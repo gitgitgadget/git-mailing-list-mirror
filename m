@@ -1,95 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/t5400-send-pack: Use POSIX options to cp for
- portability
-Date: Mon, 08 Oct 2012 09:55:03 -0700
-Message-ID: <7vd30snbtk.fsf@alter.siamese.dyndns.org>
-References: <1349683681-18978-1-git-send-email-bdwalton@gmail.com>
- <7vlifgncq8.fsf@alter.siamese.dyndns.org>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: core.autocrlf=true replaces LF with CRLF on Linux
+Date: Mon, 8 Oct 2012 10:03:19 -0700
+Message-ID: <CAD03jn41w814XqdFq=PK+AAOQcXZtm0kQrGpobPfA-YULTpkPg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 18:55:20 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 08 19:03:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLGbu-0004eK-Ug
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 18:55:19 +0200
+	id 1TLGjr-0000O6-Cs
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 19:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145Ab2JHQzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 12:55:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41687 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754043Ab2JHQzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 12:55:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97CE79B0C;
-	Mon,  8 Oct 2012 12:55:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YUFZEhS0jz/P9OdAzMqMdN1M0T0=; b=aGYfno
-	7+Dx4IYs0IuBslwccoUcqYGjKEjzbRXBE1XmHpHt7FCQWeNilOfTPrIvZNW3/Vgq
-	Joy+z125RfygCxyjHGn+B+F8Y5iCvGi1sbRU04gBj7XRQflV4HHwvGGjyuxEWfuK
-	xNQdsrFgTWLusq5S646YoEXr4HM9XgeCLwbzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qR5NPB29b6l0UeXZOVsxMy1BsPJFe96p
-	fU7cv72xW4m3aHLt6tZ8++dOV7u4S/tVPgRQ4ixguCduNf/4lmRuw1m2dMpXK8o+
-	vSpZVXpy6Xv8nTfgbb8AtuXUw5yLUYlDkuReyraYt8wwUVog1R+t9UhmLufNgEso
-	VASwg6kksYk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86A799B0B;
-	Mon,  8 Oct 2012 12:55:06 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA3719B07; Mon,  8 Oct 2012
- 12:55:04 -0400 (EDT)
-In-Reply-To: <7vlifgncq8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 08 Oct 2012 09:35:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8826A04-1168-11E2-B6E4-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753701Ab2JHRDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 13:03:22 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:41243 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751883Ab2JHRDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 13:03:20 -0400
+Received: by mail-ee0-f46.google.com with SMTP id b15so2925122eek.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 10:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Pcm9A7q9I6B9PmWyYRKfjZqNFWKsp7EXdglWWiT62vc=;
+        b=Xus0GZP1fc+glxjZIe0dCM0Fs9T6HqcvwG82YAhF8Ri0BMFzV+j4huFVWF0qTXq09u
+         pVLsHAiyucMPgeVqGrox7FXXqGdAfhKYaAfU1dJjz1Ztrf5x+takHcs8P5JUB8n6kAw7
+         MUNHf/YGxdHpnVk1LT0K6u/GYtGEzjTCOE/pz6yrquv/SQLPY9sIjtYHx+Ei9hNia7ks
+         tTUQv7w/8eRSna2r1+kcAnWo5iFRqtDlYYzV+kTsSkE7VIEnlxmiOnOe4jW0mgwlunSU
+         MaAxAZ7VRYbX7YjGtkVU4BRBSQZTH5EiR+RhInbOI8A8jHOyIP6wtxweMtVSSELMrHGv
+         Usag==
+Received: by 10.14.201.73 with SMTP id a49mr23496755eeo.39.1349715799647; Mon,
+ 08 Oct 2012 10:03:19 -0700 (PDT)
+Received: by 10.14.183.73 with HTTP; Mon, 8 Oct 2012 10:03:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207242>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The docs indicate that core.autoccrlf=true will only replace LF with
+CRLFs if the runtime platform native line-endings are CRLF, since
+core.eol defaults to native. I have gone a step further on my box and
+set core.eol to "lf", and still get the same result: conversion of LFs
+to CRLFs on a newly created file. Full reproduction:
 
-> Ben Walton <bdwalton@gmail.com> writes:
->
->> Avoid a GNU-ism in the cp options used by t5400-send-pack.  Change -a
->> to -pR.
->>
->> Signed-off-by: Ben Walton <bdwalton@gmail.com>
->> ---
->
-> Thanks, but is "-p" essential for this test to pass, or can we get
-> away with just "-R"?
-
-Besides, when you spot a potential problem, please ask "git grep"
-to catch them all.
-
-    $ git grep "cp -a" t/
-    t/t5400-send-pack.sh:   cp -a parent child &&
-    t/t5550-http-fetch.sh:  cp -a .git"$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-    t/t5800-remote-helpers.sh:      cp -a server server2 &&
-
->>  t/t5400-send-pack.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
->> index 250c720..65b3b0f 100755
->> --- a/t/t5400-send-pack.sh
->> +++ b/t/t5400-send-pack.sh
->> @@ -159,7 +159,7 @@ test_expect_success 'receive-pack runs auto-gc in remote repo' '
->>  	    git commit -a -m "Second commit" &&
->>  	    git repack
->>  	) &&
->> -	cp -a parent child &&
->> +	cp -pR parent child &&
->>  	(
->>  	    # Set the child to auto-pack if more than one pack exists
->>  	    cd child &&
+$ cat /etc/redhat-release; git --version
+Fedora release 17 (Beefy Miracle)
+git version 1.7.11.2
+$ git config -l
+core.autocrlf=true
+core.eol=lf
+$ rm -rf test; mkdir test; cd test; git init; echo bar >foo.txt; git add foo.txt
+Initialized empty Git repository in /tmp/test/.git/
+warning: LF will be replaced by CRLF in foo.txt.
+The file will have its original line endings in your working directory.
