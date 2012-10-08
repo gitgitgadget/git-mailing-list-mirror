@@ -1,74 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: In search of a version control system
-Date: Mon, 8 Oct 2012 23:54:04 +0530
-Message-ID: <CALkWK0kCbLxPMbxh=CLAE8UkkNFNqDa1QbtdM_-Q+Qr3SRh46Q@mail.gmail.com>
-References: <1349719581.76671.YahooMailNeo@web122505.mail.ne1.yahoo.com>
+From: Marcel Partap <mpartap@gmx.net>
+Subject: Git ~unusable on slow lines :,'C
+Date: Mon, 08 Oct 2012 20:27:54 +0200
+Message-ID: <50731B2A.6040104@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Maurice Francois <francoismaurice2001@yahoo.ca>
-X-From: git-owner@vger.kernel.org Mon Oct 08 20:24:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 08 20:28:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLI0J-0007DH-JS
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 20:24:35 +0200
+	id 1TLI3y-0000d5-2X
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 20:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754494Ab2JHSY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 14:24:26 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:55064 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753461Ab2JHSYZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2012 14:24:25 -0400
-Received: by mail-qa0-f46.google.com with SMTP id c26so2434612qad.19
-        for <git@vger.kernel.org>; Mon, 08 Oct 2012 11:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6gzsfb9R87o9/7Ji9mu0alyWuzfD532cX56yG49xpIA=;
-        b=Rk1sgROhN0pmVE4DLKrT/sMMeaebg49faLIe/i4aY1UAToKfp/wH8y9aGiEkWfF5qQ
-         dc6LYG7enEaxWy24Y5KbPmG4SHIqWZWKeXgcVaYlrYh8AxiBbddUjZRNET5HNh7powE5
-         0FQTjoZ0WMs+UCCAt0xNWxEB70ZQ3U8X2XVrP+3xMo4bns0G6ophhCI69WZPjzXKTA3a
-         5c7f7FGOsUlV49hkH1Tf+6/Ja5W1I98EN466LvD+ZQlN21m6LTwk3hOw2bHWJJdrtkGk
-         aXCfYoWPFONqAMY1BfezKZa5iQA9cW27nbBvxyihXfVxiLoz0P5nwaAKbE2C3imq2Eno
-         gHDQ==
-Received: by 10.49.85.202 with SMTP id j10mr44432364qez.59.1349720664830; Mon,
- 08 Oct 2012 11:24:24 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Mon, 8 Oct 2012 11:24:04 -0700 (PDT)
-In-Reply-To: <1349719581.76671.YahooMailNeo@web122505.mail.ne1.yahoo.com>
+	id S1754519Ab2JHS2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 14:28:11 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:33540 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754445Ab2JHS2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 14:28:09 -0400
+Received: (qmail invoked by alias); 08 Oct 2012 18:28:07 -0000
+Received: from unknown (EHLO [10.44.199.89]) [82.113.121.89]
+  by mail.gmx.net (mp031) with SMTP; 08 Oct 2012 20:28:07 +0200
+X-Authenticated: #724076
+X-Provags-ID: V01U2FsdGVkX189/nBtwsk92g23TxqNGvFO6qe2Z158LVohCQ9/BF
+	J94ScGZkFQQImS
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+X-Enigmail-Version: 1.4.1
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207257>
 
-Hi Maurice,
+Dear Git Devs,
+I love GIT, but since a couple of months I'm on 3G and after my traffic
+limit is transcended, things slow down to a feeble 8KiB/s. Juuuust like
+back then - things moved somewhat slower. And I'm fine with that - as
+long as things just keep moving.
+Unfortunately, git does not scale down very well, so for ten more days I
+will be unable to get the newest commits onto my machine. Which is very,
+very sad :/
+> git fetch --verbose --all 
+> Fetching origin
+> POST git-upload-pack (1023 bytes)
+> POST git-upload-pack (gzip 1123 to 614 bytes)
+> POST git-upload-pack (gzip 1973 to 1030 bytes)
+> POST git-upload-pack (gzip 5173 to 2639 bytes)
+> POST git-upload-pack (gzip 7978 to 4042 bytes)
+> remote: Counting objects: 24504, done.
+> remote: Compressing objects: 100% (10705/10705), done.
+> error: RPC failed; result=56, HTTP code = 200iB | 10 KiB/s       
+> fatal: The remote end hung up unexpectedly
+> fatal: early EOF
+> fatal: index-pack failed
+> error: Could not fetch origin
+Bam, the server kicked me off after taking to long to sync my copy.
+Multiple potential points of action:
+- git fetch should show the total amount of data it is about to transfer!
+- when ab^H^Horting, the cursor should be moved down (tput cud1) to not
+overwrite previous output
+- would be nice to be able to tell git fetch to get the next chunk of
+say 500 commits instead of trying to receive ALL commits, then b0rking
+after umpteen percent on server timeout. Not?
 
-Maurice Francois wrote:
-> The needs are not that big, that is to say it is academic and research projects. A project can have dozens of
-> Word, PDF and program files (Stata do-files, SAS programs, SPPS syntaxe
-> files and R scripts) and their corresponding log files.
-
-Note that Git wasn't designed for big binary files, and doesn't
-perform well between them.
-
-> Like many people, I hesitate between Git and Subversion.
-
-I honestly cannot comprehend why someone would choose Subversion over
-Git for a fresh repository today.
-
-> I like the idea of distributed version control system. But is that such a system eliminates the need for a real server ? Can we just set up a repository on one of the computers in our workplace and give access to that repository via a local connection or via a remote VPN connection ?
-
-Yes, you can have a "blessed" server, just like in Subversion.  And
-yes, you can access it over git://, http://, https://, or ssh://.
-
-> So, is it possible to lock a file while someone work on it ?
-
-No, and I honestly think it's a bad idea.  Read up more about Git, and
-try to understand how people work with it.
-
-Ram
+#Regards!Marcel c:
