@@ -1,129 +1,123 @@
-From: =?UTF-8?q?Jan=20H=2E=20Sch=C3=B6nherr?= <schnhrr@cs.tu-berlin.de>
-Subject: [PATCH 0/5] Cure some format-patch wrapping and encoding issues
-Date: Mon,  8 Oct 2012 19:33:24 +0200
-Message-ID: <1349717609-4770-1-git-send-email-schnhrr@cs.tu-berlin.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t/t5400-send-pack: Use POSIX options to cp for
+ portability
+Date: Mon, 08 Oct 2012 10:45:49 -0700
+Message-ID: <7vvcekluwi.fsf@alter.siamese.dyndns.org>
+References: <1349683681-18978-1-git-send-email-bdwalton@gmail.com>
+ <7vlifgncq8.fsf@alter.siamese.dyndns.org>
+ <7vd30snbtk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?q?Jan=20H=2E=20Sch=C3=B6nherr?= <schnhrr@cs.tu-berlin.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 08 19:44:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 19:46:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLHNg-0004Jv-3J
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 19:44:40 +0200
+	id 1TLHP0-000521-D3
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 19:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287Ab2JHRoa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2012 13:44:30 -0400
-Received: from mail.eecsit.tu-berlin.de ([130.149.17.13]:48284 "EHLO
-	mail.cs.tu-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185Ab2JHRo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 13:44:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost-12225.cs.tu-berlin.de (Postfix) with ESMTP id 4DE827D8B
-	for <git@vger.kernel.org>; Mon,  8 Oct 2012 19:34:35 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at cs.tu-berlin.de (including SpamAssassin)
-Received: from mailhost.cs.tu-berlin.de ([127.0.0.1])
-	by localhost (mail.cs.tu-berlin.de [127.0.0.1]) (amavisd-new, port 12224)
-	with ESMTP id 2cJNi7pGcuZu 02495-18;
-	Mon,  8 Oct 2012 19:34:25 +0200 (CEST) 13707
-Received: from asahi.kbs.tu-berlin.de (asahi.kbs.tu-berlin.de [130.149.91.59])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: schnhrr)
-	by mailhost.cs.tu-berlin.de (Postfix) with ESMTPSA;
-	Mon,  8 Oct 2012 19:34:25 +0200 (CEST)
-X-Mailer: git-send-email 1.7.12
+	id S1753698Ab2JHRpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 13:45:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62704 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751185Ab2JHRpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 13:45:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85E428A04;
+	Mon,  8 Oct 2012 13:45:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WMnom+WLK5UMo4TdexAw7KVwn6g=; b=SsrD/M
+	sPf889/saPaQ3ePKGY65LfpaBhYJldxHnvSWOfGli1XpAUQ1PS/LhjMCvHQPsvoY
+	OtAV74uYVO0CDuF6ek9Bt4KHtVwiHo+GOk1iKHJB8N9uoBC+3X7oKoPGz+z40yZP
+	PUeKoqQ5BKUxGDN03QWIjApgRgMpB3KxHC7uA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z3dzXr7mbtlvAw8XuEM/Nid//iMj2lIW
+	9KmwXcVrjaWMYLmFDIRtyPsUa0T5PYr55pC/R11H9OtdUbqZMD/WJHX9PQ5kjtmY
+	Sllybnz9ocgPbcpmCKK0EnMDAQTszPco7Tok37iVM1OwKaFuuYZHG28eVjwNyfL4
+	rU6NV6SHnIM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F76F8A03;
+	Mon,  8 Oct 2012 13:45:51 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2D4F8A02; Mon,  8 Oct 2012
+ 13:45:50 -0400 (EDT)
+In-Reply-To: <7vd30snbtk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 08 Oct 2012 09:55:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FFF88DBA-116F-11E2-92FD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207248>
 
-Hi all.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The main point of this series is to teach git to encode my name
-correctly, see patch 4, so that the decoded version is actually
-my name, so that send-email does not insist on adding a wrong
-superfluous From: line to the mail body.
+>> Thanks, but is "-p" essential for this test to pass, or can we get
+>> away with just "-R"?
+>
+> Besides, when you spot a potential problem, please ask "git grep"
+> to catch them all.
 
-But as always, you notice some other things going wrong. Here,
-patches 1 and 2 make the wrapping of header lines more correct,
-i. e., neither too early nor too late.
+In other words, how about doing this instead?
 
-Patch 3 does some refactoring, which is too unrelated to be included
-in patch 4 itself.
+-- >8 --
+Subject: tests: "cp -a" is a GNUism
 
-Patch 5 points out further problems, but leaves the actual fixing
-to someone else.
+These tests just wants a bit-for-bit identical copy; they do not
+need -H (there is no symbolic link involved) nor -p (there is no
+funny permission or ownership issues involved).  Just use "cp -R"
+instead.
+---
+ t/t5400-send-pack.sh      | 2 +-
+ t/t5550-http-fetch.sh     | 2 +-
+ t/t5800-remote-helpers.sh | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-The series is currently based on the maint branch, but it applies
-to the others as well.
-
-
-
-During the creation of this series, I came across the strbuf=20
-wrapping functions, and I wonder if there is an off-by-one issue.
-
-Consider the following excerpt from t4202:
-
-cat > expect << EOF
- This is
-  the sixth
-  commit.
- This is
-  the fifth
-  commit.
-EOF
-
-test_expect_success 'format %w(12,1,2)' '
-
-	git log -2 --format=3D"%w(12,1,2)This is the %s commit." > actual &&
-	test_cmp expect actual
-'
-
-So this sets a maximum width of 12 characters. Is that 12 character lim=
-it
-supposed to include the final newline, or not? Because the test above a=
-nd
-my series are only correct if the final newline is included, i. e., at =
-most
-eleven visible characters.
-
-If this should mean at most 12 visible characters instead, then the out=
-put
-should look like this:
-
- This is the
-  sixth
-  commit.
- This is the
-  fifth
-  commit.
-
-(In that case, I would repost an updated version of this series.)
-
-Regards
-Jan
-
-
-Jan H. Sch=C3=B6nherr (5):
-  format-patch: do not wrap non-rfc2047 headers too early
-  format-patch: do not wrap rfc2047 encoded headers too late
-  format-patch: introduce helper function last_line_length()
-  format-patch: fix rfc2047 address encoding with respect to rfc822
-    specials
-  format-patch: tests: check rfc822+rfc2047 in to+cc headers
-
- pretty.c                | 121 ++++++++++++++++++--------
- t/t4014-format-patch.sh | 227 ++++++++++++++++++++++++++++++----------=
---------
- 2 Dateien ge=C3=A4ndert, 229 Zeilen hinzugef=C3=BCgt(+), 119 Zeilen en=
-tfernt(-)
-
---=20
-1.7.12
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 250c720..418f515 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -159,7 +159,7 @@ test_expect_success 'receive-pack runs auto-gc in remote repo' '
+ 	    git commit -a -m "Second commit" &&
+ 	    git repack
+ 	) &&
+-	cp -a parent child &&
++	cp -R parent child &&
+ 	(
+ 	    # Set the child to auto-pack if more than one pack exists
+ 	    cd child &&
+diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+index 16ef041..80d20c8 100755
+--- a/t/t5550-http-fetch.sh
++++ b/t/t5550-http-fetch.sh
+@@ -22,7 +22,7 @@ test_expect_success 'setup repository' '
+ '
+ 
+ test_expect_success 'create http-accessible bare repository with loose objects' '
+-	cp -a .git "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	cp -R .git "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	 git config core.bare true &&
+ 	 mkdir -p hooks &&
+diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
+index 5702334..e7dc668 100755
+--- a/t/t5800-remote-helpers.sh
++++ b/t/t5800-remote-helpers.sh
+@@ -76,7 +76,7 @@ test_expect_success 'pushing to local repo' '
+ # git-remote-testgit, but is too slow to leave in for general use.
+ : test_expect_success 'racily pushing to local repo' '
+ 	test_when_finished "rm -rf server2 localclone2" &&
+-	cp -a server server2 &&
++	cp -R server server2 &&
+ 	git clone "testgit::${PWD}/server2" localclone2 &&
+ 	(cd localclone2 &&
+ 	echo content >>file &&
+-- 
+1.8.0.rc0.95.g9b3a052
