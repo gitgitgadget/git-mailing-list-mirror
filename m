@@ -1,161 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] rebase: Handle cases where format-patch fails
-Date: Mon, 08 Oct 2012 15:38:35 -0700
-Message-ID: <7vtxu4io7o.fsf@alter.siamese.dyndns.org>
-References: <7vipaou0zw.fsf@alter.siamese.dyndns.org>
- <1349724988-14625-1-git-send-email-andrew.kw.w@gmail.com>
- <1349724988-14625-2-git-send-email-andrew.kw.w@gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: build deps
+Date: Mon, 08 Oct 2012 18:52:41 -0400
+Message-ID: <50735939.10604@gmail.com>
+References: <CACnwZYe_vhH9Ui8W9D=M_8avgEugR+UvM1E+jH7fxr+8yk2UtQ@mail.gmail.com> <5072FAD1.1000807@gmail.com> <CACnwZYeJ-FKXterxd697iu+U4HobqEaP0zx_p8CZDsPZx4hbHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, alex.kostikov@gmail.com
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 09 00:38:58 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 00:52:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLLyR-00016K-23
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 00:38:55 +0200
+	id 1TLMC2-0007rL-SI
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 00:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755397Ab2JHWin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 18:38:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54923 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755185Ab2JHWij (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 18:38:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 215639D32;
-	Mon,  8 Oct 2012 18:38:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Xz5em63XfbYKbAVOQd7V/Wgh8jI=; b=YYNX1t
-	LtqCuH2u3QxJ19Z6lsliD/bmL2sHcbcdpXwFgTLBN+9Pob+fOvykkxbUs2zu11qc
-	OOozJ47xmliECKgMe4XWZaqWz52DK9lLZwARQfvEOmUMJi2g4Nf5llVhUh3e0QPW
-	LFfj85UB2uwxnBSM8vz/p+q752wNpxJWB824M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tFlcKwyff+DQgEsX6K6mpE1g90naaZLd
-	Tv75V1z2KpPLzcYeDo8OQxH5XjVZDtrRNQoAaaq6mBdtUrzWyRCjvijYjShDiaoh
-	wv/ERgYsxCkXSFFlNpUPy4w8EYghXE3uAcPU8l9HEfOKKr9+9oMJooFK7hOOVfPp
-	CYbPv+cnKkM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EAED9D31;
-	Mon,  8 Oct 2012 18:38:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32A959D30; Mon,  8 Oct 2012
- 18:38:37 -0400 (EDT)
-In-Reply-To: <1349724988-14625-2-git-send-email-andrew.kw.w@gmail.com>
- (Andrew Wong's message of "Mon, 8 Oct 2012 15:36:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E65DE16A-1198-11E2-86B2-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755148Ab2JHWwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 18:52:49 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:41677 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754204Ab2JHWwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 18:52:47 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so870557iea.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 15:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=REdBVZj36vFUxe7qfHJhP3XTNJZDEn7rfGTUoWPJc1w=;
+        b=FjVAXJ7B7U7HgzmokSlWuKi2NFDocOJJjuGeDUNGu+KbTvxlYLAKGrxQAfTLSHgbzx
+         /W3C4RlaoH+bsvwPsBtCRAn1BUpXi5c7DP2nDgKeOhOwQz2IgGljCn2eZfx/S8miIqII
+         gHE/YOUo6EE9lQtY0JhJYv8U4FW8+/xmGJLUUXwDu96wIZwzUdCEmJ+z0F/IgEUMSIDv
+         FC4WcX9imr3fE36SanDNQPBvVwKaEeIVh0gg+FCoS1wLXamUbXbGlE74+t6z7RBzJgb7
+         N2Vo+h2dnCBdJqerGSzS6NH2vCHKuWU2uRt8KniHIJ/tkeV/HuOCj/ou94sTwp9wB1NF
+         O7tA==
+Received: by 10.50.213.1 with SMTP id no1mr7461199igc.64.1349736767250;
+        Mon, 08 Oct 2012 15:52:47 -0700 (PDT)
+Received: from [192.168.1.3] ([69.165.255.59])
+        by mx.google.com with ESMTPS id n5sm8512299igw.13.2012.10.08.15.52.45
+        (version=SSLv3 cipher=OTHER);
+        Mon, 08 Oct 2012 15:52:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.7) Gecko/20121007 Thunderbird/10.0.7
+In-Reply-To: <CACnwZYeJ-FKXterxd697iu+U4HobqEaP0zx_p8CZDsPZx4hbHQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207278>
 
-Andrew Wong <andrew.kw.w@gmail.com> writes:
-
-> 'format-patch' could fail due to reasons such as out of memory. Such
-> failures are not detected or handled, which causes rebase to incorrectly
-> think that it completed successfully and continue with cleanup. i.e.
-> calling move_to_original_branch
+On 10/08/12 17:36, Thiago Farina wrote:
+> OK, after running ./configure I tried the make command again.
 >
-> Instead of using a pipe, we separate 'format-patch' and 'am' by using an
-> intermediate file. This gurantees that we can invoke 'am' with the
-> complete input, or not invoking 'am' at all if 'format-patch' failed.
+> CC credential-store.o
+> /bin/sh: clang: not found
+> make: *** [credential-store.o] Error 127
 >
-> Also print messages to help user with how to recover from such failures.
+> $ which clang
+> /home/tfarina/chromium/src/third_party/llvm-build/Release+Asserts/bin/clang
 >
-> Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
-> ---
->  git-rebase--am.sh | 28 +++++++++++++++++++++++++---
->  1 file changed, 25 insertions(+), 3 deletions(-)
->
-> diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-> index 392ebc9..a955b38 100644
-> --- a/git-rebase--am.sh
-> +++ b/git-rebase--am.sh
-> @@ -26,10 +26,32 @@ then
->  	# makes this easy
->  	git cherry-pick --allow-empty "$revisions"
->  else
-> -	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-> +	rm -f "$GIT_DIR/format-patch"
-> +	if ! git format-patch -k --stdout --full-index --ignore-if-in-upstream \
->  		--src-prefix=a/ --dst-prefix=b/ \
-> -		--no-renames $root_flag "$revisions" |
-> -	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
-> +		--no-renames $root_flag "$revisions" > "$GIT_DIR/format-patch" && ret=$?
-> +	then
+> $ clang --version
+> clang version 3.2 (trunk 163674)
+> Target: x86_64-unknown-linux-gnu
+> Thread model: posix
+Looks like something went wrong with "make" setting PATH. I wonder if
+the "+" sign in your path is somehow messing things up.
 
-Is it just me?  I find this construct
-
-	if ! cmd && ret=$?
-        then
-
-very hard to wrap my mind around.  Why not
-
-	git format-patch ... just as before ... \
-          ... >"$GIT_DIR/formatted-patches" || {
-		# error handling or advices come here...
-                rm -f "$GIT_DIR/formatted-patches"
-		exit 1
-	}
-
-	git am ... just as before ... "$GIT_DIR/formatted-patches" || {
-		# possibly another error handling or advices come here...
-		rm -f "$GIT_DIR/formatted-patches"
-		exit 1
-	}
-
-without changing anything else?
-
-> +		rm "$GIT_DIR/format-patch"
-> +		echo
-> +		echo "'git format-patch' seems to have failed."
-> +		echo "It is impossible to continue or abort rebasing."
-> +		echo "You have to use the following to return to your original head:"
-> +		echo
-> +		case "$head_name" in
-> +		refs/*)
-> +			echo "    git checkout $head_name"
-> +			;;
-> +		*)
-> +			echo "    git checkout $orig_head"
-> +			;;
-> +		esac
-
-You _know_ format-patch failed, not just "seems to have", at this
-point, no?  Why is it impossible to abort?
-
-What have we done before reaching to this point?  We know we are
-doing the basic "git rebase", without any funny "-m/-i/-p" business,
-so the only thing we have done are (1) detached HEAD at the new
-onto, (2) set ORIG_HEAD to point at the original tip of the branch
-being rebased (or the commit we were sitting at, if we are rebasing
-a detached history), and (3) head_name has the refname of the
-original branch (or detached HEAD) and branch_name has the name of
-the branch (or HEAD).
-
-Shouldn't we be just rewinding what we have done so far and error
-the whole thing out instead?  Perhaps the first "# error handling or
-advises come here..." part may simply be
-
-	case "$head_name" in
-	refs/heads/*)
-		git checkout "$head_name"
-                ;;
-	*)
-		git checkout "$orig_head"
-                ;;
-	esac
-	cat >&2 <<-\EOF
-	Error was found while preparing the patches ($revisions) to
-        replay on the rewound head. You cannot rebase this history.
-        EOF
-
-or something like that.  The format-patch output (and its error) may
-be of interest in getting help going forward.
+Are you trying to compile specifically with clang? If not, maybe try
+unsetting the CC env var, and run configure again?
