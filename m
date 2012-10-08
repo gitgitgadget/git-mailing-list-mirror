@@ -1,65 +1,92 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2 0/2] Re: gitk: can't reload commits with new key binding
-Date: Mon, 8 Oct 2012 23:05:55 +0200
-Message-ID: <20121008210555.GM951@goldbirke>
-References: <7vwqzacdb7.fsf@alter.siamese.dyndns.org>
- <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Allow __git_ps1 to be used in PROMPT_COMMAND
+Date: Mon, 08 Oct 2012 14:17:08 -0700
+Message-ID: <7v7gr0k6jv.fsf@alter.siamese.dyndns.org>
+References: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org>
+ <20121005210945.GA4961@simaj.xs4all.nl>
+ <7vr4p8lto5.fsf@alter.siamese.dyndns.org> <50732EA1.7040608@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, paulus@samba.org
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 23:06:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, git@drmicha.warpmail.net, spearce@spearce.org,
+	artagnon@gmail.com, schwab@linux-m68k.org, soosthoek@nieuwland.nl
+To: Simon Oosthoek <s.oosthoek@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Oct 08 23:17:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLKWk-00054y-JA
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 23:06:14 +0200
+	id 1TLKhX-0002G8-Ft
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 23:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163Ab2JHVGC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2012 17:06:02 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:62699 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab2JHVGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 17:06:01 -0400
-Received: from localhost6.localdomain6 (p5B1308CE.dip0.t-ipconnect.de [91.19.8.206])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0MEOzM-1TAOHk0auO-00FREG; Mon, 08 Oct 2012 23:05:56 +0200
-Content-Disposition: inline
-In-Reply-To: <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:l0sl/xTXtZA8uBIe+l1zHDOT2FpHoJyeQAxNScBQf6M
- 4Il3tnTK4K8PFJPNpC6sPW8bDlesFKt28ggJF15sEgYLTfon6x
- BVAUUaZf38PhtrmLVl6yilkjX9FzXfKmT0DUK0sYLSEMjXiYv4
- et4Vp/oImXcRCog6oYLjA8AaQnk0tZpMHQRuubs2x/S01T4qxg
- wLeVVXzR3pphF+LHxpZTRenxiw7ukvCfF3z1JHr552Ex9d95Dd
- hEszBVf31XkpfCmCPWAMHQdP3d6NdhGO25vQhdV0/KlsBARcbm
- h3eiUsOFck+QolRL/of85HUyUe3wXUdhv5q4IsHqroI4En6tUn
- 919uNIYA8hzyg5pdV9dY=
+	id S1754889Ab2JHVRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 17:17:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53439 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751341Ab2JHVRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 17:17:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B508B8666;
+	Mon,  8 Oct 2012 17:17:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Gf4IngNHa+slSt/uqhOZBeXfJOI=; b=LNUnja
+	Htoq5j3EsU8kBB9dA1nR3QGWoEWK3ZioslTIVJynvb/9NnxZFBNpl0t09W3EHPWR
+	JGIcGcJaovoTqnyvGPnHnqqciI0jiA9tygv8jj0WSuDIzj2kRPICeA0XyZkPICgN
+	rney8NaYtuM54ZtgjHW6uF5uAwURP/VCzbfcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vYLnk4zhxpKSYn9eN6+kGbvC49KAtwvD
+	yb7oLGpoJpvSTw6Nog7o6addr+xfTj4VyYzG1a4Xx4/zYMnLeov2aVrWogpnKVul
+	+CggLYHa8OiDe/9eOPT9sYUFyCWikIJeyNXdrlYpIs/8hDtPQ2UfymSZDsD3vV8u
+	3MZnUPkf0VU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A19998664;
+	Mon,  8 Oct 2012 17:17:10 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 197BF8662; Mon,  8 Oct 2012
+ 17:17:10 -0400 (EDT)
+In-Reply-To: <50732EA1.7040608@xs4all.nl> (Simon Oosthoek's message of "Mon,
+ 08 Oct 2012 21:50:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 85719172-118D-11E2-8ED9-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207271>
 
-Hi,
+Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
 
-(Sorry for the delayed reply, was out of town.)
+> How about "This has advantages for using color without running
+> into prompt-wrapping issues. Only by assigning \[ and \] to PS1
+> directly can bash know these and the color codes in between don't
+> count in the length of the prompt."?
+>
+> I'll rewrite the patch later on...
+>
+> Isn't it confusing that the color codes don't figure in this patch at all?
 
+Since the "Subject:" is "allow ... to be used in PROMPT_COMMAND", it
+very much is relevant to mention that we need to use PROMPT_COMMAND
+in order to correctly use \[ and \] to generated zero-width escape
+sequences, which cannot be done by simply setting PS1 to command
+substitution.
 
-On Tue, Oct 02, 2012 at 11:04:43AM -0400, Andrew Wong wrote:
-> Refactored the code for binding modified function keys as Junio sugge=
-sted.
->=20
-> Andrew Wong (2):
->   gitk: Refactor code for binding modified function keys
->   gitk: Use bindshiftfunctionkey to bind Shift-F5
->=20
+"color" is just an example; if it makes you uneasy to say "color",
+you can say zero-width escape sequences.  It could be \007 (BEL) ;-)
 
-Thanks, this series solves the problem for me.
+> I don't think it would be possible to detect any other kind of
+> customization without including specific code for it. Do you think it's
+> unnecessary to include a warning? (I think it would take people a long
+> time to figure out why their prompt goes whoopsy without getting a hint
+> that PROMPT_COMMAND messes up the PS1)
 
+I think you need your warning _only_ because you attempt to
+auto-detect it, when you do not have to.
 
-Best,
-G=E1bor
+> (OTOH, if you configure PROMPT_COMMAND, you're bound to know a little
+> bit about what you're doing...)
+
+Yup.
