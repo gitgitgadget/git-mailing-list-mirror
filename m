@@ -1,125 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push.default documented in "man git-push"?
-Date: Mon, 08 Oct 2012 10:12:02 -0700
-Message-ID: <7v8vbgnb19.fsf@alter.siamese.dyndns.org>
-References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
- <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
- <CACsJy8B7Z4kVYax4igYQ-d8q6e+GrPL3UwzhHSYbJ5Qo0TiL-w@mail.gmail.com>
- <CALkWK0kKzt8ii-+O0zRM1JLenP+XKh-2Wv_v6zXkkcvTGQ2MQg@mail.gmail.com>
- <CACsJy8BB4WM1Lqz4yCGnGN2DV1Xsip3Qzh86ibBXwt2BnaNENA@mail.gmail.com>
- <CALkWK0=N0OwTyu1KDAKzM48ioevGtmMNgy5gfK2J78zSPx7CVA@mail.gmail.com>
- <CACsJy8APN-CdBZgLzuNWAa5ArR2gkcStY4GZ=79fU7sGT9pOMw@mail.gmail.com>
- <7v7gr75s40.fsf@alter.siamese.dyndns.org>
- <20121003214051.GD4484@sigill.intra.peff.net>
+From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+Subject: Re: Fw: How do I git-push to an FTP server?
+Date: Mon, 08 Oct 2012 10:26:53 -0700
+Message-ID: <7vzk3wlvs2.fsf@alter.siamese.dyndns.org>
+References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
+ <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
+ <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
+ <7vwqz4si87.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kXH-U0mTeFtiMq7tqCOpNJT1A7Z==GxOphe-sGdmxRRg@mail.gmail.com>
+ <20121007172754.GA29560@elie.Belkin>
+ <7vvcemovrh.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nSxBsiE5_BZ67dPrwDRQSipL0LBR9Pf252iqL21HwZBA@mail.gmail.com>
+ <20121008080208.GC19733@elie.Belkin>
+ <7v7gr1nfby.fsf@alter.siamese.dyndns.org>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 08 19:12:33 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ramkumar Ramachandra <artagnon-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Thomas Ferris Nicolaisen
+ <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, 
+ Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>,  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, 
+ git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,  August Karlstrom <fusionfile-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Sverre
+ Rabbelier <srabbelier-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBCG77UMM3EJRBYUZZSBQKGQE7GJFV5A-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Oct 08 19:27:07 2012
+Return-path: <git-users+bncBCG77UMM3EJRBYUZZSBQKGQE7GJFV5A-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-oa0-f58.google.com ([209.85.219.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLGsa-00051s-De
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 19:12:32 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754274Ab2JHRMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 13:12:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48552 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754169Ab2JHRMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 13:12:06 -0400
+	(envelope-from <git-users+bncBCG77UMM3EJRBYUZZSBQKGQE7GJFV5A-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1TLH6g-0003yx-FQ
+	for gcggu-git-users@m.gmane.org; Mon, 08 Oct 2012 19:27:06 +0200
+Received: by mail-oa0-f58.google.com with SMTP id l10sf3772158oag.3
+        for <gcggu-git-users@m.gmane.org>; Mon, 08 Oct 2012 10:26:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
+         :content-type;
+        bh=v9v4+fGLksnHhRFlLUKgsDg1LKdS/YoePmNyOI4WeG0=;
+        b=QRovf8X2j7nkLhRri5bGC1hGUd0+XLRGtLTv0ewbX5OglwG0PRjgieKNxjCMkv5swo
+         Dra5WNhj6Lkg1miUKTQXwb3VF9g8serLPB0WqeTgmj/5jtR7J0gdFeE++TVj7djGUchK
+         GZr7bKtq63SblJZ/BdLLbmvpJP9k+HUVZ5gKqcWQmS2bJhqp/OZXlMA2Yo5A7iWSC2h6
+         YjcC/+uMpbuskMZ5P1Lk8BNlJRs7a6hRCYi7lHPWmnUlOUq+FPDHuriPLm84m5hS/yui
+         dnIwbjQv7Mw/dlwgkfj9TgMkRrpz5P2UfoJe4lT2tAERC1kv 
+Received: by 10.224.190.200 with SMTP id dj8mr4428255qab.17.1349717219383;
+        Mon, 08 Oct 2012 10:26:59 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.229.177.160 with SMTP id bi32ls1397865qcb.6.gmail; Mon, 08 Oct
+ 2012 10:26:58 -0700 (PDT)
+Received: by 10.224.189.75 with SMTP id dd11mr13148630qab.6.1349717218661;
+        Mon, 08 Oct 2012 10:26:58 -0700 (PDT)
+Received: by 10.224.189.75 with SMTP id dd11mr13148629qab.6.1349717218649;
+        Mon, 08 Oct 2012 10:26:58 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id f17si1532678qck.1.2012.10.08.10.26.57;
+        Mon, 08 Oct 2012 10:26:57 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD5089FAB;
-	Mon,  8 Oct 2012 13:12:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m1nhtwsPLr2jmuAu7LWfe2YGdRY=; b=TZZhGB
-	r5Mlt/dxt+EsiLYGPEr2vyl7acPt6VgJd6SrpdZrZhNd/Iz+sgh9RqMN9BiSuz17
-	7y33v2wu2F1gUToqu7mDLanNNsunSwZ2oMD9HjhJeQ4JQL7qw2FfIs1GBVbSoKWd
-	j9I3itbj7+5ULXtdC5kYVhaKILfkvYBrpi8TU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ixYC35pDaHVHaUbrfm0LsaC2yi+Snlhg
-	9woSgSUkPHVpuxbsTw4HEph/DF7uCH1ASBkn17JeyoqWIaJCw0JdZJsN9BlaSnLo
-	aE4Sopj5qTq5E29rkGqIguT+MFfCNK4aRBXXiqNTVi/U8YnePR9Cp74OgLq4BO/4
-	8YXWT/DkSZg=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3784F8415;
+	Mon,  8 Oct 2012 13:26:57 -0400 (EDT)
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A97B09FAA;
-	Mon,  8 Oct 2012 13:12:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 237838414;
+	Mon,  8 Oct 2012 13:26:57 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC02D9FA8; Mon,  8 Oct 2012
- 13:12:04 -0400 (EDT)
-In-Reply-To: <20121003214051.GD4484@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 3 Oct 2012 17:40:51 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 86CE4840F; Mon,  8 Oct 2012
+ 13:26:54 -0400 (EDT)
+In-Reply-To: <7v7gr1nfby.fsf-s2KvWo2KEQL18tm6hw+yZpy9Z0UEorGK@public.gmane.org> (Junio C. Hamano's
+ message of "Mon, 08 Oct 2012 08:39:13 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 487B4FA0-116B-11E2-850E-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207243>
+X-Pobox-Relay-ID: 5AB78E16-116D-11E2-8DA8-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org;
+ dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207244>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org> writes:
 
-> On Wed, Oct 03, 2012 at 11:26:55AM -0700, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> writes:
 >
->> Please do not label the list as "These variables affect this
->> command" to give a false impression that it is the complete list if
->> it isn't.
->> 
->> Unless somebody promises to keep an up-to-date complete list there
->> (or even better, come up with a mechanism to help us keep that
->> promise automatically, perhaps by annotating pieces with structured
->> comments in config.txt and automatically appending such a section to
->> manual pages of relevant commands), that is.
+>> I'd suggest dropping ", and will soon be removed." or replacing it
+>> with ". Don't use them." to avoid the question of how soon "soon" is.
 >>
->> With a weaker phrase, e.g. "These configuration variables may be of
->> interest", such a list may not hurt readers, but personally I do not
->> think it adds much value to have a list of variables without even a
->> single line description of what each is used for.
+>> With that change and with a clearer commit message, this will probably
+>> be good to go imho.
 >
-> We talked a while ago about actually moving the config options into the
-> individual manpages, and generating config.txt to simply contain an
-> index of keys and where their definitions may be found. That also has
-> the "list without description" characteristic. But presumably you would
-> be looking for keys in the manual of the command you want to affect, and
-> the master list would mostly be for redirecting you to the right
-> manpage.
+> Yup; thanks.
 
-That cuts both ways for configuration variables that affects or are
-affected by multiple commands, and that would range from the trivial
-example of configuration variables for fetch and merge that appear
-to take effect in "git pull" from the end users' perspective, to the
-more complex ones like remotes.*.merge and remotes.*.url that are
-set to make the @{upstream} notation work.
+Let's do this, then.
 
-> It does break down a little when you have keys that could go in multiple
-> pages. In many cases, this can be solved by a canonical location that
-> describes the shared concepts. For example, `diff.*` should probably go
-> into a `gitdiff(7)` that talks about the various diff options and
-> formats.
->
-> Of course, that only works if you think pulling out the shared diff bits
-> from git-diff*, git-log, etc into a separate manpage is a good idea. I
-> do, because I think it makes it more clear to the reader how the
-> concepts connect (as opposed to simply including shared bits inline in
-> the manpages, as we do now, with no indication that the same content is
-> going to apply in many places). But it does have a downside that
-> individual manpages are not as easily searchable via the pager, as you
-> may have to follow a cross-reference to find what you want.
+-- >8 --
+From: Ramkumar Ramachandra <artagnon-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Git url doc: mark ftp/ftps as read-only and deprecate them
 
-I suspect that approach would make individual manual pages less
-approacheable by new people, as they will have more required
-reading.
+It is not even worth mentioning their removal; just discourage
+people from using them.
 
-git(1) currently guides people to user manual, and then points at
-individual pages, assuming that these shared concepts (e.g. the one
-for "diff" you discuss in the above paragraph) are fully mastered
-once the user manual is read.  Perhaps we would need to replace it
-with a "concepts" manual, or enhance it with more "concepts"
-material?
+Signed-off-by: Ramkumar Ramachandra <artagnon-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Helped-by: Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Signed-off-by: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+---
+ Documentation/urls.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git i/Documentation/urls.txt w/Documentation/urls.txt
+index 2890194..1d15ee7 100644
+--- i/Documentation/urls.txt
++++ w/Documentation/urls.txt
+@@ -6,8 +6,12 @@ address of the remote server, and the path to the repository.
+ Depending on the transport protocol, some of this information may be
+ absent.
+ 
+-Git natively supports ssh, git, http, https, ftp, ftps, and rsync
+-protocols. The following syntaxes may be used with them:
++Git supports ssh, git, http, and https protocols (in addition, ftp,
++and ftps can be used for fetching and rsync can be used for fetching
++and pushing, but these are inefficient and deprecated; do not use
++them).
++
++The following syntaxes may be used with them:
+ 
+ - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
+ - git://host.xz{startsb}:port{endsb}/path/to/repo.git/
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
