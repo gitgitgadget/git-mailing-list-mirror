@@ -1,399 +1,307 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.0-rc1
-Date: Mon, 08 Oct 2012 12:54:30 -0700
-Message-ID: <7vhaq4k9lb.fsf@alter.siamese.dyndns.org>
+Subject: A note from the maintainer
+Date: Mon, 08 Oct 2012 13:08:38 -0700
+Message-ID: <7vbogck9l8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Oct 08 22:12:15 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Mon Oct 08 22:12:15 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1TLJgR-00029n-Nn
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 08 Oct 2012 22:12:12 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TLJgS-00029n-8T
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 22:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754723Ab2JHULj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 8 Oct 2012 16:11:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59705 "EHLO
+	id S1754741Ab2JHULy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2012 16:11:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59739 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753605Ab2JHULb convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 8 Oct 2012 16:11:31 -0400
+	id S1753266Ab2JHULf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2012 16:11:35 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DDBF94E5;
-	Mon,  8 Oct 2012 16:11:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8457A94ED;
+	Mon,  8 Oct 2012 16:11:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=u+AEyvADqAZREhBNn4nmdj6Bc
-	es=; b=kqcxNWFWy+3y0R+IS67dl5VSLiPkBCO87LWEAvcdj9gPaW3acf6eL1dyF
-	4hyrYcNWn6q4DSSI0df96TEnGQCmL/a6AG1TQbfjeJIiv5ktGKjhNZt0/szL3y+3
-	woihT7o3EFi7FMGAfF8CT8fL3fwq5fqguyY6BbzQ0jQnG/ww3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=IM2FlpQOzoR/hmt43ZN
-	vEl9JLShG17vCJ7ZG3wyk7yLgpI7+LLGFC6KsDxMiOrXF6cVdCE/I/ZST6zBUCYY
-	4wDwhYg9WjACEydyKRFASvAPKQrh0qzqSLcFxDH2bq9Rs1CrxrK2XK/vkJQeGMae
-	Q1kHtlcw7/WMKG3wfgY1qug4=
+	:content-transfer-encoding; s=sasl; bh=4nxAyNuXv9Mfwqf2vT8nCMuBL
+	kM=; b=qACPUwerkcL/pcDkvznqAbPiZQraUAEUDY2rVU2/kPyuevCyJJeR4O/dB
+	rAhhdY5gqhOobHpPibiy2vf6f1KJxfsSfJ6zEBvywjEVjN5C0Rm265lf+/t0gXPO
+	+N2tCPaz+iCbHF4gQZa4ZXzwR6Dmxr3OMp47aJTtnh34Uam9s4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=E31LZyMW09fjKD2GdUj
+	j7NOjIxAW0rdDqQIpEULK0R8YVr/iIt4z9lz1ifGZMbYDCOUtP7g4BcIh3Tt1ARr
+	8yXtqIDShREYAjxrQtL9GACfOblrp1Gs2bHiRx+v6BxEtZ4w+tswfXcE4b/6Eexl
+	0iq4z6EljkPAJlsaFOqvVN5s=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1ACDA94E4;
-	Mon,  8 Oct 2012 16:11:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7238094EB;
+	Mon,  8 Oct 2012 16:11:34 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51D2E94E2; Mon,  8 Oct 2012
- 16:11:29 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76D1B94E6; Mon,  8 Oct 2012
+ 16:11:32 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 588B666E-1184-11E2-A6FA-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 5A6C53B2-1184-11E2-A33B-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207267>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207268>
 
-A release candidate Git v1.8.0-rc1 is now available for testing
-at the usual places.
+Welcome to the Git development community.
 
-The release tarballs are found at:
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-    http://code.google.com/p/git-core/downloads/list
+* Mailing list and the community
 
-and their SHA-1 checksums are:
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-625f820554f19f76da86258b7cc67408da032fea  git-1.8.0.rc1.tar.gz
-47be50c68d9fcd1c83bfea01c18a6e3f2abd37b8  git-htmldocs-1.8.0.rc1.tar.gz
-7854c309bd9befcb0cd737eb6c17085084a458fd  git-manpages-1.8.0.rc1.tar.gz
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-Also the following public repositories all have a copy of the v1.8.0-rc=
-1
-tag and the master branch that the tag points at:
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise is a sign that people involved don't have
+enough mental/time bandwidth to process them right at the moment, and
+it often helps to wait until the list traffic becomes calmer before
+sending such a reminder.
 
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+The list archive is available at a few public sites:
 
-Git v1.8.0 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=3Dgit
+        http://www.spinics.net/lists/git/
 
-Backward compatibility notes
-----------------------------
+=46or those who prefer to read it over NNTP (including the maintainer):
 
-In the next major release (*not* in 1.8.0 but the one that comes
-after that), we will change the behavior of the "git push" command.
-When "git push [$there]" does not say what to push, we have used the
-traditional "matching" semantics so far (all your branches were sent
-to the remote as long as there already are branches of the same name
-over there).  We will now use the "simple" semantics, that pushes
-the current branch to the branch with the same name only when the
-current branch is set to integrate with that remote branch.  There
-is a user preference configuration variable "push.default" to change
-this, and "git push" will warn about the upcoming change until you
-set this variable.
+        nntp://news.gmane.org/gmane.comp.version-control.git
 
-"git branch --set-upstream" is deprecated and may be removed in a
-relatively distant future.  "git branch [-u|--set-upstream-to]" has
-been introduced with a saner order of arguments.
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
 
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
+=3D217
 
-Updates since v1.7.12
----------------------
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
 
-UI, Workflows & Features
+Some members of the development community can sometimes also be found
+on the #git IRC channel on Freenode.  Its log is available at:
 
- * A credential helper for Win32 to allow access to the keychain of
-   the logged-in user has been added.
+        http://colabti.org/irclogger/irclogger_log/git
 
- * An initial port to HP NonStop.
+* Reporting bugs
 
- * A credential helper to allow access to the Gnome keyring has been
-   added.
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
 
- * When "git am" sanitizes the "Subject:" line, we strip the prefix fro=
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reprodu=
+ce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+* Repositories, branches and documentation.
+
+My public git.git repositories are at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://github.com/git/git/
+	https://code.google.com/p/git-core/
+	git://git.sourceforge.jp/gitroot/git-core/git.git/
+	git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+A few gitweb interfaces are found at:
+
+        http://git.kernel.org/?p=3Dgit/git.git
+        http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+        git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+        git://repo.or.cz/git-{htmldocs,manpages}.git/
+        https://code.google.com/p/git-{htmldocs,manpages}.git/
+        https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+You can browse the HTML manual pages at:
+
+	http://git-htmldocs.googlecode.com/git/git.html
+
+There are four branches in git.git repository that track the source tre=
+e
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a "featu=
+re
+release" is cut from the tip of this branch and they typically are name=
+d
+with three dotted decimal digits.  The last such release was 1.7.12 don=
+e on
+Aug 19, 2012. You can expect that the tip of the "master" branch is alw=
+ays
+more stable than any of the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a feature
+release are applied to this branch and maintenance releases are cut fro=
 m
-   "Re: subject" and also from a less common "re: subject", but left
-   the even less common "RE: subject" intact. We strip that now, too.
+it.  The maintenance releases are named with four dotted decimal, named
+after the feature release they are updates to; the last such release wa=
+s
+1.7.12.3.  New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
 
- * It was tempting to say "git branch --set-upstream origin/master",
-   but that tells Git to arrange the local branch "origin/master" to
-   integrate with the currently checked out branch, which is highly
-   unlikely what the user meant.  The option is deprecated; use the
-   new "--set-upstream-to" (with a short-and-sweet "-u") option
-   instead.
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality o=
+f
+topic branches are judged primarily by the mailing list discussions.
 
- * "git cherry-pick" learned the "--allow-empty-message" option to
-   allow it to replay a commit without any log message.
+Topic branches that are in good shape are merged to the "next" branch. =
+In
+general, the "next" branch always contains the tip of "master".  It mig=
+ht
+not be quite rock-solid, but is expected to work more or less without m=
+ajor
+breakage. The "next" branch is where new and exciting things take place=
+=2E A
+topic that is in "next" is expected to be polished to perfection before=
+ it
+is merged to "master".
 
- * After "git cherry-pick -s" gave control back to the user asking
-   help to resolve conflicts, concluding "git commit" used to need to
-   be run with "-s" if the user wants to sign it off; now the command
-   leaves the sign-off line in the log template.
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches. The topics on the branch are not complete, well tested, nor w=
+ell
+documented and need further work. When a topic that was in "pu" proves =
+to
+be in testable shape, it is merged to "next".
 
- * "git daemon" learned the "--access-hook" option to allow an
-   external command to decline service based on the client address,
-   repository path, etc.
-
- * "git difftool --dir-diff" learned to use symbolic links to prepare
-   a temporary copy of the working tree when available.
-
- * "git grep" learned to use a non-standard pattern type by default if
-   a configuration variable tells it to.
-
- * "git log -g" learned the "--grep-reflog=3D<pattern>" option to limit
-   its output to commits with a reflog message that matches the given
-   pattern.
-
- * "git merge-base" learned the "--is-ancestor A B" option to tell if A=
- is
-   an ancestor of B.  The result is indicated by its exit status code.
-
- * "git mergetool" now allows users to override the actual command used
-   with the mergetool.$name.cmd configuration variable even for built-i=
-n
-   mergetool backends.
-
- * The "-Xours" backend option to "git merge -s recursive" now takes
-   effect even on binary files.
-
- * "git rebase -i" learned the "--edit-todo" option to open an editor
-   to edit the instruction sheet.
-
-
-=46oreign Interface
-
- * "git svn" has been updated to work with SVN 1.7.
-
- * "git p4" learned the "--conflicts" option to specify what to do when
-   encountering a conflict during "p4 submit".
-
-
-Performance, Internal Implementation, etc. (please report possible regr=
-essions)
-
- * Git ships with a fall-back regexp implementation for platforms with
-   buggy regexp library, but it was easy for people to keep using their
-   platform regexp by mistake.  A new test has been added to check this=
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns ou=
+t
+to be not so good and the topic can be dropped from "pu" in such a case=
 =2E
 
- * The "check-docs" build target has been updated and greatly
-   simplified.
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
 
- * The test suite is run under MALLOC_CHECK_ when running with a glibc
-   that supports the feature.
-
- * The documentation in the TeXinfo format was using indented output
-   for materials meant to be examples that are better typeset in
-   monospace.
-
- * Compatibility wrapper around some mkdir(2) implementations that
-   reject parameters with trailing slash has been introduced.
-
- * Compatibility wrapper for systems that lack usable setitimer() has
-   been added.
-
- * The option parsing of "git checkout" had error checking, dwim and
-   defaulting missing options, all mixed in the code, and issuing an
-   appropriate error message with useful context was getting harder.
-   The code has been reorganized to allow giving a proper diagnosis
-   when the user says "git checkout -b -t foo bar" (e.g. "-t" is not a
-   good name for a branch).
-
- * Many internal uses of a "git merge-base" equivalent were only to see
-   if one commit fast-forwards to the other, which did not need the
-   full set of merge bases to be computed. They have been updated to
-   use less expensive checks.
-
- * The heuristics to detect and silently convert latin1 to utf8 when
-   we were told to use utf-8 in the log message has been transplanted
-   from "mailinfo" to "commit" and "commit-tree".
-
- * Messages given by "git <subcommand> -h" from many subcommands have
-   been marked for translation.
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged.
 
 
-Also contains minor documentation updates and code clean-ups.
+* Other people's trees, trusted lieutenants and credits.
 
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
 
-=46ixes since v1.7.12
--------------------
+Although the following are included in git.git repository, they have th=
+eir
+own authoritative repository and maintainers:
 
-Unless otherwise noted, all the fixes since v1.7.12 in the
-maintenance track are contained in this release (see release notes
-to them for details).
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
 
- * The attribute system may be asked for a path that itself or its
-   leading directories no longer exists in the working tree, and it is
-   fine if we cannot open .gitattribute file in such a case.  Failure
-   to open per-directory .gitattributes with error status other than
-   ENOENT and ENOTDIR should be diagnosed, but it wasn't.
+        git://repo.or.cz/git-gui.git
 
- * When looking for $HOME/.gitconfig etc., it is OK if we cannot read
-   them because they do not exist, but we did not diagnose existing
-   files that we cannot read.
+ - gitk-git/ comes from Paul Mackerras's gitk project:
 
- * When "git am" is fed an input that has multiple "Content-type: ..."
-   header, it did not grok charset=3D attribute correctly.
+        git://git.kernel.org/pub/scm/gitk/gitk.git
 
- * "git am" mishandled a patch attached as application/octet-stream
-   (e.g. not text/*); Content-Transfer-Encoding (e.g. base64) was not
-   honored correctly.
+ - po/ comes from the localization coordinator, Jiang Xin:
 
- * "git blame MAKEFILE" run in a history that has "Makefile" but not
-   "MAKEFILE" should say "No such file MAKEFILE in HEAD", but got
-   confused on a case insensitive filesystem and failed to do so.
+	https://github.com/git-l10n/git-po/
 
- * Even during a conflicted merge, "git blame $path" always meant to
-   blame uncommitted changes to the "working tree" version; make it
-   more useful by showing cleanly merged parts as coming from the other
-   branch that is being merged.
+I would like to thank everybody who helped to raise git into the curren=
+t
+shape.  Especially I would like to thank the git list regulars whose he=
+lp
+I have relied on and expect to continue relying on heavily:
 
- * It was unclear in the documentation for "git blame" that it is
-   unnecessary for users to use the "--follow" option.
+ - Linus Torvalds, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   Ren=C3=A9 Scharfe, Jeff King, Jonathan Nieder, Johan Herland, Johann=
+es
+   Sixt, Sverre Rabbelier, Michael J Gruber, Nguy=E1=BB=85n Th=C3=A1i N=
+g=E1=BB=8Dc Duy,
+   =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Thomas Rast for helping w=
+ith general
+   design and implementation issues and reviews on the mailing list.
 
- * Output from "git branch -v" contains "(no branch)" that could be
-   localized, but the code to align it along with the names of
-   branches was counting in bytes, not in display columns.
+ - Shawn and Nicolas Pitre for helping with packfile design and
+   implementation issues.
 
- * "git cherry-pick A C B" used to replay changes in A and then B and
-   then C if these three commits had committer timestamps in that
-   order, which is not what the user who said "A C B" naturally
-   expects.
+ - Martin Langhoff, Frank Lichtenheld and =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason for
+   cvsserver and cvsimport.
 
- * A repository created with "git clone --single" had its fetch
-   refspecs set up just like a clone without "--single", leading the
-   subsequent "git fetch" to slurp all the other branches, defeating
-   the whole point of specifying "only this branch".
+ - Paul Mackerras for gitk.
 
- * Documentation talked about "first line of commit log" when it meant
-   the title of the commit.  The description was clarified by defining
-   how the title is decided and rewording the casual mention of "first
-   line" to "title".
+ - Eric Wong, David D. Kilzer and Sam Vilain for git-svn.
 
- * "git cvsimport" did not thoroughly cleanse tag names that it
-   inferred from the names of the tags it obtained from CVS, which
-   caused "git tag" to barf and stop the import in the middle.
+ - Simon Hausmann, Pete Wyckoff and Luke Diamond for git-p4.
 
- * Earlier we made the diffstat summary line that shows the number of
-   lines added/deleted localizable, but it was found irritating having
-   to see them in various languages on a list whose discussion language
-   is English, and this change has been reverted.
+ - Jakub Narebski, John Hawley, Petr Baudis, Luben Tuikov, Giuseppe
+   Bilotta for maintaining and enhancing gitweb.
 
- * "git fetch --all", when passed "--no-tags", did not honor the
-   "--no-tags" option while fetching from individual remotes (the same
-   issue existed with "--tags", but the combination "--all --tags" make=
-s
-   much less sense than "--all --no-tags").
+ - =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason for kicking off the i18n effo=
+rt, and Jiang
+   Xin for volunteering to be the l10n coordinator.
 
- * "git fetch" over http had an old workaround for an unlikely server
-   misconfiguration; it turns out that this hurts debuggability of the
-   configuration in general, and has been reverted.
+ - Jens Lehmann, Heiko Voigt and Lars Hjemli for submodule related
+   Porcelains.
 
- * "git fetch" over http advertised that it supports "deflate", which
-   is much less common, and did not advertise the more common "gzip" on
-   its Accept-Encoding header.
+ - J. Bruce Fields, Jonathan Nieder, Michael J Gruber and Thomas Rast f=
+or
+   documentation (and countless others for proofreading and fixing).
 
- * "git gc --auto" notified the user that auto-packing has triggered
-    even under the "--quiet" option.
+ - Alexandre Julliard for Emacs integration.
 
- * After "gitk" showed the contents of a tag, neither "Reread
-   references" nor "Reload" updated what is shown as the
-   contents of it when the user overwrote the tag with "git tag -f".
+ - David Aguilar and Charles Bailey for taking good care of git-mergeto=
+ol
+   (and Theodore Ts'o for creating it in the first place) and git-difft=
+ool.
 
- * "git log --all-match --grep=3DA --grep=3DB" ought to show commits th=
-at
-   mention both A and B, but when these three options are used with
-   --author or --committer, it showed commits that mention either A or
-   B (or both) instead.
+ - Johannes Schindelin, Johannes Sixt, Erik Faye-Lund, Pat Thoyts and o=
+thers
+   for their effort to move things forward on the Windows front.
 
- * "git p4", when "--use-client-spec" and "--detect-branches" are used
-   together, misdetected branches.
-
- * "git receive-pack" (the counterpart to "git push") did not give
-   progress output while processing objects it received to the puser
-   when run over the smart-http protocol.
-
- * When you misspell the command name you give to the "exec" action in
-   the "git rebase -i" instruction sheet you were told that 'rebase' is=
- not a
-   git subcommand from "git rebase --continue".
-
- * The subcommand in "git remote" to remove a defined remote was
-   "rm" and the command did not take a fully-spelled "remove".
-
- * The interactive prompt that "git send-email" gives was error prone. =
-It
-   asked "What e-mail address do you want to use?" with the address it
-   guessed (correctly) the user would want to use in its prompt,
-   tempting the user to say "y". But the response was taken as "No,
-   please use 'y' as the e-mail address instead", which is most
-   certainly not what the user meant.
-
- * "git show --format=3D'%ci'" did not give the timestamp correctly for
-   commits created without human readable name on the "committer" line.
-
- * "git show --quiet" ought to be a synonym for "git show -s", but
-   wasn't.
-
- * "git submodule frotz" was not diagnosed as "frotz" being an unknown
-   subcommand to "git submodule"; the user instead got a complaint
-   that "git submodule status" was run with an unknown path "frotz".
-
- * "git status" honored the ignore=3Ddirty settings in .gitmodules but
-   "git commit" didn't.
-
-----------------------------------------------------------------
-
-Changes since v1.8.0-rc0 are as follows:
-
-Ammon Riley (1):
-      Make git-svn branch patterns match complete URL
-
-Eric Wong (1):
-      git-svn: use path accessor for Git::SVN objects
-
-Jonathan Nieder (2):
-      Git::SVN: rename private path field
-      git-svn: keep leading slash when canonicalizing paths (fallback c=
-ase)
-
-Junio C Hamano (7):
-      log --grep-reflog: reject the option without -g
-      Start preparing for 1.7.12.3
-      t1450: the order the objects are checked is undefined
-      Update draft release notes to 1.8.0
-      paint_down_to_common(): parse commit before relying on its timest=
-amp
-      Git 1.7.12.3
-      Git 1.8.0-rc1
-
-Linus Torvalds (1):
-      mailinfo: don't require "text" mime type for attachments
-
-Michael J Gruber (1):
-      RelNotes/1.8.0: various typo and style fixes
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-      grep: prepare for new header field filter
-      revision: add --grep-reflog to filter commits by reflog messages
-      revision: make --grep search in notes too if shown
-
-Peter Krefting (1):
-      l10n: Fix to Swedish translation
-
-Ramkumar Ramachandra (1):
-      Documentation: mention `push.default` in git-push.txt
-
-Robert Luberda (1):
-      t9164: Add missing quotes in test
-
-Steven Walter (2):
-      git-svn.perl: consider all ranges for a given merge, instead of o=
-nly tip-by-tip
-      git-svn.perl: keep processing all commits in parents_exclude
-
-Tobias Ulmer (1):
-      silence git gc --auto --quiet output
+ - People on non-Linux platforms for keeping their eyes on portability;
+   especially, Randal Schwartz, Theodore Ts'o, Jason Riedy, Thomas Glan=
+zmann,
+   Brandon Casey, Jeff King, Alex Riesen and countless others.
