@@ -1,70 +1,64 @@
-From: Marcel Partap <mpartap@gmx.net>
-Subject: Git ~unusable on slow lines :,'C
-Date: Mon, 08 Oct 2012 20:27:54 +0200
-Message-ID: <50731B2A.6040104@gmx.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: In search of a version control system
+Date: Mon, 08 Oct 2012 20:30:00 +0200
+Message-ID: <vpqa9vwstp3.fsf@grenoble-inp.fr>
+References: <1349719581.76671.YahooMailNeo@web122505.mail.ne1.yahoo.com>
+	<CALkWK0kCbLxPMbxh=CLAE8UkkNFNqDa1QbtdM_-Q+Qr3SRh46Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 08 20:28:22 2012
+Content-Type: text/plain
+Cc: Maurice Francois <francoismaurice2001@yahoo.ca>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 20:30:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLI3y-0000d5-2X
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 20:28:22 +0200
+	id 1TLI5u-0001bZ-SK
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 20:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754519Ab2JHS2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 14:28:11 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:33540 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754445Ab2JHS2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 14:28:09 -0400
-Received: (qmail invoked by alias); 08 Oct 2012 18:28:07 -0000
-Received: from unknown (EHLO [10.44.199.89]) [82.113.121.89]
-  by mail.gmx.net (mp031) with SMTP; 08 Oct 2012 20:28:07 +0200
-X-Authenticated: #724076
-X-Provags-ID: V01U2FsdGVkX189/nBtwsk92g23TxqNGvFO6qe2Z158LVohCQ9/BF
-	J94ScGZkFQQImS
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
-X-Enigmail-Version: 1.4.1
-X-Y-GMX-Trusted: 0
+	id S1754526Ab2JHSaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 14:30:13 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33546 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752582Ab2JHSaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 14:30:11 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q98INPDN025142
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 8 Oct 2012 20:23:25 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TLI5Y-0001gy-KH; Mon, 08 Oct 2012 20:30:00 +0200
+In-Reply-To: <CALkWK0kCbLxPMbxh=CLAE8UkkNFNqDa1QbtdM_-Q+Qr3SRh46Q@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 8 Oct 2012 23:54:04 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 08 Oct 2012 20:23:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q98INPDN025142
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1350325409.23907@aVkUJ5xvP98Je6McWmVWlw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207258>
 
-Dear Git Devs,
-I love GIT, but since a couple of months I'm on 3G and after my traffic
-limit is transcended, things slow down to a feeble 8KiB/s. Juuuust like
-back then - things moved somewhat slower. And I'm fine with that - as
-long as things just keep moving.
-Unfortunately, git does not scale down very well, so for ten more days I
-will be unable to get the newest commits onto my machine. Which is very,
-very sad :/
-> git fetch --verbose --all 
-> Fetching origin
-> POST git-upload-pack (1023 bytes)
-> POST git-upload-pack (gzip 1123 to 614 bytes)
-> POST git-upload-pack (gzip 1973 to 1030 bytes)
-> POST git-upload-pack (gzip 5173 to 2639 bytes)
-> POST git-upload-pack (gzip 7978 to 4042 bytes)
-> remote: Counting objects: 24504, done.
-> remote: Compressing objects: 100% (10705/10705), done.
-> error: RPC failed; result=56, HTTP code = 200iB | 10 KiB/s       
-> fatal: The remote end hung up unexpectedly
-> fatal: early EOF
-> fatal: index-pack failed
-> error: Could not fetch origin
-Bam, the server kicked me off after taking to long to sync my copy.
-Multiple potential points of action:
-- git fetch should show the total amount of data it is about to transfer!
-- when ab^H^Horting, the cursor should be moved down (tput cud1) to not
-overwrite previous output
-- would be nice to be able to tell git fetch to get the next chunk of
-say 500 commits instead of trying to receive ALL commits, then b0rking
-after umpteen percent on server timeout. Not?
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-#Regards!Marcel c:
+>> So, is it possible to lock a file while someone work on it ?
+>
+> No, and I honestly think it's a bad idea.
+
+If you work on non-mergeable files (e.g. *.doc files. There are merge
+tools for MS Word and LibreOffice, but my experience with them was not
+really pleasant), then file locking is indeed not such a bad idea.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
