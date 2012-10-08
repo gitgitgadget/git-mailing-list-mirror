@@ -1,67 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/10] attr: more matching optimizations from .gitignore
-Date: Mon, 08 Oct 2012 08:50:03 -0700
-Message-ID: <7v391pnetw.fsf@alter.siamese.dyndns.org>
-References: <1349412069-627-1-git-send-email-pclouds@gmail.com>
- <1349412069-627-5-git-send-email-pclouds@gmail.com>
- <7vy5jku549.fsf@alter.siamese.dyndns.org>
- <CACsJy8DhymVp1ncHvtqd4S7TkBDQvNKBf3A0JTft9bX8_-WX_w@mail.gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: build deps
+Date: Mon, 08 Oct 2012 12:09:53 -0400
+Message-ID: <5072FAD1.1000807@gmail.com>
+References: <CACnwZYe_vhH9Ui8W9D=M_8avgEugR+UvM1E+jH7fxr+8yk2UtQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 17:50:29 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 18:10:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLFb8-0003u0-4u
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 17:50:26 +0200
+	id 1TLFuG-0005wH-2j
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 18:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab2JHPuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 11:50:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46047 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753232Ab2JHPuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 11:50:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E8CB879D;
-	Mon,  8 Oct 2012 11:50:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zdHOo++pyiO5JQPl8HJz7Qh23l4=; b=cxUQPz
-	V91IYg4jKT3W7Wf7qmRry5uXwtuxTPSjLxcPDAG+O0nPpTn8UeMSGRIMf5IWDyHv
-	W063y+oZsxKra3S5KfmZMoZQB4MMzLq6KGuNVTigJ/KkYBx8RXyeUydXk5wqj1bx
-	ft7S1buwGFE5Hd2p5bWEjhjNyKYFm5xqylZDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t+HNBkfThQuG1lImIHTGYUDyNIuw8smY
-	Hkf+kO0eulbwz7+9TRO6iMkrHXHjbm15EbHzURCfYagDL88qV4PnWKtd+F8Ms4vF
-	Xysh88GeqjBaXWiZReuoVO//ZUtir1LBOAG8bE+j28m40eKMT4sdYBKDmcgVamgf
-	eT68vdXYJgc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C0DE879C;
-	Mon,  8 Oct 2012 11:50:07 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74C72879B; Mon,  8 Oct 2012
- 11:50:05 -0400 (EDT)
-In-Reply-To: <CACsJy8DhymVp1ncHvtqd4S7TkBDQvNKBf3A0JTft9bX8_-WX_w@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 8 Oct 2012 10:26:35 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D44AA668-115F-11E2-85A6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752628Ab2JHQKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 12:10:01 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:63606 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823Ab2JHQJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 12:09:59 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so9504141iea.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 09:09:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=UkYJkrXR8e5CWpku9oeEL2aHwHL+15LGK8DpmP00SLw=;
+        b=IM2Z03omI1zaBEKu+04KP5DmNGkkZ5OjwRur8KIcyGydEaVB5JQipcp9fV12WVfRW8
+         wuaveQJLLvkv+EtoF8X9+JpxzMKM5eLM4/lk2VT6W8t6J7BggnP6v2xqdapL26OxECHI
+         NCmTIhabq1YQrsZz2X7Y+3s0I8AEY/OrVS9zkBTE3RFdL4Lg1evgUA2BfYNn9NZo2w0l
+         APCJT7nzcFrodzEPAgw2EcRyfID7giirRxRYGybvlSTv2bh1oObxDkcB03Wb9ybvQ9lr
+         M5kY+AvjsQLbL4hQhJTLPxwT5ZpfQ3zc2wL978y0AmA2fOe1PRMAEWTIHnPLF+pNkxbr
+         uLJQ==
+Received: by 10.50.77.230 with SMTP id v6mr6517622igw.11.1349712599256;
+        Mon, 08 Oct 2012 09:09:59 -0700 (PDT)
+Received: from [192.168.1.3] ([69.165.255.59])
+        by mx.google.com with ESMTPS id us4sm7102942igc.9.2012.10.08.09.09.57
+        (version=SSLv3 cipher=OTHER);
+        Mon, 08 Oct 2012 09:09:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.7) Gecko/20121007 Thunderbird/10.0.7
+In-Reply-To: <CACnwZYe_vhH9Ui8W9D=M_8avgEugR+UvM1E+jH7fxr+8yk2UtQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207234>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-
-> My objection is no-op lines are timed bombs. But users can already do
-> "dir attr" (no slashes), which is no-op. So yeah, no-op is fine.
-
-Exactly. If you are not catching and barfing the no-slashed variant
-at the syntax level (and you shouldn't), you shouldn't do so for
-slashed ones.
+On 10/07/12 20:39, Thiago Farina wrote:
+> When trying to build from source but it's failing:
+>
+> $ sudo make prefix=/usr/local all
+>     LINK git-credential-store
+> gcc: @CHARSET_LIB@: No such file or directory
+> make: *** [git-credential-store] Error 1
+Did you run the "configure" script?
+In the source folder, do you have either file "config.mak" or
+"config.mak.autogen" ? If you do, try removing them, and compile again.
+Which version are you compiling? Did you get the source files from tar?
+Or from git?
