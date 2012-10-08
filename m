@@ -1,123 +1,191 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/t5400-send-pack: Use POSIX options to cp for
- portability
-Date: Mon, 08 Oct 2012 10:45:49 -0700
-Message-ID: <7vvcekluwi.fsf@alter.siamese.dyndns.org>
-References: <1349683681-18978-1-git-send-email-bdwalton@gmail.com>
- <7vlifgncq8.fsf@alter.siamese.dyndns.org>
- <7vd30snbtk.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Jan=20H=2E=20Sch=C3=B6nherr?= <schnhrr@cs.tu-berlin.de>
+Subject: [PATCH 1/5] format-patch: do not wrap non-rfc2047 headers too early
+Date: Mon,  8 Oct 2012 19:33:25 +0200
+Message-ID: <1349717609-4770-2-git-send-email-schnhrr@cs.tu-berlin.de>
+References: <1349717609-4770-1-git-send-email-schnhrr@cs.tu-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 19:46:05 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?Jan=20H=2E=20Sch=C3=B6nherr?= <schnhrr@cs.tu-berlin.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 08 19:49:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLHP0-000521-D3
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 19:46:02 +0200
+	id 1TLHSV-0006lz-Cr
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 19:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753698Ab2JHRpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 13:45:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62704 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751185Ab2JHRpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 13:45:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85E428A04;
-	Mon,  8 Oct 2012 13:45:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WMnom+WLK5UMo4TdexAw7KVwn6g=; b=SsrD/M
-	sPf889/saPaQ3ePKGY65LfpaBhYJldxHnvSWOfGli1XpAUQ1PS/LhjMCvHQPsvoY
-	OtAV74uYVO0CDuF6ek9Bt4KHtVwiHo+GOk1iKHJB8N9uoBC+3X7oKoPGz+z40yZP
-	PUeKoqQ5BKUxGDN03QWIjApgRgMpB3KxHC7uA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z3dzXr7mbtlvAw8XuEM/Nid//iMj2lIW
-	9KmwXcVrjaWMYLmFDIRtyPsUa0T5PYr55pC/R11H9OtdUbqZMD/WJHX9PQ5kjtmY
-	Sllybnz9ocgPbcpmCKK0EnMDAQTszPco7Tok37iVM1OwKaFuuYZHG28eVjwNyfL4
-	rU6NV6SHnIM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F76F8A03;
-	Mon,  8 Oct 2012 13:45:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2D4F8A02; Mon,  8 Oct 2012
- 13:45:50 -0400 (EDT)
-In-Reply-To: <7vd30snbtk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 08 Oct 2012 09:55:03 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FFF88DBA-116F-11E2-92FD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754446Ab2JHRt3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2012 13:49:29 -0400
+Received: from mail.eecsit.tu-berlin.de ([130.149.17.13]:48592 "EHLO
+	mail.cs.tu-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600Ab2JHRt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 13:49:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost-12225.cs.tu-berlin.de (Postfix) with ESMTP id D887F7DE6
+	for <git@vger.kernel.org>; Mon,  8 Oct 2012 19:38:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at cs.tu-berlin.de (including SpamAssassin)
+Received: from mailhost.cs.tu-berlin.de ([127.0.0.1])
+	by localhost (mail.cs.tu-berlin.de [127.0.0.1]) (amavisd-new, port 12224)
+	with ESMTP id e87WLtnXiDVo 22723-16;
+	Mon,  8 Oct 2012 19:38:22 +0200 (CEST) 13694
+Received: from asahi.kbs.tu-berlin.de (asahi.kbs.tu-berlin.de [130.149.91.59])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: schnhrr)
+	by mailhost.cs.tu-berlin.de (Postfix) with ESMTPSA;
+	Mon,  8 Oct 2012 19:38:22 +0200 (CEST)
+X-Mailer: git-send-email 1.7.12
+In-Reply-To: <1349717609-4770-1-git-send-email-schnhrr@cs.tu-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207249>
 
-Junio C Hamano <gitster@pobox.com> writes:
+=46rom: Jan H. Sch=C3=B6nherr <schnhrr@cs.tu-berlin.de>
 
->> Thanks, but is "-p" essential for this test to pass, or can we get
->> away with just "-R"?
->
-> Besides, when you spot a potential problem, please ask "git grep"
-> to catch them all.
+Do not wrap the second and later lines of an ASCII header substantially
+before the 78 character limit.
 
-In other words, how about doing this instead?
-
--- >8 --
-Subject: tests: "cp -a" is a GNUism
-
-These tests just wants a bit-for-bit identical copy; they do not
-need -H (there is no symbolic link involved) nor -p (there is no
-funny permission or ownership issues involved).  Just use "cp -R"
-instead.
+Signed-off-by: Jan H. Sch=C3=B6nherr <schnhrr@cs.tu-berlin.de>
 ---
- t/t5400-send-pack.sh      | 2 +-
- t/t5550-http-fetch.sh     | 2 +-
- t/t5800-remote-helpers.sh | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ pretty.c                |  2 +-
+ t/t4014-format-patch.sh | 60 ++++++++++++++++++++++++++++-------------=
+--------
+ 2 Dateien ge=C3=A4ndert, 35 Zeilen hinzugef=C3=BCgt(+), 27 Zeilen entf=
+ernt(-)
 
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 250c720..418f515 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -159,7 +159,7 @@ test_expect_success 'receive-pack runs auto-gc in remote repo' '
- 	    git commit -a -m "Second commit" &&
- 	    git repack
- 	) &&
--	cp -a parent child &&
-+	cp -R parent child &&
- 	(
- 	    # Set the child to auto-pack if more than one pack exists
- 	    cd child &&
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index 16ef041..80d20c8 100755
---- a/t/t5550-http-fetch.sh
-+++ b/t/t5550-http-fetch.sh
-@@ -22,7 +22,7 @@ test_expect_success 'setup repository' '
- '
- 
- test_expect_success 'create http-accessible bare repository with loose objects' '
--	cp -a .git "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	cp -R .git "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	 git config core.bare true &&
- 	 mkdir -p hooks &&
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index 5702334..e7dc668 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -76,7 +76,7 @@ test_expect_success 'pushing to local repo' '
- # git-remote-testgit, but is too slow to leave in for general use.
- : test_expect_success 'racily pushing to local repo' '
- 	test_when_finished "rm -rf server2 localclone2" &&
--	cp -a server server2 &&
-+	cp -R server server2 &&
- 	git clone "testgit::${PWD}/server2" localclone2 &&
- 	(cd localclone2 &&
+diff --git a/pretty.c b/pretty.c
+index 8b1ea9f..f5caecb 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -286,7 +286,7 @@ static void add_rfc2047(struct strbuf *sb, const ch=
+ar *line, int len,
+ 		if ((i + 1 < len) && (ch =3D=3D '=3D' && line[i+1] =3D=3D '?'))
+ 			goto needquote;
+ 	}
+-	strbuf_add_wrapped_bytes(sb, line, len, 0, 1, max_length - line_len);
++	strbuf_add_wrapped_bytes(sb, line, len, -line_len, 1, max_length+1);
+ 	return;
+=20
+ needquote:
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 959aa26..d66e358 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -752,16 +752,14 @@ M64=3D$M8$M8$M8$M8$M8$M8$M8$M8
+ M512=3D$M64$M64$M64$M64$M64$M64$M64$M64
+ cat >expect <<'EOF'
+ Subject: [PATCH] foo bar foo bar foo bar foo bar foo bar foo bar foo b=
+ar foo
+- bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar
+- foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo
+- bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar
+- foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo
+- bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar
+- foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo
+- bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar
+- foo bar foo bar foo bar foo bar
++ bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar f=
+oo bar
++ foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo b=
+ar foo
++ bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar f=
+oo bar
++ foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo b=
+ar foo
++ bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar f=
+oo bar
++ foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo b=
+ar
+ EOF
+-test_expect_success 'format-patch wraps extremely long headers (ascii)=
+' '
++test_expect_success 'format-patch wraps extremely long subject (ascii)=
+' '
  	echo content >>file &&
--- 
-1.8.0.rc0.95.g9b3a052
+ 	git add file &&
+ 	git commit -m "$M512" &&
+@@ -807,28 +805,12 @@ test_expect_success 'format-patch wraps extremely=
+ long headers (rfc2047)' '
+ 	test_cmp expect subject
+ '
+=20
+-M8=3D"foo_bar_"
+-M64=3D$M8$M8$M8$M8$M8$M8$M8$M8
+-cat >expect <<EOF
+-From: $M64
+- <foobar@foo.bar>
+-EOF
+-test_expect_success 'format-patch wraps non-quotable headers' '
+-	rm -rf patches/ &&
+-	echo content >>file &&
+-	git add file &&
+-	git commit -mfoo --author "$M64 <foobar@foo.bar>" &&
+-	git format-patch --stdout -1 >patch &&
+-	sed -n "/^From: /p; /^ /p; /^$/q" <patch >from &&
+-	test_cmp expect from
+-'
+-
+ check_author() {
+ 	echo content >>file &&
+ 	git add file &&
+ 	GIT_AUTHOR_NAME=3D$1 git commit -m author-check &&
+ 	git format-patch --stdout -1 >patch &&
+-	grep ^From: patch >actual &&
++	sed -n "/^From: /p; /^ /p; /^$/q" <patch >actual &&
+ 	test_cmp expect actual
+ }
+=20
+@@ -853,6 +835,32 @@ test_expect_success 'rfc2047-encoded headers also =
+double-quote 822 specials' '
+ 	check_author "F=C3=B6o B. Bar"
+ '
+=20
++cat >expect <<EOF
++From: foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_
++ <author@example.com>
++EOF
++test_expect_success 'format-patch wraps moderately long from-header (a=
+scii)' '
++	check_author "foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar=
+_foo_bar_"
++'
++
++cat >expect <<'EOF'
++From: Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar =
+=46oo Bar
++ Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo B=
+ar Foo
++ Bar Foo Bar Foo Bar Foo Bar <author@example.com>
++EOF
++test_expect_success 'format-patch wraps extremely long from-header (as=
+cii)' '
++	check_author "Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar=
+ Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Ba=
+r Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar"
++'
++
++cat >expect <<'EOF'
++From: "Foo.Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar=
+ Foo Bar
++ Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo B=
+ar Foo
++ Bar Foo Bar Foo Bar Foo Bar" <author@example.com>
++EOF
++test_expect_success 'format-patch wraps extremely long from-header (rf=
+c822)' '
++	check_author "Foo.Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar=
+ Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Ba=
+r Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar"
++'
++
+ cat >expect <<'EOF'
+ Subject: header with . in it
+ EOF
+--=20
+1.7.12
