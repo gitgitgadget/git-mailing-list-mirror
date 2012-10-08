@@ -1,85 +1,85 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCH] MALLOC_CHECK: Allow checking to be disabled from config.mak
-Date: Mon, 8 Oct 2012 15:19:45 +0200
-Message-ID: <CA+EOSBnKqkQ_nLyEKzxsMYnB04X9ABMp3P3CuDy3ohfcoEbQtA@mail.gmail.com>
-References: <50706B54.8090004@ramsay1.demon.co.uk>
-	<7vbogfquc8.fsf@alter.siamese.dyndns.org>
+From: Simon Oosthoek <soosthoek@nieuwland.nl>
+Subject: Re: [PATCH] Add __git_ps1_pc to use as PROMPT_COMMAND
+Date: Mon, 08 Oct 2012 17:00:39 +0200
+Message-ID: <5072EA97.3060503@nieuwland.nl>
+References: <5064140E.50007@drmicha.warpmail.net> <50658C9B.6030809@nieuwland.nl> <7vipaym3ks.fsf@alter.siamese.dyndns.org> <50695ECE.5010101@nieuwland.nl> <7v626udse6.fsf@alter.siamese.dyndns.org> <7v4nmec8fi.fsf@alter.siamese.dyndns.org> <5069EE8D.6050200@nieuwland.nl> <7vr4piaryi.fsf@alter.siamese.dyndns.org> <506A0366.6030009@xs4all.nl> <7va9w5c31w.fsf@alter.siamese.dyndns.org> <506A99DE.7080503@drmicha.warpmail.net> <7vhaqcajvt.fsf@alter.siamese.dyndns.org> <506B4598.1020206@xs4all.nl> <7v8vbo7hmd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	schwab@linux-m68k.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 15:20:25 2012
+X-From: git-owner@vger.kernel.org Mon Oct 08 17:01:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLDFv-0002lZ-LU
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 15:20:23 +0200
+	id 1TLEpQ-0003HR-G3
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 17:01:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753814Ab2JHNTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 09:19:55 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:62529 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753567Ab2JHNTq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 09:19:46 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so9018643iea.19
-        for <git@vger.kernel.org>; Mon, 08 Oct 2012 06:19:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7ZySLjN1ROJAq15qHBpUbx8Bg5M1qs38ee5DBGIvg2o=;
-        b=xQ3xEWAi2yi2fLojqALn7NAalAHtf2BHpAYMHdoI/PJ+7Z+lsHKdxxJCd530fKj/kb
-         +Kcn5aLXb67D+tSMUUkuI143whxLZR1Thkm7mqNHUNkUfb3Bjq9H3JuhTc/Y01GhLJnQ
-         VkMU7X3ZFBuQQgkM5xBQPHt1xVoGtdXScBuK8R2Rxb55PkdpwpdLupmWBYlv1IS4snAi
-         9OA/doBK4+e6GxYAY/Si6eOt//HoEZe+b75bcAfn1RMTuW12FthiSz0AjqvEqN7uxKO7
-         Uri8c2XLil8xH6q2GPyKnjmut6eAU1g0Bfxj/2JRaEa9Xo2egaC5lOSWsMMpFlSY0SmR
-         7X1g==
-Received: by 10.50.7.135 with SMTP id j7mr8080091iga.34.1349702385560; Mon, 08
- Oct 2012 06:19:45 -0700 (PDT)
-Received: by 10.64.58.135 with HTTP; Mon, 8 Oct 2012 06:19:45 -0700 (PDT)
-In-Reply-To: <7vbogfquc8.fsf@alter.siamese.dyndns.org>
+	id S1753506Ab2JHPA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 11:00:59 -0400
+Received: from mail.nieuwland.nl ([87.251.35.136]:34946 "HELO nieuwland.nl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1750841Ab2JHPA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 11:00:57 -0400
+Received: (qmail 15347 invoked by uid 453); 8 Oct 2012 15:00:49 -0000
+X-Virus-Checked: Checked by ClamAV on nieuwland.nl
+Received: from Unknown (HELO [192.168.216.232]) (192.168.216.232)
+  (smtp-auth username soosthoek, mechanism plain)
+  by nieuwland.nl (qpsmtpd/0.83) with (AES256-SHA encrypted) ESMTPSA; Mon, 08 Oct 2012 17:00:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
+In-Reply-To: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207230>
 
-2012/10/6 Junio C Hamano <gitster@pobox.com>:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
->
->> The malloc checks can be disabled using the TEST_NO_MALLOC_CHECK
->> variable, either from the environment or command line of an
->> 'make test' invocation. In order to allow the malloc checks to be
->> disabled from the 'config.mak' file, we add TEST_NO_MALLOC_CHECK
->> to the environment using an export directive.
->
-> We would want to encourage people to test with cheap but effective
-> checks when available.  I do not see "malloc: using debugging hooks"
-> message anywhere when I run tests, but if you do, I'd rather see us
-> check if we can tell glibc to stop doing so first without disabling
-> the whole test.  Your patch feels like the first step to a slipperly
-> slope whose destination would make us say "we get too many messages
-> so let's do nothing in "make test" with this configuration." when
-> taken to the extreme, and obviously we would not want to go there
-> ;-).
->
-> Elia, you brought the MALLOC_CHECK_ up.  Did you hear about this
-> issue elsewhere before, and if you did, do you know how other
-> projects solves it?
-Ok. I have found. For me this is not a problem any more these days.
-Was fixed in glibc 2.8.90-9 2008
+Hi Junio
 
-* Wed Jul 16 2008 Jakub Jelinek <jakub@redhat.com> 2.8.90-9
-- update from trunk
-  - fix unbuffered vfprintf if writing to the stream fails (#455360)
-  - remove useless "malloc: using debugging hooks" message (#455355)
-  - nscd fixes
-(from glibc rpm changelog)
+I hope you found my patches, if not, I'll try to send them out again. 
+(Unfortunately my current mail setup is a mess and I need time to figure 
+out what to fix...)
 
-This is the bugzilla filled and closed
-https://bugzilla.redhat.com/show_bug.cgi?id=455355
+As for the zsh support, I found out a little bit more.
+ZSH doesn't have a variable like PROMPT_COMMAND in bash. The precmd name 
+is a function the user has to define herself to have it called before 
+the prompt is shown. Functionally this is almost, but not quite, the 
+same as PROMPT_COMMAND. The subtle difference is that with 
+PROMPT_COMMAND you can use parameters to customize the prompt, so in 
+bash you can say:
 
-Ramsay, what version of glibc you have and in what distro? thanks
+PROMPT_COMMAND="__git_ps1 '\u@\[\e[1;34m\]\h\[\e[0m\]:\w' '\\\$ '"
+
+where in zsh, if you want the status in the prompt, you can either use 
+$(__git_ps1 "(%s)") or something like it in setting the PS1 (and forget 
+about the color hints!) or you can copy the __git_ps1 function and 
+modify and rename it as precmd to set PS1 via that function. Obviously 
+it is probably even more complicated, but I'd have to try it to be certain.
+
+An alternative way might be to set special variables from __git_set_vars 
+function which may be used in a custom precmd to set the prompt.
+
+e.g. say __git_set_vars sets __GIT_VAR_STATE=dirty|stage|clean
+
+in precmd you could do
+case $__GIT_VAR_STATE in
+(dirty) PS1="$PS1 files modified in __GIT_VAR_BRANCHNAME"
+;;
+(stage) PS1="$PS1 files staged in __GIT_VAR_BRANCHNAME"
+;;
+(clean) PS1="$PS1 __GIT_VAR_BRANCHNAME clean"
+;;
+esac
+
+(more or less of course)..
+
+In that way it would be possible to add the colors relatively easily 
+based on the state of the tree in a custom precmd function of zsh.
+
+/Simon
