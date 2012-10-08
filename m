@@ -1,106 +1,67 @@
-From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-Subject: Re: Fw: How do I git-push to an FTP server?
-Date: Mon, 08 Oct 2012 08:39:13 -0700
-Message-ID: <7v7gr1nfby.fsf@alter.siamese.dyndns.org>
-References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
- <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
- <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
- <7vwqz4si87.fsf@alter.siamese.dyndns.org>
- <CALkWK0kXH-U0mTeFtiMq7tqCOpNJT1A7Z==GxOphe-sGdmxRRg@mail.gmail.com>
- <20121007172754.GA29560@elie.Belkin>
- <7vvcemovrh.fsf@alter.siamese.dyndns.org>
- <CALkWK0nSxBsiE5_BZ67dPrwDRQSipL0LBR9Pf252iqL21HwZBA@mail.gmail.com>
- <20121008080208.GC19733@elie.Belkin>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 04/10] attr: more matching optimizations from .gitignore
+Date: Mon, 08 Oct 2012 08:50:03 -0700
+Message-ID: <7v391pnetw.fsf@alter.siamese.dyndns.org>
+References: <1349412069-627-1-git-send-email-pclouds@gmail.com>
+ <1349412069-627-5-git-send-email-pclouds@gmail.com>
+ <7vy5jku549.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DhymVp1ncHvtqd4S7TkBDQvNKBf3A0JTft9bX8_-WX_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramkumar Ramachandra <artagnon-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Thomas Ferris Nicolaisen
- <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, 
- Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>,  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, 
- git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,  August Karlstrom <fusionfile-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Sverre
- Rabbelier <srabbelier-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-To: Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-X-From: git-users+bncBCG77UMM3EJRBJHHZOBQKGQETUSMRGI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Oct 08 17:39:27 2012
-Return-path: <git-users+bncBCG77UMM3EJRBJHHZOBQKGQETUSMRGI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-qa0-f58.google.com ([209.85.216.58])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 17:50:29 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncBCG77UMM3EJRBJHHZOBQKGQETUSMRGI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1TLFQR-0006MV-DZ
-	for gcggu-git-users@m.gmane.org; Mon, 08 Oct 2012 17:39:23 +0200
-Received: by mail-qa0-f58.google.com with SMTP id n12sf2667367qat.3
-        for <gcggu-git-users@m.gmane.org>; Mon, 08 Oct 2012 08:39:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
-         :x-original-sender:x-original-authentication-results:reply-to
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=JEZyAG0hlQOazFzmK/wbwz29czPiYJmm7QhR4etjiYk=;
-        b=El6ltJ4mTDm2OsCIqhbnf5em9kS5X5xZOUuJEmHKhWmu5hMxi3D5cPVcrcXuVSkez7
-         Z50hG7YGB+B+njQ0fmLjaXVmadC2OioMLETOoORpuiqPxjs0ByeMehsDCFb8iKMv9ok6
-         hkKroawBsY8TJ4nCRjeGgRt/CFmgOHBBXoSjF+ZtxT6kS3gZreLwuQkvoRC+O2YNLZ40
-         oP+jz1oFRV2e+gNI0KyEcUEyDqXrn8NFDdajQpba7kkqd4SXyIs7koSxH5L2drFesDnC
-         zaZZQi4qSUyY4WyeIAvXOsbewM3U3MNbm01ABn/zwKNEdJ5p 
-Received: by 10.229.102.143 with SMTP id g15mr871943qco.14.1349710756905;
-        Mon, 08 Oct 2012 08:39:16 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.224.188.14 with SMTP id cy14ls7726589qab.8.gmail; Mon, 08 Oct
- 2012 08:39:16 -0700 (PDT)
-Received: by 10.224.117.143 with SMTP id r15mr12890076qaq.1.1349710756416;
-        Mon, 08 Oct 2012 08:39:16 -0700 (PDT)
-Received: by 10.224.117.143 with SMTP id r15mr12890075qaq.1.1349710756405;
-        Mon, 08 Oct 2012 08:39:16 -0700 (PDT)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id a27si3708222qck.3.2012.10.08.08.39.16;
-        Mon, 08 Oct 2012 08:39:16 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TLFb8-0003u0-4u
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 17:50:26 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753529Ab2JHPuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 11:50:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46047 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753232Ab2JHPuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 11:50:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED8B38411;
-	Mon,  8 Oct 2012 11:39:15 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E8CB879D;
+	Mon,  8 Oct 2012 11:50:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zdHOo++pyiO5JQPl8HJz7Qh23l4=; b=cxUQPz
+	V91IYg4jKT3W7Wf7qmRry5uXwtuxTPSjLxcPDAG+O0nPpTn8UeMSGRIMf5IWDyHv
+	W063y+oZsxKra3S5KfmZMoZQB4MMzLq6KGuNVTigJ/KkYBx8RXyeUydXk5wqj1bx
+	ft7S1buwGFE5Hd2p5bWEjhjNyKYFm5xqylZDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t+HNBkfThQuG1lImIHTGYUDyNIuw8smY
+	Hkf+kO0eulbwz7+9TRO6iMkrHXHjbm15EbHzURCfYagDL88qV4PnWKtd+F8Ms4vF
+	Xysh88GeqjBaXWiZReuoVO//ZUtir1LBOAG8bE+j28m40eKMT4sdYBKDmcgVamgf
+	eT68vdXYJgc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA8E1840F;
-	Mon,  8 Oct 2012 11:39:15 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C0DE879C;
+	Mon,  8 Oct 2012 11:50:07 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FCB2840E; Mon,  8 Oct 2012
- 11:39:15 -0400 (EDT)
-In-Reply-To: <20121008080208.GC19733-fcEM2ccDkbL2nhBuCrrZHw@public.gmane.org> (Jonathan Nieder's message
- of "Mon, 8 Oct 2012 01:02:08 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74C72879B; Mon,  8 Oct 2012
+ 11:50:05 -0400 (EDT)
+In-Reply-To: <CACsJy8DhymVp1ncHvtqd4S7TkBDQvNKBf3A0JTft9bX8_-WX_w@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Mon, 8 Oct 2012 10:26:35 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50BB9C7C-115E-11E2-B00D-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates
- 208.72.237.35 as permitted sender) smtp.mail=junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org;
- dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207232>
+X-Pobox-Relay-ID: D44AA668-115F-11E2-85A6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207233>
 
-Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> I'd suggest dropping ", and will soon be removed." or replacing it
-> with ". Don't use them." to avoid the question of how soon "soon" is.
->
-> With that change and with a clearer commit message, this will probably
-> be good to go imho.
+> My objection is no-op lines are timed bombs. But users can already do
+> "dir attr" (no slashes), which is no-op. So yeah, no-op is fine.
 
-Yup; thanks.
-
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+Exactly. If you are not catching and barfing the no-slashed variant
+at the syntax level (and you shouldn't), you shouldn't do so for
+slashed ones.
