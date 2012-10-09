@@ -1,95 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH nd/attr-match-optim-more 2/2] attr: more matching
- optimizations from .gitignore
-Date: Mon, 08 Oct 2012 23:47:26 -0700
-Message-ID: <7vvcekgn0h.fsf@alter.siamese.dyndns.org>
-References: <1349749445-25397-1-git-send-email-pclouds@gmail.com>
- <1349749445-25397-2-git-send-email-pclouds@gmail.com>
- <7vd30si665.fsf@alter.siamese.dyndns.org> <5073BFDE.60707@viscovery.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] submodule: teach "foreach" command a --revision
+ <tree-ish> option
+Date: Tue, 9 Oct 2012 02:50:10 -0400
+Message-ID: <CAG+J_Dw1iXJfgkmA2V-L11xCOOxO57U4Dh7=h7AzkFUqLc55=w@mail.gmail.com>
+References: <1349743810-10753-1-git-send-email-jaysoffian@gmail.com>
+	<7v8vbgi3yz.fsf@alter.siamese.dyndns.org>
+	<7v4nm4i37u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Oct 09 08:47:42 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 08:50:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLTbR-0000So-Qu
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 08:47:42 +0200
+	id 1TLTe2-0001c2-CQ
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 08:50:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752363Ab2JIGrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 02:47:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42664 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751089Ab2JIGra (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 02:47:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3D725A79;
-	Tue,  9 Oct 2012 02:47:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=47sRoGMG6B+On8529BfysxEKMsY=; b=OU5+JG
-	73h2a8fqu3jhWUceq853IrG3UN21KHUlyJVh7hCi6tD3KWCYgvK5SN1Juc1lFYvh
-	vlLaZBGWNez5bJUjF7ciKyzvNskPgwV42OsP8LV1mmdk/WbSHWAoMbi8oyiAfCSb
-	B1jJMbJ5xWLYBTW8XVytJIAFFpf1wIJuIYCso=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u3LDwy/jrYLWfnEf/rQzOwoXi4xCFKUZ
-	Hj2QJjchWe8mf810GnO0HmPTlm3/vYyFgmmfgaXrPQp4i9gYuPaOcGIced/RbkaQ
-	o3dcMfoxUQy5hPSE780eI8/R1RO4wOeyDrUpuxYtVC3A/vQgSRTSPErhj50S0caE
-	ApLqIoEi9u8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D14A55A78;
-	Tue,  9 Oct 2012 02:47:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5044B5A77; Tue,  9 Oct 2012
- 02:47:29 -0400 (EDT)
-In-Reply-To: <5073BFDE.60707@viscovery.net> (Johannes Sixt's message of "Tue,
- 09 Oct 2012 08:10:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 31AC7EDA-11DD-11E2-BE3F-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752216Ab2JIGuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 02:50:12 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:48686 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089Ab2JIGuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 02:50:11 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so4718526oag.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 23:50:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=6rUyTD7RJQdK36ZT6A4PAhfn81hvrZm/CQy2/W9ceO0=;
+        b=Ff8cRS7n8sjTIJiq45ybnQJh7UVn8/BVzIQHP0YxA/hXfUQuKq2OJL8H85gzq/IG8F
+         zLE85CSw36pWsxXQTzcsx3lgtc2ZDxrX3MZrOPDkkAL0OtZWy+6z9HrBK7yWCkiLt7jj
+         BhWG6FfU5ec8wwnS/HwIUpFAuSRmIwg3iBzJ+QVWzYa0+I2VytP0tvuC9ZMUN8IEPENs
+         ND6W1V2GobJVbpMFwwgFiPGlRE0PxJo0QWjc4EgoepIZNqGlAff/TGSEL8XmAAcu+hLA
+         qfFtPl21XXgtj2enoi9Z2GGyqihS9kyMZdqEHn1yPPGFs191w0rhyTBsIlVcQj9aQvkR
+         G+/A==
+Received: by 10.182.174.66 with SMTP id bq2mr2060128obc.101.1349765410670;
+ Mon, 08 Oct 2012 23:50:10 -0700 (PDT)
+Received: by 10.60.54.169 with HTTP; Mon, 8 Oct 2012 23:50:10 -0700 (PDT)
+In-Reply-To: <7v4nm4i37u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207305>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Tue, Oct 9, 2012 at 2:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Assuming that the above guess is correct (which is a huge
+>> assumption, given the lack of clarity in the description), I think
+>> the feature might make sense.  The example would have been a lot
+>> easier to follow if it were something like this:
+>>
+>>     $ git submodule foreach --revision v1.0 'git grep -e frotz $sha1'
+>
+> Imagine you have a checkout of v2.0 of the superproject in your
+> working tree, and you run "git submodule foreach --revision v1.0".
+> Further imagine a submodule S that used to exist back when the
+> superproject was at v1.0 no longer exists in the current codebase
+> (hence there is no such submodule in the working tree).
+>
+> Shouldn't the above "foreach ... grep" still try to find 'frotz' in
+> the submodule S that was bound to v1.0 of the superproject?
+>
+> Given that your patch does not touch the part of cmd_foreach where
+> it decides which submodule to descend into, it still will base its
+> decision solely on the set of submodules that are bound to and have
+> been "git submodule init"ed in the version of the superproject that
+> is _currently_ checked out, no?
 
-> Am 10/9/2012 7:08, schrieb Junio C Hamano:
->> Imagine if we allowed only one attribute per line, instead of
->> multiple attributes on one line.
->>     
->>  - If you want to unset the attribute, you would write "path -attr".
->> 
->>  - If you want to reset the attribute to unspecified, you would
->>    write "path !attr".
->> 
->> Both are used in conjunction with some other (typically more
->> generic) pattern that sets, sets to a value, and/or unsets the
->> attribute, to countermand its effect.
->> 
->> If you were to allow "!path attr", what does it mean?  It obviously
->> is not about setting the attr to true or to a string value, but is
->> it countermanding an earlier set and telling us to unset the attr,
->> or make the attr unspecified?
->
-> If I have at the toplevel:
->
->   *.txt  whitespace=tabwidth=4
->
-> and in a subdirectory
->
->   *.txt  whitespace=tabwidth=8
->   !README.txt
->
-> it could be interpreted as "do not apply *.txt to REAME.txt in this
-> subdirectory". That is, it does not countermand some _particular_
-> attribute setting, but says "use the attributes collected elsewhere".
+That's a good observation. My use-case for this (poorly explained in
+the commit message) is as part of a release process, where I wish to
+apply corresponding tags to the superproject and its submodules like
+so:
 
-It makes it unclear what "elsewhere" means, though (besides, it does
-not match the way the matching logic works at all).
+$ cd /path/to/superproject
+$ git tag -m "1.0" v1.0 deadbeef
+$ git submodule foreach --revision deadbeef \
+  'git tag -m "superproject 1.0" superproject-1.0 $sha1'
+
+Typically deadbeef may be a day or two behind HEAD and it's nice to be
+able to tag it and the submodules w/o having to switch everything to a
+detached HEAD. In my case, tagging and updating submodule revisions
+are somewhat common, while adding/removing submodules is a rare event.
+
+I didn't mention this issue explicitly because I thought it was
+covered by the existing documentation: "Any submodules defined in the
+superproject but not checked out are ignored by this command."
+
+As you previously stated, I need to improve the documentation that
+goes along with this patch, so I'll call-out this limitation. I'm not
+sure what else can be done. You can't descend into a submodule that
+isn't there.
+
+j.
