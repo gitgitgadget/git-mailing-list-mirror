@@ -1,186 +1,96 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] submodule: teach "foreach" command a --revision <tree-ish> option
-Date: Mon,  8 Oct 2012 20:50:10 -0400
-Message-ID: <1349743810-10753-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 02:50:40 2012
+From: cmn@elego.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
+Subject: Re: Git ~unusable on slow lines :,'C
+Date: Tue, 09 Oct 2012 03:49:36 +0200
+Message-ID: <87lifgct3j.fsf@centaur.cmartin.tk>
+References: <50731B2A.6040104@gmx.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Marcel Partap <mpartap@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Oct 09 03:49:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLO1q-0005EC-21
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 02:50:34 +0200
+	id 1TLOx2-00052E-DS
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 03:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755284Ab2JIAuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 20:50:24 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:64403 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755183Ab2JIAuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 20:50:23 -0400
-Received: by mail-gh0-f174.google.com with SMTP id g15so1356562ghb.19
-        for <git@vger.kernel.org>; Mon, 08 Oct 2012 17:50:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=yMDHENnsHPUYD7U6gH8V6hJV6ZGrNzgS1zsUgmE5T1s=;
-        b=DOx/tGNUjLCvhGnH1PlAA9CRz2V8dfGya+x+WjAvfX4EKYHtLkHchl5G+VntsSvoGD
-         HNYs1KtPtVAzRDkValJJ+TD4rK+hausZ0M+3KdMknRKSSAQKYMKTRi7Dqs4SmYDnHnUG
-         HWuk5FREpNhjZeHRyYdxA78Aj2IVU76tg7eqdGY/x01eb7DmKjeDLym+uZIwnb9vDXiy
-         u6GLy1BqNT0vJYRUsDNoou6Q6IgsXqaSabqmGwBNZ5yfw1/oSoz4nlwNkTx64bhJumvR
-         8LxaDVtX8eZJNMQSqpbkIJK8XmuC0FX8c3ruDOR4JEG5iVqUOSrSBABfkMvuiJCbXwyQ
-         7VkA==
-Received: by 10.236.182.197 with SMTP id o45mr18052457yhm.23.1349743822358;
-        Mon, 08 Oct 2012 17:50:22 -0700 (PDT)
-Received: from localhost (cpe-174-097-217-221.nc.res.rr.com. [174.97.217.221])
-        by mx.google.com with ESMTPS id i20sm1579710ank.17.2012.10.08.17.50.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 08 Oct 2012 17:50:21 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.2
+	id S1751072Ab2JIBta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 21:49:30 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:52590 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750883Ab2JIBt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 21:49:29 -0400
+Received: from cmartin.tk (unknown [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4])
+	by hessy.dwim.me (Postfix) with ESMTPA id 66F7280014;
+	Tue,  9 Oct 2012 03:49:26 +0200 (CEST)
+Received: (nullmailer pid 10929 invoked by uid 1000);
+	Tue, 09 Oct 2012 01:49:36 -0000
+In-Reply-To: <50731B2A.6040104@gmx.net> (Marcel Partap's message of "Mon, 08
+	Oct 2012 20:27:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207282>
 
-Teach "git submodule foreach" a --revision <tree-ish> option. This
-is useful in combination with $sha1 to perform git commands that
-take a revision argument. For example:
+Marcel Partap <mpartap@gmx.net> writes:
 
-  $ git submodule foreach --revision v1.0 'git tag v1.0 $sha1'
+> Dear Git Devs,
+> I love GIT, but since a couple of months I'm on 3G and after my traffic
+> limit is transcended, things slow down to a feeble 8KiB/s. Juuuust like
+> back then - things moved somewhat slower. And I'm fine with that - as
+> long as things just keep moving.
+> Unfortunately, git does not scale down very well, so for ten more days I
+> will be unable to get the newest commits onto my machine. Which is very,
+> very sad :/
+>> git fetch --verbose --all 
+>> Fetching origin
+>> POST git-upload-pack (1023 bytes)
+>> POST git-upload-pack (gzip 1123 to 614 bytes)
+>> POST git-upload-pack (gzip 1973 to 1030 bytes)
+>> POST git-upload-pack (gzip 5173 to 2639 bytes)
+>> POST git-upload-pack (gzip 7978 to 4042 bytes)
+>> remote: Counting objects: 24504, done.
+>> remote: Compressing objects: 100% (10705/10705), done.
+>> error: RPC failed; result=56, HTTP code = 200iB | 10 KiB/s       
+>> fatal: The remote end hung up unexpectedly
+>> fatal: early EOF
+>> fatal: index-pack failed
+>> error: Could not fetch origin
+> Bam, the server kicked me off after taking to long to sync my copy.
 
-Previously, this would have required multiple steps:
+This is unrelated to git. The HTTP server's configuration is too
+impatient.
 
-  $ git checkout v1.0
-  $ git submodule update
-  $ git submodule foreach 'git tag v1.0'
+> Multiple potential points of action:
+> - git fetch should show the total amount of data it is about to
+> transfer!
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- Documentation/git-submodule.txt |  7 ++++++-
- git-submodule.sh                | 27 ++++++++++++++++++++++++---
- t/t7407-submodule-foreach.sh    | 15 +++++++++++++++
- 3 files changed, 45 insertions(+), 4 deletions(-)
+It can't, because it doesn't know.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index b4683bba1b..6c889f5fd6 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -17,7 +17,8 @@ SYNOPSIS
- 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
- 	      [commit] [--] [<path>...]
--'git submodule' [--quiet] foreach [--recursive] <command>
-+'git submodule' [--quiet] foreach [--recursive] [--revision <tree-ish>]
-+	      <command>
- 'git submodule' [--quiet] sync [--] [<path>...]
- 
- 
-@@ -180,6 +181,10 @@ foreach::
- 	of each submodule before evaluating the command.
- 	If `--recursive` is given, submodules are traversed recursively (i.e.
- 	the given shell command is evaluated in nested submodules as well).
-+	If `--revision <tree-ish>` is given, submodules are traversed starting
-+	at the given <tree-ish>. Though this does not alter the submodule check
-+	outs, it may be combined with $sha1 to perform git commands that can
-+	operate	on a particular commit, such as linkgit:git-tag[1].
- 	A non-zero return from the command in any submodule causes
- 	the processing to terminate. This can be overridden by adding '|| :'
- 	to the end of the command.
-diff --git a/git-submodule.sh b/git-submodule.sh
-index ab6b1107b6..5e7458e155 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -10,7 +10,7 @@ USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <r
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
--   or: $dashless [--quiet] foreach [--recursive] <command>
-+   or: $dashless [--quiet] foreach [--recursive] [--revision <tree-ish>] <command>
-    or: $dashless [--quiet] sync [--] [<path>...]"
- OPTIONS_SPEC=
- . git-sh-setup
-@@ -379,6 +379,7 @@ Use -f if you really want to add it." >&2
- cmd_foreach()
- {
- 	# parse $args after "submodule ... foreach".
-+	revision=
- 	while test $# -ne 0
- 	do
- 		case "$1" in
-@@ -388,6 +389,11 @@ cmd_foreach()
- 		--recursive)
- 			recursive=1
- 			;;
-+		--revision)
-+			git rev-parse --quiet --verify "$2" >/dev/null || usage
-+			revision=$2
-+			shift
-+			;;
- 		-*)
- 			usage
- 			;;
-@@ -404,7 +410,17 @@ cmd_foreach()
- 	# command in the subshell (and a recursive call to this function)
- 	exec 3<&0
- 
--	module_list |
-+	if test -n "$revision"
-+	then
-+		# make ls-tree output look like ls-files output
-+		git ls-tree -r $revision | grep '^160000 ' |
-+		while read mode unused sha1 sm_path
-+		do
-+			echo "$mode $sha1 0 $sm_path"
-+		done
-+	else
-+		module_list
-+	fi |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -421,7 +437,12 @@ cmd_foreach()
- 				eval "$@" &&
- 				if test -n "$recursive"
- 				then
--					cmd_foreach "--recursive" "$@"
-+					if test -n "$revision"
-+					then
-+						cmd_foreach "--recursive" "--revision" "$sha1" "$@"
-+					else
-+						cmd_foreach "--recursive" "$@"
-+					fi
- 				fi
- 			) <&3 3<&- ||
- 			die "$(eval_gettext "Stopping at '\$sm_path'; script returned non-zero status.")"
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-index 9b69fe2e14..5c798b901b 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -179,6 +179,21 @@ test_expect_success 'test "foreach --quiet --recursive"' '
- 	test_cmp expect actual
- '
- 
-+sha1=$(cd submodule && git rev-parse HEAD~1)
-+cat > expect <<EOF
-+sub1 $sha1
-+sub2 $sha1
-+sub3 $sha1
-+EOF
-+
-+test_expect_success 'test "foreach --quiet --revision"' '
-+	(
-+		cd clone2 &&
-+		git submodule foreach -q --revision HEAD~2 "echo \$path \$sha1" > ../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'use "update --recursive" to checkout all submodules' '
- 	git clone super clone3 &&
- 	(
--- 
-1.7.12.2
+> - when ab^H^Horting, the cursor should be moved down (tput cud1) to not
+> overwrite previous output
+
+The error message doesn't really know whether it is going to overwrite
+it (the CR comes from the server), though I suppose an extra LF wouldn't
+hurt there.
+
+> - would be nice to be able to tell git fetch to get the next chunk of
+> say 500 commits instead of trying to receive ALL commits, then b0rking
+> after umpteen percent on server timeout. Not?
+
+You asked for the current state of the repository, and that's what its
+giving you. The timeout has nothing to do with git, if you can't
+convince the admins to increase it, you can try using another transport
+which doesn't suffer from HTTP, as it's most likely an anti-DoS measure.
+
+If you want to download it bit by bit, you can tell fetch to download
+particular tags. Doing this automatically for this would be working
+around a configuration issue for a particular server, which is generally
+better fixed in other ways.
+
+
+   cmn
