@@ -1,102 +1,77 @@
-From: Marcel Partap <mpartap@gmx.net>
-Subject: Re: Git ~unusable on slow lines :,'C
-Date: Tue, 09 Oct 2012 16:06:11 +0200
-Message-ID: <50742F53.3050205@gmx.net>
-References: <50731B2A.6040104@gmx.net> <87lifgct3j.fsf@centaur.cmartin.tk>
+From: =?UTF-8?q?=C3=98yvind=20A=2E=20Holm?= <sunny@sunbase.org>
+Subject: [PATCH] configure.ac: Add missing comma to CC_LD_DYNPATH
+Date: Tue,  9 Oct 2012 16:26:11 +0200
+Message-ID: <1349792771-7936-1-git-send-email-sunny@sunbase.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Tue Oct 09 16:06:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: stefano.lattarini@gmail.com, gitster@pobox.com,
+	=?UTF-8?q? "=C3=98yvind=20A.=20Holm" ?= <sunny@sunbase.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 16:44:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLaS6-0000GU-MH
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 16:06:30 +0200
+	id 1TLb2g-0002sE-Jj
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 16:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755637Ab2JIOGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 10:06:21 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:51616 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754156Ab2JIOGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 10:06:19 -0400
-Received: (qmail invoked by alias); 09 Oct 2012 14:06:17 -0000
-Received: from unknown (EHLO [10.46.63.113]) [82.113.121.113]
-  by mail.gmx.net (mp069) with SMTP; 09 Oct 2012 16:06:17 +0200
-X-Authenticated: #724076
-X-Provags-ID: V01U2FsdGVkX19jRrF7zP1jeqW2nM/iIAyZIAVK0uf6R4TzH0A4Hd
-	VuWuLIyjr9yBSb
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
-In-Reply-To: <87lifgct3j.fsf@centaur.cmartin.tk>
-X-Enigmail-Version: 1.4.1
-X-Y-GMX-Trusted: 0
+	id S1752750Ab2JIOoH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2012 10:44:07 -0400
+Received: from smtp.domeneshop.no ([194.63.252.54]:47515 "EHLO
+	smtp.domeneshop.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355Ab2JIOoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 10:44:06 -0400
+X-Greylist: delayed 1014 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Oct 2012 10:44:06 EDT
+Received: from 77.19.187.42.tmi.telenormobil.no ([77.19.187.42] helo=localhost.localdomain)
+	by smtp.domeneshop.no with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <sunny@sunbase.org>)
+	id 1TLam3-0006Fy-Bo; Tue, 09 Oct 2012 16:27:07 +0200
+X-Mailer: git-send-email 1.8.0.rc0.18.gf84667d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207321>
 
->> Bam, the server kicked me off after taking to long to sync my copy.
-> This is unrelated to git. The HTTP server's configuration is too
-> impatient.
-Yes. How does that mean it is unrelated to git?
+=46rom: "=C3=98yvind A. Holm" <sunny@sunbase.org>
 
->> - git fetch should show the total amount of data it is about to
->> transfer!
-> It can't, because it doesn't know.
-The server side doesn't know at how much the objects *it just repacked
-for transfer* weigh in?
-If that truly is the case, wouldn't it make sense to make git a little
-more introspective? f.e.
-> # git info git://foo.org/bar.git
-> .. [server generating figures] ..
-> URL: git://foo.org/bar.git
-> Created/Earliest commit: ...
-> Last modified/Latest commit: ...
-> Total object count: .... (..commits, ..files, .. directories)
-> Total repository size (compressed): ... MiB
-> Branches:
-> [git branch -va] + branch size
+40bfbde ("build: don't duplicate substitution of make variables",
+2012-09-11) breaks make by removing a necessary comma at the end of
+"CC_LD_DYNPATH=3D-rpath" in line 414.
 
-> The error message doesn't really know whether it is going to overwrite
-> it (the CR comes from the server), though I suppose an extra LF wouldn't
-> hurt there.
-Definitely wouldn't hurt.
+When executing "./configure --with-zlib=3DPATH", this resulted in
 
->> - would be nice to be able to tell git fetch to get the next chunk of
->> say 500 commits instead of trying to receive ALL commits, then b0rking
->> after umpteen percent on server timeout. Not?
-> You asked for the current state of the repository, and that's what its
-> giving you.
-And instead, I would rather like to ask for the next 500 commits. No way
-to do it.
+      [...]
+      CC xdiff/xhistogram.o
+      AR xdiff/lib.a
+      LINK git-credential-store
+  /usr/bin/ld: bad -rpath option
+  collect2: ld returned 1 exit status
+  make: *** [git-credential-store] Error 1
+  $
 
-> The timeout has nothing to do with git, if you can't
-> convince the admins to increase it, you can try using another transport
-> which doesn't suffer from HTTP, as it's most likely an anti-DoS measure.
-See, I probably can't convince the admins to drop their anti-dos measures.
-And they (drupal.org admins) probably will not change their allowed
-protocol policies.
-Despite that, i've had timeouts or simply stale connections dying down
-before with other repositories and various transport modes.
-The easiest fix would be an option to tell git to not fetch everything...
+during make.
 
-> If you want to download it bit by bit, you can tell fetch to download
-> particular tags.
-..without specifying specific commit tags.
-Browsing gitweb sites to find a tag for which the fetch doesn't time out
-is hugely inconvenient, especially on a slow line.
+Signed-off-by: =C3=98yvind A. Holm <sunny@sunbase.org>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Doing this automatically for this would be working
-> around a configuration issue for a particular server, which is generally
-> better fixed in other ways.
-It is not only a configuration issue for one particular server. Git in
-general is hardly usable on slow lines because
-- it doesn't show the volume of data that is to be downloaded!
-- it doesn't allow the user to sync up in steps the circumstances will
-allow to succeed.
-
-#Regards!Marcel.
+diff --git a/configure.ac b/configure.ac
+index da1f41f..c85888c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -411,7 +411,7 @@ else
+       LDFLAGS=3D"${SAVE_LDFLAGS}"
+    ])
+    if test "$git_cv_ld_wl_rpath" =3D "yes"; then
+-      CC_LD_DYNPATH=3D-Wl,-rpath
++      CC_LD_DYNPATH=3D-Wl,-rpath,
+    else
+       AC_CACHE_CHECK([if linker supports -rpath], git_cv_ld_rpath, [
+          SAVE_LDFLAGS=3D"${LDFLAGS}"
+--=20
+1.8.0.rc0.18.gf84667d
