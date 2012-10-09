@@ -1,129 +1,86 @@
-From: cmn@dwim.me (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
-Subject: Re: Git ~unusable on slow lines :,'C
-Date: Tue, 09 Oct 2012 19:39:57 +0200
-Message-ID: <87a9vvczo2.fsf@centaur.cmartin.tk>
-References: <50731B2A.6040104@gmx.net> <87lifgct3j.fsf@centaur.cmartin.tk>
-	<50742F53.3050205@gmx.net>
+From: David Balch <david.balch@conted.ox.ac.uk>
+Subject: username case conflict in git svn clone
+Date: Tue, 09 Oct 2012 17:44:29 +0100
+Message-ID: <5074546D.9010701@conted.ox.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: Marcel Partap <mpartap@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Oct 09 19:40:06 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 19:42:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLdmk-0004tE-8F
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 19:40:02 +0200
+	id 1TLdoq-00060o-Dg
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 19:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756518Ab2JIRjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 13:39:51 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:52738 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1756363Ab2JIRju (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 13:39:50 -0400
-Received: from cmartin.tk (unknown [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4])
-	by hessy.dwim.me (Postfix) with ESMTPA id 1A2FE80014;
-	Tue,  9 Oct 2012 19:39:46 +0200 (CEST)
-Received: (nullmailer pid 18524 invoked by uid 1000);
-	Tue, 09 Oct 2012 17:39:57 -0000
-In-Reply-To: <50742F53.3050205@gmx.net> (Marcel Partap's message of "Tue, 09
-	Oct 2012 16:06:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1756510Ab2JIRmA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2012 13:42:00 -0400
+Received: from fallback1.mail.ox.ac.uk ([163.1.2.175]:56795 "EHLO
+	fallback1.mail.ox.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756398Ab2JIRl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 13:41:59 -0400
+X-Greylist: delayed 3248 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Oct 2012 13:41:58 EDT
+Received: from relay1.mail.ox.ac.uk ([129.67.1.165])
+	by fallback1.mail.ox.ac.uk with esmtp (Exim 4.69)
+	(envelope-from <david.balch@conted.ox.ac.uk>)
+	id 1TLcyC-0000Jr-6M
+	for git@vger.kernel.org; Tue, 09 Oct 2012 17:47:48 +0100
+Received: from smtp2.mail.ox.ac.uk ([163.1.2.205])
+	by relay1.mail.ox.ac.uk with esmtp (Exim 4.75)
+	(envelope-from <david.balch@conted.ox.ac.uk>)
+	id 1TLcuz-0000tr-3c
+	for git@vger.kernel.org; Tue, 09 Oct 2012 17:44:29 +0100
+Received: from staff161.conted.ox.ac.uk ([129.67.164.161])
+	by smtp2.mail.ox.ac.uk with esmtp (Exim 4.69)
+	(envelope-from <david.balch@conted.ox.ac.uk>)
+	id 1TLcuz-0004S9-6d
+	for git@vger.kernel.org; Tue, 09 Oct 2012 17:44:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207333>
 
-Marcel Partap <mpartap@gmx.net> writes:
+Hi,
 
->>> Bam, the server kicked me off after taking to long to sync my copy.
->> This is unrelated to git. The HTTP server's configuration is too
->> impatient.
-> Yes. How does that mean it is unrelated to git?
->
->>> - git fetch should show the total amount of data it is about to
->>> transfer!
->> It can't, because it doesn't know.
-> The server side doesn't know at how much the objects *it just repacked
-> for transfer* weigh in?
-> If that truly is the case, wouldn't it make sense to make git a little
-> more introspective? f.e.
+Can anyone help me with a username case conflict in git svn clone?
 
-It sends you more objects than the ones it just repacked in the normal
-case. It could tell you, but it would have to keep track of more
-information (which would make it take longer for the first bytes to get
-to you) for little gain. The only thing you'd be able to do is to
-abort the transfer immediately, but you can do that anyway, and waiting
-is only going to add history to download.
+Running
 
->> # git info git://foo.org/bar.git
->> .. [server generating figures] ..
->> URL: git://foo.org/bar.git
->> Created/Earliest commit: ...
->> Last modified/Latest commit: ...
->> Total object count: .... (..commits, ..files, .. directories)
->> Total repository size (compressed): ... MiB
->> Branches:
->> [git branch -va] + branch size
->
->> The error message doesn't really know whether it is going to overwrite
->> it (the CR comes from the server), though I suppose an extra LF wouldn't
->> hurt there.
-> Definitely wouldn't hurt.
->
->>> - would be nice to be able to tell git fetch to get the next chunk of
->>> say 500 commits instead of trying to receive ALL commits, then b0rking
->>> after umpteen percent on server timeout. Not?
->> You asked for the current state of the repository, and that's what its
->> giving you.
-> And instead, I would rather like to ask for the next 500 commits. No way
-> to do it.
+  `git svn clone svn://svn.example.com/project --no-metadata -A users.t=
+xt project`
 
-Do you mean that there are no tags in between your current state and the
-one you want to be at?
+whenusers.txt contains:
 
->
->> The timeout has nothing to do with git, if you can't
->> convince the admins to increase it, you can try using another transport
->> which doesn't suffer from HTTP, as it's most likely an anti-DoS measure.
-> See, I probably can't convince the admins to drop their anti-dos measures.
-> And they (drupal.org admins) probably will not change their allowed
-> protocol policies.
+juser Joe User <joe.user@example.com>
 
-Switch to using the raw git protocol, which is much less likely to have
-this sort of measure.
+JUser Joe User <joe.user@example.com>
 
-> Despite that, i've had timeouts or simply stale connections dying down
-> before with other repositories and various transport modes.
-> The easiest fix would be an option to tell git to not fetch everything...
->
->> If you want to download it bit by bit, you can tell fetch to download
->> particular tags.
-> ..without specifying specific commit tags.
-> Browsing gitweb sites to find a tag for which the fetch doesn't time out
-> is hugely inconvenient, especially on a slow line.
+returns:
 
-Don't use the web then. Use ls-remote to see what's at the other end.
+Initialized empty Git repository in /var/git/SCE/sce/.git/
 
->
->> Doing this automatically for this would be working
->> around a configuration issue for a particular server, which is generally
->> better fixed in other ways.
-> It is not only a configuration issue for one particular server. Git in
-> general is hardly usable on slow lines because
-> - it doesn't show the volume of data that is to be downloaded!
+	A	a.txt
 
-How would showing the amount of data help your connection?
+	A	b.txt
 
-> - it doesn't allow the user to sync up in steps the circumstances will
-> allow to succeed.
+Author: JUser not defined in users.txt file
 
-This is unfortunate is some circunstances, but you haven't shown that
-yours is one of these.
+I was hoping that the two versions of the username would be replaced wi=
+th the same details, but apparently not.
 
+Any ideas?
 
-   cmn
+Cheers,
+
+Dave.
+
+--=20
+David Balch.          | Se=F1or web developer.
+T: +44 (0)1865 280979 | Technology-Assisted Lifelong Learning.
+W: www.tall.ox.ac.uk  | University of Oxford.
+E: david.balch@conted.ox.ac.uk
