@@ -1,222 +1,73 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 8/8] Support "**" wildcard in .gitignore and .gitattributes
-Date: Tue,  9 Oct 2012 10:09:07 +0700
-Message-ID: <1349752147-13314-9-git-send-email-pclouds@gmail.com>
-References: <1349752147-13314-1-git-send-email-pclouds@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: In search of a version control system
+Date: Mon, 8 Oct 2012 20:19:26 -0700
+Message-ID: <CAJDDKr5PxM3a6TjfdVoCp1VzgCFBKQ6YGhpN-BO-D=CyVTQX3w@mail.gmail.com>
+References: <1349719581.76671.YahooMailNeo@web122505.mail.ne1.yahoo.com>
+	<CALkWK0kCbLxPMbxh=CLAE8UkkNFNqDa1QbtdM_-Q+Qr3SRh46Q@mail.gmail.com>
+	<vpqa9vwstp3.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 05:10:18 2012
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Maurice Francois <francoismaurice2001@yahoo.ca>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 09 05:19:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLQD3-0006Lj-6l
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 05:10:17 +0200
+	id 1TLQM7-0001rK-6Q
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 05:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228Ab2JIDKH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2012 23:10:07 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:52676 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753163Ab2JIDKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 23:10:05 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so4552787pad.19
-        for <git@vger.kernel.org>; Mon, 08 Oct 2012 20:10:04 -0700 (PDT)
+	id S1752605Ab2JIDT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 23:19:28 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:37553 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751612Ab2JIDT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 23:19:27 -0400
+Received: by mail-vc0-f174.google.com with SMTP id fo13so5623983vcb.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 20:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=MzeIIKBbgPaJZjuLQCCmUjHYg3RIsTKCPAPYptpE6cQ=;
-        b=R4xjgp4LyFDTFbv0LqNxi8pTaEb2GeCg0JsFpxGgn6VaTodLUoMg3v2YevK4XNZQLv
-         9txIrX1AEvlnXFQcjHKbHck69ZHFnSqye8rtIKJPo0C20tlwqEzjEBY1N9D/OFMfwsM0
-         JCS6vmEwvRjyCCIcPJCGqvDYxgbW3u05T08Hgp2H+Gg15RiZL+jcaUSP7z/c43T6AAO3
-         1SfRmdtexD/Y7neTVk4o0fdHfYMtLHz+KThqp8LIfcI/9amn9bN6wGQ9rCObFdDx9Gj7
-         HAIPtpSyelzh+iV9QO9uNCfMt4uBpNYtTNDEt7+jmn79Hmm5sQLIQqLIVjuj4hJHShPO
-         QidQ==
-Received: by 10.68.202.6 with SMTP id ke6mr58804764pbc.82.1349752204471;
-        Mon, 08 Oct 2012 20:10:04 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id o5sm6969472paz.32.2012.10.08.20.10.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 08 Oct 2012 20:10:03 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 09 Oct 2012 10:09:58 +0700
-X-Mailer: git-send-email 1.8.0.rc0.29.g1fdd78f
-In-Reply-To: <1349752147-13314-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FXmmm+nlOBv+eGozqZJSekKIzmg4xDZpPWrXyhT55xs=;
+        b=lWKgn3DIWfDJqgQGzXB4kcQcna/MObU6g/u7jUcF0HtUASNDmB0v1fpC32U8/nOsEb
+         Thot4fk/C0KIRxWKvyrVn+OwnXxa4n8DNagOsjmuyWAshWwMTEgxIGAtCgXfWtWN3/UC
+         QOLF5m+xm8O4nbHIEgxHQZh2/4rSAkIFTKpGCSZPwRb17BpLiTEBI2O2bTVlfUtNxXs2
+         fBBAQYXWdqPGrXadWPwWijoXyfKaw7jR4EoS7J02BPOPR1rDr8HRb+nHxhZM//j3VORq
+         rzpEwkm8S0Cad0F0nNoo6EQ325oqc1m15zFvOj5Kao1BYmqQySGqVmZgjgETgOglSFvf
+         Pz0A==
+Received: by 10.52.68.201 with SMTP id y9mr8910713vdt.68.1349752766330; Mon,
+ 08 Oct 2012 20:19:26 -0700 (PDT)
+Received: by 10.58.180.39 with HTTP; Mon, 8 Oct 2012 20:19:26 -0700 (PDT)
+In-Reply-To: <vpqa9vwstp3.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207296>
 
+On Mon, Oct 8, 2012 at 11:30 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>>> So, is it possible to lock a file while someone work on it ?
+>>
+>> No, and I honestly think it's a bad idea.
+>
+> If you work on non-mergeable files (e.g. *.doc files. There are merge
+> tools for MS Word and LibreOffice, but my experience with them was not
+> really pleasant), then file locking is indeed not such a bad idea.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/gitignore.txt        | 19 +++++++++++++++++++
- attr.c                             |  4 +++-
- dir.c                              |  4 +++-
- t/t0003-attributes.sh              | 38 ++++++++++++++++++++++++++++++=
-++++++++
- t/t3001-ls-files-others-exclude.sh | 19 +++++++++++++++++++
- 5 files changed, 82 insertions(+), 2 deletions(-)
+gitolite to the rescue:
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 96639e0..5a9c9f7 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -104,6 +104,25 @@ PATTERN FORMAT
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
-    "mozilla-sha1/sha1.c".
-=20
-+Two consecutive asterisks ("`**`") in patterns matched against
-+full pathname may have special meaning:
-+
-+ - A leading "`**`" followed by a slash means match in all
-+   directories. For example, "`**/foo`" matches file or directory
-+   "`foo`" anywhere, the same as pattern "`foo`". "**/foo/bar"
-+   matches file or directory "`bar`" anywhere that is directly
-+   under directory "`foo`".
-+
-+ - A trailing "/**" matches everything inside. For example,
-+   "abc/**" is equivalent to "`/abc/`".
-+
-+ - A slash followed by two consecutive asterisks then a slash
-+   matches zero or more directories. For example, "`a/**/b`"
-+   matches "`a/b`", "`a/x/b`", "`a/x/y/b`" and so on.
-+
-+ - Consecutive asterisks otherwise are treated like normal
-+   asterisk wildcards.
-+
- NOTES
- -----
-=20
-diff --git a/attr.c b/attr.c
-index 887a9ae..e85e5ed 100644
---- a/attr.c
-+++ b/attr.c
-@@ -12,6 +12,7 @@
- #include "exec_cmd.h"
- #include "attr.h"
- #include "dir.h"
-+#include "wildmatch.h"
-=20
- const char git_attr__true[] =3D "(builtin)true";
- const char git_attr__false[] =3D "\0(builtin)false";
-@@ -666,7 +667,8 @@ static int path_matches(const char *pathname, int p=
-athlen,
- 		return 0;
- 	if (baselen !=3D 0)
- 		baselen++;
--	return fnmatch_icase(pattern, pathname + baselen, FNM_PATHNAME) =3D=3D=
- 0;
-+	return wildmatch(pattern, pathname + baselen,
-+			 ignore_case ? FNM_CASEFOLD : 0);
- }
-=20
- static int macroexpand_one(int attr_nr, int rem);
-diff --git a/dir.c b/dir.c
-index 4868339..dc721c0 100644
---- a/dir.c
-+++ b/dir.c
-@@ -8,6 +8,7 @@
- #include "cache.h"
- #include "dir.h"
- #include "refs.h"
-+#include "wildmatch.h"
-=20
- struct path_simplify {
- 	int len;
-@@ -575,7 +576,8 @@ int excluded_from_list(const char *pathname,
- 			namelen -=3D prefix;
- 		}
-=20
--		if (!namelen || !fnmatch_icase(exclude, name, FNM_PATHNAME))
-+		if (!namelen ||
-+		    wildmatch(exclude, name, ignore_case ? FNM_CASEFOLD : 0))
- 			return to_exclude;
- 	}
- 	return -1; /* undecided */
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index febc45c..67a5694 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -232,4 +232,42 @@ test_expect_success 'bare repository: test info/at=
-tributes' '
- 	attr_check subdir/a/i unspecified
- '
-=20
-+test_expect_success '"**" test' '
-+	cd .. &&
-+	echo "**/f foo=3Dbar" >.gitattributes &&
-+	cat <<\EOF >expect &&
-+f: foo: bar
-+a/f: foo: bar
-+a/b/f: foo: bar
-+a/b/c/f: foo: bar
-+EOF
-+	git check-attr foo -- "f" >actual 2>err &&
-+	git check-attr foo -- "a/f" >>actual 2>>err &&
-+	git check-attr foo -- "a/b/f" >>actual 2>>err &&
-+	git check-attr foo -- "a/b/c/f" >>actual 2>>err &&
-+	test_cmp expect actual &&
-+	test_line_count =3D 0 err
-+'
-+
-+test_expect_success '"**" with no slashes test' '
-+	echo "a**f foo=3Dbar" >.gitattributes &&
-+	git check-attr foo -- "f" >actual &&
-+	cat <<\EOF >expect &&
-+f: foo: unspecified
-+af: foo: bar
-+axf: foo: bar
-+a/f: foo: unspecified
-+a/b/f: foo: unspecified
-+a/b/c/f: foo: unspecified
-+EOF
-+	git check-attr foo -- "f" >actual 2>err &&
-+	git check-attr foo -- "af" >>actual 2>err &&
-+	git check-attr foo -- "axf" >>actual 2>err &&
-+	git check-attr foo -- "a/f" >>actual 2>>err &&
-+	git check-attr foo -- "a/b/f" >>actual 2>>err &&
-+	git check-attr foo -- "a/b/c/f" >>actual 2>>err &&
-+	test_cmp expect actual &&
-+	test_line_count =3D 0 err
-+'
-+
- test_done
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-othe=
-rs-exclude.sh
-index c8fe978..278315d 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -214,4 +214,23 @@ test_expect_success 'subdirectory ignore (l1)' '
- 	test_cmp expect actual
- '
-=20
-+
-+test_expect_success 'ls-files with "**" patterns' '
-+	cat <<\EOF >expect &&
-+a.1
-+one/a.1
-+one/two/a.1
-+three/a.1
-+EOF
-+	git ls-files -o -i --exclude "**/a.1" >actual
-+	test_cmp expect actual
-+'
-+
-+
-+test_expect_success 'ls-files with "**" patterns and no slashes' '
-+	: >expect &&
-+	git ls-files -o -i --exclude "one**a.1" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
---=20
-1.8.0.rc0.29.g1fdd78f
+http://sitaramc.github.com/gitolite/locking.html
+
+If you want to setup a git server, look at gitolite.
+It's really easy and slick.
+
+I would advise against the file locking, though.  You ain't gonna need it ;-)
+-- 
+David
