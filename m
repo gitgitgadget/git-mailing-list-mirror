@@ -1,56 +1,73 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: [PATCH] configure.ac: Add missing comma to CC_LD_DYNPATH
-Date: Tue, 9 Oct 2012 18:40:29 +0200
-Message-ID: <CAA787rmpTe1L4TY41X9Szt8FS9T7bYRA2sgb=K_st4Ck2N9M1Q@mail.gmail.com>
-References: <1349800026-10717-1-git-send-email-sunny@sunbase.org>
-	<1349800572-2963-1-git-send-email-sunny@sunbase.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git ~unusable on slow lines :,'C
+Date: Tue, 09 Oct 2012 09:46:23 -0700
+Message-ID: <7vd30rh9uo.fsf@alter.siamese.dyndns.org>
+References: <50731B2A.6040104@gmx.net> <87lifgct3j.fsf@centaur.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: stefano.lattarini@gmail.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 18:40:46 2012
+Cc: Marcel Partap <mpartap@gmx.net>, git@vger.kernel.org
+To: cmn@elego.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
+X-From: git-owner@vger.kernel.org Tue Oct 09 18:46:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLcrK-0004AA-Sp
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 18:40:43 +0200
+	id 1TLcx3-0007v3-1X
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 18:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896Ab2JIQka convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2012 12:40:30 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:42758 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752244Ab2JIQk3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2012 12:40:29 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so5387121pbb.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 09:40:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Z+vDjLLl3LnMT0Z2pJqEBoe6tMr5/xo+P+s9NPYGPrQ=;
-        b=XMiKSebd3NC7v7nHRhQmOqVGM6RbYFxPzzbCLS0ZQPptE1HdUqO8m0KpytX7+V8hJP
-         Sr3PufCcN2RtzHCklJG4WQpZn5vRaX3FAjsMAIjzcPiu1vim4t/lAh3nL+IjoyOApItV
-         zF5mTwiIMdJdrSfQMaSxUC84WCU/BOpcuB507DemQi9FqHqboIE0DYF17zgmEG6LOM4O
-         Rsze3zyamkfTIW+ZIUn3vOlpCgXNwWnN2d9c/NSyIGZYG4aPc13MDkEFZ0cvb9PNIMQQ
-         Ha4IuZ3rjveBkAmt6oi8poobxrILOVKYalEGUTMLsvmEIVhVDLinkHVe2+kMXKLiCjQg
-         4vSQ==
-Received: by 10.66.83.201 with SMTP id s9mr44077360pay.74.1349800829135; Tue,
- 09 Oct 2012 09:40:29 -0700 (PDT)
-Received: by 10.68.222.7 with HTTP; Tue, 9 Oct 2012 09:40:29 -0700 (PDT)
-In-Reply-To: <1349800572-2963-1-git-send-email-sunny@sunbase.org>
-X-Google-Sender-Auth: x_PLpixADad_s3GLSyHfd0e48BU
+	id S1754444Ab2JIQq1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2012 12:46:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59057 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752978Ab2JIQq0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2012 12:46:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3FFA9B48;
+	Tue,  9 Oct 2012 12:46:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=O6Q8Zj3d2mn0
+	mPYprZOtnQKyat4=; b=nkAOh4rDV2QnUL258rphy84zQUmGxCwi9xKng+3MR0AC
+	DnhZtQ4jsk3BMf9xQ2tfE2bea+IXDlED9hW8llQ2vv1cmDZsk4E/6dhJ9ivSpS5b
+	54EBgb+HcJuTQQicqLEXsrdP7sLkslIJPBXfbqKe6pGZ1EkVgoSZo+X/CuOUtZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=D+sglr
+	5pua3eH3TWIkRtqxIYEx9xKLFPE7PoQ/71tQL82G3tnmJ+Q2QDujUy0nahW0NX34
+	agbyjZQ95eadoKzqtfDrYEZBiThXc1VW26E0JZ6Rga7oreqLGXGaeeQ5yZX2UEKo
+	vZ3dZTON51hopFcJOlNCnbHcGLGj1UndU00l0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92DC79B47;
+	Tue,  9 Oct 2012 12:46:25 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD2F89B46; Tue,  9 Oct 2012
+ 12:46:24 -0400 (EDT)
+In-Reply-To: <87lifgct3j.fsf@centaur.cmartin.tk> ("Carlos =?utf-8?Q?Mart?=
+ =?utf-8?Q?=C3=ADn?= Nieto"'s message of "Tue, 09 Oct 2012 03:49:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DCF25E74-1230-11E2-83F7-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207327>
 
-Please discard the first patch, I reckon line 423 also should be change=
-d.
+cmn@elego.de (Carlos Mart=C3=ADn Nieto) writes:
 
-Sorry about the noise,
-=C3=98yvind
+> If you want to download it bit by bit, you can tell fetch to download
+> particular tags. Doing this automatically for this would be working
+> around a configuration issue for a particular server, which is genera=
+lly
+> better fixed in other ways.
+
+As part of an upcoming "protocol update" discussion, we may want to
+include allowing "upload-pack" to accept a request for commit that
+is not at the tip of any ref.
+
+E.g. "want refs/heads/master~*0.1" might ask "I know your entire
+history is very big; please give me only the one tenth of the oldest
+history during this round." (this is not a suggestion on how to do
+this at the UI level).
