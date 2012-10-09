@@ -1,78 +1,129 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: 'git grep needle rev' attempts to access 'rev:.../.gitattributes'
- in the worktree
-Date: Tue, 9 Oct 2012 16:38:32 +0700
-Message-ID: <CACsJy8BFmUr5_E47900T6j9Lgdvj96_dNbo2LHP5hLYq3w7ZLA@mail.gmail.com>
-References: <5073E87D.9020100@viscovery.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH/RFC] svn test: escape peg revision separator using empty
+ peg rev
+Date: Tue, 09 Oct 2012 11:47:44 +0200
+Message-ID: <5073F2C0.6000504@drmicha.warpmail.net>
+References: <1343468872-72133-1-git-send-email-schwern@pobox.com> <1343468872-72133-2-git-send-email-schwern@pobox.com> <20120728141652.GA1603@burratino> <50143E34.8090802@pobox.com> <20121009084145.GA19784@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Oct 09 11:39:31 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Torsten Schmutzler <git-ts@theblacksun.eu>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 11:48:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLWHi-0006yv-9V
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 11:39:30 +0200
+	id 1TLWQ8-0002jv-A1
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 11:48:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702Ab2JIJjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 05:39:06 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:62906 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754519Ab2JIJjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 05:39:03 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so1480597iea.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 02:39:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xFIPJp5oNokz1Rh3ah1pZKKsGrHMRZ5QN9IAOtJA23c=;
-        b=btEbJbm/HxvxxxXtZgPxhFNjzIk5meuxV9Kb5xV0ROxoov9hotv52q7e0bA4CNYs37
-         N3QUuovQn5f5JkHkGu5RJnSysFy/lEcjTasjIXn/t5nD4lgifh/CnlKgNggg5U71enEL
-         oaetCBZU47hePs7JEhja+kLdfkuKwEcTJwqlRxVRvjsgjiaF9zMN/xb+z53UCKJEuAec
-         9cMxCYEq0Rx5lW7JirPGhrutyoRzPCcptl4j3TDIUCuqJlF27s1oKTk5HwMpYNG8R8zQ
-         bP7JERRIyPZ2tvDb0d9mBFQoyG/5ij5ia2tkKLlTWBe/I8Ps1RvD+8Ijf3IjjkhtaXL/
-         resw==
-Received: by 10.50.0.241 with SMTP id 17mr1063725igh.40.1349775543358; Tue, 09
- Oct 2012 02:39:03 -0700 (PDT)
-Received: by 10.64.143.168 with HTTP; Tue, 9 Oct 2012 02:38:32 -0700 (PDT)
-In-Reply-To: <5073E87D.9020100@viscovery.net>
+	id S1754752Ab2JIJsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 05:48:01 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:34188 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751893Ab2JIJsA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2012 05:48:00 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B955920668;
+	Tue,  9 Oct 2012 05:47:59 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 09 Oct 2012 05:47:59 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=N8ITqCcIB+FJwcZLzoTobz
+	/UI44=; b=NXHZz+ifpeJUC9syF4LbHvmA/bzgmZZ0iWKnVUfrWtl12D5xoVb1kY
+	Jx1oXAwQ4y+5LkM7rc86Wzl+lAqIkrDSPTxINEn/feU3BBC/+UlnW+bI685bDXj4
+	wIGplJrWchYUk/P2t7kZsr7+vlyphaKXxrmZiI2/WtCVdaEF992Z0=
+X-Sasl-enc: r94oKBfymDLDxOq18j7ecTircmzjLARIH6JWPCYZzKIK 1349776066
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 619034827EC;
+	Tue,  9 Oct 2012 05:47:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120911 Thunderbird/15.0.1
+In-Reply-To: <20121009084145.GA19784@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207314>
 
-On Tue, Oct 9, 2012 at 4:03 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Running 'git grep needle origin/master' on Windows gives numerous warnings
-> of the kind
->
-> warning: unable to access 'origin/master:Documentation/.gitattributes':
-> Invalid argument
+Jonathan Nieder venit, vidit, dixit 09.10.2012 10:41:
+> This test script uses "svn cp" to create a branch with an @-sign in
+> its name:
+> 
+> 	svn cp "pr ject/trunk" "pr ject/branches/not-a@{0}reflog"
+> 
+> That sets up for later tests that fetch the branch and check that git
+> svn mangles the refname appropriately.
+> 
+> Unfortunately, modern svn versions interpret path arguments with an
+> @-sign as an example of path@revision syntax (which pegs a path to a
+> particular revision) and truncate the path or error out with message
+> "svn: E205000: Syntax error parsing peg revision '{0}reflog'".
+> 
+> When using subversion 1.6.x, escaping the @ sign as %40 avoids trouble
+> (see 08fd28bb, 2010-07-08).  Newer versions are stricter:
+> 
+> 	$ svn cp "$repo/pr ject/trunk" "$repo/pr ject/branches/not-a%40{reflog}"
+> 	svn: E205000: Syntax error parsing peg revision '%7B0%7Dreflog'
+> 
+> The recommended method for escaping a literal @ sign in a path passed
+> to subversion is to add an empty peg revision at the end of the path
+> ("branches/not-a@{0}reflog@").  Do that.
+> 
+> Pre-1.6.12 versions of Subversion probably treat the trailing @ as
+> another literal @-sign (svn issue 3651).  Luckily ever since
+> v1.8.0-rc0~155^2~7 (t9118: workaround inconsistency between SVN
+> versions, 2012-07-28) the test can survive that.
+> 
+> Tested with Debian Subversion 1.6.12dfsg-6 and 1.7.5-1 and r1395837
+> of Subversion trunk (1.8.x).
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-strace confirms it. Stack trace
+Tested with Subversion 1.6.18.
 
-#0  read_attr_from_file (path=0x820e818
-"HEAD:Documentation/.gitattributes", macro_ok=0) at attr.c:351
-#1  0x080d378d in read_attr (path=0x820e818
-"HEAD:Documentation/.gitattributes", macro_ok=0) at attr.c:436
-#2  0x080d3bf1 in prepare_attr_stack (path=0x820e7f0
-"HEAD:Documentation/.gitattributes") at attr.c:630
-#3  0x080d3f68 in collect_all_attrs (path=0x820e7f0
-"HEAD:Documentation/.gitattributes") at attr.c:747
-#4  0x080d3ffd in git_check_attr (path=0x820e7f0
-"HEAD:Documentation/.gitattributes", num=1, check=0xbfffd848) at
-attr.c:761
-#5  0x0815e736 in userdiff_find_by_path (path=0x820e7f0
-"HEAD:Documentation/.gitattributes") at userdiff.c:278
-#6  0x081058ca in grep_source_load_driver (gs=0xbfffd978) at grep.c:1504
-#7  0x08105907 in grep_source_is_binary (gs=0xbfffd978) at grep.c:1512
-#8  0x08104eaa in grep_source_1 (opt=0xbfffe304, gs=0xbfffd978,
-collect_hits=0) at grep.c:1180
+> ---
+> Michael G Schwern wrote:
+>> On 2012.7.28 7:16 AM, Jonathan Nieder wrote:
+>>> Michael G. Schwern wrote:
+> 
+>>>> -		git rev-parse "refs/remotes/not-a%40{0}reflog"
+>>>> +		git rev-parse "refs/remotes/$non_reflog"
+>>>
+>>> Doesn't this defeat the point of the testcase (checking that git-svn
+>>> is able to avoid creating git refs containing @{, following the rules
+>>> from git-check-ref-format(1))?
+>>
+>> Unless I messed up, entirely possible as I'm not a shell programmer, the test
+>> is still useful for testing SVN 1.6.  Under SVN 1.6 $non_reflog should be
+>> 'not-a%40{0}reflog' as before.
+> 
+> Here's a patch to make the test useful again for SVN 1.7.  Sensible?
+> 
+>  t/t9118-git-svn-funky-branch-names.sh |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
+> index 193d3cab..15f93b4c 100755
+> --- a/t/t9118-git-svn-funky-branch-names.sh
+> +++ b/t/t9118-git-svn-funky-branch-names.sh
+> @@ -28,7 +28,7 @@ test_expect_success 'setup svnrepo' '
+>  	svn_cmd cp -m "trailing .lock" "$svnrepo/pr ject/trunk" \
+>  			"$svnrepo/pr ject/branches/trailing_dotlock.lock" &&
+>  	svn_cmd cp -m "reflog" "$svnrepo/pr ject/trunk" \
+> -			"$svnrepo/pr ject/branches/not-a%40{0}reflog" &&
+> +			"$svnrepo/pr ject/branches/not-a@{0}reflog@" &&
+>  	start_httpd
+>  	'
 
-Never touched userdiff.c before. Anybody?
--- 
-Duy
+I haven't checked other svn versions but this approach looks perfectly
+sensible. It makes us test branch names which can't even be created
+easily with current svn. Does svn really deserve this much attention? ;)
+
+Seriously, our tests prepare us well for an svn remote helper...
