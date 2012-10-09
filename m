@@ -1,202 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'git grep needle rev' attempts to access
- 'rev:.../.gitattributes' in the worktree
-Date: Tue, 9 Oct 2012 08:41:44 -0400
-Message-ID: <20121009124144.GB12465@sigill.intra.peff.net>
-References: <5073E87D.9020100@viscovery.net>
- <CACsJy8BFmUr5_E47900T6j9Lgdvj96_dNbo2LHP5hLYq3w7ZLA@mail.gmail.com>
- <20121009120144.GA8780@do>
+From: Marcel Partap <mpartap@gmx.net>
+Subject: Re: Git ~unusable on slow lines :,'C
+Date: Tue, 09 Oct 2012 16:06:11 +0200
+Message-ID: <50742F53.3050205@gmx.net>
+References: <50731B2A.6040104@gmx.net> <87lifgct3j.fsf@centaur.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 09 14:41:59 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Tue Oct 09 16:06:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLZ8I-0000fz-UW
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 14:41:59 +0200
+	id 1TLaS6-0000GU-MH
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 16:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754228Ab2JIMls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 08:41:48 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45068 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752786Ab2JIMlr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 08:41:47 -0400
-Received: (qmail 32376 invoked by uid 107); 9 Oct 2012 12:42:20 -0000
-Received: from wsip-70-169-140-85.hr.hr.cox.net (HELO sigill.intra.peff.net) (70.169.140.85)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 09 Oct 2012 08:42:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Oct 2012 08:41:44 -0400
-Content-Disposition: inline
-In-Reply-To: <20121009120144.GA8780@do>
+	id S1755637Ab2JIOGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 10:06:21 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:51616 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754156Ab2JIOGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 10:06:19 -0400
+Received: (qmail invoked by alias); 09 Oct 2012 14:06:17 -0000
+Received: from unknown (EHLO [10.46.63.113]) [82.113.121.113]
+  by mail.gmx.net (mp069) with SMTP; 09 Oct 2012 16:06:17 +0200
+X-Authenticated: #724076
+X-Provags-ID: V01U2FsdGVkX19jRrF7zP1jeqW2nM/iIAyZIAVK0uf6R4TzH0A4Hd
+	VuWuLIyjr9yBSb
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <87lifgct3j.fsf@centaur.cmartin.tk>
+X-Enigmail-Version: 1.4.1
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207320>
 
-On Tue, Oct 09, 2012 at 07:01:44PM +0700, Nguyen Thai Ngoc Duy wrote:
+>> Bam, the server kicked me off after taking to long to sync my copy.
+> This is unrelated to git. The HTTP server's configuration is too
+> impatient.
+Yes. How does that mean it is unrelated to git?
 
-> On Tue, Oct 09, 2012 at 04:38:32PM +0700, Nguyen Thai Ngoc Duy wrote:
-> > #5  0x0815e736 in userdiff_find_by_path (path=0x820e7f0
-> > "HEAD:Documentation/.gitattributes") at userdiff.c:278
-> > #6  0x081058ca in grep_source_load_driver (gs=0xbfffd978) at grep.c:1504
-> 
-> A bandage patch may look like this. But it does not solve the real
-> problem:
-> 
->  - we should be able to look up in-tree .gitattributes, not just
->    ignore like this patch does
-> 
->  - gs->name seems to be prepared for human consumption, not for
->    accessing files. grep_file() with opt->relative is true can put
->    quotes in gs->name, for example.
+>> - git fetch should show the total amount of data it is about to
+>> transfer!
+> It can't, because it doesn't know.
+The server side doesn't know at how much the objects *it just repacked
+for transfer* weigh in?
+If that truly is the case, wouldn't it make sense to make git a little
+more introspective? f.e.
+> # git info git://foo.org/bar.git
+> .. [server generating figures] ..
+> URL: git://foo.org/bar.git
+> Created/Earliest commit: ...
+> Last modified/Latest commit: ...
+> Total object count: .... (..commits, ..files, .. directories)
+> Total repository size (compressed): ... MiB
+> Branches:
+> [git branch -va] + branch size
 
-Right. For the second, you would probably want gs->identifier in the
-case of GREP_SOURCE_FILE. But that identifier information is not
-available at all for GREP_SOURCE_SHA1, which is what is breaking the
-first point.
+> The error message doesn't really know whether it is going to overwrite
+> it (the CR comes from the server), though I suppose an extra LF wouldn't
+> hurt there.
+Definitely wouldn't hurt.
 
-> I feel like we should make this function a callback and let git-grep
-> deal with driver loading itself.
+>> - would be nice to be able to tell git fetch to get the next chunk of
+>> say 500 commits instead of trying to receive ALL commits, then b0rking
+>> after umpteen percent on server timeout. Not?
+> You asked for the current state of the repository, and that's what its
+> giving you.
+And instead, I would rather like to ask for the next 500 commits. No way
+to do it.
 
-I think we just need to have callers of grep_source_init provide us with
-the actual pathname (or NULL, in the case of GREP_SOURCE_BUF). That is
-where the information is lost.
+> The timeout has nothing to do with git, if you can't
+> convince the admins to increase it, you can try using another transport
+> which doesn't suffer from HTTP, as it's most likely an anti-DoS measure.
+See, I probably can't convince the admins to drop their anti-dos measures.
+And they (drupal.org admins) probably will not change their allowed
+protocol policies.
+Despite that, i've had timeouts or simply stale connections dying down
+before with other repositories and various transport modes.
+The easiest fix would be an option to tell git to not fetch everything...
 
-Like this incomplete and untested patch, which should fix the quoting
-problem for GREP_SOURCE_FILE, but leave the sha1 bits broken (see the
-in-code comment). I'm traveling this week, so I doubt I'll have time to
-look for a few more days. If you want to work on it, please do.
+> If you want to download it bit by bit, you can tell fetch to download
+> particular tags.
+..without specifying specific commit tags.
+Browsing gitweb sites to find a tag for which the fetch doesn't time out
+is hugely inconvenient, especially on a slow line.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 82530a6..be602dd 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -86,7 +86,7 @@ static void add_work(struct grep_opt *opt, enum grep_source_type type,
- static int skip_first_line;
- 
- static void add_work(struct grep_opt *opt, enum grep_source_type type,
--		     const char *name, const void *id)
-+		     const char *name, const char *path, const void *id)
- {
- 	grep_lock();
- 
-@@ -94,7 +94,7 @@ static void add_work(struct grep_opt *opt, enum grep_source_type type,
- 		pthread_cond_wait(&cond_write, &grep_mutex);
- 	}
- 
--	grep_source_init(&todo[todo_end].source, type, name, id);
-+	grep_source_init(&todo[todo_end].source, type, name, path, id);
- 	if (opt->binary != GREP_BINARY_TEXT)
- 		grep_source_load_driver(&todo[todo_end].source);
- 	todo[todo_end].done = 0;
-@@ -378,14 +378,21 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 	if (opt->relative && opt->prefix_length) {
- 		quote_path_relative(filename + tree_name_len, -1, &pathbuf,
- 				    opt->prefix);
-+		/* XXX Why do we insert here instead of just putting it in
-+		 * first? */
- 		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
- 	} else {
- 		strbuf_addstr(&pathbuf, filename);
- 	}
- 
-+	/* XXX We seem to get all kinds of junk via the filename field here,
-+	 * including partial filenames, sha1:path, etc. We could parse it
-+	 * ourselves, but that is probably insanity. We should ask the
-+	 * caller to break it down more for us. For now, just pass NULL. */
-+
- #ifndef NO_PTHREADS
- 	if (use_threads) {
--		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, sha1);
-+		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, NULL, sha1);
- 		strbuf_release(&pathbuf);
- 		return 0;
- 	} else
-@@ -394,7 +401,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 		struct grep_source gs;
- 		int hit;
- 
--		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, sha1);
-+		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, NULL, sha1);
- 		strbuf_release(&pathbuf);
- 		hit = grep_source(opt, &gs);
- 
-@@ -414,7 +421,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 
- #ifndef NO_PTHREADS
- 	if (use_threads) {
--		add_work(opt, GREP_SOURCE_FILE, buf.buf, filename);
-+		add_work(opt, GREP_SOURCE_FILE, buf.buf, filename, filename);
- 		strbuf_release(&buf);
- 		return 0;
- 	} else
-@@ -423,7 +430,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 		struct grep_source gs;
- 		int hit;
- 
--		grep_source_init(&gs, GREP_SOURCE_FILE, buf.buf, filename);
-+		grep_source_init(&gs, GREP_SOURCE_FILE, buf.buf, filename, filename);
- 		strbuf_release(&buf);
- 		hit = grep_source(opt, &gs);
- 
-diff --git a/grep.c b/grep.c
-index edc7776..06bc1c6 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1373,7 +1373,7 @@ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size)
- 	struct grep_source gs;
- 	int r;
- 
--	grep_source_init(&gs, GREP_SOURCE_BUF, NULL, NULL);
-+	grep_source_init(&gs, GREP_SOURCE_BUF, NULL, NULL, NULL);
- 	gs.buf = buf;
- 	gs.size = size;
- 
-@@ -1384,10 +1384,12 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
- }
- 
- void grep_source_init(struct grep_source *gs, enum grep_source_type type,
--		      const char *name, const void *identifier)
-+		      const char *name, const char *path,
-+		      const void *identifier)
- {
- 	gs->type = type;
- 	gs->name = name ? xstrdup(name) : NULL;
-+	gs->path = path ? xstrdup(path) : NULL;
- 	gs->buf = NULL;
- 	gs->size = 0;
- 	gs->driver = NULL;
-@@ -1409,6 +1411,8 @@ void grep_source_clear(struct grep_source *gs)
- {
- 	free(gs->name);
- 	gs->name = NULL;
-+	free(gs->path);
-+	gs->path = NULL;
- 	free(gs->identifier);
- 	gs->identifier = NULL;
- 	grep_source_clear_data(gs);
-diff --git a/grep.h b/grep.h
-index c256ac6..c2cf57b 100644
---- a/grep.h
-+++ b/grep.h
-@@ -158,11 +158,13 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
- 	char *buf;
- 	unsigned long size;
- 
-+	char *path; /* for attribute lookups */
- 	struct userdiff_driver *driver;
- };
- 
- void grep_source_init(struct grep_source *gs, enum grep_source_type type,
--		      const char *name, const void *identifier);
-+		      const char *name, const char *path,
-+		      const void *identifier);
- void grep_source_clear_data(struct grep_source *gs);
- void grep_source_clear(struct grep_source *gs);
- void grep_source_load_driver(struct grep_source *gs);
+> Doing this automatically for this would be working
+> around a configuration issue for a particular server, which is generally
+> better fixed in other ways.
+It is not only a configuration issue for one particular server. Git in
+general is hardly usable on slow lines because
+- it doesn't show the volume of data that is to be downloaded!
+- it doesn't allow the user to sync up in steps the circumstances will
+allow to succeed.
+
+#Regards!Marcel.
