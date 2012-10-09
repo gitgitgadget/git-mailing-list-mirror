@@ -1,150 +1,87 @@
-From: James Nylen <jnylen@gmail.com>
-Subject: [PATCH] Add --unannotate option to git-subtree
-Date: Tue, 9 Oct 2012 16:26:50 -0400
-Message-ID: <CABVa4NinSighUn7GKbzMx9qZj3Ao2dCtEZxUqCPwO9TocZ8Kkg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: upload-pack is slow with lots of refs
+Date: Tue, 09 Oct 2012 22:30:05 +0200
+Message-ID: <5074894D.90307@kdbg.org>
+References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com> <20121003180324.GB27446@sigill.intra.peff.net> <7vobkj4cb4.fsf@alter.siamese.dyndns.org> <20121003185542.GA3635@sigill.intra.peff.net> <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com> <506E7D01.8080509@viscovery.net> <CAJo=hJsYVdWeG0ZyqexEXNfOq_k1XDR_gGP+fy_z==LvdnWJTQ@mail.gmail.com> <5072EBD1.40500@kdbg.org> <CAJo=hJsJgqZqPxucRcSgYSa0N3pcw5seT9vcu2BE8WwfJVrvKQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 22:27:03 2012
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 22:30:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLgOL-0005q5-Ni
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 22:27:02 +0200
+	id 1TLgRg-0007bL-LO
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 22:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753896Ab2JIU0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 16:26:52 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:63587 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751275Ab2JIU0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 16:26:50 -0400
-Received: by mail-ia0-f174.google.com with SMTP id y32so1097211iag.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 13:26:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=AgCbIonkOj4Im+ClvNp09vNZfe4l7SQGDacHEHpmbfw=;
-        b=int9bz69v0jQn1oQSfTZpDIGOaLkkKfwxQRqLI+ImIl38VZf83lQFe0Uwjjxo1Ofvq
-         0uXZ9jTV8iNBz7Xc7ue0Me4WYJk6Oy8vgOo695sYpxjwJ7drpovDPUNbadX1qra2/6Yj
-         JgzTdKhAJTmFk99fL7RrjKkpNsBGwuUT+wMOLGXBMTM7J0bOv7eWpFrqgfWe+SPoGfRU
-         PnoQbWvuj/YTTkwvHM8HNL5xvN3gUKZAw6M1dqFzeMZs8kWWoA7RWyBzyjtIkkCsMGao
-         1IukFWD9EK1f0kKiLomfN+TElHKtdHEjKouGNEj5MCDDrGLu0wE3Mf+dGm2CDlhkfosG
-         MyVg==
-Received: by 10.50.202.71 with SMTP id kg7mr3057547igc.55.1349814410153; Tue,
- 09 Oct 2012 13:26:50 -0700 (PDT)
-Received: by 10.42.173.130 with HTTP; Tue, 9 Oct 2012 13:26:50 -0700 (PDT)
+	id S1754755Ab2JIUaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 16:30:18 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:58012 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752478Ab2JIUaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 16:30:17 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 98A93130052;
+	Tue,  9 Oct 2012 22:30:12 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id E1BE719F3D5;
+	Tue,  9 Oct 2012 22:30:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <CAJo=hJsJgqZqPxucRcSgYSa0N3pcw5seT9vcu2BE8WwfJVrvKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207342>
 
-This new option does the reverse of --annotate, which is more useful
-when contributing back to a library which is also included in the
-repository for a larger project, and perhaps in other situations as
-well.
+Am 09.10.2012 08:46, schrieb Shawn Pearce:
+> On Mon, Oct 8, 2012 at 8:05 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> Am 05.10.2012 18:57, schrieb Shawn Pearce:
+>>> Smart HTTP is not bidirectional. The client can't cut off the server.
+>>
+>> Smart HTTP does not need it: you already posted a better solution (I'm
+>> refering to "&v=2").
+> 
+> Yes but then it diverges even further from the native bidirectional protocol.
 
-Rather than adding a marker to each commit when splitting out the
-commits back to the subproject, --unannotate removes the specified
-string (or bash glob pattern) from the beginning of the first line of
-the commit message.  This enables the following workflow:
+I won't argue here because I know next to nothing about Smart HTTP. But
+it sounds like you either have compatibility, but a diverging protocol
+or at least implementation, or no compatibility.
 
- - Commit to a library included in a large project, with message:
-     Library: Make some amazing change
+>> +static int client_spoke(void)
+>> +{
+>> +       struct pollfd pfd;
+>> +       pfd.fd = 0;
+>> +       pfd.events = POLLIN;
+>> +       return poll(&pfd, 1, 0) > 0 &&
+>> +               (pfd.revents & (POLLIN|POLLHUP));
+> 
+> Except doing this in Java is harder on an arbitrary InputStream type.
+> I guess we really only care about basic TCP, in which case we can use
+> NIO to implement an emulation of poll, and SSH, where MINA SSHD
+> probably doesn't provide a way to see if the client has given us data
+> without blocking. That makes supporting v2 really hard in e.g. Gerrit
+> Code Review. You could argue that its improper to attempt to implement
+> a network protocol in a language whose standard libraries have gone
+> out of their way to prevent you from polling to see if data is
+> immediately available, but I prefer to ignore such arguments.
 
- - Use `git-subtree split` to send this change to the library maintainer
+Can't you read the inbound stream in a second thread while the first
+thread writes the advertisements to the outbound stream? Then you don't
+even need to poll; you can just read the 4-byte length header, stash it
+away and set a flag. The implementation of client_spoke() would only
+amount to check that flag.
 
- - Pass ` --unannotate='Library: ' ` or ` --unannotate='*: ' `
+> As it turns out we don't really have this problem with git://. Clients
+> can bury a v2 request in the extended headers where the host line
+> appears today.
 
- - This will turn the commit message for the library project into:
-     Make some amazing change
+I tried, but it seems that todays git-daemons are too strict and accept
+only \0host=foo\0, nothing else :-(
 
-This helps to keep the commit messages meaningful in both the large
-project and the library project.
-
-Signed-off-by: James Nylen <jnylen@gmail.com>
----
-Let me know if gmail has munged this patch.  You can also get at it
-like this:
-
-$ git remote add nylen git://github.com/nylen/git.git
-$ git fetch nylen
-$ git show nylen/subtree-unannotate
----
- contrib/subtree/git-subtree.sh  | 11 +++++++++--
- contrib/subtree/git-subtree.txt | 15 +++++++++++++++
- 2 files changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 920c664..8d1ed05 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -21,6 +21,7 @@ P,prefix=     the name of the subdir to split out
- m,message=    use the given message as the commit message for the merge commit
-  options for 'split'
- annotate=     add a prefix to commit message of new commits
-+unannotate=   remove a prefix from new commit messages (supports bash globbing)
- b,branch=     create a new branch from the split subtree
- ignore-joins  ignore prior --rejoin commits
- onto=         try connecting new tree to an existing one
-@@ -43,6 +44,7 @@ onto=
- rejoin=
- ignore_joins=
- annotate=
-+unannotate=
- squash=
- message=
-
-@@ -80,6 +82,8 @@ while [ $# -gt 0 ]; do
- 		-d) debug=1 ;;
- 		--annotate) annotate="$1"; shift ;;
- 		--no-annotate) annotate= ;;
-+		--unannotate) unannotate="$1"; shift ;;
-+		--no-unannotate) unannotate= ;;
- 		-b) branch="$1"; shift ;;
- 		-P) prefix="$1"; shift ;;
- 		-m) message="$1"; shift ;;
-@@ -310,8 +314,11 @@ copy_commit()
- 			GIT_COMMITTER_NAME \
- 			GIT_COMMITTER_EMAIL \
- 			GIT_COMMITTER_DATE
--		(echo -n "$annotate"; cat ) |
--		git commit-tree "$2" $3  # reads the rest of stdin
-+		(
-+			read FIRST_LINE
-+			echo "$annotate${FIRST_LINE#$unannotate}"
-+			cat  # reads the rest of stdin
-+		) | git commit-tree "$2" $3
- 	) || die "Can't copy commit $1"
- }
-
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 0c44fda..ae420aa 100644
---- a/contrib/subtree/git-subtree.txt
-+++ b/contrib/subtree/git-subtree.txt
-@@ -198,6 +198,21 @@ OPTIONS FOR split
- 	git subtree tries to make it work anyway, particularly
- 	if you use --rejoin, but it may not always be effective.
-
-+--unannotate=<annotation>::
-+	This option is only valid for the split command.
-+
-+	When generating synthetic history, try to remove the prefix
-+	<annotation> from each commit message (using bash's "strip
-+	shortest match from beginning" command, which supports
-+	globbing).  This makes sense if you format library commits
-+	like "library: Change something or other" when you're working
-+	in your project's repository, but you want to remove this
-+	prefix when pushing back to the library's upstream repository.
-+	(In this case --unannotate='*: ' would work well.)
-+	
-+	Like --annotate,  you need to use the same <annotation>
-+	whenever you split, or you may run into problems.
-+
- -b <branch>::
- --branch=<branch>::
- 	This option is only valid for the split command.
--- 
-1.7.11.3
+-- Hannes
