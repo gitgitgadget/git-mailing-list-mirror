@@ -1,61 +1,78 @@
-From: Ralf Jung <post@ralfj.de>
-Subject: gitweb bug: Existence if hidden repositories is leaked
-Date: Tue, 09 Oct 2012 11:28:53 +0200
-Message-ID: <5073EE55.7010809@ralfj.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: 'git grep needle rev' attempts to access 'rev:.../.gitattributes'
+ in the worktree
+Date: Tue, 9 Oct 2012 16:38:32 +0700
+Message-ID: <CACsJy8BFmUr5_E47900T6j9Lgdvj96_dNbo2LHP5hLYq3w7ZLA@mail.gmail.com>
+References: <5073E87D.9020100@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 11:36:40 2012
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 09 11:39:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLWEw-0005h6-VM
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 11:36:39 +0200
+	id 1TLWHi-0006yv-9V
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 11:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab2JIJgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 05:36:23 -0400
-Received: from ralfj.de ([85.214.220.216]:38261 "EHLO ralfj.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754673Ab2JIJgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 05:36:20 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Oct 2012 05:36:20 EDT
-Received: from [192.168.1.151] (p54A5A12C.dip.t-dialin.net [84.165.161.44])
-	by ralfj.de (Postfix) with ESMTPSA id 703CD14F81E3
-	for <git@vger.kernel.org>; Tue,  9 Oct 2012 11:28:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-X-Enigmail-Version: 1.4.4
+	id S1754702Ab2JIJjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 05:39:06 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:62906 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754519Ab2JIJjD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 05:39:03 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so1480597iea.19
+        for <git@vger.kernel.org>; Tue, 09 Oct 2012 02:39:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xFIPJp5oNokz1Rh3ah1pZKKsGrHMRZ5QN9IAOtJA23c=;
+        b=btEbJbm/HxvxxxXtZgPxhFNjzIk5meuxV9Kb5xV0ROxoov9hotv52q7e0bA4CNYs37
+         N3QUuovQn5f5JkHkGu5RJnSysFy/lEcjTasjIXn/t5nD4lgifh/CnlKgNggg5U71enEL
+         oaetCBZU47hePs7JEhja+kLdfkuKwEcTJwqlRxVRvjsgjiaF9zMN/xb+z53UCKJEuAec
+         9cMxCYEq0Rx5lW7JirPGhrutyoRzPCcptl4j3TDIUCuqJlF27s1oKTk5HwMpYNG8R8zQ
+         bP7JERRIyPZ2tvDb0d9mBFQoyG/5ij5ia2tkKLlTWBe/I8Ps1RvD+8Ijf3IjjkhtaXL/
+         resw==
+Received: by 10.50.0.241 with SMTP id 17mr1063725igh.40.1349775543358; Tue, 09
+ Oct 2012 02:39:03 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Tue, 9 Oct 2012 02:38:32 -0700 (PDT)
+In-Reply-To: <5073E87D.9020100@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207313>
 
-Hi list,
+On Tue, Oct 9, 2012 at 4:03 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Running 'git grep needle origin/master' on Windows gives numerous warnings
+> of the kind
+>
+> warning: unable to access 'origin/master:Documentation/.gitattributes':
+> Invalid argument
 
-I am using gitweb, git-daemon and gitolite on my Debian Squeeze server.
-I have some repositories however that I do not want to be available to
-the public (currently, that is gitolite-admin only). Those repositories
-do not have a "git-daemon-export-ok" file, and the gitweb config contains
+strace confirms it. Stack trace
 
-# path to git projects (<project>.git)
-$projectroot = "/home/git/repositories";
-# only show repos which allow daemon access
-$export_ok = "git-daemon-export-ok";
+#0  read_attr_from_file (path=0x820e818
+"HEAD:Documentation/.gitattributes", macro_ok=0) at attr.c:351
+#1  0x080d378d in read_attr (path=0x820e818
+"HEAD:Documentation/.gitattributes", macro_ok=0) at attr.c:436
+#2  0x080d3bf1 in prepare_attr_stack (path=0x820e7f0
+"HEAD:Documentation/.gitattributes") at attr.c:630
+#3  0x080d3f68 in collect_all_attrs (path=0x820e7f0
+"HEAD:Documentation/.gitattributes") at attr.c:747
+#4  0x080d3ffd in git_check_attr (path=0x820e7f0
+"HEAD:Documentation/.gitattributes", num=1, check=0xbfffd848) at
+attr.c:761
+#5  0x0815e736 in userdiff_find_by_path (path=0x820e7f0
+"HEAD:Documentation/.gitattributes") at userdiff.c:278
+#6  0x081058ca in grep_source_load_driver (gs=0xbfffd978) at grep.c:1504
+#7  0x08105907 in grep_source_is_binary (gs=0xbfffd978) at grep.c:1512
+#8  0x08104eaa in grep_source_1 (opt=0xbfffe304, gs=0xbfffd978,
+collect_hits=0) at grep.c:1180
 
-I am also using pathinfo to get prettier URLs. However, if I now try to
-access gitolite-admin.git in the browser, I get "404 Project Not Found".
-If I try to access some repository which dos not actually exist, I am
-redirected to the project index. This way, the existence of hidden
-repositories is disclosed.
-
-The problem is in the function evaluate_path_info which uses
-check_head_link to find out which part of the URL is the project.
-Replacing this by check_export_ok fixes the problem.
-
-Kind regards,
-Ralf
-
-PS: Please keep me in CC, I am not subscribed.
+Never touched userdiff.c before. Anybody?
+-- 
+Duy
