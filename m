@@ -1,77 +1,53 @@
-From: =?UTF-8?q?=C3=98yvind=20A=2E=20Holm?= <sunny@sunbase.org>
-Subject: [PATCH] configure.ac: Add missing comma to CC_LD_DYNPATH
-Date: Tue,  9 Oct 2012 16:26:11 +0200
-Message-ID: <1349792771-7936-1-git-send-email-sunny@sunbase.org>
+From: Jan Engelhardt <jengelh@inai.de>
+Subject: Re: Discussion around a --bindtodev option for git-daemon
+Date: Tue, 9 Oct 2012 16:48:03 +0200 (CEST)
+Message-ID: <alpine.LNX.2.01.1210091646430.7433@nerf07.vanv.qr>
+References: <50632F15.1030908@scourge.biz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: stefano.lattarini@gmail.com, gitster@pobox.com,
-	=?UTF-8?q? "=C3=98yvind=20A.=20Holm" ?= <sunny@sunbase.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 16:44:24 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Ronan Bignaux <r.bignaux@scourge.biz>
+X-From: git-owner@vger.kernel.org Tue Oct 09 16:48:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLb2g-0002sE-Jj
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 16:44:18 +0200
+	id 1TLb6a-0004tq-Q1
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 16:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750Ab2JIOoH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2012 10:44:07 -0400
-Received: from smtp.domeneshop.no ([194.63.252.54]:47515 "EHLO
-	smtp.domeneshop.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355Ab2JIOoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 10:44:06 -0400
-X-Greylist: delayed 1014 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Oct 2012 10:44:06 EDT
-Received: from 77.19.187.42.tmi.telenormobil.no ([77.19.187.42] helo=localhost.localdomain)
-	by smtp.domeneshop.no with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <sunny@sunbase.org>)
-	id 1TLam3-0006Fy-Bo; Tue, 09 Oct 2012 16:27:07 +0200
-X-Mailer: git-send-email 1.8.0.rc0.18.gf84667d
+	id S1753616Ab2JIOsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 10:48:07 -0400
+Received: from ares07.inai.de ([5.9.24.206]:55138 "EHLO ares07.inai.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753113Ab2JIOsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 10:48:04 -0400
+Received: by ares07.inai.de (Postfix, from userid 25121)
+	id B908996A0FAD; Tue,  9 Oct 2012 16:48:03 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by ares07.inai.de (Postfix) with ESMTP id 9981F96A0BF1;
+	Tue,  9 Oct 2012 16:48:03 +0200 (CEST)
+In-Reply-To: <50632F15.1030908@scourge.biz>
+User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207322>
 
-=46rom: "=C3=98yvind A. Holm" <sunny@sunbase.org>
+On Wednesday 2012-09-26 18:36, Ronan Bignaux wrote:
 
-40bfbde ("build: don't duplicate substitution of make variables",
-2012-09-11) breaks make by removing a necessary comma at the end of
-"CC_LD_DYNPATH=3D-rpath" in line 414.
+>I wrote this little patch to add a restrict option to bind only to a
+>specific network interface.
+>
+>I'd not deal with --inetd since there are some bugs in xinetd with ipv6
+>( and no more maintener ) , systemd/upstart are also Linux centric and
+>subject to controversy...
+>
+>"listen" option was not more useful in my case because it need ip as
+>parameter (you need fix ip or custom script for example).
 
-When executing "./configure --with-zlib=3DPATH", this resulted in
-
-      [...]
-      CC xdiff/xhistogram.o
-      AR xdiff/lib.a
-      LINK git-credential-store
-  /usr/bin/ld: bad -rpath option
-  collect2: ld returned 1 exit status
-  make: *** [git-credential-store] Error 1
-  $
-
-during make.
-
-Signed-off-by: =C3=98yvind A. Holm <sunny@sunbase.org>
----
- configure.ac | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/configure.ac b/configure.ac
-index da1f41f..c85888c 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -411,7 +411,7 @@ else
-       LDFLAGS=3D"${SAVE_LDFLAGS}"
-    ])
-    if test "$git_cv_ld_wl_rpath" =3D "yes"; then
--      CC_LD_DYNPATH=3D-Wl,-rpath
-+      CC_LD_DYNPATH=3D-Wl,-rpath,
-    else
-       AC_CACHE_CHECK([if linker supports -rpath], git_cv_ld_rpath, [
-          SAVE_LDFLAGS=3D"${LDFLAGS}"
---=20
-1.8.0.rc0.18.gf84667d
+There is a reason --listen wants an address: because bind(2) binds to 
+addresses, and in principle, that is really what is wanted, since you 
+want to continue being able to connect to your service from-to 
+localhost.
