@@ -1,110 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git fetch documentation problem or bug
-Date: Mon, 08 Oct 2012 16:33:05 -0700
-Message-ID: <7vpq4silou.fsf@alter.siamese.dyndns.org>
-References: <CAB9Jk9Ac06sfFMGizRq6Ztqd2tKS7BBqGOC891=z4615J3f4hA@mail.gmail.com>
- <7vfw5olqp9.fsf@alter.siamese.dyndns.org>
- <7vbogclqm6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] submodule: teach "foreach" command a --revision <tree-ish> option
+Date: Mon,  8 Oct 2012 20:50:10 -0400
+Message-ID: <1349743810-10753-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 01:33:43 2012
+X-From: git-owner@vger.kernel.org Tue Oct 09 02:50:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLMpQ-0002lR-DB
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 01:33:40 +0200
+	id 1TLO1q-0005EC-21
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 02:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291Ab2JHXdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 19:33:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42739 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750891Ab2JHXdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 19:33:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33EB38B07;
-	Mon,  8 Oct 2012 19:33:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j0n9OHfUFbPx2Ipuj/E2fIRRvnE=; b=EOJJue
-	V3SbOS02AmPfnUc2t+nfu1QDu9D5fHRGPAqIQrtDRG87kUCq0JjFOvToiHUs51gB
-	GIA4ijPDgKkuZvFDXD/Rh3WxnDNncsqyeBIvqfe0JkA9BiQ6iVl0Sqd1dF5Bclju
-	ZfFzQ0mwB+4CvZIIislo1cdDqHvoFUfs7B7Vk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KUqreRc/jU4iXB8ErD9SdKyYgmmXeuno
-	XGYqaCZXeYgmK2bx0lxyosVaHeW3fcgnx4qdVC9GTuPqgiR15LK0fRJF0vWPiJ3c
-	ABI77ux3kUFJF9EaB/yXVmm1fUVeA3dE/d8qmOpa7jwz6OBiEy0JeGSNa2h4v+9a
-	Cf1u8wPt9D8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 217878B06;
-	Mon,  8 Oct 2012 19:33:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 743838B05; Mon,  8 Oct 2012
- 19:33:07 -0400 (EDT)
-In-Reply-To: <7vbogclqm6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 08 Oct 2012 12:18:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 839968F8-11A0-11E2-83FF-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755284Ab2JIAuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 20:50:24 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:64403 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755183Ab2JIAuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 20:50:23 -0400
+Received: by mail-gh0-f174.google.com with SMTP id g15so1356562ghb.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 17:50:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=yMDHENnsHPUYD7U6gH8V6hJV6ZGrNzgS1zsUgmE5T1s=;
+        b=DOx/tGNUjLCvhGnH1PlAA9CRz2V8dfGya+x+WjAvfX4EKYHtLkHchl5G+VntsSvoGD
+         HNYs1KtPtVAzRDkValJJ+TD4rK+hausZ0M+3KdMknRKSSAQKYMKTRi7Dqs4SmYDnHnUG
+         HWuk5FREpNhjZeHRyYdxA78Aj2IVU76tg7eqdGY/x01eb7DmKjeDLym+uZIwnb9vDXiy
+         u6GLy1BqNT0vJYRUsDNoou6Q6IgsXqaSabqmGwBNZ5yfw1/oSoz4nlwNkTx64bhJumvR
+         8LxaDVtX8eZJNMQSqpbkIJK8XmuC0FX8c3ruDOR4JEG5iVqUOSrSBABfkMvuiJCbXwyQ
+         7VkA==
+Received: by 10.236.182.197 with SMTP id o45mr18052457yhm.23.1349743822358;
+        Mon, 08 Oct 2012 17:50:22 -0700 (PDT)
+Received: from localhost (cpe-174-097-217-221.nc.res.rr.com. [174.97.217.221])
+        by mx.google.com with ESMTPS id i20sm1579710ank.17.2012.10.08.17.50.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 08 Oct 2012 17:50:21 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207281>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Teach "git submodule foreach" a --revision <tree-ish> option. This
+is useful in combination with $sha1 to perform git commands that
+take a revision argument. For example:
 
-> In other words, you can do this from the command line if you want
-> to do the update.
->
->   $ git fetch origin master:refs/remotes/origin/master
+  $ git submodule foreach --revision v1.0 'git tag v1.0 $sha1'
 
-Now having said all that, we should probably revisit this and
-possibly other issues and for the ones we can reach concensus, start
-coding after 1.8.0 final.
+Previously, this would have required multiple steps:
 
-A good place to start may be $gmane/167149, where I listed (among
-other things that turned out to be undesirable, which are omitted in
-this copy):
+  $ git checkout v1.0
+  $ git submodule update
+  $ git submodule foreach 'git tag v1.0'
 
- * "git branch --set-upstream <name>" should not be about setting the
-   upstream of <name> to the current branch.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ Documentation/git-submodule.txt |  7 ++++++-
+ git-submodule.sh                | 27 ++++++++++++++++++++++++---
+ t/t7407-submodule-foreach.sh    | 15 +++++++++++++++
+ 3 files changed, 45 insertions(+), 4 deletions(-)
 
-   This has happened during 1.8.0 cycle [CMN].
-
- * "git push" default semantics will be "upstream" (renamed from
-   "tracking"), not "matching".
-
-   1.8.0 has the first step toward this [MM].
-
- * "git merge" without "what to merge" default to @{upstream}
-
-   This is not acceptable for the default, but the users can ask for
-   it with merge.defaultToUpstream since 1.7.5 era [JC]
-
- * Unify pathspec semantics
-
-   This has happened and commands that used to take only path prefix
-   style pathspecs now take globs as well [ND]
-
- * "git fetch $from $branch..." to update tracking branches
-
-   This is the topic in this thread.
-
-I personally do not think the downside of breaking backward
-compatibility is too bad.  If we do this only when we already are
-configured to keep remote tracking branch for branch $branch from
-remote $from (it has to be given as a nickname, not URL that happens
-to have an entry in the configuration), then a promiscuous fetch
-that grabs from a URL (or a nickname that is configured not to keep
-tracking branches) will not change any behaviour, and when you want
-to keep your remote tracking branch intact while doing one-shot
-fetch for whatever reason, you can say "git fetch $from $branch:" to
-explicitly decline copying.
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index b4683bba1b..6c889f5fd6 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -17,7 +17,8 @@ SYNOPSIS
+ 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+-'git submodule' [--quiet] foreach [--recursive] <command>
++'git submodule' [--quiet] foreach [--recursive] [--revision <tree-ish>]
++	      <command>
+ 'git submodule' [--quiet] sync [--] [<path>...]
+ 
+ 
+@@ -180,6 +181,10 @@ foreach::
+ 	of each submodule before evaluating the command.
+ 	If `--recursive` is given, submodules are traversed recursively (i.e.
+ 	the given shell command is evaluated in nested submodules as well).
++	If `--revision <tree-ish>` is given, submodules are traversed starting
++	at the given <tree-ish>. Though this does not alter the submodule check
++	outs, it may be combined with $sha1 to perform git commands that can
++	operate	on a particular commit, such as linkgit:git-tag[1].
+ 	A non-zero return from the command in any submodule causes
+ 	the processing to terminate. This can be overridden by adding '|| :'
+ 	to the end of the command.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b1107b6..5e7458e155 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -10,7 +10,7 @@ USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <r
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+-   or: $dashless [--quiet] foreach [--recursive] <command>
++   or: $dashless [--quiet] foreach [--recursive] [--revision <tree-ish>] <command>
+    or: $dashless [--quiet] sync [--] [<path>...]"
+ OPTIONS_SPEC=
+ . git-sh-setup
+@@ -379,6 +379,7 @@ Use -f if you really want to add it." >&2
+ cmd_foreach()
+ {
+ 	# parse $args after "submodule ... foreach".
++	revision=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -388,6 +389,11 @@ cmd_foreach()
+ 		--recursive)
+ 			recursive=1
+ 			;;
++		--revision)
++			git rev-parse --quiet --verify "$2" >/dev/null || usage
++			revision=$2
++			shift
++			;;
+ 		-*)
+ 			usage
+ 			;;
+@@ -404,7 +410,17 @@ cmd_foreach()
+ 	# command in the subshell (and a recursive call to this function)
+ 	exec 3<&0
+ 
+-	module_list |
++	if test -n "$revision"
++	then
++		# make ls-tree output look like ls-files output
++		git ls-tree -r $revision | grep '^160000 ' |
++		while read mode unused sha1 sm_path
++		do
++			echo "$mode $sha1 0 $sm_path"
++		done
++	else
++		module_list
++	fi |
+ 	while read mode sha1 stage sm_path
+ 	do
+ 		die_if_unmatched "$mode"
+@@ -421,7 +437,12 @@ cmd_foreach()
+ 				eval "$@" &&
+ 				if test -n "$recursive"
+ 				then
+-					cmd_foreach "--recursive" "$@"
++					if test -n "$revision"
++					then
++						cmd_foreach "--recursive" "--revision" "$sha1" "$@"
++					else
++						cmd_foreach "--recursive" "$@"
++					fi
+ 				fi
+ 			) <&3 3<&- ||
+ 			die "$(eval_gettext "Stopping at '\$sm_path'; script returned non-zero status.")"
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 9b69fe2e14..5c798b901b 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -179,6 +179,21 @@ test_expect_success 'test "foreach --quiet --recursive"' '
+ 	test_cmp expect actual
+ '
+ 
++sha1=$(cd submodule && git rev-parse HEAD~1)
++cat > expect <<EOF
++sub1 $sha1
++sub2 $sha1
++sub3 $sha1
++EOF
++
++test_expect_success 'test "foreach --quiet --revision"' '
++	(
++		cd clone2 &&
++		git submodule foreach -q --revision HEAD~2 "echo \$path \$sha1" > ../actual
++	) &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'use "update --recursive" to checkout all submodules' '
+ 	git clone super clone3 &&
+ 	(
+-- 
+1.7.12.2
