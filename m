@@ -1,59 +1,56 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Inconsistency in specifying commit & path for git diff
-Date: Tue, 09 Oct 2012 22:37:18 +0200
-Message-ID: <m2391n8jr5.fsf@igel.home>
-References: <50747E48.3060203@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: upload-pack is slow with lots of refs
+Date: Tue, 09 Oct 2012 22:46:42 +0200
+Message-ID: <50748D32.8020907@kdbg.org>
+References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com> <20121003180324.GB27446@sigill.intra.peff.net> <7vobkj4cb4.fsf@alter.siamese.dyndns.org> <20121003185542.GA3635@sigill.intra.peff.net> <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com> <506E7D01.8080509@viscovery.net> <CAJo=hJsYVdWeG0ZyqexEXNfOq_k1XDR_gGP+fy_z==LvdnWJTQ@mail.gmail.com> <5072EBD1.40500@kdbg.org> <CAJo=hJsJgqZqPxucRcSgYSa0N3pcw5seT9vcu2BE8WwfJVrvKQ@mail.gmail.com> <5074894D.90307@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Arthur Etchells <adetchells@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 09 22:37:32 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 22:46:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLgYW-00038y-Ew
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 22:37:32 +0200
+	id 1TLghc-0007ow-0V
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 22:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974Ab2JIUhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 16:37:22 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:42930 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116Ab2JIUhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 16:37:21 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XbqxV6Nqrz3hhqL;
-	Tue,  9 Oct 2012 22:37:18 +0200 (CEST)
-X-Auth-Info: HzO8NI1YxXmS2zfS+qE2k8q7jHErBEQoXS1jOoXfxfc=
-Received: from igel.home (ppp-88-217-104-135.dynamic.mnet-online.de [88.217.104.135])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XbqxV66KhzbbhF;
-	Tue,  9 Oct 2012 22:37:18 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 8B3D3CA2A4; Tue,  9 Oct 2012 22:37:18 +0200 (CEST)
-X-Yow: I wonder if I could ever get started in the credit world?
-In-Reply-To: <50747E48.3060203@gmail.com> (Arthur Etchells's message of "Tue,
-	09 Oct 2012 15:43:04 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753736Ab2JIUqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 16:46:45 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:51525 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753276Ab2JIUqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 16:46:44 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 73739130047;
+	Tue,  9 Oct 2012 22:46:43 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id C565C19F3D5;
+	Tue,  9 Oct 2012 22:46:42 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <5074894D.90307@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207344>
 
-Arthur Etchells <adetchells@gmail.com> writes:
+Am 09.10.2012 22:30, schrieb Johannes Sixt:
+> Am 09.10.2012 08:46, schrieb Shawn Pearce:
+>> As it turns out we don't really have this problem with git://. Clients
+>> can bury a v2 request in the extended headers where the host line
+>> appears today.
+> 
+> I tried, but it seems that todays git-daemons are too strict and accept
+> only \0host=foo\0, nothing else :-(
 
-> git diff <commit>:<path>..<commit>:<path>
+I take that back: Modern git-daemons accept "\0host=foo\0\0version=2\0",
+as you said.
 
-<commit>:<path> represents a tree or blob, but .. requires commits as
-its end points.
+It looks like SSH is the only stubborn protocol.
 
-(You can dereference a commit to get a tree or blob, but not the other
-way round.)
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+-- Hannes
