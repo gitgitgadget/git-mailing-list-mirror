@@ -1,56 +1,79 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: upload-pack is slow with lots of refs
-Date: Tue, 09 Oct 2012 22:46:42 +0200
-Message-ID: <50748D32.8020907@kdbg.org>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com> <20121003180324.GB27446@sigill.intra.peff.net> <7vobkj4cb4.fsf@alter.siamese.dyndns.org> <20121003185542.GA3635@sigill.intra.peff.net> <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com> <506E7D01.8080509@viscovery.net> <CAJo=hJsYVdWeG0ZyqexEXNfOq_k1XDR_gGP+fy_z==LvdnWJTQ@mail.gmail.com> <5072EBD1.40500@kdbg.org> <CAJo=hJsJgqZqPxucRcSgYSa0N3pcw5seT9vcu2BE8WwfJVrvKQ@mail.gmail.com> <5074894D.90307@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] wildmatch: remove static variable force_lower_case
+Date: Tue, 09 Oct 2012 13:47:42 -0700
+Message-ID: <7vtxu3e5jl.fsf@alter.siamese.dyndns.org>
+References: <1349752147-13314-1-git-send-email-pclouds@gmail.com>
+ <1349752147-13314-5-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 09 22:46:56 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 22:47:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLghc-0007ow-0V
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 22:46:56 +0200
+	id 1TLgia-0008N6-UV
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 22:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736Ab2JIUqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 16:46:45 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:51525 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753276Ab2JIUqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 16:46:44 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 73739130047;
-	Tue,  9 Oct 2012 22:46:43 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id C565C19F3D5;
-	Tue,  9 Oct 2012 22:46:42 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
-In-Reply-To: <5074894D.90307@kdbg.org>
+	id S1756015Ab2JIUrr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2012 16:47:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43395 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751332Ab2JIUrp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2012 16:47:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00F549387;
+	Tue,  9 Oct 2012 16:47:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=PCB3w7/jsUdK
+	fl/mT9tfUsYv2Dw=; b=E7QmOjiUqBZrBjaHWK4/T2+zttTipcSB8TyDdpag/BGh
+	Q8rTB2spXvaDS89E/yWCc8BBZUSB+YMnepVwU5stHJiqh+ysTV0JTAv8FYgLeFgz
+	XM+hGLp3xbVsujobMdAnQfmn6a9IElsoLth59syAW+OZNHtj+9MZhjaYA/vhqV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qepx3o
+	wkRTr2kZoPWPrMVJoGXB0d2MiCTlGSALfL7lLRJQpVhgouDUQS3rIhlbGfjAb/+F
+	TuzBkajutrCenT8gw7MNIMw67+LoYhTZVX2N9z/Vi59Tn+9h+OXCH2ck3w/J30s0
+	7l7f8UkYQidlVGbqp4VfCQ4BWnU5GDPEEcA8I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E101A9386;
+	Tue,  9 Oct 2012 16:47:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58A669385; Tue,  9 Oct 2012
+ 16:47:44 -0400 (EDT)
+In-Reply-To: <1349752147-13314-5-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 9 Oct
+ 2012 10:09:03 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 936030C0-1252-11E2-A431-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207345>
 
-Am 09.10.2012 22:30, schrieb Johannes Sixt:
-> Am 09.10.2012 08:46, schrieb Shawn Pearce:
->> As it turns out we don't really have this problem with git://. Clients
->> can bury a v2 request in the extended headers where the host line
->> appears today.
-> 
-> I tried, but it seems that todays git-daemons are too strict and accept
-> only \0host=foo\0, nothing else :-(
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-I take that back: Modern git-daemons accept "\0host=foo\0\0version=2\0",
-as you said.
+> diff --git a/wildmatch.c b/wildmatch.c
+> index 7b64a6b..2382873 100644
+> --- a/wildmatch.c
+> +++ b/wildmatch.c
+> @@ -11,8 +11,8 @@
+> =20
+>  #include <stddef.h>
+>  #include <ctype.h>
+> -#include <string.h>
+> =20
+> +#include "cache.h"
+>  #include "wildmatch.h"
 
-It looks like SSH is the only stubborn protocol.
-
--- Hannes
+This is wrong; the includes from the system headers should have
+been removed in the previous step where the series "integrated"
+wildmatch to git, after which point the first include any C source
+that is not at the platform-compatibility layer should be cache.h
+or git-compat-util.h.
