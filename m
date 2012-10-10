@@ -1,91 +1,94 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v4 12/12] t3070: disable two fnmatch tests that have different results on different libc
-Date: Wed, 10 Oct 2012 17:40:51 +0700
-Message-ID: <1349865651-31889-13-git-send-email-pclouds@gmail.com>
-References: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?IkphbiBILiBTY2jDtm5oZXJyIg==?= <schnhrr@cs.tu-berlin.de>
+Subject: Re: [PATCH 5/5] format-patch: tests: check rfc822+rfc2047 in to+cc
+ headers
+Date: Wed, 10 Oct 2012 12:44:00 +0200
+Message-ID: <50755170.1080205@cs.tu-berlin.de>
+References: <1349717609-4770-1-git-send-email-schnhrr@cs.tu-berlin.de> <1349717609-4770-6-git-send-email-schnhrr@cs.tu-berlin.de> <7v391nfmzn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 12:42:29 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 12:44:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLtkC-0003BM-EM
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 12:42:28 +0200
+	id 1TLtm5-0004Fc-CE
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 12:44:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755755Ab2JJKmS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 06:42:18 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:49272 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755738Ab2JJKmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 06:42:15 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so466174pad.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:42:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=9ZPv/ORxsJR/pI3nk2wCWhRzTw6eNU7VpcpDSfUZYQ0=;
-        b=Tf/AZ21fZGBKNJwOZ4S1oR1aIo4OrcJb1krA9ZGjpy3Gnx4YS8v8XwNCOkMFdDWTjp
-         ob3tSWlMJlOu760AVTnTrQNS5p2Zu7my68myukQ2tttQrf43DVbqDNnBGUmRCsFnBA+z
-         Gx+oktNGG8ohwQpVOzC4pEWC8PxPcjlrNyvD/apBEkEGdwK6LxYXj6gg0QcTDy5qKQM1
-         UmsWmMIKdNl6lGu7haLclNwTaSheoCwmnJhfYOmR8c2Vwfr0T8B5SmL8Obm/cqTWe2cE
-         4mKzElm+MjTuNNAirSCpUrYidmAcxARkDsjNVoULnSa0NgXwdOp7qJexM8p07zSp82LQ
-         zSFg==
-Received: by 10.68.211.99 with SMTP id nb3mr73293553pbc.16.1349865735689;
-        Wed, 10 Oct 2012 03:42:15 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.54.82])
-        by mx.google.com with ESMTPS id it6sm851968pbc.14.2012.10.10.03.42.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 03:42:15 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 17:42:07 +0700
-X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
-In-Reply-To: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
+	id S1755758Ab2JJKoP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 06:44:15 -0400
+Received: from mail.eecsit.tu-berlin.de ([130.149.17.13]:48393 "EHLO
+	mail.cs.tu-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755055Ab2JJKoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 06:44:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost-12225.cs.tu-berlin.de (Postfix) with ESMTP id 4834C6D57
+	for <git@vger.kernel.org>; Wed, 10 Oct 2012 12:44:12 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at cs.tu-berlin.de (including SpamAssassin)
+Received: from mailhost.cs.tu-berlin.de ([127.0.0.1])
+	by localhost (mail.cs.tu-berlin.de [127.0.0.1]) (amavisd-new, port 12224)
+	with ESMTP id x8Ha7M04PNHq 04513-02;
+	Wed, 10 Oct 2012 12:44:00 +0200 (CEST) 13564
+Received: from [130.149.91.59] (asahi.kbs.tu-berlin.de [130.149.91.59])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: schnhrr)
+	by mailhost.cs.tu-berlin.de (Postfix) with ESMTPSA;
+	Wed, 10 Oct 2012 12:44:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.7) Gecko/20120919 Thunderbird/10.0.7
+In-Reply-To: <7v391nfmzn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207398>
 
-fnmatch on glibc-2.12.1 returns no match. glibc-2.15 returns ok.
+Am 09.10.2012 21:45, schrieb Junio C Hamano:
+> Jan H. Sch=C3=B6nherr <schnhrr@cs.tu-berlin.de> writes:
+>=20
+>> +test_expect_failure 'additional command line cc (rfc822)' '
+>> +
+>> +	git config --replace-all format.headers "Cc: R E Cipient <rcipient=
+@example.com>" &&
+>>  	git format-patch --cc=3D"S. E. Cipient <scipient@example.com>" --s=
+tdout master..side | sed -e "/^\$/q" >patch5 &&
+>> -	grep "^Cc: R. E. Cipient <rcipient@example.com>,\$" patch5 &&
+>> -	grep "^ *S. E. Cipient <scipient@example.com>\$" patch5
+>> +	grep "^Cc: R E Cipient <rcipient@example.com>,\$" patch5 &&
+>> +	grep "^ *"S. E. Cipient" <scipient@example.com>\$" patch5
+>=20
+> Hrm.
+>=20
+> As we are not in the business of parsing out whatever junk given
+> with --cc or --recipient from the command line or configuration, but
+> are merely parroting them to the output stream, isn't this a
+> user-error in the test that gives --cc=3D'S. E. Cipient <a@ddre.ss>'
+> instead of giving --cc=3D'"S. E. Cipient" <a@ddre.ss>'?  Same comment
+> on the new 'expect-failure' tests.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- t/t3070-wildmatch.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Originally, I just wanted to emphasize, that --to and --cc are
+currently handled differently than in git-send-email, where
+all this quoting/encoding is done.
 
-diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-index f21da6c..38042eb 100755
---- a/t/t3070-wildmatch.sh
-+++ b/t/t3070-wildmatch.sh
-@@ -13,6 +13,8 @@ match() {
- 	fi &&
- 	if [ $2 =3D 1 ]; then
- 	    test-wildmatch fnmatch '$3' '$4'
-+	elif [ $2 =3D x ]; then
-+	    true
- 	else
- 	    ! test-wildmatch fnmatch '$3' '$4'
- 	fi
-@@ -129,8 +131,8 @@ match 1 1 ']' '[\]]'
- match 0 0 '\]' '[\]]'
- match 0 0 '\' '[\]]'
- match 0 0 'ab' 'a[]b'
--match 0 1 'a[]b' 'a[]b'
--match 0 1 'ab[' 'ab['
-+match 0 x 'a[]b' 'a[]b'
-+match 0 x 'ab[' 'ab['
- match 0 0 'ab' '[!'
- match 0 0 'ab' '[-'
- match 1 1 '-' '[-]'
---=20
-1.7.12.1.406.g6ab07c4
+And it is much more convenient to add
+	--cc 'Jan H. Sch=C3=B6nherr <...>'
+than
+	--cc '=3D?UTF-8?q?Jan=3D20H=3D2E=3D20Sch=3DC3=3DB6nherr?=3D <...>'
+
+Even more, since I would expect git to correctly handle
+addresses given in a format that is also used elsewhere
+within git.
+
+
+However, I agree that we are not responsible to check/quote/encode
+anything when the user supplies whole headers (though we probably
+could).
+
+
+But if I cannot convince you, I'll just drop this patch. :)
+
+Regards
+Jan
