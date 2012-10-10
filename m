@@ -1,116 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 7/7] log: honor grep.* configuration
-Date: Wed, 10 Oct 2012 00:55:14 -0700
-Message-ID: <1349855714-17008-8-git-send-email-gitster@pobox.com>
-References: <1349855714-17008-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 09:56:07 2012
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: git checkout error
+Date: Wed, 10 Oct 2012 10:52:11 +0200
+Message-ID: <CAB9Jk9BmwuGXsQmQR3Ck58h2uA4gam8n-VWJTwgv_puJZB2sXg@mail.gmail.com>
+References: <CAB9Jk9DUEL_J3MmH_4k7NC82m+crpCf1r3NS3gQBMZy+kvY3-A@mail.gmail.com>
+	<m2lifg7zsj.fsf@igel.home>
+	<CAB9Jk9CZ8d=8ugYs7XHXs84Kj9xJmTHZyZ2J0hU66OBS7YDZTg@mail.gmail.com>
+	<7v626jdx8f.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9AFnauxX0dk8LfpBkpGDSWpWhqnzVew1Eo51K+qEA680A@mail.gmail.com>
+	<7vpq4qdbas.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 10:52:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLr9C-0000lc-HU
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 09:56:06 +0200
+	id 1TLs1i-0005Ew-59
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 10:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754717Ab2JJHzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 03:55:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44473 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754489Ab2JJHzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 03:55:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B41056FB6
-	for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:55:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ls+4
-	81kfnNsLxpF1msxth+ecMa4=; b=uG6gkqLKM/uigkWySWOe2tlFwqnKhgkBUtHk
-	srk5vtmmWd+EuQUoxE/r15x2MssaTWvZHaCty80F6sGNNxKrvmp+LrQjGi36KhfK
-	evckiPvi8vKSyoiLQhBJGC0DRziM02oHAEpJB+JWhXZISbofCgZ2aeU+L+ha8pbn
-	r++kRwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=fnRhXB
-	kB7xl2TxufuW6ac5P7Am6qiXrrOG/rQmYnKHG0lwLO5VRafGGTgSPQ9bf6X1a3yT
-	cQ4CfA/4z8+VtaMzJD0bOqu6HoEwSKYmvaAwung2Agl7PhA6xiXYF2OD2kxE02JI
-	+27nG7J0L6IexOpHVQV1wi1XSM/u8Boc2o2Io=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0B566FB5
-	for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:55:49 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F55F6FB2 for
- <git@vger.kernel.org>; Wed, 10 Oct 2012 03:55:48 -0400 (EDT)
-X-Mailer: git-send-email 1.8.0.rc1.76.g5a375e6
-In-Reply-To: <1349855714-17008-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E7B7C392-12AF-11E2-9086-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751511Ab2JJIwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 04:52:14 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:62347 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351Ab2JJIwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 04:52:12 -0400
+Received: by mail-vc0-f174.google.com with SMTP id fo13so442867vcb.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 01:52:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=B6IjLT0nrdL44dbjxVE6ogLJTNStQC2hi4cLdYNDomY=;
+        b=zugqKGdaFt3fJzEWJcUIriQPZ5cB8XqGe4p3JCrSOYXnRrs4z67w2mYXR1I91v9OdK
+         s73pnIOfN6pTjFEwuF+DNPKxecGRB/lDK/AS08S51s4AuvR/zE0v0ZJ/stqcG9FKiBdu
+         rXBUGlK4rE11TDponFcY0LhmIoGDXuxwlikcDPCzbwJa4D312tKV6AlKjtKPdPir/lR2
+         4IoxMZ/tdSFd0YlzFevFVOxuaH46kO5Ygf2KB4EOQdvpk/S7pw3JJU2XQ+d+FpPBC6bY
+         7ItoaWkb1WxPQ4/4F7dJDrTmykUBjHaOztVNMwZVaRASBTTaCngwAMdUOvOwFpkGo/pN
+         eTRQ==
+Received: by 10.52.100.229 with SMTP id fb5mr3517402vdb.103.1349859131755;
+ Wed, 10 Oct 2012 01:52:11 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Wed, 10 Oct 2012 01:52:11 -0700 (PDT)
+In-Reply-To: <7vpq4qdbas.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207380>
 
-Now the grep_config() callback is reusable from other configuration
-callbacks, call it from git_log_config() so that grep.patterntype
-and friends can be used with the commands in the "git log" family.
+Hi Junio
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/log.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+> It is not difficult.  The discussion on this list is usually done
+> via patches, and without one, constant talking is buried in other
+> noise and often go unnoticed.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 09cf43e..e7b7db1 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -351,7 +351,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!prefixcmp(var, "color.decorate."))
- 		return parse_decorate_color_config(var, 15, value);
--
-+	if (grep_config(var, value, cb) < 0)
-+		return -1;
- 	return git_diff_ui_config(var, value, cb);
- }
- 
-@@ -360,6 +361,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
- 
-+	init_grep_defaults();
- 	git_config(git_log_config, NULL);
- 
- 	init_revisions(&rev, prefix);
-@@ -450,6 +452,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	struct pathspec match_all;
- 	int i, count, ret = 0;
- 
-+	init_grep_defaults();
- 	git_config(git_log_config, NULL);
- 
- 	init_pathspec(&match_all, NULL);
-@@ -530,6 +533,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
- 
-+	init_grep_defaults();
- 	git_config(git_log_config, NULL);
- 
- 	init_revisions(&rev, prefix);
-@@ -552,6 +556,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
- 
-+	init_grep_defaults();
- 	git_config(git_log_config, NULL);
- 
- 	init_revisions(&rev, prefix);
-@@ -1121,6 +1126,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	extra_hdr.strdup_strings = 1;
- 	extra_to.strdup_strings = 1;
- 	extra_cc.strdup_strings = 1;
-+	init_grep_defaults();
- 	git_config(git_format_config, NULL);
- 	init_revisions(&rev, prefix);
- 	rev.commit_format = CMIT_FMT_EMAIL;
--- 
-1.8.0.rc1.76.g5a375e6
+Could you accept for very small changes also the simple indication of
+the change itself instead of a patch?
+
+>
+> There is however an issue about documentation consistency.  Do we
+> use elsewhere ( A | B | C ... ) to denote "You must write one (and
+> only one) among A, B, C, ..." consistently in the documentation?
+
+There is no standard for it. Posix provides a standard for commands:
+
+     http://pubs.opengroup.org/onlinepubs/9699919799/
+
+but does not mention (normal) parentheses to indicate choice.
+There is one applicable standard for this, though, the ISO 14977:
+
+     http://www.cl.cam.ac.uk/~mgk25/iso-14977.pdf
+
+which gives parentheses "()" the meaning of grouping (and then with "|"
+inside them, the meaning of choice).
+Parentheses are used in:
+
+    - git branch
+    - git commit
+    - git reset
+    - git remote
+    - git submodule
+    - git bisect
+    - git grep
+    - git am
+    - git apply
+    - git format-patch
+    - git cat-file
+    - git commit-tree
+    - git rev-list
+    - git update-index
+
+I did not find in the documentation an explanation of the use of
+parentheses, but
+to me they seem to have been used consistently.
+
+-Angelo
