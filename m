@@ -1,85 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rm and add, but not rename, of identical files
-Date: Wed, 10 Oct 2012 14:47:26 -0700
-Message-ID: <7v1uh6atjl.fsf@alter.siamese.dyndns.org>
-References: <1349894347.32696.10.camel@drew-northup.unet.maine.edu>
+Subject: Re: [PATCH v2 2/2] attr: more matching optimizations from .gitignore
+Date: Wed, 10 Oct 2012 14:50:52 -0700
+Message-ID: <7vwqyy9etf.fsf@alter.siamese.dyndns.org>
+References: <7vd30si665.fsf@alter.siamese.dyndns.org>
+ <1349864466-28289-1-git-send-email-pclouds@gmail.com>
+ <7v626iatt9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:47:42 2012
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:51:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM47x-0001Wt-Ea
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:47:41 +0200
+	id 1TM4BG-0003PV-QP
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754971Ab2JJVrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 17:47:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49435 "EHLO
+	id S1756663Ab2JJVu4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 17:50:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51172 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754629Ab2JJVra (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 17:47:30 -0400
+	id S1755199Ab2JJVuz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 17:50:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 303DD8CD0;
-	Wed, 10 Oct 2012 17:47:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E7F78DD8;
+	Wed, 10 Oct 2012 17:50:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tUFpPCus6njDMCPPzCxRySeGq7A=; b=LdsvDW
-	UVIJROlr7YFvheRygZjCOxtyf/ky4JMP8s5CGCqfktYQT58uzEELq+og+0gJg3fE
-	BE7dqWXXZe9wFX3VyFnlzJv89VudEoc/garXwhlOsYPD+mGlIUuT/0t3DXkTA66b
-	qwWPpZyrhbdPjJaKUqOw+L0tiBwZjJdC5P7ys=
+	:content-type:content-transfer-encoding; s=sasl; bh=CHB1nvcKqHlq
+	DulQE+LQ2ql2rr4=; b=s5Zc7dgy3xBj7rhBwHPQwki8IjxXc+N7V7q1dLjTgQxN
+	TOkngVhvpsKmjqEM5+glZ6YUt3cZ56gs8FiIJp0mAxDJCJkXkwStZbO08PzVgKX5
+	AZdPcZallAAAHSvLNHrW5ztyqTn28NkgHsvv2I20qHl0Bmm4HgzLqAcbiaPnJyI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e6vanrmXXJvB/uEZgB3U69u9GMOfNbiT
-	0Noioh+U2lsfxUFR4PqEYZQP7+pxb7bpZ9ePpo1PHMK+ygBGZR9lnJvNzwZPqkSC
-	KVS0aNHG0bo4D8MFvQEOWCHo/76J/iaftkAd4Y6PthMfvD0pfbuO2grKd05RjjFP
-	J86BVYzLiFM=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=VVrZxI
+	cwTQs0oBwqBcMIXX4ckS4mjwpzI/TAK21SgU6GJ7VNZ/abppps8/V+pgiunaq0WJ
+	O0HizSum+NaHU1wQ+oiawV/SVOI8y/kJFF10l8c4lOL9owe/DR+RdDCQiJrwiwEk
+	wWv1E8+Wnf0uHFFFtqzdoaGz0UKTNVo1/D29E=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E7988CCF;
-	Wed, 10 Oct 2012 17:47:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A3D28DD7;
+	Wed, 10 Oct 2012 17:50:55 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 879FF8CCD; Wed, 10 Oct 2012
- 17:47:28 -0400 (EDT)
-In-Reply-To: <1349894347.32696.10.camel@drew-northup.unet.maine.edu> (Drew
- Northup's message of "Wed, 10 Oct 2012 14:39:07 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 988AC8DD3; Wed, 10 Oct 2012
+ 17:50:54 -0400 (EDT)
+In-Reply-To: <7v626iatt9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 10 Oct 2012 14:41:38 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 16224A12-1324-11E2-ADB2-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 90F5F48C-1324-11E2-8959-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207447>
 
-Drew Northup <drew.northup@maine.edu> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       rc.d/rc2.d/S08iptables
-> #       rc.d/rc3.d/S08iptables
-> #       rc.d/rc4.d/S08iptables
-> ...
-> no changes added to commit (use "git add" and/or "git commit -a")
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
-> It detects the changes as renames however―which in this case isn't
-> appropriate:
+>>    @@ -690,16 +689,18 @@ static int path_matches(const char *pathnam=
+e, int pathlen,
+>>     	 * contain the trailing slash
+>>     	 */
+>>    =20
+>>    -	if (pathlen < baselen ||
+>>    +	if (pathlen < baselen + 1 ||
+>>     	    (baselen && pathname[baselen] !=3D '/') ||
+>>    -	    strncmp(pathname, base, baselen))
+>>    +	    strncmp_icase(pathname, base, baselen))
 >
-> [root@drew-northup ~]# etckeeper vcs status
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #       renamed:    rc.d/rc2.d/K92iptables -> rc.d/rc2.d/S08iptables
-> #       renamed:    rc.d/rc3.d/K92iptables -> rc.d/rc3.d/S08iptables
-> #       renamed:    rc.d/rc4.d/K92iptables -> rc.d/rc4.d/S08iptables
-> #...
+> Shouldn't the last comparison be
+>
+> 	strncmp_icase(pathname, base, baselen + 1)
+>
+> instead, if you are trying to match this part from dir.c where
+> baselen does count the trailing slash?
+>
+> 		if (pathlen < x->baselen ||
+> 		    (x->baselen && pathname[x->baselen-1] !=3D '/') ||
+> 		    strncmp_icase(pathname, x->base, x->baselen))
+> 			continue;
+>
+> In other words, relative to what was queued to 'pu', something like
+> this instead....
 
-Given that all of these six files have the same contents, I actually
-am slightly impressed how well Git matched them up ;-).
-
-But more seriously, why do you have rc.d/rc2.d/S08iptables untracked
-in the working tree but in the index to be committed?
+Aaaaand,... it doesn't work and breaks t0003.sh.  Sigh...
