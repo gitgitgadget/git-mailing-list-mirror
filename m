@@ -1,61 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC] svn test: escape peg revision separator using
- empty peg rev
-Date: Wed, 10 Oct 2012 20:37:30 +0000
-Message-ID: <20121010203730.GA19115@dcvr.yhbt.net>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <1343468872-72133-2-git-send-email-schwern@pobox.com>
- <20120728141652.GA1603@burratino>
- <50143E34.8090802@pobox.com>
- <20121009084145.GA19784@elie.Belkin>
- <5073F2C0.6000504@drmicha.warpmail.net>
- <20121009101953.GB28120@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is anyone working on a next-gen Git protocol?
+Date: Wed, 10 Oct 2012 13:46:30 -0700
+Message-ID: <7vlifeawd5.fsf@alter.siamese.dyndns.org>
+References: <CACBZZX6b+3P8M+z+X13k9Pq3tvVUfs_k1=foQVreX8K801=efQ@mail.gmail.com>
+ <5072973D.4080703@op5.se> <7vtxu5lyjr.fsf@alter.siamese.dyndns.org>
+ <035A66D9-FAF0-48EE-B161-7D0CAD92F2FB@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Torsten Schmutzler <git-ts@theblacksun.eu>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 22:37:45 2012
+Cc: Andreas Ericsson <ae@op5.se>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, spearce@spearce.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 10 22:46:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM32G-0005Vv-P8
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 22:37:45 +0200
+	id 1TM3Ay-00028Q-AQ
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 22:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757324Ab2JJUhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 16:37:34 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:50128 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757180Ab2JJUhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 16:37:32 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33AEA1F70C;
-	Wed, 10 Oct 2012 20:37:30 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20121009101953.GB28120@elie.Belkin>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753005Ab2JJUqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 16:46:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51074 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752781Ab2JJUqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 16:46:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ACB29A23;
+	Wed, 10 Oct 2012 16:46:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FSkLhJO1oc/ZJZ/zM2mC2GL3KzA=; b=jwfKC2
+	Zt3XPFeWwmb9tG3S2mrdyUWjcuna1N5NLfGsvP3yxtSrsBm5+66+rFyHo+8081uu
+	+hflGSUV0fS9SesL9JQJNO25Pt8oqGHdg7ulohI10qGi/uir/3P2T/UH2nzzGOgs
+	4ii+T3lAxZxPwJSi4VKjNOhIi8vbaaVLkQvaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kOP2tntOPehpx1B7Q5QRowqurPstGmS0
+	C4guv1bXnS25bQQMarE3ZxX5yl1495+etVso3wkGp1ulYD/DHRxu2OPvx2OplVQa
+	TevD3Ws+kDe7g0+sZ9O1kFnUsDvl4WYDp/UXmy4vdWNGQ/zbFonK0JEGlGC5RzBz
+	0rVCfrJa8as=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67E109A22;
+	Wed, 10 Oct 2012 16:46:32 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D10CC9A18; Wed, 10 Oct 2012
+ 16:46:31 -0400 (EDT)
+In-Reply-To: <035A66D9-FAF0-48EE-B161-7D0CAD92F2FB@zib.de> (Steffen
+ Prohaska's message of "Wed, 10 Oct 2012 21:13:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 92928CFA-131B-11E2-97AF-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207439>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Michael J Gruber wrote:
-> > Jonathan Nieder venit, vidit, dixit 09.10.2012 10:41:
-> 
-> >> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> >
-> > Tested with Subversion 1.6.18.
+Steffen Prohaska <prohaska@zib.de> writes:
 
-Thanks both.  Also pushed to "master" on git://bogomips.org/git-svn.git
-(commit 44bc5ac71fd99f195bf1a3bea63c11139d2d535f)
+> I've recently discovered that the current protocol can be amazingly
+> inefficient when it comes to transferring binary objects.  Assuming two
+> repositories that are in sync.  After a 'git checkout --orphan && git
+> commit', a subsequent transfers sends all the blobs attached to the new
+> commit, although the other side already has all the blobs.
 
-Jonathan Nieder (2):
-      git svn: work around SVN 1.7 mishandling of svn:special changes
-      svn test: escape peg revision separator using empty peg rev
+I do not think it has anything to do with binary, but what you
+deserve from using orphan, where you declared that the history does
+not have anything to do with the original.
+
+If both of your repositories had the two paralle lines of these
+histories as branches, the transfer would have went well with or
+without binary objects.
