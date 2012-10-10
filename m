@@ -1,75 +1,59 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: git checkout error
-Date: Wed, 10 Oct 2012 09:02:30 +0200
-Message-ID: <CAB9Jk9AFnauxX0dk8LfpBkpGDSWpWhqnzVew1Eo51K+qEA680A@mail.gmail.com>
-References: <CAB9Jk9DUEL_J3MmH_4k7NC82m+crpCf1r3NS3gQBMZy+kvY3-A@mail.gmail.com>
-	<m2lifg7zsj.fsf@igel.home>
-	<CAB9Jk9CZ8d=8ugYs7XHXs84Kj9xJmTHZyZ2J0hU66OBS7YDZTg@mail.gmail.com>
-	<7v626jdx8f.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git svn clone options
+Date: Wed, 10 Oct 2012 09:14:07 +0200
+Message-ID: <m28vbe7q9s.fsf@igel.home>
+References: <CAHtLG6SikQGT12jn-EBYmL7wL_EF-+kpRtcne2wM8XTrFqSpSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 09:02:47 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 09:14:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLqJa-0006zN-La
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 09:02:46 +0200
+	id 1TLqUv-0004mH-Fq
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 09:14:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615Ab2JJHCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 03:02:32 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:45204 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750870Ab2JJHCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 03:02:31 -0400
-Received: by mail-vc0-f174.google.com with SMTP id fo13so362381vcb.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 00:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7IwM7EReSgnLneI1onD1UGF+e5ULe7VII6skkuX0YCE=;
-        b=li4zVKl21Bkkl38Z3Z3hePNAySx3Hp2sv49V0tbXLLZMpP8kJ9z7VdV60FdBkOxbPB
-         KmpyjM+Gh1kFC8b+ylD+i2cExsBaqMqPUtTV6p+n6GoyY9YEfGMnn4aKgckgvL8eWUTk
-         wv3ByGQ7Ch+quPp8lvNAtVNWUUFf/5twUVf2aX7/28iEwrEplcEyrB6YhxZS3xVjOVmT
-         D4KX/vTaiKjbfdHloh24cUwr+gzVJbjTDw4qXHA8mSa7iRm/uKY5ygOF6BMRl61DcRtg
-         c3wcazS2EYCGXreax1dZr5Tiprs0Gp3ggwAPrSWkdPcYqOhfDfmlWmlqp4/w+bAGUzny
-         nrNA==
-Received: by 10.58.179.40 with SMTP id dd8mr2790540vec.41.1349852550423; Wed,
- 10 Oct 2012 00:02:30 -0700 (PDT)
-Received: by 10.58.68.40 with HTTP; Wed, 10 Oct 2012 00:02:30 -0700 (PDT)
-In-Reply-To: <7v626jdx8f.fsf@alter.siamese.dyndns.org>
+	id S1751335Ab2JJHOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 03:14:14 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:56012 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046Ab2JJHON (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 03:14:13 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3Xc64J07XDz4KKC2;
+	Wed, 10 Oct 2012 09:14:08 +0200 (CEST)
+X-Auth-Info: Fd+5w4Ksw/AHyq+HfzY9Jrv+9l59VvyJJljbOsKwKik=
+Received: from igel.home (ppp-93-104-147-205.dynamic.mnet-online.de [93.104.147.205])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3Xc64H6whMzbbfg;
+	Wed, 10 Oct 2012 09:14:07 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id A39ABCA2A4; Wed, 10 Oct 2012 09:14:07 +0200 (CEST)
+X-Yow: Okay, BARBRA STREISAND, I recognize you now!!  Also EFREM ZIMBALIST,
+ JUNIOR!!  And BEAUMONT NEWHALL!!  Everybody into th' BATHROOM!
+In-Reply-To: <CAHtLG6SikQGT12jn-EBYmL7wL_EF-+kpRtcne2wM8XTrFqSpSA@mail.gmail.com>
+	(=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Wed, 10 Oct 2012 11:15:46
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207370>
 
-Junio,
+=E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
 
-giving the user a better error message is certainly an improvement.
-But would not be another improvement to describe better the command syntax
-so as to help the user write the command right in the first place?
-After all, what is the syntax section in commands for?
-If I had seen in the syntax:
+> Could you clarify --branch option, is it the same as --branches.
 
-     git checkout [-q] [-f] [-m] [ [--track|--no-track](-b|-B)
-<new_branch>] [<start_point>]
+Switches can be abbreviated as long as they are unambiguous.
 
-I would have written the command correctly, and not even stumbled on a
-misleading
-error message.
-Note that the above syntax is exactly what the command must look like.
-The syntax is mostly a description of the form of command for the
-user. Internally, the
-implementer can use it or can even use a different one (e.g. a more
-lenient one and
-detect errors at the semantic level instead). But here what matters is
-not how the
-command is implemented, but how the user has to form it.
-Why it is so difficult to convince people to make documentation better?
+Andreas.
 
--Angelo
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
