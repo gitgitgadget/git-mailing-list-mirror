@@ -1,141 +1,109 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3] git svn: work around SVN 1.7 mishandling of svn:special
- changes
-Date: Wed, 10 Oct 2012 13:47:33 -0700
-Message-ID: <20121010204733.GA4517@elie.Belkin>
+Subject: Re: [PATCH/RFC] svn test: escape peg revision separator using empty
+ peg rev
+Date: Wed, 10 Oct 2012 14:02:18 -0700
+Message-ID: <20121010210218.GB4517@elie.Belkin>
 References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <1343468872-72133-8-git-send-email-schwern@pobox.com>
- <20121006192455.GA14969@elie.Belkin>
- <20121009101239.GA28120@elie.Belkin>
- <20121010201125.GA30952@dcvr.yhbt.net>
+ <1343468872-72133-2-git-send-email-schwern@pobox.com>
+ <20120728141652.GA1603@burratino>
+ <50143E34.8090802@pobox.com>
+ <20121009084145.GA19784@elie.Belkin>
+ <5073F2C0.6000504@drmicha.warpmail.net>
+ <20121009101953.GB28120@elie.Belkin>
+ <20121010203730.GA19115@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Torsten Schmutzler <git-ts@theblacksun.eu>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
 	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
 To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Oct 10 22:47:53 2012
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:02:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM3C4-0002iA-AG
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 22:47:52 +0200
+	id 1TM3QI-0002DV-9s
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159Ab2JJUrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 16:47:42 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:58204 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752933Ab2JJUrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 16:47:41 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so1111543pbb.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 13:47:41 -0700 (PDT)
+	id S1752871Ab2JJVCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 17:02:23 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:40047 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351Ab2JJVCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 17:02:23 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so1016450pad.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 14:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6nWRQcjNVmtnPahS1u8xZwa2IjpJZ+hs6prEFV03F9I=;
-        b=pYmN1PjVBNSs+GhNZB84cHFkthXmz6aVMBsdYmJrih9d/kx4ownLw5Cc8xlVRryBYA
-         RO8+rSCDpPXuQFjEMQuYYe0ZRdlKhJWkMFiVPCfi967zzXdAWlhboPB1O6Dz1KDuzsE1
-         TvbBRTrLnjO6mZ6W3uJ4y5jJIClSEJRPGzs43pIgB012YzNngsUzbsW7z03phfNEalsJ
-         mtMx/03GGu3Jr12ZV96+TYi5sDHJnamoVjK75J3nF7L6w/X854ZdHvSWZsaEpkYUTYjV
-         rrWjgMxoPmWC6+zdCZrbfmyBsmDfTEjcWPX0mf8r0tXsTsm6MqFeUcacpnaPZ8aF5gbP
-         CrvQ==
-Received: by 10.68.125.133 with SMTP id mq5mr76978708pbb.138.1349902061102;
-        Wed, 10 Oct 2012 13:47:41 -0700 (PDT)
+        bh=kCWnw8nWgUNdAqQrzuwlvRm8rq6WdjJ39pThfzae1uI=;
+        b=ZQh+IvRiTaP1mJkiGglE0UfrUMSeL9vUloUb6pfsDWJuL0Cmddf8DJpTv+vHcrD+kH
+         b5dqb6vAKqOUi8NxpTjg+Xv6WSXmjrPqlZvDtmxPQgdsxeEbZ4b8xgnew2ntgvw4qAch
+         XdwdIXrTicVypqcWBmzO7z+2Rsz33Xcz4ar0U173FNYaHL/sqpUEb3YN+DPhHiIB3EJh
+         FRQrViLgHTRhkkbGgw7I1ZuVVcnzElIGr/8fhAH3KQ4tQqlRKN+ggYPrANQ7Y+shr6xc
+         CF/DPeaDSYtbS4s9J+YJ0MU1twvzRLl0mKehSkt+em48/Vs15VyhTCn1qRJX8r7gxr4C
+         94RA==
+Received: by 10.68.226.136 with SMTP id rs8mr37319590pbc.153.1349902942647;
+        Wed, 10 Oct 2012 14:02:22 -0700 (PDT)
 Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id tw2sm324939pbc.34.2012.10.10.13.47.39
+        by mx.google.com with ESMTPS id tw5sm1532780pbc.48.2012.10.10.14.02.20
         (version=SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 13:47:40 -0700 (PDT)
+        Wed, 10 Oct 2012 14:02:21 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20121010201125.GA30952@dcvr.yhbt.net>
+In-Reply-To: <20121010203730.GA19115@dcvr.yhbt.net>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207441>
 
-Subversion represents symlinks as ordinary files with content starting
-with "link " and the svn:special property set to "*".  Thus a file can
-switch between being a symlink and a non-symlink simply by toggling
-its svn:special property, and new checkouts will automatically write a
-file of the appropriate type.  Likewise, in subversion 1.6 and older,
-running "svn update" would notice changes in filetype and update the
-working copy appropriately.
+Eric Wong wrote:
 
-Starting in subversion 1.7 (issue 4091), changes to the svn:special
-property trip an assertion instead:
+> Thanks both.  Also pushed to "master" on git://bogomips.org/git-svn.git
+> (commit 44bc5ac71fd99f195bf1a3bea63c11139d2d535f)
+>
+> Jonathan Nieder (2):
+>       git svn: work around SVN 1.7 mishandling of svn:special changes
+>       svn test: escape peg revision separator using empty peg rev
 
-	$ svn up svn-tree
-	Updating 'svn-tree':
-	svn: E235000: In file 'subversion/libsvn_wc/update_editor.c' \
-	line 1583: assertion failed (action == svn_wc_conflict_action_edit \
-	|| action == svn_wc_conflict_action_delete || action == \
-	svn_wc_conflict_action_replace)
+Thanks.  Here's the $deletions nit as a patch on top.
 
-Revisions prepared with ordinary svn commands ("svn add" and not "svn
-propset") don't trip this because they represent these filetype
-changes using a replace operation, which is approximately equivalent
-to removal followed by adding a new file and works fine.  Follow suit.
+-- >8 --
+Subject: Git::SVN::Editor::T: pass $deletions to ->A and ->D
 
-Noticed using t9100.  After this change, git-svn's file-to-symlink
-changes are sent in a format that modern "svn update" can handle and
-tests t9100.11-13 pass again.
+This shouldn't make a difference because the $deletions hash is
+only used when adding a directory (see 379862ec, 2012-02-20) but
+it's nice to be consistent to make reading smoother anyway.  No
+functional change intended.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Eric Wong wrote:
-
-> I needed to filter the patch through:
->
->     s,git-svn\.perl,perl/Git/SVN/Editor.pm,g
->
-> though...
-
-Yeah, good catch.  Here's a v3 tested against "master".  Unlike in v2,
-it remembers to pass the $deletions parameter to D() and A() --- which
-shouldn't make a difference because we are not adding a directory, but
-it's nice to be consistent to make reading smoother.
-
- perl/Git/SVN/Editor.pm |   25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ perl/Git/SVN/Editor.pm |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
-index 755092fd..178920c8 100644
+index 3bbc20a0..178920c8 100644
 --- a/perl/Git/SVN/Editor.pm
 +++ b/perl/Git/SVN/Editor.pm
-@@ -345,7 +345,30 @@ sub M {
- 	$self->close_file($fbat,undef,$self->{pool});
- }
- 
--sub T { shift->M(@_) }
-+sub T {
-+	my ($self, $m, $deletions) = @_;
-+
-+	# Work around subversion issue 4091: toggling the "is a
-+	# symlink" property requires removing and re-adding a
-+	# file or else "svn up" on affected clients trips an
-+	# assertion and aborts.
-+	if (($m->{mode_b} =~ /^120/ && $m->{mode_a} !~ /^120/) ||
-+	    ($m->{mode_b} !~ /^120/ && $m->{mode_a} =~ /^120/)) {
-+		$self->D({
-+			mode_a => $m->{mode_a}, mode_b => '000000',
-+			sha1_a => $m->{sha1_a}, sha1_b => '0' x 40,
-+			chg => 'D', file_b => $m->{file_b}
+@@ -358,12 +358,12 @@ sub T {
+ 			mode_a => $m->{mode_a}, mode_b => '000000',
+ 			sha1_a => $m->{sha1_a}, sha1_b => '0' x 40,
+ 			chg => 'D', file_b => $m->{file_b}
+-		});
 +		}, $deletions);
-+		$self->A({
-+			mode_a => '000000', mode_b => $m->{mode_b},
-+			sha1_a => '0' x 40, sha1_b => $m->{sha1_b},
-+			chg => 'A', file_b => $m->{file_b}
+ 		$self->A({
+ 			mode_a => '000000', mode_b => $m->{mode_b},
+ 			sha1_a => '0' x 40, sha1_b => $m->{sha1_b},
+ 			chg => 'A', file_b => $m->{file_b}
+-		});
 +		}, $deletions);
-+		return;
-+	}
-+
-+	$self->M($m, $deletions);
-+}
+ 		return;
+ 	}
  
- sub change_file_prop {
- 	my ($self, $fbat, $pname, $pval) = @_;
 -- 
 1.7.10.4
