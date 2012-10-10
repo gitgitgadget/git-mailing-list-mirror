@@ -1,147 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] attr: more matching optimizations from .gitignore
-Date: Wed, 10 Oct 2012 14:41:38 -0700
-Message-ID: <7v626iatt9.fsf@alter.siamese.dyndns.org>
-References: <7vd30si665.fsf@alter.siamese.dyndns.org>
- <1349864466-28289-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] svn test: escape peg revision separator using empty
+ peg rev
+Date: Wed, 10 Oct 2012 14:42:05 -0700
+Message-ID: <20121010214205.GD4517@elie.Belkin>
+References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
+ <1343468872-72133-2-git-send-email-schwern@pobox.com>
+ <20120728141652.GA1603@burratino>
+ <50143E34.8090802@pobox.com>
+ <20121009084145.GA19784@elie.Belkin>
+ <5073F2C0.6000504@drmicha.warpmail.net>
+ <20121009101953.GB28120@elie.Belkin>
+ <20121010203730.GA19115@dcvr.yhbt.net>
+ <20121010210218.GB4517@elie.Belkin>
+ <20121010213120.GA12935@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:41:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Torsten Schmutzler <git-ts@theblacksun.eu>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:42:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM42M-0006vl-4F
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:41:54 +0200
+	id 1TM42n-0007BX-UF
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:42:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753940Ab2JJVln convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 17:41:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46682 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751788Ab2JJVlm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 17:41:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C1728B49;
-	Wed, 10 Oct 2012 17:41:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QHbmMuh49qNS
-	0ICF1C9M9yAye8g=; b=nqUOOx6zs4GLP1hP9/KEGlFtUTXiko2rKJHerZnb34OI
-	cV3sNVSDOzdpNBD/R5AmL1vGa1Vu41Sfn3of2g/oI8tmiyNAgy74oxjs6brMMgiM
-	/7L3y5KxigvLsrBYjaSra4c877mJWFB1OuBgyfvnTY+W7MHnojil+kyQpwcA29c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=B6fUuI
-	jVaGqmpuuo2dRE2cGbDgAr8Jfh+RlD+JX9sF9sFb6+MC5ux/Ybt8SkufkOGkUE06
-	GbdZtyuC2ubKJwpc3ojmo/Dagb4kQ2rPNNjfajtp2wa8qQ8FuNHL8eVnDeKbLoqv
-	1iHXpPcBlMDRi+felUuubqPzbYwvKbqW7yeeE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 797D78B48;
-	Wed, 10 Oct 2012 17:41:41 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B89F18B47; Wed, 10 Oct 2012
- 17:41:40 -0400 (EDT)
-In-Reply-To: <1349864466-28289-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 10 Oct
- 2012 17:21:06 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 46D45200-1323-11E2-BB56-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754752Ab2JJVmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 17:42:12 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:64650 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637Ab2JJVmJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 17:42:09 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1151022pbb.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 14:42:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=CsxGziDV7OxiAZ8jF7h6BVbyyp0vQwWiL15HRAg7Kjo=;
+        b=yVjt2GC3Dx9rBWXpja9wKnX8r9pcdA9lirEeYYKiPUbV1sS4Q3w07PEyeXpv2JfUaq
+         krqs7HybkYwGfGYQSOyVy7njZuU5M/UQtOzxhNPjRsjfRQjBAoQzxkglRSzsrFmACsY2
+         KfmQiWBNVMgnnV/GBFqMgT07qJs6GpuEEuC5PAy1Xdr06E0/E7SAQwjnAhNduxJkzhT7
+         uorZqFQIsd4fYf8I/3c63rXX0awLB8WsRS9gR7nKFMOnJimQK0zYjKUFzg8id8nFm9uq
+         iPdFp0LTxmi+qi/VpIfebTMPlwD2Nnh9BQZy8yB+FBmyvr1CbGTcdXy5dvNVXSgGH3os
+         Xwgg==
+Received: by 10.66.74.196 with SMTP id w4mr65744240pav.32.1349905329264;
+        Wed, 10 Oct 2012 14:42:09 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id tw2sm382876pbc.34.2012.10.10.14.42.07
+        (version=SSLv3 cipher=OTHER);
+        Wed, 10 Oct 2012 14:42:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20121010213120.GA12935@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207445>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Eric Wong wrote:
+> Jonathan Nieder <jrnieder@gmail.com> wrote:
 
->    @@ -690,16 +689,18 @@ static int path_matches(const char *pathname=
-, int pathlen,
->     	 * contain the trailing slash
->     	 */
->    =20
->    -	if (pathlen < baselen ||
->    +	if (pathlen < baselen + 1 ||
->     	    (baselen && pathname[baselen] !=3D '/') ||
->    -	    strncmp(pathname, base, baselen))
->    +	    strncmp_icase(pathname, base, baselen))
+>> -- >8 --
+>> Subject: Git::SVN::Editor::T: pass $deletions to ->A and ->D
+>
+> For future reference, it'd be slightly easier for me to apply if you
+> included the From: (and Date:) headers so I don't have to yank+paste
+> them myself :>
 
-Shouldn't the last comparison be
+Ah, I assumed you were using "git am --scissors".  Will do next time.
 
-	strncmp_icase(pathname, base, baselen + 1)
-
-instead, if you are trying to match this part from dir.c where
-baselen does count the trailing slash?
-
-		if (pathlen < x->baselen ||
-		    (x->baselen && pathname[x->baselen-1] !=3D '/') ||
-		    strncmp_icase(pathname, x->base, x->baselen))
-			continue;
-
-In other words, relative to what was queued to 'pu', something like
-this instead....
-
--- >8 --
-Subject: [PATCH] fixup: matching path_matches() in attr.c to that of di=
-r.c
-
-In this function, baselen does not count the trailing slash that
-should come after the directory name held in "basename" variable, so
-whenever the corresponding code in dir.c:excluded_from_list() refers
-to x->baselen, we would need to use "baselen+1" consistently.
-
-Also remove unnecessary NUL-termination of a buffer obtained from
-calloc().
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- attr.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 7e85f82..a9c04a8 100644
---- a/attr.c
-+++ b/attr.c
-@@ -250,7 +250,6 @@ static struct match_attr *parse_attr_line(const cha=
-r *line, const char *src,
- 	else {
- 		char *p =3D (char *)&(res->state[num_attr]);
- 		memcpy(p, name, namelen);
--		p[namelen] =3D 0;
- 		res->u.pat.pattern =3D p;
- 		parse_exclude_pattern(&res->u.pat.pattern,
- 				      &res->u.pat.patternlen,
-@@ -687,19 +686,21 @@ static int path_matches(const char *pathname, int=
- pathlen,
-=20
- 	/*
- 	 * note: unlike excluded_from_list, baselen here does not
--	 * contain the trailing slash
-+	 * count the trailing slash.
- 	 */
-=20
--	if (pathlen < baselen ||
-+	if (pathlen < baselen + 1 ||
- 	    (baselen && pathname[baselen] !=3D '/') ||
--	    strncmp(pathname, base, baselen))
-+	    strncmp_icase(pathname, base, baselen + 1))
- 		return 0;
-=20
- 	namelen =3D baselen ? pathlen - baselen - 1 : pathlen;
- 	name =3D pathname + pathlen - namelen;
-=20
--	/* if the non-wildcard part is longer than the remaining
--	   pathname, surely it cannot match */
-+	/*
-+	 * if the non-wildcard part is longer than the remaining
-+	 * pathname, surely it cannot match.
-+	 */
- 	if (!namelen || prefix > namelen)
- 		return 0;
-=20
---=20
-1.8.0.rc1.76.g5a375e6
+Jonathan
