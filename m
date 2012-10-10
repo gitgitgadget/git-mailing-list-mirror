@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 05/12] Integrate wildmatch to git
-Date: Wed, 10 Oct 2012 17:40:44 +0700
-Message-ID: <1349865651-31889-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 06/12] wildmatch: make wildmatch's return value compatible with fnmatch
+Date: Wed, 10 Oct 2012 17:40:45 +0700
+Message-ID: <1349865651-31889-7-git-send-email-pclouds@gmail.com>
 References: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,520 +12,159 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 12:41:52 2012
+X-From: git-owner@vger.kernel.org Wed Oct 10 12:41:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLtja-0002oF-7m
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 12:41:50 +0200
+	id 1TLtjb-0002oF-09
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 12:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755563Ab2JJKld convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 06:41:33 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:34755 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755512Ab2JJKlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 06:41:32 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so575878pbb.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:41:32 -0700 (PDT)
+	id S1755583Ab2JJKlj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 06:41:39 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:49272 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755545Ab2JJKli (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 06:41:38 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so466174pad.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:41:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=fQOxdRQzu8Upm2Dq4o6XvUO0ZULPHn2X3LJn5Qs3yoI=;
-        b=mBlPLyTSMWZAINGjnrb6aYu6y7mPirFS5EJeanZfOTLbz/o7dG/Kmz2MTwOgG1u+Eg
-         5x2Af7kTqS5Lo7nl1EFyfTkyYoQSm6AKR4Ihlg+NQ+LP14888QCQ/5bARcTlquJQeHWE
-         OaM+wT1mgGMnl/zFViRFDLo4g8FU/xBfIHG/IxSM2WArjTUiFtH691WiKGbluv31b/aK
-         h4K3DCkFRNWkYpYUgZV3sOPxOTsemRlsCZw7EcnM2PoKhRZiwzwkKaRcoPeDz/S+FvoU
-         9AWr9a5KZjhqrWBYJJkacpG7P4iIcSoiPEqZtmhl6w2lbhpYBbnIiHY9Zm0TE75KBioe
-         ioQQ==
-Received: by 10.68.204.138 with SMTP id ky10mr15941187pbc.77.1349865691895;
-        Wed, 10 Oct 2012 03:41:31 -0700 (PDT)
+        bh=uogFR0LHeoDjAlkWe83WvCyI3KFo/yEdTL/9YbPUx0c=;
+        b=sfzPmESa+ZzEKLTfmpEvBReNx5iXM/A0nAikmGzjI4V4Lm1aQGBl7prZVy671uaSVR
+         zPLglRib6kX6kgGbgdi+aDFIrJxAcu00DEewZgEJ7K+tIjhkFrYv1zPYN69YJX+RzjmF
+         fZIB0SyRIsUwPav5p33JxIm65wGQTy6Op2KazjR4LoMrrFYUX7UeCbP6gOqKj+TQCCce
+         Hroj5Tp2bp3KDTHmm7B+q+ychdIJSprqfzjM804myu4THebgexjsOL8nj9PbLPDjm0Qp
+         Lct9Im0YVWRU/nECw273Ao7JUew92Qht6yuT5tBpyhdnbkIIpDRkGlDl7yUKNVhDbdl4
+         G9zw==
+Received: by 10.68.212.71 with SMTP id ni7mr71721579pbc.81.1349865697857;
+        Wed, 10 Oct 2012 03:41:37 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.54.82])
-        by mx.google.com with ESMTPS id ka4sm841504pbc.61.2012.10.10.03.41.28
+        by mx.google.com with ESMTPS id qd6sm847210pbb.34.2012.10.10.03.41.34
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 03:41:31 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 17:41:23 +0700
+        Wed, 10 Oct 2012 03:41:37 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 17:41:29 +0700
 X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
 In-Reply-To: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207391>
+
+wildmatch returns non-zero if matched, zero otherwise. This patch
+makes it return zero if matches, non-zero otherwise, like fnmatch().
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- .gitignore           |   1 +
- Makefile             |   3 +
- t/t3070-wildmatch.sh | 178 +++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- t/t3070/wildtest.txt | 165 -------------------------------------------=
-----
- test-wildmatch.c     |  14 ++++
- wildmatch.c          |   5 +-
- 6 files changed, 200 insertions(+), 166 deletions(-)
- create mode 100755 t/t3070-wildmatch.sh
- delete mode 100644 t/t3070/wildtest.txt
- create mode 100644 test-wildmatch.c
+ test-wildmatch.c |  4 ++--
+ wildmatch.c      | 21 ++++++++++++---------
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index a188a82..37c3507 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -197,6 +197,7 @@
- /test-string-list
- /test-subprocess
- /test-svn-fe
-+/test-wildmatch
- /common-cmds.h
- *.tar.gz
- *.dsc
-diff --git a/Makefile b/Makefile
-index 8413606..9a97379 100644
---- a/Makefile
-+++ b/Makefile
-@@ -523,6 +523,7 @@ TEST_PROGRAMS_NEED_X +=3D test-sigchain
- TEST_PROGRAMS_NEED_X +=3D test-string-list
- TEST_PROGRAMS_NEED_X +=3D test-subprocess
- TEST_PROGRAMS_NEED_X +=3D test-svn-fe
-+TEST_PROGRAMS_NEED_X +=3D test-wildmatch
-=20
- TEST_PROGRAMS =3D $(patsubst %,%$X,$(TEST_PROGRAMS_NEED_X))
-=20
-@@ -695,6 +696,7 @@ LIB_H +=3D userdiff.h
- LIB_H +=3D utf8.h
- LIB_H +=3D varint.h
- LIB_H +=3D walker.h
-+LIB_H +=3D wildmatch.h
- LIB_H +=3D wt-status.h
- LIB_H +=3D xdiff-interface.h
- LIB_H +=3D xdiff/xdiff.h
-@@ -826,6 +828,7 @@ LIB_OBJS +=3D utf8.o
- LIB_OBJS +=3D varint.o
- LIB_OBJS +=3D version.o
- LIB_OBJS +=3D walker.o
-+LIB_OBJS +=3D wildmatch.o
- LIB_OBJS +=3D wrapper.o
- LIB_OBJS +=3D write_or_die.o
- LIB_OBJS +=3D ws.o
-diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-new file mode 100755
-index 0000000..bb92f8d
---- /dev/null
-+++ b/t/t3070-wildmatch.sh
-@@ -0,0 +1,178 @@
-+#!/bin/sh
-+
-+test_description=3D'wildmatch tests'
-+
-+. ./test-lib.sh
-+
-+match() {
-+    test_expect_success "wildmatch $*" "
-+	if [ $1 =3D 1 ]; then
-+	    test-wildmatch wildmatch '$3' '$4'
-+	else
-+	    ! test-wildmatch wildmatch '$3' '$4'
-+	fi &&
-+	if [ $2 =3D 1 ]; then
-+	    test-wildmatch fnmatch '$3' '$4'
-+	else
-+	    ! test-wildmatch fnmatch '$3' '$4'
-+	fi
-+    "
-+}
-+
-+# Basic wildmat features
-+match 1 1 foo foo
-+match 0 0 foo bar
-+match 1 1 '' ""
-+match 1 1 foo '???'
-+match 0 0 foo '??'
-+match 1 1 foo '*'
-+match 1 1 foo 'f*'
-+match 0 0 foo '*f'
-+match 1 1 foo '*foo*'
-+match 1 1 foobar '*ob*a*r*'
-+match 1 1 aaaaaaabababab '*ab'
-+match 1 1 'foo*' 'foo\*'
-+match 0 0 foobar 'foo\*bar'
-+match 1 1 'f\oo' 'f\\oo'
-+match 1 1 ball '*[al]?'
-+match 0 0 ten '[ten]'
-+match 1 1 ten '**[!te]'
-+match 0 0 ten '**[!ten]'
-+match 1 1 ten 't[a-g]n'
-+match 0 0 ten 't[!a-g]n'
-+match 1 1 ton 't[!a-g]n'
-+match 1 1 ton 't[^a-g]n'
-+match 1 1 'a]b' 'a[]]b'
-+match 1 1 a-b 'a[]-]b'
-+match 1 1 'a]b' 'a[]-]b'
-+match 0 0 aab 'a[]-]b'
-+match 1 1 aab 'a[]a-]b'
-+match 1 1 ']' ']'
-+
-+# Extended slash-matching features
-+match 0 0 'foo/baz/bar' 'foo*bar'
-+match 1 0 'foo/baz/bar' 'foo**bar'
-+match 0 0 'foo/bar' 'foo?bar'
-+match 0 0 'foo/bar' 'foo[/]bar'
-+match 0 0 'foo/bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
-+match 1 1 'foo-bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
-+match 0 0 'foo' '**/foo'
-+match 1 1 '/foo' '**/foo'
-+match 1 0 'bar/baz/foo' '**/foo'
-+match 0 0 'bar/baz/foo' '*/foo'
-+match 0 0 'foo/bar/baz' '**/bar*'
-+match 1 0 'deep/foo/bar/baz' '**/bar/*'
-+match 0 0 'deep/foo/bar/baz/' '**/bar/*'
-+match 1 0 'deep/foo/bar/baz/' '**/bar/**'
-+match 0 0 'deep/foo/bar' '**/bar/*'
-+match 1 0 'deep/foo/bar/' '**/bar/**'
-+match 1 0 'foo/bar/baz' '**/bar**'
-+match 1 0 'foo/bar/baz/x' '*/bar/**'
-+match 0 0 'deep/foo/bar/baz/x' '*/bar/**'
-+match 1 0 'deep/foo/bar/baz/x' '**/bar/*/*'
-+
-+# Various additional tests
-+match 0 0 'acrt' 'a[c-c]st'
-+match 1 1 'acrt' 'a[c-c]rt'
-+match 0 0 ']' '[!]-]'
-+match 1 1 'a' '[!]-]'
-+match 0 0 '' '\'
-+match 0 0 '\' '\'
-+match 0 0 '/\' '*/\'
-+match 1 1 '/\' '*/\\'
-+match 1 1 'foo' 'foo'
-+match 1 1 '@foo' '@foo'
-+match 0 0 'foo' '@foo'
-+match 1 1 '[ab]' '\[ab]'
-+match 1 1 '[ab]' '[[]ab]'
-+match 1 1 '[ab]' '[[:]ab]'
-+match 0 0 '[ab]' '[[::]ab]'
-+match 1 1 '[ab]' '[[:digit]ab]'
-+match 1 1 '[ab]' '[\[:]ab]'
-+match 1 1 '?a?b' '\??\?b'
-+match 1 1 'abc' '\a\b\c'
-+match 0 0 'foo' ''
-+match 1 0 'foo/bar/baz/to' '**/t[o]'
-+
-+# Character class tests
-+match 1 1 'a1B' '[[:alpha:]][[:digit:]][[:upper:]]'
-+match 0 0 'a' '[[:digit:][:upper:][:space:]]'
-+match 1 1 'A' '[[:digit:][:upper:][:space:]]'
-+match 1 0 '1' '[[:digit:][:upper:][:space:]]'
-+match 0 0 '1' '[[:digit:][:upper:][:spaci:]]'
-+match 1 1 ' ' '[[:digit:][:upper:][:space:]]'
-+match 0 0 '.' '[[:digit:][:upper:][:space:]]'
-+match 1 1 '.' '[[:digit:][:punct:][:space:]]'
-+match 1 1 '5' '[[:xdigit:]]'
-+match 1 1 'f' '[[:xdigit:]]'
-+match 1 1 'D' '[[:xdigit:]]'
-+match 1 0 '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:]=
-[:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
-+match 1 0 '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:]=
-[:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
-+match 1 1 '.' '[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:=
-][:space:][:upper:][:xdigit:]]'
-+match 1 1 '5' '[a-c[:digit:]x-z]'
-+match 1 1 'b' '[a-c[:digit:]x-z]'
-+match 1 1 'y' '[a-c[:digit:]x-z]'
-+match 0 0 'q' '[a-c[:digit:]x-z]'
-+
-+# Additional tests, including some malformed wildmats
-+match 1 1 ']' '[\\-^]'
-+match 0 0 '[' '[\\-^]'
-+match 1 1 '-' '[\-_]'
-+match 1 1 ']' '[\]]'
-+match 0 0 '\]' '[\]]'
-+match 0 0 '\' '[\]]'
-+match 0 0 'ab' 'a[]b'
-+match 0 1 'a[]b' 'a[]b'
-+match 0 1 'ab[' 'ab['
-+match 0 0 'ab' '[!'
-+match 0 0 'ab' '[-'
-+match 1 1 '-' '[-]'
-+match 0 0 '-' '[a-'
-+match 0 0 '-' '[!a-'
-+match 1 1 '-' '[--A]'
-+match 1 1 '5' '[--A]'
-+match 1 1 ' ' '[ --]'
-+match 1 1 '$' '[ --]'
-+match 1 1 '-' '[ --]'
-+match 0 0 '0' '[ --]'
-+match 1 1 '-' '[---]'
-+match 1 1 '-' '[------]'
-+match 0 0 'j' '[a-e-n]'
-+match 1 1 '-' '[a-e-n]'
-+match 1 1 'a' '[!------]'
-+match 0 0 '[' '[]-a]'
-+match 1 1 '^' '[]-a]'
-+match 0 0 '^' '[!]-a]'
-+match 1 1 '[' '[!]-a]'
-+match 1 1 '^' '[a^bc]'
-+match 1 1 '-b]' '[a-]b]'
-+match 0 0 '\' '[\]'
-+match 1 1 '\' '[\\]'
-+match 0 0 '\' '[!\\]'
-+match 1 1 'G' '[A-\\]'
-+match 0 0 'aaabbb' 'b*a'
-+match 0 0 'aabcaa' '*ba*'
-+match 1 1 ',' '[,]'
-+match 1 1 ',' '[\\,]'
-+match 1 1 '\' '[\\,]'
-+match 1 1 '-' '[,-.]'
-+match 0 0 '+' '[,-.]'
-+match 0 0 '-.]' '[,-.]'
-+match 1 1 '2' '[\1-\3]'
-+match 1 1 '3' '[\1-\3]'
-+match 0 0 '4' '[\1-\3]'
-+match 1 1 '\' '[[-\]]'
-+match 1 1 '[' '[[-\]]'
-+match 1 1 ']' '[[-\]]'
-+match 0 0 '-' '[[-\]]'
-+
-+# Test recursion and the abort code (use "wildtest -i" to see iteratio=
-n counts)
-+match 1 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' =
-'-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
-+match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' =
-'-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
-+match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' =
-'-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
-+match 1 1 '/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' =
-'/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
-+match 0 0 '/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' =
-'/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
-+match 1 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n=
-*t'
-+match 0 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*=
-n*t'
-+
-+test_done
-diff --git a/t/t3070/wildtest.txt b/t/t3070/wildtest.txt
-deleted file mode 100644
-index 42c1678..0000000
---- a/t/t3070/wildtest.txt
-+++ /dev/null
-@@ -1,165 +0,0 @@
--# Input is in the following format (all items white-space separated):
--#
--# The first two items are 1 or 0 indicating if the wildmat call is exp=
-ected to
--# succeed and if fnmatch works the same way as wildmat, respectively. =
- After
--# that is a text string for the match, and a pattern string.  Strings =
-can be
--# quoted (if desired) in either double or single quotes, as well as ba=
-ckticks.
--#
--# MATCH FNMATCH_SAME "text to match" 'pattern to use'
--
--# Basic wildmat features
--1 1 foo			foo
--0 1 foo			bar
--1 1 ''			""
--1 1 foo			???
--0 1 foo			??
--1 1 foo			*
--1 1 foo			f*
--0 1 foo			*f
--1 1 foo			*foo*
--1 1 foobar		*ob*a*r*
--1 1 aaaaaaabababab	*ab
--1 1 foo*		foo\*
--0 1 foobar		foo\*bar
--1 1 f\oo		f\\oo
--1 1 ball		*[al]?
--0 1 ten			[ten]
--1 1 ten			**[!te]
--0 1 ten			**[!ten]
--1 1 ten			t[a-g]n
--0 1 ten			t[!a-g]n
--1 1 ton			t[!a-g]n
--1 1 ton			t[^a-g]n
--1 1 a]b			a[]]b
--1 1 a-b			a[]-]b
--1 1 a]b			a[]-]b
--0 1 aab			a[]-]b
--1 1 aab			a[]a-]b
--1 1 ]			]
--
--# Extended slash-matching features
--0 1 foo/baz/bar		foo*bar
--1 1 foo/baz/bar		foo**bar
--0 1 foo/bar		foo?bar
--0 1 foo/bar		foo[/]bar
--0 1 foo/bar		f[^eiu][^eiu][^eiu][^eiu][^eiu]r
--1 1 foo-bar		f[^eiu][^eiu][^eiu][^eiu][^eiu]r
--0 1 foo			**/foo
--1 1 /foo		**/foo
--1 1 bar/baz/foo		**/foo
--0 1 bar/baz/foo		*/foo
--0 0 foo/bar/baz		**/bar*
--1 1 deep/foo/bar/baz	**/bar/*
--0 1 deep/foo/bar/baz/	**/bar/*
--1 1 deep/foo/bar/baz/	**/bar/**
--0 1 deep/foo/bar	**/bar/*
--1 1 deep/foo/bar/	**/bar/**
--1 1 foo/bar/baz		**/bar**
--1 1 foo/bar/baz/x	*/bar/**
--0 0 deep/foo/bar/baz/x	*/bar/**
--1 1 deep/foo/bar/baz/x	**/bar/*/*
--
--# Various additional tests
--0 1 acrt		a[c-c]st
--1 1 acrt		a[c-c]rt
--0 1 ]			[!]-]
--1 1 a			[!]-]
--0 1 ''			\
--0 1 \			\
--0 1 /\			*/\
--1 1 /\			*/\\
--1 1 foo			foo
--1 1 @foo		@foo
--0 1 foo			@foo
--1 1 [ab]		\[ab]
--1 1 [ab]		[[]ab]
--1 1 [ab]		[[:]ab]
--0 1 [ab]		[[::]ab]
--1 1 [ab]		[[:digit]ab]
--1 1 [ab]		[\[:]ab]
--1 1 ?a?b		\??\?b
--1 1 abc			\a\b\c
--0 1 foo			''
--1 1 foo/bar/baz/to	**/t[o]
--
--# Character class tests
--1 1 a1B		[[:alpha:]][[:digit:]][[:upper:]]
--0 1 a		[[:digit:][:upper:][:space:]]
--1 1 A		[[:digit:][:upper:][:space:]]
--1 1 1		[[:digit:][:upper:][:space:]]
--0 1 1		[[:digit:][:upper:][:spaci:]]
--1 1 ' '		[[:digit:][:upper:][:space:]]
--0 1 .		[[:digit:][:upper:][:space:]]
--1 1 .		[[:digit:][:punct:][:space:]]
--1 1 5		[[:xdigit:]]
--1 1 f		[[:xdigit:]]
--1 1 D		[[:xdigit:]]
--1 1 _		[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:=
-][:print:][:punct:][:space:][:upper:][:xdigit:]]
--#1 1 =85		[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lo=
-wer:][:print:][:punct:][:space:][:upper:][:xdigit:]]
--1 1 =7F		[^[:alnum:][:alpha:][:blank:][:digit:][:graph:][:lower:][:pri=
-nt:][:punct:][:space:][:upper:][:xdigit:]]
--1 1 .		[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:][:space=
-:][:upper:][:xdigit:]]
--1 1 5		[a-c[:digit:]x-z]
--1 1 b		[a-c[:digit:]x-z]
--1 1 y		[a-c[:digit:]x-z]
--0 1 q		[a-c[:digit:]x-z]
--
--# Additional tests, including some malformed wildmats
--1 1 ]		[\\-^]
--0 1 [		[\\-^]
--1 1 -		[\-_]
--1 1 ]		[\]]
--0 1 \]		[\]]
--0 1 \		[\]]
--0 1 ab		a[]b
--0 1 a[]b	a[]b
--0 1 ab[		ab[
--0 1 ab		[!
--0 1 ab		[-
--1 1 -		[-]
--0 1 -		[a-
--0 1 -		[!a-
--1 1 -		[--A]
--1 1 5		[--A]
--1 1 ' '		'[ --]'
--1 1 $		'[ --]'
--1 1 -		'[ --]'
--0 1 0		'[ --]'
--1 1 -		[---]
--1 1 -		[------]
--0 1 j		[a-e-n]
--1 1 -		[a-e-n]
--1 1 a		[!------]
--0 1 [		[]-a]
--1 1 ^		[]-a]
--0 1 ^		[!]-a]
--1 1 [		[!]-a]
--1 1 ^		[a^bc]
--1 1 -b]		[a-]b]
--0 1 \		[\]
--1 1 \		[\\]
--0 1 \		[!\\]
--1 1 G		[A-\\]
--0 1 aaabbb	b*a
--0 1 aabcaa	*ba*
--1 1 ,		[,]
--1 1 ,		[\\,]
--1 1 \		[\\,]
--1 1 -		[,-.]
--0 1 +		[,-.]
--0 1 -.]		[,-.]
--1 1 2		[\1-\3]
--1 1 3		[\1-\3]
--0 1 4		[\1-\3]
--1 1 \		[[-\]]
--1 1 [		[[-\]]
--1 1 ]		[[-\]]
--0 1 -		[[-\]]
--
--# Test recursion and the abort code (use "wildtest -i" to see iteratio=
-n counts)
--1 1 -adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1	-*-*-*-*=
--*-*-12-*-*-*-m-*-*-*
--0 1 -adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1	-*-*-*-*=
--*-*-12-*-*-*-m-*-*-*
--0 1 -adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1	-*-*-*-*=
--*-*-12-*-*-*-m-*-*-*
--1 1 /adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1	/*/*/*/*=
-/*/*/12/*/*/*/m/*/*/*
--0 1 /adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1	/*/*/*/*=
-/*/*/12/*/*/*/m/*/*/*
--1 1 abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt		**/*a*b*g*n*t
--0 1 abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz		**/*a*b*g*n*t
 diff --git a/test-wildmatch.c b/test-wildmatch.c
-new file mode 100644
-index 0000000..08962d5
---- /dev/null
+index 08962d5..596029c 100644
+--- a/test-wildmatch.c
 +++ b/test-wildmatch.c
-@@ -0,0 +1,14 @@
-+#include "cache.h"
-+#include "wildmatch.h"
-+
-+int main(int argc, char **argv)
-+{
-+	if (!strcmp(argv[1], "wildmatch"))
-+		return wildmatch(argv[3], argv[2]) ? 0 : 1;
-+	else if (!strcmp(argv[1], "iwildmatch"))
-+		return iwildmatch(argv[3], argv[2]) ? 0 : 1;
-+	else if (!strcmp(argv[1], "fnmatch"))
-+		return fnmatch(argv[3], argv[2], FNM_PATHNAME);
-+	else
-+		return 1;
-+}
+@@ -4,9 +4,9 @@
+ int main(int argc, char **argv)
+ {
+ 	if (!strcmp(argv[1], "wildmatch"))
+-		return wildmatch(argv[3], argv[2]) ? 0 : 1;
++		return wildmatch(argv[3], argv[2]);
+ 	else if (!strcmp(argv[1], "iwildmatch"))
+-		return iwildmatch(argv[3], argv[2]) ? 0 : 1;
++		return iwildmatch(argv[3], argv[2]);
+ 	else if (!strcmp(argv[1], "fnmatch"))
+ 		return fnmatch(argv[3], argv[2], FNM_PATHNAME);
+ 	else
 diff --git a/wildmatch.c b/wildmatch.c
-index 71dba76..6092bde 100644
+index 6092bde..7c180e3 100644
 --- a/wildmatch.c
 +++ b/wildmatch.c
-@@ -9,7 +9,10 @@
- **  work differently than '*', and to fix the character-class code.
- */
+@@ -20,6 +20,9 @@ typedef unsigned char uchar;
 =20
--#include "rsync.h"
-+#include "cache.h"
-+#include "wildmatch.h"
+ #define FALSE 0
+ #define TRUE 1
 +
-+typedef unsigned char uchar;
++#define NOMATCH 1
++#define MATCH 0
+ #define ABORT_ALL -1
+ #define ABORT_TO_STARSTAR -2
 =20
- /* What character marks an inverted character class? */
- #define NEGATE_CLASS	'!'
+@@ -79,12 +82,12 @@ static int dowild(const uchar *p, const uchar *text=
+)
+ 	    /* FALLTHROUGH */
+ 	  default:
+ 	    if (t_ch !=3D p_ch)
+-		return FALSE;
++		return NOMATCH;
+ 	    continue;
+ 	  case '?':
+ 	    /* Match anything but '/'. */
+ 	    if (t_ch =3D=3D '/')
+-		return FALSE;
++		return NOMATCH;
+ 	    continue;
+ 	  case '*':
+ 	    if (*++p =3D=3D '*') {
+@@ -97,14 +100,14 @@ static int dowild(const uchar *p, const uchar *tex=
+t)
+ 		 * only if there are no more slash characters. */
+ 		if (!special) {
+ 			if (strchr((char*)text, '/') !=3D NULL)
+-			    return FALSE;
++			    return NOMATCH;
+ 		}
+-		return TRUE;
++		return MATCH;
+ 	    }
+ 	    while (1) {
+ 		if (t_ch =3D=3D '\0')
+ 		    break;
+-		if ((matched =3D dowild(p, text)) !=3D FALSE) {
++		if ((matched =3D dowild(p, text)) !=3D NOMATCH) {
+ 		    if (!special || matched !=3D ABORT_TO_STARSTAR)
+ 			return matched;
+ 		} else if (!special && t_ch =3D=3D '/')
+@@ -203,18 +206,18 @@ static int dowild(const uchar *p, const uchar *te=
+xt)
+ 		    matched =3D TRUE;
+ 	    } while (prev_ch =3D p_ch, (p_ch =3D *++p) !=3D ']');
+ 	    if (matched =3D=3D special || t_ch =3D=3D '/')
+-		return FALSE;
++		return NOMATCH;
+ 	    continue;
+ 	}
+     }
+=20
+-    return *text ? FALSE : TRUE;
++    return *text ? NOMATCH : MATCH;
+ }
+=20
+ /* Match the "pattern" against the "text" string. */
+ int wildmatch(const char *pattern, const char *text)
+ {
+-    return dowild((const uchar*)pattern, (const uchar*)text) =3D=3D TR=
+UE;
++    return dowild((const uchar*)pattern, (const uchar*)text);
+ }
+=20
+ /* Match the "pattern" against the forced-to-lower-case "text" string.=
+ */
+@@ -222,7 +225,7 @@ int iwildmatch(const char *pattern, const char *tex=
+t)
+ {
+     int ret;
+     force_lower_case =3D 1;
+-    ret =3D dowild((const uchar*)pattern, (const uchar*)text) =3D=3D T=
+RUE;
++    ret =3D dowild((const uchar*)pattern, (const uchar*)text);
+     force_lower_case =3D 0;
+     return ret;
+ }
 --=20
 1.7.12.1.406.g6ab07c4
