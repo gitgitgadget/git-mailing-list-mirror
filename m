@@ -1,82 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git checkout error
-Date: Tue, 09 Oct 2012 16:47:12 -0700
-Message-ID: <7v626jdx8f.fsf@alter.siamese.dyndns.org>
-References: <CAB9Jk9DUEL_J3MmH_4k7NC82m+crpCf1r3NS3gQBMZy+kvY3-A@mail.gmail.com>
- <m2lifg7zsj.fsf@igel.home>
- <CAB9Jk9CZ8d=8ugYs7XHXs84Kj9xJmTHZyZ2J0hU66OBS7YDZTg@mail.gmail.com>
+From: skillzero@gmail.com
+Subject: rebase fails mid way through due to locally modified file?
+Date: Tue, 9 Oct 2012 17:31:19 -0700
+Message-ID: <CANRUUDNoUNMy1qHkYt-_wwxGtWrRY9vi8-CjzY8WhJ2gur+zTg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 01:47:28 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 02:31:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLjWI-0007ex-D9
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 01:47:26 +0200
+	id 1TLkCx-0002Qs-KV
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 02:31:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595Ab2JIXrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 19:47:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59594 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751080Ab2JIXrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 19:47:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2CC38B75;
-	Tue,  9 Oct 2012 19:47:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3lHE76tp3vKy2SHdDrxptxBQ7yc=; b=e8+epV
-	UpVZz38n5ykUUL6d1JWzrEG3ip+Abm03DYwknM+GCNmsxeUQLwe1NKJbiflbohw3
-	xe3FtYUdHOUV4jOmRa5ILd7Foe+6TOZ7X+k75lKikvB1DiRcHssHO2qITyENLso2
-	gl5rXElWmA1d67HgDIGZLdTBsVy44ARQz0WdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gheKjR2TFwfypXhl1LKAHh+ncSKhXhSI
-	0QpLrz75E0D9ZRl7QiJafeYWJ3E8ihHs0jOqBjvrq69SEDopQ0C/yyXHljRIdLXL
-	T6vBC4P7ixUQC6CORryhwl0ogGz1WP9qNtzEe8a6hPz1/0bOensBHiIaIUVvqHil
-	JXT1W56oYWw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90A2D8B74;
-	Tue,  9 Oct 2012 19:47:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3F508B73; Tue,  9 Oct 2012
- 19:47:13 -0400 (EDT)
-In-Reply-To: <CAB9Jk9CZ8d=8ugYs7XHXs84Kj9xJmTHZyZ2J0hU66OBS7YDZTg@mail.gmail.com> (Angelo
- Borsotti's message of "Wed, 10 Oct 2012 01:25:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A694496A-126B-11E2-AF1B-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755814Ab2JJAbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 20:31:21 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:52633 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755005Ab2JJAbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 20:31:20 -0400
+Received: by mail-vc0-f174.google.com with SMTP id fo13so7775662vcb.19
+        for <git@vger.kernel.org>; Tue, 09 Oct 2012 17:31:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=wzp2s4+5GS5tcaxFEAn3GGkOlKPOqvdh5vmEZK4reD0=;
+        b=uRssMNdPZz1t1xHt6F6+/FxPIEMOfanSdrK3L2jkOC7yaFgocl6nEZhLcL0hXlSlJg
+         O6AIfatDylZGVBtKSbPNOv+eUlE/J4FIyTuzbPEy2Ebjx+B27PnL3dsJFmcCOUnzXFa0
+         DA6u6HCDghKy3iQI0r3LY+oCrKaKsAdkEVHPn84aibYGYKepHmpqfSpYrYqfXH2wOjky
+         FV4SGNHmlBck9IhWgDq2fh8T+ll6jQXpiSBWpAgdD/ccLxz74FKta+IRiN5gXNsM+8O1
+         flmz31X9q8j1cf9mrEnly5W70cgwIcfH1RpLEeGECyEiyElJZgHjUfR4kwxog3uKiOSp
+         vK0g==
+Received: by 10.220.150.201 with SMTP id z9mr12613197vcv.70.1349829079521;
+ Tue, 09 Oct 2012 17:31:19 -0700 (PDT)
+Received: by 10.58.216.164 with HTTP; Tue, 9 Oct 2012 17:31:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207356>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+I frequently see rebase fail after applying several commits because
+git thinks there are local changes. Before the rebase started, there
+were no local changes and after the rebase fails, doing a git status
+doesn't show any locally modified files. I was seeing this on git
+1.7.x and I also tried updating to git 1.8rc1 and it fails there too.
+I see progress like this:
 
-> The man page describes --track and --no-track as "options". 
+--
+Applying: Commit X
+Applying: Commit Y
+Applying: Commit Z
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+error: Your local changes to the following files would be overwritten by merge:
+	MyFile.h
+Please, commit your changes or stash them before you can merge.
+Aborting
+Failed to merge in the changes.
+Patch failed at 0013 Commit A
+The copy of the patch that failed is found in:
+   /Source/.git/rebase-apply/patch
 
-But the problem you observed is *not* about --track or --no-track.
-It is about the "-b <branchname>" option.
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+--
 
-You used the -b option that requires an argument, and as that
-argument, you gave a string "--no-track", as if you wanted to create
-a branch whose name is "--no-track".  After these words on the
-command line are understood, there are two other arguments left on
-the command line, which is an syntax error as far as "git checkout"
-is concerned.
+If I git rebase --abort then retry, it usually fails again, but
+sometimes on a different file. Once in a while, retrying will succeed.
 
-Again, this is asked-and-answered recently, and 
-
-    http://thread.gmane.org/gmane.comp.version-control.git/204397
-
-has resulted in a leading to b6312c2 (checkout: reorder option
-handling, 2012-08-30), which is in v1.8.0-rc0 and onwards.  You
-should get an error message that is a lot less confusing:
-
-    $ git checkout -b --no-track topic remotes/origin/master
-    fatal: '--no-track' is not a valid branch name.
+Is this a known issue? I can't make the source for my repo available,
+but is there some way I can provide more info to help narrow this
+down?
