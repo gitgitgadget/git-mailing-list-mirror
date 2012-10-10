@@ -1,73 +1,70 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Is anyone working on a next-gen Git protocol?
-Date: Wed, 10 Oct 2012 21:13:37 +0200
-Message-ID: <035A66D9-FAF0-48EE-B161-7D0CAD92F2FB@zib.de>
-References: <CACBZZX6b+3P8M+z+X13k9Pq3tvVUfs_k1=foQVreX8K801=efQ@mail.gmail.com> <5072973D.4080703@op5.se> <7vtxu5lyjr.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1085)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] MALLOC_CHECK: Allow checking to be disabled from
+ config.mak
+Date: Wed, 10 Oct 2012 12:16:26 -0700
+Message-ID: <7v391mcf3p.fsf@alter.siamese.dyndns.org>
+References: <50706B54.8090004@ramsay1.demon.co.uk>
+ <7vbogfquc8.fsf@alter.siamese.dyndns.org>
+ <5075B47C.6030607@ramsay1.demon.co.uk>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, spearce@spearce.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 21:14:39 2012
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Elia Pinto <gitter.spiros@gmail.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Oct 10 21:16:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM1jr-0000jA-22
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 21:14:39 +0200
+	id 1TM1lo-0001tV-WF
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 21:16:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754217Ab2JJTO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 15:14:28 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55901 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752789Ab2JJTO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 15:14:27 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id q9AJDjed005810;
-	Wed, 10 Oct 2012 21:13:50 +0200 (CEST)
-Received: from [192.168.0.10] (91-64-48-32-dynip.superkabel.de [91.64.48.32])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id q9AJDhUq008697
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 10 Oct 2012 21:13:44 +0200 (MEST)
-In-Reply-To: <7vtxu5lyjr.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1085)
+	id S1753752Ab2JJTQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 15:16:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38747 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752789Ab2JJTQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 15:16:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6D139EC8;
+	Wed, 10 Oct 2012 15:16:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ODRC3cZhGvFZP/GwIXb6slicbO4=; b=I4reEn
+	lvyE9t0Y5nZh9kgQZ9GzgyIfXW7ZoPMJYaVCp/2aqeG7kWiwBoZir5/oAj7y4qaY
+	x8poErFD3wVXOxQRSdf/l0/ekCt6e/fbbXqsaP266aq2DnwsEsNc+HFeSblIDUBj
+	TjffdAS5tBVaq1HLQPfHBJF8I3cXJfZRKasGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hjRGR7jcjvPLpMpsFFRZ0bfswHNuPoz1
+	lwCVmKDeiUg8nCGa3MWyDhpwQ+Yn4lea3bGQKafnfxtBw0dMxK9tcI6sldVx3Siv
+	WqtK3Qybe9LPDa7R8WpwOMQ0rSY7fLxJJasY+ppMypDJreHtqzjncn52uBnm0H+e
+	BtmwQGRGSzw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C36469EC7;
+	Wed, 10 Oct 2012 15:16:28 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4190B9EC5; Wed, 10 Oct 2012
+ 15:16:28 -0400 (EDT)
+In-Reply-To: <5075B47C.6030607@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Wed, 10 Oct 2012 18:46:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FDC838D8-130E-11E2-BE49-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207427>
 
-On Oct 8, 2012, at 6:27 PM, Junio C Hamano wrote:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> Once we go into "want/have" phase, I do not think there is a need
-> for fundamental change in the protocol (by this, I am not counting a
-> change to send "have"s sparsely and possibly backtracking to bisect
-> history, etc. as "fundamental").
+> Yes, so I can simply disable the malloc checks in my ~/.bashrc file.
+> However, it would be disappointing to have my config tweeks in two
+> places ... :(
+>
+> I guess I can live with it ...
 
-I've recently discovered that the current protocol can be amazingly
-inefficient when it comes to transferring binary objects.  Assuming two
-repositories that are in sync.  After a 'git checkout --orphan && git
-commit', a subsequent transfers sends all the blobs attached to the new
-commit, although the other side already has all the blobs.
-
-This behavior is especially annoying when (mis)using git to store binary
-files.  I was thinking for a while that it might be a reasonable idea to
-store binary files in a submodule and frequently cut the history in
-order to save space.  The history would have little value anyway, since
-diff and merge don't make much sense with binary files.
-
-Eventually, I abandoned the idea due to the current behavior of the
-protocol.  I had expected that git would be smarter and behave more like
-rsync, for example, by skipping big blobs as soon as it recognizes that
-they are already available at both sides.
-
-Maybe the new protocol could include an optimization for the described
-case.  I don't know whether this would be a fundamental change.
-
-    Steffen
+You could write "export that-variable" in your config.mak yourself
+;-)  Let's apply the patch as-is.
