@@ -1,66 +1,65 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: 'git grep needle rev' attempts to access 'rev:.../.gitattributes'
- in the worktree
-Date: Wed, 10 Oct 2012 12:17:53 +0700
-Message-ID: <CACsJy8Cku-XTbQBDpZpPh7AMDFMoNKLKeJNs5HKCQnBy420d2w@mail.gmail.com>
-References: <5073E87D.9020100@viscovery.net> <CACsJy8BFmUr5_E47900T6j9Lgdvj96_dNbo2LHP5hLYq3w7ZLA@mail.gmail.com>
- <20121009120144.GA8780@do> <20121009124144.GB12465@sigill.intra.peff.net> <7vk3uzfp3p.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] wildmatch: remove static variable force_lower_case
+Date: Tue, 09 Oct 2012 22:31:24 -0700
+Message-ID: <7v1uh6evv7.fsf@alter.siamese.dyndns.org>
+References: <1349752147-13314-1-git-send-email-pclouds@gmail.com>
+ <1349752147-13314-5-git-send-email-pclouds@gmail.com>
+ <7vtxu3e5jl.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BOcH8cXje5osL4oNP1YkJ8HadUOYBek3uhEbySBey9Kw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 07:18:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 07:31:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLogm-0006bQ-Cf
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 07:18:36 +0200
+	id 1TLotX-0004xx-Cv
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 07:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509Ab2JJFS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 01:18:26 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:33595 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862Ab2JJFSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 01:18:25 -0400
-Received: by mail-qc0-f174.google.com with SMTP id d3so100404qch.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 22:18:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NxyWE2Gau7+fGpfGWqJl7JTHNHzG2E76GT182cfqw68=;
-        b=Iuk++AAXUGH/bWkYJMwlChkkc4jFuxXs9OBBkvupDCN3qOvwHx2Fa0kpsuXiXTs2rk
-         bnflsxJNahdtRLn8yf6E9EqSCNazrtYXj4Qr6a+0ZP+YP2rcSo0LPZwmtptC7GgVUf8w
-         vPNPh+Y8Tq5zq123eizZ3BTSRaniU667Md4pRqnp5PH0eWRS0s5E4NwwMxUeKhFJOtLk
-         ryBjt893K361M4FHSD0udsNQgamIRMCbpD13y+6MFipkC0Yx4i/7CjwFpKyJ1/ZlgfZr
-         5tbR5JcHQDuKuqgoXLOEaUkzF0N32Kt0NOi4wRsZvWVjmpAUZvSAV8X3YWiiTbkNLyA2
-         eozA==
-Received: by 10.49.81.161 with SMTP id b1mr54587275qey.21.1349846304195; Tue,
- 09 Oct 2012 22:18:24 -0700 (PDT)
-Received: by 10.49.13.194 with HTTP; Tue, 9 Oct 2012 22:17:53 -0700 (PDT)
-In-Reply-To: <7vk3uzfp3p.fsf@alter.siamese.dyndns.org>
+	id S1752265Ab2JJFb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 01:31:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43418 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751407Ab2JJFb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 01:31:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 418B46020;
+	Wed, 10 Oct 2012 01:31:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=o8lu82h6M73vKLVsgkuomZFRur4=; b=Xq+gv9
+	5CJXlij00tgS4EP2ZeZk5KZdHO4zI31hrzbZrqVquYCHeyyHQzJOY4lQKJzPsxG0
+	UJkr54MBLYAKkZdxhd1XbIVMjLrZtKJE4ODbpI2m1Fh4fVewhGxLV/48aONm6zR+
+	DP9kH1QHAwG2UO7DcpVeUMWC7hWxXF1g3Oqw0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jhXQWVrXLiKv9QPEsmLuGq4L/Sqlaq6B
+	y3LEAJXgmeBmAMwU7ro9uf1Rm7Cf88eiwFl0SPT9wK13F7zqXfRyRVdqtexK6MtA
+	6DORwC8dJrNNnYCZz+Q+P6iz5RVJ0KaBNge6Og/ybiMEX1HES7/TPyTpb0JT0L1U
+	hzg1XEqAcZ4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27466601F;
+	Wed, 10 Oct 2012 01:31:27 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AF39601D; Wed, 10 Oct 2012
+ 01:31:26 -0400 (EDT)
+In-Reply-To: <CACsJy8BOcH8cXje5osL4oNP1YkJ8HadUOYBek3uhEbySBey9Kw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 10 Oct 2012 12:14:50 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BC5A5516-129B-11E2-B9A1-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207363>
 
-On Wed, Oct 10, 2012 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> I think we just need to have callers of grep_source_init provide us with
->> the actual pathname (or NULL, in the case of GREP_SOURCE_BUF). That is
->> where the information is lost.
->
-> Yes.  I agree that is the right approach.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Passing full path this way means prepare_attr_stack has to walk back
-to top directory for every files (even in the same directory). If
-.gitattributes are loaded while git-grep traverses the tree, then it
-can preload attr once per directory. But Jeff's approach looks
-simpler.
--- 
-Duy
+> Git's ctype does not seem to be complete for wildmatch's use so
+> ctype.h is required. But that can be easily fixed later on.
+
+Until "later on", I cannot even compile the series.
