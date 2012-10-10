@@ -1,95 +1,78 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 04/12] wildmatch: remove unnecessary functions
-Date: Wed, 10 Oct 2012 17:38:29 +0200
-Message-ID: <50759675.1070108@alum.mit.edu>
-References: <1349865651-31889-1-git-send-email-pclouds@gmail.com> <1349865651-31889-5-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/7] Tying loose ends on grep-pcre
+Date: Wed, 10 Oct 2012 09:52:34 -0700
+Message-ID: <7vlifeclrh.fsf@alter.siamese.dyndns.org>
+References: <1349855714-17008-1-git-send-email-gitster@pobox.com>
+ <5075919F.5030306@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 17:39:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 10 18:52:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLyNA-00042O-2K
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 17:39:00 +0200
+	id 1TLzWb-0005XX-IG
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 18:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755416Ab2JJPim convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 11:38:42 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:62515 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754139Ab2JJPic (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 11:38:32 -0400
-X-AuditID: 12074414-b7f846d0000008b8-ed-50759677781d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 50.30.02232.77695705; Wed, 10 Oct 2012 11:38:31 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9AFcT2s000595
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 10 Oct 2012 11:38:30 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <1349865651-31889-5-git-send-email-pclouds@gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqFs+rTTA4O8JHouuK91MFg29V5gt
-	uqe8ZXRg9tg56y67x8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGf8XpFdsJqj4kD3XJYGxsds
-	XYycHBICJhKLV29kh7DFJC7cWw8U5+IQErjMKPHl/QVGCOc4k8SS3/fAOngFtCXan31hArFZ
-	BFQluu9OYgax2QR0JRb1NIPFRQVCJGZcnswMUS8ocXLmExYQW0TAQ+LHzs2sIDazgLXE7j6I
-	uLCAq8TR03cZQWwhgXKJY38+gl3EKeAk8WXybqA4B1C9usT6eUIQrfISzVtnM09gFJiFZMMs
-	hKpZSKoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdK10MvNLNFLTSndxAgJW5EdjEdOyh1i
-	FOBgVOLhlYwvCRBiTSwrrsw9xCjJwaQkyntiUmmAEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRFe
-	Ux+gHG9KYmVValE+TEqag0VJnPfbYnU/IYH0xJLU7NTUgtQimKwMB4eSBK/qVKBGwaLU9NSK
-	tMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFCUxhcD4xQkxQO01xeknbe4IDEXKArReopRl+Nj
-	47yHjEIsefl5qVLivK4gRQIgRRmleXArYEnqFaM40MfCvP4gVTzABAc36RXQEiagJTKTSkCW
-	lCQipKQaGFMU0+p/NGnujEvi85xxbcH9mRNP7b//Z/I5T6nOTxJOXl0zn6eJZySl80o+eZfP
-	VcS9fiHrod37pt0+fS21u82qf1bZ6YBau6+R3uyCn1J23ZFiuLgzdvf+glzxZzWL 
+	id S1752905Ab2JJQwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 12:52:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65316 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750784Ab2JJQwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 12:52:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 718669314;
+	Wed, 10 Oct 2012 12:52:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8A2477HMEKVbfhnZGLp2cQI8/6o=; b=SUzeD9
+	ohxqKy3JwUGqaQbE/HrC4iqJOyyZG806CVK+4WNpdbIDxKevADd539M2lNorfXmh
+	n26DCsJz6ccoXC168+yTI5IAMTKBsS/aBxCTW/8w1uEpXlddWvE7HbXAHhHw/RkQ
+	vRB9GxtHa2bw7coWT6o4bWfq28q8BKsXuTA7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OLpuE6PFL19Gac8AVgBVMhhTAfVML8lj
+	ae3oKiTFdlJ1So+STAko66nmuRTwnSotE1n2JKojgvirYrlng6ZVoVDjTGTh5PdN
+	7Tdy2ylMzAnc12F1qKa6UyUfiB5k+pzfVeQjNCwKP8MmMx4r0gW7l081B5/VmpL6
+	UF3pbU1uuiM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F74C9313;
+	Wed, 10 Oct 2012 12:52:37 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF68A9311; Wed, 10 Oct 2012
+ 12:52:36 -0400 (EDT)
+In-Reply-To: <5075919F.5030306@alum.mit.edu> (Michael Haggerty's message of
+ "Wed, 10 Oct 2012 17:17:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E4FA3B94-12FA-11E2-9DF6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207417>
 
-On 10/10/2012 12:40 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
-:
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  wildmatch.c | 161 ++++----------------------------------------------=
-----------
->  wildmatch.h |   2 -
->  2 files changed, 9 insertions(+), 154 deletions(-)
->=20
-> diff --git a/wildmatch.c b/wildmatch.c
-> index f3a1731..71dba76 100644
-> --- a/wildmatch.c
-> +++ b/wildmatch.c
-> @@ -53,33 +53,19 @@
->  #define ISUPPER(c) (ISASCII(c) && isupper(c))
->  #define ISXDIGIT(c) (ISASCII(c) && isxdigit(c))
-> =20
-> -#ifdef WILD_TEST_ITERATIONS
-> -int wildmatch_iteration_count;
-> -#endif
-> -
->  static int force_lower_case =3D 0;
-> =20
->  /* Match pattern "p" against the a virtually-joined string consistin=
-g
->   * of "text" and any strings in array "a". */
-> -static int dowild(const uchar *p, const uchar *text, const uchar*con=
-st *a)
-> +static int dowild(const uchar *p, const uchar *text)
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-The comment still refers to array "a".
+>> The last one teaches "git log" family to honor the "grep.*"
+>> configuration variables, e.g. "grep.patterntype", so that you can
+>> say "git -c grep.patterntype=perl log --grep='(?:pcre)'".
+>
+> Maybe this has been discussed already, but it seems to me that adding a
+> persistent setting that affects how "git log --grep" interprets the
+> pattern argument could break some scripts that assume that the "old"
+> interpretation is always used.  Shouldn't this at least be documented as
+> a backwards incompatibility?
 
-Michael
+If somebody scripts around "log" with hardcoded query "--grep=..."
+strings, they can force a particular variant from such a command
+line at the same time.  But as always, responsibility of doing so is
+on the person who writes such a script; "log" being a Porcelain, we
+value ease-of-use in interactive case more than cast-in-stone
+interface stability like we do for plumbing commands.
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+And that is exactly why the series avoids changing the behaviour for
+the "rev-list" plumbing.
