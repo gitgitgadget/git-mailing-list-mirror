@@ -1,64 +1,77 @@
-From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
-Subject: git svn clone options
-Date: Wed, 10 Oct 2012 11:15:46 +0800
-Message-ID: <CAHtLG6SikQGT12jn-EBYmL7wL_EF-+kpRtcne2wM8XTrFqSpSA@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 4/8] wildmatch: remove static variable force_lower_case
+Date: Wed, 10 Oct 2012 12:14:50 +0700
+Message-ID: <CACsJy8BOcH8cXje5osL4oNP1YkJ8HadUOYBek3uhEbySBey9Kw@mail.gmail.com>
+References: <1349752147-13314-1-git-send-email-pclouds@gmail.com>
+ <1349752147-13314-5-git-send-email-pclouds@gmail.com> <7vtxu3e5jl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 05:16:22 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 07:15:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLmmU-0000Al-3S
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 05:16:22 +0200
+	id 1TLodp-00055Q-FD
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 07:15:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932350Ab2JJDQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 23:16:10 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:61326 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932332Ab2JJDQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 23:16:09 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n3so104208lbo.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 20:16:07 -0700 (PDT)
+	id S1752608Ab2JJFPX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 01:15:23 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:35553 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752197Ab2JJFPV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 01:15:21 -0400
+Received: by mail-qa0-f53.google.com with SMTP id s11so172746qaa.19
+        for <git@vger.kernel.org>; Tue, 09 Oct 2012 22:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=j0ARDogHJA05ba6UffKzeBL+OSJbflvjl4Lo46Qs0I0=;
-        b=M4kMJeRgNf+lR8Dtl1eqZfD3MtPHwwjaR+SSUlJUMwCkLysCMsmOejGfAHng/2tXN0
-         InPRfhGGko+nE9iwxLG/ArDeW1Qu/u/OomYAu3uf7msRP2CUV+T7Ky/+IlgdcnzKZbQS
-         HST8L7kvfOHZsqYDR+j7s/C4ctlDmQ2J1jC3La9ghGzvHUFkZPUF2iWbnG8ypXNcz0ec
-         3J4Kg1EgueO8+eN30vl8b6alzhX5IVyeXQMa0CkwNrC+c5IcYD7AtX0PdLvSFr1yvWOx
-         lZ8PplbUej9pYV00ZrWUQNekIpqGqKxJS6+Vh+5Xot4ORwpnq2xRndXA9yiM4KgA6oUo
-         fBPQ==
-Received: by 10.152.106.212 with SMTP id gw20mr15667231lab.8.1349838946404;
- Tue, 09 Oct 2012 20:15:46 -0700 (PDT)
-Received: by 10.112.5.70 with HTTP; Tue, 9 Oct 2012 20:15:46 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oltYkyMWBD/uLvyXZHOre+sLGCsrz8/m5PlkokLTBWU=;
+        b=bNmAUcMCWwnWiamS1/9Lt3Nt7BdC9FOfCKaG3/zz0+LXKoJTDBExXLBCgCA77KPe7Y
+         5pxJa7f/eSkYdiPvgmWzQC9SDr3a3D1C5o1V/P3A2FEqtqRopHn174qv0xNFFEOSNvFP
+         MIUXC6CodmpXMvLamatxGvTpqWNX0wfLoHOYRR6qob0oFTXunna4Jchgzg4WpHsYUCxA
+         ymULZZzujcN6xR7JjLv5Tu8IZ2nlN8bH5mZT6JXsRhYfhT9Muk5clg6j2prqaq62uGXS
+         smWrrKDmFHD2ztnWeFQ4ai75PiA4c4iL5EK+gSaxdEAW1sK9MMyk0fCReLdFoH+ozl+q
+         KZhg==
+Received: by 10.229.137.12 with SMTP id u12mr1405766qct.28.1349846121019; Tue,
+ 09 Oct 2012 22:15:21 -0700 (PDT)
+Received: by 10.49.13.194 with HTTP; Tue, 9 Oct 2012 22:14:50 -0700 (PDT)
+In-Reply-To: <7vtxu3e5jl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207361>
 
-Hi,
+On Wed, Oct 10, 2012 at 3:47 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> diff --git a/wildmatch.c b/wildmatch.c
+>> index 7b64a6b..2382873 100644
+>> --- a/wildmatch.c
+>> +++ b/wildmatch.c
+>> @@ -11,8 +11,8 @@
+>>
+>>  #include <stddef.h>
+>>  #include <ctype.h>
+>> -#include <string.h>
+>>
+>> +#include "cache.h"
+>>  #include "wildmatch.h"
+>
+> This is wrong; the includes from the system headers should have
+> been removed in the previous step where the series "integrated"
+> wildmatch to git, after which point the first include any C source
+> that is not at the platform-compatibility layer should be cache.h
+> or git-compat-util.h.
 
-I tried
-git svn clone --stdlayout --branch ABC
-but svn branches were missing (trunk was present), compared to the result of
-git svn clone --stdlayout
-
-Could you clarify --branch option, is it the same as --branches.
-I thought git clone has --branch option, so I tried this option for svn.
-
-Alos, I tried
-git svn clone --stdlayout --no-checkout
-It worked without checking out files.
-but git-svn documentation seems to not mention this option.
-
-Could you also tell what options are supported in both git clone and
-git svn clone, and git clone only options?
-
-Regards,
-
-ch3cooli
+Git's ctype does not seem to be complete for wildmatch's use so
+ctype.h is required. But that can be easily fixed later on.
+--=20
+Duy
