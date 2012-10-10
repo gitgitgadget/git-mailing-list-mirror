@@ -1,76 +1,88 @@
-From: skillzero@gmail.com
-Subject: rebase fails mid way through due to locally modified file?
-Date: Tue, 9 Oct 2012 17:31:19 -0700
-Message-ID: <CANRUUDNoUNMy1qHkYt-_wwxGtWrRY9vi8-CjzY8WhJ2gur+zTg@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Fwd: potential path traversal issue in v3 with wild repos
+Date: Wed, 10 Oct 2012 06:41:41 +0530
+Message-ID: <CAMK1S_hptJKtNJMKOr4ADgMqUoG1S9mQOTPrYV7egRhxW7ic6w@mail.gmail.com>
+References: <CAMK1S_jotna+d_X2C-+es-M28i1aUBcsNeiXxwJ63EshQ8ht6w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 10 02:31:33 2012
+X-From: git-owner@vger.kernel.org Wed Oct 10 03:11:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLkCx-0002Qs-KV
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 02:31:31 +0200
+	id 1TLkq1-000396-GA
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 03:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755814Ab2JJAbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2012 20:31:21 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:52633 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755005Ab2JJAbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2012 20:31:20 -0400
-Received: by mail-vc0-f174.google.com with SMTP id fo13so7775662vcb.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 17:31:19 -0700 (PDT)
+	id S1757253Ab2JJBLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2012 21:11:44 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:59481 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757233Ab2JJBLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2012 21:11:42 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so3509134lag.19
+        for <git@vger.kernel.org>; Tue, 09 Oct 2012 18:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=wzp2s4+5GS5tcaxFEAn3GGkOlKPOqvdh5vmEZK4reD0=;
-        b=uRssMNdPZz1t1xHt6F6+/FxPIEMOfanSdrK3L2jkOC7yaFgocl6nEZhLcL0hXlSlJg
-         O6AIfatDylZGVBtKSbPNOv+eUlE/J4FIyTuzbPEy2Ebjx+B27PnL3dsJFmcCOUnzXFa0
-         DA6u6HCDghKy3iQI0r3LY+oCrKaKsAdkEVHPn84aibYGYKepHmpqfSpYrYqfXH2wOjky
-         FV4SGNHmlBck9IhWgDq2fh8T+ll6jQXpiSBWpAgdD/ccLxz74FKta+IRiN5gXNsM+8O1
-         flmz31X9q8j1cf9mrEnly5W70cgwIcfH1RpLEeGECyEiyElJZgHjUfR4kwxog3uKiOSp
-         vK0g==
-Received: by 10.220.150.201 with SMTP id z9mr12613197vcv.70.1349829079521;
- Tue, 09 Oct 2012 17:31:19 -0700 (PDT)
-Received: by 10.58.216.164 with HTTP; Tue, 9 Oct 2012 17:31:19 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=18RE3GQch5xjO4210L8AdyP030onIett3zkk+tesb4I=;
+        b=vBUKnEEciYdcktD//glsPc0fxY4DaITbhKSwCfM3dRwase6AbZurZiEvgo4AO6UAQx
+         cifek6CQ50ainVqYPNwL9NHoI2t3KE/gQ6yptNNkvMrcGQjMM/Kd3++W5j3GZwnd6bFx
+         Owvx7CLdHQtB1CTkfqh6rAXcEiHnP21GkA5HhXNu/VljbCrGem9vRF96V75pzUQ7ymq4
+         3v2HGQC5Czimv2up+rd3AzEPuyP2A+DWwQGcqt8W+M20/MY4KkVsPlQwkqrMQt21s1+q
+         73l115GGlT7XUHdbRSQz0i4IXyyLx+nU8Fn9+biasEXLhjmyfIuPWpKSWvM69i/huOwC
+         yxwg==
+Received: by 10.152.48.102 with SMTP id k6mr18122716lan.12.1349831501098; Tue,
+ 09 Oct 2012 18:11:41 -0700 (PDT)
+Received: by 10.112.84.97 with HTTP; Tue, 9 Oct 2012 18:11:41 -0700 (PDT)
+In-Reply-To: <CAMK1S_jotna+d_X2C-+es-M28i1aUBcsNeiXxwJ63EshQ8ht6w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207357>
 
-I frequently see rebase fail after applying several commits because
-git thinks there are local changes. Before the rebase started, there
-were no local changes and after the rebase fails, doing a git status
-doesn't show any locally modified files. I was seeing this on git
-1.7.x and I also tried updating to git 1.8rc1 and it fails there too.
-I see progress like this:
+oops; forgot to add the git list earlier.
+
+---------- Forwarded message ----------
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Date: Wed, Oct 10, 2012 at 5:15 AM
+Subject: potential path traversal issue in v3 with wild repos
+To: gitolite <gitolite@googlegroups.com>, gitolite-announce@googlegroups.com
+Cc: Stephane Chazelas <stephane.chazelas@gmail.com>
+
+
+Hello all,
+
+I'm sorry to say there is a potential path traversal vulnerability in
+v3.  Thanks to Stephane (copied) for finding it and alerting me.
+
+Can it affect you?  This can only affect you if you are using wild
+card repos, *and* at least one of your patterns allows the string
+"../" to match multiple times.  (As far as I can tell, this does not
+affect v2).
+
+How badly can it affect you?  A malicious user who *also* has the
+ability to create arbitrary files in, say, /tmp (e.g., he has his own
+userid on the same box), can compromise the entire "git" user.
+Otherwise the worst he can do is create arbitrary repos in /tmp.
+
+What's the fix?  The fix has been pushed, and tagged v3.1.  This patch
+[1] is also backportable to all v3.x tags, in case you are not ready
+for an actual upgrade (it will have a slight conflict with v3.0 and
+v3.01 but you should be able to resolve it easily enough; with the
+others there is no conflict.)
+
+My sincere apologies for the fsck-up :(
+
+[1]: it's not the top-most commit; be careful if you want to 'git
+cherry-pick' this to an older tree.
 
 --
-Applying: Commit X
-Applying: Commit Y
-Applying: Commit Z
-Using index info to reconstruct a base tree...
-Falling back to patching base and 3-way merge...
-error: Your local changes to the following files would be overwritten by merge:
-	MyFile.h
-Please, commit your changes or stash them before you can merge.
-Aborting
-Failed to merge in the changes.
-Patch failed at 0013 Commit A
-The copy of the patch that failed is found in:
-   /Source/.git/rebase-apply/patch
+Sitaram
 
-When you have resolved this problem, run "git rebase --continue".
-If you prefer to skip this patch, run "git rebase --skip" instead.
-To check out the original branch and stop rebasing, run "git rebase --abort".
---
 
-If I git rebase --abort then retry, it usually fails again, but
-sometimes on a different file. Once in a while, retrying will succeed.
-
-Is this a known issue? I can't make the source for my repo available,
-but is there some way I can provide more info to help narrow this
-down?
+-- 
+Sitaram
