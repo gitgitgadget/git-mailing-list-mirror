@@ -1,79 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC] svn test: escape peg revision separator using empty
- peg rev
-Date: Wed, 10 Oct 2012 14:42:05 -0700
-Message-ID: <20121010214205.GD4517@elie.Belkin>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <1343468872-72133-2-git-send-email-schwern@pobox.com>
- <20120728141652.GA1603@burratino>
- <50143E34.8090802@pobox.com>
- <20121009084145.GA19784@elie.Belkin>
- <5073F2C0.6000504@drmicha.warpmail.net>
- <20121009101953.GB28120@elie.Belkin>
- <20121010203730.GA19115@dcvr.yhbt.net>
- <20121010210218.GB4517@elie.Belkin>
- <20121010213120.GA12935@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: rm and add, but not rename, of identical files
+Date: Wed, 10 Oct 2012 14:47:26 -0700
+Message-ID: <7v1uh6atjl.fsf@alter.siamese.dyndns.org>
+References: <1349894347.32696.10.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Torsten Schmutzler <git-ts@theblacksun.eu>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:42:25 2012
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:47:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM42n-0007BX-UF
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:42:22 +0200
+	id 1TM47x-0001Wt-Ea
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 23:47:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752Ab2JJVmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 17:42:12 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:64650 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637Ab2JJVmJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 17:42:09 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so1151022pbb.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 14:42:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=CsxGziDV7OxiAZ8jF7h6BVbyyp0vQwWiL15HRAg7Kjo=;
-        b=yVjt2GC3Dx9rBWXpja9wKnX8r9pcdA9lirEeYYKiPUbV1sS4Q3w07PEyeXpv2JfUaq
-         krqs7HybkYwGfGYQSOyVy7njZuU5M/UQtOzxhNPjRsjfRQjBAoQzxkglRSzsrFmACsY2
-         KfmQiWBNVMgnnV/GBFqMgT07qJs6GpuEEuC5PAy1Xdr06E0/E7SAQwjnAhNduxJkzhT7
-         uorZqFQIsd4fYf8I/3c63rXX0awLB8WsRS9gR7nKFMOnJimQK0zYjKUFzg8id8nFm9uq
-         iPdFp0LTxmi+qi/VpIfebTMPlwD2Nnh9BQZy8yB+FBmyvr1CbGTcdXy5dvNVXSgGH3os
-         Xwgg==
-Received: by 10.66.74.196 with SMTP id w4mr65744240pav.32.1349905329264;
-        Wed, 10 Oct 2012 14:42:09 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id tw2sm382876pbc.34.2012.10.10.14.42.07
-        (version=SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 14:42:08 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20121010213120.GA12935@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1754971Ab2JJVrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 17:47:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49435 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754629Ab2JJVra (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 17:47:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 303DD8CD0;
+	Wed, 10 Oct 2012 17:47:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tUFpPCus6njDMCPPzCxRySeGq7A=; b=LdsvDW
+	UVIJROlr7YFvheRygZjCOxtyf/ky4JMP8s5CGCqfktYQT58uzEELq+og+0gJg3fE
+	BE7dqWXXZe9wFX3VyFnlzJv89VudEoc/garXwhlOsYPD+mGlIUuT/0t3DXkTA66b
+	qwWPpZyrhbdPjJaKUqOw+L0tiBwZjJdC5P7ys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e6vanrmXXJvB/uEZgB3U69u9GMOfNbiT
+	0Noioh+U2lsfxUFR4PqEYZQP7+pxb7bpZ9ePpo1PHMK+ygBGZR9lnJvNzwZPqkSC
+	KVS0aNHG0bo4D8MFvQEOWCHo/76J/iaftkAd4Y6PthMfvD0pfbuO2grKd05RjjFP
+	J86BVYzLiFM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E7988CCF;
+	Wed, 10 Oct 2012 17:47:30 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 879FF8CCD; Wed, 10 Oct 2012
+ 17:47:28 -0400 (EDT)
+In-Reply-To: <1349894347.32696.10.camel@drew-northup.unet.maine.edu> (Drew
+ Northup's message of "Wed, 10 Oct 2012 14:39:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 16224A12-1324-11E2-ADB2-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207446>
 
-Eric Wong wrote:
-> Jonathan Nieder <jrnieder@gmail.com> wrote:
+Drew Northup <drew.northup@maine.edu> writes:
 
->> -- >8 --
->> Subject: Git::SVN::Editor::T: pass $deletions to ->A and ->D
+> # Untracked files:
+> #   (use "git add <file>..." to include in what will be committed)
+> #
+> #       rc.d/rc2.d/S08iptables
+> #       rc.d/rc3.d/S08iptables
+> #       rc.d/rc4.d/S08iptables
+> ...
+> no changes added to commit (use "git add" and/or "git commit -a")
 >
-> For future reference, it'd be slightly easier for me to apply if you
-> included the From: (and Date:) headers so I don't have to yank+paste
-> them myself :>
+> It detects the changes as renames however―which in this case isn't
+> appropriate:
+>
+> [root@drew-northup ~]# etckeeper vcs status
+> # On branch master
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #       renamed:    rc.d/rc2.d/K92iptables -> rc.d/rc2.d/S08iptables
+> #       renamed:    rc.d/rc3.d/K92iptables -> rc.d/rc3.d/S08iptables
+> #       renamed:    rc.d/rc4.d/K92iptables -> rc.d/rc4.d/S08iptables
+> #...
 
-Ah, I assumed you were using "git am --scissors".  Will do next time.
+Given that all of these six files have the same contents, I actually
+am slightly impressed how well Git matched them up ;-).
 
-Jonathan
+But more seriously, why do you have rc.d/rc2.d/S08iptables untracked
+in the working tree but in the index to be committed?
