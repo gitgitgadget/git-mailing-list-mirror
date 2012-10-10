@@ -1,61 +1,150 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: rm and add, but not rename, of identical files
-Date: Wed, 10 Oct 2012 22:09:47 +0200
-Message-ID: <m2wqyyw0l0.fsf@igel.home>
-References: <1349894347.32696.10.camel@drew-northup.unet.maine.edu>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH/RFC v2] git svn: work around SVN 1.7 mishandling of
+ svn:special changes
+Date: Wed, 10 Oct 2012 20:11:25 +0000
+Message-ID: <20121010201125.GA30952@dcvr.yhbt.net>
+References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
+ <1343468872-72133-8-git-send-email-schwern@pobox.com>
+ <20121006192455.GA14969@elie.Belkin>
+ <20121009101239.GA28120@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 10 22:10:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 22:11:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM2bS-0006U8-1m
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 22:10:02 +0200
+	id 1TM2cz-0007QO-QF
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 22:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647Ab2JJUJv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 16:09:51 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:56755 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751807Ab2JJUJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 16:09:51 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XcRHK3nYNz3hhWD;
-	Wed, 10 Oct 2012 22:09:48 +0200 (CEST)
-X-Auth-Info: odJfxwBW0adjjGMEmfYFEjlI8s1KSvRPVLInC01aOyg=
-Received: from igel.home (ppp-93-104-147-205.dynamic.mnet-online.de [93.104.147.205])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XcRHJ2zTSzbbfb;
-	Wed, 10 Oct 2012 22:09:48 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 0C67ECA2A4; Wed, 10 Oct 2012 22:09:48 +0200 (CEST)
-X-Yow: NOW, I'm supposed to SCRAMBLE two, and HOLD th' MAYO!!
-In-Reply-To: <1349894347.32696.10.camel@drew-northup.unet.maine.edu> (Drew
-	Northup's message of "Wed, 10 Oct 2012 14:39:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753676Ab2JJUL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 16:11:27 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:49926 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751206Ab2JJUL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 16:11:26 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id B96A61F70C;
+	Wed, 10 Oct 2012 20:11:25 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20121009101239.GA28120@elie.Belkin>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207437>
 
-Drew Northup <drew.northup@maine.edu> writes:
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Jonathan Nieder wrote:
+> 
+> > Revisions prepared with ordinary svn commands ("svn add" and not "svn
+> > propset") don't trip this because they represent filetype changes
+> > using a replace operation [...]
+> >                                                        Perhaps "git
+> > svn" should mimic that,
+> 
+> ... and here's what that looks like.  I like this more than ignoring
+> the problem in tests, and I suppose something like this is necessary
+> regardless of how quickly issue 4091 is fixed for compatibility with
+> the broken versions of svn.
 
-> It detects the changes as renames however=E2=80=94which in this case =
-isn't
-> appropriate:
+I prefer this v2 more than ignoring the problem in tests, too.
 
-Why is that a problem?  A rename is just something which is computed on
-the fly for display purpose, the repository only stores a snapshot of
-the resulting tree.
+> It would be nice if the patch could be more concise, though.  What do
+> you think?
 
-Andreas.
+I think it's fine.
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+>  git-svn.perl |   25 ++++++++++++++++++++++++-
+
+I needed to filter the patch through:
+
+    s,git-svn\.perl,perl/Git/SVN/Editor.pm,g
+
+though...  Will push the edited version to my master on
+git://bogomips.org/git-svn
+
+>From b8c78e2a9d6141589202e98b898f477861fcb111 Mon Sep 17 00:00:00 2001
+From: Jonathan Nieder <jrnieder@gmail.com>
+Date: Tue, 9 Oct 2012 03:12:39 -0700
+Subject: [PATCH] git svn: work around SVN 1.7 mishandling of svn:special
+ changes
+
+Subversion represents symlinks as ordinary files with content starting
+with "link " and the svn:special property set to "*".  Thus a file can
+switch between being a symlink and a non-symlink simply by toggling
+its svn:special property, and new checkouts will automatically write a
+file of the appropriate type.  Likewise, in subversion 1.6 and older,
+running "svn update" would notice changes in filetype and update the
+working copy appropriately.
+
+Starting in subversion 1.7 (issue 4091), changes to the svn:special
+property trip an assertion instead:
+
+	$ svn up svn-tree
+	Updating 'svn-tree':
+	svn: E235000: In file 'subversion/libsvn_wc/update_editor.c' \
+	line 1583: assertion failed (action == svn_wc_conflict_action_edit \
+	|| action == svn_wc_conflict_action_delete || action == \
+	svn_wc_conflict_action_replace)
+
+Revisions prepared with ordinary svn commands ("svn add" and not "svn
+propset") don't trip this because they represent these filetype
+changes using a replace operation, which is approximately equivalent
+to removal followed by adding a new file and works fine.  Follow suit.
+
+Noticed using t9100.  After this change, git-svn's file-to-symlink
+changes are sent in a format that modern "svn update" can handle and
+tests t9100.11-13 pass again.
+
+[ew: s,git-svn\.perl,perl/Git/SVN/Editor.pm,g]
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ perl/Git/SVN/Editor.pm | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
+index 755092f..3bbc20a 100644
+--- a/perl/Git/SVN/Editor.pm
++++ b/perl/Git/SVN/Editor.pm
+@@ -345,7 +345,30 @@ sub M {
+ 	$self->close_file($fbat,undef,$self->{pool});
+ }
+ 
+-sub T { shift->M(@_) }
++sub T {
++	my ($self, $m, $deletions) = @_;
++
++	# Work around subversion issue 4091: toggling the "is a
++	# symlink" property requires removing and re-adding a
++	# file or else "svn up" on affected clients trips an
++	# assertion and aborts.
++	if (($m->{mode_b} =~ /^120/ && $m->{mode_a} !~ /^120/) ||
++	    ($m->{mode_b} !~ /^120/ && $m->{mode_a} =~ /^120/)) {
++		$self->D({
++			mode_a => $m->{mode_a}, mode_b => '000000',
++			sha1_a => $m->{sha1_a}, sha1_b => '0' x 40,
++			chg => 'D', file_b => $m->{file_b}
++		});
++		$self->A({
++			mode_a => '000000', mode_b => $m->{mode_b},
++			sha1_a => '0' x 40, sha1_b => $m->{sha1_b},
++			chg => 'A', file_b => $m->{file_b}
++		});
++		return;
++	}
++
++	$self->M($m, $deletions);
++}
+ 
+ sub change_file_prop {
+ 	my ($self, $fbat, $pname, $pval) = @_;
+-- 
+1.8.0.rc0.42.gb8c78e2
