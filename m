@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 02/12] ctype: support iscntrl, ispunct, isxdigit and isprint
-Date: Wed, 10 Oct 2012 17:40:41 +0700
-Message-ID: <1349865651-31889-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 03/12] Import wildmatch from rsync
+Date: Wed, 10 Oct 2012 17:40:42 +0700
+Message-ID: <1349865651-31889-4-git-send-email-pclouds@gmail.com>
 References: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,137 +12,662 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 12:41:25 2012
+X-From: git-owner@vger.kernel.org Wed Oct 10 12:41:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLtjB-0002Z3-91
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 12:41:25 +0200
+	id 1TLtjH-0002bm-Up
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 12:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331Ab2JJKlP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 06:41:15 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:34755 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755165Ab2JJKlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 06:41:13 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so575878pbb.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:41:12 -0700 (PDT)
+	id S1755394Ab2JJKlW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 06:41:22 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:33818 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755165Ab2JJKlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 06:41:19 -0400
+Received: by mail-da0-f46.google.com with SMTP id n41so112135dak.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 03:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=P5vPSmzlOEn0sSlX6BzNCK1nWjGgcFqrdhvUykDRlBM=;
-        b=CelzgS2l06oG+sqf64Kjbe+2e5vY2t8zj8qwZ3jdKYfLakISAhidPOfDrWWmubzvej
-         4LD1cvcKpfnLusSqxYV1+q7houJGSU9aM42DFKwpiUomjjVWYRSzfCFeGwGHg5JFA+6N
-         DSiK/OARU98hUh3ev5Hmdj6KEFzy449Ze+jY56N5DqUlc0NkJJq9e/Wwl6QSSR5Idkko
-         jN254lo5zY97hixJqBSwoNvqLfuuW3Q82wyQ2a2I37/VA6D7CP/Cu+pDoqxrLonwbztb
-         d1Mxuoz80819bc2nyacrdhLlkpJFDJMZWKzUJXN/DdrDTNwNlrU7qIul+JYaQ/9q+944
-         aYYg==
-Received: by 10.68.190.197 with SMTP id gs5mr73605162pbc.124.1349865672844;
-        Wed, 10 Oct 2012 03:41:12 -0700 (PDT)
+        bh=wBkH+B0fyKu9sn4cFFmWBuino5t4MNqAZd1i5ytpoQ0=;
+        b=SLu3OlIqf/M1/IUUijyfbV8g5ts7s5dRJpTiy5bp9cJQCvrtMP3aHJIb3iCAZ/Gn2c
+         /CCTEZn3JEvUbvcj5xi931DW/UTpulJSerdDEq2mvA8hEs8HeKT4BnBpThuxcndwkfNO
+         xdxOOujdYRR3/TtRF0F3Bbp53Voi2FOc90gT5TyC9Du4MlyFVOpydakCfAjKN7gzxUzF
+         ecYt+sBy9B2pHQ4O88oBA2NUnuci+V+N7MT7mwStUviaVIGpeJh4dGl3Pw7NHIU8mf+S
+         QXjrv5PMyYS4vEXboOKbKx4I2aPQeWQnOk/gEm7CGHvM7yHJGFxqi3e6lYHjxiWmAFJn
+         6GUg==
+Received: by 10.66.89.37 with SMTP id bl5mr61610085pab.55.1349865679391;
+        Wed, 10 Oct 2012 03:41:19 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.54.82])
-        by mx.google.com with ESMTPS id d9sm666815paw.35.2012.10.10.03.41.09
+        by mx.google.com with ESMTPS id c5sm680365pay.5.2012.10.10.03.41.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 03:41:12 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 17:41:04 +0700
+        Wed, 10 Oct 2012 03:41:18 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 17:41:10 +0700
 X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
 In-Reply-To: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207388>
 
-A new table sane_ctype2[] is added, otherwise we'll need to OR with
-current bits in sane_ctype[] and that looks ugly.
+These files are from rsync.git commit
+f92f5b166e3019db42bc7fe1aa2f1a9178cd215d, which was the last commit
+before rsync turned GPL-3. All files are imported as-is and
+no-op. Adaptation is done in a separate patch.
+
+rsync.git           ->  git.git
+lib/wildmatch.[ch]      wildmatch.[ch]
+wildtest.txt            t/t3070/wildtest.txt
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- ctype.c           | 18 ++++++++++++++++++
- git-compat-util.h | 13 +++++++++++++
- 2 files changed, 31 insertions(+)
+ t/t3070/wildtest.txt | 165 +++++++++++++++++++++++
+ wildmatch.c          | 368 +++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ wildmatch.h          |   6 +
+ 3 files changed, 539 insertions(+)
+ create mode 100644 t/t3070/wildtest.txt
+ create mode 100644 wildmatch.c
+ create mode 100644 wildmatch.h
 
-diff --git a/ctype.c b/ctype.c
-index faeaf34..b4bf48a 100644
---- a/ctype.c
-+++ b/ctype.c
-@@ -26,6 +26,24 @@ const unsigned char sane_ctype[256] =3D {
- 	/* Nothing in the 128.. range */
- };
-=20
-+enum {
-+	CN =3D GIT_CNTRL,
-+	PU =3D GIT_PUNCT,
-+	XD =3D GIT_XDIGIT,
-+};
+diff --git a/t/t3070/wildtest.txt b/t/t3070/wildtest.txt
+new file mode 100644
+index 0000000..42c1678
+--- /dev/null
++++ b/t/t3070/wildtest.txt
+@@ -0,0 +1,165 @@
++# Input is in the following format (all items white-space separated):
++#
++# The first two items are 1 or 0 indicating if the wildmat call is exp=
+ected to
++# succeed and if fnmatch works the same way as wildmat, respectively. =
+ After
++# that is a text string for the match, and a pattern string.  Strings =
+can be
++# quoted (if desired) in either double or single quotes, as well as ba=
+ckticks.
++#
++# MATCH FNMATCH_SAME "text to match" 'pattern to use'
 +
-+const unsigned char sane_ctype2[256] =3D {
-+	CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, /*   =
- 0..15 */
-+	CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, /*   =
-16..31 */
-+	0,  PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, /*   =
-32..47 */
-+	XD, XD, XD, XD, XD, XD, XD, XD, XD, XD, PU, PU, PU, PU, PU, PU, /*   =
-48..63 */
-+	PU, 0,	XD, 0,	XD, 0,	XD, 0,	0,  0,	0,  0,	0,  0,	0,  0,	/*   64..79 *=
-/
-+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  PU, PU, PU, PU, PU, /*   =
-80..95 */
-+	PU, 0,	XD, 0,	XD, 0,	XD, 0,	0,  0,	0,  0,	0,  0,	0,  0,	/*  96..111 *=
-/
-+	0,  0,	0,  0,	0,  0,	0,  0,	0,  0,	0,  PU, PU, PU, PU, CN, /* 112..12=
-7 */
-+	/* Nothing in the 128.. range */
-+};
++# Basic wildmat features
++1 1 foo			foo
++0 1 foo			bar
++1 1 ''			""
++1 1 foo			???
++0 1 foo			??
++1 1 foo			*
++1 1 foo			f*
++0 1 foo			*f
++1 1 foo			*foo*
++1 1 foobar		*ob*a*r*
++1 1 aaaaaaabababab	*ab
++1 1 foo*		foo\*
++0 1 foobar		foo\*bar
++1 1 f\oo		f\\oo
++1 1 ball		*[al]?
++0 1 ten			[ten]
++1 1 ten			**[!te]
++0 1 ten			**[!ten]
++1 1 ten			t[a-g]n
++0 1 ten			t[!a-g]n
++1 1 ton			t[!a-g]n
++1 1 ton			t[^a-g]n
++1 1 a]b			a[]]b
++1 1 a-b			a[]-]b
++1 1 a]b			a[]-]b
++0 1 aab			a[]-]b
++1 1 aab			a[]a-]b
++1 1 ]			]
 +
- /* For case-insensitive kwset */
- const char tolower_trans_tbl[256] =3D {
- 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f8b859c..ea11694 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -510,14 +510,23 @@ extern const char tolower_trans_tbl[256];
- #undef isupper
- #undef tolower
- #undef toupper
-+#undef iscntrl
-+#undef ispunct
-+#undef isxdigit
-+#undef isprint
- extern const unsigned char sane_ctype[256];
-+extern const unsigned char sane_ctype2[256];
- #define GIT_SPACE 0x01
- #define GIT_DIGIT 0x02
- #define GIT_ALPHA 0x04
- #define GIT_GLOB_SPECIAL 0x08
- #define GIT_REGEX_SPECIAL 0x10
- #define GIT_PATHSPEC_MAGIC 0x20
-+#define GIT_CNTRL 0x01
-+#define GIT_PUNCT 0x02
-+#define GIT_XDIGIT 0x04
- #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask))=
- !=3D 0)
-+#define sane_istest2(x,mask) ((sane_ctype2[(unsigned char)(x)] & (mask=
-)) !=3D 0)
- #define isascii(x) (((x) & ~0x7f) =3D=3D 0)
- #define isspace(x) sane_istest(x,GIT_SPACE)
- #define isdigit(x) sane_istest(x,GIT_DIGIT)
-@@ -527,6 +536,10 @@ extern const unsigned char sane_ctype[256];
- #define isupper(x) sane_iscase(x, 0)
- #define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
- #define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX=
-_SPECIAL)
-+#define iscntrl(x) sane_istest2(x, GIT_CNTRL)
-+#define ispunct(x) sane_istest2(x, GIT_PUNCT)
-+#define isxdigit(x) sane_istest2(x, GIT_XDIGIT)
-+#define isprint(x) (isalnum(x) || isspace(x) || ispunct(x))
- #define tolower(x) sane_case((unsigned char)(x), 0x20)
- #define toupper(x) sane_case((unsigned char)(x), 0)
- #define is_pathspec_magic(x) sane_istest(x,GIT_PATHSPEC_MAGIC)
++# Extended slash-matching features
++0 1 foo/baz/bar		foo*bar
++1 1 foo/baz/bar		foo**bar
++0 1 foo/bar		foo?bar
++0 1 foo/bar		foo[/]bar
++0 1 foo/bar		f[^eiu][^eiu][^eiu][^eiu][^eiu]r
++1 1 foo-bar		f[^eiu][^eiu][^eiu][^eiu][^eiu]r
++0 1 foo			**/foo
++1 1 /foo		**/foo
++1 1 bar/baz/foo		**/foo
++0 1 bar/baz/foo		*/foo
++0 0 foo/bar/baz		**/bar*
++1 1 deep/foo/bar/baz	**/bar/*
++0 1 deep/foo/bar/baz/	**/bar/*
++1 1 deep/foo/bar/baz/	**/bar/**
++0 1 deep/foo/bar	**/bar/*
++1 1 deep/foo/bar/	**/bar/**
++1 1 foo/bar/baz		**/bar**
++1 1 foo/bar/baz/x	*/bar/**
++0 0 deep/foo/bar/baz/x	*/bar/**
++1 1 deep/foo/bar/baz/x	**/bar/*/*
++
++# Various additional tests
++0 1 acrt		a[c-c]st
++1 1 acrt		a[c-c]rt
++0 1 ]			[!]-]
++1 1 a			[!]-]
++0 1 ''			\
++0 1 \			\
++0 1 /\			*/\
++1 1 /\			*/\\
++1 1 foo			foo
++1 1 @foo		@foo
++0 1 foo			@foo
++1 1 [ab]		\[ab]
++1 1 [ab]		[[]ab]
++1 1 [ab]		[[:]ab]
++0 1 [ab]		[[::]ab]
++1 1 [ab]		[[:digit]ab]
++1 1 [ab]		[\[:]ab]
++1 1 ?a?b		\??\?b
++1 1 abc			\a\b\c
++0 1 foo			''
++1 1 foo/bar/baz/to	**/t[o]
++
++# Character class tests
++1 1 a1B		[[:alpha:]][[:digit:]][[:upper:]]
++0 1 a		[[:digit:][:upper:][:space:]]
++1 1 A		[[:digit:][:upper:][:space:]]
++1 1 1		[[:digit:][:upper:][:space:]]
++0 1 1		[[:digit:][:upper:][:spaci:]]
++1 1 ' '		[[:digit:][:upper:][:space:]]
++0 1 .		[[:digit:][:upper:][:space:]]
++1 1 .		[[:digit:][:punct:][:space:]]
++1 1 5		[[:xdigit:]]
++1 1 f		[[:xdigit:]]
++1 1 D		[[:xdigit:]]
++1 1 _		[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:=
+][:print:][:punct:][:space:][:upper:][:xdigit:]]
++#1 1 =85		[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lo=
+wer:][:print:][:punct:][:space:][:upper:][:xdigit:]]
++1 1 =7F		[^[:alnum:][:alpha:][:blank:][:digit:][:graph:][:lower:][:pri=
+nt:][:punct:][:space:][:upper:][:xdigit:]]
++1 1 .		[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:][:space=
+:][:upper:][:xdigit:]]
++1 1 5		[a-c[:digit:]x-z]
++1 1 b		[a-c[:digit:]x-z]
++1 1 y		[a-c[:digit:]x-z]
++0 1 q		[a-c[:digit:]x-z]
++
++# Additional tests, including some malformed wildmats
++1 1 ]		[\\-^]
++0 1 [		[\\-^]
++1 1 -		[\-_]
++1 1 ]		[\]]
++0 1 \]		[\]]
++0 1 \		[\]]
++0 1 ab		a[]b
++0 1 a[]b	a[]b
++0 1 ab[		ab[
++0 1 ab		[!
++0 1 ab		[-
++1 1 -		[-]
++0 1 -		[a-
++0 1 -		[!a-
++1 1 -		[--A]
++1 1 5		[--A]
++1 1 ' '		'[ --]'
++1 1 $		'[ --]'
++1 1 -		'[ --]'
++0 1 0		'[ --]'
++1 1 -		[---]
++1 1 -		[------]
++0 1 j		[a-e-n]
++1 1 -		[a-e-n]
++1 1 a		[!------]
++0 1 [		[]-a]
++1 1 ^		[]-a]
++0 1 ^		[!]-a]
++1 1 [		[!]-a]
++1 1 ^		[a^bc]
++1 1 -b]		[a-]b]
++0 1 \		[\]
++1 1 \		[\\]
++0 1 \		[!\\]
++1 1 G		[A-\\]
++0 1 aaabbb	b*a
++0 1 aabcaa	*ba*
++1 1 ,		[,]
++1 1 ,		[\\,]
++1 1 \		[\\,]
++1 1 -		[,-.]
++0 1 +		[,-.]
++0 1 -.]		[,-.]
++1 1 2		[\1-\3]
++1 1 3		[\1-\3]
++0 1 4		[\1-\3]
++1 1 \		[[-\]]
++1 1 [		[[-\]]
++1 1 ]		[[-\]]
++0 1 -		[[-\]]
++
++# Test recursion and the abort code (use "wildtest -i" to see iteratio=
+n counts)
++1 1 -adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1	-*-*-*-*=
+-*-*-12-*-*-*-m-*-*-*
++0 1 -adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1	-*-*-*-*=
+-*-*-12-*-*-*-m-*-*-*
++0 1 -adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1	-*-*-*-*=
+-*-*-12-*-*-*-m-*-*-*
++1 1 /adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1	/*/*/*/*=
+/*/*/12/*/*/*/m/*/*/*
++0 1 /adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1	/*/*/*/*=
+/*/*/12/*/*/*/m/*/*/*
++1 1 abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt		**/*a*b*g*n*t
++0 1 abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz		**/*a*b*g*n*t
+diff --git a/wildmatch.c b/wildmatch.c
+new file mode 100644
+index 0000000..f3a1731
+--- /dev/null
++++ b/wildmatch.c
+@@ -0,0 +1,368 @@
++/*
++**  Do shell-style pattern matching for ?, \, [], and * characters.
++**  It is 8bit clean.
++**
++**  Written by Rich $alz, mirror!rs, Wed Nov 26 19:03:17 EST 1986.
++**  Rich $alz is now <rsalz@bbn.com>.
++**
++**  Modified by Wayne Davison to special-case '/' matching, to make '*=
+*'
++**  work differently than '*', and to fix the character-class code.
++*/
++
++#include "rsync.h"
++
++/* What character marks an inverted character class? */
++#define NEGATE_CLASS	'!'
++#define NEGATE_CLASS2	'^'
++
++#define FALSE 0
++#define TRUE 1
++#define ABORT_ALL -1
++#define ABORT_TO_STARSTAR -2
++
++#define CC_EQ(class, len, litmatch) ((len) =3D=3D sizeof (litmatch)-1 =
+\
++				    && *(class) =3D=3D *(litmatch) \
++				    && strncmp((char*)class, litmatch, len) =3D=3D 0)
++
++#if defined STDC_HEADERS || !defined isascii
++# define ISASCII(c) 1
++#else
++# define ISASCII(c) isascii(c)
++#endif
++
++#ifdef isblank
++# define ISBLANK(c) (ISASCII(c) && isblank(c))
++#else
++# define ISBLANK(c) ((c) =3D=3D ' ' || (c) =3D=3D '\t')
++#endif
++
++#ifdef isgraph
++# define ISGRAPH(c) (ISASCII(c) && isgraph(c))
++#else
++# define ISGRAPH(c) (ISASCII(c) && isprint(c) && !isspace(c))
++#endif
++
++#define ISPRINT(c) (ISASCII(c) && isprint(c))
++#define ISDIGIT(c) (ISASCII(c) && isdigit(c))
++#define ISALNUM(c) (ISASCII(c) && isalnum(c))
++#define ISALPHA(c) (ISASCII(c) && isalpha(c))
++#define ISCNTRL(c) (ISASCII(c) && iscntrl(c))
++#define ISLOWER(c) (ISASCII(c) && islower(c))
++#define ISPUNCT(c) (ISASCII(c) && ispunct(c))
++#define ISSPACE(c) (ISASCII(c) && isspace(c))
++#define ISUPPER(c) (ISASCII(c) && isupper(c))
++#define ISXDIGIT(c) (ISASCII(c) && isxdigit(c))
++
++#ifdef WILD_TEST_ITERATIONS
++int wildmatch_iteration_count;
++#endif
++
++static int force_lower_case =3D 0;
++
++/* Match pattern "p" against the a virtually-joined string consisting
++ * of "text" and any strings in array "a". */
++static int dowild(const uchar *p, const uchar *text, const uchar*const=
+ *a)
++{
++    uchar p_ch;
++
++#ifdef WILD_TEST_ITERATIONS
++    wildmatch_iteration_count++;
++#endif
++
++    for ( ; (p_ch =3D *p) !=3D '\0'; text++, p++) {
++	int matched, special;
++	uchar t_ch, prev_ch;
++	while ((t_ch =3D *text) =3D=3D '\0') {
++	    if (*a =3D=3D NULL) {
++		if (p_ch !=3D '*')
++		    return ABORT_ALL;
++		break;
++	    }
++	    text =3D *a++;
++	}
++	if (force_lower_case && ISUPPER(t_ch))
++	    t_ch =3D tolower(t_ch);
++	switch (p_ch) {
++	  case '\\':
++	    /* Literal match with following character.  Note that the test
++	     * in "default" handles the p[1] =3D=3D '\0' failure case. */
++	    p_ch =3D *++p;
++	    /* FALLTHROUGH */
++	  default:
++	    if (t_ch !=3D p_ch)
++		return FALSE;
++	    continue;
++	  case '?':
++	    /* Match anything but '/'. */
++	    if (t_ch =3D=3D '/')
++		return FALSE;
++	    continue;
++	  case '*':
++	    if (*++p =3D=3D '*') {
++		while (*++p =3D=3D '*') {}
++		special =3D TRUE;
++	    } else
++		special =3D FALSE;
++	    if (*p =3D=3D '\0') {
++		/* Trailing "**" matches everything.  Trailing "*" matches
++		 * only if there are no more slash characters. */
++		if (!special) {
++		    do {
++			if (strchr((char*)text, '/') !=3D NULL)
++			    return FALSE;
++		    } while ((text =3D *a++) !=3D NULL);
++		}
++		return TRUE;
++	    }
++	    while (1) {
++		if (t_ch =3D=3D '\0') {
++		    if ((text =3D *a++) =3D=3D NULL)
++			break;
++		    t_ch =3D *text;
++		    continue;
++		}
++		if ((matched =3D dowild(p, text, a)) !=3D FALSE) {
++		    if (!special || matched !=3D ABORT_TO_STARSTAR)
++			return matched;
++		} else if (!special && t_ch =3D=3D '/')
++		    return ABORT_TO_STARSTAR;
++		t_ch =3D *++text;
++	    }
++	    return ABORT_ALL;
++	  case '[':
++	    p_ch =3D *++p;
++#ifdef NEGATE_CLASS2
++	    if (p_ch =3D=3D NEGATE_CLASS2)
++		p_ch =3D NEGATE_CLASS;
++#endif
++	    /* Assign literal TRUE/FALSE because of "matched" comparison. */
++	    special =3D p_ch =3D=3D NEGATE_CLASS? TRUE : FALSE;
++	    if (special) {
++		/* Inverted character class. */
++		p_ch =3D *++p;
++	    }
++	    prev_ch =3D 0;
++	    matched =3D FALSE;
++	    do {
++		if (!p_ch)
++		    return ABORT_ALL;
++		if (p_ch =3D=3D '\\') {
++		    p_ch =3D *++p;
++		    if (!p_ch)
++			return ABORT_ALL;
++		    if (t_ch =3D=3D p_ch)
++			matched =3D TRUE;
++		} else if (p_ch =3D=3D '-' && prev_ch && p[1] && p[1] !=3D ']') {
++		    p_ch =3D *++p;
++		    if (p_ch =3D=3D '\\') {
++			p_ch =3D *++p;
++			if (!p_ch)
++			    return ABORT_ALL;
++		    }
++		    if (t_ch <=3D p_ch && t_ch >=3D prev_ch)
++			matched =3D TRUE;
++		    p_ch =3D 0; /* This makes "prev_ch" get set to 0. */
++		} else if (p_ch =3D=3D '[' && p[1] =3D=3D ':') {
++		    const uchar *s;
++		    int i;
++		    for (s =3D p +=3D 2; (p_ch =3D *p) && p_ch !=3D ']'; p++) {} /*S=
+HARED ITERATOR*/
++		    if (!p_ch)
++			return ABORT_ALL;
++		    i =3D p - s - 1;
++		    if (i < 0 || p[-1] !=3D ':') {
++			/* Didn't find ":]", so treat like a normal set. */
++			p =3D s - 2;
++			p_ch =3D '[';
++			if (t_ch =3D=3D p_ch)
++			    matched =3D TRUE;
++			continue;
++		    }
++		    if (CC_EQ(s,i, "alnum")) {
++			if (ISALNUM(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "alpha")) {
++			if (ISALPHA(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "blank")) {
++			if (ISBLANK(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "cntrl")) {
++			if (ISCNTRL(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "digit")) {
++			if (ISDIGIT(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "graph")) {
++			if (ISGRAPH(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "lower")) {
++			if (ISLOWER(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "print")) {
++			if (ISPRINT(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "punct")) {
++			if (ISPUNCT(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "space")) {
++			if (ISSPACE(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "upper")) {
++			if (ISUPPER(t_ch))
++			    matched =3D TRUE;
++		    } else if (CC_EQ(s,i, "xdigit")) {
++			if (ISXDIGIT(t_ch))
++			    matched =3D TRUE;
++		    } else /* malformed [:class:] string */
++			return ABORT_ALL;
++		    p_ch =3D 0; /* This makes "prev_ch" get set to 0. */
++		} else if (t_ch =3D=3D p_ch)
++		    matched =3D TRUE;
++	    } while (prev_ch =3D p_ch, (p_ch =3D *++p) !=3D ']');
++	    if (matched =3D=3D special || t_ch =3D=3D '/')
++		return FALSE;
++	    continue;
++	}
++    }
++
++    do {
++	if (*text)
++	    return FALSE;
++    } while ((text =3D *a++) !=3D NULL);
++
++    return TRUE;
++}
++
++/* Match literal string "s" against the a virtually-joined string cons=
+isting
++ * of "text" and any strings in array "a". */
++static int doliteral(const uchar *s, const uchar *text, const uchar*co=
+nst *a)
++{
++    for ( ; *s !=3D '\0'; text++, s++) {
++	while (*text =3D=3D '\0') {
++	    if ((text =3D *a++) =3D=3D NULL)
++		return FALSE;
++	}
++	if (*text !=3D *s)
++	    return FALSE;
++    }
++
++    do {
++	if (*text)
++	    return FALSE;
++    } while ((text =3D *a++) !=3D NULL);
++
++    return TRUE;
++}
++
++/* Return the last "count" path elements from the concatenated string.
++ * We return a string pointer to the start of the string, and update t=
+he
++ * array pointer-pointer to point to any remaining string elements. */
++static const uchar *trailing_N_elements(const uchar*const **a_ptr, int=
+ count)
++{
++    const uchar*const *a =3D *a_ptr;
++    const uchar*const *first_a =3D a;
++
++    while (*a)
++	    a++;
++
++    while (a !=3D first_a) {
++	const uchar *s =3D *--a;
++	s +=3D strlen((char*)s);
++	while (--s >=3D *a) {
++	    if (*s =3D=3D '/' && !--count) {
++		*a_ptr =3D a+1;
++		return s+1;
++	    }
++	}
++    }
++
++    if (count =3D=3D 1) {
++	*a_ptr =3D a+1;
++	return *a;
++    }
++
++    return NULL;
++}
++
++/* Match the "pattern" against the "text" string. */
++int wildmatch(const char *pattern, const char *text)
++{
++    static const uchar *nomore[1]; /* A NULL pointer. */
++#ifdef WILD_TEST_ITERATIONS
++    wildmatch_iteration_count =3D 0;
++#endif
++    return dowild((const uchar*)pattern, (const uchar*)text, nomore) =3D=
+=3D TRUE;
++}
++
++/* Match the "pattern" against the forced-to-lower-case "text" string.=
+ */
++int iwildmatch(const char *pattern, const char *text)
++{
++    static const uchar *nomore[1]; /* A NULL pointer. */
++    int ret;
++#ifdef WILD_TEST_ITERATIONS
++    wildmatch_iteration_count =3D 0;
++#endif
++    force_lower_case =3D 1;
++    ret =3D dowild((const uchar*)pattern, (const uchar*)text, nomore) =
+=3D=3D TRUE;
++    force_lower_case =3D 0;
++    return ret;
++}
++
++/* Match pattern "p" against the a virtually-joined string consisting
++ * of all the pointers in array "texts" (which has a NULL pointer at t=
+he
++ * end).  The int "where" can be 0 (normal matching), > 0 (match only
++ * the trailing N slash-separated filename components of "texts"), or =
+< 0
++ * (match the "pattern" at the start or after any slash in "texts"). *=
+/
++int wildmatch_array(const char *pattern, const char*const *texts, int =
+where)
++{
++    const uchar *p =3D (const uchar*)pattern;
++    const uchar*const *a =3D (const uchar*const*)texts;
++    const uchar *text;
++    int matched;
++
++#ifdef WILD_TEST_ITERATIONS
++    wildmatch_iteration_count =3D 0;
++#endif
++
++    if (where > 0)
++	text =3D trailing_N_elements(&a, where);
++    else
++	text =3D *a++;
++    if (!text)
++	return FALSE;
++
++    if ((matched =3D dowild(p, text, a)) !=3D TRUE && where < 0
++     && matched !=3D ABORT_ALL) {
++	while (1) {
++	    if (*text =3D=3D '\0') {
++		if ((text =3D (uchar*)*a++) =3D=3D NULL)
++		    return FALSE;
++		continue;
++	    }
++	    if (*text++ =3D=3D '/' && (matched =3D dowild(p, text, a)) !=3D F=
+ALSE
++	     && matched !=3D ABORT_TO_STARSTAR)
++		break;
++	}
++    }
++    return matched =3D=3D TRUE;
++}
++
++/* Match literal string "s" against the a virtually-joined string cons=
+isting
++ * of all the pointers in array "texts" (which has a NULL pointer at t=
+he
++ * end).  The int "where" can be 0 (normal matching), or > 0 (match
++ * only the trailing N slash-separated filename components of "texts")=
+=2E */
++int litmatch_array(const char *string, const char*const *texts, int wh=
+ere)
++{
++    const uchar *s =3D (const uchar*)string;
++    const uchar*const *a =3D (const uchar* const*)texts;
++    const uchar *text;
++
++    if (where > 0)
++	text =3D trailing_N_elements(&a, where);
++    else
++	text =3D *a++;
++    if (!text)
++	return FALSE;
++
++    return doliteral(s, text, a) =3D=3D TRUE;
++}
+diff --git a/wildmatch.h b/wildmatch.h
+new file mode 100644
+index 0000000..e7f1a35
+--- /dev/null
++++ b/wildmatch.h
+@@ -0,0 +1,6 @@
++/* wildmatch.h */
++
++int wildmatch(const char *pattern, const char *text);
++int iwildmatch(const char *pattern, const char *text);
++int wildmatch_array(const char *pattern, const char*const *texts, int =
+where);
++int litmatch_array(const char *string, const char*const *texts, int wh=
+ere);
 --=20
 1.7.12.1.406.g6ab07c4
