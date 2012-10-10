@@ -1,89 +1,89 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 2/2] grep: stop looking at random places for .gitattributes
-Date: Wed, 10 Oct 2012 16:21:43 +0200
-Message-ID: <50758477.3030304@viscovery.net>
-References: <1349868894-3579-1-git-send-email-pclouds@gmail.com> <1349877544-17648-1-git-send-email-pclouds@gmail.com> <1349877544-17648-3-git-send-email-pclouds@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 0/7] Tying loose ends on grep-pcre
+Date: Wed, 10 Oct 2012 17:17:51 +0200
+Message-ID: <5075919F.5030306@alum.mit.edu>
+References: <1349855714-17008-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 16:22:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 17:18:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLxAg-0005DL-Fy
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 16:22:02 +0200
+	id 1TLy2w-0007kF-CK
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 17:18:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756644Ab2JJOVv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 10:21:51 -0400
-Received: from so.liwest.at ([212.33.55.24]:35146 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756505Ab2JJOVu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 10:21:50 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TLxAO-0000Kz-Dk; Wed, 10 Oct 2012 16:21:44 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 25EF31660F;
-	Wed, 10 Oct 2012 16:21:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <1349877544-17648-3-git-send-email-pclouds@gmail.com>
-X-Enigmail-Version: 1.4.4
-X-Spam-Score: -1.0 (-)
+	id S932394Ab2JJPRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 11:17:55 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:58237 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932351Ab2JJPRy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 11:17:54 -0400
+X-AuditID: 1207440f-b7fde6d00000095c-a4-507591a1496e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 27.4A.02396.1A195705; Wed, 10 Oct 2012 11:17:53 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9AFHpNu032107
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 10 Oct 2012 11:17:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <1349855714-17008-1-git-send-email-gitster@pobox.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsUixO6iqLtwYmmAwZI3AhZdV7qZLBp6rzA7
+	MHlcvKTs8XmTXABTFLdNUmJJWXBmep6+XQJ3xsO25awFq3gqrvx4w9TA2MjVxcjJISFgItEy
+	dyUzhC0mceHeerYuRi4OIYHLjBKXbi5lhHCOM0nsa3jJBlLFK6AtsX7DF0YQm0VAVeJCXzML
+	iM0moCuxqKeZCcQWFQiRmHF5MjNEvaDEyZlPwGpEBNQkJrYdArI5OJgFxCX6/4GFhQUsJdbM
+	eMcKYgsJOErcnveHHcTmFHCSmNSyESzOLKAj8a7vATOELS+x/e0c5gmMArOQbJiFpGwWkrIF
+	jMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9HIzS/RSU0o3MULClH8HY9d6mUOMAhyMSjy8
+	EvElAUKsiWXFlbmHGCU5mJREeV9NKA0Q4kvKT6nMSCzOiC8qzUktPsQowcGsJMJr6gOU401J
+	rKxKLcqHSUlzsCiJ86ovUfcTEkhPLEnNTk0tSC2CycpwcChJ8K4GGSpYlJqeWpGWmVOCkGbi
+	4AQZziUlUpyal5JalFhakhEPitT4YmCsgqR4gPYKTQTZW1yQmAsUhWg9xajL8bFx3kNGIZa8
+	/LxUKXHeGyA7BECKMkrz4FbAktIrRnGgj4UhRvEAExrcpFdAS5iAlshMKgFZUpKIkJJqYOTK
+	CV4gXNp3YfGdDXU/99x3W1f5WFVKIaGQ9VYBw86k9txHD6f+SqrkOs/Ac63CtUEmea+r6NLd
+	smeceq6ylsmqzCgK83Ob1Sa3sIJJ8ZTWd+4PreE/NsydeFpQ4q2o4Puo3I8Pjx3b 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207415>
 
-Am 10/10/2012 15:59, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
-> This patch passes real paths down to grep_source_load_driver(). Excep=
-t
-> grepping a blob, all other cases should have right paths down to
+On 10/10/2012 09:55 AM, Junio C Hamano wrote:
+> It took longer than expected, but here is a reroll of the previous
+> series to bring more recent "git grep" enhancements to the "--grep"
+> option of commands in "git log" family.
+> 
+> The early part of the series (1-3) refactors the code that reads
+> configuration items related to "grep" and the code that mixes the
+> result with the command line options to prepare grep_opt, which so
+> far lived in builtin/grep.c, and moves them to the grep.[ch] at the
+> top-level.
+> 
+> The middle part (4-6) reuses the code to set-up grep_opt refactored
+> by the earlier part of the series on revs->grep_filter that is used
+> in "git log --grep=..." processing.  It incidentally fixes a small
+> bug where "git log -F -E --grep='<ere>'" did not look for matches to
+> the pattern in extended regular expression, and adds --basic-regexp
+> and --perl-regexp command line options to "git log" family for
+> completeness.
+> 
+> The last one teaches "git log" family to honor the "grep.*"
+> configuration variables, e.g. "grep.patterntype", so that you can
+> say "git -c grep.patterntype=perl log --grep='(?:pcre)'".
 
-=2E.. grepping a blob or tree object...
+Maybe this has been discussed already, but it seems to me that adding a
+persistent setting that affects how "git log --grep" interprets the
+pattern argument could break some scripts that assume that the "old"
+interpretation is always used.  Shouldn't this at least be documented as
+a backwards incompatibility?
 
-> grep_source_load_driver(). In other words, .gitattributes are still
-> respected.
-=2E..
-> +test_expect_success 'grep --cached respects binary diff attribute (2=
-)' '
-> +	git add .gitattributes &&
-> +	rm .gitattributes &&
-> +	git grep --cached text t >actual &&
-> +	test_cmp expect actual &&
-> +	git checkout .gitattributes &&
-> +	git rm --cached .gitattributes
-> +'
+Michael
 
-This should perhaps be test_when_finished "git rm --cached .gitattribut=
-es".
-
-> +
-> +test_expect_success 'grep tree respects binary diff attribute' '
-
-I was confused by the word "tree" here. Isn't "pathspec" more correct?
-
-> +	git commit -m new &&
-> +	echo "Binary file HEAD:t matches" >expect &&
-> +	git grep text HEAD -- t >actual &&
-> +	test_cmp expect actual &&
-> +	git reset HEAD^
-> +'
-
-And in yet another test, should
-
-	git grep text HEAD:t
-
-/not/ respect the binary attribute?
-
-At any rate, I don't observe the warnings anymore with this series.
-
-Thanks,
--- Hannes
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
