@@ -1,77 +1,66 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 4/8] wildmatch: remove static variable force_lower_case
-Date: Wed, 10 Oct 2012 12:14:50 +0700
-Message-ID: <CACsJy8BOcH8cXje5osL4oNP1YkJ8HadUOYBek3uhEbySBey9Kw@mail.gmail.com>
-References: <1349752147-13314-1-git-send-email-pclouds@gmail.com>
- <1349752147-13314-5-git-send-email-pclouds@gmail.com> <7vtxu3e5jl.fsf@alter.siamese.dyndns.org>
+Subject: Re: 'git grep needle rev' attempts to access 'rev:.../.gitattributes'
+ in the worktree
+Date: Wed, 10 Oct 2012 12:17:53 +0700
+Message-ID: <CACsJy8Cku-XTbQBDpZpPh7AMDFMoNKLKeJNs5HKCQnBy420d2w@mail.gmail.com>
+References: <5073E87D.9020100@viscovery.net> <CACsJy8BFmUr5_E47900T6j9Lgdvj96_dNbo2LHP5hLYq3w7ZLA@mail.gmail.com>
+ <20121009120144.GA8780@do> <20121009124144.GB12465@sigill.intra.peff.net> <7vk3uzfp3p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 07:15:33 2012
+X-From: git-owner@vger.kernel.org Wed Oct 10 07:18:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLodp-00055Q-FD
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 07:15:33 +0200
+	id 1TLogm-0006bQ-Cf
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 07:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608Ab2JJFPX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 01:15:23 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:35553 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752197Ab2JJFPV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 01:15:21 -0400
-Received: by mail-qa0-f53.google.com with SMTP id s11so172746qaa.19
-        for <git@vger.kernel.org>; Tue, 09 Oct 2012 22:15:21 -0700 (PDT)
+	id S1752509Ab2JJFS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 01:18:26 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:33595 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751862Ab2JJFSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 01:18:25 -0400
+Received: by mail-qc0-f174.google.com with SMTP id d3so100404qch.19
+        for <git@vger.kernel.org>; Tue, 09 Oct 2012 22:18:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=oltYkyMWBD/uLvyXZHOre+sLGCsrz8/m5PlkokLTBWU=;
-        b=bNmAUcMCWwnWiamS1/9Lt3Nt7BdC9FOfCKaG3/zz0+LXKoJTDBExXLBCgCA77KPe7Y
-         5pxJa7f/eSkYdiPvgmWzQC9SDr3a3D1C5o1V/P3A2FEqtqRopHn174qv0xNFFEOSNvFP
-         MIUXC6CodmpXMvLamatxGvTpqWNX0wfLoHOYRR6qob0oFTXunna4Jchgzg4WpHsYUCxA
-         ymULZZzujcN6xR7JjLv5Tu8IZ2nlN8bH5mZT6JXsRhYfhT9Muk5clg6j2prqaq62uGXS
-         smWrrKDmFHD2ztnWeFQ4ai75PiA4c4iL5EK+gSaxdEAW1sK9MMyk0fCReLdFoH+ozl+q
-         KZhg==
-Received: by 10.229.137.12 with SMTP id u12mr1405766qct.28.1349846121019; Tue,
- 09 Oct 2012 22:15:21 -0700 (PDT)
-Received: by 10.49.13.194 with HTTP; Tue, 9 Oct 2012 22:14:50 -0700 (PDT)
-In-Reply-To: <7vtxu3e5jl.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        bh=NxyWE2Gau7+fGpfGWqJl7JTHNHzG2E76GT182cfqw68=;
+        b=Iuk++AAXUGH/bWkYJMwlChkkc4jFuxXs9OBBkvupDCN3qOvwHx2Fa0kpsuXiXTs2rk
+         bnflsxJNahdtRLn8yf6E9EqSCNazrtYXj4Qr6a+0ZP+YP2rcSo0LPZwmtptC7GgVUf8w
+         vPNPh+Y8Tq5zq123eizZ3BTSRaniU667Md4pRqnp5PH0eWRS0s5E4NwwMxUeKhFJOtLk
+         ryBjt893K361M4FHSD0udsNQgamIRMCbpD13y+6MFipkC0Yx4i/7CjwFpKyJ1/ZlgfZr
+         5tbR5JcHQDuKuqgoXLOEaUkzF0N32Kt0NOi4wRsZvWVjmpAUZvSAV8X3YWiiTbkNLyA2
+         eozA==
+Received: by 10.49.81.161 with SMTP id b1mr54587275qey.21.1349846304195; Tue,
+ 09 Oct 2012 22:18:24 -0700 (PDT)
+Received: by 10.49.13.194 with HTTP; Tue, 9 Oct 2012 22:17:53 -0700 (PDT)
+In-Reply-To: <7vk3uzfp3p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207362>
 
-On Wed, Oct 10, 2012 at 3:47 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Wed, Oct 10, 2012 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> diff --git a/wildmatch.c b/wildmatch.c
->> index 7b64a6b..2382873 100644
->> --- a/wildmatch.c
->> +++ b/wildmatch.c
->> @@ -11,8 +11,8 @@
->>
->>  #include <stddef.h>
->>  #include <ctype.h>
->> -#include <string.h>
->>
->> +#include "cache.h"
->>  #include "wildmatch.h"
+>> I think we just need to have callers of grep_source_init provide us with
+>> the actual pathname (or NULL, in the case of GREP_SOURCE_BUF). That is
+>> where the information is lost.
 >
-> This is wrong; the includes from the system headers should have
-> been removed in the previous step where the series "integrated"
-> wildmatch to git, after which point the first include any C source
-> that is not at the platform-compatibility layer should be cache.h
-> or git-compat-util.h.
+> Yes.  I agree that is the right approach.
 
-Git's ctype does not seem to be complete for wildmatch's use so
-ctype.h is required. But that can be easily fixed later on.
---=20
+Passing full path this way means prepare_attr_stack has to walk back
+to top directory for every files (even in the same directory). If
+.gitattributes are loaded while git-grep traverses the tree, then it
+can preload attr once per directory. But Jeff's approach looks
+simpler.
+-- 
 Duy
