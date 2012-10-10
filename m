@@ -1,132 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] format-patch: tests: check rfc822+rfc2047 in to+cc
- headers
-Date: Wed, 10 Oct 2012 10:02:24 -0700
-Message-ID: <7vhaq2clb3.fsf@alter.siamese.dyndns.org>
-References: <1349717609-4770-1-git-send-email-schnhrr@cs.tu-berlin.de>
- <1349717609-4770-6-git-send-email-schnhrr@cs.tu-berlin.de>
- <7v391nfmzn.fsf@alter.siamese.dyndns.org> <50755170.1080205@cs.tu-berlin.de>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH] MALLOC_CHECK: Allow checking to be disabled from config.mak
+Date: Wed, 10 Oct 2012 18:46:36 +0100
+Message-ID: <5075B47C.6030607@ramsay1.demon.co.uk>
+References: <50706B54.8090004@ramsay1.demon.co.uk> <7vbogfquc8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?Q?Jan_H=2E_Sch=C3=B6nherr?= <schnhrr@cs.tu-berlin.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 19:02:43 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Elia Pinto <gitter.spiros@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 19:58:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLzg9-0002XI-Rp
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 19:02:42 +0200
+	id 1TM0Xn-00087h-O8
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 19:58:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755653Ab2JJRCa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 13:02:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37711 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753816Ab2JJRCa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 13:02:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BDD5963E;
-	Wed, 10 Oct 2012 13:02:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=hPwMOWO4OnIK
-	MULB+MwR7ncGw54=; b=SxGd4sejHBYLG9j2Ce81ePx8267C/Gi9PkN54tYAjxml
-	9ku2leYHrHWTNQq7xXZwDtLmzsk0vYMww6TT9MgOlebbIrmhn9q2zJDpz7rI4aKe
-	yy/sahmWai9irO004evYZV7A638Dm6NnvujgcHD/SozRWF1+Hyw1Cu5N/uMhDcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kAuwle
-	iRWu2NYrUDTjV4I5CPtYxVgebj7wgvhXL037HDqgI5VKaLLC9LELkgmOHWGO+Qhv
-	AcBPyYHUwTZ7nJ+voaYUz5KTxum/aDEdAbjWC93glUnkm7s/mD2nvXmeScmNLEYw
-	wULXs5dHqffCxZbTp+R/DjoPaILcW9qoA2t6U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 689039632;
-	Wed, 10 Oct 2012 13:02:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C35FC962D; Wed, 10 Oct 2012
- 13:02:25 -0400 (EDT)
-In-Reply-To: <50755170.1080205@cs.tu-berlin.de> ("Jan H. =?utf-8?Q?Sch?=
- =?utf-8?Q?=C3=B6nherr=22's?= message of "Wed, 10 Oct 2012 12:44:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 441911D0-12FC-11E2-B791-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754255Ab2JJR55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 13:57:57 -0400
+Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:49567 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751733Ab2JJR54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 13:57:56 -0400
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id D2CCC384080;
+	Wed, 10 Oct 2012 18:57:53 +0100 (BST)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 01A1738407C;	Wed, 10 Oct 2012 18:57:53 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;	Wed, 10 Oct 2012 18:57:52 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <7vbogfquc8.fsf@alter.siamese.dyndns.org>
+X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207419>
 
-"Jan H. Sch=C3=B6nherr" <schnhrr@cs.tu-berlin.de> writes:
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+>> The malloc checks can be disabled using the TEST_NO_MALLOC_CHECK
+>> variable, either from the environment or command line of an
+>> 'make test' invocation. In order to allow the malloc checks to be
+>> disabled from the 'config.mak' file, we add TEST_NO_MALLOC_CHECK
+>> to the environment using an export directive.
+> 
+> We would want to encourage people to test with cheap but effective
+> checks when available.  I do not see "malloc: using debugging hooks"
+> message anywhere when I run tests, but if you do, I'd rather see us
+> check if we can tell glibc to stop doing so first without disabling
+> the whole test.  Your patch feels like the first step to a slipperly
+> slope whose destination would make us say "we get too many messages
+> so let's do nothing in "make test" with this configuration." when
+> taken to the extreme, and obviously we would not want to go there
+> ;-).
 
-> Am 09.10.2012 21:45, schrieb Junio C Hamano:
->> Jan H. Sch=C3=B6nherr <schnhrr@cs.tu-berlin.de> writes:
->>=20
->>> +test_expect_failure 'additional command line cc (rfc822)' '
->>> +
->>> +	git config --replace-all format.headers "Cc: R E Cipient <rcipien=
-t@example.com>" &&
->>>  	git format-patch --cc=3D"S. E. Cipient <scipient@example.com>" --=
-stdout master..side | sed -e "/^\$/q" >patch5 &&
->>> -	grep "^Cc: R. E. Cipient <rcipient@example.com>,\$" patch5 &&
->>> -	grep "^ *S. E. Cipient <scipient@example.com>\$" patch5
->>> +	grep "^Cc: R E Cipient <rcipient@example.com>,\$" patch5 &&
->>> +	grep "^ *"S. E. Cipient" <scipient@example.com>\$" patch5
->>=20
->> Hrm.
->>=20
->> As we are not in the business of parsing out whatever junk given
->> with --cc or --recipient from the command line or configuration, but
->> are merely parroting them to the output stream, isn't this a
->> user-error in the test that gives --cc=3D'S. E. Cipient <a@ddre.ss>'
->> instead of giving --cc=3D'"S. E. Cipient" <a@ddre.ss>'?  Same commen=
-t
->> on the new 'expect-failure' tests.
->
-> Originally, I just wanted to emphasize, that --to and --cc are
-> currently handled differently than in git-send-email, where
-> all this quoting/encoding is done.
->
-> And it is much more convenient to add
-> 	--cc 'Jan H. Sch=C3=B6nherr <...>'
-> than
-> 	--cc '=3D?UTF-8?q?Jan=3D20H=3D2E=3D20Sch=3DC3=3DB6nherr?=3D <...>'
->
-> Even more, since I would expect git to correctly handle
-> addresses given in a format that is also used elsewhere
-> within git.
->
->
-> However, I agree that we are not responsible to check/quote/encode
-> anything when the user supplies whole headers (though we probably
-> could).
->
-> But if I cannot convince you, I'll just drop this patch. :)
+[sorry for the late reply, I've been away ...]
 
-It wasn't about convincing or not convincing me.
+Yes, but ... I really don't see that this patch would encourage anyone
+to skip the malloc checks, who wasn't going to anyway! I didn't notice
+much of an increase in the running time of the tests, so that wouldn't
+discourage me. This idiotic message spewage is a different issue.
+(the complete loss of terminal scroll-back is particularly annoying)
 
-I couldn't read, just from "expect_failure" and "Do some checks
-for...", what the intention of the tests and the proposed future
-plans were.
+I had intended to run the tests with malloc checks enabled before
+submitting patches, testing -rc* builds etc., but have them disabled
+for day-to-day programming.
 
-If the proposed commit log message (or comments before these
-"expect_failure" tests) said something like this:
+> Besides, doesn't a simple instruction to export TEST_NO_MALLOC_CHECK
+> to your environment before running "make test" suffice?
 
-    "git send-email" historically did not parse the user supplied
-    extra header values (e.g. --cc, --recipient) and just replayed
-    them, but that forces users to add them in encoded form, e.g.
+Yes, so I can simply disable the malloc checks in my ~/.bashrc file.
+However, it would be disappointing to have my config tweeks in two
+places ... :(
 
- 	--cc '=3D?UTF-8?q?Jan=3D20H=3D2E=3D20Sch=3DC3=3DB6nherr?=3D <...>'
+I guess I can live with it ...
 
-    which is inconvenient. We would want to update send-email to
-    accept human-readable
-
- 	--cc 'Jan H. Sch=C3=B6nherr <...>'
-
-    and encode in the future.  Add test_expect_failure tests as a
-    reminder.
-
-that would have avoided such confusion, and even more importantly,
-made it easier for us to start discussion on the proposed future
-direction.  I am personally on the fence.
+ATB,
+Ramsay Jones
