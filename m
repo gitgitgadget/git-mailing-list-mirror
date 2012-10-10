@@ -1,93 +1,154 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: [PATCH] attr: a note about the order of .gitattributes lookup
-Date: Wed, 10 Oct 2012 20:55:52 +0700
-Message-ID: <20121010135552.GA11293@do>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 1/2] quote: let caller reset buffer for quote_path_relative()
+Date: Wed, 10 Oct 2012 20:59:03 +0700
+Message-ID: <1349877544-17648-2-git-send-email-pclouds@gmail.com>
+References: <1349868894-3579-1-git-send-email-pclouds@gmail.com>
+ <1349877544-17648-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 15:56:19 2012
+X-From: git-owner@vger.kernel.org Wed Oct 10 15:59:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLwlj-0005a1-N6
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 15:56:16 +0200
+	id 1TLwp6-0007gp-I9
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 15:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756315Ab2JJN4F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 09:56:05 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:45251 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542Ab2JJN4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 09:56:02 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so620669pad.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 06:56:01 -0700 (PDT)
+	id S1756571Ab2JJN7b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 09:59:31 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:34656 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756404Ab2JJN73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 09:59:29 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so734362pbb.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 06:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=t4XKDGAPbBpfSApjpTMLV0mrCVrCxXlP3ZNTANIY2yQ=;
-        b=ghRErM7bW0A9CKHE+vkZgyO1/p9Bc+2eg4Pk0RvDizHVIwmKfdKJRqW/a2sMnxb5eB
-         lg+M0YMwgpVoEmzuIDWxRL2Q+Uip/vIu+cJ8PY9Zf/JSQT9FhB5a5eSZ+ccHGpM/fRZo
-         M7jht4a8NJ2+73kKK9FcFkfpZGm+4dZ0nvihuj2lVSY+3lb0BRl4FnAcbNbtILkKu0F6
-         67++cJNKbqqw0GIf5HfLsvP7NMPryGm16X3qfegS88ANz4QnyYRxCvr+/MF9GqNU5Dz7
-         Djiwxt07/BfoWPMYg5PvhpCugBbX3Qi2VnMGAwFpPCHZDALwLYAZTAyBWYQN2PuE9vRq
-         rsRA==
-Received: by 10.66.86.133 with SMTP id p5mr62080333paz.35.1349877361653;
-        Wed, 10 Oct 2012 06:56:01 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=8D4wf5d4I6xXcPaZK+Lm0J14uy9uhk++31HGPMwbPkQ=;
+        b=werYhCfPvdi7qsZ4jT7w7FdFTBdubjWaj9c/DcxWzLTC64f/ze/E47dhWPl+1scAMZ
+         aMtqDp1AYo7iIfFS4Ja9V7SOr329ddletWKah8I/UbIs/OPa0FLLH4zrUbeMQeaLNXjK
+         9Nu+QB4eLsBz7ELKzIceaTydIxybZT9kPxVtcx2Fqy/BCgJVXroJwBBac2CG9FyJm4NF
+         wJPN2JJZ9CuvTZVtYB3Up/N7KvOvrgFvuRAv7Gx6yowjTjJuFgqBH4+a91zlT3yvwPkt
+         wn9Lrs6Cv8LJY0ohb7kI8Bp9zXIQxXApvvpmlATEqQWS2ZGdkC2aWYyyje+mXPA8ZTjN
+         mwGg==
+Received: by 10.66.77.40 with SMTP id p8mr62299844paw.78.1349877569336;
+        Wed, 10 Oct 2012 06:59:29 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.54.82])
-        by mx.google.com with ESMTPS id n7sm897178pav.26.2012.10.10.06.55.57
+        by mx.google.com with ESMTPS id gk5sm1074713pbc.21.2012.10.10.06.59.25
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 06:56:00 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 20:55:52 +0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Wed, 10 Oct 2012 06:59:27 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 10 Oct 2012 20:59:19 +0700
+X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
+In-Reply-To: <1349877544-17648-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207411>
 
-This is the documentation part of
+quote_path_relative() resetting output buffer is sometimes unnecessary
+as the buffer has never been used, and some other times makes it
+harder for the caller to use (see builtin/grep.c, the caller has to
+insert a string after quote_path_relative)
 
-1a9d7e9 (attr.c: read .gitattributes from index as well. - 2007-08-14)
-06f33c1 (Read attributes from the index that is being checked out - 200=
-9-03-13)
+Move the buffer reset back to call sites when necessary.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- I looked around but did not see anywhere mentioning this. If I did
- not miss anything, then we should take a note about this to avoid
- surprises.
+ builtin/clean.c    | 2 ++
+ builtin/grep.c     | 2 +-
+ builtin/ls-files.c | 1 +
+ quote.c            | 1 -
+ wt-status.c        | 1 +
+ 5 files changed, 5 insertions(+), 2 deletions(-)
 
- Resend, this time git@vger is CCed. Sorry for the noise.
-
- Documentation/gitattributes.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-index 99ed04d..8c52a99 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -66,6 +66,12 @@ is from the path in question, the lower its preceden=
-ce). Finally
- global and system-wide files are considered (they have the lowest
- precedence).
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 69c1cda..ff633cc 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -149,6 +149,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
 =20
-+Normally if `.gitattributes` is not found in a directory in work tree,
-+the same path in the index is examined. If there's a `.gitattributes`
-+version in the index, that version will be used. During checkout proce=
-ss,
-+the order of examination is reversed: index version is preferred over
-+the work tree version.
-+
- If you wish to affect only a single repository (i.e., to assign
- attributes to files that are particular to
- one user's workflow for that repository), then
+ 		if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addstr(&directory, ent->name);
++			strbuf_reset(&buf);
+ 			qname =3D quote_path_relative(directory.buf, directory.len, &buf, p=
+refix);
+ 			if (show_only && (remove_directories ||
+ 			    (matches =3D=3D MATCHED_EXACTLY))) {
+@@ -171,6 +172,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 		} else {
+ 			if (pathspec && !matches)
+ 				continue;
++			strbuf_reset(&buf);
+ 			qname =3D quote_path_relative(ent->name, -1, &buf, prefix);
+ 			if (show_only) {
+ 				printf(_("Would remove %s\n"), qname);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 82530a6..377c904 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -376,9 +376,9 @@ static int grep_sha1(struct grep_opt *opt, const un=
+signed char *sha1,
+ 	struct strbuf pathbuf =3D STRBUF_INIT;
+=20
+ 	if (opt->relative && opt->prefix_length) {
++		strbuf_add(&pathbuf, filename, tree_name_len);
+ 		quote_path_relative(filename + tree_name_len, -1, &pathbuf,
+ 				    opt->prefix);
+-		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
+ 	} else {
+ 		strbuf_addstr(&pathbuf, filename);
+ 	}
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index b5434af..1e0cae9 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -395,6 +395,7 @@ int report_path_error(const char *ps_matched, const=
+ char **pathspec, const char
+ 		if (found_dup)
+ 			continue;
+=20
++		strbuf_reset(&sb);
+ 		name =3D quote_path_relative(pathspec[num], -1, &sb, prefix);
+ 		error("pathspec '%s' did not match any file(s) known to git.",
+ 		      name);
+diff --git a/quote.c b/quote.c
+index 911229f..7e23ba9 100644
+--- a/quote.c
++++ b/quote.c
+@@ -381,7 +381,6 @@ char *quote_path_relative(const char *in, int len,
+ {
+ 	struct strbuf sb =3D STRBUF_INIT;
+ 	const char *rel =3D path_relative(in, len, &sb, prefix, -1);
+-	strbuf_reset(out);
+ 	quote_c_style_counted(rel, strlen(rel), out, NULL, 0);
+ 	strbuf_release(&sb);
+=20
+diff --git a/wt-status.c b/wt-status.c
+index 2a9658b..be8b600 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -690,6 +690,7 @@ static void wt_status_print_other(struct wt_status =
+*s,
+ 		struct string_list_item *it;
+ 		const char *path;
+ 		it =3D &(l->items[i]);
++		strbuf_reset(&buf);
+ 		path =3D quote_path(it->string, strlen(it->string),
+ 				  &buf, s->prefix);
+ 		if (column_active(s->colopts)) {
 --=20
 1.7.12.1.406.g6ab07c4
