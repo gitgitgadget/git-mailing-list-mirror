@@ -1,111 +1,74 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: [PATCH 2/2] show color hints based on state of the git tree
-Date: Wed, 10 Oct 2012 21:32:24 +0200
-Message-ID: <20121010193224.GA6769@simaj.xs4all.nl>
-References: <7v7gr0k6jv.fsf@alter.siamese.dyndns.org>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: A basic question
+Date: Wed, 10 Oct 2012 15:36:34 -0400
+Message-ID: <1349897794.32696.15.camel@drew-northup.unet.maine.edu>
+References: <001501cda711$8ab6f0a0$a024d1e0$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@drmicha.warpmail.net, spearce@spearce.org,
-	artagnon@gmail.com, schwab@linux-m68k.org, soosthoek@nieuwland.nl
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 21:32:40 2012
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "'Skot Davis'" <skotd122@gmail.com>
+To: Jim Vahl <jv@wmdb.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 21:37:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM21E-0002Yh-4Z
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 21:32:36 +0200
+	id 1TM26F-0005Ue-Dn
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Oct 2012 21:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308Ab2JJTc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 15:32:26 -0400
-Received: from simaj.xs4all.nl ([83.160.71.26]:45620 "EHLO blacky"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753977Ab2JJTcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 15:32:25 -0400
-Received: by blacky (Postfix, from userid 1000)
-	id 6BC00411F5; Wed, 10 Oct 2012 21:32:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v7gr0k6jv.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755684Ab2JJThg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 15:37:36 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:47231 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753977Ab2JJThg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 15:37:36 -0400
+Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id q9AJabJS025986
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 10 Oct 2012 15:36:37 -0400
+In-Reply-To: <001501cda711$8ab6f0a0$a024d1e0$@com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
+	Fuz2=3
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: q9AJabJS025986
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1350502619.85258@/lH7FkCyrRuxRVOlwUFW2g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207430>
 
-By setting GIT_PS1_SHOW_COLORHINTS when using __git_ps1
-as PROMPT_COMMAND, you will get color hints in addition to
-a different character (*+% etc.) to indicate the state of
-the tree.
+On Wed, 2012-10-10 at 11:03 -0700, Jim Vahl wrote:
+> All,
+> 
+> Our company is researching version control software, something which we have
+> not used previously.  I have a very basic question about git which I have
+> not been able to answer from reading.  As I understand it, a git repository
+> can be a mixture of files which are under development, staged or committed.
+> If we make a new build of our product we will obviously only want to include
+> the committed (tested) files.  
+> 
+> The question is this: what is the usual procedure to retrieve a set of
+> committed  files only from the repository to place into a distribution or
+> "ready to build" folder.  The same question goes for tagging a release: how
+> does the user get the tag to reference the committed files only and not the
+> most recent files which may be under development or undergoing testing.
+> 
+> Thanks,
+> 
+> Jim Vahl
 
-Signed-off-by: Simon Oosthoek <s.oosthoek@xs4all.nl>
----
- contrib/completion/git-prompt.sh |   36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+Jim,
+Have you looked at http://git-scm.com/book yet? It sounds to me like you
+have some misconceptions about how Git works. (If so, did it leave you
+more or less confused?)
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 4fbc1e6..a693565 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -53,6 +53,12 @@
- # find one, or @{upstream} otherwise.  Once you have set
- # GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
- # setting the bash.showUpstream config variable.
-+#
-+# If you would like a colored hint about the current dirty state, set
-+# GIT_PS1_SHOWCOLORHINTS to a nonempty value. When tracked files are
-+# modified, the branch name turns red, when all modifications are staged
-+# the branch name turns yellow and when all changes are checked in, the
-+# color changes to green. The colors are currently hardcoded in the function.
- 
- # __gitdir accepts 0 or 1 arguments (i.e., location)
- # returns location of .git repo
-@@ -206,6 +212,7 @@ __git_ps1_show_upstream ()
- # in that case it _sets_ PS1. The arguments are parts of a PS1 string.
- # when both arguments are given, the first is prepended and the second appended
- # to the state string when assigned to PS1.
-+# In this mode you can request colored hints using GIT_PS1_SHOWCOLORHINTS=true
- __git_ps1 ()
- {
- 	local pcmode=no
-@@ -319,9 +326,36 @@ __git_ps1 ()
- 		local f="$w$i$s$u"
- 		if [ $pcmode = yes ]; then
- 			PS1="$ps1pc_start("
--			PS1="$PS1$c${b##refs/heads/}${f:+ $f}$r$p"
-+			if [ -n "${GIT_PS1_SHOWCOLORHINT-}" ]; then
-+				local c_red='\e[31m'
-+				local c_green='\e[32m'
-+				local c_yellow='\e[33m'
-+				local c_lblue='\e[1;34m'
-+				local c_purple='\e[35m'
-+				local c_cyan='\e[36m'
-+				local c_clear='\e[0m'
-+				local branchstring="$c${b##refs/heads/}"
-+				local branch_color="$c_green"
-+				local flags_color="$c_cyan"
-+
-+				if [ "$w" = "*" ]; then
-+					branch_color="$c_red"
-+				elif [ -n "$i" ]; then
-+					branch_color="$c_yellow"
-+				fi
-+
-+				# Setting PS1 directly with \[ and \] around colors
-+				# is necessary to prevent wrapping issues!
-+				PS1="$PS1\[$branch_color\]$branchstring\[$c_clear\]"
-+				if [ -n "$f" ]; then
-+					PS1="$PS1 \[$flags_color\]$f\[$c_clear\]"
-+				fi
-+			else
-+				PS1="$PS1$c${b##refs/heads/}${f:+ $f}$r$p"
-+			fi
- 			PS1="$PS1)$ps1pc_end"
- 		else
-+			# NO color option unless in PROMPT_COMMAND mode
- 			printf -- "$printf_format" "$c${b##refs/heads/}${f:+ $f}$r$p"
- 		fi
- 	fi
 -- 
-1.7.9.5
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
