@@ -1,7 +1,8 @@
 From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: [Patch v2 7/8] Create pdf from all html files
-Date: Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
-Message-ID: <114836962.47023.1349976280019.JavaMail.ngmail@webmail22.arcor-online.net>
+Subject: [Patch v2 8/8] Wire everything into Makefile and
+ Documentation/Makefile
+Date: Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
+Message-ID: <1374330060.47046.1349976377823.JavaMail.ngmail@webmail22.arcor-online.net>
 References: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -9,39 +10,39 @@ Content-Transfer-Encoding: 7bit
 Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
 	th.acker66@arcor.de
 To: th.acker66@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 19:24:53 2012
+X-From: git-owner@vger.kernel.org Thu Oct 11 19:26:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMMVA-0002nZ-8n
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:24:52 +0200
+	id 1TMMWk-0003sJ-Ou
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932967Ab2JKRYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 13:24:42 -0400
-Received: from mail-in-07.arcor-online.net ([151.189.21.47]:60451 "EHLO
-	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932758Ab2JKRYl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:24:41 -0400
-Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
-	by mx.arcor.de (Postfix) with ESMTP id 1ED32107C11;
-	Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 120C9522003;
-	Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
+	id S933091Ab2JKR0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 13:26:20 -0400
+Received: from mail-in-11.arcor-online.net ([151.189.21.51]:59046 "EHLO
+	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932758Ab2JKR0T (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:26:19 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mx.arcor.de (Postfix) with ESMTP id DC2EF35B351;
+	Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id D5442208008;
+	Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
 Received: from webmail22.arcor-online.net (webmail22.arcor-online.net [151.189.8.137])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 07BD92D6432;
-	Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-10.arcor-online.net 07BD92D6432
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id C988B21305D;
+	Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-13.arcor-online.net C988B21305D
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1349976280; bh=MXaO8IuVmwBd0PW1xO1zJ6aBgLOXwK4D5DR6GamWUQo=;
+	t=1349976377; bh=gbFjYgc6CpOmQzMR5A0K1IG2D0lWUF9Bl4T5hNjzb6Y=;
 	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=o7JiXaw6u52zNkZ5PmmhXq01ETlvA/hmBYDAl8ATFlGxHtgcawjgdRrshBlG0ZZXY
-	 RL8tf9vhsisTlj+Ml+E5VB+lJhl6SUS1f2kehhbVyOSWSfjrq1sYTkf+jVjCcFLoJT
-	 u8gHwukK57N3xYwnbiu4KNxQIYRofyjtqNvICcLE=
-Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:24:39 +0200 (CEST)
+	b=TCLgrQhFqNFWhrgOM4HK1RkE0/6HBfSiyB0oDVe6Bix+aMU8wBmTRD7ZZVlXwpLyR
+	 IzBgUFm5CouXUeZTdaJQxwfr8os5hEC1u7Q3xav4MIcmpzx+VjguvhTyGpb2bqb3qx
+	 suLuoilbHy7nYE65sa5kE32cELf00HM93HCvJZno=
+Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
 In-Reply-To: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
 X-ngMessageSubType: MessageSubType_MAIL
 X-WebmailclientIP: 188.105.106.236
@@ -49,127 +50,163 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207498>
 
->From 31f86526e0a0bd00be57db3275c860913f668fb8 Mon Sep 17 00:00:00 2001
+>From ac7de86bd58c5849c12e2b05e7b7f68704d9093e Mon Sep 17 00:00:00 2001
 From: Thomas Ackermann <th.acker@arcor.de>
-Date: Mon, 1 Oct 2012 20:06:48 +0200
-Subject: [PATCH] Create pdf from all html files
+Date: Wed, 10 Oct 2012 19:30:55 +0200
+Subject: [PATCH] Wire everything into Makefile and Documentation/Makefile
 
-- use wkhtmltopdf ("patched QT" version) to combine all html files into a single pdf file "git-doc.pdf"
-- insert page breaks to separate major sections
+- target "html" creates html for all files in Documentation/howto and Documentation/technical
+- new target "relnoteshtml" creates html for all release notes
+- new target "fullpdf" creates "git-doc.pdf" and uses targets "html", "relnoteshtml" and "pdf"
+- "html" does not use "relnoteshtml"
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- Documentation/.gitignore      |  1 +
- Documentation/footerend.txt   |  4 ++++
- Documentation/footerstart.txt |  7 ++++++
- Documentation/makedocpdf.sh   | 53 +++++++++++++++++++++++++++++++++++++++++++
- Documentation/pagebreak.txt   |  1 +
- 5 files changed, 66 insertions(+)
- create mode 100644 Documentation/footerend.txt
- create mode 100644 Documentation/footerstart.txt
- create mode 100755 Documentation/makedocpdf.sh
- create mode 100644 Documentation/pagebreak.txt
+ Documentation/Makefile | 43 +++++++++++++++++++++++++++++++++++++++++--
+ Makefile               |  9 +++++++++
+ 2 files changed, 50 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index d62aebd..fba4730 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -10,3 +10,4 @@ howto-index.txt
- doc.dep
- cmds-*.txt
- manpage-base-url.xsl
-+docfiles.txt
-diff --git a/Documentation/footerend.txt b/Documentation/footerend.txt
-new file mode 100644
-index 0000000..ed16923
---- /dev/null
-+++ b/Documentation/footerend.txt
-@@ -0,0 +1,4 @@
-+    </td>
-+  </tr>
-+</table>
-+</body></html>
-diff --git a/Documentation/footerstart.txt b/Documentation/footerstart.txt
-new file mode 100644
-index 0000000..a2746ef
---- /dev/null
-+++ b/Documentation/footerstart.txt
-@@ -0,0 +1,7 @@
-+<html>
-+<head></head>
-+<body style="border:0; margin: 0;" onload="subst()">
-+<table style="border-top: 1px solid black; width: 100%">
-+  <tr>
-+    <td class="section"></td>
-+    <td style="text-align:center">
-diff --git a/Documentation/makedocpdf.sh b/Documentation/makedocpdf.sh
-new file mode 100755
-index 0000000..5f1a2c1
---- /dev/null
-+++ b/Documentation/makedocpdf.sh
-@@ -0,0 +1,53 @@
-+#!/bin/sh
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 267dfe1..6710325 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -15,6 +15,9 @@ MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
+ 
+ DOC_HTML=$(MAN_HTML)
+ 
++RELNOTES_TXT = $(wildcard RelNotes/*.txt)
++RELNOTES_HTML= $(patsubst %.txt,%.html,$(RELNOTES_TXT))
++ 
+ ARTICLES = howto-index
+ ARTICLES += everyday
+ ARTICLES += git-tools
+@@ -24,8 +27,30 @@ SP_ARTICLES = user-manual
+ SP_ARTICLES += howto/revert-branch-rebase
+ SP_ARTICLES += howto/using-merge-subtree
+ SP_ARTICLES += howto/using-signed-tag-in-pull-request
++SP_ARTICLES += howto/use-git-daemon
++SP_ARTICLES += howto/update-hook-example
++SP_ARTICLES += howto/setup-git-server-over-http
++SP_ARTICLES += howto/separating-topic-branches
++SP_ARTICLES += howto/revert-a-faulty-merge
++SP_ARTICLES += howto/recover-corrupted-blob-object
++SP_ARTICLES += howto/rebuild-from-update-hook
++SP_ARTICLES += howto/rebuild-from-update-hook
++SP_ARTICLES += howto/rebase-from-internal-branch
++SP_ARTICLES += howto/maintain-git
+ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+ SP_ARTICLES += $(API_DOCS)
 +
-+rm -f git-doc.pdf
++TECH_DOCS += technical/index-format
++TECH_DOCS += technical/pack-format
++TECH_DOCS += technical/pack-heuristics
++TECH_DOCS += technical/pack-protocol
++TECH_DOCS += technical/protocol-capabilities
++TECH_DOCS += technical/protocol-common
++TECH_DOCS += technical/racy-git
++TECH_DOCS += technical/send-pack-pipeline
++TECH_DOCS += technical/shallow
++TECH_DOCS += technical/trivial-merge
++SP_ARTICLES += $(TECH_DOCS)
+ SP_ARTICLES += technical/api-index
+ 
+ DOC_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
+@@ -156,6 +181,8 @@ all: html man
+ 
+ html: $(DOC_HTML)
+ 
++relnoteshtml: $(RELNOTES_HTML)
 +
-+cat pagebreak.txt                  >pagebreak.html
+ $(DOC_HTML) $(DOC_MAN1) $(DOC_MAN5) $(DOC_MAN7): asciidoc.conf
+ 
+ man: man1 man5 man7
+@@ -167,6 +194,9 @@ info: git.info gitman.info
+ 
+ pdf: user-manual.pdf
+ 
++fullpdf: pdf relnoteshtml html
++	./makedocpdf.sh
 +
-+cat /dev/null                      >docfiles.txt
+ install: install-man
+ 
+ install-man: man
+@@ -191,6 +221,10 @@ install-pdf: pdf
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
+ 	$(INSTALL) -m 644 user-manual.pdf $(DESTDIR)$(pdfdir)
+ 
++install-fullpdf: fullpdf install-pdf
++	$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
++	$(INSTALL) -m 644 git-doc.pdf $(DESTDIR)$(pdfdir)
 +
-+ls gittutorial.html                >>docfiles.txt
-+ls gittutorial-2.html              >>docfiles.txt
-+ls everyday.html                   >>docfiles.txt
-+ls gitworkflows.html               >>docfiles.txt
+ install-html: html
+ 	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
+ 
+@@ -230,8 +264,10 @@ clean:
+ 	$(RM) *.xml *.xml+ *.html *.html+ *.1 *.5 *.7
+ 	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
+ 	$(RM) *.pdf
++	$(RM) docfiles.txt
++	$(RM) RelNotes/*.html
+ 	$(RM) howto-index.txt howto/*.html doc.dep
+-	$(RM) technical/api-*.html technical/api-index.txt
++	$(RM) technical/*.html technical/api-index.txt
+ 	$(RM) $(cmds_txt) *.made
+ 	$(RM) manpage-base-url.xsl
+ 
+@@ -241,6 +277,9 @@ $(MAN_HTML): %.html : %.txt
+ 		$(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) -o $@+ $< && \
+ 	mv $@+ $@
+ 
++$(RELNOTES_HTML): %.html : %.txt
++	$(QUIET_ASCIIDOC)$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 $*.txt
 +
-+ls pagebreak.html                  >>docfiles.txt
-+ls git.html                        >>docfiles.txt
-+ls git-a*.html                     >>docfiles.txt
-+ls git-bisect.html                 >>docfiles.txt
-+ls git-b[j-z]*.html                >>docfiles.txt
-+ls git-[c-s]*.html                 >>docfiles.txt
-+ls git-ta*.html                    >>docfiles.txt
-+ls gitk.html                       >>docfiles.txt
-+ls git-[u-z]*.html                 >>docfiles.txt
+ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 	sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+ 
+@@ -264,7 +303,7 @@ technical/api-index.txt: technical/api-index-skel.txt \
+ 	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
+ 
+ technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+-$(patsubst %,%.html,$(API_DOCS) technical/api-index): %.html : %.txt
++$(patsubst %,%.html,$(API_DOCS) technical/api-index $(TECH_DOCS)): %.html : %.txt
+ 	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b xhtml11 -f asciidoc.conf \
+ 		$(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) $*.txt
+ 
+diff --git a/Makefile b/Makefile
+index 8413606..0392782 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2479,12 +2479,18 @@ man:
+ html:
+ 	$(MAKE) -C Documentation html
+ 
++relnoteshtml:
++	$(MAKE) -C Documentation relnoteshtml
 +
-+ls pagebreak.html                  >>docfiles.txt
-+ls gita*.html                      >>docfiles.txt
-+ls git-bisect-lk2009.html          >>docfiles.txt
-+ls git[cdghimnr]*.html             >>docfiles.txt
-+ls git-tools.html                  >>docfiles.txt
-+ls gitweb*.html                    >>docfiles.txt
+ info:
+ 	$(MAKE) -C Documentation info
+ 
+ pdf:
+ 	$(MAKE) -C Documentation pdf
+ 
++fullpdf:
++	$(MAKE) -C Documentation fullpdf
 +
-+ls pagebreak.html                  >>docfiles.txt
-+ls howto-index.html                >>docfiles.txt
-+ls howto/*.html                    >>docfiles.txt
+ XGETTEXT_FLAGS = \
+ 	--force-po \
+ 	--add-comments \
+@@ -2796,6 +2802,9 @@ install-info:
+ install-pdf:
+ 	$(MAKE) -C Documentation install-pdf
+ 
++install-fullpdf:
++	$(MAKE) -C Documentation install-fullpdf
 +
-+ls pagebreak.html                  >>docfiles.txt
-+ls technical/[b-z]*.html           >>docfiles.txt
-+
-+ls pagebreak.html                  >>docfiles.txt
-+ls technical/api-index.html        >>docfiles.txt
-+ls technical/api-[a-h]*.html       >>docfiles.txt
-+ls technical/api-in-*.html         >>docfiles.txt
-+ls technical/api-[j-z]*.html       >>docfiles.txt
-+
-+ls pagebreak.html                  >>docfiles.txt
-+ls RelNotes/*.html                 >>docfiles.txt
-+
-+cat /dev/null                      >footer.html
-+
-+cat footerstart.txt                >>footer.html
-+cat ../GIT-VERSION-FILE            >>footer.html
-+cat footerend.txt                  >>footer.html
-+
-+cat docfiles.txt | xargs cat | wkhtmltopdf --book --footer-html footer.html --disable-external-links - git-doc.pdf
-diff --git a/Documentation/pagebreak.txt b/Documentation/pagebreak.txt
-new file mode 100644
-index 0000000..fdaffd1
---- /dev/null
-+++ b/Documentation/pagebreak.txt
-@@ -0,0 +1 @@
-+</p style="page-break-after: always">
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
 -- 
 1.7.11.msysgit.1
 
