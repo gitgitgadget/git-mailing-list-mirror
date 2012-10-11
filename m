@@ -1,69 +1,98 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] grep: stop looking at random places for .gitattributes
-Date: Thu, 11 Oct 2012 08:49:27 +0700
-Message-ID: <CACsJy8CoedQBm4xyfhZX1mNTXpLMHxugygZUqOoZS8V5WVztGg@mail.gmail.com>
-References: <1349868894-3579-1-git-send-email-pclouds@gmail.com>
- <1349877544-17648-1-git-send-email-pclouds@gmail.com> <1349877544-17648-3-git-send-email-pclouds@gmail.com>
- <50758477.3030304@viscovery.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Is anyone working on a next-gen Git protocol?
+Date: Wed, 10 Oct 2012 20:08:41 -0700
+Message-ID: <CAJo=hJsFLqV7ye0LZzQOrt6EpUXNVjqYfPp9ixO52=CBWcQtdw@mail.gmail.com>
+References: <CACBZZX6b+3P8M+z+X13k9Pq3tvVUfs_k1=foQVreX8K801=efQ@mail.gmail.com>
+ <5072973D.4080703@op5.se> <7vtxu5lyjr.fsf@alter.siamese.dyndns.org>
+ <035A66D9-FAF0-48EE-B161-7D0CAD92F2FB@zib.de> <7vlifeawd5.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DMStBNjucU2eitNdkYgk-1K04dxhqV2gpKOZkpLzR_iA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 11 03:50:12 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Andreas Ericsson <ae@op5.se>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 05:09:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM7ud-0006RU-4T
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 03:50:11 +0200
+	id 1TM999-0000fH-9p
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 05:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932803Ab2JKBt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 21:49:59 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:47053 "EHLO
+	id S1756177Ab2JKDJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 23:09:04 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:42493 "EHLO
 	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932265Ab2JKBt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 21:49:58 -0400
-Received: by mail-ia0-f174.google.com with SMTP id y32so863835iag.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 18:49:58 -0700 (PDT)
+	with ESMTP id S1753448Ab2JKDJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 23:09:02 -0400
+Received: by mail-ia0-f174.google.com with SMTP id y32so902530iag.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 20:09:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=rqNJdX3OJpW3KdBHG8lJnjrYHjiWZupkwZKUrraw4fs=;
-        b=a1eMCNchwy/Q9318E21YfPd63TYKwtHGOPp2yWwpLwidiEhdq5d2BQTSV/JvSMvicv
-         ptTeETPIngRHD/Vl72Hv4vAzmNJ+XzASs84u5H0z6kIZfe/MOfxGfqqZCxAAyyxza1Ox
-         ZLQVcLYpX5FIGNNmt82PIun3uFD6WOxpDgP6haKJSOZaZOR814SM5VAtAINJPLeof32w
-         xluPS2R2oBOBjLJc57ut6MiafPXEdT5K2JNvu47CvMDCrlZuGLbFFq2o69SuMY5dobX0
-         nPT28tMPV34HvapLd5SRKzWFj5eFfPyPg2ktVpz3jE4OaUmDStLU6QPUex37rl97hrsJ
-         PybA==
-Received: by 10.50.185.231 with SMTP id ff7mr7325453igc.40.1349920197890; Wed,
- 10 Oct 2012 18:49:57 -0700 (PDT)
-Received: by 10.64.143.168 with HTTP; Wed, 10 Oct 2012 18:49:27 -0700 (PDT)
-In-Reply-To: <50758477.3030304@viscovery.net>
+        bh=ah6n7cZhmP2lfMLw0F1H/vH0OO3GsMlMYDkht7sptJ4=;
+        b=dpmu4+8D76ylj+4+5OKZZFXantY6/GgLUOHzxL8shW3vhB2QFEgOYus+/GhfSQ5qPL
+         /qDh+yzSUrzG/1wt2VETl1ki2sPQ7TTpG0uGbi2jxecIxt4sEitNekbnO8AIUbJTWmL1
+         6rQyYcs1R1cR9Hj0E0jKCRc0zeecduCV9dzFc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=ah6n7cZhmP2lfMLw0F1H/vH0OO3GsMlMYDkht7sptJ4=;
+        b=NyITRGf3PEVlxdXQCJBxmjvyjkIs+bB5GkCYhwAT1e12wFVWHCqxZcrbF8b6Kso3BP
+         wB7WE6Q6xecdpQXpoLlJtZDgg9vrpB8cevbcjUHIGDbtPOsnIkrzsTzii7XhgBCuNFOr
+         ukOHvR6pqDE9kTp122d5Wb7ONjpo5KGruwLysUAD0mI0i0gQIkE3x9y+n78UvXSGl3AL
+         oCuTPwxrRI0i4miLm+A0d6kMD/Mr6rGPvn+c0B+LatrILowavOagH3/PF0cK62+p3eHD
+         g8HLdYtWxLdt4UhInCdrAEhRxIsCdkdolSosOwOlkTwRsLKOzgMz/MUncWOxgaA50qWI
+         01+w==
+Received: by 10.50.197.170 with SMTP id iv10mr7426253igc.24.1349924941778;
+ Wed, 10 Oct 2012 20:09:01 -0700 (PDT)
+Received: by 10.64.143.106 with HTTP; Wed, 10 Oct 2012 20:08:41 -0700 (PDT)
+In-Reply-To: <CACsJy8DMStBNjucU2eitNdkYgk-1K04dxhqV2gpKOZkpLzR_iA@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmWeAIXkDG9yPSHLa6MJe4e8ezximvJZP89Q8kVmjkR+zMRdaRsC/gyuzK8NcJDGz6q1GBR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207457>
 
-On Wed, Oct 10, 2012 at 9:21 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> +     git commit -m new &&
->> +     echo "Binary file HEAD:t matches" >expect &&
->> +     git grep text HEAD -- t >actual &&
->> +     test_cmp expect actual &&
->> +     git reset HEAD^
->> +'
+On Wed, Oct 10, 2012 at 6:44 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On Thu, Oct 11, 2012 at 3:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Steffen Prohaska <prohaska@zib.de> writes:
+>>
+>>> I've recently discovered that the current protocol can be amazingly
+>>> inefficient when it comes to transferring binary objects.  Assuming two
+>>> repositories that are in sync.  After a 'git checkout --orphan && git
+>>> commit', a subsequent transfers sends all the blobs attached to the new
+>>> commit, although the other side already has all the blobs.
+>>
+>> I do not think it has anything to do with binary, but what you
+>> deserve from using orphan, where you declared that the history does
+>> not have anything to do with the original.
+>>
+>> If both of your repositories had the two paralle lines of these
+>> histories as branches, the transfer would have went well with or
+>> without binary objects.
 >
-> And in yet another test, should
->
->         git grep text HEAD:t
->
-> /not/ respect the binary attribute?
+> On the same inefficient subject, git does not try to share common
+> objects for non-commit refs, for example tags pointing to trees. I
+> have such a peculiar repo and if a new tag shares 90% the tree with
+> existing tags, git-fetch to sends the whole tree of the new tag over
+> the wire. It does not seem easy to fix though and is probably rare
+> enough that does not justify proper support. As a work around, I
+> generate commits that link all these tags/trees together in a
+> predetermined order. Not nice but works ok.
 
-Gray area. Is it ok to do that without documenting it (i.e. common
-sense)? I have something in mind that could do that, but it also makes
-"git grep text HEAD^{tree}" not respect attributes.
--- 
-Duy
+Aside from saving a huge amount of CPU during the "Counting objects"
+phase, the compressed bitmap work we presented in JGit solves this by
+working off the complete reachability graph, and not just some subset
+related to a cut made across the commit graph. Unfortunately we took a
+shortcut and didn't create bitmaps for non-commits, but this is a
+trivial modification to the algorithm and the storage.
