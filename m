@@ -1,128 +1,158 @@
-From: James Nylen <jnylen@gmail.com>
+From: Dov Grobgeld <dov.grobgeld@gmail.com>
 Subject: Re: A basic question
-Date: Thu, 11 Oct 2012 14:40:44 -0400
-Message-ID: <507712AC.7090801@gmail.com>
-References: <001501cda711$8ab6f0a0$a024d1e0$@com> <1349897794.32696.15.camel@drew-northup.unet.maine.edu> <002801cda7d7$4792c260$d6b84720$@com>
+Date: Thu, 11 Oct 2012 20:46:46 +0200
+Message-ID: <CA++fsGFsNgNeRbd76OFnNhD2=hi6edz720u=m8ZK-eorir5dow@mail.gmail.com>
+References: <001501cda711$8ab6f0a0$a024d1e0$@com>
+	<1349897794.32696.15.camel@drew-northup.unet.maine.edu>
+	<002801cda7d7$4792c260$d6b84720$@com>
+	<CA++fsGFruWFauX3XkynwcRLqK9H16frW86of3Y3ScgzGFmz=dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, skotd122@gmail.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Drew Northup <drew.northup@maine.edu>,
+	Skot Davis <skotd122@gmail.com>, git@vger.kernel.org
 To: Jim Vahl <jv@wmdb.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 20:41:08 2012
+X-From: git-owner@vger.kernel.org Thu Oct 11 20:47:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMNgw-00006B-Nt
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 20:41:07 +0200
+	id 1TMNmd-0003jw-Jn
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 20:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758881Ab2JKSk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 14:40:56 -0400
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:35473 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753739Ab2JKSkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 14:40:55 -0400
-Received: by mail-yh0-f46.google.com with SMTP id m54so576644yhm.19
-        for <git@vger.kernel.org>; Thu, 11 Oct 2012 11:40:54 -0700 (PDT)
+	id S1756551Ab2JKSqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 14:46:48 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:64166 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754294Ab2JKSqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 14:46:47 -0400
+Received: by mail-vc0-f174.google.com with SMTP id fo13so2576966vcb.19
+        for <git@vger.kernel.org>; Thu, 11 Oct 2012 11:46:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=kaWrmszDwrDaLVNut2ALIkiCRguac2Txz3A3Ur330Zs=;
-        b=0ZpIUQLqHjQhHfvXjF71qSXv9YKWvjpMUxT/KMxXvmglvNJYkV05C9HpqJEqR8NCiV
-         5WXeLrmS70DgM3f+5eN911+sFwxoxzmTI2vkchRc5cbnfrDzCTQqIbukNDmBcRn+o9p0
-         sOneHf0ZoNMFkbQBq1tKmDag3/A6XiUFde4vV5lwBXu6AFbtb9X22aB+ho1PvIzMnm8r
-         VWRbIWUAT18JUL+OXSK05zAAu30g9I10dQhnuu4nEtbOqCEoiAEMwQwxG6D8oku1y625
-         NJcaxV/VIUK53QglvrqufFI3FjVhj1NlvEgMt7RG2NFEEPXcwW8HfWPvOcT050VbHSSc
-         VZdA==
-Received: by 10.236.150.1 with SMTP id y1mr1754164yhj.96.1349980854818;
-        Thu, 11 Oct 2012 11:40:54 -0700 (PDT)
-Received: from [192.168.11.100] (host-68-169-157-114.VALOLT2.epbfi.com. [68.169.157.114])
-        by mx.google.com with ESMTPS id b46sm4934623yhn.5.2012.10.11.11.40.53
-        (version=SSLv3 cipher=OTHER);
-        Thu, 11 Oct 2012 11:40:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <002801cda7d7$4792c260$d6b84720$@com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=RyLmGakQV77FjdOOcsoTqOwmQEFc8a560Hrl0keLQtE=;
+        b=ncw43bojYw4N5VvijU41XhPED5ejUSjPu/eTnQ83ZhFbeoEX6fh6gOtQdJn5ygd+jG
+         mGjXhxuRxJis1Q23au8ZiA4lMT//fQjb0ri6QmO7EoKWyu2Fd/V2Rb2fNWU0Ooj2I4wb
+         Zr48BKJ+p8SobK6nc5D/FbgzDMKKuPEe/a/HirUqrOznzWnQIfa1CvjAtwc/UerCeb6m
+         lLU+6krW/jBo3H3INUkFf7xDDYzuEk6f9Zzh2y77SIJ1G+D4KxGLXwTi4IrZwyZeLp3n
+         bQjtR7SJK9Eyyl5MFFtyledh/OPds1yy5Q2s+NELNKhF0UFZsZ1nUAmwzLN24qpzocdt
+         Y1Nw==
+Received: by 10.52.33.130 with SMTP id r2mr825337vdi.43.1349981206792; Thu, 11
+ Oct 2012 11:46:46 -0700 (PDT)
+Received: by 10.58.146.73 with HTTP; Thu, 11 Oct 2012 11:46:46 -0700 (PDT)
+In-Reply-To: <CA++fsGFruWFauX3XkynwcRLqK9H16frW86of3Y3ScgzGFmz=dg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207504>
 
+The way you typically work with git (and with most other version
+control systems) is that you have a fast changing trunk (in git often
+called the master), where development is done. Once you want to
+release you create a release branch off the trunk, and in that branch
+you do regression testing and stability testing, and once you are
+convinced that stability has been achieved, you make your release.
 
-On 10/11/2012 1:38 PM, Jim Vahl wrote:
+In parallel, and without in any way influencing your release branch,
+your programmers happily commit to the trunk.
+
+See e.g. the following excellent description of some workflow models:
+
+http://nvie.com/posts/a-successful-git-branching-model/
+
+Regards,
+Dov
+
+ On Thu, Oct 11, 2012 at 7:38 PM, Jim Vahl <jv@wmdb.com> wrote:
+>
+> Drew,
+>
+> Thanks for responding to my email!
+>
+> Yes, I did read most of the Book, although I admit that I skimmed over some
+> of the more technical parts.  There is still a key part of how git is used
+> in a commercial environment which I don't understand.
+>
+> When we release a new version of our product, it is comprised of over a
+> hundred files.  Some of these files have not changed for years, and some
+> have been revised/fixed/updated quite recently.  But what is key is that all
+> of these components have passed a review and testing process.  A very
+> important piece of information is what revision of each file made it into
+> the release.
+>
+> I know that git takes snapshots of the repository as changes are made and
+> that it is possible to reconstruct the file set at any point in time.  But
+> unless rules or conventions are established, at any time the repository can
+> contain files which are in the process of being modified and thus have not
+> passed the testing process.  For the purpose of planning a release, we're
+> interested only in the "most recently tested and approved" files.
+>
 > For the sake of argument, I'll assume that a committing a change implies
 > that the file has passed the testing process.  So my questions are:
-You should not assume this.  You / your developers should commit far 
-more frequently than you test and release versions.  For example, I 
-usually try to commit after a day's work at most.
-
-Instead, you should mark a tested version using tags (the git tag 
-command). Here is a workflow that seems like it would work well for you:
-
-1. Commit 1
-2. Commit 2
-3. Commit 3 - TAGGED as release-v0.1
-4. Commit 4
-5. Commit 5 - TAGGED as release-v0.2
-6. Commit 6
-7. Commit 7
-
-In this scenario, you reviewed the code after Commit 3 was entered and 
-it passed your tests.  You then tagged this version of the code as 
-version 0.1.  Tagging is just a convenient way to associate a name (for 
-example, "release-v0.1") with the code tree as of a certain commit.  
-Similarly with Commit 5 and version 0.2.
-
-Commits 6 and 7 represent changes made to the code for features that are 
-in progress, bug fixes, etc.  They have not been reviewed yet.  For the 
-purpose of releasing versions, you don't care about these commits.
-
-For the purpose of releasing versions, you also don't care about the 
-state of files in the git repository (whether they are modified, or some 
-or all changes are staged).  These features exist to help you prepare 
-commits and understand what changes you are committing, not as a way of 
-managing versions of the software.
-
-Many people use git in more complex ways that involve non-linear 
-development histories (branches).  For example, you can have multiple 
-developers working on different features simultaneously, each committing 
-their own changes, and you can use git to help you reconcile the changes 
-later.  You can also have a "release" branch which stores only the 
-released versions, and separate "development" branches where code 
-changes occur.  These workflows are harder to wrap your head around, though.
-
+>
 > 1) Does git have a built-in way to get a list of all of the "most recently
 > committed" files only at a given point in time, thus automatically recording
 > the revisions of all of the component files of a release?   This implies
 > that for files which are being modified or which have been staged but not
 > committed, that git would go back to find the "predecessor" file which had
 > been committed.
-Let's replace "committed" with "tagged as a released version". Then 
-yes.  The person who wants to release a version would do:
-
-git checkout release-v0.1
-
-At this point their working folder will contain all of the files for the 
-v0.1 release.  You can run tests, run the build process and generate 
-executables, or whatever other kind of deployment process needs to be done.
-
-Another option is to create a zip file containing all the code as of 
-version 0.1:
-
-git archive release-v0.1 -o release-v0.1.zip
-
->   2) Does git have a way of creating and exporting a list of the "most
+>
+>  2) Does git have a way of creating and exporting a list of the "most
 > recently committed" files only?
-There are many ways to list and manipulate the files stored in the 
-repository, as of any commit that you want.
-
+>
 > 3) If the answer to the above questions is "No", then what is the normal way
 > for a programming shop which is using git to extract/assemble the list of
 > approved files for building a release?
-
-The first step, which git will help you with, is to ensure that you are 
-working with the right version of the code and development files (the 
-version you tested, that you intend to release).  From there, extracting 
-and deploying the files necessary for a release is up to you.
+>
+> Thank you.
+>
+> Jim Vahl
+>
+> -----Original Message-----
+> From: Drew Northup [mailto:drew.northup@maine.edu]
+> Sent: Wednesday, October 10, 2012 12:37 PM
+> To: Jim Vahl
+> Cc: git@vger.kernel.org; 'Skot Davis'
+> Subject: Re: A basic question
+>
+> On Wed, 2012-10-10 at 11:03 -0700, Jim Vahl wrote:
+> > All,
+> >
+> > Our company is researching version control software, something which
+> > we have not used previously.  I have a very basic question about git
+> > which I have not been able to answer from reading.  As I understand
+> > it, a git repository can be a mixture of files which are under
+> development, staged or committed.
+> > If we make a new build of our product we will obviously only want to
+> > include the committed (tested) files.
+> >
+> > The question is this: what is the usual procedure to retrieve a set of
+> > committed  files only from the repository to place into a distribution
+> > or "ready to build" folder.  The same question goes for tagging a
+> > release: how does the user get the tag to reference the committed
+> > files only and not the most recent files which may be under development or
+> undergoing testing.
+> >
+> > Thanks,
+> >
+> > Jim Vahl
+>
+> Jim,
+> Have you looked at http://git-scm.com/book yet? It sounds to me like you
+> have some misconceptions about how Git works. (If so, did it leave you more
+> or less confused?)
+>
+> --
+> -Drew Northup
+> ________________________________________________
+> "As opposed to vegetable or mineral error?"
+> -John Pescatore, SANS NewsBites Vol. 12 Num. 59
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
