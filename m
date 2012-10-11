@@ -1,215 +1,121 @@
-From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: [Patch v2 8/8] Wire everything into Makefile and
- Documentation/Makefile
-Date: Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
-Message-ID: <1374330060.47046.1349976377823.JavaMail.ngmail@webmail22.arcor-online.net>
-References: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
+From: "Jim Vahl" <jv@wmdb.com>
+Subject: RE: A basic question
+Date: Thu, 11 Oct 2012 10:38:49 -0700
+Message-ID: <002801cda7d7$4792c260$d6b84720$@com>
+References: <001501cda711$8ab6f0a0$a024d1e0$@com> <1349897794.32696.15.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
-	th.acker66@arcor.de
-To: th.acker66@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 19:26:34 2012
+Cc: "'Skot Davis'" <skotd122@gmail.com>, <git@vger.kernel.org>
+To: "'Drew Northup'" <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 11 19:39:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMMWk-0003sJ-Ou
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:26:31 +0200
+	id 1TMMiu-0002f2-Qq
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933091Ab2JKR0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 13:26:20 -0400
-Received: from mail-in-11.arcor-online.net ([151.189.21.51]:59046 "EHLO
-	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932758Ab2JKR0T (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:26:19 -0400
-Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
-	by mx.arcor.de (Postfix) with ESMTP id DC2EF35B351;
-	Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id D5442208008;
-	Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
-Received: from webmail22.arcor-online.net (webmail22.arcor-online.net [151.189.8.137])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id C988B21305D;
-	Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-13.arcor-online.net C988B21305D
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1349976377; bh=gbFjYgc6CpOmQzMR5A0K1IG2D0lWUF9Bl4T5hNjzb6Y=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=TCLgrQhFqNFWhrgOM4HK1RkE0/6HBfSiyB0oDVe6Bix+aMU8wBmTRD7ZZVlXwpLyR
-	 IzBgUFm5CouXUeZTdaJQxwfr8os5hEC1u7Q3xav4MIcmpzx+VjguvhTyGpb2bqb3qx
-	 suLuoilbHy7nYE65sa5kE32cELf00HM93HCvJZno=
-Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:26:17 +0200 (CEST)
-In-Reply-To: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.105.106.236
+	id S964815Ab2JKRix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 13:38:53 -0400
+Received: from 339272-web1.sleeplessmedia.com ([72.32.211.234]:55342 "EHLO
+	339272-web1.sleeplessmedia.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964797Ab2JKRix (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:38:53 -0400
+Received: (qmail 16651 invoked from network); 11 Oct 2012 12:38:52 -0500
+Received: from softdnserror (HELO Sequoia) (12.157.119.40)
+  by 192.168.100.234 with SMTP; 11 Oct 2012 12:38:52 -0500
+In-Reply-To: <1349897794.32696.15.camel@drew-northup.unet.maine.edu>
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: Ac2nHrO92/kFvT7+R86jvzaMfgLAxgAsQyGg
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207499>
 
->From ac7de86bd58c5849c12e2b05e7b7f68704d9093e Mon Sep 17 00:00:00 2001
-From: Thomas Ackermann <th.acker@arcor.de>
-Date: Wed, 10 Oct 2012 19:30:55 +0200
-Subject: [PATCH] Wire everything into Makefile and Documentation/Makefile
+Drew, 
 
-- target "html" creates html for all files in Documentation/howto and Documentation/technical
-- new target "relnoteshtml" creates html for all release notes
-- new target "fullpdf" creates "git-doc.pdf" and uses targets "html", "relnoteshtml" and "pdf"
-- "html" does not use "relnoteshtml"
+Thanks for responding to my email!
 
-Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
----
- Documentation/Makefile | 43 +++++++++++++++++++++++++++++++++++++++++--
- Makefile               |  9 +++++++++
- 2 files changed, 50 insertions(+), 2 deletions(-)
+Yes, I did read most of the Book, although I admit that I skimmed over some
+of the more technical parts.  There is still a key part of how git is used
+in a commercial environment which I don't understand.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 267dfe1..6710325 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -15,6 +15,9 @@ MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
- 
- DOC_HTML=$(MAN_HTML)
- 
-+RELNOTES_TXT = $(wildcard RelNotes/*.txt)
-+RELNOTES_HTML= $(patsubst %.txt,%.html,$(RELNOTES_TXT))
-+ 
- ARTICLES = howto-index
- ARTICLES += everyday
- ARTICLES += git-tools
-@@ -24,8 +27,30 @@ SP_ARTICLES = user-manual
- SP_ARTICLES += howto/revert-branch-rebase
- SP_ARTICLES += howto/using-merge-subtree
- SP_ARTICLES += howto/using-signed-tag-in-pull-request
-+SP_ARTICLES += howto/use-git-daemon
-+SP_ARTICLES += howto/update-hook-example
-+SP_ARTICLES += howto/setup-git-server-over-http
-+SP_ARTICLES += howto/separating-topic-branches
-+SP_ARTICLES += howto/revert-a-faulty-merge
-+SP_ARTICLES += howto/recover-corrupted-blob-object
-+SP_ARTICLES += howto/rebuild-from-update-hook
-+SP_ARTICLES += howto/rebuild-from-update-hook
-+SP_ARTICLES += howto/rebase-from-internal-branch
-+SP_ARTICLES += howto/maintain-git
- API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
- SP_ARTICLES += $(API_DOCS)
-+
-+TECH_DOCS += technical/index-format
-+TECH_DOCS += technical/pack-format
-+TECH_DOCS += technical/pack-heuristics
-+TECH_DOCS += technical/pack-protocol
-+TECH_DOCS += technical/protocol-capabilities
-+TECH_DOCS += technical/protocol-common
-+TECH_DOCS += technical/racy-git
-+TECH_DOCS += technical/send-pack-pipeline
-+TECH_DOCS += technical/shallow
-+TECH_DOCS += technical/trivial-merge
-+SP_ARTICLES += $(TECH_DOCS)
- SP_ARTICLES += technical/api-index
- 
- DOC_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
-@@ -156,6 +181,8 @@ all: html man
- 
- html: $(DOC_HTML)
- 
-+relnoteshtml: $(RELNOTES_HTML)
-+
- $(DOC_HTML) $(DOC_MAN1) $(DOC_MAN5) $(DOC_MAN7): asciidoc.conf
- 
- man: man1 man5 man7
-@@ -167,6 +194,9 @@ info: git.info gitman.info
- 
- pdf: user-manual.pdf
- 
-+fullpdf: pdf relnoteshtml html
-+	./makedocpdf.sh
-+
- install: install-man
- 
- install-man: man
-@@ -191,6 +221,10 @@ install-pdf: pdf
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
- 	$(INSTALL) -m 644 user-manual.pdf $(DESTDIR)$(pdfdir)
- 
-+install-fullpdf: fullpdf install-pdf
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
-+	$(INSTALL) -m 644 git-doc.pdf $(DESTDIR)$(pdfdir)
-+
- install-html: html
- 	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
- 
-@@ -230,8 +264,10 @@ clean:
- 	$(RM) *.xml *.xml+ *.html *.html+ *.1 *.5 *.7
- 	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
- 	$(RM) *.pdf
-+	$(RM) docfiles.txt
-+	$(RM) RelNotes/*.html
- 	$(RM) howto-index.txt howto/*.html doc.dep
--	$(RM) technical/api-*.html technical/api-index.txt
-+	$(RM) technical/*.html technical/api-index.txt
- 	$(RM) $(cmds_txt) *.made
- 	$(RM) manpage-base-url.xsl
- 
-@@ -241,6 +277,9 @@ $(MAN_HTML): %.html : %.txt
- 		$(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) -o $@+ $< && \
- 	mv $@+ $@
- 
-+$(RELNOTES_HTML): %.html : %.txt
-+	$(QUIET_ASCIIDOC)$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 $*.txt
-+
- manpage-base-url.xsl: manpage-base-url.xsl.in
- 	sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
- 
-@@ -264,7 +303,7 @@ technical/api-index.txt: technical/api-index-skel.txt \
- 	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
- 
- technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
--$(patsubst %,%.html,$(API_DOCS) technical/api-index): %.html : %.txt
-+$(patsubst %,%.html,$(API_DOCS) technical/api-index $(TECH_DOCS)): %.html : %.txt
- 	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b xhtml11 -f asciidoc.conf \
- 		$(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) $*.txt
- 
-diff --git a/Makefile b/Makefile
-index 8413606..0392782 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2479,12 +2479,18 @@ man:
- html:
- 	$(MAKE) -C Documentation html
- 
-+relnoteshtml:
-+	$(MAKE) -C Documentation relnoteshtml
-+
- info:
- 	$(MAKE) -C Documentation info
- 
- pdf:
- 	$(MAKE) -C Documentation pdf
- 
-+fullpdf:
-+	$(MAKE) -C Documentation fullpdf
-+
- XGETTEXT_FLAGS = \
- 	--force-po \
- 	--add-comments \
-@@ -2796,6 +2802,9 @@ install-info:
- install-pdf:
- 	$(MAKE) -C Documentation install-pdf
- 
-+install-fullpdf:
-+	$(MAKE) -C Documentation install-fullpdf
-+
- quick-install-doc:
- 	$(MAKE) -C Documentation quick-install
- 
--- 
-1.7.11.msysgit.1
+When we release a new version of our product, it is comprised of over a
+hundred files.  Some of these files have not changed for years, and some
+have been revised/fixed/updated quite recently.  But what is key is that all
+of these components have passed a review and testing process.  A very
+important piece of information is what revision of each file made it into
+the release.
 
+I know that git takes snapshots of the repository as changes are made and
+that it is possible to reconstruct the file set at any point in time.  But
+unless rules or conventions are established, at any time the repository can
+contain files which are in the process of being modified and thus have not
+passed the testing process.  For the purpose of planning a release, we're
+interested only in the "most recently tested and approved" files.
 
----
-Thomas
+For the sake of argument, I'll assume that a committing a change implies
+that the file has passed the testing process.  So my questions are:
+
+1) Does git have a built-in way to get a list of all of the "most recently
+committed" files only at a given point in time, thus automatically recording
+the revisions of all of the component files of a release?   This implies
+that for files which are being modified or which have been staged but not
+committed, that git would go back to find the "predecessor" file which had
+been committed.
+
+ 2) Does git have a way of creating and exporting a list of the "most
+recently committed" files only?
+
+3) If the answer to the above questions is "No", then what is the normal way
+for a programming shop which is using git to extract/assemble the list of
+approved files for building a release? 
+
+Thank you.
+
+Jim Vahl
+
+-----Original Message-----
+From: Drew Northup [mailto:drew.northup@maine.edu] 
+Sent: Wednesday, October 10, 2012 12:37 PM
+To: Jim Vahl
+Cc: git@vger.kernel.org; 'Skot Davis'
+Subject: Re: A basic question
+
+On Wed, 2012-10-10 at 11:03 -0700, Jim Vahl wrote:
+> All,
+> 
+> Our company is researching version control software, something which 
+> we have not used previously.  I have a very basic question about git 
+> which I have not been able to answer from reading.  As I understand 
+> it, a git repository can be a mixture of files which are under
+development, staged or committed.
+> If we make a new build of our product we will obviously only want to 
+> include the committed (tested) files.
+> 
+> The question is this: what is the usual procedure to retrieve a set of 
+> committed  files only from the repository to place into a distribution 
+> or "ready to build" folder.  The same question goes for tagging a 
+> release: how does the user get the tag to reference the committed 
+> files only and not the most recent files which may be under development or
+undergoing testing.
+> 
+> Thanks,
+> 
+> Jim Vahl
+
+Jim,
+Have you looked at http://git-scm.com/book yet? It sounds to me like you
+have some misconceptions about how Git works. (If so, did it leave you more
+or less confused?)
+
+--
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
