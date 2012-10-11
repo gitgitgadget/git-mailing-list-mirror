@@ -1,121 +1,113 @@
-From: "Jim Vahl" <jv@wmdb.com>
-Subject: RE: A basic question
-Date: Thu, 11 Oct 2012 10:38:49 -0700
-Message-ID: <002801cda7d7$4792c260$d6b84720$@com>
-References: <001501cda711$8ab6f0a0$a024d1e0$@com> <1349897794.32696.15.camel@drew-northup.unet.maine.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git 1.8.0.rc0.18.gf84667d trouble with "git commit -p file"
+Date: Thu, 11 Oct 2012 10:57:26 -0700
+Message-ID: <7vmwzs7uyh.fsf@alter.siamese.dyndns.org>
+References: <20121005225758.GA1202@sigill.intra.peff.net>
+ <7v8vbkru8o.fsf@alter.siamese.dyndns.org>
+ <20121006131200.GB11712@sigill.intra.peff.net>
+ <7vvcenqx39.fsf@alter.siamese.dyndns.org>
+ <20121006183026.GA3644@sigill.intra.peff.net>
+ <CAOTq_pu=xWF7q3QobxSerkkbV56n5o+CPQSyHg8onwv73v25+A@mail.gmail.com>
+ <20121006190753.GA5648@sigill.intra.peff.net>
+ <7vr4paovjq.fsf@alter.siamese.dyndns.org>
+ <20121007214958.GC1743@sigill.intra.peff.net>
+ <7vehl9q5uk.fsf@alter.siamese.dyndns.org>
+ <20121007222502.GA3263@sigill.intra.peff.net>
+ <CAOTq_ptaXMUzSi-PomMa9K9-Fnus0pnsO+vq92ZnxfeRQZPAxw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Skot Davis'" <skotd122@gmail.com>, <git@vger.kernel.org>
-To: "'Drew Northup'" <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 11 19:39:07 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Frans Klaver <fransklaver@gmail.com>,
+	git@vger.kernel.org, "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+To: Conrad Irwin <conrad.irwin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 19:57:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMMiu-0002f2-Qq
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:39:05 +0200
+	id 1TMN0z-0005lC-Po
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:57:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964815Ab2JKRix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 13:38:53 -0400
-Received: from 339272-web1.sleeplessmedia.com ([72.32.211.234]:55342 "EHLO
-	339272-web1.sleeplessmedia.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964797Ab2JKRix (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:38:53 -0400
-Received: (qmail 16651 invoked from network); 11 Oct 2012 12:38:52 -0500
-Received: from softdnserror (HELO Sequoia) (12.157.119.40)
-  by 192.168.100.234 with SMTP; 11 Oct 2012 12:38:52 -0500
-In-Reply-To: <1349897794.32696.15.camel@drew-northup.unet.maine.edu>
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: Ac2nHrO92/kFvT7+R86jvzaMfgLAxgAsQyGg
-Content-Language: en-us
+	id S1759089Ab2JKR5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 13:57:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49623 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758870Ab2JKR53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 13:57:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D46B8B85;
+	Thu, 11 Oct 2012 13:57:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=241gfnX++06RPO2e3jjM7Iy1qSs=; b=Bi0hQs
+	KzhZA4U3Za7NGoJlm/z1GXC3bmQMzi7l0jN8hM3rKWKfurNMqnvxX4KkINDQoDTL
+	/+yav7GlRih0ayGgmfhsIDUbn8mjomK6jp4iNnHMyk7AFbZjelwtzbBv0hHU8ZLq
+	X+2JsrmsZDGN2GsTiM/H03oq5U3FAc9vsSlQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VvEr8tJrkcRbFGVZphCZnGtq7n+gVFcF
+	g7yTouPHSloZuigwnAfN26uwFXNhMkSk++Nj5tU0TLXubu4qhlG9Tn3AQerXR1TG
+	wwxSYw4IBKdcrsxXBst6tg+XW2WQGIGyWXzTLGHI9r4HUuOcNR64ZE3Ny73Zn/7R
+	7lE07Q6q7lY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B1668B84;
+	Thu, 11 Oct 2012 13:57:28 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B63F18B81; Thu, 11 Oct 2012
+ 13:57:27 -0400 (EDT)
+In-Reply-To: <CAOTq_ptaXMUzSi-PomMa9K9-Fnus0pnsO+vq92ZnxfeRQZPAxw@mail.gmail.com>
+ (=?utf-8?Q?=22Conrad=C2=A0Irwin=22's?= message of "Wed, 10 Oct 2012 22:51:28
+ -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E9FD8D6-13CD-11E2-BFDB-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207500>
 
-Drew, 
+Conrad Irwin <conrad.irwin@gmail.com> writes:
 
-Thanks for responding to my email!
+>  -i::
+>  --include::
+> -	Before making a commit out of staged contents so far,
+> -	stage the contents of paths given on the command line
+> -	as well.  This is usually not what you want unless you
+> -	are concluding a conflicted merge.
+> +	In addition to the paths specified on the command line,
+> +	include the current contents of the index in the commit.
 
-Yes, I did read most of the Book, although I admit that I skimmed over some
-of the more technical parts.  There is still a key part of how git is used
-in a commercial environment which I don't understand.
+"commit" is about committing what is in the index.  include has
+always meant "in addition, include the contents of listed paths
+in the resulting commit".
 
-When we release a new version of our product, it is comprised of over a
-hundred files.  Some of these files have not changed for years, and some
-have been revised/fixed/updated quite recently.  But what is key is that all
-of these components have passed a review and testing process.  A very
-important piece of information is what revision of each file made it into
-the release.
+The updated text looks totally the other way around.
 
-I know that git takes snapshots of the repository as changes are made and
-that it is possible to reconstruct the file set at any point in time.  But
-unless rules or conventions are established, at any time the repository can
-contain files which are in the process of being modified and thus have not
-passed the testing process.  For the purpose of planning a release, we're
-interested only in the "most recently tested and approved" files.
+>  -o::
+>  --only::
+> -	Make a commit only from the paths specified on the
+> -	command line, disregarding any contents that have been
+> -	staged so far. This is the default mode of operation of
+> -	'git commit' if any paths are given on the command line,
+> -	in which case this option can be omitted.
+> -	If this option is specified together with '--amend', then
+> -	no paths need to be specified, which can be used to amend
+> -	the last commit without committing changes that have
+> -	already been staged.
+> +	Only commit changes to the paths specified on the command line,
+> +	do not include the current contents of the index. This is
+> +	the default mode of operation when paths are specified.
+> +	If this option is specified with --amend it can be used
+> +	to reword the last commit without changing its contents.
+> +	This mode cannot be used with --patch or --interactive.
 
-For the sake of argument, I'll assume that a committing a change implies
-that the file has passed the testing process.  So my questions are:
+The new text on this one does look cleaner and easier to read, at
+least to me, but "do not include the current contents" sounds as if
+you are recording a tree that only has Makefile and losing all the
+other files when you say "git commit Makefile".
 
-1) Does git have a built-in way to get a list of all of the "most recently
-committed" files only at a given point in time, thus automatically recording
-the revisions of all of the component files of a release?   This implies
-that for files which are being modified or which have been staged but not
-committed, that git would go back to find the "predecessor" file which had
-been committed.
+    Disregard what has been added to the index since HEAD, and only
+    commit changes to the given paths.
 
- 2) Does git have a way of creating and exporting a list of the "most
-recently committed" files only?
-
-3) If the answer to the above questions is "No", then what is the normal way
-for a programming shop which is using git to extract/assemble the list of
-approved files for building a release? 
-
-Thank you.
-
-Jim Vahl
-
------Original Message-----
-From: Drew Northup [mailto:drew.northup@maine.edu] 
-Sent: Wednesday, October 10, 2012 12:37 PM
-To: Jim Vahl
-Cc: git@vger.kernel.org; 'Skot Davis'
-Subject: Re: A basic question
-
-On Wed, 2012-10-10 at 11:03 -0700, Jim Vahl wrote:
-> All,
-> 
-> Our company is researching version control software, something which 
-> we have not used previously.  I have a very basic question about git 
-> which I have not been able to answer from reading.  As I understand 
-> it, a git repository can be a mixture of files which are under
-development, staged or committed.
-> If we make a new build of our product we will obviously only want to 
-> include the committed (tested) files.
-> 
-> The question is this: what is the usual procedure to retrieve a set of 
-> committed  files only from the repository to place into a distribution 
-> or "ready to build" folder.  The same question goes for tagging a 
-> release: how does the user get the tag to reference the committed 
-> files only and not the most recent files which may be under development or
-undergoing testing.
-> 
-> Thanks,
-> 
-> Jim Vahl
-
-Jim,
-Have you looked at http://git-scm.com/book yet? It sounds to me like you
-have some misconceptions about how Git works. (If so, did it leave you more
-or less confused?)
-
---
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+might be an improvement, but I dunno.
