@@ -1,85 +1,68 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 0/7] Tying loose ends on grep-pcre
-Date: Thu, 11 Oct 2012 09:08:35 +0200
-Message-ID: <50767073.50800@alum.mit.edu>
-References: <1349855714-17008-1-git-send-email-gitster@pobox.com> <5075919F.5030306@alum.mit.edu> <7vlifeclrh.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 3/3] grep: stop looking at random places for .gitattributes
+Date: Thu, 11 Oct 2012 15:17:45 +0700
+Message-ID: <CACsJy8AKT4VzYg_aBrK2UNAhv=yO=ddSFPdi3sZakD9UBc388w@mail.gmail.com>
+References: <7vk3uzfp3p.fsf@alter.siamese.dyndns.org> <1349868894-3579-1-git-send-email-pclouds@gmail.com>
+ <1349868894-3579-4-git-send-email-pclouds@gmail.com> <5075615B.8020702@viscovery.net>
+ <CACsJy8BG0HJNePG-j27SrfEenEkZ5a5nCdMEuDGn=qXxq=VzhA@mail.gmail.com>
+ <50756646.5060505@viscovery.net> <7vy5jeaz81.fsf@alter.siamese.dyndns.org>
+ <50765F34.1070108@viscovery.net> <50766F94.4020104@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 09:08:51 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 11 10:18:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMCsy-0000oJ-RZ
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 09:08:49 +0200
+	id 1TMDyS-00050Z-KM
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 10:18:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755648Ab2JKHIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 03:08:38 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:62690 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755095Ab2JKHIh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 03:08:37 -0400
-X-AuditID: 1207440c-b7f616d00000270b-ad-507670743abe
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 3B.19.09995.47076705; Thu, 11 Oct 2012 03:08:36 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9B78Z6e007225
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 11 Oct 2012 03:08:36 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <7vlifeclrh.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsUixO6iqFtSUBZg8GafhUXXlW4mi4beK8wO
-	TB4XLyl7fN4kF8AUxW2TlFhSFpyZnqdvl8Cdse7oJeaCf5wVX09PY25gnMTRxcjBISFgIvH+
-	eEwXIyeQKSZx4d56ti5GLg4hgcuMEs+enmWGcI4zSXTtPcgMUsUroCkx4dMNdhCbRUBVYsKm
-	dywgNpuArsSinmYmEFtUIEzi3a+jrBD1ghInZz4BqxERUJOY2HaIBWQxs4C4RP8/sLCwgKXE
-	mhnvWCF2dTNK9DZ0gfVyCphJ3Lv3kA3EZhbQkXjX94AZwpaX2P52DvMERoFZSFbMQlI2C0nZ
-	AkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSmlmxghYcqzg/HbOplDjAIcjEo8
-	vAu2lwYIsSaWFVfmHmKU5GBSEuWdlFcWIMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd3YSUI43
-	JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8GhJMHLDIxHIcGi1PTUirTMnBKE
-	NBMHJ8hwLimR4tS8lNSixNKSjHhQpMYXA2MVJMUDtPdTPsje4oLEXKAoROspRl2Oj43zHjIK
-	seTl56VKifNeBykSACnKKM2DWwFLSq8YxYE+FuY9DVLFA0xocJNeAS1hAloiM6kEZElJIkJK
-	qoHRLW3i+fIJsyIDBY2/8vj1rWh4ttJE08vBXJwhxPLqNdbDxvdTI+999sq+dDmG/fhN++tz
-	DBs2P7153d1vx82vic+4JC5smS5h2ePHqSm3gC+kdbrCpgePW+ZJeUocqNHxmr6D 
+	id S1751477Ab2JKISU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 04:18:20 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:34562 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953Ab2JKISQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 04:18:16 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so2521902iea.19
+        for <git@vger.kernel.org>; Thu, 11 Oct 2012 01:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nw6WVGR2Qe92MSqVF35gWP8VS8sYHUHhjyHi+pKh+vE=;
+        b=tETiDqAMfFRv2Tf1NxPGHJyXburhKXbLkakHrf8C2Cn0ERK0GFy96+Dj/5kFMG4/1L
+         BPaXXdq8kwk6vLYtnbsGT6bHWB0np5PhPseQHGwZTYRSLyu4jKCZqq8Hu/mJqzxL6157
+         mHup2b1MNL0yoWZuHUlRsNhFskiJGV4fSedGbRJVb8rALVZcdwd8/k5j8XufhQ/56h0x
+         g415MV/7A+Z2EW0pD6E3vhlSQ9Gh7bQyrEFr1KsYR9QTU/9fBdv28AFNtwligXEDsfKB
+         kml399uIToQpulPto+r81U6JC3mZ+33H0WgMjngsamppCvRYRNmYKLey0xvQXqW/RqSc
+         tL9A==
+Received: by 10.50.153.130 with SMTP id vg2mr7866798igb.26.1349943496061; Thu,
+ 11 Oct 2012 01:18:16 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Thu, 11 Oct 2012 01:17:45 -0700 (PDT)
+In-Reply-To: <50766F94.4020104@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207468>
 
-On 10/10/2012 06:52 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->>> The last one teaches "git log" family to honor the "grep.*"
->>> configuration variables, e.g. "grep.patterntype", so that you can
->>> say "git -c grep.patterntype=perl log --grep='(?:pcre)'".
->>
->> Maybe this has been discussed already, but it seems to me that adding a
->> persistent setting that affects how "git log --grep" interprets the
->> pattern argument could break some scripts that assume that the "old"
->> interpretation is always used.  Shouldn't this at least be documented as
->> a backwards incompatibility?
-> 
-> If somebody scripts around "log" with hardcoded query "--grep=..."
-> strings, they can force a particular variant from such a command
-> line at the same time.  But as always, responsibility of doing so is
-> on the person who writes such a script; "log" being a Porcelain, we
-> value ease-of-use in interactive case more than cast-in-stone
-> interface stability like we do for plumbing commands.
-> 
-> And that is exactly why the series avoids changing the behaviour for
-> the "rev-list" plumbing.
+On Thu, Oct 11, 2012 at 2:04 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Maybe I'm being too much of a purist, but I don't think that git should
+> retroactively reinterpret history on its own initiative in a way that
+> might not be correct (e.g., maybe your encoding changed from ASCII to
+> Shift-JIS sometime in the past).  It would be more appropriate for this
+> to happen only if explicitly requested by the user.  For example, why
+> don't you override the incorrect historical attributes via
+> .git/info/attributes?
 
-OK, you've convinced me.  Thanks.
-
-Michael
-
+I think git-notes is a more appropriate place to correct these things.
+If the incorrect commits are pruned, their notes can also be pruned.
+No poluttion in $GIT_DIR/info/attr.. And i'm your side, no checking
+worktree without user's permission.
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Duy
