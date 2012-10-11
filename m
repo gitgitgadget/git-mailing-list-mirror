@@ -1,97 +1,78 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetools/p4merge: Handle "/dev/null"
-Date: Wed, 10 Oct 2012 20:22:36 -0700
-Message-ID: <1349925756-87801-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Thu Oct 11 05:22:46 2012
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: Rebase doesn't restore branch pointer back on out of memory
+Date: Wed, 10 Oct 2012 23:54:02 -0400
+Message-ID: <1349927643-7195-1-git-send-email-andrew.kw.w@gmail.com>
+References: <7vtxu4io7o.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, alex.kostikov@gmail.com,
+	Andrew Wong <andrew.kw.w@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Oct 11 05:54:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM9MD-0006hJ-H0
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 05:22:45 +0200
+	id 1TM9qq-0003Hk-3C
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 05:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932181Ab2JKDWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 23:22:35 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:35019 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756385Ab2JKDWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 23:22:34 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so1385093pbb.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 20:22:33 -0700 (PDT)
+	id S933148Ab2JKDyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 23:54:13 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:63300 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756385Ab2JKDyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 23:54:12 -0400
+Received: by mail-ia0-f174.google.com with SMTP id y32so923010iag.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 20:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=ngRkh99gjOWyrwf9IVlfaxvOPSrEeGfxTifyAlfTBK8=;
-        b=GbiJ9iiXzfs4C1JJPMSqZ764ifDlRzvkhJMHEZ+F2qjAGl4OAppISmOwBibDMhyQ63
-         xu0HAW/iN1h/8VBRMTjzxYT20Po8zPQkpmKOvDh/ntGfejPqxahcWENQ+aT5Q4wtTIuw
-         M/p8jP0LTV9TPmtWHtKmH52TGn5Hd3Skvb+2JZ1/mtS+qVmOEykZyMLD6Bv44aTn43k3
-         eoRXI9KCJ4mu5NL4Ef4AvEtPKgrAEF5vVODE0CFLdvHBj4KMsESG6pzEYqvlrg3njCRW
-         PpaweF5oT6R6RAL1q3si817sEXAWr9Md/q7bjxcAd1UE6iOdgRL5imzP/g3KXgRPfQya
-         yVHg==
-Received: by 10.66.85.10 with SMTP id d10mr67669725paz.52.1349925753826;
-        Wed, 10 Oct 2012 20:22:33 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id ko8sm1993182pbc.40.2012.10.10.20.22.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Oct 2012 20:22:33 -0700 (PDT)
-X-Mailer: git-send-email 1.8.0.rc1
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=eCmELxEWQpZcdLAqov57gjh3vkL80+Kw1kN4rI/jgzU=;
+        b=PQW2f7Ownl+e4U4hY1sJEWqH4ruQ4h+mp7Wwb7xBvdA3U6USuzIjilshuJ9FbpNBXQ
+         1W1vhLZkF/D6opG6ZUtqxX4swcAFk5cNGZEoaDzv9sbS6M3dg1tWhzsEjvMwqJ0S4ny5
+         274Mb18UwbpLWVreZjzkiu0m/Dh8ow4dJwtyltDxfCxV8Y/i/bX7hmPD9TbAcrFF8BfG
+         PwpVq620TPv702Y++Dv3wcIC05DPf3H88aJyL8s/tgAOc7GrQUBpllSDKkreyk+VJFmJ
+         0++6iSzWSKm3+5+Q2ZWdx5WOpTTXZbqhvUmADQUAeIbV1NSmU7P3LkwuERGabYvUU+57
+         a67w==
+Received: by 10.50.45.226 with SMTP id q2mr7466316igm.56.1349927652218;
+        Wed, 10 Oct 2012 20:54:12 -0700 (PDT)
+Received: from localhost.localdomain ([69.165.255.59])
+        by mx.google.com with ESMTPS id bg2sm7675702igb.1.2012.10.10.20.54.09
+        (version=SSLv3 cipher=OTHER);
+        Wed, 10 Oct 2012 20:54:10 -0700 (PDT)
+X-Mailer: git-send-email 1.8.0.rc0.19.gc58a63a.dirty
+In-Reply-To: <7vtxu4io7o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207460>
 
-p4merge does not properly handle the case where "/dev/null"
-is passed as a filename.
+For the 'format-patch' part, originally I was going to do something like:
 
-Workaround it by creating a temporary file for this purpose.
+	git format-patch ... || {
+		...
+	}
 
-Reported-by: Jeremy Morton <admin@game-point.net>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Jeremy, can you test this?
+But later I thought it's better to use a consistent style as the following
+'am' part.
 
- mergetools/p4merge | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+For the 'am' part, if we kept the following line at the end of the if-block:
 
-diff --git a/mergetools/p4merge b/mergetools/p4merge
-index 1a45c1b..295361a 100644
---- a/mergetools/p4merge
-+++ b/mergetools/p4merge
-@@ -1,5 +1,30 @@
- diff_cmd () {
-+	# p4merge does not like /dev/null
-+	rm_local=
-+	rm_remote=
-+	if test "/dev/null" = "$LOCAL"
-+	then
-+		LOCAL="./p4merge-dev-null.LOCAL.$$"
-+		>"$LOCAL"
-+		rm_local=true
-+	fi
-+	if test "/dev/null" = "$REMOTE"
-+	then
-+		REMOTE="./p4merge-dev-null.REMOTE.$$"
-+		>"$REMOTE"
-+		rm_remote=true
-+	fi
-+
- 	"$merge_tool_path" "$LOCAL" "$REMOTE"
-+
-+	if test -n "$rm_local"
-+	then
-+		rm -f "$LOCAL"
-+	fi
-+	if test -n "$rm_remote"
-+	then
-+		rm -f "$REMOTE"
-+	fi
- }
- 
- merge_cmd () {
+	fi && move_to_original_branch
+
+then, before exiting the if-block, we would have to do something like:
+
+	test 0 != $ret && false
+
+which seems a bit ugly to me. So I removed the use of '&&', and rearrange the
+'write_basic_state' and 'move_to_original_branch' to make the logic flow a bit
+better and easier to read.
+
+Andrew Wong (1):
+  rebase: Handle cases where format-patch fails
+
+ git-rebase--am.sh | 51 +++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 45 insertions(+), 6 deletions(-)
+
 -- 
-1.8.0.rc1
+1.8.0.rc0.19.gc58a63a.dirty
