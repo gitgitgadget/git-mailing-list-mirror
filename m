@@ -1,82 +1,142 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: build deps
-Date: Thu, 11 Oct 2012 17:54:13 -0300
-Message-ID: <CACnwZYf56XkqW085HoWhAN2EnjCJd=VYHGAD8fZCCe6_FNhO2A@mail.gmail.com>
-References: <CACnwZYe_vhH9Ui8W9D=M_8avgEugR+UvM1E+jH7fxr+8yk2UtQ@mail.gmail.com>
-	<5072FAD1.1000807@gmail.com>
-	<CACnwZYeJ-FKXterxd697iu+U4HobqEaP0zx_p8CZDsPZx4hbHQ@mail.gmail.com>
-	<50735939.10604@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Scott Chacon <schacon@gmail.com>
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 22:54:40 2012
+From: Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH] git-cvsimport: support local timezone
+Date: Thu, 11 Oct 2012 15:48:17 -0500
+Message-ID: <1349988497-6158-1-git-send-email-chris@rorvick.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 11 22:54:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMPm7-0000JL-W0
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 22:54:36 +0200
+	id 1TMPmE-0000Kq-8W
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 22:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759341Ab2JKUyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 16:54:18 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:35308 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759332Ab2JKUyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 16:54:15 -0400
-Received: by mail-la0-f46.google.com with SMTP id h6so1551594lag.19
-        for <git@vger.kernel.org>; Thu, 11 Oct 2012 13:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RrGgoS8mEYi74jlTvLM8HVD2GqDmjcYifh64wKwaavA=;
-        b=eeNR9HXzsFQtP8an6VxbRCXuNoyM3leozKmRmQnOu+TA4AFtO/kdY3Lb+YAylk8XYt
-         3ZdZekvRuC4MjLjY3BWE0baTaCi6CQqpbsUtzsJUHdOb6k/7g8JHSj6bqcdJwleXYdM0
-         H3D+UyjpU8omzYs0TC3FzDCPpVBo8sR/CStJKt9e+PSJjdyEqRYBOrmxXAiVD1zV9ixt
-         USqAXJcFMsKnlumbiOcmJFhDv6YRZ/l9OGEkDED2DdD/kyH3VVsA9CluDlkdkZ0vGW5h
-         ZfMIsO+vnQoNHrtTdoqdWSvfJJHmqnDgA7NTUt8hSUL8+n4VEsJt9x7n8stTMWfltHdU
-         qKgQ==
-Received: by 10.112.24.74 with SMTP id s10mr842871lbf.122.1349988853247; Thu,
- 11 Oct 2012 13:54:13 -0700 (PDT)
-Received: by 10.112.24.10 with HTTP; Thu, 11 Oct 2012 13:54:13 -0700 (PDT)
-In-Reply-To: <50735939.10604@gmail.com>
+	id S1759345Ab2JKUy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 16:54:29 -0400
+Received: from [38.98.186.242] ([38.98.186.242]:3741 "HELO burner.cogcap.com"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+	id S1759332Ab2JKUy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 16:54:28 -0400
+X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Oct 2012 16:54:27 EDT
+Received: by burner.cogcap.com (Postfix, from userid 10028)
+	id 177BE2B096D; Thu, 11 Oct 2012 15:48:17 -0500 (CDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207514>
 
-On Mon, Oct 8, 2012 at 7:52 PM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
-> On 10/08/12 17:36, Thiago Farina wrote:
->> OK, after running ./configure I tried the make command again.
->>
->> CC credential-store.o
->> /bin/sh: clang: not found
->> make: *** [credential-store.o] Error 127
->>
->> $ which clang
->> /home/tfarina/chromium/src/third_party/llvm-build/Release+Asserts/bin/clang
->>
->> $ clang --version
->> clang version 3.2 (trunk 163674)
->> Target: x86_64-unknown-linux-gnu
->> Thread model: posix
-> Looks like something went wrong with "make" setting PATH. I wonder if
-> the "+" sign in your path is somehow messing things up.
->
-Would be something that could be fixed in git?
+CVS patches are unconditionally imported with a UTC timezone.  Allow
+the local timezone by adding -l to the command line or specifying
+cvsimport.l in the config.
 
-> Are you trying to compile specifically with clang?
-Nope, it just happen that I switched to clang because I use it to
-compile chromium and I need it to use the chrome_plugin[1].
+This could be made the default behavior, as setting TZ=UTC in the
+environment before doing the import is equivalent to the current
+behavior.  But since a new default may be an unwelcome surprise to
+some, make this new behavior available os an option.
 
-> If not, maybe try
-> unsetting the CC env var, and run configure again?
-Just setting CC to gcc works for me. But still, I'd like to be able to
-build with clang (may be as you noted is just something with the + in
-my PATH).
+Signed-off-by: Chris Rorvick <chris@rorvick.com>
+---
 
-[1] http://git.chromium.org/gitweb/?p=chromium.git;a=tree;f=tools/clang/plugins;h=8e79d8f35d5ccfee82b6ab8f27ea8b5d820c772d;hb=HEAD
+I have tested this with various TZ values (including "UTC") and confirmed
+that the <fuzz> + 5min timeout is observed correctly in each case.
+
+Chris Rorvick
+
+ Documentation/git-cvsimport.txt |   11 ++++++++---
+ git-cvsimport.perl              |   13 +++++++------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index 6695ab3..41cd289 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -11,9 +11,9 @@ SYNOPSIS
+ [verse]
+ 'git cvsimport' [-o <branch-for-HEAD>] [-h] [-v] [-d <CVSROOT>]
+ 	      [-A <author-conv-file>] [-p <options-for-cvsps>] [-P <file>]
+-	      [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
+-	      [-a] [-m] [-M <regex>] [-S <regex>] [-L <commitlimit>]
+-	      [-r <remote>] [-R] [<CVS_module>]
++	      [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-l] [-u]
++	      [-s <subst>] [-a] [-m] [-M <regex>] [-S <regex>]
++	      [-L <commitlimit>] [-r <remote>] [-R] [<CVS_module>]
+ 
+ 
+ DESCRIPTION
+@@ -89,6 +89,11 @@ the old cvs2git tool.
+ 	to avoid noisy changesets. Highly recommended, but off by default
+ 	to preserve compatibility with early imported trees.
+ 
++-l::
++	Apply the local timezone to timestamps.  The `TZ` environment
++	variable can be used to override the default, possibly useful
++	if you are importing a non-local repository.
++
+ -u::
+ 	Convert underscores in tag and branch names to dots.
+ 
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 8032f23..927d75c 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -28,9 +28,8 @@ use POSIX qw(strftime dup2 ENOENT);
+ use IPC::Open2;
+ 
+ $SIG{'PIPE'}="IGNORE";
+-$ENV{'TZ'}="UTC";
+ 
+-our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
++our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_l,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
+ my (%conv_author_name, %conv_author_email);
+ 
+ sub usage(;$) {
+@@ -40,7 +39,7 @@ sub usage(;$) {
+ Usage: git cvsimport     # fetch/update GIT from CVS
+        [-o branch-for-HEAD] [-h] [-v] [-d CVSROOT] [-A author-conv-file]
+        [-p opts-for-cvsps] [-P file] [-C GIT_repository] [-z fuzz] [-i] [-k]
+-       [-u] [-s subst] [-a] [-m] [-M regex] [-S regex] [-L commitlimit]
++       [-l] [-u] [-s subst] [-a] [-m] [-M regex] [-S regex] [-L commitlimit]
+        [-r remote] [-R] [CVS_module]
+ END
+ 	exit(1);
+@@ -128,7 +127,7 @@ sub read_repo_config {
+ 	}
+ }
+ 
+-my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:R";
++my $opts = "haivmkulo:d:p:r:C:z:s:M:P:A:S:L:R";
+ read_repo_config($opts);
+ Getopt::Long::Configure( 'no_ignore_case', 'bundling' );
+ 
+@@ -138,6 +137,8 @@ GetOptions( map { s/:/=s/; /M/ ? "$_\@" : $_ } split( /(?!:)/, $opts ) )
+     or usage();
+ usage if $opt_h;
+ 
++$ENV{'TZ'}="UTC" unless $opt_l;
++
+ if (@ARGV == 0) {
+ 		chomp(my $module = `git config --get cvsimport.module`);
+ 		push(@ARGV, $module) if $? == 0;
+@@ -582,7 +583,7 @@ sub pdate($) {
+ 	m#(\d{2,4})/(\d\d)/(\d\d)\s(\d\d):(\d\d)(?::(\d\d))?#
+ 		or die "Unparseable date: $d\n";
+ 	my $y=$1; $y-=1900 if $y>1900;
+-	return timegm($6||0,$5,$4,$3,$2-1,$y);
++	return timelocal($6||0,$5,$4,$3,$2-1,$y);
+ }
+ 
+ sub pmode($) {
+@@ -844,7 +845,7 @@ sub commit {
+ 		}
+ 	}
+ 
+-	my $commit_date = strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date));
++	my $commit_date = strftime("%z %Y-%m-%d %H:%M:%S",localtime($date));
+ 	$ENV{GIT_AUTHOR_NAME} = $author_name;
+ 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
+ 	$ENV{GIT_AUTHOR_DATE} = $commit_date;
+-- 
+1.7.1
