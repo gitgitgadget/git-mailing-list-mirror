@@ -1,64 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/12] Wildmatch v4
-Date: Wed, 10 Oct 2012 16:48:35 -0700
-Message-ID: <7vd30panxo.fsf@alter.siamese.dyndns.org>
-References: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/2] attr: more matching optimizations from .gitignore
+Date: Thu, 11 Oct 2012 08:36:50 +0700
+Message-ID: <CACsJy8CdCN0hBU2WwffNvHOwcC87v2OVJj=SYH4BYYveBpFiQw@mail.gmail.com>
+References: <7vd30si665.fsf@alter.siamese.dyndns.org> <1349864466-28289-1-git-send-email-pclouds@gmail.com>
+ <7v626iatt9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 01:48:54 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 03:37:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM61D-0000RM-R7
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 01:48:52 +0200
+	id 1TM7iR-0000es-Fo
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 03:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757628Ab2JJXso convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 19:48:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43045 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198Ab2JJXsk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 19:48:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97EC291F5;
-	Wed, 10 Oct 2012 19:48:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=h260KABdOk8D
-	yUqNBzIkqMnv7QU=; b=UyZCAGJ3GJAY7mgZXdTcxUPD/HBhUWXIeV9WCP9b7jKn
-	wkeGQ7v1oJCgnlLcK5GOSYZGX8gPXeht5eXLXDzT8mRJsGwR6/W60OHd/3VoPN0D
-	9KQ8H8/wqp6bMls3wXIW2bujIf/MR956HYECPCMuSIwdUdljx1YXt9jNCbHRGPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AuTelE
-	bdZQLgYXs05CTVBO0bUr+MVOI71z66sdwKQ3TwS1tGt7QBXzxBUdUTOZAn5Gb4aD
-	YciD5XQcweROJpK6PvxOfUGT0ryQdA3/Hw4Fzv9ALQVHbet53jQ3cOhtd2IC/4MQ
-	o6OqyxqvGdvYQybIzApmw2ofw0IpZTHEs4NXM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85B1F91F4;
-	Wed, 10 Oct 2012 19:48:37 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFCFE91F3; Wed, 10 Oct 2012
- 19:48:36 -0400 (EDT)
-In-Reply-To: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 10 Oct
- 2012 17:40:39 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 027439F6-1335-11E2-BD4D-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933451Ab2JKBhY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2012 21:37:24 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:40382 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933385Ab2JKBhV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2012 21:37:21 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so2135533iea.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 18:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AIH7AGvdGpX52e+04x5Kw8xKoBGtRxA8ZlkPfs9sxqk=;
+        b=bu23JkF1mssjIz0/jF0FZcH8jthDrR5im/kPlnP+NsXRXJ5VvSdRtG6BCNT++fqG7t
+         hBCTJ/0SdzYlEzAGX/AZ+vhxh6SA+1BaXAoS79ZjXlCXab9IllzGNAAhOsOCobaWd4Jz
+         Qw5Ngblbxjyc6hqWGjWWL5JKS7sPNYJ8vCY7LmfEd2loM3d3rApDAcvMBSMKGVJgYKWa
+         bMAvoY/ohaHDflS93mTRNVgBMdIx51HOqs0mJ4r1+fSzlrxla3y+EbSQSGdYY47I8kCk
+         3br9OUzzgiAna6Rfyo8lrPtW1bpBferKuyRxpCqi8I+mK5w5L/Nyro7Wdo+7VOuSWftT
+         LVMA==
+Received: by 10.50.208.71 with SMTP id mc7mr7234826igc.47.1349919440940; Wed,
+ 10 Oct 2012 18:37:20 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Wed, 10 Oct 2012 18:36:50 -0700 (PDT)
+In-Reply-To: <7v626iatt9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207453>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Thu, Oct 11, 2012 at 4:41 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>>    @@ -690,16 +689,18 @@ static int path_matches(const char *pathnam=
+e, int pathlen,
+>>        * contain the trailing slash
+>>        */
+>>
+>>    -  if (pathlen < baselen ||
+>>    +  if (pathlen < baselen + 1 ||
+>>           (baselen && pathname[baselen] !=3D '/') ||
+>>    -      strncmp(pathname, base, baselen))
+>>    +      strncmp_icase(pathname, base, baselen))
+>
+> Shouldn't the last comparison be
+>
+>         strncmp_icase(pathname, base, baselen + 1)
+>
+> instead,
 
-> Really small updates. I did not want to resend it this soon but this
-> may fix the compile errors for Junio.
+"base" does not contain the trailing slash, so it can only match up to
+base[baselen-1], then fail at base[baselen], which is '\0'. The "no
+trailing slash" business in this function is tricky :(
 
-Thanks; queued and pushed out on 'pu'.  Comments later.
+> if you are trying to match this part from dir.c where
+> baselen does count the trailing slash?
+>
+>                 if (pathlen < x->baselen ||
+>                     (x->baselen && pathname[x->baselen-1] !=3D '/') |=
+|
+>                     strncmp_icase(pathname, x->base, x->baselen))
+>                         continue;
+
+strncmp_icase() here just needs to compare x->baselen-1 chars (i.e. no
+trailing slash) as the trailing slash is explicitly checked just above
+strncmp_icase. But it does not hurt to compare an extra character so I
+leave it unchanged. But obviously it causes confusion when we try to
+match this function and the one in attr.c
+--=20
+Duy
