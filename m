@@ -1,68 +1,64 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] grep: stop looking at random places for .gitattributes
-Date: Thu, 11 Oct 2012 15:17:45 +0700
-Message-ID: <CACsJy8AKT4VzYg_aBrK2UNAhv=yO=ddSFPdi3sZakD9UBc388w@mail.gmail.com>
-References: <7vk3uzfp3p.fsf@alter.siamese.dyndns.org> <1349868894-3579-1-git-send-email-pclouds@gmail.com>
- <1349868894-3579-4-git-send-email-pclouds@gmail.com> <5075615B.8020702@viscovery.net>
- <CACsJy8BG0HJNePG-j27SrfEenEkZ5a5nCdMEuDGn=qXxq=VzhA@mail.gmail.com>
- <50756646.5060505@viscovery.net> <7vy5jeaz81.fsf@alter.siamese.dyndns.org>
- <50765F34.1070108@viscovery.net> <50766F94.4020104@alum.mit.edu>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: [BUG] "git commit" after "cherry-pick -n" conflict clobbers
+ .git/COMMIT_EDITMSG
+Date: Thu, 11 Oct 2012 11:33:52 +0200
+Organization: Bertin Technologies
+Message-ID: <20121011113352.006efa25@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 11 10:18:35 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 11 11:34:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMDyS-00050Z-KM
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 10:18:32 +0200
+	id 1TMF9Y-0005Nu-6y
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 11:34:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477Ab2JKISU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 04:18:20 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:34562 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953Ab2JKISQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 04:18:16 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so2521902iea.19
-        for <git@vger.kernel.org>; Thu, 11 Oct 2012 01:18:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nw6WVGR2Qe92MSqVF35gWP8VS8sYHUHhjyHi+pKh+vE=;
-        b=tETiDqAMfFRv2Tf1NxPGHJyXburhKXbLkakHrf8C2Cn0ERK0GFy96+Dj/5kFMG4/1L
-         BPaXXdq8kwk6vLYtnbsGT6bHWB0np5PhPseQHGwZTYRSLyu4jKCZqq8Hu/mJqzxL6157
-         mHup2b1MNL0yoWZuHUlRsNhFskiJGV4fSedGbRJVb8rALVZcdwd8/k5j8XufhQ/56h0x
-         g415MV/7A+Z2EW0pD6E3vhlSQ9Gh7bQyrEFr1KsYR9QTU/9fBdv28AFNtwligXEDsfKB
-         kml399uIToQpulPto+r81U6JC3mZ+33H0WgMjngsamppCvRYRNmYKLey0xvQXqW/RqSc
-         tL9A==
-Received: by 10.50.153.130 with SMTP id vg2mr7866798igb.26.1349943496061; Thu,
- 11 Oct 2012 01:18:16 -0700 (PDT)
-Received: by 10.64.143.168 with HTTP; Thu, 11 Oct 2012 01:17:45 -0700 (PDT)
-In-Reply-To: <50766F94.4020104@alum.mit.edu>
+	id S1756201Ab2JKJdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 05:33:53 -0400
+Received: from cabourg.bertin.fr ([195.68.26.10]:43636 "EHLO cabourg.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751664Ab2JKJdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 05:33:52 -0400
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 0014DA0FC6
+	for <git@vger.kernel.org>; Thu, 11 Oct 2012 11:33:49 +0200 (CEST)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id D05FBA0FBD
+	for <git@vger.kernel.org>; Thu, 11 Oct 2012 11:33:49 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MBQ004592KDD600@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Thu, 11 Oct 2012 11:33:49 +0200 (CEST)
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19262.002
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207469>
 
-On Thu, Oct 11, 2012 at 2:04 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Maybe I'm being too much of a purist, but I don't think that git should
-> retroactively reinterpret history on its own initiative in a way that
-> might not be correct (e.g., maybe your encoding changed from ASCII to
-> Shift-JIS sometime in the past).  It would be more appropriate for this
-> to happen only if explicitly requested by the user.  For example, why
-> don't you override the incorrect historical attributes via
-> .git/info/attributes?
+(only tested with 1.7.10.x for now)
 
-I think git-notes is a more appropriate place to correct these things.
-If the incorrect commits are pruned, their notes can also be pruned.
-No poluttion in $GIT_DIR/info/attr.. And i'm your side, no checking
-worktree without user's permission.
+~/softs/linux$ echo foo > .git/COMMIT_EDITMSG
+~/softs/linux$ git cherry-pick -n b55f3d92cd
+error: could not apply b55f3d9... Linux 2.6.32.26
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+~/softs/linux$ cat .git/COMMIT_EDITMSG
+foo
+
+So far, so good.  But then "git commit" brings me the message from the
+cherry-picked commit plus the list of conflicted files, and I can verify that
+it is now the contents of .git/COMMIT_EDITMSG.
+
+Surely the fact I passed "-n" should prevent cloberring the message, even in the
+event of a conflict.  I suppose that would imply not creating .git/MERGE_MSG in that
+case, but just removing it still causes .git/COMMIT_EDITMSG to be clobbered, this
+time with nothing but the "git status"-derived comments.
+
 -- 
-Duy
+Yann Dirson - Bertin Technologies
