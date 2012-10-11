@@ -1,60 +1,58 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [BUG] Directory probing for aliases
-Date: Thu, 11 Oct 2012 13:28:31 +0200
-Message-ID: <m2sj9ll02o.fsf@igel.home>
-References: <CAFKeBpcCZwMMcBtP8KywqnyK3e247K1Z_8na5ah+Wb+E15LPVQ@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: rebase fails mid way through due to locally modified file?
+Date: Thu, 11 Oct 2012 12:35:22 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1210111234150.2378@ds9.cixit.se>
+References: <CANRUUDNoUNMy1qHkYt-_wwxGtWrRY9vi8-CjzY8WhJ2gur+zTg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Vasiliy Yeremeyev <vayerx@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 13:28:45 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Thu Oct 11 13:35:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMGwW-0004DR-Vy
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 13:28:45 +0200
+	id 1TMH3C-0008BU-Qu
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 13:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758522Ab2JKL2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 07:28:34 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:51884 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758398Ab2JKL2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 07:28:34 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XcqgN0R2wz3hhg5;
-	Thu, 11 Oct 2012 13:28:32 +0200 (CEST)
-X-Auth-Info: 1Ir41o8UobqXu+6ibqqfyHU4HkW76ndHWyJ0ArNA82Y=
-Received: from igel.home (ppp-88-217-111-196.dynamic.mnet-online.de [88.217.111.196])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XcqgN06kKzbbct;
-	Thu, 11 Oct 2012 13:28:32 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 4E30ACA2A4; Thu, 11 Oct 2012 13:28:31 +0200 (CEST)
-X-Yow: Yow!  We're going to a new disco!
-In-Reply-To: <CAFKeBpcCZwMMcBtP8KywqnyK3e247K1Z_8na5ah+Wb+E15LPVQ@mail.gmail.com>
-	(Vasiliy Yeremeyev's message of "Thu, 11 Oct 2012 14:22:45 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1758562Ab2JKLf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 07:35:28 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:47280 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758403Ab2JKLf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 07:35:27 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id q9BBZMvN015024
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 11 Oct 2012 13:35:22 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q9BBZMqs015021;
+	Thu, 11 Oct 2012 13:35:22 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <CANRUUDNoUNMy1qHkYt-_wwxGtWrRY9vi8-CjzY8WhJ2gur+zTg@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 11 Oct 2012 13:35:22 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207473>
 
-Vasiliy Yeremeyev <vayerx@gmail.com> writes:
+skillzero@gmail.com:
 
-> Git aliases stop working when user doesn't have permissions to any
-> directory within $PATH list:
->
-> % git config alias.br branch
-> % git br
-> fatal: cannot exec 'git-br': Permission denied
+> I frequently see rebase fail after applying several commits because
+> git thinks there are local changes.
 
-This has been fixed in git-1.7.10.1.
-
-Andreas.
+What operating system are you running on? I have seen simlar issues on 
+Windows, which has a case-insensitive file system, in repositories 
+where file names have either changed just the casing of their names, 
+or there has been several files where the only difference in names 
+were only character casing.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+\\// Peter - http://www.softwolves.pp.se/
