@@ -1,109 +1,82 @@
-From: dirson@bertin.fr
-Subject: Re: [BUG] "git commit" after "cherry-pick -n" conflict clobbers
- .git/COMMIT_EDITMSG
-Date: Thu, 11 Oct 2012 22:50:35 +0200
-Message-ID: <20121011205035.GB9783@home.lan>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: build deps
+Date: Thu, 11 Oct 2012 17:54:13 -0300
+Message-ID: <CACnwZYf56XkqW085HoWhAN2EnjCJd=VYHGAD8fZCCe6_FNhO2A@mail.gmail.com>
+References: <CACnwZYe_vhH9Ui8W9D=M_8avgEugR+UvM1E+jH7fxr+8yk2UtQ@mail.gmail.com>
+	<5072FAD1.1000807@gmail.com>
+	<CACnwZYeJ-FKXterxd697iu+U4HobqEaP0zx_p8CZDsPZx4hbHQ@mail.gmail.com>
+	<50735939.10604@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 22:51:33 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 22:54:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMPjA-0006pJ-UF
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 22:51:33 +0200
+	id 1TMPm7-0000JL-W0
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 22:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030255Ab2JKUvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 16:51:22 -0400
-Received: from smtpfb2-g21.free.fr ([212.27.42.10]:46597 "EHLO
-	smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030216Ab2JKUvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 16:51:18 -0400
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id A39F0D1B029
-	for <git@vger.kernel.org>; Thu, 11 Oct 2012 22:51:14 +0200 (CEST)
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 95784D480AD;
-	Thu, 11 Oct 2012 22:50:36 +0200 (CEST)
-Received: from yann by home.lan with local (Exim 4.80)
-	(envelope-from <dirson@bertin.fr>)
-	id 1TMPiF-0000vr-BL; Thu, 11 Oct 2012 22:50:35 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759341Ab2JKUyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 16:54:18 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:35308 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759332Ab2JKUyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 16:54:15 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so1551594lag.19
+        for <git@vger.kernel.org>; Thu, 11 Oct 2012 13:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=RrGgoS8mEYi74jlTvLM8HVD2GqDmjcYifh64wKwaavA=;
+        b=eeNR9HXzsFQtP8an6VxbRCXuNoyM3leozKmRmQnOu+TA4AFtO/kdY3Lb+YAylk8XYt
+         3ZdZekvRuC4MjLjY3BWE0baTaCi6CQqpbsUtzsJUHdOb6k/7g8JHSj6bqcdJwleXYdM0
+         H3D+UyjpU8omzYs0TC3FzDCPpVBo8sR/CStJKt9e+PSJjdyEqRYBOrmxXAiVD1zV9ixt
+         USqAXJcFMsKnlumbiOcmJFhDv6YRZ/l9OGEkDED2DdD/kyH3VVsA9CluDlkdkZ0vGW5h
+         ZfMIsO+vnQoNHrtTdoqdWSvfJJHmqnDgA7NTUt8hSUL8+n4VEsJt9x7n8stTMWfltHdU
+         qKgQ==
+Received: by 10.112.24.74 with SMTP id s10mr842871lbf.122.1349988853247; Thu,
+ 11 Oct 2012 13:54:13 -0700 (PDT)
+Received: by 10.112.24.10 with HTTP; Thu, 11 Oct 2012 13:54:13 -0700 (PDT)
+In-Reply-To: <50735939.10604@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207513>
 
-> > ~/softs/linux$ echo foo > .git/COMMIT_EDITMSG
+On Mon, Oct 8, 2012 at 7:52 PM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
+> On 10/08/12 17:36, Thiago Farina wrote:
+>> OK, after running ./configure I tried the make command again.
+>>
+>> CC credential-store.o
+>> /bin/sh: clang: not found
+>> make: *** [credential-store.o] Error 127
+>>
+>> $ which clang
+>> /home/tfarina/chromium/src/third_party/llvm-build/Release+Asserts/bin/clang
+>>
+>> $ clang --version
+>> clang version 3.2 (trunk 163674)
+>> Target: x86_64-unknown-linux-gnu
+>> Thread model: posix
+> Looks like something went wrong with "make" setting PATH. I wonder if
+> the "+" sign in your path is somehow messing things up.
 >
-> Why are you mucking with such an internal implementation detail in
-> the first place?
+Would be something that could be fixed in git?
 
-I only tried to make it terse for the bugreport, I hit this while I
-was resolving conflicts during a merge.  I aknowledge that using
-"cherry-pick -n" to bring some contents to resolve a conflict is not
-really nominal - my use case involves re-merging an updated "upstream"
-branch, and bringing in fixups to the original merge.
+> Are you trying to compile specifically with clang?
+Nope, it just happen that I switched to clang because I use it to
+compile chromium and I need it to use the chrome_plugin[1].
 
-> > ~/softs/linux$ git cherry-pick -n b55f3d92cd
-> > error: could not apply b55f3d9... Linux 2.6.32.26
-> > hint: after resolving the conflicts, mark the corrected paths
-> > hint: with 'git add ' or 'git rm '
-> > ~/softs/linux$ cat .git/COMMIT_EDITMSG
-> > foo
-> >
-> > So far, so good. But then "git commit" brings me the message
-> from the
-> > cherry-picked commit plus the list of conflicted files, and I
-> can verify that
-> > it is now the contents of .git/COMMIT_EDITMSG.
->
-> You verified that "what" is now in .git/COMMIT_EDITMSG? The commit
-> log message for you to edit to record the result of the cherry-pick?
+> If not, maybe try
+> unsetting the CC env var, and run configure again?
+Just setting CC to gcc works for me. But still, I'd like to be able to
+build with clang (may be as you noted is just something with the + in
+my PATH).
 
-Precisely
-
-> If that is the case, what is the problem?
-
-I used "-n" precisely because I did not want to make a standalone
-commit, and the message from the cherry-picked source has no value to
-me.  If it had, I would instead have used cherry-pick without -n, and
-amended the commit afterwards.
-
-In the general case, I only ever use -n when I'm squashing changes
-and similar tasks.  Are there use cases out there, where it makes
-sense to keep that source message, when we don't want the commit to be
-created right away ?
-
-
-> If anything you had in .git/COMMIT_EDITMSG before you started
-> "'cherry-pick -n', edit further to adjust, and then 'commit'"
-> sequence were to appear in the editor to edit the commit log,
-> it would be a bug, I would think.
-
-Well, seems to depend on use case - I find it a bug when the merge message,
-notably containing the list of conflicting files, gets clobbered.
-
-Also, I have not checked how git gui reacts, but I would assume that
-when carefully and iteratively composing a commit message from there,
-which is IIRC managed using .git/COMMIT_EDITMSG, it would not be
-desired to get this content clobbered the same way.
-
-To me it looks like the problem is that the commit message in
-preparation is not considered precious information, when there are at
-least some cases where it indeed should be.  I'm not sure however how
-that should be done:
-
-* suddenly claiming it is precious (and require some form of -f to
-  clobber it) when it was mostly not is likely to break a number of
-  use cases
-* looking at the context (are we resolving a merge or similar ?) to
-  consider it precious is likely to miss some cases
-* declaring a new official location (or API/command ?) to store
-  considered-precious message being composed may bring its own lot of
-  semantic difficulties
+[1] http://git.chromium.org/gitweb/?p=chromium.git;a=tree;f=tools/clang/plugins;h=8e79d8f35d5ccfee82b6ab8f27ea8b5d820c772d;hb=HEAD
