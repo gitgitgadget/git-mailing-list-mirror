@@ -1,8 +1,8 @@
 From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: [Patch v2 4/8] Prerequisites for creating nice html for all files
- in Documentation/technical
-Date: Thu, 11 Oct 2012 19:21:13 +0200 (CEST)
-Message-ID: <1691703722.46948.1349976073685.JavaMail.ngmail@webmail22.arcor-online.net>
+Subject: [Patch v2 5/8] Prerequisites for creating nice html for all files
+ in Documentation/howto
+Date: Thu, 11 Oct 2012 19:22:19 +0200 (CEST)
+Message-ID: <1873679011.46972.1349976139154.JavaMail.ngmail@webmail22.arcor-online.net>
 References: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,39 +10,39 @@ Content-Transfer-Encoding: 7bit
 Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
 	th.acker66@arcor.de
 To: th.acker66@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 19:21:27 2012
+X-From: git-owner@vger.kernel.org Thu Oct 11 19:22:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMMRq-0000aV-EH
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:21:26 +0200
+	id 1TMMSu-0001Ks-G0
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759063Ab2JKRVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 13:21:15 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:57490 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759058Ab2JKRVO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:21:14 -0400
-Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
-	by mx.arcor.de (Postfix) with ESMTP id C4D73AAB19;
-	Thu, 11 Oct 2012 19:21:13 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id B56403C4143;
-	Thu, 11 Oct 2012 19:21:13 +0200 (CEST)
+	id S1759065Ab2JKRWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 13:22:22 -0400
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:55791 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754645Ab2JKRWU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:22:20 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mx.arcor.de (Postfix) with ESMTP id 3FBA3198052;
+	Thu, 11 Oct 2012 19:22:19 +0200 (CEST)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 38100208004;
+	Thu, 11 Oct 2012 19:22:19 +0200 (CEST)
 Received: from webmail22.arcor-online.net (webmail22.arcor-online.net [151.189.8.137])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id AEA15198541;
-	Thu, 11 Oct 2012 19:21:13 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net AEA15198541
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 2D47F10CD52;
+	Thu, 11 Oct 2012 19:22:19 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-06.arcor-online.net 2D47F10CD52
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1349976073; bh=hKYqlpfCvxJ/M78KN86diHv0uRdrxgtF/MiJc1WqrDk=;
+	t=1349976139; bh=EXtemShQRqhWtypirHQacyg2PbwGuN4FGo2hOvi2Tno=;
 	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=Ou1EmBloFpts+BgXOSrQb8EMWAAgVihTaR/2svBHYjwwxUBeF2GH9IZasSaJTCa+p
-	 0EtXlxMMbz6D2u0cXsb014CDPoiM7aXZ9gppKwlEMKD+C4QLydVfBeZb+dP5aBl/Jz
-	 ye5qG8V+2NZ9vPOzxJzce+Z6sOyZjsCTrOuJBLvo=
-Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:21:13 +0200 (CEST)
+	b=CjiZHb1XM65DswyTU/BVRbVl6JoTsWKy73PF64BcdX0L6T/dJQkaWIUiRswI4znq5
+	 9t8xIQiprKzAhfNb/5g1ASnpozJE5bd7Yaw1xG+9XVRF4Irj/lk7sEuOzrblk+9zH7
+	 5vKURhWDyVJDcm5LiJCtcMQZM0I1GI6qh4UZRZiM=
+Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:22:19 +0200 (CEST)
 In-Reply-To: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
 X-ngMessageSubType: MessageSubType_MAIL
 X-WebmailclientIP: 188.105.106.236
@@ -50,171 +50,330 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207495>
 
->From 23b5272cbb27dca7e292f33c79cf3d8e21298b78 Mon Sep 17 00:00:00 2001
+>From 2b9538990e30ae0911117c8e3d8b6891c9de31cf Mon Sep 17 00:00:00 2001
 From: Thomas Ackermann <th.acker@arcor.de>
-Date: Sat, 29 Sep 2012 10:00:00 +0200
+Date: Sat, 29 Sep 2012 17:28:54 +0200
 Subject: [PATCH] Prerequisites for creating nice html for all files in
- Documentation/technical
+ Documentation/howto
 
-- fix wrong asciidoc sectioning markup in index-format.txt, pack-format.txt and pack-protocol.txt
-- split an over-long line in pack-protocol.txt into several lines
-- add a markup box for definition part in shallow.txt
-- fix table markup in trivial-merge.txt
+- create headlines with asciidoc markup
+- asciidoc box markup for mail replies in recover-corrupted-blob-object.txt
+- pretty-print shell script in update-hook-example.txt
+- correct indendation for allowed-users example in update-hook-example.txt
+- headline of every howto document starts with "How to ..."
+- add "Content-type: text/asciidoc" in new files (used in howto-index.sh)
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- Documentation/technical/index-format.txt  |  2 +-
- Documentation/technical/pack-format.txt   |  8 +++----
- Documentation/technical/pack-protocol.txt |  7 +++---
- Documentation/technical/shallow.txt       |  8 ++++++-
- Documentation/technical/trivial-merge.txt | 36 +++++++++++++++----------------
- 5 files changed, 34 insertions(+), 27 deletions(-)
+ Documentation/howto/maintain-git.txt               |  4 ++
+ .../howto/rebase-from-internal-branch.txt          | 11 ++---
+ Documentation/howto/rebuild-from-update-hook.txt   |  4 ++
+ .../howto/recover-corrupted-blob-object.txt        | 10 +++++
+ Documentation/howto/revert-a-faulty-merge.txt      |  4 ++
+ Documentation/howto/revert-branch-rebase.txt       |  4 +-
+ Documentation/howto/separating-topic-branches.txt  |  4 ++
+ Documentation/howto/setup-git-server-over-http.txt |  4 ++
+ Documentation/howto/update-hook-example.txt        | 50 +++++++++++-----------
+ Documentation/howto/use-git-daemon.txt             |  3 ++
+ .../howto/using-signed-tag-in-pull-request.txt     |  4 +-
+ 11 files changed, 68 insertions(+), 34 deletions(-)
 
-diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
-index 9d25b30..57d6f91 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -1,7 +1,7 @@
- GIT index format
- ================
- 
--= The git index file has the following format
-+== The git index file has the following format
- 
-   All binary numbers are in network byte order. Version 2 is described
-   here unless stated otherwise.
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index 1803e64..a7871fb 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -1,7 +1,7 @@
- GIT pack format
- ===============
- 
--= pack-*.pack files have the following format:
-+== pack-*.pack files have the following format:
- 
-    - A header appears at the beginning and consists of the following:
- 
-@@ -34,7 +34,7 @@ GIT pack format
- 
-   - The trailer records 20-byte SHA1 checksum of all of the above.
- 
--= Original (version 1) pack-*.idx files have the following format:
-+== Original (version 1) pack-*.idx files have the following format:
- 
-   - The header consists of 256 4-byte network byte order
-     integers.  N-th entry of this table records the number of
-@@ -123,8 +123,8 @@ Pack file entry: <+
- 
- 
- 
--= Version 2 pack-*.idx files support packs larger than 4 GiB, and
--  have some other reorganizations.  They have the format:
-+== Version 2 pack-*.idx files support packs larger than 4 GiB, and
-+   have some other reorganizations.  They have the format:
- 
-   - A 4-byte magic number '\377tOc' which is an unreasonable
-     fanout[0] value.
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index d51e20f..25e1fbe 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -117,7 +117,7 @@ A few things to remember here:
- - The repository path is always quoted with single quotes.
- 
- Fetching Data From a Server
--===========================
-+---------------------------
- 
- When one Git repository wants to get data that a second repository
- has, the first can 'fetch' from the second.  This operation determines
-@@ -134,7 +134,8 @@ with the object name that each reference currently points to.
- 
-    $ echo -e -n "0039git-upload-pack /schacon/gitbook.git\0host=example.com\0" |
-       nc -v example.com 9418
--   00887217a7c7e582c46cec22a130adf4b9d7d950fba0 HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow no-progress include-tag
-+   00887217a7c7e582c46cec22a130adf4b9d7d950fba0 HEAD\0multi_ack thin-pack 
-+                side-band side-band-64k ofs-delta shallow no-progress include-tag
-    00441d3fcd5ced445d1abc402225c0b8a1299641f497 refs/heads/integration
-    003f7217a7c7e582c46cec22a130adf4b9d7d950fba0 refs/heads/master
-    003cb88d2441cac0977faf98efc80305012112238d9d refs/tags/v0.9
-@@ -421,7 +422,7 @@ entire packfile without multiplexing.
- 
- 
- Pushing Data To a Server
--========================
-+------------------------
- 
- Pushing data to a server will invoke the 'receive-pack' process on the
- server, which will allow the client to tell it which references it should
-diff --git a/Documentation/technical/shallow.txt b/Documentation/technical/shallow.txt
-index 559263a..0502a54 100644
---- a/Documentation/technical/shallow.txt
-+++ b/Documentation/technical/shallow.txt
-@@ -1,6 +1,12 @@
--Def.: Shallow commits do have parents, but not in the shallow
-+Shallow commits
-+===============
+diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
+index 8823a37..ea6e4a5 100644
+--- a/Documentation/howto/maintain-git.txt
++++ b/Documentation/howto/maintain-git.txt
+@@ -5,6 +5,10 @@ Abstract: Imagine that git development is racing along as usual, when our friend
+  neighborhood maintainer is struck down by a wayward bus. Out of the
+  hordes of suckers (loyal developers), you have been tricked (chosen) to
+  step up as the new maintainer. This howto will show you "how to" do it.
++Content-type: text/asciidoc
 +
-+.Definition
-+*********************************************************
-+Shallow commits do have parents, but not in the shallow
- repo, and therefore grafts are introduced pretending that
- these commits have no parents.
-+*********************************************************
++How to maintain Git
++===================
  
- The basic idea is to write the SHA1s of shallow commits into
- $GIT_DIR/shallow, and handle its contents like the contents
-diff --git a/Documentation/technical/trivial-merge.txt b/Documentation/technical/trivial-merge.txt
-index 24c8410..c79d4a7 100644
---- a/Documentation/technical/trivial-merge.txt
-+++ b/Documentation/technical/trivial-merge.txt
-@@ -74,24 +74,24 @@ For multiple ancestors, a '+' means that this case applies even if
- only one ancestor or remote fits; a '^' means all of the ancestors
- must be the same.
+ The maintainer's git time is spent on three activities.
  
--case  ancest    head    remote    result
------------------------------------------
--1     (empty)+  (empty) (empty)   (empty)
--2ALT  (empty)+  *empty* remote    remote
--2     (empty)^  (empty) remote    no merge
--3ALT  (empty)+  head    *empty*   head
--3     (empty)^  head    (empty)   no merge
--4     (empty)^  head    remote    no merge
--5ALT  *         head    head      head
--6     ancest+   (empty) (empty)   no merge
--8     ancest^   (empty) ancest    no merge
--7     ancest+   (empty) remote    no merge
--10    ancest^   ancest  (empty)   no merge
--9     ancest+   head    (empty)   no merge
--16    anc1/anc2 anc1    anc2      no merge
--13    ancest+   head    ancest    head
--14    ancest+   ancest  remote    remote
--11    ancest+   head    remote    no merge
-+ case  ancest    head    remote    result
-+ ----------------------------------------
-+ 1     (empty)+  (empty) (empty)   (empty)
-+ 2ALT  (empty)+  *empty* remote    remote
-+ 2     (empty)^  (empty) remote    no merge
-+ 3ALT  (empty)+  head    *empty*   head
-+ 3     (empty)^  head    (empty)   no merge
-+ 4     (empty)^  head    remote    no merge
-+ 5ALT  *         head    head      head
-+ 6     ancest+   (empty) (empty)   no merge
-+ 8     ancest^   (empty) ancest    no merge
-+ 7     ancest+   (empty) remote    no merge
-+ 10    ancest^   ancest  (empty)   no merge
-+ 9     ancest+   head    (empty)   no merge
-+ 16    anc1/anc2 anc1    anc2      no merge
-+ 13    ancest+   head    ancest    head
-+ 14    ancest+   ancest  remote    remote
-+ 11    ancest+   head    remote    no merge
+diff --git a/Documentation/howto/rebase-from-internal-branch.txt b/Documentation/howto/rebase-from-internal-branch.txt
+index 74a1c0c..4627ee4 100644
+--- a/Documentation/howto/rebase-from-internal-branch.txt
++++ b/Documentation/howto/rebase-from-internal-branch.txt
+@@ -8,7 +8,12 @@ Abstract: In this article, JC talks about how he rebases the
+  the "master" branch, and how "rebase" works.  Also discussed
+  is how this applies to individual developers who sends patches
+  upstream.
++Content-type: text/asciidoc
  
- Only #2ALT and #3ALT use *empty*, because these are the only cases
- where there can be conflicts that didn't exist before. Note that we
++How to rebase from an internal branch
++=====================================
++
++--------------------------------------
+ Petr Baudis <pasky@suse.cz> writes:
+ 
+ > Dear diary, on Sun, Aug 14, 2005 at 09:57:13AM CEST, I got a letter
+@@ -19,6 +24,7 @@ Petr Baudis <pasky@suse.cz> writes:
+ >> > branch to the real branches.
+ >>
+ > Actually, wouldn't this be also precisely for what StGIT is intended to?
++--------------------------------------
+ 
+ Exactly my feeling.  I was sort of waiting for Catalin to speak
+ up.  With its basing philosophical ancestry on quilt, this is
+@@ -156,8 +162,3 @@ you continue on starting from the new "master" head, which is
+ the #1' commit.
+ 
+ -jc
+-
+--
+-To unsubscribe from this list: send the line "unsubscribe git" in
+-the body of a message to majordomo@vger.kernel.org
+-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/Documentation/howto/rebuild-from-update-hook.txt b/Documentation/howto/rebuild-from-update-hook.txt
+index 48c6756..00c1b45 100644
+--- a/Documentation/howto/rebuild-from-update-hook.txt
++++ b/Documentation/howto/rebuild-from-update-hook.txt
+@@ -5,6 +5,10 @@ Date: Fri, 26 Aug 2005 18:19:10 -0700
+ Abstract: In this how-to article, JC talks about how he
+  uses the post-update hook to automate git documentation page
+  shown at http://www.kernel.org/pub/software/scm/git/docs/.
++Content-type: text/asciidoc
++
++How to rebuild from update hook
++===============================
+ 
+ The pages under http://www.kernel.org/pub/software/scm/git/docs/
+ are built from Documentation/ directory of the git.git project
+diff --git a/Documentation/howto/recover-corrupted-blob-object.txt b/Documentation/howto/recover-corrupted-blob-object.txt
+index 323b513..7484735 100644
+--- a/Documentation/howto/recover-corrupted-blob-object.txt
++++ b/Documentation/howto/recover-corrupted-blob-object.txt
+@@ -3,11 +3,17 @@ From: Linus Torvalds <torvalds@linux-foundation.org>
+ Subject: corrupt object on git-gc
+ Abstract: Some tricks to reconstruct blob objects in order to fix
+  a corrupted repository.
++Content-type: text/asciidoc
+ 
++How to recover a corrupted blob object
++======================================
++
++-----------------------------------------------------------
+ On Fri, 9 Nov 2007, Yossi Leybovich wrote:
+ >
+ > Did not help still the repository look for this object?
+ > Any one know how can I track this object and understand which file is it
++-----------------------------------------------------------
+ 
+ So exactly *because* the SHA1 hash is cryptographically secure, the hash
+ itself doesn't actually tell you anything, in order to fix a corrupt
+@@ -31,19 +37,23 @@ original object, so right now the corrupt object is useless, but it's very
+ interesting for the future, in the hope that you can re-create a
+ non-corrupt version.
+ 
++-----------------------------------------------------------
+ So:
+ 
+ > ib]$ mv .git/objects/4b/9458b3786228369c63936db65827de3cc06200 ../
++-----------------------------------------------------------
+ 
+ This is the right thing to do, although it's usually best to save it under
+ it's full SHA1 name (you just dropped the "4b" from the result ;).
+ 
+ Let's see what that tells us:
+ 
++-----------------------------------------------------------
+ > ib]$ git-fsck --full
+ > broken link from    tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
+ >              to    blob 4b9458b3786228369c63936db65827de3cc06200
+ > missing blob 4b9458b3786228369c63936db65827de3cc06200
++-----------------------------------------------------------
+ 
+ Ok, I removed the "dangling commit" messages, because they are just
+ messages about the fact that you probably have rebased etc, so they're not
+diff --git a/Documentation/howto/revert-a-faulty-merge.txt b/Documentation/howto/revert-a-faulty-merge.txt
+index 6fd7119..8a68548 100644
+--- a/Documentation/howto/revert-a-faulty-merge.txt
++++ b/Documentation/howto/revert-a-faulty-merge.txt
+@@ -7,6 +7,10 @@ Abstract: Sometimes a branch that was already merged to the mainline
+  after the offending branch is fixed.
+ Message-ID: <7vocz8a6zk.fsf@gitster.siamese.dyndns.org>
+ References: <alpine.LFD.2.00.0812181949450.14014@localhost.localdomain>
++Content-type: text/asciidoc
++
++How to revert a faulty merge
++============================
+ 
+ Alan <alan@clueserver.org> said:
+ 
+diff --git a/Documentation/howto/revert-branch-rebase.txt b/Documentation/howto/revert-branch-rebase.txt
+index 093c656..a59ced8 100644
+--- a/Documentation/howto/revert-branch-rebase.txt
++++ b/Documentation/howto/revert-branch-rebase.txt
+@@ -8,8 +8,8 @@ Date: Mon, 29 Aug 2005 21:39:02 -0700
+ Content-type: text/asciidoc
+ Message-ID: <7voe7g3uop.fsf@assigned-by-dhcp.cox.net>
+ 
+-Reverting an existing commit
+-============================
++How to revert an existing commit
++================================
+ 
+ One of the changes I pulled into the 'master' branch turns out to
+ break building GIT with GCC 2.95.  While they were well intentioned
+diff --git a/Documentation/howto/separating-topic-branches.txt b/Documentation/howto/separating-topic-branches.txt
+index 6d3eb8e..bd10274 100644
+--- a/Documentation/howto/separating-topic-branches.txt
++++ b/Documentation/howto/separating-topic-branches.txt
+@@ -1,6 +1,10 @@
+ From: Junio C Hamano <gitster@pobox.com>
+ Subject: Separating topic branches
+ Abstract: In this article, JC describes how to separate topic branches.
++Content-type: text/asciidoc
++
++How to separate topic branches
++==============================
+ 
+ This text was originally a footnote to a discussion about the
+ behaviour of the git diff commands.
+diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+index 622ee5c..a695f01 100644
+--- a/Documentation/howto/setup-git-server-over-http.txt
++++ b/Documentation/howto/setup-git-server-over-http.txt
+@@ -1,6 +1,10 @@
+ From: Rutger Nijlunsing <rutger@nospam.com>
+ Subject: Setting up a git repository which can be pushed into and pulled from over HTTP(S).
+ Date: Thu, 10 Aug 2006 22:00:26 +0200
++Content-type: text/asciidoc
++
++How to setup git server over http
++=================================
+ 
+ Since Apache is one of those packages people like to compile
+ themselves while others prefer the bureaucrat's dream Debian, it is
+diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
+index b7f8d41..2b472f7 100644
+--- a/Documentation/howto/update-hook-example.txt
++++ b/Documentation/howto/update-hook-example.txt
+@@ -5,6 +5,10 @@ Message-ID: <7vfypumlu3.fsf@assigned-by-dhcp.cox.net>
+ Abstract: An example hooks/update script is presented to
+  implement repository maintenance policies, such as who can push
+  into which branch and who can make a tag.
++Content-type: text/asciidoc
++
++How to use the update hook
++==========================
+ 
+ When your developer runs git-push into the repository,
+ git-receive-pack is run (either locally or over ssh) as that
+@@ -32,8 +36,7 @@ like this as your hooks/update script.
+ [jc: editorial note.  This is a much improved version by Carl
+ since I posted the original outline]
+ 
+--- >8 -- beginning of script -- >8 --
+-
++----------------------------------------------------
+ #!/bin/bash
+ 
+ umask 002
+@@ -111,12 +114,12 @@ then
+ 
+       info "Found matching head pattern: '$head_pattern'"
+       for user_pattern in $user_patterns; do
+-	info "Checking user: '$username' against pattern: '$user_pattern'"
+-	matchlen=$(expr "$username" : "$user_pattern")
+-	if test "$matchlen" = "${#username}"
+-	then
+-	  grant "Allowing user: '$username' with pattern: '$user_pattern'"
+-	fi
++	    info "Checking user: '$username' against pattern: '$user_pattern'"
++	    matchlen=$(expr "$username" : "$user_pattern")
++	    if test "$matchlen" = "${#username}"
++	    then
++	      grant "Allowing user: '$username' with pattern: '$user_pattern'"
++	    fi
+       done
+       deny "The user is not in the access list for this branch"
+     done
+@@ -149,13 +152,13 @@ then
+ 
+       info "Found matching head pattern: '$head_pattern'"
+       for group_pattern in $group_patterns; do
+-	for groupname in $groups; do
+-	  info "Checking group: '$groupname' against pattern: '$group_pattern'"
+-	  matchlen=$(expr "$groupname" : "$group_pattern")
+-	  if test "$matchlen" = "${#groupname}"
+-	  then
+-	    grant "Allowing group: '$groupname' with pattern: '$group_pattern'"
+-	  fi
++	    for groupname in $groups; do
++	      info "Checking group: '$groupname' against pattern: '$group_pattern'"
++	      matchlen=$(expr "$groupname" : "$group_pattern")
++	      if test "$matchlen" = "${#groupname}"
++	      then
++	        grant "Allowing group: '$groupname' with pattern: '$group_pattern'"
++	      fi
+         done
+       done
+       deny "None of the user's groups are in the access list for this branch"
+@@ -169,24 +172,21 @@ then
+ fi
+ 
+ deny >/dev/null "There are no more rules to check.  Denying access"
+-
+--- >8 -- end of script -- >8 --
++----------------------------------------------------
+ 
+ This uses two files, $GIT_DIR/info/allowed-users and
+ allowed-groups, to describe which heads can be pushed into by
+ whom.  The format of each file would look like this:
+ 
+-        refs/heads/master	junio
+-	+refs/heads/pu		junio
+-        refs/heads/cogito$	pasky
+-        refs/heads/bw/.*	linus
+-        refs/heads/tmp/.*	.*
+-        refs/tags/v[0-9].*	junio
++    refs/heads/master   junio
++    +refs/heads/pu      junio
++    refs/heads/cogito$  pasky
++    refs/heads/bw/.*    linus
++    refs/heads/tmp/.*   .*
++    refs/tags/v[0-9].*  junio
+ 
+ With this, Linus can push or create "bw/penguin" or "bw/zebra"
+ or "bw/panda" branches, Pasky can do only "cogito", and JC can
+ do master and pu branches and make versioned tags.  And anybody
+ can do tmp/blah branches. The '+' sign at the pu record means
+ that JC can make non-fast-forward pushes on it.
+-
+-------------
+diff --git a/Documentation/howto/use-git-daemon.txt b/Documentation/howto/use-git-daemon.txt
+index 4e2f75c..23cdf35 100644
+--- a/Documentation/howto/use-git-daemon.txt
++++ b/Documentation/howto/use-git-daemon.txt
+@@ -1,4 +1,7 @@
++Content-type: text/asciidoc
++
+ How to use git-daemon
++=====================
+ 
+ Git can be run in inetd mode and in stand alone mode. But all you want is
+ let a coworker pull from you, and therefore need to set up a git server
+diff --git a/Documentation/howto/using-signed-tag-in-pull-request.txt b/Documentation/howto/using-signed-tag-in-pull-request.txt
+index 98c0033..00f693b 100644
+--- a/Documentation/howto/using-signed-tag-in-pull-request.txt
++++ b/Documentation/howto/using-signed-tag-in-pull-request.txt
+@@ -7,8 +7,8 @@ Abstract: Beginning v1.7.9, a contributor can push a signed tag to her
+  later validate it.
+ Content-type: text/asciidoc
+ 
+-Using signed tag in pull requests
+-=================================
++How to use a signed tag in pull requests
++========================================
+ 
+ A typical distributed workflow using Git is for a contributor to fork a
+ project, build on it, publish the result to her public repository, and ask
 -- 
 1.7.11.msysgit.1
 
