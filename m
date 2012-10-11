@@ -1,8 +1,7 @@
 From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: [Patch v2 6/8] Prerequisites for creating nice html for all files
- in Documentation/RelNotes
-Date: Thu, 11 Oct 2012 19:23:35 +0200 (CEST)
-Message-ID: <970931752.47001.1349976215725.JavaMail.ngmail@webmail22.arcor-online.net>
+Subject: [Patch v2 7/8] Create pdf from all html files
+Date: Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
+Message-ID: <114836962.47023.1349976280019.JavaMail.ngmail@webmail22.arcor-online.net>
 References: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,39 +9,39 @@ Content-Transfer-Encoding: 7bit
 Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
 	th.acker66@arcor.de
 To: th.acker66@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 19:23:51 2012
+X-From: git-owner@vger.kernel.org Thu Oct 11 19:24:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMMU9-0002A7-Vp
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:23:50 +0200
+	id 1TMMVA-0002nZ-8n
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 19:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932655Ab2JKRXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 13:23:38 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:47927 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759094Ab2JKRXh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:23:37 -0400
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mx.arcor.de (Postfix) with ESMTP id C2B2010CD23;
-	Thu, 11 Oct 2012 19:23:35 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id B98177FF471;
-	Thu, 11 Oct 2012 19:23:35 +0200 (CEST)
+	id S932967Ab2JKRYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 13:24:42 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:60451 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932758Ab2JKRYl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2012 13:24:41 -0400
+Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
+	by mx.arcor.de (Postfix) with ESMTP id 1ED32107C11;
+	Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
+Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
+	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 120C9522003;
+	Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
 Received: from webmail22.arcor-online.net (webmail22.arcor-online.net [151.189.8.137])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id B0DEF30770;
-	Thu, 11 Oct 2012 19:23:35 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net B0DEF30770
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 07BD92D6432;
+	Thu, 11 Oct 2012 19:24:40 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-10.arcor-online.net 07BD92D6432
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1349976215; bh=vtRNLMSVRHZTAa++ZHSSZJIFl3xm5FlDu+WDFrJlXtw=;
+	t=1349976280; bh=MXaO8IuVmwBd0PW1xO1zJ6aBgLOXwK4D5DR6GamWUQo=;
 	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=c1MCSf+9SHz+bCO2G103xx3mQXlsKDw8AoXiWX8OVp1Y4rKYnMVh4jCYE0l9+pLg9
-	 ItzReWLfDn6JWrDXnIrWnOFTEvh4wGwaNx+haiHqL2N+O8Xa0YYl1QD7LMhpjN0MQw
-	 vmQvyL2K9eFSbBuD0GXgxLIwgtYsrFLUe02UKIFc=
-Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:23:35 +0200 (CEST)
+	b=o7JiXaw6u52zNkZ5PmmhXq01ETlvA/hmBYDAl8ATFlGxHtgcawjgdRrshBlG0ZZXY
+	 RL8tf9vhsisTlj+Ml+E5VB+lJhl6SUS1f2kehhbVyOSWSfjrq1sYTkf+jVjCcFLoJT
+	 u8gHwukK57N3xYwnbiu4KNxQIYRofyjtqNvICcLE=
+Received: from [188.105.106.236] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Thu, 11 Oct 2012 19:24:39 +0200 (CEST)
 In-Reply-To: <1412437370.46782.1349975589890.JavaMail.ngmail@webmail22.arcor-online.net>
 X-ngMessageSubType: MessageSubType_MAIL
 X-WebmailclientIP: 188.105.106.236
@@ -50,90 +49,127 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207497>
 
->From cd7a26f5e7ba8cc42bf81e1b78f800460510b71f Mon Sep 17 00:00:00 2001
+>From 31f86526e0a0bd00be57db3275c860913f668fb8 Mon Sep 17 00:00:00 2001
 From: Thomas Ackermann <th.acker@arcor.de>
-Date: Sat, 29 Sep 2012 11:00:00 +0200
-Subject: [PATCH] Prerequisites for creating nice html for all files in
- Documentation/RelNotes
+Date: Mon, 1 Oct 2012 20:06:48 +0200
+Subject: [PATCH] Create pdf from all html files
 
-- remove left-over shell-script fragments from some files
+- use wkhtmltopdf ("patched QT" version) to combine all html files into a single pdf file "git-doc.pdf"
+- insert page breaks to separate major sections
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- Documentation/RelNotes/1.5.2.1.txt | 6 ------
- Documentation/RelNotes/1.6.0.2.txt | 6 ------
- Documentation/RelNotes/1.6.1.3.txt | 4 ----
- Documentation/RelNotes/1.6.1.4.txt | 3 ---
- Documentation/RelNotes/1.6.1.txt   | 6 ------
- 5 files changed, 25 deletions(-)
+ Documentation/.gitignore      |  1 +
+ Documentation/footerend.txt   |  4 ++++
+ Documentation/footerstart.txt |  7 ++++++
+ Documentation/makedocpdf.sh   | 53 +++++++++++++++++++++++++++++++++++++++++++
+ Documentation/pagebreak.txt   |  1 +
+ 5 files changed, 66 insertions(+)
+ create mode 100644 Documentation/footerend.txt
+ create mode 100644 Documentation/footerstart.txt
+ create mode 100755 Documentation/makedocpdf.sh
+ create mode 100644 Documentation/pagebreak.txt
 
-diff --git a/Documentation/RelNotes/1.5.2.1.txt b/Documentation/RelNotes/1.5.2.1.txt
-index ebf20e2..d41984d 100644
---- a/Documentation/RelNotes/1.5.2.1.txt
-+++ b/Documentation/RelNotes/1.5.2.1.txt
-@@ -45,9 +45,3 @@ Fixes since v1.5.2
-   - git-fastimport --import-marks was broken; fixed.
- 
-   - A lot of documentation updates, clarifications and fixes.
--
----
--exec >/var/tmp/1
--O=v1.5.2-65-g996e2d6
--echo O=`git describe refs/heads/maint`
--git shortlog --no-merges $O..refs/heads/maint
-diff --git a/Documentation/RelNotes/1.6.0.2.txt b/Documentation/RelNotes/1.6.0.2.txt
-index e1e24b3..7d8fb85 100644
---- a/Documentation/RelNotes/1.6.0.2.txt
-+++ b/Documentation/RelNotes/1.6.0.2.txt
-@@ -79,9 +79,3 @@ Fixes since v1.6.0.1
-   packfile.
- 
- Also contains many documentation updates.
--
----
--exec >/var/tmp/1
--O=v1.6.0.1-78-g3632cfc
--echo O=$(git describe maint)
--git shortlog --no-merges $O..maint
-diff --git a/Documentation/RelNotes/1.6.1.3.txt b/Documentation/RelNotes/1.6.1.3.txt
-index 6f0bde1..cd08d81 100644
---- a/Documentation/RelNotes/1.6.1.3.txt
-+++ b/Documentation/RelNotes/1.6.1.3.txt
-@@ -26,7 +26,3 @@ Fixes since v1.6.1.2
- * RPM binary package installed the html manpages in a wrong place.
- 
- Also includes minor documentation fixes and updates.
--
--
----
--git shortlog --no-merges v1.6.1.2-33-gc789350..
-diff --git a/Documentation/RelNotes/1.6.1.4.txt b/Documentation/RelNotes/1.6.1.4.txt
-index 0ce6316..ccbad79 100644
---- a/Documentation/RelNotes/1.6.1.4.txt
-+++ b/Documentation/RelNotes/1.6.1.4.txt
-@@ -39,6 +39,3 @@ Fixes since v1.6.1.3
-   This fix was first merged to 1.6.2.3.
- 
- Also includes minor documentation fixes and updates.
--
----
--git shortlog --no-merges v1.6.1.3..
-diff --git a/Documentation/RelNotes/1.6.1.txt b/Documentation/RelNotes/1.6.1.txt
-index adb7cca..7b152a6 100644
---- a/Documentation/RelNotes/1.6.1.txt
-+++ b/Documentation/RelNotes/1.6.1.txt
-@@ -278,9 +278,3 @@ release, unless otherwise noted.
- 
- * "gitweb" did not mark non-ASCII characters imported from external HTML fragments
-   correctly.
--
----
--exec >/var/tmp/1
--O=v1.6.1-rc3-74-gf66bc5f
--echo O=$(git describe master)
--git shortlog --no-merges $O..master ^maint
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index d62aebd..fba4730 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -10,3 +10,4 @@ howto-index.txt
+ doc.dep
+ cmds-*.txt
+ manpage-base-url.xsl
++docfiles.txt
+diff --git a/Documentation/footerend.txt b/Documentation/footerend.txt
+new file mode 100644
+index 0000000..ed16923
+--- /dev/null
++++ b/Documentation/footerend.txt
+@@ -0,0 +1,4 @@
++    </td>
++  </tr>
++</table>
++</body></html>
+diff --git a/Documentation/footerstart.txt b/Documentation/footerstart.txt
+new file mode 100644
+index 0000000..a2746ef
+--- /dev/null
++++ b/Documentation/footerstart.txt
+@@ -0,0 +1,7 @@
++<html>
++<head></head>
++<body style="border:0; margin: 0;" onload="subst()">
++<table style="border-top: 1px solid black; width: 100%">
++  <tr>
++    <td class="section"></td>
++    <td style="text-align:center">
+diff --git a/Documentation/makedocpdf.sh b/Documentation/makedocpdf.sh
+new file mode 100755
+index 0000000..5f1a2c1
+--- /dev/null
++++ b/Documentation/makedocpdf.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++
++rm -f git-doc.pdf
++
++cat pagebreak.txt                  >pagebreak.html
++
++cat /dev/null                      >docfiles.txt
++
++ls gittutorial.html                >>docfiles.txt
++ls gittutorial-2.html              >>docfiles.txt
++ls everyday.html                   >>docfiles.txt
++ls gitworkflows.html               >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls git.html                        >>docfiles.txt
++ls git-a*.html                     >>docfiles.txt
++ls git-bisect.html                 >>docfiles.txt
++ls git-b[j-z]*.html                >>docfiles.txt
++ls git-[c-s]*.html                 >>docfiles.txt
++ls git-ta*.html                    >>docfiles.txt
++ls gitk.html                       >>docfiles.txt
++ls git-[u-z]*.html                 >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls gita*.html                      >>docfiles.txt
++ls git-bisect-lk2009.html          >>docfiles.txt
++ls git[cdghimnr]*.html             >>docfiles.txt
++ls git-tools.html                  >>docfiles.txt
++ls gitweb*.html                    >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls howto-index.html                >>docfiles.txt
++ls howto/*.html                    >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls technical/[b-z]*.html           >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls technical/api-index.html        >>docfiles.txt
++ls technical/api-[a-h]*.html       >>docfiles.txt
++ls technical/api-in-*.html         >>docfiles.txt
++ls technical/api-[j-z]*.html       >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls RelNotes/*.html                 >>docfiles.txt
++
++cat /dev/null                      >footer.html
++
++cat footerstart.txt                >>footer.html
++cat ../GIT-VERSION-FILE            >>footer.html
++cat footerend.txt                  >>footer.html
++
++cat docfiles.txt | xargs cat | wkhtmltopdf --book --footer-html footer.html --disable-external-links - git-doc.pdf
+diff --git a/Documentation/pagebreak.txt b/Documentation/pagebreak.txt
+new file mode 100644
+index 0000000..fdaffd1
+--- /dev/null
++++ b/Documentation/pagebreak.txt
+@@ -0,0 +1 @@
++</p style="page-break-after: always">
 -- 
 1.7.11.msysgit.1
 
