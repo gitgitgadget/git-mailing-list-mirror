@@ -1,80 +1,69 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Is anyone working on a next-gen Git protocol?
-Date: Thu, 11 Oct 2012 08:44:38 +0700
-Message-ID: <CACsJy8DMStBNjucU2eitNdkYgk-1K04dxhqV2gpKOZkpLzR_iA@mail.gmail.com>
-References: <CACBZZX6b+3P8M+z+X13k9Pq3tvVUfs_k1=foQVreX8K801=efQ@mail.gmail.com>
- <5072973D.4080703@op5.se> <7vtxu5lyjr.fsf@alter.siamese.dyndns.org>
- <035A66D9-FAF0-48EE-B161-7D0CAD92F2FB@zib.de> <7vlifeawd5.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2 2/2] grep: stop looking at random places for .gitattributes
+Date: Thu, 11 Oct 2012 08:49:27 +0700
+Message-ID: <CACsJy8CoedQBm4xyfhZX1mNTXpLMHxugygZUqOoZS8V5WVztGg@mail.gmail.com>
+References: <1349868894-3579-1-git-send-email-pclouds@gmail.com>
+ <1349877544-17648-1-git-send-email-pclouds@gmail.com> <1349877544-17648-3-git-send-email-pclouds@gmail.com>
+ <50758477.3030304@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Steffen Prohaska <prohaska@zib.de>, Andreas Ericsson <ae@op5.se>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, spearce@spearce.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 03:45:23 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 11 03:50:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TM7py-0004JP-VG
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 03:45:23 +0200
+	id 1TM7ud-0006RU-4T
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 03:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932778Ab2JKBpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2012 21:45:12 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:50424 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932765Ab2JKBpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2012 21:45:10 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so2144839iea.19
-        for <git@vger.kernel.org>; Wed, 10 Oct 2012 18:45:09 -0700 (PDT)
+	id S932803Ab2JKBt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2012 21:49:59 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:47053 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932265Ab2JKBt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2012 21:49:58 -0400
+Received: by mail-ia0-f174.google.com with SMTP id y32so863835iag.19
+        for <git@vger.kernel.org>; Wed, 10 Oct 2012 18:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=h0G7buslgbdSZGF/kgT7zTcBi3gINKYJalrQIZBjbQ0=;
-        b=cs5ozP43r4Ii3wd/9nWxSKmLc6zIjaVaOcOsLKGN8jDJfrQx13BTXptXANKXcX90B/
-         MzqQc2D+yPqr/SDDGntwpQvyC3z3AnFfp/eKQtrc9ZatlywdAiN6HtQjG7HNDXCayJyc
-         BXhD0UDsxoViRWVAxGq1TqTDVrw3WYjofufmi7ioHMKXlrYlaIpIQK35XZetdbap46vq
-         QnI6JAd/JQCsH6+WsE0zNkxjIEFJI5KroA25YBbqp+YloX2x/5oLfToxx2VEarhalO10
-         OqSRBzFIOBbbXl7QM3KKL6r5lsAOhkcQlC1Vn+UFrORbNnmAQ/74ACtXZKSmYbqKnGRd
-         a8ug==
-Received: by 10.50.236.39 with SMTP id ur7mr7120365igc.26.1349919909628; Wed,
- 10 Oct 2012 18:45:09 -0700 (PDT)
-Received: by 10.64.143.168 with HTTP; Wed, 10 Oct 2012 18:44:38 -0700 (PDT)
-In-Reply-To: <7vlifeawd5.fsf@alter.siamese.dyndns.org>
+        bh=rqNJdX3OJpW3KdBHG8lJnjrYHjiWZupkwZKUrraw4fs=;
+        b=a1eMCNchwy/Q9318E21YfPd63TYKwtHGOPp2yWwpLwidiEhdq5d2BQTSV/JvSMvicv
+         ptTeETPIngRHD/Vl72Hv4vAzmNJ+XzASs84u5H0z6kIZfe/MOfxGfqqZCxAAyyxza1Ox
+         ZLQVcLYpX5FIGNNmt82PIun3uFD6WOxpDgP6haKJSOZaZOR814SM5VAtAINJPLeof32w
+         xluPS2R2oBOBjLJc57ut6MiafPXEdT5K2JNvu47CvMDCrlZuGLbFFq2o69SuMY5dobX0
+         nPT28tMPV34HvapLd5SRKzWFj5eFfPyPg2ktVpz3jE4OaUmDStLU6QPUex37rl97hrsJ
+         PybA==
+Received: by 10.50.185.231 with SMTP id ff7mr7325453igc.40.1349920197890; Wed,
+ 10 Oct 2012 18:49:57 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Wed, 10 Oct 2012 18:49:27 -0700 (PDT)
+In-Reply-To: <50758477.3030304@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207456>
 
-On Thu, Oct 11, 2012 at 3:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Steffen Prohaska <prohaska@zib.de> writes:
+On Wed, Oct 10, 2012 at 9:21 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> +     git commit -m new &&
+>> +     echo "Binary file HEAD:t matches" >expect &&
+>> +     git grep text HEAD -- t >actual &&
+>> +     test_cmp expect actual &&
+>> +     git reset HEAD^
+>> +'
 >
->> I've recently discovered that the current protocol can be amazingly
->> inefficient when it comes to transferring binary objects.  Assuming two
->> repositories that are in sync.  After a 'git checkout --orphan && git
->> commit', a subsequent transfers sends all the blobs attached to the new
->> commit, although the other side already has all the blobs.
+> And in yet another test, should
 >
-> I do not think it has anything to do with binary, but what you
-> deserve from using orphan, where you declared that the history does
-> not have anything to do with the original.
+>         git grep text HEAD:t
 >
-> If both of your repositories had the two paralle lines of these
-> histories as branches, the transfer would have went well with or
-> without binary objects.
+> /not/ respect the binary attribute?
 
-On the same inefficient subject, git does not try to share common
-objects for non-commit refs, for example tags pointing to trees. I
-have such a peculiar repo and if a new tag shares 90% the tree with
-existing tags, git-fetch to sends the whole tree of the new tag over
-the wire. It does not seem easy to fix though and is probably rare
-enough that does not justify proper support. As a work around, I
-generate commits that link all these tags/trees together in a
-predetermined order. Not nice but works ok.
+Gray area. Is it ok to do that without documenting it (i.e. common
+sense)? I have something in mind that could do that, but it also makes
+"git grep text HEAD^{tree}" not respect attributes.
 -- 
 Duy
