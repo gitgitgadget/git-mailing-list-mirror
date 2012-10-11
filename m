@@ -1,64 +1,109 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: filter-branch IO optimization
-Date: Thu, 11 Oct 2012 22:34:24 +0200
-Message-ID: <878vbc21f3.fsf@pctrast.inf.ethz.ch>
-References: <fa1e05a5-54b3-47ff-bd28-dc463ebbc4bd@zcs>
+From: dirson@bertin.fr
+Subject: Re: [BUG] "git commit" after "cherry-pick -n" conflict clobbers
+ .git/COMMIT_EDITMSG
+Date: Thu, 11 Oct 2012 22:50:35 +0200
+Message-ID: <20121011205035.GB9783@home.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Cc: git list <git@vger.kernel.org>
-To: Enrico Weigelt <enrico.weigelt@vnc.biz>
-X-From: git-owner@vger.kernel.org Thu Oct 11 22:35:07 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 22:51:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMPTD-0004bn-56
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 22:35:03 +0200
+	id 1TMPjA-0006pJ-UF
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 22:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759351Ab2JKUed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 16:34:33 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:22030 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759333Ab2JKUe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 16:34:28 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 11 Oct
- 2012 22:34:23 +0200
-Received: from pctrast.inf.ethz.ch.ethz.ch (46.126.8.85) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 11 Oct
- 2012 22:34:24 +0200
-In-Reply-To: <fa1e05a5-54b3-47ff-bd28-dc463ebbc4bd@zcs> (Enrico Weigelt's
-	message of "Thu, 11 Oct 2012 17:39:47 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1030255Ab2JKUvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 16:51:22 -0400
+Received: from smtpfb2-g21.free.fr ([212.27.42.10]:46597 "EHLO
+	smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030216Ab2JKUvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 16:51:18 -0400
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id A39F0D1B029
+	for <git@vger.kernel.org>; Thu, 11 Oct 2012 22:51:14 +0200 (CEST)
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 95784D480AD;
+	Thu, 11 Oct 2012 22:50:36 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.80)
+	(envelope-from <dirson@bertin.fr>)
+	id 1TMPiF-0000vr-BL; Thu, 11 Oct 2012 22:50:35 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207512>
 
-Enrico Weigelt <enrico.weigelt@vnc.biz> writes:
+> > ~/softs/linux$ echo foo > .git/COMMIT_EDITMSG
+>
+> Why are you mucking with such an internal implementation detail in
+> the first place?
 
-> for certain projects, I need to regularily run filter-branch on quite
-> large repos (>10k commits), and that needs to be run multiple times,
-> which takes several hours, so I'm looking for optimizations.
-[...]
-> #2: run a tree-filter which:
->     * removes all files not belonging to the wanted module
->     * move the module directory under another subdir (./addons/)
->     * fix author/comitter name/email if empty (because otherwise fails)
+I only tried to make it terse for the bugreport, I hit this while I
+was resolving conflicts during a merge.  I aknowledge that using
+"cherry-pick -n" to bring some contents to resolve a conflict is not
+really nominal - my use case involves re-merging an updated "upstream"
+branch, and bringing in fixups to the original merge.
 
-The usual advice is "use an index-filter instead".  It's *much* faster
-than a tree filter.  However:
+> > ~/softs/linux$ git cherry-pick -n b55f3d92cd
+> > error: could not apply b55f3d9... Linux 2.6.32.26
+> > hint: after resolving the conflicts, mark the corrected paths
+> > hint: with 'git add ' or 'git rm '
+> > ~/softs/linux$ cat .git/COMMIT_EDITMSG
+> > foo
+> >
+> > So far, so good. But then "git commit" brings me the message
+> from the
+> > cherry-picked commit plus the list of conflicted files, and I
+> can verify that
+> > it is now the contents of .git/COMMIT_EDITMSG.
+>
+> You verified that "what" is now in .git/COMMIT_EDITMSG? The commit
+> log message for you to edit to record the result of the cherry-pick?
 
->     * fix charater sets and indentions of source files
+Precisely
 
-That last step is rather crazy.  At the very least you will want to only
-operate on files that were changed since the parent commit, so as to
-avoid scanning the whole tree.  If you do this right, it should also fit
-into an index-filter.
+> If that is the case, what is the problem?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I used "-n" precisely because I did not want to make a standalone
+commit, and the message from the cherry-picked source has no value to
+me.  If it had, I would instead have used cherry-pick without -n, and
+amended the commit afterwards.
+
+In the general case, I only ever use -n when I'm squashing changes
+and similar tasks.  Are there use cases out there, where it makes
+sense to keep that source message, when we don't want the commit to be
+created right away ?
+
+
+> If anything you had in .git/COMMIT_EDITMSG before you started
+> "'cherry-pick -n', edit further to adjust, and then 'commit'"
+> sequence were to appear in the editor to edit the commit log,
+> it would be a bug, I would think.
+
+Well, seems to depend on use case - I find it a bug when the merge message,
+notably containing the list of conflicting files, gets clobbered.
+
+Also, I have not checked how git gui reacts, but I would assume that
+when carefully and iteratively composing a commit message from there,
+which is IIRC managed using .git/COMMIT_EDITMSG, it would not be
+desired to get this content clobbered the same way.
+
+To me it looks like the problem is that the commit message in
+preparation is not considered precious information, when there are at
+least some cases where it indeed should be.  I'm not sure however how
+that should be done:
+
+* suddenly claiming it is precious (and require some form of -f to
+  clobber it) when it was mostly not is likely to break a number of
+  use cases
+* looking at the context (are we resolving a merge or similar ?) to
+  consider it precious is likely to miss some cases
+* declaring a new official location (or API/command ?) to store
+  considered-precious message being composed may bring its own lot of
+  semantic difficulties
