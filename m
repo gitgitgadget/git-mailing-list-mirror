@@ -1,64 +1,80 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: [BUG] "git commit" after "cherry-pick -n" conflict clobbers
- .git/COMMIT_EDITMSG
-Date: Thu, 11 Oct 2012 11:33:52 +0200
-Organization: Bertin Technologies
-Message-ID: <20121011113352.006efa25@chalon.bertin.fr>
+From: Vasiliy Yeremeyev <vayerx@gmail.com>
+Subject: [BUG] Directory probing for aliases
+Date: Thu, 11 Oct 2012 14:22:45 +0400
+Message-ID: <CAFKeBpcCZwMMcBtP8KywqnyK3e247K1Z_8na5ah+Wb+E15LPVQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 11 11:34:06 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 11 12:22:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMF9Y-0005Nu-6y
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 11:34:04 +0200
+	id 1TMFur-00081q-SU
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Oct 2012 12:22:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756201Ab2JKJdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 05:33:53 -0400
-Received: from cabourg.bertin.fr ([195.68.26.10]:43636 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751664Ab2JKJdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 05:33:52 -0400
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 0014DA0FC6
-	for <git@vger.kernel.org>; Thu, 11 Oct 2012 11:33:49 +0200 (CEST)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id D05FBA0FBD
-	for <git@vger.kernel.org>; Thu, 11 Oct 2012 11:33:49 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MBQ004592KDD600@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Thu, 11 Oct 2012 11:33:49 +0200 (CEST)
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19262.002
+	id S1755779Ab2JKKWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 06:22:47 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:44355 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758393Ab2JKKWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 06:22:47 -0400
+Received: by mail-qc0-f174.google.com with SMTP id d3so1172908qch.19
+        for <git@vger.kernel.org>; Thu, 11 Oct 2012 03:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Q/vOtz4pVIJ2IPxyx7Y2HU4B7sBYTv5knHul0mfL15M=;
+        b=w7qI5kW+1p1xg3PrbdOh5yrUV0ziFGidVzHjDiGOX0o/QcvCEs8YN4ptK2VEfnSO5c
+         Ib3gfkQVXQY4ySQSlulfgGOEJQBtHzwaJllK8Ll+1rUu1RpDnPdnGHCmIjb5REHrPImO
+         riUPsWZzA112gMRTWnKhnK7Oc96FmOsofTdl3YjQoaDHD+maf6CJkdthUegSkNGB0ztx
+         9iMPPDWuXxUHgySxGYl/8E2SAMGNIxTslzk9zwMvyCAp6xiheKXqtX598w+DeRUxMt5E
+         aXmiZO1f3nIGobifqLhBEwRrBV7mC5uxDLVYowinp1gTprPJ++LnoPhmX5YreNJu9SMj
+         crgA==
+Received: by 10.224.193.193 with SMTP id dv1mr980808qab.17.1349950965459; Thu,
+ 11 Oct 2012 03:22:45 -0700 (PDT)
+Received: by 10.49.73.230 with HTTP; Thu, 11 Oct 2012 03:22:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207470>
 
-(only tested with 1.7.10.x for now)
+Hi,
+Git aliases stop working when user doesn't have permissions to any
+directory within $PATH list:
 
-~/softs/linux$ echo foo > .git/COMMIT_EDITMSG
-~/softs/linux$ git cherry-pick -n b55f3d92cd
-error: could not apply b55f3d9... Linux 2.6.32.26
-hint: after resolving the conflicts, mark the corrected paths
-hint: with 'git add <paths>' or 'git rm <paths>'
-~/softs/linux$ cat .git/COMMIT_EDITMSG
-foo
+% git config alias.br branch
+% git br
+fatal: cannot exec 'git-br': Permission denied
 
-So far, so good.  But then "git commit" brings me the message from the
-cherry-picked commit plus the list of conflicted files, and I can verify that
-it is now the contents of .git/COMMIT_EDITMSG.
+Problem seems to be in directories probing:
 
-Surely the fact I passed "-n" should prevent cloberring the message, even in the
-event of a conflict.  I suppose that would imply not creating .git/MERGE_MSG in that
-case, but just removing it still causes .git/COMMIT_EDITMSG to be clobbered, this
-time with nothing but the "git status"-derived comments.
+execve("/usr/libexec/git-core/git-br", ["git-br"], [/* 76 vars */]) =
+-1 ENOENT (No such file or directory)
+execve("/home/vayerx/bin/git-br", ["git-br"], [/* 76 vars */]) = -1
+ENOENT (No such file or directory)
+execve("/usr/local/bin/git-br", ["git-br"], [/* 76 vars */]) = -1
+ENOENT (No such file or directory)
+execve("/usr/bin/git-br", ["git-br"], [/* 76 vars */]) = -1 ENOENT (No
+such file or directory)
+execve("/bin/git-br", ["git-br"], [/* 76 vars */]) = -1 ENOENT (No
+such file or directory)
+execve("/opt/bin/git-br", ["git-br"], [/* 76 vars */]) = -1 ENOENT (No
+such file or directory)
+execve("/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.3/git-br", ["git-br"],
+[/* 76 vars */]) = -1 ENOENT (No such file or directory)
+execve("/usr/games/bin/git-br", ["git-br"], [/* 76 vars */]) = -1
+EACCES (Permission denied)
+write(2, "fatal: ", 7fatal: )      = 7
+write(2, "cannot exec 'git-br': Permission"..., 39cannot exec
+'git-br': Permission denied) = 39
+
+(user doesn't have access to '/usr/games/bin' directory)
+Everything works fine if '/usr/games/bin' is not listed in $PATH variable.
+Standard/built-in git commands work fine regardless of  $PATH variable.
 
 -- 
-Yann Dirson - Bertin Technologies
+With Best Regards,
+Vasiliy Yeremeyev
