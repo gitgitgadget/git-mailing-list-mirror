@@ -1,90 +1,117 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: git fails: segfault at 0 ip 00000000004076d5 sp 00007fff7806ebc0
-Date: Fri, 12 Oct 2012 18:34:30 +0200
-Message-ID: <CABPQNSbRYq43rADP6BaQ_Q2SB+M76rHdX3hOSpGQk2c5UNR5hg@mail.gmail.com>
-References: <CAJa+X0OkzAX9E2SnDmU=on0yzzVZ9OMa2dJZgKMK=gQu2Rhf_Q@mail.gmail.com>
- <CAJa+X0MefHXTu_D7-SN8itQVO4sMyc4O7=bK=-sUP+W4GHOu9g@mail.gmail.com> <CABPQNSYyh-gk8aD9SKLzo0MDBkGECthdGZiT1mB1pA0ajdB8Cw@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v4 00/12] Wildmatch v4
+Date: Fri, 12 Oct 2012 18:44:15 +0200
+Message-ID: <507848DF.6060301@web.de>
+References: <1349865651-31889-1-git-send-email-pclouds@gmail.com> <7vd30panxo.fsf@alter.siamese.dyndns.org> <7v1uh5aar7.fsf@alter.siamese.dyndns.org> <CACsJy8B2JJmUbjAauMwbg95fCvPdUYqy4CKZp3ac44XHoh1NLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Brad Hein <linuxbrad@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 18:35:28 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 12 18:44:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMiCs-0007di-AN
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 18:35:26 +0200
+	id 1TMiLt-000687-Gt
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 18:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759792Ab2JLQfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2012 12:35:13 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:37388 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759586Ab2JLQfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2012 12:35:12 -0400
-Received: by mail-vb0-f46.google.com with SMTP id ff1so3198543vbb.19
-        for <git@vger.kernel.org>; Fri, 12 Oct 2012 09:35:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=20MSqGmxKRZ8tZXCXTfthSptf4eY/l17aaxYOON3k9A=;
-        b=K/eKKfMxhRrSy0JUXHQLr70sb4c07Hyp+tM8XZz/ethi/r2jdjsT87QX/8HLqXDJV1
-         KHTIDeJt/Hh6TG9F1WPId/88a+if83lzVSmnJ6tkOsfieHDyJ3NiEcTx8u68t4l6ivC/
-         98mtZnxqCqb6olgl6HOTneJJYkpxYiTvFRmJmthlJ4ANoPYscglmO+pLRbJxV1au3tnB
-         2Qn6/J0kcGcmsmci8Ied7wNUyNadO+Y3r32io088CQ2QxQEuGHg+fQsFdK7lIgZyToAC
-         VH0WI/bvNV+FNU2fx4u9R1guPD+uS+5h9s8MZRo/Hi4DiLXR6pzmZPgd5hMKZuFS2Twr
-         qKIQ==
-Received: by 10.52.26.81 with SMTP id j17mr2350388vdg.63.1350059711373; Fri,
- 12 Oct 2012 09:35:11 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Fri, 12 Oct 2012 09:34:30 -0700 (PDT)
-In-Reply-To: <CABPQNSYyh-gk8aD9SKLzo0MDBkGECthdGZiT1mB1pA0ajdB8Cw@mail.gmail.com>
+	id S1759924Ab2JLQo3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2012 12:44:29 -0400
+Received: from mout.web.de ([212.227.15.4]:50123 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759822Ab2JLQo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2012 12:44:27 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0LxOQ2-1TPZqP3C3e-016N6F; Fri, 12 Oct 2012 18:44:18 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <CACsJy8B2JJmUbjAauMwbg95fCvPdUYqy4CKZp3ac44XHoh1NLQ@mail.gmail.com>
+X-Provags-ID: V02:K0:sAC5XEIkFgFuk8KcHKtvYWuT4EXTudKVwMY3Y2rARFx
+ Nrcy9gp2mZx5kSYdrP4ehVOeCjIHOhYuRyslkzBAwlLsomnmA1
+ iSSfIfyYGwYsSlQy69SofaivGApomJWoltUMpm2FMkklPaiIcv
+ WodTIN6Zq5S9GQuzuqvFPC6z9ztwjSd9L+v0v5Ewk/uesJ+fIC
+ Z4Igw3MKp0+J/Mwd3KbVg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207554>
 
-On Fri, Oct 12, 2012 at 6:29 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Fri, Oct 12, 2012 at 6:58 AM, Brad Hein <linuxbrad@gmail.com> wrote:
->> In Fedora 17
->> With git-1.7.11.7-1.fc17.x86_64 (rpm)
+On 11.10.12 13:56, Nguyen Thai Ngoc Duy wrote:
+> On Thu, Oct 11, 2012 at 11:33 AM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
 >>
->> I try to clone a particular repository but git just returns, having
->> not cloned the repo. Seems like a bug. Details follow:
->>   $ git clone http://gnuradio.org/git/gnuradio.git
+>>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writ=
+es:
+>>>
+>>>> Really small updates. I did not want to resend it this soon but th=
+is
+>>>> may fix the compile errors for Junio.
 >>
->> While the command fails a message is logged to syslog. Repeated
->> attempts to clone the repo yield the same result:
->>   Oct 11 21:38:25 localhost kernel: [662703.442645]
->> git-remote-http[25796]: segfault at 0 ip 00000000004076d5 sp
->> 00007fff7806ebc0 error 4 in git-remote-http[400000+96000]
->>   Oct 11 21:39:00 localhost kernel: [662737.899829]
->> git-remote-http[25837]: segfault at 0 ip 00000000004076d5 sp
->> 00007fff37c5ef20 error 4 in git-remote-http[400000+96000]
->>   Oct 11 21:39:25 localhost kernel: [662763.341248]
->> git-remote-http[25873]: segfault at 0 ip 00000000004076d5 sp
->> 00007fff6310d470 error 4 in git-remote-http[400000+96000]
+>> t3070 seems to break TAP,
 >>
->> A tcpdump reveals that the last thing the client does is requests a
->> file that doesn't exist on the server (404). Details are in my post on
->> FedoraForums: http://forums.fedoraforum.org/showthread.php?p=1607891&posted=1#post1607891
+>>     *** prove ***
+>>     t3070-wildmatch.sh .. Failed 1/151 subtests
 >>
->> Problem mitigated by downgrade to "git-1.7.10.1-1.fc17.x86_64" or
->> "git-1.7.11.4-3.fc17.x86_64" or try to clone a different repository.
->
-> Thanks for reporting. I gave it a quick go, and the issue seems to
-> also be present in the current 'master'.
->
-> The problem is a NULL-pointer dereferencing introduced in 8809703
-> ("http: factor out http error code handling"), where the code assume
-> that slot->results still points to http_request::results. This
-> assumption seems to be wrong.
->
-> This seems to step around the issue, but I don't know if
-> http_request::results should be set to NULL in the first place. Jeff?
+>>     Test Summary Report
+>>     -------------------
+>>     t3070-wildmatch.sh (Wstat: 0 Tests: 150 Failed: 0)
+>>       Parse errors: Tests out of sequence.  Found (76) but expected =
+(75)
+>>                     Tests out of sequence.  Found (77) but expected =
+(76)
+>>                     Tests out of sequence.  Found (78) but expected =
+(77)
+>>                     Tests out of sequence.  Found (79) but expected =
+(78)
+>>                     Tests out of sequence.  Found (80) but expected =
+(79)
+>>     Displayed the first 5 of 77 TAP syntax errors.
+>>
+>> This probably is due to this part of the output:
+>>
+>>     ok 72 - wildmatch 1 1 [ab] [\[:]ab]
+>>     ok 73 - wildmatch 1 1 ?a?b \??\?b
+>>     ok 74 - wildmatch 1 1 abc ^G^Hok 75 - wildmatch 0 0 foo
+>>     ok 76 - wildmatch 1 0 foo/bar/baz/to **/t[o]
+>>     ok 77 - wildmatch 1 1 a1B [[:alpha:]][[:digit:]][[:upper:]]
+>>
+>=20
+> It seems to prove fine here with perl 5.12.3, Test-Harness-3.230,
+> bash-4.0_p38. What version do you use?
+>=20
+Some problems even here (Mac OS) commit 2aeb6d4d7884f4c4425
 
-OK, it seems I jumped the gun, and Jeff already sent out a patch for
-it. Nevermind me, then :)
+not ok 61 - wildmatch 0 0 \ \
+not ok 62 - wildmatch 0 0 /\ */\
+not ok 69 - wildmatch 1 1 [ab] [[:]ab]
+not ok 71 - wildmatch 1 1 [ab] [[:digit]ab]
+not ok 80 - wildmatch 1 0 1 [[:digit:][:upper:][:space:]]
+not ok 81 - wildmatch 0 0 1 [[:digit:][:upper:][:spaci:]]
+not ok 88 - wildmatch 1 0 _ [[:alnum:][:alpha:][:blank:][:cntrl:][:digi=
+t:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]
+not ok 89 - wildmatch 1 0 _ [[:alnum:][:alpha:][:blank:][:cntrl:][:digi=
+t:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]
+not ok 93 - wildmatch 1 1 y [a-c[:digit:]x-z]
+
+I have 2 perls, I'm not sure which versin is used by git these days.
+
+ which perl
+/opt/local/bin/perl
+tb@birne:~/projects/git/git.pu/t> perl --version
+
+This is perl, v5.8.9 built for darwin-2level
+
+----------------
+/usr/bin/perl --version
+
+This is perl, v5.10.0 built for darwin-thread-multi-2level
+(with 2 registered patches, see perl -V for more detail)
+----------
+
+If I can do more debugging/testing please let me know
+/Torsten
