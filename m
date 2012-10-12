@@ -1,110 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/12] Wildmatch v4
-Date: Thu, 11 Oct 2012 16:50:34 -0700
-Message-ID: <7vipag601h.fsf@alter.siamese.dyndns.org>
-References: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
- <7vd30panxo.fsf@alter.siamese.dyndns.org>
- <7v1uh5aar7.fsf@alter.siamese.dyndns.org>
- <CACsJy8B2JJmUbjAauMwbg95fCvPdUYqy4CKZp3ac44XHoh1NLQ@mail.gmail.com>
- <7vlifd7zz3.fsf@alter.siamese.dyndns.org>
- <7vvceh6imi.fsf@alter.siamese.dyndns.org>
+From: Christopher Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH] git-cvsimport: support local timezone
+Date: Thu, 11 Oct 2012 19:14:44 -0500
+Message-ID: <CAEUsAPYaYGDHWkixf9U27_Hsa7QqCWq3csKtBH7MrjnMD6kKJQ@mail.gmail.com>
+References: <1349988497-6158-1-git-send-email-chris@rorvick.com>
+	<50774BA9.40609@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 01:54:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 12 02:15:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMSa6-0000pv-MU
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 01:54:23 +0200
+	id 1TMSu2-0004Il-E0
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 02:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864Ab2JKXui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 19:50:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44679 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752334Ab2JKXuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 19:50:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD82791C0;
-	Thu, 11 Oct 2012 19:50:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=A9FGlMFh6bqxlF5zjzISs4vfDrQ=; b=eOzl4WHmWR6d0Ltuvbv0
-	iqtlTYyqSQGRQxlVIUTuvoey0/KSzqnp7hc60TjCElyOjz0TmjADTM/trOy+D/L3
-	vBeMLjKs/Xjr35YrMnh7ZULZZpNVRyP6DN9i855kDg1dg0gnaSFyHiHWSq2p3qo7
-	ilxcmkbGehd8TKODBe6YqqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=DGzGjXnEx1zggsIQvWpUP/Mz1mOncfDRUWoZPPAX3RYCVL
-	7K98Q9tm0edYOA9gon6Vcs9az/Izee4BtzNaSAbHJp7+Z6C1klfsMve5EJhRLc0H
-	nE582nfagZIaWjjB0Mp/Ifox2WzRFOazTRJNQwM01CDFntZGS0I7jHjRjf+pA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9903691BF;
-	Thu, 11 Oct 2012 19:50:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA0F091BC; Thu, 11 Oct 2012
- 19:50:35 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73C8677A-13FE-11E2-9A51-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759529Ab2JLAOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 20:14:46 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:39814 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759525Ab2JLAOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 20:14:46 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so1714043lbo.19
+        for <git@vger.kernel.org>; Thu, 11 Oct 2012 17:14:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=zilgWLSCNE6BlJVK7pn54MQ59mr+np6CCKMHqCy6afI=;
+        b=pgrf/mX9fgHci5lWJLT4I5hhI8yfezje1cOFE7/6UCEr5fWnLI62aItqNPtnc3sk++
+         OnTlN04UdGn/MdvNEDD9OnFmgGSAHsVqwxbmcJlzPpbn4HzAD4YawqHoy2uHVCmpGVPE
+         fTc8Kc3M/skTNB55t2G7QXE1CuEdnV/uyDyIFXC13DMVhX3ZX4nIZw+qayBFNeYYOacY
+         eNvJUNTVObnuJk0AKc4sSo9Eeig4xvmph3VyTYyF1lPf+uBze3NCsrC+Pw2fZwj23wWQ
+         +Fg98zHRMrwLLnPcqmMmozWiK3lSQa6ugBy3l52O+Sjj1twdGemA4aU8ftlVD8sR1lU6
+         bUSg==
+Received: by 10.152.106.110 with SMTP id gt14mr2391981lab.1.1350000884621;
+ Thu, 11 Oct 2012 17:14:44 -0700 (PDT)
+Received: by 10.114.2.45 with HTTP; Thu, 11 Oct 2012 17:14:44 -0700 (PDT)
+In-Reply-To: <50774BA9.40609@alum.mit.edu>
+X-Google-Sender-Auth: CHpAzL8fM9sFNpyh15rRDHix2xw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207523>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Ahh, it must be this bits from t/test-lib.sh
+On Thu, Oct 11, 2012 at 5:43 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 10/11/2012 10:48 PM, Chris Rorvick wrote:
+>> CVS patches are unconditionally imported with a UTC timezone.  Allow
+>> the local timezone by adding -l to the command line or specifying
+>> cvsimport.l in the config.
+>>
+>> This could be made the default behavior, as setting TZ=UTC in the
+>> environment before doing the import is equivalent to the current
+>> behavior.  But since a new default may be an unwelcome surprise to
+>> some, make this new behavior available os an option.
 >
->  t/test-lib.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> According to rcsfile(7), all times in RCS/CVS files are recorded in UTC.
+>  So why do you need this feature?
 >
-> diff --git i/t/test-lib.sh w/t/test-lib.sh
-> index 514282c..489bc80 100644
-> --- i/t/test-lib.sh
-> +++ w/t/test-lib.sh
-> @@ -230,7 +230,7 @@ else
->  	say_color() {
->  		test -z "$1" && test -n "$quiet" && return
->  		shift
-> -		echo "$*"
-> +		printf "%s\n" "$*"
->  	}
->  fi
+> Michael
 
-I'll queue this fix separately before your series on 'pu'.
+Hi Michael,
 
--- >8 --
-Subject: [PATCH] test-lib: Fix say_color () not to interpret \a\b\c in the message
+Precisely because of this limitation.  RCS files are not as expressive
+as a Git commit so I need a way to fill in the blanks.
 
-When running with color disabled (e.g. under prove to produce TAP
-output), say_color() helper function is defined to use echo to show
-the message.  With a message that ends with "\c", echo is allowed to
-interpret it as "Do not end the line with LF".
+This is analogous to the cvs-authors file.  The RCS files in a CVS
+repository say the author of my commits is "crorvick" but that is
+neither my name nor email.  cvsimport allows me to overcome this
+limitation by specifying a mapping from author username to full name
+and email.
 
-Use printf "%s\n" to emit the message literally.
+Likewise, just because the RCS file has a UTC timestamp does not mean
+the commit originated in Greenwich, UK.  Git includes the timezone
+offset in its timestamps, so it is reasonable to allow me to specify
+what is appropriate.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/test-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is not a big deal for a one-time import as a simple filter-branch
+run can fix this pretty quickly.  But this feature would be nice when
+running cvsimport incrementally.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c0d04c4..280b3aa 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -169,7 +169,7 @@ else
- 	say_color() {
- 		test -z "$1" && test -n "$quiet" && return
- 		shift
--		echo "$*"
-+		printf "%s\n" "$*"
- 	}
- fi
- 
--- 
-1.8.0.rc1.82.ga68bb49
+Thanks!
+
+Chris Rorvick
