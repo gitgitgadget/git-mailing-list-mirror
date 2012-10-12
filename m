@@ -1,68 +1,90 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: Re: [PATCH v2 0/2] Re: gitk: can't reload commits with new key binding
-Date: Fri, 12 Oct 2012 10:17:21 -0400
-Message-ID: <50782671.9010603@gmail.com>
-References: <7vwqzacdb7.fsf@alter.siamese.dyndns.org> <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
+From: Enrico Weigelt <enrico.weigelt@vnc.biz>
+Subject: Re: filter-branch IO optimization
+Date: Fri, 12 Oct 2012 16:49:54 +0200 (CEST)
+Message-ID: <9de87aac-7e15-48d9-832a-e9a030c5ed43@zcs>
+References: <878vbc21f3.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Wong <andrew.kw.w@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, szeder@ira.uka.de,
-	git list <git@vger.kernel.org>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Fri Oct 12 16:17:36 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 12 16:50:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMg3T-0002X6-LM
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 16:17:35 +0200
+	id 1TMgYx-0007vp-R1
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 16:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934060Ab2JLORZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2012 10:17:25 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:52662 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932762Ab2JLORY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2012 10:17:24 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so4804896iea.19
-        for <git@vger.kernel.org>; Fri, 12 Oct 2012 07:17:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=JdASwwku2UmwM6MQqf8eDnrZ7KDHdUJNS1T7ZQsTR40=;
-        b=SEM9TshZMsf62C1k8Fme6hjfxx2iTbwNzZF/oEaGrOzkdzHXz8GqttdmbNLohDtHt3
-         LV4SBL8SAuYbUcEm258Mq4TRd+FEsBM/XVKNLaVF9leS4meoGH4hbDHDg/L2kCxiDS98
-         yOrTRd2Q7y75/RCq2PiT2SLNJB5ObzR/u5Hq0Gg/iXr05OexTIMNR2kRnQYpVfIxxfFc
-         fZZL1gSorMZVZawlCquT/DXKHFgFxONc19wzASrPuW4UdSy574njoAoHXthQNdFylbPI
-         l+PhFWM4jQ/VKZH9m5RRCKky8Dk8Iqm6BGr3lHAuRezdgv9tSkOt/xQvFv9HWbSEKpLJ
-         lOEA==
-Received: by 10.50.161.232 with SMTP id xv8mr2423411igb.22.1350051444066;
-        Fri, 12 Oct 2012 07:17:24 -0700 (PDT)
-Received: from [192.168.1.112] ([66.207.196.114])
-        by mx.google.com with ESMTPS id uz12sm1580520igb.16.2012.10.12.07.17.22
-        (version=SSLv3 cipher=OTHER);
-        Fri, 12 Oct 2012 07:17:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
+	id S1757951Ab2JLOt5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2012 10:49:57 -0400
+Received: from zcs.vnc.biz ([83.144.240.118]:19714 "EHLO zcs.vnc.biz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754433Ab2JLOt4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2012 10:49:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zcs.vnc.biz (Postfix) with ESMTP id C13D6460003;
+	Fri, 12 Oct 2012 16:49:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at vnc.biz
+Received: from zcs.vnc.biz ([127.0.0.1])
+	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rZLxqaVgkBI4; Fri, 12 Oct 2012 16:49:54 +0200 (CEST)
+Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
+	by zcs.vnc.biz (Postfix) with ESMTP id 6DF52460001;
+	Fri, 12 Oct 2012 16:49:54 +0200 (CEST)
+In-Reply-To: <878vbc21f3.fsf@pctrast.inf.ethz.ch>
+X-Originating-IP: [91.43.215.119]
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207547>
 
-Can I get some feedback on these two patches? It'd be great to have them 
-merged into gitk. Thanks.
+Hi,
 
+> The usual advice is "use an index-filter instead".  It's *much*
+> faster
+> than a tree filter.  However:
 
-On 10/02/2012 11:04 AM, Andrew Wong wrote:
-> Refactored the code for binding modified function keys as Junio suggested.
->
-> Andrew Wong (2):
->    gitk: Refactor code for binding modified function keys
->    gitk: Use bindshiftfunctionkey to bind Shift-F5
->
->   gitk | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
->
+I've tried the last example from git-filter-branch manpage, but failed.
+Seems like the GIT_INDEX_FILE env variable doesnt get honoured by
+git-update-index, no index.new file created, and so mv call fails.
+
+My second try (as index-filter command) was:
+
+git ls-files -s > ../_INDEX_TMP
+cat ../_INDEX_TMP |
+    sed "s-\t\"*-&addons/-" |
+    git update-index --index-info
+rm -f ../_INDEX_TMP
+
+It works fine in the worktree (i see files renamed in the index),
+but no success when running it as --index-filter. Seems the index
+file isn't used at all (or some completely different one).
+
+By the way, inside the index filter, GIT_INDEX_FILTER here is
+
+/home/devel/vnc/openerp/workspace/pkg/openerp-extra-bundle.git/.git-rew=
+rite/t/../index
+
+Obviously a different (temporary) index file, while many examples
+on the web, suggesting to use commands like 'git add --cached' or
+'git rm --cached' _without_ passing GIT_INDEX_FILTER variable.
+
+Could there be some bug that this variable isn't honored properly
+everywhere ?
+
+--
+Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards
+
+Enrico Weigelt
+VNC - Virtual Network Consult GmbH
+Head Of Development
+
+Pariser Platz 4a, D-10117 Berlin
+Tel.: +49 (30) 3464615-20
+=46ax: +49 (30) 3464615-59
+
+enrico.weigelt@vnc.biz; www.vnc.de
