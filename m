@@ -1,88 +1,68 @@
-From: Christopher Rorvick <chris@rorvick.com>
-Subject: Re: [PATCH] git-cvsimport: support local timezone
-Date: Thu, 11 Oct 2012 19:14:44 -0500
-Message-ID: <CAEUsAPYaYGDHWkixf9U27_Hsa7QqCWq3csKtBH7MrjnMD6kKJQ@mail.gmail.com>
-References: <1349988497-6158-1-git-send-email-chris@rorvick.com>
-	<50774BA9.40609@alum.mit.edu>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: A basic question
+Date: Fri, 12 Oct 2012 06:28:49 +0530
+Message-ID: <CAMK1S_iMxju7Q7WSExw2nXqP0KqOEXFaYTMsmicYHMu6RAT-wA@mail.gmail.com>
+References: <001501cda711$8ab6f0a0$a024d1e0$@com>
+	<1349897794.32696.15.camel@drew-northup.unet.maine.edu>
+	<002801cda7d7$4792c260$d6b84720$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 12 02:15:02 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Drew Northup <drew.northup@maine.edu>,
+	Skot Davis <skotd122@gmail.com>, git@vger.kernel.org
+To: Jim Vahl <jv@wmdb.com>
+X-From: git-owner@vger.kernel.org Fri Oct 12 03:06:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMSu2-0004Il-E0
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 02:14:58 +0200
+	id 1TMTi3-0008SD-8b
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 03:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759529Ab2JLAOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2012 20:14:46 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:39814 "EHLO
+	id S1759498Ab2JLA6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2012 20:58:52 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:33197 "EHLO
 	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759525Ab2JLAOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2012 20:14:46 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n3so1714043lbo.19
-        for <git@vger.kernel.org>; Thu, 11 Oct 2012 17:14:44 -0700 (PDT)
+	with ESMTP id S1757393Ab2JLA6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2012 20:58:51 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so1731564lbo.19
+        for <git@vger.kernel.org>; Thu, 11 Oct 2012 17:58:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=zilgWLSCNE6BlJVK7pn54MQ59mr+np6CCKMHqCy6afI=;
-        b=pgrf/mX9fgHci5lWJLT4I5hhI8yfezje1cOFE7/6UCEr5fWnLI62aItqNPtnc3sk++
-         OnTlN04UdGn/MdvNEDD9OnFmgGSAHsVqwxbmcJlzPpbn4HzAD4YawqHoy2uHVCmpGVPE
-         fTc8Kc3M/skTNB55t2G7QXE1CuEdnV/uyDyIFXC13DMVhX3ZX4nIZw+qayBFNeYYOacY
-         eNvJUNTVObnuJk0AKc4sSo9Eeig4xvmph3VyTYyF1lPf+uBze3NCsrC+Pw2fZwj23wWQ
-         +Fg98zHRMrwLLnPcqmMmozWiK3lSQa6ugBy3l52O+Sjj1twdGemA4aU8ftlVD8sR1lU6
-         bUSg==
-Received: by 10.152.106.110 with SMTP id gt14mr2391981lab.1.1350000884621;
- Thu, 11 Oct 2012 17:14:44 -0700 (PDT)
-Received: by 10.114.2.45 with HTTP; Thu, 11 Oct 2012 17:14:44 -0700 (PDT)
-In-Reply-To: <50774BA9.40609@alum.mit.edu>
-X-Google-Sender-Auth: CHpAzL8fM9sFNpyh15rRDHix2xw
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=CxIFhGgEXuVIWXjhvxzZafyqmzj10Mi4SGJpkOi6aSU=;
+        b=DfyMeVTyQQp+NklSzhOQQlGaMCvSsKHs3eQY0iAcuxqFEwm1mVcAqTu97Bp2rGpf1s
+         NzZ44qepohMwL3kpLgS/81mryqgjP1JGEXiotTJpiID2bsOsqSMYpLEeFsIwx4uTnTRp
+         fanjzbsvPnyY0TvnuNTX0R9ggghAlk8dfcn5spKTGrILfLehFqVpL15bNhvDh8qgXv3r
+         GWQcCBlytN+Al0dkBrBSju80H6dqSHV47J91D4OPM6TRQxAYdjp36griptsaUSF9qasT
+         zJZlzhlBKPyqOojbdzfpMU/dVj2Vw8rsYybvMzM33g8oKWYD8HUQ0IeZS33KdBN2iAcr
+         TPJg==
+Received: by 10.112.100.129 with SMTP id ey1mr1035836lbb.10.1350003529872;
+ Thu, 11 Oct 2012 17:58:49 -0700 (PDT)
+Received: by 10.112.84.97 with HTTP; Thu, 11 Oct 2012 17:58:49 -0700 (PDT)
+In-Reply-To: <002801cda7d7$4792c260$d6b84720$@com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207524>
 
-On Thu, Oct 11, 2012 at 5:43 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 10/11/2012 10:48 PM, Chris Rorvick wrote:
->> CVS patches are unconditionally imported with a UTC timezone.  Allow
->> the local timezone by adding -l to the command line or specifying
->> cvsimport.l in the config.
->>
->> This could be made the default behavior, as setting TZ=UTC in the
->> environment before doing the import is equivalent to the current
->> behavior.  But since a new default may be an unwelcome surprise to
->> some, make this new behavior available os an option.
+On Thu, Oct 11, 2012 at 11:08 PM, Jim Vahl <jv@wmdb.com> wrote:
+> Drew,
 >
-> According to rcsfile(7), all times in RCS/CVS files are recorded in UTC.
->  So why do you need this feature?
+> Thanks for responding to my email!
 >
-> Michael
+> Yes, I did read most of the Book, although I admit that I skimmed over some
+> of the more technical parts.  There is still a key part of how git is used
+> in a commercial environment which I don't understand.
+>
+> When we release a new version of our product, it is comprised of over a
+> hundred files.  Some of these files have not changed for years, and some
+> have been revised/fixed/updated quite recently.  But what is key is that all
+> of these components have passed a review and testing process.  A very
+> important piece of information is what revision of each file made it into
+> the release.
 
-Hi Michael,
-
-Precisely because of this limitation.  RCS files are not as expressive
-as a Git commit so I need a way to fill in the blanks.
-
-This is analogous to the cvs-authors file.  The RCS files in a CVS
-repository say the author of my commits is "crorvick" but that is
-neither my name nor email.  cvsimport allows me to overcome this
-limitation by specifying a mapping from author username to full name
-and email.
-
-Likewise, just because the RCS file has a UTC timestamp does not mean
-the commit originated in Greenwich, UK.  Git includes the timezone
-offset in its timestamps, so it is reasonable to allow me to specify
-what is appropriate.
-
-This is not a big deal for a one-time import as a simple filter-branch
-run can fix this pretty quickly.  But this feature would be nice when
-running cvsimport incrementally.
-
-Thanks!
-
-Chris Rorvick
+I'm afraid I don't have anything to add to what was already said but I
+can't resist asking: are you coming from clearcase?
