@@ -1,93 +1,70 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
+From: Jeff King <peff@peff.net>
 Subject: Re: filter-branch IO optimization
-Date: Fri, 12 Oct 2012 19:20:23 +0200 (CEST)
-Message-ID: <b94baafd-3813-49c6-9848-97bf11960bb9@zcs>
-References: <d4a00074-5134-4314-aa61-f222f41712bb@zcs>
+Date: Fri, 12 Oct 2012 13:20:36 -0400
+Message-ID: <20121012172036.GB21409@sigill.intra.peff.net>
+References: <878vbc21f3.fsf@pctrast.inf.ethz.ch>
+ <9de87aac-7e15-48d9-832a-e9a030c5ed43@zcs>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 12 19:20:41 2012
+Cc: Thomas Rast <trast@student.ethz.ch>, git list <git@vger.kernel.org>
+To: Enrico Weigelt <enrico.weigelt@vnc.biz>
+X-From: git-owner@vger.kernel.org Fri Oct 12 19:20:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMiub-0006ap-31
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 19:20:37 +0200
+	id 1TMiuo-0006jx-MQ
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 19:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932695Ab2JLRU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2012 13:20:26 -0400
-Received: from zcs.vnc.biz ([83.144.240.118]:29102 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932587Ab2JLRUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2012 13:20:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 0D89A460003;
-	Fri, 12 Oct 2012 19:20:24 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PJgc-qoBaN9P; Fri, 12 Oct 2012 19:20:23 +0200 (CEST)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 915C5460001;
-	Fri, 12 Oct 2012 19:20:23 +0200 (CEST)
-In-Reply-To: <d4a00074-5134-4314-aa61-f222f41712bb@zcs>
-X-Originating-IP: [91.43.215.119]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
+	id S933875Ab2JLRUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2012 13:20:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51131 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932587Ab2JLRUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2012 13:20:39 -0400
+Received: (qmail 5186 invoked by uid 107); 12 Oct 2012 17:21:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Oct 2012 13:21:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Oct 2012 13:20:36 -0400
+Content-Disposition: inline
+In-Reply-To: <9de87aac-7e15-48d9-832a-e9a030c5ed43@zcs>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207561>
 
-Hi folks,
+On Fri, Oct 12, 2012 at 04:49:54PM +0200, Enrico Weigelt wrote:
 
-now finally managed the index-filter part.
-The main problem, IIRC, was that git-update-index didn't
-automatically create an empty index, so I needed to explicitly
-copy in (manually created it with an empty repo).
+> > The usual advice is "use an index-filter instead".  It's *much*
+> > faster
+> > than a tree filter.  However:
+> 
+> I've tried the last example from git-filter-branch manpage, but failed.
+> Seems like the GIT_INDEX_FILE env variable doesnt get honoured by
+> git-update-index, no index.new file created, and so mv call fails.
+> 
+> My second try (as index-filter command) was:
+> 
+> git ls-files -s > ../_INDEX_TMP
+> cat ../_INDEX_TMP |
+>     sed "s-\t\"*-&addons/-" |
+>     git update-index --index-info
+> rm -f ../_INDEX_TMP
 
-My current filter code is:
+I didn't look closely at your individual problem, but that example has
+proven flaky before.  There were some simpler formulations given in this
+thread:
 
-if [ ! "$GIT_AUTHOR_EMAIL" ] && [ ! "$GIT_COMMITTER_EMAIL" ]; then
-	export GIT_AUTHOR_EMAIL="nobody@none.org"
-	export GIT_COMMITTER_NAME="nobody@none.org"
-elif [ ! "$GIT_AUTHOR_EMAIL" ]; then
-	export GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
-elif [ ! "$GIT_COMITTER_EMAIL" ]; then
-	export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_NAME"
-fi
+  http://thread.gmane.org/gmane.comp.version-control.git/195492
 
-if [ ! "$GIT_AUTHOR_NAME" ] && [ ! "$GIT_COMMITTER_NAME" ]; then
-	export GIT_AUTHOR_NAME="nobody@none.org"
-	export GIT_COMMITTER_NAME="nobody@none.org"
-elif [ ! "$GIT_AUTHOR_NAME" ]; then
-	export GIT_AUTHOR_NAME="$GIT_COMMITTER_NAME"
-elif [ ! "$GIT_COMITTER_NAME" ]; then
-	export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-fi
+In particular, Junio suggested:
 
-cp ../../../../scripts/index.empty $GIT_INDEX_FILE.new
+  git filter-branch --index-filter '
+    rm -f "$GIT_INDEX_FILE"
+    git read-tree --prefix=newsubdir/ "$GIT_COMMIT"
+  ' HEAD
 
-git ls-files -s |
-    sed "s-\t\"*-&addons/-" |
-    grep -e "\t*addons/$module" |
-    ( export GIT_INDEX_FILE=$GIT_INDEX_FILE.new ; git update-index --index-info )
-
-mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
-
-
-Now another problem: this leaves behind thousands of now empty
-merge nodes (--prune-empty doesnt seem to catch them all),
-so I loop through additional `git filter-branch --prune-empty`
-runs, until the ref remains unchanged.
-
-This process is even more time-consuming, as it takes really many
-passes (havent counted them yet).
-
-Does anyone have an idea, why a single run doesnt catch that all?
-
-
-cu
+-Peff
