@@ -1,174 +1,147 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [ANNOUNCE] tig-1.1
-Date: Fri, 12 Oct 2012 15:05:57 +0200
-Message-ID: <20121012130557.GA20702@diku.dk>
+From: Brad Hein <linuxbrad@gmail.com>
+Subject: Re: [PATCH 2/2] http: do not set up curl auth after a 401
+Date: Fri, 12 Oct 2012 09:39:17 -0400
+Message-ID: <CAJa+X0OHsmQakhMr8QRwO6n9Ni9gXvXWnFTKFdb7X_qoDmEsvQ@mail.gmail.com>
+References: <20121012073053.GC17026@sigill.intra.peff.net>
+	<20121012073559.GB16441@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 12 15:39:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 12 15:39:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMfST-0002YF-P6
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 15:39:22 +0200
+	id 1TMfSc-0002gQ-RM
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 15:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932941Ab2JLNjK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2012 09:39:10 -0400
-Received: from mgw2.diku.dk ([130.225.96.92]:33349 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932311Ab2JLNjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2012 09:39:08 -0400
-X-Greylist: delayed 1967 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Oct 2012 09:39:08 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id E0F4C19BCF1
-	for <git@vger.kernel.org>; Fri, 12 Oct 2012 15:06:18 +0200 (CEST)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 31213-12 for <git@vger.kernel.org>; Fri, 12 Oct 2012 15:06:14 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id AAF3719BCAF
-	for <git@vger.kernel.org>; Fri, 12 Oct 2012 15:06:14 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP id 9D8E16DFB71
-	for <git@vger.kernel.org>; Fri, 12 Oct 2012 15:06:14 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 9E9BA266A1; Fri, 12 Oct 2012 15:05:57 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932970Ab2JLNjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2012 09:39:20 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:61547 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932311Ab2JLNjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2012 09:39:19 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so1996928lag.19
+        for <git@vger.kernel.org>; Fri, 12 Oct 2012 06:39:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=85x7Y40TJsiL3iu7hKOrmtShMHCNAhSrdIkleFnASEQ=;
+        b=XFDXiAZwV2ULwx70qm2cpXh5ORgEXJg/y64x4s6MnYj1Pgbt+vCWomY8oAZMy0Rbg7
+         9j6qeOjaUvIv13mV2WYQ54L6LG55YCJGUs8wx4IRrfg+hC00Pyen3g0z1qY06KXBW4Py
+         G5csqPEia+eFqsU6a5jehGi8tI22EHgsS7f9d47q7gAjc7oojiMzZDCwBMddUIvs4/B0
+         IesRDeA4Dw+evtdc8KtQlsGj7Nh+1+wAtFB/BeRkV7wRf8GfCjZt3zdnxlEEzlOw5FHy
+         LSxVyah7udhA0vJoqOZCCebVpBJlxfVk0xpodLcxgrvjdtm2r19w1duQ1z0+/US3LjXO
+         /eBw==
+Received: by 10.112.38.137 with SMTP id g9mr1751386lbk.79.1350049157963; Fri,
+ 12 Oct 2012 06:39:17 -0700 (PDT)
+Received: by 10.112.112.38 with HTTP; Fri, 12 Oct 2012 06:39:17 -0700 (PDT)
+In-Reply-To: <20121012073559.GB16441@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207544>
 
-Hello,
+Nice work sorting this out. I don't see the commit on github
+(https://github.com/git/git/commits/master) yet but once the code is
+available I'll be happy to re-test if needed.
 
-I've release tig version 1.1 with a bunch of improvements and bug fixes=
-=2E
-Note that tig no longer uses move/copy detection by default to work
-better on large repository. See the release notes below on how to
-restore the old behavior.
 
-What is tig?
-------------
-Tig is an ncurses-based text-mode interface for git. It functions mainl=
-y
-as a git repository browser, but can also assist in staging changes for
-commit at chunk level and act as a pager for output from various git
-commands.
-
- - Homepage:	http://jonas.nitro.dk/tig/
- - Manual:	http://jonas.nitro.dk/tig/manual.html
- - Tarballs:	http://jonas.nitro.dk/tig/releases/
- - Git URL:	git://github.com/jonas/tig.git=20
- - Gitweb:	http://repo.or.cz/w/tig.git
-
-Release notes
--------------
-Incompatibilities:
-
- - Disable diff move/copy detection by default, boosting diff
-   performance on larger projects. Use git config 'diff.renames' option
-   (git-wide) to set your preferred behavior. Environment variable
-   TIG_DIFF_OPTS can be used to restore the old behavior.
- - Values set for author-width and filename-width will result in widths
-   one character bigger than previously.
-
-Improvements:
-
- - Typing a text in the prompt will be interpreted as a tig command.
-   Prefixing the command with a '!' will execute this system command in
-   an external pager. Entering a single key will execute the
-   corresponding key binding.
- - Basic support for wrapping long line in pager, diff, and stage views=
-=2E
-   Enable using: `set wrap-lines =3D yes`. (GH #2)
- - User-defined commands prefixed with a '?' means prompt before
-   execution. Example: `bind main B !?git rebase -i %(commit)`.
- - User-defined commands prefixed with a '<' means exit after execution=
-=2E
-   Example: `bind main C !<git commit`. (GH #66)
- - User-defined commands are executed unquoted to support shell command=
-s.
-   Example: `bind generic I !@sh -c "echo -n %(commit) | xclip -selecti=
-on c"`.
-   (GH #65)
- - Configure case-insensitive searches using: `set ignore-case =3D yes`=
-=2E
- - Add "deleted mode" line type for better diff coloring.
- - Open editor when requesting edit action from within a file diff.
- - Update AX_WITH_CURSES to build under Cygwin.
- - Improve tigrc(5) documentation. (Debian #682766)
- - Allow to build on Mac OS 10.7 without the configure script. (GH #25)
- - Add option to split the view vertically instead of horizontally.
-   Example: `set vertical-split =3D yes'. (GH #76)
- - Add 'show-id' and 'id-width' options to configure the display of
-   commit IDs in the main view and ID width in the blame view. (GH #77)
- - Allow to override git-based encoding to UTF-8 by setting
-   'i18n.commitencoding' or 'gui.encoding'.
- - Improve autobuild support to track generated files and work with
-   autoreconf 2.61.
- - Commit IDs are read from stdin when --stdin is given; works for main
-   and diff view, e.g. `tig --no-walk --stdin < cherry-picks.txt`.
- - Add option to disable focusing of the child view when it's opened.
-   Disable using: `set focus-child =3D no`. (GH #83)
- - Allow to open blob related with added content in a diff. (GH #91)
-
-Bug fixes:
-
- - Fix commit graph regression when a path spec is specified. (GH #53)
- - Main view: only show staged/unstaged changes for the current branch.
- - Support submodules created with current version of git. (GH #54)
- - Fix diff status message for file diffs with no content changes.
- - Fix parent blaming when tig is launched in subdirectory. (GH #70)
- - Do not show deleted branch when reloading the branch view.
-
-Change summary
---------------
-The diffstat and log summary for changes made in this release.
-
- .gitignore                     |    2 +
- INSTALL                        |    8 +
- Makefile                       |   35 +-
- NEWS                           |   57 ++-
- autogen.sh                     |   22 +
- config.make.in                 |   12 +-
- configure.ac                   |   13 +-
- contrib/announcement.sh        |    2 +-
- contrib/aspell.dict            |  338 ++++++------
- contrib/ax_with_curses.m4      |  544 ++++++++++++++++---
- contrib/config.make-Darwin     |    3 +
- contrib/tig.spec.in            |    4 +
- contrib/update-release-docs.sh |   53 ++
- git.h                          |   36 +-
- io.c                           |   64 ++-
- io.h                           |    9 +-
- manual.txt                     |   47 +-
- refs.c                         |    2 +-
- test-graph.c                   |    2 +-
- tig.1.txt                      |    3 +-
- tig.c                          |  960 +++++++++++++++++++++++---------
- tig.h                          |   51 ++-
- tigrc.5.txt                    |  142 ++++-
- 23 files changed, 1806 insertions(+), 603 deletions(-)
-
-     1	Beat Bolli
-     1	Donald Chai
-     1	Douglas Livingstone
-     1	Hugo Schmitt
-     1	Jiri Jaburek
-    43	Jonas Fonseca
-     2	Petr Uzel
-     2	Rich Healey
-     1	Ryan Schlesinger
-     8	Samuel Bronson
-     3	Valentin Haenel
-     1	Victor Foitzik
-     7	Vivien Didelot
-     1	=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec
-
---=20
-Jonas Fonseca
+On Fri, Oct 12, 2012 at 3:35 AM, Jeff King <peff@peff.net> wrote:
+> When we get an http 401, we prompt for credentials and put
+> them in our global credential struct. We also feed them to
+> the curl handle that produced the 401, with the intent that
+> they will be used on a retry.
+>
+> When the code was originally introduced in commit 42653c0,
+> this was a necessary step. However, since dfa1725, we always
+> feed our global credential into every curl handle when we
+> initialize the slot with get_active_slot. So every further
+> request already feeds the credential to curl.
+>
+> Moreover, accessing the slot here is somewhat dubious. After
+> the slot has produced a response, we don't actually control
+> it any more.  If we are using curl_multi, it may even have
+> been re-initialized to handle a different request.
+>
+> It just so happens that we will reuse the curl handle within
+> the slot in such a case, and that because we only keep one
+> global credential, it will be the one we want.  So the
+> current code is not buggy, but it is misleading.
+>
+> By cleaning it up, we can remove the slot argument entirely
+> from handle_curl_result, making it much more obvious that
+> slots should not be accessed after they are marked as
+> finished.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  http.c        | 6 ++----
+>  http.h        | 3 +--
+>  remote-curl.c | 2 +-
+>  3 files changed, 4 insertions(+), 7 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 9334386..0a74345 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -744,8 +744,7 @@ char *get_remote_object_url(const char *url, const char *hex,
+>         return strbuf_detach(&buf, NULL);
+>  }
+>
+> -int handle_curl_result(struct active_request_slot *slot,
+> -                      struct slot_results *results)
+> +int handle_curl_result(struct slot_results *results)
+>  {
+>         if (results->curl_result == CURLE_OK) {
+>                 credential_approve(&http_auth);
+> @@ -758,7 +757,6 @@ int handle_curl_result(struct active_request_slot *slot,
+>                         return HTTP_NOAUTH;
+>                 } else {
+>                         credential_fill(&http_auth);
+> -                       init_curl_http_auth(slot->curl);
+>                         return HTTP_REAUTH;
+>                 }
+>         } else {
+> @@ -817,7 +815,7 @@ static int http_request(const char *url, void *result, int target, int options)
+>
+>         if (start_active_slot(slot)) {
+>                 run_active_slot(slot);
+> -               ret = handle_curl_result(slot, &results);
+> +               ret = handle_curl_result(&results);
+>         } else {
+>                 error("Unable to start HTTP request for %s", url);
+>                 ret = HTTP_START_FAILED;
+> diff --git a/http.h b/http.h
+> index 0bd1e84..0a80d30 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -78,8 +78,7 @@ extern void finish_all_active_slots(void);
+>  extern void run_active_slot(struct active_request_slot *slot);
+>  extern void finish_active_slot(struct active_request_slot *slot);
+>  extern void finish_all_active_slots(void);
+> -extern int handle_curl_result(struct active_request_slot *slot,
+> -                             struct slot_results *results);
+> +extern int handle_curl_result(struct slot_results *results);
+>
+>  #ifdef USE_CURL_MULTI
+>  extern void fill_active_slots(void);
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 4281262..aefafd3 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -369,7 +369,7 @@ static int run_slot(struct active_request_slot *slot)
+>         slot->curl_result = curl_easy_perform(slot->curl);
+>         finish_active_slot(slot);
+>
+> -       err = handle_curl_result(slot, &results);
+> +       err = handle_curl_result(&results);
+>         if (err != HTTP_OK && err != HTTP_REAUTH) {
+>                 error("RPC failed; result=%d, HTTP code = %ld",
+>                       results.curl_result, results.http_code);
+> --
+> 1.8.0.rc2.3.g303f317
