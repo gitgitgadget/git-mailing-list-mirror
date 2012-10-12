@@ -1,88 +1,80 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] git-cvsimport: support local timezone
-Date: Fri, 12 Oct 2012 09:57:54 +0200
-Message-ID: <5077CD82.6000405@alum.mit.edu>
-References: <1349988497-6158-1-git-send-email-chris@rorvick.com> <50774BA9.40609@alum.mit.edu> <CAEUsAPYaYGDHWkixf9U27_Hsa7QqCWq3csKtBH7MrjnMD6kKJQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v4 12/12] t3070: disable two fnmatch tests that have
+ different results on different libc
+Date: Fri, 12 Oct 2012 16:49:05 +0700
+Message-ID: <CACsJy8DkxT70M9EWGF4rFebQUcDguJqCHkrW3CL3pBi0cAegUQ@mail.gmail.com>
+References: <1349865651-31889-1-git-send-email-pclouds@gmail.com>
+ <1349865651-31889-13-git-send-email-pclouds@gmail.com> <5077C52E.2050000@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christopher Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 09:58:08 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 12 11:49:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMa8G-0000Qf-Dw
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 09:58:08 +0200
+	id 1TMbsL-0000jC-Ev
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 11:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933106Ab2JLH56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2012 03:57:58 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:46602 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932966Ab2JLH55 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2012 03:57:57 -0400
-X-AuditID: 1207440d-b7f236d000000943-df-5077cd841f04
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id C1.48.02371.48DC7705; Fri, 12 Oct 2012 03:57:56 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9C7vsNN003708
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 12 Oct 2012 03:57:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <CAEUsAPYaYGDHWkixf9U27_Hsa7QqCWq3csKtBH7MrjnMD6kKJQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqNtytjzA4MNFQYudc/exWnRd6WZy
-	YPLYfZrV4/MmuQCmKG6bpMSSsuDM9Dx9uwTujL5t/1kLWrkrTj4/wdrA+I6ji5GTQ0LAROLJ
-	k1tsELaYxIV768FsIYHLjBLfmmy6GLmA7ONMEnMvLmUHSfAKaEtcnTuBpYuRg4NFQFVick8R
-	SJhNQFdiUU8zE4gtKhAm8e7XUVaIckGJkzOfsIDYIkCtvz4+ZwNpZRYQl+j/BxYWFrCSmLpi
-	NhvEqsWMEge+r2QGSXAKBEosfr8arIhZQEfiXd8DZghbXmL72znMExgFZiFZMQtJ2SwkZQsY
-	mVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWmlG5ihAQp7w7G/+tkDjEKcDAq8fAy
-	vS0LEGJNLCuuzD3EKMnBpCTKu+R0eYAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd6DfUA53pTE
-	yqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IEb/wZoEbBotT01Iq0zJwShDQT
-	ByfIcC4pkeLUvJTUosTSkox4UJzGFwMjFSTFA7SXGaSdt7ggMRcoCtF6ilGX42PjvIeMQix5
-	+XmpUkAXgBwuAFKUUZoHtwKWkl4xigN9LMxrAjKKB5jO4Ca9AlrCBLREZlIJyJKSRISUVAOj
-	YfKCV8tabjpxGy/kPSw86dG8SSrnvr7JPc42Wzjbba9nocfstANCO3j87pi36fxkO1FoXnXg
-	9Wqn55wXt9rXb69vO34p5cIVtQvrX0Znf40/liurKLJzTkK8wLWKzB2LmXXXxHLM 
+	id S1757890Ab2JLJth convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2012 05:49:37 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:45295 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757855Ab2JLJtg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2012 05:49:36 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so4477241iea.19
+        for <git@vger.kernel.org>; Fri, 12 Oct 2012 02:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=vC644SAWUDKlpsgwtEwMewGEMago4V6owAj8bsah794=;
+        b=NRgqnoxClp8f9R0sILBkjSU8VTGlxeV42Fwa1lQ/pVrCRP4Wrpl/1FsGL0+nl0PfKp
+         X0WgKBYQ+6Kea5inPlTgHre1Eb/RFisPn5mDdvUUk1U/cfAf4ZJlBitW0k5+ssWf85rM
+         3dSp2XZLFIsrDyYYMVxZo0QuWFMLyQ1cUwJ+7etPUNSiuApsrthEhTuX4+bL6a8m2+Hq
+         kMcTTIzUs4RfJNXKMsCX3SkazmYwuInKPNeB2McDrw7/DUQ/6eVjw9c5iphvyxjRapel
+         ahmFrE/BST/WzeYm/i3YJQpWMY1XqbZJRIYoT9+AYEtwrBvxSf1zjRAd5ne80jjZdQX4
+         j+Mg==
+Received: by 10.50.153.130 with SMTP id vg2mr1663218igb.26.1350035376111; Fri,
+ 12 Oct 2012 02:49:36 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Fri, 12 Oct 2012 02:49:05 -0700 (PDT)
+In-Reply-To: <5077C52E.2050000@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207540>
 
-On 10/12/2012 02:14 AM, Christopher Rorvick wrote:
-> On Thu, Oct 11, 2012 at 5:43 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> On 10/11/2012 10:48 PM, Chris Rorvick wrote:
->>> CVS patches are unconditionally imported with a UTC timezone.  Allow
->>> the local timezone by adding -l to the command line or specifying
->>> cvsimport.l in the config.
->>>
->>> This could be made the default behavior, as setting TZ=UTC in the
->>> environment before doing the import is equivalent to the current
->>> behavior.  But since a new default may be an unwelcome surprise to
->>> some, make this new behavior available os an option.
->>
->> According to rcsfile(7), all times in RCS/CVS files are recorded in UTC.
->>  So why do you need this feature?
-> 
-> [...]
-> Likewise, just because the RCS file has a UTC timestamp does not mean
-> the commit originated in Greenwich, UK.  Git includes the timezone
-> offset in its timestamps, so it is reasonable to allow me to specify
-> what is appropriate.
+On Fri, Oct 12, 2012 at 2:22 PM, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+> Am 10/10/2012 12:40, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y:
+>> fnmatch on glibc-2.12.1 returns no match. glibc-2.15 returns ok.
+>
+> There are many more cases that fail with the fnmatch() that we ship i=
+n
+> compat/fnmatch. To test this on Linux, you have to remove the "#if de=
+fined
+> _LIBC || !defined __GNU_LIBRARY__" brackets from compat/fnmatch/fnmat=
+ch.c
+> and build with NO_FNMATCH.
 
-Ahh, OK, I hadn't realized that git stores (UTC time + time zone).  I
-mistakenly thought you wanted to use a time zone to transform CVS-time
-to git-time, i.e., as if the CVS time were recorded in local time.  Your
-actual goal makes sense.
+Thanks. The point of checking against fnmatch is to make sure that
+wildmatch does not divert in behavior from fnmatch. For some corner
+cases that behavior is undefined, I think it is ok for different
+fnmatch versions to behave differently.
 
-[And it is something I should consider building into cvs2git.]
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+But some of failed tests make me worry about fnmatch. compat/fnmatch
+for example does not match '**/foo' with '/foo' (it does '*/foo' with
+'/foo'). 'A' is matched with '[[:digit:][:space:][:upper:]]' but not
+'[[:digit:][:upper:][:space:]]'. Perhaps we better off convert git to
+use wildmatch only to keep matching behavior more reliable. wildmatch
+does not support non-FNM_PATHNAME mode, but that should be easy to
+fix. The only downside I see is fnmatch may support locale while
+wildmatch does not.
+--=20
+Duy
