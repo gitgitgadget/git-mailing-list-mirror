@@ -1,130 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] http: do not set up curl auth after a 401
-Date: Fri, 12 Oct 2012 03:35:59 -0400
-Message-ID: <20121012073559.GB16441@sigill.intra.peff.net>
-References: <20121012073053.GC17026@sigill.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2012, #04; Thu, 11)
+Date: Fri, 12 Oct 2012 09:43:04 +0200
+Message-ID: <CACBZZX6pzeWBshrA17oyTte0ZfOBQaK1SvP07TnTN4=v5imsjw@mail.gmail.com>
+References: <7vtxu061tf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brad Hein <linuxbrad@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 09:36:17 2012
+X-From: git-owner@vger.kernel.org Fri Oct 12 09:43:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMZn4-0004rI-W1
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 09:36:15 +0200
+	id 1TMZuD-0000hn-Up
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 09:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932137Ab2JLHgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2012 03:36:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50718 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757116Ab2JLHgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2012 03:36:03 -0400
-Received: (qmail 386 invoked by uid 107); 12 Oct 2012 07:36:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Oct 2012 03:36:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Oct 2012 03:35:59 -0400
-Content-Disposition: inline
-In-Reply-To: <20121012073053.GC17026@sigill.intra.peff.net>
+	id S1757450Ab2JLHn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2012 03:43:26 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:41274 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756551Ab2JLHnZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2012 03:43:25 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so2622147oag.19
+        for <git@vger.kernel.org>; Fri, 12 Oct 2012 00:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=oVnL67IyG5+ma6TD6UroqDkwIIEUBf0HphREc5he6i8=;
+        b=wBAA2GTnIjZiIcaUW8ZLxx8miRWd8wcm8rTGY/6IIVzbjaN4Is/nqsicRUN4UP3PM0
+         m70wvrbvwiKRQLACEJLH6NQbCqpFgZ8v3eF11U5uiL5CI3DfUgOohwrqffuY0msM1XFu
+         9q6G48QSSwX5oSU6v3sz8ZrMxuqhBtevP3hJdfGsfS9VuKsjE8fK7vdi5rnDrwfIOYM/
+         +5YxzyTSg1I4uKvb8igdJ9WCoDOA7zOz9qQ05i5GfI3d8E9hcgYs5O7ahxyLgZnxS2zi
+         mEItkt3NqezPzX9/bS0p5VCXpGKQDEXgAW1QGKH7X5EkKrcTG5GwRO7MqL+e1XFdEXm0
+         AWrg==
+Received: by 10.60.29.134 with SMTP id k6mr2810552oeh.5.1350027805091; Fri, 12
+ Oct 2012 00:43:25 -0700 (PDT)
+Received: by 10.60.94.225 with HTTP; Fri, 12 Oct 2012 00:43:04 -0700 (PDT)
+In-Reply-To: <7vtxu061tf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207537>
 
-When we get an http 401, we prompt for credentials and put
-them in our global credential struct. We also feed them to
-the curl handle that produced the 401, with the intent that
-they will be used on a retry.
+On Fri, Oct 12, 2012 at 1:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-When the code was originally introduced in commit 42653c0,
-this was a necessary step. However, since dfa1725, we always
-feed our global credential into every curl handle when we
-initialize the slot with get_active_slot. So every further
-request already feeds the credential to curl.
+> * jk/peel-ref (2012-10-04) 4 commits
+>   (merged to 'next' on 2012-10-08 at 4adfa2f)
+>  + upload-pack: use peel_ref for ref advertisements
+>  + peel_ref: check object type before loading
+>  + peel_ref: do not return a null sha1
+>  + peel_ref: use faster deref_tag_noverify
+>
+>  Speeds up "git upload-pack" (what is invoked by "git fetch" on the
+>  other side of the connection) by reducing the cost to advertise the
+>  branches and tags that are available in the repository.
 
-Moreover, accessing the slot here is somewhat dubious. After
-the slot has produced a response, we don't actually control
-it any more.  If we are using curl_multi, it may even have
-been re-initialized to handle a different request.
-
-It just so happens that we will reuse the curl handle within
-the slot in such a case, and that because we only keep one
-global credential, it will be the one we want.  So the
-current code is not buggy, but it is misleading.
-
-By cleaning it up, we can remove the slot argument entirely
-from handle_curl_result, making it much more obvious that
-slots should not be accessed after they are marked as
-finished.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- http.c        | 6 ++----
- http.h        | 3 +--
- remote-curl.c | 2 +-
- 3 files changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/http.c b/http.c
-index 9334386..0a74345 100644
---- a/http.c
-+++ b/http.c
-@@ -744,8 +744,7 @@ char *get_remote_object_url(const char *url, const char *hex,
- 	return strbuf_detach(&buf, NULL);
- }
- 
--int handle_curl_result(struct active_request_slot *slot,
--		       struct slot_results *results)
-+int handle_curl_result(struct slot_results *results)
- {
- 	if (results->curl_result == CURLE_OK) {
- 		credential_approve(&http_auth);
-@@ -758,7 +757,6 @@ int handle_curl_result(struct active_request_slot *slot,
- 			return HTTP_NOAUTH;
- 		} else {
- 			credential_fill(&http_auth);
--			init_curl_http_auth(slot->curl);
- 			return HTTP_REAUTH;
- 		}
- 	} else {
-@@ -817,7 +815,7 @@ static int http_request(const char *url, void *result, int target, int options)
- 
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
--		ret = handle_curl_result(slot, &results);
-+		ret = handle_curl_result(&results);
- 	} else {
- 		error("Unable to start HTTP request for %s", url);
- 		ret = HTTP_START_FAILED;
-diff --git a/http.h b/http.h
-index 0bd1e84..0a80d30 100644
---- a/http.h
-+++ b/http.h
-@@ -78,8 +78,7 @@ extern void finish_all_active_slots(void);
- extern void run_active_slot(struct active_request_slot *slot);
- extern void finish_active_slot(struct active_request_slot *slot);
- extern void finish_all_active_slots(void);
--extern int handle_curl_result(struct active_request_slot *slot,
--			      struct slot_results *results);
-+extern int handle_curl_result(struct slot_results *results);
- 
- #ifdef USE_CURL_MULTI
- extern void fill_active_slots(void);
-diff --git a/remote-curl.c b/remote-curl.c
-index 4281262..aefafd3 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -369,7 +369,7 @@ static int run_slot(struct active_request_slot *slot)
- 	slot->curl_result = curl_easy_perform(slot->curl);
- 	finish_active_slot(slot);
- 
--	err = handle_curl_result(slot, &results);
-+	err = handle_curl_result(&results);
- 	if (err != HTTP_OK && err != HTTP_REAUTH) {
- 		error("RPC failed; result=%d, HTTP code = %ld",
- 		      results.curl_result, results.http_code);
--- 
-1.8.0.rc2.3.g303f317
+FWIW I have this deployed at work for a userbase of a few hundred
+users, none of whom have had any issues with it, it does speed things
+up a lot though.
