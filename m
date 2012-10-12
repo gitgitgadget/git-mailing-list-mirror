@@ -1,63 +1,72 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2012, #04; Thu, 11)
-Date: Fri, 12 Oct 2012 09:43:04 +0200
-Message-ID: <CACBZZX6pzeWBshrA17oyTte0ZfOBQaK1SvP07TnTN4=v5imsjw@mail.gmail.com>
-References: <7vtxu061tf.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: How can I tell if anything was fetched?
+Date: Fri, 12 Oct 2012 03:47:39 -0400
+Message-ID: <20121012074739.GD17026@sigill.intra.peff.net>
+References: <CAFRB3XkueafikCvwzBb+WOAG_1mEkVg1Yt6=teOuVwYd2zWVOw@mail.gmail.com>
+ <m28vbdkley.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 09:43:38 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Phil Lawrence <prlawrence@gmail.com>, git <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Oct 12 09:47:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TMZuD-0000hn-Up
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 09:43:38 +0200
+	id 1TMZyN-00036l-5L
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Oct 2012 09:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757450Ab2JLHn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2012 03:43:26 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:41274 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756551Ab2JLHnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2012 03:43:25 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so2622147oag.19
-        for <git@vger.kernel.org>; Fri, 12 Oct 2012 00:43:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=oVnL67IyG5+ma6TD6UroqDkwIIEUBf0HphREc5he6i8=;
-        b=wBAA2GTnIjZiIcaUW8ZLxx8miRWd8wcm8rTGY/6IIVzbjaN4Is/nqsicRUN4UP3PM0
-         m70wvrbvwiKRQLACEJLH6NQbCqpFgZ8v3eF11U5uiL5CI3DfUgOohwrqffuY0msM1XFu
-         9q6G48QSSwX5oSU6v3sz8ZrMxuqhBtevP3hJdfGsfS9VuKsjE8fK7vdi5rnDrwfIOYM/
-         +5YxzyTSg1I4uKvb8igdJ9WCoDOA7zOz9qQ05i5GfI3d8E9hcgYs5O7ahxyLgZnxS2zi
-         mEItkt3NqezPzX9/bS0p5VCXpGKQDEXgAW1QGKH7X5EkKrcTG5GwRO7MqL+e1XFdEXm0
-         AWrg==
-Received: by 10.60.29.134 with SMTP id k6mr2810552oeh.5.1350027805091; Fri, 12
- Oct 2012 00:43:25 -0700 (PDT)
-Received: by 10.60.94.225 with HTTP; Fri, 12 Oct 2012 00:43:04 -0700 (PDT)
-In-Reply-To: <7vtxu061tf.fsf@alter.siamese.dyndns.org>
+	id S933059Ab2JLHrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2012 03:47:43 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50729 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932482Ab2JLHrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2012 03:47:42 -0400
+Received: (qmail 560 invoked by uid 107); 12 Oct 2012 07:48:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Oct 2012 03:48:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Oct 2012 03:47:39 -0400
+Content-Disposition: inline
+In-Reply-To: <m28vbdkley.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207538>
 
-On Fri, Oct 12, 2012 at 1:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Oct 11, 2012 at 06:45:09PM +0200, Andreas Schwab wrote:
 
-> * jk/peel-ref (2012-10-04) 4 commits
->   (merged to 'next' on 2012-10-08 at 4adfa2f)
->  + upload-pack: use peel_ref for ref advertisements
->  + peel_ref: check object type before loading
->  + peel_ref: do not return a null sha1
->  + peel_ref: use faster deref_tag_noverify
->
->  Speeds up "git upload-pack" (what is invoked by "git fetch" on the
->  other side of the connection) by reducing the cost to advertise the
->  branches and tags that are available in the repository.
+> Phil Lawrence <prlawrence@gmail.com> writes:
+> 
+> > One approach might be to first generate a state-of-the-repo SHA1:
+> >     # http://stackoverflow.com/a/7350019/834039
+> >     # http://git-scm.com/book/ch9-2.html
+> >     {
+> >         git rev-list --objects --all
+> >         git rev-list --objects -g --no-walk --all
+> >         git rev-list --objects --no-walk \
+> >             $(git fsck --unreachable |
+> >               grep '^unreachable commit' |
+> >               cut -d' ' -f3)
+> >     } | sort | uniq | git hash-object -w --stdin
+> 
+> I think you'd only need to record the state of all refs (eg. the output
+> of `git for-each-ref') to reliably detect any changes.
 
-FWIW I have this deployed at work for a userbase of a few hundred
-users, none of whom have had any issues with it, it does speed things
-up a lot though.
+To clarify on the "only" in your sentence: it is not just that recording
+the ref changes is more efficient. But recording the object state is
+actively wrong. You might have fetched ref changes that do not introduce
+new objects (e.g., a rewind of history, or a branch deletion). The
+before-and-after ref state is both sufficient and necessary.  I suspect
+you already realized that, Andreas, but I wanted to make sure it was
+clear to readers, including the OP.
+
+Checking ref state does suffer from potential race conditions with any
+other simultaneous updates.  I don't think there is any reason we
+couldn't have "git fetch" produce a machine-readable output detailing
+what happened. We already have the same for "git push". I think it is
+simply the case that nobody has really wanted it so far.
+
+-Peff
