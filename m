@@ -1,58 +1,64 @@
-From: perryh@pluto.rain.com
-Subject: Re: A design for subrepositories
-Date: Sat, 13 Oct 2012 14:20:42 -0700
-Message-ID: <507a3d9a.j+V+kkG9pRPJs4kM%perryh@pluto.rain.com>
-References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi>
+From: david@lang.hm
+Subject: looking for suggestions for managing a tree of server configs
+Date: Sat, 13 Oct 2012 14:20:59 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1210131413240.6253@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: la@iki.fi
-X-From: git-owner@vger.kernel.org Sat Oct 13 23:25:26 2012
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 13 23:41:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TN9Cw-0002mX-EO
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Oct 2012 23:25:18 +0200
+	id 1TN9SS-0005pU-7J
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Oct 2012 23:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141Ab2JMVZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2012 17:25:06 -0400
-Received: from agora.rdrop.com ([199.26.172.34]:1466 "EHLO agora.rdrop.com"
+	id S1754167Ab2JMVeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2012 17:34:15 -0400
+Received: from mail.lang.hm ([64.81.33.126]:33104 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754135Ab2JMVZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2012 17:25:05 -0400
-Received: from agora.rdrop.com (66@localhost [127.0.0.1])
-	by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id q9DLOw8r061351
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 13 Oct 2012 14:24:58 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: (from uucp@localhost)
-	by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id q9DLOwMK061350;
-	Sat, 13 Oct 2012 14:24:58 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: from fbsd81 ([192.168.200.81]) by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
-	id AA10578; Sat, 13 Oct 12 14:20:54 PDT
-In-Reply-To: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi>
-User-Agent: nail 11.25 7/29/05
+	id S1754160Ab2JMVeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2012 17:34:15 -0400
+X-Greylist: delayed 797 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Oct 2012 17:34:15 EDT
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id q9DLKwD1018752
+	for <git@vger.kernel.org>; Sat, 13 Oct 2012 14:20:58 -0700
+X-X-Sender: dlang@asgard.lang.hm
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207580>
 
-"Lauri Alanko" <la@iki.fi> wrote:
+I've got a directory tree that holds config data for all my servers. This 
+consists of one directory per server (which is updated periodically from 
+what is currently configured on that server), plus higher level summary 
+reports and similar information.
 
-> I'm going to get a bit religious here:
-> anything longer than a screenful shouldn't be written in shell ...
+today I have just a single git tree covering everything, and I make a 
+commit each time one of the per-server directories is updated, and again 
+when the top-level stuff is created. This works, but it's not really that 
+good at letting me go back and see what happened when on a particular 
+server because of all the other activity going on in git log.
 
-Whence cometh this religion?  I've heard of a modularity principle
-wherein no one function, in any language, ought to be longer than a
-page, but what's special about shell that warrants such a further
-restriction?
+Also, currently all updates to this repository is serialized, but going 
+forward I'm going to be adding some update processes that could result in 
+different per-server directories being updated at the same time (and so, 
+one may be fully populated with new data, while another has just had all 
+the old data deleted prior to the new data being written). I'm concerned 
+about possible issues with having these independant and overlapping update 
+processes all working in a single git tree
 
-BTW, to adherents of the mentioned religion, this:
-http://www.freebsd.org/cgi/cvsweb.cgi/ports/ports-mgmt/portmaster/files/Attic/portmaster.sh.in?rev=2.32;content-type=text/plain
--- at just under 3600 lines -- is likely one of the greater heresies
-around :)
+I do want to have everythng share one storage repository, because much of 
+the config on the servers is very standard, so I gain quite a bit by 
+letting them delta off each other.
+
+Is what I'm currently doing the best way to do this? or should I do 
+something like having a submodule per server, or is there some other, 
+better way of doing this.? Are there any tools that I should be using 
+instead of continuing to use the scripts that I threw together several 
+years ago?
+
+David Lang
