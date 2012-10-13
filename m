@@ -1,64 +1,64 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: git reflog delete HEAD@{1} HEAD@{2} caught me by surprise...
-Date: 13 Oct 2012 18:08:55 -0400
-Message-ID: <20121013220855.24116.qmail@science.horizon.com>
-Cc: linux@horizon.com
+From: Richard Fearn <richardfearn@gmail.com>
+Subject: [PATCH] Fix spelling error in post-receive-email hook
+Date: Sat, 13 Oct 2012 23:14:04 +0100
+Message-ID: <CAA-kXAG5wkQQ=nxHoKq_LtE7cNUD0sLdKkW-YbNUW3d5JTmGUw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 14 00:14:31 2012
+X-From: git-owner@vger.kernel.org Sun Oct 14 00:14:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TN9yS-0004ZD-My
+	id 1TN9yT-0004ZD-5m
 	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 00:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754188Ab2JMWI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2012 18:08:57 -0400
-Received: from science.horizon.com ([71.41.210.146]:22670 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754166Ab2JMWI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2012 18:08:56 -0400
-Received: (qmail 24117 invoked by uid 1000); 13 Oct 2012 18:08:55 -0400
+	id S1754200Ab2JMWOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2012 18:14:07 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:45296 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754166Ab2JMWOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2012 18:14:06 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so3881387obb.19
+        for <git@vger.kernel.org>; Sat, 13 Oct 2012 15:14:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=ZtSxOZSsLbbKPr0rLQIJ2SGj9gzH/RvqOwtuFZyEBoU=;
+        b=KfcwpDVGy0ochxw2b6+OzyAAs8QDdme0+ko9OKGV6f9yRAEelF5S8MCcWdUchKZIfA
+         1Py8pEiWfMdCBG73bF2oPzccHKKXLO4eWIQN4meSE39FILxNNoTCUsfE8OaUJYnIaUdu
+         COPyN1NY23JyefLz1P+Uts/GdwzQ8Ul/2lPYp+xcdU9aBxOLPFInBoP2s2S+u9d5Wp1w
+         tMeahs234EZ2Lbu5/ZiF0VkiiV+SVMG+4RsXkbDHviFfgClvk7UqNpwJQ35/fqWzH6c4
+         /FBI59UOYnjYIXGV3meawMPjLY9cymnsF6vp4SJQTL50bht7vwx82MZtv7OgdCRq8tYr
+         Fn0g==
+Received: by 10.60.172.233 with SMTP id bf9mr6303218oec.99.1350166444803; Sat,
+ 13 Oct 2012 15:14:04 -0700 (PDT)
+Received: by 10.182.4.147 with HTTP; Sat, 13 Oct 2012 15:14:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207582>
 
-Try the following commands in an empty directory:
-(I'm using the bash extention for {1..5}.)
+Signed-off-by: Richard Fearn <richardfearn@gmail.com>
+---
+ contrib/hooks/post-receive-email | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-git init
-for i in {1..5}; do git commit -m "Commit $i" --allow-empty; done
-git reflog
-	bc93e06 HEAD@{0}: commit: Commit 5
-	e14f92d HEAD@{1}: commit: Commit 4
-	ac64d8e HEAD@{2}: commit: Commit 3
-	287602b HEAD@{3}: commit: Commit 2
-	183a378 HEAD@{4}: commit (initial): Commit 1
-git reflog delete HEAD@{{1,2}}
-git reflog
-	bc93e06 HEAD@{0}: commit: Commit 5
-	e14f92d HEAD@{1}: commit: Commit 3
-	287602b HEAD@{2}: commit (initial): Commit 1
-
-Er...I meant to delete Commit 3 from the reflog, not Commit 2.
-
-In hindsight, it's obvious how this could happen, but it definitely
-took me by surprise when I was trying to delete the reference to
-a large and messy merge (that I didn't want and bloated my repository
-size) from the reflog.
-
-If this is, in fact, Working As Designed, could I request a paragraph
-in the man page clarifying it?  something like:
-
-
-To delete single entries from the reflog, use the subcommand "delete"
-and specify the _exact_ entry (e.g. "`git reflog delete master@{2}`").
-
-You may delete multiple reflog entries with one delete command,
-_however_ they are processed one at a time, so earlier deletes will cause
-renumbering that will affect later ones.  To delete reflog entries @{2}
-and @{3}, the command would be either "`git reflog delete @{3} @{2}`",
-or "`git reflog delete @{2} @{2}`".
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 01af9df..b2171a0 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -403,7 +403,7 @@ generate_update_branch_email()
+ 			echo "            \\"
+ 			echo "             O -- O -- O ($oldrev)"
+ 			echo ""
+-			echo "The removed revisions are not necessarilly gone - if another
+reference"
++			echo "The removed revisions are not necessarily gone - if another reference"
+ 			echo "still refers to them they will stay in the repository."
+ 			rewind_only=1
+ 		else
+-- 
+1.7.11.7
