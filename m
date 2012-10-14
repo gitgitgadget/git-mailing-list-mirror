@@ -1,100 +1,101 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] exclude: fix a bug in prefix comparison optimization
-Date: Sun, 14 Oct 2012 18:35:22 +0700
-Message-ID: <1350214522-3242-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 0/2] Re: [PATCH 2/7] Change canonicalize_url() to use the
+ SVN 1.7 API when available.
+Date: Sun, 14 Oct 2012 04:42:34 -0700
+Message-ID: <20121014114234.GA18127@elie.Belkin>
+References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
+ <1343468312-72024-3-git-send-email-schwern@pobox.com>
+ <20120728135018.GB9715@burratino>
+ <50143700.80900@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 14 13:36:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Oct 14 13:43:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNMU8-0002Nw-HM
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 13:35:56 +0200
+	id 1TNMaw-0000eK-IU
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 13:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752627Ab2JNLfj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 07:35:39 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:48670 "EHLO
+	id S1752535Ab2JNLms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 07:42:48 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:38611 "EHLO
 	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752575Ab2JNLfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 07:35:38 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so4045717pad.19
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 04:35:38 -0700 (PDT)
+	with ESMTP id S1751288Ab2JNLmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 07:42:47 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so4047989pad.19
+        for <git@vger.kernel.org>; Sun, 14 Oct 2012 04:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=Jd09VXnfNBJ2Z4FYd5tcJnFl9nKLXs0vXG1dwFLAvEE=;
-        b=vWjA9P1bnZ0jBRHRR9FdHKjOm8ZpvO7f2cNGt5QQj3vIlH2FdfWs0OG5QrZR/3nDd5
-         AXZv8P4qyFmNmmQMDaDvutwFcCHIuRSFzM/zXy5+b4Geah2c44FzwvZEXl+rmBOK5xzx
-         nH99FQcEfdaKV9Zm+vKt76rKi5RLTyObTxSK085mlnHhS0LrtaQfAlicf/IAkY1sF7lR
-         A3HgHI67VhLNMEeaVq7YJuo0OoQaBX/XNdDGkgCw9sMFySXkcFVvT4WP4dBHEOU1X0qP
-         qtrN1T8Zf6iyX8Kv+GCEQmRv3ENohjoQarPkYDHuk8VxXVCMFKvW2ADgW/QyyucAv9gI
-         lhkA==
-Received: by 10.68.212.74 with SMTP id ni10mr28581598pbc.20.1350214538147;
-        Sun, 14 Oct 2012 04:35:38 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.44.221])
-        by mx.google.com with ESMTPS id vf8sm7378083pbc.27.2012.10.14.04.35.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 14 Oct 2012 04:35:37 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 14 Oct 2012 18:35:23 +0700
-X-Mailer: git-send-email 1.8.0.rc2.11.g2b79d01
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=4jpeVG4Cw0R6coi1hh3XNvCKoX7nldsO7yXJAlSXMsM=;
+        b=xX1UPxJRb4D6yfisW1Usn+cHXaCyfMekSagARnaVpM7EaAYQ7BsGYQMyrN2wrHmELj
+         eFTzjdzIFVJt2iriy0HqPAJLvcbGDs9ryNgYwouZEqM9OcuFzlExaoOyBIVW2i76MtXE
+         KLQtoYLDYy9HVJZqEqT+rYw61JMenLdFUY5eArhJ8sx9UjeXcMrlp0Qn1lQIz7WNxLWW
+         4gcJRAK3hI19OFVPTMxp6QcPzE8POyQSJ8LMYQv+oitNEYgN8xy9oeUGEt+g1SEpHnjL
+         ziGyoTXcL9ifMzOKTES15wlSpUZoqZGO25b7cWz9+Rf7ceTvfRYUeCkzvXAV5JOtVMzk
+         X/Rw==
+Received: by 10.66.75.132 with SMTP id c4mr25084826paw.2.1350214967073;
+        Sun, 14 Oct 2012 04:42:47 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id kn8sm4604015pbc.24.2012.10.14.04.42.45
+        (version=SSLv3 cipher=OTHER);
+        Sun, 14 Oct 2012 04:42:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <50143700.80900@pobox.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207653>
 
-When "namelen" becomes zero at this stage, we have matched the fixed
-part, but whether it actually matches the pattern still depends on the
-pattern in "exclude". As demonstrated in t3001, path "three/a.3"
-exists and it matches the "three/a.3" part in pattern "three/a.3[abc]",
-but that does not mean a true match.
+Hi Eric,
 
-Don't be too optimistic and let fnmatch() do the job.
+Michael G Schwern wrote:
+> On 2012.7.28 6:50 AM, Jonathan Nieder wrote:
+>> Michael G Schwern wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- dir.c                              | 2 +-
- t/t3001-ls-files-others-exclude.sh | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+>>> --- a/perl/Git/SVN/Utils.pm
+>>> +++ b/perl/Git/SVN/Utils.pm
+>> [...]
+>>> @@ -100,6 +102,20 @@ API as a URL.
+>>>  =cut
+>>>  
+>>>  sub canonicalize_url {
+>>> +	my $url = shift;
+>>> +
+>>> +	# The 1.7 way to do it
+>>> +	if ( defined &SVN::_Core::svn_uri_canonicalize ) {
+>>> +		return SVN::_Core::svn_uri_canonicalize($url);
+>>> +	}
+>>> +	# There wasn't a 1.6 way to do it, so we do it ourself.
+>>> +	else {
+>>> +		return _canonicalize_url_ourselves($url);
+[...]
+>> Leaves me a bit nervous.
+>
+> As it should, SVN dumped a mess on us.
 
-diff --git a/dir.c b/dir.c
-index 4868339..90bf3a4 100644
---- a/dir.c
-+++ b/dir.c
-@@ -575,7 +575,7 @@ int excluded_from_list(const char *pathname,
- 			namelen -=3D prefix;
- 		}
-=20
--		if (!namelen || !fnmatch_icase(exclude, name, FNM_PATHNAME))
-+		if (!fnmatch_icase(exclude, name, FNM_PATHNAME))
- 			return to_exclude;
- 	}
- 	return -1; /* undecided */
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-othe=
-rs-exclude.sh
-index c8fe978..dc2f045 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -214,4 +214,10 @@ test_expect_success 'subdirectory ignore (l1)' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'pattern matches prefix completely' '
-+	: >expect &&
-+	git ls-files -i -o --exclude "/three/a.3[abc]" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
---=20
-1.8.0.rc2.11.g2b79d01
+Here's a pair of patches that address some of the bugs I was alluding
+to.  Patch 1 makes _canonicalize_url_ourselves() match Subversion's
+own canonicalization behavior more closely, though even with that
+patch it still does not meet Subversion's requirements perfectly
+(e.g., "%ab" is not canonicalized to "%AB").  Patch 2 makes that not
+matter by using svn_path_canonicalize() when possible, which is the
+standard way to do this kind of thing.
+
+Sorry for the lack of clarity before.
+
+Jonathan Nieder (2):
+  git svn: do not overescape URLs (fallback case)
+  Git::SVN::Utils::canonicalize_url: use svn_path_canonicalize when
+    available
+
+ perl/Git/SVN/Utils.pm | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
