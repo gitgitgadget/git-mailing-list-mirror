@@ -1,65 +1,71 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: git reflog delete HEAD@{1} HEAD@{2} caught me by surprise...
-Date: 14 Oct 2012 03:02:18 -0400
-Message-ID: <20121014070218.16887.qmail@science.horizon.com>
-References: <7vlif91wv6.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com, linux@horizon.com
-X-From: git-owner@vger.kernel.org Sun Oct 14 09:02:31 2012
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] config: treat user and xdg config permission
+ problems as errors
+Date: Sun, 14 Oct 2012 01:42:44 -0700
+Message-ID: <20121014084244.GA7190@elie.Belkin>
+References: <20121014000210.GA19094@elie.Belkin>
+ <20121014000402.GB11399@elie.Belkin>
+ <20121014062218.GB13477@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Oct 14 10:43:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNIDW-0004Km-RY
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 09:02:31 +0200
+	id 1TNJn3-0001c7-R8
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 10:43:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756Ab2JNHCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 03:02:20 -0400
-Received: from science.horizon.com ([71.41.210.146]:23524 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751589Ab2JNHCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 03:02:19 -0400
-Received: (qmail 16888 invoked by uid 1000); 14 Oct 2012 03:02:18 -0400
-In-Reply-To: <7vlif91wv6.fsf@alter.siamese.dyndns.org>
+	id S1751461Ab2JNIm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 04:42:58 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:47870 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751317Ab2JNIm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 04:42:56 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so3990359pad.19
+        for <git@vger.kernel.org>; Sun, 14 Oct 2012 01:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=l+++Na0h5TzhHqxBlhgT6I+BB2Iw3hsoq3FhTeg7G+o=;
+        b=HfgphbHNfQOxnZ0jfkN+quCkYvhRSSc3q7OsMQYDtDiY6IJGuPZOWTYR6lT53+Q8BA
+         ayZzVDGNmJ9XUo6sGzlKQFQ6ZuyUpamRNKMaOi2ACvoPGrdgbYNBzPNr9Dt6WLi7wS6w
+         HMI3OrUejNdJTDlgBlQjEgD3tnyUEFeVFdsRAnsLb4SDct0912H7gYkXqZSPpkmA1jqu
+         ktEYMPiBIvBKHUex4f2fTKu88mdmcve5LKJbLwpGi8eQRoZK+CDHQX0Cs18iE3u0Yptl
+         Km9TGweo5jjD+wqSRLdGhhUcrJNkqSOd62oAhAbOCUUk0KkTFmHLo43rZq2tlt8w70PP
+         rKyQ==
+Received: by 10.68.233.136 with SMTP id tw8mr27769661pbc.133.1350204176143;
+        Sun, 14 Oct 2012 01:42:56 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id sj5sm7211788pbc.30.2012.10.14.01.42.55
+        (version=SSLv3 cipher=OTHER);
+        Sun, 14 Oct 2012 01:42:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20121014062218.GB13477@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207645>
 
-> I would actually call that behaviour a bug.
+Jeff King wrote:
 
-Well, yes, that was my inclination, too.  But writing documentation was
-easier than writing a code patch.  :-)
+> For example, servers may depend on /etc/gitconfig to enforce security
+> policy (e.g., setting transfer.fsckObjects or receive.deny*). Perhaps
+> our default should be safe, and people can use GIT_CONFIG_NOSYSTEM to
+> work around a broken machine.
 
-Even when it is fixed, a comment about when it was fixed and what the
-buggy version did should live in the BUGS section for a while, to warn
-people writing portable scripts.
+Very good point.  How about these patches on top?
 
-> Perhaps it should grab
-> all the command line arguments first, group them per the ref the
-> reflog entries are based on, and expire _all_ reflog entries from
-> the same reflog in one go?
+Jonathan Nieder (2):
+  config doc: advertise GIT_CONFIG_NOSYSTEM
+  config: exit on error accessing any config file
 
-Two other options are to sort them in decreasing entry order (which you
-could do either per-reflog, or simply globally), or to remember previous
-deletions so you can adjust the numbers of later ones.
-
-One tricky point is whether it's possible for a reflog to have two names,
-via a symlink or something.  That definitely complicates collision
-detection.
-
-> Until that happens, it may make sense to error it out when more than
-> one entries are given from the command line, at least for the same
-> ref.
-
-Detecting this seems like half the implementation work of fixing it,
-so I'm not sure it's worth bothering.
-
-
-Looking at the code (builtin/reflog.c), I notice that expire_reflog()
-takes a lock on the ref, but the previous count_reflog_ent code doesn't,
-so things aren't necessarily race-proof.  I haven't figured out if the
-race is a problem (i.e. does expire_reflog do something nasty if the
-struct cmd_reflog_expire_cb holds stale data?), but I noticed...
+ Documentation/git-config.txt | 8 ++++++++
+ config.c                     | 6 +++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
