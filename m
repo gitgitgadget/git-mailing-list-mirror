@@ -1,67 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/2] Re: [PATCH] config: warn on inaccessible files
-Date: Sun, 14 Oct 2012 02:26:50 -0400
-Message-ID: <20121014062650.GC13477@sigill.intra.peff.net>
-References: <20121014000210.GA19094@elie.Belkin>
- <7vhapx1wlh.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v5 04/12] wildmatch: remove unnecessary functions
+Date: Sun, 14 Oct 2012 13:29:36 +0700
+Message-ID: <CACsJy8DsH9OfkdJw3MnkvUidjgdUFP_ODdjLnj25jgKbB9yr7w@mail.gmail.com>
+References: <1350182110-25936-1-git-send-email-pclouds@gmail.com>
+ <1350182110-25936-5-git-send-email-pclouds@gmail.com> <7vr4p1zl2s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 08:27:05 2012
+X-From: git-owner@vger.kernel.org Sun Oct 14 08:30:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNHfE-0007UF-E1
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 08:27:04 +0200
+	id 1TNHiO-0001ps-Og
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 08:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263Ab2JNG0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 02:26:52 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51968 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750981Ab2JNG0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 02:26:52 -0400
-Received: (qmail 18521 invoked by uid 107); 14 Oct 2012 06:27:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 14 Oct 2012 02:27:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Oct 2012 02:26:50 -0400
-Content-Disposition: inline
-In-Reply-To: <7vhapx1wlh.fsf@alter.siamese.dyndns.org>
+	id S1751292Ab2JNGaI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 02:30:08 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:42730 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216Ab2JNGaH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2012 02:30:07 -0400
+Received: by mail-ia0-f174.google.com with SMTP id y32so2952274iag.19
+        for <git@vger.kernel.org>; Sat, 13 Oct 2012 23:30:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=retP6cWYpOr4ORD7xrEwlnsGxwguL6FIII7uSpcKY5g=;
+        b=a2N5av1MohIOZuuD9P4A88xanQ+X91f4PVgSk7DcC77sBTu1XOgtV1PL1TnnVYiuZh
+         3SFDrtB3058Rhsx4TCDlKuNfWMqeJg9YsnmwR6lQLrKYmIBxPic0Jk2lQz6EpZ27ufXS
+         LHTll0hA+CmUPNLHnVXO5b9jDFxRfIe2VxfeatMJwTSEF2dOWQ3GhweOMQpbPA3fLYqt
+         KwqfGeOYfKNmrNI3hte1LIAWcNLu0vp3dC4iNeFsaI1oo7y+SBBg22SaDco3R1ccar5T
+         6wEOSOLMe8uxA1VFokPy0d2OGlWBeYu9/iH53Vdh+WGtedzQOmaK/orbyZ4qMkXqV5p+
+         tdsw==
+Received: by 10.50.0.241 with SMTP id 17mr5923116igh.40.1350196206488; Sat, 13
+ Oct 2012 23:30:06 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Sat, 13 Oct 2012 23:29:36 -0700 (PDT)
+In-Reply-To: <7vr4p1zl2s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207642>
 
-On Sat, Oct 13, 2012 at 09:55:22PM -0700, Junio C Hamano wrote:
+On Sun, Oct 14, 2012 at 12:04 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>
+> The comment-fix seems to be new but otherwise this is unchanged,
+> right?
 
-> > When ~/.gitconfig is unreadable (EPERM), the messages are a symptom of
-> > an older issue: the config file is being ignored.  Shouldn't git error
-> > out instead so the permissions can be fixed?  E.g., if the sysadmin
-> > has set "[branch] autoSetupRebase" to true in /etc/gitconfig and I
-> > have set it to false in my own ~/.gitconfig, I'd rather see git error
-> > out because ~/.gitconfig has become unreadable in a chmod gone wrong
-> > than have a branch set up with the wrong settings and have to learn to
-> > fix it up myself.
-> >
-> > In other words, how about something like this?
-> 
-> I think that is a reasonable issue to address, but I wonder if we
-> should be sharing more code between these.  If the config side can
-> be switched to unconditionally attempt to fopen and then deal with
-> an error when it happens, we can get rid of access_or_{warn,die}
-> and replace them with fopen_or_{warn,die} and use them from the two
-> places (attr.c:read_attr_from_file() and the configuration stuff).
-> 
-> I haven't looked to see if that a too intrusive refactoring to be
-> worth it, though.
-
-Handling the error at the fopen level would eliminate a minor race
-condition (e.g., access() reports OK, then the file has its permissions
-changed, then we fopen and get EPERM, but ignore it). So it would not
-just be a refactoring, but would actually improve the code quality.
-
--Peff
+Right.--
+Duy
