@@ -1,106 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v5 02/12] ctype: support iscntrl, ispunct, isxdigit and isprint
-Date: Sun, 14 Oct 2012 20:25:10 +0700
-Message-ID: <CACsJy8B+6OPkP6ijMDzm+n0eHnDZ4Pj8UO_KasdfEP4wF+_hww@mail.gmail.com>
-References: <1350182110-25936-1-git-send-email-pclouds@gmail.com>
- <1350182110-25936-3-git-send-email-pclouds@gmail.com> <507AB73D.8010406@lsrfire.ath.cx>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: A design for subrepositories
+Date: Sun, 14 Oct 2012 15:28:19 +0200
+Message-ID: <507ABDF3.4040106@web.de>
+References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi> <7vd30m2sbr.fsf@alter.siamese.dyndns.org> <20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi> <7vzk3p1xh3.fsf@alter.siamese.dyndns.org> <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Oct 14 15:26:43 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lauri Alanko <la@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Oct 14 15:28:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNODI-00008Y-6f
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 15:26:40 +0200
+	id 1TNOFA-0001lV-4M
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 15:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224Ab2JNNZl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 09:25:41 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:52409 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217Ab2JNNZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2012 09:25:41 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so6664252iea.19
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 06:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=c7R/T1NzNjSZzmxyiiSbvku0tQ/nkP2W5SBGoNQOHsQ=;
-        b=SPpTgs8sZE4uK6TegBj2Vsp4/I1CMall4v7x0x2RmJm407CfjV6W4KwC+1cv0IDo5H
-         myNn6NwH86zPO7OLkw2fmI++RZ2MxFGMZzhknlO46VRHM0dxBj8kgW9lsWdV9v4inNbu
-         JKZpn8DbWPYxzCy+PoWTyqv3IpUMKc9uGV0GSBx/nRY9VMdrMVVW9OqC9KDmuaPvp/aQ
-         aDpwcvpfNuRyhpiLX14HF9mJEW/bRrS+0CC1DwHiKMacSq8JN7QMIdZJlFqT5afoMkyO
-         xIKuXEzJB7bW2qqEzQPG7Xb3PP+n4g6/0JxF2v3TyN0hS+QjUDhrfe/eabhyLypgxjFb
-         5icg==
-Received: by 10.50.212.97 with SMTP id nj1mr6413587igc.26.1350221140426; Sun,
- 14 Oct 2012 06:25:40 -0700 (PDT)
-Received: by 10.64.143.168 with HTTP; Sun, 14 Oct 2012 06:25:10 -0700 (PDT)
-In-Reply-To: <507AB73D.8010406@lsrfire.ath.cx>
+	id S1753225Ab2JNN2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 09:28:24 -0400
+Received: from mout.web.de ([212.227.15.4]:50594 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753217Ab2JNN2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 09:28:23 -0400
+Received: from [192.168.178.41] ([79.193.81.106]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MDPEX-1T9Ifg3OGL-00HXZZ; Sun, 14 Oct 2012 15:28:22
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi>
+X-Provags-ID: V02:K0:8yLNuO17K/d62XScs4A8yX24ZDf0H4LTgEGiPzWzSv/
+ 59P2dcxNmV5mov3A0xnDu3E9NU1RK03HSCW2qWP15pY8h/VNST
+ b+xqz4ep4R0KZhjYyeBMfbdsOcroczNf3opv5Pa1OG6FjaEkQe
+ mKIQhjCvfAge9bOxtHZWvhTDzEqCJ7YBNIyPJ0C6nSelkOBw4Q
+ 9sICBRI8DTjXFKD8mC0pA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207663>
 
-On Sun, Oct 14, 2012 at 7:59 PM, Ren=C3=A9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
->> +const unsigned char sane_ctype2[256] =3D {
->> +       CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, =
-CN, /*
->> 0..15 */
->> +       CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, CN, =
-CN, /*
->> 16..31 */
->> +       0,  PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, PU, =
-PU, /*
->> 32..47 */
->> +       XD, XD, XD, XD, XD, XD, XD, XD, XD, XD, PU, PU, PU, PU, PU, =
-PU, /*
->> 48..63 */
->> +       PU, 0,  XD, 0,  XD, 0,  XD, 0,  0,  0,  0,  0,  0,  0,  0,  =
-0,  /*
->> 64..79 */
->> +       0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  PU, PU, PU, PU, =
-PU, /*
->> 80..95 */
->> +       PU, 0,  XD, 0,  XD, 0,  XD, 0,  0,  0,  0,  0,  0,  0,  0,  =
-0,  /*
->> 96..111 */
->> +       0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  PU, PU, PU, PU, =
-CN, /*
->> 112..127 */
->
->
-> Shouldn't [ace] (65, 67, 69) and [ACE] (97, 99, 101) be xdigits as we=
-ll?
+Am 14.10.2012 12:19, schrieb Lauri Alanko:
+> Quoting "Junio C Hamano" <gitster@pobox.com>:
+> 
+>>> If the
+>>> submodules ever get reorganized and foo is moved to ./bar, then it is
+>>> impossible to check out older versions or alternate branches, since
+>>> the submodule is no longer where it is expected to be at the origin.
+>>
+>> Isn't that exactly what the "module name" vs "module path" mapping
+>> in .gitmodules file is meant to address?
+> 
+> Yes, and as I showed after the part you quoted, it is possible to refer to a module by name, although it looks like such a hack that I can't imagine it's currently something that git-submodule is intended to support.
 
-Hmm.. I generated it from LANG=3DC. I wonder where I got it wrong..
+Your initial statement is not correct. It is possible to check out older
+versions or alternate branches (at least since we moved the .git directory
+into the .git directory of the superproject). So no improvement gained
+here by your proposal (although I concede that the current user experience
+is suboptimal until my recursive submodule update work hits mainline).
 
-> But how about using the existing hexval_table instead, like this:
->
->         #define isxdigit(x) (hexval_table[(x)] !=3D -1)
->
-> With that, couldn't you squeeze the other two classes into the existi=
-ng
-> sane_type?
+>>> But still, "git submodule update" only looks at the modules in the
+>>> currently checked-out tree. If we have other branches or old tags that
+>>> refer to other submodules, there's no simple way to fetch those, too.
 
-No there are still conflicts: 9, 10 and 13 as spaces (vs controls) and
-123, 124 and 126 as regex/pathspec special (vs punctuation).
+Did you notice that "git fetch" fetches all those submodules too which
+have been updated in the commits fetched for the superproject, no matter
+on what branch they are on?
 
-> By the way, I'm working on a patch series for implementing a lot more
-> character classes with table lookups.  It grew out of a desire to mak=
-e
-> bad_ref_char() faster but perhaps got a bit out of hand by now; it's =
-at 24
-> patches and still not finished.  I'm curious how long we have until i=
-t
-> escapes. ;-)
+>> Didn't I already suggest you to think about how you can improve
+>> existing "git submodule" to suit your use case better?
+> 
+> Yes, and I listed three possible ways. Two of them seem technically unattractive, whereas one of them (submodules as ref directories) seems like a huge change that could introduce incompatibilities. That is why a separate tool seems like a cleaner choice.
 
-I don't think the series is going to graduate any time soon :)
---=20
-Duy
+What's wrong with making git clone all submodules together with the
+superproject (when the user said he wants to update all submodules on
+clone too by setting a - still to be added - config option)? That's my
+plan to make automagic recursive submodule cloning work and it would
+clone all submodules seen in the history of the superproject to
+.git/modules so they could easily be checked out later (and those
+present in the HEAD of the superproject will be checked out immediately
+like "git clone --recurse-submodules" does right now). Were not there
+yet, but that's how I believe that should work.
+
+> There is actually a fourth alternative: extend the git protocol so that a remote repository could be queried for its list of submodules.
+
+That information is contained in the different versions of the .gitmodules
+file, so no need to extend anything here.
+
+I saw nothing in your proposal which couldn't been handled by submodules,
+and for every issue there already have been proposals on how to do that.
+So adding another tool doesn't make any sense here. But you are welcome
+helping us to improve the submodule script (and some core commands too)
+to make submodules cover your use case too.
