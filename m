@@ -1,83 +1,74 @@
-From: "Lauri Alanko" <la@iki.fi>
-Subject: Re: A design for subrepositories
-Date: Sun, 14 Oct 2012 13:19:28 +0300
-Message-ID: <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi>
-References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi>
-	<7vd30m2sbr.fsf@alter.siamese.dyndns.org>
-	<20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi>
-	<7vzk3p1xh3.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v5 05/12] Integrate wildmatch to git
+Date: Sun, 14 Oct 2012 13:07:36 +0200
+Message-ID: <507A9CF8.1040603@web.de>
+References: <1350182110-25936-1-git-send-email-pclouds@gmail.com> <1350182110-25936-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; DelSp="Yes"; format="flowed"
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 14 12:19:51 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 13:08:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNLIU-0006Yd-Hj
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 12:19:50 +0200
+	id 1TNM2z-0000i2-Sz
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 13:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752200Ab2JNKTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 06:19:38 -0400
-Received: from smtp-rs1-vallila2.fe.helsinki.fi ([128.214.173.75]:56972 "EHLO
-	smtp-rs1-vallila2.fe.helsinki.fi" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752175Ab2JNKTh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 06:19:37 -0400
-Received: from webmail.helsinki.fi (webmail1-vallila2.fe.helsinki.fi [128.214.173.135])
-	by smtp-rs1.it.helsinki.fi (8.14.4/8.14.4) with ESMTP id q9EAJSgM031530;
-	Sun, 14 Oct 2012 13:19:29 +0300
-Received: from scan-proxy1-1.it.helsinki.fi (scan-proxy1-1.it.helsinki.fi
-	[128.214.2.137]) by webmail.helsinki.fi (Horde Framework) with HTTP; Sun,
-	14 Oct 2012 13:19:28 +0300
-In-Reply-To: <7vzk3p1xh3.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.2.2
+	id S1752381Ab2JNLHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 07:07:41 -0400
+Received: from mout.web.de ([212.227.17.12]:53946 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752181Ab2JNLHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 07:07:40 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0Lj2TO-1Tukmk2d02-00d6KL; Sun, 14 Oct 2012 13:07:37 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <1350182110-25936-6-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V02:K0:EWgklG+N4ghaB+dFxUrypTRtp/7hvtqHoQlbVM7bWlZ
+ YoqIbaWUKTlvuEZZtSfe0jtxtI8lzybEjaJFUoYcuiWtA0Mzk1
+ 0RgFJDhwb9l0jaSkWl4z9O2qWP6Qo3RqwanCe9w3uuVLA6bZrs
+ POgKRD1pUjH04FUSGfmqUoCTk0aQDhydWh7YdWU1JwuQmu8TLX
+ QHAFQO1IxW4vBWqHFY7HQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207651>
 
-Quoting "Junio C Hamano" <gitster@pobox.com>:
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+new file mode 100755
+index 0000000..dbd3c8b
+--- /dev/null
++++ b/t/t3070-wildmatch.sh
+@@ -0,0 +1,188 @@
++#!/bin/sh
++#    else
++#    test_expect_success BROKEN_FNMATCH "fnmatch:       '$3' '$4'" "
++#        ! test-wildmatch fnmatch '$3' '$4'
++#    "
++    fi
++}
++
 
->> If the
->> submodules ever get reorganized and foo is moved to ./bar, then it is
->> impossible to check out older versions or alternate branches, since
->> the submodule is no longer where it is expected to be at the origin.
->
-> Isn't that exactly what the "module name" vs "module path" mapping
-> in .gitmodules file is meant to address?
+Thanks:
+On my Mac OS X box:
+# passed all 259 test(s)
 
-Yes, and as I showed after the part you quoted, it is possible to  
-refer to a module by name, although it looks like such a hack that I  
-can't imagine it's currently something that git-submodule is intended  
-to support.
-
->> But still, "git submodule update" only looks at the modules in the
->> currently checked-out tree. If we have other branches or old tags that
->> refer to other submodules, there's no simple way to fetch those, too.
-
-> Didn't I already suggest you to think about how you can improve
-> existing "git submodule" to suit your use case better?
-
-Yes, and I listed three possible ways. Two of them seem technically  
-unattractive, whereas one of them (submodules as ref directories)  
-seems like a huge change that could introduce incompatibilities. That  
-is why a separate tool seems like a cleaner choice.
-
-If you want enhancements to git-submodule, at least deign to comment  
-on the issues above.
-
-There is actually a fourth alternative: extend the git protocol so  
-that a remote repository could be queried for its list of submodules.  
-But this seems particularly icky: git is at its core such a low-level  
-framework. Nested repositories are such a high-level concept that  
-something is wrong if the core needs specialized support for it. The  
-ref directories approach, on the other hand, is completely transparent  
-to standard tools.
+And a quick test on cygwin:
+$ ./t3070-wildmatch.sh  2>&1 | grep "not ok"
+not ok - 148 fnmatch:      match '5' '[[:xdigit:]]'
+not ok - 150 fnmatch:      match 'f' '[[:xdigit:]]'
+not ok - 152 fnmatch:      match 'D' '[[:xdigit:]]'
 
 
-Lauri
+And 2 micronits:
+a) Commented out code
+b) Whithespace damage
+( 4 spaces used for an indent of 1, TAB for indent of 2)
+
+/Torsten
