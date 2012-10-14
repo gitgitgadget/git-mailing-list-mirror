@@ -1,101 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/2] Re: [PATCH] config: warn on inaccessible files
-Date: Sat, 13 Oct 2012 21:55:22 -0700
-Message-ID: <7vhapx1wlh.fsf@alter.siamese.dyndns.org>
-References: <20121014000210.GA19094@elie.Belkin>
+From: david@lang.hm
+Subject: Re: looking for suggestions for managing a tree of server configs
+Date: Sat, 13 Oct 2012 21:57:18 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1210132153040.6253@asgard.lang.hm>
+References: <alpine.DEB.2.02.1210131413240.6253@asgard.lang.hm> <7vpq4l1x86.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 06:55:45 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 06:57:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNGEm-00046G-1Y
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 06:55:40 +0200
+	id 1TNGGb-0005is-A6
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 06:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279Ab2JNEzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 00:55:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58012 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750890Ab2JNEzY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 00:55:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 613666248;
-	Sun, 14 Oct 2012 00:55:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+6BPLqG6ZstR2PUqcGQIM/CAvmo=; b=V5BFqS
-	STI6rYOd1QykDtjooUxY1YO2Pht8DMhEX32eUjKMegOX8+/Xhc4gfyV8JhfKWCUt
-	OFfMz7r3vPx9BCfwuZE7x4hPS5SF+WM9S2iZAuSZTvvH9ZIQ/LHgyhoTiJCxPMH8
-	b2TLdyWcEU5GTpUJufkL1mCzkPvZMRr42HgAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wKH+xyM2MgOS/djxEuFWn1Yjo/Vsmp4N
-	j5TdVFEiZYEI3FqkYkiAhE9uVBYc/rtFCto/huBivZudCvWUNG4pSLlXUrF8Vwt6
-	LcQqCNsGNo1i+rq4+Vwj8pi6eawtbacqXOuO3cYJYm3/xHsOrBx1aMeIT4/SMPpP
-	hv1gj0sUlaE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F7E46247;
-	Sun, 14 Oct 2012 00:55:24 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9DD506245; Sun, 14 Oct 2012
- 00:55:23 -0400 (EDT)
-In-Reply-To: <20121014000210.GA19094@elie.Belkin> (Jonathan Nieder's message
- of "Sat, 13 Oct 2012 17:02:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CEB8B90-15BB-11E2-8A8C-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751317Ab2JNE5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 00:57:20 -0400
+Received: from mail.lang.hm ([64.81.33.126]:41136 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751034Ab2JNE5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 00:57:19 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id q9E4vH04021418;
+	Sat, 13 Oct 2012 21:57:17 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <7vpq4l1x86.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207611>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sat, 13 Oct 2012, Junio C Hamano wrote:
 
-> Hi Jeff,
+> david@lang.hm writes:
 >
-> In August, Jeff King wrote:
+>> I've got a directory tree that holds config data for all my
+>> servers. This consists of one directory per server (which is updated
+>> periodically from what is currently configured on that server), plus
+>> higher level summary reports and similar information.
+>>
+>> today I have just a single git tree covering everything, and I make a
+>> commit each time one of the per-server directories is updated, and
+>> again when the top-level stuff is created.
 >
->> Before reading a config file, we check "!access(path, R_OK)"
->> to make sure that the file exists and is readable. If it's
->> not, then we silently ignore it.
->
-> git became noisy:
->
->  $ git fetch --all
->  warning: unable to access '/home/jrn/.config/git/config': Not a directory
->  ...
->  warning: unable to access '/home/jrn/.config/git/config': Not a directory
->  Fetching charon
->  warning: unable to access '/home/jrn/.config/git/config': Not a directory
->  [...]
->
-> On this machine, ~/.config/git has been a regular file for a while,
-> with ~/.gitconfig a symlink to it.  Probably ENOTDIR should be ignored
-> just like ENOENT is.  Except for the noise, the behavior is fine, but
-> something still feels wrong.  
->
-> When ~/.gitconfig is unreadable (EPERM), the messages are a symptom of
-> an older issue: the config file is being ignored.  Shouldn't git error
-> out instead so the permissions can be fixed?  E.g., if the sysadmin
-> has set "[branch] autoSetupRebase" to true in /etc/gitconfig and I
-> have set it to false in my own ~/.gitconfig, I'd rather see git error
-> out because ~/.gitconfig has become unreadable in a chmod gone wrong
-> than have a branch set up with the wrong settings and have to learn to
-> fix it up myself.
->
-> In other words, how about something like this?
+> It is quite clear to me what you are keeping at the top-level files,
+> but if a large portion of the configuration for these servers are
+> shared, it might not be a bad idea to have a canonical "gold-master"
+> configuration branch, to which the shared updates are applied, with
+> a branch per server that forks from that canonical branch to keep
+> the machine specific tweaks as differences from the canonical stuff,
+> instead of having N subdirectories (one per machine).
 
-I think that is a reasonable issue to address, but I wonder if we
-should be sharing more code between these.  If the config side can
-be switched to unconditionally attempt to fopen and then deal with
-an error when it happens, we can get rid of access_or_{warn,die}
-and replace them with fopen_or_{warn,die} and use them from the two
-places (attr.c:read_attr_from_file() and the configuration stuff).
+In an ideal world yes, but right now these machines are updated by many 
+different tools (unforuntantly including 'vi'), so these directories 
+aren't the config to be pushed out to the boxes (i.e. what they should 
+be), it's instead an archived 'what is', the result of changes from all 
+the tools.
 
-I haven't looked to see if that a too intrusive refactoring to be
-worth it, though.
+The systems are all built with a standard image, but the automation tools 
+I do have tend to push identical files out to many of the systems (or 
+files identical except for a couple of lines)
+
+David Lang
