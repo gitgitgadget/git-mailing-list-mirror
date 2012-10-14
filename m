@@ -1,63 +1,67 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v5 04/12] wildmatch: remove unnecessary functions
-Date: Sun, 14 Oct 2012 13:29:36 +0700
-Message-ID: <CACsJy8DsH9OfkdJw3MnkvUidjgdUFP_ODdjLnj25jgKbB9yr7w@mail.gmail.com>
-References: <1350182110-25936-1-git-send-email-pclouds@gmail.com>
- <1350182110-25936-5-git-send-email-pclouds@gmail.com> <7vr4p1zl2s.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git smart-http do not authent to allow git ls-remote to be
+ called anonymously
+Date: Sun, 14 Oct 2012 02:30:22 -0400
+Message-ID: <20121014063022.GA14812@sigill.intra.peff.net>
+References: <CAHtLG6Q+XO=LhnKw4hhwtOe2ROeDN1Kg=JN5GTQqdvYjk-Sv4g@mail.gmail.com>
+ <20121001010935.GA18987@sigill.intra.peff.net>
+ <CAHtLG6QFu1rOfUeWREwVG540WvXtM1SnH6aHEJ9dKLzwNxbkVg@mail.gmail.com>
+ <CAHtLG6T=hFsSy=ScRK2cYBoUcmAG_tsg12FiFMTvzpHGmPTzfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 08:30:24 2012
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 08:30:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNHiO-0001ps-Og
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 08:30:21 +0200
+	id 1TNHid-00026s-Hw
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 08:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292Ab2JNGaI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 02:30:08 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:42730 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751216Ab2JNGaH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2012 02:30:07 -0400
-Received: by mail-ia0-f174.google.com with SMTP id y32so2952274iag.19
-        for <git@vger.kernel.org>; Sat, 13 Oct 2012 23:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=retP6cWYpOr4ORD7xrEwlnsGxwguL6FIII7uSpcKY5g=;
-        b=a2N5av1MohIOZuuD9P4A88xanQ+X91f4PVgSk7DcC77sBTu1XOgtV1PL1TnnVYiuZh
-         3SFDrtB3058Rhsx4TCDlKuNfWMqeJg9YsnmwR6lQLrKYmIBxPic0Jk2lQz6EpZ27ufXS
-         LHTll0hA+CmUPNLHnVXO5b9jDFxRfIe2VxfeatMJwTSEF2dOWQ3GhweOMQpbPA3fLYqt
-         KwqfGeOYfKNmrNI3hte1LIAWcNLu0vp3dC4iNeFsaI1oo7y+SBBg22SaDco3R1ccar5T
-         6wEOSOLMe8uxA1VFokPy0d2OGlWBeYu9/iH53Vdh+WGtedzQOmaK/orbyZ4qMkXqV5p+
-         tdsw==
-Received: by 10.50.0.241 with SMTP id 17mr5923116igh.40.1350196206488; Sat, 13
- Oct 2012 23:30:06 -0700 (PDT)
-Received: by 10.64.143.168 with HTTP; Sat, 13 Oct 2012 23:29:36 -0700 (PDT)
-In-Reply-To: <7vr4p1zl2s.fsf@alter.siamese.dyndns.org>
+	id S1751422Ab2JNGaZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 02:30:25 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51975 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751359Ab2JNGaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 02:30:24 -0400
+Received: (qmail 18608 invoked by uid 107); 14 Oct 2012 06:30:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 14 Oct 2012 02:30:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Oct 2012 02:30:22 -0400
+Content-Disposition: inline
+In-Reply-To: <CAHtLG6T=hFsSy=ScRK2cYBoUcmAG_tsg12FiFMTvzpHGmPTzfg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207643>
 
-On Sun, Oct 14, 2012 at 12:04 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->
-> The comment-fix seems to be new but otherwise this is unchanged,
-> right?
+[re-adding git@vger; please keep discussion on-list]
 
-Right.--
-Duy
+On Sun, Oct 14, 2012 at 01:29:13PM +0800, =E4=B9=99=E9=85=B8=E9=8B=B0 w=
+rote:
+
+> Sorry, it does not serve the request. It returns http 401.
+> But if I add the username and password as a part of the URL, it succe=
+eds.
+
+In that case, then you probably need to upgrade your client version of
+git, as I mentioned here:
+
+> >> Or is it that the server tells git that it needs authorization, bu=
+t git
+> >> does not prompt, and instead just fails with "Authentication faile=
+d". In
+> >> that case, the issue is that you need a newer git client. Traditio=
+nally
+> >> the client expected to handle authentication during the initial
+> >> "info/refs" request. I added support for handling authentication d=
+uring
+> >> later requests in commit b81401c, which is in git v1.7.11.7 and
+> >> v1.7.12.1.
+
+-Peff
