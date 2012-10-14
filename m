@@ -1,72 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] Re: [PATCH] config: warn on inaccessible files
-Date: Sun, 14 Oct 2012 02:00:42 -0700
-Message-ID: <20121014090041.GE7190@elie.Belkin>
-References: <20121014000210.GA19094@elie.Belkin>
- <7vhapx1wlh.fsf@alter.siamese.dyndns.org>
+From: "Lauri Alanko" <la@iki.fi>
+Subject: Re: A design for subrepositories
+Date: Sun, 14 Oct 2012 13:19:28 +0300
+Message-ID: <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi>
+References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi>
+	<7vd30m2sbr.fsf@alter.siamese.dyndns.org>
+	<20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi>
+	<7vzk3p1xh3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 11:01:01 2012
+Content-Type: text/plain; charset=UTF-8; DelSp="Yes"; format="flowed"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 14 12:19:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNK4D-0000K8-2U
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 11:01:01 +0200
+	id 1TNLIU-0006Yd-Hj
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 12:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490Ab2JNJAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 05:00:50 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:42208 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab2JNJAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 05:00:49 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so2063526dak.19
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 02:00:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=c+cC9F+j6unwr4KMwDJZs7EgpiVXMibWYudi6F/YhKA=;
-        b=jujSZx3z+I3AgDYHFHtWCg+d12SCY8JCJNxmNDJ66W7SXQcWrRTVEuJBDW3qodvMhU
-         bhHEWSH2jqs/FcTrqgA3NS9KAcaNFSyISzLmRIT0o9pXC1Jgt3CewMrp+JqFAuQ6uRXk
-         yov9IC9wFn+ITxJFXh3pi5czo8fIwrE2OQrRXQkXB73Q8xFWyIwTAooW4sMVuLjLReAf
-         KRmQPSNqYeiv724kl2Hm+HmQ5pXCSHnQcb5XlAS38hPB4fTZr2EnUgmwssINl5fE8g0Q
-         /BfG6Q2ORjn5hHNANBdNhP/1d2keO9XFtYFqlByVNZwJSzH5KbbtH6w5g0JFAry++SpW
-         Q8zQ==
-Received: by 10.66.88.40 with SMTP id bd8mr24208992pab.36.1350205249076;
-        Sun, 14 Oct 2012 02:00:49 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id qd9sm7229155pbb.31.2012.10.14.02.00.48
-        (version=SSLv3 cipher=OTHER);
-        Sun, 14 Oct 2012 02:00:48 -0700 (PDT)
+	id S1752200Ab2JNKTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 06:19:38 -0400
+Received: from smtp-rs1-vallila2.fe.helsinki.fi ([128.214.173.75]:56972 "EHLO
+	smtp-rs1-vallila2.fe.helsinki.fi" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752175Ab2JNKTh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 06:19:37 -0400
+Received: from webmail.helsinki.fi (webmail1-vallila2.fe.helsinki.fi [128.214.173.135])
+	by smtp-rs1.it.helsinki.fi (8.14.4/8.14.4) with ESMTP id q9EAJSgM031530;
+	Sun, 14 Oct 2012 13:19:29 +0300
+Received: from scan-proxy1-1.it.helsinki.fi (scan-proxy1-1.it.helsinki.fi
+	[128.214.2.137]) by webmail.helsinki.fi (Horde Framework) with HTTP; Sun,
+	14 Oct 2012 13:19:28 +0300
+In-Reply-To: <7vzk3p1xh3.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vhapx1wlh.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+User-Agent: Internet Messaging Program (IMP) 4.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207650>
 
-Junio C Hamano wrote:
+Quoting "Junio C Hamano" <gitster@pobox.com>:
 
->                                             If the config side can
-> be switched to unconditionally attempt to fopen and then deal with
-> an error when it happens, we can get rid of access_or_{warn,die}
-> and replace them with fopen_or_{warn,die} and use them from the two
-> places (attr.c:read_attr_from_file() and the configuration stuff).
+>> If the
+>> submodules ever get reorganized and foo is moved to ./bar, then it is
+>> impossible to check out older versions or alternate branches, since
+>> the submodule is no longer where it is expected to be at the origin.
 >
-> I haven't looked to see if that a too intrusive refactoring to be
-> worth it, though.
+> Isn't that exactly what the "module name" vs "module path" mapping
+> in .gitmodules file is meant to address?
 
-That sounds reasonable, but I'm punting on it.  The first step would
-be tweaking the git_config_from_file() calling convention to convey
-"missing file" errors specially, perhaps by making sure errno is
-meaningful when the return value is -1, and that already sounds like
-work. ;-)
+Yes, and as I showed after the part you quoted, it is possible to  
+refer to a module by name, although it looks like such a hack that I  
+can't imagine it's currently something that git-submodule is intended  
+to support.
 
-Thanks,
-Jonathan
+>> But still, "git submodule update" only looks at the modules in the
+>> currently checked-out tree. If we have other branches or old tags that
+>> refer to other submodules, there's no simple way to fetch those, too.
+
+> Didn't I already suggest you to think about how you can improve
+> existing "git submodule" to suit your use case better?
+
+Yes, and I listed three possible ways. Two of them seem technically  
+unattractive, whereas one of them (submodules as ref directories)  
+seems like a huge change that could introduce incompatibilities. That  
+is why a separate tool seems like a cleaner choice.
+
+If you want enhancements to git-submodule, at least deign to comment  
+on the issues above.
+
+There is actually a fourth alternative: extend the git protocol so  
+that a remote repository could be queried for its list of submodules.  
+But this seems particularly icky: git is at its core such a low-level  
+framework. Nested repositories are such a high-level concept that  
+something is wrong if the core needs specialized support for it. The  
+ref directories approach, on the other hand, is completely transparent  
+to standard tools.
+
+
+Lauri
