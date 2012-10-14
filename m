@@ -1,86 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Why git shows staging area to users?
-Date: Sun, 14 Oct 2012 19:16:58 +0200
-Message-ID: <vpqr4p1as8l.fsf@grenoble-inp.fr>
-References: <CAFT+Tg-g6KOs3YUKV_GWbZiO9qUG3LP8-T3Tdyd3LinnheQZ8A@mail.gmail.com>
-	<CAJDDKr7tUJ59jYDM-jhFnGMEB18taT7FsTJ24Hr=iBUgXXeYdg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] exclude: fix a bug in prefix comparison optimization
+Date: Sun, 14 Oct 2012 10:36:06 -0700
+Message-ID: <7v8vb9yn09.fsf@alter.siamese.dyndns.org>
+References: <1350214522-3242-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: semtlenori@gmail.com, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 19:17:22 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 19:41:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNRoX-0001Oh-U1
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 19:17:22 +0200
+	id 1TNSBO-0005pT-5o
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 19:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769Ab2JNRRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 13:17:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58038 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754746Ab2JNRRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 13:17:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q9EHA3vW026476
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 14 Oct 2012 19:10:05 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TNRoB-0006c7-5D; Sun, 14 Oct 2012 19:16:59 +0200
-In-Reply-To: <CAJDDKr7tUJ59jYDM-jhFnGMEB18taT7FsTJ24Hr=iBUgXXeYdg@mail.gmail.com>
-	(David Aguilar's message of "Sat, 13 Oct 2012 17:56:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 14 Oct 2012 19:10:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q9EHA3vW026476
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1350839410.57815@mxnbaA1v1QPOGnojEWU+sg
+	id S1752962Ab2JNRgK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 13:36:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46107 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751578Ab2JNRgJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2012 13:36:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F3A59F4D;
+	Sun, 14 Oct 2012 13:36:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=3/V2l9BewRJp
+	A7BAqC4T5lg18ZM=; b=C/+71q0PbinVWY8r6s7+tl96dWCBDDBpPbpKkRzIa87Y
+	RplndP/hd+dT8eGJ/+e39bYM/CF8EHLlrlIPzi/+YQnP0uCMMdXT59SVM6Aev0j5
+	KQ7C/A5Jy4tMJkOiIvI1r6yf0kMD/mIpordCeuGRzUYyR6eNLZaT+2AbZL5/Ju4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=e5sBal
+	fv4nSScoFGowv5wvDUhOGQ478kRNqm80qtmCoBGr/Yuuf23FGx7OjmSEJa/aFHyG
+	xQRTmJRCN6xNtfhmesthqe8Lzd0mJ1uUSyd/kvW7xzbsSiv62PxLbQRMh8BjVATR
+	byMxFccYC8KQLIOQVmapVBR1jymPTJQGBYCIQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A2469F4C;
+	Sun, 14 Oct 2012 13:36:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C28E99F48; Sun, 14 Oct 2012
+ 13:36:07 -0400 (EDT)
+In-Reply-To: <1350214522-3242-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 14 Oct
+ 2012 18:35:22 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A2F41FFC-1625-11E2-85DB-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207678>
 
-David Aguilar <davvid@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> On Sat, Oct 13, 2012 at 2:08 PM, Yi, EungJun <semtlenori@gmail.com> wrote:
->> Hi, all.
->>
->> Why git shows staging area to users, compared with the other scms hide
->> it? What benefits users get?
+> When "namelen" becomes zero at this stage, we have matched the fixed
+> part, but whether it actually matches the pattern still depends on th=
+e
+> pattern in "exclude". As demonstrated in t3001, path "three/a.3"
+> exists and it matches the "three/a.3" part in pattern "three/a.3[abc]=
+",
+> but that does not mean a true match.
 >
-> http://thkoch2001.github.com/whygitisbetter/#the-staging-area
-> http://tomayko.com/writings/the-thing-about-git
-> http://gitready.com/beginner/2009/01/18/the-staging-area.html
->
-> Other scms do not "hide"; other scms lack this feature altogether.
+> Don't be too optimistic and let fnmatch() do the job.
 
-More precisely: there are several things in what git calls "the index"
-or "the staging area" (i.e. .git/index):
+Yeah, the existing code is correct _only_ if the pattern part can
+match an empty string (e.g. "three/a.3*") and this is a correct fix.
 
-1) a list of files tracked by Git
+With your "teach attr.c match the same optimization as dir.c"
+series, you would need something like this
 
-2) a record of the last known meta-data of the file, used to avoid
-   re-reading unmodified files content each time one runs "diff",
-   "commit" or so.
+diff --git i/attr.c w/attr.c
+index 6d39406..528e935 100644
+--- i/attr.c
++++ w/attr.c
+@@ -710,7 +710,7 @@ static int path_matches(const char *pathname, int p=
+athlen,
+ 	 * if the non-wildcard part is longer than the remaining
+ 	 * pathname, surely it cannot match.
+ 	 */
+-	if (!namelen || prefix > namelen)
++	if (prefix > namelen)
+ 		return 0;
+ 	if (baselen !=3D 0)
+ 		baselen++;
 
-3) a record of the file's staged *content* (possible several records in
-   case a merge is going on)
+Comparing the corresponding code in dir.c, there is no "compare the
+literal prefix part with strcmp() before doing the fnmatch()"
+optimization.  Intended?
 
-Any decent revision control has the equivalent of 1) and 2), but AFAIK,
-3) is a unique feature of Git. There is a frequent confusion between 2)
-and 3) that leads to people (often other revision-control
-users/developers) wonder why this is visible to the user. 2) is a
-performance optimization that can be hidden to the user (it is with
-Git's porcelain commands), but 3) is user-visible.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+(warning: I haven't had my caffeine yet)
