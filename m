@@ -1,67 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git smart-http do not authent to allow git ls-remote to be
- called anonymously
-Date: Sun, 14 Oct 2012 02:30:22 -0400
-Message-ID: <20121014063022.GA14812@sigill.intra.peff.net>
-References: <CAHtLG6Q+XO=LhnKw4hhwtOe2ROeDN1Kg=JN5GTQqdvYjk-Sv4g@mail.gmail.com>
- <20121001010935.GA18987@sigill.intra.peff.net>
- <CAHtLG6QFu1rOfUeWREwVG540WvXtM1SnH6aHEJ9dKLzwNxbkVg@mail.gmail.com>
- <CAHtLG6T=hFsSy=ScRK2cYBoUcmAG_tsg12FiFMTvzpHGmPTzfg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: "George Spelvin" <linux@horizon.com>
+Subject: Re: git reflog delete HEAD@{1} HEAD@{2} caught me by surprise...
+Date: 14 Oct 2012 03:02:18 -0400
+Message-ID: <20121014070218.16887.qmail@science.horizon.com>
+References: <7vlif91wv6.fsf@alter.siamese.dyndns.org>
 Cc: git@vger.kernel.org
-To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 08:30:37 2012
+To: gitster@pobox.com, linux@horizon.com
+X-From: git-owner@vger.kernel.org Sun Oct 14 09:02:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNHid-00026s-Hw
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 08:30:35 +0200
+	id 1TNIDW-0004Km-RY
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 09:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422Ab2JNGaZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 02:30:25 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51975 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751359Ab2JNGaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 02:30:24 -0400
-Received: (qmail 18608 invoked by uid 107); 14 Oct 2012 06:30:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 14 Oct 2012 02:30:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Oct 2012 02:30:22 -0400
-Content-Disposition: inline
-In-Reply-To: <CAHtLG6T=hFsSy=ScRK2cYBoUcmAG_tsg12FiFMTvzpHGmPTzfg@mail.gmail.com>
+	id S1751756Ab2JNHCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 03:02:20 -0400
+Received: from science.horizon.com ([71.41.210.146]:23524 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751589Ab2JNHCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 03:02:19 -0400
+Received: (qmail 16888 invoked by uid 1000); 14 Oct 2012 03:02:18 -0400
+In-Reply-To: <7vlif91wv6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207644>
 
-[re-adding git@vger; please keep discussion on-list]
+> I would actually call that behaviour a bug.
 
-On Sun, Oct 14, 2012 at 01:29:13PM +0800, =E4=B9=99=E9=85=B8=E9=8B=B0 w=
-rote:
+Well, yes, that was my inclination, too.  But writing documentation was
+easier than writing a code patch.  :-)
 
-> Sorry, it does not serve the request. It returns http 401.
-> But if I add the username and password as a part of the URL, it succe=
-eds.
+Even when it is fixed, a comment about when it was fixed and what the
+buggy version did should live in the BUGS section for a while, to warn
+people writing portable scripts.
 
-In that case, then you probably need to upgrade your client version of
-git, as I mentioned here:
+> Perhaps it should grab
+> all the command line arguments first, group them per the ref the
+> reflog entries are based on, and expire _all_ reflog entries from
+> the same reflog in one go?
 
-> >> Or is it that the server tells git that it needs authorization, bu=
-t git
-> >> does not prompt, and instead just fails with "Authentication faile=
-d". In
-> >> that case, the issue is that you need a newer git client. Traditio=
-nally
-> >> the client expected to handle authentication during the initial
-> >> "info/refs" request. I added support for handling authentication d=
-uring
-> >> later requests in commit b81401c, which is in git v1.7.11.7 and
-> >> v1.7.12.1.
+Two other options are to sort them in decreasing entry order (which you
+could do either per-reflog, or simply globally), or to remember previous
+deletions so you can adjust the numbers of later ones.
 
--Peff
+One tricky point is whether it's possible for a reflog to have two names,
+via a symlink or something.  That definitely complicates collision
+detection.
+
+> Until that happens, it may make sense to error it out when more than
+> one entries are given from the command line, at least for the same
+> ref.
+
+Detecting this seems like half the implementation work of fixing it,
+so I'm not sure it's worth bothering.
+
+
+Looking at the code (builtin/reflog.c), I notice that expire_reflog()
+takes a lock on the ref, but the previous count_reflog_ent code doesn't,
+so things aren't necessarily race-proof.  I haven't figured out if the
+race is a problem (i.e. does expire_reflog do something nasty if the
+struct cmd_reflog_expire_cb holds stale data?), but I noticed...
