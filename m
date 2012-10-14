@@ -1,156 +1,141 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 2/3] tests: use __gitcompadd to simplify completion tests
-Date: Sun, 14 Oct 2012 17:52:50 +0200
-Message-ID: <1350229971-9343-3-git-send-email-felipe.contreras@gmail.com>
-References: <1350229971-9343-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	SZEDER Gabor <szeder@ira.uka.de>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 14 17:53:23 2012
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: A design for subrepositories
+Date: Sun, 14 Oct 2012 18:10:36 +0200
+Message-ID: <507AE3FC.3040200@web.de>
+References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi> <7vd30m2sbr.fsf@alter.siamese.dyndns.org> <20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi> <7vzk3p1xh3.fsf@alter.siamese.dyndns.org> <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi> <507ABDF3.4040106@web.de> <20121014182746.42895rwvalv4uoz6.lealanko@webmail.helsinki.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lauri Alanko <la@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Oct 14 18:11:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNQVA-0003ne-01
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 17:53:16 +0200
+	id 1TNQmG-0002oN-LU
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 18:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054Ab2JNPxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 11:53:04 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:58167 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753761Ab2JNPxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 11:53:03 -0400
-Received: by mail-wg0-f44.google.com with SMTP id dr13so3800981wgb.1
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 08:53:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=CwtENX6Tb928GbelODnDJkcBxFEUPyjH/l+ATApMeK4=;
-        b=XtfATepcVRASz/+nrpts5oOHqbFBEcKkSSzyw4enJj0Hj/IteM8SCXXRfqQTfr1juf
-         wdsiOx8W7H4wwjbdObYyw+xRFHoMhN0jD/S82L4ONBPnuloOgxsdsQRjmrMmUIMvlJDP
-         pPyOIXHazHmLjWguzo87mFVcjeb9E68j5dVTKyojM0EOt0WhWaUgwj63BgfK2eVx2CUN
-         8n+zXe/l/J+ntiR37E2j3QU0Y5pGY6L66XRVY1slQy+E5wX7bMokk6U7U6hqIVqelOUM
-         pEjqXlf70DJFegayAKh67NHn1IrLc9msnLlKKHaZYZJMMHOUDyMpWQM0Vo92dous2Iw3
-         yWUA==
-Received: by 10.180.80.104 with SMTP id q8mr18006961wix.6.1350229982734;
-        Sun, 14 Oct 2012 08:53:02 -0700 (PDT)
-Received: from localhost (ip-109-43-0-56.web.vodafone.de. [109.43.0.56])
-        by mx.google.com with ESMTPS id hv8sm9416365wib.0.2012.10.14.08.53.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 14 Oct 2012 08:53:01 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.1
-In-Reply-To: <1350229971-9343-1-git-send-email-felipe.contreras@gmail.com>
+	id S1754200Ab2JNQKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 12:10:45 -0400
+Received: from mout.web.de ([212.227.15.4]:54182 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753535Ab2JNQKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 12:10:44 -0400
+Received: from [192.168.178.41] ([79.193.81.106]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0Mcni1-1T62Vv2UzJ-00IS3A; Sun, 14 Oct 2012 18:10:43
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121014182746.42895rwvalv4uoz6.lealanko@webmail.helsinki.fi>
+X-Provags-ID: V02:K0:HRy6lEBz0z/r+NjjACStpj8DovRkDukXRGQmUeiKxaD
+ xP4NQLCjXXk1dwVm9o21HuYNH0rg+vOIVUNNDp5/wZrFVRppU5
+ UtD8v0nphnxjDEdU5HWWCmFJhKYHhTfeBKVLLptqPg7RcUkr8I
+ YpAyuaQBlStS76EQOhnGHcZzLgf371q9o5Vw3Esnvp4wvxAq2B
+ QTFIt7waD7uElWLJtto1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207672>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t9902-completion.sh | 29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+Am 14.10.2012 17:27, schrieb Lauri Alanko:
+> Quoting "Jens Lehmann" <Jens.Lehmann@web.de>:
+> 
+>>>>> If the
+>>>>> submodules ever get reorganized and foo is moved to ./bar, then it is
+>>>>> impossible to check out older versions or alternate branches, since
+>>>>> the submodule is no longer where it is expected to be at the origin.
+> 
+>> Your initial statement is not correct.
+> 
+> Please elaborate. My initial statement was about "git submodule add ./foo", and this is what I get:
+> 
+> la@bq:~/tmp$ git --version
+> git version 1.8.0.rc2.2.gfc364c7
+> la@bq:~/tmp$ git init super
+> Initialized empty Git repository in /home/la/tmp/super/.git/
+> la@bq:~/tmp$ cd super
+> la@bq:~/tmp/super$ echo foo > foo
+> la@bq:~/tmp/super$ git add foo
+> la@bq:~/tmp/super$ git ci -m foo
+> [master (root-commit) a0dd543] foo
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 foo
+> la@bq:~/tmp/super$ git init sub
+> Initialized empty Git repository in /home/la/tmp/super/sub/.git/
+> la@bq:~/tmp/super$ cd sub
+> la@bq:~/tmp/super/sub$ echo bar > bar
+> la@bq:~/tmp/super/sub$ git add bar
+> la@bq:~/tmp/super/sub$ git ci -m bar
+> [master (root-commit) a6ee6d6] bar
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 bar
+> la@bq:~/tmp/super/sub$ cd ..
+> la@bq:~/tmp/super$ git submodule add ./sub
+> Adding existing repo at 'sub' to the index
+> la@bq:~/tmp/super$ git ci -m sub
+> [master cb289e8] sub
+>  2 files changed, 4 insertions(+)
+>  create mode 100644 .gitmodules
+>  create mode 160000 sub
+> la@bq:~/tmp/super$ git branch old
+> la@bq:~/tmp/super$ git mv sub movedsub
+> fatal: source directory is empty, source=sub, destination=movedsub
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 92d7eb4..49c6eb4 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -39,19 +39,18 @@ _get_comp_words_by_ref ()
- 	done
- }
- 
--print_comp ()
-+__gitcompadd ()
- {
--	local IFS=$'\n'
--	echo "${COMPREPLY[*]}" > out
-+	compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}" > out
- }
- 
- run_completion ()
- {
--	local -a COMPREPLY _words
-+	local -a _words
- 	local _cword
- 	_words=( $1 )
- 	(( _cword = ${#_words[@]} - 1 ))
--	__git_wrap__git_main && print_comp
-+	__git_wrap__git_main
- }
- 
- test_completion ()
-@@ -70,12 +69,10 @@ test_expect_success '__gitcomp - trailing space - options' '
- 	--reset-author Z
- 	EOF
- 	(
--		local -a COMPREPLY &&
- 		cur="--re" &&
- 		__gitcomp "--dry-run --reuse-message= --reedit-message=
- 				--reset-author" &&
--		IFS="$newline" &&
--		echo "${COMPREPLY[*]}" > out
-+		IFS="$newline"
- 	) &&
- 	test_cmp expected out
- '
-@@ -88,12 +85,10 @@ test_expect_success '__gitcomp - trailing space - config keys' '
- 	browser.Z
- 	EOF
- 	(
--		local -a COMPREPLY &&
- 		cur="br" &&
- 		__gitcomp "branch. branch.autosetupmerge
- 				branch.autosetuprebase browser." &&
--		IFS="$newline" &&
--		echo "${COMPREPLY[*]}" > out
-+		IFS="$newline"
- 	) &&
- 	test_cmp expected out
- '
-@@ -104,12 +99,10 @@ test_expect_success '__gitcomp - option parameter' '
- 	resolve Z
- 	EOF
- 	(
--		local -a COMPREPLY &&
- 		cur="--strategy=re" &&
- 		__gitcomp "octopus ours recursive resolve subtree
- 			" "" "re" &&
--		IFS="$newline" &&
--		echo "${COMPREPLY[*]}" > out
-+		IFS="$newline"
- 	) &&
- 	test_cmp expected out
- '
-@@ -120,12 +113,10 @@ test_expect_success '__gitcomp - prefix' '
- 	branch.maint.mergeoptions Z
- 	EOF
- 	(
--		local -a COMPREPLY &&
- 		cur="branch.me" &&
- 		__gitcomp "remote merge mergeoptions rebase
- 			" "branch.maint." "me" &&
--		IFS="$newline" &&
--		echo "${COMPREPLY[*]}" > out
-+		IFS="$newline"
- 	) &&
- 	test_cmp expected out
- '
-@@ -136,12 +127,10 @@ test_expect_success '__gitcomp - suffix' '
- 	branch.maint.Z
- 	EOF
- 	(
--		local -a COMPREPLY &&
- 		cur="branch.me" &&
- 		__gitcomp "master maint next pu
- 			" "branch." "ma" "." &&
--		IFS="$newline" &&
--		echo "${COMPREPLY[*]}" > out
-+		IFS="$newline"
- 	) &&
- 	test_cmp expected out
- '
--- 
-1.7.12.1
+This error here indicates that we didn't teach git to properly move
+a submodule yet. It is one of my next goals to make "git [submodule]
+mv sub movedsub" do the right thing here. To do these steps manually
+you'll additionally have to do the following before moving the
+submodule (because after moving it the relative paths will be broken):
+
+$ HASH=$(cd sub; git rev-parse HEAD)
+
+> la@bq:~/tmp/super$ mv sub movedsub
+
+Currently it is better to remove the submodule here, as recreating it
+with a "git submodule update" later will get the relative paths right.
+
+> la@bq:~/tmp/super$ git rm sub
+> rm 'sub'
+> la@bq:~/tmp/super$ git add movedsub
+
+And to git this adds a completely different submodule (as its name
+is not "sub"), which breaks your expectation. To do what you intended
+use this line instead:
+
+$ git update-index --add --cacheinfo 160000 $HASH movedsub
+
+(With the "--next" option currently in the "next" branch of Junio's
+repo a "git submodule add --name sub movedsub" should do the job.
+Until then a bit more magic is necessary).
+
+> la@bq:~/tmp/super$ git config -f .gitmodules submodule.sub.path movedsub
+> la@bq:~/tmp/super$ git config -f .gitmodules submodule.sub.url ./movedsub
+> la@bq:~/tmp/super$ git ci -am movedsub
+> [master 5598bc0] movedsub
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>  rename sub => movedsub (100%)
+> la@bq:~/tmp/super$ cd ..
+> la@bq:~/tmp$ git clone super superc
+> Cloning into 'superc'...
+> done.
+> la@bq:~/tmp$ cd superc
+> la@bq:~/tmp/superc$ git co old
+> Branch old set up to track remote branch old from origin.
+> Switched to a new branch 'old'
+> la@bq:~/tmp/superc$ git submodule update --init
+> Submodule 'sub' (/home/la/tmp/super/sub) registered for path 'sub'
+> fatal: repository '/home/la/tmp/super/sub' does not exist
+> Clone of '/home/la/tmp/super/sub' into submodule path 'sub' failed
+
+And that fails because to be able to clone a submodule it has to be
+pushed into its own repo first, so it can be cloned from there somewhere
+else. After doing that this will work.
+
+> So a normal relative path in .gitmodules to inside the tree is fragile, since the location of the submodule can change.
+
+As I said, the current user experience is suboptimal. The test case
+'submodule update properly revives a moved submodule' in t7406 shows
+what has to be done with current git to properly move a submodule,
+which is way too much to remember for a regular git user.
