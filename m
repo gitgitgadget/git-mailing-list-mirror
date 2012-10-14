@@ -1,160 +1,209 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v5 02/12] ctype: support iscntrl, ispunct, isxdigit and
- isprint
-Date: Sun, 14 Oct 2012 21:26:24 +0700
-Message-ID: <20121014142624.GA992@do>
-References: <1350182110-25936-1-git-send-email-pclouds@gmail.com>
- <1350182110-25936-3-git-send-email-pclouds@gmail.com>
- <507AB73D.8010406@lsrfire.ath.cx>
- <CACsJy8B+6OPkP6ijMDzm+n0eHnDZ4Pj8UO_KasdfEP4wF+_hww@mail.gmail.com>
- <507AC543.2020402@lsrfire.ath.cx>
+From: "Lauri Alanko" <la@iki.fi>
+Subject: Re: A design for subrepositories
+Date: Sun, 14 Oct 2012 18:27:46 +0300
+Message-ID: <20121014182746.42895rwvalv4uoz6.lealanko@webmail.helsinki.fi>
+References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi>
+	<7vd30m2sbr.fsf@alter.siamese.dyndns.org>
+	<20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi>
+	<7vzk3p1xh3.fsf@alter.siamese.dyndns.org>
+	<20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi>
+	<507ABDF3.4040106@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Oct 14 16:26:58 2012
+Content-Type: text/plain; charset=UTF-8; DelSp="Yes"; format="flowed"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 14 17:28:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNP9c-0001FC-Ee
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 16:26:56 +0200
+	id 1TNQ6q-00067o-4m
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 17:28:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353Ab2JNO0l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2012 10:26:41 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:59629 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753319Ab2JNO0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 10:26:40 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so4106212pad.19
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 07:26:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=1NdrYFtJG+HT/Ct+7J776h+C8wjyYXzIV5a/LvLzqyM=;
-        b=UFX55jjRJs2p3yHPwmrWz7lq6fUPuO/L/oDjOi1y1xpgzNiPz3v25boMYJxV4fftBr
-         1buQNU5jQ0/QWvtq/82+J76pnHxUI+M2DiQFGQkUSOdsnfRtKO3QNUbdxeWrZlPAAW4/
-         TH/bIQbpUEm0kamr7viZTZo5Ess7wEAS8TuWofM3r+t0LWvOhx8HOk3Z4sTXhIxzOuSr
-         7+qI/dsZ+QGYec1Epg4+7aTePOmE+hdP9vuQNAyh4EhXNy32yiqJlwtfbvyPQ4moMvnI
-         iCaSPbo/SfbSgDeWLVCChnt+l9cdIsBe0IjE+e3GeI8tPuj+AUKaWX8YmtTxvXrLEfjx
-         P1sQ==
-Received: by 10.68.136.229 with SMTP id qd5mr29318006pbb.154.1350224800286;
-        Sun, 14 Oct 2012 07:26:40 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.44.221])
-        by mx.google.com with ESMTPS id ka4sm7532712pbc.61.2012.10.14.07.26.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 14 Oct 2012 07:26:39 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 14 Oct 2012 21:26:24 +0700
+	id S1752195Ab2JNP15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 11:27:57 -0400
+Received: from smtp-rs1-vallila2.fe.helsinki.fi ([128.214.173.75]:54702 "EHLO
+	smtp-rs1-vallila2.fe.helsinki.fi" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751471Ab2JNP14 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 11:27:56 -0400
+Received: from webmail.helsinki.fi (webmail1-vallila2.fe.helsinki.fi [128.214.173.135])
+	by smtp-rs1.it.helsinki.fi (8.14.4/8.14.4) with ESMTP id q9EFRkif011410;
+	Sun, 14 Oct 2012 18:27:47 +0300
+Received: from scan-proxy1-1.it.helsinki.fi (scan-proxy1-1.it.helsinki.fi
+	[128.214.2.137]) by webmail.helsinki.fi (Horde Framework) with HTTP; Sun,
+	14 Oct 2012 18:27:46 +0300
+In-Reply-To: <507ABDF3.4040106@web.de>
 Content-Disposition: inline
-In-Reply-To: <507AC543.2020402@lsrfire.ath.cx>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Internet Messaging Program (IMP) 4.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207667>
 
-On Sun, Oct 14, 2012 at 03:59:31PM +0200, Ren=E9 Scharfe wrote:
-> Am 14.10.2012 15:25, schrieb Nguyen Thai Ngoc Duy:
-> > On Sun, Oct 14, 2012 at 7:59 PM, Ren=E9 Scharfe
-> > <rene.scharfe@lsrfire.ath.cx> wrote:
-> >> With that, couldn't you squeeze the other two classes into the exi=
-sting
-> >> sane_type?
-> >
-> > No there are still conflicts: 9, 10 and 13 as spaces (vs controls) =
-and
-> > 123, 124 and 126 as regex/pathspec special (vs punctuation).
->=20
-> That's not a problem, an entry in the table can have more than one bi=
-t=20
-> set -- just OR them together in ctype.c.  It may not look as nice, bu=
-t=20
-> that's OK.  You could also define a character for GIT_SPACE | GIT_CNT=
-RL=20
-> etc. for cosmetic reasons.
+Quoting "Jens Lehmann" <Jens.Lehmann@web.de>:
 
-Only space chars is not a subset of control chars, which needs a new
-combination. So the result does not look as bad as I thought:
+>>>> If the
+>>>> submodules ever get reorganized and foo is moved to ./bar, then it is
+>>>> impossible to check out older versions or alternate branches, since
+>>>> the submodule is no longer where it is expected to be at the origin.
 
--- 8< --
-diff --git a/ctype.c b/ctype.c
-index faeaf34..0bfebb4 100644
---- a/ctype.c
-+++ b/ctype.c
-@@ -11,18 +11,21 @@ enum {
- 	D =3D GIT_DIGIT,
- 	G =3D GIT_GLOB_SPECIAL,	/* *, ?, [, \\ */
- 	R =3D GIT_REGEX_SPECIAL,	/* $, (, ), +, ., ^, {, | */
--	P =3D GIT_PATHSPEC_MAGIC  /* other non-alnum, except for ] and } */
-+	P =3D GIT_PATHSPEC_MAGIC, /* other non-alnum, except for ] and } */
-+	X =3D GIT_CNTRL,
-+	U =3D GIT_PUNCT,
-+	Z =3D GIT_CNTRL | GIT_SPACE
- };
-=20
- const unsigned char sane_ctype[256] =3D {
--	0, 0, 0, 0, 0, 0, 0, 0, 0, S, S, 0, 0, S, 0, 0,		/*   0.. 15 */
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		/*  16.. 31 */
-+	X, X, X, X, X, X, X, X, X, Z, Z, X, X, Z, X, X,		/*   0.. 15 */
-+	X, X, X, X, X, X, X, X, X, X, X, X, X, X, X, X,		/*  16.. 31 */
- 	S, P, P, P, R, P, P, P, R, R, G, R, P, P, R, P,		/*  32.. 47 */
- 	D, D, D, D, D, D, D, D, D, D, P, P, P, P, P, G,		/*  48.. 63 */
- 	P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,		/*  64.. 79 */
--	A, A, A, A, A, A, A, A, A, A, A, G, G, 0, R, P,		/*  80.. 95 */
-+	A, A, A, A, A, A, A, A, A, A, A, G, G, U, R, P,		/*  80.. 95 */
- 	P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,		/*  96..111 */
--	A, A, A, A, A, A, A, A, A, A, A, R, R, 0, P, 0,		/* 112..127 */
-+	A, A, A, A, A, A, A, A, A, A, A, R, R, U, P, X,		/* 112..127 */
- 	/* Nothing in the 128.. range */
- };
-=20
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f8b859c..db77f3e 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -510,6 +510,10 @@ extern const char tolower_trans_tbl[256];
- #undef isupper
- #undef tolower
- #undef toupper
-+#undef iscntrl
-+#undef ispunct
-+#undef isxdigit
-+#undef isprint
- extern const unsigned char sane_ctype[256];
- #define GIT_SPACE 0x01
- #define GIT_DIGIT 0x02
-@@ -517,6 +521,8 @@ extern const unsigned char sane_ctype[256];
- #define GIT_GLOB_SPECIAL 0x08
- #define GIT_REGEX_SPECIAL 0x10
- #define GIT_PATHSPEC_MAGIC 0x20
-+#define GIT_CNTRL 0x40
-+#define GIT_PUNCT 0x80
- #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask))=
- !=3D 0)
- #define isascii(x) (((x) & ~0x7f) =3D=3D 0)
- #define isspace(x) sane_istest(x,GIT_SPACE)
-@@ -527,6 +533,13 @@ extern const unsigned char sane_ctype[256];
- #define isupper(x) sane_iscase(x, 0)
- #define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
- #define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX=
-_SPECIAL)
-+#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
-+#define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
-+		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
-+#define isxdigit(x) (hexval_table[x] !=3D -1)
-+#define isprint(x) (sane_istest(x, GIT_ALPHA | GIT_DIGIT | GIT_SPACE |=
- \
-+		GIT_PUNCT | GIT_REGEX_SPECIAL | GIT_GLOB_SPECIAL | \
-+		GIT_PATHSPEC_MAGIC))
- #define tolower(x) sane_case((unsigned char)(x), 0x20)
- #define toupper(x) sane_case((unsigned char)(x), 0)
- #define is_pathspec_magic(x) sane_istest(x,GIT_PATHSPEC_MAGIC)
--- 8< --
+> Your initial statement is not correct.
 
---=20
-Duy
+Please elaborate. My initial statement was about "git submodule add  
+./foo", and this is what I get:
+
+la@bq:~/tmp$ git --version
+git version 1.8.0.rc2.2.gfc364c7
+la@bq:~/tmp$ git init super
+Initialized empty Git repository in /home/la/tmp/super/.git/
+la@bq:~/tmp$ cd super
+la@bq:~/tmp/super$ echo foo > foo
+la@bq:~/tmp/super$ git add foo
+la@bq:~/tmp/super$ git ci -m foo
+[master (root-commit) a0dd543] foo
+  1 file changed, 1 insertion(+)
+  create mode 100644 foo
+la@bq:~/tmp/super$ git init sub
+Initialized empty Git repository in /home/la/tmp/super/sub/.git/
+la@bq:~/tmp/super$ cd sub
+la@bq:~/tmp/super/sub$ echo bar > bar
+la@bq:~/tmp/super/sub$ git add bar
+la@bq:~/tmp/super/sub$ git ci -m bar
+[master (root-commit) a6ee6d6] bar
+  1 file changed, 1 insertion(+)
+  create mode 100644 bar
+la@bq:~/tmp/super/sub$ cd ..
+la@bq:~/tmp/super$ git submodule add ./sub
+Adding existing repo at 'sub' to the index
+la@bq:~/tmp/super$ git ci -m sub
+[master cb289e8] sub
+  2 files changed, 4 insertions(+)
+  create mode 100644 .gitmodules
+  create mode 160000 sub
+la@bq:~/tmp/super$ git branch old
+la@bq:~/tmp/super$ git mv sub movedsub
+fatal: source directory is empty, source=sub, destination=movedsub
+la@bq:~/tmp/super$ mv sub movedsub
+la@bq:~/tmp/super$ git rm sub
+rm 'sub'
+la@bq:~/tmp/super$ git add movedsub
+la@bq:~/tmp/super$ git config -f .gitmodules submodule.sub.path movedsub
+la@bq:~/tmp/super$ git config -f .gitmodules submodule.sub.url ./movedsub
+la@bq:~/tmp/super$ git ci -am movedsub
+[master 5598bc0] movedsub
+  2 files changed, 2 insertions(+), 2 deletions(-)
+  rename sub => movedsub (100%)
+la@bq:~/tmp/super$ cd ..
+la@bq:~/tmp$ git clone super superc
+Cloning into 'superc'...
+done.
+la@bq:~/tmp$ cd superc
+la@bq:~/tmp/superc$ git co old
+Branch old set up to track remote branch old from origin.
+Switched to a new branch 'old'
+la@bq:~/tmp/superc$ git submodule update --init
+Submodule 'sub' (/home/la/tmp/super/sub) registered for path 'sub'
+fatal: repository '/home/la/tmp/super/sub' does not exist
+Clone of '/home/la/tmp/super/sub' into submodule path 'sub' failed
+
+So a normal relative path in .gitmodules to inside the tree is  
+fragile, since the location of the submodule can change.
+
+> Did you notice that "git fetch" fetches all those submodules too which
+> have been updated in the commits fetched for the superproject, no matter
+> on what branch they are on?
+
+No. This would be great, but this is what I get:
+
+la@bq:~/tmp$ git init super
+Initialized empty Git repository in /home/la/tmp/super/.git/
+la@bq:~/tmp$ cd super
+la@bq:~/tmp/super$ echo foo > foo
+la@bq:~/tmp/super$ git add foo
+la@bq:~/tmp/super$ git ci -m foo
+[master (root-commit) 0f207c9] foo
+  1 file changed, 1 insertion(+)
+  create mode 100644 foo
+la@bq:~/tmp/super$ git branch nosubs
+la@bq:~/tmp/super$ git init sub
+Initialized empty Git repository in /home/la/tmp/super/sub/.git/
+la@bq:~/tmp/super$ cd sub
+la@bq:~/tmp/super/sub$ echo bar > bar
+la@bq:~/tmp/super/sub$ git add bar
+la@bq:~/tmp/super/sub$ git ci -m bar
+[master (root-commit) 180c6c9] bar
+  1 file changed, 1 insertion(+)
+  create mode 100644 bar
+la@bq:~/tmp/super/sub$ cd ..
+la@bq:~/tmp/super$ git submodule add ./sub
+Adding existing repo at 'sub' to the index
+la@bq:~/tmp/super$ git ci -m sub
+[master 16cff18] sub
+  2 files changed, 4 insertions(+)
+  create mode 100644 .gitmodules
+  create mode 160000 sub
+la@bq:~/tmp/super$ cd ..
+la@bq:~/tmp$ git clone super superc
+Cloning into 'superc'...
+done.
+la@bq:~/tmp$ cd superc
+la@bq:~/tmp/superc$ git submodule update --init
+Submodule 'sub' (/home/la/tmp/super/sub) registered for path 'sub'
+Cloning into 'sub'...
+done.
+Submodule path 'sub': checked out '180c6c979289f4e25525003673e51d0e39dab8f6'
+la@bq:~/tmp/superc$ cd ../super/sub
+la@bq:~/tmp/super/sub$ echo baz >> bar
+la@bq:~/tmp/super/sub$ git ci -am baz
+[master 652c8b3] baz
+  1 file changed, 1 insertion(+)
+la@bq:~/tmp/super/sub$ cd ..
+la@bq:~/tmp/super$ git ci -am subbaz
+[master c7c3bfc] subbaz
+  1 file changed, 1 insertion(+), 1 deletion(-)
+la@bq:~/tmp/super$ cd ../superc
+la@bq:~/tmp/superc$ git co nosubs
+warning: unable to rmdir sub: Directory not empty
+Branch nosubs set up to track remote branch nosubs from origin.
+Switched to a new branch 'nosubs'
+la@bq:~/tmp/superc$ git fetch --recurse-submodules=yes
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0)
+Unpacking objects: 100% (2/2), done.
+ From /home/la/tmp/super
+    16cff18..c7c3bfc  master     -> origin/master
+la@bq:~/tmp/superc$ git co master
+Switched to branch 'master'
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+la@bq:~/tmp/superc$ git fetch --recurse-submodules=yes
+Fetching submodule sub
+remote: Counting objects: 5, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+ From /home/la/tmp/super/sub
+    180c6c9..652c8b3  master     -> origin/master
+
+So I had to checkout master in order to fetch the updates to the  
+submodule used by master.
+
+> What's wrong with making git clone all submodules together with the
+> superproject (when the user said he wants to update all submodules on
+> clone too by setting a - still to be added - config option)?
+
+Depends on how it's done. In a previous mail I just considered various  
+ways to do it. If I see correctly, your choice is to read .gitmodules  
+from every branch and every tag to find the total set of submodules  
+used by the repository. As I said already, that is certainly possible,  
+but it's just not very scalable, if fetch operations slow down  
+linearly in the number of tags.
+
+But no matter the technical issues, it seems that you at least have  
+the _intention_ to eventually support self-contained, HEAD-independent  
+repository collections. That already is valuable information, thanks.
+
+
+Lauri
