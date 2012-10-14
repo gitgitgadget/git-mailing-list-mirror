@@ -1,128 +1,120 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/2] config: exit on error accessing any config file
-Date: Sun, 14 Oct 2012 01:46:00 -0700
-Message-ID: <20121014084600.GC7190@elie.Belkin>
+Subject: [PATCH v2 3/2] doc: advertise GIT_CONFIG_NOSYSTEM
+Date: Sun, 14 Oct 2012 01:53:59 -0700
+Message-ID: <20121014085359.GD7190@elie.Belkin>
 References: <20121014000210.GA19094@elie.Belkin>
  <20121014000402.GB11399@elie.Belkin>
  <20121014062218.GB13477@sigill.intra.peff.net>
  <20121014084244.GA7190@elie.Belkin>
+ <20121014084437.GB7190@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 14 10:46:21 2012
+X-From: git-owner@vger.kernel.org Sun Oct 14 10:57:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNJq0-0004M7-MJ
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 10:46:20 +0200
+	id 1TNK0K-00058t-49
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Oct 2012 10:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300Ab2JNIqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 04:46:09 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:64526 "EHLO
+	id S1751334Ab2JNIyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 04:54:08 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:37220 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045Ab2JNIqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 04:46:08 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so4076963pbb.19
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 01:46:07 -0700 (PDT)
+	with ESMTP id S1751045Ab2JNIyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 04:54:06 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so4079294pbb.19
+        for <git@vger.kernel.org>; Sun, 14 Oct 2012 01:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=K7Mp/ySbA/I3fBVyXjEe9ZmACincf2vjPWRjhBHiFOY=;
-        b=Trc6cd5ccmo2WO0SRz8sS4RJlvwxTI0BWqCdvr9vR62WtTIUfZPgCBzJThOQidQxQJ
-         OQPLcqXdKNi0vvOw1RiWHUf3IQW+iKRJP1huQxSobpzAdOdCwajUgySwB8WbJgNmY/FJ
-         FEpSBSfjO5QQaLW+hAgZWBPD/7khKGVVY6CAHxMIyRXmv0cFnGp7o8WnMWswrHiB84X5
-         FsPbDNECM1V34x1nRSukde7bPfXlFURFhZDA/XcwasffP3oq+IFWeDdxgruG/j7siraO
-         hBu4z1q665gbEBOuJSX0hXgaF1/Isluitr3SbkoVuVUAb1A/792ikhQH6jTR9egq+vci
-         APdw==
-Received: by 10.66.77.74 with SMTP id q10mr23949472paw.81.1350204367688;
-        Sun, 14 Oct 2012 01:46:07 -0700 (PDT)
+        bh=lbkl9fwRppOKRVbaG17UcXt4axz6leW2Yjq+yzlRc6k=;
+        b=mgJzakwqGc0k0D9qzQgvOYI5HYG/RRDmqH5ZrfBV6qeJeCBV4b6WO1FmyUrX6mmO+G
+         0+PH+8+wipeoAnH9TOoW76o5KRhjLCCyKaEr2AvydDTKo6SIxULy4Nr15z65KK9dmXdw
+         ujF8Hs5IA4N9MA/y1svqIb3jESzzvtdxe99ZgTjchKJN8ChT5BgD73uIMvjGYXunMBjt
+         6A8IL/JsuzIKjRdUBXiGsX498WDSXdchOezVOI8K1lpvUe9NE43zZV6k2NM+AuEeALhZ
+         Ja6eAuzSlpXkULccDIYOVU44Yg0A+D50TL6hd3uL8uCrJGGi2beHR0NJKe0P1wSlOTLQ
+         BG1w==
+Received: by 10.68.136.231 with SMTP id qd7mr27647167pbb.3.1350204846517;
+        Sun, 14 Oct 2012 01:54:06 -0700 (PDT)
 Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id bj7sm7186683pab.24.2012.10.14.01.46.06
+        by mx.google.com with ESMTPS id p3sm706406paw.8.2012.10.14.01.54.05
         (version=SSLv3 cipher=OTHER);
-        Sun, 14 Oct 2012 01:46:07 -0700 (PDT)
+        Sun, 14 Oct 2012 01:54:06 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20121014084244.GA7190@elie.Belkin>
+In-Reply-To: <20121014084437.GB7190@elie.Belkin>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207648>
 
-There is convenience in warning and moving on when somebody has a
-bogus permissions on /etc/gitconfig and cannot do anything about it.
-But the cost in predictability and security is too high --- when
-unreadable config files are skipped, it means an I/O error or
-permissions problem causes important configuration to be bypassed.
+On a multiuser system where mortals do not have write access to /etc,
+the GIT_CONFIG_NOSYSTEM variable is the best tool we have to keep
+getting work done when a syntax error or other problem renders
+/etc/gitconfig buggy, until the sysadmin sorts the problem out.
 
-For example, servers may depend on /etc/gitconfig to enforce security
-policy (setting transfer.fsckObjects or receive.deny*).  Best to
-always error out when encountering trouble accessing a config file.
+Noticed while experimenting with teaching git to error out when
+/etc/gitconfig is unreadable.
 
-This may add inconvenience in some cases:
-
-  1. You are inspecting somebody else's repo, and you do not have
-     access to their .git/config file.  Git typically dies in this
-     case already since we cannot read core.repositoryFormatVersion,
-     so the change should not be too noticeable.
-
-  2. You have used "sudo -u" or a similar tool to switch uid, and your
-     environment still points Git at your original user's global
-     config, which is not readable.  In this case people really would
-     be inconvenienced (they would rather see the harmless warning and
-     continue the operation) but they can work around it by setting
-     HOME appropriately after switching uids.
-
-  3. You do not have access to /etc/gitconfig due to a broken setup.
-     In this case, erroring out is a good way to put pressure on the
-     sysadmin to fix the setup.  While they wait for a reply, users
-     can set GIT_CONFIG_NOSYSTEM to true to keep Git working without
-     complaint.
-
-After this patch, errors accessing the repository-local and systemwide
-config files and files requested in include directives cause Git to
-exit, just like errors accessing ~/.gitconfig.
-
-Explained-by: Jeff King <peff@peff.net>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- config.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Jonathan Nieder wrote:
 
-diff --git a/config.c b/config.c
-index e8875b8a..a4d153f6 100644
---- a/config.c
-+++ b/config.c
-@@ -60,7 +60,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		path = buf.buf;
- 	}
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -240,6 +240,14 @@ GIT_CONFIG::
+>  	Using the "--global" option forces this to ~/.gitconfig. Using the
+>  	"--system" option forces this to $(prefix)/etc/gitconfig.
+>  
+> +GIT_CONFIG_NOSYSTEM::
+
+Hm, unlike GIT_CONFIG this applies to all git commands (not just "git
+config"), so it is misleading to document them in the same place.
+Here's a better patch.
+
+ Documentation/git-config.txt | 4 ++++
+ Documentation/git.txt        | 8 ++++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index eaea0791..9ae2508f 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -240,6 +240,10 @@ GIT_CONFIG::
+ 	Using the "--global" option forces this to ~/.gitconfig. Using the
+ 	"--system" option forces this to $(prefix)/etc/gitconfig.
  
--	if (!access_or_warn(path, R_OK)) {
-+	if (!access_or_die(path, R_OK)) {
- 		if (++inc->depth > MAX_INCLUDE_DEPTH)
- 			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
- 			    cf && cf->name ? cf->name : "the command line");
-@@ -939,7 +939,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
++GIT_CONFIG_NOSYSTEM::
++	Whether to skip reading settings from the system-wide
++	$(prefix)/etc/gitconfig file. See linkgit:git[1] for details.
++
+ See also <<FILES>>.
  
- 	home_config_paths(&user_config, &xdg_config, "config");
  
--	if (git_config_system() && !access_or_warn(git_etc_gitconfig(), R_OK)) {
-+	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK)) {
- 		ret += git_config_from_file(fn, git_etc_gitconfig(),
- 					    data);
- 		found += 1;
-@@ -955,7 +955,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 		found += 1;
- 	}
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d1d227a3..ae1f833a 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -757,6 +757,14 @@ for further details.
+ 	and read the password from its STDOUT. See also the 'core.askpass'
+ 	option in linkgit:git-config[1].
  
--	if (repo_config && !access_or_warn(repo_config, R_OK)) {
-+	if (repo_config && !access_or_die(repo_config, R_OK)) {
- 		ret += git_config_from_file(fn, repo_config, data);
- 		found += 1;
- 	}
++'GIT_CONFIG_NOSYSTEM'::
++	Whether to skip reading settings from the system-wide
++	`$(prefix)/etc/gitconfig` file.  This environment variable can
++	be used along with `$HOME` and `$XDG_CONFIG_HOME` to create a
++	predictable environment for a picky script, or you can set it
++	temporarily to avoid using a buggy `/etc/gitconfig` file while
++	waiting for someone with sufficient permissions to fix it.
++
+ 'GIT_FLUSH'::
+ 	If this environment variable is set to "1", then commands such
+ 	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
 -- 
 1.8.0.rc2
