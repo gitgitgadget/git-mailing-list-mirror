@@ -1,128 +1,75 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] completion: add format-patch options to send-email
-Date: Tue, 16 Oct 2012 00:48:57 +0200
-Message-ID: <20121015224857.GA2156@goldbirke>
-References: <1350231243-13485-1-git-send-email-felipe.contreras@gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: error: git-fast-import died of signal 11
+Date: Mon, 15 Oct 2012 19:00:51 -0400
+Message-ID: <507C95A3.8010704@gmail.com>
+References: <CAMJd5ATv5XfTK++4=Rs+RUkgb7F-ssrz2Lrch_WxvxZt+yF33A@mail.gmail.com> <CAMJd5AQ_vsQBGnMRrZUUqztjYjaHkU0_FOteNpEvE8NTrPPvQQ@mail.gmail.com> <507C7C35.7080906@gmail.com> <CAMJd5ARTmud_nrUKF8USXJAKVwvLH1gSmhys2o_mjimTW5B+Vg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 00:49:23 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Uri Moszkowicz <uri@4refs.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 01:01:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNtTJ-0008T2-OJ
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 00:49:18 +0200
+	id 1TNtel-0006Da-4s
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 01:01:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752914Ab2JOWtD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 18:49:03 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:62539 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752257Ab2JOWtC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 18:49:02 -0400
-Received: from localhost6.localdomain6 (p5B1307B3.dip0.t-ipconnect.de [91.19.7.179])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0MTgXI-1Sxb9l3BLs-00QPcS; Tue, 16 Oct 2012 00:48:58 +0200
-Content-Disposition: inline
-In-Reply-To: <1350231243-13485-1-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:+WsijoYiAG7MRPO+Z1HUrTtWyweQM5C9lTdba3TZw9O
- bRn4TMQzLbLKOyX7dIji4ARiI1K8r6gvYQ09P7pcp105FoPKrK
- 4VyRDdEBs0tXpKxYMSkP57KbfxLkdW+rlwbn/RLaywbLTFyzif
- OqqXE+eHw9xW/86QDXJVl7L6dN5MMSAU5QcvkLoav7UEc/FSPq
- 8m0i2o8SqkXXlwcBb/jyNhf/osSym3vxE9HDXvQvp0cvxqYpgC
- 11nqdQyu/eNo3PY63Gi4TaZFExXdqEUxnLXrC/FhKftG37C0Ge
- ihBM7sh6hleqpZuZ11m3gMYmDQlMbz7/brtA7g6RPTc3+Zhe/0
- J6kJWnVyTBeP725ydVMY=
+	id S1754055Ab2JOXA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 19:00:56 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:61500 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752975Ab2JOXAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 19:00:55 -0400
+Received: by mail-ia0-f174.google.com with SMTP id y32so4088332iag.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 16:00:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=ukPMqXiuZ9phJm1CicTEQq48lM7dmGsB0qEzRUx4Mkg=;
+        b=OieDhI8kir2YclBt21qw634YelFcF+gcPhAyw++2lp+BaAEBq6WFTJHRnCf5N5sjEn
+         jH6opZwHZDUXYFcjtvaN8luEPT04Y459tot6+XqmrKZN1pHXExyIQHwP2vB38wWKBNRe
+         kE2rPo5kY186/P6N8ur0HkEzKqOET2cy7acxWH1i6Ru4AAPrWnT2tkpDYxhq/pzL4Fp/
+         F0Z5wTZlnwLRiobP7Pu29RECU0K2A26jJd1PwIdJaYm2br4IF4SnVn+NDBtm1I+1E+8E
+         bXiv82BTSO1H23dAjndsrLvhAMupjrcWVdtvTPuNwWdAXaNHaY7IkMtzBfDXkbdnYgJH
+         ZxZQ==
+Received: by 10.50.155.226 with SMTP id vz2mr10420343igb.54.1350342054843;
+        Mon, 15 Oct 2012 16:00:54 -0700 (PDT)
+Received: from [192.168.1.112] ([66.207.196.114])
+        by mx.google.com with ESMTPS id uz12sm7057221igb.16.2012.10.15.16.00.52
+        (version=SSLv3 cipher=OTHER);
+        Mon, 15 Oct 2012 16:00:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <CAMJd5ARTmud_nrUKF8USXJAKVwvLH1gSmhys2o_mjimTW5B+Vg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207785>
 
-Hi,
+On 10/15/2012 05:28 PM, Uri Moszkowicz wrote:
+> Thanks for the reply. Yes I am using a 64-bit build of Git. The report
+> is too large to attach to email so I've uploaded it here (~6MB tar.xz
+> file):
+>
+> http://www.tempfiles.net/download/201210/267447/fast_import_crash18192.html
+Hm, there are some blanks in the "recent commands" section:
 
-On Sun, Oct 14, 2012 at 06:14:03PM +0200, Felipe Contreras wrote:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 35 +++++++++++++++++-----------------
->  t/t9902-completion.sh                  | 21 ++++++++++++++++++++
->  2 files changed, 39 insertions(+), 17 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index d743e56..2a83504 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
+       D someFile
+       D someFile
+       D someFile
+       D someFile
+       (blank here)
+       reset refs/tags/someTag
+       from :1000045763
+       reset refs/heads/TAG.FIXUP
+     * (blank here)
 
-This patch doesn't apply on current master.
-
-> @@ -1559,11 +1559,12 @@ _git_send_email ()
->  			--signed-off-by-cc --smtp-pass --smtp-server
->  			--smtp-server-port --smtp-encryption= --smtp-user
->  			--subject --suppress-cc= --suppress-from --thread --to
-> -			--validate --no-validate"
-> +			--validate --no-validate
-> +			$__git_format_patch_options"
->  		return
->  		;;
->  	esac
-> -	COMPREPLY=()
-> +	__git_complete_revlist_file
-
-While send-email accepts a rev-list, it doesn't accept
-'HEAD:Documentation', does it?  So __git_complete_revlist() would be
-better here, because that makes the intent clear.
-
->  }
->  
->  _git_stage ()
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 92d7eb4..c4b6c13 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -146,6 +146,22 @@ test_expect_success '__gitcomp - suffix' '
->  	test_cmp expected out
->  '
->  
-> +setup_repository ()
-> +{
-> +	mkdir "$1" && (
-> +	cd "$1" &&
-> +	git init &&
-> +	test_tick &&
-> +	git commit --allow-empty -m "Initial"
-> +	)
-> +}
-> +
-> +test_expect_success 'prepare' '
-> +	setup_repository one &&
-> +	git clone one test &&
-
-Why are these new repositories needed?
-
-> +	cd test
-
-This 'cd' makes all subsequent tests to be executed in a different
-repository than previously, which breaks 'checkout completes ref
-names'.
-
-> +'
-> +
->  test_expect_success 'basic' '
->  	run_completion "git \"\"" &&
->  	# built-in
-> @@ -228,4 +244,9 @@ test_expect_success 'general options plus command' '
->  	test_completion "git --no-replace-objects check" "checkout "
->  '
->  
-> +test_expect_success 'send-email' '
-> +	test_completion "git send-email --cov" "--cover-letter " &&
-> +	test_completion "git send-email ma" "master "
-> +'
-> +
->  test_done
-> -- 
-> 1.7.12.1
-> 
+There should have been some commands there. Maybe that has something to 
+do with the crash? Would you be able to locate where this is in the cvs 
+dump? You might be able to use those tag names around those lines to 
+help locate them.
+What are those blanks supposed to be? Probably commits?
