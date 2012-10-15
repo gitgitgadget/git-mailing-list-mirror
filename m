@@ -1,33 +1,31 @@
-From: Chris Rorvick <crorvick@cogcap.com>
-Subject: [PATCH] git-cvsimport: allow author-specific timezones
-Date: Sun, 14 Oct 2012 19:30:54 -0500
-Message-ID: <1350261054-5171-1-git-send-email-crorvick@cogcap.com>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH v2] git-cvsimport: allow author-specific timezones
+Date: Sun, 14 Oct 2012 21:39:29 -0500
+Message-ID: <1350268769-15895-1-git-send-email-chris@rorvick.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 02:31:13 2012
+X-From: git-owner@vger.kernel.org Mon Oct 15 04:39:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNYaK-000511-2a
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 02:31:08 +0200
+	id 1TNaak-00019T-2y
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 04:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533Ab2JOAa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2012 20:30:56 -0400
-Received: from [38.98.186.242] ([38.98.186.242]:37449 "HELO burner.cogcap.com"
+	id S1753683Ab2JOCjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2012 22:39:31 -0400
+Received: from [38.98.186.242] ([38.98.186.242]:3580 "HELO burner.cogcap.com"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752202Ab2JOAaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2012 20:30:55 -0400
+	id S1753619Ab2JOCja (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2012 22:39:30 -0400
 Received: by burner.cogcap.com (Postfix, from userid 10028)
-	id 755D02B096D; Sun, 14 Oct 2012 19:30:54 -0500 (CDT)
+	id 9D1D62B096D; Sun, 14 Oct 2012 21:39:29 -0500 (CDT)
 X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207686>
-
-From: Chris Rorvick <chris@rorvick.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207687>
 
 CVS patchsets are imported with timestamps having an offset of +0000
 (UTC).  The cvs-authors file is already used to translate the CVS
@@ -38,8 +36,10 @@ specific timestamp offset.
 Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
 
-This supercedes the patches submitted for using the local timezone in
+This supersedes the patches submitted for using the local timezone in
 commits.
+
+(sorry for the noise, I messed up sending the patch previously)
 
  Documentation/git-cvsimport.txt    |   5 +-
  git-cvsimport.perl                 |  22 ++-
@@ -48,10 +48,10 @@ commits.
  t/t9604/cvsroot/CVSROOT/.gitignore |   2 +
  t/t9604/cvsroot/module/a,v         | 265 +++++++++++++++++++++++++++++++++++++
  6 files changed, 381 insertions(+), 6 deletions(-)
- create mode 100775 t/t9604-cvsimport-timestamps.sh
- create mode 100664 t/t9604/cvsroot/.gitattributes
- create mode 100664 t/t9604/cvsroot/CVSROOT/.gitignore
- create mode 100664 t/t9604/cvsroot/module/a,v
+ create mode 100755 t/t9604-cvsimport-timestamps.sh
+ create mode 100644 t/t9604/cvsroot/.gitattributes
+ create mode 100644 t/t9604/cvsroot/CVSROOT/.gitignore
+ create mode 100644 t/t9604/cvsroot/module/a,v
 
 diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
 index 6695ab3..35dc636 100644
@@ -149,8 +149,8 @@ index 8032f23..ceb119d 100755
  		    $author_name = $author_email = $_;
  		}
 diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps.sh
-new file mode 100644
-index 0000000..fb7459c
+new file mode 100755
+index 0000000..17d456c
 --- /dev/null
 +++ b/t/t9604-cvsimport-timestamps.sh
 @@ -0,0 +1,92 @@
@@ -163,13 +163,13 @@ index 0000000..fb7459c
 +
 +test_expect_success 'check timestamps are UTC (TZ=America/Chicago)' '
 +
-+    TZ=America/Chicago git cvsimport -p"-x" -C module-1 module &&
-+    git cvsimport -p"-x" -C module-1 module &&
-+    (cd module-1 &&
-+        git log --pretty="format:%s %ai" -- >../actual-1 &&
-+        echo "" >>../actual-1
-+    ) &&
-+    echo "Rev 16 2011-11-06 07:00:01 +0000
++	TZ=America/Chicago git cvsimport -p"-x" -C module-1 module &&
++	git cvsimport -p"-x" -C module-1 module &&
++	(cd module-1 &&
++		git log --pretty="format:%s %ai" -- >../actual-1 &&
++		echo "" >>../actual-1
++	) &&
++	echo "Rev 16 2011-11-06 07:00:01 +0000
 +Rev 15 2011-11-06 06:59:59 +0000
 +Rev 14 2011-03-13 08:00:01 +0000
 +Rev 13 2011-03-13 07:59:59 +0000
@@ -185,18 +185,18 @@ index 0000000..fb7459c
 +Rev  3 2010-03-01 00:00:00 +0000
 +Rev  2 2010-02-01 00:00:00 +0000
 +Rev  1 2010-01-01 00:00:00 +0000" >expect-1 &&
-+    test_cmp actual-1 expect-1
++	test_cmp actual-1 expect-1
 +'
 +
 +test_expect_success 'check timestamps are UTC (TZ=Australia/Sydney)' '
 +
-+    TZ=America/Chicago git cvsimport -p"-x" -C module-2 module &&
-+    git cvsimport -p"-x" -C module-2 module &&
-+    (cd module-2 &&
-+        git log --pretty="format:%s %ai" -- >../actual-2 &&
-+        echo "" >>../actual-2
-+    ) &&
-+    echo "Rev 16 2011-11-06 07:00:01 +0000
++	TZ=America/Chicago git cvsimport -p"-x" -C module-2 module &&
++	git cvsimport -p"-x" -C module-2 module &&
++	(cd module-2 &&
++		git log --pretty="format:%s %ai" -- >../actual-2 &&
++		echo "" >>../actual-2
++	) &&
++	echo "Rev 16 2011-11-06 07:00:01 +0000
 +Rev 15 2011-11-06 06:59:59 +0000
 +Rev 14 2011-03-13 08:00:01 +0000
 +Rev 13 2011-03-13 07:59:59 +0000
@@ -212,21 +212,21 @@ index 0000000..fb7459c
 +Rev  3 2010-03-01 00:00:00 +0000
 +Rev  2 2010-02-01 00:00:00 +0000
 +Rev  1 2010-01-01 00:00:00 +0000" >expect-2 &&
-+    test_cmp actual-2 expect-2
++	test_cmp actual-2 expect-2
 +'
 +
 +test_expect_success 'check timestamps with author-specific timezones' '
 +
-+    echo "user1=User One <user1@domain.org>
++	echo "user1=User One <user1@domain.org>
 +user2=User Two <user2@domain.org> America/Chicago
 +user3=User Three <user3@domain.org> Australia/Sydney
 +user4=User Four <user4@domain.org> Asia/Shanghai" >cvs-authors &&
-+    git cvsimport -p"-x" -A cvs-authors -C module-3 module &&
-+    (cd module-3 &&
-+        git log --pretty="format:%s %ai" -- >../actual-3 &&
-+        echo "" >>../actual-3
-+    ) &&
-+    echo "Rev 16 2011-11-06 01:00:01 -0600
++	git cvsimport -p"-x" -A cvs-authors -C module-3 module &&
++	(cd module-3 &&
++		git log --pretty="format:%s %ai" -- >../actual-3 &&
++		echo "" >>../actual-3
++	) &&
++	echo "Rev 16 2011-11-06 01:00:01 -0600
 +Rev 15 2011-11-06 01:59:59 -0500
 +Rev 14 2011-03-13 03:00:01 -0500
 +Rev 13 2011-03-13 01:59:59 -0600
@@ -242,7 +242,7 @@ index 0000000..fb7459c
 +Rev  3 2010-03-01 11:00:00 +1100
 +Rev  2 2010-01-31 18:00:00 -0600
 +Rev  1 2010-01-01 00:00:00 +0000" >expect-3 &&
-+    test_cmp actual-3 expect-3
++	test_cmp actual-3 expect-3
 +'
 +
 +test_done
@@ -533,4 +533,4 @@ index 0000000..7165de7
 +@
 +
 -- 
-1.8.0.rc1.20.gdb5c9b7.dirty
+1.8.0.rc1.19.gbecacc0
