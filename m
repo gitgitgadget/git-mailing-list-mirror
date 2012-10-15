@@ -1,106 +1,78 @@
-From: Marc Branchaud <mbranchaud@xiplink.com>
-Subject: Re: push race
-Date: Mon, 15 Oct 2012 10:29:08 -0400
-Message-ID: <507C1DB4.2010000@xiplink.com>
-References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com> <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
-Reply-To: marcnarc@xiplink.com
+From: Simon Oosthoek <soosthoek@nieuwland.nl>
+Subject: Re: [PATCH 2/2] show color hints based on state of the git tree
+Date: Mon, 15 Oct 2012 17:15:14 +0200
+Message-ID: <507C2882.2090406@nieuwland.nl>
+References: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org> <20121005211030.GA5414@simaj.xs4all.nl> <507BC7F1.3080506@drmicha.warpmail.net> <507BD0EE.5000107@nieuwland.nl> <507BD3C1.4040807@drmicha.warpmail.net> <CAPc5daVUyAuznmrT+-yqvPR0gd38oiWmi2k+BFVV1s9ouMUt0Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	git <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 16:37:43 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>, artagnon@gmail.com,
+	spearce@spearce.org, schwab@linux-m68k.org, gitster@pobox.com,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 17:15:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNlnY-0003Wa-N9
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 16:37:41 +0200
+	id 1TNmOJ-0001vb-IK
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 17:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913Ab2JOOha convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2012 10:37:30 -0400
-Received: from smtp152.dfw.emailsrvr.com ([67.192.241.152]:33410 "EHLO
-	smtp152.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474Ab2JOOh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 10:37:29 -0400
-X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Oct 2012 10:37:29 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp25.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 156792D0B1D
-	for <git@vger.kernel.org>; Mon, 15 Oct 2012 10:29:32 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: from smtp130.ord.emailsrvr.com (smtp130.ord.emailsrvr.com [173.203.6.130])
-	by smtp25.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id E93372D09FE
-	for <git@vger.kernel.org>; Mon, 15 Oct 2012 10:29:31 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id C1D59380160;
-	Mon, 15 Oct 2012 10:28:51 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 68467380168;
-	Mon, 15 Oct 2012 10:28:51 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
+	id S1751923Ab2JOPP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 11:15:28 -0400
+Received: from mail.nieuwland.nl ([87.251.35.136]:53475 "HELO nieuwland.nl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751131Ab2JOPP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 11:15:28 -0400
+Received: (qmail 31014 invoked by uid 453); 15 Oct 2012 15:15:17 -0000
+X-Virus-Checked: Checked by ClamAV on nieuwland.nl
+Received: from Unknown (HELO [192.168.216.232]) (192.168.216.232)
+  (smtp-auth username soosthoek, mechanism plain)
+  by nieuwland.nl (qpsmtpd/0.83) with (AES256-SHA encrypted) ESMTPSA; Mon, 15 Oct 2012 17:15:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
+In-Reply-To: <CAPc5daVUyAuznmrT+-yqvPR0gd38oiWmi2k+BFVV1s9ouMUt0Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207751>
 
-On 12-10-15 10:09 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Mon, Oct 15, 2012 at 11:14 AM, Angelo Borsotti
-> <angelo.borsotti@gmail.com> wrote:
->> Hello,
->=20
-> FWIW we have a lot of lemmings pushing to the same ref all the time a=
-t
-> $work, and while I've seen cases where:
->=20
->  1. Two clients try to push
->  2. They both get the initial lock
->  3. One of them fails to get the secondary lock (I think updating the=
- ref)
->=20
-> I've never seen cases where they clobber each other in #3 (and I woul=
-d
-> have known from "dude, where's my commit that I just pushed" reports)=
-=2E
->=20
-> So while we could fix git to make sure there's no race condition such
-> that two clients never get the #2 lock I haven't seen it cause actual
-> data issues because of two clients getting the #3 lock.
->=20
-> It might still happen in some cases, I recommend testing it with e.g.
-> lots of pushes in parallel with GNU Parallel.
+On 10/15/2012 11:39 AM, Junio C Hamano wrote:
+> Thanks for bringing some sanity to the color of the bikeshed ;-)
+>
+> As I don't use colors very much, I didn't bother checking the color
+> assignment in the patch in question, but everything you said in your
+> response makes 100% sense, including the traffic light analogy.
+>
 
-Here's a previous discussion of a race in concurrent updates to the sam=
-e ref,
-even when the updates are all identical:
+Hi Junio, Michael
 
-http://news.gmane.org/find-root.php?group=3Dgmane.comp.version-control.=
-git&article=3D164636
+The point of the thread and the patch was to enable the possibility of 
+colors in the prompt without messing it up.
 
-In that thread, Peff outlines the lock procedure for refs:
+The actual colors used are more or less how I'm used to it, but as you 
+said they may not be suitable to everyone.
 
-        1. get the lock
-        2. check and remember the sha1
-        3. release the lock
-        4. do some long-running work (like the actual push)
-        5. get the lock
-        6. check that the sha1 is the same as the remembered one
-        7. update the sha1
-        8. release the lock
+@Junio, is this patch something you want to include as it is now (with 
+the extra S that Michael pointed out) or do you want to wait for a 
+discussion about which colors to use for which state?
 
-Angelo, in your case I think one of your concurrent updates would fail =
-in
-step 6.  As you say, this is after the changes have been uploaded.  How=
-ever,
-there's none of the file-overwriting that you fear, because the changes=
- are
-stored in git's object database under their SHA hashes.  So there'll on=
-ly be
-an object-level collision if two parties upload the exact same object, =
-in
-which case it doesn't matter.
+I guess it could be quite a messy discussion, as you already hint at 
+bikeshed colors, it's quite personal and subjective.
 
-		M.
+As a start, I think it's worth considering what the color would actually 
+mean.
+
+To me:
+A neutral color should mean it's safe to switch branches or merge/update
+A non-neutral color would mean some action is required before switching 
+branches.
+There are various states that may or may not get in the way of 
+switching, like stashed stuff or divergence from upstream. I think these 
+could get a color hint, but I'm not sure what kind.
+
+Cheers
+
+Simon
