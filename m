@@ -1,65 +1,129 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: push race
-Date: Mon, 15 Oct 2012 11:14:11 +0200
-Message-ID: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: make test
+Date: Mon, 15 Oct 2012 12:36:00 +0200
+Message-ID: <k5gov5$fe1$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 11:14:30 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 12:36:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNgkh-0001Pr-Ln
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 11:14:23 +0200
+	id 1TNi2T-00045R-Ii
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 12:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359Ab2JOJON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 05:14:13 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:43117 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722Ab2JOJOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 05:14:12 -0400
-Received: by mail-vb0-f46.google.com with SMTP id ff1so4960245vbb.19
-        for <git@vger.kernel.org>; Mon, 15 Oct 2012 02:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=+4MZ6Q/ZZiXu64uyuDJqImAH9mZQ5n27aCuInI5aJ/M=;
-        b=ucBpfJtaZzSNRr5x2F/5vI48wZlWdjJ+8cRvUsOHieSmW3MRnEsijzUqHYx12AgY22
-         fimBtfLzlDA+poSZMyUIfQ2vdxIigg8cCsxSz/MH74dhWOjDP1n7+uRrhi64GmEnyrTY
-         D5eWoSeZne9+se1pmoW2OTcV6eWPx8o/IHaMWJ2Ne6yXXa/dvAp8U0PpogxtxGQrcA9c
-         aHDWIbE/t1Wo3jHDto7FJr0APudKLh2xY8hvLE0cCDwFuOLG7laGGcYM/GnWrEaJSjgG
-         zmFjGB15K/NKENnySNNuVddwSWO+02gUhNwFG6XAR1S13ooNqvBfZqu4Hmvi98Mq5Rx5
-         tb/g==
-Received: by 10.220.240.18 with SMTP id ky18mr6327527vcb.54.1350292451823;
- Mon, 15 Oct 2012 02:14:11 -0700 (PDT)
-Received: by 10.58.68.40 with HTTP; Mon, 15 Oct 2012 02:14:11 -0700 (PDT)
+	id S1751918Ab2JOKgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 06:36:38 -0400
+Received: from plane.gmane.org ([80.91.229.3]:45320 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751643Ab2JOKgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 06:36:38 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TNi2L-0003uB-6o
+	for git@vger.kernel.org; Mon, 15 Oct 2012 12:36:41 +0200
+Received: from dsdf-4d0a1987.pool.mediaways.net ([77.10.25.135])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 12:36:41 +0200
+Received: from jojo by dsdf-4d0a1987.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 12:36:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4d0a1987.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207730>
 
-Hello,
+Hi folks
 
-the push command checks first if the tips of the branches match those
-of the remote
-references, and if it does uploads the snapshot.
-The checking and the uploading are two distinct operations that should
-be indivisible.
-Suppose that two workstations are pushing at the same time, and that the push of
-the first has just checked the tips and found that they are ok, and
---before-- the
-push command uploads the snapshot, the second workstation checks the tips too.
-The test would be successful, and both workstation would upload their
-files, actually
-overwriting each others'.
-I have browsed push.c, transport.c, connect.c, send-pack.c, but have
-not found any
-synchronization that protects the checking and the uploading with some critical
-sections.
-Has some sort of mutual exclusion been implemented, or it is up to the user to
-guarantee that two pushes are not done simultaneously?
+I'm trying to understand why certain tests in 'make test' fail. Here's the 
+first one
 
--Angelo Borsotti
+$ ../git --version
+git version 1.8.0.rc2.5.g6b89306
+$ GIT_TEST_CMP_USE_COPIED_CONTEXT=true ./t0000-basic.sh # our diff doesn't 
+understand -u
+ok 1 - .git/objects should be empty after git init in an empty repo
+...
+ok 3 - success is reported like this
+not ok 4 - pretend we have a known breakage # TODO known breakage
+
+    This is expected, right?
+
+ok 5 - pretend we have fixed a known breakage (run in sub test-lib)
+...
+ok 11 - tests clean up after themselves
+
+    the next is not though? Why might it be failing, where to check?
+
+not ok - 12 tests clean up even on failures
+#
+#               mkdir failing-cleanup &&
+#               (
+#               cd failing-cleanup &&
+#
+#               cat >failing-cleanup.sh <<-EOF &&
+#               #!/bin/sh
+#
+#               test_description='Failing tests with cleanup commands'
+#
+#               # Point to the t/test-lib.sh, which isn't in ../ as usual
+#               TEST_DIRECTORY="/home/jojo/git/git/t"
+#               . "$TEST_DIRECTORY"/test-lib.sh
+#
+#               test_expect_success 'tests clean up even after a failure' '
+#                       touch clean-after-failure &&
+#                       test_when_finished rm clean-after-failure &&
+#                       (exit 1)
+#               '
+#               test_expect_success 'failure to clean up causes the test to 
+fail' '
+#                       test_when_finished "(exit 2)"
+#               '
+#               test_done
+#
+#               EOF
+#
+#               chmod +x failing-cleanup.sh &&
+#               test_must_fail ./failing-cleanup.sh >out 2>err &&
+#               ! test -s err &&
+#               ! test -f "trash 
+directory.failing-cleanup/clean-after-failure" &&
+#               sed -e 's/Z$//' -e 's/^> //' >expect <<-\EOF &&
+#               > not ok - 1 tests clean up even after a failure
+#               > #     Z
+#               > #     touch clean-after-failure &&
+#               > #     test_when_finished rm clean-after-failure &&
+#               > #     (exit 1)
+#               > #     Z
+#               > not ok - 2 failure to clean up causes the test to fail
+#               > #     Z
+#               > #     test_when_finished "(exit 2)"
+#               > #     Z
+#               > # failed 2 among 2 test(s)
+#               > 1..2
+#               EOF
+#               test_cmp expect out
+#               )
+#
+ok 13 - git update-index without --add should fail adding
+...
+ok 47 - very long name in the index handled sanely
+# still have 1 known breakage(s)
+# failed 1 among remaining 46 test(s)
+1..47
+
+Bye, Jojo 
