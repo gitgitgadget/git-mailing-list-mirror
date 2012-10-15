@@ -1,189 +1,66 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: make test
-Date: Mon, 15 Oct 2012 13:00:14 +0200
-Message-ID: <003101cdaac4$430b7a30$c9226e90$@schmitz-digital.de>
-References: <k5gov5$fe1$1@ger.gmane.org> <507BEB12.9040101@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push race
+Date: Mon, 15 Oct 2012 13:05:51 +0200
+Message-ID: <vpqd30k806o.fsf@grenoble-inp.fr>
+References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Johannes Sixt'" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 13:00:57 2012
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 13:06:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNiPk-0003Z9-Pp
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 13:00:53 +0200
+	id 1TNiUo-0000Xw-Te
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 13:06:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab2JOLAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 07:00:42 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:65071 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750739Ab2JOLAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 07:00:41 -0400
-Received: from DualCore (dsdf-4d0a1987.pool.mediaWays.net [77.10.25.135])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MeMIx-1SzjL73QP1-00Pj8Z; Mon, 15 Oct 2012 13:00:40 +0200
-In-Reply-To: <507BEB12.9040101@viscovery.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIVSFpveJljjAzS/2bNxxeCRCIxGwHjqAgSlxvZFNA=
-Content-Language: de
-X-Provags-ID: V02:K0:lByaXU15XzZ32tE8TyW8RVchccpZYEloccIvy+YnsuA
- 0XkKbTIU+rXwIMBUqotMmI1VhEE0CZ/j/Tkj7bB2vmdDjWefFI
- jAmYGeKiy+2TgU7yj8qfi+XepPQkZO+dlxbnYemsFRl5Kpq1ap
- w/uVmXzn0TelU6IZNscJPtTJp9QmvyaqfmsBLShwfMTxG/ea6A
- M4kBu8ocx5AbhUDK5uzmSJYiBHiNpE4S2+XnvUnS8tUdRMr0mt
- TzwhkD7/E+zibE8m8wZeeC7L44YtRvYTQpnLVYKF5DiPtrt7Kb
- dM9gC1zkbrDPlfJeqU5lM5xcamG85sOZY2Z2lV+C/yW7eY0yKv
- mNJ4BlCeY5s9LtEDjbDWsYCI1HRFXxPnOfIkqKYN50yy7HKJcK
- eDL+nn9yYyOqw==
+	id S1752124Ab2JOLFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 07:05:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38824 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750739Ab2JOLFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 07:05:55 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q9FAxkMe024646
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Oct 2012 12:59:46 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TNiUZ-0001Bz-R8; Mon, 15 Oct 2012 13:05:51 +0200
+In-Reply-To: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+	(Angelo Borsotti's message of "Mon, 15 Oct 2012 11:14:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Oct 2012 12:59:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q9FAxkMe024646
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1350903587.26163@tCoWM4cNXBpLnOaMJAcURQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207735>
 
-> From: Johannes Sixt [mailto:j.sixt@viscovery.net]
-> Sent: Monday, October 15, 2012 12:53 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: make test
-> 
-> Am 10/15/2012 12:36, schrieb Joachim Schmitz:
-> > not ok 4 - pretend we have a known breakage # TODO known breakage
-> >
-> >    This is expected, right?
-> 
-> Right.
-> 
-> >    the next is not though? Why might it be failing, where to check?
-> >
-> > not ok - 12 tests clean up even on failures
-> > #
-> > #               mkdir failing-cleanup &&
-> > #...
-> > #               test_cmp expect out
-> > #               )
-> > #
-> 
-> First thing:
-> 
->   ./t0000-basic.sh -v -i
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-OK, I should have mentioned that I did look with -v :
-not ok - 12 tests clean up even on failures
-#
-#               mkdir failing-cleanup &&
-#               (
-#               cd failing-cleanup &&
-#
-#               cat >failing-cleanup.sh <<-EOF &&
-#               #!/bin/sh
-#
-#               test_description='Failing tests with cleanup commands'
-#
-#               # Point to the t/test-lib.sh, which isn't in ../ as usual
-#               TEST_DIRECTORY="/home/jojo/git/git/t"
-#               . "$TEST_DIRECTORY"/test-lib.sh
-#
-#               test_expect_success 'tests clean up even after a failure' '
-#                       touch clean-after-failure &&
-#                       test_when_finished rm clean-after-failure &&
-#                       (exit 1)
-#               '
-#               test_expect_success 'failure to clean up causes the test to fail' '
-#                       test_when_finished "(exit 2)"
-#               '
-#               test_done
-#
-#               EOF
-#
-#               chmod +x failing-cleanup.sh &&
-#               test_must_fail ./failing-cleanup.sh >out 2>err &&
-#               ! test -s err &&
-#               ! test -f "trash directory.failing-cleanup/clean-after-failure" &&
-#               sed -e 's/Z$//' -e 's/^> //' >expect <<-\EOF &&
-#               > not ok - 1 tests clean up even after a failure
-#               > #     Z
-#               > #     touch clean-after-failure &&
-#               > #     test_when_finished rm clean-after-failure &&
-#               > #     (exit 1)
-#               > #     Z
-#               > not ok - 2 failure to clean up causes the test to fail
-#               > #     Z
-#               > #     test_when_finished "(exit 2)"
-#               > #     Z
-#               > # failed 2 among 2 test(s)
-#               > 1..2
-#               EOF
-#               test_cmp expect out
-#               )
-#
+> the push command checks first if the tips of the branches match those
+> of the remote references, and if it does uploads the snapshot.
 
-> and if that does not give sufficient clues,
-> 
->   $SHELL_PATH -x ./t0000-basic.sh -v -i
+The update does two things: upload objects to the database, and then
+update the reference. Adding objects to the database does not change the
+repository until the objects are reachable from a ref. Updating the ref
+is usually done giving the expected old sha1, and locks the ref, so it
+can't change in the meantime.
 
-not ok - 12 tests clean up even on failures
-#
-#               mkdir failing-cleanup &&
-#               (
-#               cd failing-cleanup &&
-#
-#               cat >failing-cleanup.sh <<-EOF &&
-#               #!/bin/sh
-#
-#               test_description='Failing tests with cleanup commands'
-#
-#               # Point to the t/test-lib.sh, which isn't in ../ as usual
-#               TEST_DIRECTORY="/home/jojo/git/git/t"
-#               . "$TEST_DIRECTORY"/test-lib.sh
-#
-#               test_expect_success 'tests clean up even after a failure' '
-#                       touch clean-after-failure &&
-#                       test_when_finished rm clean-after-failure &&
-#                       (exit 1)
-#               '
-#               test_expect_success 'failure to clean up causes the test to fail' '
-#                       test_when_finished "(exit 2)"
-#               '
-#               test_done
-#
-#               EOF
-#
-#               chmod +x failing-cleanup.sh &&
-#               test_must_fail ./failing-cleanup.sh >out 2>err &&
-#               ! test -s err &&
-#               ! test -f "trash directory.failing-cleanup/clean-after-failure" &&
-#               sed -e 's/Z$//' -e 's/^> //' >expect <<-\EOF &&
-#               > not ok - 1 tests clean up even after a failure
-#               > #     Z
-#               > #     touch clean-after-failure &&
-#               > #     test_when_finished rm clean-after-failure &&
-#               > #     (exit 1)
-#               > #     Z
-#               > not ok - 2 failure to clean up causes the test to fail
-#               > #     Z
-#               > #     test_when_finished "(exit 2)"
-#               > #     Z
-#               > # failed 2 among 2 test(s)
-#               > 1..2
-#               EOF
-#               test_cmp expect out
-#               )
-#
-+ die
+I don't know this part of the code very well, but check refs.c for the C
+part, and "git update-ref" for the plumbing interface.
 
-Looks identical, except for the "die" at the end. And still leaves me without a clue...
-
-> (Beware, though: in some cases, the latter gives additional failures, in
-> particular, when the stderr of a command is checked for with test_cmp
-> instead of grep because the 'actual' results contain the shell command
-> logs, which are not in the 'expected' results.)
-> 
-> -- Hannes,
-
-Bye, Jojo
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
