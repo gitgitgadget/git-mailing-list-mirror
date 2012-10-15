@@ -1,162 +1,251 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: A design for subrepositories
-Date: Mon, 15 Oct 2012 19:10:50 +0200
-Message-ID: <507C439A.6060202@web.de>
-References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi> <7vd30m2sbr.fsf@alter.siamese.dyndns.org> <20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi> <7vzk3p1xh3.fsf@alter.siamese.dyndns.org> <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi> <507ABDF3.4040106@web.de> <20121014182746.42895rwvalv4uoz6.lealanko@webmail.helsinki.fi> <507AE773.1010301@web.de> <20121015015934.1597359e76eaqvh2.lealanko@webmail.helsinki.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvsimport: allow author-specific timezones
+Date: Mon, 15 Oct 2012 10:40:50 -0700
+Message-ID: <7vpq4jws4d.fsf@alter.siamese.dyndns.org>
+References: <1350261054-5171-1-git-send-email-crorvick@cogcap.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Lauri Alanko <la@iki.fi>
-X-From: git-owner@vger.kernel.org Mon Oct 15 19:11:23 2012
+To: Chris Rorvick <crorvick@cogcap.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 19:41:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNoCH-0001SL-GX
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 19:11:22 +0200
+	id 1TNof3-0000uD-GF
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 19:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965Ab2JORLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 13:11:10 -0400
-Received: from mout.web.de ([212.227.17.12]:54579 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750953Ab2JORLJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 13:11:09 -0400
-Received: from [192.168.178.41] ([91.3.173.246]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0MCqsR-1TFrhH1cVH-009arn; Mon, 15 Oct 2012 19:11:00
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <20121015015934.1597359e76eaqvh2.lealanko@webmail.helsinki.fi>
-X-Provags-ID: V02:K0:JVOMiJOeUAxkvOYg4ErOeFKsXc0Z+Hh/gt2BvTNwPVu
- f9Up7borhUvfMyxfFyiCK18MwV39eq+0FW0i9ETRf6KDzdsbk+
- UYQIv7WYSauYkvpzzVVnjSCubsIG4evHrAz8zefT+tlwvRVZSo
- 4Zs1XBn0HOfAYf32BC5OPrnavI5VPOwEqqYm1v6bbmOcdw/4dP
- BB06tfrP4eF9drh3MavoQ==
+	id S1752805Ab2JORky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 13:40:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45054 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751131Ab2JORkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 13:40:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCEF38231;
+	Mon, 15 Oct 2012 13:40:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4ph9HnhuAXFMweyarLKOQIp+dbU=; b=DZRrZ9
+	IN7h+3pbMknHSgyVAZGH2+ZYe+T61Z8giyZpIpVERVwbezxYLkgiSE0y2RgEBcC1
+	rw7DVvzy5wWP/KKu7VQ8VBMhO6GqCpqnGFGrBp79CpaOABWI+WSIyx+rE07JM4pd
+	Y59eW3MiNs/ICkvFUl7Gdd6DLKK8ESwq4KB7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F9T5DpMLo1bYqEnEYI9hFKy0PHyi7ViT
+	DQnVMkzAscUe5TAycB9bczbVQ8By6HcJXGwo3xXOM7RCbSd9nRk6zkuaV4s+1IJW
+	63fMoiTAt0dtKGdYU6Hlk8wNXjy/eu9WvA8JKiEgzZ77kpSo6ftt8ZAiV9wJN9Hm
+	PqJX5z7WRas=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA7128230;
+	Mon, 15 Oct 2012 13:40:52 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5A2C822E; Mon, 15 Oct 2012
+ 13:40:51 -0400 (EDT)
+In-Reply-To: <1350261054-5171-1-git-send-email-crorvick@cogcap.com> (Chris
+ Rorvick's message of "Sun, 14 Oct 2012 19:30:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 76B0C68C-16EF-11E2-8B7A-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207764>
 
-Am 15.10.2012 00:59, schrieb Lauri Alanko:
->>> la@bq:~/tmp/super$ git mv sub movedsub
->>> fatal: source directory is empty, source=sub, destination=movedsub
->>
->> This error here indicates that we didn't teach git to properly move
->> a submodule yet. It is one of my next goals to make "git [submodule]
->> mv sub movedsub" do the right thing here.
-> 
-> I'll digress here a bit: I'm not really fond of the idea of adding
-> special-purpose support into the core git commands. It just makes them
-> messier, and there will always be other tools that won't be supported by
-> git directly. I'd much rather see an mv-hook that arbitrary extensions
-> could use to update metadata associated with a tree entry.
+Chris Rorvick <crorvick@cogcap.com> writes:
 
-One third of the participants of the GitSurvey2010 stated that they are
-using submodules (e.g. more than gitattributes), so adding some support
-for them into the core doesn't look that unwarranted to me. And believe
-me, without putting support in there the user experience will stay
-suboptimal.
+> From: Chris Rorvick <chris@rorvick.com>
+>
+> CVS patchsets are imported with timestamps having an offset of +0000
+> (UTC).  The cvs-authors file is already used to translate the CVS
+> username to full name and email in the corresponding commit.  Extend
+> this file to support an optional timezone for calculating a user-
+> specific timestamp offset.
+>
+> Signed-off-by: Chris Rorvick <chris@rorvick.com>
+> ---
+>
+> This supercedes the patches submitted for using the local timezone in
+> commits.
+>
+>  Documentation/git-cvsimport.txt    |   5 +-
+>  git-cvsimport.perl                 |  22 ++-
+>  t/t9604-cvsimport-timestamps.sh    |  92 +++++++++++++
+>  t/t9604/cvsroot/.gitattributes     |   1 +
+>  t/t9604/cvsroot/CVSROOT/.gitignore |   2 +
+>  t/t9604/cvsroot/module/a,v         | 265 +++++++++++++++++++++++++++++++++++++
+>  6 files changed, 381 insertions(+), 6 deletions(-)
+>  create mode 100775 t/t9604-cvsimport-timestamps.sh
 
-> Indeed, one of the reasons a separate tool seemed attractive to me was
-> that that way I could be sure that the tool was a high-level utility
-> that was completely implemented on top of basic low-level git
-> operations. The fact that git's submodule support manifests as bits and
-> pieces in various parts of the core seems a bit worrisome to me.
+OK, a new test script has its executable bit set (correct).
 
-I see it the other way around: Due to the fact that submodules were
-only accessible via the submodule script and not integrated into the
-core made a lot of people (e.g. the Jenkins Git plugin we are using at
-work) code around that. That wouldn't have been necessary if I would
-have finished my submodule update work at that time.
+>  create mode 100664 t/t9604/cvsroot/.gitattributes
+>  create mode 100664 t/t9604/cvsroot/CVSROOT/.gitignore
+>  create mode 100664 t/t9604/cvsroot/module/a,v
+>
+> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+> index 6695ab3..35dc636 100644
+> --- a/Documentation/git-cvsimport.txt
+> +++ b/Documentation/git-cvsimport.txt
+> @@ -141,13 +141,14 @@ This option can be used several times to provide several detection regexes.
+>  +
+>  ---------
+>  	exon=Andreas Ericsson <ae@op5.se>
+> -	spawn=Simon Pawn <spawn@frog-pond.org>
+> +	spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
+>  
+>  ---------
+>  +
+>  'git cvsimport' will make it appear as those authors had
+>  their GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL set properly
+> -all along.
+> +all along.  If a timezone is specified, GIT_AUTHOR_DATE will
+> +have the corresponding offset applied.
 
-And e.g. you can't forget to add changes inside the submodule anymore
-since diff and status learned to show those changes. And we still have
-mis-merges at my dayjob due to not updated submodules, which will go
-away the moment merge learns to update all submodules without merge
-conflicts. And so on.
+The description above the context reads:
 
-> (Moreover, it's confusing to the user. I read the git-submodule man page
-> and thought that that described all the available submodule operations.
-> Only now did I find out that clone and fetch also have built-in
-> submodule functionality.)
+    -A <author-conv-file>::
+            CVS by default uses the Unix username when writing its
+            commit logs. Using this option and an author-conv-file
+            in this format
 
-Then the man page might need some overhaul. Care to take a look?
+which probably need to be updated to describe what "this format" is
+a bit better.
 
->>> la@bq:~/tmp/super$ mv sub movedsub
->>
->> Currently it is better to remove the submodule here, as recreating it
->> with a "git submodule update" later will get the relative paths right.
-> 
-> This was a bit of a special case, as this was the original directory
-> where we did "git init sub" and "git submodule add ./sub". So "sub"
-> actually contains the real repository, not a gitlink to
-> .git/modules/sub. Arguably "git submodule add" should move the local
-> submodule's repository there.
+	... an author-conv-file that maps the name recorded in CVS
+	to author name, author e-mail and an optional timezone for
+	the author
 
-That sounds like a good idea.
+or something.
 
->>> la@bq:~/tmp/super$ git rm sub
->>> rm 'sub'
->>> la@bq:~/tmp/super$ git add movedsub
->>
->> And to git this adds a completely different submodule (as its name
->> is not "sub"), which breaks your expectation.
-> 
-> Submodule? This is just a normal git add, not git submodule add. I
-> thought this just adds to the index a gitlink with the head revision in
-> movedsub, which is the same as the head revision was in sub, so it's
-> detected as a move of a gitlink.
+>  For convenience, this data is saved to `$GIT_DIR/cvs-authors`
+>  each time the '-A' option is provided and read from that same
 
-You're free to use simple gitlinks, but then you can't expect existing
-and coming goodies - like git being able to move them around in the
-work tree - work all by itself, because they are only possible with
-submodule support.
+> @@ -844,7 +854,9 @@ sub commit {
+>  		}
+>  	}
+>  
+> -	my $commit_date = strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date));
+> +	$ENV{'TZ'}=$author_tz;
+> +	my $commit_date = strftime("%s %z", localtime($date));
 
->> To do what you intended
->> use this line instead:
->>
->> $ git update-index --add --cacheinfo 160000 $HASH movedsub
-> 
-> Doesn't this do exactly the same thing as "git add" for a directory
-> containing a repository?
+With this, because it updates $commit_date, the specified timezone
+applies to both AUTHOR and COMMITTER dates (which is correct---I am
+just pointing it out).
 
-In my test case "git add movesub" silently does nothing, as my
-directory is empty. So I need the update-index here.
+> diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps.sh
+> new file mode 100644
 
->>> la@bq:~/tmp/superc$ git submodule update --init
->>> Submodule 'sub' (/home/la/tmp/super/sub) registered for path 'sub'
->>> fatal: repository '/home/la/tmp/super/sub' does not exist
->>> Clone of '/home/la/tmp/super/sub' into submodule path 'sub' failed
->>
->> And that fails because to be able to clone a submodule it has to be
->> pushed into its own repo first, so it can be cloned from there somewhere
->> else. After doing that this will work.
-> 
-> Sorry, but I can't get this to work. To me it seems that when fetching
-> submodules from the origin, submodule.sub.url has to point to the actual
-> location of the repository, and if this is outdated or missing, the
-> fetch won't work.
-> 
-> It would make sense that if the url is missing, the submodule repo
-> inside origin's .git/modules would be used, but this doesn't seem to be
-> the case currently.
+Huh?  What happened to the executable bit we saw earlier?
 
-No it isn't. Patches welcome ;-)
+> index 0000000..fb7459c
+> --- /dev/null
+> +++ b/t/t9604-cvsimport-timestamps.sh
+> @@ -0,0 +1,92 @@
+> +#!/bin/sh
+> +
+> +test_description='git cvsimport timestamps'
+> +. ./lib-cvs.sh
+> +
+> +setup_cvs_test_repository t9604
+> +
+> +test_expect_success 'check timestamps are UTC (TZ=America/Chicago)' '
+> +
+> +    TZ=America/Chicago git cvsimport -p"-x" -C module-1 module &&
+> +    git cvsimport -p"-x" -C module-1 module &&
+> +    (cd module-1 &&
+> +        git log --pretty="format:%s %ai" -- >../actual-1 &&
+> +        echo "" >>../actual-1
+> +    ) &&
+> +    echo "Rev 16 2011-11-06 07:00:01 +0000
+> +Rev 15 2011-11-06 06:59:59 +0000
+> +Rev 14 2011-03-13 08:00:01 +0000
+> +Rev 13 2011-03-13 07:59:59 +0000
+> +Rev 12 2010-12-01 00:00:00 +0000
+> +Rev 11 2010-11-01 00:00:00 +0000
+> +Rev 10 2010-10-01 00:00:00 +0000
+> +Rev  9 2010-09-01 00:00:00 +0000
+> +Rev  8 2010-08-01 00:00:00 +0000
+> +Rev  7 2010-07-01 00:00:00 +0000
+> +Rev  6 2010-06-01 00:00:00 +0000
+> +Rev  5 2010-05-01 00:00:00 +0000
+> +Rev  4 2010-04-01 00:00:00 +0000
+> +Rev  3 2010-03-01 00:00:00 +0000
+> +Rev  2 2010-02-01 00:00:00 +0000
+> +Rev  1 2010-01-01 00:00:00 +0000" >expect-1 &&
+> +    test_cmp actual-1 expect-1
+> +'
 
-> Anyway, I am a bit surprised to hear of such active development for
-> git-submodule. It's pretty old now (the shell script says 2007), and I
-> thought that if it were to ever support the kind of basic functionality
-> I require, it would do so already.
+A handful of issues.
 
-So much to do, so little time.
+    - (style) Please use one tab for one level of indent;
+    - (style) Learn to use <<-\HERE document to make list easier to
+      read; 
+    - You shouldn't have to choose --pretty=format which places LF
+      in between records and add another LF yourself.  Instead, you
+      can use --pretty=tformat that uses LF as record terminator, or
+      its short-hand form --format="...";
+    - I am not sure what you are gaining out of the trailing "--".
 
-> How soon do you envision support for bare repositories with submodules?
+See below for a suggested way to lay this out better.
 
-I'm not sure what you mean by that and what your use case is, but I'll
-be happy to discuss design issues with you. But as that is not my itch
-I don't expect to be working on that soon, as my next main goal is to
-get recursive checkout working (currently I'm removing the obstacles
-I find in my way towards that, but there is still quite some work to
-do until I get there).
+> +test_expect_success 'check timestamps are UTC (TZ=Australia/Sydney)' '
+> +
+> +    TZ=America/Chicago git cvsimport -p"-x" -C module-2 module &&
+
+This look identical to the first one, but even with a trivial change
+to use Australia/Sydney instead of Chicago, I am not sure what the
+test buys us.
+
+> +test_expect_success 'check timestamps with author-specific timezones' '
+> +
+> +    echo "user1=User One <user1@domain.org>
+> +user2=User Two <user2@domain.org> America/Chicago
+> +user3=User Three <user3@domain.org> Australia/Sydney
+> +user4=User Four <user4@domain.org> Asia/Shanghai" >cvs-authors &&
+> +    git cvsimport -p"-x" -A cvs-authors -C module-3 module &&
+> +    (cd module-3 &&
+> +        git log --pretty="format:%s %ai" -- >../actual-3 &&
+> +        echo "" >>../actual-3
+> +    ) &&
+> +    echo "Rev 16 2011-11-06 01:00:01 -0600
+> +Rev 15 2011-11-06 01:59:59 -0500
+> +Rev 14 2011-03-13 03:00:01 -0500
+> +Rev 13 2011-03-13 01:59:59 -0600
+> +...
+> +Rev  2 2010-01-31 18:00:00 -0600
+> +Rev  1 2010-01-01 00:00:00 +0000" >expect-3 &&
+> +    test_cmp actual-3 expect-3
+> +'
+
+In addition to the same comments as above, this one would benefit
+having %an in its output to illustrate that the code is handling
+locations with daylight saving time correctly.  It would make it
+stand out that Rev 16 is done during the standard time while Rev 15
+is done during the DST.  It would look more like this (with the
+style fix):
+
+test_expect_success 'check timestamps with author-specific timezones' '
+	cat >cvs-authors <<-EOF &&
+	user1=User One <user1@domain.org>
+	user2=User Two <user2@domain.org> America/Chicago
+	user3=User Three <user3@domain.org> Australia/Sydney
+	user4=User Four <user4@domain.org> Asia/Shanghai
+	EOF
+	git cvsimport -p"-x" -A cvs-authors -C module-3 module &&
+	(
+		cd module-3 &&
+		git log --format="%s %ai %an"
+	) >actual-3 &&
+	cat >expect-3 <<-\EOF
+	Rev 16 2011-11-06 01:00:01 -0600 User Two
+	Rev 15 2011-11-06 01:59:59 -0500 User Two
+	Rev 14 2011-03-13 03:00:01 -0500 User Two
+	...
+	Rev  2 2010-01-31 18:00:00 -0600 User Two
+	Rev  1 2010-01-01 00:00:00 +0000 User One
+	EOF
+	test_cmp actual-3 expect-3
+'
