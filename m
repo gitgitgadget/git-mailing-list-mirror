@@ -1,78 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Patch 0/5] Create single PDF for all HTML files
-Date: Mon, 15 Oct 2012 13:42:43 -0400
-Message-ID: <20121015174243.GA31658@sigill.intra.peff.net>
-References: <20121006193205.GD3644@sigill.intra.peff.net>
- <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
- <1770841099.101310.1349597668191.JavaMail.ngmail@webmail23.arcor-online.net>
- <20121007225232.GA3490@sigill.intra.peff.net>
- <507BF9C7.1080601@drmicha.warpmail.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: When Will We See Collisions for SHA-1? (An interesting analysis
+ by Bruce Schneier)
+Date: Mon, 15 Oct 2012 19:47:09 +0200
+Message-ID: <CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
+References: <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Ackermann <th.acker66@arcor.de>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 19:43:13 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 19:47:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNogx-0003SU-IH
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 19:43:03 +0200
+	id 1TNolR-0000Pn-Ud
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 19:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246Ab2JORmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 13:42:50 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53048 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753803Ab2JORmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 13:42:49 -0400
-Received: (qmail 2962 invoked by uid 107); 15 Oct 2012 17:43:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Oct 2012 13:43:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Oct 2012 13:42:43 -0400
-Content-Disposition: inline
-In-Reply-To: <507BF9C7.1080601@drmicha.warpmail.net>
+	id S1754157Ab2JORrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 13:47:31 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:64645 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752713Ab2JORra (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 13:47:30 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so5251452oag.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 10:47:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=zNNm59LK3FmwmmlCqQ9usNhBh7PDMED1fKKQYZQpJuk=;
+        b=LENaAwCzg2RbC9x2Ba1Y6AFSAx5B228Ikk/pgTz4LjT1cnVRFsqiJ8TfPlvkeDW+Wn
+         CWTBHy0qE2kaFX/dQMG+5m7feN+6HrkOpQ443ytdw4+E+D5Y12LOjbj/5lkLRUojLSx4
+         bv7eUWoH3wHszPEG8OfXGL4yw7Suf6v2g+qNhnz0l/0Ft0VCzhOry5hygqlvoG2zqF50
+         GcHRakh9xXqrw70PU3L7qVF4m2eyGPMAONW68HQ4jshkkKRLCMWHN93p5b3nJlEklHs6
+         vvM7p7Xjv3yM6CPdBBhcEu9Q/zTHHOim5iuRID1vqLzISfM/COpCEvNl2NleWT5C0voV
+         Ua/A==
+Received: by 10.182.113.5 with SMTP id iu5mr10258228obb.36.1350323250050; Mon,
+ 15 Oct 2012 10:47:30 -0700 (PDT)
+Received: by 10.60.94.225 with HTTP; Mon, 15 Oct 2012 10:47:09 -0700 (PDT)
+In-Reply-To: <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207766>
 
-On Mon, Oct 15, 2012 at 01:55:51PM +0200, Michael J Gruber wrote:
+On Mon, Oct 15, 2012 at 6:42 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
+> Very clear analysis. Well written. Perhaps is it the time to update
+> http://git-scm.com/book/ch6-1.html (A SHORT NOTE ABOUT SHA-1) ?
+>
+> Hope useful
+>
+> http://www.schneier.com/crypto-gram-1210.html
 
-> > I wonder if a more sane route is to drop HTML entirely, convert the
-> > asciidoc to docbook (which we already do for manpages), and then create
-> > a docbook document that is a collection of all elements, which can then
-> 
-> Hmm, I think the html output often looks better than the man output
-> (tables and such), and it is a formatted, reflowable, interlinked format
-> fit for many puposes.
+This would be concerning if the Git security model would break down if
+someone found a SHA1 collision, but it really wouldn't.
 
-It does look better, but that is because the docbook->roff step is where
-things get ugly. In theory, docbook is at least as expressive as HTML,
-and has lots of nice semantic markup that gives us flexibility in what
-the final product looks like.
+It's one thing to find *a* collision, it's quite another to:
 
-There are docbook->epub converters (I think xmlto will do this out of
-the box), as well as a host of other formats. But convincing docbook to
-create a collection of "refentry" (their term for manpage) articles is
-harder than you'd think. I tried a few things when this thread started
-and couldn't get anything simple to work (xml has managed to make the
-simple act of "include this document in this other document" insanely
-complex). But I only spent a few minutes on it.
+ 1. Find a collision for the sha1 of harmless.c which I know you use,
+    and replace it with evil.c.
 
-> > be converted to pdf, epub, or whatever. I would not be surprised if
-> > somebody has solved this problem before (but it is not really my itch,
-> > so I did not look very far).
-> 
-> I'd rather ditch docbook and have one toolchain (asciidoc, unless we
-> want to switch to something else) only... We've been hunting asciidoc as
-> well as docbook compatibility (between versions) and interoperability
-> (between them) issues again and again.
+ 2. Somehow make evil.c compile so that it actually does something
+    useful and nefarious, and doesn't just make the C compiler puke.
 
-Yeah, I really hate our doc toolchain. It just seems like everything
-else is even worse. We can ditch docbook, but then how do we make
-manpages?
+    If finding one arbitrary collision costs $43K in 2021 dollars
+    getting past this point is going to take quite a large multiple of
+    $43K.
 
--Peff
+ 3. Somehow inject the new evil object into your repository, or
+    convince you to re-clone it / clone it from somewhere you usually
+    wouldn't.
+
+At some point in the early days of Git Linus went on a rant to this
+effect either on this list or on the LKML.
+
+Maybe it would be useful to include some of that instead?
+
+It would be very interesting to see an analysis that deals with some
+actual Git-related security scenarios, instead of something that just
+assumes that if someone finds *any* SHA1 collision the sky is going to
+fall.
