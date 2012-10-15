@@ -1,162 +1,119 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] show color hints based on state of the git tree
-Date: Mon, 15 Oct 2012 10:23:13 +0200
-Message-ID: <507BC7F1.3080506@drmicha.warpmail.net>
-References: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org> <20121005211030.GA5414@simaj.xs4all.nl>
+From: Johan Herland <johan@herland.net>
+Subject: BUG when trying to delete symbolic refs
+Date: Mon, 15 Oct 2012 10:50:58 +0200
+Message-ID: <CALKQrgfnvV+1XHjeSytj+LxkAabZJK3hewxH7WT0nkX-ewOKUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, spearce@spearce.org,
-	artagnon@gmail.com, schwab@linux-m68k.org, soosthoek@nieuwland.nl
-To: Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 10:23:29 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 10:51:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNfxQ-0002UF-OQ
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 10:23:29 +0200
+	id 1TNgOP-0004aA-Ti
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 10:51:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447Ab2JOIXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 04:23:17 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45869 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751027Ab2JOIXP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2012 04:23:15 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 2EEA020619;
-	Mon, 15 Oct 2012 04:23:15 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 15 Oct 2012 04:23:15 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=+MuYXI1BMH8oLKqegWYe0X
-	XFzJo=; b=CIOzI6cCijteLDQmym1rNpdbAsc5QNUPqrRTwoEUCypUdmsRFO4Wts
-	Tc7bNdbcKOII3QrER8m4vk1ImtnP5lRW1biMMXvvQHKdwu+Wt0tefXyTLFAu7r7d
-	xAkRCOeUg5MPFY2ki8Fx4ka3gmFaJuKT38l0WdihY8lDIpJxSErFE=
-X-Sasl-enc: jmQbxJR4ewSebYMu90UuajGXlcTEdsXBA9JCtQLTjuU9 1350289394
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 0EF3D4827D0;
-	Mon, 15 Oct 2012 04:23:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
-In-Reply-To: <20121005211030.GA5414@simaj.xs4all.nl>
+	id S1751305Ab2JOIvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 04:51:10 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:59042 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751073Ab2JOIvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 04:51:09 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1TNgOA-000KXL-Nj
+	for git@vger.kernel.org; Mon, 15 Oct 2012 10:51:07 +0200
+Received: by mail-oa0-f46.google.com with SMTP id h16so4704645oag.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 01:50:58 -0700 (PDT)
+Received: by 10.60.22.161 with SMTP id e1mr2867020oef.93.1350291058833; Mon,
+ 15 Oct 2012 01:50:58 -0700 (PDT)
+Received: by 10.76.154.135 with HTTP; Mon, 15 Oct 2012 01:50:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207726>
 
-Sorry for being late ($DAYJOB and such), but I just noticed this is on
-next already:
+Hi,
 
-Simon Oosthoek venit, vidit, dixit 05.10.2012 23:10:
-> By setting GIT_PS1_SHOW_COLORHINTS when using __git_ps1
-> as PROMPT_COMMAND, you will get color hints in addition to
-> a different character (*+% etc.)
-> 
-> Signed-off-by: Simon Oosthoek <soosthoek@nieuwland.nl>
-> ---
->  contrib/completion/git-prompt.sh |   42 +++++++++++++++++++++++++++++++++++---
->  1 file changed, 39 insertions(+), 3 deletions(-)
-> 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index c50c94a..51285d7 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -53,6 +53,12 @@
->  # find one, or @{upstream} otherwise.  Once you have set
->  # GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
->  # setting the bash.showUpstream config variable.
-> +#
-> +# If you would like a colored hint about the current dirty state, set
-> +# GIT_PS1_SHOWCOLORHINTS to a nonempty value. When tracked files are
-> +# modified, the branch name turns red, when all modifications are staged
-> +# the branch name turns yellow and when all changes are checked in, the
-> +# color changes to green. The colors are currently hardcoded in the function.
->  
->  # __gitdir accepts 0 or 1 arguments (i.e., location)
->  # returns location of .git repo
-> @@ -201,11 +207,12 @@ __git_ps1_show_upstream ()
->  # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
->  # when called from PS1 using command substitution
->  # in this mode it returns text to add to bash PS1 prompt (includes branch name) or
-> -# __git_ps1 accepts 0 or 2 arguments when called from PROMPT_COMMAND
-> +# __git_ps1 accepts 0 or 2 arguments when called from PROMPT_COMMAND (pc)
->  # in that case it _sets_ PS1. The arguments are parts of a PS1 string.
->  # when both arguments are given, the first is prepended and the second appended
->  # to the state string when assigned to PS1, otherwise default start/end strings
->  # are used.
-> +# In pcmode you can request colored hints using GIT_PS1_SHOWCOLORHINTS=true
->  __git_ps1 ()
->  {
->  	local pcmode=yes
-> @@ -320,8 +327,37 @@ __git_ps1 ()
->  
->  		local f="$w$i$s$u"
->  		if [ $pcmode = yes ]; then
-> -			PS1="$ps1pc_start($c${b##refs/heads/}${f:+ $f}$r$p)$ps1pc_end"
-> -		elif [ $pcmode = no ]; then
-> +			PS1="$ps1pc_start("
-> +			if [ -n "${GIT_PS1_SHOWCOLORHINT-}" ]; then
+At $dayjob we renamed a branch, and for a grace period, we kept the
+old name as a symref/alias to the new name, to give our users a window
+for switching. This has worked well, until we tried to remove the
+symref/alias. The following script demonstrates what we discovered:
 
-You're missing the "S" here (HINTS).
+ $ git --version
+ git version 1.8.0.rc2.249.g6cc8227
+ $ git init symref_delete_test/
+ Initialized empty Git repository in .../symref_delete_test/.git/
+ $ cd symref_delete_test/
+ $ echo foo > foo && git add foo && git commit -m foo
+ [master (root-commit) c7ae77e] foo
+  1 file changed, 1 insertion(+)
+  create mode 100644 foo
+ $ git gc
+ Counting objects: 3, done.
+ Writing objects: 100% (3/3), done.
+ Total 3 (delta 0), reused 0 (delta 0)
+ $ cat .git/packed-refs
+ # pack-refs with: peeled
+ c7ae77e537138bee3f722e57e1af87a7011466cb refs/heads/master
+ $ echo bar > foo && git commit -am bar
+ [master 7451bf0] bar
+  1 file changed, 1 insertion(+), 1 deletion(-)
+ $ git symbolic-ref refs/heads/alias refs/heads/master
+ $ git rev-parse master
+ 7451bf08b7aacedc9e88a9fa37a6c1f701071bbe
+ $ git rev-parse alias
+ 7451bf08b7aacedc9e88a9fa37a6c1f701071bbe
+ $ git branch -d alias
+ Deleted branch alias (was 7451bf0).
+ $ git rev-parse master
+ c7ae77e537138bee3f722e57e1af87a7011466cb
+ $ git rev-parse alias
+ c7ae77e537138bee3f722e57e1af87a7011466cb
+ $ cat .git/packed-refs
+ # pack-refs with: peeled
+ c7ae77e537138bee3f722e57e1af87a7011466cb refs/heads/master
+ $ ls .git/refs/heads/
+ alias
 
-> +				local c_red='\e[31m'
-> +				local c_green='\e[32m'
-> +				local c_yellow='\e[33m'
-> +				local c_lblue='\e[1;34m'
-> +				local c_purple='\e[35m'
-> +				local c_cyan='\e[36m'
-> +				local c_clear='\e[0m'
-> +				local branchstring="$c${b##refs/heads/}"
-> +				local branch_color="$c_green"
-> +				local flags_color="$c_cyan"
-> +
-> +				if [ "$w" = "*" ]; then
-> +					branch_color="$c_red"
-> +				elif [ -n "$i" ]; then
-> +					branch_color="$c_yellow"
-> +				fi
-> +
-> +				# Setting PS1 directly with \[ and \] around colors
-> +				# is necessary to prevent wrapping issues!
-> +				PS1="$PS1\[$branch_color\]$branchstring\[$c_clear\]"
-> +				if [ -n "$f" ]; then
-> +					PS1="$PS1 \[$flags_color\]$f\[$c_clear\]"
-> +				fi
-> +			else
-> +				PS1="$PS1$c${b##refs/heads/}${f:+ $f}$r$p"
-> +			fi
-> +			PS1="$PS1)$ps1pc_end"
-> +		else
-> +			# NO color option unless in PROMPT_COMMAND mode
->  			printf -- "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r$p"
->  		fi
->  	fi
-> 
+Basically, there is a "master" branch, and an "alias" symref to
+"master". When we naively try to delete the symref with "git branch -d
+alias", it ends up:
 
-I'm afraid I don't like this coloring style at all because it is
-inconsistent with the color usage of "git status -sb". First of all, the
-colors are different, and second, the fact *what* is colored is
-different. I had suggested following "git status -sb" for a good reason.
-It colors a branch green and a detached head red. It colors "change"
-(A/D/M/R) as red/green depending on non-cached/cached, so that's how */+
-should be. Your call for $/% (I'd leave them uncolored).[*][**]
+ - NOT deleting the "alias" symref
+ - DELETING the "master" loose ref
+ - NOT deleting the "master" packed ref
 
-I think it's very confusing to have completely different schemes (not
-just themes) for two versions of the same information: concise status
-information.
+So, from the user perspective, "git branch -d alias" ends up resetting
+"master" (and "alias") back to the last time we happened to run "git
+gc". Needless to say, this is not quite what we had in mind...
 
-So, please try and follow "git status -sb".
+AFAICS, there may be three possible "acceptable" outcomes when we run
+"git branch -d alias" in the above scenario:
 
-Michael
+ A. The symbolic ref is deleted. This is obviously what we expected...
 
-[*] Really, there's nothin "red" about a branch when there are cached or
-non-cached changes. They are changes wrt. to what's in HEAD resp. the
-index, no matter what HEAD is.
+ B. The command fails because "alias" is a symref. This would be
+understandable if we don't want to teach "branch -d" about symrefs.
+But then, the error message should ideally explain which command we
+should use to remove the symref.
 
-[**] Also, coloring the status characters opens the way to even using
-the same characters as "status -sb" (ADM).
+ C. The "master" ref (BOTH loose and packed versions of it) is
+deleted. This would be less helpful for us, but Git would at least be
+internally consistent (in that the symref would be resolved, and the
+command would become "git branch -d master").
+
+Obviously, I would advocate for option A. What say you?
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
