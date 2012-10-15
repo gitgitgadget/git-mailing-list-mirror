@@ -1,78 +1,71 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: make test
-Date: Mon, 15 Oct 2012 15:18:19 +0200
-Message-ID: <004001cdaad7$8bb72aa0$a3257fe0$@schmitz-digital.de>
-References: <k5gov5$fe1$1@ger.gmane.org> <507BEB12.9040101@viscovery.net>	<003101cdaac4$430b7a30$c9226e90$@schmitz-digital.de>	<507BF0EA.7000805@viscovery.net>	<003801cdaac9$81d5bff0$85813fd0$@schmitz-digital.de>	<507BF8FE.1060502@viscovery.net>	<003901cdaacc$6f87e640$4e97b2c0$@schmitz-digital.de>	<507BFD03.7060208@viscovery.net> <m2mwznrk0c.fsf@igel.home>
+From: Simon Oosthoek <soosthoek@nieuwland.nl>
+Subject: Re: [PATCH 2/2] show color hints based on state of the git tree
+Date: Mon, 15 Oct 2012 15:20:01 +0200
+Message-ID: <507C0D81.7030005@nieuwland.nl>
+References: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org> <20121005211030.GA5414@simaj.xs4all.nl> <507BC7F1.3080506@drmicha.warpmail.net> <507BD0EE.5000107@nieuwland.nl> <507BD3C1.4040807@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Andreas Schwab'" <schwab@linux-m68k.org>,
-	"'Johannes Sixt'" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 15:19:01 2012
+Cc: Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
+	spearce@spearce.org, artagnon@gmail.com, schwab@linux-m68k.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 15 15:20:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNkZP-0004Di-QX
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 15:19:00 +0200
+	id 1TNkal-0005iL-Jh
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 15:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab2JONSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 09:18:48 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:62650 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753325Ab2JONSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 09:18:48 -0400
-Received: from DualCore (dsdf-4d0a1987.pool.mediaWays.net [77.10.25.135])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0M7EPO-1Taca42eog-00wK5e; Mon, 15 Oct 2012 15:18:42 +0200
-In-Reply-To: <m2mwznrk0c.fsf@igel.home>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIVSFpveJljjAzS/2bNxxeCRCIxGwHjqAgSAptEk9IBw7/mtgF+OhWNAdUX+SMA3Fi1dgIPN99PAv5kh3iWrx62YA==
-Content-Language: de
-X-Provags-ID: V02:K0:kl97gzIZFNqqPR5gJq08UDp9GsgL2stwdcbjQVfTRJV
- Jf43cz/J4oFFvdLJgZzX40VQA8gv9BfWhh5vt24oMEdbGy4oEE
- vJkG9s3qQLAaRPgz8cB2sWNTHP06Fiyp6l7x1Sk++ie7ybhA/m
- iyq/5jBaiS9i/seQLId+ifzqvZ1lr0xklR/PLmwoYuRh2jnhHw
- nic+CwXdQH9hrVcJ25nOTKszftow65DP6yjuf81/l/bGuloJn1
- Qnughcm9eAzlc5fsgriJswxE/5dspWAVRxhUSI+RP6tNFjblpN
- t/We/bkDY7jourUvxBh84KqApmKBGNhHmLgURaC1TaRmjz3Uhb
- mCWvxdKciw2upO1hy75nz4HxgYnfLcpE/EskDJ/clJ2t6k4BK7
- M4Qxnf20lxr7A==
+	id S1753371Ab2JONUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 09:20:11 -0400
+Received: from mail.nieuwland.nl ([87.251.35.136]:51400 "HELO nieuwland.nl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753325Ab2JONUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 09:20:11 -0400
+Received: (qmail 13769 invoked by uid 453); 15 Oct 2012 13:20:02 -0000
+X-Virus-Checked: Checked by ClamAV on nieuwland.nl
+Received: from Unknown (HELO [192.168.216.232]) (192.168.216.232)
+  (smtp-auth username soosthoek, mechanism plain)
+  by nieuwland.nl (qpsmtpd/0.83) with (AES256-SHA encrypted) ESMTPSA; Mon, 15 Oct 2012 15:20:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
+In-Reply-To: <507BD3C1.4040807@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207746>
 
-> From: Andreas Schwab [mailto:schwab@linux-m68k.org]
-> Sent: Monday, October 15, 2012 2:35 PM
-> To: Johannes Sixt
-> Cc: Joachim Schmitz; git@vger.kernel.org
-> Subject: Re: make test
-> 
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
-> > Am 10/15/2012 13:58, schrieb Joachim Schmitz:
-> >> ++ mkdir failing-cleanup
-> >> ++ cd failing-cleanup
-> >> ++ cat
-> >> ++ chmod +x failing-cleanup.sh
-> >> ++ test_must_fail ./failing-cleanup.sh
-> >> + eval_ret=1
-> >
-> > I wonder why the log does not show the commands of function
-> > test_must_fail.
-> 
-> That's because stderr is redirected.
-> 
+Hi Michael, sorry for the duplicate, forgot to reply-all...
 
-cat err
-++ ./failing-cleanup.sh
-++ exit_code=0
-++ test 0 = 0
-++ echo 'test_must_fail: command succeeded: ./failing-cleanup.sh'
-test_must_fail: command succeeded: ./failing-cleanup.sh
-++ return 1
+On 10/15/2012 11:13 AM, Michael J Gruber wrote:
+
+> ...only because you don't know the color coding scheme. It's green
+> because those changes are saved somewhere (in the index) and would even
+> survice a branch switch.
+>
+
+But git doesn't exactly let you do this:
+I modified some things in git-prompt.sh trying to implement some of what 
+we discussed. Then staged the file and tried git checkout HEAD^^ (or any 
+branch)
+
+error: Your local changes to the following files would be overwritten by 
+checkout:
+         contrib/completion/git-prompt.sh
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+
+So I don't think it's all that strange to mark the branch as not quite 
+safe to change. The idea (or at least my idea) behind these hints is 
+that it reminds me to do stuff that prevents these "Aborts". I think 
+that that is a useful feature for any user of git.
+
+In this light, would you accept yellow in the branch color to indicate 
+uncommitted staged changes?
+
+Cheers
+
+Simon
