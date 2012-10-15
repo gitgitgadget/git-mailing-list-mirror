@@ -1,75 +1,91 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [Patch 3/5] Create html documents for all files in Documentation/RelNotes
-Date: Mon, 15 Oct 2012 13:48:22 +0200
-Message-ID: <507BF806.1030709@drmicha.warpmail.net>
-References: <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net> <343092834.269729.1349538958985.JavaMail.ngmail@webmail08.arcor-online.net> <20121006192105.GA17895@sigill.intra.peff.net> <7vmwzyovg3.fsf@alter.siamese.dyndns.org>
+Subject: Re: [Patch 0/5] Create single PDF for all HTML files
+Date: Mon, 15 Oct 2012 13:55:51 +0200
+Message-ID: <507BF9C7.1080601@drmicha.warpmail.net>
+References: <20121006193205.GD3644@sigill.intra.peff.net> <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net> <1770841099.101310.1349597668191.JavaMail.ngmail@webmail23.arcor-online.net> <20121007225232.GA3490@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Thomas Ackermann <th.acker66@arcor.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 17:34:44 2012
+Cc: Thomas Ackermann <th.acker66@arcor.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 15 17:34:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNmgm-0005Qh-0m
+	id 1TNmgm-0005Qh-GV
 	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 17:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181Ab2JOPed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 11:34:33 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33369 "EHLO
+	id S1752267Ab2JOPee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 11:34:34 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:47677 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751288Ab2JOPec (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2012 11:34:32 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 1DE7320E44;
-	Mon, 15 Oct 2012 11:34:32 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1752188Ab2JOPee (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2012 11:34:34 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C8EFF20CEC;
+	Mon, 15 Oct 2012 11:34:33 -0400 (EDT)
 Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 15 Oct 2012 11:34:32 -0400
+  by compute2.internal (MEProxy); Mon, 15 Oct 2012 11:34:33 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=rN1ZHKvy3VPA7xZNzHuAkU
-	UxrBA=; b=TXBH3s1q2SfjOnBQOLSdnpfJAcB1v14IGnBPC3b44GPHb3kf756c8D
-	HABYPBcu/gcLU5jkOaAXpxLfub65lm6iGsppHdKf562i52O91lI5AZ32RW6dZ0rZ
-	Sax2Ohod8tMlQc4Q35FOs8u6ioJzYSLTyXj2B42hBFzo1k4X+5zIs=
-X-Sasl-enc: XAs4LM1afXP2EjlP8LtNpzhGXivJu978TszgkmRXYV9W 1350315271
+	:content-transfer-encoding; s=smtpout; bh=ZujJkwqJE/sT+h1goccEiZ
+	eRWto=; b=ozktZgSuKSPmUAvTQPMzi13GKvE4VhC6xWdzjJc5zk1PmkuiKgxxrR
+	7IrRKEOqTDuIqJDUQUkkzQVaetWIHEO0dRz4bWSwktDlEYPvkbDHLQRWtgGD8B+r
+	h0DHLcVoKCoxu7ylFEe6TTkG5W0CoJB/MeIU2wT6b8m/19/PL7uUU=
+X-Sasl-enc: 2qPvvk3mSFYDCCTsI5XH0PYbfq4Xn9iWegLUIWYx3i82 1350315273
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 68FD04827BC;
-	Mon, 15 Oct 2012 11:34:31 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 380924825D1;
+	Mon, 15 Oct 2012 11:34:33 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
-In-Reply-To: <7vmwzyovg3.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20121007225232.GA3490@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207754>
 
-Junio C Hamano venit, vidit, dixit 07.10.2012 22:53:
-> Jeff King <peff@peff.net> writes:
+Jeff King venit, vidit, dixit 08.10.2012 00:52:
+> On Sun, Oct 07, 2012 at 10:14:28AM +0200, Thomas Ackermann wrote:
 > 
->> [1] I would not be surprised if they do not actually format all that
->>     well. Though they are written in an asciidoc-ish style, they have
->>     not traditionally been formatted, and I suspect there are many small
->>     errors (like improper quoting of metacharacters) in them.
+>> There are "patched QT" and "unpatched QT" versions of wkhtmltopdf
+>> (see http://code.google.com/p/wkhtmltopdf/). I am using V0.9.9 for Windows
+>> which is "patched QT".
 > 
-> They aren't even "errors". As far as I (who writes the release
-> notes) am concerned, they are straight text without any asciidoc
-> or markdown mark-up.
+> That's a definite compatibility question for taking your patches into
+> upstream git.
+> 
+>> There is one drawback with wkhtmltopdf: At least on my Netbook (Win7 64bit,
+>> Pentium 1.5GHz) it is very slow. It takes more than 3 hrs to create git-doc.pdf.
+>>
+>> If you want to have a quick look on the resulting pdf just clone 
+>> https://github.com/tacker66/git-docpdf.git. This repo contains
+>> a current version of user.manual.pdf and git-doc.pdf 
+> 
+> It does look better than the output generated by the "man -Tdvi" loop I
+> posted. It retains more styling from the HTML and it has a nice table of
+> contents. But 3 hours? Yeesh. Mine took 11 seconds.
+> 
+> I wonder if a more sane route is to drop HTML entirely, convert the
+> asciidoc to docbook (which we already do for manpages), and then create
+> a docbook document that is a collection of all elements, which can then
 
-I'm wondering: If it's neither markdown nor markup then what is it:
-marklevel, markeven or markstraight?
+Hmm, I think the html output often looks better than the man output
+(tables and such), and it is a formatted, reflowable, interlinked format
+fit for many puposes.
 
-Seriously, if Thomas converts them into asciidoc it's an added benefit
-(and I don't think you'd have to change your writing by much), but
-RelNotes should not be in the standard make target.
+> be converted to pdf, epub, or whatever. I would not be surprised if
+> somebody has solved this problem before (but it is not really my itch,
+> so I did not look very far).
 
-On a different note: Is pdf really the format of choice for mobile
-platforms? I'd expect something that is "formatted" (markup) but can
-reflow text intrinsically, not only by making your pdf reader jump
-through hoops. HTML?
+I'd rather ditch docbook and have one toolchain (asciidoc, unless we
+want to switch to something else) only... We've been hunting asciidoc as
+well as docbook compatibility (between versions) and interoperability
+(between them) issues again and again.
+
+In fact, if I remember correctly, that's what has been keeping us from
+using *real* tables in the doc (but hasn't kept us from using tables ;) ).
 
 Michael
