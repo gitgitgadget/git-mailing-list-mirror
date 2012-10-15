@@ -1,121 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: When Will We See Collisions for SHA-1? (An interesting analysis
- by Bruce Schneier)
-Date: Mon, 15 Oct 2012 14:34:38 -0400
-Message-ID: <20121015183438.GB31658@sigill.intra.peff.net>
-References: <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>
- <CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
+Subject: Re: push race
+Date: Mon, 15 Oct 2012 14:56:08 -0400
+Message-ID: <20121015185608.GC31658@sigill.intra.peff.net>
+References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+ <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
+ <507C1DB4.2010000@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 20:34:57 2012
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Mon Oct 15 20:56:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNpV6-00045r-AG
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 20:34:52 +0200
+	id 1TNppu-00026n-KO
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 20:56:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381Ab2JOSel convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2012 14:34:41 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53098 "EHLO
+	id S1754369Ab2JOS4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 14:56:12 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53117 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754076Ab2JOSel (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 14:34:41 -0400
-Received: (qmail 3754 invoked by uid 107); 15 Oct 2012 18:35:16 -0000
+	id S1752483Ab2JOS4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 14:56:11 -0400
+Received: (qmail 5076 invoked by uid 107); 15 Oct 2012 18:56:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Oct 2012 14:35:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Oct 2012 14:34:38 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Oct 2012 14:56:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Oct 2012 14:56:08 -0400
 Content-Disposition: inline
-In-Reply-To: <CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
+In-Reply-To: <507C1DB4.2010000@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207772>
 
-On Mon, Oct 15, 2012 at 07:47:09PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Mon, Oct 15, 2012 at 10:29:08AM -0400, Marc Branchaud wrote:
 
-> On Mon, Oct 15, 2012 at 6:42 PM, Elia Pinto <gitter.spiros@gmail.com>=
- wrote:
-> > Very clear analysis. Well written. Perhaps is it the time to update
-> > http://git-scm.com/book/ch6-1.html (A SHORT NOTE ABOUT SHA-1) ?
-> >
-> > Hope useful
-> >
-> > http://www.schneier.com/crypto-gram-1210.html
->=20
-> This would be concerning if the Git security model would break down i=
-f
-> someone found a SHA1 collision, but it really wouldn't.
->=20
-> It's one thing to find *a* collision, it's quite another to:
->=20
->  1. Find a collision for the sha1 of harmless.c which I know you use,
->     and replace it with evil.c.
->=20
->  2. Somehow make evil.c compile so that it actually does something
->     useful and nefarious, and doesn't just make the C compiler puke.
->=20
->     If finding one arbitrary collision costs $43K in 2021 dollars
->     getting past this point is going to take quite a large multiple o=
-f
->     $43K.
+> Here's a previous discussion of a race in concurrent updates to the same ref,
+> even when the updates are all identical:
+> 
+> http://news.gmane.org/find-root.php?group=gmane.comp.version-control.git&article=164636
+> 
+> In that thread, Peff outlines the lock procedure for refs:
+> 
+>         1. get the lock
+>         2. check and remember the sha1
+>         3. release the lock
+>         4. do some long-running work (like the actual push)
+>         5. get the lock
+>         6. check that the sha1 is the same as the remembered one
+>         7. update the sha1
+>         8. release the lock
 
-There are easier attacks than that if you can hide arbitrary bytes
-inside a file. It's hard with C source code. The common one in hash
-collision detection circles is to put invisible cruft into binary
-document formats like PDF or Postscript. Git blobs themselves do not
-have such an invisible place to put it, but you might be storing a
-format that does.
+A minor nit, but I was wrong on steps 1-3. We don't have to take a lock
+on reading, because our write mechanism uses atomic replacement. So it
+is really:
 
-But worse, git _commits_ have such an invisible portion. We calculate
-the sha1 over the full commit, but we tend to show only the portion up
-to the first NUL byte. I used that horrible trick in my "choose your ow=
-n
-sha1 prefix" patch. However, we could mitigate that by checking for
-embedded NULs in git-fsck.
+  1. read and remember the original sha1
+  2. do some long-running work (like the actual push)
+  3. get the write lock
+  4. read the sha1 and check that it's the same as our original
+  5. write the new sha1 to the lockfile
+  6. simultaneously release the lock and update the ref by atomically
+     renaming the lockfile to the actual ref
 
->  3. Somehow inject the new evil object into your repository, or
->     convince you to re-clone it / clone it from somewhere you usually
->     wouldn't.
+Any simultaneous push may see the "old" sha1 before step 6, and when it
+gets to its own step 4, will fail (and two processes cannot be in steps
+3-6 simultaneously).
 
-Yeah, this part is the kicker. With the commit NUL trick, you would mak=
-e
-a useful commit and then ask somebody to pull it, and then later replac=
-e
-it with a commit pointing to an arbitrary tree. But if we assume we can
-detect that easily (which I think we can), we are left with replacing
-binary blobs that have hidden bits. And most projects do not take many
-such blobs, and the result is that you could only replace the contents
-of that particular blob, not an arbitrary part of the tree.
+> Angelo, in your case I think one of your concurrent updates would fail in
+> step 6.  As you say, this is after the changes have been uploaded.  However,
+> there's none of the file-overwriting that you fear, because the changes are
+> stored in git's object database under their SHA hashes.  So there'll only be
+> an object-level collision if two parties upload the exact same object, in
+> which case it doesn't matter.
 
-> It would be very interesting to see an analysis that deals with some
-> actual Git-related security scenarios, instead of something that just
-> assumes that if someone finds *any* SHA1 collision the sky is going t=
-o
-> fall.
-
-I agree that most of the analysis is overblown. Having read the analysi=
-s
-Schneier pointed to, it actually is not that bad. We have 5-10 years to
-get to a point where it's really expensive and extremely complex to
-mount a single attack.
-
-That doesn't seem like an emergency to me. It sounds like something we
-should be thinking about (and we are). The simplest thing would be to
-wait for a moment when it makes sense to break compatibility (e.g., we
-decide that "git 2.0" is here, and everybody will have to rewrite to
-take advantage of new features, so we can jump to sha-2). We can also
-start building sha-2 history that references sha-1 history. That would
-mean everybody needs to upgrade their git, but that is not a problem
-that requires 5-10 years of foresight and planning.
+Right. The only thing that needs locking is the refs, because the object
+database is add-only for normal operations, and by definition collisions
+mean you have the same content (or are astronomically unlucky, but your
+consolation prize is that you can write a paper on how you found a sha1
+collision).
 
 -Peff
