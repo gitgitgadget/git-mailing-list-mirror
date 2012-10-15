@@ -1,104 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH UI experiment] diffstat: annotate/highlight new or
- removed files
-Date: Mon, 15 Oct 2012 14:03:07 -0700
-Message-ID: <7v626bwir8.fsf@alter.siamese.dyndns.org>
-References: <1350311749-15447-1-git-send-email-pclouds@gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: error: git-fast-import died of signal 11
+Date: Mon, 15 Oct 2012 17:12:21 -0400
+Message-ID: <507C7C35.7080906@gmail.com>
+References: <CAMJd5ATv5XfTK++4=Rs+RUkgb7F-ssrz2Lrch_WxvxZt+yF33A@mail.gmail.com> <CAMJd5AQ_vsQBGnMRrZUUqztjYjaHkU0_FOteNpEvE8NTrPPvQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 23:03:25 2012
+To: Uri Moszkowicz <uri@4refs.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 23:12:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNrop-0005I1-Hb
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 23:03:23 +0200
+	id 1TNrxq-00071b-Jt
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 23:12:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928Ab2JOVDM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2012 17:03:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53179 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750895Ab2JOVDL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2012 17:03:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 326B48E39;
-	Mon, 15 Oct 2012 17:03:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=7bnlKMyeJ+GQ
-	xlV76EDfLDQ4ZFM=; b=iAgy3bL28F2fcbZzEx00zXdgntWlEMClOkkRoniBK+9w
-	uNJBBRuDslTAHpJXZrsWn70GQFWwOfxiTJtzOVqdXWsArHZy8NVAPZsqbune4ezW
-	LxdXMo+5N+Ofp0+rHjlZBUKC2NWp2HO0NSLiltziFBcMdndobY+d9eCjq6y5LJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YhlqLN
-	ic2RISujTCnkJ5mIFNbPFX88Na02BAd3GgMoosskGupe9yu+zLCsoPfYlltE71DJ
-	fqzcUDkujwSWt9jziuJf+RYWrz0CjzSgHXPFklG+VWQB2zKCArXaQ+7xr+2M0Kjs
-	ofpUMnR5CcLArgfWnPpTBXTxwHS6LgI+MeALY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 209AF8E38;
-	Mon, 15 Oct 2012 17:03:11 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F35F8E35; Mon, 15 Oct 2012
- 17:03:09 -0400 (EDT)
-In-Reply-To: <1350311749-15447-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 15 Oct
- 2012 21:35:49 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B94A82A0-170B-11E2-8DDD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753101Ab2JOVMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 17:12:32 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:65367 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750895Ab2JOVMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 17:12:31 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so8630268iea.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 14:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fbH6DSku36IbaMJ6D2tdfrNTAvlm3ZvxP126OVUMhYA=;
+        b=PKfNCK53zgqykwMKQ5BDQx8zXP2nffm6xitR7zjgPbjdht0B6/pkhOncF1q5aYommx
+         2VT74bQ9ZEpErNpYNqF6ZmPsW6c2tyRdJ4Nu81hQ6aIicAW+OcHGZFGDhln15vtmQSjE
+         0HjsOeIx5DRjJDbMGnoxY8OhOd/KCNjIoZfroJBSLoM+7vIK7qMZHwXkbtE/lfd4HBXv
+         +NP794jOFH2RFW+j1aAm2gz9j7guAI+zdMAzASRFWfYf+eBL4MiEumpNXVUXYUwhQ2fQ
+         2N2z6CfnjuL3A5HI8Cm7a57ljY4qZjUTfmt4FWRsx/LiTNfwEiwouLsoZ8d/d4sOgzQ4
+         QYIA==
+Received: by 10.50.153.162 with SMTP id vh2mr9940746igb.67.1350335550643;
+        Mon, 15 Oct 2012 14:12:30 -0700 (PDT)
+Received: from [192.168.1.112] ([66.207.196.114])
+        by mx.google.com with ESMTPS id v12sm7344687igv.3.2012.10.15.14.12.28
+        (version=SSLv3 cipher=OTHER);
+        Mon, 15 Oct 2012 14:12:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <CAMJd5AQ_vsQBGnMRrZUUqztjYjaHkU0_FOteNpEvE8NTrPPvQQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207780>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On 10/15/2012 11:53 AM, Uri Moszkowicz wrote:
+> I'm trying to convert a CVS repository to Git using cvs2git. I was able to
+> generate the dump file without problem but am unable to get Git to
+> fast-import it. The dump file is 328GB and I ran git fast-import on a
+> machine with 512GB of RAM.
+Just taking a wild guess here. Are you using 64bit version of git? If 
+not, maybe it'd help to try 64bit?
 
-> diffstat does not show whether a file is added or deleted. I know
-> --summary does. But the problem with --summary is it makes me look fo=
-r
-> information of a file in two places: diffstat and summary. And with a
-> commit that adds/removes a lot, showing both --stat --summary can be
-> long.
->
-> This patch adds "(new)", "(gone)" or "(new mode)" to diffstat, with
-> highlight, to easily catch file additions/removals. The extra text is
-> chosen to be short enough so that it won't take up too much space for
-> path names:
->
->  .gitignore                  |   1 +
->  Makefile                    |   3 +
->  t/t3070-wildmatch.sh (new)  | 188 ++++++++++++++++++++++++
->  t/t3070/wildtest.txt (gone) | 165 ---------------------
->  test-wildmatch.c (new)      |  14 ++
->  wildmatch.c                 |   5 +-
->  6 files changed, 210 insertions(+), 166 deletions(-)
->
-> I don't put creation modes in there too because most of the time it
-> does not matter much to me and I could look down to --summary for mod=
-e
-> verification. But we could put "(new+x)" for 0755 and just "(new)" fo=
-r
-> 0644. "(new mode)" then could become "(+x)", "(-x)" or something like
-> that.
->
-> Coloring is to me an improvement over --summary. Probably the main
-> point. Without it, perhaps it's not worth putting extra text to
-> diffstat.
-
-It is kind of surprising that you did not choose to paint new in
-green and gone in red, and rather paint everything in yellow.
-
-I personally think the above in monochrome is fairly easy to read;
-with coloring, it might become too distracting, though.
-
-Just a nit, "new mode" is too similar to "new".  Everything is "new"
-in the sense that they have "new contents"; it may be better phrased
-without saying "new" but giving a stress on "changed".
-
-Thanks for a fun patch.  I am not strongly against it.
+> fatal: Out of memory? mmap failed: Cannot allocate memory
+> fast-import: dumping crash report to fast_import_crash_18192
+> error: git-fast-import died of signal 11
+"fast-import" also produced a crash report. It might help to diagnose 
+the issue if you can post that report?
+The report shouldn't be too big. And you might want to strip any 
+sensitive information before posting.
