@@ -1,67 +1,58 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Planning to pass the baton to an interim maintainer
-Date: Mon, 15 Oct 2012 17:47:51 +0200
-Message-ID: <507C3027.2030401@drmicha.warpmail.net>
-References: <7vsj9gyktw.fsf@alter.siamese.dyndns.org> <20121015055654.GA10064@sigill.intra.peff.net>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: push race
+Date: Mon, 15 Oct 2012 17:50:47 +0200
+Message-ID: <CAB9Jk9A8E57byg+1yzc22ByC_3VQd0j+HGu8Sj9121=LToopyg@mail.gmail.com>
+References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+	<CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
+	<507C1DB4.2010000@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 17:48:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git <git@vger.kernel.org>
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Mon Oct 15 17:51:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNmtg-00034y-96
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 17:48:04 +0200
+	id 1TNmwV-0006O2-L7
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 17:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885Ab2JOPrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 11:47:53 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:35025 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752723Ab2JOPrw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2012 11:47:52 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 6A67920B8C;
-	Mon, 15 Oct 2012 11:47:52 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute5.internal (MEProxy); Mon, 15 Oct 2012 11:47:52 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=OcE1yJrSObz9QkWCK2Hd8l
-	buGLg=; b=GeBWj8oz9i2PeXxZJIA03fjKnL1zLfWmf8f4Fx0xDPTF77r02OwmyW
-	tB665HEzJgt1gw2G8IUeP63Dq6g7HKgV6ad/g5oxy8ERY5NgxTPFuxF5/VXszUaT
-	okzfeLsAOt/VfZpVTbpDhtMSxGOVbeHJSM1QLD3w2jE+7PqIb05Fs=
-X-Sasl-enc: XUCqZBh6eEGhgnuITII/WjNzUTKWxoP5NQmBiNl02KqB 1350316072
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D3E2A4825D1;
-	Mon, 15 Oct 2012 11:47:51 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
-In-Reply-To: <20121015055654.GA10064@sigill.intra.peff.net>
+	id S1752708Ab2JOPut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 11:50:49 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:58001 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752639Ab2JOPus (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 11:50:48 -0400
+Received: by mail-vc0-f174.google.com with SMTP id fk26so1918451vcb.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 08:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=QDyIlKpy2g1fUA4RREQtI0iAYBCp7bubWkvT/WllFsg=;
+        b=lzvb1glhMV5YCDDG3Nk9rdQMFBL7ldPxSTG74sKUdHjQzfikl1hPdMQxlln6I5rnHX
+         5wRiaAkzCGwOQC1v1alUe2pQyAu+Nf06a26JrSr9NsXUilKIl/dxRP2JprdAV+yo7iXI
+         zMUrjVgRo0OwoqlqyJikYdhCvZ9N6Dp7a8jsaH7zf0uqFdTVBsyF70/CmLjGMa8RnRNw
+         M6RzIk+FRJINH0zTPJFGxR3Zr0tsuWgyqjiCpL0XJoL+sZN0cJM44h2A3DwrO1907ruC
+         Jmh4SW/ALHikq/6mKsItnSytGTna2HADHdbsCOB/r/JZtqpMe8ZAuzPK9eor702Itqa8
+         8ogg==
+Received: by 10.58.189.33 with SMTP id gf1mr7181346vec.41.1350316247601; Mon,
+ 15 Oct 2012 08:50:47 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Mon, 15 Oct 2012 08:50:47 -0700 (PDT)
+In-Reply-To: <507C1DB4.2010000@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207757>
 
-Jeff King venit, vidit, dixit 15.10.2012 07:56:
-> On Sun, Oct 14, 2012 at 11:23:07AM -0700, Junio C Hamano wrote:
-> 
->> I am planning to
->>
->>  * tag 1.8.0 final on Oct 21st (Sun);
->>  * go offline on Oct 22nd (Mon); and
->>  * come back online on Nov 12th (Mon).
->>
->> Peff, could you be the interim maintainer as you've done in earlier
->> years while I was away?
-> 
-> Sure, I look forward to ruling the list with an iron fist...er, helping
-> contributors review their patches.
+Hi Marc,
 
-...the ironing fist, yeah ;)
+correct, there will be no file overwriting because no files are
+written on the work tree.
+I tried to follow the actions of the program, but did not quite catch
+the 6. you mention.
 
-Michael
+-Angelo
