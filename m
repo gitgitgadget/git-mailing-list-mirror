@@ -1,132 +1,72 @@
-From: Simon Oosthoek <soosthoek@nieuwland.nl>
-Subject: Re: [PATCH 2/2] show color hints based on state of the git tree
-Date: Mon, 15 Oct 2012 12:34:24 +0200
-Message-ID: <507BE6B0.4020306@nieuwland.nl>
-References: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org> <20121005211030.GA5414@simaj.xs4all.nl> <507BC7F1.3080506@drmicha.warpmail.net> <507BD0EE.5000107@nieuwland.nl> <507BD3C1.4040807@drmicha.warpmail.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: make test
+Date: Mon, 15 Oct 2012 12:53:06 +0200
+Message-ID: <507BEB12.9040101@viscovery.net>
+References: <k5gov5$fe1$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
-	spearce@spearce.org, artagnon@gmail.com, schwab@linux-m68k.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 12:41:41 2012
+Cc: git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Mon Oct 15 12:53:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNi76-0000aA-ST
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 12:41:37 +0200
+	id 1TNiIZ-0004Mz-NG
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 12:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943Ab2JOKl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 06:41:26 -0400
-Received: from mail.nieuwland.nl ([87.251.35.136]:47660 "HELO nieuwland.nl"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751703Ab2JOKl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 06:41:26 -0400
-Received: (qmail 20043 invoked by uid 453); 15 Oct 2012 10:34:33 -0000
-X-Virus-Checked: Checked by ClamAV on nieuwland.nl
-Received: from Unknown (HELO [192.168.216.232]) (192.168.216.232)
-  (smtp-auth username soosthoek, mechanism plain)
-  by nieuwland.nl (qpsmtpd/0.83) with (AES256-SHA encrypted) ESMTPSA; Mon, 15 Oct 2012 12:34:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
-In-Reply-To: <507BD3C1.4040807@drmicha.warpmail.net>
+	id S1751980Ab2JOKxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 06:53:11 -0400
+Received: from so.liwest.at ([212.33.55.24]:58808 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751643Ab2JOKxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 06:53:10 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TNiIE-0001m7-K6; Mon, 15 Oct 2012 12:53:06 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 58BBF1660F;
+	Mon, 15 Oct 2012 12:53:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <k5gov5$fe1$1@ger.gmane.org>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207732>
 
-On 10/15/2012 11:13 AM, Michael J Gruber wrote:
->
-> It really doesn't matter much what works for you, and it doesn't matter
-> what works for me either. The point is: What works for most users?
+Am 10/15/2012 12:36, schrieb Joachim Schmitz:
+> not ok 4 - pretend we have a known breakage # TODO known breakage
+> 
+>    This is expected, right?
 
-Obviously, that was my point as well ;-)
+Right.
 
->> I'm quite unfamiliar with the color coding of git (I hadn't enabled that
->> option), I suppose consistency would be better, but then you'd have to
->> add some code to figure out which color is used for what in git's output
->> and convert that to the code setting the colors here.
->
-> As a starter, you could use the default colors which git uses. Querying
-> git for the colors could be the next, optional step.
+>    the next is not though? Why might it be failing, where to check?
+> 
+> not ok - 12 tests clean up even on failures
+> #
+> #               mkdir failing-cleanup &&
+> #...
+> #               test_cmp expect out
+> #               )
+> #
 
-I suppose it would be a start.
+First thing:
 
-so how should it be?
+  ./t0000-basic.sh -v -i
 
-all committed: green branch, no characters
-only staged changes: green branch, colored characters (yellow/red?)
-only unstaged changes: red/yellow branch, colored characters (red)
-staged and unstaged changes: red/yellow branch, multiple characters in 
-red/yellow?)
-detached head: red commit-sha1 (abbrev.), characters as above?
+and if that does not give sufficient clues,
 
-What is the most useful thing to show in case of a detached head?
--the commit hash of current head?
--"detached head"
+  $SHELL_PATH -x ./t0000-basic.sh -v -i
 
+(Beware, though: in some cases, the latter gives additional failures, in
+particular, when the stderr of a command is checked for with test_cmp
+instead of grep because the 'actual' results contain the shell command
+logs, which are not in the 'expected' results.)
 
->
->> As for the characters used, I think there's a good reason not to use the
->> ones git uses in the prompt. The characters in git status output are put
->> in front of the files they apply to, in the prompt you only get a
->> summarized output. And perhaps that argument could be extended to the
->> use of the colors as well, I prefer to know whether I have uncommitted
->> changes and in that category I want to know whether I already staged
->> them or not.
->
-> Well, sure. The prompt could show any of AMCRD if you have any of those
-> changes. * + are shortcuts saying you have any of those.
-
-How do you suppose that should work?
-Add another configuration parameter like GIT_PS1_SHOWSTATUSSBCHARS 
-(please give a better suggestion ;-) or the other way around 
-GIT_PS1_SHOWSTARPLUS (either of which could be the default)
-
->>> I think it's very confusing to have completely different schemes (not
->>> just themes) for two versions of the same information: concise status
->>> information.
->>>
->>> So, please try and follow "git status -sb".
->>
->> I think there are different levels of conciseness. And I see "git status
->> -sb" uses green for staged modified files, which would be confusing to me.
->
-> ...only because you don't know the color coding scheme. It's green
-> because those changes are saved somewhere (in the index) and would even
-> survice a branch switch.
-
-I suppose you could see that as green (I usually view a yellow traffic 
-light as green as well ;-)
-
-Isn't it best practice to commit the staged changes ASAP? (But let's not 
-diverge in this thread to discuss best-practices, so consider that a 
-rhetorical question for now ;-)
-
-> No, I said red for unstaged, green for staged for the characters, i.e. a
-> * would always be red if present, a + always green if present.
->
-> For the "branch name", it would be red for detached head and green for
-> checked out branch.
-
-using green for staged changes could be acceptable for me, but I'm 
-slightly worried that a colored character would be too slight a hint.
-
-OTOH, a detached head would show up with or without color...
-
->
->> Perhaps, but that would be confusing to me ;-)
->
-> If that is case, you can try and propose changing that scheme...
->
-> But there's really a good reason for it. Cached (staged) changes are
-> "safe" because they are saved in the index, and also they are "good to
-> go into the next commit", i.e. the commit traffic lights are green!
-
-I suppose I knew that in the back of my mind, but not as clearly as you 
-spell it out here... Tnx!
-
-/Simon
+-- Hannes,
