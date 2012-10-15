@@ -1,114 +1,87 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: When Will We See Collisions for SHA-1? (An interesting analysis
- by Bruce Schneier)
-Date: Mon, 15 Oct 2012 20:09:12 +0200
-Message-ID: <CA+EOSBnUxHW2c6r4C6cTn0P_NMAoyJL9jvaG9Du1O8BT-8EVPA@mail.gmail.com>
-References: <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>
-	<CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] show color hints based on state of the git tree
+Date: Mon, 15 Oct 2012 11:10:52 -0700
+Message-ID: <7vlif7wqqb.fsf@alter.siamese.dyndns.org>
+References: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org>
+ <20121005211030.GA5414@simaj.xs4all.nl>
+ <507BC7F1.3080506@drmicha.warpmail.net> <507BD0EE.5000107@nieuwland.nl>
+ <507BD3C1.4040807@drmicha.warpmail.net>
+ <CAPc5daVUyAuznmrT+-yqvPR0gd38oiWmi2k+BFVV1s9ouMUt0Q@mail.gmail.com>
+ <507C2882.2090406@nieuwland.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 20:09:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junio@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>, artagnon@gmail.com,
+	spearce@spearce.org, schwab@linux-m68k.org,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>
+To: Simon Oosthoek <soosthoek@nieuwland.nl>
+X-From: git-owner@vger.kernel.org Mon Oct 15 20:11:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNp6T-0000mP-Cu
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 20:09:25 +0200
+	id 1TNp87-0002sP-3w
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 20:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087Ab2JOSJO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2012 14:09:14 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:52499 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751735Ab2JOSJN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2012 14:09:13 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so8296866iea.19
-        for <git@vger.kernel.org>; Mon, 15 Oct 2012 11:09:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=FMtdLaGnRoK2GMFhq2UH7Drmo2g9MiY41Rye3g5C5N0=;
-        b=v5jOmfd9CYf5AEa9jO6BeFLvmoBoCZPk2xNcZzU6MdTxZOsG40AbDzqJ19YTPjMxd6
-         nxyEv+N0eEkzymQeXnkvPbvn4onbdW9VuZTQvHY7jtvZpk+9rTSvrfCHjpLu9oACM2Oh
-         trIdTusd1VWKmhlS4ClWV/mB1JmuTpvWVpUBAKya3qTDOPgc6s/BTmoBWaTIVg0O0OBA
-         WqBhqCktrA5Xz7SfAB3yOMxspJIvBhp4fqBvpwpSdj7xtxXcCdJgGEOpVJsEydGcy8Ui
-         PFdOIvetRnpqKPRblpEPMS12VwVxaZHwvRVvFNiT8jhxxkfRPHsqWHmbOuMFbE06dd6K
-         kUNQ==
-Received: by 10.50.236.39 with SMTP id ur7mr9464844igc.26.1350324552981; Mon,
- 15 Oct 2012 11:09:12 -0700 (PDT)
-Received: by 10.64.48.37 with HTTP; Mon, 15 Oct 2012 11:09:12 -0700 (PDT)
-In-Reply-To: <CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
+	id S1754266Ab2JOSK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 14:10:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60630 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754076Ab2JOSKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 14:10:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C1BB8D68;
+	Mon, 15 Oct 2012 14:10:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kpY4uxODjoXHhZ5ovRApppRNusY=; b=tWeg8D
+	q8DV/4NGl2+JUXQnrDyQj5JRjZ8WCiQHWmWyLg2TADYjVr9+rAGIZWWX10+N8JhK
+	qlP7UIvVxo3S40XrMLHVSDk1Yd+hOp0Fwu4/wbijxKRTj1D1pdkL0R28l0az4iLm
+	M0R9llmsqlLCCEZQ8pZM4ueG39oRTX2g1MZtk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cDsBm/Yydc5j1CgIMK8XMoYCFI1ibDcS
+	Ov12VSAEHWsrDhciUiqTrsWuk89zXCHIIUG9lHKPHK6dExP2IBKFXA21x+HWmVUy
+	jsADb0Cf+dd3IgKssR/s4r1ONcW3QTyWT5206yKuUbb4irw1U8VHUdK9hp7Y7nS6
+	zX4L498g/c8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77A728D67;
+	Mon, 15 Oct 2012 14:10:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4C1C8D64; Mon, 15 Oct 2012
+ 14:10:53 -0400 (EDT)
+In-Reply-To: <507C2882.2090406@nieuwland.nl> (Simon Oosthoek's message of
+ "Mon, 15 Oct 2012 17:15:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A8D08752-16F3-11E2-BDF4-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207770>
 
-2012/10/15 =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>:
-> On Mon, Oct 15, 2012 at 6:42 PM, Elia Pinto <gitter.spiros@gmail.com>=
- wrote:
->> Very clear analysis. Well written. Perhaps is it the time to update
->> http://git-scm.com/book/ch6-1.html (A SHORT NOTE ABOUT SHA-1) ?
->>
->> Hope useful
->>
->> http://www.schneier.com/crypto-gram-1210.html
->
-> This would be concerning if the Git security model would break down i=
-f
-> someone found a SHA1 collision, but it really wouldn't.
-I know perfectly.
->
-> It's one thing to find *a* collision, it's quite another to:
->
->  1. Find a collision for the sha1 of harmless.c which I know you use,
->     and replace it with evil.c.
->
->  2. Somehow make evil.c compile so that it actually does something
->     useful and nefarious, and doesn't just make the C compiler puke.
->
->     If finding one arbitrary collision costs $43K in 2021 dollars
->     getting past this point is going to take quite a large multiple o=
-f
->     $43K.
->
->  3. Somehow inject the new evil object into your repository, or
->     convince you to re-clone it / clone it from somewhere you usually
->     wouldn't.
->
-> At some point in the early days of Git Linus went on a rant to this
-> effect either on this list or on the LKML.
->
-> Maybe it would be useful to include some of that instead?
->
-What you wrote is a risk analysis. I appreciate, i am also a  security
-professionals..
-> It would be very interesting to see an analysis that deals with some
-> actual Git-related security scenarios, instead of something that just
-> assumes that if someone finds *any* SHA1 collision the sky is going t=
-o
-> fall.
-What you wrote is a risk analysis. I appreciate, as security profession=
-als, too.
+Simon Oosthoek <soosthoek@nieuwland.nl> writes:
 
-I agree, of course. However, it is totally different from saying that
-because exists the birthday paradox git will be immune to collision,
-sure, if caused by a cryptographic attack. But clearly the risk for a
-project that uses a cryptographic hash function as a hash function, as
-git, is zero in the absence of a real use case. In computer security
-the use of encryption is hardly the point of attack, today, as you
-have clearly said. But it is the most invisible to highlight.
+> The point of the thread and the patch was to enable the possibility of
+> colors in the prompt without messing it up.
+>
+> The actual colors used are more or less how I'm used to it, but as you
+> said they may not be suitable to everyone.
+>
+> @Junio, is this patch something you want to include as it is now (with
+> the extra S that Michael pointed out) or do you want to wait for a
+> discussion about which colors to use for which state?
 
-It seemed interesting to quote here the Bruce article because the
-topic has already been discussed in the past here. That's it. No more,
-no less.
+The latter.
 
-Thanks
+> I guess it could be quite a messy discussion, as you already hint at
+> bikeshed colors, it's quite personal and subjective.
 
-Best Regards
-Best Regard
+The choice of colours may be subjective, but you can just omit that
+part, if there is already an existing choice made by others in
+earlier changes like in "status" output.  As long as the subjective
+choices in two systems that show similar information are consistent,
+exact choice of colours does not matter that much.
