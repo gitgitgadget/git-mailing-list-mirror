@@ -1,74 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] exclude: fix a bug in prefix comparison optimization
-Date: Mon, 15 Oct 2012 11:09:26 +0700
-Message-ID: <CACsJy8DEqkPob+KjFS_Y3BraS40CSP7snS3aB41hg0Ng0DuJDg@mail.gmail.com>
-References: <1350214522-3242-1-git-send-email-pclouds@gmail.com> <7v8vb9yn09.fsf@alter.siamese.dyndns.org>
+Date: Sun, 14 Oct 2012 21:28:48 -0700
+Message-ID: <7vk3usxssf.fsf@alter.siamese.dyndns.org>
+References: <1350214522-3242-1-git-send-email-pclouds@gmail.com>
+ <7v8vb9yn09.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DEqkPob+KjFS_Y3BraS40CSP7snS3aB41hg0Ng0DuJDg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 06:10:16 2012
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 06:29:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNc0K-0004o7-CW
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 06:10:12 +0200
+	id 1TNcId-0004jm-RU
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Oct 2012 06:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751125Ab2JOEJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 00:09:58 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:38482 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751012Ab2JOEJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 00:09:57 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so4559795oag.19
-        for <git@vger.kernel.org>; Sun, 14 Oct 2012 21:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=XTbljAkdliO9GuZh6a1KYTrco446Tfc/UF8rqSf66ko=;
-        b=KPsKK/fzBP+QZKe5oRikw7ippKzWYMDDvMIGw+BR73qDuMAIfTc1vnPxKkPIMjidED
-         VX93N/mdlA9uLnNXTwL3Z7eOExf3+GqMaxpF+ZZu1dWQmPPGPm1zlWHHN6kYyV7p9y88
-         ZZZdyv1oQvmLKZ8a5jvQj3FRKB3sSFZ2snNyNqhtpmpt5AGcCWtiW2lTHdGYBwoXvOj/
-         8/qkEdYh2Pb0M8XyQi26qRNDkhnsqihLFaFKT0hGcjC/SuFeR03Q/4AgT3dLPMpY8wER
-         wTYcwsAAHBbfn84iLVuBDsODOgrLmj7jg5qKA7Biw4MoNLwEZwOBb19sVxfMpCtC7InU
-         Eq7g==
-Received: by 10.60.1.40 with SMTP id 8mr6797209oej.55.1350274196405; Sun, 14
- Oct 2012 21:09:56 -0700 (PDT)
-Received: by 10.182.108.10 with HTTP; Sun, 14 Oct 2012 21:09:26 -0700 (PDT)
-In-Reply-To: <7v8vb9yn09.fsf@alter.siamese.dyndns.org>
+	id S1751270Ab2JOE25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 00:28:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63100 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751141Ab2JOE24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 00:28:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 768039C48;
+	Mon, 15 Oct 2012 00:28:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VttV8QQ8Aunq7BXtulhuA9yaCao=; b=VY8RTg
+	JQblZXqGFLjd8JcAgdjfQ/z7fTSiWg2SOA/XwxPh+Z4dbNR9y93JxU4/jOYwXeOZ
+	NHmpRtIlvS/E2mIWC7fBuOedg1KjqI8ed6s0PX4EV4hOhguY20//2zwNHutkwAQz
+	nVLF+9gqtZuGcqgAD9wFEyAguwcUJB0/kR/Wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D+Di303FJD02wudXbelN6SC7gnQge9cg
+	PIuz6fNx7LiWVScrrNQj4IgS72NNuQ16yNsoxtqsP9A6hqB5uvcFfto3brVZb9jB
+	F2FJI4OQ350oFu2FmzUa0mKgejsoEXKIHymoiyhIl2ax22sjWygQnrbU4lcMfNUA
+	WFOSpQxFxM8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 640CE9C3B;
+	Mon, 15 Oct 2012 00:28:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B62219C31; Mon, 15 Oct 2012
+ 00:28:54 -0400 (EDT)
+In-Reply-To: <CACsJy8DEqkPob+KjFS_Y3BraS40CSP7snS3aB41hg0Ng0DuJDg@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Mon, 15 Oct 2012 11:09:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D4464228-1680-11E2-9800-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207689>
 
-On Mon, Oct 15, 2012 at 12:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> With your "teach attr.c match the same optimization as dir.c"
-> series, you would need something like this
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+
+> On Mon, Oct 15, 2012 at 12:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> With your "teach attr.c match the same optimization as dir.c"
+>> series, you would need something like this
+>>
+>> diff --git i/attr.c w/attr.c
+>> index 6d39406..528e935 100644
+>> --- i/attr.c
+>> +++ w/attr.c
+>> @@ -710,7 +710,7 @@ static int path_matches(const char *pathname, int pathlen,
+>>          * if the non-wildcard part is longer than the remaining
+>>          * pathname, surely it cannot match.
+>>          */
+>> -       if (!namelen || prefix > namelen)
+>> +       if (prefix > namelen)
+>>                 return 0;
+>>         if (baselen != 0)
+>>                 baselen++;
 >
-> diff --git i/attr.c w/attr.c
-> index 6d39406..528e935 100644
-> --- i/attr.c
-> +++ w/attr.c
-> @@ -710,7 +710,7 @@ static int path_matches(const char *pathname, int pathlen,
->          * if the non-wildcard part is longer than the remaining
->          * pathname, surely it cannot match.
->          */
-> -       if (!namelen || prefix > namelen)
-> +       if (prefix > namelen)
->                 return 0;
->         if (baselen != 0)
->                 baselen++;
+> If there's still a chance to rewrite attr-match-optim-more series (I
+> see it's in next now), then I could reorder the patches so that
+> excluded_from_list code refactoring goes first, then rewrite "teach
+> attr.c match... as dir.c" patch makes use of the new functions without
+> code duplication. The end result would be the same, except that we
+> won't see this bug in attr.c's history. Not much value so if it may
+> take a lot of your time, don't bother.
 
-If there's still a chance to rewrite attr-match-optim-more series (I
-see it's in next now), then I could reorder the patches so that
-excluded_from_list code refactoring goes first, then rewrite "teach
-attr.c match... as dir.c" patch makes use of the new functions without
-code duplication. The end result would be the same, except that we
-won't see this bug in attr.c's history. Not much value so if it may
-take a lot of your time, don't bother.
---
-Duy
+Actually it started to become nuisance to deal with conflicts among
+as/check-ignore and the attr/dir/wildmatch series, and I've been
+wondering if it makes sense to eject all of these out of 'next' (as
+they won't advance beyond 'next' until the next release anyway).
+
+So please go ahead and reroll the whole thing if you think the end
+result would be a history with better organization.
