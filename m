@@ -1,89 +1,80 @@
-From: Christian Thaeter <ct@pipapo.org>
-Subject: Re: feature request
-Date: Tue, 16 Oct 2012 15:34:29 +0200
-Message-ID: <20121016153429.6e06ef91@jupiter.pipapo.org>
-References: <CAB9Jk9AwTVM4TPwPg1Gmi8TCnnXWUsMAfaz8DdfcEhBNW_15Ug@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:40:49 2012
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 1/5] t1400-update-ref: Add test verifying bug with symrefs in delete_ref()
+Date: Tue, 16 Oct 2012 15:44:50 +0200
+Message-ID: <1350395094-11404-2-git-send-email-johan@herland.net>
+References: <CAPc5daUws-MfzC9imkytTrLaHyyywE4_OX1jAUVPCTK2WyUF=w@mail.gmail.com>
+ <1350395094-11404-1-git-send-email-johan@herland.net>
+Cc: git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx, vmiklos@suse.cz,
+	Johan Herland <johan@herland.net>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:45:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO7O5-0007He-2B
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 15:40:49 +0200
+	id 1TO7ST-0004Sl-Mk
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 15:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754016Ab2JPNkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 09:40:37 -0400
-Received: from pipapo.org ([217.8.62.137]:38165 "EHLO mail.pipapo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753959Ab2JPNkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 09:40:37 -0400
-X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Oct 2012 09:40:36 EDT
-Received: from jupiter.pipapo.org (unknown [10.30.0.6])
-	by mail.pipapo.org (Postfix) with ESMTP id F3C539E02221;
-	Tue, 16 Oct 2012 13:34:30 +0000 (UTC)
-In-Reply-To: <CAB9Jk9AwTVM4TPwPg1Gmi8TCnnXWUsMAfaz8DdfcEhBNW_15Ug@mail.gmail.com>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+	id S1754169Ab2JPNpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 09:45:09 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:63923 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754061Ab2JPNpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 09:45:08 -0400
+Received: by mail-ee0-f46.google.com with SMTP id b15so3506457eek.19
+        for <git@vger.kernel.org>; Tue, 16 Oct 2012 06:45:07 -0700 (PDT)
+Received: by 10.14.178.195 with SMTP id f43mr21216983eem.44.1350395106937;
+        Tue, 16 Oct 2012 06:45:06 -0700 (PDT)
+Received: from gamma.cisco.com (64-103-25-233.cisco.com. [64.103.25.233])
+        by mx.google.com with ESMTPS id o47sm11333415eem.11.2012.10.16.06.45.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 16 Oct 2012 06:45:06 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.1.609.g5cd6968
+In-Reply-To: <1350395094-11404-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207824>
 
-Am Tue, 16 Oct 2012 13:36:04 +0200
-schrieb Angelo Borsotti <angelo.borsotti@gmail.com>:
+When deleting a ref through a symref (e.g. using 'git update-ref -d HEAD'
+to delete refs/heads/master), we currently fail to remove the packed
+version of that ref. This testcase demonstrates the bug.
 
-> Hello,
-> 
-> some VCS, e.g. ClearCase, allow to control the fetching of files so as
-> to warn, or
-> disallow parallel changes to the same files.
-> As of today, there is no way to implement the same kind of workflow
-> with git because there are no fetch hooks.
-> Would it be a good idea to provide them?
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ t/t1400-update-ref.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-
-I've actually implemented a 'git lock' command to lock pathnames from
-concurrent editing for a customer. Normally one would say this is a
-rather ill and ugly feature for git but there where some reasons to do
-it anyways (imagine robots crashing into each other on a production
-line because of bad (developer-)communication).
-
-The code is GPL and I can distribute it, but I didn't consider it ready
-for an open announcement yet. Noteworthy some problems with msys led
-to some ugly solution (the uniq command doesn't know the -z option
-there).
-
-I hope this might be useful to you. I'd also like to get contributions
-and fixes if there are any problems I am not aware of.
-
-Short into; the doc:
-
- http://git.pipapo.org/?p=git;a=blob_plain;f=Documentation/git-lock.txt;h=dcc7a5c34dea657ab5819e8def54e154d5d97219;hb=25ee09cf35daa03a7c2ef10537561a50db2d17b2
-
-the code is available at
-
- git://git.pipapo.org/git
-
-in the 'ct/git-lock' branch.
-
-It is a bit fallen behind the current git version, I will update/merge
-it sometime next (to keep in par with msysgit, thats what is required
-here)
-
-	Christian
-
-
-
-
-> 
-> -Angelo Borsotti
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 4fd83a6..f7ec203 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -74,6 +74,24 @@ test_expect_success "delete $m (by HEAD)" '
+ '
+ rm -f .git/$m
+ 
++test_expect_success \
++	"create $m (by HEAD)" \
++	"git update-ref HEAD $A &&
++	 test $A"' = $(cat .git/'"$m"')'
++test_expect_success \
++	"pack refs" \
++	"git pack-refs --all"
++test_expect_success \
++	"move $m (by HEAD)" \
++	"git update-ref HEAD $B $A &&
++	 test $B"' = $(cat .git/'"$m"')'
++test_expect_failure "delete $m (by HEAD) should remove both packed and loose $m" '
++	git update-ref -d HEAD $B &&
++	! grep "$m" .git/packed-refs &&
++	! test -f .git/$m
++'
++rm -f .git/$m
++
+ cp -f .git/HEAD .git/HEAD.orig
+ test_expect_success "delete symref without dereference" '
+ 	git update-ref --no-deref -d HEAD &&
+-- 
+1.7.12.1.609.g5cd6968
