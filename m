@@ -1,115 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: When Will We See Collisions for SHA-1? (An interesting analysis
- by Bruce Schneier)
-Date: Tue, 16 Oct 2012 14:54:30 -0400
-Message-ID: <20121016185430.GF27243@sigill.intra.peff.net>
-References: <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>
- <CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
- <20121015183438.GB31658@sigill.intra.peff.net>
- <507D4651.6080207@lsrfire.ath.cx>
- <20121016173254.GD27243@sigill.intra.peff.net>
- <20121016175806.GB26650@thunk.org>
- <20121016182751.GA30010@sigill.intra.peff.net>
- <alpine.DEB.2.02.1210161131100.13407@asgard.lang.hm>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: push race
+Date: Tue, 16 Oct 2012 12:09:53 -0700
+Message-ID: <7vhapus072.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+ <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
+ <507C1DB4.2010000@xiplink.com> <20121015185608.GC31658@sigill.intra.peff.net>
+ <CAJo=hJu=eqgUhJvvpMLJ05AT6o+nVUDcm+tHV8en8OCX2-2qgA@mail.gmail.com>
+ <20121016045118.GA21359@sigill.intra.peff.net>
+ <CACsJy8AJVAoUHft6+rdOjWCpLWWj3m0NgvFd9pToQRQ5uD8_gg@mail.gmail.com>
+ <20121016053750.GA22281@sigill.intra.peff.net>
+ <CACsJy8D14sv5=+5zfiwgYCb7OoEqvQoVQ0ObAeWtUUSjRAgBeQ@mail.gmail.com>
+ <7vtxtus58h.fsf@alter.siamese.dyndns.org>
+ <20121016172502.GC27243@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Tue Oct 16 20:54:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>, marcnarc@xiplink.com,
+	=?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= 
+	<avarab@gmail.com>, Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 16 21:10:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOCHu-0004BG-0D
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 20:54:46 +0200
+	id 1TOCWn-00062n-0U
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 21:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841Ab2JPSye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 14:54:34 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55231 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755681Ab2JPSye (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 14:54:34 -0400
-Received: (qmail 18886 invoked by uid 107); 16 Oct 2012 18:55:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Oct 2012 14:55:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2012 14:54:30 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.02.1210161131100.13407@asgard.lang.hm>
+	id S1752381Ab2JPTJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 15:09:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57185 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751491Ab2JPTJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 15:09:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB7D6862A;
+	Tue, 16 Oct 2012 15:09:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k+RU/pa4fAXsQssErsB0JIfAyoc=; b=pttaD+
+	0ZHtzawTAb7UWgDMs1jWf0Xtv0mXhwm/JzvjCMFEcxcA4F4UR/Ve7Uk4qjtIkMVU
+	A5fIHc46S1vZZSgar1bgk2XoUv8d0+KbN2Z6BSn/LbyvbGzU+wXKwOKkAVigZpIy
+	CsE16amqWPv7wiCqdzPILP/QlMkrFsPno/32U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Lxq4KeiNSznbRj2vqmrTeyU6ijq2e5T7
+	2lmey5ka7RXidOfSNZO8Cj3qv0SI6MKhaCw8RFQl8b6JEh+5BOrbEh9DmBuHsCse
+	UHX73Gin8UcnJLzffjjkJvQShSRQnsBPjQNBnI4MBd/mrQo2bWGR0z6XzA10m2IB
+	UB1s6DyVMEo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7B998629;
+	Tue, 16 Oct 2012 15:09:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 297418621; Tue, 16 Oct 2012
+ 15:09:55 -0400 (EDT)
+In-Reply-To: <20121016172502.GC27243@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 16 Oct 2012 13:25:02 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 11F4EA30-17C5-11E2-A470-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207871>
 
-On Tue, Oct 16, 2012 at 11:32:38AM -0700, david@lang.hm wrote:
+Jeff King <peff@peff.net> writes:
 
-> >I don't see much point in it. If we want to add new backup pointers to
-> >commit objects, it is very easy to do so by adding new header fields.
-> >
-> >A much bigger problem is the other places we reference sha1s. The
-> >obvious place is trees, which have no room for backup pointers (either
-> >in headers, or with a NUL trick). But it also means that any time you
-> >have a sha1 that you arrive at in some other way than traversal from a
-> >signature, you are vulnerable to attack. E.g., if I record a sha1 in an
-> >external system, today I can be sure that when I fetch the object for
-> >that sha1, it is valid (or I can check that it is valid by hashing it).
-> >With sha1 collisions, I am vulnerable to attack.
-> 
-> If you have two hashes of the same contents (SHA1 and SHA3) and they
-> both agree that the file has not been tampered with, you should still
-> be in good shape just using the SHA1 as a reference.
+> But still...the complexity is ugly, and we do not even have a measured
+> problem in the real world. This is not worth thinking about. :)
 
-But tampering is only part of it. We care about a chain of authenticity
-from some known point (either a gpg signature, or a sha1 that you know
-to be good because you recorded it from a trusted source). The
-references between objects are the links in that chain.
-
-Whether an internal hash would help you would depend on the exact
-details of the collision attack. Let's imagine you have a signed tag
-that points to commit sha1 X. The pointed-to commit contains a trailer
-that says "btw, my sha-3 is Y". An attacker doing a brute-force birthday
-attack would do:
-
-  1. Generate some potential contents for the object (generally, take a good
-     and malicious version of the object, and add some random bits at
-     the end).
-
-  2. Generate the sha-3 trailer for each object and tack it on.
-
-  3. Generate the sha1 for object+trailer.
-
-  4. Remember the sha1 and contents of each object. If the sha1 matches
-     something we generated before, we have a collision. Otherwise, goto
-     step 1.
-
-So each object, good or malicious, remains consistent with respect to
-the sha-3 hash. We know it has not been tampered with since its
-generation, but do we not know if it is the same object that the tagger
-originally referenced.  We had to compute the sha-3 as part of
-generating the object, but it was not actually part of the collision
-attack; it just makes it a little more expensive to compute each
-iteration. We still have to do only 2^80 iterations.
-
-But nobody is worried about this 2^80 brute force attack. The problem
-with sha-1 (as I understand it) is that there are tricks you can do when
-making the modifications in step 1 that will make the sha1 from step 3
-more likely to find a collision with something you've already generated.
-The modifications you make in step 1 will affect the sha-3 hash in step
-2, which ultimately impacts the sha1 hash in step 3. Whether and how
-that affects your attack would depend on the exact details of the
-tricks.
-
-I don't keep up on the state of the art in sha-1 cracking, so maybe the
-techniques happen in such a way that the extra hash would be a
-significant impediment. Even if it is sufficient to stop current (or
-whatever is "current" when sha1 is broken enough to worry about)
-attacks, it is a weak point for future attacks.
-
--Peff
+Yup.
