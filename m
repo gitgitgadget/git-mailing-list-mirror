@@ -1,67 +1,73 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 3/5] delete_ref(): Remove the correct reflog when deleting symrefs
-Date: Tue, 16 Oct 2012 15:44:52 +0200
-Message-ID: <1350395094-11404-4-git-send-email-johan@herland.net>
-References: <CAPc5daUws-MfzC9imkytTrLaHyyywE4_OX1jAUVPCTK2WyUF=w@mail.gmail.com>
- <1350395094-11404-1-git-send-email-johan@herland.net>
-Cc: git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx, vmiklos@suse.cz,
-	Johan Herland <johan@herland.net>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:45:48 2012
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH 12/12] Add git-check-ignore sub-command
+Date: Tue, 16 Oct 2012 07:09:51 -0700
+Message-ID: <CAOkDyE_HCxNYpWVc0WCwhcAivEm+RLiFj-TwSsEbi+U5mZ3cww@mail.gmail.com>
+References: <1350282212-4270-1-git-send-email-pclouds@gmail.com>
+	<1350282486-4646-1-git-send-email-pclouds@gmail.com>
+	<1350282486-4646-12-git-send-email-pclouds@gmail.com>
+	<7vlif7v03r.fsf@alter.siamese.dyndns.org>
+	<CACsJy8Du1G-=pBbHW841V-61L9_HGmNkOE7EB2W2f1RJe9WuXg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 16:10:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO7Sr-0004ua-Nk
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 15:45:46 +0200
+	id 1TO7qO-0000SV-7S
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 16:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754236Ab2JPNp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 09:45:29 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63923 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754171Ab2JPNpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 09:45:10 -0400
-Received: by mail-ee0-f46.google.com with SMTP id b15so3506457eek.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 06:45:10 -0700 (PDT)
-Received: by 10.14.205.3 with SMTP id i3mr20991072eeo.18.1350395110136;
-        Tue, 16 Oct 2012 06:45:10 -0700 (PDT)
-Received: from gamma.cisco.com (64-103-25-233.cisco.com. [64.103.25.233])
-        by mx.google.com with ESMTPS id o47sm11333415eem.11.2012.10.16.06.45.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 16 Oct 2012 06:45:09 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.1.609.g5cd6968
-In-Reply-To: <1350395094-11404-1-git-send-email-johan@herland.net>
+	id S1754086Ab2JPOJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 10:09:53 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:62034 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754035Ab2JPOJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 10:09:52 -0400
+Received: by mail-bk0-f46.google.com with SMTP id jk13so3027895bkc.19
+        for <git@vger.kernel.org>; Tue, 16 Oct 2012 07:09:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=1ysuiLJaQwdYeJRANLUNYwu6uOKbBHdHxblEysAmgzs=;
+        b=t7To3S59dNnifc3YlDuC1EvnYhwQKBgDLLY+USu9OMNLNJPUAx/4/cKpiLU3C0kG5/
+         /+61HCJp6/XinVqpWBSwEWgAllr7RQaZAOzcYA+K0jDilqqt+GoulMxWpt9j+Np2uo1t
+         q/aqP/34uSRPytgDHIOuPWGLPtVn9Vpmol9UQWUkaNlcq+DSL6SIsPCfytF/Z1ytwjhx
+         0fwSyrEB9LBvck9nPQVkflwyI54mwLjjd79YaMgrrNFiOiLZSNDXC/Z2u8mnEjTeYMBl
+         JGmHLXqRQA/tj+2YKsNRT5tQePCfZOOSG80hMZGV38p3S11KsVqG8fE/4uC4v6d4Kx7K
+         IVnA==
+Received: by 10.204.4.129 with SMTP id 1mr4271286bkr.58.1350396591109; Tue, 16
+ Oct 2012 07:09:51 -0700 (PDT)
+Received: by 10.204.15.133 with HTTP; Tue, 16 Oct 2012 07:09:51 -0700 (PDT)
+In-Reply-To: <CACsJy8Du1G-=pBbHW841V-61L9_HGmNkOE7EB2W2f1RJe9WuXg@mail.gmail.com>
+X-Google-Sender-Auth: EJqkKaWcll5GE3wMvNkZkRJ672w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207830>
 
-When deleting a symref (e.g. HEAD), we would incorrectly remove the
-reflog of the dereferenced ref (e.g. .git/logs/refs/heads/master),
-insted of the symref's reflog (e.g. .git/logs/HEAD).
+Hi again,
 
-This patch ensures that we remove the reflog that corresponds to the
-removed (sym)ref.
+Firstly thanks very much for your recent work on this series!
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- refs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Oct 16, 2012 at 4:08 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> Adam, do you have time to continue this series? I can help polish it
+> for inclusion, but I don't want to step in your way if you are quietly
+> updating it.
 
-diff --git a/refs.c b/refs.c
-index df4fe20..f2508bf 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1781,7 +1781,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- 	if (!delete_symref)
- 		ret |= repack_without_ref(refname);
- 
--	unlink_or_warn(git_path("logs/%s", lock->ref_name));
-+	unlink_or_warn(git_path("logs/%s", refname));
- 	invalidate_ref_cache(NULL);
- 	unlock_ref(lock);
- 	return ret;
--- 
-1.7.12.1.609.g5cd6968
+I was *intending* to finish it off soon, but I have been really busy
+with work and other commitments recently, which has prevented this.  I
+don't currently have any unpublished changes which would conflict with
+your recent work, and I'm at a conference this week, so feel free to
+carry on polishing if you want.  However I will probably have some
+responses on the discussion about current issues, so it would be good
+if I was given a chance to catch up on this discussion before the
+series makes its way to master.
+
+Thanks again!
+
+Adam
