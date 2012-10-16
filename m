@@ -1,120 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: When Will We See Collisions for SHA-1? (An interesting analysis
- by Bruce Schneier)
-Date: Tue, 16 Oct 2012 13:09:07 -0700
-Message-ID: <7v391erxgc.fsf@alter.siamese.dyndns.org>
-References: <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>
- <CACBZZX65Kbp8N9X9UtBfJca7U1T0m-VtKZeKM5q9mhyCR7dwGg@mail.gmail.com>
- <20121015183438.GB31658@sigill.intra.peff.net>
- <507D4651.6080207@lsrfire.ath.cx>
- <20121016173254.GD27243@sigill.intra.peff.net>
- <20121016175806.GB26650@thunk.org>
- <20121016182751.GA30010@sigill.intra.peff.net>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: error: git-fast-import died of signal 11
+Date: Tue, 16 Oct 2012 16:12:12 -0400
+Message-ID: <CADgNjanD=gYF_J7onuY6gK2mXuj1XGjWWX28nb2aAYPfmWH3PQ@mail.gmail.com>
+References: <CAMJd5ATv5XfTK++4=Rs+RUkgb7F-ssrz2Lrch_WxvxZt+yF33A@mail.gmail.com>
+	<CAMJd5AQ_vsQBGnMRrZUUqztjYjaHkU0_FOteNpEvE8NTrPPvQQ@mail.gmail.com>
+	<507C7C35.7080906@gmail.com>
+	<CAMJd5ARTmud_nrUKF8USXJAKVwvLH1gSmhys2o_mjimTW5B+Vg@mail.gmail.com>
+	<507C95A3.8010704@gmail.com>
+	<CAMJd5AT51oSGer2JAhCPGnjWqCR-M2b1_4ULF7LeTob8xLcjVw@mail.gmail.com>
+	<CADgNjakqUL+66t7=Fkd69GPYOq54Z49RQchBLSSVGRv+4=5eGQ@mail.gmail.com>
+	<CAMJd5AR2gsyymKhT_hK9=4bHbcVnn+qEaDSxrZeJL1dfbmDxTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 16 22:09:26 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Uri Moszkowicz <uri@4refs.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 22:12:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TODS9-0008SZ-Ch
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 22:09:25 +0200
+	id 1TODV3-0003dt-OJ
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 22:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755263Ab2JPUJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 16:09:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42248 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752333Ab2JPUJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 16:09:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C762B9BFC;
-	Tue, 16 Oct 2012 16:09:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Et2AewJtqeok4fUYFWBhKmR2SxQ=; b=GQfycv
-	t8r8AA/J0xnFlDBZeSpJ7wQ9ClZjSatDdUoE5Ok6se5WpI+9gSzDIBQbxHLwUCgZ
-	mr3uh8o3l0fA6qT97pbSRzGN010wgTNxW0cn35FBW3TrcQU4VUd+kDYV3FmwR6iH
-	618BlK5paARfn7QC5BHloG+e7Gjuj7RkI0aog=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BSYO0R3lhB8gQuhEc4mey/ppN0agHwBL
-	RguBQBhVbzQGYXuucESbXPUx6e+Fg7jV/ZPAdB3Snvjat1eVLnIppbMcPMFjcphj
-	C05K+BE/+AY3u6FOluHedNDr31gq5zdxy8dwMWIPPvxcRFYk68zghS+tQcmWqnlI
-	NjDT84Zqa54=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B25A29BFB;
-	Tue, 16 Oct 2012 16:09:09 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8E699BF7; Tue, 16 Oct 2012
- 16:09:08 -0400 (EDT)
-In-Reply-To: <20121016182751.GA30010@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 16 Oct 2012 14:27:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 58339B92-17CD-11E2-9AD7-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755773Ab2JPUMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 16:12:15 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:37740 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754398Ab2JPUMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 16:12:14 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so4474129lag.19
+        for <git@vger.kernel.org>; Tue, 16 Oct 2012 13:12:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=em5k4hU1X/MHm1thaSHMZ2u9sUd6f5SdHFW+XB+ICV4=;
+        b=PEW/NXxbojVwRNqFTTEBIBM41NbM5pY5U0wk9G9LVo6q1/hqQFxdfFqjdMb1g+jrsr
+         dlAcUnFJOUcNXbPbFWXBnKOaMHs7+/A99G/1ttwLPajfgZZCy4PvF6BxNAve6/ZlWKAf
+         5PwxkaTELunOw7YWsM+PtKLEQquzKJQ79mgzjGL5ox9g4J6Pu77ZI+PZtARnrqZhYAWJ
+         2WGKEeetYP9qpwveSihSZvXwHCZYQgUobXCoAEiWikVHWY5ZwLimbxApyzgWWEcZ7jKQ
+         0snBAc1D6emNKn5UUr4dC4L0tVp1ffduTMSBZUyqO+l02Go5CC+UxZW6bOrGPtMjGl+1
+         L3Og==
+Received: by 10.152.112.136 with SMTP id iq8mr13598280lab.18.1350418332837;
+ Tue, 16 Oct 2012 13:12:12 -0700 (PDT)
+Received: by 10.112.106.164 with HTTP; Tue, 16 Oct 2012 13:12:12 -0700 (PDT)
+In-Reply-To: <CAMJd5AR2gsyymKhT_hK9=4bHbcVnn+qEaDSxrZeJL1dfbmDxTw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207879>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Oct 16, 2012 at 3:41 PM, Uri Moszkowicz <uri@4refs.com> wrote:
+> I can do that if it still fails tomorrow. How do I build a debug version of git?
+>
+> On Tue, Oct 16, 2012 at 2:35 PM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
+>> Yea, it's a difficult problem to diagnose. It'd be really helpful if
+>> you can run a debug version of git and run the import process under a
+>> debugger.
 
-> A much bigger problem is the other places we reference sha1s. The
-> obvious place is trees, which have no room for backup pointers (either
-> in headers, or with a NUL trick).
+After getting git's source, you can simply run "make", and it'll
+compile with debug info by default. When compiling is done, you will
+see all the binaries in the source's root folder. Then, from the
+source folder, you can start gdb by the command:
+    gdb ./git-fast-import
 
-This is a tangent (as I do not have anything particularly worth
-adding on top of what have already been said around the exact
-SHA-[123] topic), but we probably would want to start thinking about
-the tree object format "v2" at some point.
+When you're inside gdb, put a breakpoint on "die_nicely" by entering:
+    b die_nicely
 
-Some random thoughts:
+Then, you can finally run your import process by entering:
+    r < your_cvs_dump
 
- - It is OK if existing versions of Git barfed when asked to read a
-   tree object in the "v2" format.  The repository format version
-   may need to be bumped up when writing such an object, and
-   transfer protocols need to pay attention to it, to avoid
-   transferring history with objects in newer representation to
-   repositories with older repository format version.
+When fast-import crashes/dies, you can find the stacktrace by entering:
+    bt
 
- - We do not need a new "tree v2" object type.  Existing versions of
-   Git will barf upon seeing such an object, but that won't be the
-   only way to prevent existing versions of Git from misinterpreting
-   a tree object recorded in the "v2" format as if it were in the
-   current format (e.g. a non-octal in the mode field of the first
-   entry causes tree-walk.c::get_mode() to barf).
-
- - We do not mind two tree objects that encodes the same tree in the
-   current and the enhanced formats to have different object names.
-   In fact, we care more about the object names derived purely from
-   the content of the object as an uninterpreted bytestream, so it
-   is expected that they have different object names.
-
-   This will make the path-limited traversal and diff to open more
-   trees unnecessarily at the "version bump" boundary in the
-   history, but that is normal (think of a project that used to
-   record its text files with CRLF and one day decides to convert
-   everything to LF; the trees before and after the conversion will
-   record logically the same contents "git show" should give an
-   emptyness, but the diff machinery needs to go into contents at
-   the flag day boundary).
-
-   As long as we do not let random "extension of the day" into the
-   new format willy-nilly, the resulting history will still be
-   useful and usable.  From that point of view, no parts of the
-   additional information we would record in the updated format that
-   is not present in the current format should be optional (iow,
-   once you decide to use the "v2" format to record a certain tree,
-   you will produce an identical and reproducible representation in
-   "v2", regardless of your implementation).
-
-All of the above are issues for Git 3.0 and beyond, though ;-).
+And that should tell us where it crashed, and, hopefully, where the
+memory error happened.
