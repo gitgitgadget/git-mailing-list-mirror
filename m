@@ -1,83 +1,85 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
-Date: Tue, 16 Oct 2012 17:11:25 +0200
-Message-ID: <007401cdabb0$831d1f10$89575d30$@schmitz-digital.de>
-References: <k5gq60$q8c$1@ger.gmane.org> <0140f3f2f2f4bded6868f4082bef0c36e9a8560e.1350387132.git.git@drmicha.warpmail.net> <007001cdaba8$5afc6c00$10f54400$@schmitz-digital.de> <507D7809.6040904@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvsimport: allow author-specific timezones
+Date: Tue, 16 Oct 2012 08:49:41 -0700
+Message-ID: <7vzk3mto16.fsf@alter.siamese.dyndns.org>
+References: <1350261054-5171-1-git-send-email-crorvick@cogcap.com>
+ <7vpq4jws4d.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPY3fJJSzX8WPRVQPNOF0A0KAMCXr1u0ZzjEFvXDF=v6JA@mail.gmail.com>
+ <7v4nlvulc2.fsf@alter.siamese.dyndns.org>
+ <20121016063152.GB22941@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>
-To: "'Michael J Gruber'" <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Oct 16 17:13:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 16 17:50:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO8pl-0007nR-L1
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 17:13:29 +0200
+	id 1TO9P7-0000uE-Tt
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 17:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897Ab2JPPNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 11:13:09 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:61396 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754878Ab2JPPNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 11:13:08 -0400
-Received: from DualCore (dsdf-4db552a4.pool.mediaWays.net [77.181.82.164])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MYLIX-1SswlC1suH-00V8r9; Tue, 16 Oct 2012 17:11:51 +0200
-In-Reply-To: <507D7809.6040904@drmicha.warpmail.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJeqU/4XWJERJTycJKdEfjaJWW8tQL0cImCAhznpmcCn+72OZZcg/vg
-Content-Language: de
-X-Provags-ID: V02:K0:+cINxT9Z7BqRQqV5KxD7YtilOzHRbN4E5p7P/1Vnhga
- o3LqLG1jVPWi+/HNQlHgmauX/w/XWLODHKfBZzAKVlP5UZJUBf
- T4Jgk27M+uzgLePKSjYc9tDH8bBDm1T69699JsXAZWiFJnY3re
- SDa5rEgGXNXNziw1mPqG/X1ci/pfENIUYNASM0ckfT2/cCFNoI
- N6qj200Zr6+7GygLqWpNNNNRW3VRp1j2VPKpUSi33sPpZhgi+Q
- nAcu6VW5q65gSAhQUQgH9SmpGgpPOU7N56VTy4lEPVZg8WQJZs
- VG1vLmY8djCuDcCo5m8HUzBqb23u7IYsHo+JUtTifFe2h65A4J
- vkXZyfkVcgCTPO9YY46pTQ7eDJcVdf0Xd8ucHpNuA4WKSwxEup
- Ufdn1nzihtq6w==
+	id S1754054Ab2JPPtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 11:49:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48951 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753939Ab2JPPtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 11:49:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79BC281AC;
+	Tue, 16 Oct 2012 11:49:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GPea4pBhqyYSNxFj5sPK+x5bt0g=; b=pKwGvo
+	U/bywvXvWYf20K4H8B2R67tbXgOB5l/f7OTvGwPTi0WtkEHVrifmvlq7rRhAd0dQ
+	fGU/YQ7TK26+RubOiGRmq0QdJzlWW3mnZzbYZcDc29vv71nkBLzakPHdi1KMPzan
+	/2cC/z/H6FltjqlyVpdX4UITS9SIr3jE8uD5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M7Q6nh669QYvnkJJ4CRL20P85csZBlZL
+	lsyQx8BWYNUyagm3NoJPPIzPgza1cs7u4KWXg7i5sm7xy3gNx4Qka24cxudQuVVk
+	rHirI2+7lxOVhEdmG0oorU4TpKTsHeeM6jZzkpcD5jyf4O7jMrIuuQfQQmpqShgC
+	ckLT6w/jU4o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6746181AB;
+	Tue, 16 Oct 2012 11:49:45 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5657181A9; Tue, 16 Oct 2012
+ 11:49:43 -0400 (EDT)
+In-Reply-To: <20121016063152.GB22941@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 16 Oct 2012 02:31:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1A5B0928-17A9-11E2-AEB7-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207837>
 
-> From: Michael J Gruber [mailto:git@drmicha.warpmail.net]
-> Sent: Tuesday, October 16, 2012 5:07 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org; 'Junio C Hamano'
-> Subject: Re: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
-> 
-> Joachim Schmitz venit, vidit, dixit 16.10.2012 16:13:
-> >> From: Michael J Gruber [mailto:git@drmicha.warpmail.net]
-> >> Sent: Tuesday, October 16, 2012 1:40 PM
-> >> To: git@vger.kernel.org
-> >> Cc: Joachim Schmitz; Junio C Hamano
-> >> Subject: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
-> >>
-> >> Some test want to use the time command (not the shell builtin) and test
-> >> for its availability at /usr/bin/time.
-> >>
-> >> Provide a lazy prereq TIME_COMMAND which tests for /usr/bin/time and
-> >> /bin/time. If any is found, set TEST_COMMAND_PATH to the first match.
-> >>
-> >> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> >> ---
-> >> Rather than iterating over 2 or more hardcoded paths, one could use
-> >> "test -P time" or allow a make variable TIME_COMMAND_PATH whose
-> >
-> > test -P time won't work for me:
-> > test -P: unary operator expected
-> >
-> > I do have another one in /usr/local/bin, maybe that could get added too?
-> 
-> Yikes.
-> 
-> If we introduce a make variable TIME_COMMAND_PATH we can even get rid of
-> 2/4 (but have to change Makefile or t/Makefile).
+Jeff King <peff@peff.net> writes:
 
-I don't mind too much. /usr/bin/time and /bin/time should be enough.
+> On Mon, Oct 15, 2012 at 08:50:21PM -0700, Junio C Hamano wrote:
+>
+>> Chris Rorvick <chris@rorvick.com> writes:
+>> 
+>> > It occurred to me that the success of the unit test depends on the
+>> > host platform's zoneinfo database.  I think this problem is inherent
+>> > with this functionality.  Should the unit test attempt to detect
+>> > support for the used timezones and short circuit if this fails?  Not
+>> > sure exactly how I'd do this, but wondering if it's worth thinking
+>> > about.
+>> 
+>> Yeah, that did indeed cross my mind.
+>> 
+>> You could say TZ=QST6QDT or something silly like that but that in
+>> turn has to assume your tzset() is POSIX.1 compliant anyway.
+>
+> We use EST5 in t0006 (it was originally just "EST" but IRIX complained).
+> It's been in the test suite for two years without a problem, so it may
+> be simple and safe enough to just use that.
+
+Sounds good.  As the test vector for the last piece seems to be
+designed to show that the dst conversion correctly works, we would
+need to use STD$nDST formats, though.
