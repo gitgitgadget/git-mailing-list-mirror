@@ -1,158 +1,100 @@
-From: Uri Moszkowicz <uri@4refs.com>
-Subject: Re: error: git-fast-import died of signal 11
-Date: Tue, 16 Oct 2012 14:27:50 -0500
-Message-ID: <CAMJd5ATOZGrRUWQCey8KHY=JfOtZCmhzpvCBou2EpY1tfLLFZA@mail.gmail.com>
-References: <CAMJd5ATv5XfTK++4=Rs+RUkgb7F-ssrz2Lrch_WxvxZt+yF33A@mail.gmail.com>
- <CAMJd5AQ_vsQBGnMRrZUUqztjYjaHkU0_FOteNpEvE8NTrPPvQQ@mail.gmail.com> <507D0A53.1030707@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 3/4v2] test-lib: provide lazy TIME_COMMAND prereq
+Date: Tue, 16 Oct 2012 12:34:08 -0700
+Message-ID: <7v8vb6rz2n.fsf@alter.siamese.dyndns.org>
+References: <007001cdaba8$5afc6c00$10f54400$@schmitz-digital.de>
+ <28ca29e59c5905ba7232dcdbe4661f37ef90cac5.1350399860.git.git@drmicha.warpmail.net> <507DB39C.3080005@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 16 21:28:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Joachim Schmitz <jojo@schmitz-digital.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 21:34:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOCoc-0002gJ-Sy
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 21:28:35 +0200
+	id 1TOCuL-0001FN-Ni
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 21:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756011Ab2JPT2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 15:28:15 -0400
-Received: from mx71.nozonenet.com ([204.14.89.24]:57960 "EHLO
-	mail3.nozonenet.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755999Ab2JPT2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 15:28:12 -0400
-Received: (qmail 8373 invoked by uid 399); 16 Oct 2012 15:28:11 -0400
-Received: from mail-qa0-f46.google.com (smtp@4refs.com@209.85.216.46)
-  (de-)crypted with TLSv1: RC4-SHA [128/128] DN=unknown
-  by mail3.nozonenet.com with ESMTPSAM; 16 Oct 2012 15:28:11 -0400
-X-Originating-IP: 209.85.216.46
-X-Sender: smtp@4refs.com
-Received: by mail-qa0-f46.google.com with SMTP id c26so251442qad.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 12:28:11 -0700 (PDT)
-Received: by 10.58.162.130 with SMTP id ya2mr9581337veb.2.1350415691073; Tue,
- 16 Oct 2012 12:28:11 -0700 (PDT)
-Received: by 10.58.226.164 with HTTP; Tue, 16 Oct 2012 12:27:50 -0700 (PDT)
-In-Reply-To: <507D0A53.1030707@alum.mit.edu>
+	id S1756048Ab2JPTeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 15:34:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44560 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755367Ab2JPTeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 15:34:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F7719B75;
+	Tue, 16 Oct 2012 15:34:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hBCTFUB5L7M48ttIkYynmkNqscE=; b=B4KMjA
+	tHKdW/jX8SVo1Cjte7MsAGxehC559QAJbzBZRntdpsri+as+snYtf44SKpQzXXBx
+	IVXp5wpXYzMjefaZT9rJsqtAQMZHi0JFOoO6B7vXQ/0UrrO3jEbqM/ElVjN+VUI2
+	k3oX0WjlBQXM5betLhWaK9xTNjc0MNsa2bxG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QjEplYqMdXQFpnNRKyjScnBCvDk1ka73
+	+k22Rc2eu3cU9Ag6M+SAcmj/4GSVls+nz2WMgiVZcR0/647NZf014zVz6qHcGNpS
+	TY4M43wDjQloAUPedcTWl6qSiGJnvRMMZlrttGNNHLl8puNAnM6kvDGebY4qMCvO
+	pJR0Eu8gDTg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CB579B74;
+	Tue, 16 Oct 2012 15:34:11 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 694F59B70; Tue, 16 Oct 2012
+ 15:34:10 -0400 (EDT)
+In-Reply-To: <507DB39C.3080005@kdbg.org> (Johannes Sixt's message of "Tue, 16
+ Oct 2012 21:21:00 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 755C1654-17C8-11E2-B7E6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207875>
 
-I'm using Git 1.8.0-rc2 and cvs2git version 2.5.0-dev (trunk). The
-repository is almost 20 years old and should consist of mostly
-smallish plain text files. We've been tagging every commit, in
-addition to for releases and development branches, so there's a lot of
-tags and branches. I didn't see the memory usage of the process before
-exiting but after ~3.5 hours in a subsequent run it seems to be using
-about 8.5GB of virtual memory with a resident size of only .5GB, which
-should have easily fit on the 512GB machine that I was using. I'm
-trying on a 1TB machine now but it doesn't look like it'll make a
-difference. There is no ram disk and I have exclusive access to the
-machine so only from the OS, which is trivial. The only significant
-limit from my environment would be on the stack:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-[umoszkow@mawhp5 ~] limit
-cputime      unlimited
-filesize     unlimited
-datasize     unlimited
-stacksize    8000 kbytes
-coredumpsize 0 kbytes
-memoryuse    unlimited
-vmemoryuse   unlimited
-descriptors  1024
-memorylocked 32 kbytes
-maxproc      8388608
+> Am 16.10.2012 17:07, schrieb Michael J Gruber:
+>> Some test want to use the time command (not the shell builtin) and test
+>> for its availability at /usr/bin/time.
+>> 
+>> Provide a lazy prereq TIME_COMMAND which tests for $TEST_COMMAND_PATH,
+>> which can be set from config.mak. It defaults to /usr/bin/time.
+>
+> This avoids the builtin:
+>
+> 	command time $that_command
+>
+> It works for bash, ksh, zsh, and dash (where the latter doesn't have it
+> as builtin).
 
-Would that result in an mmap error though? I'll try with unlimited
-stacksize and descriptors anyway.
+"command time" works but I think that is because it is not a
+built-in ;-)
 
-I don't think modifying the original repository or a clone of it is
-possible at this point but breaking up the import into a few steps may
-be - will try that next if this fails.
+Here is what I read in bash(1):
 
-On Tue, Oct 16, 2012 at 2:18 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 10/15/2012 05:53 PM, Uri Moszkowicz wrote:
->> I'm trying to convert a CVS repository to Git using cvs2git. I was able to
->> generate the dump file without problem but am unable to get Git to
->> fast-import it. The dump file is 328GB and I ran git fast-import on a
->> machine with 512GB of RAM.
->>
->> fatal: Out of memory? mmap failed: Cannot allocate memory
->> fast-import: dumping crash report to fast_import_crash_18192
->> error: git-fast-import died of signal 11
->>
->> How can I import the repository?
->
-> What versions of git and of cvs2git are you using?  If not the current
-> versions, please try with the current versions.
->
-> What is the nature of your repository (i.e., why is it so big)?  Does it
-> consist of extremely large files?  A very deep history?  Extremely many
-> branches/tags?  Extremely many files?
->
-> Did you check whether the RAM usage of git-fast-import process was
-> growing gradually to fill RAM while it was running vs. whether the usage
-> seemed reasonable until it suddenly crashed?
->
-> There are a few obvious possibilities:
->
-> 0. There is some reason that too little of your computer's RAM is
-> available to git-fast-import (e.g., ulimit, other processes running at
-> the same time, much RAM being used as a ramdisk, etc).
->
-> 1. Your import is simply too big for git-fast-import to hold in memory
-> the accumulated things that it has to remember.  I'm not familiar with
-> the internals of git-fast-import, but I believe that the main thing that
-> it has to keep in RAM is the list of "marks" (references to git objects
-> that can be referred to later in the import).  From your crash file, it
-> looks like there were about 350k marks loaded at the time of the crash.
->  Supposing each mark is about 100 bytes, this would only amount to 35
-> Mb, which should not be a problem (*if* my assumptions are correct).
->
-> 2. Your import contains a gigantic object which individually is so big
-> that it overflows some component of the import.  (I don't know whether
-> large objects are handled streamily; they might be read into memory at
-> some point.)  But since your computer had so much RAM this is hardly
-> imaginable.
->
-> 3. git-fast-import has a memory leak and the accumulated memory leakage
-> is exhausting your RAM.
->
-> 4. git-fast-import has some other kind of a bug.
->
-> 5. The contents of the dumpfile are corrupt in a way that is triggering
-> the problem.  This could either be invalid input (e.g., an object that
-> is reported to be quaggabytes large), or some invalid input that
-> triggers a bug in git-fast-import.
->
-> If (1), then you either need a bigger machine or git-fast-import needs
-> architectural changes.
->
-> If (2), then you either need a bigger machine or git-fast-import and/or
-> git needs architectural changes.
->
-> If (3), then it would be good to get more information about the problem
-> so that the leak can be fixed.  If this is the case, it might be
-> possible to work around the problem by splitting the dumpfile into
-> several parts and loading them one after the other (outputting the marks
-> from one run and loading them into the next).
->
-> If (4) or (5), then it would be helpful to narrow down the problem.  It
-> might be possible to do so by following the instructions in the cvs2svn
-> FAQ [1] for systematically shrinking a test case to smaller size using
-> destroy_repository.py and shrink_test_case.py.  If you can create a
-> small repository that triggers the same problem, then there is a good
-> chance that it is easy to fix.
->
-> Michael
-> (the cvs2git maintainer)
->
-> [1] http://cvs2svn.tigris.org/faq.html#testcase
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+       command [-pVv] command [arg ...]  Run command with args
+              suppressing the normal shell function lookup. Only
+              builtin commands or commands found in the PATH are
+              executed.
+
+Taken together with this from "COMMAND EXECUTION":
+
+       If the command name contains no slashes, the shell attempts
+       to locate it.  If there exists a shell function by that name,
+       that function is invoked as described above in FUNCTIONS.  If
+       the name does not match a function, the shell searches for it
+       in the list of shell builtins.  If a match is found, that
+       builtin is invoked.
+
+       If the name is neither a shell function nor a builtin, and
+       contains no slashes, bash searches each element of the PATH
+       for a directory containing an executable file by that name.
+
+I suspect "command printf 'a b c\n'" would not use $HOME/bin/printf
+even when I have $HOME/bin early in my $PATH (nor /usr/bin/printf
+for that matter).
