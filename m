@@ -1,81 +1,61 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: push race
-Date: Tue, 16 Oct 2012 01:37:50 -0400
-Message-ID: <20121016053750.GA22281@sigill.intra.peff.net>
-References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
- <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
- <507C1DB4.2010000@xiplink.com>
- <20121015185608.GC31658@sigill.intra.peff.net>
- <CAJo=hJu=eqgUhJvvpMLJ05AT6o+nVUDcm+tHV8en8OCX2-2qgA@mail.gmail.com>
- <20121016045118.GA21359@sigill.intra.peff.net>
- <CACsJy8AJVAoUHft6+rdOjWCpLWWj3m0NgvFd9pToQRQ5uD8_gg@mail.gmail.com>
+Subject: Re: [PATCH] git-cvsimport: allow author-specific timezones
+Date: Tue, 16 Oct 2012 02:31:52 -0400
+Message-ID: <20121016063152.GB22941@sigill.intra.peff.net>
+References: <1350261054-5171-1-git-send-email-crorvick@cogcap.com>
+ <7vpq4jws4d.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPY3fJJSzX8WPRVQPNOF0A0KAMCXr1u0ZzjEFvXDF=v6JA@mail.gmail.com>
+ <7v4nlvulc2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>, marcnarc@xiplink.com,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 07:38:07 2012
+Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 08:32:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNzqu-0003pl-Ph
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 07:38:05 +0200
+	id 1TO0hD-00065s-Us
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 08:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250Ab2JPFhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 01:37:54 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54545 "EHLO
+	id S1753033Ab2JPGb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 02:31:56 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54590 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752094Ab2JPFhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 01:37:53 -0400
-Received: (qmail 12190 invoked by uid 107); 16 Oct 2012 05:38:29 -0000
+	id S1751880Ab2JPGbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 02:31:55 -0400
+Received: (qmail 12681 invoked by uid 107); 16 Oct 2012 06:32:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Oct 2012 01:38:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2012 01:37:50 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Oct 2012 02:32:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2012 02:31:52 -0400
 Content-Disposition: inline
-In-Reply-To: <CACsJy8AJVAoUHft6+rdOjWCpLWWj3m0NgvFd9pToQRQ5uD8_gg@mail.gmail.com>
+In-Reply-To: <7v4nlvulc2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207804>
 
-On Tue, Oct 16, 2012 at 12:15:21PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Mon, Oct 15, 2012 at 08:50:21PM -0700, Junio C Hamano wrote:
 
-> On Tue, Oct 16, 2012 at 11:51 AM, Jeff King <peff@peff.net> wrote:
-> >> Its worth nothing that a SHA-1 collision can be identified at the
-> >> server because the server performs a byte-for-byte compare of both
-> >> copies of the object to make sure they match exactly in every way. Its
-> >> not fast, but its safe. :-)
-> >
-> > Do we? I thought early versions of git did that, but we did not
-> > double-check collisions any more for performance reasons. You don't
-> > happen to remember where that code is, do you (not that it really
-> > matters, but I am just curious)?
+> Chris Rorvick <chris@rorvick.com> writes:
 > 
-> We do. I touched that sha-1 collision code last time I updated
-> index-pack, to support large blobs. We only do that when we receive an
-> object that we already have, which should not happen often unless
-> you're under attack, so little performance impact normally. Search
-> "collision" in index-pack.c
+> > It occurred to me that the success of the unit test depends on the
+> > host platform's zoneinfo database.  I think this problem is inherent
+> > with this functionality.  Should the unit test attempt to detect
+> > support for the used timezones and short circuit if this fails?  Not
+> > sure exactly how I'd do this, but wondering if it's worth thinking
+> > about.
+> 
+> Yeah, that did indeed cross my mind.
+> 
+> You could say TZ=QST6QDT or something silly like that but that in
+> turn has to assume your tzset() is POSIX.1 compliant anyway.
 
-Ah, thanks, I remember this now. I think that I was thinking of the very
-early code to check every sha1 file write. E.g., the code killed off by
-aac1794 (Improve sha1 object file writing., 2005-05-03). But that is
-ancient history that is not really relevant.
-
-Interesting that we check only in index-pack. If the pushed content is
-small enough, we will call unpack-objects. That follows the usual code
-path for writing the object, which will prefer the existing copy.
-
-I suspect a site that is heavy on alternates is invoking the index-pack
-code path more frequently than necessary (e.g., history gets pushed to
-one forked repo, then when it goes to the next one, we may not share the
-ref that tells the client we already have the object and receive it a
-second time).
+We use EST5 in t0006 (it was originally just "EST" but IRIX complained).
+It's been in the test suite for two years without a problem, so it may
+be simple and safe enough to just use that.
 
 -Peff
