@@ -1,166 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG when trying to delete symbolic refs
-Date: Tue, 16 Oct 2012 09:09:09 -0700
-Message-ID: <7vr4oytn4q.fsf@alter.siamese.dyndns.org>
-References: <CALKQrgfnvV+1XHjeSytj+LxkAabZJK3hewxH7WT0nkX-ewOKUA@mail.gmail.com>
- <507D315E.8040101@lsrfire.ath.cx>
+Subject: Re: [PATCH 12/12] Add git-check-ignore sub-command
+Date: Tue, 16 Oct 2012 09:12:58 -0700
+Message-ID: <7vmwzmtmyd.fsf@alter.siamese.dyndns.org>
+References: <1350282212-4270-1-git-send-email-pclouds@gmail.com>
+ <1350282486-4646-1-git-send-email-pclouds@gmail.com>
+ <1350282486-4646-12-git-send-email-pclouds@gmail.com>
+ <7vlif7v03r.fsf@alter.siamese.dyndns.org>
+ <CAOkDyE9g6rNiv7nnTu2i34dbn_z7r5SmhDuxief7iEQLVxtO5g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>,
-	Miklos Vajna <vmiklos@suse.cz>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Oct 16 18:09:27 2012
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 18:13:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO9hs-00071b-M3
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 18:09:25 +0200
+	id 1TO9lb-00034U-3G
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 18:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732Ab2JPQJN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2012 12:09:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59284 "EHLO
+	id S1754738Ab2JPQND convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2012 12:13:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61662 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752105Ab2JPQJM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 12:09:12 -0400
+	id S1754357Ab2JPQNC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 12:13:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF4108809;
-	Tue, 16 Oct 2012 12:09:11 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 795C68947;
+	Tue, 16 Oct 2012 12:13:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=o2cUJz5FFZSs
-	afvTejpW4jpzQvE=; b=EOaVb21YMwprnYzeMrJ3G7x11sp9cdOle3kjgwySJN5O
-	c+5C5hdjrOMlfPxVQBNUJVUl7JKsPhY/7/AlcQ/qj1N3L6O4wksU0d9FR7X/Od3q
-	+TzXD5FS5z0kmLvz0aT1wKDgCPUSMrvx9PwNAhmDYYLfwtgfazQF1XbTOCscB6U=
+	:content-type:content-transfer-encoding; s=sasl; bh=Wp4Y1zogz/jo
+	AYYa7iFvgvgdYeE=; b=rFfNOX9YwHbUBuXDUbMQP5J0lIsSgU1MvHlV4fq8gxd8
+	YmAKGzz0axuXA0YVZyxwMlYDIbN3/v3dh/lDzk/58cQL7Pp4yprxfZdEnfTMrAq4
+	wtBPdwYYBQUrOozTCowMe4qPunVcF9Uxih/y80GlmGomwWvk13IL6Aamvi61VI0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aLhaTj
-	iCFZo3WlRD5/Fjcj8W+AonrR7fQ8q8ijv17GNDWF1rWC1h89snf1fmFD/rRCDQ+n
-	7RZfu4E3D1o3hytx00fqILDxKOe0jGJy1IRrBDLZYomd5HOqon98U2ocmuWNIxSx
-	SAMig5Tn79NrLep/YNbmve+aCy7y0XxLDsbuI=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=N4Bc56
+	rtUV23mUgVsi9ea8EHIQtJ5oSUz9F0UHVl7rbUWaBWajJKfIWdemSF2UK80G1sD9
+	vLTRxGReJaW+hr3alPwQJ5aHiKMGTg2J1Dro9QRg/3OG6iaiaxGikFSmfomspS9H
+	SKrWW1EBIINT5xDslxqbAq2EalYRcmNYdVbd8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D53B8808;
-	Tue, 16 Oct 2012 12:09:11 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FEDF8946;
+	Tue, 16 Oct 2012 12:13:00 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA5518807; Tue, 16 Oct 2012
- 12:09:10 -0400 (EDT)
-In-Reply-To: <507D315E.8040101@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue, 16 Oct 2012 12:05:18 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B885C8941; Tue, 16 Oct 2012
+ 12:12:59 -0400 (EDT)
+In-Reply-To: <CAOkDyE9g6rNiv7nnTu2i34dbn_z7r5SmhDuxief7iEQLVxtO5g@mail.gmail.com> (Adam
+ Spiers's message of "Tue, 16 Oct 2012 07:13:46 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D23984E6-17AB-11E2-85DE-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5AAD45A6-17AC-11E2-B73A-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207841>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Adam Spiers <git@adamspiers.org> writes:
 
-> Am 15.10.2012 10:50, schrieb Johan Herland:
->> Basically, there is a "master" branch, and an "alias" symref to
->> "master". When we naively try to delete the symref with "git branch =
--d
->> alias", it ends up:
->>=20
->>   - NOT deleting the "alias" symref
->>   - DELETING the "master" loose ref
->>   - NOT deleting the "master" packed ref
->>=20
->> So, from the user perspective, "git branch -d alias" ends up resetti=
-ng
->> "master" (and "alias") back to the last time we happened to run "git
->> gc". Needless to say, this is not quite what we had in mind...
->>=20
->> AFAICS, there may be three possible "acceptable" outcomes when we ru=
-n
->> "git branch -d alias" in the above scenario:
->>=20
->>   A. The symbolic ref is deleted. This is obviously what we expected=
-=2E..
+> On Mon, Oct 15, 2012 at 3:31 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+>>
+>>> +For each pathname given via the command-line or from a file via
+>>> +`--stdin`, this command will list the first exclude pattern found =
+(if
+>>> +any) which explicitly excludes or includes that pathname.  Note th=
+at
+>>> +within any given exclude file, later patterns take precedence over
+>>> +earlier ones, so any matching pattern which this command outputs m=
+ay
+>>> +not be the one you would immediately expect.
+>>
+>> "The first exclude pattern" is very misleading, isn't it?
 >
-> Below is a patch to do that.
+> I don't think so, because of the second sentence.
 >
->>   B. The command fails because "alias" is a symref. This would be
->> understandable if we don't want to teach "branch -d" about symrefs.
->> But then, the error message should ideally explain which command we
->> should use to remove the symref.
+>> For example, with these in $GIT_DIR/info/exclude, I would get:
+>>
+>>         $ cat -n .git/info/exclude
+>>           1 *~
+>>           2 Makefile~
+>>         $ git check-ignore -v Makefile~
+>>         .git/info/exclude:2:Makefile~   Makefile~
+>>
+>> which is the correct result (the last one in a single source decides
+>> the fate of the path), but it hardly is "first one found" and the
+>> matching pattern in the output would not be something unexpected for
+>> the users, either.
+>>
+>> The reason it is "the first one found" is because the implementation
+>> arranges the loop in such a way that it can stop early when it finds
+>> a match---it simply checks matches from the end of the source.
+>>
+>> But that is not visible to end-users,
 >
-> Renaming of symrefs with branch -m is disallowed because it's more
-> complicated than it looks at first; this was discussed here:
-> http://thread.gmane.org/gmane.comp.version-control.git/98825/focus=3D=
-99206
-
-Thanks for a reminder.
-
-> I can't imagine why deletion should be prohibited as well, though.
-
-I am not sure if it is a good idea to let "update-ref -d" work on a
-symref, with or without --no-deref.  There are cases where you want
-to remove the pointer ("symbolic-ref -d" is there for that), and
-there are cases where you want to remove the underlying ref (but of
-course you can "update-ref -d" the underlying ref yourself).  If
-"update-ref -d" refused to work on a symref, we do not have to worry
-about the confusion "which one is removed---the pointer, or the
-pointee?"
-
-> But I wonder why most delete_ref() calls in the code actually don't u=
-se
-> the flag REF_NODEREF, thus deleting symref targets instead of the
-> symrefs themselves.  I may be missing something important here.
-
-I suspect that is primarily because using a symref to represent
-anything other than $GIT_DIR/HEAD and $GIT_DIR/refs/remotes/*/HEAD
-is outside the normally supported use case and in the "may happen to
-work" territory.
-
-Having said all that, I think your patch is going in the right
-direction.  If somebody had a symbolic ref in refs/heads/, the
-removal should remove it, not the pointee, which may not even
-exist.  Does "branch -d sym" work correctly with your patch when
-refs/heads/sym is pointing at something that does not exist?
-
-> ---
->  builtin/branch.c  |  2 +-
->  t/t3200-branch.sh | 10 ++++++++++
->  2 files changed, 11 insertions(+), 1 deletion(-)
+> Correct; that's precisely why I wrote the second sentence which
+> explicitly explains this.
 >
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index ffd2684..31af114 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -221,7 +221,7 @@ static int delete_branches(int argc, const char *=
-*argv, int force, int kinds,
->  			continue;
->  		}
-> =20
-> -		if (delete_ref(name, sha1, 0)) {
-> +		if (delete_ref(name, sha1, REF_NODEREF)) {
->  			error(remote_branch
->  			      ? _("Error deleting remote branch '%s'")
->  			      : _("Error deleting branch '%s'"),
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 79c8d01..4b73406 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -262,6 +262,16 @@ test_expect_success 'config information was rena=
-med, too' \
->  	"test $(git config branch.s.dummy) =3D Hello &&
->  	 test_must_fail git config branch.s/s/dummy"
-> =20
-> +test_expect_success 'deleting a symref' '
-> +	git branch target &&
-> +	git symbolic-ref refs/heads/symlink refs/heads/target &&
-> +
-> +	git branch -d symlink &&
-> +
-> +	test_path_is_file .git/refs/heads/target &&
-> +	test_path_is_missing .git/refs/heads/symlink
-> +'
-> +
->  test_expect_success 'renaming a symref is not allowed' \
->  '
->  	git symbolic-ref refs/heads/master2 refs/heads/master &&
+>> and they will find the above description just wrong, no?
+>
+> It's not wrong AFAICS, but suggestions for rewording this more clearl=
+y
+> are of course welcome.  Maybe s/immediately/intuitively/ ?
+
+I think this is sufficient:
+
+	For each pathname given via the command-line or from a file
+	via `--stdin`, show the pattern from .gitignore (or other
+	input files to the exclude mechanism) that decides if the
+	pathname is excluded.
+
+and without "Note that" at all.
