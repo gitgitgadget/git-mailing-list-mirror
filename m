@@ -1,59 +1,174 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: feature request
-Date: Tue, 16 Oct 2012 19:27:26 +0200
-Message-ID: <CAB9Jk9DaJnN9wmzi-4P3+PqBOobOapnU50y5zkKV9-1CNpV3Yw@mail.gmail.com>
-References: <CAB9Jk9AwTVM4TPwPg1Gmi8TCnnXWUsMAfaz8DdfcEhBNW_15Ug@mail.gmail.com>
-	<CAH5451=1VU6oUzAyGXZvOW-Pk3+Os1mq1neum572venNjRfT+g@mail.gmail.com>
+From: Thomas Ackermann <th.acker66@arcor.de>
+Subject: [Patch v3 7/8] Create pdf from all html files
+Date: Tue, 16 Oct 2012 19:27:25 +0200 (CEST)
+Message-ID: <814705718.154269.1350408445020.JavaMail.ngmail@webmail15.arcor-online.net>
+References: <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:27:46 2012
+Content-Transfer-Encoding: 7bit
+Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
+	th.acker66@arcor.de, git@drmicha.warpmail.net
+To: th.acker66@arcor.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:27:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOAvh-0007X2-QY
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:27:46 +0200
+	id 1TOAvb-0007Wx-IE
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075Ab2JPR1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 13:27:32 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:55892 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755125Ab2JPR11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 13:27:27 -0400
-Received: by mail-vb0-f46.google.com with SMTP id ff1so6815445vbb.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 10:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=D9WII8O79CVFAUTCdVDoUQTc4/s8ln5H9PsVF0fD32k=;
-        b=a/b6fU4UFSlduW+kG4zFeYgu+DQWMlLkh1i0lZWai5M0fNuGGZV744K9BqTRDqwAtX
-         38cVORB17FM5oKCRoJiSlOaCA1bp8dILMayEaCDQozNF5J8Q2bIYl6vXRq6YyOlx8Vmy
-         fmS+NFfAzXcHrH6Z/CHy0YeVvWHzXv2uGAFF40I+f3sa8N8+PMCMd7H+4XdjDV8Jl/5G
-         I2l1gVH29J/makxhrgLQ12bTq8fKNB2Y6h4htI6Ok1y/tLBEoRF/ftncYG7rluQXA3F8
-         mipD7s8fIA8+7FkRZ2WgWCCCtw7KXKmfTkr/OaeUyQa/dL2vujmrhUmw4YVZgtxh47+7
-         BbsQ==
-Received: by 10.58.189.33 with SMTP id gf1mr9363186vec.41.1350408446677; Tue,
- 16 Oct 2012 10:27:26 -0700 (PDT)
-Received: by 10.58.68.40 with HTTP; Tue, 16 Oct 2012 10:27:26 -0700 (PDT)
-In-Reply-To: <CAH5451=1VU6oUzAyGXZvOW-Pk3+Os1mq1neum572venNjRfT+g@mail.gmail.com>
+	id S1755430Ab2JPR12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 13:27:28 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:49349 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755013Ab2JPR10 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 13:27:26 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mx.arcor.de (Postfix) with ESMTP id 527C82D665F;
+	Tue, 16 Oct 2012 19:27:25 +0200 (CEST)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 4AC0E208025;
+	Tue, 16 Oct 2012 19:27:25 +0200 (CEST)
+Received: from webmail15.arcor-online.net (webmail15.arcor-online.net [151.189.8.68])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 0B0B1108715;
+	Tue, 16 Oct 2012 19:27:25 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 0B0B1108715
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1350408445; bh=Ed6Ls5UQfbuMWAtUgmmu+g/8PjOtWDWL2sDRcN01bR8=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=Sn+FzXsjwUKMykMBa55Q/n2dpbr7z+GvDytG8E7SUufwKbTRVCB9ABv0UkT8wolsM
+	 MVP0bsVjJuBF1z4n0yIIG0sR7omka+Ob2iMJwKVFu7CW/16FSdrnpBcS19vMk5pjzs
+	 BFrf0TbdIPYGUo6zPdH6QmIgi+iNNwwCvquOquNg=
+Received: from [188.98.243.159] by webmail15.arcor-online.net (151.189.8.68) with HTTP (Arcor Webmail); Tue, 16 Oct 2012 19:27:24 +0200 (CEST)
+In-Reply-To: <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.98.243.159
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207861>
 
-Hi Andrew,
 
-one nice thing is to warn a developer that wants to modify a source
-file, that there is somebody else changing it beforehand. It is nicer
-than discovering that at push time.
-Take into account that there are changes in files that may be
-incompatible to each other, or that can be amenable to be
-automatically merged producing wrong results. So, knowing it could
-help.
+- use wkhtmltopdf ("patched QT" version) to combine all html files into a single pdf file "git-doc.pdf"
+- insert page breaks to separate major sections
 
--Angelo
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/.gitignore      |  1 +
+ Documentation/footerend.txt   |  4 ++++
+ Documentation/footerstart.txt |  7 ++++++
+ Documentation/makedocpdf.sh   | 53 +++++++++++++++++++++++++++++++++++++++++++
+ Documentation/pagebreak.txt   |  1 +
+ 5 files changed, 66 insertions(+)
+ create mode 100644 Documentation/footerend.txt
+ create mode 100644 Documentation/footerstart.txt
+ create mode 100755 Documentation/makedocpdf.sh
+ create mode 100644 Documentation/pagebreak.txt
+
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index d62aebd..fba4730 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -10,3 +10,4 @@ howto-index.txt
+ doc.dep
+ cmds-*.txt
+ manpage-base-url.xsl
++docfiles.txt
+diff --git a/Documentation/footerend.txt b/Documentation/footerend.txt
+new file mode 100644
+index 0000000..ed16923
+--- /dev/null
++++ b/Documentation/footerend.txt
+@@ -0,0 +1,4 @@
++    </td>
++  </tr>
++</table>
++</body></html>
+diff --git a/Documentation/footerstart.txt b/Documentation/footerstart.txt
+new file mode 100644
+index 0000000..a2746ef
+--- /dev/null
++++ b/Documentation/footerstart.txt
+@@ -0,0 +1,7 @@
++<html>
++<head></head>
++<body style="border:0; margin: 0;" onload="subst()">
++<table style="border-top: 1px solid black; width: 100%">
++  <tr>
++    <td class="section"></td>
++    <td style="text-align:center">
+diff --git a/Documentation/makedocpdf.sh b/Documentation/makedocpdf.sh
+new file mode 100755
+index 0000000..5f1a2c1
+--- /dev/null
++++ b/Documentation/makedocpdf.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++
++rm -f git-doc.pdf
++
++cat pagebreak.txt                  >pagebreak.html
++
++cat /dev/null                      >docfiles.txt
++
++ls gittutorial.html                >>docfiles.txt
++ls gittutorial-2.html              >>docfiles.txt
++ls everyday.html                   >>docfiles.txt
++ls gitworkflows.html               >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls git.html                        >>docfiles.txt
++ls git-a*.html                     >>docfiles.txt
++ls git-bisect.html                 >>docfiles.txt
++ls git-b[j-z]*.html                >>docfiles.txt
++ls git-[c-s]*.html                 >>docfiles.txt
++ls git-ta*.html                    >>docfiles.txt
++ls gitk.html                       >>docfiles.txt
++ls git-[u-z]*.html                 >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls gita*.html                      >>docfiles.txt
++ls git-bisect-lk2009.html          >>docfiles.txt
++ls git[cdghimnr]*.html             >>docfiles.txt
++ls git-tools.html                  >>docfiles.txt
++ls gitweb*.html                    >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls howto-index.html                >>docfiles.txt
++ls howto/*.html                    >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls technical/[b-z]*.html           >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls technical/api-index.html        >>docfiles.txt
++ls technical/api-[a-h]*.html       >>docfiles.txt
++ls technical/api-in-*.html         >>docfiles.txt
++ls technical/api-[j-z]*.html       >>docfiles.txt
++
++ls pagebreak.html                  >>docfiles.txt
++ls RelNotes/*.html                 >>docfiles.txt
++
++cat /dev/null                      >footer.html
++
++cat footerstart.txt                >>footer.html
++cat ../GIT-VERSION-FILE            >>footer.html
++cat footerend.txt                  >>footer.html
++
++cat docfiles.txt | xargs cat | wkhtmltopdf --book --footer-html footer.html --disable-external-links - git-doc.pdf
+diff --git a/Documentation/pagebreak.txt b/Documentation/pagebreak.txt
+new file mode 100644
+index 0000000..fdaffd1
+--- /dev/null
++++ b/Documentation/pagebreak.txt
+@@ -0,0 +1 @@
++</p style="page-break-after: always">
+-- 
+1.7.11.msysgit.1
+
+
+---
+Thomas
