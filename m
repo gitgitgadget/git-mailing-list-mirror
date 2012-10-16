@@ -1,53 +1,81 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: git submodule sync --recursive
-Date: Tue, 16 Oct 2012 19:20:42 -0400
-Message-ID: <CABURp0obPcS=KZJ4xaVouHBS_O+OuWGYxYwSU9wwnQrL5Huwzg@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: feature request
+Date: Wed, 17 Oct 2012 05:00:01 +0530
+Message-ID: <CAMK1S_iRRLFmL33UcLRowbbJqG+JoJt011yg=R3s4MegE4_JbA@mail.gmail.com>
+References: <CAB9Jk9AwTVM4TPwPg1Gmi8TCnnXWUsMAfaz8DdfcEhBNW_15Ug@mail.gmail.com>
+	<CAH5451=1VU6oUzAyGXZvOW-Pk3+Os1mq1neum572venNjRfT+g@mail.gmail.com>
+	<CAB9Jk9DaJnN9wmzi-4P3+PqBOobOapnU50y5zkKV9-1CNpV3Yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 01:21:23 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Ardill <andrew.ardill@gmail.com>, git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 01:30:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOGRp-0004RR-FW
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 01:21:17 +0200
+	id 1TOGaY-0006j3-Ik
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 01:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755823Ab2JPXVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 19:21:06 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:52772 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755504Ab2JPXVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 19:21:05 -0400
-Received: by mail-la0-f46.google.com with SMTP id h6so4585176lag.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 16:21:02 -0700 (PDT)
+	id S1755816Ab2JPXaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 19:30:05 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:32972 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755696Ab2JPXaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 19:30:03 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so4664933lbo.19
+        for <git@vger.kernel.org>; Tue, 16 Oct 2012 16:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=tK7wP9txUbrDF+5hnX+ciW9lxEOdCq80Uo8MZmJg/Ek=;
-        b=mAkQg8hs4EEltX7XDhdUzubPkiB3ErsmjZ+f2f0FQBvQ+QNDwwvqXGG7K6Dr/go263
-         5cVfAUkZmYD+v6csuPQIbbnMGv6WteCWai16nFXtOwiROD+G1c4IXUdN34mM3EbxMDPB
-         IWc49xUxsuNRTo2G5RmdCK1Gmg+hls5eC68iDucrr0hqdsAfWSmtmFfcYvB8qTpES8/J
-         1dP4A0NK9vY5pWHe1xla1M6TGl4VpojQVAZAPBV/W1yFTaEU/4UvJuybClk2rG+EKjs+
-         2a+LXnoZP+m9+SkcpDFKG5gWyC+Sxxr0632jVLTlv6f+7y+4iUSp6CzSVfyYwBcRItbg
-         BJtQ==
-Received: by 10.112.39.170 with SMTP id q10mr5727093lbk.120.1350429662735;
- Tue, 16 Oct 2012 16:21:02 -0700 (PDT)
-Received: by 10.114.26.166 with HTTP; Tue, 16 Oct 2012 16:20:42 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5jlWBDaa1qsqaeFxb4TwmzvKhG58TEPQa1AJx0yRzs0=;
+        b=0qqRTaw15JnAXPtyNpKM94ZO9QqeCe4G7Ke67GgK4DSV+JyPdYq2GuKfQkQbwFp44G
+         qiSBamWQDcT4umDTu5RL1jGOcMn5d4eOH2YGJH4Ir/cAuwj9hAGltka9y/qG/CmLCWbg
+         LOZXd13g6H0J5IcDMuCrJ8SQ/xJyU17SlAYtvMQdVCskrv1zSQn/f6SMDi4fvD8TgriU
+         gnBH1yIeeYpxPVuf/nc8L7TYcLT0MviEs3efI1QryS18Bb5ve0CU3Fq61NU2fcJKYhID
+         s2vTWC/iL11PArtJR4QuIE5ckAJCcGz+ADmL684nbgQR2s4KgGJ5P1AMl5WmnbLaxThv
+         PPYw==
+Received: by 10.152.104.107 with SMTP id gd11mr13994274lab.25.1350430201966;
+ Tue, 16 Oct 2012 16:30:01 -0700 (PDT)
+Received: by 10.112.84.97 with HTTP; Tue, 16 Oct 2012 16:30:01 -0700 (PDT)
+In-Reply-To: <CAB9Jk9DaJnN9wmzi-4P3+PqBOobOapnU50y5zkKV9-1CNpV3Yw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207886>
 
-I noticed that this is not supported:
+On Tue, Oct 16, 2012 at 10:57 PM, Angelo Borsotti
+<angelo.borsotti@gmail.com> wrote:
+> Hi Andrew,
+>
+> one nice thing is to warn a developer that wants to modify a source
+> file, that there is somebody else changing it beforehand. It is nicer
+> than discovering that at push time.
 
-    git submodule sync --recursive
+Andrew:
+
+also see http://sitaramc.github.com/gitolite/locking.html for a way to
+do file locking (and enforce it) using gitolite.
+
+This does warn, as long as the user remembers to try to acquire a lock
+before working on a binary file.  (You can't get around that
+requirement on a DVCS, sorry!)
+
+> Take into account that there are changes in files that may be
+> incompatible to each other, or that can be amenable to be
+> automatically merged producing wrong results. So, knowing it could
+> help.
+>
+> -Angelo
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 
-I do not see any discussion in the relevant commits about why it
-cannot or should not be supported.  Is it just an itch no one has
-scratched?
 
-Phil
+-- 
+Sitaram
