@@ -1,59 +1,60 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: push race
-Date: Tue, 16 Oct 2012 08:35:53 +0200
-Message-ID: <CAB9Jk9A72EpMTcdVgXXWZJz-QjsAWyo1Ds5kmDqim-RtuK8b-g@mail.gmail.com>
-References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
-	<CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
-	<507C1DB4.2010000@xiplink.com>
-	<20121015185608.GC31658@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 2/2] grep: stop looking at random places for .gitattributes
+Date: Tue, 16 Oct 2012 08:39:06 +0200
+Message-ID: <507D010A.8000904@viscovery.net>
+References: <1349868894-3579-1-git-send-email-pclouds@gmail.com> <1349877544-17648-1-git-send-email-pclouds@gmail.com> <1349877544-17648-3-git-send-email-pclouds@gmail.com> <50758477.3030304@viscovery.net> <7vtxu2ayov.fsf@alter.siamese.dyndns.org> <50765CDC.8020509@viscovery.net> <7vpq4p80sn.fsf@alter.siamese.dyndns.org> <5077C7AC.9010301@viscovery.net> <7v4nlx3cc8.fsf@alter.siamese.dyndns.org> <507BA6F0.4090500@viscovery.net> <7vfw5fy8tx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: marcnarc@xiplink.com,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 16 08:36:07 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 08:39:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO0l3-0002FL-RX
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 08:36:06 +0200
+	id 1TO0oJ-0005yG-Ab
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 08:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754062Ab2JPGfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 02:35:55 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:33630 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754000Ab2JPGfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 02:35:54 -0400
-Received: by mail-ia0-f174.google.com with SMTP id y32so4304109iag.19
-        for <git@vger.kernel.org>; Mon, 15 Oct 2012 23:35:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=CWzTWDVk9RDVicINJYWje/SYERqJhx783CilSVQhKZE=;
-        b=zGs+JPQWtOgd7FDPwB18vBvSd5cd8PJUd4T6qQ5+2FJFADi97WlcKQiGIxYvGUT0tZ
-         ypoJUahZaGNkBPjI43YsBXI6W8X1GAc6bkEzCj5w6YZ4CSonVHieNqMqkZD7eY5IZO/v
-         WzDW6E6bDLg0rQvscVc2lcqll0tuYLMGRkiTIjkwpimX6B4DaM+7ILa/GDGVGvL5WxML
-         XzbwBZnaNgcMnLWdckKJfZWnr4guc2FbmpiITx9Jq5mONr1N4ftFRHPKgb7j4eypc273
-         pQLf95vwT7b89E46Bj5lMEMHwkcj51zz/TiQi3TIwy0mfid1/4CfrVQt2V2bt501iBtp
-         O1Ow==
-Received: by 10.50.88.168 with SMTP id bh8mr10843050igb.71.1350369354130; Mon,
- 15 Oct 2012 23:35:54 -0700 (PDT)
-Received: by 10.43.131.136 with HTTP; Mon, 15 Oct 2012 23:35:53 -0700 (PDT)
-In-Reply-To: <20121015185608.GC31658@sigill.intra.peff.net>
+	id S1753750Ab2JPGjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 02:39:15 -0400
+Received: from so.liwest.at ([212.33.55.24]:64506 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754167Ab2JPGjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 02:39:14 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TO0nz-0001En-5q; Tue, 16 Oct 2012 08:39:07 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C63BF1660F;
+	Tue, 16 Oct 2012 08:39:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <7vfw5fy8tx.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207806>
 
-Hi Jeff,
+Am 10/15/2012 18:54, schrieb Junio C Hamano:
+> Ideally, that earlier workaround
+> should have done a logica equivalent of:
+> ...
+> and did so not in-line at the calling site but in a compat/ wrapper
+> for fflush() to eliminate the need for the ifdef.
 
-it would be worth to put your description as comments in the code for future
-reference.
+Fair enough.
 
-Thanks
--Angelo
+>> But reverting the EINVAL check from write_or_die.c is out of question,
+>> because that handles a real case.
+
+Correction: I can't reproduce the error messages that this was working
+around anymore in a brief test. I'll revert the check locally and see what
+happens.
+
+-- Hannes
