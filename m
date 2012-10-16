@@ -1,521 +1,79 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v3] git-cvsimport: allow author-specific timezones
-Date: Mon, 15 Oct 2012 21:40:53 -0500
-Message-ID: <1350355253-311-1-git-send-email-chris@rorvick.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 04:41:11 2012
+From: PJ Weisberg <pj@irregularexpressions.net>
+Subject: Re: Cloning tags from master
+Date: Mon, 15 Oct 2012 20:08:13 -0700
+Message-ID: <CAJsNXT=JHds1fxDVYECXhVaRgkgFg6-amGBRy6HQDgxOiUOkkg@mail.gmail.com>
+References: <1350330293914-7569301.post@n2.nabble.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: dquince <devin.quince@troppussoftware.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 05:08:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNx5f-0006TN-Is
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 04:41:08 +0200
+	id 1TNxW7-0002Vv-Fv
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 05:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755256Ab2JPCkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 22:40:55 -0400
-Received: from [38.98.186.242] ([38.98.186.242]:50379 "HELO burner.cogcap.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752148Ab2JPCky (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 22:40:54 -0400
-Received: by burner.cogcap.com (Postfix, from userid 10028)
-	id B22F62B096D; Mon, 15 Oct 2012 21:40:53 -0500 (CDT)
-X-Mailer: git-send-email 1.7.1
+	id S1755621Ab2JPDIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 23:08:16 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:55977 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754771Ab2JPDIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 23:08:15 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so3908875lbo.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 20:08:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=dTipKOLwjP5n1MCt+uH9C5AZRlgIOIXW1yCqpm+vpjk=;
+        b=Tkfe4Vf5SNNG32w3oUpxzXqzed98Hmp1k2woQ6hRSxs6Pel8Ya8TxmQ5nRhBtIe8t3
+         OF6ybt/nQM2vKmA9qCKLZcNxlxWX06D4Mr9MwAhCL3hqu9Q98+QPwLSQN9G760kLB3BH
+         LGo/nbCR4/Jf9aRpRHRbEllN2oG09kstvEwO2QySD1WFvuIC6cmxKmIFv8+LZRo9ntj6
+         nan0DGGtU1TS4havP3LK/rNmauzsf6ieIn8XecEeEdmu1YL3UqIV6rLxw0JJsEXGajK2
+         iNBAFwvgQJkOwKm3fCCMXE8vn02NMCUNRXIEZmYphO7/WsXLfKH9Wv0VUb6brFg+T79N
+         5/fg==
+Received: by 10.152.47.97 with SMTP id c1mr11353485lan.37.1350356893830; Mon,
+ 15 Oct 2012 20:08:13 -0700 (PDT)
+Received: by 10.112.6.197 with HTTP; Mon, 15 Oct 2012 20:08:13 -0700 (PDT)
+In-Reply-To: <1350330293914-7569301.post@n2.nabble.com>
+X-Google-Sender-Auth: yWvgS4JaCWOp1ruRHUGnK_W2Bto
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207798>
 
-CVS patchsets are imported with timestamps having an offset of +0000
-(UTC).  The cvs-authors file is already used to translate the CVS
-username to full name and email in the corresponding commit.  Extend
-this file to support an optional timezone for calculating a user-
-specific timestamp offset.
+On Mon, Oct 15, 2012 at 12:44 PM, dquince
+<devin.quince@troppussoftware.com> wrote:
+> I am trying to implement using tags in our build process, but am running into
+> an issue with pulling tags from master. My scenario is as follows
+> We decide on a release and I tag master with testtag which has commit
+> testtag-1-gf3b117e
+> When I make another commit to master and check the tag, I see it as
+> testtag-2-gfb56442
 
-Signed-off-by: Chris Rorvick <chris@rorvick.com>
----
+I don't know what you mean by "check the tag", but those look like the
+output of "git describe" when HEAD is one or two commits ahead of
+testtag (with no tags that are closer).
 
-Cleaned up unit tests and added more detail to documentation.
+> When I try and pull the tag using testtag, it just wants to pull the latest
+> commit to master.
 
-Unit test is inherently platform dependent due to dependency on
-zoneinfo database.  Is there a way to improve this situation?
+You're probably not running "git pull origin refs/tags/testtag", but I
+think that's the only way to "pull the tag," so I don't know what
+you're doing here.  The tag doesn't include anything that's not part
+of the tag's history, though, so "pulling" it won't get the latest
+version of anything.
 
- Documentation/git-cvsimport.txt    |   8 +-
- git-cvsimport.perl                 |  22 ++-
- t/t9604-cvsimport-timestamps.sh    |  71 ++++++++++
- t/t9604/cvsroot/.gitattributes     |   1 +
- t/t9604/cvsroot/CVSROOT/.gitignore |   2 +
- t/t9604/cvsroot/module/a,v         | 265 +++++++++++++++++++++++++++++++++++++
- 6 files changed, 362 insertions(+), 7 deletions(-)
- create mode 100755 t/t9604-cvsimport-timestamps.sh
- create mode 100644 t/t9604/cvsroot/.gitattributes
- create mode 100644 t/t9604/cvsroot/CVSROOT/.gitignore
- create mode 100644 t/t9604/cvsroot/module/a,v
+> I verified this works in branches other than master, so can this be done
+> from master or does the tag just follow the head?
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 6695ab3..9ea8bb5 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -137,17 +137,19 @@ This option can be used several times to provide several detection regexes.
- -A <author-conv-file>::
- 	CVS by default uses the Unix username when writing its
- 	commit logs. Using this option and an author-conv-file
--	in this format
-+	maps the name recorded in CVS to author name, e-mail and
-+	and optional timezone:
- +
- ---------
- 	exon=Andreas Ericsson <ae@op5.se>
--	spawn=Simon Pawn <spawn@frog-pond.org>
-+	spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
- 
- ---------
- +
- 'git cvsimport' will make it appear as those authors had
- their GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL set properly
--all along.
-+all along.  If a timezone is specified, GIT_AUTHOR_DATE will
-+have the corresponding offset applied.
- +
- For convenience, this data is saved to `$GIT_DIR/cvs-authors`
- each time the '-A' option is provided and read from that same
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 8032f23..ceb119d 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -31,7 +31,7 @@ $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
- our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
--my (%conv_author_name, %conv_author_email);
-+my (%conv_author_name, %conv_author_email, %conv_author_tz);
- 
- sub usage(;$) {
- 	my $msg = shift;
-@@ -59,6 +59,14 @@ sub read_author_info($) {
- 			$conv_author_name{$user} = $2;
- 			$conv_author_email{$user} = $3;
- 		}
-+		# or with an optional timezone:
-+		#   spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
-+		elsif (m/^(\S+?)\s*=\s*(.+?)\s*<(.+)>\s*(\S+?)\s*$/) {
-+			$user = $1;
-+			$conv_author_name{$user} = $2;
-+			$conv_author_email{$user} = $3;
-+			$conv_author_tz{$user} = $4;
-+		}
- 		# However, we also read from CVSROOT/users format
- 		# to ease migration.
- 		elsif (/^(\w+):(['"]?)(.+?)\2\s*$/) {
-@@ -84,7 +92,9 @@ sub write_author_info($) {
- 	  die("Failed to open $file for writing: $!");
- 
- 	foreach (keys %conv_author_name) {
--		print $f "$_=$conv_author_name{$_} <$conv_author_email{$_}>\n";
-+		print $f "$_=$conv_author_name{$_} <$conv_author_email{$_}>";
-+		print $f " $conv_author_tz{$_}" if ($conv_author_tz{$_});
-+		print $f "\n";
- 	}
- 	close ($f);
- }
-@@ -795,7 +805,7 @@ sub write_tree () {
- 	return $tree;
- }
- 
--my ($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
-+my ($patchset,$date,$author_name,$author_email,$author_tz,$branch,$ancestor,$tag,$logmsg);
- my (@old,@new,@skipped,%ignorebranch,@commit_revisions);
- 
- # commits that cvsps cannot place anywhere...
-@@ -844,7 +854,9 @@ sub commit {
- 		}
- 	}
- 
--	my $commit_date = strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date));
-+	$ENV{'TZ'}=$author_tz;
-+	my $commit_date = strftime("%s %z", localtime($date));
-+	$ENV{'TZ'}="UTC";
- 	$ENV{GIT_AUTHOR_NAME} = $author_name;
- 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
- 	$ENV{GIT_AUTHOR_DATE} = $commit_date;
-@@ -945,12 +957,14 @@ while (<CVS>) {
- 		}
- 		$state=3;
- 	} elsif ($state == 3 and s/^Author:\s+//) {
-+		$author_tz = "UTC";
- 		s/\s+$//;
- 		if (/^(.*?)\s+<(.*)>/) {
- 		    ($author_name, $author_email) = ($1, $2);
- 		} elsif ($conv_author_name{$_}) {
- 			$author_name = $conv_author_name{$_};
- 			$author_email = $conv_author_email{$_};
-+			$author_tz = $conv_author_tz{$_} if ($conv_author_tz{$_});
- 		} else {
- 		    $author_name = $author_email = $_;
- 		}
-diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps.sh
-new file mode 100755
-index 0000000..7e2fe2c
---- /dev/null
-+++ b/t/t9604-cvsimport-timestamps.sh
-@@ -0,0 +1,71 @@
-+#!/bin/sh
-+
-+test_description='git cvsimport timestamps'
-+. ./lib-cvs.sh
-+
-+setup_cvs_test_repository t9604
-+
-+test_expect_success 'check timestamps are UTC (TZ=America/Chicago)' '
-+
-+	TZ=America/Chicago git cvsimport -p"-x" -C module-1 module &&
-+	git cvsimport -p"-x" -C module-1 module &&
-+	(
-+		cd module-1 &&
-+		git log --format="%s %ai"
-+	) >actual-1 &&
-+	cat >expect-1 <<-EOF &&
-+	Rev 16 2011-11-06 07:00:01 +0000
-+	Rev 15 2011-11-06 06:59:59 +0000
-+	Rev 14 2011-03-13 08:00:01 +0000
-+	Rev 13 2011-03-13 07:59:59 +0000
-+	Rev 12 2010-12-01 00:00:00 +0000
-+	Rev 11 2010-11-01 00:00:00 +0000
-+	Rev 10 2010-10-01 00:00:00 +0000
-+	Rev  9 2010-09-01 00:00:00 +0000
-+	Rev  8 2010-08-01 00:00:00 +0000
-+	Rev  7 2010-07-01 00:00:00 +0000
-+	Rev  6 2010-06-01 00:00:00 +0000
-+	Rev  5 2010-05-01 00:00:00 +0000
-+	Rev  4 2010-04-01 00:00:00 +0000
-+	Rev  3 2010-03-01 00:00:00 +0000
-+	Rev  2 2010-02-01 00:00:00 +0000
-+	Rev  1 2010-01-01 00:00:00 +0000
-+	EOF
-+	test_cmp actual-1 expect-1
-+'
-+
-+test_expect_success 'check timestamps with author-specific timezones' '
-+
-+	cat >cvs-authors <<-EOF &&
-+	user1=User One <user1@domain.org>
-+	user2=User Two <user2@domain.org> America/Chicago
-+	user3=User Three <user3@domain.org> Australia/Sydney
-+	user4=User Four <user4@domain.org> Asia/Shanghai
-+	EOF
-+	git cvsimport -p"-x" -A cvs-authors -C module-2 module &&
-+	(
-+		cd module-2 &&
-+		git log --format="%s %ai %an"
-+	) >actual-2 &&
-+	cat >expect-2 <<-EOF &&
-+	Rev 16 2011-11-06 01:00:01 -0600 User Two
-+	Rev 15 2011-11-06 01:59:59 -0500 User Two
-+	Rev 14 2011-03-13 03:00:01 -0500 User Two
-+	Rev 13 2011-03-13 01:59:59 -0600 User Two
-+	Rev 12 2010-12-01 08:00:00 +0800 User Four
-+	Rev 11 2010-11-01 11:00:00 +1100 User Three
-+	Rev 10 2010-09-30 19:00:00 -0500 User Two
-+	Rev  9 2010-09-01 00:00:00 +0000 User One
-+	Rev  8 2010-08-01 08:00:00 +0800 User Four
-+	Rev  7 2010-07-01 10:00:00 +1000 User Three
-+	Rev  6 2010-05-31 19:00:00 -0500 User Two
-+	Rev  5 2010-05-01 00:00:00 +0000 User One
-+	Rev  4 2010-04-01 08:00:00 +0800 User Four
-+	Rev  3 2010-03-01 11:00:00 +1100 User Three
-+	Rev  2 2010-01-31 18:00:00 -0600 User Two
-+	Rev  1 2010-01-01 00:00:00 +0000 User One
-+	EOF
-+	test_cmp actual-2 expect-2
-+'
-+
-+test_done
-diff --git a/t/t9604/cvsroot/.gitattributes b/t/t9604/cvsroot/.gitattributes
-new file mode 100644
-index 0000000..562b12e
---- /dev/null
-+++ b/t/t9604/cvsroot/.gitattributes
-@@ -0,0 +1 @@
-+* -whitespace
-diff --git a/t/t9604/cvsroot/CVSROOT/.gitignore b/t/t9604/cvsroot/CVSROOT/.gitignore
-new file mode 100644
-index 0000000..3bb9b34
---- /dev/null
-+++ b/t/t9604/cvsroot/CVSROOT/.gitignore
-@@ -0,0 +1,2 @@
-+history
-+val-tags
-diff --git a/t/t9604/cvsroot/module/a,v b/t/t9604/cvsroot/module/a,v
-new file mode 100644
-index 0000000..7165de7
---- /dev/null
-+++ b/t/t9604/cvsroot/module/a,v
-@@ -0,0 +1,265 @@
-+head	1.16;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.16
-+date	2011.11.06.07.00.01;	author user2;	state Exp;
-+branches;
-+next	1.15;
-+
-+1.15
-+date	2011.11.06.06.59.59;	author user2;	state Exp;
-+branches;
-+next	1.14;
-+
-+1.14
-+date	2011.03.13.08.00.01;	author user2;	state Exp;
-+branches;
-+next	1.13;
-+
-+1.13
-+date	2011.03.13.07.59.59;	author user2;	state Exp;
-+branches;
-+next	1.12;
-+
-+1.12
-+date	2010.12.01.00.00.00;	author user4;	state Exp;
-+branches;
-+next	1.11;
-+
-+1.11
-+date	2010.11.01.00.00.00;	author user3;	state Exp;
-+branches;
-+next	1.10;
-+
-+1.10
-+date	2010.10.01.00.00.00;	author user2;	state Exp;
-+branches;
-+next	1.9;
-+
-+1.9
-+date	2010.09.01.00.00.00;	author user1;	state Exp;
-+branches;
-+next	1.8;
-+
-+1.8
-+date	2010.08.01.00.00.00;	author user4;	state Exp;
-+branches;
-+next	1.7;
-+
-+1.7
-+date	2010.07.01.00.00.00;	author user3;	state Exp;
-+branches;
-+next	1.6;
-+
-+1.6
-+date	2010.06.01.00.00.00;	author user2;	state Exp;
-+branches;
-+next	1.5;
-+
-+1.5
-+date	2010.05.01.00.00.00;	author user1;	state Exp;
-+branches;
-+next	1.4;
-+
-+1.4
-+date	2010.04.01.00.00.00;	author user4;	state Exp;
-+branches;
-+next	1.3;
-+
-+1.3
-+date	2010.03.01.00.00.00;	author user3;	state Exp;
-+branches;
-+next	1.2;
-+
-+1.2
-+date	2010.02.01.00.00.00;	author user2;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2010.01.01.00.00.00;	author user1;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.16
-+log
-+@Rev 16
-+@
-+text
-+@Rev 16
-+@
-+
-+
-+1.15
-+log
-+@Rev 15
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 15
-+@
-+
-+
-+1.14
-+log
-+@Rev 14
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 14
-+@
-+
-+
-+1.13
-+log
-+@Rev 13
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 13
-+@
-+
-+
-+1.12
-+log
-+@Rev 12
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 12
-+@
-+
-+
-+1.11
-+log
-+@Rev 11
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 11
-+@
-+
-+
-+1.10
-+log
-+@Rev 10
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 10
-+@
-+
-+
-+1.9
-+log
-+@Rev  9
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 9
-+@
-+
-+
-+1.8
-+log
-+@Rev  8
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 8
-+@
-+
-+
-+1.7
-+log
-+@Rev  7
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 7
-+@
-+
-+
-+1.6
-+log
-+@Rev  6
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 6
-+@
-+
-+
-+1.5
-+log
-+@Rev  5
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 5
-+@
-+
-+
-+1.4
-+log
-+@Rev  4
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 4
-+@
-+
-+
-+1.3
-+log
-+@Rev  3
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 3
-+@
-+
-+
-+1.2
-+log
-+@Rev  2
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 2
-+@
-+
-+
-+1.1
-+log
-+@Rev  1
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 1
-+@
-+
--- 
-1.8.0.rc1.19.gbecacc0
+Tags never follow anything.  Once they're created, they stay put.
+
+-PJ
+
+Gehm's Corollary to Clark's Law: Any technology distinguishable from
+magic is insufficiently advanced.
