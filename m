@@ -1,174 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] status: add --long for default format
-Date: Tue, 16 Oct 2012 13:22:04 -0400
-Message-ID: <20121016172204.GB27243@sigill.intra.peff.net>
-References: <1350404569-9787-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge option suggestion (dictator, humble)
+Date: Tue, 16 Oct 2012 10:23:04 -0700
+Message-ID: <7vpq4is553.fsf@alter.siamese.dyndns.org>
+References: <CAHtLG6TYEstro0J5jFJc1sZMoLC9gkHWrZdu4Y=hz-+kKkqXTQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:22:20 2012
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:23:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOAqR-0001IJ-Ke
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:22:19 +0200
+	id 1TOArR-0002X8-3e
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755180Ab2JPRWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 13:22:09 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55119 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755161Ab2JPRWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 13:22:08 -0400
-Received: (qmail 17562 invoked by uid 107); 16 Oct 2012 17:22:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Oct 2012 13:22:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2012 13:22:04 -0400
-Content-Disposition: inline
-In-Reply-To: <1350404569-9787-1-git-send-email-pclouds@gmail.com>
+	id S1755191Ab2JPRXI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2012 13:23:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42538 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755135Ab2JPRXH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 13:23:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C4C093EC;
+	Tue, 16 Oct 2012 13:23:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=dxQgG3wusE73
+	DxMDzhGkcq06KCs=; b=dwpyrtHvjl3YJiJr0x1PY7ruZOW3z8Nf1/QdNFKqoAOw
+	tA+UjvJZFkKDTOveFEzYv8eKa/PSlOt243Sbqk4DO8uvr6QT2s2K2Amb8TUwvmD+
+	b6pRc7jczeuho4pX11F1V4+hSHMElFWzNwiRZOg8W1hA365EUTlcvwoFeC4+ZLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wv+rjY
+	4FlWPnMATAII999rtjK09zzxpisd8ogAkydgJkyfw0UtsLv+4Y05Q3wdv+Ck8kYS
+	D4OW5yc1uubLGPHJE5FaI75IV10AveLUdd6Nj98hFSigM59giyWCuCf687tOKws/
+	JwUSb2893tfJNXtvu883fPVV+K2/X+Yp0Q8Pw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0793C93EA;
+	Tue, 16 Oct 2012 13:23:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C34293E5; Tue, 16 Oct 2012
+ 13:23:06 -0400 (EDT)
+In-Reply-To: <CAHtLG6TYEstro0J5jFJc1sZMoLC9gkHWrZdu4Y=hz-+kKkqXTQ@mail.gmail.com>
+ (=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Tue, 16 Oct 2012 23:52:09
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 25E67C16-17B6-11E2-95C7-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207854>
 
-On Tue, Oct 16, 2012 at 11:22:49PM +0700, Nguyen Thai Ngoc Duy wrote:
+=E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
 
-> This could be useful when the user sets an alias to "status --short"
-> and wants to get back the default format temporarily.
+> I would like to suggest 2 merge options
+> --dictator   use all my changes
+> --humble   use all their changes
+>
+> These allows to produce a fast-forward commit, without resolving any =
+conflicts.
+> Sometimes, someone did something completely wrong, so the commit need=
+s
+> to be ignored.
 
-Makes sense, but...
+> I cannot tell everyone in the world to run git fetch followed by git
+> reset --hard.
 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index a17a5df..5adab33 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1159,6 +1159,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
->  		OPT_SET_INT(0, "porcelain", &status_format,
->  			    N_("machine-readable output"),
->  			    STATUS_FORMAT_PORCELAIN),
-> +		OPT_SET_INT(0, "long", &status_format,
-> +			    N_("show status in long format (default)"), STATUS_FORMAT_LONG),
->  		OPT_BOOLEAN('z', "null", &s.null_termination,
->  			    N_("terminate entries with NUL")),
->  		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
+Then you cannot tell them to use "pull --humble" either, can you?
 
-I'm pretty sure we use STATUS_FORMAT_LONG elsewhere as a synonym for
-"the user has not set anything".
-
-Ah, here it is:
-
-  $ git grep -nA1 '== STATUS_FORMAT_LONG'
-  1073:   if (s->null_termination && status_format == STATUS_FORMAT_LONG)
-  1074-           status_format = STATUS_FORMAT_PORCELAIN;
-  --
-  1201:   if (s.null_termination && status_format == STATUS_FORMAT_LONG)
-  1202-           status_format = STATUS_FORMAT_PORCELAIN;
-
-I think you would want something like this. I had originally intended to
-make it a refactoring patch that would come before yours, but some of
-the cleanups are tied to actually adding --long. So I think you would
-want to squash it together with your patch and combine the commit
-messages.
-
--- >8 --
-Subject: [PATCH] status: refactor output format to represent "default"
-
-When deciding which output format to use, we default an
-internal enum to STATUS_FORMAT_LONG and modify it if
-"--porcelain" or "--short" is given. If this enum is set to
-LONG, then we know the user has not specified any format,
-and we can kick in default behaviors. This works because
-there is no "--long" which they could use to explicitly
-specify LONG.
-
-Let's expand the enum to have an explicit STATUS_FORMAT_NONE,
-in preparation for adding "--long". Then we can distinguish
-between LONG and NONE when setting other defaults. There are
-two such cases:
-
-  1. The user has asked for NUL termination. With NONE, we
-     currently default to turning on the porcelain mode.
-     With an explicit --long, we would in theory use NUL
-     termination with the long mode, but it does not support
-     it. So we can just complain and die.
-
-  2. When an output format is given to "git commit", we
-     default to "--dry-run". This behavior would now kick in
-     when "--long" is given, too.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/commit.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 00ac35b..ec299f4 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -112,10 +112,11 @@ static enum {
- static struct strbuf message = STRBUF_INIT;
- 
- static enum {
-+	STATUS_FORMAT_NONE = 0,
- 	STATUS_FORMAT_LONG,
- 	STATUS_FORMAT_SHORT,
- 	STATUS_FORMAT_PORCELAIN
--} status_format = STATUS_FORMAT_LONG;
-+} status_format;
- 
- static int mention_abandoned_message;
- static void maybe_mention_abandoned_message(void)
-@@ -464,6 +465,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	case STATUS_FORMAT_PORCELAIN:
- 		wt_porcelain_print(s);
- 		break;
-+	case STATUS_FORMAT_NONE:
- 	case STATUS_FORMAT_LONG:
- 		wt_status_print(s);
- 		break;
-@@ -1070,9 +1072,13 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (all && argc > 0)
- 		die(_("Paths with -a does not make sense."));
- 
--	if (s->null_termination && status_format == STATUS_FORMAT_LONG)
--		status_format = STATUS_FORMAT_PORCELAIN;
--	if (status_format != STATUS_FORMAT_LONG)
-+	if (s->null_termination) {
-+		if (status_format == STATUS_FORMAT_NONE)
-+			status_format = STATUS_FORMAT_PORCELAIN;
-+		else if (status_format == STATUS_FORMAT_LONG)
-+			die("--long and -z are incompatible");
-+	}
-+	if (status_format != STATUS_FORMAT_NONE)
- 		dry_run = 1;
- 
- 	return argc;
-@@ -1198,8 +1204,12 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 			     builtin_status_usage, 0);
- 	finalize_colopts(&s.colopts, -1);
- 
--	if (s.null_termination && status_format == STATUS_FORMAT_LONG)
--		status_format = STATUS_FORMAT_PORCELAIN;
-+	if (s.null_termination) {
-+		if (status_format == STATUS_FORMAT_NONE)
-+			status_format = STATUS_FORMAT_PORCELAIN;
-+		else if (status_format == STATUS_FORMAT_LONG)
-+			die("--long and -z are incompatible");
-+	}
- 
- 	handle_untracked_files_arg(&s);
- 	if (show_ignored_in_status)
-@@ -1228,6 +1238,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	case STATUS_FORMAT_PORCELAIN:
- 		wt_porcelain_print(&s);
- 		break;
-+	case STATUS_FORMAT_NONE:
- 	case STATUS_FORMAT_LONG:
- 		s.verbose = verbose;
- 		s.ignore_submodule_arg = ignore_submodule_arg;
--- 
-1.8.0.rc2.5.gecca26e
+Not seeing any merit in the proposal (yet).
