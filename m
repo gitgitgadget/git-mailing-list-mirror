@@ -1,102 +1,72 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: build deps
-Date: Mon, 15 Oct 2012 18:39:02 -0700
-Message-ID: <CAJDDKr5QaByGg0wW_fwFErRyMA6hbg2kHskxOqY4Z_rLoo1maQ@mail.gmail.com>
-References: <CACnwZYe_vhH9Ui8W9D=M_8avgEugR+UvM1E+jH7fxr+8yk2UtQ@mail.gmail.com>
-	<5072FAD1.1000807@gmail.com>
-	<CACnwZYeJ-FKXterxd697iu+U4HobqEaP0zx_p8CZDsPZx4hbHQ@mail.gmail.com>
-	<50735939.10604@gmail.com>
-	<CACnwZYf56XkqW085HoWhAN2EnjCJd=VYHGAD8fZCCe6_FNhO2A@mail.gmail.com>
-	<50776D0D.9090306@gmail.com>
-	<CACnwZYfmz1BTo6okzFh8jXbw+0MAV0sEanYXNzAnV7L4p7nY_g@mail.gmail.com>
-	<507C2F6E.9060100@drmicha.warpmail.net>
-	<7vd30jwj7v.fsf@alter.siamese.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: push race
+Date: Mon, 15 Oct 2012 19:09:52 -0700
+Message-ID: <CAJo=hJu=eqgUhJvvpMLJ05AT6o+nVUDcm+tHV8en8OCX2-2qgA@mail.gmail.com>
+References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+ <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
+ <507C1DB4.2010000@xiplink.com> <20121015185608.GC31658@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Thiago Farina <tfransosi@gmail.com>,
-	Andrew Wong <andrew.kw.w.lists@gmail.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 03:39:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: marcnarc@xiplink.com,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 16 04:10:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNw7o-0007nN-HE
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 03:39:16 +0200
+	id 1TNwc2-00081O-JS
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 04:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755565Ab2JPBjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2012 21:39:04 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:49623 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755557Ab2JPBjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2012 21:39:03 -0400
-Received: by mail-vb0-f46.google.com with SMTP id ff1so5999017vbb.19
-        for <git@vger.kernel.org>; Mon, 15 Oct 2012 18:39:03 -0700 (PDT)
+	id S1755512Ab2JPCKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2012 22:10:16 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:52491 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753268Ab2JPCKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2012 22:10:15 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so1935035qad.19
+        for <git@vger.kernel.org>; Mon, 15 Oct 2012 19:10:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=h1Vncl9S0qe1E8Z3R5p358HGrlzeqrp/Hk24VOV3gvY=;
-        b=N7e6oDHtgoV34lOkt2lzJOCW8oaVE4ZHArbz1umyM7btHH8k1EHbxYwLKiYAcxGu+j
-         7AeCB/pPvzWVtHJodIq4HjaeErGEn9wWA7IWNg2eq7X5fYG6mGzuZtRQ5ivw9LRpk6xl
-         YtFqj47bGoR+LFtvFw8+FFxmuCYWEJMRDme0PrTynTf89lfnDRZrLeQnPBOhkJSBh/5h
-         6o2PWuz4roMnYWmvsDWaLPc0DXisJXpPFJfdCF+j79lvcZWeDvCFRYC9x2wDuIfGBTJ1
-         t9KxJFyQb8522aAL1KJ1nbMX3U6eV42eBup6zfJ1eOh5t2AKOIdJGslYEmxPi/bbiL8I
-         sccA==
-Received: by 10.220.231.138 with SMTP id jq10mr7781347vcb.29.1350351542811;
- Mon, 15 Oct 2012 18:39:02 -0700 (PDT)
-Received: by 10.58.182.10 with HTTP; Mon, 15 Oct 2012 18:39:02 -0700 (PDT)
-In-Reply-To: <7vd30jwj7v.fsf@alter.siamese.dyndns.org>
+        bh=QSNhk30EuwGivRxCTaGf24lphzV1trlr9Fsq+gPXFZ8=;
+        b=a9cdH+nXqA6Vt0pzd/TiTn2Xd8LP1CnbTZeFADpAXfQMYACY0Uje3Vlx/3msxCYTiV
+         dq7JhWOnLN9MXuoa4/XCOwwv7a+OVjq9XNzajbx9aJob6cS87P8qiQRY8fbdP07Kmnsx
+         DUHtxgR9kJaXVwpWt53dIhJ9J4zqq9rqqb4Rc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=QSNhk30EuwGivRxCTaGf24lphzV1trlr9Fsq+gPXFZ8=;
+        b=CNqhOTver5O6Zaia8beiGPmPhQP9Qwq+OcM8Eb2S33S7SZVwdgCouZkUhL4dgzsCQc
+         yjjkbCXjYB5ETr1TeegNE3Az7qL6BHC8528U+g+E5XIKLYX58wiYVUjz8CUhLN1G1/lJ
+         lhNkDEQK/75KXYfkDpftduHG2Fhk9k0GIKTw883OWBv8FgXpZ4DFOtGABeTeFLvTanVh
+         c9lSACfUNXZMg2ITRrwl625sD7bkrwfaC5olyP8Jcwom0NqDri9ysztBLCyTKK7La/v7
+         Ph72FtjStpW9tP48/50PR1qzy/3z4qGo5w3m58ErfnKKdzZMFVWpAqbl6vXnC8uwRepw
+         fTKw==
+Received: by 10.49.127.115 with SMTP id nf19mr31790471qeb.36.1350353414181;
+ Mon, 15 Oct 2012 19:10:14 -0700 (PDT)
+Received: by 10.49.35.75 with HTTP; Mon, 15 Oct 2012 19:09:52 -0700 (PDT)
+In-Reply-To: <20121015185608.GC31658@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQmFNCT7896tFYuz4I5UH9A2E/bjwtqaJK49yXKg2GO3EIHjh3v6elRwkUpCqD4NnZyQHGd4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207795>
 
-On Mon, Oct 15, 2012 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->>> grep.c:451:16: warning: comparison of unsigned enum expression < 0 is
->>> always false [-Wtautological-compare]
->>>                 if (p->field < 0 || GREP_HEADER_FIELD_MAX <= p->field)
->>>                     ~~~~~~~~ ^ ~
->>> 1 warning generated.
->>
->> Right, that enum type starts at 0. Junio, you last touched this area.
->> Can we just dump the first comparison or did you have something else in
->> mind?
->
-> I think it was a leftover from the very first implementation that
-> defensively said "this has to be one of these known ones", and tried
-> to bound it from both sides of the range, regaredless of the actual
-> type of the field (these GREP_HEADER_WHAT things may have been
-> simple integers with #define'd values).  Dropping the "negative"
-> comparison is perfectly fine.
+On Mon, Oct 15, 2012 at 11:56 AM, Jeff King <peff@peff.net> wrote:
+> Right. The only thing that needs locking is the refs, because the object
+> database is add-only for normal operations, and by definition collisions
+> mean you have the same content (or are astronomically unlucky, but your
+> consolation prize is that you can write a paper on how you found a sha1
+> collision).
 
-This snippet of code came up before:
-
-http://thread.gmane.org/gmane.comp.version-control.git/184908/focus=185014
-
-There seemed to be good reasons to keep the check at the time.
-
-Was this same snippet not also touched when Nguyen Thai Ngoc Duy
-worked on the "even if I'm drunk" patch?:
-
-http://thread.gmane.org/gmane.comp.version-control.git/206413/focus=206539
-
-With the "drunk" patch then we wouldn't need the check at all,
-which is really nice.
-
-I hope that helps jog folks' memories.
-I'm not sure if the above discussions are relevant anymore,
-but I figured it'd be good to provide some more context.
-
-cheers,
--- 
-David
+Its worth nothing that a SHA-1 collision can be identified at the
+server because the server performs a byte-for-byte compare of both
+copies of the object to make sure they match exactly in every way. Its
+not fast, but its safe. :-)
