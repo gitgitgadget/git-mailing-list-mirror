@@ -1,137 +1,59 @@
-From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: [Patch v3 6/8] Prerequisites for creating nice html for all files
- in Documentation/RelNotes
-Date: Tue, 16 Oct 2012 19:26:23 +0200 (CEST)
-Message-ID: <580942178.154247.1350408383667.JavaMail.ngmail@webmail15.arcor-online.net>
-References: <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: feature request
+Date: Tue, 16 Oct 2012 19:27:26 +0200
+Message-ID: <CAB9Jk9DaJnN9wmzi-4P3+PqBOobOapnU50y5zkKV9-1CNpV3Yw@mail.gmail.com>
+References: <CAB9Jk9AwTVM4TPwPg1Gmi8TCnnXWUsMAfaz8DdfcEhBNW_15Ug@mail.gmail.com>
+	<CAH5451=1VU6oUzAyGXZvOW-Pk3+Os1mq1neum572venNjRfT+g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
-	th.acker66@arcor.de, git@drmicha.warpmail.net
-To: th.acker66@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:26:38 2012
+Cc: git <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:27:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOAua-0006Cx-JT
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:26:36 +0200
+	id 1TOAvh-0007X2-QY
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754869Ab2JPR0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 13:26:25 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:58236 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755091Ab2JPR0Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 13:26:24 -0400
-Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
-	by mx.arcor.de (Postfix) with ESMTP id C2D0AE435C;
-	Tue, 16 Oct 2012 19:26:23 +0200 (CEST)
-Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
-	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id B37C82E60B2;
-	Tue, 16 Oct 2012 19:26:23 +0200 (CEST)
-Received: from webmail15.arcor-online.net (webmail15.arcor-online.net [151.189.8.68])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id AB4B535A9D3;
-	Tue, 16 Oct 2012 19:26:23 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-11.arcor-online.net AB4B535A9D3
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1350408383; bh=n7dujNLlFxe8aNVNSP5aJN24RcwfoMtTsR9irdmG67M=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=rjGgcrMTHFZgqngyWpw1BUu7Ap3cT29rz7P4SyONPVQFI10Ic0cVFXDsHH4hhnc1K
-	 N6vrRxMepai1xl5yyuCo9CjrCcK87iBBCfxS9tWG3h0mP7KYX+ft7T/kjUX7o2p+7h
-	 lxbv96F5qHeg35iQBmF8y0HXiT7/RRD2aLzTo78c=
-Received: from [188.98.243.159] by webmail15.arcor-online.net (151.189.8.68) with HTTP (Arcor Webmail); Tue, 16 Oct 2012 19:26:23 +0200 (CEST)
-In-Reply-To: <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.98.243.159
+	id S932075Ab2JPR1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 13:27:32 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:55892 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755125Ab2JPR11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 13:27:27 -0400
+Received: by mail-vb0-f46.google.com with SMTP id ff1so6815445vbb.19
+        for <git@vger.kernel.org>; Tue, 16 Oct 2012 10:27:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=D9WII8O79CVFAUTCdVDoUQTc4/s8ln5H9PsVF0fD32k=;
+        b=a/b6fU4UFSlduW+kG4zFeYgu+DQWMlLkh1i0lZWai5M0fNuGGZV744K9BqTRDqwAtX
+         38cVORB17FM5oKCRoJiSlOaCA1bp8dILMayEaCDQozNF5J8Q2bIYl6vXRq6YyOlx8Vmy
+         fmS+NFfAzXcHrH6Z/CHy0YeVvWHzXv2uGAFF40I+f3sa8N8+PMCMd7H+4XdjDV8Jl/5G
+         I2l1gVH29J/makxhrgLQ12bTq8fKNB2Y6h4htI6Ok1y/tLBEoRF/ftncYG7rluQXA3F8
+         mipD7s8fIA8+7FkRZ2WgWCCCtw7KXKmfTkr/OaeUyQa/dL2vujmrhUmw4YVZgtxh47+7
+         BbsQ==
+Received: by 10.58.189.33 with SMTP id gf1mr9363186vec.41.1350408446677; Tue,
+ 16 Oct 2012 10:27:26 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Tue, 16 Oct 2012 10:27:26 -0700 (PDT)
+In-Reply-To: <CAH5451=1VU6oUzAyGXZvOW-Pk3+Os1mq1neum572venNjRfT+g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207860>
 
+Hi Andrew,
 
-- remove left-over shell-script fragments from some files
+one nice thing is to warn a developer that wants to modify a source
+file, that there is somebody else changing it beforehand. It is nicer
+than discovering that at push time.
+Take into account that there are changes in files that may be
+incompatible to each other, or that can be amenable to be
+automatically merged producing wrong results. So, knowing it could
+help.
 
-Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
----
- Documentation/RelNotes/1.5.2.1.txt | 6 ------
- Documentation/RelNotes/1.6.0.2.txt | 6 ------
- Documentation/RelNotes/1.6.1.3.txt | 4 ----
- Documentation/RelNotes/1.6.1.4.txt | 3 ---
- Documentation/RelNotes/1.6.1.txt   | 6 ------
- 5 files changed, 25 deletions(-)
-
-diff --git a/Documentation/RelNotes/1.5.2.1.txt b/Documentation/RelNotes/1.5.2.1.txt
-index ebf20e2..d41984d 100644
---- a/Documentation/RelNotes/1.5.2.1.txt
-+++ b/Documentation/RelNotes/1.5.2.1.txt
-@@ -45,9 +45,3 @@ Fixes since v1.5.2
-   - git-fastimport --import-marks was broken; fixed.
- 
-   - A lot of documentation updates, clarifications and fixes.
--
----
--exec >/var/tmp/1
--O=v1.5.2-65-g996e2d6
--echo O=`git describe refs/heads/maint`
--git shortlog --no-merges $O..refs/heads/maint
-diff --git a/Documentation/RelNotes/1.6.0.2.txt b/Documentation/RelNotes/1.6.0.2.txt
-index e1e24b3..7d8fb85 100644
---- a/Documentation/RelNotes/1.6.0.2.txt
-+++ b/Documentation/RelNotes/1.6.0.2.txt
-@@ -79,9 +79,3 @@ Fixes since v1.6.0.1
-   packfile.
- 
- Also contains many documentation updates.
--
----
--exec >/var/tmp/1
--O=v1.6.0.1-78-g3632cfc
--echo O=$(git describe maint)
--git shortlog --no-merges $O..maint
-diff --git a/Documentation/RelNotes/1.6.1.3.txt b/Documentation/RelNotes/1.6.1.3.txt
-index 6f0bde1..cd08d81 100644
---- a/Documentation/RelNotes/1.6.1.3.txt
-+++ b/Documentation/RelNotes/1.6.1.3.txt
-@@ -26,7 +26,3 @@ Fixes since v1.6.1.2
- * RPM binary package installed the html manpages in a wrong place.
- 
- Also includes minor documentation fixes and updates.
--
--
----
--git shortlog --no-merges v1.6.1.2-33-gc789350..
-diff --git a/Documentation/RelNotes/1.6.1.4.txt b/Documentation/RelNotes/1.6.1.4.txt
-index 0ce6316..ccbad79 100644
---- a/Documentation/RelNotes/1.6.1.4.txt
-+++ b/Documentation/RelNotes/1.6.1.4.txt
-@@ -39,6 +39,3 @@ Fixes since v1.6.1.3
-   This fix was first merged to 1.6.2.3.
- 
- Also includes minor documentation fixes and updates.
--
----
--git shortlog --no-merges v1.6.1.3..
-diff --git a/Documentation/RelNotes/1.6.1.txt b/Documentation/RelNotes/1.6.1.txt
-index adb7cca..7b152a6 100644
---- a/Documentation/RelNotes/1.6.1.txt
-+++ b/Documentation/RelNotes/1.6.1.txt
-@@ -278,9 +278,3 @@ release, unless otherwise noted.
- 
- * "gitweb" did not mark non-ASCII characters imported from external HTML fragments
-   correctly.
--
----
--exec >/var/tmp/1
--O=v1.6.1-rc3-74-gf66bc5f
--echo O=$(git describe master)
--git shortlog --no-merges $O..master ^maint
--- 
-1.7.11.msysgit.1
-
-
----
-Thomas
+-Angelo
