@@ -1,144 +1,81 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: [PATCH 3/3] Change colors to be based on git status -sb in color mode
-Date: Tue, 16 Oct 2012 07:32:57 +0200
-Message-ID: <20121016053257.GA8366@simaj.xs4all.nl>
-References: <7vlif7wqqb.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: push race
+Date: Tue, 16 Oct 2012 01:37:50 -0400
+Message-ID: <20121016053750.GA22281@sigill.intra.peff.net>
+References: <CAB9Jk9Be4gGaBXixWN7Xju7N6RGKH+FonhaTbZFJ6uYsJDk8dg@mail.gmail.com>
+ <CACBZZX5keWVDZ-rvQfHFChKRC1YwXcUvfiqzgeMjVTydnQCdmg@mail.gmail.com>
+ <507C1DB4.2010000@xiplink.com>
+ <20121015185608.GC31658@sigill.intra.peff.net>
+ <CAJo=hJu=eqgUhJvvpMLJ05AT6o+nVUDcm+tHV8en8OCX2-2qgA@mail.gmail.com>
+ <20121016045118.GA21359@sigill.intra.peff.net>
+ <CACsJy8AJVAoUHft6+rdOjWCpLWWj3m0NgvFd9pToQRQ5uD8_gg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@drmicha.warpmail.net, spearce@spearce.org,
-	artagnon@gmail.com, schwab@linux-m68k.org, soosthoek@nieuwland.nl,
-	junio@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 07:33:15 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, marcnarc@xiplink.com,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 07:38:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TNzmD-0007Ym-EU
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 07:33:13 +0200
+	id 1TNzqu-0003pl-Ph
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 07:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350Ab2JPFdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 01:33:01 -0400
-Received: from simaj.xs4all.nl ([83.160.71.26]:48641 "EHLO simaj.xs4all.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750823Ab2JPFdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 01:33:00 -0400
-Received: by simaj.xs4all.nl (Postfix, from userid 1000)
-	id DE44F40C6E; Tue, 16 Oct 2012 07:32:57 +0200 (CEST)
+	id S1752250Ab2JPFhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 01:37:54 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54545 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094Ab2JPFhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 01:37:53 -0400
+Received: (qmail 12190 invoked by uid 107); 16 Oct 2012 05:38:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Oct 2012 01:38:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2012 01:37:50 -0400
 Content-Disposition: inline
-In-Reply-To: <7vlif7wqqb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CACsJy8AJVAoUHft6+rdOjWCpLWWj3m0NgvFd9pToQRQ5uD8_gg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207803>
 
-Hi
+On Tue, Oct 16, 2012 at 12:15:21PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-this patch is an additional patch to the previous series of two.  It also
-corrects the missing S and some minor details. The main point of this
-one is changing the used colors to be more close to the color output of "git
-status -sb" Mainly, the branchname stays green until it loses a HEAD, in
-detached head state it becomes red.
-The flags get their own color, either red or green for unstaged/staged and the
-remaining flags get a different color or none at all.
+> On Tue, Oct 16, 2012 at 11:51 AM, Jeff King <peff@peff.net> wrote:
+> >> Its worth nothing that a SHA-1 collision can be identified at the
+> >> server because the server performs a byte-for-byte compare of both
+> >> copies of the object to make sure they match exactly in every way. Its
+> >> not fast, but its safe. :-)
+> >
+> > Do we? I thought early versions of git did that, but we did not
+> > double-check collisions any more for performance reasons. You don't
+> > happen to remember where that code is, do you (not that it really
+> > matters, but I am just curious)?
+> 
+> We do. I touched that sha-1 collision code last time I updated
+> index-pack, to support large blobs. We only do that when we receive an
+> object that we already have, which should not happen often unless
+> you're under attack, so little performance impact normally. Search
+> "collision" in index-pack.c
 
-Cheers
+Ah, thanks, I remember this now. I think that I was thinking of the very
+early code to check every sha1 file write. E.g., the code killed off by
+aac1794 (Improve sha1 object file writing., 2005-05-03). But that is
+ancient history that is not really relevant.
 
-Simon
+Interesting that we check only in index-pack. If the pushed content is
+small enough, we will call unpack-objects. That follows the usual code
+path for writing the object, which will prefer the existing copy.
 
-The color in the prompt now follows the colors used by
-git itself when showing colors. The branch name is only
-colored red if the tree has a detached HEAD.
+I suspect a site that is heavy on alternates is invoking the index-pack
+code path more frequently than necessary (e.g., history gets pushed to
+one forked repo, then when it goes to the next one, we may not share the
+ref that tells the client we already have the object and receive it a
+second time).
 
-Signed-off-by: Simon Oosthoek <s.oosthoek@xs4all.nl>
----
- contrib/completion/git-prompt.sh |   52 ++++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 22 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 4fb998a..ff69bbc 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -55,11 +55,9 @@
- # setting the bash.showUpstream config variable.
- #
- # If you would like a colored hint about the current dirty state, set
--# GIT_PS1_SHOWCOLORHINTS to a nonempty value. When tracked files are
--# modified, the branch name turns red, when all modifications are staged
--# the branch name turns yellow and when all changes are checked in, the
--# color changes to green. The colors are currently hardcoded in the function.
--
-+# GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on 
-+# the colored output of "git status -sb".
-+#
- # __gitdir accepts 0 or 1 arguments (i.e., location)
- # returns location of .git repo
- __gitdir ()
-@@ -325,35 +323,45 @@ __git_ps1 ()
- 
- 		local f="$w$i$s$u"
- 		if [ $pcmode = yes ]; then
--			PS1="$ps1pc_start("
--			if [ -n "${GIT_PS1_SHOWCOLORHINT-}" ]; then
-+			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
- 				local c_red='\e[31m'
- 				local c_green='\e[32m'
--				local c_yellow='\e[33m'
- 				local c_lblue='\e[1;34m'
--				local c_purple='\e[35m'
--				local c_cyan='\e[36m'
- 				local c_clear='\e[0m'
- 				local branchstring="$c${b##refs/heads/}"
--				local branch_color="$c_green"
--				local flags_color="$c_cyan"
-+				local branch_color="$c_clear"
-+				local flags_color="$c_lblue"
- 
--				if [ "$w" = "*" ]; then
--					branch_color="$c_red"
--				elif [ -n "$i" ]; then
--					branch_color="$c_yellow"
--				fi
-+				case "$b" in 
-+					\(*\))	branch_color="$c_red"
-+					;;
-+					*)	local branch_color="$c_green"
-+					;;
-+				esac
- 
- 				# Setting PS1 directly with \[ and \] around colors
- 				# is necessary to prevent wrapping issues!
--				PS1="$PS1\[$branch_color\]$branchstring\[$c_clear\]"
--				if [ -n "$f" ]; then
--					PS1="$PS1 \[$flags_color\]$f\[$c_clear\]"
-+				PS1="$ps1pc_start (\[$branch_color\]$branchstring\[$c_clear\]"
-+
-+				if [ -n "$w$i$s$u$r$p" ]; then
-+					PS1="$PS1 "
-+				fi
-+				if [ "$w" = "*" ]; then
-+					PS1="$PS1\[$c_red\]$w"
-+				fi
-+				if [ -n "$i" ]; then
-+					PS1="$PS1\[$c_green\]$i"
-+				fi
-+				if [ -n "$s" ]; then
-+					PS1="$PS1\[$flags_color\]$s"
-+				fi
-+				if [ -n "$u" ]; then
-+					PS1="$PS1\[$c_red\]$u"
- 				fi
-+				PS1="$PS1\[$c_clear\]$r$p)$ps1pc_end"
- 			else
--				PS1="$PS1$c${b##refs/heads/}${f:+ $f}$r$p"
-+				PS1="$ps1pc_start ($c${b##refs/heads/}${f:+ $f}$r$p)$ps1pc_end"
- 			fi
--			PS1="$PS1)$ps1pc_end"
- 		else
- 			# NO color option unless in PROMPT_COMMAND mode
- 			printf -- "$printf_format" "$c${b##refs/heads/}${f:+ $f}$r$p"
--- 
-1.7.9.5
+-Peff
