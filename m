@@ -1,136 +1,96 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH 12/12] Add git-check-ignore sub-command
-Date: Tue, 16 Oct 2012 07:13:46 -0700
-Message-ID: <CAOkDyE9g6rNiv7nnTu2i34dbn_z7r5SmhDuxief7iEQLVxtO5g@mail.gmail.com>
-References: <1350282212-4270-1-git-send-email-pclouds@gmail.com>
-	<1350282486-4646-1-git-send-email-pclouds@gmail.com>
-	<1350282486-4646-12-git-send-email-pclouds@gmail.com>
-	<7vlif7v03r.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
+Date: Tue, 16 Oct 2012 16:13:02 +0200
+Message-ID: <007001cdaba8$5afc6c00$10f54400$@schmitz-digital.de>
+References: <k5gq60$q8c$1@ger.gmane.org> <0140f3f2f2f4bded6868f4082bef0c36e9a8560e.1350387132.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 16:14:00 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Junio C Hamano'" <gitster@pobox.com>
+To: "'Michael J Gruber'" <git@drmicha.warpmail.net>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 16:14:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO7uB-00053u-KV
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 16:13:59 +0200
+	id 1TO7uY-0005T2-Hs
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 16:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754285Ab2JPONs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2012 10:13:48 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:45088 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775Ab2JPONr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 10:13:47 -0400
-Received: by mail-bk0-f46.google.com with SMTP id jk13so3030646bkc.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 07:13:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/lF++HMntv1ej8IYAANxl88omyDRZXJOKAyaF1eFB2o=;
-        b=EdpVr7PIcPaOeVoUwqbEB4Oe2GF7pVRhDfhubQox4O8aRYdO6fE9tKBYQV/QSLVDgW
-         Nvl/X8dHL1Pv+v032xsCgGyvdAR0z1pO0cqsvDq7jviRAKq4Wp8e44x9NG3yFzGQLIYU
-         p8tg3zHDMFRh4Ru4WxOfO8fY3Ok9NGlKaDRZ8X4hNedwQJG6wgnbvxxHY60PVHJZYxFl
-         YQ0mP1mpM25xt7g2FL6zFpuxJ89CrI7Uvm6GKBe3PeKCKZGijh8hVAKpZHI1MiohNzl2
-         fgQTZ3lzUMTLc3/TqFTOTrbLCpyGoAhODcYEB2YvRclhTGzNouCU5wBvUHHoz+bd65Nz
-         1IoQ==
-Received: by 10.204.4.129 with SMTP id 1mr4276223bkr.58.1350396826679; Tue, 16
- Oct 2012 07:13:46 -0700 (PDT)
-Received: by 10.204.15.133 with HTTP; Tue, 16 Oct 2012 07:13:46 -0700 (PDT)
-In-Reply-To: <7vlif7v03r.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: SiUtsxihh8OdTakaWuHFTHxfg9E
+	id S1754573Ab2JPOOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 10:14:09 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:49465 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754527Ab2JPOOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 10:14:08 -0400
+Received: from DualCore (dsdf-4db552a4.pool.mediaWays.net [77.181.82.164])
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0LqnUA-1Ttctp412o-00dhOO; Tue, 16 Oct 2012 16:13:28 +0200
+In-Reply-To: <0140f3f2f2f4bded6868f4082bef0c36e9a8560e.1350387132.git.git@drmicha.warpmail.net>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQJeqU/4XWJERJTycJKdEfjaJWW8tQL0cImCloJYoGA=
+Content-Language: de
+X-Provags-ID: V02:K0:0RtQeMZWo3s0bLV1pLEiR1kJjMaqBeihfmP7ys4+Fm7
+ tyK63bmswQ+mchF8zBjxiaIL7WbSozt0ucXsX2Sjy7oytpUsDv
+ AoFzgSFAGv0XRe1UecaQDWVdqSAA05fgdrhZyoENIq5WSzRY+3
+ 9ZPvpjx7XNgobjbi/ySHli0lUnUBih0wZNVI0WLCTmAZEWd9n4
+ jyNlH3QXxWSLTp6wJZpfgsUvkIEZmkC9fFaLPtfZsUXouC0ube
+ XOzVXR/zte3b4qAsOIS2TmM8pcq/VfvXym83cS8NvWZVXcD3zW
+ 0kIHm0z8n5Sk74QxM9oc8qsUuxssPEYjo9BKA0aSiqmekFZwJA
+ UhPPH/ciYsBsznEZEitSiqQmLUbRugglp+YnyJ5/ymklpPVlY3
+ vwS9ncTTIcDjA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207832>
 
-On Mon, Oct 15, 2012 at 3:31 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> +For each pathname given via the command-line or from a file via
->> +`--stdin`, this command will list the first exclude pattern found (=
-if
->> +any) which explicitly excludes or includes that pathname.  Note tha=
-t
->> +within any given exclude file, later patterns take precedence over
->> +earlier ones, so any matching pattern which this command outputs ma=
-y
->> +not be the one you would immediately expect.
->
-> "The first exclude pattern" is very misleading, isn't it?
+> From: Michael J Gruber [mailto:git@drmicha.warpmail.net]
+> Sent: Tuesday, October 16, 2012 1:40 PM
+> To: git@vger.kernel.org
+> Cc: Joachim Schmitz; Junio C Hamano
+> Subject: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
+> 
+> Some test want to use the time command (not the shell builtin) and test
+> for its availability at /usr/bin/time.
+> 
+> Provide a lazy prereq TIME_COMMAND which tests for /usr/bin/time and
+> /bin/time. If any is found, set TEST_COMMAND_PATH to the first match.
+> 
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> Rather than iterating over 2 or more hardcoded paths, one could use
+> "test -P time" or allow a make variable TIME_COMMAND_PATH whose
 
-I don't think so, because of the second sentence.
+test -P time won't work for me:
+test -P: unary operator expected
 
-> For example, with these in $GIT_DIR/info/exclude, I would get:
->
->         $ cat -n .git/info/exclude
->           1 *~
->           2 Makefile~
->         $ git check-ignore -v Makefile~
->         .git/info/exclude:2:Makefile~   Makefile~
->
-> which is the correct result (the last one in a single source decides
-> the fate of the path), but it hardly is "first one found" and the
-> matching pattern in the output would not be something unexpected for
-> the users, either.
->
-> The reason it is "the first one found" is because the implementation
-> arranges the loop in such a way that it can stop early when it finds
-> a match---it simply checks matches from the end of the source.
->
-> But that is not visible to end-users,
+I do have another one in /usr/local/bin, maybe that could get added too?
 
-Correct; that's precisely why I wrote the second sentence which
-explicitly explains this.
-
-> and they will find the above description just wrong, no?
-
-It's not wrong AFAICS, but suggestions for rewording this more clearly
-are of course welcome.  Maybe s/immediately/intuitively/ ?
-
->> +OUTPUT
->> +------
->> +
->> +By default, any of the given pathnames which match an ignore patter=
-n
->> +will be output, one per line.  If no pattern matches a given path,
->> +nothing will be output for that path; this means that path will not=
- be
->> +ignored.
->> +
->> +If `--verbose` is specified, the output is a series of lines of the=
- form:
->> +
->> +<source> <COLON> <linenum> <COLON> <pattern> <HT> <pathname>
->> +
->> +<pathname> is the path of a file being queried, <pattern> is the
->> +matching pattern, <source> is the pattern's source file, and <linen=
-um>
->> +is the line number of the pattern within that source.  If the patte=
-rn
->> +contained a `!` prefix or `/` suffix, it will be preserved in the
->> +output.  <source> will be an absolute path when referring to the fi=
-le
->> +configured by `core.excludesfile`, or relative to the repository ro=
-ot
->> +when referring to `.git/info/exclude` or a per-directory exclude fi=
-le.
->> +
->> +If `-z` is specified, the output is a series of lines of the form:
->> +
->
-> Hmph... the remainder of the paragraph seems to have been chopped off=
-=2E
-
-Yes, an earlier review also caught this but I have not had time to fix
-it yet, sorry :-/
+> executability is checked by the prereq. I really don't know what's best.
+> 
+>  t/test-lib.sh | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 489bc80..7977c15 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -738,6 +738,13 @@ test_lazy_prereq UTF8_NFD_TO_NFC '
+>  	esac
+>  '
+> 
+> +test_lazy_prereq TIME_COMMAND '
+> +	for command in /usr/bin/time /bin/time
+> +	do
+> +		test -x "$command" && break
+> +	done && TIME_COMMAND_PATH="$command"
+> +'
+> +
+>  # When the tests are run as root, permission tests will report that
+>  # things are writable when they shouldn't be.
+>  test -w / || test_set_prereq SANITY
+> --
+> 1.8.0.rc2.304.g9f3ac5c
