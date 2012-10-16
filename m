@@ -1,88 +1,174 @@
-From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: [Patch v3 2/8] Shorten two over-long lines in git-bisect-lk2009.txt
- by abbreviating some sha1
-Date: Tue, 16 Oct 2012 19:21:57 +0200 (CEST)
-Message-ID: <1739299099.154164.1350408117758.JavaMail.ngmail@webmail15.arcor-online.net>
-References: <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] status: add --long for default format
+Date: Tue, 16 Oct 2012 13:22:04 -0400
+Message-ID: <20121016172204.GB27243@sigill.intra.peff.net>
+References: <1350404569-9787-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: philipoakley@iee.org, peff@peff.net, gitster@pobox.com,
-	th.acker66@arcor.de, git@drmicha.warpmail.net
-To: th.acker66@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:22:11 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:22:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOAqI-000187-Hh
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:22:10 +0200
+	id 1TOAqR-0001IJ-Ke
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 19:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755078Ab2JPRV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 13:21:59 -0400
-Received: from mail-in-17.arcor-online.net ([151.189.21.57]:37541 "EHLO
-	mail-in-17.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754960Ab2JPRV7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 13:21:59 -0400
-Received: from mail-in-19-z2.arcor-online.net (mail-in-19-z2.arcor-online.net [151.189.8.36])
-	by mx.arcor.de (Postfix) with ESMTP id CBA0CCBC7A;
-	Tue, 16 Oct 2012 19:21:57 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-19-z2.arcor-online.net (Postfix) with ESMTP id C7A3D3F83DF;
-	Tue, 16 Oct 2012 19:21:57 +0200 (CEST)
-Received: from webmail15.arcor-online.net (webmail15.arcor-online.net [151.189.8.68])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id C0437E46AB;
-	Tue, 16 Oct 2012 19:21:57 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-05.arcor-online.net C0437E46AB
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1350408117; bh=Mt1jgnwoWTS2NUQ37yLN6jxQPoVjjGIkKLsFGxUipUc=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=VCD8uerjH4uhiWMy9eU37tx8dr3JifFrOfzZHDDikjgTu/54eqbhwEf+AZ9oOwkN4
-	 yQFA87hcWylRtukTDRQbMUpzmawaiPO5RjsOHdUHFq4ylKk9LT6df/3K+iQvxli5Ck
-	 BoLBxVzr/HvNxwHlS50KZfNg5V2xcdVLV5lFdQN0=
-Received: from [188.98.243.159] by webmail15.arcor-online.net (151.189.8.68) with HTTP (Arcor Webmail); Tue, 16 Oct 2012 19:21:57 +0200 (CEST)
-In-Reply-To: <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.98.243.159
+	id S1755180Ab2JPRWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 13:22:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55119 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755161Ab2JPRWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 13:22:08 -0400
+Received: (qmail 17562 invoked by uid 107); 16 Oct 2012 17:22:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Oct 2012 13:22:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2012 13:22:04 -0400
+Content-Disposition: inline
+In-Reply-To: <1350404569-9787-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207853>
 
+On Tue, Oct 16, 2012 at 11:22:49PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> This could be useful when the user sets an alias to "status --short"
+> and wants to get back the default format temporarily.
+
+Makes sense, but...
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index a17a5df..5adab33 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1159,6 +1159,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  		OPT_SET_INT(0, "porcelain", &status_format,
+>  			    N_("machine-readable output"),
+>  			    STATUS_FORMAT_PORCELAIN),
+> +		OPT_SET_INT(0, "long", &status_format,
+> +			    N_("show status in long format (default)"), STATUS_FORMAT_LONG),
+>  		OPT_BOOLEAN('z', "null", &s.null_termination,
+>  			    N_("terminate entries with NUL")),
+>  		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
+
+I'm pretty sure we use STATUS_FORMAT_LONG elsewhere as a synonym for
+"the user has not set anything".
+
+Ah, here it is:
+
+  $ git grep -nA1 '== STATUS_FORMAT_LONG'
+  1073:   if (s->null_termination && status_format == STATUS_FORMAT_LONG)
+  1074-           status_format = STATUS_FORMAT_PORCELAIN;
+  --
+  1201:   if (s.null_termination && status_format == STATUS_FORMAT_LONG)
+  1202-           status_format = STATUS_FORMAT_PORCELAIN;
+
+I think you would want something like this. I had originally intended to
+make it a refactoring patch that would come before yours, but some of
+the cleanups are tied to actually adding --long. So I think you would
+want to squash it together with your patch and combine the commit
+messages.
+
+-- >8 --
+Subject: [PATCH] status: refactor output format to represent "default"
+
+When deciding which output format to use, we default an
+internal enum to STATUS_FORMAT_LONG and modify it if
+"--porcelain" or "--short" is given. If this enum is set to
+LONG, then we know the user has not specified any format,
+and we can kick in default behaviors. This works because
+there is no "--long" which they could use to explicitly
+specify LONG.
+
+Let's expand the enum to have an explicit STATUS_FORMAT_NONE,
+in preparation for adding "--long". Then we can distinguish
+between LONG and NONE when setting other defaults. There are
+two such cases:
+
+  1. The user has asked for NUL termination. With NONE, we
+     currently default to turning on the porcelain mode.
+     With an explicit --long, we would in theory use NUL
+     termination with the long mode, but it does not support
+     it. So we can just complain and die.
+
+  2. When an output format is given to "git commit", we
+     default to "--dry-run". This behavior would now kick in
+     when "--long" is given, too.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-bisect-lk2009.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/commit.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-bisect-lk2009.txt b/Documentation/git-bisect-lk2009.txt
-index 8a2ba37..ec4497e 100644
---- a/Documentation/git-bisect-lk2009.txt
-+++ b/Documentation/git-bisect-lk2009.txt
-@@ -257,7 +257,7 @@ Date:   Sat May 3 11:59:44 2008 -0700
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 00ac35b..ec299f4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -112,10 +112,11 @@ static enum {
+ static struct strbuf message = STRBUF_INIT;
  
-     Linux 2.6.26-rc1
+ static enum {
++	STATUS_FORMAT_NONE = 0,
+ 	STATUS_FORMAT_LONG,
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN
+-} status_format = STATUS_FORMAT_LONG;
++} status_format;
  
--:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M      Makefile
-+:100644 100644 5cf82581... 4492984e... M      Makefile
- -------------
+ static int mention_abandoned_message;
+ static void maybe_mention_abandoned_message(void)
+@@ -464,6 +465,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(s);
+ 		break;
++	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+ 		wt_status_print(s);
+ 		break;
+@@ -1070,9 +1072,13 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (all && argc > 0)
+ 		die(_("Paths with -a does not make sense."));
  
- At this point we can see what the commit does, check it out (if it's
-@@ -331,7 +331,7 @@ Date:   Sat May 3 11:59:44 2008 -0700
+-	if (s->null_termination && status_format == STATUS_FORMAT_LONG)
+-		status_format = STATUS_FORMAT_PORCELAIN;
+-	if (status_format != STATUS_FORMAT_LONG)
++	if (s->null_termination) {
++		if (status_format == STATUS_FORMAT_NONE)
++			status_format = STATUS_FORMAT_PORCELAIN;
++		else if (status_format == STATUS_FORMAT_LONG)
++			die("--long and -z are incompatible");
++	}
++	if (status_format != STATUS_FORMAT_NONE)
+ 		dry_run = 1;
  
-     Linux 2.6.26-rc1
+ 	return argc;
+@@ -1198,8 +1204,12 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 			     builtin_status_usage, 0);
+ 	finalize_colopts(&s.colopts, -1);
  
--:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M      Makefile
-+:100644 100644 5cf82581... 4492984e... M      Makefile
- bisect run success
- -------------
+-	if (s.null_termination && status_format == STATUS_FORMAT_LONG)
+-		status_format = STATUS_FORMAT_PORCELAIN;
++	if (s.null_termination) {
++		if (status_format == STATUS_FORMAT_NONE)
++			status_format = STATUS_FORMAT_PORCELAIN;
++		else if (status_format == STATUS_FORMAT_LONG)
++			die("--long and -z are incompatible");
++	}
  
+ 	handle_untracked_files_arg(&s);
+ 	if (show_ignored_in_status)
+@@ -1228,6 +1238,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(&s);
+ 		break;
++	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+ 		s.verbose = verbose;
+ 		s.ignore_submodule_arg = ignore_submodule_arg;
 -- 
-1.7.11.msysgit.1
-
-
----
-Thomas
+1.8.0.rc2.5.gecca26e
