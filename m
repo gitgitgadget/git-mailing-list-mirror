@@ -1,95 +1,59 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] status: add --long for default format
-Date: Tue, 16 Oct 2012 23:22:49 +0700
-Message-ID: <1350404569-9787-1-git-send-email-pclouds@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [RFC/PATCH 3/4v2] test-lib: provide lazy TIME_COMMAND prereq
+Date: Tue, 16 Oct 2012 18:28:12 +0200
+Message-ID: <m2mwzmxtyb.fsf@igel.home>
+References: <007001cdaba8$5afc6c00$10f54400$@schmitz-digital.de>
+	<28ca29e59c5905ba7232dcdbe4661f37ef90cac5.1350399860.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 18:23:42 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Joachim Schmitz <jojo@schmitz-digital.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 16 18:28:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO9vg-0007HR-Ia
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 18:23:40 +0200
+	id 1TOA0M-0004nW-4i
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 18:28:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754484Ab2JPQX2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2012 12:23:28 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:55389 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754620Ab2JPQXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 12:23:20 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so3250277dak.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 09:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=nWtm+teFAz3yAZ2E7/qsHRzVKDcbXd47shnLPHdsW4U=;
-        b=h3/mp44rHPp9YWF/msaowpZ861P3cjT7XNEog9vtQrznq+O0u22XfE/J+cO/hmGKwz
-         az4Orf1lKbAHvQSnG5pSLJoursmy4KBZwynkhlVmnYMmyP/G2uDCq0uCiMs+ajpRYjyK
-         lvoHv6zhOn0AudBS0ZihVsyE2GJpEnUpSULItsOs7R6axcdse1U9u5Id1U9y9+QXuao1
-         T6HllnLX0gHqS/M3pQy5zp32zL6WJhFu5ukHZtoWUrJ68vxhuvkMPpuihwxaDlAe8Nlv
-         Afdlo61D+Y1t+dLfXXAfcFgzpZVGD82akpdZHOkvjHduiN/dnZCyB5C2rcKjt7og4aRw
-         5VFw==
-Received: by 10.68.195.195 with SMTP id ig3mr48824963pbc.108.1350404599134;
-        Tue, 16 Oct 2012 09:23:19 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.44.221])
-        by mx.google.com with ESMTPS id mn5sm11003960pbc.12.2012.10.16.09.23.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 16 Oct 2012 09:23:17 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 16 Oct 2012 23:22:59 +0700
-X-Mailer: git-send-email 1.8.0.rc2.21.g0695653
+	id S1754819Ab2JPQ2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 12:28:19 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:47095 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754691Ab2JPQ2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 12:28:18 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3Xh24s0Qf1z4KKBT;
+	Tue, 16 Oct 2012 18:28:12 +0200 (CEST)
+X-Auth-Info: fdJs1KRRojxjiRPmJaI+R5NoOUcl5sL6pIvuuf5zDck=
+Received: from igel.home (ppp-88-217-123-14.dynamic.mnet-online.de [88.217.123.14])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3Xh24r60WFzbbgb;
+	Tue, 16 Oct 2012 18:28:12 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 7AAB3CA2A4; Tue, 16 Oct 2012 18:28:12 +0200 (CEST)
+X-Yow: I think my CAREER is RUINED!!
+In-Reply-To: <28ca29e59c5905ba7232dcdbe4661f37ef90cac5.1350399860.git.git@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Tue, 16 Oct 2012 17:07:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207844>
 
-This could be useful when the user sets an alias to "status --short"
-and wants to get back the default format temporarily.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-status.txt | 3 +++
- builtin/commit.c             | 2 ++
- 2 files changed, 5 insertions(+)
+> Some test want to use the time command (not the shell builtin) and test
+> for its availability at /usr/bin/time.
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.tx=
-t
-index 67e5f53..9f1ef9a 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -38,6 +38,9 @@ OPTIONS
- 	across git versions and regardless of user configuration. See
- 	below for details.
-=20
-+--long::
-+	Give the output in the long-format. This is the default.
-+
- -u[<mode>]::
- --untracked-files[=3D<mode>]::
- 	Show untracked files.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index a17a5df..5adab33 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1159,6 +1159,8 @@ int cmd_status(int argc, const char **argv, const=
- char *prefix)
- 		OPT_SET_INT(0, "porcelain", &status_format,
- 			    N_("machine-readable output"),
- 			    STATUS_FORMAT_PORCELAIN),
-+		OPT_SET_INT(0, "long", &status_format,
-+			    N_("show status in long format (default)"), STATUS_FORMAT_LONG)=
-,
- 		OPT_BOOLEAN('z', "null", &s.null_termination,
- 			    N_("terminate entries with NUL")),
- 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
---=20
-1.8.0.rc2.21.g0695653
+An alternative way to suppress the builtin meaning is to quote it, like
+\time.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
