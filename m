@@ -1,63 +1,83 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 12/12] Add git-check-ignore sub-command
-Date: Tue, 16 Oct 2012 22:07:23 +0700
-Message-ID: <CACsJy8BewSctFSoth=pzYd+5fNZOUZ2AwUcrLd9VKA2OduJV+A@mail.gmail.com>
-References: <1350282212-4270-1-git-send-email-pclouds@gmail.com>
- <1350282486-4646-1-git-send-email-pclouds@gmail.com> <1350282486-4646-12-git-send-email-pclouds@gmail.com>
- <7vlif7v03r.fsf@alter.siamese.dyndns.org> <CACsJy8Du1G-=pBbHW841V-61L9_HGmNkOE7EB2W2f1RJe9WuXg@mail.gmail.com>
- <CAOkDyE_HCxNYpWVc0WCwhcAivEm+RLiFj-TwSsEbi+U5mZ3cww@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
+Date: Tue, 16 Oct 2012 17:11:25 +0200
+Message-ID: <007401cdabb0$831d1f10$89575d30$@schmitz-digital.de>
+References: <k5gq60$q8c$1@ger.gmane.org> <0140f3f2f2f4bded6868f4082bef0c36e9a8560e.1350387132.git.git@drmicha.warpmail.net> <007001cdaba8$5afc6c00$10f54400$@schmitz-digital.de> <507D7809.6040904@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 17:08:08 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>
+To: "'Michael J Gruber'" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 16 17:13:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TO8kY-0001K0-OU
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 17:08:07 +0200
+	id 1TO8pl-0007nR-L1
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Oct 2012 17:13:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871Ab2JPPH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 11:07:56 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:44846 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754868Ab2JPPHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 11:07:55 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so6287284oag.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 08:07:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=LLXxKI5G/oBEy/czh659JAFneKjLfJQEtnQDg7Umtrc=;
-        b=Go7u8iNENl2q32+ZE+ngHh204lYyzU6xqVrcy2bOPgswEwAPO6RuerD5VzMl+NYwwq
-         AwAm6+enBR1j1LKp9NQ0WtULjd4Ujj0uhM9gRscYAK9cE6TU7XKRD43dpltmCLRXFUjk
-         weGXvqk5jWgAX4rR/prJbOT+SJErcFim20eLXyR4WrLyEPPeTM3ituL5F1WOPQlTTx/f
-         8i7P4vRtdzxnqjZyeklYkAUkfx8SZ30W5OgrzpwO+syvWkCoKSTXDrsKCux6K6f7Ks4X
-         fR9g7W2i8parmQlW3ejHyiA2sn6iHPN8D/x6NAmGH9PUH0uz8c9+EcHi1ov+w251tSjv
-         +Mbw==
-Received: by 10.60.26.230 with SMTP id o6mr12366582oeg.109.1350400075231; Tue,
- 16 Oct 2012 08:07:55 -0700 (PDT)
-Received: by 10.182.108.10 with HTTP; Tue, 16 Oct 2012 08:07:23 -0700 (PDT)
-In-Reply-To: <CAOkDyE_HCxNYpWVc0WCwhcAivEm+RLiFj-TwSsEbi+U5mZ3cww@mail.gmail.com>
+	id S1754897Ab2JPPNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 11:13:09 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:61396 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754878Ab2JPPNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 11:13:08 -0400
+Received: from DualCore (dsdf-4db552a4.pool.mediaWays.net [77.181.82.164])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MYLIX-1SswlC1suH-00V8r9; Tue, 16 Oct 2012 17:11:51 +0200
+In-Reply-To: <507D7809.6040904@drmicha.warpmail.net>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQJeqU/4XWJERJTycJKdEfjaJWW8tQL0cImCAhznpmcCn+72OZZcg/vg
+Content-Language: de
+X-Provags-ID: V02:K0:+cINxT9Z7BqRQqV5KxD7YtilOzHRbN4E5p7P/1Vnhga
+ o3LqLG1jVPWi+/HNQlHgmauX/w/XWLODHKfBZzAKVlP5UZJUBf
+ T4Jgk27M+uzgLePKSjYc9tDH8bBDm1T69699JsXAZWiFJnY3re
+ SDa5rEgGXNXNziw1mPqG/X1ci/pfENIUYNASM0ckfT2/cCFNoI
+ N6qj200Zr6+7GygLqWpNNNNRW3VRp1j2VPKpUSi33sPpZhgi+Q
+ nAcu6VW5q65gSAhQUQgH9SmpGgpPOU7N56VTy4lEPVZg8WQJZs
+ VG1vLmY8djCuDcCo5m8HUzBqb23u7IYsHo+JUtTifFe2h65A4J
+ vkXZyfkVcgCTPO9YY46pTQ7eDJcVdf0Xd8ucHpNuA4WKSwxEup
+ Ufdn1nzihtq6w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207836>
 
-On Tue, Oct 16, 2012 at 9:09 PM, Adam Spiers <git@adamspiers.org> wrote:
-> I was *intending* to finish it off soon, but I have been really busy
-> with work and other commitments recently, which has prevented this.  I
-> don't currently have any unpublished changes which would conflict with
-> your recent work, and I'm at a conference this week, so feel free to
-> carry on polishing if you want.  However I will probably have some
-> responses on the discussion about current issues, so it would be good
-> if I was given a chance to catch up on this discussion before the
-> series makes its way to master.
+> From: Michael J Gruber [mailto:git@drmicha.warpmail.net]
+> Sent: Tuesday, October 16, 2012 5:07 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org; 'Junio C Hamano'
+> Subject: Re: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
+> 
+> Joachim Schmitz venit, vidit, dixit 16.10.2012 16:13:
+> >> From: Michael J Gruber [mailto:git@drmicha.warpmail.net]
+> >> Sent: Tuesday, October 16, 2012 1:40 PM
+> >> To: git@vger.kernel.org
+> >> Cc: Joachim Schmitz; Junio C Hamano
+> >> Subject: [RFC/PATCH 3/4] test-lib: provide lazy TIME_COMMAND prereq
+> >>
+> >> Some test want to use the time command (not the shell builtin) and test
+> >> for its availability at /usr/bin/time.
+> >>
+> >> Provide a lazy prereq TIME_COMMAND which tests for /usr/bin/time and
+> >> /bin/time. If any is found, set TEST_COMMAND_PATH to the first match.
+> >>
+> >> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> >> ---
+> >> Rather than iterating over 2 or more hardcoded paths, one could use
+> >> "test -P time" or allow a make variable TIME_COMMAND_PATH whose
+> >
+> > test -P time won't work for me:
+> > test -P: unary operator expected
+> >
+> > I do have another one in /usr/local/bin, maybe that could get added too?
+> 
+> Yikes.
+> 
+> If we introduce a make variable TIME_COMMAND_PATH we can even get rid of
+> 2/4 (but have to change Makefile or t/Makefile).
 
-No hurry. And thanks for your contribution.
--- 
-Duy
+I don't mind too much. /usr/bin/time and /bin/time should be enough.
