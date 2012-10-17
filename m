@@ -1,90 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What can cause empty GIT_AUTHOR_NAME for 'git filter-branch
- --tree-filter' on Solaris?
-Date: Wed, 17 Oct 2012 03:18:17 -0400
-Message-ID: <20121017071817.GA15419@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What can cause empty GIT_AUTHOR_NAME for 'git filter-branch --tree-filter'
+ on Solaris?
+Date: Wed, 17 Oct 2012 09:23:12 +0200
+Message-ID: <507E5CE0.10002@viscovery.net>
 References: <1109432467.20121017104729@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 09:18:33 2012
+X-From: git-owner@vger.kernel.org Wed Oct 17 09:23:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TONth-0008Kf-09
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 09:18:33 +0200
+	id 1TONyQ-0005kK-Pr
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 09:23:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754337Ab2JQHSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 03:18:22 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55877 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753279Ab2JQHSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 03:18:21 -0400
-Received: (qmail 24522 invoked by uid 107); 17 Oct 2012 07:18:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Oct 2012 03:18:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2012 03:18:17 -0400
-Content-Disposition: inline
+	id S1753869Ab2JQHXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 03:23:15 -0400
+Received: from so.liwest.at ([212.33.55.24]:46042 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751504Ab2JQHXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 03:23:15 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TONyC-0007ns-M2; Wed, 17 Oct 2012 09:23:12 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 69B8B1660F;
+	Wed, 17 Oct 2012 09:23:12 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
 In-Reply-To: <1109432467.20121017104729@gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207900>
 
-On Wed, Oct 17, 2012 at 10:47:29AM +0400, Ilya Basin wrote:
-
+Am 10/17/2012 8:47, schrieb Ilya Basin:
 > The filter-branch command, the contents of ~/.gitconfig and the tree
 > are the same.
 > The command succeeds on cygwin, but fails on Solaris due to
 > unset GIT_AUTHOR_NAME and GIT_COMMITTER_NAME :
+> 
+> $ git filter-branch --tree-filter "env | grep GIT_ ; $CMD" b416b9bfc5e71531f2f05af4c396bb0ba7560741..HEAD
+> Rewrite 214efc6eec82b015aefe23b2280979f05b351396 (1/16)GIT_DIR=/home/tester/.ilya/builds/makepkg.rap_0.1-1_sparc.XXXXXX/src/rap/.git
+> GIT_INDEX_FILE=/home/tester/.ilya/builds/makepkg.rap_0.1-1_sparc.XXXXXX/src/rap/.git-rewrite/t/../index
+> GIT_WORK_TREE=.
+> GIT_AUTHOR_NAME=
+> GIT_COMMITTER_NAME=
+> GIT_COMMIT=214efc6eec82b015aefe23b2280979f05b351396
+> fatal: empty ident  <my@email.com> not allowed
+> could not write rewritten commit
 
-That shouldn't happen. The likely culprit is that the sed magic in the
-set_ident function of git-filter-branch is not portable to your version
-of sed.
+Most likely, your sed has problems with a sed script in function
+get_author_ident_from_commit. I tested it like this:
 
-What happens if you run this:
+$ sh -c '. $(git --exec-path)/git-sh-setup;
+		get_author_ident_from_commit HEAD'
+GIT_AUTHOR_NAME='Johannes Sixt'
+GIT_AUTHOR_EMAIL='j6t@kdbg.org'
+GIT_AUTHOR_DATE='@1350025129 +0200'
 
-	echo 'author Your Name <you@example.com> 1350408529 -0400' >commit
-	set -- author
-	lid="$(echo "$1" | tr "[A-Z]" "[a-z]")"
-	uid="$(echo "$1" | tr "[a-z]" "[A-Z]")"
-        pick_id_script='
-                /^'$lid' /{
-                        s/'\''/'\''\\'\'\''/g
-                        h
-                        s/^'$lid' \([^<]*\) <[^>]*> .*$/\1/
-                        s/'\''/'\''\'\'\''/g
-                        s/.*/GIT_'$uid'_NAME='\''&'\''; export GIT_'$uid'_NAME/p
-
-                        g
-                        s/^'$lid' [^<]* <\([^>]*\)> .*$/\1/
-                        s/'\''/'\''\'\'\''/g
-                        s/.*/GIT_'$uid'_EMAIL='\''&'\''; export GIT_'$uid'_EMAIL/p
-
-                        g
-                        s/^'$lid' [^<]* <[^>]*> \(.*\)$/@\1/
-                        s/'\''/'\''\'\'\''/g
-                        s/.*/GIT_'$uid'_DATE='\''&'\''; export GIT_'$uid'_DATE/p
-
-                        q
-                }
-        '
-        LANG=C LC_ALL=C sed -ne "$pick_id_script" <commit
-
-in your shell? You should get:
-
-  GIT_AUTHOR_NAME='Your Name'; export GIT_AUTHOR_NAME
-  GIT_AUTHOR_EMAIL='you@example.com'; export GIT_AUTHOR_EMAIL
-  GIT_AUTHOR_DATE='@1350408529 -0400'; export GIT_AUTHOR_DATE
-
-> I use git 1.7.6, from sunfreeware.
-
-It might also be worth testing v1.7.12, but reading the logs, I don't
-think there has been any meaningful update to filter-branch since then.
-
--Peff
+-- Hannes
