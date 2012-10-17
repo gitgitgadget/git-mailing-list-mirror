@@ -1,118 +1,170 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PULL REQUEST]: Please pull git-gui
-Date: Wed, 17 Oct 2012 23:16:04 +0100
-Message-ID: <87d30gzqvv.fsf@fox.patthoyts.tk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add new git-remote-hd helper
+Date: Wed, 17 Oct 2012 18:59:13 -0400
+Message-ID: <20121017225913.GC21742@sigill.intra.peff.net>
+References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 00:17:50 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 18 00:59:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TObvt-0006sU-HN
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 00:17:45 +0200
+	id 1TOcaF-0002VZ-Ni
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 00:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981Ab2JQWRe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Oct 2012 18:17:34 -0400
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:4944 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751801Ab2JQWRe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 18:17:34 -0400
-Received: from know-smtpout-1.server.virginmedia.net ([62.254.123.1])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20121017221732.GIEB26256.mtaout03-winn.ispmail.ntl.com@know-smtpout-1.server.virginmedia.net>;
-          Wed, 17 Oct 2012 23:17:32 +0100
-Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
-	by know-smtpout-1.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1TObuI-0005to-OJ; Wed, 17 Oct 2012 23:16:06 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 28BD420C31; Wed, 17 Oct 2012 23:16:06 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Cloudmark-Analysis: v=1.1 cv=AUhbpHVS+xhHrj9wLCYAQoYnFLYUZdbP8UM0GmH2jwk= c=1 sm=0 a=O9HYxzjLEG8A:10 a=HL6A0-_58CgA:10 a=CtgcEeagiGAA:10 a=8nJEP1OIZ-IA:10 a=TuTkHzy0x2fPOqGbHOgA:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1752027Ab2JQW7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 18:59:16 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56985 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751788Ab2JQW7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 18:59:15 -0400
+Received: (qmail 30805 invoked by uid 107); 17 Oct 2012 22:59:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Oct 2012 18:59:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2012 18:59:13 -0400
+Content-Disposition: inline
+In-Reply-To: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207946>
 
-The following changes since commit 942e6baa92846e5628752c65a22bc4957d8d=
-e4d0:
+On Wed, Oct 17, 2012 at 02:58:41PM +0200, Felipe Contreras wrote:
 
-  git-gui 0.16 (2011-12-13 23:44:30 +0000)
+> I've looked at many hg<->git tools and none satisfy me. Too complicated, or too
+> slow, or to difficult to setup, etc.
 
-are available in the git repository at:
+I run into this every few months, evaluate all of the options, and come
+to the same conclusion. So I am excited at the prospect of something
+simple that just works out of the box.
 
-  git://repo.or.cz/git-gui.git tags/gitgui-0.17.0
+Unfortunately, when I tried it, it did not work for me. :(
 
-for you to fetch changes up to f6dd784ed4c1705d465b1238f9a5971f2733e582=
-:
+Details below.
 
-  git-gui 0.17 (2012-10-17 21:57:29 +0100)
+>  contrib/remote-hd/git-remote-hg | 231 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 231 insertions(+)
+>  create mode 100755 contrib/remote-hd/git-remote-hg
 
-----------------------------------------------------------------
-git-gui 0.17.0
+Is this "hd" a typo, or is there something clever I am missing?
 
-----------------------------------------------------------------
-Andrew Wong (2):
-      git-gui: Detect full path when parsing arguments
-      git-gui: Don't prepend the prefix if value looks like a full path
+> --- /dev/null
+> +++ b/contrib/remote-hd/git-remote-hg
+> @@ -0,0 +1,231 @@
+> +#!/usr/bin/python2
 
-Beat Bolli (2):
-      git-gui: Fix a loose/lose mistake
-      git-gui: remove .git/CHERRY_PICK_HEAD after committing
+I do not have /usr/bin/python2. I do have (on my Debian box):
 
-Benjamin Kerensa (1):
-      git-gui: fix a typo in po/ files
+  $ ls -l /usr/bin/python* | perl -lne 'print $& if m{/.*}'
+  /usr/bin/python -> python2.7
+  /usr/bin/python2.6
+  /usr/bin/python2.7
+  /usr/bin/python3 -> python3.2
+  /usr/bin/python3.2 -> python3.2mu
+  /usr/bin/python3.2mu
+  /usr/bin/python3mu -> python3.2mu
 
-Clemens Buchacher (1):
-      git-gui: fix git-gui crash due to uninitialized variable
+Obviously a minor, easily fixable issue, but I wonder if it should ship
+with a more portable default (like just "/usr/bin/python", or even
+"/usr/bin/env python").
 
-Heiko Voigt (1):
-      git-gui: open console when using --trace on windows
+> +# Inspired by Rocco Rutte's hg-fast-export
+> +
+> +# Just copy to your ~/bin, or anywhere in your $PATH.
+> +# Then you can clone with:
+> +# hg::file:///path/to/mercurial/repo/
 
-Marcus Karlsson (1):
-      git-gui: Use PWD if it exists on Mac OS X
+The first thing I tried was:
 
-Pat Thoyts (3):
-      git-gui: preserve commit messages in utf-8
-      Merge branch 'rt/trans'
-      git-gui 0.17
+  $ git clone hg::https://code.google.com/p/dactyl/ 
+  Cloning into 'dactyl'...
+  fatal: Unable to find remote helper for 'hg'
+  sigill:~/compile/dactyl$ git clone hg::https://code.google.com/p/dactyl/ 
+  Cloning into 'dactyl'...
+  Traceback (most recent call last):
+    File "/home/peff/local/bin/git-remote-hg", line 231, in <module>
+      sys.exit(main(sys.argv))
+    File "/home/peff/local/bin/git-remote-hg", line 222, in main
+      do_list(repo, args)
+    File "/home/peff/local/bin/git-remote-hg", line 159, in do_list
+      head = repo.dirstate.branch()
+  AttributeError: 'httpsrepository' object has no attribute 'dirstate'
 
-Ralf Thielow (3):
-      git-gui: de.po: consistently add untranslated hook names within b=
-races
-      git-gui: de.po: translate "bare" as "blo=DF"
-      git-gui: de.po: translate "remote" as "extern"
+So we are failing here:
 
-Vitaly _Vi Shukela (1):
-      git-gui: Fix semi-working shortcuts for unstage and revert
+> +def do_list(repo, args):
+> +    global branches
+> +
+> +    head = repo.dirstate.branch()
+> +    for branch in repo.branchmap():
+> +        heads = repo.branchheads(branch)
+> +        if len(heads):
+> +            branches[branch] = heads
 
- GIT-VERSION-GEN    |  2 +-
- git-gui.sh         | 36 ++++++++++++++++++++++++++++++------
- lib/commit.tcl     |  3 ++-
- lib/status_bar.tcl |  1 +
- macosx/AppMain.tcl |  4 +++-
- po/de.po           | 38 +++++++++++++++++++-------------------
- po/fr.po           |  2 +-
- po/git-gui.pot     |  2 +-
- po/hu.po           |  2 +-
- po/it.po           |  2 +-
- po/ja.po           |  2 +-
- po/nb.po           |  2 +-
- po/pt_br.po        |  2 +-
- po/ru.po           |  2 +-
- po/sv.po           |  2 +-
- 15 files changed, 65 insertions(+), 37 deletions(-)
+Is there a way to get this information for remote repos?
+
+I worked around it by doing an hg-clone and trying to git-clone from
+that local clone. But that didn't work either:
+
+  $ hg clone https://code.google.com/p/dactyl/ hg
+  [... clone eventually completes ...]
+
+  $ git clone hg::$PWD/hg git
+  Cloning into 'git'...
+  progress revision 99 'pentadactyl-1.0b5-branch' (100/5367)
+  [... many more progress updates ...]
+  progress revision 6766 'cpg-hack' (1400/1467)
+  ERROR: Branch 'default' has more than one head
+  error: refs/tags/VIMPERATOR_2_2_b1 does not point to a valid object!
+  error: refs/tags/muttator-0.5 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b1 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b2 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b3 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b4 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b4.1 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b4.2 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b4.3 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b5 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b5.1 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b6 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b7 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0b7.1 does not point to a valid object!
+  error: refs/tags/pentadactyl-1.0rc1 does not point to a valid object!
+  error: refs/tags/vimperator-0.4.1 does not point to a valid object!
+  error: refs/tags/vimperator-0.5 does not point to a valid object!
+  error: refs/tags/vimperator-0.5-branch-HEAD-merge-1 does not point to a valid object!
+  error: refs/tags/vimperator-0.5.1 does not point to a valid object!
+  error: refs/tags/vimperator-0.5.2 does not point to a valid object!
+  error: refs/tags/vimperator-0.5.3 does not point to a valid object!
+  error: refs/tags/vimperator-1.0 does not point to a valid object!
+  error: refs/tags/vimperator-1.1 does not point to a valid object!
+  error: refs/tags/vimperator-1.2 does not point to a valid object!
+  error: refs/tags/vimperator-2.0 does not point to a valid object!
+  error: refs/tags/vimperator-2.0a1 does not point to a valid object!
+  error: refs/tags/vimperator-2.1 does not point to a valid object!
+  error: refs/tags/vimperator-2.2 does not point to a valid object!
+  error: refs/tags/vimperator-2.2b1 does not point to a valid object!
+  error: refs/tags/xulmus-0.1 does not point to a valid object!
+
+I seem to remember getting this with other importers, too (probably
+because they were also based on the same script).
+
+We do not need to fix every bug before bringing a script into git
+(especially into contrib/), but I am wondering if this script errs too
+much on the side of "simple" and not enough on "works out of the box".
+Maybe this repo is really complex and unusual, and the multi-heads thing
+is not common enough to worry about. But I feel cloning a remote is the
+first thing most people are going to try, and it doesn't work.
+
+-Peff
