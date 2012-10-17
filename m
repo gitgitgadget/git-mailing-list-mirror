@@ -1,524 +1,94 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v4] git-cvsimport: allow author-specific timezones
-Date: Tue, 16 Oct 2012 22:53:29 -0500
-Message-ID: <1350446009-25059-1-git-send-email-chris@rorvick.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 17 05:53:44 2012
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: git rebase -p and patch equivalent commits
+Date: Tue, 16 Oct 2012 22:13:28 -0700
+Message-ID: <CANiSa6iecBnnjqcfZjQTrhz0-_=LO_AQpDz=J3aR1==6TB3M3Q@mail.gmail.com>
+References: <k5ke9q$gom$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Damien Robert <damien.olivier.robert+gmane@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 07:13:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOKhR-0000ya-Tq
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 05:53:42 +0200
+	id 1TOLwq-000374-NP
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 07:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756073Ab2JQDxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 23:53:30 -0400
-Received: from [38.98.186.242] ([38.98.186.242]:37920 "HELO burner.cogcap.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1755989Ab2JQDxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2012 23:53:30 -0400
-Received: by burner.cogcap.com (Postfix, from userid 10028)
-	id 4104F2B096D; Tue, 16 Oct 2012 22:53:29 -0500 (CDT)
-X-Mailer: git-send-email 1.7.1
+	id S1751801Ab2JQFN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 01:13:29 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:54980 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784Ab2JQFN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 01:13:28 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so11190877iea.19
+        for <git@vger.kernel.org>; Tue, 16 Oct 2012 22:13:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gGuKmEEsMLjlfaMalDLWop0Ku2R67ifxMiMD9uu5JyI=;
+        b=THQNgMqJ76N/vYONdWMBIpbKGEB0M/nUKXvj4HpsMz2qpk5a1jBYuXDf03dVXpWroA
+         WEVWrFoSNtB1ydvRuJ42/327FRQLJN4vAUYQqRP5O3Kfv5+E+QI6VoKOghvEYo2Z6LoS
+         GLFvXfUePcGxdR66TUMLQfmzA8Ye+YlPm685VWw7jSExCn9CkalLLSk6qEzf19fzaGxW
+         pCOTmkLMGjFHd3U9qrsHZAD+LBsqG4bdTEzIRaTzUgi0brc0Flbu3b3fwdYo1Gqng/zw
+         37Mok0EV6/DfPzl8oew8KK1TkEFPBZ8NqrBje/4QDhzi0i6ZWuDoPqGngWwT3jgCAW1X
+         LR2A==
+Received: by 10.43.135.135 with SMTP id ig7mr13455109icc.8.1350450808462; Tue,
+ 16 Oct 2012 22:13:28 -0700 (PDT)
+Received: by 10.64.103.5 with HTTP; Tue, 16 Oct 2012 22:13:28 -0700 (PDT)
+In-Reply-To: <k5ke9q$gom$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207891>
 
-CVS patchsets are imported with timestamps having an offset of +0000
-(UTC).  The cvs-authors file is already used to translate the CVS
-username to full name and email in the corresponding commit.  Extend
-this file to support an optional timezone for calculating a user-
-specific timestamp offset.
+On Tue, Oct 16, 2012 at 12:58 PM, Damien Robert
+<damien.olivier.robert+gmane@gmail.com> wrote:
+> Now feature is rebased against master. How would you rebase the branches
+> patch1, patch2 and build so that they keep the same layout?
+>
+> I tried to rebase patch1 and patch2, hoping that rebase -p build would use
+> the rebased commits for the merge but it creates new commits (that are
+> patch equivalents to patch1 and patch2) and merge them.
+>
+> So I can think of two ways to proceed:
+> 1) only rebase patch1 and patch2, and then remerge them again in build.
 
-Signed-off-by: Chris Rorvick <chris@rorvick.com>
----
+If the build branch really is just a build branch, then I would
+probably choose this option.
 
-Use System V timezones in unit test per feedback from Junio and Peff.
-Also, use timestamps from before the 2007 changes to DST--seems
-reasonable that people may not have bothered patching their systems for
-this in some parts of the world.
+>    This start to get complicated if I have some commits in build after the
+>    merge
 
-Is continuing to update the patch helpful at this point, or is this
-just noise?
+What would such commits contain? Is it something related to your build
+system that you can automate? If not, should they perhaps rather have
+been included in one of the patch branches? Or are they related to
+interactions between the patch branches? If the latter, I would
+probably serialize the dependent branches (e.g. basing "patch2" on
+"patch1").
 
- Documentation/git-cvsimport.txt    |   8 +-
- git-cvsimport.perl                 |  22 ++-
- t/t9604-cvsimport-timestamps.sh    |  71 ++++++++++
- t/t9604/cvsroot/.gitattributes     |   1 +
- t/t9604/cvsroot/CVSROOT/.gitignore |   2 +
- t/t9604/cvsroot/module/a,v         | 265 +++++++++++++++++++++++++++++++++++++
- 6 files changed, 362 insertions(+), 7 deletions(-)
- create mode 100755 t/t9604-cvsimport-timestamps.sh
- create mode 100644 t/t9604/cvsroot/.gitattributes
- create mode 100644 t/t9604/cvsroot/CVSROOT/.gitignore
- create mode 100644 t/t9604/cvsroot/module/a,v
+> 2) I can rebase -p the build branch first, and then reset --soft patch1
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 6695ab3..9ea8bb5 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -137,17 +137,19 @@ This option can be used several times to provide several detection regexes.
- -A <author-conv-file>::
- 	CVS by default uses the Unix username when writing its
- 	commit logs. Using this option and an author-conv-file
--	in this format
-+	maps the name recorded in CVS to author name, e-mail and
-+	and optional timezone:
- +
- ---------
- 	exon=Andreas Ericsson <ae@op5.se>
--	spawn=Simon Pawn <spawn@frog-pond.org>
-+	spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
- 
- ---------
- +
- 'git cvsimport' will make it appear as those authors had
- their GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL set properly
--all along.
-+all along.  If a timezone is specified, GIT_AUTHOR_DATE will
-+have the corresponding offset applied.
- +
- For convenience, this data is saved to `$GIT_DIR/cvs-authors`
- each time the '-A' option is provided and read from that same
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 8032f23..ceb119d 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -31,7 +31,7 @@ $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
- our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
--my (%conv_author_name, %conv_author_email);
-+my (%conv_author_name, %conv_author_email, %conv_author_tz);
- 
- sub usage(;$) {
- 	my $msg = shift;
-@@ -59,6 +59,14 @@ sub read_author_info($) {
- 			$conv_author_name{$user} = $2;
- 			$conv_author_email{$user} = $3;
- 		}
-+		# or with an optional timezone:
-+		#   spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
-+		elsif (m/^(\S+?)\s*=\s*(.+?)\s*<(.+)>\s*(\S+?)\s*$/) {
-+			$user = $1;
-+			$conv_author_name{$user} = $2;
-+			$conv_author_email{$user} = $3;
-+			$conv_author_tz{$user} = $4;
-+		}
- 		# However, we also read from CVSROOT/users format
- 		# to ease migration.
- 		elsif (/^(\w+):(['"]?)(.+?)\2\s*$/) {
-@@ -84,7 +92,9 @@ sub write_author_info($) {
- 	  die("Failed to open $file for writing: $!");
- 
- 	foreach (keys %conv_author_name) {
--		print $f "$_=$conv_author_name{$_} <$conv_author_email{$_}>\n";
-+		print $f "$_=$conv_author_name{$_} <$conv_author_email{$_}>";
-+		print $f " $conv_author_tz{$_}" if ($conv_author_tz{$_});
-+		print $f "\n";
- 	}
- 	close ($f);
- }
-@@ -795,7 +805,7 @@ sub write_tree () {
- 	return $tree;
- }
- 
--my ($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
-+my ($patchset,$date,$author_name,$author_email,$author_tz,$branch,$ancestor,$tag,$logmsg);
- my (@old,@new,@skipped,%ignorebranch,@commit_revisions);
- 
- # commits that cvsps cannot place anywhere...
-@@ -844,7 +854,9 @@ sub commit {
- 		}
- 	}
- 
--	my $commit_date = strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date));
-+	$ENV{'TZ'}=$author_tz;
-+	my $commit_date = strftime("%s %z", localtime($date));
-+	$ENV{'TZ'}="UTC";
- 	$ENV{GIT_AUTHOR_NAME} = $author_name;
- 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
- 	$ENV{GIT_AUTHOR_DATE} = $commit_date;
-@@ -945,12 +957,14 @@ while (<CVS>) {
- 		}
- 		$state=3;
- 	} elsif ($state == 3 and s/^Author:\s+//) {
-+		$author_tz = "UTC";
- 		s/\s+$//;
- 		if (/^(.*?)\s+<(.*)>/) {
- 		    ($author_name, $author_email) = ($1, $2);
- 		} elsif ($conv_author_name{$_}) {
- 			$author_name = $conv_author_name{$_};
- 			$author_email = $conv_author_email{$_};
-+			$author_tz = $conv_author_tz{$_} if ($conv_author_tz{$_});
- 		} else {
- 		    $author_name = $author_email = $_;
- 		}
-diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps.sh
-new file mode 100755
-index 0000000..1fd5142
---- /dev/null
-+++ b/t/t9604-cvsimport-timestamps.sh
-@@ -0,0 +1,71 @@
-+#!/bin/sh
-+
-+test_description='git cvsimport timestamps'
-+. ./lib-cvs.sh
-+
-+setup_cvs_test_repository t9604
-+
-+test_expect_success 'check timestamps are UTC (TZ=CST6CDT)' '
-+
-+	TZ=CST6CDT git cvsimport -p"-x" -C module-1 module &&
-+	git cvsimport -p"-x" -C module-1 module &&
-+	(
-+		cd module-1 &&
-+		git log --format="%s %ai"
-+	) >actual-1 &&
-+	cat >expect-1 <<-EOF &&
-+	Rev 16 2006-10-29 07:00:01 +0000
-+	Rev 15 2006-10-29 06:59:59 +0000
-+	Rev 14 2006-04-02 08:00:01 +0000
-+	Rev 13 2006-04-02 07:59:59 +0000
-+	Rev 12 2005-12-01 00:00:00 +0000
-+	Rev 11 2005-11-01 00:00:00 +0000
-+	Rev 10 2005-10-01 00:00:00 +0000
-+	Rev  9 2005-09-01 00:00:00 +0000
-+	Rev  8 2005-08-01 00:00:00 +0000
-+	Rev  7 2005-07-01 00:00:00 +0000
-+	Rev  6 2005-06-01 00:00:00 +0000
-+	Rev  5 2005-05-01 00:00:00 +0000
-+	Rev  4 2005-04-01 00:00:00 +0000
-+	Rev  3 2005-03-01 00:00:00 +0000
-+	Rev  2 2005-02-01 00:00:00 +0000
-+	Rev  1 2005-01-01 00:00:00 +0000
-+	EOF
-+	test_cmp actual-1 expect-1
-+'
-+
-+test_expect_success 'check timestamps with author-specific timezones' '
-+
-+	cat >cvs-authors <<-EOF &&
-+	user1=User One <user1@domain.org>
-+	user2=User Two <user2@domain.org> CST6CDT
-+	user3=User Three <user3@domain.org> EST5EDT
-+	user4=User Four <user4@domain.org> MST7MDT
-+	EOF
-+	git cvsimport -p"-x" -A cvs-authors -C module-2 module &&
-+	(
-+		cd module-2 &&
-+		git log --format="%s %ai %an"
-+	) >actual-2 &&
-+	cat >expect-2 <<-EOF &&
-+	Rev 16 2006-10-29 01:00:01 -0600 User Two
-+	Rev 15 2006-10-29 01:59:59 -0500 User Two
-+	Rev 14 2006-04-02 03:00:01 -0500 User Two
-+	Rev 13 2006-04-02 01:59:59 -0600 User Two
-+	Rev 12 2005-11-30 17:00:00 -0700 User Four
-+	Rev 11 2005-10-31 19:00:00 -0500 User Three
-+	Rev 10 2005-09-30 19:00:00 -0500 User Two
-+	Rev  9 2005-09-01 00:00:00 +0000 User One
-+	Rev  8 2005-07-31 18:00:00 -0600 User Four
-+	Rev  7 2005-06-30 20:00:00 -0400 User Three
-+	Rev  6 2005-05-31 19:00:00 -0500 User Two
-+	Rev  5 2005-05-01 00:00:00 +0000 User One
-+	Rev  4 2005-03-31 17:00:00 -0700 User Four
-+	Rev  3 2005-02-28 19:00:00 -0500 User Three
-+	Rev  2 2005-01-31 18:00:00 -0600 User Two
-+	Rev  1 2005-01-01 00:00:00 +0000 User One
-+	EOF
-+	test_cmp actual-2 expect-2
-+'
-+
-+test_done
-diff --git a/t/t9604/cvsroot/.gitattributes b/t/t9604/cvsroot/.gitattributes
-new file mode 100644
-index 0000000..562b12e
---- /dev/null
-+++ b/t/t9604/cvsroot/.gitattributes
-@@ -0,0 +1 @@
-+* -whitespace
-diff --git a/t/t9604/cvsroot/CVSROOT/.gitignore b/t/t9604/cvsroot/CVSROOT/.gitignore
-new file mode 100644
-index 0000000..3bb9b34
---- /dev/null
-+++ b/t/t9604/cvsroot/CVSROOT/.gitignore
-@@ -0,0 +1,2 @@
-+history
-+val-tags
-diff --git a/t/t9604/cvsroot/module/a,v b/t/t9604/cvsroot/module/a,v
-new file mode 100644
-index 0000000..3c338a0
---- /dev/null
-+++ b/t/t9604/cvsroot/module/a,v
-@@ -0,0 +1,265 @@
-+head	1.16;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.16
-+date	2006.10.29.07.00.01;	author user2;	state Exp;
-+branches;
-+next	1.15;
-+
-+1.15
-+date	2006.10.29.06.59.59;	author user2;	state Exp;
-+branches;
-+next	1.14;
-+
-+1.14
-+date	2006.04.02.08.00.01;	author user2;	state Exp;
-+branches;
-+next	1.13;
-+
-+1.13
-+date	2006.04.02.07.59.59;	author user2;	state Exp;
-+branches;
-+next	1.12;
-+
-+1.12
-+date	2005.12.01.00.00.00;	author user4;	state Exp;
-+branches;
-+next	1.11;
-+
-+1.11
-+date	2005.11.01.00.00.00;	author user3;	state Exp;
-+branches;
-+next	1.10;
-+
-+1.10
-+date	2005.10.01.00.00.00;	author user2;	state Exp;
-+branches;
-+next	1.9;
-+
-+1.9
-+date	2005.09.01.00.00.00;	author user1;	state Exp;
-+branches;
-+next	1.8;
-+
-+1.8
-+date	2005.08.01.00.00.00;	author user4;	state Exp;
-+branches;
-+next	1.7;
-+
-+1.7
-+date	2005.07.01.00.00.00;	author user3;	state Exp;
-+branches;
-+next	1.6;
-+
-+1.6
-+date	2005.06.01.00.00.00;	author user2;	state Exp;
-+branches;
-+next	1.5;
-+
-+1.5
-+date	2005.05.01.00.00.00;	author user1;	state Exp;
-+branches;
-+next	1.4;
-+
-+1.4
-+date	2005.04.01.00.00.00;	author user4;	state Exp;
-+branches;
-+next	1.3;
-+
-+1.3
-+date	2005.03.01.00.00.00;	author user3;	state Exp;
-+branches;
-+next	1.2;
-+
-+1.2
-+date	2005.02.01.00.00.00;	author user2;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2005.01.01.00.00.00;	author user1;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.16
-+log
-+@Rev 16
-+@
-+text
-+@Rev 16
-+@
-+
-+
-+1.15
-+log
-+@Rev 15
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 15
-+@
-+
-+
-+1.14
-+log
-+@Rev 14
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 14
-+@
-+
-+
-+1.13
-+log
-+@Rev 13
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 13
-+@
-+
-+
-+1.12
-+log
-+@Rev 12
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 12
-+@
-+
-+
-+1.11
-+log
-+@Rev 11
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 11
-+@
-+
-+
-+1.10
-+log
-+@Rev 10
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 10
-+@
-+
-+
-+1.9
-+log
-+@Rev  9
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 9
-+@
-+
-+
-+1.8
-+log
-+@Rev  8
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 8
-+@
-+
-+
-+1.7
-+log
-+@Rev  7
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 7
-+@
-+
-+
-+1.6
-+log
-+@Rev  6
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 6
-+@
-+
-+
-+1.5
-+log
-+@Rev  5
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 5
-+@
-+
-+
-+1.4
-+log
-+@Rev  4
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 4
-+@
-+
-+
-+1.3
-+log
-+@Rev  3
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 3
-+@
-+
-+
-+1.2
-+log
-+@Rev  2
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 2
-+@
-+
-+
-+1.1
-+log
-+@Rev  1
-+@
-+text
-+@d1 1
-+a1 1
-+Rev 1
-+@
-+
--- 
-1.8.0.rc1.19.gbecacc0
+Did you mean --hard/--keep here? Or why would you use --soft?
+
+>    and
+>    patch2 so that they point to the right commits in the rebased branch.
+>    This way looks easier to do with more complicated layout, I just need to
+>    find a good way of finding where the rebased commits for patch1 and
+>    patch2 are, and I was thinking of using notes for that.
+
+I don't quite understand why you would want to do that if the build
+branch is just to make sure test pass on the merged result, but, yes,
+this method would probably be easier if you do need to keep both the
+build branch and the patchX branches up to date. Which branch do you
+actively work on at this point? Both the build branch and the patchX
+branches? Is it that you have sent patch1 and patch2 for review and
+you want to base your next topic on the merged result? I assume not,
+since you said it was a "build" branch. But if that was the case (i.e.
+somewhat active development on build, patch1 and patch2 (perhaps due
+to review comments)), I would probably still rebase one branch at a
+time, recreate the merge (possibly using rerere), and then "rebase
+--onto new-merge old-merge build".
