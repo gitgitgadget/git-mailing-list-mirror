@@ -1,78 +1,151 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Aw: Re: [Patch v3 0/8] Create single PDF for all HTML files
-Date: Wed, 17 Oct 2012 13:24:59 -0700
-Message-ID: <7vipa8onhg.fsf@alter.siamese.dyndns.org>
-References: <2064042984.134573.1350493458315.JavaMail.ngmail@webmail22.arcor-online.net>
+Subject: [ANNOUNCE] Git v1.7.12.4
+Date: Wed, 17 Oct 2012 13:33:00 -0700
+Message-ID: <7v6268on43.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, philipoakley@iee.org, peff@peff.net,
-	git@drmicha.warpmail.net
-To: Thomas Ackermann <th.acker66@arcor.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 22:25:28 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Wed Oct 17 22:33:25 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOaB6-0007Ic-Eq
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 22:25:20 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1TOaIq-0000vQ-JJ
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 17 Oct 2012 22:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754885Ab2JQUZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 16:25:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50981 "EHLO
+	id S1757857Ab2JQUdG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 17 Oct 2012 16:33:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54694 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752771Ab2JQUZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 16:25:05 -0400
+	id S1755580Ab2JQUdD convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 17 Oct 2012 16:33:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42047841E;
-	Wed, 17 Oct 2012 16:25:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3A638718;
+	Wed, 17 Oct 2012 16:33:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jX3tjpMChdG3kFBj/QGYuXgFKyo=; b=ExD06G
-	NhDX6Lx5cmthP9ZEJECWnS8AmQyOeIiFTLIlS1Fx0J/9hEnr6kB1w4evShT+/lPg
-	cKzIAGMlhB3VLewJvSJiYqcxOy6BZHHLjX95+suddBEez+QIZomSGa+CVX/xUXEr
-	sQsu665p5mijI6ZWQu91BxcRSu8xuHKrssVow=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=q1Eu8NtKmqRCBJp5dhqHq056x
+	mU=; b=uqKaY9f7GVJ6KIzaj+Ps1goVrf7hE3MkraQwbCW3gWoo7FFajBw35A92r
+	56g3xHJm6pIzOoC8t3rFIOBPjbPyWRMSH2BKiWz98PxZmLjrmnys6HwfUSgDIgrD
+	HzcTS11aBu87ZXPJermeOBDG5rCfj8X8jpOcX0h0AXbzy0wGlY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M1XmQz4CRIyIaLk1tL5hFkAAQBArGPlI
-	D9CBU/ywLVeD8O8HzrSx0MD0e4hA4g47YsGLqFTe4hc5NvJhv9RqFwHOMWbs1n0Q
-	sIe7YsRxAxAXFSntw+U1OcVfxgZgFppVKleDf54TmWMA+NhZVI0MH9Je5f3VW69V
-	SQ5B/Nl7vDo=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=v0svSkxQfcjar3O9uT3
+	QVtWd/IOT4CMLS/bfSNQehvNdC8nbHoxhFiFJ8ZJ6+9s3I5o0eIlt9PPbpWLtCZO
+	OrNnRz7S1LXH+8oyJKf0iUuY4O9wig6IP6UrguKOWIlDlZnjip+/YVgx2A3xT6GO
+	U8xqbjb1RmrFNN8estC6WKTA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3078C841D;
-	Wed, 17 Oct 2012 16:25:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1C848717;
+	Wed, 17 Oct 2012 16:33:02 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 510EB841A; Wed, 17 Oct 2012
- 16:25:01 -0400 (EDT)
-In-Reply-To: <2064042984.134573.1350493458315.JavaMail.ngmail@webmail22.arcor-online.net>
- (Thomas Ackermann's message of "Wed, 17 Oct 2012 19:04:18 +0200 (CEST)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D54578716; Wed, 17 Oct 2012
+ 16:33:01 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BA404ED6-1898-11E2-8514-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: D8ACFAA8-1899-11E2-A633-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207939>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207940>
 
-Thomas Ackermann <th.acker66@arcor.de> writes:
+The latest maintenance release Git v1.7.12.4 is now available at
+the usual places.
 
-> BTW1: As only the changes in the doc files where cherry-picked, currently on pu howto-index.sh
-> will create invalid links in howto-index.html because it scans all .txt-files in ./howto for 
-> 'Content-type: text/asciidoc' and if found, creates a reference to a html file. But these are not created
-> for the new asciidoc files. So the changes in Documentation/Makefile which create html for the new  
-> files should be merged also.
+The release tarballs are found at:
 
-Ah, I didn't notice that.
+    http://code.google.com/p/git-core/downloads/list
 
-That means that for the patch [6/8], which adds content-type to the
-text files, to be complete, it needs to update Makefile to produce
-html files from them.
+and their SHA-1 checksums are:
 
-Thanks.
+e7eb697fc12887138e44ae100165c620a1210e81  git-1.7.12.4.tar.gz
+1d4ce5c8fabbf576d611effcce2f87089da1bb89  git-htmldocs-1.7.12.4.tar.gz
+1f853aa40c4518a4fad829f255c96d6e21659e93  git-manpages-1.7.12.4.tar.gz
 
-> BTW2: The 'pretty-print shell script in update-hook-example.txt'
-> part of my changes was left out from the merge to pu ...
+Also the following public repositories all have a copy of the v1.7.12.4
+tag and the maint branch that the tag points at:
 
-Do you mean e2399e9 (Documentation/howto: convert plain text files
-to asciidoc, 2012-10-16), or something else?
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
+
+Git 1.7.12.4 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.7.12.3
+---------------------
+
+ * "git fetch" over the dumb-http revision walker could segfault when
+   curl's multi interface was used.
+
+ * It was possible to give specific paths for "asciidoc" and other
+   tools in the documentation toolchain, but not for "xmlto".
+
+ * "gitweb" did not give the correct committer timezone in its feed
+   output due to a typo.
+
+ * The "-Xours" (and similarly -Xtheirs) backend option to "git
+   merge -s recursive" was ignored for binary files.  Now it is
+   honored.
+
+ * The "binary" synthetic attribute made "diff" to treat the path as
+   binary, but not "merge".
+
+Also contains many documentation updates.
+
+----------------------------------------------------------------
+
+Changes since v1.7.12.3 are as follows:
+
+Ben Walton (1):
+      tests: "cp -a" is a GNUism
+
+Dave Borowitz (1):
+      Documentation/Makefile: Allow custom XMLTO binary
+
+Dylan Alex Simon (1):
+      gitweb.cgi: fix "comitter_tz" typo in feed
+
+Jeff King (1):
+      http: fix segfault in handle_curl_result
+
+Junio C Hamano (6):
+      merge: teach -Xours/-Xtheirs to binary ll-merge driver
+      attr: "binary" attribute should choose built-in "binary" merge dr=
+iver
+      ll-merge: warn about inability to merge binary files only when we=
+ can't
+      t1450: the order the objects are checked is undefined
+      gitcli: parse-options lets you omit tail of long options
+      Git 1.7.12.4
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+      gitignore.txt: suggestions how to get literal # or ! at the begin=
+ning
+      attr: a note about the order of .gitattributes lookup
+
+Philip Oakley (5):
+      Doc: shallow clone deepens _to_ new depth
+      Doc: separate gitignore pattern sources
+      Doc add: link gitignore
+      Doc clean: add See Also link
+      Doc branch: show -vv option and alternative
+
+Ramkumar Ramachandra (3):
+      t/test-lib: make sure Git has already been built
+      test-lib: use $SHELL_PATH, not $SHELL
+      Git url doc: mark ftp/ftps as read-only and deprecate them
+
+Richard Fearn (1):
+      Fix spelling error in post-receive-email hook
+
+Simon Ruderich (1):
+      l10n: de.po: fix a few minor typos
