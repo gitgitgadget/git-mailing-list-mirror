@@ -1,98 +1,232 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new git-remote-hd helper
-Date: Wed, 17 Oct 2012 18:38:23 +0200
-Message-ID: <CAMP44s1WY+Q7jyy4PQvwff7JSxHsnkhrPWozOLnNuNOrn7FGBA@mail.gmail.com>
-References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
-	<alpine.DEB.1.00.1210171759230.3049@bonsai2>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Fix "git diff --stat" for interesting - but empty - file changes
+Date: Wed, 17 Oct 2012 10:00:37 -0700
+Message-ID: <CA+55aFz88GPJcfMSqiyY+u0Cdm48bEyrsTGxHVJbGsYsDg=Q5w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 18:38:36 2012
+Content-Type: multipart/mixed; boundary=0016e6de17e8f554cf04cc4436ac
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 17 19:01:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOWdg-0006Og-3q
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 18:38:36 +0200
+	id 1TOWza-0003wT-GH
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 19:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306Ab2JQQiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 12:38:24 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:53534 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756455Ab2JQQiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 12:38:23 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so7627950oag.19
-        for <git@vger.kernel.org>; Wed, 17 Oct 2012 09:38:23 -0700 (PDT)
+	id S1757444Ab2JQRBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 13:01:01 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:65246 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756475Ab2JQRBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 13:01:00 -0400
+Received: by mail-wi0-f178.google.com with SMTP id hr7so983897wib.1
+        for <git@vger.kernel.org>; Wed, 17 Oct 2012 10:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=MvUs4TvQYuM32q9ufuJlypvOxr0OBQAHq5/681mcB8s=;
-        b=ol8yp60ezMkpGAnAgvjQ0CWuIYH+bsTkMoqnX1shmKpJxfhRTqeBihjVfDIhe72XXM
-         JaKmT1PaKJ8soohkemIziY3F0HiMZw6+8NWO+lgzTZ4RuIcJ8mFjEvrRECi27iBi8XUr
-         a502lYZf/Os358/dPVv6pwJaLw+3h1fT3BtehV55KScm3bZ3weibCoBCcb0ZeQR5iCpf
-         e0tkEybqu1I7As90ZAFWpmkriXuo5mQ+r+wOYWAIXuTXYYHuH5eVPaiEL3ajEa5k8PKu
-         6x5EErwl9xQ/MTCAS0MBcOME3VB4tcwS8efAurBvzs918wb5Pk0rebYedHsG1mjXwXgI
-         9JZg==
-Received: by 10.182.245.20 with SMTP id xk20mr15832155obc.89.1350491903110;
- Wed, 17 Oct 2012 09:38:23 -0700 (PDT)
-Received: by 10.60.58.137 with HTTP; Wed, 17 Oct 2012 09:38:23 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1210171759230.3049@bonsai2>
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        bh=nWyvloaPESQcUB6SbNSB6HETtlKyHU+XsstE03+BGMY=;
+        b=yPaLS5vcObKpAX5ek9/HkEm1d1iSJ4mbRjusxcRDbUVRaB7K5s1Ql7Xww6Q7viDn3G
+         b+v9yRg5k45kbSSn04PEkNWuhtr4QmmtNRpELmI84EHeNhcRhjjOARXyNOGyau/L/b/+
+         a+8uxNMXFBYA7oK92AfdOTxt/GF6yM9hEHbdhgw/7rRsre7oZrnTrpXWYYG2zOhpK8kH
+         zPNkqZC2BQuUWlgv778jmYHYCWoNKgBC8DTO18N7Hc+mff+zjJSbb5pOKjlIs2o3ekk3
+         rcFbvln/Gr+4LKYp5ODJzO2li7U7cUMdsG1Z4bSkl0SYkoMotLWsCLX++xDDFqhvB35E
+         7tMg==
+Received: by 10.216.136.31 with SMTP id v31mr12212338wei.104.1350493258732;
+ Wed, 17 Oct 2012 10:00:58 -0700 (PDT)
+Received: by 10.216.195.164 with HTTP; Wed, 17 Oct 2012 10:00:37 -0700 (PDT)
+X-Google-Sender-Auth: 2EoWpCrLYPWKlZQOm0YkaQhGPRQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207922>
 
-On Wed, Oct 17, 2012 at 6:03 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 17 Oct 2012, Felipe Contreras wrote:
->
->> I've looked at many hg<->git tools and none satisfy me. Too complicated,
->> or too slow, or to difficult to setup, etc.
->
-> The one I merged into Git for Windows (since that is what I install on all
-> my machines even if they run Linux) is rock-solid. It also comes with
-> tests. And it requires a fix I tried to get into git.git (but failed,
-> since I was asked to do much more in addition to what I needed for myself,
-> and I lack the time to address such requests these days).
+--0016e6de17e8f554cf04cc4436ac
+Content-Type: text/plain; charset=ISO-8859-1
 
-Maybe, but who uses it? It's quite a lot of code, and it's quite
-difficult to setup--you would need a non-vanilla version of git.
+The behavior of "git diff --stat" is rather odd for files that have
+zero lines of changes: it will discount them entirely unless they were
+renames.
 
-Compare this:
-32 files changed, 3351 insertions(+), 289 deletions(-)
+Which means that the stat output will simply not show files that only
+had "other" changes: they were created or deleted, or their mode was
+changed.
 
-To this:
-1 file changed, 231 insertions(+)
+Now, those changes do show up in the summary, but so do renames, so
+the diffstat logic is inconsistent. Why does it show renames with zero
+lines changed, but not mode changes or added files with zero lines
+changed?
 
-I would like to first get something that works in, and then step by
-step work on top of that.
+So change the logic to not check for "is_renamed", but for
+"is_interesting" instead, where "interesting" is judged to be any
+action but a pure data change (because a pure data change with zero
+data changed really isn't worth showing, if we ever get one in our
+diffpairs).
 
-Anyway, I'm not even sure which version you are talking about, because
-there's plenty out there:
-https://github.com/SRabbelier/git/network
+So if you did
 
-> So I have to admit that I do not quite see the point of avoiding to
-> enhance the existing work of Sverre (and a little bit of me, too, in a
-> hackathon for which I traveled half the continent back in July 2011).
+   chmod +x Makefile
+   git diff --stat
 
-It's way too much code, to be specific; 15x the code I just submitted.
-It would be better to work together, but to me the code-styles are way
-too different, the difference between night and day. If you are
-interested in simplifying that code, get rid of the classes of classes
-of classes and have something more consolidated, I could try to
-contribute, but I doubt that's the case.
+before, it would show empty (" 0 files changed"), with this it shows
 
-Anyway, this is 231 lines of code, and works just fine, which is
-better than what we have in git.git for mercurial: basically nothing.
+ Makefile | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
 
-Cheers.
+which I think is a more correct diffstat (and then with "--summary" it
+shows *what* the metadata change to Makefile was - this is completely
+consistent with our handling of renamed files).
 
--- 
-Felipe Contreras
+Side note: the old behavior was *really* odd. With no changes at all,
+"git diff --stat" output was empty. With just a chmod, it said "0
+files changed". No way is our legacy behavior sane.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+This was triggered by kernel developers not noticing that they had
+added zero-sized files, because those additions never showed up in the
+diffstat.
+
+NOTE! This does break two of our tests, so we clearly did this on
+purpose, or at least tested for it. I just uncommented the subtests
+that this makes irrelevant, and changed the output of another one.
+
+Another test was simply buggy. It used "git diff --root cmit", and
+thought that would be the diff against root. It isn't, and never has
+been. It just happened to give the same (no file) output before.
+Fixing --stat to show new files showed how buggy the test was. The
+"--root" thing matters for "git show" or "git log" (when showing a
+root commit) and for "git diff-tree" with a single tree.
+
+Maybe we would *want* to make "git diff --root <cmit>" be the "diff
+between root and cmit", but that's not what it actually is.
+
+Comments?
+
+--0016e6de17e8f554cf04cc4436ac
+Content-Type: application/octet-stream; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_h8eopvpt0
+
+IGRpZmYuYyAgICAgICAgICAgICAgICAgICAgICAgIHwgMjUgKysrKysrKysrKysrKy0tLS0tLS0t
+LS0KIHQvdDQwMDYtZGlmZi1tb2RlLnNoICAgICAgICAgIHwgNDYgKysrKysrKysrKysrKysrKysr
+KysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogdC90NDA0OS1kaWZmLXN0YXQtY291bnQuc2ggICAg
+fCAgMyArKy0KIHQvdDQyMDUtbG9nLXByZXR0eS1mb3JtYXRzLnNoIHwgIDQgKystLQogNCBmaWxl
+cyBjaGFuZ2VkLCA0MiBpbnNlcnRpb25zKCspLCAzNiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQg
+YS9kaWZmLmMgYi9kaWZmLmMKaW5kZXggMzVkM2YwNzM4NTlhLi45NWJiYWQ2NmM2ODYgMTAwNjQ0
+Ci0tLSBhL2RpZmYuYworKysgYi9kaWZmLmMKQEAgLTEzMDAsNiArMTMwMCw3IEBAIHN0cnVjdCBk
+aWZmc3RhdF90IHsKIAkJdW5zaWduZWQgaXNfdW5tZXJnZWQ6MTsKIAkJdW5zaWduZWQgaXNfYmlu
+YXJ5OjE7CiAJCXVuc2lnbmVkIGlzX3JlbmFtZWQ6MTsKKwkJdW5zaWduZWQgaXNfaW50ZXJlc3Rp
+bmc6MTsKIAkJdWludG1heF90IGFkZGVkLCBkZWxldGVkOwogCX0gKipmaWxlczsKIH07CkBAIC0x
+NDY5LDcgKzE0NzAsNyBAQCBzdGF0aWMgdm9pZCBzaG93X3N0YXRzKHN0cnVjdCBkaWZmc3RhdF90
+ICpkYXRhLCBzdHJ1Y3QgZGlmZl9vcHRpb25zICpvcHRpb25zKQogCWZvciAoaSA9IDA7IChpIDwg
+Y291bnQpICYmIChpIDwgZGF0YS0+bnIpOyBpKyspIHsKIAkJc3RydWN0IGRpZmZzdGF0X2ZpbGUg
+KmZpbGUgPSBkYXRhLT5maWxlc1tpXTsKIAkJdWludG1heF90IGNoYW5nZSA9IGZpbGUtPmFkZGVk
+ICsgZmlsZS0+ZGVsZXRlZDsKLQkJaWYgKCFkYXRhLT5maWxlc1tpXS0+aXNfcmVuYW1lZCAmJgor
+CQlpZiAoIWRhdGEtPmZpbGVzW2ldLT5pc19pbnRlcmVzdGluZyAmJgogCQkJIChjaGFuZ2UgPT0g
+MCkpIHsKIAkJCWNvdW50Kys7IC8qIG5vdCBzaG93biA9PSByb29tIGZvciBvbmUgbW9yZSAqLwog
+CQkJY29udGludWU7CkBAIC0xNTkwLDcgKzE1OTEsNyBAQCBzdGF0aWMgdm9pZCBzaG93X3N0YXRz
+KHN0cnVjdCBkaWZmc3RhdF90ICpkYXRhLCBzdHJ1Y3QgZGlmZl9vcHRpb25zICpvcHRpb25zKQog
+CQl1aW50bWF4X3QgZGVsZXRlZCA9IGRhdGEtPmZpbGVzW2ldLT5kZWxldGVkOwogCQlpbnQgbmFt
+ZV9sZW47CiAKLQkJaWYgKCFkYXRhLT5maWxlc1tpXS0+aXNfcmVuYW1lZCAmJgorCQlpZiAoIWRh
+dGEtPmZpbGVzW2ldLT5pc19pbnRlcmVzdGluZyAmJgogCQkJIChhZGRlZCArIGRlbGV0ZWQgPT0g
+MCkpIHsKIAkJCXRvdGFsX2ZpbGVzLS07CiAJCQljb250aW51ZTsKQEAgLTE2NjksNyArMTY3MCw3
+IEBAIHN0YXRpYyB2b2lkIHNob3dfc3RhdHMoc3RydWN0IGRpZmZzdGF0X3QgKmRhdGEsIHN0cnVj
+dCBkaWZmX29wdGlvbnMgKm9wdGlvbnMpCiAJZm9yIChpID0gY291bnQ7IGkgPCBkYXRhLT5ucjsg
+aSsrKSB7CiAJCXVpbnRtYXhfdCBhZGRlZCA9IGRhdGEtPmZpbGVzW2ldLT5hZGRlZDsKIAkJdWlu
+dG1heF90IGRlbGV0ZWQgPSBkYXRhLT5maWxlc1tpXS0+ZGVsZXRlZDsKLQkJaWYgKCFkYXRhLT5m
+aWxlc1tpXS0+aXNfcmVuYW1lZCAmJgorCQlpZiAoIWRhdGEtPmZpbGVzW2ldLT5pc19pbnRlcmVz
+dGluZyAmJgogCQkJIChhZGRlZCArIGRlbGV0ZWQgPT0gMCkpIHsKIAkJCXRvdGFsX2ZpbGVzLS07
+CiAJCQljb250aW51ZTsKQEAgLTE2OTcsNyArMTY5OCw3IEBAIHN0YXRpYyB2b2lkIHNob3dfc2hv
+cnRzdGF0cyhzdHJ1Y3QgZGlmZnN0YXRfdCAqZGF0YSwgc3RydWN0IGRpZmZfb3B0aW9ucyAqb3B0
+aW9uCiAKIAkJaWYgKGRhdGEtPmZpbGVzW2ldLT5pc191bm1lcmdlZCkKIAkJCWNvbnRpbnVlOwot
+CQlpZiAoIWRhdGEtPmZpbGVzW2ldLT5pc19yZW5hbWVkICYmIChhZGRlZCArIGRlbGV0ZWQgPT0g
+MCkpIHsKKwkJaWYgKCFkYXRhLT5maWxlc1tpXS0+aXNfaW50ZXJlc3RpbmcgJiYgKGFkZGVkICsg
+ZGVsZXRlZCA9PSAwKSkgewogCQkJdG90YWxfZmlsZXMtLTsKIAkJfSBlbHNlIGlmICghZGF0YS0+
+ZmlsZXNbaV0tPmlzX2JpbmFyeSkgeyAvKiBkb24ndCBjb3VudCBieXRlcyAqLwogCQkJYWRkcyAr
+PSBhZGRlZDsKQEAgLTIzOTcsMTMgKzIzOTgsMjAgQEAgc3RhdGljIHZvaWQgYnVpbHRpbl9kaWZm
+c3RhdChjb25zdCBjaGFyICpuYW1lX2EsIGNvbnN0IGNoYXIgKm5hbWVfYiwKIAkJCSAgICAgc3Ry
+dWN0IGRpZmZfZmlsZXNwZWMgKnR3bywKIAkJCSAgICAgc3RydWN0IGRpZmZzdGF0X3QgKmRpZmZz
+dGF0LAogCQkJICAgICBzdHJ1Y3QgZGlmZl9vcHRpb25zICpvLAotCQkJICAgICBpbnQgY29tcGxl
+dGVfcmV3cml0ZSkKKwkJCSAgICAgc3RydWN0IGRpZmZfZmlsZXBhaXIgKnApCiB7CiAJbW1maWxl
+X3QgbWYxLCBtZjI7CiAJc3RydWN0IGRpZmZzdGF0X2ZpbGUgKmRhdGE7CiAJaW50IHNhbWVfY29u
+dGVudHM7CisJaW50IGNvbXBsZXRlX3Jld3JpdGUgPSAwOworCisJaWYgKCFESUZGX1BBSVJfVU5N
+RVJHRUQocCkpIHsKKwkJaWYgKHAtPnN0YXR1cyA9PSBESUZGX1NUQVRVU19NT0RJRklFRCAmJiBw
+LT5zY29yZSkKKwkJCWNvbXBsZXRlX3Jld3JpdGUgPSAxOworCX0KIAogCWRhdGEgPSBkaWZmc3Rh
+dF9hZGQoZGlmZnN0YXQsIG5hbWVfYSwgbmFtZV9iKTsKKwlkYXRhLT5pc19pbnRlcmVzdGluZyA9
+IHAtPnN0YXR1cyAhPSAwOwogCiAJaWYgKCFvbmUgfHwgIXR3bykgewogCQlkYXRhLT5pc191bm1l
+cmdlZCA9IDE7CkBAIC0zMTE0LDExICszMTIyLDEwIEBAIHN0YXRpYyB2b2lkIHJ1bl9kaWZmc3Rh
+dChzdHJ1Y3QgZGlmZl9maWxlcGFpciAqcCwgc3RydWN0IGRpZmZfb3B0aW9ucyAqbywKIHsKIAlj
+b25zdCBjaGFyICpuYW1lOwogCWNvbnN0IGNoYXIgKm90aGVyOwotCWludCBjb21wbGV0ZV9yZXdy
+aXRlID0gMDsKIAogCWlmIChESUZGX1BBSVJfVU5NRVJHRUQocCkpIHsKIAkJLyogdW5tZXJnZWQg
+Ki8KLQkJYnVpbHRpbl9kaWZmc3RhdChwLT5vbmUtPnBhdGgsIE5VTEwsIE5VTEwsIE5VTEwsIGRp
+ZmZzdGF0LCBvLCAwKTsKKwkJYnVpbHRpbl9kaWZmc3RhdChwLT5vbmUtPnBhdGgsIE5VTEwsIE5V
+TEwsIE5VTEwsIGRpZmZzdGF0LCBvLCBwKTsKIAkJcmV0dXJuOwogCX0KIApAQCAtMzEzMSw5ICsz
+MTM4LDcgQEAgc3RhdGljIHZvaWQgcnVuX2RpZmZzdGF0KHN0cnVjdCBkaWZmX2ZpbGVwYWlyICpw
+LCBzdHJ1Y3QgZGlmZl9vcHRpb25zICpvLAogCWRpZmZfZmlsbF9zaGExX2luZm8ocC0+b25lKTsK
+IAlkaWZmX2ZpbGxfc2hhMV9pbmZvKHAtPnR3byk7CiAKLQlpZiAocC0+c3RhdHVzID09IERJRkZf
+U1RBVFVTX01PRElGSUVEICYmIHAtPnNjb3JlKQotCQljb21wbGV0ZV9yZXdyaXRlID0gMTsKLQli
+dWlsdGluX2RpZmZzdGF0KG5hbWUsIG90aGVyLCBwLT5vbmUsIHAtPnR3bywgZGlmZnN0YXQsIG8s
+IGNvbXBsZXRlX3Jld3JpdGUpOworCWJ1aWx0aW5fZGlmZnN0YXQobmFtZSwgb3RoZXIsIHAtPm9u
+ZSwgcC0+dHdvLCBkaWZmc3RhdCwgbywgcCk7CiB9CiAKIHN0YXRpYyB2b2lkIHJ1bl9jaGVja2Rp
+ZmYoc3RydWN0IGRpZmZfZmlsZXBhaXIgKnAsIHN0cnVjdCBkaWZmX29wdGlvbnMgKm8pCmRpZmYg
+LS1naXQgYS90L3Q0MDA2LWRpZmYtbW9kZS5zaCBiL3QvdDQwMDYtZGlmZi1tb2RlLnNoCmluZGV4
+IDNkNGIxYmEyM2Y5ZS4uMDU5MTE0OTJjYTZkIDEwMDc1NQotLS0gYS90L3Q0MDA2LWRpZmYtbW9k
+ZS5zaAorKysgYi90L3Q0MDA2LWRpZmYtbW9kZS5zaApAQCAtMzIsMjggKzMyLDI4IEBAIHRlc3Rf
+ZXhwZWN0X3N1Y2Nlc3MgJ3ByZXBhcmUgYmluYXJ5IGZpbGUnICcKIAlnaXQgY29tbWl0IC1tIGJp
+bmJpbgogJwogCi10ZXN0X2V4cGVjdF9zdWNjZXNzICctLXN0YXQgb3V0cHV0IGFmdGVyIHRleHQg
+Y2htb2QnICcKLQl0ZXN0X2NobW9kIC14IHJlenJvdiAmJgotCWVjaG8gIiAwIGZpbGVzIGNoYW5n
+ZWQiID5leHBlY3QgJiYKLQlnaXQgZGlmZiBIRUFEIC0tc3RhdCA+YWN0dWFsICYmCi0JdGVzdF9p
+MThuY21wIGV4cGVjdCBhY3R1YWwKLScKLQotdGVzdF9leHBlY3Rfc3VjY2VzcyAnLS1zaG9ydHN0
+YXQgb3V0cHV0IGFmdGVyIHRleHQgY2htb2QnICcKLQlnaXQgZGlmZiBIRUFEIC0tc2hvcnRzdGF0
+ID5hY3R1YWwgJiYKLQl0ZXN0X2kxOG5jbXAgZXhwZWN0IGFjdHVhbAotJwotCi10ZXN0X2V4cGVj
+dF9zdWNjZXNzICctLXN0YXQgb3V0cHV0IGFmdGVyIGJpbmFyeSBjaG1vZCcgJwotCXRlc3RfY2ht
+b2QgK3ggYmluYmluICYmCi0JZWNobyAiIDAgZmlsZXMgY2hhbmdlZCIgPmV4cGVjdCAmJgotCWdp
+dCBkaWZmIEhFQUQgLS1zdGF0ID5hY3R1YWwgJiYKLQl0ZXN0X2kxOG5jbXAgZXhwZWN0IGFjdHVh
+bAotJwotCi10ZXN0X2V4cGVjdF9zdWNjZXNzICctLXNob3J0c3RhdCBvdXRwdXQgYWZ0ZXIgYmlu
+YXJ5IGNobW9kJyAnCi0JZ2l0IGRpZmYgSEVBRCAtLXNob3J0c3RhdCA+YWN0dWFsICYmCi0JdGVz
+dF9pMThuY21wIGV4cGVjdCBhY3R1YWwKLScKKyMgdGVzdF9leHBlY3Rfc3VjY2VzcyAnLS1zdGF0
+IG91dHB1dCBhZnRlciB0ZXh0IGNobW9kJyAnCisjIAl0ZXN0X2NobW9kIC14IHJlenJvdiAmJgor
+IyAJZWNobyAiIDAgZmlsZXMgY2hhbmdlZCIgPmV4cGVjdCAmJgorIyAJZ2l0IGRpZmYgSEVBRCAt
+LXN0YXQgPmFjdHVhbCAmJgorIwl0ZXN0X2kxOG5jbXAgZXhwZWN0IGFjdHVhbAorIyAnCisjCisj
+IHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJy0tc2hvcnRzdGF0IG91dHB1dCBhZnRlciB0ZXh0IGNobW9k
+JyAnCisjIAlnaXQgZGlmZiBIRUFEIC0tc2hvcnRzdGF0ID5hY3R1YWwgJiYKKyMgCXRlc3RfaTE4
+bmNtcCBleHBlY3QgYWN0dWFsCisjICcKKyMKKyMgdGVzdF9leHBlY3Rfc3VjY2VzcyAnLS1zdGF0
+IG91dHB1dCBhZnRlciBiaW5hcnkgY2htb2QnICcKKyMgCXRlc3RfY2htb2QgK3ggYmluYmluICYm
+CisjIAllY2hvICIgMCBmaWxlcyBjaGFuZ2VkIiA+ZXhwZWN0ICYmCisjIAlnaXQgZGlmZiBIRUFE
+IC0tc3RhdCA+YWN0dWFsICYmCisjIAl0ZXN0X2kxOG5jbXAgZXhwZWN0IGFjdHVhbAorIyAnCisj
+CisjIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJy0tc2hvcnRzdGF0IG91dHB1dCBhZnRlciBiaW5hcnkg
+Y2htb2QnICcKKyMgCWdpdCBkaWZmIEhFQUQgLS1zaG9ydHN0YXQgPmFjdHVhbCAmJgorIyAJdGVz
+dF9pMThuY21wIGV4cGVjdCBhY3R1YWwKKyMgJwogCiB0ZXN0X2RvbmUKZGlmZiAtLWdpdCBhL3Qv
+dDQwNDktZGlmZi1zdGF0LWNvdW50LnNoIGIvdC90NDA0OS1kaWZmLXN0YXQtY291bnQuc2gKaW5k
+ZXggYjQxZWI2MWNhOGIxLi43YjNlZjAwNTMzZjcgMTAwNzU1Ci0tLSBhL3QvdDQwNDktZGlmZi1z
+dGF0LWNvdW50LnNoCisrKyBiL3QvdDQwNDktZGlmZi1zdGF0LWNvdW50LnNoCkBAIC0xNiw3ICsx
+Niw4IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3Mgc2V0dXAgJwogCWNhdCA+ZXhwZWN0IDw8LVxFT0YK
+IAkgYSB8IDEgKwogCSBiIHwgMSArCi0JIDIgZmlsZXMgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCsp
+CisJIC4uLgorCSA0IGZpbGVzIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQogCUVPRgogCWdpdCBk
+aWZmIC0tc3RhdCAtLXN0YXQtY291bnQ9MiA+YWN0dWFsICYmCiAJdGVzdF9pMThuY21wIGV4cGVj
+dCBhY3R1YWwKZGlmZiAtLWdpdCBhL3QvdDQyMDUtbG9nLXByZXR0eS1mb3JtYXRzLnNoIGIvdC90
+NDIwNS1sb2ctcHJldHR5LWZvcm1hdHMuc2gKaW5kZXggMmM0NWRlN2FlYWYyLi45OGE0M2Q0NTdh
+M2QgMTAwNzU1Ci0tLSBhL3QvdDQyMDUtbG9nLXByZXR0eS1mb3JtYXRzLnNoCisrKyBiL3QvdDQy
+MDUtbG9nLXByZXR0eS1mb3JtYXRzLnNoCkBAIC04NSw3ICs4NSw3IEBAIHRlc3RfZXhwZWN0X3N1
+Y2Nlc3MgJ05VTCB0ZXJtaW5hdGlvbicgJwogCiB0ZXN0X2V4cGVjdF9zdWNjZXNzICdOVUwgc2Vw
+YXJhdGlvbiB3aXRoIC0tc3RhdCcgJwogCXN0YXQwX3BhcnQ9JChnaXQgZGlmZiAtLXN0YXQgSEVB
+RF4gSEVBRCkgJiYKLQlzdGF0MV9wYXJ0PSQoZ2l0IGRpZmYgLS1zdGF0IC0tcm9vdCBIRUFEXikg
+JiYKKwlzdGF0MV9wYXJ0PSQoZ2l0IGRpZmYtdHJlZSAtLW5vLWNvbW1pdC1pZCAtLXN0YXQgLS1y
+b290IEhFQUReKSAmJgogCXByaW50ZiAiYWRkIGJhclxuJHN0YXQwX3BhcnRcblwwaW5pdGlhbFxu
+JHN0YXQxX3BhcnRcbiIgPmV4cGVjdGVkICYmCiAJZ2l0IGxvZyAteiAtLXN0YXQgLS1wcmV0dHk9
+ImZvcm1hdDolcyIgPmFjdHVhbCAmJgogCXRlc3RfaTE4bmNtcCBleHBlY3RlZCBhY3R1YWwKQEAg
+LTkzLDcgKzkzLDcgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnTlVMIHNlcGFyYXRpb24gd2l0aCAt
+LXN0YXQnICcKIAogdGVzdF9leHBlY3RfZmFpbHVyZSAnTlVMIHRlcm1pbmF0aW9uIHdpdGggLS1z
+dGF0JyAnCiAJc3RhdDBfcGFydD0kKGdpdCBkaWZmIC0tc3RhdCBIRUFEXiBIRUFEKSAmJgotCXN0
+YXQxX3BhcnQ9JChnaXQgZGlmZiAtLXN0YXQgLS1yb290IEhFQUReKSAmJgorCXN0YXQxX3BhcnQ9
+JChnaXQgZGlmZi10cmVlIC0tbm8tY29tbWl0LWlkIC0tc3RhdCAtLXJvb3QgSEVBRF4pICYmCiAJ
+cHJpbnRmICJhZGQgYmFyXG4kc3RhdDBfcGFydFxuXDBpbml0aWFsXG4kc3RhdDFfcGFydFxuXDAi
+ID5leHBlY3RlZCAmJgogCWdpdCBsb2cgLXogLS1zdGF0IC0tcHJldHR5PSJ0Zm9ybWF0OiVzIiA+
+YWN0dWFsICYmCiAJdGVzdF9pMThuY21wIGV4cGVjdGVkIGFjdHVhbAo=
+--0016e6de17e8f554cf04cc4436ac--
