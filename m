@@ -1,102 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fix "git diff --stat" for interesting - but empty - file changes
-Date: Wed, 17 Oct 2012 11:28:02 -0700
-Message-ID: <7v4nltoswd.fsf@alter.siamese.dyndns.org>
-References: <CA+55aFz88GPJcfMSqiyY+u0Cdm48bEyrsTGxHVJbGsYsDg=Q5w@mail.gmail.com>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: config core.autocrlf changes the index
+Date: Wed, 17 Oct 2012 20:30:35 +0200
+Message-ID: <CAB9Jk9DPLjRDino0A4LotEXC6BSNAjftEUtPQb2bo1TKXPAd+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Oct 17 20:28:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 17 20:30:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOYLr-0005nK-FP
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 20:28:19 +0200
+	id 1TOYOF-0000ij-WA
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 20:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757596Ab2JQS2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 14:28:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56717 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754716Ab2JQS2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 14:28:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C949C9981;
-	Wed, 17 Oct 2012 14:28:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d/0Q4YyrWxfyeyuPCJXDtijIkxA=; b=g+O35F
-	6UXslhcFZRxynkAMu4d5hqIJbxVy4C9cfCUsooFCwAtCyjY5QrD+3zWs/G+8psXW
-	ha5vuWYFyGS5lxT3lWf/vHEXYCOLwYUF5Hcnnn6ryZBRHDolBTxz5jUv+yFR67Po
-	OdffFvLTXaKkLmL8P4dzcm34Efgd/XtC9KC7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=APdlLPBQb1REoOWHeNTdxse2K2DnZpZ0
-	TO8gXrNy6QbW5qs+jWEJXvMXSMgkGS5rLDk8AQX55zW4+W9I4RI3asPSc6W+Xa/r
-	D0k9exobPHZ0Z4qDc7ckW0wVyNLW24M+HPCa04cARVuZVrrLIfhuYfnEVli576NC
-	wQTfDjUW2oI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B54CB9980;
-	Wed, 17 Oct 2012 14:28:05 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0125A997E; Wed, 17 Oct 2012
- 14:28:03 -0400 (EDT)
-In-Reply-To: <CA+55aFz88GPJcfMSqiyY+u0Cdm48bEyrsTGxHVJbGsYsDg=Q5w@mail.gmail.com> (Linus
- Torvalds's message of "Wed, 17 Oct 2012 10:00:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 63990A92-1888-11E2-9473-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932397Ab2JQSah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 14:30:37 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:35856 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932247Ab2JQSag (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 14:30:36 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so7412747pad.19
+        for <git@vger.kernel.org>; Wed, 17 Oct 2012 11:30:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=7GnEPSB4JTWhTRTmob4SsOWf1TyFOURDF9R2oNkBpsg=;
+        b=fVL6r5tzRactKQznuobGPAlEcsdDeX5g/CGkKFqzitZj1G0h6sh4H6m5bJD0cfQHxc
+         6rs3zi2ON70lr04iD0uxoKQYBsxNqaSYe1OQWPF4ahQhUAqIAMcjsoTDh92NmPciiNu6
+         tQLGOjDttXuU9RImenFn0DCI10pF5IiP/Wwbpj3ImqdzIkblxZIYJzosC4ApZCWPjYuJ
+         eiJW3p0xD5ZWWFY/gZbweNCx+IOzVX0HxzST2lSHBfvERcHtgWCjPzSKYDcbYbL4sRRE
+         0xaIYL0Z3iIdWjToKQ2j94Vbs7wn46+D79XCA71rtioXONnbWlPPm3tAA3v47fjUgnIT
+         BRyw==
+Received: by 10.68.212.6 with SMTP id ng6mr16895268pbc.57.1350498635595; Wed,
+ 17 Oct 2012 11:30:35 -0700 (PDT)
+Received: by 10.67.3.101 with HTTP; Wed, 17 Oct 2012 11:30:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207934>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hello,
 
-> So if you did
->
->    chmod +x Makefile
->    git diff --stat
->
-> before, it would show empty (" 0 files changed"), with this it shows
->
->  Makefile | 0
->  1 file changed, 0 insertions(+), 0 deletions(-)
->
-> which I think is a more correct diffstat (and then with "--summary" it
-> shows *what* the metadata change to Makefile was - this is completely
-> consistent with our handling of renamed files).
->
-> Side note: the old behavior was *really* odd. With no changes at all,
-> "git diff --stat" output was empty. With just a chmod, it said "0
-> files changed". No way is our legacy behavior sane.
->
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> ---
->
-> This was triggered by kernel developers not noticing that they had
-> added zero-sized files, because those additions never showed up in the
-> diffstat.
-> ...
-> Comments?
+git config config core.autocrlf changes the index file, apparently
+making obsolete its contents
+when a repository is cloned.
+Run the following script:
 
-I think listing a file whose content remain unchanged with 0 as the
-number of lines affected makes sense, and it will mesh well with
-Duy's
+# create a bare repository, empty
+rm -rf rel.git
+mkdir rel.git
+cd rel.git
+git init --bare
+git config core.autocrlf false
+cd -
 
-  http://thread.gmane.org/gmane.comp.version-control.git/207749
+# populate the bare repository
+rm -rf temp
+git clone rel.git temp
+cd temp
+echo aaa>f1
+git add f1
+git commit -m A
+git push origin master
+cd -
+rm -rf temp
 
-I first wondered if we would get a division-by-zero while scaling
-the graph, but we do not scale smaller numbers up to fill the
-columns, so we should be safe.
+# clone then the bare repository
+rm -rf int
+mkdir int
+git clone rel.git int
+cd int
+git status
+git ls-files -s --debug
+# (1)
+# change then core.autocrlf in the config
+git config core.autocrlf false
+git status
+git ls-files -s --debug
+# (2)
+cd -
 
-These days, we omit 0 insertions and 0 deletions, so I am not sure
-what you should get for this case, though:
+At (1), git status reports "nothing to commit", but at (2) it reports:
 
->  Makefile | 0
->  1 file changed, 0 insertions(+), 0 deletions(-)
+ On branch master
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+   (use "git checkout -- <file>..." to discard changes in working directory)
 
-Should we just say "1 file changed"?
+       modified:   f1
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+The two git ls-files -s --debug commands report also differences in the index.
+
+This seems rather strange, although one can think that changing
+core.autocrlf might imply that the files in the workspace might have
+no longer the same contents that they had should they have benn
+checked out with the new core.autocrlf.
+Be as it is, at least this unexpected effect of changing core.autocrlf
+should be documented.
+
+-Angelo Borsotti
