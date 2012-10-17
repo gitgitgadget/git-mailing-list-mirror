@@ -1,83 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new git-remote-hd helper
-Date: Wed, 17 Oct 2012 20:33:07 +0200
-Message-ID: <CAMP44s2-BCuA5v7jE8S3d-Gg+DxKf6Yte9MvTDBDr4jEkLKZ9g@mail.gmail.com>
-References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
-	<alpine.DEB.1.00.1210171759230.3049@bonsai2>
-	<CAMP44s1WY+Q7jyy4PQvwff7JSxHsnkhrPWozOLnNuNOrn7FGBA@mail.gmail.com>
-	<alpine.DEB.1.00.1210171936170.3049@bonsai2>
-	<CAMP44s2=hhMz35SpYXMBLcQPfVaPxY4pBWZDF7zbqVwz=tbedA@mail.gmail.com>
-	<CAGdFq_i4c=ei4ni5bv9nNEbCfNG4sbRkqyip2voW17GhkRAKPQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] notes: mention --notes in more places
+Date: Wed, 17 Oct 2012 15:05:07 -0400
+Message-ID: <20121017190507.GA17648@sigill.intra.peff.net>
+References: <1350443975-19935-1-git-send-email-eblake@redhat.com>
+ <20121017055136.GA12301@sigill.intra.peff.net>
+ <507EB310.8020904@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 20:33:25 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 21:05:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOYQk-0004Go-Bn
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 20:33:22 +0200
+	id 1TOYvq-0006DI-92
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 21:05:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757612Ab2JQSdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 14:33:10 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:45449 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756211Ab2JQSdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 14:33:08 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so7760049oag.19
-        for <git@vger.kernel.org>; Wed, 17 Oct 2012 11:33:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Mlw/wrPVV7C1y6bHtolvtU4prd5f/MrAfnM9YDQYNT4=;
-        b=WLPFA8O5QFh4K3124ZedAR/RSj4IKNB2WPelZzbplL9/s0p9NB+ZorP0ZRqjz8EjsY
-         rDFp7PbqraYAW+lop1WO+fWJ6fbP9IcyLbI+f8osmzhSGBUr/7RHvvaxigyr0+1wI5KS
-         SqjQFbg7EuKBxDhisVF41gejnBpnJgZbSeYqaPxRx/rschAL3MyY8mrnHyCOtzU2MpMR
-         5D+5QM25e4qPxDG0EF0S3QdFsPZM7Z5H4aA9mQRO+DH9mlpsE7H76yUMemUNc5sSjP1e
-         tYCl/JWxoX7pQhE7WtBbt92WQMYf/kf/PcLsbi7tihHub92eWoeEzY+uQgh6adPJDxH1
-         /pAQ==
-Received: by 10.60.27.71 with SMTP id r7mr16259424oeg.96.1350498787368; Wed,
- 17 Oct 2012 11:33:07 -0700 (PDT)
-Received: by 10.60.58.137 with HTTP; Wed, 17 Oct 2012 11:33:07 -0700 (PDT)
-In-Reply-To: <CAGdFq_i4c=ei4ni5bv9nNEbCfNG4sbRkqyip2voW17GhkRAKPQ@mail.gmail.com>
+	id S1757685Ab2JQTFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 15:05:16 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56271 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757676Ab2JQTFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 15:05:15 -0400
+Received: (qmail 29152 invoked by uid 107); 17 Oct 2012 19:05:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Oct 2012 15:05:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2012 15:05:07 -0400
+Content-Disposition: inline
+In-Reply-To: <507EB310.8020904@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207936>
 
-On Wed, Oct 17, 2012 at 8:18 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Wed, Oct 17, 2012 at 11:12 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> But fine, lets remove the tests out of the equation (150 lines), the
->> number of lines of code still exceeds 3000.
->
-> I don't think it's fair to just look at LOC, git-remote-hg when it was
-> just parsing was fairly simple. Most of the current code is our copy
-> of the python fast-import library which is only used to support
-> pushing to mercurial.
+On Wed, Oct 17, 2012 at 07:30:56AM -0600, Eric Blake wrote:
 
-Well, as a rule of thumb more code means more places for bugs to hide.
-It is also quite frankly rather difficult to navigate; very
-spaghetti-like. I have the feeling I can implement the same
-fast-import functionality in a much simpler way, but for now I want to
-concentrate on fetching, and hopefully making it easy for people to
-actually use it.
+> > We've talked about it several times, but it's never happened (probably
+> > because most people don't actually use notes).
+> 
+> And people (like me) don't use notes because they aren't documented.
+> Catch-22, so we have to start somewhere.
 
-I would like to cooperate as much as possible, but as I said, I would
-rewrite a lot of that code. And also, I'm not even sure which
-repository contains the latest version of this code. I've seen a
-couple of them that are quite different, and none which are based on a
-recent version of git.
+Oh, I definitely agree your patch is the right direction. I was just
+explaining why it hasn't happened, even though people think it's a good
+idea.
 
-Cheers.
+> I'll submit a v2 with the non-controversial edits, and spend some time
+> trying to figure out how to isolate the portion of pretty-options.txt
+> that is relevant to format-patch.  If it's easy enough, I can also
+> consider using --- instead of Notes: as the separator when using
+> format-patch.
 
--- 
-Felipe Contreras
+Hmm. After digging in the archive, it seems we (including both you and
+me!) have discussed this several times, and there are even some patches
+floating around. Maybe one of them would be a good starting point for
+your submission (I did not read carefully over all of the arguments for
+each):
+
+  Patch from Thomas, Feb 2010:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/139919/focus=140818
+
+  Discussion between us, Dec 2010:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/163141
+
+  Patch from Michael, Apr 2011:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/172079
+
+-Peff
