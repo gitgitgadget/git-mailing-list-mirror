@@ -1,94 +1,165 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: git rebase -p and patch equivalent commits
-Date: Tue, 16 Oct 2012 22:13:28 -0700
-Message-ID: <CANiSa6iecBnnjqcfZjQTrhz0-_=LO_AQpDz=J3aR1==6TB3M3Q@mail.gmail.com>
-References: <k5ke9q$gom$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] notes: mention --notes in more places
+Date: Tue, 16 Oct 2012 22:14:36 -0700
+Message-ID: <7vvce9ptmr.fsf@alter.siamese.dyndns.org>
+References: <1350443975-19935-1-git-send-email-eblake@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Damien Robert <damien.olivier.robert+gmane@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 07:13:41 2012
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 07:14:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOLwq-000374-NP
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 07:13:41 +0200
+	id 1TOLy2-0004XP-BN
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 07:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801Ab2JQFN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 01:13:29 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:54980 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784Ab2JQFN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 01:13:28 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so11190877iea.19
-        for <git@vger.kernel.org>; Tue, 16 Oct 2012 22:13:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gGuKmEEsMLjlfaMalDLWop0Ku2R67ifxMiMD9uu5JyI=;
-        b=THQNgMqJ76N/vYONdWMBIpbKGEB0M/nUKXvj4HpsMz2qpk5a1jBYuXDf03dVXpWroA
-         WEVWrFoSNtB1ydvRuJ42/327FRQLJN4vAUYQqRP5O3Kfv5+E+QI6VoKOghvEYo2Z6LoS
-         GLFvXfUePcGxdR66TUMLQfmzA8Ye+YlPm685VWw7jSExCn9CkalLLSk6qEzf19fzaGxW
-         pCOTmkLMGjFHd3U9qrsHZAD+LBsqG4bdTEzIRaTzUgi0brc0Flbu3b3fwdYo1Gqng/zw
-         37Mok0EV6/DfPzl8oew8KK1TkEFPBZ8NqrBje/4QDhzi0i6ZWuDoPqGngWwT3jgCAW1X
-         LR2A==
-Received: by 10.43.135.135 with SMTP id ig7mr13455109icc.8.1350450808462; Tue,
- 16 Oct 2012 22:13:28 -0700 (PDT)
-Received: by 10.64.103.5 with HTTP; Tue, 16 Oct 2012 22:13:28 -0700 (PDT)
-In-Reply-To: <k5ke9q$gom$1@ger.gmane.org>
+	id S1751791Ab2JQFOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 01:14:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59407 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751423Ab2JQFOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 01:14:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B9C0658B;
+	Wed, 17 Oct 2012 01:14:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=n8qLDQf8TyEQ2qBhDFwLtfCOtHY=; b=t7Ptp6
+	uBQFNPjvgBv8C/s0i2vRCjsvTjBK4yj8+E8NE3x6gLpaegR7MvTTbeuui1qtD9DP
+	50CPuKri6ROVwvqapT56Ef6STRF8dzq3IBs3TAfmzfMA/yXgsBgXhmnTDLApnRmI
+	qLcyhPEWZE1sUIWWDCrV5LxIJg/afdeDmw++s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wt8k1CsL1EWv+l71gFcM8iGYJ0DXju9A
+	Bs/3s8n0ir4inrDmIHfL//k9b4aIhYZb7WzKV4hPFKjfM0lzOuz6DGmzSzWW0PQt
+	Zl1w9v+q54BtFkPBHAhJn28ZVsedKovEKvkl9pKTYaQZ1c62+KztJWRUcbJr18ZV
+	+F2yc1SL15A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 292926589;
+	Wed, 17 Oct 2012 01:14:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23E8D6583; Wed, 17 Oct 2012
+ 01:14:41 -0400 (EDT)
+In-Reply-To: <1350443975-19935-1-git-send-email-eblake@redhat.com> (Eric
+ Blake's message of "Tue, 16 Oct 2012 21:19:35 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8E155556-1819-11E2-941B-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207892>
 
-On Tue, Oct 16, 2012 at 12:58 PM, Damien Robert
-<damien.olivier.robert+gmane@gmail.com> wrote:
-> Now feature is rebased against master. How would you rebase the branches
-> patch1, patch2 and build so that they keep the same layout?
+Eric Blake <eblake@redhat.com> writes:
+
+> * git-notes.txt: Mention that --notes option exists in many
+> commands to override defaults.
+> * git-format-patch.txt: Include pretty-options, for things like
+> --notes.
+> * git-send-email.txt: Mention that revision lists forwarded to
+> format-patch can also include options.
+
+Overall I feel fairly negative on this one, even though there are
+good bits.
+
 >
-> I tried to rebase patch1 and patch2, hoping that rebase -p build would use
-> the rebased commits for the merge but it creates new commits (that are
-> patch equivalents to patch1 and patch2) and merge them.
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>  Documentation/git-format-patch.txt | 2 ++
+>  Documentation/git-notes.txt        | 6 ++++--
+>  Documentation/git-send-email.txt   | 3 ++-
+>  3 files changed, 8 insertions(+), 3 deletions(-)
 >
-> So I can think of two ways to proceed:
-> 1) only rebase patch1 and patch2, and then remerge them again in build.
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index 6d43f56..a068f37 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -222,6 +222,8 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+>  	range are always formatted as creation patches, independently
+>  	of this flag.
+>
+> +include::pretty-options.txt[]
 
-If the build branch really is just a build branch, then I would
-probably choose this option.
+In the context of format-patch, the inclusion of pretty-options
+probably causes more harm than being helpful, I am afraid.  If you
+use "--pretty=<format>", "--format=<format>", or "--oneline", the
+output will no longer be a proper mbox and is not suitable for
+asking somebody else to apply.
 
->    This start to get complicated if I have some commits in build after the
->    merge
+At the very least, you would need to add something like:
 
-What would such commits contain? Is it something related to your build
-system that you can automate? If not, should they perhaps rather have
-been included in one of the patch branches? Or are they related to
-interactions between the patch branches? If the latter, I would
-probably serialize the dependent branches (e.g. basing "patch2" on
-"patch1").
+    ifndef::git-format-patch[]
+    ... enclose everything that should not be used with format-patch
+    endif::git-format-patch[]
 
-> 2) I can rebase -p the build branch first, and then reset --soft patch1
+to the included file, and then define the token before the
+inclusion, like this:
 
-Did you mean --hard/--keep here? Or why would you use --soft?
+    :git-format-patch: 1
+    include::pretty-formats.txt[]
 
->    and
->    patch2 so that they point to the right commits in the rebased branch.
->    This way looks easier to do with more complicated layout, I just need to
->    find a good way of finding where the rebased commits for patch1 and
->    patch2 are, and I was thinking of using notes for that.
+to limit the damage.
 
-I don't quite understand why you would want to do that if the build
-branch is just to make sure test pass on the merged result, but, yes,
-this method would probably be easier if you do need to keep both the
-build branch and the patchX branches up to date. Which branch do you
-actively work on at this point? Both the build branch and the patchX
-branches? Is it that you have sent patch1 and patch2 for review and
-you want to base your next topic on the merged result? I assume not,
-since you said it was a "build" branch. But if that was the case (i.e.
-somewhat active development on build, patch1 and patch2 (perhaps due
-to review comments)), I would probably still rebase one branch at a
-time, recreate the merge (possibly using rerere), and then "rebase
---onto new-merge old-merge build".
+Even with such a change to include only --notes, I am not sure if
+the result is something we would want to recommend/advertise to our
+users.
+
+The output from format-patch with --notes shows the notes, after
+adding a blank line to the sign-off block, to look like this:
+
+	From: A U Thor <author@example.com>
+        Date: Tue, 16 Oct 2012 19:26:23 +0200
+	Subject: [PATCH] Gostak: distim the doshes correctly
+
+	With the current code, the Gostak cannot correctly distim
+        the doshes, because ...
+
+	Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+	Notes:
+		This patch was inspired by Eric Blake
+
+	---
+	diff --git a/gostak b/gostak
+        ...
+
+I am not sure if this is suiable for sending to somebody and asking
+it to be applied.
+
+> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+> index b95aafa..be9e60f 100644
+> --- a/Documentation/git-notes.txt
+> +++ b/Documentation/git-notes.txt
+> @@ -39,8 +39,10 @@ message stored in the commit object, the notes are indented like the
+>  message, after an unindented line saying "Notes (<refname>):" (or
+>  "Notes:" for `refs/notes/commits`).
+>
+> -To change which notes are shown by 'git log', see the
+> -"notes.displayRef" configuration in linkgit:git-log[1].
+> +To change which notes are shown by default in 'git log', see the
+> +"notes.displayRef" configuration in linkgit:git-log[1].  Also,
+> +many commands understand a `--notes` option to alter the set of
+> +notes displayed (see linkgit:git-rev-list[1]).
+>
+>  See the "notes.rewrite.<command>" configuration for a way to carry
+>  notes across commands that rewrite commits.
+
+OK.
+
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index eeb561c..450d975 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -18,7 +18,8 @@ Takes the patches given on the command line and emails them out.
+>  Patches can be specified as files, directories (which will send all
+>  files in the directory), or directly as a revision list.  In the
+>  last case, any format accepted by linkgit:git-format-patch[1] can
+> -be passed to git send-email.
+> +be passed to git send-email, including additional command line
+> +options such as `--cover-letter` or `--notes`.
+
+OK for --cover-letter, dubious on --notes.
