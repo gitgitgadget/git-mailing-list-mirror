@@ -1,103 +1,524 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: [PATCH] notes: mention --notes in more places
-Date: Tue, 16 Oct 2012 21:19:35 -0600
-Message-ID: <1350443975-19935-1-git-send-email-eblake@redhat.com>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH v4] git-cvsimport: allow author-specific timezones
+Date: Tue, 16 Oct 2012 22:53:29 -0500
+Message-ID: <1350446009-25059-1-git-send-email-chris@rorvick.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 17 05:32:02 2012
+X-From: git-owner@vger.kernel.org Wed Oct 17 05:53:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOKMR-000203-P2
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 05:32:00 +0200
+	id 1TOKhR-0000ya-Tq
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Oct 2012 05:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756012Ab2JQDbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2012 23:31:48 -0400
-Received: from qmta14.emeryville.ca.mail.comcast.net ([76.96.27.212]:44040
-	"EHLO qmta14.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755690Ab2JQDbs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2012 23:31:48 -0400
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Oct 2012 23:31:48 EDT
-Received: from omta04.emeryville.ca.mail.comcast.net ([76.96.30.35])
-	by qmta14.emeryville.ca.mail.comcast.net with comcast
-	id C3KZ1k0030lTkoCAE3QibK; Wed, 17 Oct 2012 03:24:42 +0000
-Received: from office.redhat.com ([24.10.251.25])
-	by omta04.emeryville.ca.mail.comcast.net with comcast
-	id C3Kc1k00H0ZdyUg8Q3Khys; Wed, 17 Oct 2012 03:19:42 +0000
-X-Mailer: git-send-email 1.7.11.7
+	id S1756073Ab2JQDxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2012 23:53:30 -0400
+Received: from [38.98.186.242] ([38.98.186.242]:37920 "HELO burner.cogcap.com"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755989Ab2JQDxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2012 23:53:30 -0400
+Received: by burner.cogcap.com (Postfix, from userid 10028)
+	id 4104F2B096D; Tue, 16 Oct 2012 22:53:29 -0500 (CDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207890>
 
-Every so often, I search 'git send-email --help' to remember some
-option I've used in the past, only to discover that the option is
-documented instead in 'git format-patch --help'.  Worse, even that
-command didn't document the option I was looking for today, which
-was how to include 'git notes' in the body of the commits I was
-mailing.  Reading 'git notes --help' didn't mention this either,
-and I had to resort to searching the source code.  It can't hurt
-to add some documentation to make this option less obscure.
+CVS patchsets are imported with timestamps having an offset of +0000
+(UTC).  The cvs-authors file is already used to translate the CVS
+username to full name and email in the corresponding commit.  Extend
+this file to support an optional timezone for calculating a user-
+specific timestamp offset.
 
-* git-notes.txt: Mention that --notes option exists in many
-commands to override defaults.
-* git-format-patch.txt: Include pretty-options, for things like
---notes.
-* git-send-email.txt: Mention that revision lists forwarded to
-format-patch can also include options.
-
-Signed-off-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- Documentation/git-format-patch.txt | 2 ++
- Documentation/git-notes.txt        | 6 ++++--
- Documentation/git-send-email.txt   | 3 ++-
- 3 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 6d43f56..a068f37 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -222,6 +222,8 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
- 	range are always formatted as creation patches, independently
- 	of this flag.
+Use System V timezones in unit test per feedback from Junio and Peff.
+Also, use timestamps from before the 2007 changes to DST--seems
+reasonable that people may not have bothered patching their systems for
+this in some parts of the world.
 
-+include::pretty-options.txt[]
+Is continuing to update the patch helpful at this point, or is this
+just noise?
+
+ Documentation/git-cvsimport.txt    |   8 +-
+ git-cvsimport.perl                 |  22 ++-
+ t/t9604-cvsimport-timestamps.sh    |  71 ++++++++++
+ t/t9604/cvsroot/.gitattributes     |   1 +
+ t/t9604/cvsroot/CVSROOT/.gitignore |   2 +
+ t/t9604/cvsroot/module/a,v         | 265 +++++++++++++++++++++++++++++++++++++
+ 6 files changed, 362 insertions(+), 7 deletions(-)
+ create mode 100755 t/t9604-cvsimport-timestamps.sh
+ create mode 100644 t/t9604/cvsroot/.gitattributes
+ create mode 100644 t/t9604/cvsroot/CVSROOT/.gitignore
+ create mode 100644 t/t9604/cvsroot/module/a,v
+
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index 6695ab3..9ea8bb5 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -137,17 +137,19 @@ This option can be used several times to provide several detection regexes.
+ -A <author-conv-file>::
+ 	CVS by default uses the Unix username when writing its
+ 	commit logs. Using this option and an author-conv-file
+-	in this format
++	maps the name recorded in CVS to author name, e-mail and
++	and optional timezone:
+ +
+ ---------
+ 	exon=Andreas Ericsson <ae@op5.se>
+-	spawn=Simon Pawn <spawn@frog-pond.org>
++	spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
+ 
+ ---------
+ +
+ 'git cvsimport' will make it appear as those authors had
+ their GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL set properly
+-all along.
++all along.  If a timezone is specified, GIT_AUTHOR_DATE will
++have the corresponding offset applied.
+ +
+ For convenience, this data is saved to `$GIT_DIR/cvs-authors`
+ each time the '-A' option is provided and read from that same
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 8032f23..ceb119d 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -31,7 +31,7 @@ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+ our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
+-my (%conv_author_name, %conv_author_email);
++my (%conv_author_name, %conv_author_email, %conv_author_tz);
+ 
+ sub usage(;$) {
+ 	my $msg = shift;
+@@ -59,6 +59,14 @@ sub read_author_info($) {
+ 			$conv_author_name{$user} = $2;
+ 			$conv_author_email{$user} = $3;
+ 		}
++		# or with an optional timezone:
++		#   spawn=Simon Pawn <spawn@frog-pond.org> America/Chicago
++		elsif (m/^(\S+?)\s*=\s*(.+?)\s*<(.+)>\s*(\S+?)\s*$/) {
++			$user = $1;
++			$conv_author_name{$user} = $2;
++			$conv_author_email{$user} = $3;
++			$conv_author_tz{$user} = $4;
++		}
+ 		# However, we also read from CVSROOT/users format
+ 		# to ease migration.
+ 		elsif (/^(\w+):(['"]?)(.+?)\2\s*$/) {
+@@ -84,7 +92,9 @@ sub write_author_info($) {
+ 	  die("Failed to open $file for writing: $!");
+ 
+ 	foreach (keys %conv_author_name) {
+-		print $f "$_=$conv_author_name{$_} <$conv_author_email{$_}>\n";
++		print $f "$_=$conv_author_name{$_} <$conv_author_email{$_}>";
++		print $f " $conv_author_tz{$_}" if ($conv_author_tz{$_});
++		print $f "\n";
+ 	}
+ 	close ($f);
+ }
+@@ -795,7 +805,7 @@ sub write_tree () {
+ 	return $tree;
+ }
+ 
+-my ($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
++my ($patchset,$date,$author_name,$author_email,$author_tz,$branch,$ancestor,$tag,$logmsg);
+ my (@old,@new,@skipped,%ignorebranch,@commit_revisions);
+ 
+ # commits that cvsps cannot place anywhere...
+@@ -844,7 +854,9 @@ sub commit {
+ 		}
+ 	}
+ 
+-	my $commit_date = strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date));
++	$ENV{'TZ'}=$author_tz;
++	my $commit_date = strftime("%s %z", localtime($date));
++	$ENV{'TZ'}="UTC";
+ 	$ENV{GIT_AUTHOR_NAME} = $author_name;
+ 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
+ 	$ENV{GIT_AUTHOR_DATE} = $commit_date;
+@@ -945,12 +957,14 @@ while (<CVS>) {
+ 		}
+ 		$state=3;
+ 	} elsif ($state == 3 and s/^Author:\s+//) {
++		$author_tz = "UTC";
+ 		s/\s+$//;
+ 		if (/^(.*?)\s+<(.*)>/) {
+ 		    ($author_name, $author_email) = ($1, $2);
+ 		} elsif ($conv_author_name{$_}) {
+ 			$author_name = $conv_author_name{$_};
+ 			$author_email = $conv_author_email{$_};
++			$author_tz = $conv_author_tz{$_} if ($conv_author_tz{$_});
+ 		} else {
+ 		    $author_name = $author_email = $_;
+ 		}
+diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps.sh
+new file mode 100755
+index 0000000..1fd5142
+--- /dev/null
++++ b/t/t9604-cvsimport-timestamps.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
 +
- CONFIGURATION
- -------------
- You can specify extra mail header lines to be added to each message,
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index b95aafa..be9e60f 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -39,8 +39,10 @@ message stored in the commit object, the notes are indented like the
- message, after an unindented line saying "Notes (<refname>):" (or
- "Notes:" for `refs/notes/commits`).
-
--To change which notes are shown by 'git log', see the
--"notes.displayRef" configuration in linkgit:git-log[1].
-+To change which notes are shown by default in 'git log', see the
-+"notes.displayRef" configuration in linkgit:git-log[1].  Also,
-+many commands understand a `--notes` option to alter the set of
-+notes displayed (see linkgit:git-rev-list[1]).
-
- See the "notes.rewrite.<command>" configuration for a way to carry
- notes across commands that rewrite commits.
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index eeb561c..450d975 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -18,7 +18,8 @@ Takes the patches given on the command line and emails them out.
- Patches can be specified as files, directories (which will send all
- files in the directory), or directly as a revision list.  In the
- last case, any format accepted by linkgit:git-format-patch[1] can
--be passed to git send-email.
-+be passed to git send-email, including additional command line
-+options such as `--cover-letter` or `--notes`.
-
- The header of the email is configurable by command line options.  If not
- specified on the command line, the user will be prompted with a ReadLine
++test_description='git cvsimport timestamps'
++. ./lib-cvs.sh
++
++setup_cvs_test_repository t9604
++
++test_expect_success 'check timestamps are UTC (TZ=CST6CDT)' '
++
++	TZ=CST6CDT git cvsimport -p"-x" -C module-1 module &&
++	git cvsimport -p"-x" -C module-1 module &&
++	(
++		cd module-1 &&
++		git log --format="%s %ai"
++	) >actual-1 &&
++	cat >expect-1 <<-EOF &&
++	Rev 16 2006-10-29 07:00:01 +0000
++	Rev 15 2006-10-29 06:59:59 +0000
++	Rev 14 2006-04-02 08:00:01 +0000
++	Rev 13 2006-04-02 07:59:59 +0000
++	Rev 12 2005-12-01 00:00:00 +0000
++	Rev 11 2005-11-01 00:00:00 +0000
++	Rev 10 2005-10-01 00:00:00 +0000
++	Rev  9 2005-09-01 00:00:00 +0000
++	Rev  8 2005-08-01 00:00:00 +0000
++	Rev  7 2005-07-01 00:00:00 +0000
++	Rev  6 2005-06-01 00:00:00 +0000
++	Rev  5 2005-05-01 00:00:00 +0000
++	Rev  4 2005-04-01 00:00:00 +0000
++	Rev  3 2005-03-01 00:00:00 +0000
++	Rev  2 2005-02-01 00:00:00 +0000
++	Rev  1 2005-01-01 00:00:00 +0000
++	EOF
++	test_cmp actual-1 expect-1
++'
++
++test_expect_success 'check timestamps with author-specific timezones' '
++
++	cat >cvs-authors <<-EOF &&
++	user1=User One <user1@domain.org>
++	user2=User Two <user2@domain.org> CST6CDT
++	user3=User Three <user3@domain.org> EST5EDT
++	user4=User Four <user4@domain.org> MST7MDT
++	EOF
++	git cvsimport -p"-x" -A cvs-authors -C module-2 module &&
++	(
++		cd module-2 &&
++		git log --format="%s %ai %an"
++	) >actual-2 &&
++	cat >expect-2 <<-EOF &&
++	Rev 16 2006-10-29 01:00:01 -0600 User Two
++	Rev 15 2006-10-29 01:59:59 -0500 User Two
++	Rev 14 2006-04-02 03:00:01 -0500 User Two
++	Rev 13 2006-04-02 01:59:59 -0600 User Two
++	Rev 12 2005-11-30 17:00:00 -0700 User Four
++	Rev 11 2005-10-31 19:00:00 -0500 User Three
++	Rev 10 2005-09-30 19:00:00 -0500 User Two
++	Rev  9 2005-09-01 00:00:00 +0000 User One
++	Rev  8 2005-07-31 18:00:00 -0600 User Four
++	Rev  7 2005-06-30 20:00:00 -0400 User Three
++	Rev  6 2005-05-31 19:00:00 -0500 User Two
++	Rev  5 2005-05-01 00:00:00 +0000 User One
++	Rev  4 2005-03-31 17:00:00 -0700 User Four
++	Rev  3 2005-02-28 19:00:00 -0500 User Three
++	Rev  2 2005-01-31 18:00:00 -0600 User Two
++	Rev  1 2005-01-01 00:00:00 +0000 User One
++	EOF
++	test_cmp actual-2 expect-2
++'
++
++test_done
+diff --git a/t/t9604/cvsroot/.gitattributes b/t/t9604/cvsroot/.gitattributes
+new file mode 100644
+index 0000000..562b12e
+--- /dev/null
++++ b/t/t9604/cvsroot/.gitattributes
+@@ -0,0 +1 @@
++* -whitespace
+diff --git a/t/t9604/cvsroot/CVSROOT/.gitignore b/t/t9604/cvsroot/CVSROOT/.gitignore
+new file mode 100644
+index 0000000..3bb9b34
+--- /dev/null
++++ b/t/t9604/cvsroot/CVSROOT/.gitignore
+@@ -0,0 +1,2 @@
++history
++val-tags
+diff --git a/t/t9604/cvsroot/module/a,v b/t/t9604/cvsroot/module/a,v
+new file mode 100644
+index 0000000..3c338a0
+--- /dev/null
++++ b/t/t9604/cvsroot/module/a,v
+@@ -0,0 +1,265 @@
++head	1.16;
++access;
++symbols;
++locks; strict;
++comment	@# @;
++
++
++1.16
++date	2006.10.29.07.00.01;	author user2;	state Exp;
++branches;
++next	1.15;
++
++1.15
++date	2006.10.29.06.59.59;	author user2;	state Exp;
++branches;
++next	1.14;
++
++1.14
++date	2006.04.02.08.00.01;	author user2;	state Exp;
++branches;
++next	1.13;
++
++1.13
++date	2006.04.02.07.59.59;	author user2;	state Exp;
++branches;
++next	1.12;
++
++1.12
++date	2005.12.01.00.00.00;	author user4;	state Exp;
++branches;
++next	1.11;
++
++1.11
++date	2005.11.01.00.00.00;	author user3;	state Exp;
++branches;
++next	1.10;
++
++1.10
++date	2005.10.01.00.00.00;	author user2;	state Exp;
++branches;
++next	1.9;
++
++1.9
++date	2005.09.01.00.00.00;	author user1;	state Exp;
++branches;
++next	1.8;
++
++1.8
++date	2005.08.01.00.00.00;	author user4;	state Exp;
++branches;
++next	1.7;
++
++1.7
++date	2005.07.01.00.00.00;	author user3;	state Exp;
++branches;
++next	1.6;
++
++1.6
++date	2005.06.01.00.00.00;	author user2;	state Exp;
++branches;
++next	1.5;
++
++1.5
++date	2005.05.01.00.00.00;	author user1;	state Exp;
++branches;
++next	1.4;
++
++1.4
++date	2005.04.01.00.00.00;	author user4;	state Exp;
++branches;
++next	1.3;
++
++1.3
++date	2005.03.01.00.00.00;	author user3;	state Exp;
++branches;
++next	1.2;
++
++1.2
++date	2005.02.01.00.00.00;	author user2;	state Exp;
++branches;
++next	1.1;
++
++1.1
++date	2005.01.01.00.00.00;	author user1;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.16
++log
++@Rev 16
++@
++text
++@Rev 16
++@
++
++
++1.15
++log
++@Rev 15
++@
++text
++@d1 1
++a1 1
++Rev 15
++@
++
++
++1.14
++log
++@Rev 14
++@
++text
++@d1 1
++a1 1
++Rev 14
++@
++
++
++1.13
++log
++@Rev 13
++@
++text
++@d1 1
++a1 1
++Rev 13
++@
++
++
++1.12
++log
++@Rev 12
++@
++text
++@d1 1
++a1 1
++Rev 12
++@
++
++
++1.11
++log
++@Rev 11
++@
++text
++@d1 1
++a1 1
++Rev 11
++@
++
++
++1.10
++log
++@Rev 10
++@
++text
++@d1 1
++a1 1
++Rev 10
++@
++
++
++1.9
++log
++@Rev  9
++@
++text
++@d1 1
++a1 1
++Rev 9
++@
++
++
++1.8
++log
++@Rev  8
++@
++text
++@d1 1
++a1 1
++Rev 8
++@
++
++
++1.7
++log
++@Rev  7
++@
++text
++@d1 1
++a1 1
++Rev 7
++@
++
++
++1.6
++log
++@Rev  6
++@
++text
++@d1 1
++a1 1
++Rev 6
++@
++
++
++1.5
++log
++@Rev  5
++@
++text
++@d1 1
++a1 1
++Rev 5
++@
++
++
++1.4
++log
++@Rev  4
++@
++text
++@d1 1
++a1 1
++Rev 4
++@
++
++
++1.3
++log
++@Rev  3
++@
++text
++@d1 1
++a1 1
++Rev 3
++@
++
++
++1.2
++log
++@Rev  2
++@
++text
++@d1 1
++a1 1
++Rev 2
++@
++
++
++1.1
++log
++@Rev  1
++@
++text
++@d1 1
++a1 1
++Rev 1
++@
++
 -- 
-1.7.11.7
+1.8.0.rc1.19.gbecacc0
