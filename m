@@ -1,73 +1,71 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new git-remote-hd helper
-Date: Thu, 18 Oct 2012 11:10:35 +0200
-Message-ID: <CAMP44s3+FP2N4iEmxzcu_ayUAF+XWmKdBFDCvFvj6D5RQmN+5Q@mail.gmail.com>
-References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
-	<20121017225913.GC21742@sigill.intra.peff.net>
-	<CAMP44s0+Fhtj2rMQ1Av-49Koa=DumX8JZs5angOFSRzqtDc+9Q@mail.gmail.com>
-	<CAMP44s1b=dNaCbm1WkFBv6368Y+jDYdkPuscEFdiUnVJBStfVg@mail.gmail.com>
-	<CAGdFq_hsCjL5uunwg=N-y+FkFt-ZxORtrEcxAAHt-rDfA04cZw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] pretty: prepare notes message at a centralized place
+Date: Thu, 18 Oct 2012 02:17:01 -0700
+Message-ID: <7vfw5cm96a.fsf@alter.siamese.dyndns.org>
+References: <1350539128-21577-1-git-send-email-gitster@pobox.com>
+ <1350539128-21577-4-git-send-email-gitster@pobox.com>
+ <20121018074921.GC9999@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 11:10:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 18 11:17:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOm82-0008QM-Tk
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 11:10:59 +0200
+	id 1TOmEI-00088F-GG
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 11:17:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922Ab2JRJKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 05:10:38 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:64260 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754909Ab2JRJKg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 05:10:36 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so8365790oag.19
-        for <git@vger.kernel.org>; Thu, 18 Oct 2012 02:10:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/xdSVEt7/+lhryCp4n4SEcMRXBTovjKPwxGTkkMbzzE=;
-        b=PV+hmke6kcNnM34WSWiNyWODxFVGPuybRNxnfw5lrut1LKZZErXJvu9bIXo6yGeUX7
-         sbFGL0bgtoWh8qT9o0fGsunv+uVtGNGSNpQp1z3xlMd5ivMasvlV7PBgZHAdMHjWR0T1
-         NgXNoSln0gxeSA6EKlPxXeTjq0TcSBUNRUVUyajC+XZs1RntKrWkrUNl6/hITYi9JAzQ
-         qw+oku1ILxWGcyGlX6P4pB5xSrKuhl8Jze+3d2VipV4KtqF0/kVxNnhhS78gqAha/czM
-         GL7QmzEK1t6JeT7w2qw7rvp3XWuzl8OV6LiFYezW+oHEZAFbJ0JffE2edgg+a/1l7NET
-         y9jw==
-Received: by 10.60.32.19 with SMTP id e19mr18769046oei.9.1350551435637; Thu,
- 18 Oct 2012 02:10:35 -0700 (PDT)
-Received: by 10.60.58.137 with HTTP; Thu, 18 Oct 2012 02:10:35 -0700 (PDT)
-In-Reply-To: <CAGdFq_hsCjL5uunwg=N-y+FkFt-ZxORtrEcxAAHt-rDfA04cZw@mail.gmail.com>
+	id S1754968Ab2JRJRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 05:17:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41531 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754959Ab2JRJRK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 05:17:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34D839117;
+	Thu, 18 Oct 2012 05:17:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f8rUNkn+neFvliPEbUXwUEn1HE0=; b=hjCDvB
+	aFma+A/EWBMFFAyyiMFD4VJ4cR/Z0fE88fhkMNJZ3qA90z80u2dZgBWW7OMnxvkq
+	5HQ5mHmdyet6bOmuxqvKqKQqf2hfBiZ1/CcdDwN7bG9TNmFXh3JX87z8dsWA1XCB
+	jY8NlVeUdj6xSNgp0lSf4WjQHF5Q31UzGWvI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UCRaCwpTogoVnmQy6lBbCURJngi1XQgN
+	I43yAnpFf2TUXYbyz5zKawXHc2Z+eLCaTU/6dq8Ez6Db9R5aoFp3utLfHLNpcMBJ
+	9OkL1ThBmCZHGRjoR03tMus1Sb80G69WQnprRsPq6Do8npgYIuQ+UyqOUuI2clE9
+	TcN1coASMNU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 200B09115;
+	Thu, 18 Oct 2012 05:17:09 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 818CC910F; Thu, 18 Oct 2012
+ 05:17:08 -0400 (EDT)
+In-Reply-To: <20121018074921.GC9999@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 18 Oct 2012 03:49:21 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9769B9A8-1904-11E2-9C19-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207982>
 
-On Thu, Oct 18, 2012 at 8:12 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Wed, Oct 17, 2012 at 10:18 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> Right now I've just added an error when using remote repositories. But
->> it seems there's no way around it; if we want to have support for
->> remote repos, we need to make a local clone.
->
-> My git-remote-hg does the local clone into .git/ using a hash of the
-> url (although you could just as well use urlencode, basically any way
-> to safely use a url as a directory name). Have a look if you want.
+Jeff King <peff@peff.net> writes:
 
-Can you point to the version you are talking about? I've been checking
-the remote-hg branch of fingolfin.
+> It's possible that switching it would create bugs elsewhere (there are
+> over 100 uses of strbuf_detach, so maybe somebody really does want this
+> NULL behavior), but I tend to think it is just as likely to be fixing
+> undiscovered bugs.
 
-https://github.com/fingolfin/git/tree/remote-hg/
+Yeah, I tend to agree.
 
--- 
-Felipe Contreras
+This "format-patch --notes" is obviously a post 1.8.0 topic, and so
+is the strbuf_detach() clean-up.  Let me bookmark this thread in
+case it hasn't been resolved when I came back from my vacation, so
+that I won't forget ;-).
