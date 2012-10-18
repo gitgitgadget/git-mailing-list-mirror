@@ -1,399 +1,232 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Add new git-remote-hd helper
-Date: Thu, 18 Oct 2012 15:18:15 +0200
-Message-ID: <50800197.90105@drmicha.warpmail.net>
-References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3] status: refactor output format to represent "default" and add --long
+Date: Thu, 18 Oct 2012 21:15:50 +0700
+Message-ID: <1350569750-26304-1-git-send-email-pclouds@gmail.com>
+References: <20121018020308.GA24484@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 15:18:33 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 16:16:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOpzb-0005VG-AN
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 15:18:31 +0200
+	id 1TOqtg-0002Fn-66
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 16:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755443Ab2JRNST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 09:18:19 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56617 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753336Ab2JRNSS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2012 09:18:18 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id EF73A2094E;
-	Thu, 18 Oct 2012 09:18:17 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 18 Oct 2012 09:18:18 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=xTQorqzbTAgCvLN/4XEeHm
-	OvQ6E=; b=hwmieiRv3wB93wywzIixbJ6dBiMeyCfZwoXdJkLh4B4v92eJvyZqXl
-	05v0AVxZrowWSbMBatyxYHiV2sGo3cHtqhVzb3vcmqsJLGsil2TT/YUcZ+TGyGpd
-	qbK/GHZZoB/d6Gt6cyNmcr2z18MsCBZMcBUsFXzAaYjGQKS7P4VkM=
-X-Sasl-enc: gqrZVdSBZpKS8t/d93k7JxMrC7d3J9oPsC4VHtviI5gG 1350566297
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A0890482740;
-	Thu, 18 Oct 2012 09:18:16 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
-In-Reply-To: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
+	id S1756063Ab2JROQQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2012 10:16:16 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:62352 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755810Ab2JROQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 10:16:15 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so8399121pbb.19
+        for <git@vger.kernel.org>; Thu, 18 Oct 2012 07:16:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=EaXCRK978LcA60hMW9zer/rZ2SPw+k3FyN2Uv3xnGyw=;
+        b=W/TU3aQ69jeSCGGooecRmZ0LN39r2cMJERUXidF9/n4U+FVDMh8uOciNx+iRHJfm08
+         82geydpUsnEThgy6VSQSCwF6rJdUSimAUL2ZouJTIE0OuVnzX9qP6mpK72HHJmHWwdLa
+         mT+lTxIgtgih0JucNjAB1k6xHwpHsTx6kIGv+FFK5dcXugcu4hx5wdlM3qqz2A5ELwhn
+         LXEoXGRhpRB73PxH+6YcGYREiPI5+EOXTW3sIuwG8YYauYYk7VCaxi5adSetTyfH1HTf
+         GsRmQf5hMxov+5HgYKsK2iyaTcJGrJrDcxxlpt84URq6HjykrBIh5oXmV5pklCGTF65/
+         +Bfg==
+Received: by 10.68.218.10 with SMTP id pc10mr31897388pbc.47.1350569774878;
+        Thu, 18 Oct 2012 07:16:14 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.44.221])
+        by mx.google.com with ESMTPS id po4sm14308456pbb.13.2012.10.18.07.16.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 18 Oct 2012 07:16:12 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 18 Oct 2012 21:15:51 +0700
+X-Mailer: git-send-email 1.8.0.rc2.22.gad9383a
+In-Reply-To: <20121018020308.GA24484@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208005>
 
-Felipe Contreras venit, vidit, dixit 17.10.2012 14:58:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
-> 
-> I've looked at many hg<->git tools and none satisfy me. Too complicated, or too
-> slow, or to difficult to setup, etc.
+=46rom: Jeff King <peff@peff.net>
 
-It's in an unsatisfying state, I agree. We have a great remote helper
-infrastructure, but neither git-svn nor git-cvsimport/export use it, and
-remote-hg is not in git.git.
+When deciding which output format to use, we default an internal enum
+to STATUS_FORMAT_LONG and modify it if "--porcelain" or "--short" is
+given. If this enum is set to LONG, then we know the user has not
+specified any format, and we can kick in default behaviors. This works
+because there is no "--long" which they could use to explicitly
+specify LONG.
 
-git-svn used to be our killer feature! (It's becoming hard to maintain,
-though.)
+Let's expand the enum to have an explicit STATUS_FORMAT_NONE, in
+preparation for adding "--long", which can be used to override --short
+or --porcelain. Then we can distinguish between LONG and NONE when
+setting other defaults. There are two such cases:
 
-git-hg (in the shape of a remote helper) could be our next killer
-feature, finally leading to our world domination ;)
+  1. The user has asked for NUL termination. With NONE, we
+     currently default to turning on the porcelain mode.
+     With an explicit --long, we would in theory use NUL
+     termination with the long mode, but it does not support
+     it. So we can just complain and die.
 
-> The only one I've liked so far is hg-fast-export[1], which is indeed fast,
-> relatively simple, and relatively easy to use. But it's not properly maintained
-> any more.
-> 
-> So, I decided to write my own from scratch, using hg-fast-export as
-> inspiration, and voila.
-> 
-> This one doesn't have any dependencies, just put it into your $PATH, and you
-> can clone and fetch hg repositories. More importantly to me; the code is
-> simple, and easy to maintain.
+  2. When an output format is given to "git commit", we
+     default to "--dry-run". This behavior would now kick in
+     when "--long" is given, too.
 
-Well, it still has hg as a dependency. All our remote
-integration/helpers suffer from that. At least, every hg install comes
-with the modules, whereas svn is a beast (apr and such) that often comes
-without the language bindings.
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Thu, Oct 18, 2012 at 9:03 AM, Jeff King <peff@peff.net> wrote:
+ > I think that is fine to split it like this, but you would want to up=
+date
+ > the commit message above. Probably just remove those two cases and s=
+ay
+ > something like:
+ >
+ >   Note that you cannot actually trigger STATUS_FORMAT_LONG, as we do
+ >   not yet have "--long"; that will come in a follow-on patch.
+ >
+ > And then move the reasoning for how "--long" works with each case in=
+to
+ > the commit message of the next patch.
 
-> [1] http://repo.or.cz/w/fast-export.git
-> 
->  contrib/remote-hd/git-remote-hg | 231 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 231 insertions(+)
->  create mode 100755 contrib/remote-hd/git-remote-hg
+ Nope, it's hard to split the explanation in two (at least to me),
+ which may mean that the split does not make sense.
 
-That diffstat looks great (sans tests, of course; it's contrib), but
-there's no push functionality, and that is usually the most difficult
-part all helpers have to implement: Not only the push interaction, but
-also making sure that commits don't get duped in a roundtrip (git fetch
-from vcs, push to vcs, git fetch from vcs).
+ Documentation/git-commit.txt |  4 ++++
+ Documentation/git-status.txt |  3 +++
+ builtin/commit.c             | 29 +++++++++++++++++++++++------
+ 3 files changed, 30 insertions(+), 6 deletions(-)
 
-Just cloning and fetching can be done most easily with a shared worktree
-and scripting around "hg up" and "git commit -A" in some flavour.
-
-> diff --git a/contrib/remote-hd/git-remote-hg b/contrib/remote-hd/git-remote-hg
-> new file mode 100755
-> index 0000000..9157b30
-> --- /dev/null
-> +++ b/contrib/remote-hd/git-remote-hg
-> @@ -0,0 +1,231 @@
-> +#!/usr/bin/python2
-> +
-> +# Inspired by Rocco Rutte's hg-fast-export
-> +
-> +# Just copy to your ~/bin, or anywhere in your $PATH.
-> +# Then you can clone with:
-> +# hg::file:///path/to/mercurial/repo/
-> +
-> +from mercurial import hg, ui
-> +
-> +import re
-> +import sys
-> +import os
-> +import json
-> +
-> +def die(msg, *args):
-> +    print >> sys.stderr, 'ERROR:', msg % args
-> +    sys.exit(1)
-
-While we don't have to code for py3, avoiding '>>' will help us later.
-(It got removed in py3.) sys.sdterr.write() should be most portable.
-
-> +def gitmode(flags):
-> +    return 'l' in flags and '120000' or 'x' in flags and '100755' or '100644'
-> +
-> +def export_file(fc):
-> +    if fc.path() == '.hgtags':
-
-Is this always relative? Just wondering, dunno.
-
-> +        return
-> +    d = fc.data()
-> +    print "M %s inline %s" % (gitmode(fc.flags()), fc.path())
-> +    print "data %d" % len(d)
-> +    print d
-> +
-> +def get_filechanges(repo, ctx, parents):
-> +    l = [repo.status(p, ctx)[:3] for p in parents]
-> +    changed, added, removed = [sum(e, []) for e in zip(*l)]
-> +    return added + changed, removed
-> +
-> +author_re = re.compile('^((.+?) )?(<.+?>)$')
-> +
-> +def fixup_user(user):
-> +    user = user.replace('"', '')
-> +    m = author_re.match(user)
-> +    if m:
-> +        name = m.group(1)
-> +        mail = m.group(3)
-> +    else:
-> +        name = user
-> +        mail = None
-> +
-> +    if not name:
-> +        name = 'Unknown'
-> +    if not mail:
-> +        mail = '<unknown>'
-> +
-> +    return '%s %s' % (name, mail)
-> +
-> +def get_repo(path, alias):
-> +    myui = ui.ui()
-> +    myui.setconfig('ui', 'interactive', 'off')
-> +    repo = hg.repository(myui, path)
-> +    return repo
-
-Is there a reason to spell this out, e.g.: Why not
-
-return hg.repository(myui, path)
-
-> +
-> +def hg_branch(b):
-> +    if b == 'master':
-> +        return 'default'
-> +    return b
-> +
-> +def git_branch(b):
-> +    if b == 'default':
-> +        return 'master'
-> +    return b
-> +
-> +def export_tag(repo, tag):
-> +    global prefix
-> +    print "reset %s/tags/%s" % (prefix, tag)
-> +    print "from :%s" % (repo[tag].rev() + 1)
-> +    print
-> +
-> +def export_branch(repo, branch):
-> +    global prefix, marks, cache, branches
-> +
-> +    heads = branches[hg_branch(branch)]
-> +
-> +    # verify there's only one head
-> +    if (len(heads) > 1):
-> +        die("Branch '%s' has more than one head" % hg_branch(branch))
-
-We have to deal with this at some point... Do you support "hg
-bookmarks"? They'd be an option, or we implement better detached head
-handling in git...
-
-> +
-> +    head = repo[heads[0]]
-> +    tip = marks.get(branch, 0)
-> +    # mercurial takes too much time checking this
-> +    if tip == head.rev():
-> +        # nothing to do
-> +        return
-> +    revs = repo.revs('%u:%u' % (tip, head))
-> +    count = 0
-> +
-
-> +    revs = [rev for rev in revs if not cache.get(rev, False)]
-> +
-> +    for rev in revs:
-
-Those lines set up the list just so that you iterate over it later.
-Please don't do this (unless you know that revs is very small).
-
-for rev in revs:
-  if cache.get(rev, False):
-    continue
-
-is more performant. You can reduce this further to
-
-count=0
-for rev in repo.revs('%u:%u' % (tip, head)):
-  if cache.get(rev, False):
-    continue
-
-which is even more performant generally, and especially if repo.revs()
-returns an iterator rather than a list.
-
-[Yes, you could use lambda+filter, but let's not get religious. The
-above is simple and pythonic.]
-
-> +
-> +        c = repo[rev]
-> +        (manifest, user, (time, tz), files, desc, extra) = repo.changelog.read(c.node())
-
-Same here, you introduce c just for the next line (unless I'm mistaken).
-
-> +        rev_branch = git_branch(extra['branch'])
-> +
-> +        tz = '%+03d%02d' % (-tz / 3600, -tz % 3600 / 60)
-> +
-> +        print "commit %s/branches/%s" % (prefix, rev_branch)
-> +        print "mark :%d" % (rev + 1)
-> +        print "committer %s %d %s" % (fixup_user(user), time, tz)
-> +        print "data %d" % (len(desc) + 1)
-> +        print desc
-> +        print
-> +
-> +        parents = [p for p in repo.changelog.parentrevs(rev) if p >= 0]
-> +
-> +        if len(parents) == 0:
-> +            modified = c.manifest().keys()
-> +            removed = []
-> +        else:
-> +            added = []
-> +            changed = []
-> +            print "from :%s" % (parents[0] + 1)
-
-What is this +1 offset that is appearing here and there?
-
-> +            if len(parents) > 1:
-> +                print "merge :%s" % (parents[1] + 1)
-> +            modified, removed = get_filechanges(repo, c, parents)
-> +
-> +        for f in removed:
-> +            print "D %s" % (f)
-> +        for f in modified:
-> +            export_file(c.filectx(f))
-> +        print
-> +
-> +        count += 1
-> +        if (count % 100 == 0):
-> +            print "progress revision %d '%s' (%d/%d)" % (rev, branch, count, len(revs))
-> +            print "#############################################################"
-> +
-> +        cache[rev] = True
-> +
-> +    # store the latest revision
-> +    marks[branch] = rev
-> +
-> +def do_capabilities(repo, args):
-> +    global prefix, dirname
-> +
-> +    print "import"
-> +    print "refspec refs/heads/*:%s/branches/*" % prefix
-> +    print "refspec refs/tags/*:%s/tags/*" % prefix
-> +
-> +    path = os.path.join(dirname, 'marks-git')
-> +
-> +    print "*export-marks %s" % path
-> +    if os.path.exists(path):
-> +        print "*import-marks %s" % path
-> +
-> +    print
-> +
-> +def do_list(repo, args):
-> +    global branches
-> +
-> +    head = repo.dirstate.branch()
-> +    for branch in repo.branchmap():
-> +        heads = repo.branchheads(branch)
-> +        if len(heads):
-> +            branches[branch] = heads
-
-I'm a bit confused here. repo.brancheads() is a list, no? Is this the
-single head case only? I'd expect [0] of that, but you seem to be
-getting branch names (strings).
-
-Also, if len(heads) == 0 then branches[branch] is undefined or stale. No?
-
-> +
-> +    for branch in branches:
-> +        print "? refs/heads/%s" % git_branch(branch)
-> +    for tag, node in repo.tagslist():
-> +        if tag == 'tip':
-> +            continue
-> +        print "? refs/tags/%s" % tag
-> +    print "@refs/heads/%s HEAD" % git_branch(head)
-> +    print
-> +
-> +def do_import(repo, args):
-> +    ref = args[1]
-> +
-> +    if (ref == 'HEAD'):
-> +        return
-> +
-> +    if ref.startswith('refs/heads/'):
-> +        branch = ref[len('refs/heads/'):]
-> +        export_branch(repo, branch)
-> +    elif ref.startswith('refs/tags/'):
-> +        tag = ref[len('refs/tags/'):]
-> +        export_tag(repo, tag)
-> +
-> +def main(args):
-> +    global prefix, dirname, marks, cache, branches
-> +
-> +    alias = args[1]
-> +    url = args[2]
-> +
-> +    gitdir = os.environ['GIT_DIR']
-> +    dirname = os.path.join(gitdir, 'hg')
-> +    cache = {}
-> +    branches = {}
-> +
-> +    repo = get_repo(url, alias)
-> +    prefix = 'refs/hg/%s' % alias
-> +
-> +    if not os.path.exists(dirname):
-> +        os.makedirs(dirname)
-> +
-> +    marks_path = os.path.join(dirname, 'marks-hg')
-> +    try:
-> +        fp = open(marks_path, 'r')
-> +        marks = json.load(fp)
-> +        fp.close()
-> +    except IOError:
-> +        marks = {}
-> +
-> +    line = True
-> +    while (line):
-> +        line = sys.stdin.readline().strip()
-> +        if line == '':
-> +            break
-> +        args = line.split()
-> +        cmd = args[0]
-> +        if cmd == 'capabilities':
-> +            do_capabilities(repo, args)
-> +        elif cmd == 'list':
-> +            do_list(repo, args)
-> +        elif cmd == 'import':
-> +            do_import(repo, args)
-> +        sys.stdout.flush()
-> +
-> +    fp = open(marks_path, 'w')
-> +    json.dump(marks, fp)
-> +    fp.close()
-> +
-> +sys.exit(main(sys.argv))
-> 
-
-Overall, this looks like plain scripting in python rather than anything
-oo'ish, but that's okay and probably dictated by the remote helper
-interface and/or the existing exporter.
-
-I'm all for an improvement in that area, but still feel we'd need a
-combined effort rather than yet another start.
-
-Michael
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+index 9594ac8..3acf2e7 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -109,6 +109,10 @@ OPTIONS
+ 	format. See linkgit:git-status[1] for details. Implies
+ 	`--dry-run`.
+=20
++--long::
++	When doing a dry-run, give the output in a the long-format.
++	Implies `--dry-run`.
++
+ -z::
+ --null::
+ 	When showing `short` or `porcelain` status output, terminate
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.tx=
+t
+index 67e5f53..9f1ef9a 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -38,6 +38,9 @@ OPTIONS
+ 	across git versions and regardless of user configuration. See
+ 	below for details.
+=20
++--long::
++	Give the output in the long-format. This is the default.
++
+ -u[<mode>]::
+ --untracked-files[=3D<mode>]::
+ 	Show untracked files.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a17a5df..1dd2ec5 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -112,10 +112,11 @@ static const char *only_include_assumed;
+ static struct strbuf message =3D STRBUF_INIT;
+=20
+ static enum {
++	STATUS_FORMAT_NONE =3D 0,
+ 	STATUS_FORMAT_LONG,
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN
+-} status_format =3D STATUS_FORMAT_LONG;
++} status_format;
+=20
+ static int opt_parse_m(const struct option *opt, const char *arg, int =
+unset)
+ {
+@@ -454,6 +455,7 @@ static int run_status(FILE *fp, const char *index_f=
+ile, const char *prefix, int
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(s);
+ 		break;
++	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+ 		wt_status_print(s);
+ 		break;
+@@ -1058,9 +1060,13 @@ static int parse_and_validate_options(int argc, =
+const char *argv[],
+ 	if (all && argc > 0)
+ 		die(_("Paths with -a does not make sense."));
+=20
+-	if (s->null_termination && status_format =3D=3D STATUS_FORMAT_LONG)
+-		status_format =3D STATUS_FORMAT_PORCELAIN;
+-	if (status_format !=3D STATUS_FORMAT_LONG)
++	if (s->null_termination) {
++		if (status_format =3D=3D STATUS_FORMAT_NONE)
++			status_format =3D STATUS_FORMAT_PORCELAIN;
++		else if (status_format =3D=3D STATUS_FORMAT_LONG)
++			die(_("--long and -z are incompatible"));
++	}
++	if (status_format !=3D STATUS_FORMAT_NONE)
+ 		dry_run =3D 1;
+=20
+ 	return argc;
+@@ -1159,6 +1165,9 @@ int cmd_status(int argc, const char **argv, const=
+ char *prefix)
+ 		OPT_SET_INT(0, "porcelain", &status_format,
+ 			    N_("machine-readable output"),
+ 			    STATUS_FORMAT_PORCELAIN),
++		OPT_SET_INT(0, "long", &status_format,
++			    N_("show status in long format (default)"),
++			    STATUS_FORMAT_LONG),
+ 		OPT_BOOLEAN('z', "null", &s.null_termination,
+ 			    N_("terminate entries with NUL")),
+ 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
+@@ -1186,8 +1195,12 @@ int cmd_status(int argc, const char **argv, cons=
+t char *prefix)
+ 			     builtin_status_usage, 0);
+ 	finalize_colopts(&s.colopts, -1);
+=20
+-	if (s.null_termination && status_format =3D=3D STATUS_FORMAT_LONG)
+-		status_format =3D STATUS_FORMAT_PORCELAIN;
++	if (s.null_termination) {
++		if (status_format =3D=3D STATUS_FORMAT_NONE)
++			status_format =3D STATUS_FORMAT_PORCELAIN;
++		else if (status_format =3D=3D STATUS_FORMAT_LONG)
++			die(_("--long and -z are incompatible"));
++	}
+=20
+ 	handle_untracked_files_arg(&s);
+ 	if (show_ignored_in_status)
+@@ -1216,6 +1229,7 @@ int cmd_status(int argc, const char **argv, const=
+ char *prefix)
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(&s);
+ 		break;
++	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+ 		s.verbose =3D verbose;
+ 		s.ignore_submodule_arg =3D ignore_submodule_arg;
+@@ -1386,6 +1400,9 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+ 		OPT_BOOLEAN(0, "branch", &s.show_branch, N_("show branch information=
+")),
+ 		OPT_SET_INT(0, "porcelain", &status_format,
+ 			    N_("machine-readable output"), STATUS_FORMAT_PORCELAIN),
++		OPT_SET_INT(0, "long", &status_format,
++			    N_("show status in long format (default)"),
++			    STATUS_FORMAT_LONG),
+ 		OPT_BOOLEAN('z', "null", &s.null_termination,
+ 			    N_("terminate entries with NUL")),
+ 		OPT_BOOLEAN(0, "amend", &amend, N_("amend previous commit")),
+--=20
+1.8.0.rc2.22.gad9383a
