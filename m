@@ -1,133 +1,177 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/6] pretty: remove reencode_commit_message()
-Date: Wed, 17 Oct 2012 22:45:23 -0700
-Message-ID: <1350539128-21577-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/6] format_note(): simplify API
+Date: Wed, 17 Oct 2012 22:45:24 -0700
+Message-ID: <1350539128-21577-3-git-send-email-gitster@pobox.com>
 References: <1350539128-21577-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 07:45:47 2012
+X-From: git-owner@vger.kernel.org Thu Oct 18 07:46:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOivQ-0005GL-Sy
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 07:45:45 +0200
+	id 1TOivh-0005dI-1D
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 07:46:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754176Ab2JRFpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 01:45:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59858 "EHLO
+	id S1754179Ab2JRFph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 01:45:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59909 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754088Ab2JRFpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 01:45:33 -0400
+	id S1754088Ab2JRFpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 01:45:35 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 058D46D19
-	for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F4406D25
+	for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=RRXH
-	Bw4J3jMmYFcUm82Dx/bLnOc=; b=pwUqz5wJ5bXsA9ptb7tSubadHlCWJJbuEpC7
-	vVrGl1u8GKKwFAVlsJtH9hee5D1TSLP8YA3THHJ6OzF+hZ4cEvwohFlNmBE9z/u+
-	SUWApbESIBZ6eFuXpbtrKYFbAH0k74l8qQ3mi+FWY+/m/nRG74xKycf+93qGWQpr
-	Yq+H0rM=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=qWJC
+	93GPC39YwRPVUkFDNd+7MKs=; b=xGwALuI1KQqk8Ob6vwBRAQfT92gdHsoCBsBS
+	5W6jrvQl99tfYASLg22F21issjVB5zItNgdFk3zc6XmGcdJcNtVUSIJm9Gns7/up
+	1lRUHaGEpVjZIyTaSV7PprsnMEiftWXxcqaaNB9WRTWu8N+Vk1aEEKJKdqZuPb1K
+	2fSbqzI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=GYr5lE
-	85CHqorWJSuLYmFy89XmiC6QjGTYQNZMwEBJW9VSiJ81VzlQJFL3Qod/jvc5nZdo
-	qFu1BSZDAGPlA4ut9BFZMwYzNNLy+ehmibERR/1VQIIkqvoPjJR/NtWsnEDGdwz+
-	gdsyVs/UdNeiU64SRjPAu9njZlCcCX+38iJug=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Fgo3wG
+	lGTTVVYTcDNhJ6oFHHeFHZhkGbRdpzdm4KwvLPjZcwkteSIzQhWDe+T+WOi098uK
+	pt5q8vsbhPNZ8/Jhce7wBHky93Ps1whL1c3sXo34dQZ8mstpwaEog3Ij1e9ZdWT6
+	4uPDhXTWDE+OCBXprHJHNav77cxhQ7UQgLDYc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5C576D18
-	for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C0686D24
+	for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:35 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B0456D15 for
- <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:32 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 579AE6D22 for
+ <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:34 -0400 (EDT)
 X-Mailer: git-send-email 1.8.0.rc3.112.gdb88a5e
 In-Reply-To: <1350539128-21577-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 07DFA404-18E7-11E2-AFF8-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 091893D0-18E7-11E2-9BDC-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207963>
 
-This function has only two callsites, and is a thin wrapper whose
-usefulness is dubious.  When the caller needs to learn the log
-output encoding, it should be able to do so by directly calling
-get_log_output_encoding() and calling the underlying
-logmsg_reencode() with it.
+We either stuff the notes message without modification for %N
+userformat, or format it for human consumption.  Using two bits
+is an overkill that does not benefit anybody.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/blame.c |  5 +++--
- commit.h        |  2 --
- pretty.c        | 13 ++-----------
- 3 files changed, 5 insertions(+), 15 deletions(-)
+ notes.c    | 13 +++++++------
+ notes.h    |  6 +-----
+ pretty.c   |  5 ++---
+ revision.c |  2 +-
+ 4 files changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index c27ef21..cfae569 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1425,7 +1425,7 @@ static void get_commit_info(struct commit *commit,
- 			    int detailed)
+diff --git a/notes.c b/notes.c
+index bc454e1..97097db 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1204,10 +1204,11 @@ void free_notes(struct notes_tree *t)
+  * If the given notes_tree is NULL, the internal/default notes_tree will be
+  * used instead.
+  *
+- * 'flags' is a bitwise combination of the flags for format_display_notes.
++ * (raw != 0) gives the %N userformat; otherwise, the note message is given
++ * for human consumption.
+  */
+ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+-			struct strbuf *sb, const char *output_encoding, int flags)
++			struct strbuf *sb, const char *output_encoding, int raw)
  {
- 	int len;
--	const char *subject;
-+	const char *subject, *encoding;
- 	char *reencoded, *message;
- 	static char author_name[1024];
- 	static char author_mail[1024];
-@@ -1446,7 +1446,8 @@ static void get_commit_info(struct commit *commit,
- 			die("Cannot read commit %s",
- 			    sha1_to_hex(commit->object.sha1));
- 	}
--	reencoded = reencode_commit_message(commit, NULL);
-+	encoding = get_log_output_encoding();
-+	reencoded = logmsg_reencode(commit, encoding);
- 	message   = reencoded ? reencoded : commit->buffer;
- 	ret->author = author_name;
- 	ret->author_mail = author_mail;
-diff --git a/commit.h b/commit.h
-index 9f21313..a822af8 100644
---- a/commit.h
-+++ b/commit.h
-@@ -99,8 +99,6 @@ extern int has_non_ascii(const char *text);
- struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
- extern char *logmsg_reencode(const struct commit *commit,
- 			     const char *output_encoding);
--extern char *reencode_commit_message(const struct commit *commit,
--				     const char **encoding_p);
- extern void get_commit_format(const char *arg, struct rev_info *);
- extern const char *format_subject(struct strbuf *sb, const char *msg,
- 				  const char *line_separator);
-diff --git a/pretty.c b/pretty.c
-index 8b1ea9f..c311a68 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1341,16 +1341,6 @@ void pp_remainder(const struct pretty_print_context *pp,
- 	}
+ 	static const char utf8[] = "utf-8";
+ 	const unsigned char *sha1;
+@@ -1244,7 +1245,7 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 	if (msglen && msg[msglen - 1] == '\n')
+ 		msglen--;
+ 
+-	if (flags & NOTES_SHOW_HEADER) {
++	if (!raw) {
+ 		const char *ref = t->ref;
+ 		if (!ref || !strcmp(ref, GIT_NOTES_DEFAULT_REF)) {
+ 			strbuf_addstr(sb, "\nNotes:\n");
+@@ -1260,7 +1261,7 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 	for (msg_p = msg; msg_p < msg + msglen; msg_p += linelen + 1) {
+ 		linelen = strchrnul(msg_p, '\n') - msg_p;
+ 
+-		if (flags & NOTES_INDENT)
++		if (!raw)
+ 			strbuf_addstr(sb, "    ");
+ 		strbuf_add(sb, msg_p, linelen);
+ 		strbuf_addch(sb, '\n');
+@@ -1270,13 +1271,13 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
  }
  
--char *reencode_commit_message(const struct commit *commit, const char **encoding_p)
--{
--	const char *encoding;
+ void format_display_notes(const unsigned char *object_sha1,
+-			  struct strbuf *sb, const char *output_encoding, int flags)
++			  struct strbuf *sb, const char *output_encoding, int raw)
+ {
+ 	int i;
+ 	assert(display_notes_trees);
+ 	for (i = 0; display_notes_trees[i]; i++)
+ 		format_note(display_notes_trees[i], object_sha1, sb,
+-			    output_encoding, flags);
++			    output_encoding, raw);
+ }
+ 
+ int copy_note(struct notes_tree *t,
+diff --git a/notes.h b/notes.h
+index 3592b19..3324c48 100644
+--- a/notes.h
++++ b/notes.h
+@@ -237,10 +237,6 @@ void prune_notes(struct notes_tree *t, int flags);
+  */
+ void free_notes(struct notes_tree *t);
+ 
+-/* Flags controlling how notes are formatted */
+-#define NOTES_SHOW_HEADER 1
+-#define NOTES_INDENT 2
 -
--	encoding = get_log_output_encoding();
--	if (encoding_p)
--		*encoding_p = encoding;
--	return logmsg_reencode(commit, encoding);
--}
--
- void pretty_print_commit(const struct pretty_print_context *pp,
- 			 const struct commit *commit,
- 			 struct strbuf *sb)
-@@ -1367,7 +1357,8 @@ void pretty_print_commit(const struct pretty_print_context *pp,
- 		return;
+ struct string_list;
+ 
+ struct display_notes_opt {
+@@ -274,7 +270,7 @@ void init_display_notes(struct display_notes_opt *opt);
+  * You *must* call init_display_notes() before using this function.
+  */
+ void format_display_notes(const unsigned char *object_sha1,
+-			  struct strbuf *sb, const char *output_encoding, int flags);
++			  struct strbuf *sb, const char *output_encoding, int raw);
+ 
+ /*
+  * Load the notes tree from each ref listed in 'refs'.  The output is
+diff --git a/pretty.c b/pretty.c
+index c311a68..735cf0f 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1035,7 +1035,7 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 	case 'N':
+ 		if (c->pretty_ctx->show_notes) {
+ 			format_display_notes(commit->object.sha1, sb,
+-				    get_log_output_encoding(), 0);
++					     get_log_output_encoding(), 1);
+ 			return 1;
+ 		}
+ 		return 0;
+@@ -1419,8 +1419,7 @@ void pretty_print_commit(const struct pretty_print_context *pp,
+ 		strbuf_addch(sb, '\n');
+ 
+ 	if (pp->show_notes)
+-		format_display_notes(commit->object.sha1, sb, encoding,
+-				     NOTES_SHOW_HEADER | NOTES_INDENT);
++		format_display_notes(commit->object.sha1, sb, encoding, 0);
+ 
+ 	free(reencoded);
+ }
+diff --git a/revision.c b/revision.c
+index a09e60b..ddfba11 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2236,7 +2236,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ 		if (!buf.len)
+ 			strbuf_addstr(&buf, commit->buffer);
+ 		format_display_notes(commit->object.sha1, &buf,
+-				     get_log_output_encoding(), 0);
++				     get_log_output_encoding(), 1);
  	}
  
--	reencoded = reencode_commit_message(commit, &encoding);
-+	encoding = get_log_output_encoding();
-+	reencoded = logmsg_reencode(commit, encoding);
- 	if (reencoded) {
- 		msg = reencoded;
- 	}
+ 	/* Find either in the commit object, or in the temporary */
 -- 
 1.8.0.rc3.112.gdb88a5e
