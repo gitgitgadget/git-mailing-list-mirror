@@ -1,184 +1,84 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new git-remote-hd helper
-Date: Thu, 18 Oct 2012 07:18:49 +0200
-Message-ID: <CAMP44s1b=dNaCbm1WkFBv6368Y+jDYdkPuscEFdiUnVJBStfVg@mail.gmail.com>
-References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
-	<20121017225913.GC21742@sigill.intra.peff.net>
-	<CAMP44s0+Fhtj2rMQ1Av-49Koa=DumX8JZs5angOFSRzqtDc+9Q@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What can cause empty GIT_AUTHOR_NAME for 'git filter-branch --tree-filter'
+ on Solaris?
+Date: Thu, 18 Oct 2012 07:31:35 +0200
+Message-ID: <507F9437.2070501@viscovery.net>
+References: <1109432467.20121017104729@gmail.com> <507E5CE0.10002@viscovery.net> <1013956402.20121017125847@gmail.com> <20121017220912.GA21742@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
+Content-Transfer-Encoding: 7bit
+Cc: Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 07:19:04 2012
+X-From: git-owner@vger.kernel.org Thu Oct 18 07:31:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOiVZ-0005mD-QV
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 07:19:02 +0200
+	id 1TOii0-0004w3-20
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 07:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040Ab2JRFSu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 01:18:50 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:49956 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862Ab2JRFSt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 01:18:49 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so8226605oag.19
-        for <git@vger.kernel.org>; Wed, 17 Oct 2012 22:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=KzS1phgQ97Et/BX5mgv81D98+cUAuHPJIjj3mZSVs5I=;
-        b=fEtcDhuI8gci6dUrb7Buoiqr+VO7HtCWvD7MJxbgqxW+Tfm1ndEy5ixA7iCZNFxKNS
-         rwPA5hF0EUfpBmNXf9x7RKWxuF0FvZO+nAQ4FUnFgQLj3UDfgvJ3DhYInqEXZLnzJ706
-         gwYT/9X+VXRW2qkAndJjOAWj9dm/uvE8z+koJ2gAODFb01J1+0qzW8WZPLoCZ1IdoAaU
-         8wRU/OHuMyWJQ7wDkEqwGnUYCePteUhwe0MSTFI9X2+u6MK2eTyKUj5YlTFRqeWtHDHC
-         LGSF6fmrJ+I8gBhwoLtGBnBTfnYMR0HREy/FirJWiOeNur/nL1LG85/RvkAiB6krFqb7
-         bmiA==
-Received: by 10.60.170.179 with SMTP id an19mr12902630oec.46.1350537529341;
- Wed, 17 Oct 2012 22:18:49 -0700 (PDT)
-Received: by 10.60.58.137 with HTTP; Wed, 17 Oct 2012 22:18:49 -0700 (PDT)
-In-Reply-To: <CAMP44s0+Fhtj2rMQ1Av-49Koa=DumX8JZs5angOFSRzqtDc+9Q@mail.gmail.com>
+	id S1754134Ab2JRFbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 01:31:40 -0400
+Received: from so.liwest.at ([212.33.55.24]:37617 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754094Ab2JRFbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 01:31:39 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TOihj-0007LN-Ta; Thu, 18 Oct 2012 07:31:36 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 8D8481660F;
+	Thu, 18 Oct 2012 07:31:35 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121017220912.GA21742@sigill.intra.peff.net>
+X-Enigmail-Version: 1.4.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207959>
 
-On Thu, Oct 18, 2012 at 5:44 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Thu, Oct 18, 2012 at 12:59 AM, Jeff King <peff@peff.net> wrote:
->> On Wed, Oct 17, 2012 at 02:58:41PM +0200, Felipe Contreras wrote:
->>
->>> I've looked at many hg<->git tools and none satisfy me. Too complicated, or too
->>> slow, or to difficult to setup, etc.
->>
->> I run into this every few months, evaluate all of the options, and come
->> to the same conclusion. So I am excited at the prospect of something
->> simple that just works out of the box.
->>
->> Unfortunately, when I tried it, it did not work for me. :(
+Am 10/18/2012 0:09, schrieb Jeff King:
+> -	lid="$(echo "$1" | tr "[A-Z]" "[a-z]")"
+> -	uid="$(echo "$1" | tr "[a-z]" "[A-Z]")"
+> +	lid="$(echo "$1" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz)"
+> +	uid="$(echo "$1" | tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ)"
+> 
+> That seems like crazy overkill, but it at least will let us double-check
+> that the tr sequences are the problem.
 
-Ok, I've fixed all those issues:
-http://github.com/felipec/git/blob/fc-remote-hg/contrib/remote-hg/git-remote-hg
+Right. But we should really be doing something like this instead to save a
+few subprocesses.
 
-Right now I've just added an error when using remote repositories. But
-it seems there's no way around it; if we want to have support for
-remote repos, we need to make a local clone.
+-- Hannes
 
-> But at the moment it should fail at this point, I wonder why you get
-> the errors below.
->
->>   error: refs/tags/VIMPERATOR_2_2_b1 does not point to a valid object!
->>   error: refs/tags/muttator-0.5 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b1 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b2 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b3 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b4 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b4.1 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b4.2 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b4.3 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b5 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b5.1 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b6 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b7 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0b7.1 does not point to a valid object!
->>   error: refs/tags/pentadactyl-1.0rc1 does not point to a valid object!
->>   error: refs/tags/vimperator-0.4.1 does not point to a valid object!
->>   error: refs/tags/vimperator-0.5 does not point to a valid object!
->>   error: refs/tags/vimperator-0.5-branch-HEAD-merge-1 does not point to a valid object!
->>   error: refs/tags/vimperator-0.5.1 does not point to a valid object!
->>   error: refs/tags/vimperator-0.5.2 does not point to a valid object!
->>   error: refs/tags/vimperator-0.5.3 does not point to a valid object!
->>   error: refs/tags/vimperator-1.0 does not point to a valid object!
->>   error: refs/tags/vimperator-1.1 does not point to a valid object!
->>   error: refs/tags/vimperator-1.2 does not point to a valid object!
->>   error: refs/tags/vimperator-2.0 does not point to a valid object!
->>   error: refs/tags/vimperator-2.0a1 does not point to a valid object!
->>   error: refs/tags/vimperator-2.1 does not point to a valid object!
->>   error: refs/tags/vimperator-2.2 does not point to a valid object!
->>   error: refs/tags/vimperator-2.2b1 does not point to a valid object!
->>   error: refs/tags/xulmus-0.1 does not point to a valid object!
->
-> This is weird.
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 178e453..018e56e 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -68,8 +68,8 @@ eval "$functions"
+ # "author" or "committer
 
-I think I know why the errors above show up; even though the helper
-dies, transport-helper doesn't check the status until the very end.
+ set_ident () {
+-	lid="$(echo "$1" | tr "[A-Z]" "[a-z]")"
+-	uid="$(echo "$1" | tr "[a-z]" "[A-Z]")"
++	uid=$1
++	lid=$2
+ 	pick_id_script='
+ 		/^'$lid' /{
+ 			s/'\''/'\''\\'\'\''/g
+@@ -320,9 +320,9 @@ while read commit parents; do
+ 	git cat-file commit "$commit" >../commit ||
+ 		die "Cannot read commit $commit"
 
-Something like this should do the trick:
-
-diff --git a/run-command.c b/run-command.c
-index 1101ef7..0a859ca 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -559,6 +559,21 @@ int run_command(struct child_process *cmd)
- 	return finish_command(cmd);
- }
-
-+int check_command(struct child_process *cmd)
-+{
-+	int status;
-+	pid_t pid;
-+
-+	pid = waitpid(cmd->pid, &status, WNOHANG);
-+
-+	if (pid != cmd->pid)
-+		return -1;
-+	if (WIFSIGNALED(status))
-+		return WTERMSIG(status);
-+	if (WIFEXITED(status))
-+		return WEXITSTATUS(status);
-+}
-+
- static void prepare_run_command_v_opt(struct child_process *cmd,
- 				      const char **argv,
- 				      int opt)
-diff --git a/run-command.h b/run-command.h
-index 44f7d2b..9019e38 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -45,6 +45,7 @@ struct child_process {
- int start_command(struct child_process *);
- int finish_command(struct child_process *);
- int run_command(struct child_process *);
-+int check_command(struct child_process *cmd);
-
- extern int run_hook(const char *index_file, const char *name, ...);
-
-diff --git a/transport-helper.c b/transport-helper.c
-index cfe0988..bc1349d 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -441,6 +441,10 @@ static int fetch_with_import(struct transport *transport,
-
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
-+
-+	if (check_command(data->helper))
-+		die("Error while running helper");
-+
- 	free(fastimport.argv);
- 	fastimport.argv = NULL;
-
-@@ -784,6 +788,10 @@ static int push_refs_with_export(struct transport
-*transport,
-
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
-+
-+	if (check_command(data->helper))
-+		die("Error while running helper");
-+
- 	push_update_refs_status(data, remote_refs);
- 	return 0;
- }
-
--- 
-Felipe Contreras
+-	eval "$(set_ident AUTHOR <../commit)" ||
++	eval "$(set_ident AUTHOR author <../commit)" ||
+ 		die "setting author failed for commit $commit"
+-	eval "$(set_ident COMMITTER <../commit)" ||
++	eval "$(set_ident COMMITTER committer <../commit)" ||
+ 		die "setting committer failed for commit $commit"
+ 	eval "$filter_env" < /dev/null ||
+ 		die "env filter failed: $filter_env"
