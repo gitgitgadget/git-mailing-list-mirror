@@ -1,106 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Bring "format-patch --notes" closer to a real
- feature
-Date: Thu, 18 Oct 2012 10:04:11 -0700
-Message-ID: <7v391bn244.fsf@alter.siamese.dyndns.org>
-References: <1350539128-21577-1-git-send-email-gitster@pobox.com>
- <CACsJy8Dxx6JtRXP_HWNBrobNems+4UsaOGSRef08cf8--b5dOw@mail.gmail.com>
+From: Thomas Ackermann <th.acker66@arcor.de>
+Subject: Aw: Re: Aw: Re: [Patch v3 0/8] Create single PDF for all HTML files
+Date: Thu, 18 Oct 2012 19:19:52 +0200 (CEST)
+Message-ID: <634888125.421937.1350580792693.JavaMail.ngmail@webmail11.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 19:04:34 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, philipoakley@iee.org, peff@peff.net,
+	git@drmicha.warpmail.net
+To: gitster@pobox.com, th.acker66@arcor.de
+X-From: git-owner@vger.kernel.org Thu Oct 18 19:20:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOtWG-0005xA-Mm
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 19:04:29 +0200
+	id 1TOtlN-0008Qa-Si
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 19:20:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757285Ab2JRREQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 13:04:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51073 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757196Ab2JRREP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 13:04:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23AF48F78;
-	Thu, 18 Oct 2012 13:04:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kY9SgWISw8Q3DzaytJgetIKAckg=; b=RM2Vkx
-	3YvIj2TkVrq8QEiiGWkpy/BeqN8k+3lGM9v964QawCV5F3yyNwNl/AvEw8O9/OOe
-	MA9miGtRorD1TMbF2vXlqJ6wwRq+c7SqZsVIh4voj2G4UMBTQe041YNp2fWDbi65
-	QvUhP8qDipw2s5JPx/RTg16XpdQc1yNHg5KwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CLL0bqJZxu+IUNPHIw9MitAYBo8sq1jk
-	1AiwvqFKOiipEQKnnQAKmzl/JgwUMEtCPx61qg5FmbLOLwjZ9JFWE+IwWGvenMeG
-	9On98AeOkSm74pcfN21sLtB3rRtjIJsWVNtnHjMPCBCW+/cMbe/8/oPDEc1spN+y
-	kkfKlhNHWXA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C0498F77;
-	Thu, 18 Oct 2012 13:04:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F0A38F74; Thu, 18 Oct 2012
- 13:04:13 -0400 (EDT)
-In-Reply-To: <CACsJy8Dxx6JtRXP_HWNBrobNems+4UsaOGSRef08cf8--b5dOw@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Thu, 18 Oct 2012 18:06:10 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D787AEDC-1945-11E2-9B1F-84882E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932531Ab2JRRTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 13:19:55 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:42055 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932119Ab2JRRTy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2012 13:19:54 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mx.arcor.de (Postfix) with ESMTP id B9F7B108431;
+	Thu, 18 Oct 2012 19:19:52 +0200 (CEST)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id B3FD42E60AA;
+	Thu, 18 Oct 2012 19:19:52 +0200 (CEST)
+Received: from webmail11.arcor-online.net (webmail11.arcor-online.net [151.189.8.83])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id ADFAB30766;
+	Thu, 18 Oct 2012 19:19:52 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net ADFAB30766
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1350580792; bh=9wzglAHa3A4+8jYIoJXeaDrw0RYUshSe43vaRSq3g3g=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=LUXQTxp7StWP5/EXMaMFkjEocm9gcrDmArwV89KqmSn/kkMelgcu6cw+2fbUEXO23
+	 jlaOzjQUWiFElkhsNtN/Nmk+eUmB8MoclAig2DyBPGfnJkU8b/ZoSzcoND8PnIjU8E
+	 OhnRBKCTxGthVVdaDFzwbv4PxFI3KP6Lea7KP6BI=
+Received: from [188.105.105.12] by webmail11.arcor-online.net (151.189.8.83) with HTTP (Arcor Webmail); Thu, 18 Oct 2012 19:19:52 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.105.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208016>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-
-> On Thu, Oct 18, 2012 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> This replaces the earlier "wip" with a real thing.
->>
->> We never advertised the "--notes" option to format-patch (or
->> anything related to the pretty format options for that matter)
->> because the behaviour of these options was whatever they happened to
->> do, not what they were designed to do.
+ 
 >
-> Stupid question: does "git am" recreate notes from "format-patch
-> --notes" output? If it does not, should it? I think it could be a nice
-> way of copying notes from one machine to another, but not enabled by
-> default (iow "am --notes").
+> That means that for the patch [6/8], which adds content-type to the
+> text files, to be complete, it needs to update Makefile to produce
+> html files from them.
+> 
 
-Thinking about what the "notes" are, I do not think it should, at
-least by default; the model is broken at the conceptual level.
+IMHO also for the new files in ./technical html should be created because
+now as we have asciidoc markup why not also use it.
 
-The notes are comments on a commit you make after the fact, because
-you do not want to (or cannot afford to) amend the commit to include
-the comment.  When you are sending it out over e-mailto be applied
-with "am", as opposed to asking the other to pull, you are by
-definition willing to see the commit replayed with modification.
+>
+> > BTW2: The 'pretty-print shell script in update-hook-example.txt'
+> > part of my changes was left out from the merge to pu ...
+> 
+> Do you mean e2399e9 (Documentation/howto: convert plain text files
+> to asciidoc, 2012-10-16), or something else?
 
-I think it is sensible for format-patch/am pipeline when asked to
-use --notes to add the notes section after "---" as additional
-material to help the recipient understand the context of the patch
-better, which is done with this series.  If the submitter (or the
-recipient) wants to incorporate the description from the notes to
-update the proposed log message, it can easily be done by editing
-the output of "format-patch --notes" before sending it out (or
-before applying it with "am").
+Yes; in e2399e9 the following hunks where left out from the patch to update-hook-example.txt:
 
-That does not mean that the recipient should not use notes for his
-own purpose on the resulting commit, by the way.  It would be a
-convenient feature to prime the contents of such a new note the
-recipient creates on the resulting commit from the comment after
-"---" before the diffstat or "diff --git" line.  Note that (no pun
-intended) that additional comment does not have to originate from
-any notes in the submitter's repository.  If saving the additional
-comments the submitter attached from the notes to the patch is
-useful, it would equally be useful to save typed-in comments on the
-patch that came from the submitter's fingers, not from the notes.
+@@ -111,12 +114,12 @@ then
+ 
+       info "Found matching head pattern: '$head_pattern'"
+       for user_pattern in $user_patterns; do
+-	info "Checking user: '$username' against pattern: '$user_pattern'"
+-	matchlen=$(expr "$username" : "$user_pattern")
+-	if test "$matchlen" = "${#username}"
+-	then
+-	  grant "Allowing user: '$username' with pattern: '$user_pattern'"
+-	fi
++        info "Checking user: '$username' against pattern: '$user_pattern'"
++        matchlen=$(expr "$username" : "$user_pattern")
++        if test "$matchlen" = "${#username}"
++        then
++          grant "Allowing user: '$username' with pattern: '$user_pattern'"
++        fi
+       done
+       deny "The user is not in the access list for this branch"
+     done
+@@ -149,13 +152,13 @@ then
+ 
+       info "Found matching head pattern: '$head_pattern'"
+       for group_pattern in $group_patterns; do
+-	for groupname in $groups; do
+-	  info "Checking group: '$groupname' against pattern: '$group_pattern'"
+-	  matchlen=$(expr "$groupname" : "$group_pattern")
+-	  if test "$matchlen" = "${#groupname}"
+-	  then
+-	    grant "Allowing group: '$groupname' with pattern: '$group_pattern'"
+-	  fi
++        for groupname in $groups; do
++          info "Checking group: '$groupname' against pattern: '$group_pattern'"
++          matchlen=$(expr "$groupname" : "$group_pattern")
++          if test "$matchlen" = "${#groupname}"
++          then
++            grant "Allowing group: '$groupname' with pattern: '$group_pattern'"
++          fi
+         done
+       done
+       deny "None of the user's groups are in the access list for this branch"
 
-It is something you can do by inspecting $dotest/patch file in your
-post-applypatch hook with today's git.  If many people use and find
-such a feature desirable, we could add inbuilt support for it, but I
-do not think we are there yet.
+
+
+---
+Thomas
