@@ -1,62 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What can cause empty GIT_AUTHOR_NAME for 'git filter-branch
- --tree-filter' on Solaris?
-Date: Thu, 18 Oct 2012 01:36:56 -0400
-Message-ID: <20121018053656.GA6308@sigill.intra.peff.net>
-References: <1109432467.20121017104729@gmail.com>
- <507E5CE0.10002@viscovery.net>
- <1013956402.20121017125847@gmail.com>
- <20121017220912.GA21742@sigill.intra.peff.net>
- <507F9437.2070501@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 07:37:10 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/6] Bring "format-patch --notes" closer to a real feature
+Date: Wed, 17 Oct 2012 22:45:22 -0700
+Message-ID: <1350539128-21577-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 07:45:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOin8-0003DV-Cj
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 07:37:10 +0200
+	id 1TOivQ-0005GL-Dt
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 07:45:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078Ab2JRFg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 01:36:59 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58614 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753951Ab2JRFg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 01:36:58 -0400
-Received: (qmail 1751 invoked by uid 107); 18 Oct 2012 05:37:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Oct 2012 01:37:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2012 01:36:56 -0400
-Content-Disposition: inline
-In-Reply-To: <507F9437.2070501@viscovery.net>
+	id S1754154Ab2JRFpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 01:45:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59805 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754088Ab2JRFpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 01:45:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD4226D10
+	for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=XJJ033wlhZJm0dokOKtIETT0oJE
+	=; b=C6Z3aZpTTaUfltCDrUzM3hc8RZj4IvcpYR6FrR7Lp6SHiEZnA5QNFY7xQKY
+	UMhHu387NNdLK+DBox4YxjArgOO4PyF/q3F9t/sHzg+nr2rOqTcQ82weI21cnYUy
+	au0aFvh+Od1BTTwruei1L0qsZ40bO9LhV2Rbee0ZDjQ5XObw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=fR+LLHuGLaH251zKTim5qwbbdHAQn
+	AM9+TNeG9kkz98RaeRuRutnX0K5SfTFEHjemUh+PpuKLaRFXw6U3mJw51W1+hlXN
+	Bmz72v+3furL2RYbkCpuywmYSWpLFILtZp0UwKnjVBeiwxUmRQxWnulleQQvBEOV
+	lphMftEQwpKbvw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B97E56D0E
+	for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:30 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2383B6D0C for
+ <git@vger.kernel.org>; Thu, 18 Oct 2012 01:45:30 -0400 (EDT)
+X-Mailer: git-send-email 1.8.0.rc3.112.gdb88a5e
+X-Pobox-Relay-ID: 0695F6A2-18E7-11E2-9450-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207961>
 
-On Thu, Oct 18, 2012 at 07:31:35AM +0200, Johannes Sixt wrote:
+This replaces the earlier "wip" with a real thing.
 
-> Right. But we should really be doing something like this instead to save a
-> few subprocesses.
-> [...]
-> -	eval "$(set_ident AUTHOR <../commit)" ||
-> +	eval "$(set_ident AUTHOR author <../commit)" ||
+We never advertised the "--notes" option to format-patch (or
+anything related to the pretty format options for that matter)
+because the behaviour of these options was whatever they happened to
+do, not what they were designed to do.
 
-I cringe a little at losing DRY-ness to avoid processes. But the
-repetition is pretty straightforward and obvious, and I know that some
-platforms are really hurt by extra processes (and this is being called
-for every commit).
+It had a few obvious glitches:
 
-Speaking of repetition, this seems like almost the exact same parsing
-that happens in git-sh-setup's get_author_ident_from_commit. Maybe it's
-worth merging them. I suspect you could also avoid another process
-by parsing out both author and committer information in the same sed
-invocation.
+ * The notes section was appended immediately after the log message,
+   and then the three-dash line was added.  Such a supplimental
+   material should come after the three-dash line.
 
--Peff
+ * The logic to append a new sign-off with "format-patch --signoff"
+   worked on the message after the note was added, which made the
+   detection of existing sign-off lines incorrect.
+
+This updates the handling of "--notes" option to correct these, in
+an attempt to bring it closer to a real feature.
+
+Junio C Hamano (6):
+  pretty: remove reencode_commit_message()
+  format_note(): simplify API
+  pretty: prepare notes message at a centralized place
+  pretty_print_commit(): do not append notes message
+  format-patch: append --signature after notes
+  format-patch --notes: show notes after three-dashes
+
+ builtin/blame.c         |  5 +++--
+ commit.h                |  4 +---
+ log-tree.c              | 32 ++++++++++++++++++++++++++++----
+ notes.c                 | 13 +++++++------
+ notes.h                 |  6 +-----
+ pretty.c                | 22 ++++------------------
+ revision.c              |  2 +-
+ revision.h              |  1 +
+ t/t4014-format-patch.sh | 15 +++++++++++++--
+ 9 files changed, 59 insertions(+), 41 deletions(-)
+
+-- 
+1.8.0.rc3.112.gdb88a5e
