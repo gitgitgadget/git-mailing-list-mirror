@@ -1,154 +1,152 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 6/6] format-patch --notes: show notes after three-dashes
-Date: Thu, 18 Oct 2012 22:35:25 +0100
-Organization: OPDS
-Message-ID: <C2D3CE0879B345FFAC2A6487760B5378@PhilipOakley>
-References: <1350539128-21577-1-git-send-email-gitster@pobox.com> <1350539128-21577-7-git-send-email-gitster@pobox.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: szager@google.com
+Subject: Fix potential hang in https handshake.
+Date: Thu, 18 Oct 2012 14:35:26 -0700
+Message-ID: <5080761e.IEDySUuQzlCwL6fM%szager@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 23:35:24 2012
+Cc: gitster@pobox.com, sop@google.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 23:35:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOxkR-0003yv-0F
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 23:35:23 +0200
+	id 1TOxkh-0004NS-Pt
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 23:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106Ab2JRVfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 17:35:09 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:63970 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755799Ab2JRVfI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2012 17:35:08 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuMKAAl1gFBcGnoN/2dsb2JhbABFi1GzdAQBA4EFgQmCGwUBAQUIAQEdEREFCAEBLAIDBQIBAxQBDCUUAQQYAgYHFwYBBwsIAgECAwEMBIdnB71XjBI2AYRxYAOII4VEiRmPH4Jw
-X-IronPort-AV: E=Sophos;i="4.80,609,1344207600"; 
-   d="scan'208";a="396927093"
-Received: from host-92-26-122-13.as13285.net (HELO PhilipOakley) ([92.26.122.13])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 18 Oct 2012 22:35:06 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1756154Ab2JRVf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 17:35:29 -0400
+Received: from mail-vb0-f74.google.com ([209.85.212.74]:37887 "EHLO
+	mail-vb0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755799Ab2JRVf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 17:35:28 -0400
+Received: by mail-vb0-f74.google.com with SMTP id s24so1045802vbi.1
+        for <git@vger.kernel.org>; Thu, 18 Oct 2012 14:35:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=XeCJA0w51DUthvcdr8qaYQaR85TeTd9VjCdhuHXif9Y=;
+        b=lIb+suv4UWB/Y0lpfWTme7WcOzxlZuL39Gz3uV1yQJ/xP6VFefG6xDFH/4wc8CdQ5N
+         zRY/RVU3ZA3EwzxgOVFZvnef93NSVk12dwOALcvYWEwBIgG20dWDMt1vZXC4FbB9fn4o
+         kyM2ZfI6puvFA4okbQWBASl074QQ6LFNQeYg0mm1ZE4UkK03zxVCgFvsLy5sHIA1TovD
+         vUbi49ns5KVK6C6CSVPAOGmgEUfvxA1ZnNjcreiM67p48sjcJG2QIZkxH4C2RT+YR8Dq
+         K8bPA8KTnSrugCv8V385WeY7WesFy9a5LYEYiqGFs+GM+3mawJdlusrzZkiwJFSYTmFF
+         Rb3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding:x-gm-message-state;
+        bh=XeCJA0w51DUthvcdr8qaYQaR85TeTd9VjCdhuHXif9Y=;
+        b=RgLtse+lUaJinXPczxespRNz/+KW9Uf+7zeFIpmH5Dh5g1dS8qu1uxKHIzAzkPPIrA
+         vMGazDvDggn7Lb4tjPrT8KcuPu/6A/rqXJ56UHyptcv6+FhlcDBno8APXA6ETAqcM5wC
+         FmcsFXLhytDJezhKZF7Wx0IDhKElVxrrYf2Qt3AgtKMLTxdyhFPeUK+U+R3bPMobno1V
+         UPNa/6HtUhEdqb+0lzt4TuaCvkXSL9l3ZZn8cSMWcB+Wb2jYn/zYHsucs2zSWHt02rwb
+         6vI6nRpbIF1ohzYEgvElsrzBEGwjIeWvnctuoFNVKUy5oTQsX6EbFPRAgmPgmFWXJgKw
+         HWSw==
+Received: by 10.236.181.234 with SMTP id l70mr17422770yhm.39.1350596127103;
+        Thu, 18 Oct 2012 14:35:27 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id g7si1157267anp.1.2012.10.18.14.35.27
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 18 Oct 2012 14:35:27 -0700 (PDT)
+Received: from wince.sfo.corp.google.com (wince.sfo.corp.google.com [172.31.53.43])
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 034E61E0043;
+	Thu, 18 Oct 2012 14:35:27 -0700 (PDT)
+Received: by wince.sfo.corp.google.com (Postfix, from userid 138314)
+	id 3831F40EE3; Thu, 18 Oct 2012 14:35:26 -0700 (PDT)
+User-Agent: Heirloom mailx 12.5 6/20/10
+X-Gm-Message-State: ALoCoQnRgISaOh/UAsOo/21y7ujZ3OEDsdW+5ZOsJs5khXQkFEP2UL+D9FGPlIn3ZozEUQ3Mx5uVi08YgvYemcbIY77jkJHeXRtgMy7fVtzOrv1unYrl6avWkggvxnhuTG/fGxkxu1+mPW3Y388q7xL6EvOgj6cLCsZRvLzQimtC36fgztYQoLC1Z4ou6AHezRpCBIuCfJMj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208023>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> When inserting the note after the commit log message to format-patch
-> output, add three dashes before the note.  Record the fact that we
-> did so in the rev_info and omit showing duplicated three dashes in
-> the usual codepath that is used when notes are not being shown.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>From 700b8075c578941c8f951711825c390ac68b190f Mon Sep 17 00:00:00 2001
+From: Stefan Zager <szager@google.com>
+Date: Thu, 18 Oct 2012 14:03:59 -0700
+Subject: [PATCH] Fix potential hang in https handshake.
 
-Should this also include a documentation update to make this substantive 
-benefit visible, whether that be in the format-patch man pages, the 
-SubmittingPatches guide, in the git-notes description of 'A typical 
-use...', or even in the user-manual?
+It will sometimes happen that curl_multi_fdset() doesn't
+return any file descriptors.  In that case, it's recommended
+that the application sleep for a short time before running
+curl_multi_perform() again.
 
-Do you have a preference?
+http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
 
-> ---
-> log-tree.c              | 15 +++++++++++----
-> revision.h              |  1 +
-> t/t4014-format-patch.sh |  7 +++++--
-> 3 files changed, 17 insertions(+), 6 deletions(-)
->
-> diff --git a/log-tree.c b/log-tree.c
-> index 4390b11..712a22b 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -677,8 +677,13 @@ void show_log(struct rev_info *opt)
->  append_signoff(&msgbuf, opt->add_signoff);
->
->  if ((ctx.fmt != CMIT_FMT_USERFORMAT) &&
-> -     ctx.notes_message && *ctx.notes_message)
-> +     ctx.notes_message && *ctx.notes_message) {
-> + if (ctx.fmt == CMIT_FMT_EMAIL) {
-> + strbuf_addstr(&msgbuf, "---\n");
-> + opt->shown_dashes = 1;
-> + }
->  strbuf_addstr(&msgbuf, ctx.notes_message);
-> + }
->
->  if (opt->show_log_size) {
->  printf("log size %i\n", (int)msgbuf.len);
-> @@ -710,6 +715,7 @@ void show_log(struct rev_info *opt)
->
-> int log_tree_diff_flush(struct rev_info *opt)
-> {
-> + opt->shown_dashes = 0;
->  diffcore_std(&opt->diffopt);
->
->  if (diff_queue_is_empty()) {
-> @@ -737,10 +743,11 @@ int log_tree_diff_flush(struct rev_info *opt)
->  opt->diffopt.output_prefix_data);
->  fwrite(msg->buf, msg->len, 1, stdout);
->  }
-> - if ((pch & opt->diffopt.output_format) == pch) {
-> - printf("---");
-> + if (!opt->shown_dashes) {
-> + if ((pch & opt->diffopt.output_format) == pch)
-> + printf("---");
-> + putchar('\n');
->  }
-> - putchar('\n');
->  }
->  }
->  diff_flush(&opt->diffopt);
-> diff --git a/revision.h b/revision.h
-> index a95bd0b..059bfff 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -111,6 +111,7 @@ struct rev_info {
->
->  /* Format info */
->  unsigned int shown_one:1,
-> + shown_dashes:1,
->  show_merge:1,
->  show_notes:1,
->  show_notes_given:1,
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index bea6381..9750ba6 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -623,9 +623,12 @@ test_expect_success 'format-patch --signoff' '
-> test_expect_success 'format-patch --notes --signoff' '
->  git notes --ref test add -m "test message" HEAD &&
->  git format-patch -1 --signoff --stdout --notes=test >out &&
-> - # Notes message must come after S-o-b
-> + # Three dashes must come after S-o-b
->  ! sed "/^Signed-off-by: /q" out | grep "test message" &&
-> - sed "1,/^Signed-off-by: /d" out | grep "test message"
-> + sed "1,/^Signed-off-by: /d" out | grep "test message" &&
-> + # Notes message must come after three dashes
-> + ! sed "/^---$/q" out | grep "test message" &&
-> + sed "1,/^---$/d" out | grep "test message"
-> '
->
-> echo "fatal: --name-only does not make sense" > expect.name-only
-> -- 
-> 1.8.0.rc3.112.gdb88a5e
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
-> -----
-> No virus found in this message.
-> Checked by AVG - www.avg.com
-> Version: 2013.0.2741 / Virus Database: 2614/5837 - Release Date: 
-> 10/17/12
-> 
+Signed-off-by: Stefan Zager <szager@google.com>
+---
+ http.c |   40 ++++++++++++++++++++++++++--------------
+ 1 files changed, 26 insertions(+), 14 deletions(-)
+
+diff --git a/http.c b/http.c
+index df9bb71..a6f66c0 100644
+--- a/http.c
++++ b/http.c
+@@ -602,35 +602,47 @@ void run_active_slot(struct active_request_slot *slot)
+ 	int max_fd;
+ 	struct timeval select_timeout;
+ 	int finished = 0;
++	long curl_timeout;
+ 
+ 	slot->finished = &finished;
+ 	while (!finished) {
+ 		step_active_slots();
+ 
+ 		if (slot->in_use) {
++			max_fd = -1;
++			FD_ZERO(&readfds);
++			FD_ZERO(&writefds);
++			FD_ZERO(&excfds);
++			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
++
+ #if LIBCURL_VERSION_NUM >= 0x070f04
+-			long curl_timeout;
+-			curl_multi_timeout(curlm, &curl_timeout);
+-			if (curl_timeout == 0) {
+-				continue;
+-			} else if (curl_timeout == -1) {
++			/* It will sometimes happen that curl_multi_fdset() doesn't
++			   return any file descriptors.  In that case, it's recommended
++			   that the application sleep for a short time before running
++			   curl_multi_perform() again.
++
++			   http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
++			*/
++			if (max_fd == -1) {
+ 				select_timeout.tv_sec  = 0;
+ 				select_timeout.tv_usec = 50000;
+ 			} else {
+-				select_timeout.tv_sec  =  curl_timeout / 1000;
+-				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
++				curl_timeout = 0;
++				curl_multi_timeout(curlm, &curl_timeout);
++				if (curl_timeout == 0) {
++					continue;
++				} else if (curl_timeout == -1) {
++					select_timeout.tv_sec  = 0;
++					select_timeout.tv_usec = 50000;
++				} else {
++					select_timeout.tv_sec  =  curl_timeout / 1000;
++					select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
++				}
+ 			}
+ #else
+ 			select_timeout.tv_sec  = 0;
+ 			select_timeout.tv_usec = 50000;
+ #endif
+-
+-			max_fd = -1;
+-			FD_ZERO(&readfds);
+-			FD_ZERO(&writefds);
+-			FD_ZERO(&excfds);
+-			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
+-
+ 			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
+ 		}
+ 	}
+-- 
+1.7.7.3
