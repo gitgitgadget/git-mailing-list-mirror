@@ -1,70 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [WIP-PATCH 0/3] Cleaning up "notes" in log output
-Date: Wed, 17 Oct 2012 19:20:15 -0700
-Message-ID: <1350526818-354-1-git-send-email-gitster@pobox.com>
+Subject: [WIP-PATCH 3/3] pretty_print_commit(): do not append notes message
+Date: Wed, 17 Oct 2012 19:20:18 -0700
+Message-ID: <1350526818-354-4-git-send-email-gitster@pobox.com>
+References: <1350526818-354-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 04:20:52 2012
+X-From: git-owner@vger.kernel.org Thu Oct 18 04:20:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOfj8-0003OE-Ae
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 04:20:50 +0200
+	id 1TOfj8-0003OE-QE
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 04:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753597Ab2JRCUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2012 22:20:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34895 "EHLO
+	id S1753640Ab2JRCUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2012 22:20:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34971 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752030Ab2JRCUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2012 22:20:24 -0400
+	id S1753605Ab2JRCU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2012 22:20:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B599B83F1
-	for <git@vger.kernel.org>; Wed, 17 Oct 2012 22:20:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43C78840C
+	for <git@vger.kernel.org>; Wed, 17 Oct 2012 22:20:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id; s=sasl; bh=BxNUlG7+skhjMxT15Ggol/eFWG4
-	=; b=wH8dUvBKSHFKEF+iffWDWJnLMkjJS1V7ISOy9BfLlFF1WmRGs+vkZ7v0v3a
-	2POSRJ4X5Luq6VmjoiTsTPoh50J9rSc8kQoklAZcmkgjVhs5e0fBhuTRT52f4ZZV
-	He1E3CjMiUTxWwsVimKRuTaEJ1k9eQjuNrJSxj4RpK9oJkBM=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ldzt
+	yhoGeWt9KFKiyqvoPSKmLAI=; b=ZscydL+GOQ1Ppe6WDMoUBaxhC0kZsGgI0co6
+	WotWkrLPP2YiQsNSeSj4ZlklgwBHHZSmUp3mls5XhaOhFh45i9SRR4hLXNpJP8bh
+	Kdj4JC8otWO9I7Y4qRVs+9FhEhGLsMbyMIxJUw8tOsrQJuj9cq1qqVZHr6l6/Zo1
+	TTSZjDQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id; q=dns; s=sasl; b=Jl3FM1LC2LZiz7FeYQc56kw4130gE
-	UE13TqvHt57grrvNKXGf0C2fq65VS2Lkx5lqZ4iTvIOJVrQ7jF/89KZUouv7pQ7D
-	uK24Sw3K2G+CSREHZxf+V1SfvE0DWADtUevt3v678E18WGAT8U3xRikTgOTrLtUM
-	Ys0zojye0mVBrY=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=pS0EDD
+	eHXzY4RYQ56CCk78MTbg0d2vX0BQ+wMu4rJHjNWevR7JcW48xs0SRBHGqzXOYeYe
+	RtwPa6LU+l38w/U+0efoVid0MmfF3V78+Gt2s2vX1afJ2a0JE8IeYmHHeMc6bodu
+	zNRd/AUeuO38ZxynrqV0MY1ov9rCqgyZnp6yo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3BCE83F0
-	for <git@vger.kernel.org>; Wed, 17 Oct 2012 22:20:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33551840B
+	for <git@vger.kernel.org>; Wed, 17 Oct 2012 22:20:29 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BC2283EF for
- <git@vger.kernel.org>; Wed, 17 Oct 2012 22:20:20 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F76383FE for
+ <git@vger.kernel.org>; Wed, 17 Oct 2012 22:20:28 -0400 (EDT)
 X-Mailer: git-send-email 1.8.0.rc3.112.gdb88a5e
-X-Pobox-Relay-ID: 5D8BD2C8-18CA-11E2-BA91-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+In-Reply-To: <1350526818-354-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 623EE92C-18CA-11E2-9ADD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207954>
 
-This is only the preparatory step.
+The only case pretty_print_commit() appends notes message to the log
+message taken from the commit is when show_log() calls it with the
+after_message_body field set and the output format is not the
+userformat.  No other users of this function sets this field in the
+pretty_print_context, as can be seen in the previous step.
 
-The obvious next one that follows will swap the "add-sign-off" logic
-and appending of notes, so that sign-off will come before the notes.
-And then, we will insert "---" before we add notes, leave a bit in
-the rev_info for the later step in the codepath to tell it that it
-does not have to add another "---", and tweak the existing codepath
-that adds "---" to refrain from doing so.
+Hoist the code to append the notes message to the caller.
 
-Junio C Hamano (3):
-  pretty: remove reencode_commit_message()
-  pretty: prepare notes message at a centralized place
-  pretty_print_commit(): do not append notes message
+Up to this point, no functionality change is intended.
 
- builtin/blame.c |  5 +++--
- commit.h        |  4 +---
- log-tree.c      | 17 ++++++++++++++++-
- pretty.c        | 22 ++++------------------
- 4 files changed, 24 insertions(+), 24 deletions(-)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ log-tree.c | 2 ++
+ pretty.c   | 3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
+diff --git a/log-tree.c b/log-tree.c
+index 95ff405..6e141f0 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -673,6 +673,8 @@ void show_log(struct rev_info *opt)
+ 	ctx.reflog_info = opt->reflog_info;
+ 	ctx.fmt = opt->commit_format;
+ 	pretty_print_commit(&ctx, commit, &msgbuf);
++	if ((ctx.fmt != CMIT_FMT_USERFORMAT) && ctx.after_message_body)
++		strbuf_addbuf(&msgbuf, ctx.after_message_body);
+ 
+ 	if (opt->add_signoff)
+ 		append_signoff(&msgbuf, opt->add_signoff);
+diff --git a/pretty.c b/pretty.c
+index bdd991c..ad27325 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1417,9 +1417,6 @@ void pretty_print_commit(const struct pretty_print_context *pp,
+ 	if (pp->fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
+ 		strbuf_addch(sb, '\n');
+ 
+-	if (pp->after_message_body)
+-		strbuf_addbuf(sb, pp->after_message_body);
+-
+ 	free(reencoded);
+ }
+ 
 -- 
 1.8.0.rc3.112.gdb88a5e
