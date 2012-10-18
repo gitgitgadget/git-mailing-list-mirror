@@ -1,61 +1,63 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/6] Bring "format-patch --notes" closer to a real feature
-Date: Thu, 18 Oct 2012 18:06:10 +0700
-Message-ID: <CACsJy8Dxx6JtRXP_HWNBrobNems+4UsaOGSRef08cf8--b5dOw@mail.gmail.com>
-References: <1350539128-21577-1-git-send-email-gitster@pobox.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: BUG when trying to delete symbolic refs
+Date: Thu, 18 Oct 2012 13:59:07 +0200
+Message-ID: <507FEF0B.1060309@lsrfire.ath.cx>
+References: <CALKQrgfnvV+1XHjeSytj+LxkAabZJK3hewxH7WT0nkX-ewOKUA@mail.gmail.com> <507D315E.8040101@lsrfire.ath.cx> <7vr4oytn4q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: Johan Herland <johan@herland.net>,
+	Git mailing list <git@vger.kernel.org>,
+	Miklos Vajna <vmiklos@suse.cz>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 13:06:54 2012
+X-From: git-owner@vger.kernel.org Thu Oct 18 13:59:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOnwD-000257-HT
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 13:06:53 +0200
+	id 1TOolI-0007gq-3K
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 13:59:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755483Ab2JRLGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 07:06:42 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:62191 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754903Ab2JRLGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 07:06:41 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so8379634obb.19
-        for <git@vger.kernel.org>; Thu, 18 Oct 2012 04:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YcgQVNi+TKvwKvXia4y++dYFbTVH/5lOrnoMNOk9p2k=;
-        b=kHl3SYsFaQ3wxSaB1dIrI3g2uAZ8EB85iZrn3CjiCu6TTGJpTrkBmkquREi0zurec0
-         SoRGPJEFo8Wq4vEvI/9p+eI724afGGlNin7T7mKpRRHddIvWh6FUuMSh53h3y2C0C73v
-         4boMV2eUImBtvSp6M6DFjCz5fuVxHASDv8joVt5CcC/up0bRGQGBURfhstGigvW8wBoS
-         OTgAMcMizWXghqgjqfD4iReY3dBFYACQPmDeW5rA/jCYfRRQS3l+OmxDy/vjX+3vEhC7
-         lV5SQqKIl8gyM5aYsdu3rXuMP7g00eSLmdUUHNG1Qi/vISK8DHsBhNZh8j9bmkesuxPN
-         uZwg==
-Received: by 10.60.1.40 with SMTP id 8mr16816777oej.55.1350558401189; Thu, 18
- Oct 2012 04:06:41 -0700 (PDT)
-Received: by 10.182.108.10 with HTTP; Thu, 18 Oct 2012 04:06:10 -0700 (PDT)
-In-Reply-To: <1350539128-21577-1-git-send-email-gitster@pobox.com>
+	id S1754323Ab2JRL7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 07:59:23 -0400
+Received: from india601.server4you.de ([85.25.151.105]:44727 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754297Ab2JRL7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 07:59:21 -0400
+Received: from [192.168.2.105] (p4FFDA222.dip.t-dialin.net [79.253.162.34])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0134296;
+	Thu, 18 Oct 2012 13:59:18 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <7vr4oytn4q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207996>
 
-On Thu, Oct 18, 2012 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> This replaces the earlier "wip" with a real thing.
->
-> We never advertised the "--notes" option to format-patch (or
-> anything related to the pretty format options for that matter)
-> because the behaviour of these options was whatever they happened to
-> do, not what they were designed to do.
+Am 16.10.2012 18:09, schrieb Junio C Hamano:
+> Having said all that, I think your patch is going in the right
+> direction.  If somebody had a symbolic ref in refs/heads/, the
+> removal should remove it, not the pointee, which may not even
+> exist.  Does "branch -d sym" work correctly with your patch when
+> refs/heads/sym is pointing at something that does not exist?
 
-Stupid question: does "git am" recreate notes from "format-patch
---notes" output? If it does not, should it? I think it could be a nice
-way of copying notes from one machine to another, but not enabled by
-default (iow "am --notes").
+No, it doesn't, neither with nor without the patch.  But we can make it
+work, and also address a UI issue.  This series starts with two patches
+that only move code around, then follows the patch you commented on, a
+patch addressing dangling symrefs and finally a change to the way
+deleted symrefs are reported by git branch.
+
+  branch: factor out check_branch_commit()
+  branch: factor out delete_branch_config()
+  branch: delete symref branch, not its target
+  branch: skip commit checks when deleting symref branches
+  branch: show targets of deleted symrefs, not sha1s
+
+ builtin/branch.c  | 75 ++++++++++++++++++++++++++++++++++++-------------------
+ t/t3200-branch.sh | 19 ++++++++++++++
+ 2 files changed, 68 insertions(+), 26 deletions(-)
+
 -- 
-Duy
+1.7.12
