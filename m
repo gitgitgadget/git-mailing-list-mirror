@@ -1,109 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] Add new git-remote-hd helper
-Date: Thu, 18 Oct 2012 10:47:07 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1210181031320.3049@bonsai2>
-References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com> <alpine.DEB.1.00.1210171759230.3049@bonsai2> <CAMP44s1WY+Q7jyy4PQvwff7JSxHsnkhrPWozOLnNuNOrn7FGBA@mail.gmail.com> <alpine.DEB.1.00.1210171936170.3049@bonsai2>
- <CAMP44s2=hhMz35SpYXMBLcQPfVaPxY4pBWZDF7zbqVwz=tbedA@mail.gmail.com> <CAGdFq_i4c=ei4ni5bv9nNEbCfNG4sbRkqyip2voW17GhkRAKPQ@mail.gmail.com> <CAMP44s2-BCuA5v7jE8S3d-Gg+DxKf6Yte9MvTDBDr4jEkLKZ9g@mail.gmail.com>
+Date: Thu, 18 Oct 2012 10:48:51 +0200
+Message-ID: <CAMP44s3=pv4kHiZ2KM+e1tnGo=38oy76Sm3i3VMDFseWXZH85Q@mail.gmail.com>
+References: <1350478721-3685-1-git-send-email-felipe.contreras@gmail.com>
+	<20121017225913.GC21742@sigill.intra.peff.net>
+	<CAMP44s0+Fhtj2rMQ1Av-49Koa=DumX8JZs5angOFSRzqtDc+9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 10:47:42 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 18 10:49:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOllV-0004V6-Gu
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 10:47:41 +0200
+	id 1TOlmq-0006Hl-8S
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 10:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754527Ab2JRIr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 04:47:29 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:37324 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751168Ab2JRIr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 04:47:26 -0400
-Received: (qmail invoked by alias); 18 Oct 2012 08:47:22 -0000
-Received: from unknown (EHLO bonsai2) [2.215.133.187]
-  by mail.gmx.net (mp024) with SMTP; 18 Oct 2012 10:47:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+V6l1aQXyVKjO83dw8I4m1HAxWHOLA/SQqKQejmu
-	qb9hzUh+aU6VCQ
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <CAMP44s2-BCuA5v7jE8S3d-Gg+DxKf6Yte9MvTDBDr4jEkLKZ9g@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754718Ab2JRIsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 04:48:53 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:57974 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754624Ab2JRIsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 04:48:52 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so8299907obb.19
+        for <git@vger.kernel.org>; Thu, 18 Oct 2012 01:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=icsWGoROMhXIilAHDWGZ2xNSeb3KN7+al+JqXK559Ew=;
+        b=Uh/dnDwP9q4c/7GS01paZeUCMT3A54PsY8GsPpSSm3vt/o5tuD8AJuYeMuAeXW2/8o
+         NUz4Lh/vrZEAI0sjXF+85JsbHKucAwHuv/dU6Xz6A7KsU6KdJ6D9hGfWDFHZZe8lrcS+
+         tk+I4JlxatJ7O6L86E4lBvuiarKmqfQ6nt1i/owHiE0ys7b5ujBg712rnQgE83a4NOTS
+         Eg55Hi8vwFdhwo4Nunlh3Tgu7enlhWqijhIDYC4RK58GK075Cs0vlISVAumPhImpzJYy
+         X7wZoXYKhm/8MBqeRuV4GBNteDJp2DNWcCqs6222DTbW35+JEhXttE/y6ypMs095YqgH
+         pydA==
+Received: by 10.60.27.71 with SMTP id r7mr18389843oeg.96.1350550131411; Thu,
+ 18 Oct 2012 01:48:51 -0700 (PDT)
+Received: by 10.60.58.137 with HTTP; Thu, 18 Oct 2012 01:48:51 -0700 (PDT)
+In-Reply-To: <CAMP44s0+Fhtj2rMQ1Av-49Koa=DumX8JZs5angOFSRzqtDc+9Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207979>
 
-Hi Felipe,
+On Thu, Oct 18, 2012 at 5:44 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Thu, Oct 18, 2012 at 12:59 AM, Jeff King <peff@peff.net> wrote:
 
-On Wed, 17 Oct 2012, Felipe Contreras wrote:
+>> The first thing I tried was:
+>>
+>>   $ git clone hg::https://code.google.com/p/dactyl/
+>
+> Right, doesn't look like it works for remote repositories. I think
+> that's the next feature I want to implement, but to be honest, I don't
+> think it's a big issue. To replace this:
 
-> On Wed, Oct 17, 2012 at 8:18 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> > On Wed, Oct 17, 2012 at 11:12 AM, Felipe Contreras
-> > <felipe.contreras@gmail.com> wrote:
-> >> But fine, lets remove the tests out of the equation (150 lines), the
-> >> number of lines of code still exceeds 3000.
-> >
-> > I don't think it's fair to just look at LOC, git-remote-hg when it was
-> > just parsing was fairly simple. Most of the current code is our copy
-> > of the python fast-import library which is only used to support
-> > pushing to mercurial.
-> 
-> Well, as a rule of thumb more code means more places for bugs to hide.
+Done, now you should be able to clone and fetch remote repositories :)
+https://github.com/felipec/git/commit/783e4b380ab4fabb4e2fb200722c92afc8494a83
 
-Everybody on this list knows that. But it is equally true that more
-functionality requires more code.
-
-Besides, we are talking about concrete code, so there is no need at all
-for handwaving arguments. GitHub makes it easy to point at exact line
-numbers in exact file names in exact revisions, as you know, and we should
-use that to discuss code.
-
-> It is also quite frankly rather difficult to navigate; very
-> spaghetti-like. I have the feeling [...]
-
-Yours truly always welcomes constructive criticism. Other types of
-criticism, not so much.
-
-As to the functionality you seek: git-remote-hg found in
-git://github.com/msysgit/git works. It has the following advantages over
-every other solution, including the one proposed in this thread:
-
-- it works
-
-- no really, it works
-
-- it supports pushes, too
-
-- it matured over a long time
-
-- there are tests
-
-- whenever we fixed bugs, we also added tests for the bug fixes
-
-- it is rock solid
-
-- it is in constant use
-
-Without push support, remote-hg is useless to me. Without regression tests
-proving that it is rock solid, I will not use remote-hg. And I will not
-indulge in efforts to duplicate work.
-
-If there are concerns about code style or unnecessary code (insofar it is
-really unnecessary, testgit for example is not, unless you want to avoid
-robust regression tests), I will discuss issues and collaborate. If the
-idea was not to collaborate, but to show off how much shorter code can be
-when it lacks functionality and proof of robustness I require for my
-everyday use of the program, dismissing existing code and concepts, less
-so.
-
-Hth,
-Johannes
+-- 
+Felipe Contreras
