@@ -1,73 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] transport-helper: call git fast-import properly
-Date: Thu, 18 Oct 2012 09:39:35 +0200
-Message-ID: <CAMP44s3FsdF7944TkO3CVCV9d80TTocE5zXyE8sh1bXL0eMu5Q@mail.gmail.com>
-References: <1350462440-427-1-git-send-email-felipe.contreras@gmail.com>
-	<CAGdFq_jNs_CNN8PGbbgvJbmNTSSN9TaEDxCSyDEpScZL4zyiwg@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] filter-branch: use git-sh-setup's ident parsing functions
+Date: Thu, 18 Oct 2012 09:49:04 +0200
+Message-ID: <507FB470.2060404@viscovery.net>
+References: <20121018072207.GA1605@sigill.intra.peff.net> <20121018072535.GB9999@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 09:39:53 2012
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 18 09:49:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOkhn-0003gc-G3
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 09:39:47 +0200
+	id 1TOkr4-0007Rb-0x
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 09:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766Ab2JRHjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 03:39:36 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:53571 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168Ab2JRHjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 03:39:36 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so8304785oag.19
-        for <git@vger.kernel.org>; Thu, 18 Oct 2012 00:39:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mZxaM6CVN/xCTVqIN3z6kfqO6hlxvDN9a1Ki7IaKfRk=;
-        b=QuSJ1FGptJcwuSxC40Zwq/kLKkIy/H4pQNV269JXvFEOb4DtpbhNv2DQxIoVc36aJz
-         a9qmPi4Blr3vefuTqiJmw5tM10/eX3IlaAlggdp02p0wYtxj2twkx/vQJ1Qg8y9dl2RN
-         bGpehfRH9xGhcVh5H4Qxb17Q3x6HVKWDIbNV3bPBbx1+waDmTyGUvLRvKxZOYWmrbtcu
-         Rjw4wBB5hh+H52PdNvoimIdxDrmKJoOSIGegqTNqCRlgHeCththNOdKWWd8KToH7SCVm
-         xpgAvN2+0HvSzPcYe2RBAQyISgXH3EdFgpqZ58e1VZ5uQheZlglmS0sGan8XDRJUtl7a
-         x/Yw==
-Received: by 10.60.170.179 with SMTP id an19mr13112070oec.46.1350545975626;
- Thu, 18 Oct 2012 00:39:35 -0700 (PDT)
-Received: by 10.60.58.137 with HTTP; Thu, 18 Oct 2012 00:39:35 -0700 (PDT)
-In-Reply-To: <CAGdFq_jNs_CNN8PGbbgvJbmNTSSN9TaEDxCSyDEpScZL4zyiwg@mail.gmail.com>
+	id S1752926Ab2JRHtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 03:49:11 -0400
+Received: from so.liwest.at ([212.33.55.24]:2625 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751509Ab2JRHtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 03:49:10 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TOkqn-0005AX-Bq; Thu, 18 Oct 2012 09:49:05 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1D87E1660F;
+	Thu, 18 Oct 2012 09:49:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121018072535.GB9999@sigill.intra.peff.net>
+X-Enigmail-Version: 1.4.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207975>
 
-On Thu, Oct 18, 2012 at 7:13 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Wed, Oct 17, 2012 at 1:27 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> The marks options are being ignored right now.
->
-> It seems unlikely to me that this never worked, surely no reviewer
-> would accept a patch that doesn't actually implement the feature?
-> What's the history here?
+Am 10/18/2012 9:25, schrieb Jeff King:
+> -# When piped a commit, output a script to set the ident of either
+> -# "author" or "committer
+> +# Ensure non-empty id name.
+> +fallback_name() {
+> +	echo "case \"\$GIT_$1_NAME\" in \"\") GIT_$1_NAME=\"\${GIT_$1_EMAIL%%@*}\" && export GIT_$1_NAME;; esac"
+> +}
+>  
+>  set_ident () {
+> -	lid="$(echo "$1" | tr "[A-Z]" "[a-z]")"
+> -	uid="$(echo "$1" | tr "[a-z]" "[A-Z]")"
+> -	pick_id_script='
+> -		/^'$lid' /{
+> -			s/'\''/'\''\\'\'\''/g
+> -			h
+> -			s/^'$lid' \([^<]*\) <[^>]*> .*$/\1/
+> -			s/'\''/'\''\'\'\''/g
+> -			s/.*/GIT_'$uid'_NAME='\''&'\''; export GIT_'$uid'_NAME/p
+> -
+> -			g
+> -			s/^'$lid' [^<]* <\([^>]*\)> .*$/\1/
+> -			s/'\''/'\''\'\'\''/g
+> -			s/.*/GIT_'$uid'_EMAIL='\''&'\''; export GIT_'$uid'_EMAIL/p
+> -
+> -			g
+> -			s/^'$lid' [^<]* <[^>]*> \(.*\)$/@\1/
+> -			s/'\''/'\''\'\'\''/g
+> -			s/.*/GIT_'$uid'_DATE='\''&'\''; export GIT_'$uid'_DATE/p
+> -
+> -			q
+> -		}
+> -	'
+> -
+> -	LANG=C LC_ALL=C sed -ne "$pick_id_script"
+> -	# Ensure non-empty id name.
+> -	echo "case \"\$GIT_${uid}_NAME\" in \"\") GIT_${uid}_NAME=\"\${GIT_${uid}_EMAIL%%@*}\" && export GIT_${uid}_NAME;; esac"
+> +	parse_ident_from_commit author AUTHOR committer COMMITTER
+> +	fallback_name AUTHOR
+> +	fallback_name COMMITTER
+>  }
 
-Now I see, the {import,export}-marks options are only meant for
-fast-export, for fast-import one should use the 'feature' commands. It
-took me a while because the git_remote_helper code for python is very
-confusing: it uses testgit.marks for the marks that git generates, and
-git.marks for the marks that testgit generates.
+Didn't you lose the export GIT_$uid_{NAME,EMAIL,DATE} parts somewhere on
+the way?
 
-It's not very convenient for remote-helpers that can export single
-branches as opposed to the whole repo:
+Thanks for working on this!
 
-http://github.com/felipec/git/commit/0961fdf8231a4ac057eec8a306a708e66f7b6ae9
-
-But it works, so this patch is not needed.
-
--- 
-Felipe Contreras
+-- Hannes
