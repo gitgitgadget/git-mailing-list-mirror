@@ -1,95 +1,71 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] notes: mention --notes in more places
-Date: Thu, 18 Oct 2012 14:11:57 +0200
-Message-ID: <507FF20D.6030106@drmicha.warpmail.net>
-References: <1350443975-19935-1-git-send-email-eblake@redhat.com> <20121017055136.GA12301@sigill.intra.peff.net> <507EB310.8020904@redhat.com> <20121017190507.GA17648@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/6] Bring "format-patch --notes" closer to a real feature
+Date: Thu, 18 Oct 2012 14:24:32 +0200
+Message-ID: <507FF500.2090702@drmicha.warpmail.net>
+References: <1350539128-21577-1-git-send-email-gitster@pobox.com> <CACsJy8Dxx6JtRXP_HWNBrobNems+4UsaOGSRef08cf8--b5dOw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Eric Blake <eblake@redhat.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 14:12:12 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 18 14:24:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOoxQ-0006BD-5C
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 14:12:12 +0200
+	id 1TOp9c-0005LF-9y
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 14:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754359Ab2JRMMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 08:12:00 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:34630 "EHLO
+	id S1754751Ab2JRMYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 08:24:34 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60563 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753957Ab2JRML7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2012 08:11:59 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id CF4C820701;
-	Thu, 18 Oct 2012 08:11:58 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1754687Ab2JRMYe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2012 08:24:34 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 9747C2029D;
+	Thu, 18 Oct 2012 08:24:33 -0400 (EDT)
 Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 18 Oct 2012 08:11:58 -0400
+  by compute6.internal (MEProxy); Thu, 18 Oct 2012 08:24:33 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=kaqjFe+vDcG2iyPKpwIHrY
-	SI3js=; b=rfS+9dwWWbzFQjNnFc23HB8F4NKylAJTv1aHD6A0+KDmnqGdM99GSg
-	gJbc7A9pd6oCQtqZjyOnd2Vd1EAM4wSHRloxtrIspNAupWXmz108PE7JXeSbPTl0
-	YOgbNXapVZs5c1959ZC/+CA1rBxp9C/mokADTj/2sAmeOyJXuoiDM=
-X-Sasl-enc: YIvYO2cF0ehR1poxaTIjj37PoMsJrEdOui9ToVQp/Hba 1350562318
+	:content-transfer-encoding; s=smtpout; bh=iYthatOcKpFjNz/VXGb3T2
+	8eOUQ=; b=m+qj/R3Rp3jeDEvq+vOzla/4um6XTf8Jui2nUyFB24WRewl49kJ9rZ
+	s9tyFIfwL7A7dKdal6yUv+OMr4OzajWArihF9VOzLYkLumSzof75F3ZrJx+jdZRm
+	RxMc405PT68+ou6pEFdoT+jOTfN7R93c6eJDDn+jbbNZK+pOmdz/M=
+X-Sasl-enc: gwXORjoBfD/0xXa9mia6PKsK8RQBZkjr54blzfCauoqT 1350563073
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 205A64827F6;
-	Thu, 18 Oct 2012 08:11:58 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 0AC4E482730;
+	Thu, 18 Oct 2012 08:24:32 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
-In-Reply-To: <20121017190507.GA17648@sigill.intra.peff.net>
+In-Reply-To: <CACsJy8Dxx6JtRXP_HWNBrobNems+4UsaOGSRef08cf8--b5dOw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208003>
 
-Jeff King venit, vidit, dixit 17.10.2012 21:05:
-> On Wed, Oct 17, 2012 at 07:30:56AM -0600, Eric Blake wrote:
-> 
->>> We've talked about it several times, but it's never happened (probably
->>> because most people don't actually use notes).
+Nguyen Thai Ngoc Duy venit, vidit, dixit 18.10.2012 13:06:
+> On Thu, Oct 18, 2012 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> This replaces the earlier "wip" with a real thing.
 >>
->> And people (like me) don't use notes because they aren't documented.
->> Catch-22, so we have to start somewhere.
+>> We never advertised the "--notes" option to format-patch (or
+>> anything related to the pretty format options for that matter)
+>> because the behaviour of these options was whatever they happened to
+>> do, not what they were designed to do.
 > 
-> Oh, I definitely agree your patch is the right direction. I was just
-> explaining why it hasn't happened, even though people think it's a good
-> idea.
+> Stupid question: does "git am" recreate notes from "format-patch
+> --notes" output? If it does not, should it? I think it could be a nice
+> way of copying notes from one machine to another, but not enabled by
+> default (iow "am --notes").
 > 
->> I'll submit a v2 with the non-controversial edits, and spend some time
->> trying to figure out how to isolate the portion of pretty-options.txt
->> that is relevant to format-patch.  If it's easy enough, I can also
->> consider using --- instead of Notes: as the separator when using
->> format-patch.
-> 
-> Hmm. After digging in the archive, it seems we (including both you and
-> me!) have discussed this several times, and there are even some patches
-> floating around. Maybe one of them would be a good starting point for
-> your submission (I did not read carefully over all of the arguments for
-> each):
-> 
->   Patch from Thomas, Feb 2010:
-> 
->     http://thread.gmane.org/gmane.comp.version-control.git/139919/focus=140818
-> 
->   Discussion between us, Dec 2010:
-> 
->     http://thread.gmane.org/gmane.comp.version-control.git/163141
-> 
->   Patch from Michael, Apr 2011:
-> 
->     http://thread.gmane.org/gmane.comp.version-control.git/172079
 
-That one used to work for about one more year or so (it went through a
-few rebases) but stopped working during some rework involving the
-signature (signed-off-by), i.e. it puts the notes before the signed-off
-now. I didn't update it because nobody seemed interested anyway (and
-because branch-notes got implemented in a different, non-note way, so I
-dumped that part of my workflow also).
+Not yet, but you can already start basing your am patches on top of
+Junio's series ;)
+
+am should allow a notes ref (--notes=hereyougo) like other similar
+instances.
 
 Michael
