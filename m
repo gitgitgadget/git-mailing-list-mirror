@@ -1,117 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] filter-branch: use git-sh-setup's ident parsing functions
-Date: Thu, 18 Oct 2012 03:25:35 -0400
-Message-ID: <20121018072535.GB9999@sigill.intra.peff.net>
-References: <20121018072207.GA1605@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] transport-helper: call git fast-import properly
+Date: Thu, 18 Oct 2012 09:39:35 +0200
+Message-ID: <CAMP44s3FsdF7944TkO3CVCV9d80TTocE5zXyE8sh1bXL0eMu5Q@mail.gmail.com>
+References: <1350462440-427-1-git-send-email-felipe.contreras@gmail.com>
+	<CAGdFq_jNs_CNN8PGbbgvJbmNTSSN9TaEDxCSyDEpScZL4zyiwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 09:25:51 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 18 09:39:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOkUI-0003M4-Ks
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 09:25:50 +0200
+	id 1TOkhn-0003gc-G3
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 09:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938Ab2JRHZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 03:25:39 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37532 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751272Ab2JRHZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 03:25:38 -0400
-Received: (qmail 2579 invoked by uid 107); 18 Oct 2012 07:26:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Oct 2012 03:26:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2012 03:25:35 -0400
-Content-Disposition: inline
-In-Reply-To: <20121018072207.GA1605@sigill.intra.peff.net>
+	id S1752766Ab2JRHjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 03:39:36 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:53571 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168Ab2JRHjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 03:39:36 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so8304785oag.19
+        for <git@vger.kernel.org>; Thu, 18 Oct 2012 00:39:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mZxaM6CVN/xCTVqIN3z6kfqO6hlxvDN9a1Ki7IaKfRk=;
+        b=QuSJ1FGptJcwuSxC40Zwq/kLKkIy/H4pQNV269JXvFEOb4DtpbhNv2DQxIoVc36aJz
+         a9qmPi4Blr3vefuTqiJmw5tM10/eX3IlaAlggdp02p0wYtxj2twkx/vQJ1Qg8y9dl2RN
+         bGpehfRH9xGhcVh5H4Qxb17Q3x6HVKWDIbNV3bPBbx1+waDmTyGUvLRvKxZOYWmrbtcu
+         Rjw4wBB5hh+H52PdNvoimIdxDrmKJoOSIGegqTNqCRlgHeCththNOdKWWd8KToH7SCVm
+         xpgAvN2+0HvSzPcYe2RBAQyISgXH3EdFgpqZ58e1VZ5uQheZlglmS0sGan8XDRJUtl7a
+         x/Yw==
+Received: by 10.60.170.179 with SMTP id an19mr13112070oec.46.1350545975626;
+ Thu, 18 Oct 2012 00:39:35 -0700 (PDT)
+Received: by 10.60.58.137 with HTTP; Thu, 18 Oct 2012 00:39:35 -0700 (PDT)
+In-Reply-To: <CAGdFq_jNs_CNN8PGbbgvJbmNTSSN9TaEDxCSyDEpScZL4zyiwg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207974>
 
-This saves us some code, but it also reduces the number of
-processes we start for each filtered commit. Since we can
-parse both author and committer in the same sed invocation,
-we save one process. And since the new interface avoids tr,
-we save 4 processes.
+On Thu, Oct 18, 2012 at 7:13 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> On Wed, Oct 17, 2012 at 1:27 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> The marks options are being ignored right now.
+>
+> It seems unlikely to me that this never worked, surely no reviewer
+> would accept a patch that doesn't actually implement the feature?
+> What's the history here?
 
-It also avoids using "tr", which has had some odd
-portability problems reported with from Solaris's xpg6
-version.
+Now I see, the {import,export}-marks options are only meant for
+fast-export, for fast-import one should use the 'feature' commands. It
+took me a while because the git_remote_helper code for python is very
+confusing: it uses testgit.marks for the marks that git generates, and
+git.marks for the marks that testgit generates.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-filter-branch.sh | 42 +++++++++---------------------------------
- 1 file changed, 9 insertions(+), 33 deletions(-)
+It's not very convenient for remote-helpers that can export single
+branches as opposed to the whole repo:
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 178e453..69406ae 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -64,37 +64,15 @@ set_ident () {
- 
- eval "$functions"
- 
--# When piped a commit, output a script to set the ident of either
--# "author" or "committer
-+# Ensure non-empty id name.
-+fallback_name() {
-+	echo "case \"\$GIT_$1_NAME\" in \"\") GIT_$1_NAME=\"\${GIT_$1_EMAIL%%@*}\" && export GIT_$1_NAME;; esac"
-+}
- 
- set_ident () {
--	lid="$(echo "$1" | tr "[A-Z]" "[a-z]")"
--	uid="$(echo "$1" | tr "[a-z]" "[A-Z]")"
--	pick_id_script='
--		/^'$lid' /{
--			s/'\''/'\''\\'\'\''/g
--			h
--			s/^'$lid' \([^<]*\) <[^>]*> .*$/\1/
--			s/'\''/'\''\'\'\''/g
--			s/.*/GIT_'$uid'_NAME='\''&'\''; export GIT_'$uid'_NAME/p
--
--			g
--			s/^'$lid' [^<]* <\([^>]*\)> .*$/\1/
--			s/'\''/'\''\'\'\''/g
--			s/.*/GIT_'$uid'_EMAIL='\''&'\''; export GIT_'$uid'_EMAIL/p
--
--			g
--			s/^'$lid' [^<]* <[^>]*> \(.*\)$/@\1/
--			s/'\''/'\''\'\'\''/g
--			s/.*/GIT_'$uid'_DATE='\''&'\''; export GIT_'$uid'_DATE/p
--
--			q
--		}
--	'
--
--	LANG=C LC_ALL=C sed -ne "$pick_id_script"
--	# Ensure non-empty id name.
--	echo "case \"\$GIT_${uid}_NAME\" in \"\") GIT_${uid}_NAME=\"\${GIT_${uid}_EMAIL%%@*}\" && export GIT_${uid}_NAME;; esac"
-+	parse_ident_from_commit author AUTHOR committer COMMITTER
-+	fallback_name AUTHOR
-+	fallback_name COMMITTER
- }
- 
- USAGE="[--env-filter <command>] [--tree-filter <command>]
-@@ -320,10 +298,8 @@ while read commit parents; do
- 	git cat-file commit "$commit" >../commit ||
- 		die "Cannot read commit $commit"
- 
--	eval "$(set_ident AUTHOR <../commit)" ||
--		die "setting author failed for commit $commit"
--	eval "$(set_ident COMMITTER <../commit)" ||
--		die "setting committer failed for commit $commit"
-+	eval "$(set_ident <../commit)" ||
-+		die "setting author/committer failed for commit $commit"
- 	eval "$filter_env" < /dev/null ||
- 		die "env filter failed: $filter_env"
- 
+http://github.com/felipec/git/commit/0961fdf8231a4ac057eec8a306a708e66f7b6ae9
+
+But it works, so this patch is not needed.
+
 -- 
-1.8.0.rc3.3.gba630e1
+Felipe Contreras
