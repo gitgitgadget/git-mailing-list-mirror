@@ -1,105 +1,95 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 5/5] branch: show targets of deleted symrefs, not sha1s
-Date: Thu, 18 Oct 2012 14:08:03 +0200
-Message-ID: <507FF123.2030709@lsrfire.ath.cx>
-References: <CALKQrgfnvV+1XHjeSytj+LxkAabZJK3hewxH7WT0nkX-ewOKUA@mail.gmail.com> <507D315E.8040101@lsrfire.ath.cx> <7vr4oytn4q.fsf@alter.siamese.dyndns.org> <507FEF0B.1060309@lsrfire.ath.cx>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] notes: mention --notes in more places
+Date: Thu, 18 Oct 2012 14:11:57 +0200
+Message-ID: <507FF20D.6030106@drmicha.warpmail.net>
+References: <1350443975-19935-1-git-send-email-eblake@redhat.com> <20121017055136.GA12301@sigill.intra.peff.net> <507EB310.8020904@redhat.com> <20121017190507.GA17648@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Miklos Vajna <vmiklos@suse.cz>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 14:08:27 2012
+Cc: Eric Blake <eblake@redhat.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 18 14:12:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TOotj-0001XI-Db
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 14:08:23 +0200
+	id 1TOoxQ-0006BD-5C
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Oct 2012 14:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754136Ab2JRMIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 08:08:12 -0400
-Received: from india601.server4you.de ([85.25.151.105]:44749 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752359Ab2JRMIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 08:08:12 -0400
-Received: from [192.168.2.105] (p4FFDA222.dip.t-dialin.net [79.253.162.34])
-	by india601.server4you.de (Postfix) with ESMTPSA id D844D23E;
-	Thu, 18 Oct 2012 14:08:10 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <507FEF0B.1060309@lsrfire.ath.cx>
+	id S1754359Ab2JRMMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 08:12:00 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:34630 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753957Ab2JRML7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2012 08:11:59 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id CF4C820701;
+	Thu, 18 Oct 2012 08:11:58 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 18 Oct 2012 08:11:58 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=kaqjFe+vDcG2iyPKpwIHrY
+	SI3js=; b=rfS+9dwWWbzFQjNnFc23HB8F4NKylAJTv1aHD6A0+KDmnqGdM99GSg
+	gJbc7A9pd6oCQtqZjyOnd2Vd1EAM4wSHRloxtrIspNAupWXmz108PE7JXeSbPTl0
+	YOgbNXapVZs5c1959ZC/+CA1rBxp9C/mokADTj/2sAmeOyJXuoiDM=
+X-Sasl-enc: YIvYO2cF0ehR1poxaTIjj37PoMsJrEdOui9ToVQp/Hba 1350562318
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 205A64827F6;
+	Thu, 18 Oct 2012 08:11:58 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
+In-Reply-To: <20121017190507.GA17648@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208002>
 
-git branch reports the abbreviated hash of the head commit of
-a deleted branch to make it easier for a user to undo the
-operation.  For symref branches this doesn't help.  Print the
-symref target instead for them.
+Jeff King venit, vidit, dixit 17.10.2012 21:05:
+> On Wed, Oct 17, 2012 at 07:30:56AM -0600, Eric Blake wrote:
+> 
+>>> We've talked about it several times, but it's never happened (probably
+>>> because most people don't actually use notes).
+>>
+>> And people (like me) don't use notes because they aren't documented.
+>> Catch-22, so we have to start somewhere.
+> 
+> Oh, I definitely agree your patch is the right direction. I was just
+> explaining why it hasn't happened, even though people think it's a good
+> idea.
+> 
+>> I'll submit a v2 with the non-controversial edits, and spend some time
+>> trying to figure out how to isolate the portion of pretty-options.txt
+>> that is relevant to format-patch.  If it's easy enough, I can also
+>> consider using --- instead of Notes: as the separator when using
+>> format-patch.
+> 
+> Hmm. After digging in the archive, it seems we (including both you and
+> me!) have discussed this several times, and there are even some patches
+> floating around. Maybe one of them would be a good starting point for
+> your submission (I did not read carefully over all of the arguments for
+> each):
+> 
+>   Patch from Thomas, Feb 2010:
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/139919/focus=140818
+> 
+>   Discussion between us, Dec 2010:
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/163141
+> 
+>   Patch from Michael, Apr 2011:
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/172079
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- builtin/branch.c  | 19 +++++++++++--------
- t/t3200-branch.sh |  5 ++---
- 2 files changed, 13 insertions(+), 11 deletions(-)
+That one used to work for about one more year or so (it went through a
+few rebases) but stopped working during some rework involving the
+signature (signed-off-by), i.e. it puts the notes before the signed-off
+now. I didn't update it because nobody seemed interested anyway (and
+because branch-notes got implemented in a different, non-note way, so I
+dumped that part of my workflow also).
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index d87035a..1ec9c02 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -251,15 +251,18 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			      : _("Error deleting branch '%s'"),
- 			      bname.buf);
- 			ret = 1;
--		} else {
--			if (!quiet)
--				printf(remote_branch
--				       ? _("Deleted remote branch %s (was %s).\n")
--				       : _("Deleted branch %s (was %s).\n"),
--				       bname.buf,
--				       find_unique_abbrev(sha1, DEFAULT_ABBREV));
--			delete_branch_config(bname.buf);
-+			continue;
-+		}
-+		if (!quiet) {
-+			printf(remote_branch
-+			       ? _("Deleted remote branch %s (was %s).\n")
-+			       : _("Deleted branch %s (was %s).\n"),
-+			       bname.buf,
-+			       (flags & REF_ISSYMREF)
-+			       ? target
-+			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
- 		}
-+		delete_branch_config(bname.buf);
- 	}
- 
- 	free(name);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 1323f6f..80e6be3 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -265,8 +265,7 @@ test_expect_success 'config information was renamed, too' \
- test_expect_success 'deleting a symref' '
- 	git branch target &&
- 	git symbolic-ref refs/heads/symref refs/heads/target &&
--	sha1=$(git rev-parse symref | cut -c 1-7) &&
--	echo "Deleted branch symref (was $sha1)." >expect &&
-+	echo "Deleted branch symref (was refs/heads/target)." >expect &&
- 	git branch -d symref >actual &&
- 	test_path_is_file .git/refs/heads/target &&
- 	test_path_is_missing .git/refs/heads/symref &&
-@@ -276,7 +275,7 @@ test_expect_success 'deleting a symref' '
- test_expect_success 'deleting a dangling symref' '
- 	git symbolic-ref refs/heads/dangling-symref nowhere &&
- 	test_path_is_file .git/refs/heads/dangling-symref &&
--	echo "Deleted branch dangling-symref (was 0000000)." >expect &&
-+	echo "Deleted branch dangling-symref (was nowhere)." >expect &&
- 	git branch -d dangling-symref >actual &&
- 	test_path_is_missing .git/refs/heads/dangling-symref &&
- 	test_i18ncmp expect actual
--- 
-1.7.12
+Michael
