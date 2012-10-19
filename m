@@ -1,63 +1,69 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Unexpected directories from read-tree
-Date: Fri, 19 Oct 2012 10:34:27 +0700
-Message-ID: <CACsJy8BeMPwRtU9LQ9aS=0NY7vo_hXQs5Vxo9krXb+epqf=Fdw@mail.gmail.com>
-References: <CAMJd5AQhcvWVwsZHPknAXvNpqnfqdCtx-xUv39Au1=x-1_ExMg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: libgit2 status
+Date: Fri, 19 Oct 2012 09:24:21 +0530
+Message-ID: <CALkWK0=P7THaJduYFS1Sr6mxtNqAWQsDgwQyr_KEX4NA4kmVSA@mail.gmail.com>
+References: <87a9xkqtfg.fsf@waller.obbligato.org> <5038A148.4020003@op5.se>
+ <7vharpv77n.fsf@alter.siamese.dyndns.org> <nnglih0jotj.fsf@transit.us.cray.com>
+ <7vfw78s1kd.fsf@alter.siamese.dyndns.org> <nngsjb8i30w.fsf@transit.us.cray.com>
+ <7v6284qfw8.fsf@alter.siamese.dyndns.org> <20120827214027.GA511@vidovic>
+ <nngr4qqhp7x.fsf@transit.us.cray.com> <7vvcg2zwvq.fsf@alter.siamese.dyndns.org>
+ <CACnwZYe6BZVuqCCPho5+3dy=rzKqDv1A8uGAvhLm2JPO9b2LMw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Uri Moszkowicz <uri@4refs.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:35:14 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	dag@cray.com, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Andreas Ericsson <ae@op5.se>, greened@obbligato.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:54:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TP3Me-0000US-Sj
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 05:35:13 +0200
+	id 1TP3fi-0003Ra-GM
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 05:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030368Ab2JSDe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2012 23:34:59 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:34467 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752329Ab2JSDe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 23:34:58 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so32146oag.19
-        for <git@vger.kernel.org>; Thu, 18 Oct 2012 20:34:57 -0700 (PDT)
+	id S1752119Ab2JSDyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 23:54:43 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:46346 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751028Ab2JSDym (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 23:54:42 -0400
+Received: by mail-qa0-f53.google.com with SMTP id s11so75828qaa.19
+        for <git@vger.kernel.org>; Thu, 18 Oct 2012 20:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=0gis8RF2S8TCUR7Pc7/Yq/bYjpVbowvg74l+NvrUj84=;
-        b=u1cJEKKU6pe4S3CKR+B/gF2tBOEaKp+4ETbtm4ZS8WRmUaq1P9iEv+vo3rWQjNJEYU
-         Lw89nqkuuMSxKt7LFHP+iNO5jdQSfwAQe8+pHiJ4s1Dk4jGCgX0tbfvE2yhTfykA8ubQ
-         8IHgAmQ47UgPCXezchBdU34W1QEPpmS2B4SmJiae8uJovmSSKc1Z++/8bZ5eQeQdaP9S
-         QqMDycW4KM0w9NCBO/RbotiwoctpJRfJdQDu/onhDtZdzh2ClI+/Pa/alt6UwY14TqgA
-         /bonZ367hn/C7WFWKXBPQMrkcto8OkPWJu9nVPFnrgBVuWCYVnlfsXmsT4jF8eQGBnh4
-         JoJg==
-Received: by 10.60.22.136 with SMTP id d8mr20768129oef.124.1350617697586; Thu,
- 18 Oct 2012 20:34:57 -0700 (PDT)
-Received: by 10.182.108.10 with HTTP; Thu, 18 Oct 2012 20:34:27 -0700 (PDT)
-In-Reply-To: <CAMJd5AQhcvWVwsZHPknAXvNpqnfqdCtx-xUv39Au1=x-1_ExMg@mail.gmail.com>
+        bh=IyiSd3uE7NOvCh8PJa5vaY02ICBX7HsaprdiFpAR46I=;
+        b=IAN0hpTr9LZwc8VSwjAlVaoy8Dncq2akeawO6i/DCGcejHii//YsgOP+L4+Z7Q+ZgA
+         gTeBENb+mWCRA2D5PwmNFWsTfCTScxZqPDtP2yJwjFry9zbcU+gxtZJZ47LiwKvZufnu
+         rCxt7TOaaV9SYUHsbT9k+eeFZc4B4Vv2svGDVycHjYmzLAn6XdxnieJEp2MoYnEgwktH
+         jtOR5/pQMWbUL1XaAIcCDcXoioN60o7SHT0fQOU2OCRLxIt1bsTOGe2Fj8I65JL7f1e2
+         PwD4tqHkCRMrKl/K9emJPFtnjtemBALW/rzt/8JiTkqOIKZzHsSNPgTcfih20grm+J6K
+         m0Hw==
+Received: by 10.224.78.141 with SMTP id l13mr156885qak.25.1350618881613; Thu,
+ 18 Oct 2012 20:54:41 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Thu, 18 Oct 2012 20:54:21 -0700 (PDT)
+In-Reply-To: <CACnwZYe6BZVuqCCPho5+3dy=rzKqDv1A8uGAvhLm2JPO9b2LMw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208038>
 
-On Fri, Oct 19, 2012 at 6:10 AM, Uri Moszkowicz <uri@4refs.com> wrote:
-> I'm testing out the sparse checkout feature of Git on my large (14GB)
-> repository and am running into a problem. When I add "dir1/" to
-> sparse-checkout and then run "git read-tree -mu HEAD" I see dir1 as
-> expected. But when I add "dir2/" to sparse-checkout and read-tree
-> again I see dir2 and dir3 appear and they're not nested. If I replace
-> "dir2/" with "dir3/" in the sparse-checkout file, then I see dir1 and
-> dir3 but not dir2 as expected again. How can I debug this problem?
+Thiago Farina wrote:
+> [...]
+> With some structure like:
+>
+> include/git.h
+> src/git.c
+>
+> ...
+>
+> whatever.
+> [...]
 
-Posting here is step 1. What version are you using? You can look at
-unpack-trees.c The function that does the check is excluded_from_list.
-You should check "ls-files -t", see if CE_SKIP_WORKTREE is set
-correctly for all dir1/*, dir2/* and dir3/*. Can you recreate a
-minimal test case for the problem?
--- 
-Duy
+Junio- is it reasonable to expect the directory-restructuring by 2.0?
+
+Ram
