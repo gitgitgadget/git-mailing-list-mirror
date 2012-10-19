@@ -1,179 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: fatal: cannot convert from utf8 to UTF-8
-Date: Thu, 18 Oct 2012 22:50:45 -0700
-Message-ID: <7vy5j3j9hm.fsf@alter.siamese.dyndns.org>
-References: <1532361.Y42DjGJIX1@leto>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: Git for Windows and line endings
+Date: Fri, 19 Oct 2012 08:09:40 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1210190801490.2695@bonsai2>
+References: <CADKp0pyy=Nnv29LyhzAOX4B5wJNYnZ0h5d7zxNRyZxV2OGUSjg@mail.gmail.com> <CABPQNSZE7TP0G-uW1b1nbsNgpxYCEiD5KefS62GB5gZbWyZXDQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Cristian Tibirna <ctibirna@giref.ulaval.ca>
-X-From: git-owner@vger.kernel.org Fri Oct 19 07:51:06 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Chris B <chris.blaszczynski@gmail.com>, git@vger.kernel.org, 
+    msysgit@googlegroups.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBJW5QOCAKGQE5RKGJAY@googlegroups.com Fri Oct 19 08:09:55 2012
+Return-path: <msysgit+bncBCZPH74Q5YNRBJW5QOCAKGQE5RKGJAY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f58.google.com ([209.85.214.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TP5U6-0003jR-1N
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 07:51:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756894Ab2JSFuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2012 01:50:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34643 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753066Ab2JSFuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2012 01:50:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E97E6B7E;
-	Fri, 19 Oct 2012 01:50:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cTlvaQUvEqJFqBu8uGa6av8gt+M=; b=kS/iNk
-	UN2uiwocTKp7j+v5y/ULwFCP0VH+UDK0CwYEXhtQOTkgCr7CMKhSH1TJpfhDtgmM
-	o8uhX9R7gsy6Ej7gSoP4YYwWDI+UWRR67ZhfHhzrzyWubbaXmRmBzmmPmcaiB0sg
-	sFBqcqXFVeuLyb35f/3sTTPzUf78RtUvVye3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xZZLINBGjB1ZRuGuV548SposH/xM03wk
-	FeWf88jZEuINXKvmU0hdgNtlOXwZ2CNZcOfGzHa3O6r6t7zxPMLUDkqt6ySvs9wj
-	EHWjN0pKxTXKRJacjCgO416R3hN5bmb6U/rudpN8kckiSZpXWvjD1a4jC7rDdCo4
-	QFbN/jTPaLM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0ACD36B7D;
-	Fri, 19 Oct 2012 01:50:49 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23D516B7C; Fri, 19 Oct 2012
- 01:50:48 -0400 (EDT)
-In-Reply-To: <1532361.Y42DjGJIX1@leto> (Cristian Tibirna's message of "Thu,
- 18 Oct 2012 20:03:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE8AACB8-19B0-11E2-BDC3-9A8C2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208039>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBJW5QOCAKGQE5RKGJAY@googlegroups.com>)
+	id 1TP5mK-0005B7-Lp
+	for gcvm-msysgit@m.gmane.org; Fri, 19 Oct 2012 08:09:52 +0200
+Received: by mail-bk0-f58.google.com with SMTP id j10sf41051bkw.3
+        for <gcvm-msysgit@m.gmane.org>; Thu, 18 Oct 2012 23:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:x-authenticated:x-provags-id:date:from
+         :x-x-sender:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-y-gmx-trusted:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=0cl4SPBFe1L6l2fQgViuzzFBgrrSAbCqELG87UUfKYc=;
+        b=fqjR3ovzmtu7tXUUnMvfOHLcV1JFKjci0F8AvGK93q7L2N0syV9HXXLqXyezeMZa8B
+         2IBfIo0FgvwZ2ZOtOhmj+KiWHWOxKSPx3eGsl0cYXxc9LePOJPfDGpTjdsHX0Ak1cGe0
+         0qxAAE4G2Sc3KTd03E83u0Y165j0j0CQ+sBYLP15bBc1BMKomMk5jsiQufkmgCup2t4o
+         V8HRb5DYTl6xwFerm+MPeR/lL6FSusdMJVVzl4A6RDmEJvmwUr2DYNSCCPhVffHXBLw7
+         5yOF24SJp2PsI7wyL5 
+Received: by 10.216.207.210 with SMTP id n60mr3734weo.77.1350626982685;
+        Thu, 18 Oct 2012 23:09:42 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.99.65 with SMTP id eo1ls2432438wib.1.gmail; Thu, 18 Oct
+ 2012 23:09:41 -0700 (PDT)
+Received: by 10.180.106.102 with SMTP id gt6mr2322706wib.0.1350626981864;
+        Thu, 18 Oct 2012 23:09:41 -0700 (PDT)
+Received: by 10.180.106.102 with SMTP id gt6mr2322705wib.0.1350626981853;
+        Thu, 18 Oct 2012 23:09:41 -0700 (PDT)
+Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.22])
+        by gmr-mx.google.com with SMTP id b5si1961712wie.2.2012.10.18.23.09.41;
+        Thu, 18 Oct 2012 23:09:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted sender) client-ip=213.165.64.22;
+Received: (qmail invoked by alias); 19 Oct 2012 06:09:41 -0000
+Received: from p4FEF845A.dip0.t-ipconnect.de (EHLO bonsai2.local) [79.239.132.90]
+  by mail.gmx.net (mp004) with SMTP; 19 Oct 2012 08:09:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1//36oDiA7/R1CsZOIGeeYwpc6VisiP3go3Uj6O+j
+	mPob3emWAcW9RU
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <CABPQNSZE7TP0G-uW1b1nbsNgpxYCEiD5KefS62GB5gZbWyZXDQ@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted
+ sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208040>
 
-Cristian Tibirna <ctibirna@giref.ulaval.ca> writes:
+Hi,
 
-> This error:
->
-> fatal: cannot convert from utf8 to UTF-8
-> ...
-> This is in part our fault: during the standardisation of our git environment, 
-> we (re)enforced UTF-8 encodings by setting "i18n.commitenconding" and 
-> "i18n.logOutputEncoding" to "utf8".
-> ...
-> I know "utf8" is not an accepted denomination ("UTF-8" or "utf-8" should be 
-> used, according to IANA standards),...
+On Fri, 19 Oct 2012, Erik Faye-Lund wrote:
 
-Perhaps like this.
+> On Fri, Oct 19, 2012 at 12:13 AM, Chris B <chris.blaszczynski@gmail.com> wrote:
+> > Hi.. it is such a crime to have that default option of MSysGit mess
+> > around with the line endings.
+> 
+> No it's not.
 
--- >8 --
-Subject: [PATCH] reencode_string(): introduce and use same_encoding()
+Let's keep things professional. Eliciting emotions, especially negative
+ones, traditionally makes it more unlikely to get what one asks for.
 
-Callers of reencode_string() that re-encodes a string from one
-encoding to another all used ad-hoc way to bypass the case where the
-input and the output encodings are the same.  Some did strcmp(),
-some did strcasecmp(), yet some others when converting to UTF-8 used
-is_encoding_utf8().
+Also to clarify: as so many Open Source projects (but unlike Git itself),
+msysGit is a purely volunteer-driven software. So naturally, contributors
+have a lot more to say about the defaults than non-contributors [*1*].
 
-Introduce same_encoding() helper function to make these callers
-use the same logic.  Notably, is_encoding_utf8() has a work-around
-for common misconfiguration to use "utf8" to name UTF-8 encoding,
-which does not match "UTF-8" hence strcasecmp() would not consider
-the same.  Make use of it in this helper function.
+Besides, there is a fantastic and very detailed page when running the
+installer where the interested user can inform herself and change the
+defaults to her likings very easily.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Therefore I consider this bug report -- insofar it was one -- as closed.
 
- builtin/mailinfo.c | 2 +-
- notes.c            | 2 +-
- pretty.c           | 2 +-
- sequencer.c        | 2 +-
- utf8.c             | 7 +++++++
- utf8.h             | 1 +
- 6 files changed, 12 insertions(+), 4 deletions(-)
+Ciao,
+Johannes
 
-diff --git c/builtin/mailinfo.c w/builtin/mailinfo.c
-index da23140..e4e39d6 100644
---- c/builtin/mailinfo.c
-+++ w/builtin/mailinfo.c
-@@ -483,7 +483,7 @@ static void convert_to_utf8(struct strbuf *line, const char *charset)
- 
- 	if (!charset || !*charset)
- 		return;
--	if (!strcasecmp(metainfo_charset, charset))
-+	if (same_encoding(metainfo_charset, charset))
- 		return;
- 	out = reencode_string(line->buf, metainfo_charset, charset);
- 	if (!out)
-diff --git c/notes.c w/notes.c
-index bc454e1..ee8f01f 100644
---- c/notes.c
-+++ w/notes.c
-@@ -1231,7 +1231,7 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
- 	}
- 
- 	if (output_encoding && *output_encoding &&
--			strcmp(utf8, output_encoding)) {
-+	    !is_encoding_utf8(output_encoding)) {
- 		char *reencoded = reencode_string(msg, output_encoding, utf8);
- 		if (reencoded) {
- 			free(msg);
-diff --git c/pretty.c w/pretty.c
-index 8b1ea9f..e87fe9f 100644
---- c/pretty.c
-+++ w/pretty.c
-@@ -504,7 +504,7 @@ char *logmsg_reencode(const struct commit *commit,
- 		return NULL;
- 	encoding = get_header(commit, "encoding");
- 	use_encoding = encoding ? encoding : utf8;
--	if (!strcmp(use_encoding, output_encoding))
-+	if (same_encoding(use_encoding, output_encoding))
- 		if (encoding) /* we'll strip encoding header later */
- 			out = xstrdup(commit->buffer);
- 		else
-diff --git c/sequencer.c w/sequencer.c
-index e3723d2..73c396b 100644
---- c/sequencer.c
-+++ w/sequencer.c
-@@ -60,7 +60,7 @@ static int get_message(struct commit *commit, struct commit_message *out)
- 
- 	out->reencoded_message = NULL;
- 	out->message = commit->buffer;
--	if (strcmp(encoding, git_commit_encoding))
-+	if (same_encoding(encoding, git_commit_encoding))
- 		out->reencoded_message = reencode_string(commit->buffer,
- 					git_commit_encoding, encoding);
- 	if (out->reencoded_message)
-diff --git c/utf8.c w/utf8.c
-index a544f15..6a52834 100644
---- c/utf8.c
-+++ w/utf8.c
-@@ -423,6 +423,13 @@ int is_encoding_utf8(const char *name)
- 	return 0;
- }
- 
-+int same_encoding(const char *src, const char *dst)
-+{
-+	if (is_encoding_utf8(src) && is_encoding_utf8(dst))
-+		return 1;
-+	return !strcasecmp(src, dst);
-+}
-+
- /*
-  * Given a buffer and its encoding, return it re-encoded
-  * with iconv.  If the conversion fails, returns NULL.
-diff --git c/utf8.h w/utf8.h
-index 3c0ae76..93ef600 100644
---- c/utf8.h
-+++ w/utf8.h
-@@ -7,6 +7,7 @@ int utf8_width(const char **start, size_t *remainder_p);
- int utf8_strwidth(const char *string);
- int is_utf8(const char *text);
- int is_encoding_utf8(const char *name);
-+int same_encoding(const char *, const char *);
- 
- int strbuf_add_wrapped_text(struct strbuf *buf,
- 		const char *text, int indent, int indent2, int width);
+Footnote [*1*]: And yes, the line endings default was changed from this
+developer's preference to what it is now -- based on a discussion with
+convincing arguments. Since msysGit is developed as an Open Source project
+with a truly Open Source process, all of these discussions can be found in
+the mailing list archives.
+
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
