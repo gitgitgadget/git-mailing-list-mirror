@@ -1,100 +1,63 @@
-From: Cristian Tibirna <ctibirna@giref.ulaval.ca>
-Subject: fatal: cannot convert from utf8 to UTF-8
-Date: Thu, 18 Oct 2012 20:03:26 -0400
-Organization: GIREF
-Message-ID: <1532361.Y42DjGJIX1@leto>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Unexpected directories from read-tree
+Date: Fri, 19 Oct 2012 10:34:27 +0700
+Message-ID: <CACsJy8BeMPwRtU9LQ9aS=0NY7vo_hXQs5Vxo9krXb+epqf=Fdw@mail.gmail.com>
+References: <CAMJd5AQhcvWVwsZHPknAXvNpqnfqdCtx-xUv39Au1=x-1_ExMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 19 03:08:30 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Uri Moszkowicz <uri@4refs.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:35:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TP14b-00033Q-J3
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 03:08:25 +0200
+	id 1TP3Me-0000US-Sj
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 05:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753166Ab2JSBIF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2012 21:08:05 -0400
-Received: from walter.accountservergroup.com ([50.22.11.10]:42821 "EHLO
-	walter.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752137Ab2JSBIE convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2012 21:08:04 -0400
-X-Greylist: delayed 3874 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Oct 2012 21:08:04 EDT
-Received: from modemcable066.126-58-74.mc.videotron.ca ([74.58.126.66]:59839 helo=leto.localnet)
-	by walter.accountservergroup.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.77)
-	(envelope-from <ctibirna@giref.ulaval.ca>)
-	id 1TP03k-00098o-Ki; Thu, 18 Oct 2012 19:03:28 -0500
-User-Agent: KMail/4.9.2 (Linux/3.4.11-2.16-desktop; KDE/4.9.2; x86_64; ; )
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - walter.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - giref.ulaval.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030368Ab2JSDe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2012 23:34:59 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:34467 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752329Ab2JSDe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2012 23:34:58 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so32146oag.19
+        for <git@vger.kernel.org>; Thu, 18 Oct 2012 20:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0gis8RF2S8TCUR7Pc7/Yq/bYjpVbowvg74l+NvrUj84=;
+        b=u1cJEKKU6pe4S3CKR+B/gF2tBOEaKp+4ETbtm4ZS8WRmUaq1P9iEv+vo3rWQjNJEYU
+         Lw89nqkuuMSxKt7LFHP+iNO5jdQSfwAQe8+pHiJ4s1Dk4jGCgX0tbfvE2yhTfykA8ubQ
+         8IHgAmQ47UgPCXezchBdU34W1QEPpmS2B4SmJiae8uJovmSSKc1Z++/8bZ5eQeQdaP9S
+         QqMDycW4KM0w9NCBO/RbotiwoctpJRfJdQDu/onhDtZdzh2ClI+/Pa/alt6UwY14TqgA
+         /bonZ367hn/C7WFWKXBPQMrkcto8OkPWJu9nVPFnrgBVuWCYVnlfsXmsT4jF8eQGBnh4
+         JoJg==
+Received: by 10.60.22.136 with SMTP id d8mr20768129oef.124.1350617697586; Thu,
+ 18 Oct 2012 20:34:57 -0700 (PDT)
+Received: by 10.182.108.10 with HTTP; Thu, 18 Oct 2012 20:34:27 -0700 (PDT)
+In-Reply-To: <CAMJd5AQhcvWVwsZHPknAXvNpqnfqdCtx-xUv39Au1=x-1_ExMg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208037>
 
+On Fri, Oct 19, 2012 at 6:10 AM, Uri Moszkowicz <uri@4refs.com> wrote:
+> I'm testing out the sparse checkout feature of Git on my large (14GB)
+> repository and am running into a problem. When I add "dir1/" to
+> sparse-checkout and then run "git read-tree -mu HEAD" I see dir1 as
+> expected. But when I add "dir2/" to sparse-checkout and read-tree
+> again I see dir2 and dir3 appear and they're not nested. If I replace
+> "dir2/" with "dir3/" in the sparse-checkout file, then I see dir1 and
+> dir3 but not dir2 as expected again. How can I debug this problem?
 
-This error:
-
-fatal: cannot convert from utf8 to UTF-8
-
-occured in two distinct situations in our work group with git binaries =
-older=20
-or equal to 1.7.7. Once during a commit, the other time during a rebase=
-=2E Both=20
-occurences are 100% reproductible. But the commit that gives the error =
-during=20
-a rebase doesn't do so in a cherry-pick.
-
-This is in part our fault: during the standardisation of our git enviro=
-nment,=20
-we (re)enforced UTF-8 encodings by setting "i18n.commitenconding" and=20
-"i18n.logOutputEncoding" to "utf8".
-
-It is the "i18n.logOutputEncoding =3D utf8" that *sometimes* triggers t=
-he error=20
-above.
-
-I know "utf8" is not an accepted denomination ("UTF-8" or "utf-8" shoul=
-d be=20
-used, according to IANA standards), but we have attenuating circumstanc=
-es in=20
-the fact that most things dealing with encoding accept the erroneous na=
-me.=20
-That includes at least iconv(1) and python(1). Thus we ignored that a=20
-distinction existed and, as self-respecting lazy typers, we preferred t=
-he (one=20
-touch) shorter version.
-
-I wonder if it should be expected that git accepts these name variants =
-("utf8"=20
-and "UTF8") as valid and equivalent to the standard ones.
-
-Of course it is very easy for us to work around the error, since settin=
-g=20
-"i18n.logOutputEncoding =3D utf-8" or removing it altogether from the g=
-it config=20
-file chases the error away. It's only that these kinds of things are bo=
-und to=20
-happen and for a good proportion of git users it might be well opaque,=20
-difficult to fix and, in drastic (user ignorance-induced) cases, a=20
-showstopper.
-
-Thanks for listening.
-
---=20
-Cristian Tibirna				(418) 656-2131 / 4340
-  Laval University - Qu=E9bec, CAN ... http://www.giref.ulaval.ca/~ctib=
-irna
-  Research professional - GIREF ... ctibirna@giref.ulaval.ca
+Posting here is step 1. What version are you using? You can look at
+unpack-trees.c The function that does the check is excluded_from_list.
+You should check "ls-files -t", see if CE_SKIP_WORKTREE is set
+correctly for all dir1/*, dir2/* and dir3/*. Can you recreate a
+minimal test case for the problem?
+-- 
+Duy
