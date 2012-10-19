@@ -1,66 +1,63 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: [DOCBUG] git subtree synopsis needs updating
-Date: Fri, 19 Oct 2012 15:21:58 +0200
-Organization: Bertin Technologies
-Message-ID: <20121019152158.4297707b@chalon.bertin.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/2] gitk: fix --full-diff handling
+Date: Fri, 19 Oct 2012 15:22:36 +0200
+Message-ID: <CAMP44s1F9eKpSiTQLTjXz4R0NewaMaw3554O=ynvGFXsKYEaaA@mail.gmail.com>
+References: <1350644213-4882-1-git-send-email-felipe.contreras@gmail.com>
+	<508151A0.3050505@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 15:22:10 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 15:22:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPCWf-0003Q6-M0
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 15:22:10 +0200
+	id 1TPCXI-0003xK-Hu
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 15:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757229Ab2JSNV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2012 09:21:58 -0400
-Received: from cabourg.bertin.fr ([195.68.26.10]:35608 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751855Ab2JSNV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2012 09:21:57 -0400
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 855DDA0FDB
-	for <git@vger.kernel.org>; Fri, 19 Oct 2012 15:21:55 +0200 (CEST)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 5E0A0A0FD8
-	for <git@vger.kernel.org>; Fri, 19 Oct 2012 15:21:55 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MC500ERO6GJ2B70@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Fri, 19 Oct 2012 15:21:55 +0200 (CEST)
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19288.002
+	id S1754399Ab2JSNWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2012 09:22:37 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:37816 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751276Ab2JSNWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2012 09:22:37 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so378436oag.19
+        for <git@vger.kernel.org>; Fri, 19 Oct 2012 06:22:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JsO9TEhRzbKTO9I5NeiN3QYYTS95OvBtjuDfoyHlMtE=;
+        b=i0ePrE3KBbI7PE7Ary9L2pHsryvdY9V8L/0XuwDgHMMmS6MXklb3iSXj0Ye5v5+4Od
+         8QrPoP1JL3Jz38rGFHtLyv/lYCyyqvXq6BCDgDEwj5y1PcOAsIgNiC9+6DbRMfW01RRl
+         aCBDahyLblYZxBrrLAUisj8O5DJ/JydrA9cPmZ1aspu0vr3qEjauVvR2eg/Pf7MG4a9p
+         NxhzQgsGvtxmeKl5Sl2ma+nUW+NwD7naoaPgIWZ7EJl47eMSomArHMAcIuYv6LrQREJh
+         1FO/K7Ip5xh/sMB9dDAnK5O8+jOIATJCO+lWbHjtQFVyMYH2pcsujHezwGUOZaP71uLk
+         icJw==
+Received: by 10.182.245.20 with SMTP id xk20mr388082obc.89.1350652956663; Fri,
+ 19 Oct 2012 06:22:36 -0700 (PDT)
+Received: by 10.60.58.137 with HTTP; Fri, 19 Oct 2012 06:22:36 -0700 (PDT)
+In-Reply-To: <508151A0.3050505@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208047>
 
+On Fri, Oct 19, 2012 at 3:12 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 10/19/2012 12:56, schrieb Felipe Contreras:
+>> I find usel to do 'git log --full-duff -- file' to find out all the commits
+>> that touched the file, and show the full diff (not just the one of the file).
+>>
+>> Unfortunately gitk doesn't honour this option; the diff is limited in the UI.
+>
+> There is Edit->Preferences->General->Limit diff to listed paths. Doesn't
+> it do what you want if you switch it off?
 
-As the examples in git-subtree.txt show, the synopsis in the same file should
-surely get a patch along the lines of:
-
--'git subtree' add   -P <prefix> <commit>
-+'git subtree' add   -P <prefix> <repository> <commit>
-
-Failure to specify the repository (by just specifying a local commit) fails with
-the cryptic:
-
- warning: read-tree: emptying the index with no arguments is deprecated; use --empty
- fatal: just how do you expect me to merge 0 trees?
-
-
-Furthermore, the doc paragraph for add, aside from mentionning <repository>, also
-mentions a <refspec> which the synopsis does not show either.
-
-
-As a sidenote it someone wants to do some maintainance, using "." as repository when
-the branch to subtree-add is already locally available does not work well either
-(fails with "could not find ref myremote/myhead").
+Hmm, I guess so, but it's not triggered from the command line. Maybe
+the --full-diff option should enable that flag.
 
 -- 
-Yann Dirson - Bertin Technologies
+Felipe Contreras
