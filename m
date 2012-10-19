@@ -1,119 +1,196 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] format-patch --notes: show notes after three-dashes
-Date: Fri, 19 Oct 2012 13:06:30 -0700
-Message-ID: <7vzk3ii5vd.fsf@alter.siamese.dyndns.org>
-References: <1350539128-21577-1-git-send-email-gitster@pobox.com>
- <1350539128-21577-7-git-send-email-gitster@pobox.com>
- <C2D3CE0879B345FFAC2A6487760B5378@PhilipOakley>
- <7vlif3l9fw.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: A design for distributed submodules
+Date: Fri, 19 Oct 2012 22:09:35 +0200
+Message-ID: <5081B37F.3010204@web.de>
+References: <20121013163322.685276teuhqhjc82.lealanko@webmail.helsinki.fi> <7vd30m2sbr.fsf@alter.siamese.dyndns.org> <20121014002304.14167k2j2ctspiuw.lealanko@webmail.helsinki.fi> <7vzk3p1xh3.fsf@alter.siamese.dyndns.org> <20121014131928.25943ezwa6fveyls.lealanko@webmail.helsinki.fi> <507ABDF3.4040106@web.de> <20121014182746.42895rwvalv4uoz6.lealanko@webmail.helsinki.fi> <507AE773.1010301@web.de> <7v4nlxylpm.fsf@alter.siamese.dyndns.org> <20121019033158.93403x1gcanyjo8u.lealanko@webmail.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 22:06:48 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lauri Alanko <la@iki.fi>
+X-From: git-owner@vger.kernel.org Fri Oct 19 22:10:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPIqE-0006uE-Ad
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 22:06:46 +0200
+	id 1TPItK-00010L-Kl
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Oct 2012 22:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758609Ab2JSUGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2012 16:06:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44389 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758327Ab2JSUGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2012 16:06:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACAD98462;
-	Fri, 19 Oct 2012 16:06:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZSmE809zTN5LAeV1YRlhRpHh4g8=; b=XSxNH6
-	JrnLrqXEzqekDP4KUl1fh8FVzHAnbAPbPfOAYrLI/Fz7hxrV4YqSTNVBffipHEM4
-	vSnQ/ItURoX77+SB9kPF66IeIveTuI0NgTvO3+FRmraleSigkBP5B1Uqo81eOQc/
-	tkptGbusTWKwP6uXl/eK70EvcTRp/UxH0mMqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hja9N/SfNOxm68QueOvddoH1K7sCuiWW
-	ieuVF9rPQnwdUQg2cNA5Ph23CgosEKkIxiK+kgUVma0gsr+Y/pBrrwcApB8ahBvM
-	VIcnejzNkHlVdYz2l4+jw2uOAwerTDH6InUXspUQHPInR9SySn8NYBwQmOoBNv3C
-	YqvQSIW+BS0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 990BA8461;
-	Fri, 19 Oct 2012 16:06:32 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 929B48454; Fri, 19 Oct 2012
- 16:06:31 -0400 (EDT)
-In-Reply-To: <7vlif3l9fw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 18 Oct 2012 15:08:51 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 799FFFAC-1A28-11E2-8D00-9A8C2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758467Ab2JSUJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2012 16:09:47 -0400
+Received: from mout.web.de ([212.227.17.11]:55123 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755086Ab2JSUJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2012 16:09:47 -0400
+Received: from [192.168.178.41] ([91.3.183.102]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MLPRu-1TPqqm23Kk-0005OU; Fri, 19 Oct 2012 22:09:38
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121019033158.93403x1gcanyjo8u.lealanko@webmail.helsinki.fi>
+X-Provags-ID: V02:K0:Zm2gKCd1LHHjHwFL53wlCmxB6YCxacpOO6AVy80IWSJ
+ 19zH4aL/F7psuSr6o+pHOBQN+nW2eyTNG2b3h5sfC60FnSTX7O
+ W89tzgH63Xwdx+7ijE5af2/eXlIFOTVEBRt1N17jrqdWTi7i/6
+ Ecamqqo7DnfGydIEsHxjAeJ6YgW1UiLA1E6mcIh70XRauUwN2m
+ p6fKgOZ/+Xbzo59SV5tiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208057>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 19.10.2012 02:31, schrieb Lauri Alanko:
+> I think I finally agree that it's best to develop submodules further
+> rather than introduce a new tool for the functionality I require. Here
+> are some explicit proposals for submodules so we can at least establish
+> agreement on what should be done. These are in order of decreasing
+> importance (to me).
 
-> As long as what it does is explained in format-patch, that is fine.
->
-> I do not think this deserves to be in the SubmittingPatches.  We do
-> tell people to hide "here is the context of the change" additional
-> explanation after three dashes, but how the submitters prepare that
-> text is entirely up to them (and I personally do not think notes is
-> not necessarily the right tool to do so).
+Good to hear that!
 
-Just in case, here is what I'll queue as a placeholder on 'pu'.
+> * Upstreamless submodules
+> 
+> If there is no 'url' key defined for a submodule in .gitconfig, there is
+> no "authoritative upstream" for it. When a recursive
+> fetch/pull/clone/push is performed on a remote superproject, its
+> upstreamless submodules are also fetched/pulled/cloned/pushed directly
+> from/to the submodule repositories under the superproject .git/modules.
+> If this is the first time that remote's submodules are accessed, that
+> remote is initialized for the local submodules: the submodule of the
+> remote superproject becomes a remote of the local submodule, and is
+> given the same name as the remote of the superproject.
+> 
+> So, suppose we have a superproject with .gitmodules:
+> 
+> [submodule "sub"]
+>     path = sub
+> 
+> which is hosted at repositories at URL1 and URL2. Then we do:
+> 
+> git clone --recursive URL1 super
+> cd super
+> git remote add other URL2
+> git fetch --recursive URL2
+> 
+> Now .git/modules/sub/config has:
+> 
+> [remote "origin"]
+>     url = URL1/.git/modules/sub
+> [remote "other"]
+>     url = URL2/.git/modules/sub
 
--- >8 --
-Subject: [PATCH] Documentation: decribe format-patch --notes
+So you want to automatically propagate the new superproject remote
+"other" into the submodules?
 
-Even though I coded this, I am not sure what use scenarios would benefit
-from this option, so the description is unnecessarily negative at this
-moment. People who do want to use this feature need to come up with a
-more plausible use case and replace it.
+> So the effect is similar to just setting the submodule's url as
+> ".git/modules/sub", except that:
+> 
+>  - it hides the implementation detail of the exact location of the
+>    submodule repository from the publicly visible configuration file
+> 
+>  - it also works with bare remotes (where the actual remote submodule
+>    location would be URL/modules/sub)
+> 
+>  - it allows multiple simultaneous superproject remotes (where
+>    git-submodule currently always resolves relative urls against
+>    branch.$branch.remote with no option to fetch from a different
+>    remote).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-format-patch.txt | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+Maybe it's too late on a Friday evening in my timezone, but currently
+I can't wrap my mind around what you have in mind here ... will try
+again later.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 6d43f56..066dc8b 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -20,7 +20,7 @@ SYNOPSIS
- 		   [--ignore-if-in-upstream]
- 		   [--subject-prefix=Subject-Prefix]
- 		   [--to=<email>] [--cc=<email>]
--		   [--cover-letter] [--quiet]
-+		   [--cover-letter] [--quiet] [--notes[=<ref>]]
- 		   [<common diff options>]
- 		   [ <since> | <revision range> ]
- 
-@@ -191,6 +191,19 @@ will want to ensure that threading is disabled for `git send-email`.
- 	containing the shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
- 
-+--notes[=<ref>]::
-+	Append the notes (see linkgit:git-notes[1]) for the commit
-+	after the three-dash line.
-++
-+The expected use case of this is to write supporting explanation for
-+the commit that does not belong to the commit log message proper
-+when (or after) you create the commit, and include it in your patch
-+submission.  But if you can plan ahead and write it down, there may
-+not be a good reason not to write it in your commit message, and if
-+you can't, you can always edit the output of format-patch before
-+sending it out, so the practical value of this option is somewhat
-+dubious, unless your workflow is broken.
-+
- --[no]-signature=<signature>::
- 	Add a signature to each message produced. Per RFC 3676 the signature
- 	is separated from the body by a line with '-- ' on it. If the
--- 
-1.8.0.rc3.162.g1f53438
+> * Submodule discovery across all refs
+> 
+> This is what Jens already mentioned. If we fetch multiple refs of a
+> remote superproject, we also need to fetch _all_ of the submodules
+> referenced by _any_ of the refs, not just the ones in the currently
+> active branch.
+
+That is how things already work now (and it is done in an optimized
+way because we only do a fetch in a submodule when the referenced
+commit isn't already present locally). But the current limitation
+is that only populated submodules are updated (we do a "git fetch"
+inside the submodules work tree), so e.g. currently we can't follow
+renames. We should also do a fetch for submodules which aren't
+checked out but whose repo is found in .git/modules/<name>.
+
+> Finding the complete list of submodules probably has to
+> be implemented by reading .gitmodules in all of the (updated) refs,
+> which is a bit ugly, but not too bad.
+
+Yes, this will be necessary to get the correct path -> name mapping
+for submodules which aren't found in the work tree (e.g. because
+they are renamed). (I will also need to peek into another commit's
+.gitmodules file to make the recursive checkout work for appearing
+submodules for the same reason)
+
+> * Recording the active branch of a submodule
+> 
+> When a submodule is added, its active branch should be stored in
+> .gitmodules as submodule.$sub.branch. Then, when the submodule is
+> checked out, and the head of that branch is the same as the commit in
+> the gitlink (i.e. the superproject tree is "current"), then that branch
+> is set as the active branch in the checked-out submodule working tree.
+> Otherwise, a detached head is used.
+
+We had some discussions about a "floating" submodule model where the
+submodules follow the tip of a branch configured in .gitmodules. That
+looked similar to what you have in mind, except that the tip of that
+branch is always used.
+
+> * Multiple working trees for a submodule
+> 
+> A superproject may have multiple paths for the same submodule,
+> presumably for different commits. This is for cases where the
+> superproject is a snapshot of a developer's directory hierarchy, and the
+> developer is simultaneously working on multiple branches of a submodule
+> and it is convenient to have separate working trees for each of them.
+> 
+> This is a bit hard to express with the current .gitconfig format, since
+> paths are attributes of repository ids instead of vice versa. I'd
+> introduce an alternative section format where you can say:
+> 
+> [mount "path1"]
+>   module = sub
+>   branch = master
+> 
+> [mount "path2"]
+>   module = sub
+>   branch = topic
+> 
+> Implementing this is a bit intricate, since we need to use the
+> git-new-workdir method to create multiple working directories that share
+> the same refs, config, and object store, but have separate HEAD and
+> index. I think this is a problem with the repository layout: the
+> non-workdir-specific bits should all be in a single directory so that a
+> single symlink would be enough.
+
+I'm not sure how good that'll work. E.g. what happens if the user
+configures the URL of "path1" to something else? It looks to me like
+having the same repo copied under different .git/modules/<name> would
+be a more robust approach, even though it wastes some disk space.
+
+> Obviously, I'm willing to implement the above functionalities since I
+> need them. However, I think I'm going to work in Dulwich (which doesn't
+> currently have any submodule support): a Python API is currently more
+> important to me than a command-line tool, and the git.git codebase
+> doesn't look like a very attractive place to contribute anyway. No
+> offense, it's just not to my tastes.
+> 
+> So the main reason I'd like to reach some tentative agreement about the
+> details of the proposal is to ensure that _once_ someone finally
+> implements this kind of functionality in git.git, it will use the same
+> configuration format and same conventions, so that it will be compatible
+> with my code. The compatibility between different tools is after all the
+> main reason for doing this stuff as an extension to submodules instead
+> of something completely different.
+
+Fair enough. But I fear unless we code the same functionality in both
+worlds at about the same time the assumption that it will be done in
+the future in the git core in the same way you expect may fail.
+
+Having said that: I expect to implement peeking into another commit's
+.gitmodules to read the config next after I finished the rm and mv for
+submodules (and intend to use it for doing a fetch first), so maybe we
+can start with that?
