@@ -1,56 +1,96 @@
-From: David Soria Parra <dsp@php.net>
-Subject: [PATCH] grep: remove tautological check
-Date: Sat, 20 Oct 2012 19:26:04 +0200
-Message-ID: <1350753964-29346-1-git-send-email-dsp@php.net>
-Cc: David Soria Parra <dsp@php.net>
+From: Cheeray Huang <cheeray.huang@gmail.com>
+Subject: Report a bug, about track remote repository.
+Date: Sun, 21 Oct 2012 02:49:57 +0800
+Message-ID: <5082F255.9060600@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 20 19:33:28 2012
+X-From: git-owner@vger.kernel.org Sat Oct 20 20:52:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPcvQ-0003kU-Cu
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 19:33:28 +0200
+	id 1TPe9d-0003NI-93
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 20:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756505Ab2JTRdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 13:33:16 -0400
-Received: from config.schlueters.de ([217.114.211.66]:65489 "EHLO
-	config.schlueters.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756441Ab2JTRdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 13:33:15 -0400
-X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Oct 2012 13:33:15 EDT
-Received: from Achird.local (HSI-KBW-149-172-196-164.hsi13.kabel-badenwuerttemberg.de [149.172.196.164])
-	by config.schlueters.de (Postfix) with ESMTPA id 7C55065078;
-	Sat, 20 Oct 2012 19:26:12 +0200 (CEST)
-X-Mailer: git-send-email 1.8.0.rc3.332.g181c802
+	id S1754423Ab2JTSuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2012 14:50:05 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:44572 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751560Ab2JTSuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2012 14:50:04 -0400
+Received: by mail-da0-f46.google.com with SMTP id n41so734209dak.19
+        for <git@vger.kernel.org>; Sat, 20 Oct 2012 11:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=r3oib3Z2EdDAFT5UKyj/Y3H7YLT275saroVT7palICY=;
+        b=rjtmFGtdjo8835GTph6/Fp1fG1Qw7gloPHfTzGCaQtNBO1e4hfPEprW7KgOjvdA7bn
+         9VwLDQ9Jzy/dU/rlrNQvUzBtqkfCZviAAH6UNW7bAVnwySZ20jQQ0NBPzunUMujcq9WY
+         RSOX0Pqx+xwTBGYxCNh2SGuKCvDfBFPU88hER8avPS2zT8+Z4RjOMHiWDOsIHGAzUoHq
+         2oeq9MaucUjytvYC/KL8P9C3ePl7y6RMS3Sy1wKUPXcEmqmcC/d4m5Bpe4PgB1Jx6sjB
+         tj4iVdA1/ejeNiD3SnB7VvSdZyi/XjRgxlViF7nNn8ZW3iCETnp2IvyzKx/v0kStinUF
+         eV+w==
+Received: by 10.68.136.100 with SMTP id pz4mr17039380pbb.135.1350759003932;
+        Sat, 20 Oct 2012 11:50:03 -0700 (PDT)
+Received: from [192.168.1.101] ([115.195.168.67])
+        by mx.google.com with ESMTPS id pw2sm3175470pbb.59.2012.10.20.11.50.01
+        (version=SSLv3 cipher=OTHER);
+        Sat, 20 Oct 2012 11:50:03 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208091>
 
-The enum grep_header_field is unsigned. Therefore the field part of the
-grep_pat structure is unsigned and cannot be less then 0. We remove the
-tautological check for p->field < 0.
+Hi,
 
-Signed-off-by: David Soria Parra <dsp@php.net>
----
- grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think I found a bug, when I used local branches to track remote 
+branch. But I'm not very sure, can anyone double check this?  I'd like 
+to finger this out. I think you can reproduce this bug as below steps:
 
-diff --git a/grep.c b/grep.c
-index 4bd1b8b..db177ef 100644
---- a/grep.c
-+++ b/grep.c
-@@ -625,7 +625,7 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
- 	for (p = opt->header_list; p; p = p->next) {
- 		if (p->token != GREP_PATTERN_HEAD)
- 			die("bug: a non-header pattern in grep header list.");
--		if (p->field < 0 || GREP_HEADER_FIELD_MAX <= p->field)
-+		if (GREP_HEADER_FIELD_MAX <= p->field)
- 			die("bug: unknown header field %d", p->field);
- 		compile_regexp(p, opt);
- 	}
+precondition:
+
+Suppose that you have a remote branch in repository, named origin/work. 
+And then you want to track it with a local branch.
+
+Steps:
+
+1. So you can do this:
+
+git checkout -t origin/work
+
+now, you have a local branch also named "work" to track "origin/work".
+It works nicely, you can use "push/pull" command without any detail 
+parameters to sync anything with the remote branch.
+
+2. Create another branch, ex. named "work2", to track "origin/work" 
+again, though maybe there are not so many people that will do like this.
+
+You will find that local branch "work2" can't "push" to "origin/work".
+ex. After you committed something in work2, you typed "git status", git 
+would tell you:
+
+Your branch is ahead of 'origin/work' by x commit.
+
+And then you used "git push", git can't display the information about 
+changing hash value in remote branch, just printed "everything is up to 
+date".
+
+Actually, you can use some exact parameters to solve this,  such as:
+
+git push origin work2:work
+
+But, I still think it is a bug.
+
+BTW, I found this bug when I used github. I don't know whether it is  
+related to github.
+
+
 -- 
-1.8.0.rc3.332.g181c802
+B&R,
+Cheeray
