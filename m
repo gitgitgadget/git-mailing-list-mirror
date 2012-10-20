@@ -1,71 +1,56 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2] Add new remote-hg transport helper
-Date: Sat, 20 Oct 2012 18:04:06 +0200
-Message-ID: <CAMP44s14LeQY5OumDrMRN9foQPTnAUxtYoyf0Z5YHzjxOybcsA@mail.gmail.com>
-References: <1350745206-28955-1-git-send-email-felipe.contreras@gmail.com>
-	<20121020154301.GA31829@glandium.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 18:04:27 2012
+From: David Soria Parra <dsp@php.net>
+Subject: [PATCH] grep: remove tautological check
+Date: Sat, 20 Oct 2012 19:26:04 +0200
+Message-ID: <1350753964-29346-1-git-send-email-dsp@php.net>
+Cc: David Soria Parra <dsp@php.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 20 19:33:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPbXB-0007eV-Gz
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 18:04:21 +0200
+	id 1TPcvQ-0003kU-Cu
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 19:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754533Ab2JTQEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 12:04:09 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:53885 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754501Ab2JTQEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 12:04:07 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so1294917obb.19
-        for <git@vger.kernel.org>; Sat, 20 Oct 2012 09:04:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=y7w2FSsEpXqmyfU55lN4JOA99ttcuTBi6lvJ4S2iafY=;
-        b=sYRwQCTm/aDQ2oOaGvnj2nlhDRka3hyAKoQNjqTkAVqlP++wFzJsrBu+fVy5oh75Lg
-         Cr94igyMjhluLQsp9Hp0+FUAoKvZA5zVL9deHjdNQ25wiaE8hu8YfpXQzxB/fTm/Enxy
-         a5FxvBubQkWnWZLkaOZ7HqLVchH2dxKZ5X77Gfp0puzwdQry/NTr9vqPo6ZWOvlMCplF
-         O6YJOOjnIyYnqhKCPPkfF152uaRK1MepKW0cA856GoI4zXsZnNCSPHsFm/0fekR5AZhZ
-         4kTd+rrFHZ1x0uArutt0eRDIdUxTuecYOZ/2/GJoKtY48LTh2ktlqwd2yilB+M7VuwCc
-         QFCg==
-Received: by 10.60.22.228 with SMTP id h4mr4193469oef.30.1350749046361; Sat,
- 20 Oct 2012 09:04:06 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Sat, 20 Oct 2012 09:04:06 -0700 (PDT)
-In-Reply-To: <20121020154301.GA31829@glandium.org>
+	id S1756505Ab2JTRdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2012 13:33:16 -0400
+Received: from config.schlueters.de ([217.114.211.66]:65489 "EHLO
+	config.schlueters.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756441Ab2JTRdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2012 13:33:15 -0400
+X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Oct 2012 13:33:15 EDT
+Received: from Achird.local (HSI-KBW-149-172-196-164.hsi13.kabel-badenwuerttemberg.de [149.172.196.164])
+	by config.schlueters.de (Postfix) with ESMTPA id 7C55065078;
+	Sat, 20 Oct 2012 19:26:12 +0200 (CEST)
+X-Mailer: git-send-email 1.8.0.rc3.332.g181c802
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208090>
 
-On Sat, Oct 20, 2012 at 5:43 PM, Mike Hommey <mh@glandium.org> wrote:
-> On Sat, Oct 20, 2012 at 05:00:06PM +0200, Felipe Contreras wrote:
->> Changes since v1:
->>
->>  * Improved documentation
->>  * Use more common 'python' binary
->>  * Warn, don't barf when a branch has multiple heads
->>  * Fixed marks to fetch after cloned
->>  * Support for cloning/pulling remote repositories
->>  * Use a more appropriate internal directory (e.g. .git/hg/origin)
->>  * Fixes for python3
->
-> Are the resulting commits identical to what you'd get from using hg-git?
+The enum grep_header_field is unsigned. Therefore the field part of the
+grep_pat structure is unsigned and cannot be less then 0. We remove the
+tautological check for p->field < 0.
 
-No, but should be easy to implement.
+Signed-off-by: David Soria Parra <dsp@php.net>
+---
+ grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/grep.c b/grep.c
+index 4bd1b8b..db177ef 100644
+--- a/grep.c
++++ b/grep.c
+@@ -625,7 +625,7 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
+ 	for (p = opt->header_list; p; p = p->next) {
+ 		if (p->token != GREP_PATTERN_HEAD)
+ 			die("bug: a non-header pattern in grep header list.");
+-		if (p->field < 0 || GREP_HEADER_FIELD_MAX <= p->field)
++		if (GREP_HEADER_FIELD_MAX <= p->field)
+ 			die("bug: unknown header field %d", p->field);
+ 		compile_regexp(p, opt);
+ 	}
 -- 
-Felipe Contreras
+1.8.0.rc3.332.g181c802
