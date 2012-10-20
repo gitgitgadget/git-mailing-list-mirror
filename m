@@ -1,90 +1,60 @@
 From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Problems with  ./t9902-completion.sh
-Date: Sat, 20 Oct 2012 14:02:36 +0200
-Message-ID: <508292DC.8030700@web.de>
+Subject: Re: Problems with  ./t9902-completion.sh
+Date: Sat, 20 Oct 2012 14:50:23 +0200
+Message-ID: <50829E0F.5040900@web.de>
+References: <508292DC.8030700@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 14:02:58 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Oct 20 14:55:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPXlZ-0004l4-7M
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 14:02:57 +0200
+	id 1TPYaX-0004sN-Vf
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 14:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343Ab2JTMCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 08:02:39 -0400
-Received: from mout.web.de ([212.227.17.12]:62942 "EHLO mout.web.de"
+	id S1755707Ab2JTMu3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Oct 2012 08:50:29 -0400
+Received: from mout.web.de ([212.227.15.4]:56586 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755333Ab2JTMCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 08:02:39 -0400
-Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0Lto05-1TI5bE0xnR-0118dM; Sat, 20 Oct 2012 14:02:37 +0200
+	id S1755537Ab2JTMu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2012 08:50:29 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0LZeou-1T2LFf0FIK-00m3Xr; Sat, 20 Oct 2012 14:50:27 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-X-Provags-ID: V02:K0:ZQhn9HuAQaUC7kDH6HHuqasyOe4KiAkIhsk2h/Ryvt6
- kFYtrrGnqvVfoBBBZgn/c7A1yiRPDaPBypzibEZrzmTMya8Fss
- XOJyHs4t0tZNMXKIBL60M5QZZCYi67FGt/2EXXzvnUdnbHbaIP
- kGhHBKq42Z5/0IT9apOaDYMyFsoF19VITIw7yRqWjf6YSKA3Je
- diTksx0IBg2m3tRwN6gVA==
+In-Reply-To: <508292DC.8030700@web.de>
+X-Provags-ID: V02:K0:tbHmK8eDwfFM0hMKgialYzzvRT/PK1c3m2qOOQ/5MOl
+ meEdEFX4Me75+LDQMXXNoFnZAAsyBVGOYmdTBAcVbnS0gHqGTc
+ UhxflTGczSeUkoReAUHttqPnygWdABhGLenFg1I5iq3kdf/D2k
+ L+YVua2ZraVSpNIWNjcH+sAr1elQPcdEvOxcA0a9sdHJ0ml69g
+ cp47qo3UoUwKP9ddgUxuw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208086>
 
-t9902  does not work on my Mac OS box,
-but only in one working directory.
-
-Any idea where the "check-ignore" comea from ?
-/Torsten
-
-
-[snip]
---- expected    2012-10-20 11:54:35.000000000 +0000
-+++ out    2012-10-20 11:54:35.000000000 +0000
-@@ -1 +1,2 @@
-+check-ignore
- checkout
-
-This patch corrects the problem:
-(s/check"/checko"/)
+On 20.10.12 14:02, Torsten B=F6gershausen wrote:
+> t9902  does not work on my Mac OS box,
+> but only in one working directory.
+>=20
+> Any idea where the "check-ignore" comea from ?
+> /Torsten
+>=20
 
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index cbd0fb6..0df751b 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -222,19 +222,19 @@ test_expect_success 'general options' '
- '
- 
- test_expect_success 'general options plus command' '
--       test_completion "git --version check" "checkout " &&
--       test_completion "git --paginate check" "checkout " &&
--       test_completion "git --git-dir=foo check" "checkout " &&
--       test_completion "git --bare check" "checkout " &&
-+       test_completion "git --version checko" "checkout " &&
-+       test_completion "git --paginate checko" "checkout " &&
-+       test_completion "git --git-dir=foo checko" "checkout " &&
-+       test_completion "git --bare checko" "checkout " &&
-        test_completion "git --help des" "describe " &&
--       test_completion "git --exec-path=foo check" "checkout " &&
--       test_completion "git --html-path check" "checkout " &&
--       test_completion "git --no-pager check" "checkout " &&
--       test_completion "git --work-tree=foo check" "checkout " &&
--       test_completion "git --namespace=foo check" "checkout " &&
--       test_completion "git --paginate check" "checkout " &&
--       test_completion "git --info-path check" "checkout " &&
--       test_completion "git --no-replace-objects check" "checkout "
-+       test_completion "git --exec-path=foo checko" "checkout " &&
-+       test_completion "git --html-path checko" "checkout " &&
-+       test_completion "git --no-pager checko" "checkout " &&
-+       test_completion "git --work-tree=foo checko" "checkout " &&
-+       test_completion "git --namespace=foo checko" "checkout " &&
-+       test_completion "git --paginate checko" "checkout " &&
-+       test_completion "git --info-path checko" "checkout " &&
-+       test_completion "git --no-replace-objects checko" "checkout "
- '
+Oh, I find the answer myself:
+ git status
+
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#       ../git-check-ignore
+
+=46rom some experiments there was a git-check-ignore left.
+(and make clean doesn't delete it)
+
+sorry for the noise.
