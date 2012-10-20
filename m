@@ -1,118 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] contrib/hooks: avoid requiring root access in usage
- instructions
-Date: Fri, 19 Oct 2012 17:31:04 -0700
-Message-ID: <20121020003104.GA26596@elie.Belkin>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: libgit2 status
+Date: Fri, 19 Oct 2012 22:21:30 -0300
+Message-ID: <CACnwZYdiz05xRr5b+Hn0o-wZRm+cOJ3hQ8LGiABm8G10Pos10A@mail.gmail.com>
+References: <87a9xkqtfg.fsf@waller.obbligato.org>
+	<5038A148.4020003@op5.se>
+	<7vharpv77n.fsf@alter.siamese.dyndns.org>
+	<nnglih0jotj.fsf@transit.us.cray.com>
+	<7vfw78s1kd.fsf@alter.siamese.dyndns.org>
+	<nngsjb8i30w.fsf@transit.us.cray.com>
+	<7v6284qfw8.fsf@alter.siamese.dyndns.org>
+	<20120827214027.GA511@vidovic>
+	<nngr4qqhp7x.fsf@transit.us.cray.com>
+	<7vvcg2zwvq.fsf@alter.siamese.dyndns.org>
+	<CACnwZYe6BZVuqCCPho5+3dy=rzKqDv1A8uGAvhLm2JPO9b2LMw@mail.gmail.com>
+	<CALkWK0=P7THaJduYFS1Sr6mxtNqAWQsDgwQyr_KEX4NA4kmVSA@mail.gmail.com>
+	<7vvce6i5j2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Olivier Berger <olivier.berger@it-sudparis.eu>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"Kevin P. Fleming" <kpfleming@digium.com>,
-	Chris Hiestand <chiestand@salk.edu>,
-	Miklos Vajna <vmiklos@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 20 02:33:47 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	dag@cray.com, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Andreas Ericsson <ae@op5.se>, greened@obbligato.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 20 03:21:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPN0Y-0003fl-Q1
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 02:33:43 +0200
+	id 1TPNl2-0001qI-4e
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 03:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755498Ab2JTAbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2012 20:31:22 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:50146 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754827Ab2JTAbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2012 20:31:22 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so721324pad.19
-        for <git@vger.kernel.org>; Fri, 19 Oct 2012 17:31:21 -0700 (PDT)
+	id S1759446Ab2JTBVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2012 21:21:32 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:48944 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755490Ab2JTBVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2012 21:21:31 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so644911lag.19
+        for <git@vger.kernel.org>; Fri, 19 Oct 2012 18:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=cPNIvmaSnll3ayTaTkKZGYpuREKm9Fmn+eKZe3iUQQw=;
-        b=killpq4GSVZdZJRHAgtppdrR83sFHrMVbyjI64tdFV/nfiKqt+cARF92ayvYRw1lzS
-         KXkhk2SVgdeeF2SICtwTbqnMYHVYFqqnXrfVcjQxtA834jazxXYrod2e4VaNBwTapIpy
-         4LIQtOzZtHA11nIDnXhIA8QQWxQf3qnLItLJ7ijxwg6Nx2rwgkNyzJl+20ARDy3PHeYA
-         TcfTlxEIctDHyhjCpyiZWGJA6j3l5SwDUF5TEnPI2cdYRBINE7ZQ3CIVsOvHHis4mUMo
-         y5x+trg96f0KPRRtca0mQviollbd379uwqF4EUxbVvLZ5vRBqRzSrWLHZxtJSLM2vhTN
-         Dhhg==
-Received: by 10.66.83.129 with SMTP id q1mr8609996pay.4.1350693081614;
-        Fri, 19 Oct 2012 17:31:21 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id qb2sm1971160pbb.15.2012.10.19.17.31.12
-        (version=SSLv3 cipher=OTHER);
-        Fri, 19 Oct 2012 17:31:15 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=9IW3K+FNa8ijECoXz6x/KoykbDZb7v3rybwSEGJa2bE=;
+        b=G9fUloninKf1v12cEi/6diMoHfpVkCOY5evD8AWLzOlDwf5B+iDrUyLlrdzk3xmJiS
+         piheemqSJpNfRPS9SSdVF9n56X4g/+8X7RhjWhBOk6tQDJPN3TgDrO2XMVXb8kpEN34C
+         wWCClzVCImm/XH4q2pzTOjnGSNsheQiX0yfqbFwPnvgypzu07DMXUYFQk3D6kv2ZAa2b
+         2S7Pyjf7/5hIdQDUHUd1KLKnP8GiXQKTIoUe7SyFpvY94wQFogsrZgsQyG2dP+7vmgzN
+         bsZZmmCAMg4fsMUoJwTNqwOHwu22nyc97fPFlsQoyYUUMGP1m+0xNp0UM2ovTa4rQNq1
+         ds9g==
+Received: by 10.152.124.111 with SMTP id mh15mr2477043lab.20.1350696090065;
+ Fri, 19 Oct 2012 18:21:30 -0700 (PDT)
+Received: by 10.112.45.98 with HTTP; Fri, 19 Oct 2012 18:21:30 -0700 (PDT)
+In-Reply-To: <7vvce6i5j2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208078>
 
-Comments in hooks/post-receive-email suggest:
-
- For example, on debian the hook is stored in
- /usr/share/git-core/contrib/hooks/post-receive-email:
-
-  chmod a+x post-receive-email
-  cd /path/to/your/repository.git
-  ln -sf /usr/share/git-core/contrib/hooks/post-receive-email hooks/post-receive
-
-Doing that means changing permissions on a file provided by a package,
-which is problematic in a number of ways: the permissions would be
-likely to change back in later upgrades, and changing them requires
-root access.  Copying the script into each repo that uses it is not
-much better, since each copy would be maintained separately and not
-benefit from bugfixes in the master copy.
-
-Better to ship the hook with executable permission and remove the
-chmod line so enabling the hook becomes a one-step process: just
-symlink it into place.
-
-Likewise for the pre-auto-gc-battery hook.
-
-Reported-by: Olivier Berger <olivier.berger@it-sudparis.eu>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-From <http://bugs.debian.org/687391>.
-
-Thoughts?
-Jonathan
-
- contrib/hooks/post-receive-email  | 1 -
- contrib/hooks/pre-auto-gc-battery | 1 -
- 2 files changed, 2 deletions(-)
- mode change 100644 => 100755 contrib/hooks/pre-auto-gc-battery
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 8ca6607a..359f1ad2 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -13,7 +13,6 @@
- # For example, on debian the hook is stored in
- # /usr/share/git-core/contrib/hooks/post-receive-email:
- #
--#  chmod a+x post-receive-email
- #  cd /path/to/your/repository.git
- #  ln -sf /usr/share/git-core/contrib/hooks/post-receive-email hooks/post-receive
- #
-diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
-old mode 100644
-new mode 100755
-index 1f914c94..9d0c2d19
---- a/contrib/hooks/pre-auto-gc-battery
-+++ b/contrib/hooks/pre-auto-gc-battery
-@@ -13,7 +13,6 @@
- # For example, if the hook is stored in
- # /usr/share/git-core/contrib/hooks/pre-auto-gc-battery:
- #
--# chmod a+x pre-auto-gc-battery
- # cd /path/to/your/repository.git
- # ln -sf /usr/share/git-core/contrib/hooks/pre-auto-gc-battery \
- #	hooks/pre-auto-gc
--- 
-1.8.0.rc2
+On Fri, Oct 19, 2012 at 5:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I actually hate "include/git.h vs src/git.c"; you have distinction
+> between .c and .h already.
+Which distinction are you talking about? This is not an issue of
+header file versus source file, but a public header file to be
+included by external projects versus internal header files that are
+intended to be included only by git itself and that will probably live
+under src/ directory.
