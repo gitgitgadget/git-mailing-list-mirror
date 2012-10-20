@@ -1,168 +1,115 @@
 From: Herman van Rink <rink@initfour.nl>
-Subject: Re: [PATCH] Add --unannotate option to git-subtree
-Date: Sat, 20 Oct 2012 21:33:06 +0200
+Subject: Re: Subtree in Git
+Date: Sat, 20 Oct 2012 22:03:00 +0200
 Organization: Initfour websolutions
-Message-ID: <5082FC72.4000608@initfour.nl>
-References: <CABVa4NinSighUn7GKbzMx9qZj3Ao2dCtEZxUqCPwO9TocZ8Kkg@mail.gmail.com> <CABVa4NgdaiwfTvFe1CU+24QF-BA45tM2e3+9e2PJ_4ecuD0Cyg@mail.gmail.com>
+Message-ID: <50830374.9090308@initfour.nl>
+References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com> <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl> <87fwbgbs0h.fsf@smith.obbligato.org> <7v8vh78dag.fsf@alter.siamese.dyndns.org> <4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com> <nngaa0z3p8b.fsf@transit.us.cray.com> <87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl> <nng4npe6zsj.fsf@transit.us.cray.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: James Nylen <jnylen@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 20 21:42:43 2012
+Cc: dag@cray.com, greened@obbligato.org,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 20 22:03:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPewQ-0004y3-2m
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 21:42:38 +0200
+	id 1TPfGa-0006tx-L3
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 22:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582Ab2JTTm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 15:42:26 -0400
-Received: from hosted-by.initfour.nl ([83.137.144.7]:57041 "EHLO
+	id S1756549Ab2JTUDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2012 16:03:04 -0400
+Received: from hosted-by.initfour.nl ([83.137.144.7]:36632 "EHLO
 	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754447Ab2JTTm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 15:42:26 -0400
+	with ESMTP id S1754447Ab2JTUDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2012 16:03:03 -0400
 Received: from [192.168.65.204] (hosted-by.initfour.nl [83.137.144.34])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
 	(Authenticated sender: helmo@INITFOUR.NL)
-	by mail.initfour.nl (Postfix) with ESMTPSA id 75DD39FC6D9;
-	Sat, 20 Oct 2012 21:33:07 +0200 (CEST)
+	by mail.initfour.nl (Postfix) with ESMTPSA id 4FED79FC6DD;
+	Sat, 20 Oct 2012 22:03:01 +0200 (CEST)
 User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <CABVa4NgdaiwfTvFe1CU+24QF-BA45tM2e3+9e2PJ_4ecuD0Cyg@mail.gmail.com>
+In-Reply-To: <nng4npe6zsj.fsf@transit.us.cray.com>
 X-Enigmail-Version: 1.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208095>
 
-On 10/16/2012 02:47 PM, James Nylen wrote:
-> On Tue, Oct 9, 2012 at 4:26 PM, James Nylen <jnylen@gmail.com> wrote:
->> This new option does the reverse of --annotate, which is more useful
->> when contributing back to a library which is also included in the
->> repository for a larger project, and perhaps in other situations as
->> well.
->>
->> Rather than adding a marker to each commit when splitting out the
->> commits back to the subproject, --unannotate removes the specified
->> string (or bash glob pattern) from the beginning of the first line of
->> the commit message.  This enables the following workflow:
->>
->>  - Commit to a library included in a large project, with message:
->>      Library: Make some amazing change
->>
->>  - Use `git-subtree split` to send this change to the library maintainer
->>
->>  - Pass ` --unannotate='Library: ' ` or ` --unannotate='*: ' `
->>
->>  - This will turn the commit message for the library project into:
->>      Make some amazing change
->>
->> This helps to keep the commit messages meaningful in both the large
->> project and the library project.
->>
->> Signed-off-by: James Nylen <jnylen@gmail.com>
->> ---
-> Has anybody looked at this?
+On 07/11/2012 06:14 PM, dag@cray.com wrote:
+> Herman van Rink <rink@initfour.nl> writes:
 >
-> It has been very useful for me.
+>>> It's hard to tell what's what with one big diff.  Each command should
+>>> get its own commit plus more if infrastructure work has to be done.  I
+>>> realize it's a bit of a pain to reformulate this but git rebase -i makes
+>>> it easy and the history will be much better long-term.
+>>>
+>>> Each command should be described briefly in the commit log.
+>> That would indeed be nice, but as some parts interdependent it would be
+>> rather complicated.
+> Do the interdependent parts first, then.  These should be pure
+> infrastructure.
+>
+>> And what is the use if their not fully independently testable.
+> The command should be testable as soon as they are fully implemented,
+> no?
+>
+> I'm thinking about a sequence like this:
+>
+> - Infrastructure for command A (and possibly B, C, etc. if they are
+>   interdependent).
+> - Command A + tests
+> - Infrastructure for command B
+> - Command B + tests
+> - etc.
+>
+>> If you want to fake a nice history tree then go ahead, I just don't have
+>> the energy to go through these commits again just for that.
+> Well, I can't do this either, both because it would take time to get up
+> to speed on the patches and because I have a million other things going
+> on at the moment.  So unfortunately, this is going to sit until someone
+> can take it up.
+>
+> Unless Junio accepts your patches, of course.  :)
 
+Junio, Could you please consider merging the single commit from my
+subtree-updates branch? https://github.com/helmo/git/tree/subtree-updates
 
-The version of subtree in contrib is rather out-dated unfortunately.
-Your patch looks interesting though. I can see how this could be useful.
+I've seen a few reactions on the git userlist refer to issues which have
+long been solved in these collected updates.
 
-I've collected a bunch of patches in
-https://github.com/helmo/git/tree/subtree-updates
-
-Apart from a line in git-subtree.txt ending in whitespace I think I can
-merge it in there.
 
 >
->> Let me know if gmail has munged this patch.  You can also get at it
->> like this:
->>
->> $ git remote add nylen git://github.com/nylen/git.git
->> $ git fetch nylen
->> $ git show nylen/subtree-unannotate
->> ---
->>  contrib/subtree/git-subtree.sh  | 11 +++++++++--
->>  contrib/subtree/git-subtree.txt | 15 +++++++++++++++
->>  2 files changed, 24 insertions(+), 2 deletions(-)
->>
->> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->> index 920c664..8d1ed05 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -21,6 +21,7 @@ P,prefix=     the name of the subdir to split out
->>  m,message=    use the given message as the commit message for the merge commit
->>   options for 'split'
->>  annotate=     add a prefix to commit message of new commits
->> +unannotate=   remove a prefix from new commit messages (supports bash globbing)
->>  b,branch=     create a new branch from the split subtree
->>  ignore-joins  ignore prior --rejoin commits
->>  onto=         try connecting new tree to an existing one
->> @@ -43,6 +44,7 @@ onto=
->>  rejoin=
->>  ignore_joins=
->>  annotate=
->> +unannotate=
->>  squash=
->>  message=
->>
->> @@ -80,6 +82,8 @@ while [ $# -gt 0 ]; do
->>                 -d) debug=1 ;;
->>                 --annotate) annotate="$1"; shift ;;
->>                 --no-annotate) annotate= ;;
->> +               --unannotate) unannotate="$1"; shift ;;
->> +               --no-unannotate) unannotate= ;;
->>                 -b) branch="$1"; shift ;;
->>                 -P) prefix="$1"; shift ;;
->>                 -m) message="$1"; shift ;;
->> @@ -310,8 +314,11 @@ copy_commit()
->>                         GIT_COMMITTER_NAME \
->>                         GIT_COMMITTER_EMAIL \
->>                         GIT_COMMITTER_DATE
->> -               (echo -n "$annotate"; cat ) |
->> -               git commit-tree "$2" $3  # reads the rest of stdin
->> +               (
->> +                       read FIRST_LINE
->> +                       echo "$annotate${FIRST_LINE#$unannotate}"
->> +                       cat  # reads the rest of stdin
->> +               ) | git commit-tree "$2" $3
->>         ) || die "Can't copy commit $1"
->>  }
->>
->> diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
->> index 0c44fda..ae420aa 100644
->> --- a/contrib/subtree/git-subtree.txt
->> +++ b/contrib/subtree/git-subtree.txt
->> @@ -198,6 +198,21 @@ OPTIONS FOR split
->>         git subtree tries to make it work anyway, particularly
->>         if you use --rejoin, but it may not always be effective.
->>
->> +--unannotate=<annotation>::
->> +       This option is only valid for the split command.
->> +
->> +       When generating synthetic history, try to remove the prefix
->> +       <annotation> from each commit message (using bash's "strip
->> +       shortest match from beginning" command, which supports
->> +       globbing).  This makes sense if you format library commits
->> +       like "library: Change something or other" when you're working
->> +       in your project's repository, but you want to remove this
->> +       prefix when pushing back to the library's upstream repository.
->> +       (In this case --unannotate='*: ' would work well.)
->> +
->> +       Like --annotate,  you need to use the same <annotation>
->> +       whenever you split, or you may run into problems.
->> +
->>  -b <branch>::
->>  --branch=<branch>::
->>         This option is only valid for the split command.
->> --
->> 1.7.11.3
+>>> Some questions/comments:
+>>>
+>>> - Is .gittrees the right solution?  I like the feature it provides but
+>>>   an external file feels a bit hacky.  I wonder if there is a better way
+>>>   to track this metadata.  Notes maybe?  Other git experts will have to
+>>>   chime in with suggestions.
+>> It's similar to what git submodule does. And when you add this file to
+>> the index you can use it on other checkouts as well.
+> Well, I guess I'm not strongly opposed, I was just asking the question.
+>
+>>> - This code seems to be repeated a lot.  Maybe it should be a utility
+>>>   function.
+>> Yes that's there three times...
+> So you agree it should be factored?
+>
+>>> - I removed all this stuff in favor of the test library.  Please don't
+>>>   reintroduce it.  These new tests will have to be rewritten in terms of
+>>>   the existing test infrastructure.  It's not too hard.
+>> I've left it in to be able to verify your new tests. Once all the new
+>> tests are passing we can get rid of the old one, not before.
+>> And as all the old tests are contained in test.sh it should not interfere...
+> No, I'm very strongly against putting this back in.  The new tests will
+> have to be updated to the upstream test infrastructure.
+>
+>                                       -Dave
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
