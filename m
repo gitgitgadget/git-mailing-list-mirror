@@ -1,125 +1,106 @@
-From: Herman van Rink <rink@initfour.nl>
-Subject: Re: Subtree in Git
-Date: Sat, 20 Oct 2012 22:03:00 +0200
-Organization: Initfour websolutions
-Message-ID: <50830374.9090308@initfour.nl>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com> <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl> <87fwbgbs0h.fsf@smith.obbligato.org> <7v8vh78dag.fsf@alter.siamese.dyndns.org> <4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com> <nngaa0z3p8b.fsf@transit.us.cray.com> <87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl> <nng4npe6zsj.fsf@transit.us.cray.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Report a bug, about track remote repository.
+Date: Sun, 21 Oct 2012 00:46:20 +0100
+Organization: OPDS
+Message-ID: <F15116C3B49A439AB06C8068F79E4C0F@PhilipOakley>
+References: <5082F255.9060600@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
 Content-Transfer-Encoding: 7bit
-Cc: dag@cray.com, greened@obbligato.org,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 20 22:03:29 2012
+To: "Cheeray Huang" <cheeray.huang@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 01:46:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPfGa-0006tx-L3
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Oct 2012 22:03:28 +0200
+	id 1TPik2-0004jg-Rw
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 01:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756549Ab2JTUDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 16:03:04 -0400
-Received: from hosted-by.initfour.nl ([83.137.144.7]:36632 "EHLO
-	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754447Ab2JTUDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 16:03:03 -0400
-Received: from [192.168.65.204] (hosted-by.initfour.nl [83.137.144.34])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: helmo@INITFOUR.NL)
-	by mail.initfour.nl (Postfix) with ESMTPSA id 4FED79FC6DD;
-	Sat, 20 Oct 2012 22:03:01 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <nng4npe6zsj.fsf@transit.us.cray.com>
-X-Enigmail-Version: 1.4.4
+	id S1753393Ab2JTXpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2012 19:45:49 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:8356 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752982Ab2JTXps (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Oct 2012 19:45:48 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AuIKABYzg1BZ8rGT/2dsb2JhbABEi1O0LwQBA4EDgQmCGwUBAQQBCAEBLh4BASwCAwUCAQMVDCUUAQQIEgYHFwYBEggCAQIDAYdhAwkKsQ4NiVSKdoEkRBEchGNgA4glhUeGMIx+hRCCcA
+X-IronPort-AV: E=Sophos;i="4.80,622,1344207600"; 
+   d="scan'208";a="388217841"
+Received: from host-89-242-177-147.as13285.net (HELO PhilipOakley) ([89.242.177.147])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 21 Oct 2012 00:45:45 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208096>
 
-On 07/11/2012 06:14 PM, dag@cray.com wrote:
-> Herman van Rink <rink@initfour.nl> writes:
+From: "Cheeray Huang" <cheeray.huang@gmail.com>
+> Hi,
 >
->>> It's hard to tell what's what with one big diff.  Each command should
->>> get its own commit plus more if infrastructure work has to be done.  I
->>> realize it's a bit of a pain to reformulate this but git rebase -i makes
->>> it easy and the history will be much better long-term.
->>>
->>> Each command should be described briefly in the commit log.
->> That would indeed be nice, but as some parts interdependent it would be
->> rather complicated.
-> Do the interdependent parts first, then.  These should be pure
-> infrastructure.
+> I think I found a bug, when I used local branches to track remote 
+> branch. But I'm not very sure, can anyone double check this?  I'd like 
+> to finger this out. I think you can reproduce this bug as below steps:
 >
->> And what is the use if their not fully independently testable.
-> The command should be testable as soon as they are fully implemented,
-> no?
+> precondition:
 >
-> I'm thinking about a sequence like this:
+> Suppose that you have a remote branch in repository, named 
+> origin/work. And then you want to track it with a local branch.
 >
-> - Infrastructure for command A (and possibly B, C, etc. if they are
->   interdependent).
-> - Command A + tests
-> - Infrastructure for command B
-> - Command B + tests
-> - etc.
+> Steps:
 >
->> If you want to fake a nice history tree then go ahead, I just don't have
->> the energy to go through these commits again just for that.
-> Well, I can't do this either, both because it would take time to get up
-> to speed on the patches and because I have a million other things going
-> on at the moment.  So unfortunately, this is going to sit until someone
-> can take it up.
+> 1. So you can do this:
 >
-> Unless Junio accepts your patches, of course.  :)
+> git checkout -t origin/work
+>
+> now, you have a local branch also named "work" to track "origin/work".
+> It works nicely, you can use "push/pull" command without any detail 
+> parameters to sync anything with the remote branch.
+>
+> 2. Create another branch, ex. named "work2", to track "origin/work" 
+> again, though maybe there are not so many people that will do like 
+> this.
 
-Junio, Could you please consider merging the single commit from my
-subtree-updates branch? https://github.com/helmo/git/tree/subtree-updates
-
-I've seen a few reactions on the git userlist refer to issues which have
-long been solved in these collected updates.
-
+At this point you have created the 'conflict' - You can't have two 
+different branches that both track the same identical remote branch and 
+expect that they can be both different and identical at the same time.
 
 >
->>> Some questions/comments:
->>>
->>> - Is .gittrees the right solution?  I like the feature it provides but
->>>   an external file feels a bit hacky.  I wonder if there is a better way
->>>   to track this metadata.  Notes maybe?  Other git experts will have to
->>>   chime in with suggestions.
->> It's similar to what git submodule does. And when you add this file to
->> the index you can use it on other checkouts as well.
-> Well, I guess I'm not strongly opposed, I was just asking the question.
+> You will find that local branch "work2" can't "push" to "origin/work".
+> ex. After you committed something in work2, you typed "git status", 
+> git would tell you:
 >
->>> - This code seems to be repeated a lot.  Maybe it should be a utility
->>>   function.
->> Yes that's there three times...
-> So you agree it should be factored?
+> Your branch is ahead of 'origin/work' by x commit.
 >
->>> - I removed all this stuff in favor of the test library.  Please don't
->>>   reintroduce it.  These new tests will have to be rewritten in terms of
->>>   the existing test infrastructure.  It's not too hard.
->> I've left it in to be able to verify your new tests. Once all the new
->> tests are passing we can get rid of the old one, not before.
->> And as all the old tests are contained in test.sh it should not interfere...
-> No, I'm very strongly against putting this back in.  The new tests will
-> have to be updated to the upstream test infrastructure.
+> And then you used "git push", git can't display the information about 
+> changing hash value in remote branch, just printed "everything is up 
+> to date".
+
+Only one push (from two branches trying) can suceed. You either force 
+the remote to match the current branch, and loose any information that 
+it had about the other branch, or the remote stays with one branch. 
+Simply don't do it [that way]. If the local branches are different, then 
+you need distinct remote branches.
+
 >
->                                       -Dave
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Actually, you can use some exact parameters to solve this,  such as:
 >
-
-
--- 
-
-Met vriendelijke groet / Regards,
-
-Herman van Rink
-Initfour websolutions
+> git push origin work2:work
+>
+> But, I still think it is a bug.
+>
+> BTW, I found this bug when I used github. I don't know whether it is 
+> related to github.
+>
+>
+> -- 
+> B&R,
+> Cheeray
