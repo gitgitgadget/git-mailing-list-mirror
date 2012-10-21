@@ -1,86 +1,77 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: looking for suggestions for managing a tree of server configs
-Date: Sat, 20 Oct 2012 21:50:19 -0400
-Message-ID: <CAM9Z-nmHxyqnyq1fChhv7hP_awgsaO2FT1t29PAwrvZkaA-hgg@mail.gmail.com>
-References: <alpine.DEB.2.02.1210131413240.6253@asgard.lang.hm>
-	<7vpq4l1x86.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.2.02.1210132153040.6253@asgard.lang.hm>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sun Oct 21 03:53:46 2012
+From: Matt Arsenault <arsenm2@gmail.com>
+Subject: [PATCH] Fix git p4 sync errors
+Date: Sat, 20 Oct 2012 18:59:29 -0700
+Message-ID: <AC43C2B4-623F-4590-9F92-6CCA26645EFE@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 21 03:59:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPkjZ-0006DK-I4
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 03:53:45 +0200
+	id 1TPkpO-0000zX-OK
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 03:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754042Ab2JUBuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 21:50:22 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:34541 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753987Ab2JUBuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 21:50:21 -0400
-Received: by mail-bk0-f46.google.com with SMTP id jk13so631831bkc.19
-        for <git@vger.kernel.org>; Sat, 20 Oct 2012 18:50:19 -0700 (PDT)
+	id S1754198Ab2JUB7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2012 21:59:35 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:43094 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753073Ab2JUB7f convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Oct 2012 21:59:35 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1244674pbb.19
+        for <git@vger.kernel.org>; Sat, 20 Oct 2012 18:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=39JbXKp87npPgtmD21kfy6bpHJmrbPWKo/rZV2LDPOA=;
-        b=BATdW4UjVS34V02BL8AiYZlYSIdohmTJ33QhfRm/lICMpCp+b0gAqVBQDEZEsDOfPy
-         JCPsugRmvF9H7wsIB+7hBKx8pJu07UhTRvtd4RikaHJwELZqnTF9V1Y5YMR+pvuPmnRB
-         YnLpXJqwlWRb/vcnVune8izrsZBllrV8aa2M0GkKgt+cRnd0w9NvfsyeeJAYNtD6rQgr
-         7a6ZaMnthQf/ClvPuM6qdB6uWf7REX4ngtgbHRfYql38KC9aQL+CbcLYhYfk8gVxQQ2l
-         lqbaVUyNGuH9kKeHZSYQlAZsIGT5A84zIx89ZpG2RYDHiP4N6TVP8tdGqz177huJ68Nj
-         3eAQ==
-Received: by 10.204.148.21 with SMTP id n21mr1590731bkv.124.1350784219260;
- Sat, 20 Oct 2012 18:50:19 -0700 (PDT)
-Received: by 10.205.122.144 with HTTP; Sat, 20 Oct 2012 18:50:19 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.02.1210132153040.6253@asgard.lang.hm>
+        h=sender:from:content-type:content-transfer-encoding:subject
+         :message-id:date:to:mime-version:x-mailer;
+        bh=ncf1IjcbrkxswTP1CoqjJfv1szFKKJpULZUwJ/AEUlU=;
+        b=IpYrwbrTzTI00dDXoY9UyDxo3iCp2XsiphbhviE4ZCtMFc4RTVbTdgDxdu7ApOB7tq
+         yPcfsvSMZIxnfB7qdAVQ/bhyv2a0Sco8ohKPLGSTgbDdizUrnHYYO6ezhMwtakR8fcYN
+         hYZF6MefqF8GUVYIhXMzkuljBrrtuSles/yfBsVCs8pH5c4RlQK3SA/vmC1cyxiqEkBN
+         jfdQo93JBp8fiDY7/C2CFXYnfEEh+3BVwLd+KkZhQdoYdizCdNr/fM+w1PF4m8lvicnb
+         CAlf1vUss6W2Cp3legcZf4QSGBSnUdLwN1KSK+oX07KcJICttVxc9x6c5gbH9KsnzOCH
+         /TjA==
+Received: by 10.66.73.226 with SMTP id o2mr15653640pav.83.1350784774751;
+        Sat, 20 Oct 2012 18:59:34 -0700 (PDT)
+Received: from [192.168.1.13] (c-76-102-117-203.hsd1.ca.comcast.net. [76.102.117.203])
+        by mx.google.com with ESMTPS id y5sm3510767pav.36.2012.10.20.18.59.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 20 Oct 2012 18:59:34 -0700 (PDT)
+X-Mailer: Apple Mail (2.1499)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208098>
 
-On Sun, Oct 14, 2012 at 12:57 AM,  <david@lang.hm> wrote:
-> On Sat, 13 Oct 2012, Junio C Hamano wrote:
->> david@lang.hm writes:
->>> I've got a directory tree that holds config data for all my
->>> servers. This consists of one directory per server (which is updated
->>> periodically from what is currently configured on that server), plus
->>> higher level summary reports and similar information.
->>>
->>> today I have just a single git tree covering everything, and I make a
->>> commit each time one of the per-server directories is updated, and
->>> again when the top-level stuff is created.
->>
->> It is quite clear to me what you are keeping at the top-level files,
->> but if a large portion of the configuration for these servers are
->> shared, it might not be a bad idea to have a canonical "gold-master"
->> configuration branch, to which the shared updates are applied, with
->> a branch per server that forks from that canonical branch to keep
->> the machine specific tweaks as differences from the canonical stuff,
->> instead of having N subdirectories (one per machine).
->
-> In an ideal world yes, but right now these machines are updated by many
-> different tools (unforuntantly including 'vi'), so these directories aren't
-> the config to be pushed out to the boxes (i.e. what they should be), it's
-> instead an archived 'what is', the result of changes from all the tools.
->
-> The systems are all built with a standard image, but the automation tools I
-> do have tend to push identical files out to many of the systems (or files
-> identical except for a couple of lines)
+>From 425e4dc6992d07aa00039c5bb8e8c76def591fd3 Mon Sep 17 00:00:00 2001
+From: Matt Arsenault <arsenm2@gmail.com>
+Date: Sat, 20 Oct 2012 18:48:45 -0700
+Subject: [PATCH] git-p4: Fix not using -s option to describe
 
-David,
-Is there any particular reason you aren't using etckeeper?
+This solves errors in some cases when syncing renamed files.
+Other places where describe is used use the -s, except this one.
 
+Signed-off-by: Matt Arsenault <arsenm2@gmail.com>
+---
+ git-p4.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index 882b1bb..e203508 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2543,7 +2543,7 @@ class P4Sync(Command, P4UserMap):
+     def importChanges(self, changes):
+         cnt = 1
+         for change in changes:
+-            description = p4Cmd(["describe", str(change)])
++            description = p4Cmd(["describe", "-s", str(change)])
+             self.updateOptionDict(description)
+ 
+             if not self.silent:
 -- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+1.7.12.2
