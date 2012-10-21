@@ -1,81 +1,79 @@
-From: david@lang.hm
-Subject: Re: looking for suggestions for managing a tree of server configs
-Date: Sat, 20 Oct 2012 19:34:57 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1210201931130.31862@asgard.lang.hm>
-References: <alpine.DEB.2.02.1210131413240.6253@asgard.lang.hm> <7vpq4l1x86.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.02.1210132153040.6253@asgard.lang.hm> <CAM9Z-nmHxyqnyq1fChhv7hP_awgsaO2FT1t29PAwrvZkaA-hgg@mail.gmail.com>
+From: Cheeray Huang <cheeray.huang@gmail.com>
+Subject: Re: Report a bug, about track remote repository.
+Date: Sun, 21 Oct 2012 10:44:05 +0800
+Message-ID: <50836175.5020501@gmail.com>
+References: <5082F255.9060600@gmail.com> <F15116C3B49A439AB06C8068F79E4C0F@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 21 04:35:34 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 04:44:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPlO0-00013k-66
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 04:35:32 +0200
+	id 1TPlWb-00056z-C4
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 04:44:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732Ab2JUCfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2012 22:35:12 -0400
-Received: from mail.lang.hm ([64.81.33.126]:43877 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754633Ab2JUCfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2012 22:35:11 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id q9L2YtUq010739;
-	Sat, 20 Oct 2012 19:34:55 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <CAM9Z-nmHxyqnyq1fChhv7hP_awgsaO2FT1t29PAwrvZkaA-hgg@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1754906Ab2JUCoO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Oct 2012 22:44:14 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:62563 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751575Ab2JUCoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2012 22:44:13 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1255872pbb.19
+        for <git@vger.kernel.org>; Sat, 20 Oct 2012 19:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=DnKmWlNQEC7s/lPad96v3PBt3jkwSCoCWrqWFNFyMto=;
+        b=Cz73A3XdVHAlkJ4ogo7ND875vlB1YK32eNkPZbaAIHJWIEuiXNt8QYJaxKFvUYE+lm
+         8HJOOvuICMStZTsZ23I65fP3BmFzg7T4yooNDBfZy1DMtlqIGIEsvhH89ILHfiFMvsJU
+         wIfH3puaF6coEf2HqCLqRya7gTO9qkL8iWM3t/b5suH+p92l3Ygj7IM4krLCbri00JXE
+         j0ADmTrvn67WyBaOXg7ED3e/ZOpby06HbP9Q132a59E768F7UZU/gxClkP10eSxcwJWJ
+         h5Yyq0ON31yYoVNvaWXEwW9hMRptSuN1weJ7Bw3laf8DaR3pnUTOMhbJT4/+mTibMZf9
+         f8uA==
+Received: by 10.68.230.66 with SMTP id sw2mr19168144pbc.119.1350787453159;
+        Sat, 20 Oct 2012 19:44:13 -0700 (PDT)
+Received: from [192.168.1.101] ([115.195.140.152])
+        by mx.google.com with ESMTPS id po4sm3647736pbb.13.2012.10.20.19.44.09
+        (version=SSLv3 cipher=OTHER);
+        Sat, 20 Oct 2012 19:44:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <F15116C3B49A439AB06C8068F79E4C0F@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208100>
 
-On Sat, 20 Oct 2012, Drew Northup wrote:
-
-> On Sun, Oct 14, 2012 at 12:57 AM,  <david@lang.hm> wrote:
->> On Sat, 13 Oct 2012, Junio C Hamano wrote:
->>> david@lang.hm writes:
->>>> I've got a directory tree that holds config data for all my
->>>> servers. This consists of one directory per server (which is updated
->>>> periodically from what is currently configured on that server), plus
->>>> higher level summary reports and similar information.
->>>>
->>>> today I have just a single git tree covering everything, and I make a
->>>> commit each time one of the per-server directories is updated, and
->>>> again when the top-level stuff is created.
->>>
->>> It is quite clear to me what you are keeping at the top-level files,
->>> but if a large portion of the configuration for these servers are
->>> shared, it might not be a bad idea to have a canonical "gold-master"
->>> configuration branch, to which the shared updates are applied, with
->>> a branch per server that forks from that canonical branch to keep
->>> the machine specific tweaks as differences from the canonical stuff,
->>> instead of having N subdirectories (one per machine).
->>
->> In an ideal world yes, but right now these machines are updated by many
->> different tools (unforuntantly including 'vi'), so these directories aren't
->> the config to be pushed out to the boxes (i.e. what they should be), it's
->> instead an archived 'what is', the result of changes from all the tools.
->>
->> The systems are all built with a standard image, but the automation tools I
->> do have tend to push identical files out to many of the systems (or files
->> identical except for a couple of lines)
+On 2012=E5=B9=B410=E6=9C=8821=E6=97=A5 07:46, Philip Oakley wrote:
 >
-> David,
-> Is there any particular reason you aren't using etckeeper?
+> At this point you have created the 'conflict' - You can't have two=20
+> different branches that both track the same identical remote branch=20
+> and expect that they can be both different and identical at the same=20
+> time.
 
-not really, I've thought of that as a tool for managing a single system. 
-Some of the data in configs is sensitive (and much of it is not in /etc), 
-but I guess I should be able to work around those issues.
+> Only one push (from two branches trying) can suceed. You either force=
+=20
+> the remote to match the current branch, and loose any information tha=
+t=20
+> it had about the other branch, or the remote stays with one branch.=20
+> Simply don't do it [that way]. If the local branches are different,=20
+> then you need distinct remote branches.
 
-I can e-mail 'patches' to the central server, but I'm then back to the 
-same question that I started out with.
+Yes, if it will lead a conflict, I think git should give a warning for=20
+it and prevent these operations rather than give a comment to inform yo=
+u=20
+to push something.
 
-How can I sanely organize all these different, but similar sets of files 
-on the central server?
 
-David Lang
+
+--=20
+Best Regards!
+
+Qiyu Huang( Cheeray )
