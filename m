@@ -1,158 +1,128 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] transport-helper: check when helpers fail
-Date: Sun, 21 Oct 2012 21:19:18 +0200
-Message-ID: <1350847158-14154-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 21 21:19:47 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git fetch documentation problem or bug
+Date: Sun, 21 Oct 2012 12:30:38 -0700
+Message-ID: <7vk3ujfwrl.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9Ac06sfFMGizRq6Ztqd2tKS7BBqGOC891=z4615J3f4hA@mail.gmail.com>
+ <7vfw5olqp9.fsf@alter.siamese.dyndns.org>
+ <7vbogclqm6.fsf@alter.siamese.dyndns.org>
+ <7vpq4silou.fsf@alter.siamese.dyndns.org>
+ <CAM9Z-nnKTq0C9wPA=JKZ3qzTmL3NVisfy=rbjjq1yKEVrN53FQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Drew Northup <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 21 21:30:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQ13p-0001RO-Nr
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 21:19:46 +0200
+	id 1TQ1Eb-0006Q7-Eq
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 21:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448Ab2JUTTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 15:19:30 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:44686 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754423Ab2JUTT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 15:19:28 -0400
-Received: by mail-we0-f174.google.com with SMTP id t9so1089935wey.19
-        for <git@vger.kernel.org>; Sun, 21 Oct 2012 12:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=8xbplBVM9YjmpJZ+3AfW6CYkzW9FtwKn5+VZjNTtFsk=;
-        b=NnB9PXBXsIrL4Cfri9IoPH8KXwg92F1KNNvaugNRk0BhzOwGLZO+B5biAYXLb33GA8
-         axeEbnBZZIIqAd7scEZLkJBKXuNmhefZnn/GqkElfOlgdg8L51Ks7bJG2xs7C68J3pyn
-         gsYsmRl+O083eS8nG66IosZkfbc9hG8yvT28Wu/j3uVs2Wp6CujEo8yA6J6UKgBOGFPp
-         np+99uvlKe2d5x+2hAMmtaXgn5DkzqDbaz/sdvweEKCXCJHrUVqtMteiQDjplteQ0i3g
-         9w60HQ1k4d8HPU05yqigEuUUivLXBFNNQCXHUPWgyTUMJKuc8K1hESr0kmx79qFeH+5O
-         +8Rw==
-Received: by 10.180.100.97 with SMTP id ex1mr16152017wib.17.1350847167573;
-        Sun, 21 Oct 2012 12:19:27 -0700 (PDT)
-Received: from localhost (ip-109-43-0-67.web.vodafone.de. [109.43.0.67])
-        by mx.google.com with ESMTPS id p4sm17569510wix.0.2012.10.21.12.19.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 21 Oct 2012 12:19:26 -0700 (PDT)
-X-Mailer: git-send-email 1.8.0.rc2
+	id S1754334Ab2JUTam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 15:30:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45733 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754228Ab2JUTal (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2012 15:30:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B32409AEA;
+	Sun, 21 Oct 2012 15:30:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WZPZqdH+6e+WB8i96GSjP2D22do=; b=iLHvn+
+	2DRL1F7XAazc2qWlG/UGiA7BhqvyEd67UXaPBhRyga7WJpa5Bhmh+mkfpFfxftUS
+	fgXa7fS+F9zYTjbMO8Dhy4FCsO1wLq1h6WtXVJ4LU8B2ret5wxmr4q1ldjCsZ9oa
+	q/20djwikabTpTgwD4fAbc+inkpPJrekrTtcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jMz3Gci96oL+aIL6GBbA4vIyHqbcAdAs
+	qq3TCgQLYIcVYn2vplhclWHUWZCnW8mqL1k/3PtEUdPXLuwT7x0NFhntvL69kS3h
+	XgA9oGAcs0x+GSpe66hBxowXN+dnQLvyokDPHGRA7d+Y3Rik/So0ZzuPjLHjeqHg
+	ljGm11HMEOU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A03439AE9;
+	Sun, 21 Oct 2012 15:30:40 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9CFEA9AE7; Sun, 21 Oct 2012
+ 15:30:39 -0400 (EDT)
+In-Reply-To: <CAM9Z-nnKTq0C9wPA=JKZ3qzTmL3NVisfy=rbjjq1yKEVrN53FQ@mail.gmail.com> (Drew
+ Northup's message of "Sun, 21 Oct 2012 08:15:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CBC91514-1BB5-11E2-95DE-9A8C2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208140>
 
-Otherwise transport-helper will continue checking for refs and other
-things what will confuse the user more.
+Drew Northup <n1xim.email@gmail.com> writes:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- git-remote-testgit.py     |  3 +++
- run-command.c             | 17 +++++++++++++++++
- run-command.h             |  1 +
- t/t5800-remote-helpers.sh |  6 ++++++
- transport-helper.c        |  8 ++++++++
- 5 files changed, 35 insertions(+)
+> On Mon, Oct 8, 2012 at 7:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> I personally do not think the downside of breaking backward
+>> compatibility is too bad.  If we do this only when we already are
+>> configured to keep remote tracking branch for branch $branch from
+>> remote $from (it has to be given as a nickname, not URL that happens
+>> to have an entry in the configuration), then a promiscuous fetch
+>> that grabs from a URL (or a nickname that is configured not to keep
+>> tracking branches) will not change any behaviour, and when you want
+>> to keep your remote tracking branch intact while doing one-shot
+>> fetch for whatever reason, you can say "git fetch $from $branch:" to
+>> explicitly decline copying.
+>
+> How are we supposed to remember those are different?
+>
+> "git fetch $from $branch..."
+> VS
+> "git fetch $from $branch:"
 
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index 5f3ebd2..355e3f5 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -159,6 +159,9 @@ def do_import(repo, args):
-         ref = line[7:].strip()
-         refs.append(ref)
- 
-+    if os.environ.get("GIT_REMOTE_TESTGIT_FAILURE"):
-+        die('Told to fail')
-+
-     repo = update_local_repo(repo)
-     repo.exporter.export_repo(repo.gitdir, refs)
- 
-diff --git a/run-command.c b/run-command.c
-index 1101ef7..2852e9d 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -559,6 +559,23 @@ int run_command(struct child_process *cmd)
- 	return finish_command(cmd);
- }
- 
-+int check_command(struct child_process *cmd)
-+{
-+	int status;
-+	pid_t pid;
-+
-+	pid = waitpid(cmd->pid, &status, WNOHANG);
-+
-+	if (pid < 0)
-+		return -1;
-+	if (WIFSIGNALED(status))
-+		return WTERMSIG(status);
-+	if (WIFEXITED(status))
-+		return WEXITSTATUS(status);
-+
-+	return 0;
-+}
-+
- static void prepare_run_command_v_opt(struct child_process *cmd,
- 				      const char **argv,
- 				      int opt)
-diff --git a/run-command.h b/run-command.h
-index 44f7d2b..9019e38 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -45,6 +45,7 @@ struct child_process {
- int start_command(struct child_process *);
- int finish_command(struct child_process *);
- int run_command(struct child_process *);
-+int check_command(struct child_process *cmd);
- 
- extern int run_hook(const char *index_file, const char *name, ...);
- 
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index e7dc668..d4b17ae 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -145,4 +145,10 @@ test_expect_failure 'push new branch with old:new refspec' '
- 	compare_refs clone HEAD server refs/heads/new-refspec
- '
- 
-+test_expect_success 'proper failure checks' '
-+	export GIT_REMOTE_TESTGIT_FAILURE=1 &&
-+	! git clone "testgit::$PWD/server" failure 2> errors &&
-+	grep -q "Error while running helper" errors
-+'
-+
- test_done
-diff --git a/transport-helper.c b/transport-helper.c
-index cfe0988..fbd923d 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -441,6 +441,10 @@ static int fetch_with_import(struct transport *transport,
- 
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
-+
-+	if (check_command(data->helper))
-+		die("Error while running helper");
-+
- 	free(fastimport.argv);
- 	fastimport.argv = NULL;
- 
-@@ -784,6 +788,10 @@ static int push_refs_with_export(struct transport *transport,
- 
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
-+
-+	if (check_command(data->helper))
-+		die("Error while running helper");
-+
- 	push_update_refs_status(data, remote_refs);
- 	return 0;
- }
--- 
-1.8.0.rc2
+I do not know what you meant by the three dots, but you are supposed
+to know what you meant by $branch... whatever it is.  It is what you
+wrote, not I did ;-)
+
+Let me clarify what is in the message you are responding to.
+
+	git fetch $from $branch
+
+(no colon in $branch part anywhere) traditionally meant a short-hand
+of saying
+
+	git fetch $from $branch:
+
+I.e. "fetch $branch and store in FETCH_HEAD but not anywhere else".
+
+The hypothesized change is to make it a short-hand of saying
+
+	git fetch $from $branch:refs/remotes/$from/$branch
+
+when "git fetch $from" is already configured to store the result
+there. 
+
+Without [remote "$from"] fetch = refs/heads/*:refs/remotes/$from/*
+configured, it will still mean "git fetch $from $branch:".
+
+And for the record, I am *not* enthused about such a change.  I am
+only saying that, seeing that many new people seem to wish the
+command behaved that way, such a change would not hurt existing
+users too much.  Switching the meaning of shorthand (i.e. a piece of
+refspec that does not have any colon) from "just fetch but do not
+store" from "fetch and store in the remote tracking ref if it is
+configured to do so without command override" is still a backward
+incompatible change.
+
+> I strongly prefer EXPLICITLY setting tracking than expecting some
+> extreme syntactic nuance to quietly do it for me now and confuse the
+> heck out of me later.
+
+This is not about your preference.  This is about what happens when
+you say something on the command line to override your explicit
+setting you have in $GIT_DIR/config
+
+	[remote "$from"] fetch = ...
