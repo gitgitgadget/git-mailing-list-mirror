@@ -1,103 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add -S, --gpg-sign option to manpage of "git commit"
-Date: Sun, 21 Oct 2012 13:15:16 -0700
-Message-ID: <7vbofvfup7.fsf@alter.siamese.dyndns.org>
-References: <20121021195455.43D8F7D4C@ralph.oxix.org>
+From: Herman van Rink <rink@initfour.nl>
+Subject: Re: Subtree in Git
+Date: Sun, 21 Oct 2012 22:23:15 +0200
+Organization: Initfour websolutions
+Message-ID: <508459B3.6030403@initfour.nl>
+References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com> <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl> <87fwbgbs0h.fsf@smith.obbligato.org> <7v8vh78dag.fsf@alter.siamese.dyndns.org> <4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com> <nngaa0z3p8b.fsf@transit.us.cray.com> <87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl> <nng4npe6zsj.fsf@transit.us.cray.com> <50830374.9090308@initfour.nl> <7vbofwgwso.fsf@alter.siamese.dyndns.org> <5084102A.2010006@initfour.nl> <7vfw57fvtl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tom Jones <tom@oxix.org>
-X-From: git-owner@vger.kernel.org Sun Oct 21 22:16:42 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: greened@obbligato.org, Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, dag@cray.com
+X-From: git-owner@vger.kernel.org Sun Oct 21 22:26:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQ1wt-0001Jk-BF
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 22:16:39 +0200
+	id 1TQ26m-00067S-Vo
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 22:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754313Ab2JUUPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 16:15:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62170 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753634Ab2JUUPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 16:15:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A577D87CB;
-	Sun, 21 Oct 2012 16:15:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6gH+IdvO7GWSLNiNe0WewnjBNnQ=; b=moHHO0
-	zYS0J+HzQvttjlorVYgEYblz+C1VrT0hIbFZqiu+owDqWm2Fs+QSX1csbDKCwC2n
-	SqAJFxPEJ9rIZ7GbdN7Un8Uqm9mrrz307G4D4BJ+Niu7kqMigZ4IbMKlxB2ve4xs
-	MEWxwOVMfE5hu4VGxIawRvBqUVpHBG0BLc7I4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IvkJ/npN1AlKZqj5Cvnn7S45Y7edIdQh
-	C0e4oHeZjePR60SbmDM+RoqX+tTW9ooata78T1zCrh9LIPB7EfH+Wl5ah0eZxg87
-	QX7M5zE6lvU3vAFB6ANzxlQ7HeCaXxT3nAmJ9omlDamPeO9pp1lv1b7CRzd0w/Mr
-	Ag/Sy3mT9TI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9269987CA;
-	Sun, 21 Oct 2012 16:15:19 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0103987C6; Sun, 21 Oct 2012
- 16:15:17 -0400 (EDT)
-In-Reply-To: <20121021195455.43D8F7D4C@ralph.oxix.org> (Tom Jones's message
- of "Sun, 21 Oct 2012 20:46:37 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 08366096-1BBC-11E2-B6EF-9A8C2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932538Ab2JUUXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 16:23:20 -0400
+Received: from hosted-by.initfour.nl ([83.137.144.7]:33480 "EHLO
+	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754401Ab2JUUXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2012 16:23:20 -0400
+Received: from [192.168.65.204] (hosted-by.initfour.nl [83.137.144.34])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: helmo@INITFOUR.NL)
+	by mail.initfour.nl (Postfix) with ESMTPSA id E8C8F9FC413;
+	Sun, 21 Oct 2012 22:23:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
+In-Reply-To: <7vfw57fvtl.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208145>
 
-Tom Jones <tom@oxix.org> writes:
-
-> git commit -S, --gpg-sign was mentioned in the program's help message,
-> but not in the manpage.
+On 10/21/2012 09:51 PM, Junio C Hamano wrote:
+> Herman van Rink <rink@initfour.nl> writes:
 >
-> This adds an equivalent entry for the option in the manpage.
-> ---
-
-Sign off?
-
->  Documentation/git-commit.txt |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
+>> On 10/21/2012 08:32 AM, Junio C Hamano wrote:
+>>> Herman van Rink <rink@initfour.nl> writes:
+>>>
+>>>> Junio, Could you please consider merging the single commit from my
+>>>> subtree-updates branch? https://github.com/helmo/git/tree/subtree-updates
+>>> In general, in areas like contrib/ where there is a volunteer area
+>>> maintainer, unless the change something ultra-urgent (e.g. serious
+>>> security fix) and the area maintainer is unavailable, I'm really
+>>> reluctant to bypass and take a single patch that adds many things
+>>> that are independent from each other.
+>> Who do you see as volunteer area maintainer for contrib/subtree?
+>> My best guess would be Dave. And he already indicated earlier in the
+>> thread to be ok with the combined patch as long as you are ok with it.
+> Yes, dag volunteered to be the area maintainer to act as a
+> gatekeeper for me.
 >
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 9594ac8..0e0a22c 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
->  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
->  	   [--date=<date>] [--cleanup=<mode>] [--status | --no-status]
-> -	   [-i | -o] [--] [<file>...]
-> +	   [-i | -o] [--] [-S[keyid]] [<file>...]
+> The message you addressed to me was sent as a response to his
+> message, where he gave you specific suggestions to improve the patch
+> and turn it into a readable series instead of a single ball of wax
+> and it looked to me as if you are trying to bypass him and shove the
+> single ball of wax to our history over his objection.
+>
+> I haven't formed an opinion on the particular change as to how bad
+> its collapsing unrelated changes into a single change is. Maybe they
+> are not as unrelated and form a coherent whole.  Maybe not.  Also I
+> personally do not mind too much if the area maintainer for contrib/
+> has a lower standard for atomicity of commits compared to the rest
+> of the system.  But I do prefer the decision to be made at the level
+> of area maintainer's, and have issues when people try to bypass
+> without a good reason.
+>
+> Note that I was not following the thread very closely, so I may have
+> misread the discussion.  I read his "Unless Junio accepts..." to
+> mean "I (dag) still object, but if Junio accepts that patch I object
+> to directly, there is nothing I can do about it".  That is very
+> different from "I am on the fence and cannot decide it is a good
+> patch or not.  I'll let Junio decide; I am OK as long as he is".
+>
+> Thanks.
 
-Are you sure about this?  The order, described in "git help cli", of
-the command line arguments is options (such as -F <file>
--S[<keyid>]) first, then revs (irrelevant for "git commit" and lack
-of it in this manual is correct), and then paths.  Optionally "--"
-can be used to mark the beginning of "paths" part (e.g. "git commit
--- -S" or "git commit ./-S" is used when you want to commit a file
-whose name is "-S").
+Thanks for explaining.
+I had read it the latter way.
 
+The problem is that I don't have the time to split all these out. Dag
+has indicated that he does not have the time either.
 
+This single ball of wax was already an alternative to the 'messy' merge
+history it had accumulated. The result of merging from dozens of github
+forks with numerous levels of parallel/contra-productive whitspace fixes.
 
+Dag: Did I read it correctly?
 
->  DESCRIPTION
->  -----------
-> @@ -276,6 +276,10 @@ configuration variable documented in linkgit:git-config[1].
->  	commit message template when using an editor to prepare the
->  	default commit message.
->  
-> +-S[<keyid>]::
-> +--gpg-sign[=<keyid>]::
-> +	GPG-sign commit.
-> +
->  \--::
->  	Do not interpret any more arguments as options.
+-- 
+
+Met vriendelijke groet / Regards,
+
+Herman van Rink
+Initfour websolutions
