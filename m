@@ -1,7 +1,8 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 0/6] New remote-hg helper
-Date: Sun, 21 Oct 2012 19:48:58 +0200
-Message-ID: <1350841744-21564-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 2/6] remote-hg: add support for pushing
+Date: Sun, 21 Oct 2012 19:49:00 +0200
+Message-ID: <1350841744-21564-3-git-send-email-felipe.contreras@gmail.com>
+References: <1350841744-21564-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -11,106 +12,297 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 21 19:49:28 2012
+X-From: git-owner@vger.kernel.org Sun Oct 21 19:49:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPzeR-0002dM-I2
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 19:49:27 +0200
+	id 1TPzeY-0002gq-Py
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 19:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932390Ab2JURtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 13:49:16 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:58451 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932303Ab2JURtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 13:49:15 -0400
-Received: by mail-wg0-f44.google.com with SMTP id dr13so1631487wgb.1
-        for <git@vger.kernel.org>; Sun, 21 Oct 2012 10:49:14 -0700 (PDT)
+	id S932402Ab2JURtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 13:49:25 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:35579 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932303Ab2JURtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2012 13:49:24 -0400
+Received: by mail-wi0-f172.google.com with SMTP id hq12so1757274wib.1
+        for <git@vger.kernel.org>; Sun, 21 Oct 2012 10:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=y4zevPB4Rz0bBAJxoW7gTkfpSHNSUAxKn/SutI+wfqU=;
-        b=mTWFTSiDaFGwytu/oYPWeIn+k3byHnSw99BkLF9iwaIRjfTGL3BIGV7fYPQ3rR3rXS
-         5MpUe+AYXod/REHIexrdgVMc7ZZDBc0wrk4B4W7UG64W4RrjjGzR8JVfrSULcnOCwIXS
-         VEgJjfyxGe0NW5Q1bS3Ewk7BuRu7zaqy4vFhdLb2tlT6ChSKWrMexoFdPjiWoysF5axo
-         27De3RBeA3CEPW4f9TPVmRmS9mq3BOJy58CerpPnshvG/ulF30JNI5Zcl60dwNhi3IzQ
-         VLMVcohCm/apyvf5U/vVj9OdAlfD9CgsHqiLcm/1xOjENbK4KinjtzxQ2w1lOLRiBXyX
-         Flnw==
-Received: by 10.216.136.158 with SMTP id w30mr3838440wei.30.1350841754307;
-        Sun, 21 Oct 2012 10:49:14 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=Fi8Ichx+k99oCmbIl2RjEGTivwe7Sv+GpvNqygXkt5g=;
+        b=g+NriQ8DqpkDEQy0gdI+Dxu86rw/YfjM5+NPY81IKrvBGosYPfuepas4uOSF1yqmj1
+         ppZ15ym9TTGbet5p44YjEuPXo8EUYjd1VH/QfgKvKCZMX9ii4L8iiE+J0OxerXEYhq1z
+         PVaIlchP1/BMO7/RMdW9GoRl/d/SSmD633L0/jmWhOJHw9oDQ0TRvCSYU2PyZcv05ait
+         2Wie7uNEo6r3lGweZN8cNDqcdyqdn9EQ0kES4XqvJvcXhDyw//ud6Ssv2tMg9XHkfkdf
+         TnOiUKPy2mLTL020hjBc1Ek0rS5n/xXnBFvjXBBJ3QaEIDTSFCsQqU4cdXZpvqRqYsbe
+         cCIQ==
+Received: by 10.180.87.74 with SMTP id v10mr15820793wiz.21.1350841762755;
+        Sun, 21 Oct 2012 10:49:22 -0700 (PDT)
 Received: from localhost (ip-109-43-0-67.web.vodafone.de. [109.43.0.67])
-        by mx.google.com with ESMTPS id bn7sm17152477wib.8.2012.10.21.10.49.11
+        by mx.google.com with ESMTPS id az2sm8539817wib.10.2012.10.21.10.49.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 21 Oct 2012 10:49:13 -0700 (PDT)
+        Sun, 21 Oct 2012 10:49:21 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0.rc2.7.g0961fdf.dirty
+In-Reply-To: <1350841744-21564-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208129>
 
-I've looked at many hg<->git tools and none satisfy me. Too complicated, or too
-slow, or to difficult to setup, etc.
+Some parsing of fast-export parsing might be missing, but I couldn't find any.
 
-The only one I've liked so far is hg-fast-export[1], which is indeed fast,
-relatively simple, and relatively easy to use. But it's not properly maintained
-any more.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-hg/git-remote-hg | 156 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 154 insertions(+), 2 deletions(-)
 
-So, I decided to write my own from scratch, using hg-fast-export as
-inspiration, and voila.
-
-This one doesn't have any dependencies, just put it into your $PATH, and you
-can clone and fetch hg repositories. More importantly to me; the code is
-simple, and easy to maintain.
-
-One important remote-hg alternative is the one written by Sverre Rabbelier that
-is now maintained and distributed in msysgit, however, in my opinion the code
-is bloated, and there isn't even a standalone branch to take a look at the
-patches, and give them a try.
-
-This version has some features that Sverre's version doesn't:
-
- * Support for tags
- * Support to specify branches to pull
-
-Sverre's version has some features this one doesn't:
-
- * Support for octopus merges
-
-[1] http://repo.or.cz/w/fast-export.git
-
-Changes since v2:
-
- * Added support for pushing
- * Tests copied from original remote-hg
- * Custom default -> master renames removed
- * Code reorganized
-
-Changes since v1:
-
- * Improved documentation
- * Use more common 'python' binary
- * Warn, don't barf when a branch has multiple heads
- * Fixed marks to fetch after cloned
- * Support for cloning/pulling remote repositories
- * Use a more appropriate internal directory (e.g. .git/hg/origin)
- * Fixes for python3
-
-Felipe Contreras (6):
-  Add new remote-hg transport helper
-  remote-hg: add support for pushing
-  remote-hg: add support for remote pushing
-  remote-hg: add support for trivial features
-  tests: add remote-hg tests
-  tests: fix remote-hg warnings for modern git
-
- contrib/remote-hg/git-remote-hg | 489 ++++++++++++++++++++++++++++++++++++++++
- t/t5801-remote-hg.sh            | 143 ++++++++++++
- 2 files changed, 632 insertions(+)
- create mode 100755 contrib/remote-hg/git-remote-hg
- create mode 100755 t/t5801-remote-hg.sh
-
+diff --git a/contrib/remote-hg/git-remote-hg b/contrib/remote-hg/git-remote-hg
+index f0ce4a4..fc4510c 100755
+--- a/contrib/remote-hg/git-remote-hg
++++ b/contrib/remote-hg/git-remote-hg
+@@ -6,7 +6,7 @@
+ # Then you can clone with:
+ # git clone hg::/path/to/mercurial/repo/
+ 
+-from mercurial import hg, ui
++from mercurial import hg, ui, context
+ 
+ import re
+ import sys
+@@ -16,6 +16,7 @@ import json
+ first = True
+ 
+ AUTHOR_RE = re.compile('^((.+?) )?(<.+?>)$')
++RAW_AUTHOR_RE = re.compile('^(\w+) (.+) <(.+)> (\d+) ([+-]\d+)')
+ 
+ def die(msg, *args):
+     sys.stderr.write('ERROR: %s\n' % (msg % args))
+@@ -27,12 +28,17 @@ def warn(msg, *args):
+ def gitmode(flags):
+     return 'l' in flags and '120000' or 'x' in flags and '100755' or '100644'
+ 
++def hgmode(mode):
++    m = { '0100755': 'x', '0120000': 'l' }
++    return m.get(mode, '')
++
+ class Marks:
+ 
+     def __init__(self, path):
+         self.path = path
+         self.tips = {}
+         self.marks = {}
++        self.rev_hgmarks = {}
+         self.last_mark = 0
+ 
+         self.load()
+@@ -47,6 +53,9 @@ class Marks:
+         self.marks = tmp['marks']
+         self.last_mark = tmp['last-mark']
+ 
++        for rev, mark in self.marks.iteritems():
++            self.rev_hgmarks[mark] = int(rev)
++
+     def dict(self):
+         return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark }
+ 
+@@ -59,11 +68,19 @@ class Marks:
+     def from_rev(self, rev):
+         return self.marks[str(rev)]
+ 
++    def to_rev(self, mark):
++        return self.rev_hgmarks[mark]
++
+     def next_mark(self, rev):
+         self.last_mark += 1
+         self.marks[str(rev)] = self.last_mark
+         return self.last_mark
+ 
++    def new_mark(self, rev, mark):
++        self.marks[str(rev)] = mark
++        self.rev_hgmarks[mark] = rev
++        self.last_mark = mark
++
+     def is_marked(self, rev):
+         return self.marks.has_key(str(rev))
+ 
+@@ -96,6 +113,28 @@ class Parser:
+     def __iter__(self):
+         return self.each_block('')
+ 
++    def next(self):
++        self.line = self.get_line()
++        if self.line == 'done':
++            self.line = None
++
++    def get_mark(self):
++        i = self.line.index(':') + 1
++        return int(self.line[i:])
++
++    def get_data(self):
++        if not self.check('data'):
++            return None
++        i = self.line.index(' ') + 1
++        size = int(self.line[i:])
++        return sys.stdin.read(size)
++
++    def get_author(self):
++        m = RAW_AUTHOR_RE.match(self.line)
++        if not m:
++            return None
++        return list(m.groups())[1:]
++
+ def export_file(fc):
+     if fc.path() == '.hgtags':
+         return
+@@ -150,6 +189,10 @@ def rev_to_mark(rev):
+     global marks
+     return marks.from_rev(rev)
+ 
++def mark_to_rev(mark):
++    global marks
++    return marks.to_rev(mark)
++
+ def export_tag(repo, tag):
+     global prefix
+     print "reset %s/tags/%s" % (prefix, tag)
+@@ -229,8 +272,16 @@ def do_capabilities(parser):
+     global prefix, dirname
+ 
+     print "import"
++    print "export"
+     print "refspec refs/heads/*:%s/branches/*" % prefix
+     print "refspec refs/tags/*:%s/tags/*" % prefix
++
++    path = os.path.join(dirname, 'marks-git')
++
++    if os.path.exists(path):
++        print "*import-marks %s" % path
++    print "*export-marks %s" % path
++
+     print
+ 
+ def do_list(parser):
+@@ -277,8 +328,108 @@ def do_import(parser):
+         tag = ref[len('refs/tags/'):]
+         export_tag(repo, tag)
+ 
++def parse_blob(parser):
++    global blob_marks
++
++    parser.next()
++    if parser.check('mark'):
++        mark = parser.get_mark()
++        parser.next()
++    data = parser.get_data()
++    blob_marks[mark] = data
++    return
++
++def parse_commit(parser):
++    global marks, blob_marks
++
++    from_mark = merge_mark = None
++
++    a = parser.line.split(' ')
++    ref = a[1]
++    if ref.startswith('refs/heads/'):
++        branch = ref[len('refs/heads/'):]
++    parser.next()
++
++    if parser.check('mark'):
++        commit_mark = parser.get_mark()
++        parser.next()
++    if parser.check('author'):
++        author = parser.get_author()
++        parser.next()
++    committer = parser.get_author()
++    parser.next()
++    data = parser.get_data()
++    parser.next()
++    if parser.check('from'):
++        from_mark = parser.get_mark()
++        parser.next()
++    if parser.check('merge'):
++        merge_mark = parser.get_mark()
++        parser.next()
++        if parser.check('merge'):
++            die('octopus merges are not supported yet')
++
++    files = {}
++
++    for line in parser:
++        if parser.check('M'):
++            t, mode, mark_ref, path = line.split(' ')
++            mark = int(mark_ref[1:])
++            f = { 'mode' : hgmode(mode), 'data' : blob_marks[mark] }
++        elif parser.check('D'):
++            t, path = line.split(' ')
++            f = { 'deleted' : True }
++        else:
++            die('Unknown file command: %s' % line)
++        files[path] = f
++
++    def getfilectx(repo, memctx, f):
++        of = files[f]
++        if 'deleted' in of:
++            raise IOError
++        return context.memfilectx(f, of['data'], False, False, None)
++
++    repo = parser.repo
++
++    committer_name, committer_email, date, tz = committer
++    date = int(date)
++    tz = int(tz)
++    tz = ((tz / 100) * 3600) + ((tz % 100) * 60)
++    extra = {}
++    extra['branch'] = branch
++
++    if from_mark:
++        p1 = repo.changelog.node(mark_to_rev(from_mark))
++    else:
++        p1 = '\0' * 20
++
++    if merge_mark:
++        p2 = repo.changelog.node(mark_to_rev(merge_mark))
++    else:
++        p2 = '\0' * 20
++
++    ctx = context.memctx(repo, (p1, p2), data,
++            files.keys(), getfilectx,
++            '%s <%s>' % (committer_name, committer_email), (date, -tz), extra)
++
++    node = repo.commitctx(ctx)
++    rev = repo[node].rev()
++
++    marks.new_mark(rev, commit_mark)
++
++    print "ok %s" % ref
++
++def do_export(parser):
++    for line in parser.each_block('done'):
++        if parser.check('blob'):
++            parse_blob(parser)
++        elif parser.check('commit'):
++            parse_commit(parser)
++    print
++
+ def main(args):
+-    global prefix, dirname, marks, branches
++    global prefix, dirname, branches
++    global marks, blob_marks
+ 
+     alias = args[1]
+     url = args[2]
+@@ -286,6 +437,7 @@ def main(args):
+     gitdir = os.environ['GIT_DIR']
+     dirname = os.path.join(gitdir, 'hg', alias)
+     branches = {}
++    blob_marks = {}
+ 
+     repo = get_repo(url, alias)
+     prefix = 'refs/hg/%s' % alias
 -- 
 1.8.0.rc2.7.g0961fdf.dirty
