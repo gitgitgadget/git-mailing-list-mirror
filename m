@@ -1,68 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git config --unset does not remove section
-Date: Sun, 21 Oct 2012 00:09:20 -0700
-Message-ID: <7v3918gv33.fsf@alter.siamese.dyndns.org>
-References: <CAB9Jk9C_b_PScm3vEdvxsjqNHpTbz7OTTdFeFey7Sdb+M5gYFw@mail.gmail.com>
+From: Mike Norman <mknorman@gmail.com>
+Subject: Links broken in ref docs.
+Date: Sun, 21 Oct 2012 00:31:13 -0700
+Message-ID: <CAJr+XPGm4djBh+vacG5Ff=Y6aYmWbcUXOV9x2jekgnsGsk4b-g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 21 09:16:37 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 09:31:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPplx-00013i-Pu
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 09:16:34 +0200
+	id 1TPq0M-000898-8l
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 09:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730Ab2JUHJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 03:09:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37734 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751646Ab2JUHJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 03:09:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B8496D03;
-	Sun, 21 Oct 2012 03:09:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ehca4lKGRiQ7+BDWBaDD2344PLw=; b=dv5mrS
-	3RlX3KjoFWA3fGaE9F5ttESZnZ9lkslYemBsayq64gvRLqzr3ugRwWmdKtZjHron
-	5mPL0cpsxZ5utTN53AaOq9OMjdP+F3RnDgjy8as+oYpUDy+K5z8bNbIYe38twGPT
-	Cjq+mhhnqf8TDbV73uDn/IOc5ruZEn8Tv6YM4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nieLIAg6My43qyh7obeuylr5CcgM8my1
-	P38P8dy/kqDngUhKHqKV+d8oKJ28b8ytlbL4gVPuKulTwtqWfa7lyVEIT1ncrnib
-	IaPkaCnjc0WRbViltwRfxViXzhdmXNLdLwXzepVceOoD9oSsynaZn6nFzPk/JuwQ
-	qmocp52Yn8I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 365C36D00;
-	Sun, 21 Oct 2012 03:09:22 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A66B36CFF; Sun, 21 Oct 2012
- 03:09:21 -0400 (EDT)
-In-Reply-To: <CAB9Jk9C_b_PScm3vEdvxsjqNHpTbz7OTTdFeFey7Sdb+M5gYFw@mail.gmail.com> (Angelo
- Borsotti's message of "Sun, 21 Oct 2012 08:46:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3CDAEFEC-1B4E-11E2-B8B6-9A8C2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751717Ab2JUHbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 03:31:15 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:59326 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489Ab2JUHbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2012 03:31:14 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so1591318oag.19
+        for <git@vger.kernel.org>; Sun, 21 Oct 2012 00:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=YRphB/ywMMmW6kt/T3aqiDwsffaRSO5nHKRuLKfyWxw=;
+        b=0Yi4U3AjisKxW1Rtb/Kf2r5/0QCDtDFn/oLezz3PZUz9frK+bU6A8xjytaSyiIJrWB
+         WSnuj6ecnWFdB6ihn/ysm0sEA1MC76D4tZ3Y3rtECZSTiqxqTmWJAHGug/om9Cel4LfN
+         /jlH7Xto5rhigJItrcpX6nUTDLjlAl/HXScPBannNok/nmHMYQ4N0SRaBNKDF7JalsRB
+         UN73Mi/+HohozUN/IBagjmSbTw41BzFAdyC3qKtNUIZMUrQWKGo/yGwDlRsB/Xl9WuFB
+         V1Zo283ih9VkE/ybbMLsW+/1HsrSAAnam8OPFUdabenV2Sf8sERhYIW05Qhs76v/GvnD
+         +DZg==
+Received: by 10.60.30.100 with SMTP id r4mr5411485oeh.121.1350804673837; Sun,
+ 21 Oct 2012 00:31:13 -0700 (PDT)
+Received: by 10.76.76.202 with HTTP; Sun, 21 Oct 2012 00:31:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208116>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+Many links on scm-git.org/docs simply reload the page.
 
-> Another git config foo.bar true changes the config file into:
->
->     [foo]
->     [foo]
-> 	bar = true
->
-> Having two sections with the same name clutters the config file.
+For example, all of Sharing and Updating section simply reload the
+docs page. And tons others. Must be a broken link or routing problem.
+Repros on FF 14.0.1 and Chrome. Good luck!
 
-True.  It would be nice if the removal of the last element removes
-the section header as well.
+IRC was useless.
+
+Also, fuck your stupid email policies. :)
