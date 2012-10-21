@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 3/8] Introduce new function real_path_if_valid()
-Date: Sun, 21 Oct 2012 07:57:32 +0200
-Message-ID: <1350799057-13846-4-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 7/8] normalize_ceiling_entry(): resolve symlinks
+Date: Sun, 21 Oct 2012 07:57:36 +0200
+Message-ID: <1350799057-13846-8-git-send-email-mhagger@alum.mit.edu>
 References: <1350799057-13846-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jiang Xin <worldhello.net@gmail.com>,
 	Lea Wiemann <lewiemann@gmail.com>,
@@ -15,80 +15,101 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPoYo-0006i8-6c
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 07:58:54 +0200
+	id 1TPoYq-0006i8-2A
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 07:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751697Ab2JUF61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 01:58:27 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:42213 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751387Ab2JUF60 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2012 01:58:26 -0400
-X-AuditID: 1207440c-b7f616d00000270b-29-50838f0141ac
+	id S1751843Ab2JUF6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 01:58:40 -0400
+Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:45961 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751766Ab2JUF6h (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2012 01:58:37 -0400
+X-AuditID: 12074413-b7f786d0000008bb-1a-50838f0cd253
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id F3.7F.09995.10F83805; Sun, 21 Oct 2012 01:58:25 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 60.B1.02235.C0F83805; Sun, 21 Oct 2012 01:58:36 -0400 (EDT)
 Received: from michael.fritz.box (p57A24D34.dip.t-dialin.net [87.162.77.52])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9L5w2Wq013120
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9L5w2Wu013120
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 21 Oct 2012 01:58:23 -0400
+	Sun, 21 Oct 2012 01:58:35 -0400
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1350799057-13846-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGIsWRmVeSWpSXmKPExsUixO6iqMvY3xxgsPKSiMWRN0+YLbqudDNZ
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKIsWRmVeSWpSXmKPExsUixO6iqMvT3xxgsOumpcWRN0+YLbqudDNZ
 	NPReYbZ4Mvcus8XRUxYWt1fMZ7ZY/+4qswO7x9/3H5g83rT3MnrsnHWX3ePhqy52j4uXlD0+
-	b5ILYIvitklKLCkLzkzP07dL4M64tXE7a8FZjor2eWcZGxhb2bsYOTkkBEwkJp0/BWWLSVy4
-	t56ti5GLQ0jgMqPErK9nWCGcM0wS1/48YgapYhPQlVjU08wEYosIqElMbDvEAlLELHCHUWLh
-	lTdgRcICzhI/H61hA7FZBFQltmzaBLaCV8BF4svzW6wQ6xQlfnxfA1bPKeAqcWXZHLB6IaCa
-	nRvfM05g5F3AyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdQLzezRC81pXQTIyTkeHYwflsn
-	c4hRgINRiYeX0bo5QIg1say4MvcQoyQHk5Io74teoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR
-	3t2CQDnelMTKqtSifJiUNAeLkjiv6hJ1PyGB9MSS1OzU1ILUIpisDAeHkgRvah9Qo2BRanpq
-	RVpmTglCmomDE0RwgWzgAdrgClLIW1yQmFucmQ5RdIpRUUqc1wgkIQCSyCjNgxsASw6vGMWB
-	/hHm9QKp4gEmFrjuV0CDmYAGm3M3ggwuSURISTUwhm3+rlOhNWtijfeGlb8u3cxdk36SXyn5
-	U/FHKd21XXxfWUQDAuPmZvsu714SnPum/846z79rsjdnrerpeNLw683Cmi8Xbmg8vnyUSbDN
-	RFDHm6WhaefGnnQV5fPft68N0Om6+TnjT97fJtNiX+79dcEr7/wqvOcasrP+1YxF 
+	b5ILYIvitklKLCkLzkzP07dL4M64d6aTrWCmQMXDiTeZGxjn83YxcnJICJhIPHrdzwphi0lc
+	uLeerYuRi0NI4DKjxMm/+9khnDNMEoc+32MEqWIT0JVY1NPMBGKLCKhJTGw7xAJSxCxwh1Fi
+	4ZU3zCAJYQFniftXO9hBbBYBVYl73Q+Bijg4eAVcJB6crIbYpijx4/sasHJOAVeJK8vmsIHY
+	QkAlOze+Z5zAyLuAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka65Xm5miV5qSukmRkjACe9g
+	3HVS7hCjAAejEg8vs3VzgBBrYllxZe4hRkkOJiVR3he9QCG+pPyUyozE4oz4otKc1OJDjBIc
+	zEoivLsFgXK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZGQ4OJQneZX1AjYJF
+	qempFWmZOSUIaSYOThDBBbKBB2hDI0ghb3FBYm5xZjpE0SlGRSlx3iaQhABIIqM0D24ALDW8
+	YhQH+keYtxOkigeYVuC6XwENZgIabM7dCDK4JBEhJdXAaHTr99/gh27T+RcUWlrsXuaW9vf6
+	yoV7T/RyKx0WbPbx2vSndl3ItIbgDma/FyUMU3tYr975eYJp8rxZi0VTpl1c9PS09lamvi/J
+	S1s2XfJzeNX5M+mz9sF+QWv5e1cZnyU7JAdkchvvCBHwfJjmGad5rav2mQz/S77l 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208109>
 
-The function is like real_path(), except that it returns NULL on error
-instead of dying.
+longest_ancestor_length() relies on a textual comparison of directory
+parts to find the part of path that overlaps with one of the paths in
+prefix_list.  But this doesn't work if any of the prefixes involves a
+symbolic link, because the directories will look different even though
+they might logically refer to the same directory.  So canonicalize the
+paths listed in GIT_CEILING_DIRECTORIES using real_path_if_valid()
+before passing them to longest_ancestor_length().
+
+path is already in canonical form, so doesn't need to be canonicalized
+again.
+
+This fixes some problems with using GIT_CEILING_DIRECTORIES that
+contains paths involving symlinks, including t4035 if run with --root
+set to a path involving symlinks.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- abspath.c | 5 +++++
- cache.h   | 1 +
- 2 files changed, 6 insertions(+)
+ setup.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index f8a526f..40cdc46 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -153,6 +153,11 @@ const char *real_path(const char *path)
- 	return real_path_internal(path, 1);
+diff --git a/setup.c b/setup.c
+index df97ad3..2eb5b75 100644
+--- a/setup.c
++++ b/setup.c
+@@ -622,24 +622,22 @@ static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_
  }
  
-+const char *real_path_if_valid(const char *path)
-+{
-+	return real_path_internal(path, 0);
-+}
-+
- static const char *get_pwd_cwd(void)
+ /*
+- * A "string_list_each_func_t" function that normalizes an entry from
+- * GIT_CEILING_DIRECTORIES or discards it if unusable.
++ * A "string_list_each_func_t" function that canonicalizes an entry
++ * from GIT_CEILING_DIRECTORIES using real_path_if_valid(), or
++ * discards it if unusable.
+  */
+ static int normalize_ceiling_entry(struct string_list_item *item, void *unused)
  {
- 	static char cwd[PATH_MAX + 1];
-diff --git a/cache.h b/cache.h
-index a58df84..b0d75bc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -714,6 +714,7 @@ static inline int is_absolute_path(const char *path)
+-	const char *ceil = item->string;
+-	int len = strlen(ceil);
+-	char buf[PATH_MAX+1];
++	char *ceil = item->string;
++	const char *real_path;
+ 
+-	if (len == 0 || len > PATH_MAX || !is_absolute_path(ceil))
++	if (!*ceil || !is_absolute_path(ceil))
+ 		return 0;
+-	if (normalize_path_copy(buf, ceil) < 0)
++	real_path = real_path_if_valid(ceil);
++	if (!real_path)
+ 		return 0;
+-	len = strlen(buf);
+-	if (len > 1 && buf[len-1] == '/')
+-		buf[--len] = '\0';
+ 	free(item->string);
+-	item->string = xstrdup(buf);
++	item->string = xstrdup(real_path);
+ 	return 1;
  }
- int is_directory(const char *);
- const char *real_path(const char *path);
-+const char *real_path_if_valid(const char *path);
- const char *absolute_path(const char *path);
- const char *relative_path(const char *abs, const char *base);
- int normalize_path_copy(char *dst, const char *src);
+ 
 -- 
 1.7.11.3
