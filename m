@@ -1,82 +1,116 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 2/2] Fix failure to delete a packed ref through a symref
-Date: Sun, 21 Oct 2012 19:46:45 +0200
-Message-ID: <50843505.3040509@lsrfire.ath.cx>
-References: <7vpq4flb1c.fsf@alter.siamese.dyndns.org> <1350816032-16312-1-git-send-email-johan@herland.net> <1350816032-16312-3-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, vmiklos@suse.cz
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Oct 21 19:47:09 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 0/6] New remote-hg helper
+Date: Sun, 21 Oct 2012 19:48:58 +0200
+Message-ID: <1350841744-21564-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 21 19:49:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TPzcB-0001bW-79
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 19:47:07 +0200
+	id 1TPzeR-0002dM-I2
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 19:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932380Ab2JURqz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Oct 2012 13:46:55 -0400
-Received: from india601.server4you.de ([85.25.151.105]:44954 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932303Ab2JURqy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 13:46:54 -0400
-Received: from [192.168.2.105] (p579BE26F.dip.t-dialin.net [87.155.226.111])
-	by india601.server4you.de (Postfix) with ESMTPSA id B1959105;
-	Sun, 21 Oct 2012 19:46:52 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <1350816032-16312-3-git-send-email-johan@herland.net>
+	id S932390Ab2JURtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 13:49:16 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:58451 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932303Ab2JURtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2012 13:49:15 -0400
+Received: by mail-wg0-f44.google.com with SMTP id dr13so1631487wgb.1
+        for <git@vger.kernel.org>; Sun, 21 Oct 2012 10:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=y4zevPB4Rz0bBAJxoW7gTkfpSHNSUAxKn/SutI+wfqU=;
+        b=mTWFTSiDaFGwytu/oYPWeIn+k3byHnSw99BkLF9iwaIRjfTGL3BIGV7fYPQ3rR3rXS
+         5MpUe+AYXod/REHIexrdgVMc7ZZDBc0wrk4B4W7UG64W4RrjjGzR8JVfrSULcnOCwIXS
+         VEgJjfyxGe0NW5Q1bS3Ewk7BuRu7zaqy4vFhdLb2tlT6ChSKWrMexoFdPjiWoysF5axo
+         27De3RBeA3CEPW4f9TPVmRmS9mq3BOJy58CerpPnshvG/ulF30JNI5Zcl60dwNhi3IzQ
+         VLMVcohCm/apyvf5U/vVj9OdAlfD9CgsHqiLcm/1xOjENbK4KinjtzxQ2w1lOLRiBXyX
+         Flnw==
+Received: by 10.216.136.158 with SMTP id w30mr3838440wei.30.1350841754307;
+        Sun, 21 Oct 2012 10:49:14 -0700 (PDT)
+Received: from localhost (ip-109-43-0-67.web.vodafone.de. [109.43.0.67])
+        by mx.google.com with ESMTPS id bn7sm17152477wib.8.2012.10.21.10.49.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 21 Oct 2012 10:49:13 -0700 (PDT)
+X-Mailer: git-send-email 1.8.0.rc2.7.g0961fdf.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208128>
 
-Am 21.10.2012 12:40, schrieb Johan Herland:
-> When deleting a ref through a symref (e.g. using 'git update-ref -d H=
-EAD'
-> to delete refs/heads/master), we would remove the loose ref, but a pa=
-cked
-> version of the same ref would remain, the end result being that inste=
-ad of
-> deleting refs/heads/master we would appear to reset it to its state a=
-s of
-> the last repack.
->
-> This patch fixes the issue, by making sure we pass the correct ref na=
-me
-> when invoking repack_without_ref() from within delete_ref().
->
-> Signed-off-by: Johan Herland <johan@herland.net>
-> ---
->   refs.c                | 2 +-
->   t/t1400-update-ref.sh | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index 726c53c..6cec1c8 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1779,7 +1779,7 @@ int delete_ref(const char *refname, const unsig=
-ned char *sha1, int delopt)
->   	 * packed one.  Also, if it was not loose we need to repack
->   	 * without it.
->   	 */
-> -	ret |=3D repack_without_ref(refname);
-> +	ret |=3D repack_without_ref(lock->ref_name);
->
->   	unlink_or_warn(git_path("logs/%s", lock->ref_name));
->   	invalidate_ref_cache(NULL);
+I've looked at many hg<->git tools and none satisfy me. Too complicated, or too
+slow, or to difficult to setup, etc.
 
-Looks reasonable.
+The only one I've liked so far is hg-fast-export[1], which is indeed fast,
+relatively simple, and relatively easy to use. But it's not properly maintained
+any more.
 
-=46WIW, this is independent of 547d058f in next (refs: lock symref that=
- is=20
-to be deleted, not its target), which only affects behaviour when=20
-REF_NODEREF is set, while this one here only makes a difference with=20
-symrefs and REF_NODEREF unset.
+So, I decided to write my own from scratch, using hg-fast-export as
+inspiration, and voila.
 
-Ren=E9
+This one doesn't have any dependencies, just put it into your $PATH, and you
+can clone and fetch hg repositories. More importantly to me; the code is
+simple, and easy to maintain.
+
+One important remote-hg alternative is the one written by Sverre Rabbelier that
+is now maintained and distributed in msysgit, however, in my opinion the code
+is bloated, and there isn't even a standalone branch to take a look at the
+patches, and give them a try.
+
+This version has some features that Sverre's version doesn't:
+
+ * Support for tags
+ * Support to specify branches to pull
+
+Sverre's version has some features this one doesn't:
+
+ * Support for octopus merges
+
+[1] http://repo.or.cz/w/fast-export.git
+
+Changes since v2:
+
+ * Added support for pushing
+ * Tests copied from original remote-hg
+ * Custom default -> master renames removed
+ * Code reorganized
+
+Changes since v1:
+
+ * Improved documentation
+ * Use more common 'python' binary
+ * Warn, don't barf when a branch has multiple heads
+ * Fixed marks to fetch after cloned
+ * Support for cloning/pulling remote repositories
+ * Use a more appropriate internal directory (e.g. .git/hg/origin)
+ * Fixes for python3
+
+Felipe Contreras (6):
+  Add new remote-hg transport helper
+  remote-hg: add support for pushing
+  remote-hg: add support for remote pushing
+  remote-hg: add support for trivial features
+  tests: add remote-hg tests
+  tests: fix remote-hg warnings for modern git
+
+ contrib/remote-hg/git-remote-hg | 489 ++++++++++++++++++++++++++++++++++++++++
+ t/t5801-remote-hg.sh            | 143 ++++++++++++
+ 2 files changed, 632 insertions(+)
+ create mode 100755 contrib/remote-hg/git-remote-hg
+ create mode 100755 t/t5801-remote-hg.sh
+
+-- 
+1.8.0.rc2.7.g0961fdf.dirty
