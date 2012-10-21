@@ -1,89 +1,87 @@
-From: Gelonida N <gelonida@gmail.com>
-Subject: clone over slow/ unreliable network  / partial clone with full history
-Date: Sun, 21 Oct 2012 23:22:05 +0200
-Message-ID: <k61p1s$3fp$1@ger.gmane.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 6/6] format-patch --notes: show notes after three-dashes
+Date: Sun, 21 Oct 2012 22:33:54 +0100
+Organization: OPDS
+Message-ID: <B15B2D6C9AAB43AF9D480D9DEB3D2F47@PhilipOakley>
+References: <1350539128-21577-1-git-send-email-gitster@pobox.com> <1350539128-21577-7-git-send-email-gitster@pobox.com> <C2D3CE0879B345FFAC2A6487760B5378@PhilipOakley> <7vlif3l9fw.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 21 23:22:38 2012
+Cc: <git@vger.kernel.org>, "Eric Blake" <eblake@redhat.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 21 23:34:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQ2yj-0000Fk-N8
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 23:22:38 +0200
+	id 1TQ39r-0005zb-F9
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Oct 2012 23:34:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754641Ab2JUVWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 17:22:17 -0400
-Received: from plane.gmane.org ([80.91.229.3]:60236 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754288Ab2JUVWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 17:22:16 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TQ2yT-00006v-Q7
-	for git@vger.kernel.org; Sun, 21 Oct 2012 23:22:21 +0200
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Oct 2012 23:22:21 +0200
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Oct 2012 23:22:21 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
+	id S932514Ab2JUVdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2012 17:33:52 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:58680 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754574Ab2JUVdw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2012 17:33:52 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AuIKAFZfhFBcHlx7/2dsb2JhbABDi1O0MAQBA4EEgQmCGwUBAQQBCAEBLh4BARMOBQYCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGHbQoHuheMGkQRHIRjYAOIJYVHkyKFHIJw
+X-IronPort-AV: E=Sophos;i="4.80,626,1344207600"; 
+   d="scan'208";a="407383988"
+Received: from host-92-30-92-123.as13285.net (HELO PhilipOakley) ([92.30.92.123])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 21 Oct 2012 22:33:49 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208152>
 
-Hi,
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> From: "Junio C Hamano" <gitster@pobox.com>
+>>> When inserting the note after the commit log message to format-patch
+>>> output, add three dashes before the note.  Record the fact that we
+>>> did so in the rev_info and omit showing duplicated three dashes in
+>>> the usual codepath that is used when notes are not being shown.
+>>>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>
+>> Should this also include a documentation update to make this
+>> substantive benefit visible, whether that be in the format-patch man
+>> pages, the SubmittingPatches guide, in the git-notes description of 
+>> 'A
+>> typical use...', or even in the user-manual?
+>
+> Eric Blake (http://mid.gmane.org/507EB310.8020904@redhat.com) was
+Added to distribution.
 
+> already working on a documentation updates already, I thought.
+>
+> As long as what it does is explained in format-patch, that is fine.
+>
+> I do not think this deserves to be in the SubmittingPatches.  We do
+> tell people to hide "here is the context of the change" additional
+> explanation after three dashes, but how the submitters prepare that
+> text is entirely up to them (and I personally do not think notes is
+> not necessarily the right tool to do so).
+>
+I've prepared a short set of patches for the documenation I mentioned.
 
-Sometimes I have to clone a repository over a slow / rather unreliable 
-network and wonder whether there are any tools tricks to reduce the pain
-for such cases.
+I, like Eric, feel some of the methods available are a bit of a Catch 
+22.
+We do need to at least hint about capabilities as a way of helping new
+users who aren't already experts (the inverse Kruger Dunning problem).
 
+I have tried hard to make the patches concise so hopefully they will be
+acceptable.
 
-I'm having two problems:
-
-Problem 1: Resuming a clone:
------------------------------
-
-When the connection gets cut during the clone, then I don't know how to 
-continue / resume the clone. This is very annoying. After 20 minutes of 
-cloning my connection is los. I reclone after 15 minutes the connection 
-is lost. I reclone and after 25 minutes I succeed.
-
-The only wrokaround, that I know would require full ssh access to the 
-server. In fact it would be using rsync, (which can be resumed)
-clone from the rsynced copy and thenmanually change the url of origin.
-
-
-
-Problem 2: Full history but only required data
------------------------------------------------
-Very often I would only need a few versions (some branch heads / last 
-week's commits) However git clone --depth seems to have far too many 
-restrictions. (e.g. can't push from it)
-So I wondered whether it would be possible to clone the entire history
-of a repositry, but fetch only the data of a few specific commits.
-
-This would reduce the transfer time massively as the repository may 
-contine some huge binary files, which may change every few versions.
-
-What would be great would be.
-- download only the history (of course with a resume option if the 
-connection got interrupted)
-- then fetch the 'contents' for the version's I want to checkout
-   (ideally specify some commit ranges, but specifying some specific 
-commit id's would be good enough for me)
-
-
-
-Are there any helper tools/ plans which would allow such work flow?
+Philip 
