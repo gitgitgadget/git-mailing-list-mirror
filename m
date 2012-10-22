@@ -1,76 +1,97 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: [PATCH 1/2] git-pull: Avoid merge-base on detached head
-Date: Mon, 22 Oct 2012 18:50:04 -0400
-Message-ID: <1350946204-26399-1-git-send-email-hordp@cisco.com>
-Cc: gitster@pobox.com, phil.hord@gmail.com, santi@agolina.net,
-	Elijah Newren <newren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phil Hord <hordp@cisco.com>
+From: victorcruz <vitycruz@gmail.com>
+Subject: Re: Migrating from StarTeam to GIT
+Date: Mon, 22 Oct 2012 16:24:54 -0700 (PDT)
+Message-ID: <1350948294188-7569734.post@n2.nabble.com>
+References: <89b129c60902190919p2cdbe349o4a2a659617dae341@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 23 01:00:34 2012
+X-From: git-owner@vger.kernel.org Tue Oct 23 01:25:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQQyw-0005w3-Au
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 01:00:26 +0200
+	id 1TQRMp-00057z-VT
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 01:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228Ab2JVXAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2012 19:00:11 -0400
-Received: from rcdn-iport-3.cisco.com ([173.37.86.74]:24754 "EHLO
-	rcdn-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751594Ab2JVXAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2012 19:00:10 -0400
-X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Oct 2012 19:00:10 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=985; q=dns/txt; s=iport;
-  t=1350946811; x=1352156411;
-  h=from:to:cc:subject:date:message-id;
-  bh=2oNRHauQcqkn6XqXxRleQFUpdEOagg03NPafpM4eoe8=;
-  b=li46AxaWKUZTGhc7fMNYmQvbIStF+gB2UgIZLp84LCFcFN++CkWLrVVb
-   B0ZTTxc8rZsGU3kppcODrRpl0hx6BKjicYt5XgasNORFBPeWnWax/WUVT
-   LrBIALK5Etj3o92nT6lskEzBIWPM1+J9cYNDKrfkQ2yzl6VvDfHmgIpvL
-   w=;
-X-IronPort-AV: E=Sophos;i="4.80,632,1344211200"; 
-   d="scan'208";a="134307494"
-Received: from rcdn-core-2.cisco.com ([173.37.93.153])
-  by rcdn-iport-3.cisco.com with ESMTP; 22 Oct 2012 22:50:44 +0000
-Received: from ipsn-lnx-hordp.cisco.com (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by rcdn-core-2.cisco.com (8.14.5/8.14.5) with ESMTP id q9MMogWm007513;
-	Mon, 22 Oct 2012 22:50:43 GMT
-X-Mailer: git-send-email 1.8.0.2.ge1a3bdd
+	id S1754372Ab2JVXYz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Oct 2012 19:24:55 -0400
+Received: from 216-139-250-139.aus.us.siteprotect.com ([216.139.250.139]:41353
+	"EHLO joe.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752790Ab2JVXYy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2012 19:24:54 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by joe.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <vitycruz@gmail.com>)
+	id 1TQRMc-0003NN-6S
+	for git@vger.kernel.org; Mon, 22 Oct 2012 16:24:54 -0700
+In-Reply-To: <89b129c60902190919p2cdbe349o4a2a659617dae341@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208208>
 
-git pull --rebase does some clever tricks to find the base
-for $upstream , but it forgets that we may not have any
-branch at all.  When this happens, git merge-base reports its
-"usage" help in the middle of an otherwise successful
-rebase operation, because git-merge is called with one too
-few parameters.
+victor cruz alonso
+vitycruz@gmail.com
 
-Since we do not need the merge-base trick in the case of a
-detached HEAD, detect this condition and bypass the clever
-trick and the usage noise.
----
- git-pull.sh | 1 +
- 1 file changed, 1 insertion(+)
+The following is a small web application that converts projects of Star=
+Team
+to GIT repository.
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 2a10047..266e682 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -200,6 +200,7 @@ test true = "$rebase" && {
- 		require_clean_work_tree "pull with rebase" "Please commit or stash them."
- 	fi
- 	oldremoteref= &&
-+	test -n "$curr_branch" &&
- 	. git-parse-remote &&
- 	remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
- 	oldremoteref="$(git rev-parse -q --verify "$remoteref")" &&
--- 
-1.8.0.2.ge1a3bdd
+http://dl.dropbox.com/u/101447754/startgit.tar.gz
+
+I developed because in my work decided to migrate and give the possibil=
+ity
+that any group without previous research work to make such a process.
+
+Now:
+
+StartGIT es una sencilla herramienta para trabajar con Controladores de
+Versiones, su fin es poder convertir un repositorio en Starteam a GIT, =
+para
+ello se hace uso del script "svnimporter-1.2-st" obtenido en
+"http://www.polarion.com/user/direct_register.php?dl=3Dsvnimporterst":
+
+Tener instalado:
+  - GIT
+  - git-svn
+  - java
+  - apache2
+
+Pasos:
+ - Descomprimir "startgit.zip"
+ - Colocar la carpeta descomprimida "startgit" en el directorio "/var/w=
+ww/"
+ - Abrir navegador web y colocar la siguiente direccci=C3=B3n
+"http://localhost/startgit"
+
+//-------------------------------------------------------------
+
+StartGIT is a simple tool, its purpose is to convert a Starteam reposit=
+ory
+to GIT.
+
+This script uses the "svnimporter-1.2-st" obtained "http://www.polarion=
+=2Ecom
+/ user / direct_register.php? dl =3D svnimporterst "
+
+Have installed:
+   - GIT
+   - Git-svn
+   - java
+   - apache2
+
+steps:
+  - Unzip "startgit.zip"
+  - Place the unzipped folder "startgit" in the "/ var / www /"
+  - Open web browser and "http://localhost/startgit"
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Migrating=
+-from-StarTeam-to-GIT-tp2354198p7569734.html
+Sent from the git mailing list archive at Nabble.com.
