@@ -1,74 +1,69 @@
-From: <dag@cray.com>
-Subject: Re: Subtree in Git
-Date: Mon, 22 Oct 2012 09:47:19 -0500
-Message-ID: <nng1ugqfts8.fsf@transit.us.cray.com>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
-	<nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
-	<87fwbgbs0h.fsf@smith.obbligato.org>
-	<7v8vh78dag.fsf@alter.siamese.dyndns.org>
-	<4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com>
-	<nngaa0z3p8b.fsf@transit.us.cray.com>
-	<87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl>
-	<nng4npe6zsj.fsf@transit.us.cray.com> <50830374.9090308@initfour.nl>
-	<7vbofwgwso.fsf@alter.siamese.dyndns.org>
-	<5084102A.2010006@initfour.nl>
-	<7vfw57fvtl.fsf@alter.siamese.dyndns.org>
-	<508459B3.6030403@initfour.nl>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: The config include mechanism doesn't allow for overwriting
+Date: Mon, 22 Oct 2012 17:55:00 +0200
+Message-ID: <CACBZZX4cu9XuS5AtduWrNeXNUeZ4rqDUzRdmyz2b3cXtmo1nqQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, <greened@obbligato.org>,
-	"Hilco Wijbenga" <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Mon Oct 22 16:49:22 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 22 17:55:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQJJf-0003Pq-Vp
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 16:49:20 +0200
+	id 1TQKLm-0006nb-2T
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 17:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755154Ab2JVOtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2012 10:49:08 -0400
-Received: from exprod6og114.obsmtp.com ([64.18.1.33]:37821 "EHLO
-	exprod6og114.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754842Ab2JVOtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2012 10:49:06 -0400
-Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob114.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKUIVc16lVWyCvjnIjnOV4y3YgAF+rVLZW@postini.com; Mon, 22 Oct 2012 07:49:06 PDT
-Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
- (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.318.1; Mon, 22 Oct
- 2012 09:47:20 -0500
-In-Reply-To: <508459B3.6030403@initfour.nl> (Herman van Rink's message of
-	"Sun, 21 Oct 2012 22:23:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1751555Ab2JVPzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2012 11:55:22 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:48598 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750798Ab2JVPzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 11:55:21 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so2560520obb.19
+        for <git@vger.kernel.org>; Mon, 22 Oct 2012 08:55:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=yf/6DNRUFN4ANvAI8BQ/bCyrKvf5p+DVjiYscnyr7kA=;
+        b=QdRikGDJt9b0un6I5cPhTxpsiOXIFu2/g65152+IdpppAILA/sx+WOXDirAgAi2T3D
+         A5H1JrfJRUlAL2DPC3k4/q20eEb3HmMBHSgHIv75ZDTpIQox/RmcP6vPs+qT5DKYSNIr
+         koXqdWTQupAWyYPW+m0fUzo1MDoboHcPO6JunZcMx11aX5nvg9jobTlF06etNtXP+yUg
+         ebi/qbcMbjLQcpk7JXdqvEB0EJUHjxKhdfVJVbJ+jm2U76fAEstR6jEYrU7y02KVL4VQ
+         VceuVMwQtuj50x2mgwUHR30Pxvg1f8Ohh+E3t/6dbNRYDSZF6JcWtdk2lqwryQRtiUVQ
+         7s6w==
+Received: by 10.60.19.168 with SMTP id g8mr6022067oee.101.1350921320572; Mon,
+ 22 Oct 2012 08:55:20 -0700 (PDT)
+Received: by 10.60.94.225 with HTTP; Mon, 22 Oct 2012 08:55:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208195>
 
-Herman van Rink <rink@initfour.nl> writes:
+I was hoping to write something like this:
 
-> The problem is that I don't have the time to split all these out. Dag
-> has indicated that he does not have the time either.
+    [user]
+        name = Luser
+        email = some-default@example.com
+    [include]
+        path = ~/.gitconfig.d/user-email
 
-I would have the time to review and integrate separate patches.  I do
-not have time to unwrap the ball of wax and ensure the quality of each
-feature and bug fix.  That is the responsibility of the submitter.  You
-can't expect reviewers to do your work for you.  I'm not being harsh, it
-is simply the reality of how things work in every project I've been
-involved with.
+Where that file would contain:
 
-> This single ball of wax was already an alternative to the 'messy' merge
-> history it had accumulated. The result of merging from dozens of github
-> forks with numerous levels of parallel/contra-productive whitspace fixes.
+    [user]
+        email = local-email@example.com
 
-Yes, we don't really want that history.  You have a single patch now.  A
-series of git rebase -i + git add -i should make it easy to separate it
-into patches for each feature and bug fix, as I suggested previously.
+But when you do that git prints:
 
-It really, really shouldn't be that hard unless the code is atrocious.
+    $ git config --get user.email
+     some-default@example.com
+     error: More than one value for the key user.email: local-email@example.com
 
-                            -David
+I couldn't find information in either the commt that introduced the
+feature or the documentation explaining whether this was the intent or
+not.
+
+I think config inclusion is much less useful when you can't clobber
+previously assigned values.
