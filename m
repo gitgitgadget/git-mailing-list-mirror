@@ -1,135 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6 3/3] completion: add new zsh completion
-Date: Mon, 22 Oct 2012 03:45:42 +0200
-Message-ID: <1350870342-22653-4-git-send-email-felipe.contreras@gmail.com>
-References: <1350870342-22653-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 22 03:46:23 2012
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Links broken in ref docs.
+Date: Mon, 22 Oct 2012 15:45:00 +1100
+Message-ID: <CAH5451nFf_SY4K2DS52vhP6VeXSmeikUrc0zy8HK3xmGgs+UGg@mail.gmail.com>
+References: <CAJr+XPGm4djBh+vacG5Ff=Y6aYmWbcUXOV9x2jekgnsGsk4b-g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Scott Chacon <schacon@gmail.com>
+To: Mike Norman <mknorman@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 22 06:45:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQ75x-0002tq-Kn
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 03:46:21 +0200
+	id 1TQ9tP-0002aT-2N
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 06:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932799Ab2JVBqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2012 21:46:04 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:47837 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932688Ab2JVBqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2012 21:46:03 -0400
-Received: by mail-wg0-f44.google.com with SMTP id dr13so1802046wgb.1
-        for <git@vger.kernel.org>; Sun, 21 Oct 2012 18:46:02 -0700 (PDT)
+	id S1751712Ab2JVEpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2012 00:45:21 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:49711 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146Ab2JVEpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 00:45:21 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so1005014qad.19
+        for <git@vger.kernel.org>; Sun, 21 Oct 2012 21:45:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=WVSj82kQtRbdz4Knbaessncai7EaswylHzPFq4WLmzk=;
-        b=bQBFnIbQk5YUfRpn89Sc++oBXKLWArJ8flXY66vMbStEQ7X1NcmBmNAgpD1ITfTG1u
-         JCpbcHPzVvvZQbu8LIHOvVMf0lfayKW9krUiGrZ1ofhbNzYqVUWUcgMtTrMNAkDWVcrr
-         haxbtcK0UOTEBwvVhMhZmxJjowDqYaKbTirD2/jp50XR7LBI3WA6KwQDscEzz1NCAejL
-         I5NDB3dIm/2ynlDUrReDet1NpvGmrNg33rjd5ueiX2Iw/z0vnsEHkW+xqaInZirSnHMF
-         1ej5lC8drPTTfxaXNRaTwLvICmUxt/5Td9hL1GhteIlTMwgiD/1Fs4lTd4blDd3nzDdK
-         22KA==
-Received: by 10.180.91.71 with SMTP id cc7mr17576944wib.2.1350870362640;
-        Sun, 21 Oct 2012 18:46:02 -0700 (PDT)
-Received: from localhost (ip-109-43-0-67.web.vodafone.de. [109.43.0.67])
-        by mx.google.com with ESMTPS id hb6sm11891473wib.7.2012.10.21.18.46.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 21 Oct 2012 18:46:01 -0700 (PDT)
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1350870342-22653-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=viGHP50zOTZASszz/+eE01U62IH4lOsPbXp3MzIbsQw=;
+        b=0h/moVoh8rHJu44WNIXy662NcA6vtO64kUWIB1REAEz11MHn5En4hM/jizXJh3rr1v
+         b7AifNifRok7Z7hjXfGvPxNo6H/Awa+HSwao6JZjLSEM/4/eSZ4k7UT34fg8C6Rkx+ST
+         vVlCAnZi4N1DoCGwlyVrAc31dqODBzk36W4KfhX0qOMvXlZ97q5ofcRvkvaIKIxhqCE3
+         ZsXt3fS8EgdoM12i61JC7+bK+7SQ+Bs8wqSP5n6hdcHgoObOa4KZB0nloZH75EIyPF8m
+         cADGrllm2pPPc7uBLPXuj8mV6D4fBwcG3m/nnyEPK4H1vNJZWMsZxv2ABcAwZ84Bjfar
+         Bftg==
+Received: by 10.224.189.65 with SMTP id dd1mr3533351qab.79.1350881120631; Sun,
+ 21 Oct 2012 21:45:20 -0700 (PDT)
+Received: by 10.49.58.225 with HTTP; Sun, 21 Oct 2012 21:45:00 -0700 (PDT)
+In-Reply-To: <CAJr+XPGm4djBh+vacG5Ff=Y6aYmWbcUXOV9x2jekgnsGsk4b-g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208174>
 
-It seems there's always issues with zsh's bash completion emulation.
-I've tried to fix as many as I could and most of the fixes are already
-in the latest version of zsh, but still, there are issues.
+On 21 October 2012 18:31, Mike Norman <mknorman@gmail.com> wrote:
+> Many links on scm-git.org/docs simply reload the page.
+>
+> For example, all of Sharing and Updating section simply reload the
+> docs page. And tons others. Must be a broken link or routing problem.
+> Repros on FF 14.0.1 and Chrome. Good luck!
+>
 
-There is no point in going through all that pain; the emulation is easy
-to achieve, and this patch works better than zsh's emulation.
+Including Scott Chacon as he manages this site (to my knowledge).
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+Looking at the request, I am getting a 302:
 
-v5:
+Request URL:http://git-scm.com/docs/git-fetch
+Request Method:GET
+Status Code:302 Moved Temporarily
 
- * Even more simplification by using __gitcompadd
+Maybe those pages are not done yet? That doesn't seem right as this is
+simply the reference manual, but perhaps there is something else going
+on here.
 
-v4:
+On another (related) note, the wayback machine has some very
+interesting entries for the scm-git.org domain [1] and it seems the
+/doc directory is not indexed at all. Is this on purpose?
 
- * Simplification updates for the latest bash completion
+Regards,
 
-v3:
+Andrew Ardill
 
- * Simplification
- * Avoid COMPREPLY; call compadd directly
- * Fix _get_comp_words_by_ref
-
- contrib/completion/git-completion.zsh | 48 +++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
- create mode 100644 contrib/completion/git-completion.zsh
-
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-new file mode 100644
-index 0000000..ae9c532
---- /dev/null
-+++ b/contrib/completion/git-completion.zsh
-@@ -0,0 +1,48 @@
-+#compdef git gitk
-+
-+# zsh completion wrapper for git
-+#
-+# You need git's bash completion script installed somewhere, by default on the
-+# same directory as this script.
-+#
-+# If your script is on ~/.git-completion.sh instead, you can configure it on
-+# your ~/.zshrc:
-+#
-+#  zstyle ':completion:*:*:git:*' script ~/.git-completion.sh
-+#
-+# The recommended way to install this script is to copy to
-+# '~/.zsh/completion/_git', and then add the following to your ~/.zshrc file:
-+#
-+#  fpath=(~/.zsh/completion $fpath)
-+
-+complete ()
-+{
-+	# do nothing
-+	return 0
-+}
-+
-+zstyle -s ":completion:*:*:git:*" script script
-+test -z "$script" && script="$(dirname ${funcsourcetrace[1]%:*})"/git-completion.bash
-+ZSH_VERSION='' . "$script"
-+
-+__gitcompadd ()
-+{
-+	compadd -Q -S "$4" -P "${(M)cur#*[=:]}" -p "$2" -- ${=1} && _ret=0
-+}
-+
-+_git ()
-+{
-+	local _ret=1
-+	() {
-+		emulate -L ksh
-+		local cur cword prev
-+		cur=${words[CURRENT-1]}
-+		prev=${words[CURRENT-2]}
-+		let cword=CURRENT-1
-+		__${service}_main
-+	}
-+	let _ret && _default -S '' && _ret=0
-+	return _ret
-+}
-+
-+_git
--- 
-1.8.0
+[1] http://wayback.archive.org/web/*/http://git-scm.com/*
