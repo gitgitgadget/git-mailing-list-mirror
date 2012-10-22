@@ -1,80 +1,103 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: diff support for the Eiffel language?
-Date: Mon, 22 Oct 2012 15:35:12 +0200
-Message-ID: <50854B90.50807@viscovery.net>
-References: <508550E8020000A10000CF36@gwsmtp1.uni-regensburg.de> <CACBZZX4wF8C_9ok+zeTfO70BgZXufvQaJ+8B5EiOAmxvVwr54g@mail.gmail.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Git submodule for a local branch?
+Date: Mon, 22 Oct 2012 08:37:14 -0400
+Message-ID: <20121022123714.GL25563@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-	git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 22 15:35:32 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="/jkxxxtAhYIHVDuh"
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 22 15:37:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQIAE-0006wm-Ea
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 15:35:30 +0200
+	id 1TQICa-0008UE-2u
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 15:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754190Ab2JVNfS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Oct 2012 09:35:18 -0400
-Received: from so.liwest.at ([212.33.55.24]:30700 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753182Ab2JVNfR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2012 09:35:17 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TQI9x-0001fP-Gm; Mon, 22 Oct 2012 15:35:14 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4363B1660F;
-	Mon, 22 Oct 2012 15:35:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <CACBZZX4wF8C_9ok+zeTfO70BgZXufvQaJ+8B5EiOAmxvVwr54g@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1754320Ab2JVNhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2012 09:37:43 -0400
+Received: from vms173021pub.verizon.net ([206.46.173.21]:24530 "EHLO
+	vms173021pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754200Ab2JVNhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 09:37:43 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Oct 2012 09:37:43 EDT
+Received: from odin.tremily.us ([unknown] [72.68.93.242])
+ by vms173021.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MCA000HJOE2Q920@vms173021.mailsrvcs.net> for
+ git@vger.kernel.org; Mon, 22 Oct 2012 07:37:20 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 371A467D3B8; Mon,
+ 22 Oct 2012 08:37:14 -0400 (EDT)
+Content-disposition: inline
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208184>
 
-Am 10/22/2012 15:06, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> On Mon, Oct 22, 2012 at 1:58 PM, Ulrich Windl=20
-> <Ulrich.Windl@rz.uni-regensburg.de> wrote:
->> However there's one little thing I noticed with "git diff": The
->> conte4xt lines (staring with "@@") show the current function (in Per=
-l
->> and C), but they show the current "feature clause" in Eiffel (as
->> opposed to the expected current feature). I wonder how hard it is to
->> fix it (Observed in git 1.7.7 of openSUSE 12.1).
->=20
-> See git.git's e90d065 for an example of adding a new diff pattern.
 
-It's not necessary to wait until there is built-in support for a new la=
-nguage.
+--/jkxxxtAhYIHVDuh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-=46or example, for Windows resource files, I have
+I have a bunch of branches in my repo (a, b, c, =E2=80=A6), and I'd like to
+check them out into subdirectories of another branch (index).  My
+initial inclination was to use something like
 
-*.rc    diff=3Dwinres
+  $ git checkout index
+  $ git branch
+    a
+    b
+    c
+  * index
+  $ git submodule add -b a --reference ./ ./ dir-for-a/
+  $ git submodule add -b b --reference ./ ./ dir-for-b/
+  $ git submodule add -b c --reference ./ ./ dir-for-c/
 
-in .gitattributes or .git/info/attributes and
+but cloning a remote repository (vs. checking out a local branch)
+seems to be baked into the submodule implementation.  Should I be
+thinking about generalizing git-submodule.sh, or am I looking under
+the wrong rock?  My ideal syntax would be something like
 
-[diff "winres"]
-        xfuncname =3D
-"!^(BEGIN|END|FONT|CAPTION|STYLE)\n^[a-zA-Z_][a-zA-Z_0-9]*.*\n^[[:space=
-:]]*([[:alnum:]_]+,
-*DIALOG.*)"
+  $ git submodule add -b c --local dir-for-c/
 
-in .git/config (the xfuncname is all on a single line). The first part
-beginning at ! up to \n tells to ignore the specified matches. The othe=
-r
-parts separated by \n tell the things to put in the hunk header. You ca=
-n
-have "ignore" parts (with exlamation mark) and "take this" parts (witho=
-ut)
-in any order that is convenient, as long as the last one is "take this"=
-=2E
+The motivation is that I have website that contains a bunch of
+sub-sites, and the sub-sites share content.  I have per-sub-site
+branches (a, b, c) and want a master branch (index) that aggregates
+them.  Perhaps this is too much to wedge into a single repository?
 
--- Hannes
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--/jkxxxtAhYIHVDuh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQhT33AAoJEEUbTsx0l5OMb5MP/1xSdFahLjuY1GHqJ8qCmj1A
+Ovhohhq564YIfGHiEIXEn66uX7PAHnjNfpR6q8uRJKj+opIVNcHuL8EjKwZ5zeig
+JJ5z6EsUvknQDYsJTI2aPZmXJ831VDAdyjUd9Ku3CftEuUeJLWyF77PWo+9CKdL4
+vB6eon93kE4AB/qyOj474bKSN02wI+VgWHrTtaIkCndDH3wC0McoH6Oua6qOUEv2
+uY/ef7p+mDZKBC9Mv2x4op3DrXr9UcxjIBcZoE8u8rG5Kyt8rQqXnZzl9VYPOzC5
+jMPt/LcgPLdu6fk0oOO1sqZsgoVEuNnTELI9YWNmXVBRK6zY6GtJZcyfvt63iuam
+9x9fgIYkNWTadRXOLBdK7nJZFtsdPjNhXRochPMruuJPnj/CCBu708A7iwSi2yQH
+owwm4eu79fr0Ct7re2va2FQwojqI8KxYk2/GQsJvTiZWW5DnwwHtBsyNx6NnlRdp
+qeOckB7tQNLmJukFdAOGcj+5XTjlA9cYpXc0q81Q8IaI5IWwM6wS4tfuuTmR93U8
+oheq7ctGy1URCCAgVAG2qCSjLwktlACLhBUqc0mmZwPAKgpJE2PCtZIdqEMHzaLj
+XRMT+ADPplUtGlSBJP6+y52pfgd1f1N31upsdtRM8uTfzblSjRz16UwQXcGY2B/4
+w0nRR/cs3JykmfLU0gvK
+=7dK2
+-----END PGP SIGNATURE-----
+
+--/jkxxxtAhYIHVDuh--
