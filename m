@@ -1,68 +1,114 @@
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Subject: diff support for the Eiffel language?
-Date: Mon, 22 Oct 2012 13:58:00 +0200
-Message-ID: <508550E8020000A10000CF36@gwsmtp1.uni-regensburg.de>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: =?UTF-8?q?=5BPATCH=5D=20git-send-email=3A=20use=20compose-encoding=20for=20Subject?=
+Date: Mon, 22 Oct 2012 14:41:48 +0200
+Message-ID: <1350909708-32241-1-git-send-email-krzysiek@podlesie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 14:05:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Krzysztof Mazur <krzysiek@podlesie.net>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 22 14:51:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQGlI-0000ll-0y
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 14:05:40 +0200
+	id 1TQHTJ-0003ch-7m
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 14:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab2JVMF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2012 08:05:28 -0400
-Received: from rrzmta1.uni-regensburg.de ([194.94.155.51]:59931 "EHLO
-	rrzmta1.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752688Ab2JVMF2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2012 08:05:28 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Oct 2012 08:05:28 EDT
-Received: from rrzmta1.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id EC1E39E67
-	for <git@vger.kernel.org>; Mon, 22 Oct 2012 13:58:04 +0200 (CEST)
-Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-	by rrzmta1.uni-regensburg.de (Postfix) with ESMTP id D658E9E52
-	for <git@vger.kernel.org>; Mon, 22 Oct 2012 13:58:03 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
-	with Novell_GroupWise; Mon, 22 Oct 2012 13:57:23 +0200
-X-Mailer: Novell GroupWise Internet Agent 12.0.1 
-Content-Disposition: inline
+	id S1753333Ab2JVMu5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Oct 2012 08:50:57 -0400
+Received: from [93.179.225.50] ([93.179.225.50]:42484 "EHLO shrek.podlesie.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753182Ab2JVMu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 08:50:57 -0400
+X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Oct 2012 08:50:56 EDT
+Received: from geronimo.kss.ia.polsl.pl (localhost [127.0.0.1])
+	by shrek.podlesie.net (Postfix) with ESMTP id 2950A42E;
+	Mon, 22 Oct 2012 14:43:09 +0200 (CEST)
+X-Mailer: git-send-email 1.8.0.2.g35080e9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208180>
 
-Hi!
+The commit "git-send-email: introduce compose-encoding" introduced
+the compose-encoding option to specify the introduction email encoding
+(--compose option), but the email Subject encoding was still hardcoded
+to UTF-8.
 
-After a longer pause, I did some programming in Eiffel again, and while doing so, why not use Git? It works!
-
-However there's one little thing I noticed with "git diff":
-The conte4xt lines (staring with "@@") show the current function (in Perl and C), but they show the current "feature clause" in Eiffel (as opposed to the expected current feature). I wonder how hard it is to fix it (Observed in git 1.7.7 of openSUSE 12.1).
-
-For the non-Eiffelists:
-
-Eiffel has a class structure like this:
-class FOO
-
-feature {BAR} -- This is a "feature clause", grouping related features (attributes/routines)
-
-   baz (x,y : INTEGER) : STRING is
-      -- blabla...
-      do
-         ...
-      end -- baz
-
-end -- class FOO
-
+Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
 ---
-Now if I change something inside "baz", it would be nice if the @@-contect line would show "baz" (or more) instead of "feature {BAR}...".
+Patch against km/send-email-compose-encoding
+(commit 62e0069056ed11294c29bae25df69b6518f6339e). Cleanly applies to c=
+urrent
+next (commit 291341ca77d902dc76e204a3fc498a155f0ab75d)
 
-Regards,
-Ulrich
-P.S. Apologies if the feature requested had been added already.
+ git-send-email.perl   |  8 ++++----
+ t/t9001-send-email.sh | 14 ++++++++++++++
+ 2 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 107e814..adcb4e3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -636,15 +636,15 @@ EOT
+ 	my $need_8bit_cte =3D file_has_nonascii($compose_filename);
+ 	my $in_body =3D 0;
+ 	my $summary_empty =3D 1;
++	if (!defined $compose_encoding) {
++		$compose_encoding =3D "UTF-8";
++	}
+ 	while(<$c>) {
+ 		next if m/^GIT:/;
+ 		if ($in_body) {
+ 			$summary_empty =3D 0 unless (/^\n$/);
+ 		} elsif (/^\n$/) {
+ 			$in_body =3D 1;
+-			if (!defined $compose_encoding) {
+-				$compose_encoding =3D "UTF-8";
+-			}
+ 			if ($need_8bit_cte) {
+ 				print $c2 "MIME-Version: 1.0\n",
+ 					 "Content-Type: text/plain; ",
+@@ -658,7 +658,7 @@ EOT
+ 			my $subject =3D $initial_subject;
+ 			$_ =3D "Subject: " .
+ 				($subject =3D~ /[^[:ascii:]]/ ?
+-				 quote_rfc2047($subject) :
++				 quote_rfc2047($subject, $compose_encoding) :
+ 				 $subject) .
+ 				"\n";
+ 		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 265ae04..89fceda 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -909,6 +909,20 @@ test_expect_success $PREREQ '--compose-encoding ov=
+errides sendemail.composeencod
+ 	grep "^Content-Type: text/plain; charset=3Diso-8859-2" msgtxt1
+ '
+=20
++test_expect_success $PREREQ '--compose-encoding adds correct MIME for =
+subject' '
++	clean_fake_sendmail &&
++	  GIT_EDITOR=3D"\"$(pwd)/fake-editor\"" \
++	  git send-email \
++	  --compose-encoding iso-8859-2 \
++	  --compose --subject utf8-s=C3=BCbj=C3=ABct \
++	  --from=3D"Example <nobody@example.com>" \
++	  --to=3Dnobody@example.com \
++	  --smtp-server=3D"$(pwd)/fake.sendmail" \
++	  $patches &&
++	grep "^fake edit" msgtxt1 &&
++	grep "^Subject: =3D?iso-8859-2?q?utf8-s=3DC3=3DBCbj=3DC3=3DABct?=3D" =
+msgtxt1
++'
++
+ test_expect_success $PREREQ 'detects ambiguous reference/file conflict=
+' '
+ 	echo master > master &&
+ 	git add master &&
+--=20
+1.8.0.2.g35080e9
