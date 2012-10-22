@@ -1,7 +1,7 @@
 From: <dag@cray.com>
 Subject: Re: Subtree in Git
-Date: Mon, 22 Oct 2012 09:41:32 -0500
-Message-ID: <nnga9vefu1v.fsf@transit.us.cray.com>
+Date: Mon, 22 Oct 2012 09:44:29 -0500
+Message-ID: <nng6262ftwy.fsf@transit.us.cray.com>
 References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
 	<nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
 	<87fwbgbs0h.fsf@smith.obbligato.org>
@@ -12,71 +12,63 @@ References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
 	<nng4npe6zsj.fsf@transit.us.cray.com> <50830374.9090308@initfour.nl>
 	<7vbofwgwso.fsf@alter.siamese.dyndns.org>
 	<5084102A.2010006@initfour.nl>
+	<7vfw57fvtl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, <greened@obbligato.org>,
+Cc: Herman van Rink <rink@initfour.nl>, <greened@obbligato.org>,
 	"Hilco Wijbenga" <hilco.wijbenga@gmail.com>,
 	Git Users <git@vger.kernel.org>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Mon Oct 22 16:44:04 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 22 16:47:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQJEZ-0008Ne-2l
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 16:44:03 +0200
+	id 1TQJHq-0002F2-OS
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 16:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755081Ab2JVOnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2012 10:43:50 -0400
-Received: from exprod6og101.obsmtp.com ([64.18.1.181]:42783 "EHLO
-	exprod6og101.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755154Ab2JVOnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2012 10:43:49 -0400
-Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob101.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKUIVbneHsRHV07kXwmEeiHcO6BI24ac9Q@postini.com; Mon, 22 Oct 2012 07:43:49 PDT
+	id S1754737Ab2JVOrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2012 10:47:15 -0400
+Received: from exprod6og114.obsmtp.com ([64.18.1.33]:44183 "EHLO
+	exprod6og114.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871Ab2JVOrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 10:47:15 -0400
+Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob114.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKUIVca6IhCZWiJokrJ2ozwPczxWtCF9Mr@postini.com; Mon, 22 Oct 2012 07:47:14 PDT
 Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
  (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.318.1; Mon, 22 Oct
- 2012 09:41:33 -0500
-In-Reply-To: <5084102A.2010006@initfour.nl> (Herman van Rink's message of
-	"Sun, 21 Oct 2012 17:09:30 +0200")
+ 2012 09:44:30 -0500
+In-Reply-To: <7vfw57fvtl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 21 Oct 2012 12:51:02 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208192>
 
-Herman van Rink <rink@initfour.nl> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 10/21/2012 08:32 AM, Junio C Hamano wrote:
->> Herman van Rink <rink@initfour.nl> writes:
->>
->>> Junio, Could you please consider merging the single commit from my
->>> subtree-updates branch? https://github.com/helmo/git/tree/subtree-updates
->> In general, in areas like contrib/ where there is a volunteer area
->> maintainer, unless the change something ultra-urgent (e.g. serious
->> security fix) and the area maintainer is unavailable, I'm really
->> reluctant to bypass and take a single patch that adds many things
->> that are independent from each other.
->
-> Who do you see as volunteer area maintainer for contrib/subtree?
-> My best guess would be Dave. And he already indicated earlier in the
-> thread to be ok with the combined patch as long as you are ok with it.
+> I haven't formed an opinion on the particular change as to how bad
+> its collapsing unrelated changes into a single change is. Maybe they
+> are not as unrelated and form a coherent whole.  Maybe not.  
 
-Let's be clear.  Junio owns the project so what he says goes, no
-question.  I provided some review feedback which I thought would help
-the patches get in more easily.  We really shouldn't be adding multiple
-features in one patch.  This is easily separated into multiple patches.
+It is difficult for me to tell which is one of the red flags that caused
+me to request breaking it up.  It's much to hard to review this patch as
+it is.  It conflates multiple features and bug fixes.  It includes
+comments to the effect of, "I don't like this but I don't know of a
+better way."  Part of the reson we do reviews is to have people help out
+and find a better way.  I don't think people can do that with the way
+the patch is currently structured.
 
-Then there is the issue of testcases.  We should NOT have git-subtree go
-back to the pre-merge _ad_hoc_ test environment.  We should use what the
-usptream project uses.  That will make mainlining this much easier in
-the future.
+> Note that I was not following the thread very closely, so I may have
+> misread the discussion.  I read his "Unless Junio accepts..." to
+> mean "I (dag) still object, but if Junio accepts that patch I object
+> to directly, there is nothing I can do about it".  That is very
+> different from "I am on the fence and cannot decide it is a good
+> patch or not.  I'll let Junio decide; I am OK as long as he is".
 
-If Junio is ok with overriding my decisions here, that's fine.  But I
-really don't understand why you are so hesitant to rework the patches
-when it should be realtively easy.  Certainly easier than convincing me
-they are in good shape currently.  :)
+Yopur first reading is the correct one.
 
-                            -David
+                              -David
