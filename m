@@ -1,58 +1,59 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: diff support for the Eiffel language?
-Date: Mon, 22 Oct 2012 15:06:26 +0200
-Message-ID: <CACBZZX4wF8C_9ok+zeTfO70BgZXufvQaJ+8B5EiOAmxvVwr54g@mail.gmail.com>
-References: <508550E8020000A10000CF36@gwsmtp1.uni-regensburg.de>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] grep: remove tautological check
+Date: Mon, 22 Oct 2012 14:20:50 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1210221416080.32103@ds9.cixit.se>
+References: <1350753964-29346-1-git-send-email-dsp@php.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Mon Oct 22 15:07:01 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Soria Parra <dsp@php.net>
+X-From: git-owner@vger.kernel.org Mon Oct 22 15:21:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQHid-0005np-NL
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 15:07:00 +0200
+	id 1TQHwj-0006PN-T5
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 15:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974Ab2JVNGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2012 09:06:50 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:37957 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753993Ab2JVNGr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2012 09:06:47 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so2363061obb.19
-        for <git@vger.kernel.org>; Mon, 22 Oct 2012 06:06:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CB2c2Ak9goNPF7rkoS1wa8HbO76Q6mFdl29AAmAzCgY=;
-        b=skcbo5cscSywCzRimoNaOjsAweDpf6YU0YDii6a8eudwMFq4kUM7QAMo/NRigInwGl
-         3+xC/xywLwLjNFAy/cG4HnI9vlBIvp8ZGT3PZV1OVvfYmadEOUeoH4jcN217sH8wVH80
-         OF19ecweLKL8ZVUBFrNf7T0CvQl9I0ORTY/23ovx4zNkxyifq8VbWyS0YbSwvwts1XaZ
-         7hvWu6h9DrgiFtG8g7egoq482Q9tOPFAxYRddwSA798Kl101HgtkGKzsHS5VZTpBok52
-         /KRNvXjsa6YSfDgnueLsw2f3auq/H3jbulz48uLo+bfUnDktdqapVtXLJEJ7ez2GTa8G
-         1eHg==
-Received: by 10.182.49.104 with SMTP id t8mr6927567obn.0.1350911206441; Mon,
- 22 Oct 2012 06:06:46 -0700 (PDT)
-Received: by 10.60.94.225 with HTTP; Mon, 22 Oct 2012 06:06:26 -0700 (PDT)
-In-Reply-To: <508550E8020000A10000CF36@gwsmtp1.uni-regensburg.de>
+	id S1754125Ab2JVNVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2012 09:21:07 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:54733 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753537Ab2JVNVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 09:21:04 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id q9MDKpOb017271
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 22 Oct 2012 15:20:51 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q9MDKos5017267;
+	Mon, 22 Oct 2012 15:20:50 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <1350753964-29346-1-git-send-email-dsp@php.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Mon, 22 Oct 2012 15:20:51 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208182>
 
-On Mon, Oct 22, 2012 at 1:58 PM, Ulrich Windl
-<Ulrich.Windl@rz.uni-regensburg.de> wrote:
-> However there's one little thing I noticed with "git diff":
-> The conte4xt lines (staring with "@@") show the current function (in Perl and C), but they show the current "feature clause" in Eiffel (as opposed to the expected current feature). I wonder how hard it is to fix it (Observed in git 1.7.7 of openSUSE 12.1).
+David Soria Parra:
 
-See git.git's e90d065 for an example of adding a new diff pattern.
+> -		if (p->field < 0 || GREP_HEADER_FIELD_MAX <= p->field)
+> +		if (GREP_HEADER_FIELD_MAX <= p->field)
 
-You could easily come up with a patch and send it to the list, however
-it would probably be good to CC some Eiffel language list in case
-there's some syntax oddities you've missed.
+A friend taught me this trick, which will check that it isn't negative 
+for compilers that have the enumeration be signed (notably MSVC), 
+while not complaining for compilers that have it unsigned (GCC, Clang):
+
+   const unsigned int sign = 1u << (sizeof(p->field) * CHAR_BIT - 1);
+   if (!(sign & (unsigned int) p->field) || GREP_HEADER_FIELD_MAX <= p->field)
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
