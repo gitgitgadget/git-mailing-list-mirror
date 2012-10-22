@@ -1,75 +1,127 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: [PATCH] fix 'make test' for HP NonStop
-Date: Mon, 22 Oct 2012 16:30:17 +0200
-Message-ID: <001e01cdb061$c25f6380$471e2a80$@schmitz-digital.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] transport-helper: check when helpers fail
+Date: Mon, 22 Oct 2012 16:31:22 +0200
+Message-ID: <CAMP44s1m9eVqqrgJFuWOBa3DCZAzAqpVwG8Nxn-6MbXWbF_2fw@mail.gmail.com>
+References: <1350847158-14154-1-git-send-email-felipe.contreras@gmail.com>
+	<5084E931.3010809@viscovery.net>
+	<CAMP44s2XDkLhKkqvxnGH+U5X=42dXU1550xVQvyQk=WD2p0c6Q@mail.gmail.com>
+	<50854E20.1040303@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 16:30:38 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Oct 22 16:31:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQJ1Y-0008Lc-S3
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 16:30:37 +0200
+	id 1TQJ2U-0000VV-QO
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Oct 2012 16:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754235Ab2JVOaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2012 10:30:25 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:50764 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753279Ab2JVOaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2012 10:30:25 -0400
-Received: from DualCore (dsdf-4d0a104c.pool.mediaWays.net [77.10.16.76])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0MMcRu-1TWKtF310o-008Ftg; Mon, 22 Oct 2012 16:30:23 +0200
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2wYVOqGrpC8KggR6OYJx1fDBG+cw==
-Content-language: de
-X-Provags-ID: V02:K0:nUmx8wcjlDbXca/NGiHw03sNNnBJRj8leaCqeWWd0kI
- sPQp0fnvhZVsxeBTMxYguQDukLD+S5bB1iXkygTGSDJNqBE6MJ
- ElYGvHZtM5w1YHOdpX6LALTw8qKEfi/LDnAi+iqxdceSlJFauR
- 7coHqvKl8kRSthSvr466T1szrnxxJx6XpHv6LHjlNOBbG1qUxj
- wnK+wYG/UCHofkQx8LvME1GQvNHj0QLfIKCbyORS4Kgp30+6Wt
- d2RksQywoDwLPeJwunhvPg2QYju76TyXuocrABnj43c9HUgPBZ
- Gfq1W19LAj+7MHZILs7n1HcUTJf478d7FDDp5qEYOvSsClTFEn
- 8ope7QdyxpsywEZhQ1hn14pupJODgmbi9H+rBbQR4knUqUOIdY
- hlimpIFrKAX3w==
+	id S1754353Ab2JVObY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2012 10:31:24 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:50056 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871Ab2JVObX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2012 10:31:23 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so2457412oag.19
+        for <git@vger.kernel.org>; Mon, 22 Oct 2012 07:31:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=S2uZ8SlYZ1DPQ4g2hmJsP4criWUutLFwInyPfv6X4CI=;
+        b=WIg+ynMlf8v9/KS3XZJF0+yQ1oQ0ZV0nCwO6LP0y5e6LQ2HrXnYXDxrSXs5y+1UeXF
+         hovzWlI14RX5wpkz93YexYA7i0RWxqk1mvTi1JEIhwdiNLRm/6bQF09RgzaIJwSls6kF
+         MWvRBLEuzwca09h8m9aFq2wljL+Vyu/btlxonp+hdfNzjXadTJeA70j821ibJyW+7byJ
+         hk64t2cRx+AM0CX+yTE7aFc7A8R2NB+bJxerNx96JYt4Z+yyD48zjvvwcQ8pYz9byWZN
+         qe+GILjRWlU1ZnAWbIH/FPnvXE+rulgkqY+Ht4iBSUYNLeHbPgNS9rPbgkOy+VOdm1FJ
+         v92A==
+Received: by 10.60.32.19 with SMTP id e19mr8536876oei.9.1350916282651; Mon, 22
+ Oct 2012 07:31:22 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Mon, 22 Oct 2012 07:31:22 -0700 (PDT)
+In-Reply-To: <50854E20.1040303@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208190>
 
-This fixes the vast majority of test failures on HP NonStop.
+On Mon, Oct 22, 2012 at 3:46 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 10/22/2012 13:50, schrieb Felipe Contreras:
+>> On Mon, Oct 22, 2012 at 8:35 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> Another thought: In your use-case, isn't it so that it would be an error
+>>> that the process exited for whatever reason? I.e., even if it exited with
+>>> code 0 ("success"), it would be an error because it violated the protocol?
+>>
+>> How is that violating the protocol?
+>
+> Because the helper stops talking too early. But as I said, I actually
+> don't know the protocol.
 
-Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
----
-A few more still insist on /usr/local/bin being 1st in PATH and having done that
-we're down to one single failing test, t0301 #12 "helper (cache --timeout=1) times out"
+We could use the 'feature done' of fast-import, but this causes
+problems because of the way transport-helper uses it:
 
-Makefile | 9 +++++++++
-1 file changed, 9 insertions(+)
+-> import refs/heads/master
+<- exported stuff
+<- done
+-> import refs/heads/devel
+<- exported stuff
+<- done
 
-diff --git a/Makefile b/Makefile
-index f69979e..35380dd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1381,6 +1381,15 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-	MKDIR_WO_TRAILING_SLASH = YesPlease
-	# RFE 10-120912-4693 submitted to HP NonStop development.
-	NO_SETITIMER = UnfortunatelyYes
-+
-+	# for 'make test'
-+	# some test don't work with /bin/diff, some fail with /bin/tar
-+	# some need bash, and some need ${prefix}/bin in PATH first
-+	SHELL_PATH=${prefix}/bin/bash
-+	SANE_TOOL_PATH=${prefix}/bin
-+	# as of H06.25/J06.14, we might better use this
-+	#SHELL_PATH=/usr/coreutils/bin/bash
-+	#SANE_TOOL_PATH=/usr/coreutils/bin:${prefix}/bin
-endif
-ifneq (,$(findstring MINGW,$(uname_S)))
-	pathsep = ;
+'done' will terminate the fast-import process, so the second exported
+stuff won't be processed; the fast-import process is reused.
+
+For some reason remote-testgit doesn't exercise this multiple import
+stuff properly, but my remote-hg certainly does, so I can't just say
+'done'.
+
+It would be much better if the transport-helper protocol was something
+like this:
+
+-> import-begin
+<- feature X
+<- feature Y
+-> import refs/heads/master
+<- exported stuff
+-> import refs/heads/devel
+<- exported stuff
+-> import-end
+<- done
+
+This would certainly makes things easier for transport-helpers that
+support multiple ref selections (like my remote-hg). Maybe I should
+add code that does this if certain feature is specified (so it doesn't
+break other helpers)
+
+But at least on my tests, even with 'feature done' the crash is not
+detected properly, either by the transport-helper, or fast-import.
+
+And also, the msysgit branch does the same check for fast-export,
+which actually uses the 'done' feature always, so it should work fine,
+but perhaps because of the strange issue with fast-import I just
+mentioned, it's not actually detected. I should add tests for this
+too.
+
+> I was just infering what I saw in transport-helper.c: get_helper() dup's
+> the output of the helper process and stores it in data->out (after
+> fdopen()ing on it). (The original file descriptor is handed over to
+> fast-import or fast-export.)
+>
+> Actually, I didn't find a spot where data->out was used except to fclose()
+> it. But I take it that there is a reason that it exists and infer that
+> further output from the helper is expected by something after fast-import
+> or fast-export have exited.
+>
+> But I may be completely off...
+
+Yes, further output is expected, or at least in theory.
+
+Cheers.
+
+-- 
+Felipe Contreras
