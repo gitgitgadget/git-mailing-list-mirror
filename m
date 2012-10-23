@@ -1,74 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tile: support GENERIC_KERNEL_THREAD and
- GENERIC_KERNEL_EXECVE
-Date: Tue, 23 Oct 2012 16:51:19 -0400
-Message-ID: <20121023205119.GA27729@sigill.intra.peff.net>
-References: <20121016223508.GR2616@ZenIV.linux.org.uk>
- <201210192041.q9JKf7jD003998@farm-0010.internal.tilera.com>
- <20121019213548.GR2616@ZenIV.linux.org.uk>
- <5082A1F1.3080303@tilera.com>
- <20121020153401.GT2616@ZenIV.linux.org.uk>
- <20121020171643.GU2616@ZenIV.linux.org.uk>
- <5086D432.4070008@tilera.com>
- <20121023184122.GZ2616@ZenIV.linux.org.uk>
- <alpine.LFD.2.02.1210232232070.2756@ionos>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Git submodule for a local branch?
+Date: Tue, 23 Oct 2012 22:57:57 +0200
+Message-ID: <508704D5.9020902@web.de>
+References: <20121022123714.GL25563@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Al Viro <viro@ZenIV.linux.org.uk>,
-	Chris Metcalf <cmetcalf@tilera.com>,
-	LKML <linux-kernel@vger.kernel.org>, linux-arch@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Gleixner <tglx@linutronix.de>
-X-From: git-owner@vger.kernel.org Tue Oct 23 22:51:45 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Tue Oct 23 22:58:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQlRu-0004OQ-9D
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 22:51:42 +0200
+	id 1TQlYK-0000bU-2S
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 22:58:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933772Ab2JWUvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 16:51:25 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51539 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933407Ab2JWUvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 16:51:23 -0400
-Received: (qmail 22121 invoked by uid 107); 23 Oct 2012 20:52:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 23 Oct 2012 16:52:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2012 16:51:19 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.02.1210232232070.2756@ionos>
+	id S965364Ab2JWU6H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2012 16:58:07 -0400
+Received: from mout.web.de ([212.227.17.12]:49561 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964994Ab2JWU6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 16:58:05 -0400
+Received: from [192.168.178.41] ([79.193.87.155]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MEmKo-1Tfg3P10Ha-00FUXw; Tue, 23 Oct 2012 22:58:01
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121022123714.GL25563@odin.tremily.us>
+X-Provags-ID: V02:K0:a56f2jJUD9rDn2ENAoUIH8Besyjmg3+VrQavzWctFDR
+ rVvuy3pWdApt2+FOo85ZqkC7y6sBnNOjvF+wnLKjL7u2ru11FE
+ 9+7fGVSeWh8wiBZUnkhayPsw8kbhIsL3HWcIyRIdoksJ79/FmS
+ Zxtzxn5aq+bKjQ7GrDy9Ke2Y7sNq4LBs0JgGSfGB+v8493r+HV
+ 0C02eLgJhszuzdoXMVEwg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208249>
 
-On Tue, Oct 23, 2012 at 10:47:28PM +0200, Thomas Gleixner wrote:
+Am 22.10.2012 14:37, schrieb W. Trevor King:
+> I have a bunch of branches in my repo (a, b, c, =E2=80=A6), and I'd l=
+ike to
+> check them out into subdirectories of another branch (index).  My
+> initial inclination was to use something like
+>=20
+>   $ git checkout index
+>   $ git branch
+>     a
+>     b
+>     c
+>   * index
+>   $ git submodule add -b a --reference ./ ./ dir-for-a/
+>   $ git submodule add -b b --reference ./ ./ dir-for-b/
+>   $ git submodule add -b c --reference ./ ./ dir-for-c/
+>=20
+> but cloning a remote repository (vs. checking out a local branch)
+> seems to be baked into the submodule implementation.  Should I be
+> thinking about generalizing git-submodule.sh, or am I looking under
+> the wrong rock?  My ideal syntax would be something like
+>=20
+>   $ git submodule add -b c --local dir-for-c/
 
-> I agree that this is a common issue. Acked-by/Reviewed-by mails come
-> in after the fact that the patch has been committed to an immutable
-> (i.e no-rebase mode) branch or if the change in question already hit
-> Linus tree.
-> 
-> Still it would be nice to have a recording of that in the git tree
-> itself.
-> 
-> Something like: "git --attach SHA1 <comment>" would be appreciated!
+But then we'd have to be able to have two (or more) work trees using
+the same git directory, which current submodule code can't.
 
-It is spelled:
+> The motivation is that I have website that contains a bunch of
+> sub-sites, and the sub-sites share content.  I have per-sub-site
+> branches (a, b, c) and want a master branch (index) that aggregates
+> them.  Perhaps this is too much to wedge into a single repository?
 
-  git notes add -m <comment> SHA1
-
-The resulting notes are stored in a separate revision-controlled branch
-and can be pushed and pulled like regular refs. Note, though, that the
-default refspecs do not yet include refs/notes, so you'd have to add
-them manually. The workflows around notes are not very mature yet, so if
-you start using them, feedback would be appreciated.
-
--Peff
+To me this sounds upside-down. I'd put the three sub-sites into
+different repositories and the shared content into a submodule that
+all three sub-sites use. At least that is how I do all my content
+sharing on the websites I have done ... does that make sense?
