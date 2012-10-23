@@ -1,109 +1,78 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule add: Record branch name in .gitmodules
-Date: Tue, 23 Oct 2012 22:36:44 +0200
-Message-ID: <5086FFDC.2050700@web.de>
-References: <61a31f6bc61d4df322a097e32ba472390c583a81.1350923683.git.wking@tremily.us> <5086ED06.5020406@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, wking@tremily.us
-To: Nahor <nahor.j+gmane@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 22:37:31 2012
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCHv2] git-pull: Avoid merge-base on detached head
+Date: Tue, 23 Oct 2012 16:39:56 -0400
+Message-ID: <1351024796-28174-2-git-send-email-hordp@cisco.com>
+References: <1351024796-28174-1-git-send-email-hordp@cisco.com>
+Cc: phil.hord@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <hordp@cisco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 23 22:40:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQlE4-0002gQ-DH
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 22:37:24 +0200
+	id 1TQlHJ-0004yy-NU
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 22:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965034Ab2JWUhF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2012 16:37:05 -0400
-Received: from mout.web.de ([212.227.17.12]:57171 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965028Ab2JWUhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 16:37:01 -0400
-Received: from [192.168.178.41] ([79.193.87.155]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0M7bYJ-1TBxGP0LZ9-00wZbk; Tue, 23 Oct 2012 22:36:58
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <5086ED06.5020406@gmail.com>
-X-Provags-ID: V02:K0:ExsAwUQ3JZosvOpxoxR4D7XelWMMlxCuifQwyNh0kWL
- OkLpqKA+AA0PO729g6BlamCqpacFJolVz2TjQEN9qOQ87XrlPr
- OCW4NM8lleeuj/TMMQfm7yOpR4sWNaF4OsOZLs9R4YBIW/olT7
- HLfqpSTnJCEKRydqWT7Rbe/LQtSd9qPo02A3MeID2kQFpun7Pb
- kZCvvLY3v7y0oo39QRI3Q==
+	id S965031Ab2JWUkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2012 16:40:25 -0400
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:5713 "EHLO
+	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933816Ab2JWUkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 16:40:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=1037; q=dns/txt; s=iport;
+  t=1351024821; x=1352234421;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=I5379ctUDYRdJ94FGig65oFXdyqLebVVoRzUeQtE9T0=;
+  b=FIBZJ9lIDdZpiaQ/VoSSyLkNM/rZ/Anz/4ns1VpKTSet8ZG+2yQEvjUB
+   XvhUGO/mXRJG9uTouwLepxhK/iYyVNDhqdJ7n9HK6OKCqFglxIHzk67OU
+   rDtvP9b/UYF2ctuvKF8LtXHxkC+vxMPTx8/ykvm/GvdeewABdiZKLsym0
+   s=;
+X-IronPort-AV: E=Sophos;i="4.80,637,1344211200"; 
+   d="scan'208";a="134638445"
+Received: from rcdn-core-3.cisco.com ([173.37.93.154])
+  by rcdn-iport-5.cisco.com with ESMTP; 23 Oct 2012 20:40:20 +0000
+Received: from ipsn-lnx-hordp.cisco.com (dhcp-64-100-104-96.cisco.com [64.100.104.96])
+	by rcdn-core-3.cisco.com (8.14.5/8.14.5) with ESMTP id q9NKeDVT019733;
+	Tue, 23 Oct 2012 20:40:20 GMT
+X-Mailer: git-send-email 1.8.0.2.gc921d59.dirty
+In-Reply-To: <1351024796-28174-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208244>
 
-Am 23.10.2012 21:16, schrieb Nahor:
-> On 2012-10-22 09:34, W. Trevor King wrote:
->> From: "W. Trevor King" <wking@tremily.us>
->>
->> This removes a configuration step if you're trying to setup =C3=86va=
-r's
->>
->>    $ git submodule foreach 'git checkout $(git config --file $toplev=
-el/.gitmodules submodule.$name.branch) && git pull'
->>
->> workflow from
->>
->>    commit f030c96d8643fa0a1a9b2bd9c2f36a77721fb61f
->>    Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->>    Date:   Fri May 21 16:10:10 2010 +0000
->>
->>      git-submodule foreach: Add $toplevel variable
->>
->> If you're not using that workflow, I see no harm in recording the
->> branch used to determine the original submodule commit.
+git pull --rebase does some clever tricks to find the base
+for $upstream , but it forgets that we may not have any
+branch at all.  When this happens, git merge-base reports its
+"usage" help in the middle of an otherwise successful
+rebase operation, because git-merge is called with one too
+few parameters.
 
-Except recording the branch name might raise expectations about what gi=
-t
-will do with it. And as far as this patch goes, git won't do anything
-with it (yet).
+Since we do not need the merge-base trick in the case of a
+detached HEAD, detect this condition and bypass the clever
+trick and the usage noise.
 
-> IMHO, the problem is that this works only for a very specific workflo=
-w. Normal git usage can very easily break this feature.
->=20
-> For instance, the module may later be updated to a commit in branch B=
- instead of branch A. Unless you remember to also update .gitmodule, yo=
-u have then inconsistent information.
->=20
-> A similar issue arises if branch A is deleted from the module later (=
-for instance because it has been merged in the master branch and is not=
- useful anymore). Then .gitmodule points to a non-existant branch.
-> Same thing if a branch is renamed.
+Signed-off-by: Phil Hord <hordp@cisco.com>
+---
+ git-pull.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-Those are valid points. The next "git submodule update" will leave the
-submodule with a detached HEAD, making the branch configuration rather
-meaningless (except for your "git submodule foreach ..." use case of
-course).
-
-> Last issue, the branch that exists in your local repository may not e=
-xist in someone else's repository, either because the branch is purely =
-local, or because it has a different name on the remote repo.
-
-You'll always face this kind of problems with commits too when using
-submodules, so I don't see that as a problem here.
-
-> I think a better place to store that kind of information is using git=
--notes. That way, if the branch is renamed or deleted, you can easily u=
-pdate the old notes to use the new name instead.
-
-I can't comment on that, as I have never been using notes so far.
-
-But I'd rather see a patch series properly implementing the always-tip
-mode =C3=86var mentions in f030c96d86 (and which is requested by some u=
-sers),
-especially the interesting parts: What should git record as commit in
-that case and how are "git status" and "git diff" going to handle
-submodules which shall follow a specific branch. I assume "git submodul=
-e
-update" is the right point in time to fetch that branch again and check
-out a newer branch tip if necessary, but should that commit be added to
-the superproject for that submodule automagically or not? This patch
-falls short of this, as it does the easy part but not the interesting
-ones ;-)
+diff --git a/git-pull.sh b/git-pull.sh
+index 2a10047..266e682 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -200,6 +200,7 @@ test true = "$rebase" && {
+ 		require_clean_work_tree "pull with rebase" "Please commit or stash them."
+ 	fi
+ 	oldremoteref= &&
++	test -n "$curr_branch" &&
+ 	. git-parse-remote &&
+ 	remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
+ 	oldremoteref="$(git rev-parse -q --verify "$remoteref")" &&
+-- 
+1.8.0.2.gc921d59.dirty
