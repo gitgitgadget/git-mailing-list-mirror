@@ -1,206 +1,129 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/2] git svn: canonicalize_url(): use
- svn_path_canonicalize when available
-Date: Tue, 23 Oct 2012 22:58:12 +0000
-Message-ID: <20121023225812.GA21716@dcvr.yhbt.net>
-References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
- <1343468312-72024-3-git-send-email-schwern@pobox.com>
- <20120728135018.GB9715@burratino>
- <50143700.80900@pobox.com>
- <20121014114234.GA18127@elie.Belkin>
- <20121014114857.GB21106@elie.Belkin>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: Git submodule for a local branch?
+Date: Tue, 23 Oct 2012 18:09:55 -0400
+Message-ID: <20121023220955.GA30442@odin.tremily.us>
+References: <20121022123714.GL25563@odin.tremily.us> <508704D5.9020902@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 00:58:26 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=BOKacYhQ+x31HxR3
+Cc: Git <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 24 01:10:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQnQX-0006jZ-87
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 00:58:25 +0200
+	id 1TQnc2-0006e3-2v
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 01:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933725Ab2JWW6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 18:58:13 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53180 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933464Ab2JWW6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 18:58:12 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 592821F42D;
-	Tue, 23 Oct 2012 22:58:12 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20121014114857.GB21106@elie.Belkin>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933658Ab2JWXKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2012 19:10:04 -0400
+Received: from vms173019pub.verizon.net ([206.46.173.19]:57459 "EHLO
+	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933464Ab2JWXKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 19:10:03 -0400
+X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Oct 2012 19:10:03 EDT
+Received: from odin.tremily.us ([unknown] [72.76.145.253])
+ by vms173019.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MCD005QG9KJAR10@vms173019.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 23 Oct 2012 17:09:56 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 9E7A467EBC0; Tue,
+ 23 Oct 2012 18:09:55 -0400 (EDT)
+Content-disposition: inline
+In-reply-to: <508704D5.9020902@web.de>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208272>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Until Subversion 1.7 (more precisely r873487), the standard way to
-> canonicalize a URI was to call svn_path_canonicalize().  Use it.
-> 
-> This saves "git svn" from having to rely on our imperfect
-> reimplementation of the same.  If the function doesn't exist or
-> returns undef, though, it can use the fallback code, which we keep to
-> be conservative.  Since svn_path_canonicalize() was added before
-> Subversion 1.1, hopefully that doesn't happen often.
 
-Hi Jonathan, this fails for me using http (but not file:// or svn://).
-1/2 of this RFC looks fine, though.
+--BOKacYhQ+x31HxR3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-subversion 1.6.12dfsg-6, apache2-mpm-prefork 2.2.16-6+squeeze8
-(Debian squeeze)
+On Tue, Oct 23, 2012 at 10:57:57PM +0200, Jens Lehmann wrote:
+> Am 22.10.2012 14:37, schrieb W. Trevor King:
+> > but cloning a remote repository (vs. checking out a local branch)
+> > seems to be baked into the submodule implementation.  Should I be
+> > thinking about generalizing git-submodule.sh, or am I looking under
+> > the wrong rock?  My ideal syntax would be something like
+> >=20
+> >   $ git submodule add -b c --local dir-for-c/
+>=20
+> But then we'd have to be able to have two (or more) work trees using
+> the same git directory, which current submodule code can't.
 
-$ SVN_HTTPD_PORT=12345 sh t9118-git-svn-funky-branch-names.sh -v
-Initialized empty Git repository in /home/ew/git-core/t/trash directory.t9118-git-svn-funky-branch-names/.git/
-expecting success: 
-	mkdir project project/trunk project/branches project/tags &&
-	echo foo > project/trunk/foo &&
-	svn_cmd import -m "$test_description" project "$svnrepo/pr ject" &&
-	rm -rf project &&
-	svn_cmd cp -m "fun" "$svnrepo/pr ject/trunk" \
-	                "$svnrepo/pr ject/branches/fun plugin" &&
-	svn_cmd cp -m "more fun!" "$svnrepo/pr ject/branches/fun plugin" \
-	                      "$svnrepo/pr ject/branches/more fun plugin!" &&
-	svn_cmd cp -m "scary" "$svnrepo/pr ject/branches/fun plugin" \
-	              "$svnrepo/pr ject/branches/$scary_uri" &&
-	svn_cmd cp -m "leading dot" "$svnrepo/pr ject/trunk" \
-			"$svnrepo/pr ject/branches/.leading_dot" &&
-	svn_cmd cp -m "trailing dot" "$svnrepo/pr ject/trunk" \
-			"$svnrepo/pr ject/branches/trailing_dot." &&
-	svn_cmd cp -m "trailing .lock" "$svnrepo/pr ject/trunk" \
-			"$svnrepo/pr ject/branches/trailing_dotlock.lock" &&
-	svn_cmd cp -m "reflog" "$svnrepo/pr ject/trunk" \
-			"$svnrepo/pr ject/branches/not-a@{0}reflog@" &&
-	start_httpd
-	
-Adding         project/trunk
-Adding         project/trunk/foo
-Adding         project/branches
-Adding         project/tags
+And that's the problem I'm trying to solve ;).
 
-Committed revision 1.
+> > The motivation is that I have website that contains a bunch of
+> > sub-sites, and the sub-sites share content.  I have per-sub-site
+> > branches (a, b, c) and want a master branch (index) that aggregates
+> > them.  Perhaps this is too much to wedge into a single repository?
+>=20
+> To me this sounds upside-down. I'd put the three sub-sites into
+> different repositories and the shared content into a submodule that
+> all three sub-sites use. At least that is how I do all my content
+> sharing on the websites I have done ... does that make sense?
 
-Committed revision 2.
+That makes sense, however the problem is not in the common content, it
+is in the final index:
 
-Committed revision 3.
+  index
+  |-- sub-site a (branch of sub-site-x)
+  |-- sub-site b (branch of sub-site-x)
+  `-- sub-site c (branch of sub-site-x)
 
-Committed revision 4.
+All of the sub-sites are branches of a single sub-site-x master:
 
-Committed revision 5.
+  o--o--o--o   sub-site-x
+   \--o--o--o  sub-site-1
+       \--o    sub-site-2
+        \--o   sub-site-3
 
-Committed revision 6.
+So they all live in the same repository.  My index repository will
+have submodules for each of the sub-sites, and I'd like the index
+branch to *also* live in same repository as the subsites.  This last
+bit is the sticky part.
 
-Committed revision 7.
+For a proof-of-concept example (where I currently use public
+repositories for the sub-site submodules), see
 
-Committed revision 8.
-ok 1 - setup svnrepo
+  http://wking.github.com/swc-workshop/
 
-expecting success: 
-	git svn clone -s "$svnrepo/pr ject" project &&
-	(
-		cd project &&
-		git rev-parse "refs/remotes/fun%20plugin" &&
-		git rev-parse "refs/remotes/more%20fun%20plugin!" &&
-		git rev-parse "refs/remotes/$scary_ref" &&
-		git rev-parse "refs/remotes/%2Eleading_dot" &&
-		git rev-parse "refs/remotes/trailing_dot%2E" &&
-		git rev-parse "refs/remotes/trailing_dotlock%2Elock" &&
-		git rev-parse "refs/remotes/$non_reflog"
-	)
-	
-Initialized empty Git repository in /home/ew/git-core/t/trash directory.t9118-git-svn-funky-branch-names/project/.git/
-Bad URL passed to RA layer: URL 'http://127.0.0.1:12345/pr ject' is malformed or the scheme or host or path is missing at /home/ew/git-core/perl/blib/lib/Git/SVN.pm line 310
+which uses gh-pages as the index branch, and master, 2012-10-caltech,
+and 2012-10-lbl for the sub-site branches.
 
-not ok - 2 test clone with funky branch names
-#	
-#		git svn clone -s "$svnrepo/pr ject" project &&
-#		(
-#			cd project &&
-#			git rev-parse "refs/remotes/fun%20plugin" &&
-#			git rev-parse "refs/remotes/more%20fun%20plugin!" &&
-#			git rev-parse "refs/remotes/$scary_ref" &&
-#			git rev-parse "refs/remotes/%2Eleading_dot" &&
-#			git rev-parse "refs/remotes/trailing_dot%2E" &&
-#			git rev-parse "refs/remotes/trailing_dotlock%2Elock" &&
-#			git rev-parse "refs/remotes/$non_reflog"
-#		)
-#		
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
-expecting success: 
-	(
-		cd project &&
-		git reset --hard 'refs/remotes/more%20fun%20plugin!' &&
-		echo hello >> foo &&
-		git commit -m 'hello' -- foo &&
-		git svn dcommit
-	)
-	
-fatal: ambiguous argument 'refs/remotes/more%20fun%20plugin!': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok - 3 test dcommit to funky branch
-#	
-#		(
-#			cd project &&
-#			git reset --hard 'refs/remotes/more%20fun%20plugin!' &&
-#			echo hello >> foo &&
-#			git commit -m 'hello' -- foo &&
-#			git svn dcommit
-#		)
-#		
+--BOKacYhQ+x31HxR3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-expecting success: 
-	(
-		cd project &&
-		git reset --hard "refs/remotes/$scary_ref" &&
-		echo urls are scary >> foo &&
-		git commit -m "eep" -- foo &&
-		git svn dcommit
-	)
-	
-fatal: ambiguous argument 'refs/remotes/Abo-Uebernahme%20(Bug%20#994)': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok - 4 test dcommit to scary branch
-#	
-#		(
-#			cd project &&
-#			git reset --hard "refs/remotes/$scary_ref" &&
-#			echo urls are scary >> foo &&
-#			git commit -m "eep" -- foo &&
-#			git svn dcommit
-#		)
-#		
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-expecting success: 
-	(
-		cd project &&
-		git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
-		echo who names branches like this anyway? >> foo &&
-		git commit -m "bar" -- foo &&
-		git svn dcommit
-	)
-	
-fatal: ambiguous argument 'refs/remotes/trailing_dotlock%2Elock': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok - 5 test dcommit to trailing_dotlock branch
-#	
-#		(
-#			cd project &&
-#			git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
-#			echo who names branches like this anyway? >> foo &&
-#			git commit -m "bar" -- foo &&
-#			git svn dcommit
-#		)
-#		
+iQIcBAEBAgAGBQJQhxWwAAoJEEUbTsx0l5OM6okP+wXqzfplYbs7duodS4NRN/NN
+t7K/FgQIuFDYs6Va2RkdXyzQ+6Q3//RPiOMgp5YlJIWO/+0BKkslxyUztlIz8FPZ
+X+sanf5bmzmh1bCP7Adxnx44htq+4nDzpa+G9z++rHHwbFqpEfgy8hOlntD8Aj9p
+Mm6f1qhSkCg5cp198MrBCfG1Hfp9hK+zQVvNIBFwe06LDkRtzj5CSa2aOM306KaB
+kcaa6AvYnoiCcaqMf3IYHvsVZqjAsBm4GEjCFvy+LB8LcI8PWKYm60vB6mAhxk1s
+dVPicJUQjUeAOcPCxp6wfS/Qq9qIzNPFwXSVN+d12IcKAaysr5SacDTpXRuB52Rt
+crEDjIRzYQHjYa+vrrl5wl50BVN6/6w1ZSme1a8qWjQVCfpd9m6CvbY8IfYLHTxB
+Ypd6tZz/V7fJHZMAKM9HFysYPYk/1joS7qT+3oUj4ox3M6e5cRmdkPxK10zTLu1g
+pm4Yp98baVufKBVVCdrSMedCvuOUxLjkcKbMO23dF0Vnj9zArDk1KM/LZ5DVDeUD
+cn9IiKq20QyXddM9mzhujOfKkk2v75w+PMDCZHE35fn26DTOZcLHbL8jfMAlEHcB
+cInfm0kd3jGRpylSpOUO58rfVA0LfG+uJ8NPUXMNND9FWxdcTWWyXj1a58WcT8nQ
+BecrYRBqyHOBQacXBo6U
+=+vI8
+-----END PGP SIGNATURE-----
 
-# failed 4 among 5 test(s)
-1..5
+--BOKacYhQ+x31HxR3--
