@@ -1,112 +1,100 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-status: show short sequencer state
-Date: Tue, 23 Oct 2012 08:05:54 +0200
-Message-ID: <vpqsj95soxp.fsf@grenoble-inp.fr>
-References: <1350948569-28445-2-git-send-email-hordp@cisco.com>
+From: Joey Jiao <joey.jiaojg@gmail.com>
+Subject: Git push slowly under 1000M/s network
+Date: Tue, 23 Oct 2012 14:27:44 +0800
+Message-ID: <CAKOmCvp23fALGsDe4Ck7ZXpMJmOAq+YWCXPe_xb6GfQcjJi_kQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: phil.hord@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	konglu@minatec.inpg.fr, Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
-	git@vger.kernel.org,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 08:06:23 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 23 08:28:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQXd8-0006lR-W0
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 08:06:23 +0200
+	id 1TQXyN-0002j5-8E
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 08:28:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752313Ab2JWGGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 02:06:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37555 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750921Ab2JWGGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 02:06:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q9N5wTge029223
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 23 Oct 2012 07:58:29 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TQXcg-0005hh-CF; Tue, 23 Oct 2012 08:05:54 +0200
-In-Reply-To: <1350948569-28445-2-git-send-email-hordp@cisco.com> (Phil Hord's
-	message of "Mon, 22 Oct 2012 19:29:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 23 Oct 2012 07:58:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q9N5wTge029223
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1351576717.01138@k28UTbN4UfAYDqiiGxkXYw
+	id S1754012Ab2JWG2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2012 02:28:06 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:61821 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752595Ab2JWG2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 02:28:05 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so2518370pad.19
+        for <git@vger.kernel.org>; Mon, 22 Oct 2012 23:28:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=ZLKzTGc4VptWYUB8iRqK/i6USUAZCfoiAFbUDUCBuoY=;
+        b=LP1Rt0R0X/gQYyC6twH0PyuhAsHw9Xw+7/JKylLVCz5hTCtbIUZus8od6rSSzMioEI
+         GW5PaomAs9mkM79BkYoXDbFMqh25XrOsmeZa9s9aVoABhtZh8JbMPvrFmvh0veWABITG
+         /fbKpYLaK2rInwCNIsfg1XEb9XxYjQfQFL1rgr+TAeO+AxjKnLnD2RWDedZGQ8FN8q8f
+         lspJfXGdRgo1o0k98U+SXWn11wOnP6v07AIChtGfxov4DVCVKxv05JMaIhI/zklqk/Wq
+         vN9SmTmt+/QvFEWJGORqb8eQzw9o2lAlPv3B1g3Q7yJ9Yn2KMTEK73KpYaaGIuaTW2p6
+         ZRSA==
+Received: by 10.68.136.229 with SMTP id qd5mr36874444pbb.154.1350973684422;
+ Mon, 22 Oct 2012 23:28:04 -0700 (PDT)
+Received: by 10.66.219.166 with HTTP; Mon, 22 Oct 2012 23:27:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208215>
 
-Phil Hord <hordp@cisco.com> writes:
+Hi Git Listeners,
+I'm facing one problem when pushing to git repository via gerrit port.
+Don't stop to look into the below content, as I doubt it might be a
+git problem.
 
-> +	merge              a git-merge is in progress
-> +	am                 a git-am is in progress
-> +	rebase             a git-rebase is in progress
-> +	rebase-interactive a git-rebase--interactive is in progress
-> +	cherry-pick        a git-cherry-pick is in progress
-> +	bisect             a git-bisect is in progress
+The pushing takes me 7mins~11mins each time every I had git gc on remote.
+The remote server is 24 core with scsi disk. And the connection is
+within 1000M/s intranet.
+The pushing is only slowly on this kernel project, but faster on other
+android projects, takes seconds only.
+I tried on 4 core and 24 core clients to do the push, the time is
+almost the same. So I think it's not the client problem.
 
-Avoid using git-foo syntax in documentation, it suggests that this is
-valid command, which isn't true anymore. `git foo` seems the most common
-syntax. Also, git-rebase--interactive is not user-visible => `git rebase
---interactive`.
+The command I use as below. I also tried to pushing to git repository
+directly, it is also slow, only some seconds benifit. So I think it
+might be not the gerrit problem.
+$ git push -v ssh://remote_url:29418/kernel/msm.git HEAD:refs/changes/33599
+The stderr stops at remote: Resolving deltas:   0% (0/2) for 99% of the time.
 
-> -	if (state->am_empty_patch)
-> +	if (state->substate==WT_SUBSTATE_NOMINAL)
->  		status_printf_ln(s, color,
->  			_("The current patch is empty."));
+I added some timestamp in the git source code, Like git version 1.8.0.
+The receive_status called by send_pack inside send-pack.c takes the
+99% of the time.
 
-This looks weird. First, spaces around == (here and below). Then, the
-logic is unintuitive. The "if" suggests everything is allright, and the
-message below is very specific. This at least deserves a comment.
+It looks like the client is waiting the pushing result status from
+server although by checking server side, the real object has already
+been upload succeed.
 
->  	if (advice_status_hints) {
-> -		if (!state->am_empty_patch)
-> +		if (state->substate==WT_SUBSTATE_CONFLICTED)
+Below is the log after adding time info.
+$ time git push -v ssh://git.qrd.qualcomm.com:29418/kernel/msm.git
+HEAD:refs/changes/33599 2>&1|tee -a log.txt
+Pushing to ssh://git.qrd.qualcomm.com:29418/kernel/msm.git
+error: Time start packet_flush: Tue Oct 23 14:14:47 2012
 
-Spaces around ==.
+error: Time finish packet_trace: Tue Oct 23 14:14:47 2012
 
-> +static void wt_print_token(struct wt_status *s, const char *color, const char *token)
-> +{
-> +	color_fprintf(s->fp, color, "%s", token);
-> +	fputc(s->null_termination ? '\0' : '\n', s->fp);
-> +}
+error: Time finish safe_write: Tue Oct 23 14:14:47 2012
 
-The output format seems to be meant only for machine-consumption. Is
-there any case when we'd want color? I'd say we can disable coloring
-completely for this format (normally, color=auto does the right thing,
-but I prefer being 100% sure I'll get no color when writing scripts)
+error: Time start receive_status: Tue Oct 23 14:14:47 2012
 
-> +static void wt_shortstatus_print_sequencer(struct wt_status *s)
-[...]
-> +void wt_sequencer_print(struct wt_status *s)
-> +{
-> +	wt_shortstatus_print_sequencer(s);
-> +}
-> +
+remote: Resolving deltas:   0% (0/2)
+remote: (W) afafdad: no files changed, message updated
+error: Time start packet_read_line: Tue Oct 23 14:24:41 2012
+, len=10
+error: Time packet_read_line: Tue Oct 23 14:24:41 2012
+, len=22
+error: Time packet_read_line: Tue Oct 23 14:24:41 2012
+, len=0
+error: Time finish receive_status: Tue Oct 23 14:24:41 2012
 
-Why do you need this trivial wrapper?
+To ssh://git.qrd.qualcomm.com:29418/kernel/msm.git
+ * [new branch]      HEAD -> refs/changes/33599
 
-Other than that, I like the idea (although I have no concrete use-case
-in mind), but I didn't actually test the patch.
-
+real	9m56.928s
+user	0m0.364s
+sys	0m0.160s
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Joey Jiao
