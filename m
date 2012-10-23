@@ -1,77 +1,206 @@
-From: Tom Jones <tom@oxix.org>
-Subject: [PATCH] Add -S, --gpg-sign option to manpage of "git commit"
-Date: Sun, 21 Oct 2012 20:46:37 +0100
-Message-ID: <20121023225101.189E57D4C@ralph.oxix.org>
-References: <7vbofvfup7.fsf@alter.siamese.dyndns.org>
-Cc: tom@oxix.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 24 00:52:18 2012
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 2/2] git svn: canonicalize_url(): use
+ svn_path_canonicalize when available
+Date: Tue, 23 Oct 2012 22:58:12 +0000
+Message-ID: <20121023225812.GA21716@dcvr.yhbt.net>
+References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
+ <1343468312-72024-3-git-send-email-schwern@pobox.com>
+ <20120728135018.GB9715@burratino>
+ <50143700.80900@pobox.com>
+ <20121014114234.GA18127@elie.Belkin>
+ <20121014114857.GB21106@elie.Belkin>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 24 00:58:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQnKZ-0002T4-L9
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 00:52:15 +0200
+	id 1TQnQX-0006jZ-87
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 00:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934038Ab2JWWwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 18:52:03 -0400
-Received: from [81.187.158.195] ([81.187.158.195]:39883 "EHLO ralph.oxix.org"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S933995Ab2JWWv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 18:51:59 -0400
-Received: by ralph.oxix.org (Postfix, from userid 1000)
-	id 189E57D4C; Tue, 23 Oct 2012 23:51:01 +0100 (BST)
-In-Reply-To: <7vbofvfup7.fsf@alter.siamese.dyndns.org>
+	id S933725Ab2JWW6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2012 18:58:13 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53180 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933464Ab2JWW6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 18:58:12 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 592821F42D;
+	Tue, 23 Oct 2012 22:58:12 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20121014114857.GB21106@elie.Belkin>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208271>
 
-git commit -S, --gpg-sign was mentioned in the program's help message,
-but not in the manpage.
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Until Subversion 1.7 (more precisely r873487), the standard way to
+> canonicalize a URI was to call svn_path_canonicalize().  Use it.
+> 
+> This saves "git svn" from having to rely on our imperfect
+> reimplementation of the same.  If the function doesn't exist or
+> returns undef, though, it can use the fallback code, which we keep to
+> be conservative.  Since svn_path_canonicalize() was added before
+> Subversion 1.1, hopefully that doesn't happen often.
 
-This adds an equivalent entry for the option in the manpage.
+Hi Jonathan, this fails for me using http (but not file:// or svn://).
+1/2 of this RFC looks fine, though.
 
-Signed-off-by: Tom Jones <tom@oxix.org>
----
-On Sun, Oct 21, 2012 at 01:15:16PM -0700, Junio C Hamano wrote:
-> Are you sure about this?  The order [...]
+subversion 1.6.12dfsg-6, apache2-mpm-prefork 2.2.16-6+squeeze8
+(Debian squeeze)
 
-Good point.  Please find a revised patch, with the newly documented
-option before the optional double dashes, below.
+$ SVN_HTTPD_PORT=12345 sh t9118-git-svn-funky-branch-names.sh -v
+Initialized empty Git repository in /home/ew/git-core/t/trash directory.t9118-git-svn-funky-branch-names/.git/
+expecting success: 
+	mkdir project project/trunk project/branches project/tags &&
+	echo foo > project/trunk/foo &&
+	svn_cmd import -m "$test_description" project "$svnrepo/pr ject" &&
+	rm -rf project &&
+	svn_cmd cp -m "fun" "$svnrepo/pr ject/trunk" \
+	                "$svnrepo/pr ject/branches/fun plugin" &&
+	svn_cmd cp -m "more fun!" "$svnrepo/pr ject/branches/fun plugin" \
+	                      "$svnrepo/pr ject/branches/more fun plugin!" &&
+	svn_cmd cp -m "scary" "$svnrepo/pr ject/branches/fun plugin" \
+	              "$svnrepo/pr ject/branches/$scary_uri" &&
+	svn_cmd cp -m "leading dot" "$svnrepo/pr ject/trunk" \
+			"$svnrepo/pr ject/branches/.leading_dot" &&
+	svn_cmd cp -m "trailing dot" "$svnrepo/pr ject/trunk" \
+			"$svnrepo/pr ject/branches/trailing_dot." &&
+	svn_cmd cp -m "trailing .lock" "$svnrepo/pr ject/trunk" \
+			"$svnrepo/pr ject/branches/trailing_dotlock.lock" &&
+	svn_cmd cp -m "reflog" "$svnrepo/pr ject/trunk" \
+			"$svnrepo/pr ject/branches/not-a@{0}reflog@" &&
+	start_httpd
+	
+Adding         project/trunk
+Adding         project/trunk/foo
+Adding         project/branches
+Adding         project/tags
 
-> Sign off?
+Committed revision 1.
 
-Now added, too.
+Committed revision 2.
 
- Documentation/git-commit.txt |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+Committed revision 3.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 9594ac8..4b78bd0 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--status | --no-status]
--	   [-i | -o] [--] [<file>...]
-+	   [-i | -o] [-S[keyid]] [--] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -276,6 +276,10 @@ configuration variable documented in linkgit:git-config[1].
- 	commit message template when using an editor to prepare the
- 	default commit message.
- 
-+-S[<keyid>]::
-+--gpg-sign[=<keyid>]::
-+	GPG-sign commit.
-+
- \--::
- 	Do not interpret any more arguments as options.
- 
--- 
-1.7.2.5
+Committed revision 4.
+
+Committed revision 5.
+
+Committed revision 6.
+
+Committed revision 7.
+
+Committed revision 8.
+ok 1 - setup svnrepo
+
+expecting success: 
+	git svn clone -s "$svnrepo/pr ject" project &&
+	(
+		cd project &&
+		git rev-parse "refs/remotes/fun%20plugin" &&
+		git rev-parse "refs/remotes/more%20fun%20plugin!" &&
+		git rev-parse "refs/remotes/$scary_ref" &&
+		git rev-parse "refs/remotes/%2Eleading_dot" &&
+		git rev-parse "refs/remotes/trailing_dot%2E" &&
+		git rev-parse "refs/remotes/trailing_dotlock%2Elock" &&
+		git rev-parse "refs/remotes/$non_reflog"
+	)
+	
+Initialized empty Git repository in /home/ew/git-core/t/trash directory.t9118-git-svn-funky-branch-names/project/.git/
+Bad URL passed to RA layer: URL 'http://127.0.0.1:12345/pr ject' is malformed or the scheme or host or path is missing at /home/ew/git-core/perl/blib/lib/Git/SVN.pm line 310
+
+not ok - 2 test clone with funky branch names
+#	
+#		git svn clone -s "$svnrepo/pr ject" project &&
+#		(
+#			cd project &&
+#			git rev-parse "refs/remotes/fun%20plugin" &&
+#			git rev-parse "refs/remotes/more%20fun%20plugin!" &&
+#			git rev-parse "refs/remotes/$scary_ref" &&
+#			git rev-parse "refs/remotes/%2Eleading_dot" &&
+#			git rev-parse "refs/remotes/trailing_dot%2E" &&
+#			git rev-parse "refs/remotes/trailing_dotlock%2Elock" &&
+#			git rev-parse "refs/remotes/$non_reflog"
+#		)
+#		
+
+expecting success: 
+	(
+		cd project &&
+		git reset --hard 'refs/remotes/more%20fun%20plugin!' &&
+		echo hello >> foo &&
+		git commit -m 'hello' -- foo &&
+		git svn dcommit
+	)
+	
+fatal: ambiguous argument 'refs/remotes/more%20fun%20plugin!': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+not ok - 3 test dcommit to funky branch
+#	
+#		(
+#			cd project &&
+#			git reset --hard 'refs/remotes/more%20fun%20plugin!' &&
+#			echo hello >> foo &&
+#			git commit -m 'hello' -- foo &&
+#			git svn dcommit
+#		)
+#		
+
+expecting success: 
+	(
+		cd project &&
+		git reset --hard "refs/remotes/$scary_ref" &&
+		echo urls are scary >> foo &&
+		git commit -m "eep" -- foo &&
+		git svn dcommit
+	)
+	
+fatal: ambiguous argument 'refs/remotes/Abo-Uebernahme%20(Bug%20#994)': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+not ok - 4 test dcommit to scary branch
+#	
+#		(
+#			cd project &&
+#			git reset --hard "refs/remotes/$scary_ref" &&
+#			echo urls are scary >> foo &&
+#			git commit -m "eep" -- foo &&
+#			git svn dcommit
+#		)
+#		
+
+expecting success: 
+	(
+		cd project &&
+		git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
+		echo who names branches like this anyway? >> foo &&
+		git commit -m "bar" -- foo &&
+		git svn dcommit
+	)
+	
+fatal: ambiguous argument 'refs/remotes/trailing_dotlock%2Elock': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+not ok - 5 test dcommit to trailing_dotlock branch
+#	
+#		(
+#			cd project &&
+#			git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
+#			echo who names branches like this anyway? >> foo &&
+#			git commit -m "bar" -- foo &&
+#			git svn dcommit
+#		)
+#		
+
+# failed 4 among 5 test(s)
+1..5
