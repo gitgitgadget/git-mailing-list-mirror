@@ -1,427 +1,96 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: [PATCH] git-status: show short sequencer state
-Date: Tue, 23 Oct 2012 14:58:47 -0400
-Message-ID: <1351018727-26815-1-git-send-email-hordp@cisco.com>
-Cc: phil.hord@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	konglu@minatec.inpg.fr,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: hordp@cisco.com
-X-From: git-owner@vger.kernel.org Tue Oct 23 20:59:48 2012
+From: Nahor <nahor.j+gmane@gmail.com>
+Subject: Re: [PATCH] git-submodule add: Record branch name in .gitmodules
+Date: Tue, 23 Oct 2012 12:16:22 -0700
+Message-ID: <5086ED06.5020406@gmail.com>
+References: <61a31f6bc61d4df322a097e32ba472390c583a81.1350923683.git.wking@tremily.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 23 21:20:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQjhc-0000g0-2m
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 20:59:48 +0200
+	id 1TQk1R-0006Z9-Nq
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 21:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757384Ab2JWS7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 14:59:35 -0400
-Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:57989 "EHLO
-	rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756771Ab2JWS7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 14:59:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=13199; q=dns/txt;
-  s=iport; t=1351018774; x=1352228374;
-  h=from:to:cc:subject:date:message-id;
-  bh=oJ3juDj0rV1ztQK9uZAtD6108AySiZ5xnHFBfaKHVz8=;
-  b=ai5xmPzrzi5+CR8Tj5aKAdSCMbNR6R5VYI+nCxwqwhuuWNTQg/M8YRVX
-   UYsfORel/UXQ+zgSj0eQpJZ7RiFN2VmLbd1qathFpW2GeN00UuNaHClrQ
-   Pf2LsMTaQWYYQnAkz/ZOlJSje3tgI4ZVC+RX57Rwi6lOxrJi3oGSThgWL
-   U=;
-X-IronPort-AV: E=Sophos;i="4.80,637,1344211200"; 
-   d="scan'208";a="134586070"
-Received: from rcdn-core2-4.cisco.com ([173.37.113.191])
-  by rcdn-iport-7.cisco.com with ESMTP; 23 Oct 2012 18:59:34 +0000
-Received: from ipsn-lnx-hordp.cisco.com (dhcp-64-100-104-96.cisco.com [64.100.104.96])
-	by rcdn-core2-4.cisco.com (8.14.5/8.14.5) with ESMTP id q9NIxXqX031322;
-	Tue, 23 Oct 2012 18:59:33 GMT
-X-Mailer: git-send-email 1.8.0.2.gc921d59.dirty
+	id S933264Ab2JWTUD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2012 15:20:03 -0400
+Received: from plane.gmane.org ([80.91.229.3]:45279 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932144Ab2JWTUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 15:20:01 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TQk1D-0006RK-TZ
+	for git@vger.kernel.org; Tue, 23 Oct 2012 21:20:03 +0200
+Received: from 173-167-111-189-sfba.hfc.comcastbusiness.net ([173.167.111.189])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Oct 2012 21:20:03 +0200
+Received: from nahor.j+gmane by 173-167-111-189-sfba.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Oct 2012 21:20:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 173-167-111-189-sfba.hfc.comcastbusiness.net
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <61a31f6bc61d4df322a097e32ba472390c583a81.1350923683.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208240>
 
-Recently git-status learned to display the state of the git
-sequencer in long form to help the user remember an interrupted
-command.  This information is also useful in short form to
-humans and scripts, but no option is available to boil it down.
+On 2012-10-22 09:34, W. Trevor King wrote:
+> From: "W. Trevor King" <wking@tremily.us>
+>
+> This removes a configuration step if you're trying to setup =C3=86var=
+'s
+>
+>    $ git submodule foreach 'git checkout $(git config --file $topleve=
+l/.gitmodules submodule.$name.branch) && git pull'
+>
+> workflow from
+>
+>    commit f030c96d8643fa0a1a9b2bd9c2f36a77721fb61f
+>    Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>    Date:   Fri May 21 16:10:10 2010 +0000
+>
+>      git-submodule foreach: Add $toplevel variable
+>
+> If you're not using that workflow, I see no harm in recording the
+> branch used to determine the original submodule commit.
 
-Teach git-status to report the sequencer state in short form
-using a new --sequencer (-S) switch.  Output zero or more
-simple state token strings indicating the deduced state of the
-git sequencer.
+IMHO, the problem is that this works only for a very specific workflow.=
+=20
+Normal git usage can very easily break this feature.
 
-Introduce a common function to determine the current sequencer
-state so the regular status function and this short version can
-share common code.
+=46or instance, the module may later be updated to a commit in branch B=
+=20
+instead of branch A. Unless you remember to also update .gitmodule, you=
+=20
+have then inconsistent information.
 
-Add a substate to wt_status_state to track more detailed
-information about a state, such as "conflicted" or "resolved".
-Move the am_empty_patch flage out of wt_status_state and into
-this new substate.
+A similar issue arises if branch A is deleted from the module later (fo=
+r=20
+instance because it has been merged in the master branch and is not=20
+useful anymore). Then .gitmodule points to a non-existant branch.
+Same thing if a branch is renamed.
 
-State token strings which may be emitted and their meanings:
-    merge              a git-merge is in progress
-    am                 a git-am is in progress
-    rebase             a git-rebase is in progress
-    rebase-interactive a git-rebase--interactive is in progress
-    cherry-pick        a git-cherry-pick is in progress
-    bisect             a git-bisect is in progress
-    conflicted         there are unresolved conflicts
-    resolved           conflicts have been resolved
-    editing            interactive rebase stopped to edit a commit
-    edited             interactive rebase edit has been edited
-    splitting          interactive rebase, commit is being split
+Last issue, the branch that exists in your local repository may not=20
+exist in someone else's repository, either because the branch is purely=
+=20
+local, or because it has a different name on the remote repo.
 
-I also considered adding these tokens, but I decided it was not
-appropriate since these changes are not sequencer-related.  But
-it is possible I am being too short-sighted or have chosen the
-switch name poorly.
-    clean
-    index
-    modified
-    untracked
----
- Documentation/git-status.txt |  18 +++++++
- builtin/commit.c             |  12 ++++-
- wt-status.c                  | 125 +++++++++++++++++++++++++++++++++++--------
- wt-status.h                  |  14 ++++-
- 4 files changed, 145 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 67e5f53..31ffabd 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -38,6 +38,24 @@ OPTIONS
- 	across git versions and regardless of user configuration. See
- 	below for details.
- 
-+-S::
-+--sequence::
-+	Show the git sequencer status. This shows zero or more tokens
-+	describing the state of several git sequence operations. Each
-+	token is separated by a newline.
-++
-+	merge              a merge is in progress
-+	am                 an am is in progress
-+	rebase             a rebase is in progress
-+	rebase-interactive an interactive rebase is in progress
-+	cherry-pick        a cherry-pick is in progress
-+	bisect             a bisect is in progress
-+	conflicted         there are unresolved conflicts
-+	resolved           conflicts have been resolved
-+	editing            interactive rebase stopped to edit a commit
-+	edited             interactive rebase edit has been edited
-+	splitting          interactive rebase, commit is being split
-+
- -u[<mode>]::
- --untracked-files[=<mode>]::
- 	Show untracked files.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index a17a5df..9706ed9 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -114,7 +114,8 @@ static struct strbuf message = STRBUF_INIT;
- static enum {
- 	STATUS_FORMAT_LONG,
- 	STATUS_FORMAT_SHORT,
--	STATUS_FORMAT_PORCELAIN
-+	STATUS_FORMAT_PORCELAIN,
-+	STATUS_FORMAT_SEQUENCER
- } status_format = STATUS_FORMAT_LONG;
- 
- static int opt_parse_m(const struct option *opt, const char *arg, int unset)
-@@ -454,6 +455,9 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	case STATUS_FORMAT_PORCELAIN:
- 		wt_porcelain_print(s);
- 		break;
-+	case STATUS_FORMAT_SEQUENCER:
-+		wt_sequencer_print(s);
-+		break;
- 	case STATUS_FORMAT_LONG:
- 		wt_status_print(s);
- 		break;
-@@ -1156,6 +1160,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 			    N_("show status concisely"), STATUS_FORMAT_SHORT),
- 		OPT_BOOLEAN('b', "branch", &s.show_branch,
- 			    N_("show branch information")),
-+		OPT_SET_INT('S', "sequence", &status_format,
-+				N_("show sequencer state"),
-+				STATUS_FORMAT_SEQUENCER),
- 		OPT_SET_INT(0, "porcelain", &status_format,
- 			    N_("machine-readable output"),
- 			    STATUS_FORMAT_PORCELAIN),
-@@ -1216,6 +1223,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	case STATUS_FORMAT_PORCELAIN:
- 		wt_porcelain_print(&s);
- 		break;
-+	case STATUS_FORMAT_SEQUENCER:
-+		wt_sequencer_print(&s);
-+		break;
- 	case STATUS_FORMAT_LONG:
- 		s.verbose = verbose;
- 		s.ignore_submodule_arg = ignore_submodule_arg;
-diff --git a/wt-status.c b/wt-status.c
-index 2a9658b..81d91e3 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -781,7 +781,7 @@ static void show_merge_in_progress(struct wt_status *s,
- 				struct wt_status_state *state,
- 				const char *color)
- {
--	if (has_unmerged(s)) {
-+	if (state->substate == WT_SUBSTATE_CONFLICTED) {
- 		status_printf_ln(s, color, _("You have unmerged paths."));
- 		if (advice_status_hints)
- 			status_printf_ln(s, color,
-@@ -802,11 +802,11 @@ static void show_am_in_progress(struct wt_status *s,
- {
- 	status_printf_ln(s, color,
- 		_("You are in the middle of an am session."));
--	if (state->am_empty_patch)
-+	if (state->substate == WT_SUBSTATE_AM_EMPTY)
- 		status_printf_ln(s, color,
- 			_("The current patch is empty."));
- 	if (advice_status_hints) {
--		if (!state->am_empty_patch)
-+		if (state->substate == WT_SUBSTATE_CONFLICTED)
- 			status_printf_ln(s, color,
- 				_("  (fix conflicts and then run \"git am --resolved\")"));
- 		status_printf_ln(s, color,
-@@ -867,9 +867,7 @@ static void show_rebase_in_progress(struct wt_status *s,
- 				struct wt_status_state *state,
- 				const char *color)
- {
--	struct stat st;
--
--	if (has_unmerged(s)) {
-+	if (state->substate == WT_SUBSTATE_CONFLICTED) {
- 		status_printf_ln(s, color, _("You are currently rebasing."));
- 		if (advice_status_hints) {
- 			status_printf_ln(s, color,
-@@ -879,19 +877,19 @@ static void show_rebase_in_progress(struct wt_status *s,
- 			status_printf_ln(s, color,
- 				_("  (use \"git rebase --abort\" to check out the original branch)"));
- 		}
--	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), &st)) {
-+	} else if (state->substate == WT_SUBSTATE_RESOLVED) {
- 		status_printf_ln(s, color, _("You are currently rebasing."));
- 		if (advice_status_hints)
- 			status_printf_ln(s, color,
- 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
--	} else if (split_commit_in_progress(s)) {
-+	} else if (state->substate == WT_SUBSTATE_SPLITTING) {
- 		status_printf_ln(s, color, _("You are currently splitting a commit during a rebase."));
- 		if (advice_status_hints)
- 			status_printf_ln(s, color,
- 				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
- 	} else {
- 		status_printf_ln(s, color, _("You are currently editing a commit during a rebase."));
--		if (advice_status_hints && !s->amend) {
-+		if (advice_status_hints && state->substate == WT_SUBSTATE_EDITING) {
- 			status_printf_ln(s, color,
- 				_("  (use \"git commit --amend\" to amend the current commit)"));
- 			status_printf_ln(s, color,
-@@ -907,7 +905,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
- {
- 	status_printf_ln(s, color, _("You are currently cherry-picking."));
- 	if (advice_status_hints) {
--		if (has_unmerged(s))
-+		if (state->substate == WT_SUBSTATE_CONFLICTED)
- 			status_printf_ln(s, color,
- 				_("  (fix conflicts and run \"git commit\")"));
- 		else
-@@ -928,34 +926,68 @@ static void show_bisect_in_progress(struct wt_status *s,
- 	wt_status_print_trailer(s);
- }
- 
--static void wt_status_print_state(struct wt_status *s)
-+static void wt_status_get_state(struct wt_status *s , struct wt_status_state *state)
- {
--	const char *state_color = color(WT_STATUS_HEADER, s);
--	struct wt_status_state state;
- 	struct stat st;
- 
--	memset(&state, 0, sizeof(state));
-+	memset(state, 0, sizeof(*state));
- 
-+	// Determine main sequencer activity
- 	if (!stat(git_path("MERGE_HEAD"), &st)) {
--		state.merge_in_progress = 1;
-+		state->merge_in_progress = 1;
- 	} else if (!stat(git_path("rebase-apply"), &st)) {
- 		if (!stat(git_path("rebase-apply/applying"), &st)) {
--			state.am_in_progress = 1;
-+			state->am_in_progress = 1;
- 			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
--				state.am_empty_patch = 1;
-+				state->substate = WT_SUBSTATE_AM_EMPTY;
-+			else
-+				state->substate = WT_SUBSTATE_CONFLICTED;
- 		} else {
--			state.rebase_in_progress = 1;
-+			state->rebase_in_progress = 1;
- 		}
- 	} else if (!stat(git_path("rebase-merge"), &st)) {
- 		if (!stat(git_path("rebase-merge/interactive"), &st))
--			state.rebase_interactive_in_progress = 1;
-+			state->rebase_interactive_in_progress = 1;
- 		else
--			state.rebase_in_progress = 1;
-+			state->rebase_in_progress = 1;
- 	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
--		state.cherry_pick_in_progress = 1;
-+		state->cherry_pick_in_progress = 1;
- 	}
- 	if (!stat(git_path("BISECT_LOG"), &st))
--		state.bisect_in_progress = 1;
-+		state->bisect_in_progress = 1;
-+
-+	// Check for unmerged files
-+	if (state->rebase_in_progress || state->rebase_interactive_in_progress ||
-+			state->cherry_pick_in_progress || state->merge_in_progress) {
-+		if (has_unmerged(s)) {
-+			state->substate = WT_SUBSTATE_CONFLICTED;
-+		} else {
-+			state->substate = WT_SUBSTATE_RESOLVED;
-+		}
-+	}
-+
-+	// Interactive Rebase is more nuanced
-+	if (state->rebase_interactive_in_progress && state->substate != WT_SUBSTATE_CONFLICTED) {
-+		if (!stat(git_path("MERGE_MSG"), &st)) {
-+			state->substate = WT_SUBSTATE_RESOLVED;
-+		} else if (split_commit_in_progress(s)) {
-+			state->substate = WT_SUBSTATE_SPLITTING;
-+		} else {
-+			if (s->amend) {
-+				state->substate = WT_SUBSTATE_EDITED;
-+			} else {
-+				state->substate = WT_SUBSTATE_EDITING;
-+			}
-+		}
-+	}
-+}
-+
-+static void wt_status_print_state(struct wt_status *s)
-+{
-+	const char *state_color = color(WT_STATUS_HEADER, s);
-+	struct wt_status_state state;
-+
-+	wt_status_get_state(s, &state);
- 
- 	if (state.merge_in_progress)
- 		show_merge_in_progress(s, &state, state_color);
-@@ -1192,6 +1224,55 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	fputc(s->null_termination ? '\0' : '\n', s->fp);
- }
- 
-+static void wt_print_token(struct wt_status *s, const char *token)
-+{
-+	fprintf(s->fp, "%s", token);
-+	fputc(s->null_termination ? '\0' : '\n', s->fp);
-+}
-+
-+void wt_sequencer_print(struct wt_status *s)
-+{
-+	struct wt_status_state state;
-+
-+	wt_status_get_state(s, &state);
-+
-+	if (state.merge_in_progress)
-+		wt_print_token(s, "merge");
-+	if (state.am_in_progress)
-+		wt_print_token(s, "am");
-+	if (state.rebase_in_progress)
-+		wt_print_token(s, "rebase");
-+	if (state.rebase_interactive_in_progress)
-+		wt_print_token(s, "rebase-interactive");
-+	if (state.cherry_pick_in_progress)
-+		wt_print_token(s, "cherry-pick");
-+	if (state.bisect_in_progress)
-+		wt_print_token(s, "bisect");
-+
-+	switch (state.substate) {
-+	case WT_SUBSTATE_NOMINAL:
-+		break;
-+	case WT_SUBSTATE_CONFLICTED:
-+		wt_print_token(s, "conflicted");
-+		break;
-+	case WT_SUBSTATE_RESOLVED:
-+		wt_print_token(s, "resolved");
-+		break;
-+	case WT_SUBSTATE_EDITED:
-+		wt_print_token(s, "edited");
-+		break;
-+	case WT_SUBSTATE_EDITING:
-+		wt_print_token(s, "editing");
-+		break;
-+	case WT_SUBSTATE_SPLITTING:
-+		wt_print_token(s, "splitting");
-+		break;
-+	case WT_SUBSTATE_AM_EMPTY:
-+		wt_print_token(s, "am-empty");
-+		break;
-+	}
-+}
-+
- void wt_shortstatus_print(struct wt_status *s)
- {
- 	int i;
-diff --git a/wt-status.h b/wt-status.h
-index 236b41f..900889c 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -59,6 +59,7 @@ struct wt_status {
- 	unsigned colopts;
- 	int null_termination;
- 	int show_branch;
-+	int show_sequencer;
- 
- 	/* These are computed during processing of the individual sections */
- 	int commitable;
-@@ -71,14 +72,24 @@ struct wt_status {
- 	struct string_list ignored;
- };
- 
-+enum wt_status_substate {
-+	WT_SUBSTATE_NOMINAL = 0,
-+	WT_SUBSTATE_CONFLICTED,
-+	WT_SUBSTATE_RESOLVED,
-+	WT_SUBSTATE_SPLITTING,
-+	WT_SUBSTATE_EDITING,
-+	WT_SUBSTATE_EDITED,
-+	WT_SUBSTATE_AM_EMPTY,
-+};
-+
- struct wt_status_state {
- 	int merge_in_progress;
- 	int am_in_progress;
--	int am_empty_patch;
- 	int rebase_in_progress;
- 	int rebase_interactive_in_progress;
- 	int cherry_pick_in_progress;
- 	int bisect_in_progress;
-+	enum wt_status_substate substate;
- };
- 
- void wt_status_prepare(struct wt_status *s);
-@@ -86,6 +97,7 @@ void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
- 
- void wt_shortstatus_print(struct wt_status *s);
-+void wt_sequencer_print(struct wt_status *s);
- void wt_porcelain_print(struct wt_status *s);
- 
- void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, ...)
--- 
-1.8.0.2.gc921d59.dirty
+I think a better place to store that kind of information is using=20
+git-notes. That way, if the branch is renamed or deleted, you can easil=
+y=20
+update the old notes to use the new name instead.
+
+
+	Nahor
