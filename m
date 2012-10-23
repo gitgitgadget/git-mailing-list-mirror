@@ -1,73 +1,53 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
 Subject: Re: git merge man page, upstream
-Date: Tue, 23 Oct 2012 09:51:50 +0200
-Message-ID: <vpqk3uhr5gp.fsf@grenoble-inp.fr>
+Date: Tue, 23 Oct 2012 11:07:15 +0200
+Message-ID: <CAB9Jk9CEbT=Y=yjw2tPSLiLibejDSheabcBPEpHCLa_TS+6Cpw@mail.gmail.com>
 References: <CAB9Jk9BT3F1_yvf7jQQyT72_EWskFS4bEgXCkmJs7uZOPhEK8w@mail.gmail.com>
+	<vpqk3uhr5gp.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 09:52:19 2012
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 23 11:07:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQZHb-0006IC-O7
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 09:52:16 +0200
+	id 1TQaST-0000fe-Jr
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Oct 2012 11:07:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754260Ab2JWHwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 03:52:03 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37680 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751817Ab2JWHwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 03:52:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q9N7jMqD009255
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 23 Oct 2012 09:45:22 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TQZHC-0008Sx-S4; Tue, 23 Oct 2012 09:51:50 +0200
-In-Reply-To: <CAB9Jk9BT3F1_yvf7jQQyT72_EWskFS4bEgXCkmJs7uZOPhEK8w@mail.gmail.com>
-	(Angelo Borsotti's message of "Tue, 23 Oct 2012 09:40:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 23 Oct 2012 09:45:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q9N7jMqD009255
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1351583126.56931@7L4eO3zTExfU5Ng+9PRlnQ
+	id S1756805Ab2JWJHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2012 05:07:17 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:48049 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756707Ab2JWJHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 05:07:16 -0400
+Received: by mail-da0-f46.google.com with SMTP id n41so1831082dak.19
+        for <git@vger.kernel.org>; Tue, 23 Oct 2012 02:07:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=bqU+2WN2H1Moo7BVaH6vd/+dRuFRwd7UNT0UBrWrdUo=;
+        b=xV237vV9VHDP8r4tgcTm3f8Ehai0tYJjlSxXmmmz3U6UKOysxM/ucMB8PghOaWeob6
+         tvP9xG8ir8gsBbFz4/U9fjob0GMsT90r/4BS2o626YrmnXxYMGcAIOIal349shKOAvum
+         y0lVMibpO4TBk6IaZMfLpdol3ZFOVWkbyOp426d3ij13YzA6pdtxqFdlKnOkF/xx+c0J
+         I39BlgrEVjUhiwsMdj3Fl2cIjyo0Nc+T3zmJZ4M/KhkR/J7qWswrkfdblbKzmOVvc6Ei
+         zyEQ867Zd6mQCs5oteZgfOI2y0OtrsDkbzpQ8VC0AZ845FKir15vq7SAzZlM31cweG8C
+         EmQQ==
+Received: by 10.66.76.98 with SMTP id j2mr33209591paw.65.1350983235758; Tue,
+ 23 Oct 2012 02:07:15 -0700 (PDT)
+Received: by 10.67.3.101 with HTTP; Tue, 23 Oct 2012 02:07:15 -0700 (PDT)
+In-Reply-To: <vpqk3uhr5gp.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208218>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+Hi Matthieu,
 
-> Hello,
->
-> the git merge man page, OPTIONS, <commit> ... states:
->
->    "If no commit is given from the command line, and if
-> merge.defaultToUpstream configuration variable is set, merge the
-> remote tracking branches that the current branch is configured to use
-> as its upstream. See also the configuration section of this manual
-> page."
->
-> Actually, in this case git merge merges the upstream branch, not the
-> remote tracking branch.
+the upstream branch can also be a local branch.
 
-It merges the upstream branch, which is a remote-tracking branch (notice
-the - between remote and tracking, it's a branch that tracks a remote
-branch, not a remote branch that tracks something).
-
-I'll send a patch to fix that.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Angelo
