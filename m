@@ -1,129 +1,123 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Git submodule for a local branch?
-Date: Tue, 23 Oct 2012 18:09:55 -0400
-Message-ID: <20121023220955.GA30442@odin.tremily.us>
-References: <20121022123714.GL25563@odin.tremily.us> <508704D5.9020902@web.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=BOKacYhQ+x31HxR3
-Cc: Git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 24 01:10:22 2012
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCH 1/2] Teach --recursive to submodule sync
+Date: Tue, 23 Oct 2012 19:15:40 -0400
+Message-ID: <1351034141-2641-2-git-send-email-hordp@cisco.com>
+References: <507EF86C.4050807@web.de>
+ <1351034141-2641-1-git-send-email-hordp@cisco.com>
+Cc: phil.hord@gmail.com, Jens Lehmann <Jens.Lehmann@web.de>,
+	Phil Hord <hordp@cisco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 24 01:16:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQnc2-0006e3-2v
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 01:10:18 +0200
+	id 1TQnhg-0002NS-Vb
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 01:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933658Ab2JWXKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2012 19:10:04 -0400
-Received: from vms173019pub.verizon.net ([206.46.173.19]:57459 "EHLO
-	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933464Ab2JWXKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 19:10:03 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Oct 2012 19:10:03 EDT
-Received: from odin.tremily.us ([unknown] [72.76.145.253])
- by vms173019.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MCD005QG9KJAR10@vms173019.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 23 Oct 2012 17:09:56 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 9E7A467EBC0; Tue,
- 23 Oct 2012 18:09:55 -0400 (EDT)
-Content-disposition: inline
-In-reply-to: <508704D5.9020902@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S965134Ab2JWXP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2012 19:15:57 -0400
+Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:58528 "EHLO
+	rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934100Ab2JWXPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2012 19:15:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2280; q=dns/txt; s=iport;
+  t=1351034154; x=1352243754;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=Bcq8TzQA6SohCqxhXDbqrwCV8KbNhhAaib8W/rQbDM8=;
+  b=ad+sdITZ1/UXFLGXDudmmb86mN/Rz+WjhD5bRdC6GzBOgmoLqILELLuT
+   tlFtXsMt/5zMl400PTHsm9bAjOe5c+eoGNqrB8kMzBraKuYzDISAZmfVV
+   zfQb4A2YelayA9fG2n2eFv/kpLv6ZDMkwB8oOFdpmB9KUkgK0yNZok8g2
+   o=;
+X-IronPort-AV: E=Sophos;i="4.80,637,1344211200"; 
+   d="scan'208";a="134680802"
+Received: from rcdn-core2-2.cisco.com ([173.37.113.189])
+  by rcdn-iport-7.cisco.com with ESMTP; 23 Oct 2012 23:15:53 +0000
+Received: from ipsn-lnx-hordp.cisco.com (dhcp-64-100-104-96.cisco.com [64.100.104.96])
+	by rcdn-core2-2.cisco.com (8.14.5/8.14.5) with ESMTP id q9NNFp9I006158;
+	Tue, 23 Oct 2012 23:15:53 GMT
+X-Mailer: git-send-email 1.8.0.2.gcde19fc.dirty
+In-Reply-To: <1351034141-2641-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208273>
 
+The submodule sync command was somehow left out when
+--recursive was added to the other submodule commands.
 
---BOKacYhQ+x31HxR3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Teach sync to handle the --recursive switch by recursing
+when we're in a submodule we are sync'ing.
 
-On Tue, Oct 23, 2012 at 10:57:57PM +0200, Jens Lehmann wrote:
-> Am 22.10.2012 14:37, schrieb W. Trevor King:
-> > but cloning a remote repository (vs. checking out a local branch)
-> > seems to be baked into the submodule implementation.  Should I be
-> > thinking about generalizing git-submodule.sh, or am I looking under
-> > the wrong rock?  My ideal syntax would be something like
-> >=20
-> >   $ git submodule add -b c --local dir-for-c/
->=20
-> But then we'd have to be able to have two (or more) work trees using
-> the same git directory, which current submodule code can't.
+Change the report during sync to show submodule-path
+instead of submodule-name to be consistent with the other
+submodule commands and to help recursed paths make sense.
 
-And that's the problem I'm trying to solve ;).
+Signed-off-by: Phil Hord <hordp@cisco.com>
+---
+ git-submodule.sh | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-> > The motivation is that I have website that contains a bunch of
-> > sub-sites, and the sub-sites share content.  I have per-sub-site
-> > branches (a, b, c) and want a master branch (index) that aggregates
-> > them.  Perhaps this is too much to wedge into a single repository?
->=20
-> To me this sounds upside-down. I'd put the three sub-sites into
-> different repositories and the shared content into a submodule that
-> all three sub-sites use. At least that is how I do all my content
-> sharing on the websites I have done ... does that make sense?
-
-That makes sense, however the problem is not in the common content, it
-is in the final index:
-
-  index
-  |-- sub-site a (branch of sub-site-x)
-  |-- sub-site b (branch of sub-site-x)
-  `-- sub-site c (branch of sub-site-x)
-
-All of the sub-sites are branches of a single sub-site-x master:
-
-  o--o--o--o   sub-site-x
-   \--o--o--o  sub-site-1
-       \--o    sub-site-2
-        \--o   sub-site-3
-
-So they all live in the same repository.  My index repository will
-have submodules for each of the sub-sites, and I'd like the index
-branch to *also* live in same repository as the subsites.  This last
-bit is the sticky part.
-
-For a proof-of-concept example (where I currently use public
-repositories for the sub-site submodules), see
-
-  http://wking.github.com/swc-workshop/
-
-which uses gh-pages as the index branch, and master, 2012-10-caltech,
-and 2012-10-lbl for the sub-site branches.
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---BOKacYhQ+x31HxR3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQhxWwAAoJEEUbTsx0l5OM6okP+wXqzfplYbs7duodS4NRN/NN
-t7K/FgQIuFDYs6Va2RkdXyzQ+6Q3//RPiOMgp5YlJIWO/+0BKkslxyUztlIz8FPZ
-X+sanf5bmzmh1bCP7Adxnx44htq+4nDzpa+G9z++rHHwbFqpEfgy8hOlntD8Aj9p
-Mm6f1qhSkCg5cp198MrBCfG1Hfp9hK+zQVvNIBFwe06LDkRtzj5CSa2aOM306KaB
-kcaa6AvYnoiCcaqMf3IYHvsVZqjAsBm4GEjCFvy+LB8LcI8PWKYm60vB6mAhxk1s
-dVPicJUQjUeAOcPCxp6wfS/Qq9qIzNPFwXSVN+d12IcKAaysr5SacDTpXRuB52Rt
-crEDjIRzYQHjYa+vrrl5wl50BVN6/6w1ZSme1a8qWjQVCfpd9m6CvbY8IfYLHTxB
-Ypd6tZz/V7fJHZMAKM9HFysYPYk/1joS7qT+3oUj4ox3M6e5cRmdkPxK10zTLu1g
-pm4Yp98baVufKBVVCdrSMedCvuOUxLjkcKbMO23dF0Vnj9zArDk1KM/LZ5DVDeUD
-cn9IiKq20QyXddM9mzhujOfKkk2v75w+PMDCZHE35fn26DTOZcLHbL8jfMAlEHcB
-cInfm0kd3jGRpylSpOUO58rfVA0LfG+uJ8NPUXMNND9FWxdcTWWyXj1a58WcT8nQ
-BecrYRBqyHOBQacXBo6U
-=+vI8
------END PGP SIGNATURE-----
-
---BOKacYhQ+x31HxR3--
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b110..6dd2338 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -11,7 +11,7 @@ USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <r
+    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+-   or: $dashless [--quiet] sync [--] [<path>...]"
++   or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+ OPTIONS_SPEC=
+ . git-sh-setup
+ . git-sh-i18n
+@@ -1008,7 +1008,9 @@ cmd_sync()
+ 		case "$1" in
+ 		-q|--quiet)
+ 			GIT_QUIET=1
+-			shift
++			;;
++		--recursive)
++			recursive=1
+ 			;;
+ 		--)
+ 			shift
+@@ -1021,6 +1023,8 @@ cmd_sync()
+ 			break
+ 			;;
+ 		esac
++		orig_flags="$orig_flags $(git rev-parse --sq-quote "$1")"
++		shift
+ 	done
+ 	cd_to_toplevel
+ 	module_list "$@" |
+@@ -1051,7 +1055,7 @@ cmd_sync()
+ 
+ 		if git config "submodule.$name.url" >/dev/null 2>/dev/null
+ 		then
+-			say "$(eval_gettext "Synchronizing submodule url for '\$name'")"
++			say "$(eval_gettext "Synchronizing submodule url for '\$prefix\$sm_path'")"
+ 			git config submodule."$name".url "$super_config_url"
+ 
+ 			if test -e "$sm_path"/.git
+@@ -1061,6 +1065,14 @@ cmd_sync()
+ 				cd "$sm_path"
+ 				remote=$(get_default_remote)
+ 				git config remote."$remote".url "$sub_origin_url"
++
++				if test -n "$recursive"
++				then
++				(
++					prefix="$prefix$sm_path/"
++					eval cmd_sync "$orig_args"
++				)
++			fi
+ 			)
+ 			fi
+ 		fi
+-- 
+1.8.0.2.gcde19fc.dirty
