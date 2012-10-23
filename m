@@ -1,115 +1,96 @@
-From: Jeff King <peff@peff.net>
+From: Thomas Gleixner <tglx@linutronix.de>
 Subject: Re: [PATCH] tile: support GENERIC_KERNEL_THREAD and
  GENERIC_KERNEL_EXECVE
-Date: Tue, 23 Oct 2012 17:22:45 -0400
-Message-ID: <20121023212245.GA28828@sigill.intra.peff.net>
-References: <201210192041.q9JKf7jD003998@farm-0010.internal.tilera.com>
- <20121019213548.GR2616@ZenIV.linux.org.uk>
- <5082A1F1.3080303@tilera.com>
- <20121020153401.GT2616@ZenIV.linux.org.uk>
- <20121020171643.GU2616@ZenIV.linux.org.uk>
- <5086D432.4070008@tilera.com>
- <20121023184122.GZ2616@ZenIV.linux.org.uk>
- <alpine.LFD.2.02.1210232232070.2756@ionos>
- <20121023205119.GA27729@sigill.intra.peff.net>
- <CAHkRjk6x9ToVzY7jv1ZxPt57F6agcH7SfHZpZNpHC3QP3PZp3Q@mail.gmail.com>
+Date: Tue, 23 Oct 2012 23:25:06 +0200 (CEST)
+Message-ID: <alpine.LFD.2.02.1210232307480.2756@ionos>
+References: <20121016223508.GR2616@ZenIV.linux.org.uk> <201210192041.q9JKf7jD003998@farm-0010.internal.tilera.com> <20121019213548.GR2616@ZenIV.linux.org.uk> <5082A1F1.3080303@tilera.com> <20121020153401.GT2616@ZenIV.linux.org.uk> <20121020171643.GU2616@ZenIV.linux.org.uk>
+ <5086D432.4070008@tilera.com> <20121023184122.GZ2616@ZenIV.linux.org.uk> <alpine.LFD.2.02.1210232232070.2756@ionos> <20121023205119.GA27729@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Al Viro <viro@ZenIV.linux.org.uk>,
 	Chris Metcalf <cmetcalf@tilera.com>,
 	LKML <linux-kernel@vger.kernel.org>, linux-arch@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Catalin Marinas <catalin.marinas@arm.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Oct 23 23:23:05 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: linux-arch-owner@vger.kernel.org Tue Oct 23 23:25:29 2012
+Return-path: <linux-arch-owner@vger.kernel.org>
+Envelope-to: glka-linux-arch@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1TQlwH-0000zu-0V
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 23 Oct 2012 23:23:05 +0200
+	(envelope-from <linux-arch-owner@vger.kernel.org>)
+	id 1TQlyW-0002XM-8n
+	for glka-linux-arch@plane.gmane.org; Tue, 23 Oct 2012 23:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757441Ab2JWVWu (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 23 Oct 2012 17:22:50 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51585 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756884Ab2JWVWs (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 23 Oct 2012 17:22:48 -0400
-Received: (qmail 22424 invoked by uid 107); 23 Oct 2012 21:23:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 23 Oct 2012 17:23:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2012 17:22:45 -0400
-Content-Disposition: inline
-In-Reply-To: <CAHkRjk6x9ToVzY7jv1ZxPt57F6agcH7SfHZpZNpHC3QP3PZp3Q@mail.gmail.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S932749Ab2JWVZQ (ORCPT <rfc822;glka-linux-arch@m.gmane.org>);
+	Tue, 23 Oct 2012 17:25:16 -0400
+Received: from www.linutronix.de ([62.245.132.108]:47215 "EHLO
+	Galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756855Ab2JWVZO (ORCPT
+	<rfc822;linux-arch@vger.kernel.org>); Tue, 23 Oct 2012 17:25:14 -0400
+Received: from localhost ([127.0.0.1])
+	by Galois.linutronix.de with esmtps (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <tglx@linutronix.de>)
+	id 1TQlyF-00084d-9l; Tue, 23 Oct 2012 23:25:07 +0200
+In-Reply-To: <20121023205119.GA27729@sigill.intra.peff.net>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
+X-Linutronix-Spam-Score: -1.0
+X-Linutronix-Spam-Level: -
+X-Linutronix-Spam-Status: No , -1.0 points, 5.0 required,  ALL_TRUSTED=-1,SHORTCIRCUIT=-0.0001
+Sender: linux-arch-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208252>
+List-ID: <linux-arch.vger.kernel.org>
+X-Mailing-List: linux-arch@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208253>
 
-On Tue, Oct 23, 2012 at 10:09:46PM +0100, Catalin Marinas wrote:
+On Tue, 23 Oct 2012, Jeff King wrote:
 
-> > It is spelled:
-> >
-> >   git notes add -m <comment> SHA1
-> >
-> > The resulting notes are stored in a separate revision-controlled branch
-> > and can be pushed and pulled like regular refs. Note, though, that the
-> > default refspecs do not yet include refs/notes, so you'd have to add
-> > them manually. The workflows around notes are not very mature yet, so if
-> > you start using them, feedback would be appreciated.
+> On Tue, Oct 23, 2012 at 10:47:28PM +0200, Thomas Gleixner wrote:
 > 
-> What would be nice is that notes are pushed/pulled automatically with
-> standard git push/fetch/pull commands. Usually git walks the DAG
-> starting with the pulled commit or tag and following the parents. With
-> notes, the reference is reversed, the note pointing to the commit and
-> not the other way around. So handling this automatically in Git would
-> be really useful.
+> > I agree that this is a common issue. Acked-by/Reviewed-by mails come
+> > in after the fact that the patch has been committed to an immutable
+> > (i.e no-rebase mode) branch or if the change in question already hit
+> > Linus tree.
+> > 
+> > Still it would be nice to have a recording of that in the git tree
+> > itself.
+> > 
+> > Something like: "git --attach SHA1 <comment>" would be appreciated!
+> 
+> It is spelled:
+> 
+>   git notes add -m <comment> SHA1
 
-Right, that's what I meant about the refspecs. You can configure git to
-push or pull them automatically, but it is not the default. Something
-like:
+Cool!
 
-  git config --add remote.origin.fetch '+refs/notes/*:refs/notes/origin/*'
+> The resulting notes are stored in a separate revision-controlled branch
 
-would be a start, but you'd also want to "git notes merge" upstream's
-changes into your local notes (you _could_ just fetch straight into
-refs/notes/, but if you are making your own notes locally, you have to
-resolve it somehow). Exactly how to make this smooth is one of the workflow
-considerations; there's been discussion, but most people aren't using
-the feature, so we don't have a lot of data.
+Which branch(es) is/are that ? What are the semantics of that?
 
-If you are asking whether we could "auto-follow" notes for commits that
-have been fetched like we do for tags, the answer is "not really". The
-notes tree is version-controlled as a whole, so you generally fetch the
-whole thing or not. And the remote does not advertise note information
-the same way we advertise peeled tag references, so a client does not
-know which notes are available for fetch. The intended strategy is to
-pull in the notes or not (though you can have multiple notes refs with
-different names, and fetch just a subset of them).
+Assume I commit something to branch "foo"
 
-> The other feature I'd like is that notes are automatically folded in
-> the log during git rebase (maybe similar to the squash option). If you
-> rebase, you lose all the notes (though this depends on the workflow,
-> it may not be needed with published branches).
+Now I get that late Ack/Reviewed-by and want to associate that to that
+commit in branch "foo". Does that go into "notes/foo" ?
 
-Git-rebase can automatically copy notes from one commit to another
-during a rebase, but you need to set notes.rewriteRef to do so (see "git
-help config" for details). The reason for this conservative default is
-that some notes may not be appropriate for automatic copying (e.g., a
-notes tree containing QA approval should probably be invalidated during
-a rebase, whereas one with commentary probably should).
+If yes, good. (Any other sensible prefix is good as well). If no,
+where does it go to?
 
-Squashing the notes into the commit message during rebase would be a
-useful feature (at least for some type of notes), but that feature does
-not currently exist (and as far as I recall, this is the first it has
-been proposed).
+Later when I send a pull request to my upstream maintainer for branch
+"foo" does he get "notes/foo" automagically or do I have to request to
+pull him that separately?
 
-Again, I think a lot of this comes down to the fact that not many people
-are really using notes for their daily workflow, so these itches are not
-coming up and getting scratched.
+Either way is fine for me, though something which lets me "automate"
+that would be appreciated. I can work around that easily as my pull
+requests are generated via scripts, so I can add the secondary one for
+the dependent "notes" branch if necessary. Though it would be nice to
+avoid that. Avoiding that, i.e having a straight connection (maybe
+configurable) between "foo" and "notes/foo" and the commits which have
+not yet hit my upstream maintainer would make my life easier. I.e. I
+just have to check "foo" for stuff which is not upstream yet instead
+of checking both, but that might just be my laziness.
 
--Peff
+Thoughts?
+
+	tglx
