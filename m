@@ -1,102 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: The config include mechanism doesn't allow for overwriting
-Date: Tue, 23 Oct 2012 20:51:30 -0400
-Message-ID: <20121024005130.GA19638@sigill.intra.peff.net>
-References: <CACBZZX4cu9XuS5AtduWrNeXNUeZ4rqDUzRdmyz2b3cXtmo1nqQ@mail.gmail.com>
- <20121022211505.GA3301@sigill.intra.peff.net>
- <CACBZZX5mOb7_i9r8AqNK5V3r-gVnzN+rkeY9xrhecGv1rS-anA@mail.gmail.com>
- <CAEBDL5V0Ffyp306rVo-USCBy_AXXMHXN1yrWmkF1BhzFaq60nA@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] tile: support GENERIC_KERNEL_THREAD and GENERIC_KERNEL_EXECVE
+Date: Wed, 24 Oct 2012 04:02:49 +0300
+Message-ID: <CA+55aFyYD2jvD3+TSe=GhBgg5UQt2RNFdYf6HGiKRX-xWzFmdw@mail.gmail.com>
+References: <20121016223508.GR2616@ZenIV.linux.org.uk> <201210192041.q9JKf7jD003998@farm-0010.internal.tilera.com>
+ <20121019213548.GR2616@ZenIV.linux.org.uk> <5082A1F1.3080303@tilera.com>
+ <20121020153401.GT2616@ZenIV.linux.org.uk> <20121020171643.GU2616@ZenIV.linux.org.uk>
+ <5086D432.4070008@tilera.com> <20121023184122.GZ2616@ZenIV.linux.org.uk>
+ <alpine.LFD.2.02.1210232232070.2756@ionos> <20121023205119.GA27729@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1210232307480.2756@ionos>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Al Viro <viro@zeniv.linux.org.uk>,
+	Chris Metcalf <cmetcalf@tilera.com>,
+	LKML <linux-kernel@vger.kernel.org>, linux-arch@vger.kernel.org,
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 02:51:47 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+To: Thomas Gleixner <tglx@linutronix.de>
+X-From: linux-arch-owner@vger.kernel.org Wed Oct 24 03:03:21 2012
+Return-path: <linux-arch-owner@vger.kernel.org>
+Envelope-to: glka-linux-arch@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQpCE-0006UB-BQ
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 02:51:46 +0200
+	(envelope-from <linux-arch-owner@vger.kernel.org>)
+	id 1TQpNR-0004xG-0i
+	for glka-linux-arch@plane.gmane.org; Wed, 24 Oct 2012 03:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933705Ab2JXAvf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2012 20:51:35 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51805 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933407Ab2JXAve (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2012 20:51:34 -0400
-Received: (qmail 24309 invoked by uid 107); 24 Oct 2012 00:52:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 23 Oct 2012 20:52:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2012 20:51:30 -0400
-Content-Disposition: inline
-In-Reply-To: <CAEBDL5V0Ffyp306rVo-USCBy_AXXMHXN1yrWmkF1BhzFaq60nA@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S964943Ab2JXBDM (ORCPT <rfc822;glka-linux-arch@m.gmane.org>);
+	Tue, 23 Oct 2012 21:03:12 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:49442 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933666Ab2JXBDL (ORCPT
+	<rfc822;linux-arch@vger.kernel.org>); Tue, 23 Oct 2012 21:03:11 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so4179129obb.19
+        for <multiple recipients>; Tue, 23 Oct 2012 18:03:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=3uGLjXTceZDxZ94jfUf3Y1pAqHb/56hsXGPcr8QqJoA=;
+        b=SkD2cPC+2T+jzCFlLzNzEa6ZtoOfZ/h/gRFzkfUks2sC1YKWR3vHmZMpgxttVjxBFG
+         rkNWlFwNCakxLxjYOyw/0TmlBc4cCTju002cXb/WqE2vtaDFyYI6UUVOUDLXLOKuYtYx
+         jNYpzUjt+4b7I8rNZM+JducDLemhjrGveDCR7UNBUUkIthWyag32Az7TDQ90/kGaQoay
+         p6aa7JlkHEcylFTFYOHqmMmCojDv+rmYPYUPduelG7QTgof3SIoM0aSTt9FdidvWJNBo
+         7ZPIRE2+Xfc74tBpGyKCjerShMkXOSpNk35nCW9obr2BTCAF5f7vC27PmBRE08scTLUY
+         QQGw==
+Received: by 10.182.23.79 with SMTP id k15mr11646182obf.100.1351040589811;
+ Tue, 23 Oct 2012 18:03:09 -0700 (PDT)
+Received: by 10.76.2.242 with HTTP; Tue, 23 Oct 2012 18:02:49 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.02.1210232307480.2756@ionos>
+X-Google-Sender-Auth: DGiBmrZyZJcepPIhd-017quol1Q
+Sender: linux-arch-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208277>
+List-ID: <linux-arch.vger.kernel.org>
+X-Mailing-List: linux-arch@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208278>
 
-On Tue, Oct 23, 2012 at 08:46:47PM -0400, John Szakmeister wrote:
+On Wed, Oct 24, 2012 at 12:25 AM, Thomas Gleixner <tglx@linutronix.de> wrote:
+>>
+>> It is spelled:
+>>
+>>   git notes add -m <comment> SHA1
+>
+> Cool!
 
-> On Tue, Oct 23, 2012 at 10:13 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarma=
-son
-> <avarab@gmail.com> wrote:
-> [snip]
-> > And git config --get foo.bar will give you:
-> >
-> >     $ git config -f /tmp/test --get foo.bar
-> >     one
-> >     error: More than one value for the key foo.bar: two
-> >     error: More than one value for the key foo.bar: three
-> >
-> > I think that it would be better if the config mechanism just silent=
-ly
-> > overwrote keys that clobbered earlier keys like your patch does.
-> >
-> > But in addition can we simplify things for the consumers of
-> > "git-{config,var} -l" by only printing:
-> >
-> >     foo.bar=3Dthree
-> >
-> > Or are there too many variables like "include.path" that can
-> > legitimately appear more than once.
->=20
-> I frequently use pushurl in my remotes to push my master branch both
-> to the original repo and my forked version.  I find it very helpful i=
-n
-> my workflow, and would hate to lose that.  That said, I do like the
-> idea of having a config file and the ability to override some of the
-> variables.
+Don't use them for anything global.
 
-No, that won't go anywhere. We really do have two classes of variables:
-things that are expected to be single values, and things that are
-expected to be lists.
+Use them for local codeflow, but don't expect them to be distributed.
+It's a separate "flow", and while it *can* be distributed, it's not
+going to be for the kernel, for example. So no, don't start using this
+to ack things, because the acks *will* get lost.
 
-=46rom the perspective of the config code, we don't know or care which =
-is
-which, and just feed all entries sequentially to a C callback. In
-practice, the callbacks do one of two things:
-
-  1. Append the values into a list.
-
-  2. Overwrite, and end up with the final value seen.
-
-The trouble is that git-config has to print the values in a reasonable
-way, so it asks the caller to give a hint about which it wants (--get
-versus --get-all). But in the single-value case did not behave like the
-C callbacks, which is what my series fixes.
-
-Using "git config -l" is more like asking the config machinery to just
-feed us everything, which is what the C callbacks see. Which is more
-flexible, but way less convenient for the caller. But it doesn't need t=
-o
-be fixed, since the caller has all the information to implement whateve=
-r
-semantics they like.
-
--Peff
+             Linus
