@@ -1,9 +1,9 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/3] t9350: point out that refs are not updated correctly
-Date: Wed, 24 Oct 2012 19:52:28 +0200
-Message-ID: <CAMP44s1hdZb_7Lv8SEe+MsfC_q-nXsnjJobABFq6eFR_er4TaA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] fast-export: output reset command for commandline revs
+Date: Wed, 24 Oct 2012 20:02:40 +0200
+Message-ID: <CAMP44s2hX=y+tH4ANJp_Jj3OD4zaNccroVOd+51NhvFz=xZd7A@mail.gmail.com>
 References: <1320535407-4933-1-git-send-email-srabbelier@gmail.com>
-	<1320535407-4933-2-git-send-email-srabbelier@gmail.com>
+	<1320535407-4933-4-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -17,135 +17,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Herman <eric@freesa.org>,
 	Fernando Vezzosi <buccia@repnz.net>
 To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 19:53:02 2012
+X-From: git-owner@vger.kernel.org Wed Oct 24 20:03:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TR58V-0006s1-E6
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 19:52:59 +0200
+	id 1TR5ID-0005mV-Je
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 20:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935341Ab2JXRwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 13:52:31 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:34697 "EHLO
+	id S965248Ab2JXSCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 14:02:43 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:52222 "EHLO
 	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935092Ab2JXRw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 13:52:29 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so716905oag.19
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 10:52:28 -0700 (PDT)
+	with ESMTP id S965228Ab2JXSCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 14:02:41 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so728207oag.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 11:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=YFpha58jQC9144twEH9TYr6J3ldaEqlTaZ+DOvn9f54=;
-        b=vUtlqFZU1ofjZ/MfpGPIugfnKpFQD7G2m3MN9Vqw3XafpJXx4igTM3nBIcbXapaGHx
-         LnflDu0c6AEz/N0exXwDXtW9uAde/ZH+mV767B0bVdnzUS+auRiKDsXDPACjcfRFfq4B
-         QzAjFWrZMpOuw6c2VkgFzgoMQYpWV7JJvuHsjdOYscZYV5GqmNZJIHeFLDD5wYZmswnA
-         qNwcuosA/7aFlVeQP+gSkAAFRdyh2jBTc5a0scp5IJP+4JrDKrQzIUgshktMxhIQtqEW
-         mZFI5DoMGJ28uE0+1OBth5shMnKzO7uxX1oh9dKu7VWoQ5UYKL1JLOgk/GEdp7lRoBiD
-         pSMg==
-Received: by 10.182.245.20 with SMTP id xk20mr13521899obc.89.1351101148781;
- Wed, 24 Oct 2012 10:52:28 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Wed, 24 Oct 2012 10:52:28 -0700 (PDT)
-In-Reply-To: <1320535407-4933-2-git-send-email-srabbelier@gmail.com>
+        bh=pFTfZOHVEHKvs4/J2mR5H0+tFMScwomv3x+CGyLCG1c=;
+        b=gtucBb/5X0lUHZLcBHbW3ZGPfTk6L3rGZac9LIEg44lgG+jl+ZrbOSZNZiqsx0M2uQ
+         Xi5oVdxLXPT0n0Hc4IdvlLCJtUwIrY43zy5Oo50LGyJHog03S1Pb2L0zzKLRSm9GYK9y
+         rDfifMsPjt2NWPJHJzpT+35G4hBuFeziO3RnRO9IU6B4D1LpToyQ2tXMh0250tNFV8zI
+         5q9ZfigYILzwqPmd1a6xa0uK1q9KVysCm6XoseHoMskpS3DqZxh6dMNg5ZIXdCHSKNgx
+         0lVAK6oxAEFwmVCrsWDpwbASTtikcpHDwYDeG/s0nH2ppd50BdF5GuuX/uMtI1KIUZ1L
+         KL8A==
+Received: by 10.182.38.101 with SMTP id f5mr13695678obk.80.1351101760491; Wed,
+ 24 Oct 2012 11:02:40 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Wed, 24 Oct 2012 11:02:40 -0700 (PDT)
+In-Reply-To: <1320535407-4933-4-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208312>
-
-Hi,
-
-Joined late to the party :)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208313>
 
 On Sun, Nov 6, 2011 at 12:23 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> This happens only when the corresponding commits are not exported in
-> the current fast-export run. This can happen either when the relevant
-> commit is already marked, or when the commit is explicitly marked
-> as UNINTERESTING with a negative ref by another argument.
->
-> This breaks fast-export based remote helpers, as they use marks
-> files to store which commits have already been seen. The call graph
-> is something as follows:
->
-> $ # push master to remote repo
-> $ git fast-export --{im,ex}port-marks=marksfile master
-> $ # make a commit on master and push it to remote
-> $ git fast-export --{im,ex}port-marks=marksfile master
-> $ # run `git branch foo` and push it to remote
-> $ git fast-export --{im,ex}port-marks=marksfile foo
+> When a revision is specified on the commandline we explicitly output
+> a 'reset' command for it if it was not handled already. This allows
+> for example the remote-helper protocol to use fast-export to create
+> branches that point to a commit that has already been exported.
 
-That is correctly, but try this:
-$ git fast-export --{im,ex}port-marks=marksfile foo foo
-
-Now foo is updated.
-
-> When fast-export imports the marksfile and sees that all commits in
-> foo are marked as UNINTERESTING (they have already been exported
-> while pushing master), it exits without doing anything. However,
-> what we want is for it to reset 'foo' to the already-exported commit.
->
-> Either way demonstrates the problem, and since this is the most
-> succint way to demonstrate the problem it is implemented by passing
-> master..master on the commandline.
->
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> ---
->  t/t9350-fast-export.sh |   11 +++++++++++
->  1 files changed, 11 insertions(+), 0 deletions(-)
->
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index 950d0ff..74914dc 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -440,4 +440,15 @@ test_expect_success 'fast-export quotes pathnames' '
->         )
->  '
->
-> +cat > expected << EOF
-> +reset refs/heads/master
-> +from $(git rev-parse master)
-> +
-> +EOF
-> +
-> +test_expect_failure 'refs are updated even if no commits need to be exported' '
-> +       git fast-export master..master > actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  test_done
-
-This test is completely wrong.
-
-1) Where are the marks file?
-2) master..master shouldn't export anything
-3) Why do you expect a SHA-1? It could be a mark.
-
-I decided to write my own this way:
-
----
-cat > expected << EOF
-reset refs/heads/master
-from ##mark##
-
-EOF
-
-test_expect_failure 'refs are updated even if no commits need to be exported' '
-	cp tmp-marks /tmp
-	git fast-export --import-marks=tmp-marks \
-		--export-marks=tmp-marks master | true &&
-	git fast-export --import-marks=tmp-marks \
-		--export-marks=tmp-marks master > actual &&
-	mark=$(grep $(git rev-parse master) tmp-marks | cut -f 1 -d " ")
-	sed -i -e "s/##mark##/$mark/" expected &&
-	test_cmp expected actual
-'
----
-
-Yes, it's true this fails, but change to 'master master', and then it works.
-
-This can be easily fixed by this patch:
+This simpler patch does the same, doesn't it?
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
 index 12220ad..3b4c2d6 100644
@@ -171,19 +87,48 @@ full_name)->util = commit;
         }
  }
 
-Now if you specify a ref it will get updated regardless. However, this
-points to another bug:
+> Initial-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+> ---
+>
+>   Most of the hard work for this patch was done by Dscho. The rest of
+>   it was basically me applying the technique used by jch in c3502fa
+>   (25-08-2011 do not include sibling history in --ancestry-path).
+>
+>   The if statement dealing with tag_of_filtered_mode is not as
+>   elegant as either me or Dscho would have liked, but we couldn't
+>   find a better way to determine if a ref is a tag at this point
+>   in the code.
 
-% git fast-export --{im,ex}port-marks=/tmp/marks master ^foo foo.foo
+Which is needed why?
 
-The foo ref will be reset _twice_ because all pending refs after the
-first one get reset no matter how they were specified.
+Right now if I do:
+% git fast-export --{im,ex}port-marks=/tmp/marks foo1 tag-to-foo1
 
-That is already the case, my patch will cause this to generate the same output:
+Where tag-to-foo1 is a tag that that points to foo1, I get a reset for that.
 
-% git fast-export --{im,ex}port-marks=/tmp/marks ^foo foo.foo
+>   Additionally, the elem->whence != REV_CMD_RIGHT case should really
+>   check if REV_CMD_RIGHT_REF, but as this is not provided by the
+>   ref_info structure this is left as is. A result of this is that
+>   incorrect input will result in incorrect output, rather than an
+>   error message. That is: `git fast-export a..<sha1>` will
+>   incorrectly generate a `reset <sha1>` statement in the fast-export
+>   stream.
 
-Which is still not got, but not catastrophic by any means.
+I don't see the point of this.
+
+Besides, you can check the return value of dwim_ref, if it's not 1,
+then you shouldn't generate a reset.
+
+>   The dwim_ref bit is a double work (it has already been done by the
+>   caller of this function), but I decided it would be more work to
+>   pass this information along than to recompute it for the few
+>   commandline refs that were relevant.
+
+It's already stored in commit->util, you don't need to do that.
+
+As I said, I think the patch above does the trick, and it even has the
+advantage of not having the above a..<SHA-1> issues.
 
 Cheers.
 
