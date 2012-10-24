@@ -1,85 +1,165 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 5/6] tests: add remote-hg tests
-Date: Wed, 24 Oct 2012 17:47:40 +0200
-Message-ID: <CAMP44s0OLE8wqoGOJ+cw1uuYjdema6UuXJU5-wAuWdJuxi2Mtg@mail.gmail.com>
-References: <1350841744-21564-1-git-send-email-felipe.contreras@gmail.com>
-	<1350841744-21564-6-git-send-email-felipe.contreras@gmail.com>
-	<CAGdFq_hhjvysViU+rceOcX7L48BkxUbDzKiyT7LakFqz1ikT8A@mail.gmail.com>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: [PATCH] git-send-email: skip RFC2047 quoting for ASCII subjects
+Date: Wed, 24 Oct 2012 19:10:36 +0200
+Message-ID: <20121024171036.GA18880@shrek.podlesie.net>
+References: <1351065815-22416-1-git-send-email-krzysiek@podlesie.net>
+ <20121024084636.GA23500@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 17:47:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 24 19:10:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TR3BR-0008V6-LF
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 17:47:53 +0200
+	id 1TR4Tk-00065k-LN
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 19:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756011Ab2JXPrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 11:47:41 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:64875 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753132Ab2JXPrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 11:47:40 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so573652oag.19
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 08:47:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=snYj7J9vRSC5Vl6TOgxT/9m6q3Zlrr20wo+n3/qUa/M=;
-        b=SXcUvosjfnoC3yA97tEZsGvqMNcIbZl1w8EijkEOpZHY67D0k6b3BM65vKYM/QHxAp
-         Iv8/W25DBAth98iDlTyPO9PIidur7KniEapTNktlvIRlUZ7cqBiChHjFV9iurhdrwcPp
-         YN0V83P1dIXx53ynBYkfxEtu+psC5nOdymCX8xNr5aFs8D4aS/0HkDodyCi+fMyd0Jcz
-         HHl/W9dXDdxExqg2w2qlot4sgFlAJ6mO23l86YP7F8HNn7M7dhnwK4FAhjZDHMunFYse
-         38hipNN+O2L8Zq5OqwwN/uqX+bv66wcQ9EkN+aRqCnMtAkYRz4T7lWTwqHNMRPR7UWln
-         VeUQ==
-Received: by 10.182.116.6 with SMTP id js6mr12985777obb.82.1351093660334; Wed,
- 24 Oct 2012 08:47:40 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Wed, 24 Oct 2012 08:47:40 -0700 (PDT)
-In-Reply-To: <CAGdFq_hhjvysViU+rceOcX7L48BkxUbDzKiyT7LakFqz1ikT8A@mail.gmail.com>
+	id S1758589Ab2JXRKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 13:10:40 -0400
+Received: from [93.179.225.50] ([93.179.225.50]:38265 "EHLO shrek.podlesie.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1756417Ab2JXRKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 13:10:39 -0400
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 8BB91450; Wed, 24 Oct 2012 19:10:36 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20121024084636.GA23500@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208310>
 
-On Sun, Oct 21, 2012 at 11:02 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Sun, Oct 21, 2012 at 10:49 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> From the original remote-hg.
->>
->> You need git-remote-hg already in your path to run them.
->>
->> I'm not proposing to include this patch like this, but should make it easier to
->> test.
->
-> You should also have a look at the tests that were marked as "expected
-> to fail", since they point out a bug with fast-export.
+On Wed, Oct 24, 2012 at 04:46:36AM -0400, Jeff King wrote:
+> On Wed, Oct 24, 2012 at 10:03:35AM +0200, Krzysztof Mazur wrote:
+> 
+> > The git-send-email always use RFC2047 subject quoting for files
+> > with "broken" encoding - non-ASCII files without Content-Transfer-Encoding,
+> > even for ASCII subjects. Now for ASCII subjects the RFC2047 quoting will be
+> > skipped.
+> > [...]
+> > -	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
+> > +	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject) &&
+> > +			($subject =~ /[^[:ascii:]]/)) {
+> 
+> Is that test sufficient? We would also need to encode if it has rfc2047
+> specials, no?
 
-What tests? All the tests I see in msysgit are expected to succeed:
-https://github.com/msysgit/git/blob/devel/t/t5801-remote-hg.sh
+For Subject this should be sufficient. According to RFC822 after
+"Subject:" we have "text" token,
 
-> I'd sent a
-> series to fix that, but didn't follow-up to get it merged:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/184874
+--- from RFC822 ---
+                 /  "Subject"           ":"  *text
+--- from RFC822 ---
 
-I have read that thread multiple times now, and I still don't see the
-problem. Everything works fine in my remote-hg. I still don't
-understand what changes are required in upstream that your remote-hg
-needs, and the fact that there is no up-to-date remote-hg branch
-doesn't help.
+and text is defined as:
 
-Cheers.
+--- from RFC822 ---
+     text        =  <any CHAR, including bare    ; => atoms, specials,
+                     CR & bare LF, but NOT       ;  comments and
+                     including CRLF>             ;  quoted-strings are
+                                                 ;  NOT recognized.
+--- from RFC822 ---
 
+so only CRLF is not allowed in Subject.
+
+
+So the problem only exists for broken RFC2047-like texts, but I think
+it's ok to just pass such subjects, in most cases the Subject comes
+from already formatted patch file. I think that we just want to fix Subjects
+without specified encoding here.
+
+
+In most cases, when git-send-email is used for patches generated
+by "git format-patch" we just don't want to corrupt Subject. The
+"git format-patch" generates "broken" patches when commit message
+uses only ASCII characters and patch contains some non-ASCII characters.
+In this case original git-send-email, without this patch, adds RFC2047
+quotation for pure ASCII Subject.
+
+> 
+> It looks like we use the same regex elsewhere. Maybe this would be a
+> good chance to abstract out a needs_rfc2047_quoting while we are in the
+> area?
+
+It's a good idea, however rules are different for Subject and addresses
+(sanitize_address).
+
+I think we can go even further, we can just add quote_subject(),
+which performs this test and calls quote_rfc2047() if necessary.
+I'm sending bellow patch that does that.
+
+Krzysiek
 -- 
-Felipe Contreras
+From a1e6eef831275485ec1555d94ff0d9aac852dd12 Mon Sep 17 00:00:00 2001
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Date: Wed, 24 Oct 2012 19:08:57 +0200
+Subject: [PATCH] git-send-email: introduce quote_subject()
+
+The quote_rfc2047() always adds RFC2047 quoting and to avoid quoting ASCII
+subjects, before calling quote_rfc2047() subject must be tested for non-ASCII
+characters. To avoid this new quote_subject() function is introduced.
+The quote_subject() performs this test and calls quote_rfc2047() only if
+necessary.
+
+Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
+---
+ git-send-email.perl | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index efeae4c..e9aec8d 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -657,9 +657,7 @@ EOT
+ 			$initial_subject = $1;
+ 			my $subject = $initial_subject;
+ 			$_ = "Subject: " .
+-				($subject =~ /[^[:ascii:]]/ ?
+-				 quote_rfc2047($subject, $compose_encoding) :
+-				 $subject) .
++				quote_subject($subject, $compose_encoding) .
+ 				"\n";
+ 		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
+ 			$initial_reply_to = $1;
+@@ -907,6 +905,22 @@ sub is_rfc2047_quoted {
+ 	$s =~ m/^(?:"[[:ascii:]]*"|=\?$token\?$token\?$encoded_text\?=)$/o;
+ }
+ 
++sub subject_needs_rfc2047_quoting {
++	my $s = shift;
++
++	return !is_rfc2047_quoted($s) && ($s =~ /[^[:ascii:]]/);
++}
++
++sub quote_subject {
++ 	local $subject = shift;
++ 	my $encoding = shift || 'UTF-8';
++
++ 	if (subject_needs_rfc2047_quoting($subject)) {
++		return quote_rfc2047($subject, $encoding);
++ 	}
++ 	return $subject;
++}
++
+ # use the simplest quoting being able to handle the recipient
+ sub sanitize_address {
+ 	my ($recipient) = @_;
+@@ -1327,9 +1341,8 @@ foreach my $t (@files) {
+ 		$body_encoding = $auto_8bit_encoding;
+ 	}
+ 
+-	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject) &&
+-			($subject =~ /[^[:ascii:]]/)) {
+-		$subject = quote_rfc2047($subject, $auto_8bit_encoding);
++	if ($broken_encoding{$t}) {
++		$subject = quote_subject($subject, $auto_8bit_encoding);
+ 	}
+ 
+ 	if (defined $author and $author ne $sender) {
+-- 
+1.8.0.3.gf4c35fc
