@@ -1,89 +1,84 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [DOCBUG] git subtree synopsis needs updating
-Date: Wed, 24 Oct 2012 16:29:47 +0200
-Organization: Bertin Technologies
-Message-ID: <20121024162947.2c1edc50@chalon.bertin.fr>
-References: <20121019152158.4297707b@chalon.bertin.fr>
- <5082FE13.2000003@initfour.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git list <git@vger.kernel.org>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Wed Oct 24 16:30:04 2012
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: [PATCH] configure: fix some output message
+Date: Wed, 24 Oct 2012 17:34:27 +0200
+Message-ID: <b67d9e47dc92c2c316495ac4bd8e7ba93d339781.1351091006.git.stefano.lattarini@gmail.com>
+Cc: Stefano Lattarini <stefano.lattarini@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 24 17:35:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TR1y3-0001ty-BN
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 16:29:59 +0200
+	id 1TR2z3-00072X-7Z
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 17:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934881Ab2JXO3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 10:29:47 -0400
-Received: from cabourg.bertin.fr ([195.68.26.10]:64829 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934863Ab2JXO3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 10:29:46 -0400
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 891E7A1028
-	for <git@vger.kernel.org>; Wed, 24 Oct 2012 16:29:44 +0200 (CEST)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 5FB18A1012
-	for <git@vger.kernel.org>; Wed, 24 Oct 2012 16:29:44 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MCE000OIIXJZ9A0@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 24 Oct 2012 16:29:44 +0200 (CEST)
-In-reply-to: <5082FE13.2000003@initfour.nl>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19302.003
+	id S965210Ab2JXPem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 11:34:42 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:59866 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964999Ab2JXPek (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 11:34:40 -0400
+Received: by mail-we0-f174.google.com with SMTP id t9so321693wey.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 08:34:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=hWNNMuGe6+lAZSZgSfgoP8kQGGSIzLVxzP0asB0Lm9w=;
+        b=YSku6qbkuenudYF49jElg6mKDNJpQx8PlulrYDt2kKPUwpEjuWxse15ITq77h34a8Q
+         +QFDDY/laeJ9RPB9fck46AH5eazbkh/tLyCLiNtqHTU8LcCWiX/ufbPG/+cmCLrOfbxW
+         gOtIya5Ee14QEhA5ArbEyg0XP6rI/HfhSQxvnrZ+plb6g8LAY2PCoKqexYNu6TztJ6qM
+         0g5sANxGwDbG+wSkTVsCgP5/+iIqlybYXrNVoGg/4Z67Yq7/j1k1oVQX+LwMBs6o/BE2
+         1Swn3MisUTNW7+ERjsu9Q73d22vdz42CfwxurlkthXXXnJgk2uow457s566FdDnAtaAR
+         Uq4g==
+Received: by 10.180.87.74 with SMTP id v10mr6739937wiz.21.1351092878555;
+        Wed, 24 Oct 2012 08:34:38 -0700 (PDT)
+Received: from localhost.localdomain (host247-100-dynamic.8-87-r.retail.telecomitalia.it. [87.8.100.247])
+        by mx.google.com with ESMTPS id hv8sm4919052wib.0.2012.10.24.08.34.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 24 Oct 2012 08:34:37 -0700 (PDT)
+X-Mailer: git-send-email 1.8.0.rc2.11.gd25c58c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208308>
 
-On Sat, 20 Oct 2012 21:40:03 +0200
-Herman van Rink <rink@initfour.nl> wrote:
+Before this change, output from ./configure could contain
+botched wording like this:
 
-> On 10/19/2012 03:21 PM, Yann Dirson wrote:
-> > As the examples in git-subtree.txt show, the synopsis in the same file should
-> > surely get a patch along the lines of:
-> >
-> > -'git subtree' add   -P <prefix> <commit>
-> > +'git subtree' add   -P <prefix> <repository> <commit>
-> >
-> > Failure to specify the repository (by just specifying a local commit) fails with
-> > the cryptic:
-> >
-> >  warning: read-tree: emptying the index with no arguments is deprecated; use --empty
-> >  fatal: just how do you expect me to merge 0 trees?
-> >
-> >
-> > Furthermore, the doc paragraph for add, aside from mentionning <repository>, also
-> > mentions a <refspec> which the synopsis does not show either.
-> >
-> >
-> > As a sidenote it someone wants to do some maintainance, using "." as repository when
-> > the branch to subtree-add is already locally available does not work well either
-> > (fails with "could not find ref myremote/myhead").
-> >
-> 
-> The version of subtree in contrib is rather out-dated unfortunately.
-> 
-> I've collected a bunch of patches in
-> https://github.com/helmo/git/tree/subtree-updates
+    checking Checking for POSIX Threads with '-pthread'... yes
 
-Ah, it's nice to see subtree updates.  Any plans to get them merged anytime soon ?
+instead of the intended:
 
-I guess you may want to rebase the patches from https://github.com/helmo/git-subtree,
-the subtree-updates patch looks like a "subtree merge --squash" result, and is not really
-suitable for reviewing on the list.
+    checking for POSIX Threads with '-pthread'... yes
 
-> The documentation issue is also fixed in there.
-> 
+Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
+diff --git a/configure.ac b/configure.ac
+index c85888c..ad215cc 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1024,7 +1024,7 @@ elif test -z "$PTHREAD_CFLAGS"; then
+   for opt in -mt -pthread -lpthread; do
+      old_CFLAGS="$CFLAGS"
+      CFLAGS="$opt $CFLAGS"
+-     AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
++     AC_MSG_CHECKING([for POSIX Threads with '$opt'])
+      AC_LINK_IFELSE([PTHREADTEST_SRC],
+ 	[AC_MSG_RESULT([yes])
+ 		NO_PTHREADS=
+@@ -1044,7 +1044,7 @@ elif test -z "$PTHREAD_CFLAGS"; then
+ else
+   old_CFLAGS="$CFLAGS"
+   CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+-  AC_MSG_CHECKING([Checking for POSIX Threads with '$PTHREAD_CFLAGS'])
++  AC_MSG_CHECKING([for POSIX Threads with '$PTHREAD_CFLAGS'])
+   AC_LINK_IFELSE([PTHREADTEST_SRC],
+ 	[AC_MSG_RESULT([yes])
+ 		NO_PTHREADS=
 -- 
-Yann Dirson - Bertin Technologies
+1.8.0.rc2.11.gd25c58c
