@@ -1,66 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/8] t1300: style updates
-Date: Wed, 24 Oct 2012 02:37:12 -0400
-Message-ID: <20121024063712.GA17789@sigill.intra.peff.net>
-References: <20121023223502.GA23194@sigill.intra.peff.net>
- <20121023223554.GA17392@sigill.intra.peff.net>
- <50878BAB.60809@viscovery.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Large number of object files
+Date: Wed, 24 Oct 2012 13:59:16 +0700
+Message-ID: <CACsJy8CcMBJLV=urVoWOQABQzQkC6y35spPF+_3fW6dtJjHtvg@mail.gmail.com>
+References: <CAMJd5AS1=Cf--0=1Xynxf1J-22fxBq05XjNGMcUep+ndAOO7ig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 08:37:31 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Uri Moszkowicz <uri@4refs.com>
+X-From: git-owner@vger.kernel.org Wed Oct 24 09:00:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQuap-0003nR-8o
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 08:37:31 +0200
+	id 1TQuwa-0000JR-EN
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 09:00:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933506Ab2JXGhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 02:37:17 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53682 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933348Ab2JXGhQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 02:37:16 -0400
-Received: (qmail 26889 invoked by uid 107); 24 Oct 2012 06:37:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Oct 2012 02:37:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Oct 2012 02:37:12 -0400
-Content-Disposition: inline
-In-Reply-To: <50878BAB.60809@viscovery.net>
+	id S933650Ab2JXG7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 02:59:48 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:51373 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933282Ab2JXG7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 02:59:47 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so158713oag.19
+        for <git@vger.kernel.org>; Tue, 23 Oct 2012 23:59:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JufDPq/4WJYPxps72iGamlOic/ehS6gaKlwjtmCvdFY=;
+        b=c1dzFgl7/TooUkIYyKitPpVsZLxiCaU8dHLnFAx1jIxBT8O0m3lSXuqGL0EuSE3Igs
+         4ACnkwsllsUJ1zPZb0knmmu12+z3ZyeYbBt+B68taFfZRFuMHXcvFqQyAg4o1EpnKBdP
+         4EcYMDPe2CsXWfBPDrlxU3h+HPNkeZsC9Hj4zEtTYHnEi/bOz2fKiO9sKlwHmFsky4UW
+         gByzBzdG9d2pmnp8IHuZqI1APVjJ1r2LVxIc0xAO8IKvF1VDQ3zppebrZCm4etcPOOTO
+         ixFPheGECfUrkYdpD0LWfX/IJpnoAY6afUzKA76fpSFTckfCTcMBaDGgijBJ/FBqjjMR
+         NB3w==
+Received: by 10.60.169.137 with SMTP id ae9mr13135090oec.91.1351061987067;
+ Tue, 23 Oct 2012 23:59:47 -0700 (PDT)
+Received: by 10.182.108.10 with HTTP; Tue, 23 Oct 2012 23:59:16 -0700 (PDT)
+In-Reply-To: <CAMJd5AS1=Cf--0=1Xynxf1J-22fxBq05XjNGMcUep+ndAOO7ig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208291>
 
-On Wed, Oct 24, 2012 at 08:33:15AM +0200, Johannes Sixt wrote:
+On Wed, Oct 24, 2012 at 12:21 PM, Uri Moszkowicz <uri@4refs.com> wrote:
+> Continuing to work on improving clone times, using "git gc
+> --aggressive" has resulted in a large number of tags combining into a
+> single file but now I have a large number of files in the objects
+> directory - 131k for a ~2.7GB repository.
 
-> Am 10/24/2012 0:35, schrieb Jeff King:
-> > -test_expect_success 'non-match value' \
-> > -	'test wow = $(git config --get nextsection.nonewline !for)'
-> > +test_expect_success 'non-match value' '
-> > +	test wow = $(git config --get nextsection.nonewline !for)
-> > +'
-> 
-> Here's a case you forgot to update to test_cmp.
+Can you paste "git count-objects -v"? I'm curious why gc keeps so many
+loose objects around.
 
-Thanks. I noticed I left quite a few of those in (the other changes I
-did mechanically, but I only fixed up the "test" ones in nearby spots).
+> Any way to reduce the number of these files to speed up clones?
 
-> > +test_expect_success 'get-regexp variable with no value' '
-> > +	git config --get-regexp novalue > output &&
-> > +	 test_cmp expect output'
-> 
-> And while you are here, you might want to remove this extra space. ;)
-> 
-> Otherwise, looks fine.
-
-Thanks, I'll fix up both.
-
--Peff
+An easy way to get rid of them is to clone the non-local way.
+Everything will be sent over a pack, the result would be a single pack
+in new repo. Try "git clone file:///path/to/source/repo new-repo". You
+can also try "git prune" on the existing repo (read its man page
+before use).
+-- 
+Duy
