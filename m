@@ -1,114 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-email: skip RFC2047 quoting for ASCII subjects
-Date: Wed, 24 Oct 2012 15:25:30 -0400
-Message-ID: <20121024192530.GA26477@sigill.intra.peff.net>
-References: <1351065815-22416-1-git-send-email-krzysiek@podlesie.net>
- <20121024084636.GA23500@sigill.intra.peff.net>
- <20121024171036.GA18880@shrek.podlesie.net>
+From: Sergey Shelukhin <sergey@hortonworks.com>
+Subject: strange problems applying --no-prefix patch with -p0 and added files
+Date: Wed, 24 Oct 2012 13:54:30 -0700
+Message-ID: <CAHXxaiCELHomSPQoZWw+SdV61Y0gVb9MEdRv-gCOfkJG50xCeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Krzysztof Mazur <krzysiek@podlesie.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 21:25:47 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 24 22:54:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TR6aH-0005kM-Kc
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 21:25:45 +0200
+	id 1TR7yP-00022l-4A
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 22:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933461Ab2JXTZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 15:25:33 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54132 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933046Ab2JXTZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 15:25:32 -0400
-Received: (qmail 31922 invoked by uid 107); 24 Oct 2012 19:26:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Oct 2012 15:26:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Oct 2012 15:25:30 -0400
-Content-Disposition: inline
-In-Reply-To: <20121024171036.GA18880@shrek.podlesie.net>
+	id S1752746Ab2JXUyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 16:54:32 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:33423 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752205Ab2JXUyb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 16:54:31 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so1352871lbo.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 13:54:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :x-gm-message-state;
+        bh=S7WF5rCC1adDbHdEztwwcrs+Y3hwm+xnDlsR8bIt4q4=;
+        b=mP2n6tXLN9t7Nb7XeiHiVeP/VQrXmwCHWAYYF7iVB4vGBi5+h1sA6dqiSgrPk/gYZI
+         woS7gIxmNOirKwro7VBv2q6Qvx+n3nXDdUA1d5eei1NrZorf8bIqVFLFE+ZS730Pr+eG
+         ICGmx5BEmGsa5O/9dHWu2PbnbksX3Yne8I4zMiha6+nRVXbnBVv390QOKn/OghqXxJM/
+         M8hw/6D5D2/iO4V2b7He+xr9FhQYSlna26c4GDx1CJ2IIfXD6HrQbUhzBevXcpjIKt1l
+         7CKtAqjg5XMAX/anM2O5G+89nPMpLY+sRMVkD0G+9W0XbQnydLuSLCZO/tf7dgMT+LLY
+         I3Rg==
+Received: by 10.152.110.74 with SMTP id hy10mr15747633lab.54.1351112070237;
+ Wed, 24 Oct 2012 13:54:30 -0700 (PDT)
+Received: by 10.114.14.134 with HTTP; Wed, 24 Oct 2012 13:54:30 -0700 (PDT)
+X-Gm-Message-State: ALoCoQnBB5wRGo4NXTfEQ2WjOE3P6a+lsxdZ50NlHF1XmPismIT+NYWZ6IDvy95FOAf6cP35CmMm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208323>
 
-On Wed, Oct 24, 2012 at 07:10:36PM +0200, Krzysztof Mazur wrote:
+Hello.
+I am trying to apply a patch made via {git diff somehash^ somehash >
+....} before (same version of Git, same machine). I have no-prefix
+enabled by default.
+If I try to apply the patch with -p0, it fails.
+If I go to a directory where all the changed files are ("src/" below)
+to "simulate" the prefix for -p1, it silently does nothing.
+Only if I make it a -p1 patch, it actually tries to do apply (and
+applies the new files that cause problems in -p0 alright too, if used
+with --reject).
 
-> > > -	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
-> > > +	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject) &&
-> > > +			($subject =~ /[^[:ascii:]]/)) {
-> > 
-> > Is that test sufficient? We would also need to encode if it has rfc2047
-> > specials, no?
-> 
-> For Subject this should be sufficient. According to RFC822 after
-> "Subject:" we have "text" token,
-> [...]
-> So the problem only exists for broken RFC2047-like texts, but I think
-> it's ok to just pass such subjects, in most cases the Subject comes
-> from already formatted patch file. I think that we just want to fix Subjects
-> without specified encoding here.
+I am relatively new to git, so while researching I realized I might be
+using wrong ways to do things (e.g. not using cherry-pick), but this
+seems like a bug regardless.
 
-Right, but I was specifically worried about raw "=?", which is only an
-issue due to rfc2047 itself.
+Here's the log of my interactions with git:
 
-However, reading the patch again, we are already checking for that with
-is_rfc2047_quoted. It might miss the case where we have =? but not the
-rest of a valid encoded word, but any compliant parser should recognize
-that and leave it be.
-
-So I think your original patch is actually correct.
-
-> I think we can go even further, we can just add quote_subject(),
-> which performs this test and calls quote_rfc2047() if necessary.
-> I'm sending bellow patch that does that.
-
-Yeah, it would still be nice to keep the logic in one place.
-
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index efeae4c..e9aec8d 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -657,9 +657,7 @@ EOT
->  			$initial_subject = $1;
->  			my $subject = $initial_subject;
->  			$_ = "Subject: " .
-> -				($subject =~ /[^[:ascii:]]/ ?
-> -				 quote_rfc2047($subject, $compose_encoding) :
-> -				 $subject) .
-> +				quote_subject($subject, $compose_encoding) .
-
-Hrm. Isn't this one technically a regression if the $subject contains
-encoded words? IOW, in this case we feed quote_subject a known-raw
-header; any rfc2047 in it would want to be encoded to be preserved.
-
-But in this case:
-
-> @@ -1327,9 +1341,8 @@ foreach my $t (@files) {
->  		$body_encoding = $auto_8bit_encoding;
->  	}
->  
-> -	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject) &&
-> -			($subject =~ /[^[:ascii:]]/)) {
-> -		$subject = quote_rfc2047($subject, $auto_8bit_encoding);
-> +	if ($broken_encoding{$t}) {
-> +		$subject = quote_subject($subject, $auto_8bit_encoding);
->  	}
-
-We have a possibly already-encoded header, and we would want to avoid
-double-encoding it.
-
-In the first case, the "wants quoting" logic should be:
-
-  is_rfc2047_quoted($subject) || /[^[:ascii:]]/
-
-and in the latter case it would be:
-
-  !is_rfc2047_quoted($subject) && /^[:ascii:]]/
-
--Peff
+reznor-mbp:git-hbase-089 sergey$ git version
+git version 1.7.10.2 (Apple Git-33)
+reznor-mbp:git-hbase-089 sergey$ git status
+# On branch 0.94
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#    HBASE-6371.patch
+nothing added to commit but untracked files present (use "git add" to track)
+reznor-mbp:git-hbase-089 sergey$ git apply -p0 HBASE-6371.patch
+fatal: git apply: bad git-diff - inconsistent new filename on line 128
+reznor-mbp:git-hbase-089 sergey$ sed -n 125,129p HBASE-6371.patch
+diff --git src/main/java/org/apache/
+hadoop/hbase/regionserver/CompactSelection.java
+src/main/java/org/apache/hadoop/hbase/regionserver/CompactSelection.java
+new file mode 100644
+index 0000000..a9ee0d4
+--- /dev/null
++++ src/main/java/org/apache/hadoop/hbase/regionserver/CompactSelection.java
+reznor-mbp:git-hbase-089 sergey$ cd src
+reznor-mbp:src sergey$ git apply -p1 -v --whitespace=nowarn ../HBASE-6371.patch
+[ there's nothing here, e.g. no output ]
+reznor-mbp:src sergey$ git status
+# On branch 0.94
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#    ../HBASE-6371.patch
+nothing added to commit but untracked files present (use "git add" to track)
+reznor-mbp:src sergey$ cd ..
+reznor-mbp:git-hbase-089 sergey$ sed -E "s/(--git|---) src/\1 a\/src/"
+HBASE-6371.patch | sed -E "s/ src\// b\/src\//" >
+HBASE-6371-prefix.patch
+reznor-mbp:git-hbase-089 sergey$ git apply HBASE-6371-prefix.patch
+HBASE-6371-prefix.patch:169: trailing whitespace.
+ ...
+error: patch failed:
+src/main/java/org/apache/hadoop/hbase/HBaseConfiguration.java:64
+error: src/main/java/org/apache/hadoop/hbase/HBaseConfiguration.java:
+patch does not apply
+....
