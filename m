@@ -1,46 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 8/8] git-config: use git_config_with_options
-Date: Wed, 24 Oct 2012 08:33:21 +0200
-Message-ID: <50878BB1.8050902@viscovery.net>
-References: <20121023223502.GA23194@sigill.intra.peff.net> <20121023224119.GH17392@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/8] t1300: style updates
+Date: Wed, 24 Oct 2012 02:37:12 -0400
+Message-ID: <20121024063712.GA17789@sigill.intra.peff.net>
+References: <20121023223502.GA23194@sigill.intra.peff.net>
+ <20121023223554.GA17392@sigill.intra.peff.net>
+ <50878BAB.60809@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 08:33:36 2012
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 24 08:37:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQuX0-0001IF-TE
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 08:33:35 +0200
+	id 1TQuap-0003nR-8o
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 08:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933132Ab2JXGdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 02:33:23 -0400
-Received: from so.liwest.at ([212.33.55.24]:21074 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757648Ab2JXGdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 02:33:22 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TQuWn-0000ta-Ea; Wed, 24 Oct 2012 08:33:21 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 3A7D21660F;
-	Wed, 24 Oct 2012 08:33:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <20121023224119.GH17392@sigill.intra.peff.net>
-X-Spam-Score: -1.0 (-)
+	id S933506Ab2JXGhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 02:37:17 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53682 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933348Ab2JXGhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 02:37:16 -0400
+Received: (qmail 26889 invoked by uid 107); 24 Oct 2012 06:37:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Oct 2012 02:37:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Oct 2012 02:37:12 -0400
+Content-Disposition: inline
+In-Reply-To: <50878BAB.60809@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208290>
 
-All looked sane. Thanks for a pleasant read!
+On Wed, Oct 24, 2012 at 08:33:15AM +0200, Johannes Sixt wrote:
 
--- Hannes
+> Am 10/24/2012 0:35, schrieb Jeff King:
+> > -test_expect_success 'non-match value' \
+> > -	'test wow = $(git config --get nextsection.nonewline !for)'
+> > +test_expect_success 'non-match value' '
+> > +	test wow = $(git config --get nextsection.nonewline !for)
+> > +'
+> 
+> Here's a case you forgot to update to test_cmp.
+
+Thanks. I noticed I left quite a few of those in (the other changes I
+did mechanically, but I only fixed up the "test" ones in nearby spots).
+
+> > +test_expect_success 'get-regexp variable with no value' '
+> > +	git config --get-regexp novalue > output &&
+> > +	 test_cmp expect output'
+> 
+> And while you are here, you might want to remove this extra space. ;)
+> 
+> Otherwise, looks fine.
+
+Thanks, I'll fix up both.
+
+-Peff
