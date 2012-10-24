@@ -1,116 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-status: show short sequencer state
-Date: Wed, 24 Oct 2012 10:15:52 +0200
-Message-ID: <vpqsj94mgjr.fsf@grenoble-inp.fr>
-References: <1350948569-28445-2-git-send-email-hordp@cisco.com>
-	<vpqsj95soxp.fsf@grenoble-inp.fr> <5086DBDB.9070606@cisco.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/9] pretty: support padding placeholders, %< %> and %><
+Date: Wed, 24 Oct 2012 04:25:12 -0400
+Message-ID: <20121024082512.GA22127@sigill.intra.peff.net>
+References: <1348287739-12128-1-git-send-email-pclouds@gmail.com>
+ <1348391433-11300-1-git-send-email-pclouds@gmail.com>
+ <1348391433-11300-8-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "phil.hord\@gmail.com" <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"konglu\@minatec.inpg.fr" <konglu@minatec.inpg.fr>,
-	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 10:16:27 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 24 10:25:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQw8Z-00053s-1B
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 10:16:27 +0200
+	id 1TQwHO-0002Si-Vg
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 10:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758069Ab2JXIQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 04:16:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58560 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757352Ab2JXIQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 04:16:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q9O88OUK001140
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 24 Oct 2012 10:08:24 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TQw81-0008In-7t; Wed, 24 Oct 2012 10:15:53 +0200
-In-Reply-To: <5086DBDB.9070606@cisco.com> (Phil Hord's message of "Tue, 23 Oct
-	2012 14:03:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 24 Oct 2012 10:08:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q9O88OUK001140
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1351670909.45052@cppmijH28oph0/y7iVDCCw
+	id S933575Ab2JXIZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 04:25:20 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53795 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933565Ab2JXIZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 04:25:16 -0400
+Received: (qmail 27774 invoked by uid 107); 24 Oct 2012 08:25:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Oct 2012 04:25:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Oct 2012 04:25:12 -0400
+Content-Disposition: inline
+In-Reply-To: <1348391433-11300-8-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208299>
 
-Phil Hord <hordp@cisco.com> writes:
+On Sun, Sep 23, 2012 at 04:10:31PM +0700, Nguyen Thai Ngoc Duy wrote:
 
->>> +	if (state->substate==WT_SUBSTATE_NOMINAL)
->>>  		status_printf_ln(s, color,
->>>  			_("The current patch is empty."));
->> This looks weird. First, spaces around == (here and below). Then, the
->> logic is unintuitive. The "if" suggests everything is allright, and the
->> message below is very specific. This at least deserves a comment.
->
-> Yes, I agree. It was less clear but more reasonable before I tried to
-> clear it up some.  It's driven by the short-token printer. The state is
-> "you're in a 'git am' but I do not see any conflicted files.  Therefore,
-> your patch must be empty."
+> +	else {
+> +		int sb_len = sb->len, offset;
+> +		switch (c->flush_type) {
+> +		case flush_left:
+> +			offset = padding - len;
+> +			break;
+> +		case flush_right:
+> +			offset = 0;
+> +			break;
+> +		case flush_both:
+> +			offset = (padding - len) / 2;
+> +			break;
+> +		case no_flush: /* to make gcc happy */
+> +			break;
+> +		}
+> +		/*
+> +		 * we calculate padding in columns, now
+> +		 * convert it back to chars
+> +		 */
+> +		padding = padding - len + local_sb.len;
+> +		strbuf_grow(sb, padding);
+> +		strbuf_setlen(sb, sb_len + padding);
+> +		memset(sb->buf + sb_len, ' ', sb->len - sb_len);
+> +		memcpy(sb->buf + sb_len + offset, local_sb.buf,
+> +		       local_sb.len);
+> +	}
 
-This was my guess, but I wouldn't have needed to guess if there was a
-comment in the code ;-).
+gcc complains (rightly, I think) that offset can be used uninitialized
+in the final line (looks like it is from the no_flush case). If it is a
+"can never happen" case that is there to appease gcc in the switch
+statement, should we drop a die("BUG: XXX") there? If so, what would the
+XXX be?
 
-> I'll try to make this more explicit.   Currently the short-status
-> version will say either "am" or "am \n conflicted" when a 'git am' is in
-> progress.  The logical path to follow if I re-add 'git-am-empty' state
-> tracker is for this to now show either "am \n am-is-empty" or "am \n
-> conflicted".  But I think I should suppress the "am-is-empty" report in
-> that case.  What do you think
-
-I don't think you should remove it from the output (no strong opinion).
-My point was just that the code looked weird.
-
->>> +static void wt_print_token(struct wt_status *s, const char *color, const char *token)
->>> +{
->>> +	color_fprintf(s->fp, color, "%s", token);
->>> +	fputc(s->null_termination ? '\0' : '\n', s->fp);
->>> +}
->> The output format seems to be meant only for machine-consumption. Is
->> there any case when we'd want color? [...]
-
-> > [...]I thought I might be going back there, or that I might combine this
-> > with full 'git status' again somehow, and colors seemed appropriate
-> > still.
-> > [...]
-> > So I can remove this color decorator until someone finds a need for
-> > it.
-
-I'm fine with both options, with a slight preference for removing them.
-
-> My own use-case involves $PS1.
-
-That makes sense (indeed, the implementation of status hints was
-slightly inspired from what the bash prompt in
-contrib/completion/git-prompt.sh does). The next step could be to use
-your porcelain there instead of checking manually file existance.
-
-You may want to add a short note about this motivation in the commit
-message.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
