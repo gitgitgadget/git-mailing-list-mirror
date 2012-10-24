@@ -1,83 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] t9350: point out that refs are not updated correctly
-Date: Wed, 24 Oct 2012 11:08:08 -0700
-Message-ID: <20121024180807.GA3338@elie.Belkin>
-References: <1320535407-4933-1-git-send-email-srabbelier@gmail.com>
- <1320535407-4933-2-git-send-email-srabbelier@gmail.com>
- <CAMP44s1hdZb_7Lv8SEe+MsfC_q-nXsnjJobABFq6eFR_er4TaA@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH] git-submodule add: Record branch name in .gitmodules
+Date: Wed, 24 Oct 2012 14:12:18 -0400
+Message-ID: <CABURp0rpPqeTJMYXmgMG2CmU=SzzvCMeX46rnMVB0EeB_LXPiA@mail.gmail.com>
+References: <61a31f6bc61d4df322a097e32ba472390c583a81.1350923683.git.wking@tremily.us>
+ <CABURp0pqg7XC6makK2OcundMabV9AtcBNGNK6Q0TMZfJbt3anw@mail.gmail.com> <20121022225546.GO23101@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Eric Herman <eric@freesa.org>,
-	Fernando Vezzosi <buccia@repnz.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 20:08:34 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: "W. Trevor King" <wking@tremily.us>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 24 20:12:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TR5NU-0001DV-NH
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 20:08:29 +0200
+	id 1TR5Rj-0004RD-LX
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 20:12:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935419Ab2JXSIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 14:08:16 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:51249 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935409Ab2JXSIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 14:08:15 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so535460pad.19
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 11:08:15 -0700 (PDT)
+	id S1161065Ab2JXSMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 14:12:40 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:33212 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161061Ab2JXSMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 14:12:39 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so499671lag.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 11:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IyPX3wDjx1aEti9hBGi4XKsdxb7E4DDuQJ1fr2rYQUU=;
-        b=F00e9OkKvpcry+iv5JwqX+GU6v8QuZX1Sp2VwWvXunC5D0cYBsVqcDkrZcjX0cj1ML
-         drJQ72zUQRipw9iqh41wu1ttStCDiWzQ0ibz5uct+KcmF9sspmTtiD8l3oF269Hctbca
-         3NDUOOBu7dX5moEx6xy99RksQOxi94/A8HIvdEDvKzNghQ3xck+k74SOLBK2NokG9Z/P
-         imIrM32HmAX2qcPSP2uG5eWxwZ3cITOkD+JC2Mph+E8Stv2OgwAQjQY5jBED7I1hxNbE
-         i5nMottl3rvPri6L4aiJfuN0LWpVLMj3+pltX9NoKdzBMK3whEPoEatgBWHmwNpqy24h
-         BxNA==
-Received: by 10.66.87.132 with SMTP id ay4mr16202935pab.67.1351102095630;
-        Wed, 24 Oct 2012 11:08:15 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id k6sm6002476paz.8.2012.10.24.11.08.13
-        (version=SSLv3 cipher=OTHER);
-        Wed, 24 Oct 2012 11:08:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1hdZb_7Lv8SEe+MsfC_q-nXsnjJobABFq6eFR_er4TaA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=hE4vk7rVUmz2kEe9onwK/ch23+WLewe4/QR4aFOO3xg=;
+        b=FZVNVfuvPOG8V0Abz1gTx+jIHxvP5h8QT0X+nZMvE3RXjSEpCEXSidLuIXzWk92uSO
+         oFnOOd2vP0LdfkAy+fyi4AlDeActvtHUJPcrYhOIfw/rrXRuys/0k4UBfoNueKyWx/hJ
+         FbW/XAcP/3p6FkBSZt8ZE6XQZc73h+jxVUyLOSWZwHybPvED+cQMPzj0EsAGSz2LPFzo
+         LoWA2Qzma/+hy5jkl9OOt2MiFnwOPYeRgjkFOuZoLC+25Xds2fL4diQ5TlAKhyMQuz1y
+         IgomDOlz93NXefNVahBwasImSMK54pawlvq+Q5rXOMz3ucD0FYIcWbE8eMzQNmUArDnZ
+         CoJA==
+Received: by 10.152.105.135 with SMTP id gm7mr15255011lab.22.1351102358266;
+ Wed, 24 Oct 2012 11:12:38 -0700 (PDT)
+Received: by 10.114.26.166 with HTTP; Wed, 24 Oct 2012 11:12:18 -0700 (PDT)
+In-Reply-To: <20121022225546.GO23101@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208315>
 
-Hi Felipe,
-
-Felipe Contreras wrote:
-
-> This test is completely wrong.
+On Mon, Oct 22, 2012 at 6:55 PM, W. Trevor King <wking@tremily.us> wrote:
+> On a tangentially related note, it would be nice to set environment
+> variables for each of the settings in submodule.$name during a foreach
+> call.  Then you could use
 >
-> 1) Where are the marks file?
-> 2) master..master shouldn't export anything
+>   git submodule foreach 'git checkout $branch && git pull'
+>
+> Perhaps you'd want to blacklist/whitelist or downcase settings names
+> to avoid things like
+>
+>   [submodule "foo"]
+>         PATH = /my/rootkit/
+>
+> but the update line is much cleaner.
 
-Why shouldn't master..master export anything?  It means "update the
-master ref; we already have all commits up to and including master^0".
+This is ugly as can be, but it works in my meagre testing.  It defines
+"submodule_path=/my/rootkit/" for the above bit of .gitmodules.  That
+is, it adds definitions for 'submodule_<var-name>' for each <var-name>
+in .gitmodules in submodule.$name.<var-name>, but <var-name> is
+lowercased and defanged (everything that's not already [a-z0-9] is
+replaced with underscore).  For example,
 
-The underlying problem is that fast-export takes rev-list arguments as
-parameters, which is unfortunately only an approximation to what is
-really intended.  Ideally it would separately take a list of refs to
-import and rev-list arguments representing the commits we already
-have.
+  git submodule foreach 'echo $submodule_url'
 
-Hoping that clarifies,
-Jonathan
+--- >8 ---
+diff --git c/git-submodule.sh i/git-submodule.sh
+index 6dd2338..79b3467 100755
+--- c/git-submodule.sh
++++ i/git-submodule.sh
+@@ -416,7 +416,15 @@ cmd_foreach()
+                                prefix="$prefix$sm_path/"
+                                clear_local_git_env
+                                # we make $path available to scripts ...
+                                path=$sm_path
++
++                               # make all submodule variables
+available to scripts
++                               eval $(git config -f .gitmodules
+--get-regexp "^submodule\.${name}\..*" |
++                               sed -e "s|^submodule\.${name}\.||" |
++                               while read VAR_NAME VAR_VALUE ; do
++                                       VAR_NAME=$(printf '%s'
+"$VAR_NAME" | tr A-Z a-z | sed -e 's/^[^a-z]/_/' -e 's/[^a-z0-9]/_/g')
++                                       printf 'submodule_%s=%s;\n'
+"$VAR_NAME" "'$VAR_VALUE'"
++                               done)
+                                cd "$sm_path" &&
+                                eval "$@" &&
+                                if test -n "$recursive"
