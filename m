@@ -1,84 +1,85 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH] configure: fix some output message
-Date: Wed, 24 Oct 2012 17:34:27 +0200
-Message-ID: <b67d9e47dc92c2c316495ac4bd8e7ba93d339781.1351091006.git.stefano.lattarini@gmail.com>
-Cc: Stefano Lattarini <stefano.lattarini@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 24 17:35:07 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 5/6] tests: add remote-hg tests
+Date: Wed, 24 Oct 2012 17:47:40 +0200
+Message-ID: <CAMP44s0OLE8wqoGOJ+cw1uuYjdema6UuXJU5-wAuWdJuxi2Mtg@mail.gmail.com>
+References: <1350841744-21564-1-git-send-email-felipe.contreras@gmail.com>
+	<1350841744-21564-6-git-send-email-felipe.contreras@gmail.com>
+	<CAGdFq_hhjvysViU+rceOcX7L48BkxUbDzKiyT7LakFqz1ikT8A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 24 17:47:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TR2z3-00072X-7Z
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 17:35:05 +0200
+	id 1TR3BR-0008V6-LF
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 17:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965210Ab2JXPem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 11:34:42 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:59866 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964999Ab2JXPek (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 11:34:40 -0400
-Received: by mail-we0-f174.google.com with SMTP id t9so321693wey.19
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 08:34:38 -0700 (PDT)
+	id S1756011Ab2JXPrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 11:47:41 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:64875 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753132Ab2JXPrk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 11:47:40 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so573652oag.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 08:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=hWNNMuGe6+lAZSZgSfgoP8kQGGSIzLVxzP0asB0Lm9w=;
-        b=YSku6qbkuenudYF49jElg6mKDNJpQx8PlulrYDt2kKPUwpEjuWxse15ITq77h34a8Q
-         +QFDDY/laeJ9RPB9fck46AH5eazbkh/tLyCLiNtqHTU8LcCWiX/ufbPG/+cmCLrOfbxW
-         gOtIya5Ee14QEhA5ArbEyg0XP6rI/HfhSQxvnrZ+plb6g8LAY2PCoKqexYNu6TztJ6qM
-         0g5sANxGwDbG+wSkTVsCgP5/+iIqlybYXrNVoGg/4Z67Yq7/j1k1oVQX+LwMBs6o/BE2
-         1Swn3MisUTNW7+ERjsu9Q73d22vdz42CfwxurlkthXXXnJgk2uow457s566FdDnAtaAR
-         Uq4g==
-Received: by 10.180.87.74 with SMTP id v10mr6739937wiz.21.1351092878555;
-        Wed, 24 Oct 2012 08:34:38 -0700 (PDT)
-Received: from localhost.localdomain (host247-100-dynamic.8-87-r.retail.telecomitalia.it. [87.8.100.247])
-        by mx.google.com with ESMTPS id hv8sm4919052wib.0.2012.10.24.08.34.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 24 Oct 2012 08:34:37 -0700 (PDT)
-X-Mailer: git-send-email 1.8.0.rc2.11.gd25c58c
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=snYj7J9vRSC5Vl6TOgxT/9m6q3Zlrr20wo+n3/qUa/M=;
+        b=SXcUvosjfnoC3yA97tEZsGvqMNcIbZl1w8EijkEOpZHY67D0k6b3BM65vKYM/QHxAp
+         Iv8/W25DBAth98iDlTyPO9PIidur7KniEapTNktlvIRlUZ7cqBiChHjFV9iurhdrwcPp
+         YN0V83P1dIXx53ynBYkfxEtu+psC5nOdymCX8xNr5aFs8D4aS/0HkDodyCi+fMyd0Jcz
+         HHl/W9dXDdxExqg2w2qlot4sgFlAJ6mO23l86YP7F8HNn7M7dhnwK4FAhjZDHMunFYse
+         38hipNN+O2L8Zq5OqwwN/uqX+bv66wcQ9EkN+aRqCnMtAkYRz4T7lWTwqHNMRPR7UWln
+         VeUQ==
+Received: by 10.182.116.6 with SMTP id js6mr12985777obb.82.1351093660334; Wed,
+ 24 Oct 2012 08:47:40 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Wed, 24 Oct 2012 08:47:40 -0700 (PDT)
+In-Reply-To: <CAGdFq_hhjvysViU+rceOcX7L48BkxUbDzKiyT7LakFqz1ikT8A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208309>
 
-Before this change, output from ./configure could contain
-botched wording like this:
+On Sun, Oct 21, 2012 at 11:02 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> On Sun, Oct 21, 2012 at 10:49 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> From the original remote-hg.
+>>
+>> You need git-remote-hg already in your path to run them.
+>>
+>> I'm not proposing to include this patch like this, but should make it easier to
+>> test.
+>
+> You should also have a look at the tests that were marked as "expected
+> to fail", since they point out a bug with fast-export.
 
-    checking Checking for POSIX Threads with '-pthread'... yes
+What tests? All the tests I see in msysgit are expected to succeed:
+https://github.com/msysgit/git/blob/devel/t/t5801-remote-hg.sh
 
-instead of the intended:
+> I'd sent a
+> series to fix that, but didn't follow-up to get it merged:
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/184874
 
-    checking for POSIX Threads with '-pthread'... yes
+I have read that thread multiple times now, and I still don't see the
+problem. Everything works fine in my remote-hg. I still don't
+understand what changes are required in upstream that your remote-hg
+needs, and the fact that there is no up-to-date remote-hg branch
+doesn't help.
 
-Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
----
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Cheers.
 
-diff --git a/configure.ac b/configure.ac
-index c85888c..ad215cc 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1024,7 +1024,7 @@ elif test -z "$PTHREAD_CFLAGS"; then
-   for opt in -mt -pthread -lpthread; do
-      old_CFLAGS="$CFLAGS"
-      CFLAGS="$opt $CFLAGS"
--     AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
-+     AC_MSG_CHECKING([for POSIX Threads with '$opt'])
-      AC_LINK_IFELSE([PTHREADTEST_SRC],
- 	[AC_MSG_RESULT([yes])
- 		NO_PTHREADS=
-@@ -1044,7 +1044,7 @@ elif test -z "$PTHREAD_CFLAGS"; then
- else
-   old_CFLAGS="$CFLAGS"
-   CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
--  AC_MSG_CHECKING([Checking for POSIX Threads with '$PTHREAD_CFLAGS'])
-+  AC_MSG_CHECKING([for POSIX Threads with '$PTHREAD_CFLAGS'])
-   AC_LINK_IFELSE([PTHREADTEST_SRC],
- 	[AC_MSG_RESULT([yes])
- 		NO_PTHREADS=
 -- 
-1.8.0.rc2.11.gd25c58c
+Felipe Contreras
