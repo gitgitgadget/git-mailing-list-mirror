@@ -1,55 +1,86 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: L10n regression in 1.8.0.rc2: diffstat summary (git diff --stat,
- git format-patch)
-Date: Wed, 24 Oct 2012 08:54:38 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1210240853220.22443@ds9.cixit.se>
-References: <alpine.DEB.2.00.1210171145360.12699@ds9.cixit.se> <CACsJy8CS9TKGaT8+MQ_JOEQD+fgnc9HVAbr1pjQ3JE_3ZjE9=A@mail.gmail.com> <alpine.DEB.2.00.1210200035220.15821@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 09:54:58 2012
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: [PATCH] git-send-email: skip RFC2047 quoting for ASCII subjects
+Date: Wed, 24 Oct 2012 10:03:35 +0200
+Message-ID: <1351065815-22416-1-git-send-email-krzysiek@podlesie.net>
+Cc: Krzysztof Mazur <krzysiek@podlesie.net>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 24 10:05:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TQvnl-0008V6-38
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 09:54:57 +0200
+	id 1TQvxc-0006NC-Bg
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Oct 2012 10:05:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702Ab2JXHyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 03:54:45 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:53006 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751976Ab2JXHyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 03:54:44 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id q9O7sdQY023561
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 24 Oct 2012 09:54:39 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q9O7sctx023558;
-	Wed, 24 Oct 2012 09:54:38 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <alpine.DEB.2.00.1210200035220.15821@ds9.cixit.se>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Wed, 24 Oct 2012 09:54:39 +0200 (CEST)
+	id S1757990Ab2JXIEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 04:04:37 -0400
+Received: from shrek-modem2.podlesie.net ([83.13.132.46]:32965 "EHLO
+	shrek.podlesie.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757975Ab2JXIEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 04:04:33 -0400
+Received: from geronimo.kss.ia.polsl.pl (localhost [127.0.0.1])
+	by shrek.podlesie.net (Postfix) with ESMTP id 2B9683AB;
+	Wed, 24 Oct 2012 10:04:30 +0200 (CEST)
+X-Mailer: git-send-email 1.8.0.3.gf4c35fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208297>
 
-> I'll see if I can come up with a patch that cater for both use-cases.
+The git-send-email always use RFC2047 subject quoting for files
+with "broken" encoding - non-ASCII files without Content-Transfer-Encoding,
+even for ASCII subjects. Now for ASCII subjects the RFC2047 quoting will be
+skipped.
 
-I see that I forgot to Cc you; please see the patch series starting 
-with the Subject "[RFC PATCH 0/2] Localize log output", which I posted 
-here yesterday.
+Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
+---
+ git-send-email.perl   |  3 ++-
+ t/t9001-send-email.sh | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index adcb4e3..efeae4c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1327,7 +1327,8 @@ foreach my $t (@files) {
+ 		$body_encoding = $auto_8bit_encoding;
+ 	}
+ 
+-	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
++	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject) &&
++			($subject =~ /[^[:ascii:]]/)) {
+ 		$subject = quote_rfc2047($subject, $auto_8bit_encoding);
+ 	}
+ 
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 89fceda..6c6af7d 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1143,6 +1143,23 @@ EOF
+ '
+ 
+ test_expect_success $PREREQ 'setup expect' '
++cat >expected <<EOF
++Subject: subject goes here
++EOF
++'
++
++test_expect_success $PREREQ 'ASCII subject is not RFC2047 quoted' '
++	clean_fake_sendmail &&
++	echo bogus |
++	git send-email --from=author@example.com --to=nobody@example.com \
++			--smtp-server="$(pwd)/fake.sendmail" \
++			--8bit-encoding=UTF-8 \
++			email-using-8bit >stdout &&
++	grep "Subject" msgtxt1 >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success $PREREQ 'setup expect' '
+ cat >content-type-decl <<EOF
+ MIME-Version: 1.0
+ Content-Type: text/plain; charset=UTF-8
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.8.0.3.gf4c35fc
