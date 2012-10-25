@@ -1,116 +1,101 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: Where should git-prompt.sh be installed?
-Date: Thu, 25 Oct 2012 17:11:20 +0200
-Message-ID: <20121025151120.GA14740@goldbirke>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
- <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
- <20121025005106.GA9112@elie.Belkin>
+From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+Subject: Unexpected behaviour after removing submodule
+Date: Thu, 25 Oct 2012 17:06:40 +0200
+Message-ID: <50895580.9080408@morey-chaisemartin.com>
+Reply-To: devel-git@morey-chaisemartin.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Anders Kaseorg <andersk@MIT.EDU>,
-	Danny Yates <mail4danny@googlemail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ted Pavlic <ted@tedpavlic.com>, Dan McGee <dan@archlinux.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 17:11:44 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 25 17:14:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRP5v-0004Yo-Ai
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 17:11:39 +0200
+	id 1TRP8N-0006pA-BW
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 17:14:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965463Ab2JYPLZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Oct 2012 11:11:25 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:58028 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934530Ab2JYPLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 11:11:22 -0400
-Received: from localhost6.localdomain6 (goldbirke.fzi.de [141.21.50.31])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0MYcDK-1TwhMA3wJ8-00Vt7g; Thu, 25 Oct 2012 17:11:21 +0200
-Content-Disposition: inline
-In-Reply-To: <20121025005106.GA9112@elie.Belkin>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:gOPrPAcRnyfzeP9qSQAsR+2EVh8S7lWRG+Db604orp1
- mgfqmWEUkg+sh9ey3SMJhC9LBIgCVhmUK0dvthv3OLUylzMy/s
- gJOD5RqihRJJnQai9oPNoWfPkqBlYWP04Ekwg3QAijYCkIsjtr
- Ffn1tJr+wolYMMBxzVSErKtN96aZzhuilP0lmRrhv3pjoo0Lss
- K53Q0ugiHQuZ1jimvYOfN+RSQVFHbwnmqjsJhSG2c6zVnRE0Vi
- tof2w0REhxfLQm0c+x5dJ2Gb2OODvVdEJxMIxU71E0f/deEWza
- dI2pwLKsa1jOp/hCXrCM9newYxwEreNc3Rd/ccVrxlUi8+Z+mg
- yghpBlFAcRi90N2WmLkgRXYMn3zVTVmNsXhBMYTJN
+	id S934120Ab2JYPN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 11:13:56 -0400
+Received: from 9.mo4.mail-out.ovh.net ([46.105.40.176]:35537 "EHLO
+	mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1946074Ab2JYPNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 11:13:53 -0400
+X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Oct 2012 11:13:53 EDT
+Received: from mail247.ha.ovh.net (b7.ovh.net [213.186.33.57])
+	by mo4.mail-out.ovh.net (Postfix) with SMTP id A76F910501ED
+	for <git@vger.kernel.org>; Thu, 25 Oct 2012 17:13:38 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 25 Oct 2012 17:06:42 +0200
+Received: from unknown (HELO sat.lin.mbt.kalray.eu) (devel-git@morey-chaisemartin.com@5.23.40.158)
+  by ns0.ovh.net with SMTP; 25 Oct 2012 17:06:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+X-Ovh-Mailout: 178.32.228.4 (mo4.mail-out.ovh.net)
+X-Ovh-Tracer-Id: 6161205766418915294
+X-Ovh-Remote: 5.23.40.158 ()
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeehfedrtdelucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecunecuhfhrohhmpefpihgtohhlrghsucfoohhrvgihqdevhhgrihhsvghmrghrthhinhcuoeguvghvvghlqdhgihhtsehmohhrvgihqdgthhgrihhsvghmrghrthhinhdrtghomheqnecujfgurhepkfffhfhrfgggvffutgfgsehtjegrtddtfedu
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeehfedrtdelucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecunecuhfhrohhmpefpihgtohhlrghsucfoohhrvgihqdevhhgrihhsvghmrghrthhinhcuoeguvghvvghlqdhgihhtsehmohhrvgihqdgthhgrihhsvghmrghrthhinhdrtghomheqnecujfgurhepkfffhfhrfgggvffutgfgsehtjegrtddtfedu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208402>
 
-On Wed, Oct 24, 2012 at 05:51:06PM -0700, Jonathan Nieder wrote:
-> Hi,
->=20
-> In olden days the admin would copy contrib/completion/git-completion.=
-sh
-> to
->=20
->         /etc/bash_completion.d/git
->=20
-> and mortals could source /etc/bash_completion or
-> /etc/bash_completion.d/git in their ~/.bashrc (possibly shared among
-> multiple machines) so that the bash completion and __git_ps1 helpers
-> could work.
+Hi,
 
-Ah, the good old days!  I even modified 'make install' to copy the
-completion script to /etc/bash_completion.d/.  And I was happy.
+At work, we use a lot of submodules (several levels of submodules actually).
+As we also work with development branches, we use scripts to resync the whole checked-out tree (mainly in automated integration)
 
-> With Git 1.7.12 __git_ps1 has been split into a separate file, to hel=
-p
-> users who only want __git_ps1 to avoid the overhead of loading the
-> entire completion script (and allow the completion script to be loade=
-d
-> by bash-completion magic on the fly!).  Now the sysadmin should copy
-> contrib/completion/git-completion.sh to
->=20
-> 	/usr/share/bash-completion/completions/git
->=20
-> and contrib/completion/git-prompt.sh to
->=20
-> 	/usr/share/git-core/contrib/?? (somewhere?)
->=20
-> Mortals source /etc/bash_completion in their ~/.bashrc (possibly
-> shared among multiple machines) and expect bash completion to work.
-> For __git_ps1, users should source that ?? path.
->=20
-> Questions:
->=20
->  1) what path is appropriate for ?? above?
->  2) is this documented anywhere?
+We recently run across an issue where a branch (dev) contained a submodule while it had been removed in master and the files were imported in a subdirectory with the same name (probably using git-subtree).
 
-Don't know what is appropriate, and it's not documented.  I for one
-copy it manually to ~/.git-prompt.sh every once in a while.  And I'm
-not all that happy with that.
+Basically:
 
-> Possible answers:
->=20
->  1) Fedora uses /etc/profile.d/git-prompt.sh.  Gentoo uses
->     /usr/share/bash-completion/git-prompt.  Maybe others use
->     some other path.
->=20
->  2) The scripts themselves suggest copying to ~/.git-completion.sh
->     and ~/.git-prompt.sh.
->=20
-> Proposal:
->=20
->   1) /usr/lib/git-core/git-sh-prompt
->   2) git-sh-prompt(1)
+On dev:
+* top/refs(submodule)/file1
+On master:
+* top/refs(dir)/file1
 
-Not sure about the "sh" part.  The prompt function is very
-Bash-specific, it won't work under a plain POSIX shell.
+Outside the fact that it is quite hard to move from one branch to the other while having a perfectly clean tree checked out underneath, we manage to end up into a weird (invalid) state
+that was neither clearly described nor "easy" to cleanup (using standard git clean/checkout/reset commands).
 
-Do other VCSes have similar prompt scripts?  Where do they install
-theirs?
+While I cannot explain how we got in this state, here is a small test-case that produce the same results:
+------
+mkdir folder1
+cd folder1
+git init
+echo "Ooops" > file
+git add file
+git commit -m "Add file"
+cd ..
+mkdir folder2
+cd folder2
+git init
+mkdir folder1
+echo "Ooops" > folder1/file
+git add folder1/file
+git commit -m "Add file again"
+git checkout -b branch
+cp -R ../folder1/.git ./folder1
+------
+The 'cp' just seems pointless but with the submodule described as above we manage to end up in a similar state.
+In this state, when being in folder2, git status reports nothing. Dev branch is checked out and everything looks great.
 
+However if you change dir to folder2/folder1, while still being inside folder2, git thinks (because of the .git dir) that you are actually on master branch of folder1 repository.
+Which mean that if you happen to commit from a subdirectory, you may easily end-up committing in another repository than the one expected.
 
-G=E1bor
+The issue is, there is no way from folder2 to see that something "wrong" is going on inside your tree!
+As we manage to reach this state using only standard git commands (I'll try to reproduce it) with submodules, and this being part of an automated flow, it is quite worrying.
+We may actually be committing in the wrong repo and pushing the wrong things around.
+
+Is there or should there be a way to look for such issues? And is this an expected behaviour?
+
+Thanks in advance
+
+Nicolas
