@@ -1,94 +1,95 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Wed, 24 Oct 2012 20:53:07 -0400
-Message-ID: <20121025005307.GE801@odin.tremily.us>
-References: <20121023204437.GE28592@odin.tremily.us>
- <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
- <50883E54.4080507@web.de>
+From: Anand Kumria <akumria@acm.org>
+Subject: Re: Is git mktag supposed to accept git cat-file input?
+Date: Thu, 25 Oct 2012 01:58:38 +0100
+Message-ID: <CAM1C4Gn6tr_bxG1De+kZecpJ7kLg7_hOO7q-aa7HwFkr9od6_Q@mail.gmail.com>
+References: <CAM1C4GneOnyBQyJRbhtuYNDsc4NxXgFcfHrQpziLpp_AY0TjbA@mail.gmail.com>
+ <CA+sFfMdaaTwc82-J6a=wdjDzAFq6z8PS2rjSZ=tuyweOzuf4Kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=Q8BnQc91gJZX4vDc
-Cc: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Oct 25 02:53:46 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 02:59:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRBhi-0001n8-9l
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 02:53:46 +0200
+	id 1TRBn9-0005L8-TQ
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 02:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759045Ab2JYAxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 20:53:34 -0400
-Received: from vms173013pub.verizon.net ([206.46.173.13]:32545 "EHLO
-	vms173013pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759009Ab2JYAxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 20:53:33 -0400
-Received: from odin.tremily.us ([unknown] [72.68.84.95])
- by vms173013.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MCF0028GBSJP030@vms173013.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 24 Oct 2012 19:53:08 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 871E067F346; Wed,
- 24 Oct 2012 20:53:07 -0400 (EDT)
-Content-disposition: inline
-In-reply-to: <50883E54.4080507@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758936Ab2JYA7K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Oct 2012 20:59:10 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:48359 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757302Ab2JYA7J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Oct 2012 20:59:09 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so750424pad.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 17:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NDon55Ug3VbVqlBTccMiMPRolKTvcqwDrNcAbFqDWgo=;
+        b=ZDUwUQx7Zlq5uRAzj4y7qjVC8qK/Z1luzfG8SjJUOb5BWykuJSy4s8KGBWHo46LCqK
+         ryqXb4QWUeGHZcXT8Fad1rhUyI6oKxcOVbK1/tgF6leANvDPGg0oJ60IMt8gpG3uVLiO
+         yqGLOgP1/vYfyfOwcSe4SZWpL5k4v0V0TXQN2kunTSOB8q8SkP1dp/4mt6H1tn3EulxK
+         1IXmLd0gOI1qELjVsFgDld7LAooEMdPavtipHGPb0Om/bENdq6+VafN+7DdZ++auty4l
+         7VKR57PO3Z9rEA15J4fgL7Ic0wgSRCX8+oBuSUMI5/AERd0u2yhWkX1m45Sbo3T8vlVe
+         IYZQ==
+Received: by 10.66.88.197 with SMTP id bi5mr48314205pab.58.1351126749121; Wed,
+ 24 Oct 2012 17:59:09 -0700 (PDT)
+Received: by 10.66.189.166 with HTTP; Wed, 24 Oct 2012 17:58:38 -0700 (PDT)
+In-Reply-To: <CA+sFfMdaaTwc82-J6a=wdjDzAFq6z8PS2rjSZ=tuyweOzuf4Kg@mail.gmail.com>
+X-Google-Sender-Auth: tzGVTMm1sb91J9Z-S55ozrTLFrg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208331>
+
+Ahh, unix time. Of course.
+
+Thanks Brandon.
+
+On 25 October 2012 01:18, Brandon Casey <drafnel@gmail.com> wrote:
+> On Wed, Oct 24, 2012 at 4:39 PM, Anand Kumria <akumria@acm.org> wrote=
+:
+>> Hi,
+>>
+>> I am doing some experimenting with git-mktag, and was looking into t=
+he
+>> format it expects on input.
+>>
+>> Should this sequence of commands work?
+>
+> Yes, with a slight tweak...
+>
+>> kalki:[/tmp/gittest]% git tag -m "tag-test" tag-test
+>> kalki:[/tmp/gittest]% git cat-file -p e619
+>
+> '-p' means pretty-print, i.e. produce a human-readable format.  mktag
+> supports the raw format.  So you should invoke it like this:
+>
+>       $ git cat-file tag e619
+>
+> which should produce something like:
+>
+>    object c0ae36fee730f7034b1f76c1490fe6f46f7ecad5
+>    type commit
+>    tag tag-test
+>    tagger Anand Kumria <akumria@acm.org> 1351121552 +0100
+>
+>    tag-test
+>
+> and is the format expected by mktag.
+>
+> -Brandon
+>
 
 
---Q8BnQc91gJZX4vDc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Oct 24, 2012 at 09:15:32PM +0200, Jens Lehmann wrote:
-> I still fail to see what adding that functionality to the submodule
-> command buys us (unless we also add code which really uses the branch
-> setting). What's wrong with doing a simple:
->=20
->    git config -f .gitmodules submodule.<path>.branch <record_branch>
->=20
-> on the command line when you want to use the branch setting for your
-> own purposes? You could easily wrap that into a helper script, no?
-
-Sure.  But why maintain my own helper script if I can edit
-git-submodules.sh?  It seems like a number of people are using this
-config option, and they generally store the same name in it that they
-use to create the submodule.  This way I can save them time too.
 
 --=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---Q8BnQc91gJZX4vDc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQiI1yAAoJEEUbTsx0l5OMOEIQAJRcR3CLrjexKHf2HP1INanQ
-s0H+69G2ISPVN0VO/ga632CT2e+hlUHiu0rjsck22CKy1vPZqX6b1GxZ+cKw5ZG4
-ZuE+gA168ki4n/GUNvfqGhsr8BzsrMTlDgX4hZAxQivFX3hjAzcXJwqg+yB0dcSW
-hGSQnHmj3pxjWjcN1G37/qE46p8XOawOrlwC0zkPe/Ui2asEuolk16hV/oLNl8aw
-ytjonD+BnX2YY0QK94XhkXiS6mkR+wBupFxOuw2AcFdHlIwxeS+NEQZGLItB8mP6
-r8K/312VlxlEB4FPrATTXfxqlISVEDzL16+/+QybSF4UmAE/zAkeKVYDHkXd4TUa
-TSDioYe9zoXMR+F9BHPrdgSa5htwTgRVmvZPOsUKjetDsa0AR0wynLORm1CvqjEb
-ZdySi34sSn7RUTNGs7k0oz544CCcBW6ISP//sHABTWst/v3cKskMs4Wj22luwUX4
-51whfjl9aEGMgX+2PV/mDw3IhT5hI4YxJiiJdHxQkS9CFJXPVpCUfC/3Hm9NYmYr
-PK53X+K+pJjsFHtJWGoLOeLDijDvD/ayHdIv2ReC1JhmSc+1RMyfrpaLf/5/niZT
-P2SR6IfaPaJdqdQ4WjA6XW0g6etba+zBdjWXDuuV1KRSLCskJAQVmWpb//qihe7E
-aqjJv6wzaC1hibqIPwGz
-=8ge/
------END PGP SIGNATURE-----
-
---Q8BnQc91gJZX4vDc--
+=E2=80=9CDon=E2=80=99t be sad because it=E2=80=99s over. Smile because =
+it happened.=E2=80=9D =E2=80=93 Dr. Seuss
