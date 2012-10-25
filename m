@@ -1,93 +1,100 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH] git-submodule add: Record branch name in .gitmodules
-Date: Wed, 24 Oct 2012 21:12:27 -0400
-Message-ID: <20121025011227.GH801@odin.tremily.us>
-References: <61a31f6bc61d4df322a097e32ba472390c583a81.1350923683.git.wking@tremily.us>
- <CABURp0pqg7XC6makK2OcundMabV9AtcBNGNK6Q0TMZfJbt3anw@mail.gmail.com>
- <20121022225546.GO23101@odin.tremily.us>
- <CABURp0rpPqeTJMYXmgMG2CmU=SzzvCMeX46rnMVB0EeB_LXPiA@mail.gmail.com>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: Where should git-prompt.sh be installed?
+Date: Wed, 24 Oct 2012 21:59:31 -0400
+Message-ID: <CAM9Z-nnqG2Gm_9T1k25yYHWGtyS3MSBzJW31XiizsCHa=Pc59A@mail.gmail.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+	<20121025005106.GA9112@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=TdkiTnkLhLQllcMS
-Cc: git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 03:13:00 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Anders Kaseorg <andersk@mit.edu>,
+	Danny Yates <mail4danny@googlemail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ted Pavlic <ted@tedpavlic.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Dan McGee <dan@archlinux.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 03:59:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRC0J-0005Fy-J0
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 03:12:59 +0200
+	id 1TRCja-0001SL-Iq
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 03:59:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758955Ab2JYBMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 21:12:47 -0400
-Received: from vms173019pub.verizon.net ([206.46.173.19]:59894 "EHLO
-	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758939Ab2JYBMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 21:12:46 -0400
-Received: from odin.tremily.us ([unknown] [72.68.84.95])
- by vms173019.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MCF00BI6CORL600@vms173019.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 24 Oct 2012 20:12:28 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 34E4767F404; Wed,
- 24 Oct 2012 21:12:27 -0400 (EDT)
-Content-disposition: inline
-In-reply-to: <CABURp0rpPqeTJMYXmgMG2CmU=SzzvCMeX46rnMVB0EeB_LXPiA@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759079Ab2JYB7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 21:59:34 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:36984 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758987Ab2JYB7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 21:59:33 -0400
+Received: by mail-bk0-f46.google.com with SMTP id jk13so513575bkc.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 18:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OUIMP6/MsmokVf8Ijqpwal/4HWjIOYgdCkBhnrMUR5E=;
+        b=mKjFv5FZXLGbqloKQaQjIlPRAqdtMiewpwGCqTKCz0jB0mP2hTs5j+v0NZx/b0lu24
+         FqZqvEGgzCMQGn1H3I74dK5Um1ZNIU9R5Q8+1QSVjO6gXDnMQpN3Sf52SrvUx8yYnF5X
+         1RMkJfcdseAOY5R9sfhma3/mzYqYqawHtjKzJvam6zkyHZ3lKGc9uXONpiyb5lzoQ9BP
+         QumvnxoM1Wolmktqu5ZKolu4DXGPHxzTZSKzo9cN7tiaGx3tSogd8R6HxrIImzHV3+5X
+         +HdoraQ/C6H+VvI20W0Ir8dL1SIEC3NtCbnYhj6qD+/FMgbMAxekN2mBtsnl4qZHHcey
+         IaYg==
+Received: by 10.204.148.21 with SMTP id n21mr5593797bkv.124.1351130372184;
+ Wed, 24 Oct 2012 18:59:32 -0700 (PDT)
+Received: by 10.205.122.144 with HTTP; Wed, 24 Oct 2012 18:59:31 -0700 (PDT)
+In-Reply-To: <20121025005106.GA9112@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208334>
 
+On Wed, Oct 24, 2012 at 8:51 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Now the sysadmin should copy
+> contrib/completion/git-completion.sh to
+>
+>         /usr/share/bash-completion/completions/git
+>
+> and contrib/completion/git-prompt.sh to
+>
+>         /usr/share/git-core/contrib/?? (somewhere?)
+>
+> Mortals source /etc/bash_completion in their ~/.bashrc (possibly
+> shared among multiple machines) and expect bash completion to work.
+> For __git_ps1, users should source that ?? path.
+>
+> Questions:
+>
+>  1) what path is appropriate for ?? above?
+>  2) is this documented anywhere?
+>
+> Possible answers:
+>
+>  1) Fedora uses /etc/profile.d/git-prompt.sh.  Gentoo uses
+>     /usr/share/bash-completion/git-prompt.  Maybe others use
+>     some other path.
+>
+>  2) The scripts themselves suggest copying to ~/.git-completion.sh
+>     and ~/.git-prompt.sh.
+>
+> Proposal:
+>
+>   1) /usr/lib/git-core/git-sh-prompt
+>   2) git-sh-prompt(1)
+>
+> Sensible?
 
---TdkiTnkLhLQllcMS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Does the LSB provide any guidance? If not, or if such guidance isn't
+helpful, I say that looks reasonable.
 
-On Wed, Oct 24, 2012 at 02:12:18PM -0400, Phil Hord wrote:
-> +                                       VAR_NAME=3D$(printf '%s'
-> "$VAR_NAME" | tr A-Z a-z | sed -e 's/^[^a-z]/_/' -e 's/[^a-z0-9]/_/g')
+What I'd like to know is why we are saying "copy" when symlinking is
+likely to be more easily maintainable? (Less chance to screw up.)
 
-Is there a reason why you use printf instead of echo?
-
-Also, this sort of name cleaning should probably live in a new
-function:
-
-  clean_environment_variable()
-
-or some such.  Is there a git-utility-functions.sh library hiding
-somewhere in the source? ;)
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---TdkiTnkLhLQllcMS
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQiJHyAAoJEEUbTsx0l5OM/5QP/j9yN3xwU9OHH82iMRwpoYgg
-5Jm5LCGlHpalXik5fRouc8JLV+Z1WDP5q4IdE0HufWAxehrgCQaXelXdiOVC/gbD
-hfpmQV4DcGo+88/qxwosQsLeK3rEZflE5Y+P3lHCMfbF7jD4iM3COoFvUyvW9R4H
-v0RQZQCbfBj0ucNWMwj+geMpGvMHxltqQv5JD8DPCT18nuJOtkfqNqN7gk1mRR6f
-WfI3shg7uhpkOP2vZP7Q/v3xV3lXoFgtOzQ6489mHORBnV3HO21yJ1RYzfpKAe1W
-8XnBECY466O0GISpR8cUdKj2Szqku3lG5aTBI4VeK/ZaPpJYs6cuMmowBrTa9y0F
-cYi+/c7albrH/ZaxU4k9c+AD8EqUX2c2JBHM4VnVgNtRSkCPbWUwdNlO0iwaAPD0
-EXEoOWoC1LFLYdV3Dni8ELMZdg5kaH4wDGFz0VMtpjxSFxvMo1ttHzaWrUIBKwcQ
-cDeOlcgIEMZ1jnb1ajq/hhds6ReeeusKY4ORRNdeJAjYHiHX9XLl7XcPpNXNjsha
-Wb2JZVnM8i24yxqzEPcGP2z5sDwg4KwdWTVol1OGYevh91teop81SpqaPEvgW99o
-rES6/3IYCy4iSr5xQlgDLH4njzJbkfx9Tt0XJsk28SC1ku8AlWgKu3/StTDXUlOj
-zGUG5rPfayaXYIRRbNkn
-=wvGm
------END PGP SIGNATURE-----
-
---TdkiTnkLhLQllcMS--
+-- 
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
