@@ -1,89 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Move try_merge_command and checkout_fast_forward to libgit.a
-Date: Thu, 25 Oct 2012 19:50:26 +0700
-Message-ID: <CACsJy8D1_c9NP_nwvp6uJyKikG+_jqnm1hVEs_t_wnsYTLZ4Yg@mail.gmail.com>
-References: <1350959091-30030-1-git-send-email-pclouds@gmail.com> <20121025094500.GJ8390@sigill.intra.peff.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: t9401 fails with OS X sed
+Date: Thu, 25 Oct 2012 14:51:23 +0200
+Message-ID: <508935CB.9020408@web.de>
+References: <609AC6E7-45CD-4472-B1DC-FBB785D6B815@gernhardtsoftware.com> <F721B376-F4E6-4274-9A6E-BD1CFCBDA39F@adacore.com> <20121025084132.GB8390@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: Geert Bosch <bosch@adacore.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 25 14:51:12 2012
+X-From: git-owner@vger.kernel.org Thu Oct 25 14:51:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRMty-0001S5-D0
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 14:51:10 +0200
+	id 1TRMuZ-0001u1-Qu
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 14:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759405Ab2JYMu5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Oct 2012 08:50:57 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:35761 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757822Ab2JYMu5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2012 08:50:57 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so1521080oag.19
-        for <git@vger.kernel.org>; Thu, 25 Oct 2012 05:50:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=asVSOHXP+Ib4u+JarveT45tuiSC+ILz/OJzcigBMbhY=;
-        b=CyfOvRDZeQYZMqgrqN+TEarj9mWQISG84g907QJcjyqPTJLlUkdSs12X22HTA2L3+R
-         xLiHb2QOmpXb9ZFLgDXcRC0JAdkcz/VhV0wj9ETaK3pnrUV34tkeDX/NxOwM+x0Uphm8
-         CjeYsyjSvYw/HqALuwZc+Aof64JxoDIWFLoq2O6pibgovjUXf12TCnnk3KNx07DuEmiS
-         NneONr3gnI4GpEWYl+my0NmNqGzHFgdB+R8gHBOMwXRUd4Fz4vETz/A9sZxEI8Y3J5dW
-         VXCw+nO0958bghEcEHmDkToKB5fUO80FyJ92bEeKPTnmbuRL6x1HpKAY96mO9fBXT8KC
-         WttA==
-Received: by 10.182.225.5 with SMTP id rg5mr15551546obc.49.1351169456376; Thu,
- 25 Oct 2012 05:50:56 -0700 (PDT)
-Received: by 10.182.108.10 with HTTP; Thu, 25 Oct 2012 05:50:26 -0700 (PDT)
-In-Reply-To: <20121025094500.GJ8390@sigill.intra.peff.net>
+	id S1759415Ab2JYMvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 08:51:36 -0400
+Received: from mout.web.de ([212.227.15.3]:53262 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752803Ab2JYMvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 08:51:35 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0Lw1CH-1TLkd43tLZ-018H6x; Thu, 25 Oct 2012 14:51:24 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121025084132.GB8390@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:2Peihbmlp108BkTrc4T8KikkiPztrQetLM3KRKm49WQ
+ 7RzukcjAizQyXGbKDKdCGD5rmE6N1px3jUxusPhUF5DLSNofqM
+ iuqkyPDjc6fb68W3bF40w8Wnv6v5DuIv0zmX3jEDrYDmqhq4FL
+ g9fwFqeapbyOaCKlD3U9NqxSOnfTuQm+MW/GOOrokumGwbhDDK
+ l8oMHj1n/ntC9s19xQyRA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208397>
 
-On Thu, Oct 25, 2012 at 4:45 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 23, 2012 at 09:24:51AM +0700, Nguyen Thai Ngoc Duy wrote:
->
->> These functions are called in sequencer.c, which is part of
->> libgit.a. This makes libgit.a potentially require builtin/merge.c fo=
-r
->> external git commands.
+On 25.10.12 10:41, Jeff King wrote:
+> On Thu, Oct 25, 2012 at 01:04:11AM -0400, Geert Bosch wrote:
+> 
+>> On Oct 24, 2012, at 23:54, Brian Gernhardt <brian@gernhardtsoftware.com> wrote:
 >>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  I made some unrelated changes in sequencer.c and this problem shown
->>  up. merge-recursive.c is probably not the best place for these
->>  functions. I just don't want to create merge.c for them.
->
-> I'm fine with this conceptually, but merge-recursive really is the wr=
-ong
-> place. I'd much rather see a new merge.c to collect merge-related hel=
-per
-> functions that are not strategy-specific.
+>>> It works if I change \s to [[:space:]], but I don't know how portable that is.
+>>
+>> As \s is shorthand for the POSIX character class [:space:], I'd say the latter
+>> should be more portable: anything accepting the shorthand should also accept
+>> the full character class. If not, you probably only care about horizontal tab
+>> and space, for which you could just use a simple regular expression. Just a
+>> literal space and tab character between square brackets is probably going to be
+>> most portable, though not most readable.
+> 
+> I agree that the POSIX character class would be more portable than "\s",
+> but we do not have any existing uses of them, and I would worry a little
+> about older systems like Solaris. If we can simply use a literal space
+> and tab, that seems like the safest.
+> 
+> Brian, can you work up a patch?
+> 
+> -Peff
 
-OK. I checked around for similar issues and found these used by
-libgit.a but stay in builtin/ instead:
+Would this be portable:
+(It works on my Mac OS X box after installing cvs)
+But I don't have solaris
 
-estimate_bisect_steps: bisect.c and builtin/rev-list.c
-print_commit_list: bisect.c and builtin/rev-list.c
 
- -> move them to bisect.c? another candidate is revision.c.
-
-fetch_pack: transport.c and builtin/fetch-pack.c
-send_pack: transport.c and builtin/send-pack.c
-
- -> move them to transport.c? or new files fetch-pack.c and
-send-pack.c? I haven't check how many functions they may pull
-together.
-
-setup_diff_pager: diff-no-index.c and builtin/diff.c
-
- -> to diff-lib.c?
---=20
-Duy
+diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
+index cdb8360..f2ec9d2 100755
+--- a/t/t9401-git-cvsserver-crlf.sh
++++ b/t/t9401-git-cvsserver-crlf.sh
+@@ -46,7 +46,7 @@ check_status_options() {
+        echo "Error from cvs status: $1 $2" >> "${WORKDIR}/marked.log"
+        return 1;
+     fi
+-    got="$(sed -n -e 's/^\s*Sticky Options:\s*//p' "${WORKDIR}/status.out")"
++    got="$(tr '\t' ' ' < "${WORKDIR}/status.out" | sed -n -e 's/^ *Sticky Options: *//p')"
+     expect="$3"
+     if [ x"$expect" = x"" ] ; then
+        expect="(none)"
