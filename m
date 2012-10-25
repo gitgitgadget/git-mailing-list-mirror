@@ -1,119 +1,92 @@
-From: Danny Yates <mail4danny@gmail.com>
-Subject: Re: Where should git-prompt.sh be installed?
-Date: Thu, 25 Oct 2012 07:02:27 +0100
-Message-ID: <3B606942-D194-4148-AF6E-1F3283C983ED@googlemail.com>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com> <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com> <20121025005106.GA9112@elie.Belkin>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Anders Kaseorg <andersk@MIT.EDU>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ted Pavlic <ted@tedpavlic.com>,
-	=?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Dan McGee <dan@archlinux.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 08:02:45 2012
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 1/3] t9350: point out that refs are not updated correctly
+Date: Wed, 24 Oct 2012 23:07:17 -0700
+Message-ID: <CAGdFq_jfiX9apPyq6pba4S4iCQLGLmDvSrLaujSB5rO0i+fzfg@mail.gmail.com>
+References: <1320535407-4933-1-git-send-email-srabbelier@gmail.com>
+ <1320535407-4933-2-git-send-email-srabbelier@gmail.com> <CAMP44s1hdZb_7Lv8SEe+MsfC_q-nXsnjJobABFq6eFR_er4TaA@mail.gmail.com>
+ <20121024180807.GA3338@elie.Belkin> <CAMP44s2RspCrRXZbRTsVwezyU9X=+8RF=_9Q+3zX75LBJkdoPA@mail.gmail.com>
+ <20121024191149.GA3120@elie.Belkin> <CAMP44s2kjv9fHbruXv7NyVm9m+FjFnYDryuPZQ-RQXN9Nj6MAw@mail.gmail.com>
+ <20121025042731.GA11243@elie.Belkin> <CAMP44s1Pe8Ef6-GRbmSs7rY7gWyaPCN+jWGysyttZp3drSDoZg@mail.gmail.com>
+ <20121025052823.GB11243@elie.Belkin> <CAGdFq_gg3gPvCADje9ibz8xHgPOLF+=79EqksVzG2JeTOfHocw@mail.gmail.com>
+ <CAMP44s3kBxzJbyoxPqWbRMWmpX9sNPGjdRy_KrTeRoVmGC-+Hg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Eric Herman <eric@freesa.org>,
+	Fernando Vezzosi <buccia@repnz.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 08:08:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRGWi-0004No-4C
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 08:02:44 +0200
+	id 1TRGc1-0007dQ-Hn
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 08:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932882Ab2JYGCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 02:02:31 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:35532 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932176Ab2JYGCa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2012 02:02:30 -0400
-Received: by mail-wi0-f172.google.com with SMTP id hq12so5606103wib.1
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 23:02:29 -0700 (PDT)
+	id S932914Ab2JYGH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 02:07:59 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:39336 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756510Ab2JYGH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 02:07:59 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so3247609qad.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 23:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:x-mailer:from:subject:date
-         :to;
-        bh=hNRpioVHrtuqEyB0p5EvsYzbYcxHDeMvC4Ud5t38HGI=;
-        b=sp+TBddfbncDsiLUMcL8SPT3MLlIVo6igaCA8rodmLwrnmIi30caQ9mghA8Zophu/w
-         lBSsqgAclxmgOnWDroE8yrcRnXe7iidsbq6vHE72eF0MqTG8ZtEQO16u+oq7CtiNeN0c
-         I+ZKU1uAfLs+YdWRhEucNWTkP7fdo4ynX3rxpWS/y7BYTttBU4eDY5bc1f/WBuPbC+bv
-         QNT82Omsa45oNNKYmrdiBs3rsE+gjigu36oRxTxQKglmwLSB5kHmMMyc/d6JEt+tzDZf
-         AbW2ywTP/6C4C25Vu9Ou2wI6B5duH2upoVooO8SEhC+FC0xBjdmVEf0+mWNHqOWyBgRw
-         PoOg==
-Received: by 10.216.202.206 with SMTP id d56mr11950132weo.73.1351144948917;
-        Wed, 24 Oct 2012 23:02:28 -0700 (PDT)
-Received: from [188.29.9.42] (188.29.9.42.threembb.co.uk. [188.29.9.42])
-        by mx.google.com with ESMTPS id fp6sm8274706wib.0.2012.10.24.23.02.26
-        (version=SSLv3 cipher=OTHER);
-        Wed, 24 Oct 2012 23:02:28 -0700 (PDT)
-In-Reply-To: <20121025005106.GA9112@elie.Belkin>
-X-Mailer: iPad Mail (10A403)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=SLwQLsWzYCTWeGmHxuy+Fu8HUDUUyZI07yq5q8SFLUY=;
+        b=JNlSJ/MQ0rLmn2DyXu25KpPDecIEUITKsY1wku3fUNHKkOP7rM544lVuTETLXGjuQO
+         /oZT3jbvPVmSu2OUNKj4Iiljnl0pxWh0DIsKQibf1kyEUcnHzC5iEPrfooemQoPCQ3Rf
+         685FALw+G8V1MPpckOpIddAHrpm7+418qdh9HAhWLgJ9crEpH7x65mMXRp1XagwQ3vnU
+         02fQVECQMECssbCrtcCX4OjTMftXO8xyv+Fdnmi86089h+vLDcf+hnKwWDNJm1hSVgdD
+         ik+hNpbVPILR/zd0/iY7oZ81TdZDbGAik4kKOKB4FkQ3YZpPDETTeo6Lh6X3J7C93apg
+         DS4A==
+Received: by 10.224.208.68 with SMTP id gb4mr7149617qab.99.1351145278177; Wed,
+ 24 Oct 2012 23:07:58 -0700 (PDT)
+Received: by 10.49.36.195 with HTTP; Wed, 24 Oct 2012 23:07:17 -0700 (PDT)
+In-Reply-To: <CAMP44s3kBxzJbyoxPqWbRMWmpX9sNPGjdRy_KrTeRoVmGC-+Hg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208350>
 
-Would that not give the impression of "git sh-prompt" being a core command? If so, that would be poor, IMHO. 
+On Wed, Oct 24, 2012 at 10:50 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> This works just fine. Go ahead, apply my patch, and run it, the second
+> branch gets updated.
 
-When I was investigating this last night, I expected to find it (git-prompt.sh) in contrib, although that doesn't make an enormous amount of sense. Ideally, the full path to wherever it's installed should be mentioned in the bash completion file (which is where I went to look when __git_ps1 stopped working), but that would mean modifying a file from upstream and I'm not sure if that's easy/"the done thing".
+Yes, but as you said:
 
-Danny. 
+> That is already the case, my patch will cause this to generate the same output:
+> % git fast-export --{im,ex}port-marks=/tmp/marks ^foo foo.foo
+> Which is still not got, but not catastrophic by any means.
 
+Which is exactly the reason we (Dscho and I during our little
+hackathon) went with the approach we did. We considered the approach
+you took (if I still had the repository I might even find something
+very like your patch in my reflog), but dismissed it for that reason.
+By teaching fast-export to properly re-export interesting refs, this
+exporting of negated refs does not happen. Additionally, you say it is
+not catastrophic, but it _is_, if you run: 'git fast-export ^master
+foo', you do not expect master to suddenly show up on the remote side.
 
-On 25 Oct 2012, at 01:51, Jonathan Nieder <jrnieder@gmail.com> wrote:
+I agree that your test more accurately describes what we're testing
+(and in fact, it should probably go in the tests for remote helpers).
+However, this test points out a shortcoming of fast-export that
+prevents us from implementing a cleaner solution to the 'fast-export
+push an existing ref' problem.
 
-> Hi,
-> 
-> In olden days the admin would copy contrib/completion/git-completion.sh
-> to
-> 
->        /etc/bash_completion.d/git
-> 
-> and mortals could source /etc/bash_completion or
-> /etc/bash_completion.d/git in their ~/.bashrc (possibly shared among
-> multiple machines) so that the bash completion and __git_ps1 helpers
-> could work.
-> 
-> With Git 1.7.12 __git_ps1 has been split into a separate file, to help
-> users who only want __git_ps1 to avoid the overhead of loading the
-> entire completion script (and allow the completion script to be loaded
-> by bash-completion magic on the fly!).  Now the sysadmin should copy
-> contrib/completion/git-completion.sh to
-> 
->    /usr/share/bash-completion/completions/git
-> 
-> and contrib/completion/git-prompt.sh to
-> 
->    /usr/share/git-core/contrib/?? (somewhere?)
-> 
-> Mortals source /etc/bash_completion in their ~/.bashrc (possibly
-> shared among multiple machines) and expect bash completion to work.
-> For __git_ps1, users should source that ?? path.
-> 
-> Questions:
-> 
-> 1) what path is appropriate for ?? above?
-> 2) is this documented anywhere?
-> 
-> Possible answers:
-> 
-> 1) Fedora uses /etc/profile.d/git-prompt.sh.  Gentoo uses
->    /usr/share/bash-completion/git-prompt.  Maybe others use
->    some other path.
-> 
-> 2) The scripts themselves suggest copying to ~/.git-completion.sh
->    and ~/.git-prompt.sh.
-> 
-> Proposal:
-> 
->  1) /usr/lib/git-core/git-sh-prompt
->  2) git-sh-prompt(1)
-> 
-> Sensible?
-> 
-> Thanks,
-> Jonathan
+-- 
+Cheers,
+
+Sverre Rabbelier
