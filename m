@@ -1,91 +1,90 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH] fix 'make test' for HP NonStop
-Date: Thu, 25 Oct 2012 12:21:44 +0200
-Message-ID: <002e01cdb29a$893593f0$9ba0bbd0$@schmitz-digital.de>
-References: <001e01cdb061$c25f6380$471e2a80$@schmitz-digital.de> <20121025095826.GM8390@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Doc format-patch: clarify --notes use case
+Date: Thu, 25 Oct 2012 06:25:27 -0400
+Message-ID: <20121025102527.GO8390@sigill.intra.peff.net>
+References: <1350855250-2844-1-git-send-email-philipoakley@iee.org>
+ <1350855250-2844-4-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "'Jeff King'" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 25 12:22:25 2012
+Content-Type: text/plain; charset=utf-8
+Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Blake <eblake@redhat.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Oct 25 12:25:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRKZz-0001vC-VF
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 12:22:24 +0200
+	id 1TRKdD-0003pZ-AO
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 12:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422767Ab2JYKWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 06:22:11 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:50628 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422736Ab2JYKWK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2012 06:22:10 -0400
-Received: from DualCore (dsdf-4db53cfd.pool.mediaWays.net [77.181.60.253])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MSpj3-1Tsf983GDN-00SVMI; Thu, 25 Oct 2012 12:21:53 +0200
-In-Reply-To: <20121025095826.GM8390@sigill.intra.peff.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQI2sQMOQ5ANofWD9kSBDc7fafINHQKHXgBmluOSE/A=
-Content-Language: de
-X-Provags-ID: V02:K0:XY00ZP8c1FVX3tJ55x8wD7gb2Is0h5yRlmO37flA2gQ
- Mbnz+hbp3LbhFTeH5Pd0wEENVrZ+bjpDSqXuBkKXHvFMSpzMUp
- bXRVYZTQB70P++mHqWqxHlMswwdEcQ7PmWi54WKW96pa2F0mj9
- 9IdxD6BggQ5qS44U+hHiwguiyfkra6tP5udnEHXzQxrFUcRQzb
- Q3YNsRQaxN2CQHQO2yzyqxV5zPDOGXIf8jSW171Z3pTKaoonBW
- qoFNvKgzIe7w/s/rWs2/r7bgEp6qKXS9KeU1ZNtJIvYXeeJIfJ
- 8W9fvVhzutT3rsKygynSQ/zUiV3wTqUjUbyCiomIVpm+2aZClX
- oK4sh3q+xhjhKydgajqQc8GJdG/+MiHrEvMK15G+J+ED/6QyJR
- wmzmS1824ZEEw==
+	id S1751401Ab2JYKZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 06:25:31 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56103 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750865Ab2JYKZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 06:25:30 -0400
+Received: (qmail 7632 invoked by uid 107); 25 Oct 2012 10:26:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 25 Oct 2012 06:26:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2012 06:25:27 -0400
+Content-Disposition: inline
+In-Reply-To: <1350855250-2844-4-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208383>
 
-> From: Jeff King [mailto:peff@peff.net]
-> Sent: Thursday, October 25, 2012 11:58 AM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] fix 'make test' for HP NonStop
-> 
-> On Mon, Oct 22, 2012 at 04:30:17PM +0200, Joachim Schmitz wrote:
-> 
-> > +	# for 'make test'
-> > +	# some test don't work with /bin/diff, some fail with /bin/tar
-> > +	# some need bash, and some need ${prefix}/bin in PATH first
-> > +	SHELL_PATH=${prefix}/bin/bash
-> > +	SANE_TOOL_PATH=${prefix}/bin
-> 
-> This feels a little too specific to go in our Makefile. Do we have any
-> reason to think that where you are installing git is going to be the
-> same place you have bash and other sane tools? Wouldn't this mean that
-> things work when you run "make" but mysteriously break when you run
-> "make prefix=/my/local/install/of/git"?
+On Sun, Oct 21, 2012 at 10:34:10PM +0100, Philip Oakley wrote:
 
-Well, "make" won't break (I think), but "make test" very well might.
+>  The expected use case of this is to write supporting explanation for
+> -the commit that does not belong to the commit log message proper
+> -when (or after) you create the commit, and include it in your patch
+> -submission.  But if you can plan ahead and write it down, there may
+> -not be a good reason not to write it in your commit message, and if
+> -you can't, you can always edit the output of format-patch before
+> -sending it out, so the practical value of this option is somewhat
+> -dubious, unless your workflow is broken.
+> +the commit, that does not belong to the commit log message proper,
+> +and include it with the patch submission. The notes can be maintained
+> +between versions of the patch series. You can also edit the output of
+> +format-patch before sending.
 
-Well, so far all OpenSource packages ported to HP NonStop (at least the ones on ituglib.connect-community.org) use prefix=/usr/local and there is no intention to change that.
-A few (bash, vim, coreutils, tar, gzip, bzip2) get delivered with the system meanwhile (rather than having to be downloaded and installed by the customer) and live in /usr/corutiles. Still more are needed (e.g. diff , make).
-The next lines in my patch cater for that, it is missing though an automatic switch.
-Such a switch would be possible, using 'uname -r' and 'uname -v', but pretty convoluted
+I found the "you can also" slightly awkward here, as it was not clear
+why it was mentioned. I think the intent is "this is an alternative that
+does not involve the notes workflow", but it is not clear from the text
+why you would prefer the notes workflow. Here is what I queued instead,
+which tires to clarify that, and also mentions that this workflow needs
+additional setup to track rewritten commits:
 
-Pseudo code:
-If (`uname -r` = J06 && `uname -v` >= 14) || (`uname -r`= H06 && `uname -v` >= 25)
-	SHELL_PATH=/usr/coreutils/bin/bash
-	SANE_TOOL_PATH=/usr/coreutils/bin:${prefix}/bin
-else
-	SHELL_PATH=${prefix}/bin/bash
-	SANE_TOOL_PATH=${prefix}/bin
-endif	
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 066dc8b..750b3fa 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -196,13 +196,12 @@ The expected use case of this is to write supporting explanation for
+ 	after the three-dash line.
+ +
+ The expected use case of this is to write supporting explanation for
+-the commit that does not belong to the commit log message proper
+-when (or after) you create the commit, and include it in your patch
+-submission.  But if you can plan ahead and write it down, there may
+-not be a good reason not to write it in your commit message, and if
+-you can't, you can always edit the output of format-patch before
+-sending it out, so the practical value of this option is somewhat
+-dubious, unless your workflow is broken.
++the commit that does not belong to the commit log message proper,
++and include it with the patch submission. While one can simply write
++these explanations after `format-patch` has run but before sending,
++keeping them as git notes allows them to be maintained between versions
++of the patch series (but see the discussion of the `notes.rewrite.*`
++configuration in linkgit:git-notes[1] to use this workflow).
+ 
+ --[no]-signature=<signature>::
+ 	Add a signature to each message produced. Per RFC 3676 the signature
 
-I didn't deem it worth the effort. As mentioned it'd most likely still need stuff from /usr/local/bin
 
-And someone wanting prefix somewhere else could still do
-PATH=/usr/local/bin:$PATH make prefix=/my/local/install/of/git 
-And so find what's need in either the 1st or 2nd path of PATH
+I've queued that and your other patches on top of jc/prettier-pretty-note.
 
-Bye, Jojo
+-Peff
