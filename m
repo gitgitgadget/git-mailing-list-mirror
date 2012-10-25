@@ -1,83 +1,119 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Who is the 'git' vendor?
-Date: Thu, 25 Oct 2012 10:52:44 +0200
-Message-ID: <5088FDDC.20404@op5.se>
-References: <8F7A9DADB4F4064EB938B0D3EBB63FDC208A5A34@PBNEMBMSX4120.int.Corp.sun>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-email: skip RFC2047 quoting for ASCII subjects
+Date: Thu, 25 Oct 2012 05:01:49 -0400
+Message-ID: <20121025090149.GC8390@sigill.intra.peff.net>
+References: <1351065815-22416-1-git-send-email-krzysiek@podlesie.net>
+ <20121024084636.GA23500@sigill.intra.peff.net>
+ <20121024171036.GA18880@shrek.podlesie.net>
+ <20121024192530.GA26477@sigill.intra.peff.net>
+ <20121024210826.GA23562@shrek.podlesie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "'git@vger.kernel.org'" <git@vger.kernel.org>,
-	"'Thor Home (thorlp@hotkey.net.au)'" <thorlp@hotkey.net.au>
-To: "PROHASKA, Thor" <Thor.PROHASKA@suncorp.com.au>
-X-From: git-owner@vger.kernel.org Thu Oct 25 10:53:08 2012
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Krzysztof Mazur <krzysiek@podlesie.net>
+X-From: git-owner@vger.kernel.org Thu Oct 25 11:02:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRJBX-00070w-FL
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 10:53:03 +0200
+	id 1TRJKM-0003jC-1Y
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 11:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934643Ab2JYIwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 04:52:51 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:51941 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933482Ab2JYIwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 04:52:49 -0400
-Received: by mail-la0-f46.google.com with SMTP id h6so1146347lag.19
-        for <git@vger.kernel.org>; Thu, 25 Oct 2012 01:52:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=kI1/v5ddUzAspy561TOJXNifA3GIpU1L8xvkLbX9RqM=;
-        b=h/skgv3p6b0UGztPPyWXGMwlzn9KwfdaqTIPRf6qFLMk13xZQ4zgWM8J71bjPP/BZL
-         hAANeIcZIWXiJsI4gBnGvZMhF3v6JUc26v7nCTTo3wPSYj3YxRqdu/zM4nxYSLYEeXlY
-         uOe7pbf4+FLWJ8hhwzWBmuxE0fcGbUaB3kBv1q5qTFYHCorS6npn2xDUfQ6sBcE3QHn+
-         2KIZt+MXLysi3qN4AuvKvYBttxh9UwRd6R2vNT/f3dYHP9fH9I21C+WmtpjBr61V3+Ic
-         o8+HlDwUwekONmCwZltYG3LbLjpM47lia185y5Z2F9Gu0o3SQ2dUkWlbqfZcrmz/HHhu
-         KklA==
-Received: by 10.112.25.161 with SMTP id d1mr7433609lbg.118.1351155167741;
-        Thu, 25 Oct 2012 01:52:47 -0700 (PDT)
-Received: from vix.int.op5.se (c80-217-218-226.bredband.comhem.se. [80.217.218.226])
-        by mx.google.com with ESMTPS id g5sm5662628lbk.7.2012.10.25.01.52.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 25 Oct 2012 01:52:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
-In-Reply-To: <8F7A9DADB4F4064EB938B0D3EBB63FDC208A5A34@PBNEMBMSX4120.int.Corp.sun>
-X-Gm-Message-State: ALoCoQnp82UTwRSw+mTnQ5tpM/ayW68aC3dDjtkhjZVQG6ARkcOLhGNB/t1yozabBjaH42QXBFQe
+	id S934921Ab2JYJB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 05:01:57 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55965 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934647Ab2JYJBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 05:01:55 -0400
+Received: (qmail 6531 invoked by uid 107); 25 Oct 2012 09:02:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 25 Oct 2012 05:02:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2012 05:01:49 -0400
+Content-Disposition: inline
+In-Reply-To: <20121024210826.GA23562@shrek.podlesie.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208368>
 
-On 10/25/2012 08:43 AM, PROHASKA, Thor wrote:
-> Hi,
-> 
-> The organisation I am currently working for uses 'git'.
-> 
-> In order to manage all the software used in the organisation we have
-> been compiling a list of software that includes the software Vendor's
-> name.
-> 
-> My colleague has listed the vendor of git as being the 'Software
-> Freedom Conservancy'. Can you please advise me if this is correct? If
-> not, who should the vendor be identified as?
-> 
+On Wed, Oct 24, 2012 at 11:08:26PM +0200, Krzysztof Mazur wrote:
 
-Most likely, you'll want to put "git@vger.kernel.org" as vendor for git,
-as the whole vendor concept doesn't really fly with FOSS. There's noone
-to go to if it breaks your systems, and unless you purchase a support
-contract from somewhere there's noone to turn to except the (excellent)
-git community in case you have issues with it.
+> ok, I'm sending a version that just adds quote_subject() without
+> changing any logic, so now we still have in first case:
+> 
+>  /[^[:ascii:]]/
+> 
+> and in the latter case:
+>  
+>  !is_rfc2047_quoted($subject) && /^[:ascii:]]/
+> 
+> 
+> In the next patch I will just add matching for "=?" in 
+> subject_needs_rfc2047_quoting() and we will have:
+> 
+>    /=?/ || /[^[:ascii:]]/
+> 
+> and in the latter case:
+>  
+>    !is_rfc2047_quoted($subject) && (/=\?/ || /^[:ascii:]]/)
+> 
+> This will also add quoting for any rfc2047 quoted subject or any
+> other rfc2047-like subject, as you suggested.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Thanks, the two-patch series you outline makes a lot of sense to me.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+> Krzysiek
+> -- 
+> From a70c5385f9b4da69a8ce00a1448f87f63bbd500d Mon Sep 17 00:00:00 2001
+> From: Krzysztof Mazur <krzysiek@podlesie.net>
+> Date: Wed, 24 Oct 2012 22:46:00 +0200
+> Subject: [PATCH] git-send-email: introduce quote_subject()
+
+When sending a patch following some cover letter material, please cut
+out any non-essential headers and use the scissors symbol, like this:
+
+  -- >8 --
+  Subject: [PATCH] this subject overrides the whole email's subject
+
+  the regular body and diff go here...
+
+That format is understood by "git am" and means I do not have to
+manually munge it, which saves a little work.
+
+> +sub quote_subject {
+> + 	local $subject = shift;
+> + 	my $encoding = shift || 'UTF-8';
+> +
+> + 	if (subject_needs_rfc2047_quoting($subject)) {
+> +		return quote_rfc2047($subject, $encoding);
+> + 	}
+> + 	return $subject;
+> +}
+
+There is some funny whitespace here (space followed by tab).
+
+> -	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject) &&
+> -			($subject =~ /[^[:ascii:]]/)) {
+> -		$subject = quote_rfc2047($subject, $auto_8bit_encoding);
+> +	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
+> +		$subject = quote_subject($subject, $auto_8bit_encoding);
+>  	}
+
+Hmm. What is this patch on top of? It looks like it is on top of your
+original patch, but when I tried it on top of that, it does not apply
+either, and the index lines in the patch do not mention a sha1 that I do
+not have.
+
+Do you mind re-rolling a final 2-patch series with:
+
+  1. Your original patch and this one squashed together, with an
+     appropriate commit message.
+
+  2. The second "quote when we see '=?'" patch.
+
+Thanks.
+
+-Peff
