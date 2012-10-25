@@ -1,79 +1,128 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: git push tags
-Date: Thu, 25 Oct 2012 21:05:48 +0200
-Message-ID: <CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
-References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] Use character class for sed expression instead of \s
+Date: Thu, 25 Oct 2012 22:09:39 +0200
+Message-ID: <50899C83.6090008@web.de>
+References: <508935CB.9020408@web.de> <1351180699-24695-1-git-send-email-bdwalton@gmail.com> <C2AB6973-7BC2-45A4-836E-BB1FAAE7501C@gernhardtsoftware.com> <5089689A.9070301@web.de> <CAP30j15n1hVn6zptDpAfM+Aqc3LnRR4PN6jHTHpTkcjYLgPnjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 21:06:06 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>, peff@peff.net,
+	bosch@adacore.com, git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 22:10:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRSkk-0007hO-3L
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 21:06:02 +0200
+	id 1TRTkr-0001IV-CG
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 22:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760136Ab2JYTFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 15:05:50 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:48309 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760100Ab2JYTFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 15:05:49 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so1381356pad.19
-        for <git@vger.kernel.org>; Thu, 25 Oct 2012 12:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HJ8azSwyK3aAvesEUhJ0P8rA2wtCf5LAfRYuEP0Fr+c=;
-        b=AWNlDW5JhJexkVUK5femkw5axqFHCG9l7P0W3aJFwCgvZGmYK8V6zSOrTaDAfks7FO
-         O4YgiduZkOBTysxWiI5sPCI8wJinuMl8xtIuujwhN6r0UhtRQml/XDP24NE1DRUk/AX8
-         AacEgb9ewg5MZ7IxtVIpDL2riDt5iyYQH0gpP2JSXx/x0OsPcDzhdc1S9dqzAZ7Hrp5f
-         DvolHnxmd94ZNlzzJMvfRM+UZ5zHJyNyQHdE0fOdbnoer38ahVopN5Ix27pP650ZhT5J
-         VnOCMx3Jh9sW5R6Jv5RwtpNnpw6lrGQPFztYXMjC/NlQShjcJSlkxGXw6M9jshavt+3o
-         5zTw==
-Received: by 10.66.76.98 with SMTP id j2mr55472462paw.65.1351191949030; Thu,
- 25 Oct 2012 12:05:49 -0700 (PDT)
-Received: by 10.67.3.101 with HTTP; Thu, 25 Oct 2012 12:05:48 -0700 (PDT)
-In-Reply-To: <CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
+	id S1760220Ab2JYUKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Oct 2012 16:10:00 -0400
+Received: from mout.web.de ([212.227.17.12]:58079 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755951Ab2JYUJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 16:09:59 -0400
+Received: from wanderer.site ([195.67.191.22]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MUncu-1TvFaR2gWa-00Ygz7; Thu, 25 Oct 2012 22:09:47
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <CAP30j15n1hVn6zptDpAfM+Aqc3LnRR4PN6jHTHpTkcjYLgPnjw@mail.gmail.com>
+X-Provags-ID: V02:K0:fF6Uf8FFv5YxCrax2tX08AtOeflVGS4Utup1KI1gzG4
+ jd4Gk2VsObQBMPGNsQL04l3iSBuw1fldC6xlbpss7BzkbSJC84
+ 0iXtSXwXJKpD+DXkVrwHlbQsZASkZjlEjfUtLPefCYnV6ZGhu5
+ jOZ0GI8sFTZI+5l7Fp+Z/r7vVS98rZ7N5FLFWmKVnFJfpplN1O
+ 8y0YajJvHssaIG8F4vWxg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208417>
 
-Hi Drew,
-
+On 10/25/2012 08:08 PM, Ben Walton wrote:
+> Hi Torsten,
 >
-> You specified "-f" (force) and it did exactly what you asked. That is
-> fully documented (git help tag).
+> On Thu, Oct 25, 2012 at 5:28 PM, Torsten B=F6gershausen <tboegi@web.d=
+e> wrote:
 >
+>> BTW: While we are talking CVS: (I installed a fresh version)
+>> cvs --version
+>> Concurrent Versions System (CVS) 1.11.23 (client/server)
+>
+> I have 1.12.13-MirDebian-8 here.
+>
+>> And t9200 fails:
+>> git checkout t9200-git-cvsexportcommit.sh
+>> tb@birne:~/projects/git/git.pu/t> ./t9200-git-cvsexportcommit.sh
+>> cvs [init aborted]: Cannot initialize repository under existing CVSR=
+OOT: `/Users/tb/projects/git/git.pu/t/trash directory.t9200-git-cvsexpo=
+rtcommit'
+>> FATAL: Unexpected exit with code 1
+>
+> I'm not able to reproduce this manually...are you able to make it fai=
+l
+> this way outside of the test harness?
+>
+> $ CVSROOT=3D$PWD/bw
+> $ export CVSROOT
+> $ mkdir $CVSROOT && cvs init && echo ok
+> ok
+> $ rm -rf $CVSROOT
+> $ cvs init && echo ok
+> ok
+>
+>>> (cvs init || mkdir "$CVSROOT" && cvs init ) &&
+>
+> If your version of cvs fails the checks above in manual testing, we
+> could see if there is a flag that works in all (old and new) versions
+> to override the failure if CVSROOT exists.  Otherwise, this isn't a
+> bad fix, I don't think.
+>
+> If your version does fail the manual checks, I think it's likely a
+> regression that was introduced and later reverted.  I don't see those
+> strings inside my cvs binary at all...?
+>
+> HTH.
+>
+> Thanks
+> -Ben
+>
+Hej Ben,
+thanks for looking into that - here some short answers:
 
-Yes, it is, and I used it to show that there is a need to specify
-explicitly the intent to change a tag, that without such an indication
-would not be changed.
+a) The manual test (as you describe it) succeeds
+b) The test case 9200 failes, and now I know why:
 
->Tags have many uses. Some of those uses are harmed when tags change
-and some aren't. That's a philosophical argument
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcomm=
+it.sh
+index b59be9a..d2c3c37 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -19,7 +19,7 @@ then
+      test_done
+  fi
 
-I agree, but in this case the computer does not provide any means to
-implement the same strategy on tags as it does instead on local
-repositories. Why I must force a change on a tag in the local
-repository and instead I can change it without any forcing in a remote
-one? Are remote repositories less protected than the local ones? I
-think that to be consistent, the same strategy should be used on all
-repositories, i.e. rejecting changes on tags by default, unless they
-are forced.
-
--Angelo
+-CVSROOT=3D$PWD/cvsroot
++CVSROOT=3D$PWD/xx
+  CVSWORK=3D$PWD/cvswork
+  GIT_DIR=3D$PWD/.git
+  export CVSROOT CVSWORK GIT_DIR
 
 
-> --
-> -Drew Northup
-> --------------------------------------------------------------
-> "As opposed to vegetable or mineral error?"
-> -John Pescatore, SANS NewsBites Vol. 12 Num. 59
+
+c) I need to send a patch tomorrow
+
+d) FYI: I compiled cvs from scratch, from a file called cvs-1.11.23.tar=
+=2Egz
+    and the code is in cvs-1.11.23/src/mkmodules.c:942
+
+if (root_dir && strcmp (root_dir, current_parsed_root->directory))
+   error (1, 0,
+          "Cannot initialize repository under existing CVSROOT: `%s'",
+          root_dir);
+     free (root_dir);
+
+/Torsten
