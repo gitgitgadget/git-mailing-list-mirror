@@ -1,105 +1,86 @@
-From: "PROHASKA, Thor" <Thor.PROHASKA@suncorp.com.au>
-Subject: RE: Who is the 'git' vendor?
-Date: Thu, 25 Oct 2012 23:10:48 +0000
-Message-ID: <8F7A9DADB4F4064EB938B0D3EBB63FDC208A6024@PBNEMBMSX4120.int.Corp.sun>
-References: <8F7A9DADB4F4064EB938B0D3EBB63FDC208A5A34@PBNEMBMSX4120.int.Corp.sun>
- <5088FDDC.20404@op5.se> <20121025091017.GE8390@sigill.intra.peff.net>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
+Date: Thu, 25 Oct 2012 18:14:31 -0400
+Message-ID: <20121025221431.GH13647@odin.tremily.us>
+References: <20121023204437.GE28592@odin.tremily.us>
+ <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Andreas Ericsson <ae@op5.se>,
-	"'git@vger.kernel.org'" <git@vger.kernel.org>,
-	"'Thor Home (thorlp@hotkey.net.au)'" <thorlp@hotkey.net.au>
-To: 'Jeff King' <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 26 01:12:19 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=GBDnBH7+ZvLx8QD4
+To: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 01:15:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRWaw-0005XC-Bg
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 01:12:10 +0200
+	id 1TRWds-0007J2-LK
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 01:15:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936Ab2JYXL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 19:11:56 -0400
-Received: from mail143.messagelabs.com ([216.82.254.35]:49127 "HELO
-	mail143.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750737Ab2JYXLx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 19:11:53 -0400
-X-Env-Sender: Thor.PROHASKA@suncorp.com.au
-X-Msg-Ref: server-3.tower-143.messagelabs.com!1351206648!16068281!11
-X-Originating-IP: [203.0.223.249]
-X-StarScan-Received: 
-X-StarScan-Version: 6.6.1.3; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 12942 invoked from network); 25 Oct 2012 23:11:30 -0000
-Received: from mail2.suncorpmetway.com.au (HELO PBNEMSXEDGE2101.workgroup.com) (203.0.223.249)
-  by server-3.tower-143.messagelabs.com with SMTP; 25 Oct 2012 23:11:30 -0000
-Received: from PBNEMSX4108.int.Corp.sun (10.80.165.53) by
- PBNEMSXEDGE2101.workgroup.com (192.168.127.219) with Microsoft SMTP Server
- (TLS) id 14.2.318.1; Fri, 26 Oct 2012 09:11:14 +1000
-Received: from PBNEMBMSX4120.int.Corp.sun ([169.254.12.179]) by
- PBNEMSX4108.int.Corp.sun ([10.80.165.53]) with mapi id 14.02.0318.001; Fri,
- 26 Oct 2012 09:10:49 +1000
-Thread-Topic: Who is the 'git' vendor?
-Thread-Index: Ac2yfBVNJp5fjgb6QVi5xJifjKXeQP//fGQAgAAE54D//m3UoA==
-In-Reply-To: <20121025091017.GE8390@sigill.intra.peff.net>
-Accept-Language: en-AU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.240.22]
-X-CFilter-Loop: Reflected
+	id S1752022Ab2JYXPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 19:15:00 -0400
+Received: from vms173005pub.verizon.net ([206.46.173.5]:56886 "EHLO
+	vms173005pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751663Ab2JYXO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 19:14:59 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Oct 2012 19:14:59 EDT
+Received: from odin.tremily.us ([unknown] [72.68.84.95])
+ by vms173005.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MCG00K41Z47Z350@vms173005.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 25 Oct 2012 17:14:42 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id A39E6680761; Thu,
+ 25 Oct 2012 18:14:31 -0400 (EDT)
+Content-disposition: inline
+In-reply-to: <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208427>
 
-VGhhbmtzIEFuZHJlYXMgJiBKZWZmLiBZb3VyIGFkdmljZSBpcyBtdWNoIGFwcHJlY2lhdGVkLiBD
-aGVlcnMsIFRob3INCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEplZmYgS2lu
-ZyBbbWFpbHRvOnBlZmZAcGVmZi5uZXRdDQpTZW50OiBUaHVyc2RheSwgMjUgT2N0b2JlciAyMDEy
-IDc6MTAgUE0NClRvOiBQUk9IQVNLQSwgVGhvcg0KQ2M6IEFuZHJlYXMgRXJpY3Nzb247ICdnaXRA
-dmdlci5rZXJuZWwub3JnJzsgJ1Rob3IgSG9tZSAodGhvcmxwQGhvdGtleS5uZXQuYXUpJw0KU3Vi
-amVjdDogUmU6IFdobyBpcyB0aGUgJ2dpdCcgdmVuZG9yPw0KDQpPbiBUaHUsIE9jdCAyNSwgMjAx
-MiBhdCAxMDo1Mjo0NEFNICswMjAwLCBBbmRyZWFzIEVyaWNzc29uIHdyb3RlOg0KDQo+IE9uIDEw
-LzI1LzIwMTIgMDg6NDMgQU0sIFBST0hBU0tBLCBUaG9yIHdyb3RlOg0KPiA+IEhpLA0KPiA+DQo+
-ID4gVGhlIG9yZ2FuaXNhdGlvbiBJIGFtIGN1cnJlbnRseSB3b3JraW5nIGZvciB1c2VzICdnaXQn
-Lg0KPiA+DQo+ID4gSW4gb3JkZXIgdG8gbWFuYWdlIGFsbCB0aGUgc29mdHdhcmUgdXNlZCBpbiB0
-aGUgb3JnYW5pc2F0aW9uIHdlIGhhdmUNCj4gPiBiZWVuIGNvbXBpbGluZyBhIGxpc3Qgb2Ygc29m
-dHdhcmUgdGhhdCBpbmNsdWRlcyB0aGUgc29mdHdhcmUNCj4gPiBWZW5kb3IncyBuYW1lLg0KPiA+
-DQo+ID4gTXkgY29sbGVhZ3VlIGhhcyBsaXN0ZWQgdGhlIHZlbmRvciBvZiBnaXQgYXMgYmVpbmcg
-dGhlICdTb2Z0d2FyZQ0KPiA+IEZyZWVkb20gQ29uc2VydmFuY3knLiBDYW4geW91IHBsZWFzZSBh
-ZHZpc2UgbWUgaWYgdGhpcyBpcyBjb3JyZWN0Pw0KPiA+IElmIG5vdCwgd2hvIHNob3VsZCB0aGUg
-dmVuZG9yIGJlIGlkZW50aWZpZWQgYXM/DQo+ID4NCj4NCj4gTW9zdCBsaWtlbHksIHlvdSdsbCB3
-YW50IHRvIHB1dCAiZ2l0QHZnZXIua2VybmVsLm9yZyIgYXMgdmVuZG9yIGZvcg0KPiBnaXQsIGFz
-IHRoZSB3aG9sZSB2ZW5kb3IgY29uY2VwdCBkb2Vzbid0IHJlYWxseSBmbHkgd2l0aCBGT1NTLiBU
-aGVyZSdzDQo+IG5vb25lIHRvIGdvIHRvIGlmIGl0IGJyZWFrcyB5b3VyIHN5c3RlbXMsIGFuZCB1
-bmxlc3MgeW91IHB1cmNoYXNlIGENCj4gc3VwcG9ydCBjb250cmFjdCBmcm9tIHNvbWV3aGVyZSB0
-aGVyZSdzIG5vb25lIHRvIHR1cm4gdG8gZXhjZXB0IHRoZQ0KPiAoZXhjZWxsZW50KSBnaXQgY29t
-bXVuaXR5IGluIGNhc2UgeW91IGhhdmUgaXNzdWVzIHdpdGggaXQuDQoNClllYWguIERlcGVuZGlu
-ZyBvbiB0aGUgcHVycG9zZSBvZiB0aGUgbGlzdCwgSSB3b3VsZCBwcm9iYWJseSBfbm90XyBwdXQg
-dGhlIFNGQy4gVGhleSBoZWxwIG1hbmFnZSB0aGUgbGVnYWwgYW5kIGZpbmFuY2lhbCBhc3BlY3Rz
-IG9mIHRoZSBnaXQgcHJvamVjdCwgYnV0IHRoZXkgaGF2ZSBub3RoaW5nIGF0IGFsbCB0byBkbyB3
-aXRoIHRoZSBjb2RlIGl0c2VsZi4gSSB3b3VsZCBoYXRlIGZvciB0aGVtIHRvIGdldCBhIHBob25l
-IGNhbGwgYWJvdXQgc3VwcG9ydC4gOikNCg0KUHJvYmFibHkgIlRoZSBHaXQgQ29tbXVuaXR5IiBv
-ciAiZ2l0QHZnZXIua2VybmVsLm9yZyIgaXMgdGhlIGJlc3QgdGhpbmcgdG8gZmlsbCBpbiBpZiB5
-b3UgbmVlZCB0byB3cml0ZSBzb21ldGhpbmcgaW4gYSBmb3JtLiBJZiB0aGVyZSBlbmRzIHVwIGJl
-aW5nIHNvbWUgc3BlY2lmaWMgcmVhc29uIGZvciBhIHZlbmRvciB0byBiZSBjb250YWN0ZWQsIGZv
-bGtzIG9uIHRoZSBsaXN0IHdpbGwgYmUgYWJsZSB0byBwb2ludCBhbiBpbnF1aXJ5IGluIHRoZSBy
-aWdodCBkaXJlY3Rpb24gKHdoaWNoIG1pZ2h0IGV2ZW4gZW5kIHVwIGJlaW5nIHRoZSBTRkMpLg0K
-DQotUGVmZg0KDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQpUaGlzIGUtbWFp
-bCBpcyBzZW50IGJ5IFN1bmNvcnAgR3JvdXAgTGltaXRlZCBBQk4gNjYgMTQ1IDI5MCAxMjQgb3Ig
-b25lIG9mIGl0cyByZWxhdGVkIGVudGl0aWVzICJTdW5jb3JwIi4NClN1bmNvcnAgbWF5IGJlIGNv
-bnRhY3RlZCBhdCBMZXZlbCAxOCwgMzYgV2lja2hhbSBUZXJyYWNlLCBCcmlzYmFuZSBvciBvbiAx
-MyAxMSA1NSBvciBhdCBzdW5jb3JwLmNvbS5hdS4NClRoZSBjb250ZW50IG9mIHRoaXMgZS1tYWls
-IGlzIHRoZSB2aWV3IG9mIHRoZSBzZW5kZXIgb3Igc3RhdGVkIGF1dGhvciBhbmQgZG9lcyBub3Qg
-bmVjZXNzYXJpbHkgcmVmbGVjdCB0aGUgdmlldyBvZiBTdW5jb3JwLiBUaGUgY29udGVudCwgaW5j
-bHVkaW5nIGF0dGFjaG1lbnRzLCBpcyBhIGNvbmZpZGVudGlhbCBjb21tdW5pY2F0aW9uIGJldHdl
-ZW4gU3VuY29ycCBhbmQgdGhlIGludGVuZGVkIHJlY2lwaWVudC4gSWYgeW91IGFyZSBub3QgdGhl
-IGludGVuZGVkIHJlY2lwaWVudCwgYW55IHVzZSwgaW50ZXJmZXJlbmNlIHdpdGgsIGRpc2Nsb3N1
-cmUgb3IgY29weWluZyBvZiB0aGlzIGUtbWFpbCwgaW5jbHVkaW5nIGF0dGFjaG1lbnRzLCBpcyB1
-bmF1dGhvcmlzZWQgYW5kIGV4cHJlc3NseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZl
-ZCB0aGlzIGUtbWFpbCBpbiBlcnJvciBwbGVhc2UgY29udGFjdCB0aGUgc2VuZGVyIGltbWVkaWF0
-ZWx5IGFuZCBkZWxldGUgdGhlIGUtbWFpbCBhbmQgYW55IGF0dGFjaG1lbnRzIGZyb20geW91ciBz
-eXN0ZW0uDQo=
+
+--GBDnBH7+ZvLx8QD4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Should I rebase this so it lands cleanly atop 38ae92e4 in next?
+
+  commit 38ae92e4d027063b9b87e51a9bf12809d10066f6
+  Author: W. Trevor King <wking@tremily.us>
+  Date:   Tue Oct 23 17:00:21 2012 -0400
+
+    git-submodule: wrap branch option with "<>" in usage strings.
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--GBDnBH7+ZvLx8QD4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQibnGAAoJEEUbTsx0l5OM2k0P/26wJM7I9ipNYNLoxzHwnSUC
+KIhcV3znmJx62acbF7OMFDXvRO3uDm172wcQRZ/V0iBUjxqQCZ+P/S5x47nlILB2
+n67RmFUuV6d4EIFWhMfPeeQs1oUGRsqxWJuJwec9antBzmYCo0jeLF992/gUWOBd
+T3PY9jaUH46Ccr6UqITYsTBgMXNh+LsbPzuepb3WeR8d3aS3niTmFYYLmh7yzcaa
+BffIbP8ZmbX7n+IkzBOWQcYnqV0mn4nlfgRwY2JLw5iF7aOadbGWRtPtsFETr7Sr
+DyJDAAKZg1YH1sb/wL84Lkx+BFaDbB3idP3K2jlyvSiG1SZ5tRidu1GgSynUVg5N
+Nsr5/CW01BdGAsHQyB16VfyM417eGdG17Ujc79FAhyB6nGQkQkZc935FAG3qBNCf
+Vdys3gcD5afwyTzHcdhXdur76/WGvyvpCIzBk8zf8MzeybM1A8rsHlSenFOTHe8t
+OtY0qSz1JRlI3sdTUhQ27SUh+Tdw1BK7UO+Gb/WUBM1+z7qI8Rk7nqZv+95/c2fW
+veTT8XisMfMOm1MgRGIW4CVfJPdRU03seWqqftIym/y/T/0IN2MdnXo1MkaBJRGG
+Jr3X2NUzSJThMCBRQSpnqnNRsGyx6evJNlLp0a7m7iRtDxjlGgiYlowBdWn/orZx
+UK8qJNsnWZkbP2xQUG1w
+=tdO5
+-----END PGP SIGNATURE-----
+
+--GBDnBH7+ZvLx8QD4--
