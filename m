@@ -1,88 +1,84 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: git push tags
-Date: Thu, 25 Oct 2012 17:16:00 -0400
-Message-ID: <CAM9Z-nkosbe1NXYnu7x6v4seLqCnMBWg-jrdH2eJ9RetaZBTyQ@mail.gmail.com>
-References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
-	<CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Fixes handling of --reference argument.
+Date: Thu, 25 Oct 2012 23:32:29 +0200
+Message-ID: <5089AFED.7060404@web.de>
+References: <5088c5a4.L25tOcUVCSwBRpYF%szager@google.com> <20121025083625.GA8390@sigill.intra.peff.net> <20121025104519.GA3816@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 23:16:19 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, szager@google.com, git@vger.kernel.org
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Oct 25 23:32:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRUmo-000103-L1
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 23:16:18 +0200
+	id 1TRV2m-0003Bf-7m
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 23:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965687Ab2JYVQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 17:16:04 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:42075 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965575Ab2JYVQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 17:16:02 -0400
-Received: by mail-bk0-f46.google.com with SMTP id jk13so1011125bkc.19
-        for <git@vger.kernel.org>; Thu, 25 Oct 2012 14:16:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=dtZ6Y/vsueAx0+EvjeGEGnP79w9uYEVsVt6GsG6gYUQ=;
-        b=O+sGR0orPkrVJVqNe61/ILVo7fEC8sU+8UNA/bI5WI+Uuz5WhT204UQcVC0HD+64C5
-         t611hNutrrndXA1lffv/WLKH2gbnMyNZHitPfRb9fpR+d9fGGWGg+EmYWR/C7C63lLO1
-         amvdVgnPMrpmOstHuXm3n5ETEm4enSG7lPt6iyUOAVbTnFA4lRPbqp6RFIDe/Kvp1431
-         Fbyxll1Pyi8yUc48NSlpiD/u8tKnFqRki9bmQ8BE3639M7RPjU09mmjJhExXzoXV4AhU
-         v0gDY7FfULCkWfDieeQgrNTF/HIEP2bUrqVoJedyk0R856DcWqx5foOUaJkgHlCIMaaJ
-         nRGg==
-Received: by 10.204.9.3 with SMTP id j3mr6709421bkj.15.1351199760949; Thu, 25
- Oct 2012 14:16:00 -0700 (PDT)
-Received: by 10.205.122.144 with HTTP; Thu, 25 Oct 2012 14:16:00 -0700 (PDT)
-In-Reply-To: <CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
+	id S1751188Ab2JYVcg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Oct 2012 17:32:36 -0400
+Received: from mout.web.de ([212.227.17.11]:54965 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750912Ab2JYVcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 17:32:35 -0400
+Received: from [192.168.178.41] ([91.3.191.79]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0Lsy7e-1TGw4A4Aag-012TXs; Thu, 25 Oct 2012 23:32:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121025104519.GA3816@odin.tremily.us>
+X-Provags-ID: V02:K0:XQydVzghXC/q0BAIoPuxWMJ5f/4lpZuZvB7Kz51N2ws
+ 1n2NkHXkZ4l2tl8RCq8kic14JcMsR/p43rjwvfgKaEwVVu+nW5
+ Gi43fpyY7+HaKYNE5+n/w+jQgiDY3lvpXI9zadlXB0oWExfRIb
+ eYEZvoMyT2/lbxZ4iyH22VtouAQLmXr7uw+OVb1mpj7Tddks4g
+ 16GgkI/NMF8DJerhR4Scw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208419>
 
-On Thu, Oct 25, 2012 at 3:05 PM, Angelo Borsotti
-<angelo.borsotti@gmail.com> wrote:
----At 13:19 on Oct 25, 2012, Drew Northup wrote: [added for clarity]
->>Tags have many uses. Some of those uses are harmed when tags change
-> and some aren't. That's a philosophical argument
->
-> I agree, but in this case the computer does not provide any means to
-> implement the same strategy on tags as it does instead on local
-> repositories. Why I must force a change on a tag in the local
-> repository and instead I can change it without any forcing in a remote
-> one?
+Am 25.10.2012 12:45, schrieb W. Trevor King:
+> On Thu, Oct 25, 2012 at 04:36:26AM -0400, Jeff King wrote:
+>> On Wed, Oct 24, 2012 at 09:52:52PM -0700, szager@google.com wrote:
+>>> diff --git a/git-submodule.sh b/git-submodule.sh
+>>> index ab6b110..dcceb43 100755
+>>> --- a/git-submodule.sh
+>>> +++ b/git-submodule.sh
+>>> @@ -270,7 +270,6 @@ cmd_add()
+>>>  			;;
+>>>  		--reference=3D*)
+>>>  			reference=3D"$1"
+>>> -			shift
+>>>  			;;
+>>
+>> Is that right? We'll unconditionally do a "shift" at the end of the
+>> loop. If it were a two-part argument like "--reference foo", the ext=
+ra
+>> shift would make sense, but for "--reference=3D*", no extra shift sh=
+ould
+>> be neccessary. Am I missing something?
+>=20
+> Both the patch and Jeff's analysis are right.  You only need an
+> in-case shift if you consume "$2", or you're on =E2=80=98--=E2=80=99 =
+and you're
+> breaking before the end-of-case shift.
 
-Changing the tag in the local repository is a tag modification
-operation. Pushing that change to a remote repository DOES NOT execute
-"git tag...." in the remote. Plain and simple the two are different
-operations.
+Right you are. The shift there is wrong, as there is no extra argument
+to consume for "--reference=3D<repo>" (opposed to "--reference <repo>",
+also see cmd_update() where this is done right).
 
-> Are remote repositories less protected than the local ones? I
-> think that to be consistent, the same strategy should be used on all
-> repositories, i.e. rejecting changes on tags by default, unless they
-> are forced.
+So tested and Acked-By me, but me thinks the subject should read:
 
-So here we come to the core argument. Is sounds to me like you want
-changes to remote tags to work differently from push updates to ALL
-other references. The required change, if I'm not mistaken, would be
-for tags to not permit fast-forward updates while all other references
-would be pushed normally. From my brief and un-enlightened look at the
-push code I can't see that being as easy as it sounds.
+   [PATCH] submodule add: Fix handling of the --reference=3D<repo> opti=
+on
 
-In any case, I think your complaint stems from thinking that "git tag"
-is the operation being performed on the remote when in fact it is not.
-Given the mayhem that changing this may involve I'm not going to claim
-it to be a good idea.
+and the commit message should begin with:
 
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+   Doing a shift there is wrong because there is no extra argument
+   to consume when "--reference=3D<repo>" is used (note the '=3D' inste=
+ad
+   of a space).
+
+Peff, is it ok for you to squash that in or do you want Stefan to resen=
+d?
