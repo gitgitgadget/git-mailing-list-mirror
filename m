@@ -1,90 +1,83 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] Doc User-Manual: Patch cover letter, three dashes, and --notes
-Date: Thu, 25 Oct 2012 23:45:57 +0100
-Organization: OPDS
-Message-ID: <F4D36C50EB6945CD8EB6E5AF73238148@PhilipOakley>
-References: <1350855250-2844-1-git-send-email-philipoakley@iee.org> <1350855250-2844-2-git-send-email-philipoakley@iee.org> <20121025102638.GP8390@sigill.intra.peff.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Unexpected behaviour after removing submodule
+Date: Fri, 26 Oct 2012 00:47:46 +0200
+Message-ID: <5089C192.2050903@web.de>
+References: <50895580.9080408@morey-chaisemartin.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Eric Blake" <eblake@redhat.com>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 26 00:46:00 2012
+Cc: git@vger.kernel.org
+To: devel-git@morey-chaisemartin.com
+X-From: git-owner@vger.kernel.org Fri Oct 26 00:48:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRWBb-0006oW-6k
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:45:59 +0200
+	id 1TRWDY-000835-M4
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750855Ab2JYWpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 18:45:47 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:53921 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750803Ab2JYWpq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2012 18:45:46 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArINAGXAiVBcHl58/2dsb2JhbABEhhaFP7VVBAEBAoEGgQmCGQUBAQQBCAEBGRUeAQEhCwIDBQIBAw4HAQICAgUhAgIUAQQaBgcXBhMIAgECAwGHbQqrIZJvgSCKQW8eQDqDUzJhA41xmEKCcA
-X-IronPort-AV: E=Sophos;i="4.80,650,1344207600"; 
-   d="scan'208";a="407908320"
-Received: from host-92-30-94-124.as13285.net (HELO PhilipOakley) ([92.30.94.124])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 25 Oct 2012 23:45:44 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751950Ab2JYWrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 18:47:49 -0400
+Received: from mout.web.de ([212.227.17.11]:55339 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751922Ab2JYWrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 18:47:48 -0400
+Received: from [192.168.178.41] ([91.3.191.79]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0LvSU3-1TIp6H1nsJ-00zvjL; Fri, 26 Oct 2012 00:47:46 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <50895580.9080408@morey-chaisemartin.com>
+X-Provags-ID: V02:K0:/WmuKRZXyFPQ2MvUmybKPgSYG3CG2yG1nOzF0Y2WgU1
+ EzlRzDm+3HbhsJ6E/bK5KXlz8Zdxr7xssrx26TPMBCQP+6Yl7a
+ Wm69uZv88xCKGW6ZkFk/ZkRTdSA6229To9LUr6Lg75Q6+Jb7oH
+ xKdFhC0HmvU2R1NFSVLtKGkCYRmqDEQShrkKdYVzUewY7M/2lX
+ hYTpqj45q3uuCBjU1pAfQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208424>
 
-From: "Jeff King" <peff@peff.net> Sent: Thursday, October 25, 2012 11:26 
-AM
-> On Sun, Oct 21, 2012 at 10:34:08PM +0100, Philip Oakley wrote:
->
->> diff --git a/Documentation/user-manual.txt 
->> b/Documentation/user-manual.txt
->> index 85651b5..d918c53 100644
->> --- a/Documentation/user-manual.txt
->> +++ b/Documentation/user-manual.txt
->> @@ -1787,6 +1787,11 @@ $ git format-patch origin
->>  will produce a numbered series of files in the current directory, 
->> one
->>  for each patch in the current branch but not in origin/HEAD.
->>
->> +`git format-patch` can include an initial "cover letter". You can 
->> insert
->> +a commentary on individual patches using a three dash line after the
->> +commit message, and before the patch itself. `git 
->> format-patch --notes`
->> +(v1.8.1) will include the commit's notes in the similar manner.
->
-> I'd rather not mention a version number here, as we do not yet know
-> which version (if any) will contain the feature. Besides, we write our
-> documentation to match the current version, so as long as this is 
-> queued
-> on top of the new code, I do not see any reason to mention a version 
-> at
-> all.
+Am 25.10.2012 17:06, schrieb Nicolas Morey-Chaisemartin:
+> At work, we use a lot of submodules (several levels of submodules actually).
+> As we also work with development branches, we use scripts to resync the whole checked-out tree (mainly in automated integration)
+> 
+> We recently run across an issue where a branch (dev) contained a submodule while it had been removed in master and the files were imported in a subdirectory with the same name (probably using git-subtree).
+> 
+> Basically:
+> 
+> On dev:
+> * top/refs(submodule)/file1
+> On master:
+> * top/refs(dir)/file1
+> 
+> Outside the fact that it is quite hard to move from one branch to the other while having a perfectly clean tree checked out underneath, we manage to end up into a weird (invalid) state
+> that was neither clearly described nor "easy" to cleanup (using standard git clean/checkout/reset commands).
 
-I'd included it because of the manual's title caveat "(for version 1.5.3 
-or newer)", which I'd somehow thought was the matching date for the 
-majority of text, hence my inclusion of the version. Begs the question 
-what happened back then ;-)
+<snipped example without submodules>
 
->
-> I'll tweak it while queueing.
+> The issue is, there is no way from folder2 to see that something "wrong" is going on inside your tree!
+> As we manage to reach this state using only standard git commands (I'll try to reproduce it) with submodules, and this being part of an automated flow, it is quite worrying.
+> We may actually be committing in the wrong repo and pushing the wrong things around.
+> 
+> Is there or should there be a way to look for such issues? And is this an expected behaviour?
 
-Thank you.
+Unfortunately this is how things work at the moment. If you remove a
+submodule its work tree will currently stay around nonetheless. And
+when you replace it with a directory containing files tracked by git,
+things start to get really weird when you do checkouts crossing that
+conversion.
 
->
-> -Peff
-> --
+But the solution to that problem is coming closer. The first step was
+to move the .git directory out of the submodule's work tree, so that
+we are able to remove it without loosing any history. The next step
+will be to enable git to remove and re-add submodules on checkout. The
+"remove a submodule" part already works in my - still experimental -
+recursive_submodule_checkout branch at my github repo. The thing that
+is still missing - apart from tests ;) - is that checkout has to learn
+to look into the to-be-checked-out .gitmodules to be able to populate
+a re-appearing submodule. I plan to add that for git fetch first (so
+it can fetch submodules the user showed interest in but which aren't
+currently checked out) and after that I'll reuse it for checkout.
+
+But that's still some work to do and will take some time ...
