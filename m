@@ -1,69 +1,91 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Workflow for templates?
-Date: Thu, 25 Oct 2012 23:15:22 +0200
-Message-ID: <20121025211522.GA28437@raven.wolf.lan>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] submodule status: properly pass options with --recursive
+Date: Fri, 26 Oct 2012 00:20:29 +0200
+Message-ID: <5089BB2D.90400@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 25 23:42:59 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 26 00:20:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRVCa-0001c4-Ht
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 23:42:56 +0200
+	id 1TRVnE-0000OC-6e
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758Ab2JYVmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 17:42:45 -0400
-Received: from quechua.inka.de ([193.197.184.2]:55947 "EHLO mail.inka.de"
+	id S1751071Ab2JYWUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 18:20:34 -0400
+Received: from mout.web.de ([212.227.17.11]:50267 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751741Ab2JYVmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 17:42:44 -0400
-X-Greylist: delayed 1351 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Oct 2012 17:42:44 EDT
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1TRUqZ-0005hc-Bz; Thu, 25 Oct 2012 23:20:11 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 70AD1760CB; Thu, 25 Oct 2012 23:15:22 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1750738Ab2JYWUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 18:20:33 -0400
+Received: from [192.168.178.41] ([91.3.191.79]) by smtp.web.de (mrweb003) with
+ ESMTPA (Nemesis) id 0LgHKO-1T6Qe20GlI-00niKD; Fri, 26 Oct 2012 00:20:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+X-Provags-ID: V02:K0:H+3psgksBGiJOOP8+OZgOqMsdFReFuRBDR43S0SeV/1
+ hI8NX46NguTr3mBfnwniHJqr3kDyZc++eo680pQ1qIvMHCf1P/
+ kktFbmsW+wnoGDqpWN2YM6W6aAqspSHKUs3DGabyijpHPf0P/W
+ FHpXLLb77qrQ1RXEQIX2kn+kzZ7OcVL8NMVZTcAG0Up03Jtih0
+ ifkN70Nd+ALyWdpVtENsA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208421>
 
-Hello everybody,
+When renaming orig_args to orig_flags in 98dbe63d (submodule: only
+preserve flags across recursive status/update invocations) the call site
+of the recursive cmd_status was forgotten. At that place orig_args is
+still passed into the recursion, which is always empty now. This clears
+all options when recursing, as that variable is never set.
 
-I am looking for a setup where teplates can be handled easily.
+Fix that by renaming orig_args to orig_flags there too and add a test to
+catch that bug.
 
-For a better explanation of what I'm trying to achieve, I use the apache
-httpd project as an example.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-Apache httpd provides an extensively commented httpd.conf template, which
-users can use as a starting point for their own customization.
+I noticed that when reviewing Phil's "Teach --recursive to submodule
+sync" patch.
 
-Tha's fine so far. But I'd like this to work in both directions:
+ git-submodule.sh             | 2 +-
+ t/t7407-submodule-foreach.sh | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-Downstream: When the upstream template has new changes, I can merge them into
-my local branch. Conflicts will remind me that I have to review my
-customization.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b110..c089d48 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -990,7 +990,7 @@ cmd_status()
+ 				prefix="$displaypath/"
+ 				clear_local_git_env
+ 				cd "$sm_path" &&
+-				eval cmd_status "$orig_args"
++				eval cmd_status "$orig_flags"
+ 			) ||
+ 			die "$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
+ 		fi
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 9b69fe2..eca36b5 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -245,6 +245,14 @@ test_expect_success 'ensure "status --cached --recursive" preserves the --cached
+ 	test_cmp expect actual
+ '
 
-Upstream: Within the customized working copy, I implement a new module or
-change an existing one (e.g. mod_ssl). While implementing the new feature, I
-add/modify my _customized_ template. When I'm happy with the new feature, I'd
-like to rewrite the localized customization into something generic and send it
-along with the implementation of the new feature to the upstream generic
-template. My localized customization should not get lost during the
-process, of course.
-
-One more important aspect: since the customized template might contain
-confidential information, those bits should have a hard time to propagate to
-the upstream repository.
-
-I guess the downstream part can be done by a vendor branch. But I have a hard
-time to find a proper workflow for the upstream part.
-
-Any ideas?
++test_expect_success 'ensure "status --quiet --recursive" preserves the --quiet flag' '
++	(
++		cd clone3 &&
++		git submodule status --quiet --recursive -- nested1 > ../actual
++	) &&
++	! test -s actual
++'
++
+ test_expect_success 'use "git clone --recursive" to checkout all submodules' '
+ 	git clone --recursive super clone4 &&
+ 	(
+-- 
+1.8.0.dirty
