@@ -1,83 +1,127 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Unexpected behaviour after removing submodule
-Date: Fri, 26 Oct 2012 00:47:46 +0200
-Message-ID: <5089C192.2050903@web.de>
-References: <50895580.9080408@morey-chaisemartin.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] Doc format-patch: clarify --notes use case
+Date: Thu, 25 Oct 2012 23:48:04 +0100
+Organization: OPDS
+Message-ID: <7427D8D31835443F96156C24D3EB6A5A@PhilipOakley>
+References: <1350855250-2844-1-git-send-email-philipoakley@iee.org> <1350855250-2844-4-git-send-email-philipoakley@iee.org> <20121025102527.GO8390@sigill.intra.peff.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: devel-git@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Fri Oct 26 00:48:01 2012
+Cc: "GitList" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Eric Blake" <eblake@redhat.com>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 26 00:48:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRWDY-000835-M4
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:48:00 +0200
+	id 1TRWDe-00086l-H4
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950Ab2JYWrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 18:47:49 -0400
-Received: from mout.web.de ([212.227.17.11]:55339 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751922Ab2JYWrs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 18:47:48 -0400
-Received: from [192.168.178.41] ([91.3.191.79]) by smtp.web.de (mrweb101) with
- ESMTPA (Nemesis) id 0LvSU3-1TIp6H1nsJ-00zvjL; Fri, 26 Oct 2012 00:47:46 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <50895580.9080408@morey-chaisemartin.com>
-X-Provags-ID: V02:K0:/WmuKRZXyFPQ2MvUmybKPgSYG3CG2yG1nOzF0Y2WgU1
- EzlRzDm+3HbhsJ6E/bK5KXlz8Zdxr7xssrx26TPMBCQP+6Yl7a
- Wm69uZv88xCKGW6ZkFk/ZkRTdSA6229To9LUr6Lg75Q6+Jb7oH
- xKdFhC0HmvU2R1NFSVLtKGkCYRmqDEQShrkKdYVzUewY7M/2lX
- hYTpqj45q3uuCBjU1pAfQ==
+	id S1751953Ab2JYWrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 18:47:53 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:20009 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751922Ab2JYWrw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2012 18:47:52 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArUNAP6/iVBcHl58/2dsb2JhbABEhhaFP7VVAQMBAQKBBoEJghkFAQEEAQgBARkVHgEBIQUGAgMFAgEDDgcBAgICBSECAhQBBBoGBxcGEwgCAQIDAYdtCqsfkm+BIIpBbx5AOoNTMmEDjXGYQoJw
+X-IronPort-AV: E=Sophos;i="4.80,650,1344207600"; 
+   d="scan'208";a="51716502"
+Received: from host-92-30-94-124.as13285.net (HELO PhilipOakley) ([92.30.94.124])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 25 Oct 2012 23:47:50 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208425>
 
-Am 25.10.2012 17:06, schrieb Nicolas Morey-Chaisemartin:
-> At work, we use a lot of submodules (several levels of submodules actually).
-> As we also work with development branches, we use scripts to resync the whole checked-out tree (mainly in automated integration)
-> 
-> We recently run across an issue where a branch (dev) contained a submodule while it had been removed in master and the files were imported in a subdirectory with the same name (probably using git-subtree).
-> 
-> Basically:
-> 
-> On dev:
-> * top/refs(submodule)/file1
-> On master:
-> * top/refs(dir)/file1
-> 
-> Outside the fact that it is quite hard to move from one branch to the other while having a perfectly clean tree checked out underneath, we manage to end up into a weird (invalid) state
-> that was neither clearly described nor "easy" to cleanup (using standard git clean/checkout/reset commands).
+From: "Jeff King" <peff@peff.net> Sent: Thursday, October 25, 2012 11:25 
+AM
+> On Sun, Oct 21, 2012 at 10:34:10PM +0100, Philip Oakley wrote:
+>
+>>  The expected use case of this is to write supporting explanation for
+>> -the commit that does not belong to the commit log message proper
+>> -when (or after) you create the commit, and include it in your patch
+>> -submission.  But if you can plan ahead and write it down, there may
+>> -not be a good reason not to write it in your commit message, and if
+>> -you can't, you can always edit the output of format-patch before
+>> -sending it out, so the practical value of this option is somewhat
+>> -dubious, unless your workflow is broken.
+>> +the commit, that does not belong to the commit log message proper,
+>> +and include it with the patch submission. The notes can be 
+>> maintained
+>> +between versions of the patch series. You can also edit the output 
+>> of
+>> +format-patch before sending.
+>
+> I found the "you can also" slightly awkward here, as it was not clear
+> why it was mentioned.
 
-<snipped example without submodules>
+I was trying to catch what I think Junio was trying to say about 
+'writing it down' and 'can always edit the output' but wasn't exactly 
+sure how to read it.
 
-> The issue is, there is no way from folder2 to see that something "wrong" is going on inside your tree!
-> As we manage to reach this state using only standard git commands (I'll try to reproduce it) with submodules, and this being part of an automated flow, it is quite worrying.
-> We may actually be committing in the wrong repo and pushing the wrong things around.
-> 
-> Is there or should there be a way to look for such issues? And is this an expected behaviour?
+>I think the intent is "this is an alternative that
+> does not involve the notes workflow", but it is not clear from the 
+> text
+> why you would prefer the notes workflow. Here is what I queued 
+> instead,
+> which tires to clarify that, and also mentions that this workflow 
+> needs
+> additional setup to track rewritten commits:
 
-Unfortunately this is how things work at the moment. If you remove a
-submodule its work tree will currently stay around nonetheless. And
-when you replace it with a directory containing files tracked by git,
-things start to get really weird when you do checkouts crossing that
-conversion.
+Your version below captures the intent. <Ack>
+>
+> diff --git a/Documentation/git-format-patch.txt 
+> b/Documentation/git-format-patch.txt
+> index 066dc8b..750b3fa 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -196,13 +196,12 @@ The expected use case of this is to write 
+> supporting explanation for
+>  after the three-dash line.
+> +
+> The expected use case of this is to write supporting explanation for
+> -the commit that does not belong to the commit log message proper
+> -when (or after) you create the commit, and include it in your patch
+> -submission.  But if you can plan ahead and write it down, there may
+> -not be a good reason not to write it in your commit message, and if
+> -you can't, you can always edit the output of format-patch before
+> -sending it out, so the practical value of this option is somewhat
+> -dubious, unless your workflow is broken.
+> +the commit that does not belong to the commit log message proper,
+> +and include it with the patch submission. While one can simply write
+> +these explanations after `format-patch` has run but before sending,
+> +keeping them as git notes allows them to be maintained between 
+> versions
+> +of the patch series (but see the discussion of the `notes.rewrite.*`
+> +configuration in linkgit:git-notes[1] to use this workflow).
 
-But the solution to that problem is coming closer. The first step was
-to move the .git directory out of the submodule's work tree, so that
-we are able to remove it without loosing any history. The next step
-will be to enable git to remove and re-add submodules on checkout. The
-"remove a submodule" part already works in my - still experimental -
-recursive_submodule_checkout branch at my github repo. The thing that
-is still missing - apart from tests ;) - is that checkout has to learn
-to look into the to-be-checked-out .gitmodules to be able to populate
-a re-appearing submodule. I plan to add that for git fetch first (so
-it can fetch submodules the user showed interest in but which aren't
-currently checked out) and after that I'll reuse it for checkout.
+Should the notes.rewriteRef also be mentioned (not part of .*), which is 
+at the end of the notes configuration and that it must be set may be 
+missed by readers? Perhaps "the 'notes.rewrite' configurations", 
+dropping the .* and making it plural?
 
-But that's still some work to do and will take some time ...
+>  a signature to each message produced. Per RFC 3676 the signature
+>
+>
+> I've queued that and your other patches on top of 
+> jc/prettier-pretty-note.
+>
+> -Peff
+>
+>
+> -----
+
+Philip 
