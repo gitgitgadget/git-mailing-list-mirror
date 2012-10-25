@@ -1,67 +1,76 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH] fix 'make test' for HP NonStop
-Date: Thu, 25 Oct 2012 12:59:14 +0200
-Message-ID: <003201cdb29f$c5bc7960$51356c20$@schmitz-digital.de>
-References: <001e01cdb061$c25f6380$471e2a80$@schmitz-digital.de> <20121025095826.GM8390@sigill.intra.peff.net> <002e01cdb29a$893593f0$9ba0bbd0$@schmitz-digital.de> <20121025104900.GA6363@sigill.intra.peff.net> <002f01cdb29e$c2db47e0$4891d7a0$@schmitz-digital.de> <20121025105236.GA2962@sigill.intra.peff.net>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: [PATCH] git-send-email: skip RFC2047 quoting for ASCII subjects
+Date: Thu, 25 Oct 2012 13:12:17 +0200
+Message-ID: <20121025111217.GA3688@shrek.podlesie.net>
+References: <1351065815-22416-1-git-send-email-krzysiek@podlesie.net>
+ <20121024084636.GA23500@sigill.intra.peff.net>
+ <20121024171036.GA18880@shrek.podlesie.net>
+ <20121024192530.GA26477@sigill.intra.peff.net>
+ <20121024210826.GA23562@shrek.podlesie.net>
+ <20121025090149.GC8390@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Jeff King'" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 25 12:59:42 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 25 13:13:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRLA3-0006yf-Eq
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 12:59:39 +0200
+	id 1TRLMy-0006lr-Op
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 13:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758937Ab2JYK7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 06:59:24 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:57467 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757745Ab2JYK7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 06:59:23 -0400
-Received: from DualCore (dsdf-4db53cfd.pool.mediaWays.net [77.181.60.253])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0MZfTi-1TiS4F42l4-00LwN7; Thu, 25 Oct 2012 12:59:22 +0200
-In-Reply-To: <20121025105236.GA2962@sigill.intra.peff.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQI2sQMOQ5ANofWD9kSBDc7fafINHQKHXgBmASq388ECc588sgH/DfRWApIX5gOWoiZrcA==
-Content-Language: de
-X-Provags-ID: V02:K0:kvi3Z40XstU5RslQT83mbmjyI8hNERT1XFK/yzQpU8w
- YaU2oEW7M570+Yyt3HFT00GnRk+1t/eKqvKi0LhDjjuy+mDqIa
- t1MqIksLHO0ga91dwttcdpTIK5Ujol58MsUJ/3CV3iF/K7T9u1
- jAvQKtTNa/JirGzXbhTc0yzgy5jtOZmlDKtNWGbSfIvAN/7whU
- VjKN1LeqJwCERsXivIOJ8gqzqLYIx+jYtgrv0/TwgO6pxeXiPa
- mVvWNLXXywlUtx4RlGz2JAvbqR8Ve/SZ6aiZ9yYAMnl6Cszrwe
- GWUOowDHK6Zl/vard3KUrqwqfWi6bHWs2ziEBJ3Y6ZA6orsFpT
- oZpZOqQ49KDSZ13os+LV/Q1k9qBgkdFrsMSHnpFT4XYYwfi9VG
- T3ORBfsfljA0w==
+	id S933164Ab2JYLMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 07:12:48 -0400
+Received: from shrek-modem2.podlesie.net ([83.13.132.46]:45512 "EHLO
+	shrek.podlesie.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758617Ab2JYLMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 07:12:47 -0400
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 65DDA399; Thu, 25 Oct 2012 13:12:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20121025090149.GC8390@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208391>
 
-> From: Jeff King [mailto:peff@peff.net]
-> Sent: Thursday, October 25, 2012 12:53 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] fix 'make test' for HP NonStop
+On Thu, Oct 25, 2012 at 05:01:49AM -0400, Jeff King wrote:
 > 
-> On Thu, Oct 25, 2012 at 12:51:59PM +0200, Joachim Schmitz wrote:
-> 
-> > > But then I would think using /usr/local would be the sane thing to put
-> > > there, if that is the closest to "standard" for your platform.
-> >
-> > OK, yes, hardcoding /usr/local seems OK too.
-> > Would I need to re-roll?
-> 
-> Please do.
+> Hmm. What is this patch on top of? It looks like it is on top of your
+> original patch, but when I tried it on top of that, it does not apply
+> either, and the index lines in the patch do not mention a sha1 that I do
+> not have.
 
-Done. For some reason not 'chained' to this thread though
+Sorry, it's against km/send-email-compose-encoding (or current next)
++ "git-send-email: use compose-encoding for Subject".
 
-Bye, Jojo
+> 
+> Do you mind re-rolling a final 2-patch series with:
+> 
+>   1. Your original patch and this one squashed together, with an
+>      appropriate commit message.
+
+I think that it's better to do refactoring and fix for ASCII in separate
+patches. Maybe we should reverse order of first two patches. This first
+will do refactoring and the second will just replace quote_rfc2047()
+with quote_subject() in "broken" encoding case and add test
+for this problem.
+
+> 
+>   2. The second "quote when we see '=?'" patch.
+> 
+> Thanks.
+> 
+> -Peff
+
+ok, I will resend the final series.
+
+I need also to fix "git-send-email: use compose-encoding for Subject"
+patch. Now it's depends both on this series and
+km/send-email-compose-encoding branch.
+
+Krzysiek
