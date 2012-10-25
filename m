@@ -1,85 +1,79 @@
-From: szager@google.com
-Subject: [PATCH] Fixes handling of --reference argument.
-Date: Wed, 24 Oct 2012 21:52:52 -0700
-Message-ID: <5088c5a4.L25tOcUVCSwBRpYF%szager@google.com>
+From: Joey Jiao <joey.jiaojg@gmail.com>
+Subject: Re: Git push slowly under 1000M/s network
+Date: Thu, 25 Oct 2012 13:04:32 +0800
+Message-ID: <CAKOmCvruvHPmwz1CDbS1pJPgHZXuUP8p-tdeumxLB=ShAdw4Rg@mail.gmail.com>
+References: <CAKOmCvp23fALGsDe4Ck7ZXpMJmOAq+YWCXPe_xb6GfQcjJi_kQ@mail.gmail.com>
+ <CAJo=hJuGksy7pzzy7-7eTUxNmtT9qR2xCPxSfYO58_8SohFjxQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 25 06:53:07 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 25 07:05:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRFRK-0002nA-V1
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 06:53:07 +0200
+	id 1TRFcy-0001j9-EU
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 07:05:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342Ab2JYEwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 00:52:55 -0400
-Received: from mail-gh0-f202.google.com ([209.85.160.202]:44162 "EHLO
-	mail-gh0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751151Ab2JYEwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 00:52:54 -0400
-Received: by mail-gh0-f202.google.com with SMTP id z15so154972ghb.1
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 21:52:53 -0700 (PDT)
+	id S1753027Ab2JYFEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 01:04:53 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:38466 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752873Ab2JYFEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 01:04:52 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1724794pbb.19
+        for <git@vger.kernel.org>; Wed, 24 Oct 2012 22:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:subject:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=PjqNhKz3S/aNOX7jDFRrd6ZiOFZofTaA7u1UWP+hlAY=;
-        b=ZZmGvMCwv29hxGBvU5jyqz4OQhr/41x8/6Lyy4Z1IroueXBLRMZTB6+JHtco2vYOuA
-         6RuMskrl0KQRj2Of4YOnB8CiXcYH29RfS5/rE8cbUKKSmNyARA78PwmFkiihsYNuGHf3
-         AmPhzYK4Yr0zkxTMi9ilvHgwvYgzBpHEUdK6e1nt6/S38AF/OqZ2DXKCEj6QLCcs4jrI
-         hMZYzMSq8zY7iiLJqU0p1oM/mET1X2yPd+Gj4UhbyQF/eb+K9OdGYKvcMnYZYCTC3KuE
-         5WWb7H45rykxLp51p7OY0MqQo5KCikt+/ZIlRsEeIv90vREc65q8cke5g0NJA5jcJwwJ
-         +Gsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:subject:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding:x-gm-message-state;
-        bh=PjqNhKz3S/aNOX7jDFRrd6ZiOFZofTaA7u1UWP+hlAY=;
-        b=QEJBMyQY+Koj4KYCnLcUMES9sFd02Ea67ev36XpR6pkMg4MzeSVjUjc6moBep+8oZZ
-         wUTY+1BhXMbp5r3bEowuqw9F/1069F6DfJveHgMOaui6Stfjt3ZRLgEQv9xJPjBJ4WEC
-         QcS64yVTl6tgPL+v7sbpwNU4TuWgRgwHp3I+/RQqiRFkNNuT8yawkmTle+6xYABHYJ/p
-         PBuNQ4Cj3BPJmiHuDFpkYLpSThI3BiNbcA6qET7aA7JyXIEtUYZ3n8Qo5dmUW/65zh95
-         /XgQZCoI15CiNjQ1eVU77sBwEu8PB8Rey3lgQf+H9VdVd2djhUya/P5F4Dxl9E9OAh32
-         oAPg==
-Received: by 10.101.128.38 with SMTP id f38mr2959937ann.22.1351140773660;
-        Wed, 24 Oct 2012 21:52:53 -0700 (PDT)
-Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id i27si1489239yhe.4.2012.10.24.21.52.53
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Wed, 24 Oct 2012 21:52:53 -0700 (PDT)
-Received: from wince.sfo.corp.google.com (wince.sfo.corp.google.com [172.31.53.43])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 751F3100047
-	for <git@vger.kernel.org>; Wed, 24 Oct 2012 21:52:53 -0700 (PDT)
-Received: by wince.sfo.corp.google.com (Postfix, from userid 138314)
-	id D69B9404DC; Wed, 24 Oct 2012 21:52:52 -0700 (PDT)
-User-Agent: Heirloom mailx 12.5 6/20/10
-X-Gm-Message-State: ALoCoQl7LqmM1rUI5dVaw29MR53PAJQ+SGn7i6M5Y1RykvoXhGMbhA/r3WBek/g04HEoWbWklkSMEocZLmlYYEEJiRO42l8YRnlrT7a9R78vGr86QqUIhTKEDYj3urGshoF/18EAA6QvxMe421Ui9fbfH28oAI/bAsZRvOJgHUzqYcZzIVRzWla3CNnd2ZNjYforwCRCjovKdXubSDBL7FWxPLr/5HLQjQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qy8ONRLPYVwQXon7ydp7H09NvPzv9KB0A9jkG2kaT/Q=;
+        b=LjjRfhB9dG9m2AeSHHk5jGbbR9JneXwKfizy6qMzL2bixoddgi9OWpJVQFJiMSCSkB
+         8fSKJvUBRTnqKuaQ9HtNmVCNeUwmHPY1j1AMeLGIr9whg0EpngqLSTWwxkVPU6AavY/l
+         z9gbhg0l4M0pYooilGVCQwB3pswY/WHWk0XYGWuscJgssZl6osX69BSDTmarASb592Jy
+         0N8KnTtzV03Q+JYyN13QZhgiGRkIazy2F+Czri+2mflLSuIGqmuZ1jB3aifGWTw+C/yN
+         Ra1KHNN7Sb+QR7LhHL/jA7AMz0MSgHprnFmC9tqpquJ3luuLa+eMufVVfOXnPQaHxcGR
+         qWug==
+Received: by 10.68.235.106 with SMTP id ul10mr57078616pbc.83.1351141492152;
+ Wed, 24 Oct 2012 22:04:52 -0700 (PDT)
+Received: by 10.66.219.166 with HTTP; Wed, 24 Oct 2012 22:04:32 -0700 (PDT)
+In-Reply-To: <CAJo=hJuGksy7pzzy7-7eTUxNmtT9qR2xCPxSfYO58_8SohFjxQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208340>
 
-Signed-off-by: Stefan Zager <szager@google.com>
----
- git-submodule.sh |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+Yes, I believe it's gerrit problem and will discuss there.
+During first minutes of restarting gerrit, the pushing becomes quite
+faster 13s instead.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index ab6b110..dcceb43 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -270,7 +270,6 @@ cmd_add()
- 			;;
- 		--reference=*)
- 			reference="$1"
--			shift
- 			;;
- 		--)
- 			shift
+2012/10/24 Shawn Pearce <spearce@spearce.org>:
+> On Mon, Oct 22, 2012 at 11:27 PM, Joey Jiao <joey.jiaojg@gmail.com> wrote:
+>> It looks like the client is waiting the pushing result status from
+>> server although by checking server side, the real object has already
+>> been upload succeed.
+>>
+>> Below is the log after adding time info.
+>> $ time git push -v ssh://git.qrd.qualcomm.com:29418/kernel/msm.git
+>> HEAD:refs/changes/33599 2>&1|tee -a log.txt
+> ...
+>> remote: Resolving deltas:   0% (0/2)
+>> remote: (W) afafdad: no files changed, message updated
+> ...
+>> real    9m56.928s
+>> user    0m0.364s
+>> sys     0m0.160s
+>
+> What version of Gerrit are you using?
+> How many changes already exist in this project?
+>
+> I am fairly certain this is an issue with Gerrit. Which may be better
+> discussed at http://groups.google.com/group/repo-discuss
+
+
+
 -- 
-1.7.7.3
+-Joey Jiao
