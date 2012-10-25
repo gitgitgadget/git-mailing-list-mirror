@@ -1,109 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Where should git-prompt.sh be installed?
-Date: Wed, 24 Oct 2012 17:51:06 -0700
-Message-ID: <20121025005106.GA9112@elie.Belkin>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
- <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
+Date: Wed, 24 Oct 2012 20:53:07 -0400
+Message-ID: <20121025005307.GE801@odin.tremily.us>
+References: <20121023204437.GE28592@odin.tremily.us>
+ <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
+ <50883E54.4080507@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Anders Kaseorg <andersk@MIT.EDU>,
-	Danny Yates <mail4danny@googlemail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ted Pavlic <ted@tedpavlic.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Dan McGee <dan@archlinux.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 25 02:51:30 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=Q8BnQc91gJZX4vDc
+Cc: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Oct 25 02:53:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRBfT-0000LE-KE
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 02:51:27 +0200
+	id 1TRBhi-0001n8-9l
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 02:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757164Ab2JYAvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2012 20:51:15 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:51008 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243Ab2JYAvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2012 20:51:14 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so746677pad.19
-        for <git@vger.kernel.org>; Wed, 24 Oct 2012 17:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/uZCqYVpQh2zg5UGCzWc5q5NZQYC9KErNwKopnH8+Yo=;
-        b=QK+uGqnPA/9OXXi3JbvhyuZ7Fcb+Ek2O0qbxBYaNDZN2WE9TFL41hUTJp3XxUvK0dd
-         D2gNabDatq46O0/xT/ELnWZ9yoPBbelpwUYVecVw+tQ97NGJYSJW/cHknGQ3loZtg5wJ
-         wFBCtxUb6HOu3KdbrN3U2cirCcj+71QD8zhz77fwVPRZH0nkG8cwIkGbV0UjEh44lkDH
-         suLfYhKfhtRrbVVnUiXUu0Z+az7UZ3QgcgbRKywYMOKQcnHc3qkSfLwcPC4sh9ArlGEZ
-         FG6qpSTK3J9QMzIt77e0tri2L6P8FpTsY2FQqNIk+Cau+BKOKRf1SmLdqaNPpYUr7EBw
-         sTuw==
-Received: by 10.66.86.42 with SMTP id m10mr49006580paz.3.1351126274279;
-        Wed, 24 Oct 2012 17:51:14 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id f2sm10298133paz.25.2012.10.24.17.51.12
-        (version=SSLv3 cipher=OTHER);
-        Wed, 24 Oct 2012 17:51:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1759045Ab2JYAxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2012 20:53:34 -0400
+Received: from vms173013pub.verizon.net ([206.46.173.13]:32545 "EHLO
+	vms173013pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759009Ab2JYAxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2012 20:53:33 -0400
+Received: from odin.tremily.us ([unknown] [72.68.84.95])
+ by vms173013.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MCF0028GBSJP030@vms173013.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 24 Oct 2012 19:53:08 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 871E067F346; Wed,
+ 24 Oct 2012 20:53:07 -0400 (EDT)
+Content-disposition: inline
+In-reply-to: <50883E54.4080507@web.de>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208330>
 
-Hi,
 
-In olden days the admin would copy contrib/completion/git-completion.sh
-to
+--Q8BnQc91gJZX4vDc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-        /etc/bash_completion.d/git
+On Wed, Oct 24, 2012 at 09:15:32PM +0200, Jens Lehmann wrote:
+> I still fail to see what adding that functionality to the submodule
+> command buys us (unless we also add code which really uses the branch
+> setting). What's wrong with doing a simple:
+>=20
+>    git config -f .gitmodules submodule.<path>.branch <record_branch>
+>=20
+> on the command line when you want to use the branch setting for your
+> own purposes? You could easily wrap that into a helper script, no?
 
-and mortals could source /etc/bash_completion or
-/etc/bash_completion.d/git in their ~/.bashrc (possibly shared among
-multiple machines) so that the bash completion and __git_ps1 helpers
-could work.
+Sure.  But why maintain my own helper script if I can edit
+git-submodules.sh?  It seems like a number of people are using this
+config option, and they generally store the same name in it that they
+use to create the submodule.  This way I can save them time too.
 
-With Git 1.7.12 __git_ps1 has been split into a separate file, to help
-users who only want __git_ps1 to avoid the overhead of loading the
-entire completion script (and allow the completion script to be loaded
-by bash-completion magic on the fly!).  Now the sysadmin should copy
-contrib/completion/git-completion.sh to
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
-	/usr/share/bash-completion/completions/git
+--Q8BnQc91gJZX4vDc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-and contrib/completion/git-prompt.sh to
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-	/usr/share/git-core/contrib/?? (somewhere?)
+iQIcBAEBAgAGBQJQiI1yAAoJEEUbTsx0l5OMOEIQAJRcR3CLrjexKHf2HP1INanQ
+s0H+69G2ISPVN0VO/ga632CT2e+hlUHiu0rjsck22CKy1vPZqX6b1GxZ+cKw5ZG4
+ZuE+gA168ki4n/GUNvfqGhsr8BzsrMTlDgX4hZAxQivFX3hjAzcXJwqg+yB0dcSW
+hGSQnHmj3pxjWjcN1G37/qE46p8XOawOrlwC0zkPe/Ui2asEuolk16hV/oLNl8aw
+ytjonD+BnX2YY0QK94XhkXiS6mkR+wBupFxOuw2AcFdHlIwxeS+NEQZGLItB8mP6
+r8K/312VlxlEB4FPrATTXfxqlISVEDzL16+/+QybSF4UmAE/zAkeKVYDHkXd4TUa
+TSDioYe9zoXMR+F9BHPrdgSa5htwTgRVmvZPOsUKjetDsa0AR0wynLORm1CvqjEb
+ZdySi34sSn7RUTNGs7k0oz544CCcBW6ISP//sHABTWst/v3cKskMs4Wj22luwUX4
+51whfjl9aEGMgX+2PV/mDw3IhT5hI4YxJiiJdHxQkS9CFJXPVpCUfC/3Hm9NYmYr
+PK53X+K+pJjsFHtJWGoLOeLDijDvD/ayHdIv2ReC1JhmSc+1RMyfrpaLf/5/niZT
+P2SR6IfaPaJdqdQ4WjA6XW0g6etba+zBdjWXDuuV1KRSLCskJAQVmWpb//qihe7E
+aqjJv6wzaC1hibqIPwGz
+=8ge/
+-----END PGP SIGNATURE-----
 
-Mortals source /etc/bash_completion in their ~/.bashrc (possibly
-shared among multiple machines) and expect bash completion to work.
-For __git_ps1, users should source that ?? path.
-
-Questions:
-
- 1) what path is appropriate for ?? above?
- 2) is this documented anywhere?
-
-Possible answers:
-
- 1) Fedora uses /etc/profile.d/git-prompt.sh.  Gentoo uses
-    /usr/share/bash-completion/git-prompt.  Maybe others use
-    some other path.
-
- 2) The scripts themselves suggest copying to ~/.git-completion.sh
-    and ~/.git-prompt.sh.
-
-Proposal:
-
-  1) /usr/lib/git-core/git-sh-prompt
-  2) git-sh-prompt(1)
-
-Sensible?
-
-Thanks,
-Jonathan
+--Q8BnQc91gJZX4vDc--
