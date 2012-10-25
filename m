@@ -1,101 +1,84 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: Unexpected behaviour after removing submodule
-Date: Thu, 25 Oct 2012 17:06:40 +0200
-Message-ID: <50895580.9080408@morey-chaisemartin.com>
-Reply-To: devel-git@morey-chaisemartin.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 25 17:14:19 2012
+From: Ben Walton <bdwalton@gmail.com>
+Subject: [PATCH] Use character class for sed expression instead of \s
+Date: Thu, 25 Oct 2012 16:58:19 +0100
+Message-ID: <1351180699-24695-1-git-send-email-bdwalton@gmail.com>
+References: <508935CB.9020408@web.de>
+Cc: Ben Walton <bdwalton@gmail.com>
+To: tboegi@web.de, peff@peff.net, bosch@adacore.com,
+	brian@gernhardtsoftware.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 25 17:58:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRP8N-0006pA-BW
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 17:14:11 +0200
+	id 1TRPpW-0005Ul-Nz
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Oct 2012 17:58:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934120Ab2JYPN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 11:13:56 -0400
-Received: from 9.mo4.mail-out.ovh.net ([46.105.40.176]:35537 "EHLO
-	mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1946074Ab2JYPNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 11:13:53 -0400
-X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Oct 2012 11:13:53 EDT
-Received: from mail247.ha.ovh.net (b7.ovh.net [213.186.33.57])
-	by mo4.mail-out.ovh.net (Postfix) with SMTP id A76F910501ED
-	for <git@vger.kernel.org>; Thu, 25 Oct 2012 17:13:38 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 25 Oct 2012 17:06:42 +0200
-Received: from unknown (HELO sat.lin.mbt.kalray.eu) (devel-git@morey-chaisemartin.com@5.23.40.158)
-  by ns0.ovh.net with SMTP; 25 Oct 2012 17:06:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-X-Ovh-Mailout: 178.32.228.4 (mo4.mail-out.ovh.net)
-X-Ovh-Tracer-Id: 6161205766418915294
-X-Ovh-Remote: 5.23.40.158 ()
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeehfedrtdelucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecunecuhfhrohhmpefpihgtohhlrghsucfoohhrvgihqdevhhgrihhsvghmrghrthhinhcuoeguvghvvghlqdhgihhtsehmohhrvgihqdgthhgrihhsvghmrghrthhinhdrtghomheqnecujfgurhepkfffhfhrfgggvffutgfgsehtjegrtddtfedu
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeehfedrtdelucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecunecuhfhrohhmpefpihgtohhlrghsucfoohhrvgihqdevhhgrihhsvghmrghrthhinhcuoeguvghvvghlqdhgihhtsehmohhrvgihqdgthhgrihhsvghmrghrthhinhdrtghomheqnecujfgurhepkfffhfhrfgggvffutgfgsehtjegrtddtfedu
+	id S933622Ab2JYP6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 11:58:34 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:34413 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932678Ab2JYP6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 11:58:33 -0400
+Received: by mail-wg0-f44.google.com with SMTP id dr13so1441618wgb.1
+        for <git@vger.kernel.org>; Thu, 25 Oct 2012 08:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=+pKQwXmm0bTt8KcYeBOA0d6tLRfVAM8GRBZGg3lloCI=;
+        b=DiRWpPTZHDhMSm6b5iy0n26Mut3FmUG/HVOkcgn5wNrSQj5mw0cTeb3FX3gCcnzH7P
+         DAUc7grTc72jw60NZ2u4Gi17gxyP/zRf6pVSajTGoUCtnEwJ2alDGa1A0o9or3QfoVYj
+         pqrs03TyREpHw9IJxms/H3iSokCCg7Qkx9e8ILx5Atbn8AHyOFGywCwsx1OAWd38htre
+         01+Z+GBw25cKgl9FAaD5EDVxhZRB6xORRvsr2XpHhbD1lgqGWCPTa28u4oxVBWB51Rac
+         uOOEoNK/vQyaR26O0MZaFafw7hSwHgahQgWnQX68hiTdN3HzstyCjL/+rulXsf32vXvB
+         Phqg==
+Received: by 10.216.131.132 with SMTP id m4mr12781229wei.23.1351180712548;
+        Thu, 25 Oct 2012 08:58:32 -0700 (PDT)
+Received: from gilmour.chass.utoronto.ca ([89.100.144.153])
+        by mx.google.com with ESMTPS id fp6sm10527322wib.0.2012.10.25.08.58.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 25 Oct 2012 08:58:31 -0700 (PDT)
+Received: from bwalton by gilmour.chass.utoronto.ca with local (Exim 4.76)
+	(envelope-from <bdwalton@gmail.com>)
+	id 1TRPpC-0006Qs-Tf; Thu, 25 Oct 2012 16:58:26 +0100
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <508935CB.9020408@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208403>
 
-Hi,
+Sed on Mac OS X doesn't handle \s in a sed expressions so use a more
+portable character set expression instead.
 
-At work, we use a lot of submodules (several levels of submodules actually).
-As we also work with development branches, we use scripts to resync the whole checked-out tree (mainly in automated integration)
+Signed-off-by: Ben Walton <bdwalton@gmail.com>
+---
 
-We recently run across an issue where a branch (dev) contained a submodule while it had been removed in master and the files were imported in a subdirectory with the same name (probably using git-subtree).
+Hi Torsten,
 
-Basically:
+I think this would be a nicer fix for the issue although your solution
+should work as well.
 
-On dev:
-* top/refs(submodule)/file1
-On master:
-* top/refs(dir)/file1
+Thanks
+-Ben
 
-Outside the fact that it is quite hard to move from one branch to the other while having a perfectly clean tree checked out underneath, we manage to end up into a weird (invalid) state
-that was neither clearly described nor "easy" to cleanup (using standard git clean/checkout/reset commands).
+ t/t9401-git-cvsserver-crlf.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-While I cannot explain how we got in this state, here is a small test-case that produce the same results:
-------
-mkdir folder1
-cd folder1
-git init
-echo "Ooops" > file
-git add file
-git commit -m "Add file"
-cd ..
-mkdir folder2
-cd folder2
-git init
-mkdir folder1
-echo "Ooops" > folder1/file
-git add folder1/file
-git commit -m "Add file again"
-git checkout -b branch
-cp -R ../folder1/.git ./folder1
-------
-The 'cp' just seems pointless but with the submodule described as above we manage to end up in a similar state.
-In this state, when being in folder2, git status reports nothing. Dev branch is checked out and everything looks great.
-
-However if you change dir to folder2/folder1, while still being inside folder2, git thinks (because of the .git dir) that you are actually on master branch of folder1 repository.
-Which mean that if you happen to commit from a subdirectory, you may easily end-up committing in another repository than the one expected.
-
-The issue is, there is no way from folder2 to see that something "wrong" is going on inside your tree!
-As we manage to reach this state using only standard git commands (I'll try to reproduce it) with submodules, and this being part of an automated flow, it is quite worrying.
-We may actually be committing in the wrong repo and pushing the wrong things around.
-
-Is there or should there be a way to look for such issues? And is this an expected behaviour?
-
-Thanks in advance
-
-Nicolas
+diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
+index cdb8360..1c5bc84 100755
+--- a/t/t9401-git-cvsserver-crlf.sh
++++ b/t/t9401-git-cvsserver-crlf.sh
+@@ -46,7 +46,7 @@ check_status_options() {
+ 	echo "Error from cvs status: $1 $2" >> "${WORKDIR}/marked.log"
+ 	return 1;
+     fi
+-    got="$(sed -n -e 's/^\s*Sticky Options:\s*//p' "${WORKDIR}/status.out")"
++    got="$(sed -n -e 's/^[ 	]*Sticky Options:[ 	]*//p' "${WORKDIR}/status.out")"
+     expect="$3"
+     if [ x"$expect" = x"" ] ; then
+ 	expect="(none)"
+-- 
+1.7.9.5
