@@ -1,134 +1,90 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 1/2] Teach --recursive to submodule sync
-Date: Fri, 26 Oct 2012 00:23:29 +0200
-Message-ID: <5089BBE1.3040107@web.de>
-References: <507EF86C.4050807@web.de> <1351034141-2641-1-git-send-email-hordp@cisco.com> <1351034141-2641-2-git-send-email-hordp@cisco.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] Doc User-Manual: Patch cover letter, three dashes, and --notes
+Date: Thu, 25 Oct 2012 23:45:57 +0100
+Organization: OPDS
+Message-ID: <F4D36C50EB6945CD8EB6E5AF73238148@PhilipOakley>
+References: <1350855250-2844-1-git-send-email-philipoakley@iee.org> <1350855250-2844-2-git-send-email-philipoakley@iee.org> <20121025102638.GP8390@sigill.intra.peff.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, phil.hord@gmail.com, Jeff King <peff@peff.net>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 00:23:49 2012
+Cc: "GitList" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Eric Blake" <eblake@redhat.com>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 26 00:46:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRVq4-00020J-D3
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:23:44 +0200
+	id 1TRWBb-0006oW-6k
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 00:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751020Ab2JYWXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 18:23:32 -0400
-Received: from mout.web.de ([212.227.17.11]:56270 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750737Ab2JYWXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 18:23:31 -0400
-Received: from [192.168.178.41] ([91.3.191.79]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0Lcgp5-1T2Jkr0Ctb-00jbIz; Fri, 26 Oct 2012 00:23:30 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <1351034141-2641-2-git-send-email-hordp@cisco.com>
-X-Provags-ID: V02:K0:ujiwmVzTT4XUeIQgR29lX2r9+d5Q0/O5hJj7xAEzEvu
- Va/ElZdpxx+IPK4n9IhOlMjCBKwUkhXtG3lbjAYMzRNqA593++
- hgvhd8whr1u0JuQpWlBed0YZSAbXtaHHy05F2CcMiqykNttCc0
- zV4bHPhHYicuGxp+ZxK33yRg0aL3F4xgr2IAYoJofVN1OaeUgo
- CWDtM3MfydVj/aik2AU9w==
+	id S1750855Ab2JYWpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2012 18:45:47 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:53921 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750803Ab2JYWpq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2012 18:45:46 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArINAGXAiVBcHl58/2dsb2JhbABEhhaFP7VVBAEBAoEGgQmCGQUBAQQBCAEBGRUeAQEhCwIDBQIBAw4HAQICAgUhAgIUAQQaBgcXBhMIAgECAwGHbQqrIZJvgSCKQW8eQDqDUzJhA41xmEKCcA
+X-IronPort-AV: E=Sophos;i="4.80,650,1344207600"; 
+   d="scan'208";a="407908320"
+Received: from host-92-30-94-124.as13285.net (HELO PhilipOakley) ([92.30.94.124])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 25 Oct 2012 23:45:44 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208423>
 
-Am 24.10.2012 01:15, schrieb Phil Hord:
-> The submodule sync command was somehow left out when
-> --recursive was added to the other submodule commands.
-> 
-> Teach sync to handle the --recursive switch by recursing
-> when we're in a submodule we are sync'ing.
-> 
-> Change the report during sync to show submodule-path
-> instead of submodule-name to be consistent with the other
-> submodule commands and to help recursed paths make sense.
-> 
-> Signed-off-by: Phil Hord <hordp@cisco.com>
+From: "Jeff King" <peff@peff.net> Sent: Thursday, October 25, 2012 11:26 
+AM
+> On Sun, Oct 21, 2012 at 10:34:08PM +0100, Philip Oakley wrote:
+>
+>> diff --git a/Documentation/user-manual.txt 
+>> b/Documentation/user-manual.txt
+>> index 85651b5..d918c53 100644
+>> --- a/Documentation/user-manual.txt
+>> +++ b/Documentation/user-manual.txt
+>> @@ -1787,6 +1787,11 @@ $ git format-patch origin
+>>  will produce a numbered series of files in the current directory, 
+>> one
+>>  for each patch in the current branch but not in origin/HEAD.
+>>
+>> +`git format-patch` can include an initial "cover letter". You can 
+>> insert
+>> +a commentary on individual patches using a three dash line after the
+>> +commit message, and before the patch itself. `git 
+>> format-patch --notes`
+>> +(v1.8.1) will include the commit's notes in the similar manner.
+>
+> I'd rather not mention a version number here, as we do not yet know
+> which version (if any) will contain the feature. Besides, we write our
+> documentation to match the current version, so as long as this is 
+> queued
+> on top of the new code, I do not see any reason to mention a version 
+> at
+> all.
 
-This makes perfect sense to me. Two things though:
+I'd included it because of the manual's title caveat "(for version 1.5.3 
+or newer)", which I'd somehow thought was the matching date for the 
+majority of text, hence my inclusion of the version. Begs the question 
+what happened back then ;-)
 
-First it would be nice to initialize orig_flags like all the other
-call sites do:
+>
+> I'll tweak it while queueing.
 
-@@ -1003,6 +1003,7 @@ cmd_status()
- #
- cmd_sync()
- {
-+	orig_flags=
- 	while test $# -ne 0
- 	do
- 		case "$1" in
+Thank you.
 
-> ---
->  git-submodule.sh | 18 +++++++++++++++---
->  1 file changed, 15 insertions(+), 3 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ab6b110..6dd2338 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -11,7 +11,7 @@ USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <r
->     or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
->     or: $dashless [--quiet] foreach [--recursive] <command>
-> -   or: $dashless [--quiet] sync [--] [<path>...]"
-> +   or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
->  OPTIONS_SPEC=
->  . git-sh-setup
->  . git-sh-i18n
-> @@ -1008,7 +1008,9 @@ cmd_sync()
->  		case "$1" in
->  		-q|--quiet)
->  			GIT_QUIET=1
-> -			shift
-> +			;;
-> +		--recursive)
-> +			recursive=1
->  			;;
->  		--)
->  			shift
-> @@ -1021,6 +1023,8 @@ cmd_sync()
->  			break
->  			;;
->  		esac
-> +		orig_flags="$orig_flags $(git rev-parse --sq-quote "$1")"
-> +		shift
->  	done
->  	cd_to_toplevel
->  	module_list "$@" |
-> @@ -1051,7 +1055,7 @@ cmd_sync()
->  
->  		if git config "submodule.$name.url" >/dev/null 2>/dev/null
->  		then
-> -			say "$(eval_gettext "Synchronizing submodule url for '\$name'")"
-> +			say "$(eval_gettext "Synchronizing submodule url for '\$prefix\$sm_path'")"
->  			git config submodule."$name".url "$super_config_url"
->  
->  			if test -e "$sm_path"/.git
-> @@ -1061,6 +1065,14 @@ cmd_sync()
->  				cd "$sm_path"
->  				remote=$(get_default_remote)
->  				git config remote."$remote".url "$sub_origin_url"
-> +
-> +				if test -n "$recursive"
-> +				then
-> +				(
-> +					prefix="$prefix$sm_path/"
-> +					eval cmd_sync "$orig_args"
-
-This should read 'eval cmd_sync "$orig_flags"'. I think you copied that
-from cmd_status(), where this is also incorrect, I just sent a patch to
-correct that one.
-
-> +				)
-> +			fi
->  			)
->  			fi
->  		fi
-> 
+>
+> -Peff
+> --
