@@ -1,80 +1,118 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: git push tags
-Date: Fri, 26 Oct 2012 17:23:01 +0200
-Message-ID: <CAB9Jk9DV=V5rSg2Wz4+GhM28fG8xwpFdP+LvXDXMUxKvR=GG4Q@mail.gmail.com>
-References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
-	<CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
-	<CAM9Z-nkosbe1NXYnu7x6v4seLqCnMBWg-jrdH2eJ9RetaZBTyQ@mail.gmail.com>
-	<CAB9Jk9ApdbN+4Yk-6+u4Nje9+tbESSGGVj95iof1jnfG4Ga7GA@mail.gmail.com>
-	<CAM9Z-n=+YeF3BaF-5UB5f2GBHYw7WDZEFDVT72RGSsDBaH4PJA@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] replace: parse revision argument for -d
+Date: Fri, 26 Oct 2012 17:25:50 +0200
+Message-ID: <CAP8UFD3MNwpwzD-eNEHDLRSkLskXfW-tF061U=Nxc-OrTf4znw@mail.gmail.com>
+References: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 17:23:18 2012
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Oct 26 17:26:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRlkk-0004Y7-9E
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 17:23:18 +0200
+	id 1TRlnQ-0006LT-9T
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 17:26:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933806Ab2JZPXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 11:23:03 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:34554 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933738Ab2JZPXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 11:23:02 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so1350173dak.19
-        for <git@vger.kernel.org>; Fri, 26 Oct 2012 08:23:02 -0700 (PDT)
+	id S933811Ab2JZPZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 11:25:52 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:34982 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933738Ab2JZPZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 11:25:51 -0400
+Received: by mail-wg0-f44.google.com with SMTP id dr13so2190455wgb.1
+        for <git@vger.kernel.org>; Fri, 26 Oct 2012 08:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=Saolsy3GtjyE+BetPXnZtXPSS7MFCdUAlNqqbPRc6+s=;
-        b=XK0i+8VNewjix3nxAfR4WUDu7sGI/KokqfvTkK0fbxidPXjfEopG9fWMNUDbd4e40P
-         C9IgZA2zxojMLQUOI5pqreHqrh0PAJbYvdf5ZBgwnmVM/Pp8xdrgAVIyfC+cI3E8QQf8
-         TzJuBparrj7wyY4U9Jop0rQjbx5XjAtnZDR27LyngNbZk2egyvIw799Ucd9w2/YHWDqA
-         jwFAXdTs41m94d3UlnZW83A+59gBqhhITS13E7fON3A0YyojRaNsmj6R5+zG5XD2/n9S
-         TX8JvplRvc+ZpiwYZPNCK3ZwjfDWJ3PkoqyAhCJUPvgX+Ah3O4ytplF9CnU6SsdLgz3E
-         flpQ==
-Received: by 10.66.86.228 with SMTP id s4mr52275724paz.15.1351264982163; Fri,
- 26 Oct 2012 08:23:02 -0700 (PDT)
-Received: by 10.67.3.101 with HTTP; Fri, 26 Oct 2012 08:23:01 -0700 (PDT)
-In-Reply-To: <CAM9Z-n=+YeF3BaF-5UB5f2GBHYw7WDZEFDVT72RGSsDBaH4PJA@mail.gmail.com>
+        bh=ty+oaNAAU84eDJUzjnlEVjN1oALku04B3q6Ps+/M8W4=;
+        b=tPCY0XoELWboWYznCbW4600XzCFbLthjizGttUI+lMCxHLNH2jxoYy9Mk9QgelYgPz
+         /ZW9CGoICu+Q4zXx4i37LxKsIe+7ZpzCqyvZXAuhe8nKOfBdEJqcjd9bnAEG66Omdjqn
+         QcPx7s5ppnL+KUfwvyZeQiuqq5QKAu50AiZvjGY8vI5/sGdoCls+9F+BurZzSx4PyMiL
+         F1leBr9CuH2DKG8aIy5ihQqvqZxNvnKzJoGFpwMNgvNsRrtz8/rg0o2TNdDIHDjMkpn3
+         8xU5rIxCawE6fCkZrYJuBE5fsX7ENzIwIdqDfmiSS+vR041v2IYR6Be6MA82wBP6Otlu
+         lmGQ==
+Received: by 10.216.144.69 with SMTP id m47mr13864294wej.183.1351265150098;
+ Fri, 26 Oct 2012 08:25:50 -0700 (PDT)
+Received: by 10.194.138.42 with HTTP; Fri, 26 Oct 2012 08:25:50 -0700 (PDT)
+In-Reply-To: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208454>
 
-Hi Drew,
+Hi,
 
-git is an open source, community project, which means that it benefits
-from all the contributions of many people, and they are not restricted
-to patches.
-If the only one suggestions that were taken into account were patches
-sent by people that had the time to study the sources and propose
-changes, then we would miss the opportunity of taking many good things
-that the community generates, like new ideas for example.
+On Fri, Oct 26, 2012 at 3:33 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> 'git replace' parses the revision arguments when it creates replacements
+> (so that a sha1 can be abbreviated, e.g.) but not when deleting
+> replacements.
+>
+> This sucks.
+>
+> Make it parse the argument to 'replace -d' in the same way.
 
-By the way, I already browsed the code, but have seen that there is
-not only push.c to understand, but a dozen or more of other sources.
-This is why I am not yet able to propose patches.
-But I am using git all day, and often come to unexpected or
-undocumented behaviors, and want to share my findings in case they
-could serve to improve git. This means to me to spend time in
-formulating them the best I can to make others understand what I have
-found, and that is a contribution too.
+Nit: there could be more than one argument to 'replace -d', so perhaps
+"each argument" is better.
 
-Here is a proposed change to the git-push manpage:
+> Just in case someone lost the replacement object before deleting the
+> replacement, take the argument literally if it can not be resolved to a
 
-- section: "DESCRIPTION", first paragraph ("Updates remote .."), add at the end:
+Here too.
 
-   "Remote references (branches and tags) that do not exist are
-created. The ones that exist are updated except when + is not
-specified and they are not fast-forward updates."
+> full sha1.
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  builtin/replace.c | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/replace.c b/builtin/replace.c
+> index e3aaf70..80e2039 100644
+> --- a/builtin/replace.c
+> +++ b/builtin/replace.c
+> @@ -46,24 +46,29 @@ typedef int (*each_replace_name_fn)(const char *name, const char *ref,
+>
+>  static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
+>  {
+> -       const char **p;
+> +       const char **p, *q;
+>         char ref[PATH_MAX];
+>         int had_error = 0;
+>         unsigned char sha1[20];
+>
+>         for (p = argv; *p; p++) {
+> -               if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
+> +               q = *p;
+> +               if (get_sha1(q, sha1))
+> +                       warning("Failed to resolve '%s' as a valid ref; taking it literally.", q);
+> +               else
+> +                       q = sha1_to_hex(sha1);
+> +               if (snprintf(ref, sizeof(ref), "refs/replace/%s", q)
+>                                         >= sizeof(ref)) {
+> -                       error("replace ref name too long: %.*s...", 50, *p);
+> +                       error("replace ref name too long: %.*s...", 50, q);
+>                         had_error = 1;
+>                         continue;
+>                 }
+>                 if (read_ref(ref, sha1)) {
+> -                       error("replace ref '%s' not found.", *p);
+> +                       error("replace ref '%s' not found.", q);
+>                         had_error = 1;
+>                         continue;
+>                 }
+> -               if (fn(*p, ref, sha1))
+> +               if (fn(q, ref, sha1))
+>                         had_error = 1;
+>         }
+>         return had_error;
 
--Angelo
+Looks good to me.
+
+Thanks,
+Christian.
