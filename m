@@ -1,118 +1,72 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] replace: parse revision argument for -d
-Date: Fri, 26 Oct 2012 17:25:50 +0200
-Message-ID: <CAP8UFD3MNwpwzD-eNEHDLRSkLskXfW-tF061U=Nxc-OrTf4znw@mail.gmail.com>
-References: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Fix git p4 sync errors
+Date: Fri, 26 Oct 2012 17:44:13 +0200
+Message-ID: <CAP8UFD0+FPDERfkTeJWuq=T6RQ65yjHwbhTP_SYv6aA+1xq32Q@mail.gmail.com>
+References: <AC43C2B4-623F-4590-9F92-6CCA26645EFE@gmail.com>
+	<7vwqyjfxwd.fsf@alter.siamese.dyndns.org>
+	<F0F92B0A-D37F-40D4-A0DF-43EEDA2818B9@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 26 17:26:05 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>
+To: Matt Arsenault <arsenm2@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 17:44:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRlnQ-0006LT-9T
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 17:26:05 +0200
+	id 1TRm5I-0001ow-00
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 17:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933811Ab2JZPZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 11:25:52 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:34982 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933738Ab2JZPZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 11:25:51 -0400
-Received: by mail-wg0-f44.google.com with SMTP id dr13so2190455wgb.1
-        for <git@vger.kernel.org>; Fri, 26 Oct 2012 08:25:50 -0700 (PDT)
+	id S933896Ab2JZPoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 11:44:18 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:62591 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933879Ab2JZPoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 11:44:15 -0400
+Received: by mail-wi0-f170.google.com with SMTP id hm2so536616wib.1
+        for <git@vger.kernel.org>; Fri, 26 Oct 2012 08:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=ty+oaNAAU84eDJUzjnlEVjN1oALku04B3q6Ps+/M8W4=;
-        b=tPCY0XoELWboWYznCbW4600XzCFbLthjizGttUI+lMCxHLNH2jxoYy9Mk9QgelYgPz
-         /ZW9CGoICu+Q4zXx4i37LxKsIe+7ZpzCqyvZXAuhe8nKOfBdEJqcjd9bnAEG66Omdjqn
-         QcPx7s5ppnL+KUfwvyZeQiuqq5QKAu50AiZvjGY8vI5/sGdoCls+9F+BurZzSx4PyMiL
-         F1leBr9CuH2DKG8aIy5ihQqvqZxNvnKzJoGFpwMNgvNsRrtz8/rg0o2TNdDIHDjMkpn3
-         8xU5rIxCawE6fCkZrYJuBE5fsX7ENzIwIdqDfmiSS+vR041v2IYR6Be6MA82wBP6Otlu
-         lmGQ==
-Received: by 10.216.144.69 with SMTP id m47mr13864294wej.183.1351265150098;
- Fri, 26 Oct 2012 08:25:50 -0700 (PDT)
-Received: by 10.194.138.42 with HTTP; Fri, 26 Oct 2012 08:25:50 -0700 (PDT)
-In-Reply-To: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
+        bh=itDCwRRWeEoJ84BX2bNyoF4rgkYbwmkUaKej6K8f6rA=;
+        b=gSi7PO1b/WbQjXJ9erIaFCHeEi7HxroVyN5NsukpJbHbo1pWFyY52iXtdoIx4IG4TC
+         9UeHawwcgjrLBSiSRRM+tBfxQ4JHf4NvyoL/ETaO2+1AiGElsONZoT0p7VtJF+Y50WEF
+         F/pmzGl9ueETg44oQBCRztSHE7B+i58S67DURp4nnJ2V0kBAgH0RumolKsYxYwxee5PR
+         dXvAF6d/LER8i22SvBi7cTBdC+Kb7OAz0kulyWZ6k0C5jeSxd9kAQXaDBTmRz6XmYUmH
+         nLFzT8PCCosZdHy0hvZfi8lEtVUEKKWT2txFrsXbrWKCczmPmiZuwhSrtFFtZnB2eIej
+         wX1Q==
+Received: by 10.216.217.195 with SMTP id i45mr13729327wep.14.1351266253618;
+ Fri, 26 Oct 2012 08:44:13 -0700 (PDT)
+Received: by 10.194.138.42 with HTTP; Fri, 26 Oct 2012 08:44:13 -0700 (PDT)
+In-Reply-To: <F0F92B0A-D37F-40D4-A0DF-43EEDA2818B9@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208455>
 
 Hi,
 
-On Fri, Oct 26, 2012 at 3:33 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> 'git replace' parses the revision arguments when it creates replacements
-> (so that a sha1 can be abbreviated, e.g.) but not when deleting
-> replacements.
+On Thu, Oct 25, 2012 at 4:41 AM, Matt Arsenault <arsenm2@gmail.com> wrote:
 >
-> This sucks.
+> On Oct 21, 2012, at 12:06 , Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> - Why is it a bug not to pass "-s"?  How does the bug happen?
 >
-> Make it parse the argument to 'replace -d' in the same way.
+> I encountered this one time after using it for months. One day I couldn't git p4 rebase
+> with the key error.  I searched for the error and found some version of git-p4 that fixed
+> a similar error by adding the -s to describe. Adding the -s fixed the error and
+> everything seemed to be working correctly.
 
-Nit: there could be more than one argument to 'replace -d', so perhaps
-"each argument" is better.
+The perforce documentation says the following about this flag:
 
-> Just in case someone lost the replacement object before deleting the
-> replacement, take the argument literally if it can not be resolved to a
+"The -s flag omits the diffs of files that were updated."
 
-Here too.
+So if the diffs are not used, there is no downside to use -s.
+Maybe the patch should just state this.
 
-> full sha1.
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->  builtin/replace.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index e3aaf70..80e2039 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -46,24 +46,29 @@ typedef int (*each_replace_name_fn)(const char *name, const char *ref,
->
->  static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
->  {
-> -       const char **p;
-> +       const char **p, *q;
->         char ref[PATH_MAX];
->         int had_error = 0;
->         unsigned char sha1[20];
->
->         for (p = argv; *p; p++) {
-> -               if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
-> +               q = *p;
-> +               if (get_sha1(q, sha1))
-> +                       warning("Failed to resolve '%s' as a valid ref; taking it literally.", q);
-> +               else
-> +                       q = sha1_to_hex(sha1);
-> +               if (snprintf(ref, sizeof(ref), "refs/replace/%s", q)
->                                         >= sizeof(ref)) {
-> -                       error("replace ref name too long: %.*s...", 50, *p);
-> +                       error("replace ref name too long: %.*s...", 50, q);
->                         had_error = 1;
->                         continue;
->                 }
->                 if (read_ref(ref, sha1)) {
-> -                       error("replace ref '%s' not found.", *p);
-> +                       error("replace ref '%s' not found.", q);
->                         had_error = 1;
->                         continue;
->                 }
-> -               if (fn(*p, ref, sha1))
-> +               if (fn(q, ref, sha1))
->                         had_error = 1;
->         }
->         return had_error;
-
-Looks good to me.
-
-Thanks,
+Best,
 Christian.
