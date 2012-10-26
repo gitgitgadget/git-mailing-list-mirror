@@ -1,56 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Fri, 26 Oct 2012 10:00:56 -0400
-Message-ID: <20121026140056.GL1455@sigill.intra.peff.net>
-References: <20121023204437.GE28592@odin.tremily.us>
- <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
- <20121025221431.GH13647@odin.tremily.us>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: git submodule summary doesn't return an error when passed a wrong commit/rev
+Date: Fri, 26 Oct 2012 16:03:26 +0200
+Message-ID: <CAC9WiBgdgy1bwh0c16jd017q2rqQAq-suDADn2-vGw9eubBs_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Fri Oct 26 16:01:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 26 16:03:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRkTU-00015j-9Y
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 16:01:24 +0200
+	id 1TRkVf-0002dk-Pa
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 16:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933135Ab2JZOBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 10:01:01 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37928 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933042Ab2JZOA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 10:00:59 -0400
-Received: (qmail 23168 invoked by uid 107); 26 Oct 2012 14:01:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Oct 2012 10:01:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Oct 2012 10:00:56 -0400
-Content-Disposition: inline
-In-Reply-To: <20121025221431.GH13647@odin.tremily.us>
+	id S933073Ab2JZOD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 10:03:27 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:60020 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933042Ab2JZOD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 10:03:27 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so2659935oag.19
+        for <git@vger.kernel.org>; Fri, 26 Oct 2012 07:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=fokHEA30ZQbKAtI/znDk9Hquao0bAjSzvznhJ2X4faw=;
+        b=FG+uvnpYRazai11iXuE4MnqqTTtCKr6IQrLPBBqIN/6OQkK/610hYSUqA0oxPn88al
+         0Vve7f9JmHPYx2avDMknfutbiqlTZHD02VNPRRsNtUFbFtmarJg3BgHVaGCv+ZGdheot
+         f3uPCE9aKrDBbVQniLE0jkAGWP8Xuqls6pqAPHmLXOdUVHhQ1jVdJ098GDXoDlF6pQ27
+         DdQsVE+WOpDRDOEerYqUtQEUdpBaniIprJNyBfQTq0Shuwo+fHyLEMsJWfzbh5BbkIGz
+         M1svKqvqhcchdklN/cM/p58OptfMbUUTVrD4O7RIR2YuGafjXjhbto2PdRgJGoCt78b1
+         21vA==
+Received: by 10.60.172.48 with SMTP id az16mr19203735oec.64.1351260206042;
+ Fri, 26 Oct 2012 07:03:26 -0700 (PDT)
+Received: by 10.60.93.163 with HTTP; Fri, 26 Oct 2012 07:03:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208449>
 
-On Thu, Oct 25, 2012 at 06:14:31PM -0400, W. Trevor King wrote:
+Hi,
 
-> Should I rebase this so it lands cleanly atop 38ae92e4 in next?
-> 
->   commit 38ae92e4d027063b9b87e51a9bf12809d10066f6
->   Author: W. Trevor King <wking@tremily.us>
->   Date:   Tue Oct 23 17:00:21 2012 -0400
-> 
->     git-submodule: wrap branch option with "<>" in usage strings.
+it seems to me that when passed an unknown rev or a wrong commit/sha1,
+git-submodule-summary should at least exit with an error status. Even better
+would be a error output.
 
-In general, it is not a good idea to base your patches on things in
-next, because it means your topic is held hostage to the one in next,
-which may or may not graduate to master. We can always do a merge later
-(and in this case, it is really just a one-line conflict).
+Test was done with git version 1.7.10.4 from debian wheezy.
 
--Peff
+Thanks
+-- 
+Francis
