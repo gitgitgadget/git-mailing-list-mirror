@@ -1,122 +1,62 @@
-From: David Michael Barr <b@rr-dav.id.au>
-Subject: Re: Subtree in Git
-Date: Sat, 27 Oct 2012 00:58:23 +1100
-Message-ID: <2DDAA35052EA4F88A6EAC4FBDDF7FCCD@rr-dav.id.au>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
- <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
- <87fwbgbs0h.fsf@smith.obbligato.org>
- <7v8vh78dag.fsf@alter.siamese.dyndns.org> <4FA82799.1020400@initfour.nl>
- <nngzk9jvemb.fsf@transit.us.cray.com>
- <nngaa0z3p8b.fsf@transit.us.cray.com>
- <87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl>
- <nng4npe6zsj.fsf@transit.us.cray.com> <50830374.9090308@initfour.nl>
- <7vbofwgwso.fsf@alter.siamese.dyndns.org> <5084102A.2010006@initfour.nl>
- <nnga9vefu1v.fsf@transit.us.cray.com> <508A8BD3.9020901@initfour.nl>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: git push tags
+Date: Fri, 26 Oct 2012 08:59:58 -0500
+Message-ID: <CAEUsAPZC80aSwnS0sBTt9nEu0HgyPp0BD2TWjSBb7tS7=i=VhQ@mail.gmail.com>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+	<CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
+	<CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
+	<CAM9Z-nkosbe1NXYnu7x6v4seLqCnMBWg-jrdH2eJ9RetaZBTyQ@mail.gmail.com>
+	<CAB9Jk9ApdbN+4Yk-6+u4Nje9+tbESSGGVj95iof1jnfG4Ga7GA@mail.gmail.com>
+	<CAM9Z-n=+YeF3BaF-5UB5f2GBHYw7WDZEFDVT72RGSsDBaH4PJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: dag@cray.com, Junio C Hamano <gitster@pobox.com>,
-	greened@obbligato.org, Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Fri Oct 26 15:58:47 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Drew Northup <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 16:00:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRkQu-0007jx-BK
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 15:58:44 +0200
+	id 1TRkSO-0000On-Iy
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 16:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932892Ab2JZN6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 09:58:32 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:49202 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751000Ab2JZN6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 09:58:31 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so1318021dak.19
-        for <git@vger.kernel.org>; Fri, 26 Oct 2012 06:58:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-gm-message-state;
-        bh=48P392e9F1d64PWQ+o/b74dZCXz4pgezboQsoDNOFhU=;
-        b=bf5Uf2s0p5BocgK66OGlrEO1Angtt4ehsUI9Z5/e5qRIYmAhQN18XE9MXfghflpuXb
-         2oWAb948rHRcmPCSA1CxUHh7nbOufcIl7cJoC4pBAXt8Ss5Vxe/nofmmldSFCyL5P8Gm
-         XFdiEekcZBcWLsawqnCC+KSlmrcGfKIFfrFxlU96Z5Kdl11FnahNm7w1f6pwmkeyp6iR
-         mByD36by3fYY19+pGFaqZfogg6cYcoNpNoencOUZHA5mgvqGx09+ASRQoi921zPqnRNv
-         Ss/VNJNkIbW5wl9qZ7oLa8ijiXZ74lX99FbKWhrxHJisa5GOiIEWrCSIlysfoIl8NHxg
-         nAhg==
-Received: by 10.66.76.98 with SMTP id j2mr62086669paw.65.1351259911327;
-        Fri, 26 Oct 2012 06:58:31 -0700 (PDT)
-Received: from [192.168.0.12] (c122-107-58-35.blktn5.nsw.optusnet.com.au. [122.107.58.35])
-        by mx.google.com with ESMTPS id gl9sm1212240pbc.51.2012.10.26.06.58.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 26 Oct 2012 06:58:28 -0700 (PDT)
-In-Reply-To: <508A8BD3.9020901@initfour.nl>
-X-Mailer: sparrow 1.6.4 (build 1176)
-Content-Disposition: inline
-X-Gm-Message-State: ALoCoQl9+vcdhNg/7255PamjVUT85vWbjXYfUJqIfmcarvNDH+Y0SZ+wJji5RKQ+54W67igLu28p
+	id S933023Ab2JZOAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 10:00:01 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:64679 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932529Ab2JZOAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 10:00:00 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so2424662lag.19
+        for <git@vger.kernel.org>; Fri, 26 Oct 2012 06:59:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=UBw2MYqOV5uTb1QbCtwLv0irvkFamqqHccK2AHZLt44=;
+        b=HkwfaqwtYsWVHruwQDBhZjua+XiZI8AF0j9eyS35c3fq5D06BDL3bYsPAnrhT87mVk
+         CzNkkRW/Qt5OQYxKWugRjjcn+cl7aKAwb8K8mwX9MFMH6F5CdK/IN55rLfZbbXlkZPtg
+         +z476y1ZYzBFUSigI5KzPsmbqbLgwR/ffQS8YWFleQasWHedR6eU1OkFw40h6sgYquxP
+         Cev7hnBoPpHjpl8uoqeW2YBDnTgj0W0UOCot3P8ky18MJTDjxeBrVTlnM43IU1UvsRsB
+         rJuhoxZRBGbsqlXw1JOuqJo2Aff4a4BuBa1fvVTFg4oe6yPFeVrZku0vIhPJ9f9Kfdr9
+         mS8w==
+Received: by 10.112.14.107 with SMTP id o11mr8977221lbc.98.1351259998436; Fri,
+ 26 Oct 2012 06:59:58 -0700 (PDT)
+Received: by 10.114.2.45 with HTTP; Fri, 26 Oct 2012 06:59:58 -0700 (PDT)
+In-Reply-To: <CAM9Z-n=+YeF3BaF-5UB5f2GBHYw7WDZEFDVT72RGSsDBaH4PJA@mail.gmail.com>
+X-Google-Sender-Auth: BZUdLESXpqATog5HmjU9w-Y18-A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208447>
 
-On Saturday, 27 October 2012 at 12:10 AM, Herman van Rink wrote:
-> On 10/22/2012 04:41 PM, dag@cray.com (mailto:dag@cray.com) wrote:
-> > Herman van Rink <rink@initfour.nl (mailto:rink@initfour.nl)> writes:
-> > 
-> > > On 10/21/2012 08:32 AM, Junio C Hamano wrote:
-> > > > Herman van Rink <rink@initfour.nl (mailto:rink@initfour.nl)> writes:
-> > > > 
-> > > > > Junio, Could you please consider merging the single commit from my
-> > > > > subtree-updates branch? https://github.com/helmo/git/tree/subtree-updates
-> > > > 
-> > > > 
-> > > > In general, in areas like contrib/ where there is a volunteer area
-> > > > maintainer, unless the change something ultra-urgent (e.g. serious
-> > > > security fix) and the area maintainer is unavailable, I'm really
-> > > > reluctant to bypass and take a single patch that adds many things
-> > > > that are independent from each other.
-> > > 
-> > > 
-> > > Who do you see as volunteer area maintainer for contrib/subtree?
-> > > My best guess would be Dave. And he already indicated earlier in the
-> > > thread to be ok with the combined patch as long as you are ok with it.
-> > 
-> > 
-> > Let's be clear. Junio owns the project so what he says goes, no
-> > question. I provided some review feedback which I thought would help
-> > the patches get in more easily. We really shouldn't be adding multiple
-> > features in one patch. This is easily separated into multiple patches.
-> > 
-> > Then there is the issue of testcases. We should NOT have git-subtree go
-> > back to the pre-merge _ad_hoc_ test environment. We should use what the
-> > usptream project uses. That will make mainlining this much easier in
-> > the future.
-> > 
-> > If Junio is ok with overriding my decisions here, that's fine. But I
-> > really don't understand why you are so hesitant to rework the patches
-> > when it should be realtively easy. Certainly easier than convincing me
-> > they are in good shape currently. :)
-> 
-> 
-> 
-> If it's so easy to rework these patches then please do so yourself.
-> It's been ages since I've worked on this so I would also have to
-> re-discover everything.
+On Fri, Oct 26, 2012 at 8:37 AM, Drew Northup <n1xim.email@gmail.com> wrote:
+> (As for deleting the current branch, you can't really do that on a
+> proper bare remote anyway as there is no such thing as a "current
+> branch" in that context.)
 
->From a quick survey, it appears there are no more than 55 patches
-squashed into the submitted patch.
-As I have an interest in git-subtree for maintaining the out-of-tree
-version of vcs-svn/ and a desire to improve my rebase-fu, I am tempted
-to make some sense of the organic growth that happened on GitHub.
-It doesn't appear that anyone else is willing to do this, so I doubt
-there will be any duplication of effort.
-
-
-
---
-David Michael Barr
+Really?  When I clone a bare repository I see a HEAD, and Git doesn't
+want me to delete it with a push from a remote repo.  So is this not a
+"proper" bare repository?
