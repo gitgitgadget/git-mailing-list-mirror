@@ -1,83 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Can't understand the behaviour of git-diff --submodule
-Date: Fri, 26 Oct 2012 21:08:30 +0200
-Message-ID: <508ADFAE.1050800@web.de>
-References: <CAC9WiBgzbsury2f9FyAu=Pgn31f2uCtq7AvsVWGWEwoV6KbyjA@mail.gmail.com>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: git push tags
+Date: Fri, 26 Oct 2012 15:08:41 -0400
+Message-ID: <CAM9Z-n=qzakFsKbJbUsK_2Ypjg93wbdX+3LGk6NxoOKgv3DipA@mail.gmail.com>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+	<CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
+	<CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
+	<CAM9Z-nkosbe1NXYnu7x6v4seLqCnMBWg-jrdH2eJ9RetaZBTyQ@mail.gmail.com>
+	<20121026174255.GE10560@camk.edu.pl>
+	<CAM9Z-nkBO1dbF-sBFLuxM_S_MT79Cx=gLEL+83XKB7ys8VTqNQ@mail.gmail.com>
+	<20121026182020.GF10560@camk.edu.pl>
+	<CAB9Jk9AR7vFBH6E7-hFabyD9XgRrF5PVZU-HtABS85wkwVTt+Q@mail.gmail.com>
+	<20121026190029.GB15328@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 21:08:46 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Kacper Kornet <draenog@pld-linux.org>
+X-From: git-owner@vger.kernel.org Fri Oct 26 21:08:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRpGu-0007Ie-St
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 21:08:45 +0200
+	id 1TRpH6-0007Qs-GI
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 21:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966090Ab2JZTIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 15:08:34 -0400
-Received: from mout.web.de ([212.227.17.11]:64183 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966087Ab2JZTIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 15:08:32 -0400
-Received: from [192.168.178.41] ([79.193.90.117]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0Lo0Hw-1SufFG3za4-00gbqj; Fri, 26 Oct 2012 21:08:31
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <CAC9WiBgzbsury2f9FyAu=Pgn31f2uCtq7AvsVWGWEwoV6KbyjA@mail.gmail.com>
-X-Provags-ID: V02:K0:1X0/PAK0hs81lgfCFx7+dAjWEX8dF1TZiWB81fbmXup
- MCKDx+x+tCFGSzD2BlwUmqLszxjlloitQSfPnEol2sY0qn9+/l
- rQFQGQcVLKdqmXiOtTvkAI3yxaLs126vDID3tAbXDJs6Uwf4qD
- Dd8iXjQAqbgZLo/xpmHkcmYcRY9Hb5CTxUIY+MluVOxM/KSE+P
- ZzumPAufg/VmxmcoFPRzw==
+	id S966093Ab2JZTIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 15:08:44 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42607 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966075Ab2JZTIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 15:08:43 -0400
+Received: by mail-bk0-f46.google.com with SMTP id jk13so1379171bkc.19
+        for <git@vger.kernel.org>; Fri, 26 Oct 2012 12:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EdwKGZiKUsQPXX5ZoeeCn0tJ0ag/l5W09tuSswbyDBw=;
+        b=lNgtKB/n3NxiXtGjFvW7ROKRjwp9lX3UlBoIODDbsOMhK0lWuHNjVmFI2Me6GDr1dj
+         RPlqa6e9agaltFT1R9GCvjycpXGojsa/atPiB7W1hxkeUHlNM7Tnv15IIb8DGbgkjHD/
+         s/ysOR1hYIabXpGzO6VpEyqvbVlZytf+9DWuFICX++I/oU3cyAitdmVFa+mA4bb9VfhZ
+         Cj+csiZ/QHKTUslP/OSE87yBNXO3jNlvOq6+mPQ+a65aDTlNq7+HPhSnkB8x7cGvxUdd
+         5GQLFltuwHbfw6tICP+uyr3qW/WA3yr1/rhD2Mdys0XYWh5zLIQhA1Ma14X8vdVBDGTe
+         B2kw==
+Received: by 10.204.131.87 with SMTP id w23mr7245202bks.73.1351278521827; Fri,
+ 26 Oct 2012 12:08:41 -0700 (PDT)
+Received: by 10.205.122.144 with HTTP; Fri, 26 Oct 2012 12:08:41 -0700 (PDT)
+In-Reply-To: <20121026190029.GB15328@camk.edu.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208480>
 
-Am 26.10.2012 16:07, schrieb Francis Moreau:
-> I'm trying to use the --submodule switch with git-diff but doesnt
-> understand the following behaviour:
-> 
-> $ git diff 2c9a257718d1803de720f95766ff256d33accad5 HEAD
-> diff --git a/configs b/configs
-> index 16c6a89..ce12289 160000
-> --- a/configs
-> +++ b/configs
-> @@ -1 +1 @@
-> -Subproject commit 16c6a89f245f0eed7fb0bce8e027c59fcf1d543e
-> +Subproject commit ce12289c5bfca7b2c423d9f1871c13ad1ba1dc32
-> 
-> but adding the --submodule option gives:
-> 
-> $ git diff --submodule=log 2c9a257718d1803de720f95766ff256d33accad5 HEAD
-> Submodule configs 16c6a89...ce12289 (commits not present)
-> 
-> Could anybody enlight me ?
+On Fri, Oct 26, 2012 at 3:00 PM, Kacper Kornet <draenog@pld-linux.org> wrote:
+> On Fri, Oct 26, 2012 at 08:35:50PM +0200, Angelo Borsotti wrote:
+>> Hello
+>
+>> Drew,
+....
+>> Kacper
+>
+>> thank you for the patch. To keep downward compatibility, the denial to
+>> update tags should perhaps be enabled with some option.
+>
+> You are probably right. The proper submission should also contain a
+> test. I have sent a crude patch to show that the behaviour asked by you
+> is possible to obtain.
+>
+> I will try to prepare a formal submission patch, but I can't say how
+> long it will take me. So if you want to do it by yourself feel free.
 
-The output "Submodule configs 16c6a89...ce12289 (commits not present)"
-contains same SHA-1s, only in their abbreviated form. That is the same
-information you get without the --submodule option, but in shorter
-format: it says the submodule moved from 16c6a89 to ce12289 in the
-given commit range of the superproject (and the "..." part tells us it
-wasn't a fast-forward). The "(commits not present)" part indicates that
-even though git diff would have wanted to show you what happened in the
-submodule between 16c6a89 and ce12289 by displaying the first line of
-each commit message, it couldn't because these commit(s) are not present
-in the submodule repo. If you do a "git log --oneline 16c6a89...ce12289"
-inside the submodule you'll get an "unknown revision" error for the same
-reason.
+Kacper,
+I have been rebuilding my local so that generating a proper patch for
+the manpage change part of the set won't make a horrible mess over
+here.
 
-The "(commits not present)" part should go away and the output of the
-short commit messages should appear when you do a "git fetch" inside the
-submodule (at least unless someone forgot to push these submodule commits
-upstream). As "git fetch" does attempt to fetch all referenced submodules
-too, I suspect that you have unpushed commits (e.g. they might have been
-dropped because of a rebase). In this case a "git submodule update" will
-fail for the same reason.
+It looks to me like the changeset requires the following:
+Kacper's patch, some manpage changes, a test.
 
-Does that make it clearer?
+Angelo, may we use your original mail as the source for the cover page?
+
+-- 
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
