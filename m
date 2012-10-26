@@ -1,86 +1,94 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Thu, 25 Oct 2012 18:14:31 -0400
-Message-ID: <20121025221431.GH13647@odin.tremily.us>
-References: <20121023204437.GE28592@odin.tremily.us>
- <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fixes handling of --reference argument.
+Date: Thu, 25 Oct 2012 20:39:34 -0400
+Message-ID: <20121026003934.GA20064@sigill.intra.peff.net>
+References: <5088c5a4.L25tOcUVCSwBRpYF%szager@google.com>
+ <20121025083625.GA8390@sigill.intra.peff.net>
+ <20121025104519.GA3816@odin.tremily.us>
+ <5089AFED.7060404@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=GBDnBH7+ZvLx8QD4
-To: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 01:15:16 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "W. Trevor King" <wking@tremily.us>, szager@google.com,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Oct 26 02:39:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRWds-0007J2-LK
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 01:15:12 +0200
+	id 1TRXxt-0007mk-DS
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 02:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022Ab2JYXPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2012 19:15:00 -0400
-Received: from vms173005pub.verizon.net ([206.46.173.5]:56886 "EHLO
-	vms173005pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751663Ab2JYXO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2012 19:14:59 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Oct 2012 19:14:59 EDT
-Received: from odin.tremily.us ([unknown] [72.68.84.95])
- by vms173005.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MCG00K41Z47Z350@vms173005.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 25 Oct 2012 17:14:42 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id A39E6680761; Thu,
- 25 Oct 2012 18:14:31 -0400 (EDT)
-Content-disposition: inline
-In-reply-to: <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754190Ab2JZAjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Oct 2012 20:39:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56648 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753591Ab2JZAjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2012 20:39:37 -0400
+Received: (qmail 17331 invoked by uid 107); 26 Oct 2012 00:40:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 25 Oct 2012 20:40:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2012 20:39:34 -0400
+Content-Disposition: inline
+In-Reply-To: <5089AFED.7060404@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208428>
 
+On Thu, Oct 25, 2012 at 11:32:29PM +0200, Jens Lehmann wrote:
 
---GBDnBH7+ZvLx8QD4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> >>> @@ -270,7 +270,6 @@ cmd_add()
+> >>>  			;;
+> >>>  		--reference=3D*)
+> >>>  			reference=3D"$1"
+> >>> -			shift
+> >>>  			;;
+> >>
+> >> Is that right? We'll unconditionally do a "shift" at the end of th=
+e
+> >> loop. If it were a two-part argument like "--reference foo", the e=
+xtra
+> >> shift would make sense, but for "--reference=3D*", no extra shift =
+should
+> >> be neccessary. Am I missing something?
+> >=20
+> > Both the patch and Jeff's analysis are right.  You only need an
+> > in-case shift if you consume "$2", or you're on =E2=80=98--=E2=80=99=
+ and you're
+> > breaking before the end-of-case shift.
+>=20
+> Right you are. The shift there is wrong, as there is no extra argumen=
+t
+> to consume for "--reference=3D<repo>" (opposed to "--reference <repo>=
+",
+> also see cmd_update() where this is done right).
 
-Should I rebase this so it lands cleanly atop 38ae92e4 in next?
+Oh, the problem is that I'm an idiot, and for some reason read it as
+_adding_ the bogus shift, not removing it. Patch is clearly correct.
 
-  commit 38ae92e4d027063b9b87e51a9bf12809d10066f6
-  Author: W. Trevor King <wking@tremily.us>
-  Date:   Tue Oct 23 17:00:21 2012 -0400
+> So tested and Acked-By me, but me thinks the subject should read:
+>=20
+>    [PATCH] submodule add: Fix handling of the --reference=3D<repo> op=
+tion
+>=20
+> and the commit message should begin with:
+>=20
+>    Doing a shift there is wrong because there is no extra argument
+>    to consume when "--reference=3D<repo>" is used (note the '=3D' ins=
+tead
+>    of a space).
 
-    git-submodule: wrap branch option with "<>" in usage strings.
+Yeah, I think it makes sense to explain why it is wrong in the commit
+message (I'll blame that for my lack of common sense above :) ).
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+> Peff, is it ok for you to squash that in or do you want Stefan to res=
+end?
 
---GBDnBH7+ZvLx8QD4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+I can squash it in. Thanks all.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQibnGAAoJEEUbTsx0l5OM2k0P/26wJM7I9ipNYNLoxzHwnSUC
-KIhcV3znmJx62acbF7OMFDXvRO3uDm172wcQRZ/V0iBUjxqQCZ+P/S5x47nlILB2
-n67RmFUuV6d4EIFWhMfPeeQs1oUGRsqxWJuJwec9antBzmYCo0jeLF992/gUWOBd
-T3PY9jaUH46Ccr6UqITYsTBgMXNh+LsbPzuepb3WeR8d3aS3niTmFYYLmh7yzcaa
-BffIbP8ZmbX7n+IkzBOWQcYnqV0mn4nlfgRwY2JLw5iF7aOadbGWRtPtsFETr7Sr
-DyJDAAKZg1YH1sb/wL84Lkx+BFaDbB3idP3K2jlyvSiG1SZ5tRidu1GgSynUVg5N
-Nsr5/CW01BdGAsHQyB16VfyM417eGdG17Ujc79FAhyB6nGQkQkZc935FAG3qBNCf
-Vdys3gcD5afwyTzHcdhXdur76/WGvyvpCIzBk8zf8MzeybM1A8rsHlSenFOTHe8t
-OtY0qSz1JRlI3sdTUhQ27SUh+Tdw1BK7UO+Gb/WUBM1+z7qI8Rk7nqZv+95/c2fW
-veTT8XisMfMOm1MgRGIW4CVfJPdRU03seWqqftIym/y/T/0IN2MdnXo1MkaBJRGG
-Jr3X2NUzSJThMCBRQSpnqnNRsGyx6evJNlLp0a7m7iRtDxjlGgiYlowBdWn/orZx
-UK8qJNsnWZkbP2xQUG1w
-=tdO5
------END PGP SIGNATURE-----
-
---GBDnBH7+ZvLx8QD4--
+-Peff
