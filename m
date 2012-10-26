@@ -1,86 +1,86 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule status: properly pass options with --recursive
-Date: Fri, 26 Oct 2012 21:26:33 +0200
-Message-ID: <508AE3E9.6000304@web.de>
-References: <5089BB2D.90400@web.de> <20121026131507.GA2747@sigill.intra.peff.net> <CABURp0op2+QUvusUmAFUxT8s8c02bB9V3=ag9gTTSiiN4t96OA@mail.gmail.com>
+Subject: Re: [PATCH] t7407: Fix recursive submodule test
+Date: Fri, 26 Oct 2012 21:29:47 +0200
+Message-ID: <508AE4AB.4070209@web.de>
+References: <CABURp0op2+QUvusUmAFUxT8s8c02bB9V3=ag9gTTSiiN4t96OA@mail.gmail.com> <1351278834-28867-1-git-send-email-hordp@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 21:26:59 2012
+Cc: Git Mailing List <git@vger.kernel.org>, phil.hord@gmail.com,
+	Jeff King <peff@peff.net>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 21:30:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRpYW-0003S3-Tw
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 21:26:57 +0200
+	id 1TRpbZ-0005lP-Jv
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 21:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966150Ab2JZT0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 15:26:44 -0400
-Received: from mout.web.de ([212.227.15.3]:52085 "EHLO mout.web.de"
+	id S966160Ab2JZT3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 15:29:53 -0400
+Received: from mout.web.de ([212.227.15.3]:62031 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966098Ab2JZT0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 15:26:44 -0400
-Received: from [192.168.178.41] ([79.193.90.117]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LudP2-1TIn0b3vbU-010Kxv; Fri, 26 Oct 2012 21:26:35
+	id S966021Ab2JZT3w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 15:29:52 -0400
+Received: from [192.168.178.41] ([79.193.90.117]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0MKrPw-1TRpbH26jI-000hKZ; Fri, 26 Oct 2012 21:29:47
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <CABURp0op2+QUvusUmAFUxT8s8c02bB9V3=ag9gTTSiiN4t96OA@mail.gmail.com>
-X-Provags-ID: V02:K0:A7KFsf7uI4SNZWUpf0D3Dy01aIfHI4dlOBobU41vDw3
- GZFJQaRYHU16VWs/MxBTWNDtc4y/wK7CWY0HaSTsP1ExvrAywf
- VcMSPm3Qa3PpVxg11RBHsfALbHedKwUzYOR8XWzMo8wuuozqlV
- VsewcQE6saRhJkNHur1jLf45gbnwCQpzCapzH+zm64Lum0J7Ew
- vOasaeSZXc8L/SR69tiQA==
+In-Reply-To: <1351278834-28867-1-git-send-email-hordp@cisco.com>
+X-Provags-ID: V02:K0:FcRYAc3oxPQgiWYNB8lOOja0jbXdA+dV9Pef//y3uZ9
+ 6SXCyvKAQeVlcLQHClYK31d9IFEOfx+Sz65dZw3hpTWCctsQRR
+ cRas88WnvP1ErHpRamSdi2KMjVnpFtYlSqMS6toX+QGQnRzGMR
+ B7tw0kkaLLUn/iZhCWY2sbwAEJf6YOpwC34saqGfIeE8l4f1tZ
+ 3GqzOMFiRXtDdQhSU1kwA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208483>
 
-Am 26.10.2012 21:07, schrieb Phil Hord:
-> On Fri, Oct 26, 2012 at 9:15 AM, Jeff King <peff@peff.net> wrote:
->> On Fri, Oct 26, 2012 at 12:20:29AM +0200, Jens Lehmann wrote:
->>
->>> When renaming orig_args to orig_flags in 98dbe63d (submodule: only
->>> preserve flags across recursive status/update invocations) the call site
->>> of the recursive cmd_status was forgotten. At that place orig_args is
->>> still passed into the recursion, which is always empty now. This clears
->>> all options when recursing, as that variable is never set.
->>>
->>> Fix that by renaming orig_args to orig_flags there too and add a test to
->>> catch that bug.
->>
->> Thanks. I back-ported your patch on top of 98dbe63d so it can go to
->> 'maint'. I'm curious, though: why didn't the test right before (which
->> checks recursion for --cached) catch this?
+Am 26.10.2012 21:13, schrieb Phil Hord:
+> A test in t7404-submodule-foreach purports to test that
+> the --cached flag is properly noticed by --recursive calls
+> to the foreach command as it descends into nested
+> submodules.  However, the test really does not perform this
+> test since the change it looks for is in a top-level
+> submodule handled by the first invocation of the command.
+> To properly test for the flag being passed to recursive
+> invocations, the change must be buried deeper in the
+> hierarchy.
 > 
-> I was wondering the same thing about why 'git submodule sync
-> --recursive --quiet' succeeded, so I checked on it.  The answer is
-> that "--quiet" sets GIT_QUIET=1, which is then inherited by the
-> recursive call. Indeed, Jens' new test passes even without the
-> accompanying fix.  :-\
+> Move the change one level deeper so it properly verifies
+> the recursive machinery of the 'git submodule status'
+> command.
 
-Dang, you're right! At least that explains why nobody noticed that
-so far ... (and that's what you get for skipping the "does the test
-fail without your fix?" part because the fix is so obvious :-( )
+Me thinks we should definitely do this.
 
-> The 'status --recursive --cached' test passes for two reasons.  The
-> first is that the test is checking for a cached change in a level-1
-> submodule, but it is the level-2+ submodules which do not get the
-> flags passed down correctly in "$@".  The 2nd reason is that the
-> $cached variable is _also_ inherited by the recursive call to
-> cmd_status, specifically because it is a call to cmd_status() and not
-> to '$SHELL git submodule status', where the latter would have cleared
-> the flags at startup, but the former does not.
+> Signed-off-by: Phil Hord <hordp@cisco.com>
+> ---
+>  t/t7407-submodule-foreach.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> I'm a bit wary about "fixing" the flags for the recursion machinery.
-> I'm starting to think $orig_flags is moot in almost all cases.  It
-> looks like clearing all the flags on each iteration would break 'git
-> submodule foreach --recursive --quiet' because it does not use
-> $orig_flags at all.  Who knows what other surprises lurk there.
-
-I agree, it looks like ripping out the orig_flags would be the way
-to go.
+> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+> index 9b69fe2..107b4b7 100755
+> --- a/t/t7407-submodule-foreach.sh
+> +++ b/t/t7407-submodule-foreach.sh
+> @@ -226,14 +226,14 @@ test_expect_success 'test "status --recursive"' '
+>  	test_cmp expect actual
+>  '
+>  
+> -sed -e "/nested1 /s/.*/+$nested1sha1 nested1 (file2~1)/;/sub[1-3]/d" < expect > expect2
+> +sed -e "/nested2 /s/.*/+$nested2sha1 nested1\/nested2 (file2~1)/;/sub[1-3]/d" < expect > expect2
+>  mv -f expect2 expect
+>  
+>  test_expect_success 'ensure "status --cached --recursive" preserves the --cached flag' '
+>  	(
+>  		cd clone3 &&
+>  		(
+> -			cd nested1 &&
+> +			cd nested1/nested2 &&
+>  			test_commit file2
+>  		) &&
+>  		git submodule status --cached --recursive -- nested1 > ../actual
+> 
