@@ -1,59 +1,86 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 1/2] Teach --recursive to submodule sync
-Date: Fri, 26 Oct 2012 20:50:19 +0200
-Message-ID: <508ADB6B.5040905@web.de>
-References: <507EF86C.4050807@web.de> <1351034141-2641-1-git-send-email-hordp@cisco.com> <1351034141-2641-2-git-send-email-hordp@cisco.com> <5089BBE1.3040107@web.de> <508AC63E.6010502@cisco.com> <CABURp0q0uELTS4DQ=Kqfr+8Pr-KgLcGJaBY_kJE_AiO=BZu+Bw@mail.gmail.com>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: Re: git push tags
+Date: Fri, 26 Oct 2012 21:00:30 +0200
+Message-ID: <20121026190029.GB15328@camk.edu.pl>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+ <CAM9Z-nkxCOyrtJ8vCF=00vrA_1eFr2-Fk7PXjYEx0HbVt0GPkQ@mail.gmail.com>
+ <CAB9Jk9A95YrrtH8ue-CJ6Mqe9Z+3nfo=tjurLZjmecfiMFijvg@mail.gmail.com>
+ <CAM9Z-nkosbe1NXYnu7x6v4seLqCnMBWg-jrdH2eJ9RetaZBTyQ@mail.gmail.com>
+ <20121026174255.GE10560@camk.edu.pl>
+ <CAM9Z-nkBO1dbF-sBFLuxM_S_MT79Cx=gLEL+83XKB7ys8VTqNQ@mail.gmail.com>
+ <20121026182020.GF10560@camk.edu.pl>
+ <CAB9Jk9AR7vFBH6E7-hFabyD9XgRrF5PVZU-HtABS85wkwVTt+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 20:51:04 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Drew Northup <n1xim.email@gmail.com>, git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 21:00:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRozn-0002hq-Iw
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 20:51:03 +0200
+	id 1TRp9J-0001f7-Io
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 21:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966044Ab2JZSuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 14:50:37 -0400
-Received: from mout.web.de ([212.227.15.3]:50621 "EHLO mout.web.de"
+	id S1759005Ab2JZTAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 15:00:40 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:57679 "EHLO moat.camk.edu.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965243Ab2JZSu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 14:50:26 -0400
-Received: from [192.168.178.41] ([79.193.90.117]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MCqkB-1TaNQL3KvT-009C7T; Fri, 26 Oct 2012 20:50:23
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <CABURp0q0uELTS4DQ=Kqfr+8Pr-KgLcGJaBY_kJE_AiO=BZu+Bw@mail.gmail.com>
-X-Provags-ID: V02:K0:QyZeEOz7jRwQU5aQMovO9z1PPdsUZyiXYeERdqn0hnf
- jZHqIl+XuSQpbhOrcViLzAASvsI3gVU/2JTO53RVwmPgRyW0P4
- +IbQs/IRvrMp4Mf7t/zug8oNaelOIXqMwME7ccRUE3Zy2exoB0
- iVVLLYp6ymII2DSQ9tFGGLnKdq1pQNBnx3ExVvd592OnqGGZMH
- VYnMTD9Lc1qOwYhoTGSfQ==
+	id S1758960Ab2JZTAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 15:00:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 2B36F5F0047;
+	Fri, 26 Oct 2012 21:00:39 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id bDFtFv5zZuho; Fri, 26 Oct 2012 21:00:31 +0200 (CEST)
+Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 88AFA5F0048;
+	Fri, 26 Oct 2012 21:00:31 +0200 (CEST)
+Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
+	id 5931843CFD; Fri, 26 Oct 2012 21:00:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <CAB9Jk9AR7vFBH6E7-hFabyD9XgRrF5PVZU-HtABS85wkwVTt+Q@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208477>
 
-Am 26.10.2012 19:55, schrieb Phil Hord:
-> On Fri, Oct 26, 2012 at 1:19 PM, Phil Hord <hordp@cisco.com> wrote:
->>
->> Yes, thanks for catching that.  I think I should add a test for that
->> except I notice that sync doesn't take any other flags useful for passing.
-> 
-> Which, of course, suggests that I should not add this
-> flag-propagating-machinery to submodule-sync at all. yes?
+On Fri, Oct 26, 2012 at 08:35:50PM +0200, Angelo Borsotti wrote:
+> Hello
 
-Nope, the new --recursive option has to be passed on!
+> Drew,
 
-To catch that bug in your test you'd need another submodule inside your
-sub-submodule. The first level submodule is initialized by sync anyways,
-the sub-submodule is initialized by the --recursive logic you added but
-the sub-sub-submodule would not have been synced because the option was
-dropped. I really can't blame you for not adding that third level of
-submodules ;-)
+> I made some further tests on git-push to see if it handled branches
+> and tags in the same way, and have discovered the following
+> differences:
+
+>     - git push origin --delete master
+>       remote: error: By default, deleting the current branch is denied
+
+>     - git push origin --delete vx            (where vx is a tag)
+>       ... accepted
+
+> This is consistent with what is done on the local repo: deleting the
+> current branch is disallowed, but deleting a tag is allowed (even when
+> HEAD points to it).
+> That means that git-push does not handle branches and tags exactly the same.
+
+> Kacper
+
+> thank you for the patch. To keep downward compatibility, the denial to
+> update tags should perhaps be enabled with some option.
+
+You are probably right. The proper submission should also contain a
+test. I have sent a crude patch to show that the behaviour asked by you
+is possible to obtain.
+
+I will try to prepare a formal submission patch, but I can't say how
+long it will take me. So if you want to do it by yourself feel free.
+
+-- 
+  Kacper Kornet
