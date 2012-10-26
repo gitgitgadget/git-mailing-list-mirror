@@ -1,54 +1,65 @@
 From: Francis Moreau <francis.moro@gmail.com>
-Subject: git submodule summary doesn't return an error when passed a wrong commit/rev
-Date: Fri, 26 Oct 2012 16:03:26 +0200
-Message-ID: <CAC9WiBgdgy1bwh0c16jd017q2rqQAq-suDADn2-vGw9eubBs_w@mail.gmail.com>
+Subject: Can't understand the behaviour of git-diff --submodule
+Date: Fri, 26 Oct 2012 16:07:27 +0200
+Message-ID: <CAC9WiBgzbsury2f9FyAu=Pgn31f2uCtq7AvsVWGWEwoV6KbyjA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 26 16:03:40 2012
+X-From: git-owner@vger.kernel.org Fri Oct 26 16:07:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TRkVf-0002dk-Pa
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 16:03:40 +0200
+	id 1TRkZY-0005Cm-By
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Oct 2012 16:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933073Ab2JZOD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2012 10:03:27 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:60020 "EHLO
+	id S933097Ab2JZOH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2012 10:07:28 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:59664 "EHLO
 	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933042Ab2JZOD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2012 10:03:27 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so2659935oag.19
-        for <git@vger.kernel.org>; Fri, 26 Oct 2012 07:03:26 -0700 (PDT)
+	with ESMTP id S1751695Ab2JZOH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2012 10:07:27 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so2664003oag.19
+        for <git@vger.kernel.org>; Fri, 26 Oct 2012 07:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=fokHEA30ZQbKAtI/znDk9Hquao0bAjSzvznhJ2X4faw=;
-        b=FG+uvnpYRazai11iXuE4MnqqTTtCKr6IQrLPBBqIN/6OQkK/610hYSUqA0oxPn88al
-         0Vve7f9JmHPYx2avDMknfutbiqlTZHD02VNPRRsNtUFbFtmarJg3BgHVaGCv+ZGdheot
-         f3uPCE9aKrDBbVQniLE0jkAGWP8Xuqls6pqAPHmLXOdUVHhQ1jVdJ098GDXoDlF6pQ27
-         DdQsVE+WOpDRDOEerYqUtQEUdpBaniIprJNyBfQTq0Shuwo+fHyLEMsJWfzbh5BbkIGz
-         M1svKqvqhcchdklN/cM/p58OptfMbUUTVrD4O7RIR2YuGafjXjhbto2PdRgJGoCt78b1
-         21vA==
-Received: by 10.60.172.48 with SMTP id az16mr19203735oec.64.1351260206042;
- Fri, 26 Oct 2012 07:03:26 -0700 (PDT)
-Received: by 10.60.93.163 with HTTP; Fri, 26 Oct 2012 07:03:26 -0700 (PDT)
+        bh=Cfsr6xRUYDWJ872ATX/jE3f7fg0X2vvxmlCBRFGF0zE=;
+        b=ZHnb6JmNk9C0m/SdZYENpg2rQwxEAUMqvcj64xC7+tRH9oWHAB/RxPlyNRfxE+p0a0
+         KFkyOBtykAimcm0d/WLGkS9dtnjIBihyZaeOD95WN/AXAaCcoAO8IXk5CQS1uuX1DFul
+         3Rn4rkahYtf2RgOtEX7pD0rvUc5pEdeiS89ByqF2nbjziwjU751sCC9vlyVfuhrm1sOs
+         nib2DodGbYzDfJ+DCgQat+oKARqxi0ardwK+qrSW/N/RhjjfVVOrVEsFV1F1PiRWZct9
+         Zm9DFYth7yjAOTjk8q4igS2T2P5fHAZbf23dPdMU092ZQFOxCRb3o/T2fAQJakF1iwQe
+         C9JA==
+Received: by 10.182.64.101 with SMTP id n5mr18252959obs.11.1351260447390; Fri,
+ 26 Oct 2012 07:07:27 -0700 (PDT)
+Received: by 10.60.93.163 with HTTP; Fri, 26 Oct 2012 07:07:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208450>
 
 Hi,
 
-it seems to me that when passed an unknown rev or a wrong commit/sha1,
-git-submodule-summary should at least exit with an error status. Even better
-would be a error output.
+I'm trying to use the --submodule switch with git-diff but doesnt
+understand the following behaviour:
 
-Test was done with git version 1.7.10.4 from debian wheezy.
+$ git diff 2c9a257718d1803de720f95766ff256d33accad5 HEAD
+diff --git a/configs b/configs
+index 16c6a89..ce12289 160000
+--- a/configs
++++ b/configs
+@@ -1 +1 @@
+-Subproject commit 16c6a89f245f0eed7fb0bce8e027c59fcf1d543e
++Subproject commit ce12289c5bfca7b2c423d9f1871c13ad1ba1dc32
 
-Thanks
+but adding the --submodule option gives:
+
+$ git diff --submodule=log 2c9a257718d1803de720f95766ff256d33accad5 HEAD
+Submodule configs 16c6a89...ce12289 (commits not present)
+
+Could anybody enlight me ?
 -- 
 Francis
