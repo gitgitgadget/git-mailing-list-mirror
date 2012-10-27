@@ -1,65 +1,60 @@
-From: Romain Francoise <romain@orebokech.com>
-Subject: [PATCH] mailmap: avoid out-of-bounds memory access
-Date: Sun, 28 Oct 2012 00:49:55 +0200
-Organization: orebokech dot com
-Message-ID: <87k3ub4jjg.fsf@silenus.orebokech.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Can't understand the behaviour of git-diff --submodule
+Date: Sun, 28 Oct 2012 01:02:59 +0200
+Message-ID: <508C6823.5060800@web.de>
+References: <CAC9WiBgzbsury2f9FyAu=Pgn31f2uCtq7AvsVWGWEwoV6KbyjA@mail.gmail.com> <508ADFAE.1050800@web.de> <CAC9WiBjiHLJggUzmmx4sPpXNNq=Kz0TOZAzmRShc1AZcPjGvig@mail.gmail.com> <508AED26.3090805@web.de> <CAC9WiBhZWJihPToMawPCxEVkTKL0e-GzUw3qneJMUx-WqSNbjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: gitster@pobox.com, peff@peff.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 00:50:31 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 01:03:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSFD4-0001mK-HB
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 00:50:30 +0200
+	id 1TSFPP-0002zA-Ax
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 01:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399Ab2J0Wt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2012 18:49:57 -0400
-Received: from stringer.orebokech.com ([88.190.240.207]:59798 "EHLO
-	stringer.orebokech.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910Ab2J0Wt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2012 18:49:57 -0400
-Received: from silenus.orebokech.com (silenus [192.168.1.4])
-	by stringer.orebokech.com (Postfix) with ESMTP id DAC931880033;
-	Sun, 28 Oct 2012 00:49:55 +0200 (CEST)
-Received: by silenus.orebokech.com (Postfix, from userid 1000)
-	id B0F2BA01D0; Sun, 28 Oct 2012 00:49:55 +0200 (CEST)
+	id S1752026Ab2J0XDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2012 19:03:03 -0400
+Received: from mout.web.de ([212.227.15.4]:59986 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751885Ab2J0XDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2012 19:03:01 -0400
+Received: from [192.168.178.41] ([91.3.186.112]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0Lrs70-1TGjOM0HqI-012xRx; Sun, 28 Oct 2012 01:03:00
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <CAC9WiBhZWJihPToMawPCxEVkTKL0e-GzUw3qneJMUx-WqSNbjw@mail.gmail.com>
+X-Provags-ID: V02:K0:kSGDwT9MV1XfPPba9KgmJ1Rf7sQE1cfCuCabZWk0mPw
+ rAdCdZ0L3FigSTzfcAdzc40TL8VvDXy7qwtAgUE3m9aQp0JCeX
+ 9BqMcKbHOtJUYic6+IhS7TR8wtWwFtZvyaNax0zQOUsGBwzDTW
+ al3UrbjOIKE/OIjPqntYP+yUPeGXuh9xTSE+D9+iRcRkpVTF19
+ T35nV8xnG1KSVjtAGLe6g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208516>
 
-AddressSanitizer (http://clang.llvm.org/docs/AddressSanitizer.html)
-complains of a one-byte buffer underflow in parse_name_and_email() while
-running the test suite. And indeed, if one of the lines in the mailmap
-begins with '<', we dereference the address just before the beginning of
-the buffer when looking for whitespace to remove, before checking that
-we aren't going too far.
+Am 26.10.2012 22:43, schrieb Francis Moreau:
+> On Fri, Oct 26, 2012 at 10:05 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> [...]
+>>
+>> That is weird, "git diff --submodule" should show that too. Is there
+>> anything unusual about your setup? (The only explanation I can come
+>> up with after checking the code is that your submodule has neither a
+>> .git directory nor a gitfile or the objects directory in there doesn't
+>> contain these commits)
+> 
+> Oh now you're asking, I think the submodule has been added by using
+> the --reference option of git-submodule-add.
+> 
+>   $ cd configs
+>   $ cat .git
+>   gitdir: ../.git/modules/configs
 
-So reverse the order of the tests to make sure that we don't read
-outside the buffer.
-
-Signed-off-by: Romain Francoise <romain@orebokech.com>
----
- mailmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mailmap.c b/mailmap.c
-index 47aa419..ea4b471 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -118,7 +118,7 @@ static char *parse_name_and_email(char *buffer, char **name,
- 	while (isspace(*nstart) && nstart < left)
- 		++nstart;
- 	nend = left-1;
--	while (isspace(*nend) && nend > nstart)
-+	while (nend > nstart && isspace(*nend))
- 		--nend;
- 
- 	*name = (nstart < nend ? nstart : NULL);
--- 
-1.7.10.4
+Thanks, I suspect the --reference option makes the difference here,
+I'll check that as soon as I find some time.
