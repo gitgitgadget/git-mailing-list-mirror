@@ -1,150 +1,90 @@
-From: Ingo Molnar <mingo@kernel.org>
-Subject: 'git describe' is very slow on development trees with lots of commits
-Date: Sat, 27 Oct 2012 15:33:52 +0200
-Message-ID: <20121027133352.GB30001@gmail.com>
-References: <1351261913-28250-1-git-send-email-acme@infradead.org>
- <20121026145451.GA14379@gmail.com>
- <508AA709.7010202@gmail.com>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: git config error message
+Date: Sat, 27 Oct 2012 16:50:32 +0200
+Message-ID: <CAB9Jk9A-uXXXKCBKvxyDN6QQx1b0zqemg7UbeRMcWeY7gi4MRQ@mail.gmail.com>
+References: <CAB9Jk9AQkSiv=F8NeYs+uspR5f4CeJS5L-hwZUXdq7dts1W5ng@mail.gmail.com>
+	<m2bofo9v93.fsf@linux-m68k.org>
+	<CAB9Jk9CONVSZvBUgnZHiniwPHHvcap8Wyjyw-sCHaSokDoNRWA@mail.gmail.com>
+	<CAP30j15pUwX9sD3FXAfroxFK9paHmb1eAg+M5YAHT4aB22DBEw@mail.gmail.com>
+	<CAB9Jk9COSZOske5xzgnE=1oHe7qiwwOzHYE6pJkuZ0sZyZYhng@mail.gmail.com>
+	<m2d3049hvs.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Arnaldo Carvalho de Melo <acme@infradead.org>,
-	linux-kernel@vger.kernel.org, Andrew Vagin <avagin@openvz.org>,
-	Borislav Petkov <bp@amd64.org>,
-	David Howells <dhowells@redhat.com>,
-	Frederic Weisbecker <fweisbec@gmail.com>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Stephane Eranian <eranian@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>, arnaldo.melo@gmail.com,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-To: David Ahern <dsahern@gmail.com>, git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Sat Oct 27 15:34:17 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ben Walton <bdwalton@gmail.com>, git <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Oct 27 16:50:47 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1TS6Wm-0001ro-69
-	for glk-linux-kernel-3@plane.gmane.org; Sat, 27 Oct 2012 15:34:16 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TS7io-0001tW-51
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Oct 2012 16:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758280Ab2J0Nd7 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sat, 27 Oct 2012 09:33:59 -0400
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:39608 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758025Ab2J0Nd5 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sat, 27 Oct 2012 09:33:57 -0400
-Received: by mail-ea0-f174.google.com with SMTP id c13so1160673eaa.19
-        for <multiple recipients>; Sat, 27 Oct 2012 06:33:56 -0700 (PDT)
+	id S1752801Ab2J0Oud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2012 10:50:33 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:42739 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752436Ab2J0Oud (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2012 10:50:33 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so3364325pbb.19
+        for <git@vger.kernel.org>; Sat, 27 Oct 2012 07:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xa+1fk3TcaCroc1Maf6/csKG8JuonOCjyEcBDxamGBs=;
-        b=GzjPUg8D2ynDzJBlQSlpHgQAvgOV7in44bwPaGOSmKAAPHGZFi9S/wu5yVChViAi/a
-         g1RKvQyP8nuDXbQzUC9ZWChmorAUT7ebUJAIhsvOzL5gUlN/nV7gept++NqcUYd8xsMs
-         f2TClDayWKJlJYWNFexzxpI1acsd8CvySTeXHmNbyAgHP1i+tsTieDmNEBZYY+jmmGTk
-         XVjFvxIlCIAGLUckScGHmGC96GSxLHHjx83gni3fwowq6Tkdl4FEQ4qzNaYHY3Czoj3e
-         aW5aKevoPiGu+Q6FUXJcKEgHjwl7RHDm4zQeMduH4lvSy/WWtJY6NiMUasVuNKyOaF+w
-         R3qw==
-Received: by 10.14.214.133 with SMTP id c5mr42434209eep.8.1351344836662;
-        Sat, 27 Oct 2012 06:33:56 -0700 (PDT)
-Received: from gmail.com (2E6BC28D.catv.pool.telekom.hu. [46.107.194.141])
-        by mx.google.com with ESMTPS id g5sm9335831eem.4.2012.10.27.06.33.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 27 Oct 2012 06:33:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <508AA709.7010202@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-kernel-owner@vger.kernel.org
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1auhFwZkpx6fsxIvNtPoVwN33jQItevAE4g6muXZAzg=;
+        b=ycjvH9fE0O8IQMmU2evPZ5cPfKX+HMn/+xts6cbfL7OjiIELYMOxsw4mMT2E19jqel
+         afC0TQRg/okEoJPP2cLqOyYargNLW5CY+MVS35JRSX4StQlnwCWt5YfJOTe8p9TrbuoK
+         xndeIxtifM5shmAICC9OCl6prIUhQxYxTmpleGouB4oo3rR4WhtBkDiHfLsUmHvllWSi
+         HBPT1nTKkBjXhDeSoc3Z5gaVQ5dcSQy/PnC0TmDZL1yfbT+QmVtelgZ7cC7lRr5BNyVh
+         IJ98nd2kFjE+B2Vq85tSiETgAcrZzC2Y/X315nE8h6KiRPp2CGjb/huECPpbp+VlYWKj
+         mQdg==
+Received: by 10.66.76.98 with SMTP id j2mr70140907paw.65.1351349432798; Sat,
+ 27 Oct 2012 07:50:32 -0700 (PDT)
+Received: by 10.67.3.101 with HTTP; Sat, 27 Oct 2012 07:50:32 -0700 (PDT)
+In-Reply-To: <m2d3049hvs.fsf@igel.home>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208509>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208510>
 
+Hi Andreas,
 
-(Cc:-ed the Git development list.)
+>
+> Is grep not finding a match an error?  Is cmp finding a difference an
+> error?  It all depends on the context.
+>
 
-* David Ahern <dsahern@gmail.com> wrote:
+Manpage of grep, exit staus:
 
-> PERF-VERSION-GEN and specifically the git commands are the 
-> cause of more delay than the config checks, especially when 
-> doing the build in a VM with the kernel source on an NFS 
-> mount.
+   "Normally, the exit status is 0 if selected lines are found and 1
+otherwise. But the exit status is 2 if an error occurred, ..."
 
-Yes, I have noticed that too.
+cmp uses the same convention (albeit not reported in its manpage).
 
-So, the problem is that we use 'git describe' on the kernel tree 
-to generate the version string, which is very, very slow if we 
-are far away from any tagged release - which is the case for the 
--tip tree:
+I am not stating that all linux commands and utilities follow exactly
+the same convention, but these
+two are at least consistent with themselves always returning an exit
+status that has a well defined meaning. git-config returns
+consistently the exit status, it only issues in certain cases messages
+and in others not. A consistent solution could be for it to return 0
+upon success, 1 when the section or key is absent, and 2 when the
+config file does not exist or is corrupt issuing also an error
+message.
 
- comet:~/tip> perf stat --null --repeat 3 git describe
- v3.7-rc2-2007-g83e8223
- v3.7-rc2-2007-g83e8223
- v3.7-rc2-2007-g83e8223
+-Angelo
 
-'git describe' is much faster if we are on or near to a tag:
-
- $ git checkout v3.6
- $ perf stat --null --repeat 3 git describe
- v3.6
- v3.6
- v3.6
-
- Performance counter stats for 'git describe' (3 runs):
-
-       0.020171640 seconds time elapsed                                          ( +-  3.64% )
-
- $ git checkout b34e5f55a1e6
-
- $ perf stat --null --repeat 3 git describe
- v3.6-41-gb34e5f5
- v3.6-41-gb34e5f5
- v3.6-41-gb34e5f5
-
- Performance counter stats for 'git describe' (3 runs):
-
-       0.155603676 seconds time elapsed                                          ( +-  0.23% )
-
-The cost on this pretty fast machine is about 1 msecs per commit 
-- which adds up to about 2.5 seconds during much of the 
-development cycle.
-
-So maybe we should be using a different version string, for 
-example, instead of:
-
- v3.7-rc2-2007-g83e8223
-
-this would be perfectly fine:
-
- v3.7-rc2-g83e8223
-
-the 'commit count' is informative but not essential - and in 
-counting the number of off-tag commits is where much of the 
-overhead is:
-
-#
-# Overhead  Command       Shared Object                                      Symbol
-# ........  .......  ..................  ..........................................
-#
-    39.79%      git  libz.so.1.2.5       [.] 0x000000000000c1fe                    
-    26.39%      git  libz.so.1.2.5       [.] inflate                               
-    22.42%      git  git                 [.] 0x000000000009bd1e                    
-     2.99%      git  libz.so.1.2.5       [.] adler32                               
-     1.23%      git  libc-2.15.so        [.] _int_malloc                           
-     0.72%      git  libc-2.15.so        [.] __GI_____strtoull_l_internal          
-     0.67%      git  libc-2.15.so        [.] _int_free                             
-     0.62%      git  libc-2.15.so        [.] malloc_consolidate                    
-     0.54%      git  [kernel.kallsyms]   [k] clear_page_c                          
-     0.32%      git  [kernel.kallsyms]   [k] page_fault                            
-
-So by switching to the shorter version string that still embedds 
-the tag and the exact sha1 we'd be able to run this script a 
-*lot* faster.
-
-Thanks,
-
-	Ingo
+>> How can otherwise the user tell a corrupted configuration file from a
+>> missing key?
+>
+> You cannot, as long as your configuration file is well-formed, because a
+> missing key is an expected condition in many cases.
+>
+> Andreas.
+>
+> --
+> Andreas Schwab, schwab@linux-m68k.org
+> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+> "And now for something completely different."
