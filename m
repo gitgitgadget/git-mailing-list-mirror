@@ -1,67 +1,71 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git config error message
-Date: Sat, 27 Oct 2012 15:14:31 +0200
-Message-ID: <m2d3049hvs.fsf@igel.home>
-References: <CAB9Jk9AQkSiv=F8NeYs+uspR5f4CeJS5L-hwZUXdq7dts1W5ng@mail.gmail.com>
-	<m2bofo9v93.fsf@linux-m68k.org>
-	<CAB9Jk9CONVSZvBUgnZHiniwPHHvcap8Wyjyw-sCHaSokDoNRWA@mail.gmail.com>
-	<CAP30j15pUwX9sD3FXAfroxFK9paHmb1eAg+M5YAHT4aB22DBEw@mail.gmail.com>
-	<CAB9Jk9COSZOske5xzgnE=1oHe7qiwwOzHYE6pJkuZ0sZyZYhng@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Strange behaviour of git diff branch1 ... branch2
+Date: Sat, 27 Oct 2012 20:32:46 +0700
+Message-ID: <CACsJy8BkKRxp9AQW0M0vDSL8Mb16VGSrZ1OnQpwCrERWKVLSyA@mail.gmail.com>
+References: <20121026212650.GB2612@pug.qqx.org> <CACsJy8CX4Wbf3Bqez2kcQ7NGYMkqXC8MK+=hrH4iaev+0ZrQ8Q@mail.gmail.com>
+ <4ecbe65e-4b56-4a49-96c3-1ea8b3f0c473@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ben Walton <bdwalton@gmail.com>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 27 15:14:48 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Aaron Schrab <aaron@schrab.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 27 15:33:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TS6Dv-0003pB-Dn
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Oct 2012 15:14:47 +0200
+	id 1TS6W2-0001Hp-Fs
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Oct 2012 15:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576Ab2J0NOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2012 09:14:34 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:44407 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753627Ab2J0NOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2012 09:14:34 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XpjGJ26Qnz4KK2C;
-	Sat, 27 Oct 2012 15:14:32 +0200 (CEST)
-X-Auth-Info: SlTZgSZpJAiy+e1+nWHFaZ6w32ifCrKfXzShx4T5FFo=
-Received: from igel.home (ppp-93-104-148-157.dynamic.mnet-online.de [93.104.148.157])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XpjGJ1mMWzbbcg;
-	Sat, 27 Oct 2012 15:14:32 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id BFA08CA2A1; Sat, 27 Oct 2012 15:14:31 +0200 (CEST)
-X-Yow: I just had a MAJOR CONTRACT DISPUTE with SUZANNE SOMERS!!
-In-Reply-To: <CAB9Jk9COSZOske5xzgnE=1oHe7qiwwOzHYE6pJkuZ0sZyZYhng@mail.gmail.com>
-	(Angelo Borsotti's message of "Sat, 27 Oct 2012 12:36:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1758024Ab2J0NdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2012 09:33:18 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:64896 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754808Ab2J0NdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2012 09:33:17 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so3461401oag.19
+        for <git@vger.kernel.org>; Sat, 27 Oct 2012 06:33:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=agAvkFejxTWuzMc0U03Lq4xmDYIlVboAJPvFduxktsA=;
+        b=y/2ezGnfbUEdxgJqCNazOlH3ji///ksf2aPaQBX6ki27w14bAxHadv8h2pFFpdxDii
+         7VHcTw24Xmhgp+pPypoyFpIfgr9pSm6an5npAQjI4ijlAXYobswjW7hSs9EglOcXsw+L
+         UzRAKceQ1h9avYPhnRRFQq0xQ483xpFZ0Z5TnUQ4TuXll2raTzNZZD7XSsa9u0/PVj56
+         ++k4l0bPqjIqwB3T8U5mu4RvfXMw9EOdK3AXlsz789KK6uqmHRt0pHE+UN4wJJrmiJpN
+         /KyDJaaVpkatZSBUlrWgG0dJld4CbgSDwpR/hVyMQ3biqZUYDI4xituyKf7dFRiGoU+A
+         W/rg==
+Received: by 10.60.169.137 with SMTP id ae9mr21929318oec.91.1351344796354;
+ Sat, 27 Oct 2012 06:33:16 -0700 (PDT)
+Received: by 10.182.108.10 with HTTP; Sat, 27 Oct 2012 06:32:46 -0700 (PDT)
+In-Reply-To: <4ecbe65e-4b56-4a49-96c3-1ea8b3f0c473@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208508>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+On Sat, Oct 27, 2012 at 7:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>>
+>>Notice the --cc in the first line, which is combined diff. Usually
+>>combined-diff is between two points and one parent. Though somehow git
+>>passes 4 parents down combined-diff.c:show_combined_header, as you can
+>>see in the "index" line. I think we should fix rev parsing code as it
+>>does not make sense to pass 4 identical parents this way.
+>
+> The two heads home from HEAD...HEAD the user has on the command line.
+>
+> The user is getting exactly what she asked; there is nothing to fix.
 
-> Besides that, it is common practice in *nix OSs to
-> consider a return != 0 as an error.
+Is there any use case where HEAD...HEAD (or "..." alone) is actually useful?
 
-Is grep not finding a match an error?  Is cmp finding a difference an
-error?  It all depends on the context.
-
-> How can otherwise the user tell a corrupted configuration file from a
-> missing key?
-
-You cannot, as long as your configuration file is well-formed, because a
-missing key is an expected condition in many cases.
-
-Andreas.
-
+I have re-read the git-diff man page and I don't think it explains
+"git diff foo ... bar" syntax (from a user's point of view, not a git
+guru's). We could improve the documentation if "git diff foo ... bar"
+is useful, or reject it with an error to avoid confusion.
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Duy
