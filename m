@@ -1,57 +1,118 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Removing unreachable objects in the presence of broken links?
-Date: Sun, 28 Oct 2012 22:34:37 +0100
-Message-ID: <m2r4oiffgy.fsf@igel.home>
-References: <CAMuHMdUqUtDspOP2kE9wtGEr9aJHGGBG=HRomdY6NRa8gxar4A@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] submodule status: remove unused orig_* variables
+Date: Sun, 28 Oct 2012 22:37:16 +0100
+Message-ID: <508DA58C.2040504@web.de>
+References: <CABURp0op2+QUvusUmAFUxT8s8c02bB9V3=ag9gTTSiiN4t96OA@mail.gmail.com> <1351278834-28867-1-git-send-email-hordp@cisco.com> <508AE4AB.4070209@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Oct 28 22:35:01 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, phil.hord@gmail.com,
+	Jeff King <peff@peff.net>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 22:37:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSaVX-00035x-NX
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 22:35:00 +0100
+	id 1TSaY7-0005Wn-5S
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 22:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756040Ab2J1Vel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 17:34:41 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:59079 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756027Ab2J1Vek (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 17:34:40 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XqXJt0rWhz4KK2t;
-	Sun, 28 Oct 2012 22:34:38 +0100 (CET)
-X-Auth-Info: YyubHcaeAGUttJfRMtOUQ6ZivCI7rc1QQgEzuhMEpqs=
-Received: from igel.home (ppp-93-104-156-214.dynamic.mnet-online.de [93.104.156.214])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XqXJt0KQNzbbcM;
-	Sun, 28 Oct 2012 22:34:38 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id AB41CCA2A1; Sun, 28 Oct 2012 22:34:37 +0100 (CET)
-X-Yow: First, I'm going to give you all the ANSWERS to today's test..
- So just plug in your SONY WALKMANS and relax!!
-In-Reply-To: <CAMuHMdUqUtDspOP2kE9wtGEr9aJHGGBG=HRomdY6NRa8gxar4A@mail.gmail.com>
-	(Geert Uytterhoeven's message of "Sun, 28 Oct 2012 22:21:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1756047Ab2J1Vh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 17:37:27 -0400
+Received: from mout.web.de ([212.227.15.3]:60514 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756041Ab2J1Vh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 17:37:26 -0400
+Received: from [192.168.178.41] ([91.3.156.115]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0Mf0pJ-1TmCpR3pqD-00PGGv; Sun, 28 Oct 2012 22:37:17
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <508AE4AB.4070209@web.de>
+X-Enigmail-Version: 1.4.5
+X-Provags-ID: V02:K0:PZ46O08WhIxg9zyDM3u6AwOZkYSOAgQL+8FHsziKA21
+ oAV/7Znt+F0HfCvZFfwlx1Uurb+NotDTUu+0bIoWTnSjJRLT8I
+ 14Lr9zHKbLHpRCbG0otyVqYgKiJZXIZPbRWMe4m4HhTkyDWh1T
+ egVqkTCLi5CKssv8KT2gDU5e9yxbBpOMpB1RvfcSAjray86WrA
+ WbxBRXhhYSaDNR4mRmW9A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208571>
 
-Geert Uytterhoeven <geert@linux-m68k.org> writes:
+When renaming orig_args to orig_flags in 98dbe63d (submodule: only
+preserve flags across recursive status/update invocations) the call site
+of the recursive cmd_status was forgotten. At that place orig_args is
+still passed into the recursion, which is always empty since then. This
+did not break anything because the orig_flags logic is not needed at all
+when a function from the submodule script is called with eval, as that
+inherits all the variables set by the option parsing done in the first
+level of the recursion.
 
-> Is there a way to force removing unreachable objects in the presence of broken
-> links?
+Now that we know that orig_flags and orig_args aren't needed at all,
+let's just remove them from cmd_status().
 
-Does it help to forcibly expire the reflogs?
+Thanks-to: Phil Hord <hordp@cisco.com>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-Andreas.
+Am 26.10.2012 21:29, schrieb Jens Lehmann:
+> Am 26.10.2012 21:13, schrieb Phil Hord:
+>> A test in t7404-submodule-foreach purports to test that
+>> the --cached flag is properly noticed by --recursive calls
+>> to the foreach command as it descends into nested
+>> submodules.  However, the test really does not perform this
+>> test since the change it looks for is in a top-level
+>> submodule handled by the first invocation of the command.
+>> To properly test for the flag being passed to recursive
+>> invocations, the change must be buried deeper in the
+>> hierarchy.
+>>
+>> Move the change one level deeper so it properly verifies
+>> the recursive machinery of the 'git submodule status'
+>> command.
+> 
+> Me thinks we should definitely do this.
 
+And I also think this patch should go on top of Phil's patch after what
+we learned so far.
+
+I'm currently checking if we can also safely remove orig_flags from
+cmd_update(). At least the test suite runs fine without it ...
+
+
+ git-submodule.sh | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b110..c287464 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -926,7 +926,6 @@ cmd_summary() {
+ cmd_status()
+ {
+ 	# parse $args after "submodule ... status".
+-	orig_flags=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -950,7 +949,6 @@ cmd_status()
+ 			break
+ 			;;
+ 		esac
+-		orig_flags="$orig_flags $(git rev-parse --sq-quote "$1")"
+ 		shift
+ 	done
+
+@@ -990,7 +988,7 @@ cmd_status()
+ 				prefix="$displaypath/"
+ 				clear_local_git_env
+ 				cd "$sm_path" &&
+-				eval cmd_status "$orig_args"
++				eval cmd_status
+ 			) ||
+ 			die "$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
+ 		fi
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.8.0.42.g2ea983b
