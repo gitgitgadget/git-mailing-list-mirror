@@ -1,80 +1,85 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: git push tags
-Date: Sun, 28 Oct 2012 19:58:20 -0400
-Message-ID: <CAM9Z-n=VGiio0V=SmyXmSA9cBhqGjXaEGfAvh3wLQR+eDQpNNQ@mail.gmail.com>
-References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<508D7628.10509@kdbg.org>
-	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
-	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
+From: rh <richard_hubbe11@lavabit.com>
+Subject: gitweb
+Date: Sun, 28 Oct 2012 16:56:47 -0700
+Message-ID: <20121028165647.b79fe3fcb6784c4ae547439e@lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Chris Rorvick <chris@rorvick.com>, Johannes Sixt <j6t@kdbg.org>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	git <git@vger.kernel.org>, Kacper Kornet <draenog@pld-linux.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Oct 29 00:59:05 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 29 01:00:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TScky-00010g-RH
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 00:59:05 +0100
+	id 1TScm2-00020B-TA
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 01:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab2J1X6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 19:58:22 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:54860 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753489Ab2J1X6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 19:58:22 -0400
-Received: by mail-bk0-f46.google.com with SMTP id jk13so1741365bkc.19
-        for <git@vger.kernel.org>; Sun, 28 Oct 2012 16:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ne0DREsy4y31K0IiFl8kqkEDn8JOK+Ty4epIIaa+fLQ=;
-        b=pgNtHB8DxDVAOBRZnqKAzQhAmbn7rSB5wCsGmEBcUgCU20GrXN5VkDlvVPagrQ7b/B
-         yzld9yvZw7Qh5bASB9D5uFZkgamQt8N36sJxSpZXPo0wZtoXtydGi5PhANhn8VdB1BlS
-         DoRUAbtL4u9bV0o++RiuBSmlwhx+Z7oxt2lSriR821F96wmr8ZohCRpdPu7zik0U9LkC
-         01CmSfKUrjijDDsadB9iFMaBOeDdmM2w+sTsrkDMLyHooq6ZqGto0+3GNHKGP1e31xBk
-         PnfhmbUNE6Bdkhi3o7h8AhLrx7yeoTIwJYDprFsmjfZqHVbDrQ/K641XYDx682K1lPqC
-         k9lg==
-Received: by 10.204.11.70 with SMTP id s6mr8989272bks.63.1351468700498; Sun,
- 28 Oct 2012 16:58:20 -0700 (PDT)
-Received: by 10.205.122.144 with HTTP; Sun, 28 Oct 2012 16:58:20 -0700 (PDT)
-In-Reply-To: <4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
+	id S1755739Ab2J1X76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 19:59:58 -0400
+Received: from plane.gmane.org ([80.91.229.3]:51929 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755033Ab2J1X75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 19:59:57 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TSclv-0001rb-Rr
+	for git@vger.kernel.org; Mon, 29 Oct 2012 01:00:03 +0100
+Received: from ip68-6-43-149.sb.sd.cox.net ([68.6.43.149])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 01:00:03 +0100
+Received: from richard_hubbe11 by ip68-6-43-149.sb.sd.cox.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 01:00:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ip68-6-43-149.sb.sd.cox.net
+User-Agent: dsodnetnin
+X-Mailer: EZnn0.37p
+X-Newsreader: EZnn0.37p
+X-Gmane-NNTP-Posting-Host: EZnn0.37p
+Received: from slem by 1.1 with local
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208578>
 
-On Sun, Oct 28, 2012 at 5:49 PM, Philip Oakley <philipoakley@iee.org> wrote:
+I'm not using gitweb I was thinking about using it and was looking at the 
+cgi and saw this in this file:
+https://github.com/git/git/blob/master/gitweb/gitweb.perl
 
-> If I read it right it was where two users can tag two different commits with
-> the same tag name [e.g. 'Release_V3.3'] and the last person to push wins, so
-> anyone in the team can change what is to be the released version!
+I think I understand the intention but the outcome is wrong.
 
-Philip,
-Please look at Kacper's patch and Angelo's response to it. He seems to
-be asking that tags not be permitted to be pushed as if doing so were
-a "fast-forward" update.
+our %highlight_ext = (
+	# main extensions, defining name of syntax;
+	# see files in /usr/share/highlight/langDefs/ directory
+	map { $_ => $_ }
+	qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl sql make),
+	# alternate extensions, see /etc/highlight/filetypes.conf
+	'h' => 'c',
+	map { $_ => 'sh' } qw(bash zsh ksh),
+	map { $_ => 'cpp' } qw(cxx c++ cc),
+	map { $_ => 'php' } qw(php3 php4 php5 phps),
+	map { $_ => 'pl' } qw(perl pm), # perhaps also 'cgi'
+	map { $_ => 'make'} qw(mak mk),
+	map { $_ => 'xml' } qw(xhtml html htm),
+);
 
-This weekend I was, in part, trying to figure out what the correct CC
-list for that patch would be, what the documentation change would be,
-what changes would need to be made to the advice, what test would need
-to be included, and so on to build a proper patch bundle. All of that
-while tring to keep the house from "falling in" (I've been doing some
-cleaning) and prepare for the Northeastern USA Coast to be doused and
-blasted by Sandy in about a day and a half. If we decide to continue
-in the path that Kacper and I have stumbled upon (with Angelo's
-prodding) I'd appreciate a little help putting all of this together to
-mesh with the aforementioned patch. (Heck, if there's somebody better
-than me to take this over I'd be game for that too...)
+I think the intent is better met with this, (the print is for show)
 
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+our %he = ();
+$he{'h'} = 'c';
+$he{$_} = $_     for (qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl sql make));
+$he{$_} = 'cpp'  for (qw(cxx c++ cc));
+$he{$_} = 'php'  for (qw(php3 php4 php5 phps));
+$he{$_} = 'pl'   for (qw(cgi perl pm));
+$he{$_} = 'make' for (qw(mak mk));
+$he{$_} = 'xml'  for (qw(xhtml html htm));
+$he{$_} = 'sh'   for (qw(bash zsh ksh));
+
+print "$he{$_} $_\n" for(sort {$he{$a} cmp $he{$b}} keys %he);
+
+But then again maybe I misunderstood the intent.  And maybe everyone's happy
+with it as-is.
