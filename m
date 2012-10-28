@@ -1,113 +1,80 @@
-From: =?ISO-8859-2?Q?Bojan_Petrovi=E6?= <bojan85@gmail.com>
-Subject: Re: Mistake in git-reset documentation
-Date: Sun, 28 Oct 2012 10:32:21 +0100
-Message-ID: <CABPGWqoA9RKfAT5HPtL8q+cqVnNtY3m62FbnFupDfdNztjOhVA@mail.gmail.com>
-References: <CABPGWqr7=Rq4qS7yP09t2vMBUJ98NFTSmHUUgMzUQ5=WVrjfqg@mail.gmail.com>
-	<20121028083610.GA26374@shrek.podlesie.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mailmap: avoid out-of-bounds memory access
+Date: Sun, 28 Oct 2012 07:02:07 -0400
+Message-ID: <20121028110207.GA11434@sigill.intra.peff.net>
+References: <87k3ub4jjg.fsf@silenus.orebokech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Krzysztof Mazur <krzysiek@podlesie.net>
-X-From: git-owner@vger.kernel.org Sun Oct 28 10:32:38 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Romain Francoise <romain@orebokech.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 12:02:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSPES-0006x4-7K
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 10:32:36 +0100
+	id 1TSQdR-0006dd-86
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 12:02:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901Ab2J1JcY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Oct 2012 05:32:24 -0400
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:42983 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746Ab2J1JcW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Oct 2012 05:32:22 -0400
-Received: by mail-ea0-f174.google.com with SMTP id c13so1332976eaa.19
-        for <git@vger.kernel.org>; Sun, 28 Oct 2012 02:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WDcPl1AiLKbBm3qYkEf+xKSgR+GUvPIKwlpiNjl0CYs=;
-        b=ioXVeq8wm8/4Cryy+GN0YSAy/MlmOX5IvzPs+nV86nrb5ma8yMhS4c5oMO9EUuuGhU
-         5vp9FgyH3X9TRlXnlG9x4IblHUBpG6fk9GyDTcnI67pMqowQzOKFj5u/cjCUtgp5rHdd
-         Dm3tWd73qxNYTe0DsmKXmgw/eIa1YDFa788YcAT1HkTUZE6BI6R1LwY04jQsjL7TbK0E
-         HDyW5Ws9gVp1CQt1b1HqqaEWAx/aW79x14vK/SvVpUPL0B77hLPhQoQdj6St4Eidgd6e
-         r3ZVLEvrVrxxWpCnwIaYGXvJzdgHsgVzAc7gR2cl7HGVvRQfWLUVRt3bRUuVQ5EU4Lv/
-         HFQw==
-Received: by 10.14.216.193 with SMTP id g41mr40973880eep.37.1351416741364;
- Sun, 28 Oct 2012 02:32:21 -0700 (PDT)
-Received: by 10.223.144.68 with HTTP; Sun, 28 Oct 2012 02:32:21 -0700 (PDT)
-In-Reply-To: <20121028083610.GA26374@shrek.podlesie.net>
+	id S1751271Ab2J1LCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 07:02:16 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41253 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750825Ab2J1LCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 07:02:15 -0400
+Received: (qmail 7769 invoked by uid 107); 28 Oct 2012 11:02:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 28 Oct 2012 07:02:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Oct 2012 07:02:07 -0400
+Content-Disposition: inline
+In-Reply-To: <87k3ub4jjg.fsf@silenus.orebokech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208536>
 
-No need for that. Getting this patched will be enough. :) Thank you!
+On Sun, Oct 28, 2012 at 12:49:55AM +0200, Romain Francoise wrote:
 
-On 28 October 2012 09:36, Krzysztof Mazur <krzysiek@podlesie.net> wrote=
-:
-> On Sat, Oct 27, 2012 at 01:21:18PM +0200, Bojan Petrovi=C4=87 wrote:
->> None of the three forms of git-reset accept: "git reset" which is th=
-e
->> equivalent of "git reset -mixed".
->>
->> Square brackets should be used instead of parentheses for "--soft |
->> --mixed | --hard | --merge | --keep".
->>
->> Bojan
->
-> Square brackets are also missing in "'git reset' --<mode> [<commit>]"=
-=2E
->
-> Bojan, do you want to add a Reported-by line with your name?
->
-> Krzysiek
->
-> -- >8 --
-> Subject: [PATCH] doc: git-reset: make "--<mode>" optional
->
-> The git-reset's "--<mode>" is an optional argument, however it was
-> documented as required.
->
-> Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
-> ---
->  Documentation/git-reset.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.tx=
-t
-> index 117e374..1f95292 100644
-> --- a/Documentation/git-reset.txt
-> +++ b/Documentation/git-reset.txt
-> @@ -10,7 +10,7 @@ SYNOPSIS
->  [verse]
->  'git reset' [-q] [<commit>] [--] <paths>...
->  'git reset' (--patch | -p) [<commit>] [--] [<paths>...]
-> -'git reset' (--soft | --mixed | --hard | --merge | --keep) [-q] [<co=
-mmit>]
-> +'git reset' [--soft | --mixed | --hard | --merge | --keep] [-q] [<co=
-mmit>]
->
->  DESCRIPTION
->  -----------
-> @@ -43,7 +43,7 @@ This means that `git reset -p` is the opposite of `=
-git add -p`, i.e.
->  you can use it to selectively reset hunks. See the ``Interactive Mod=
-e''
->  section of linkgit:git-add[1] to learn how to operate the `--patch` =
-mode.
->
-> -'git reset' --<mode> [<commit>]::
-> +'git reset' [--<mode>] [<commit>]::
->         This form resets the current branch head to <commit> and
->         possibly updates the index (resetting it to the tree of <comm=
-it>) and
->         the working tree depending on <mode>, which
-> --
-> 1.8.0.46.gd11dae0
->
+> AddressSanitizer (http://clang.llvm.org/docs/AddressSanitizer.html)
+> complains of a one-byte buffer underflow in parse_name_and_email() while
+> running the test suite. And indeed, if one of the lines in the mailmap
+> begins with '<', we dereference the address just before the beginning of
+> the buffer when looking for whitespace to remove, before checking that
+> we aren't going too far.
+> 
+> So reverse the order of the tests to make sure that we don't read
+> outside the buffer.
+
+Thanks, I think your fix is correct.
+
+> diff --git a/mailmap.c b/mailmap.c
+> index 47aa419..ea4b471 100644
+> --- a/mailmap.c
+> +++ b/mailmap.c
+> @@ -118,7 +118,7 @@ static char *parse_name_and_email(char *buffer, char **name,
+>  	while (isspace(*nstart) && nstart < left)
+>  		++nstart;
+>  	nend = left-1;
+> -	while (isspace(*nend) && nend > nstart)
+> +	while (nend > nstart && isspace(*nend))
+>  		--nend;
+
+The fix confused me for a moment, because the problem is not actually in
+the loop condition itself; working backwards from "nend > nstart", we
+will at worst dereference nstart unnecessarily. The real problem is in
+the "nend = left-1" above, which sets the loop precondition outside the
+string to be examined.
+
+So you could also check for "left == nstart" before the loop even
+begins. I think your fix (to just make the loop more robust to that
+precondition) is better, though, as the rest of the code does the right
+thing with such a value of nend.
+
+It looks like t4203 triggers this problem. Curious that valgrind does
+not find it. I guess since it does not have compiler support, it cannot
+find out-of-bound errors on stack buffers. Does the rest of the test
+suite turn up clean with AddressSanitizer?
+
+-Peff
