@@ -1,122 +1,96 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: Mistake in git-reset documentation
-Date: Sun, 28 Oct 2012 15:13:27 +0100
-Message-ID: <20121028141327.GB16686@shrek.podlesie.net>
-References: <CABPGWqr7=Rq4qS7yP09t2vMBUJ98NFTSmHUUgMzUQ5=WVrjfqg@mail.gmail.com>
- <20121028083610.GA26374@shrek.podlesie.net>
- <20121028110715.GB11434@sigill.intra.peff.net>
- <m2zk36hg0q.fsf@igel.home>
- <20121028134635.GA25519@sigill.intra.peff.net>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH] Fix git p4 sync errors
+Date: Sun, 28 Oct 2012 11:06:23 -0400
+Message-ID: <20121028150623.GA9249@padd.com>
+References: <AC43C2B4-623F-4590-9F92-6CCA26645EFE@gmail.com>
+ <7vwqyjfxwd.fsf@alter.siamese.dyndns.org>
+ <F0F92B0A-D37F-40D4-A0DF-43EEDA2818B9@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Bojan =?iso-8859-2?Q?Petrovi=E6?= <bojan85@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 28 15:13:45 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Luke Diamand <luke@diamand.org>
+To: Matt Arsenault <arsenm2@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 16:06:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSTcV-0002S6-Q2
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 15:13:44 +0100
+	id 1TSURj-00046Y-UK
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 16:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608Ab2J1ONb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 10:13:31 -0400
-Received: from [93.179.225.50] ([93.179.225.50]:41320 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750979Ab2J1ONa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 10:13:30 -0400
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id AE0B859; Sun, 28 Oct 2012 15:13:27 +0100 (CET)
+	id S1752637Ab2J1PG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 11:06:27 -0400
+Received: from honk.padd.com ([74.3.171.149]:58102 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752402Ab2J1PG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 11:06:27 -0400
+Received: from arf.padd.com (unknown [50.55.148.232])
+	by honk.padd.com (Postfix) with ESMTPSA id 43C35D02;
+	Sun, 28 Oct 2012 08:06:26 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 09C0C22714; Sun, 28 Oct 2012 11:06:23 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20121028134635.GA25519@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <F0F92B0A-D37F-40D4-A0DF-43EEDA2818B9@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208548>
 
-On Sun, Oct 28, 2012 at 09:46:35AM -0400, Jeff King wrote:
-> On Sun, Oct 28, 2012 at 02:39:49PM +0100, Andreas Schwab wrote:
+arsenm2@gmail.com wrote on Wed, 24 Oct 2012 19:41 -0700:
 > 
-> > Jeff King <peff@peff.net> writes:
+> On Oct 21, 2012, at 12:06 , Junio C Hamano <gitster@pobox.com> wrote:
 > > 
-> > > On Sun, Oct 28, 2012 at 09:36:10AM +0100, Krzysztof Mazur wrote:
-> > >
-> > >>  DESCRIPTION
-> > >>  -----------
-> > >> @@ -43,7 +43,7 @@ This means that `git reset -p` is the opposite of `git add -p`, i.e.
-> > >>  you can use it to selectively reset hunks. See the ``Interactive Mode''
-> > >>  section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
-> > >>  
-> > >> -'git reset' --<mode> [<commit>]::
-> > >> +'git reset' [--<mode>] [<commit>]::
-> > >>  	This form resets the current branch head to <commit> and
-> > >>  	possibly updates the index (resetting it to the tree of <commit>) and
-> > >>  	the working tree depending on <mode>, which
-> > >
-> > > Should we say something like "if --<mode> is omitted, defaults to
-> > > "--mixed"?
+> >> 
+> >> This solves errors in some cases when syncing renamed files.
 > > 
-> > Under --mixed it already says "This is the default action", though.
+> > Can you be a bit more descriptive?  What are "errors in some case"?
+> > 
+> It might just be when files are renamed. I ran into this after months of using it, and I'm skeptical that in that time no files were ever renamed. I'm not sure what was special about the file that was renamed. (There also might have been deleted files in the same commit, not sure if that matters)
+
+I set up a test case where I did a "p4 move" on a file and tried
+syncing it, with and without "-s" to describe.  It works in both
+cases, for an old (2009.2) and new (2012.1) version of p4.
+
+The output of -s versus no -s does differ, and the differences
+are different with server version worse yet.  But in no case is
+there ever a set of file differences.  -G does seem to disable
+that.
+
+I'd love to track this down, but can't seem to provoke anything
+on my own.  Let me know if you have any hints based on what is in
+your depot or server/client config.  Or if you see it again.
+
+> > In short, what I am getting at are:
+> > 
+> > - What breaks by not passing "-s"?  What are the user visible
+> >   symptoms?
 > 
-> I know, but that is somewhat buried for somebody who is seeing that the
-> "--<mode>" bit is optional and wondering what it means to omit it.
-> 
+> There's a key error on the line
+> line 2198:        epoch = details["time"]
+> The details object is an error different fields set (I don't remember what it is exactly, I'm not at work right now)
 
-The --mixed mode is also described as second mode, and saying that --mixed
-is default earlier may save some time wasted on reading --soft
-description.
+This would happen if describe did not return a "time" field, but
+there's an explicit check for that:
 
-There is also small inconsequence in what <mode> is, just "mixed" or
-"--mixed".
+        res = p4CmdList("describe -s %d" % newestRevision)
+        newestTime = None   
+        for r in res:       
+            if r.has_key('time'):
+                newestTime = int(r['time'])
+        if newestTime is None:
+            die("Output from \"describe -s\" on newest change %d did not give a time" %                     
+                newestRevision) 
+        details["time"] = newestTime
 
-Krzysiek
+so I'm confused how this could happen.  Maybe your version is
+older/different than what is in the git source?
 
--- >8 --
-Subject: [PATCH] doc: git-reset: make "<mode>" optional
 
-The git-reset's "<mode>" is an optional argument, however it was
-documented as required.
+I'm not against putting in your patch, since it is true we don't
+want the file diff, and adding "-s" should be harmless in theory.
+And it doesn't cause any existing tests to fail.  It just scares
+me that there's something else going on we haven't figured out.
 
-The "<mode>" is documented as one of: --soft, --mixed, --hard, --merge
-or --keep, so "<mode>" should be used instead of "--<mode>".
-
-Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
----
- Documentation/git-reset.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 117e374..978d8da 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git reset' [-q] [<commit>] [--] <paths>...
- 'git reset' (--patch | -p) [<commit>] [--] [<paths>...]
--'git reset' (--soft | --mixed | --hard | --merge | --keep) [-q] [<commit>]
-+'git reset' [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
- 
- DESCRIPTION
- -----------
-@@ -43,11 +43,11 @@ This means that `git reset -p` is the opposite of `git add -p`, i.e.
- you can use it to selectively reset hunks. See the ``Interactive Mode''
- section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
- 
--'git reset' --<mode> [<commit>]::
-+'git reset' [<mode>] [<commit>]::
- 	This form resets the current branch head to <commit> and
- 	possibly updates the index (resetting it to the tree of <commit>) and
--	the working tree depending on <mode>, which
--	must be one of the following:
-+	the working tree depending on <mode>. If <mode> is omitted,
-+	defaults to "--mixed". The <mode> must be one of the following:
- +
- --
- --soft::
--- 
-1.8.0.47.g5b520ba
+		-- Pete
