@@ -1,81 +1,71 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 13/13] remote-hg: add extra author test
-Date: Sun, 28 Oct 2012 04:54:13 +0100
-Message-ID: <1351396453-29042-14-git-send-email-felipe.contreras@gmail.com>
-References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
+Subject: Re: [PATCH v2] Add new remote-hg transport helper
+Date: Sun, 28 Oct 2012 05:24:29 +0100
+Message-ID: <CAMP44s1a4ZjhQySTFbFzvgPhTwNJNoqLchP0xqmGekwHk5kqXw@mail.gmail.com>
+References: <1350745206-28955-1-git-send-email-felipe.contreras@gmail.com>
+	<20121020154301.GA31829@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 04:56:03 2012
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Oct 28 05:24:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSJyk-0003mE-9A
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 04:56:02 +0100
+	id 1TSKQa-0008GA-T9
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 05:24:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab2J1Dzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2012 23:55:47 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:38829 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755006Ab2J1Dzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2012 23:55:46 -0400
-Received: by mail-ee0-f46.google.com with SMTP id b15so1585004eek.19
-        for <git@vger.kernel.org>; Sat, 27 Oct 2012 20:55:45 -0700 (PDT)
+	id S1751386Ab2J1EYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 00:24:30 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:51310 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328Ab2J1EYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 00:24:30 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so3696068obb.19
+        for <git@vger.kernel.org>; Sat, 27 Oct 2012 21:24:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=vuPv5983rB/lrMhGH3U3IVOEn/3iAcZ4N9mCAeqXcYs=;
-        b=BIqXAdQnJgsG1HMdGAZYnv0T5CO8QJ8o3Q5jN3HAKBx9vGlutKeGQffsoG231HW1WY
-         UCyeqBxjAmGmyJetL2b7uED7wLmeBf64w2A89j4eCIKKfrgIkm2xeBYN+ZUZBZnaHjzc
-         OjqSmVorwJPze7JWcW+O600UJgNQ14WqcKsH1Nleh9sGaW9RxlIMQZwyDOQxghfSEDXa
-         NUVT0oH5vcr8rSCzoKoyDfFbagf6Y1WxMzKhK/sk4L3ZIYk7ErnmgobXh0oaDP57G+UD
-         1XCGXtygYmbXYEq1yNsbfa2eloQVzT6UG/JCZSgYI32h/OOekc6gpXqWTBs3oS1p9FVW
-         b4ng==
-Received: by 10.14.173.137 with SMTP id v9mr34572028eel.41.1351396545947;
-        Sat, 27 Oct 2012 20:55:45 -0700 (PDT)
-Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
-        by mx.google.com with ESMTPS id a44sm13231458eeo.7.2012.10.27.20.55.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 27 Oct 2012 20:55:45 -0700 (PDT)
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dYOgFWxcdNq/voY238dSPPd6hwh6sRICeE+QGAGHJjo=;
+        b=UWojfXWtS03IQTiODLELF4lvkdrKDcB7tQv66xMqRM2C6nOxF86n8BjV7NFZlpryf3
+         aPufdBXmZlLDdXtzz4bD5CwSS8vYEMa3b3s6tLlVTGPKC5dPYTYWWuOYKkBqdlhy+zZX
+         p1v1lRrESehGMe29UaV268sYsd8OZfGKi89mA3YAmJOOk0RyKf5kvKrLJmTou9AmFSQ2
+         kg+Q8E9gH2lm6ou9nMdMDV63ToBpc6UW/a8J1oVqc0Jb+O7fQQ8WDlhC8Kfbj5ZjdZWt
+         3zJcUgPNNprqIEMLaFpIOJMfFUo1d2H/bU215qSm7IYZrEuef/zNCwotJdLWrd2+I18O
+         ykCg==
+Received: by 10.60.27.201 with SMTP id v9mr13958716oeg.85.1351398269258; Sat,
+ 27 Oct 2012 21:24:29 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Sat, 27 Oct 2012 21:24:29 -0700 (PDT)
+In-Reply-To: <20121020154301.GA31829@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208532>
 
-For hg.hg.
+On Sat, Oct 20, 2012 at 5:43 PM, Mike Hommey <mh@glandium.org> wrote:
+> On Sat, Oct 20, 2012 at 05:00:06PM +0200, Felipe Contreras wrote:
+>> Changes since v1:
+>>
+>>  * Improved documentation
+>>  * Use more common 'python' binary
+>>  * Warn, don't barf when a branch has multiple heads
+>>  * Fixed marks to fetch after cloned
+>>  * Support for cloning/pulling remote repositories
+>>  * Use a more appropriate internal directory (e.g. .git/hg/origin)
+>>  * Fixes for python3
+>
+> Are the resulting commits identical to what you'd get from using hg-git?
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t5802-remote-hg-hg-git.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Now they are :)
 
-diff --git a/t/t5802-remote-hg-hg-git.sh b/t/t5802-remote-hg-hg-git.sh
-index 3cfa9e6..1f9f85c 100755
---- a/t/t5802-remote-hg-hg-git.sh
-+++ b/t/t5802-remote-hg-hg-git.sh
-@@ -353,7 +353,11 @@ test_expect_success 'hg author' '
- 
- 		echo theta > theta &&
- 		hg add theta &&
--		hg commit -u "test >test@example.com>" -m "add theta"
-+		hg commit -u "test >test@example.com>" -m "add theta" &&
-+
-+		echo iota > iota &&
-+		hg add iota &&
-+		hg commit -u "test <test <at> example <dot> com>" -m "add iota"
- 		) &&
- 
- 		hg_push_$x hgrepo-$x gitrepo-$x &&
 -- 
-1.8.0
+Felipe Contreras
