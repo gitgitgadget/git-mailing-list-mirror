@@ -1,89 +1,93 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] Fix t9200 on case insensitive file systems
-Date: Sun, 28 Oct 2012 16:28:19 +0100
-Message-ID: <508D4F13.1090209@web.de>
-References: <201210261818.25620.tboegi@web.de> <20121028111053.GC11434@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org, bdwalton@gmail.com, bosch@adacore.com,
-	brian@gernhardtsoftware.com, robin.rosenberg@dewire.com
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v4 0/8] Fix GIT_CEILING_DIRECTORIES that contain symlinks
+Date: Sun, 28 Oct 2012 17:16:19 +0100
+Message-ID: <1351440987-26636-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Lea Wiemann <lewiemann@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 28 16:30:26 2012
+X-From: git-owner@vger.kernel.org Sun Oct 28 17:16:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSUod-0006fy-2P
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 16:30:19 +0100
+	id 1TSVXj-00032Y-N8
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 17:16:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395Ab2J1P2Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Oct 2012 11:28:24 -0400
-Received: from mout.web.de ([212.227.17.11]:49924 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752075Ab2J1P2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 11:28:24 -0400
-Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0MT8bi-1TsIsP3fvC-00RkgN; Sun, 28 Oct 2012 16:28:20 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <20121028111053.GC11434@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:JeQVZB0CRzfv5UkDDGKe4PpntYEaYm29p2HbT9CA+1y
- BFhDsFJZ/KqDXjcLpYmKf9xTyMQn/VTVgbVmegl4LSM35617lS
- CjhMutk+GJqX2yN8ZUJXQ96SnEPBOpxTl68o85D/7l1BXW+02V
- l1hRrQIaBbrYYx2K/K0b6j4rWjinPOLQ8w3e6GFsX1CZycq82k
- icDqhUVg3FlKSPJUY+LHQ==
+	id S1752944Ab2J1QQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 12:16:44 -0400
+Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:49627 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752894Ab2J1QQn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Oct 2012 12:16:43 -0400
+X-AuditID: 12074413-b7f786d0000008bb-d5-508d5a6aada8
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id F4.A0.02235.A6A5D805; Sun, 28 Oct 2012 12:16:42 -0400 (EDT)
+Received: from michael.fritz.box (p57A2465E.dip.t-dialin.net [87.162.70.94])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q9SGGXJa002689
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 28 Oct 2012 12:16:39 -0400
+X-Mailer: git-send-email 1.8.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHIsWRmVeSWpSXmKPExsUixO6iqJsV1RtgcOYZn0XXlW4mi4beK8wW
+	T+beZbY4esrC4vaK+cwWP1p6mC3Wv7vK7MDu8ff9ByaPnbPusns8fNXF7vGsdw+jx8VLyh6f
+	N8kFsEVx2yQllpQFZ6bn6dslcGccnXuHqWAtb8W3ta8YGxibOLsYOTkkBEwkjrw4yQxhi0lc
+	uLeerYuRi0NI4DKjxOW/c5ggnDNMEi371zKCVLEJ6Eos6mlmArFFBGQlvh/eyAhSxCxwl1Fi
+	0tGpbCAJYQFPiYWz/4A1sAioSvxZ9Y8dxOYVcJH4u+Y6O8Q6OYkPex6xT2DkXsDIsIpRLjGn
+	NFc3NzEzpzg1Wbc4OTEvL7VI11wvN7NELzWldBMjJISEdzDuOil3iFGAg1GJh/dSQU+AEGti
+	WXFl7iFGSQ4mJVFe5qDeACG+pPyUyozE4oz4otKc1OJDjBIczEoivEu5gXK8KYmVValF+TAp
+	aQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZGQ4OJQneqZFAjYJFqempFWmZOSUIaSYOThDBBbKB
+	B2jDOpBC3uKCxNzizHSIolOMilLivMcigBICIImM0jy4AbBof8UoDvSPMO9GkHYeYKKA634F
+	NJgJaLAOH9jgkkSElFQDY7vYBNOfSVG/LTw3nT58zmjet3kzRdTePnuXeVJM8LXz21AenS1R
+	CiuKXGU21TroSVoe5T3JkpBfoMEvy/OkV9t9aq6g7WGZ+EMLFise1Nmg5HHu4KR7bR9Yti9k
+	OL340pGAuQ97vov8flRQ0f362CTFC6Wbn30KiOSanmSz553/c6vfplf6lyuxFGck 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208550>
 
-On 28.10.12 12:10, Jeff King wrote:
-> On Fri, Oct 26, 2012 at 06:18:24PM +0200, Torsten B=C3=B6gershausen w=
-rote:
->=20
->> t9200 defines $CVSROOT where cvs should init its repository
->> $CVSROOT is set to $PWD/cvsroot.
->> cvs init is supposed to create the repository inside $PWD/cvsroot/CV=
-SROOT
->>
->> "cvs init" (e.g. version  1.11.23) checks if the last element of the=
- path is
->> "CVSROOT", and if a directory with e.g. $PWD/cvsroot/CVSROOT already=
- exists.
->>
->> For such a $CVSROOT cvs refuses to init a repository here:
->> "Cannot initialize repository under existing CVSROOT:
->>
->> On a case insenstive file system cvsroot and CVSROOT are the same di=
-rectories
->> and t9200 fails.
->>
->> Solution: use $PWD/tmp/cvsroot instead of cvsroot $PWD/cvsroot
->=20
-> Wouldn't tmp/cvsroot have the same problem, since the basename is sti=
-ll
-> cvsroot?
->=20
->> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportc=
-ommit.sh
->> index b59be9a..69934b2 100755
->> --- a/t/t9200-git-cvsexportcommit.sh
->> +++ b/t/t9200-git-cvsexportcommit.sh
->> @@ -19,7 +19,7 @@ then
->>      test_done
->>  fi
->> =20
->> -CVSROOT=3D$PWD/cvsroot
->> +CVSROOT=3D$PWD/tmpcvsroot
->=20
-> Ah, but here you do something different, which makes sense. Should I
-> tweak the commit message?
->=20
+v4 of the series; see the cover letter for v3 [1] for more editorial
+comments.
 
-Yes, please do so.
+Changes since v3:
 
-Thanks for spotting,
-/torsten
+* For "test-path-utils longest_ancestor_length", normalize all of the
+  paths using normalize_path_copy() to counteract the path mangling
+  carried out by bash on Windows.  (Thanks to Johannes Sixt for his
+  helpful advice.)
+
+* Rebased onto a more recent master.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/208102
+
+Michael Haggerty (8):
+  Introduce new static function real_path_internal()
+  real_path_internal(): add comment explaining use of cwd
+  Introduce new function real_path_if_valid()
+  longest_ancestor_length(): use string_list_split()
+  longest_ancestor_length(): take a string_list argument for prefixes
+  longest_ancestor_length(): require prefix list entries to be
+    normalized
+  setup_git_directory_gently_1(): resolve symlinks in ceiling paths
+  string_list_longest_prefix(): remove function
+
+ Documentation/technical/api-string-list.txt |   8 ---
+ abspath.c                                   | 105 ++++++++++++++++++++++------
+ cache.h                                     |   3 +-
+ path.c                                      |  46 ++++++------
+ setup.c                                     |  34 ++++++++-
+ string-list.c                               |  20 ------
+ string-list.h                               |   8 ---
+ t/t0060-path-utils.sh                       |  41 ++++-------
+ t/t0063-string-list.sh                      |  30 --------
+ test-path-utils.c                           |  51 +++++++++++++-
+ test-string-list.c                          |  20 ------
+ 11 files changed, 202 insertions(+), 164 deletions(-)
+
+-- 
+1.8.0
