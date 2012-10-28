@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 03/13] remote-hg: add support for pushing
-Date: Sun, 28 Oct 2012 04:54:03 +0100
-Message-ID: <1351396453-29042-4-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 01/13] Add new remote-hg transport helper
+Date: Sun, 28 Oct 2012 04:54:01 +0100
+Message-ID: <1351396453-29042-2-git-send-email-felipe.contreras@gmail.com>
 References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
@@ -18,349 +18,408 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSJxa-0002qk-OQ
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 04:54:51 +0100
+	id 1TSJxZ-0002qk-Kb
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 04:54:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754838Ab2J1Dyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2012 23:54:36 -0400
+	id S1754754Ab2J1Dy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2012 23:54:29 -0400
 Received: from mail-ea0-f174.google.com ([209.85.215.174]:62048 "EHLO
 	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531Ab2J1Dyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2012 23:54:35 -0400
+	with ESMTP id S1752531Ab2J1Dy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2012 23:54:28 -0400
 Received: by mail-ea0-f174.google.com with SMTP id c13so1289746eaa.19
-        for <git@vger.kernel.org>; Sat, 27 Oct 2012 20:54:35 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 27 Oct 2012 20:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=EcnrtVQFWQ6Xu+6LzkwYqlNzMh+0Sl9j/d1lPikNpjA=;
-        b=fCZI/y0N99fVVqui0mNV7Yvk+4Tnh7RT6W1XsI9DBb1k7uCMbyrJfzfb4muGVn3T5h
-         4AnKI6u5QUiRCldCLVtIUY6DaDEqRV0/jlmpHbuQQJEechqqPAm41iwoUvEAWDCX+Qur
-         1hHQg0zXHvwZ8wObpgxegXOpEeew9i4hs2825BJVjnbF2xBWaG5zbxYApjj3jQz/HL4F
-         9JFGLo+x36bezda3bAxX1qy4yVkAzCqfWGymsZcsG2/uG1fTROAVm7ddIl11f81cKcfO
-         7aBCjOD9w/h8PHZ0zUL5v4oaX1mrkOeLdA/p4Yn+/+EBXrWAQu37vKBrp+Me1rjC5pBu
-         yLNg==
-Received: by 10.14.179.69 with SMTP id g45mr38441509eem.42.1351396475286;
-        Sat, 27 Oct 2012 20:54:35 -0700 (PDT)
+        bh=iDiKh2pnY6h39zj9rNSf02Xy6evEDWhAOsMQpIaP+bU=;
+        b=aqWZedvwN0hAwpOW0R7R9EtEUuEXaHX/rB/6WYSJnVVDKxEtIxDDbPZUb0UKdpSoMh
+         VZja2Jx0u9Dn2O7rU3GFQPA9Uq+7sszK5hlKS0tRRiBAymehRr/notE06EEGRfLDA1HJ
+         Ob9DbvlkDmWaFAwhYnfZX2Fa3gUOVFAxLUdgFQfLBwjWdN1T0VCCBIBUvkhdUws8O8Qd
+         a2LK1gwB6ud0y3Qs3vjCjEmohuAVXB/+ACs6hYisRK+k9h9md8TUYcR65i0twp6DKdjq
+         uHcdjNCnVz1eYI4ZEJyeO3wzqIHBE8WanxOw9FSIqDkdUGplOCSvOM4kVNoFR7QiWqht
+         KWMQ==
+Received: by 10.14.172.137 with SMTP id t9mr48311986eel.2.1351396467037;
+        Sat, 27 Oct 2012 20:54:27 -0700 (PDT)
 Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
-        by mx.google.com with ESMTPS id e1sm13232522eem.3.2012.10.27.20.54.32
+        by mx.google.com with ESMTPS id c6sm13229687eep.17.2012.10.27.20.54.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 27 Oct 2012 20:54:34 -0700 (PDT)
+        Sat, 27 Oct 2012 20:54:26 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208519>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-hg/git-remote-hg | 215 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 213 insertions(+), 2 deletions(-)
+ contrib/remote-hg/git-remote-hg | 356 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 356 insertions(+)
+ create mode 100755 contrib/remote-hg/git-remote-hg
 
 diff --git a/contrib/remote-hg/git-remote-hg b/contrib/remote-hg/git-remote-hg
-index 4ba9ee6..4021a7d 100755
---- a/contrib/remote-hg/git-remote-hg
+new file mode 100755
+index 0000000..c771182
+--- /dev/null
 +++ b/contrib/remote-hg/git-remote-hg
-@@ -6,7 +6,7 @@
- # Then you can clone with:
- # git clone hg::/path/to/mercurial/repo/
- 
--from mercurial import hg, ui, bookmarks
-+from mercurial import hg, ui, bookmarks, context
- 
- import re
- import sys
-@@ -15,6 +15,7 @@ import json
- 
- NAME_RE = re.compile('^([^<>]+)')
- AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]+)>$')
-+RAW_AUTHOR_RE = re.compile('^(\w+) (?:(.+)? )?<(.+)> (\d+) ([+-]\d+)')
- 
- def die(msg, *args):
-     sys.stderr.write('ERROR: %s\n' % (msg % args))
-@@ -29,12 +30,17 @@ def gitmode(flags):
- def gittz(tz):
-     return '%+03d%02d' % (-tz / 3600, -tz % 3600 / 60)
- 
-+def hgmode(mode):
-+    m = { '0100755': 'x', '0120000': 'l' }
-+    return m.get(mode, '')
+@@ -0,0 +1,356 @@
++#!/usr/bin/python
 +
- class Marks:
- 
-     def __init__(self, path):
-         self.path = path
-         self.tips = {}
-         self.marks = {}
-+        self.rev_marks = {}
-         self.last_mark = 0
- 
-         self.load()
-@@ -49,6 +55,9 @@ class Marks:
-         self.marks = tmp['marks']
-         self.last_mark = tmp['last-mark']
- 
-+        for rev, mark in self.marks.iteritems():
-+            self.rev_marks[mark] = int(rev)
++# Inspired by Rocco Rutte's hg-fast-export
 +
-     def dict(self):
-         return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark }
- 
-@@ -61,11 +70,19 @@ class Marks:
-     def from_rev(self, rev):
-         return self.marks[str(rev)]
- 
-+    def to_rev(self, mark):
-+        return self.rev_marks[mark]
++# Just copy to your ~/bin, or anywhere in your $PATH.
++# Then you can clone with:
++# git clone hg::/path/to/mercurial/repo/
 +
-     def next_mark(self, rev):
-         self.last_mark += 1
-         self.marks[str(rev)] = self.last_mark
-         return self.last_mark
- 
-+    def new_mark(self, rev, mark):
-+        self.marks[str(rev)] = mark
-+        self.rev_marks[mark] = rev
-+        self.last_mark = mark
++from mercurial import hg, ui
 +
-     def is_marked(self, rev):
-         return self.marks.has_key(str(rev))
- 
-@@ -103,6 +120,35 @@ class Parser:
-         if self.line == 'done':
-             self.line = None
- 
-+    def get_mark(self):
-+        i = self.line.index(':') + 1
-+        return int(self.line[i:])
++import re
++import sys
++import os
++import json
 +
-+    def get_data(self):
-+        if not self.check('data'):
-+            return None
-+        i = self.line.index(' ') + 1
-+        size = int(self.line[i:])
-+        return sys.stdin.read(size)
++NAME_RE = re.compile('^([^<>]+)')
++AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]+)>$')
 +
-+    def get_author(self):
-+        m = RAW_AUTHOR_RE.match(self.line)
-+        if not m:
-+            return None
-+        _, name, email, date, tz = m.groups()
++def die(msg, *args):
++    sys.stderr.write('ERROR: %s\n' % (msg % args))
++    sys.exit(1)
 +
-+        if email != 'unknown':
-+            if name:
-+                user = '%s <%s>' % (name, email)
-+            else:
-+                user = '<%s>' % (email)
++def warn(msg, *args):
++    sys.stderr.write('WARNING: %s\n' % (msg % args))
++
++def gitmode(flags):
++    return 'l' in flags and '120000' or 'x' in flags and '100755' or '100644'
++
++def gittz(tz):
++    return '%+03d%02d' % (-tz / 3600, -tz % 3600 / 60)
++
++class Marks:
++
++    def __init__(self, path):
++        self.path = path
++        self.tips = {}
++        self.marks = {}
++        self.last_mark = 0
++
++        self.load()
++
++    def load(self):
++        if not os.path.exists(self.path):
++            return
++
++        tmp = json.load(open(self.path))
++
++        self.tips = tmp['tips']
++        self.marks = tmp['marks']
++        self.last_mark = tmp['last-mark']
++
++    def dict(self):
++        return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark }
++
++    def store(self):
++        json.dump(self.dict(), open(self.path, 'w'))
++
++    def __str__(self):
++        return str(self.dict())
++
++    def from_rev(self, rev):
++        return self.marks[str(rev)]
++
++    def next_mark(self, rev):
++        self.last_mark += 1
++        self.marks[str(rev)] = self.last_mark
++        return self.last_mark
++
++    def is_marked(self, rev):
++        return self.marks.has_key(str(rev))
++
++    def get_tip(self, branch):
++        return self.tips.get(branch, 0)
++
++    def set_tip(self, branch, tip):
++        self.tips[branch] = tip
++
++class Parser:
++
++    def __init__(self, repo):
++        self.repo = repo
++        self.line = self.get_line()
++
++    def get_line(self):
++        return sys.stdin.readline().strip()
++
++    def __getitem__(self, i):
++        return self.line.split()[i]
++
++    def check(self, word):
++        return self.line.startswith(word)
++
++    def each_block(self, separator):
++        while self.line != separator:
++            yield self.line
++            self.line = self.get_line()
++
++    def __iter__(self):
++        return self.each_block('')
++
++    def next(self):
++        self.line = self.get_line()
++        if self.line == 'done':
++            self.line = None
++
++def export_file(fc):
++    d = fc.data()
++    print "M %s inline %s" % (gitmode(fc.flags()), fc.path())
++    print "data %d" % len(d)
++    print d
++
++def get_filechanges(repo, ctx, parents):
++    l = [repo.status(p, ctx)[:3] for p in parents]
++    changed, added, removed = [set(sum(e, [])) for e in zip(*l)]
++    return added | changed, removed
++
++def fixup_user(user):
++    user = user.replace('"', '')
++    name = mail = None
++    m = AUTHOR_RE.match(user)
++    if m:
++        name = m.group(1)
++        mail = m.group(2).strip()
++    else:
++        m = NAME_RE.match(user)
++        if m:
++            name = m.group(1).strip()
++
++    if not name:
++        name = 'Unknown'
++    if not mail:
++        mail = 'unknown'
++
++    return '%s <%s>' % (name, mail)
++
++def get_repo(url, alias):
++    global dirname
++
++    myui = ui.ui()
++    myui.setconfig('ui', 'interactive', 'off')
++
++    if hg.islocal(url):
++        repo = hg.repository(myui, url)
++    else:
++        local_path = os.path.join(dirname, 'clone')
++        if not os.path.exists(local_path):
++            peer, dstpeer = hg.clone(myui, {}, url, local_path, update=False, pull=True)
++            repo = dstpeer.local()
 +        else:
-+            user = name
++            repo = hg.repository(myui, local_path)
++            peer = hg.peer(myui, {}, url)
++            repo.pull(peer, heads=None, force=True)
 +
-+        tz = int(tz)
-+        tz = ((tz / 100) * 3600) + ((tz % 100) * 60)
-+        return (user, int(date), -tz)
++    return repo
 +
- def export_file(fc):
-     d = fc.data()
-     print "M %s inline %s" % (gitmode(fc.flags()), fc.path())
-@@ -157,6 +203,10 @@ def rev_to_mark(rev):
-     global marks
-     return marks.from_rev(rev)
- 
-+def mark_to_rev(mark):
++def rev_to_mark(rev):
 +    global marks
-+    return marks.to_rev(mark)
++    return marks.from_rev(rev)
 +
- def export_ref(repo, name, kind, head):
-     global prefix, marks
- 
-@@ -246,9 +296,17 @@ def do_capabilities(parser):
-     global prefix, dirname
- 
-     print "import"
-+    print "export"
-     print "refspec refs/heads/branches/*:%s/branches/*" % prefix
-     print "refspec refs/heads/*:%s/bookmarks/*" % prefix
-     print "refspec refs/tags/*:%s/tags/*" % prefix
++def export_ref(repo, name, kind, head):
++    global prefix, marks
 +
-+    path = os.path.join(dirname, 'marks-git')
++    ename = '%s/%s' % (kind, name)
++    tip = marks.get_tip(ename)
 +
-+    if os.path.exists(path):
-+        print "*import-marks %s" % path
-+    print "*export-marks %s" % path
++    # mercurial takes too much time checking this
++    if tip and tip == head.rev():
++        # nothing to do
++        return
++    revs = repo.revs('%u:%u' % (tip, head))
++    count = 0
 +
-     print
- 
- def get_branch_tip(repo, branch):
-@@ -331,8 +389,159 @@ def do_import(parser):
- 
-     print 'done'
- 
-+def parse_blob(parser):
-+    global blob_marks
++    revs = [rev for rev in revs if not marks.is_marked(rev)]
 +
-+    parser.next()
-+    mark = parser.get_mark()
-+    parser.next()
-+    data = parser.get_data()
-+    blob_marks[mark] = data
-+    parser.next()
-+    return
++    for rev in revs:
 +
-+def parse_commit(parser):
-+    global marks, blob_marks, bmarks, parsed_refs
++        c = repo[rev]
++        (manifest, user, (time, tz), files, desc, extra) = repo.changelog.read(c.node())
++        rev_branch = extra['branch']
 +
-+    from_mark = merge_mark = None
-+
-+    a = parser.line.split(' ')
-+    ref = a[1]
-+    parser.next()
-+
-+    commit_mark = parser.get_mark()
-+    parser.next()
-+    author = parser.get_author()
-+    parser.next()
-+    committer = parser.get_author()
-+    parser.next()
-+    data = parser.get_data()
-+    parser.next()
-+    if parser.check('from'):
-+        from_mark = parser.get_mark()
-+        parser.next()
-+    if parser.check('merge'):
-+        merge_mark = parser.get_mark()
-+        parser.next()
-+        if parser.check('merge'):
-+            die('octopus merges are not supported yet')
-+
-+    files = {}
-+
-+    for line in parser:
-+        if parser.check('M'):
-+            t, m, mark_ref, path = line.split(' ')
-+            mark = int(mark_ref[1:])
-+            f = { 'mode' : hgmode(m), 'data' : blob_marks[mark] }
-+        elif parser.check('D'):
-+            t, path = line.split(' ')
-+            f = { 'deleted' : True }
++        author = "%s %d %s" % (fixup_user(user), time, gittz(tz))
++        if 'committer' in extra:
++            user, time, tz = extra['committer'].rsplit(' ', 2)
++            committer = "%s %s %s" % (user, time, gittz(int(tz)))
 +        else:
-+            die('Unknown file command: %s' % line)
-+        files[path] = f
++            committer = author
 +
-+    def getfilectx(repo, memctx, f):
-+        of = files[f]
-+        if 'deleted' in of:
-+            raise IOError
-+        is_exec = of['mode'] == 'x'
-+        is_link = of['mode'] == 'l'
-+        return context.memfilectx(f, of['data'], is_link, is_exec, None)
++        parents = [p for p in repo.changelog.parentrevs(rev) if p >= 0]
++
++        if len(parents) == 0:
++            modified = c.manifest().keys()
++            removed = []
++        else:
++            modified, removed = get_filechanges(repo, c, parents)
++
++        if len(parents) == 0 and rev:
++            print 'reset %s/%s' % (prefix, ename)
++
++        print "commit %s/%s" % (prefix, ename)
++        print "mark :%d" % (marks.next_mark(rev))
++        print "author %s" % (author)
++        print "committer %s" % (committer)
++        print "data %d" % (len(desc))
++        print desc
++
++        if len(parents) > 0:
++            print "from :%s" % (rev_to_mark(parents[0]))
++            if len(parents) > 1:
++                print "merge :%s" % (rev_to_mark(parents[1]))
++
++        for f in removed:
++            print "D %s" % (f)
++        for f in modified:
++            export_file(c.filectx(f))
++        print
++
++        count += 1
++        if (count % 100 == 0):
++            print "progress revision %d '%s' (%d/%d)" % (rev, ename, count, len(revs))
++            print "#############################################################"
++
++    # make sure the ref is updated
++    print "reset %s/%s" % (prefix, ename)
++    print "from :%u" % rev_to_mark(rev)
++    print
++
++    marks.set_tip(ename, rev)
++
++def export_tag(repo, tag):
++    export_ref(repo, tag, 'tags', repo[tag])
++
++def export_branch(repo, branch):
++    tip = get_branch_tip(repo, branch)
++    head = repo[tip]
++    export_ref(repo, branch, 'branches', head)
++
++def export_head(repo):
++    global g_head
++    export_ref(repo, g_head[0], g_head[1], g_head[2])
++
++def do_capabilities(parser):
++    global prefix, dirname
++
++    print "import"
++    print "refspec refs/heads/branches/*:%s/branches/*" % prefix
++    print "refspec refs/tags/*:%s/tags/*" % prefix
++    print
++
++def get_branch_tip(repo, branch):
++    global branches
++
++    heads = branches.get(branch, None)
++    if not heads:
++        return None
++
++    # verify there's only one head
++    if (len(heads) > 1):
++        warn("Branch '%s' has more than one head, consider merging" % branch)
++        return repo.branchtip(branch)
++
++    return heads[0]
++
++def list_branch_head(repo, cur):
++    global g_head
++
++    tip = get_branch_tip(repo, cur)
++    head = 'branches/' + cur
++    print "@refs/heads/%s HEAD" % head
++    g_head = (head, 'branches', repo[tip])
++
++def do_list(parser):
++    global branches
 +
 +    repo = parser.repo
++    for branch in repo.branchmap():
++        heads = repo.branchheads(branch)
++        if len(heads):
++            branches[branch] = heads
 +
-+    user, date, tz = author
-+    extra = {}
++    cur = repo.dirstate.branch()
 +
-+    if committer != author:
-+        extra['committer'] = "%s %u %u" % committer
++    list_branch_head(repo, cur)
++    for branch in branches:
++        print "? refs/heads/branches/%s" % branch
 +
-+    if from_mark:
-+        p1 = repo.changelog.node(mark_to_rev(from_mark))
-+    else:
-+        p1 = '\0' * 20
-+
-+    if merge_mark:
-+        p2 = repo.changelog.node(mark_to_rev(merge_mark))
-+    else:
-+        p2 = '\0' * 20
-+
-+    ctx = context.memctx(repo, (p1, p2), data,
-+            files.keys(), getfilectx,
-+            user, (date, tz), extra)
-+
-+    node = repo.commitctx(ctx)
-+
-+    rev = repo[node].rev()
-+
-+    parsed_refs[ref] = node
-+
-+    marks.new_mark(rev, commit_mark)
-+
-+def parse_reset(parser):
-+    a = parser.line.split(' ')
-+    ref = a[1]
-+    parser.next()
-+    # ugh
-+    if parser.check('commit'):
-+        parse_commit(parser)
-+        return
-+    if not parser.check('from'):
-+        return
-+    from_mark = parser.get_mark()
-+    parser.next()
-+
-+    node = parser.repo.changelog.node(mark_to_rev(from_mark))
-+    parsed_refs[ref] = node
-+
-+def parse_tag(parser):
-+    a = parser.line.split(' ')
-+    name = a[1]
-+    parser.next()
-+    from_mark = parser.get_mark()
-+    parser.next()
-+    tagger = parser.get_author()
-+    parser.next()
-+    data = parser.get_data()
-+    parser.next()
-+
-+    # nothing to do
-+
-+def do_export(parser):
-+    global parsed_refs
-+
-+    parser.next()
-+
-+    for line in parser.each_block('done'):
-+        if parser.check('blob'):
-+            parse_blob(parser)
-+        elif parser.check('commit'):
-+            parse_commit(parser)
-+        elif parser.check('reset'):
-+            parse_reset(parser)
-+        elif parser.check('tag'):
-+            parse_tag(parser)
-+        elif parser.check('feature'):
-+            pass
-+        else:
-+            die('unhandled export command: %s' % line)
-+
-+    for ref, node in parsed_refs.iteritems():
-+        if ref.startswith('refs/heads/branches'):
-+            pass
-+        elif ref.startswith('refs/heads/'):
-+            bmark = ref[len('refs/heads/'):]
-+            bookmarks.pushbookmark(parser.repo, bmark, '', node)
-+        elif ref.startswith('refs/tags/'):
-+            tag = ref[len('refs/tags/'):]
-+            parser.repo.tag([tag], node, None, True, None, {})
-+        print "ok %s" % ref
++    for tag, node in repo.tagslist():
++        if tag == 'tip':
++            continue
++        print "? refs/tags/%s" % tag
 +
 +    print
 +
- def main(args):
--    global prefix, dirname, marks, branches, bmarks
-+    global prefix, dirname, branches, bmarks
-+    global marks, blob_marks, parsed_refs
- 
-     alias = args[1]
-     url = args[2]
-@@ -341,6 +550,8 @@ def main(args):
-     dirname = os.path.join(gitdir, 'hg', alias)
-     branches = {}
-     bmarks = {}
-+    blob_marks = {}
-+    parsed_refs = {}
- 
-     repo = get_repo(url, alias)
-     prefix = 'refs/hg/%s' % alias
++def do_import(parser):
++    repo = parser.repo
++
++    path = os.path.join(dirname, 'marks-git')
++
++    print "feature done"
++    if os.path.exists(path):
++        print "feature import-marks=%s" % path
++    print "feature export-marks=%s" % path
++    sys.stdout.flush()
++
++    # lets get all the import lines
++    while parser.check('import'):
++        ref = parser[1]
++
++        if (ref == 'HEAD'):
++            export_head(repo)
++        elif ref.startswith('refs/heads/branches/'):
++            branch = ref[len('refs/heads/branches/'):]
++            export_branch(repo, branch)
++        elif ref.startswith('refs/tags/'):
++            tag = ref[len('refs/tags/'):]
++            export_tag(repo, tag)
++
++        parser.next()
++
++    print 'done'
++
++def main(args):
++    global prefix, dirname, marks, branches
++
++    alias = args[1]
++    url = args[2]
++
++    gitdir = os.environ['GIT_DIR']
++    dirname = os.path.join(gitdir, 'hg', alias)
++    branches = {}
++
++    repo = get_repo(url, alias)
++    prefix = 'refs/hg/%s' % alias
++
++    if not os.path.exists(dirname):
++        os.makedirs(dirname)
++
++    marks_path = os.path.join(dirname, 'marks-hg')
++    marks = Marks(marks_path)
++
++    parser = Parser(repo)
++    for line in parser:
++        if parser.check('capabilities'):
++            do_capabilities(parser)
++        elif parser.check('list'):
++            do_list(parser)
++        elif parser.check('import'):
++            do_import(parser)
++        elif parser.check('export'):
++            do_export(parser)
++        else:
++            die('unhandled command: %s' % line)
++        sys.stdout.flush()
++
++    marks.store()
++
++sys.exit(main(sys.argv))
 -- 
 1.8.0
