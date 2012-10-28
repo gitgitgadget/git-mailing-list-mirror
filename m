@@ -1,134 +1,94 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Sun, 28 Oct 2012 17:16:23 -0400
-Message-ID: <20121028211623.GE26675@odin.tremily.us>
-References: <20121023204437.GE28592@odin.tremily.us>
- <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
- <50883E54.4080507@web.de> <20121025005307.GE801@odin.tremily.us>
- <508D9A12.6010104@web.de>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Removing unreachable objects in the presence of broken links?
+Date: Sun, 28 Oct 2012 22:21:32 +0100
+Message-ID: <CAMuHMdUqUtDspOP2kE9wtGEr9aJHGGBG=HRomdY6NRa8gxar4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=zjcmjzIkjQU2rmur
-Cc: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Oct 28 22:17:00 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 28 22:21:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSaE4-00040U-28
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 22:16:56 +0100
+	id 1TSaIk-0008GS-PX
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 22:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755956Ab2J1VQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 17:16:44 -0400
-Received: from vms173019pub.verizon.net ([206.46.173.19]:45541 "EHLO
-	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755946Ab2J1VQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 17:16:43 -0400
-Received: from odin.tremily.us ([unknown] [72.68.106.55])
- by vms173019.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MCM008KEGFBJ820@vms173019.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 28 Oct 2012 16:16:24 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 7094C682696; Sun,
- 28 Oct 2012 17:16:23 -0400 (EDT)
-Content-disposition: inline
-In-reply-to: <508D9A12.6010104@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756000Ab2J1VVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 17:21:35 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:52881 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755946Ab2J1VVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 17:21:34 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so2647695lbo.19
+        for <git@vger.kernel.org>; Sun, 28 Oct 2012 14:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=Hf5EKCeZL8yk2LcDLrJ73u50reB1z+nQP4WRFPOfApc=;
+        b=OmujAIqhwnn9EeeJo3RyTe0HH7ICa0+xi9+jd1IsoAAZNbYkVLuOeSHdL5ogGOPaH4
+         g+QztSiuf6wzMthlRVueV5qvaXsJa1pt70MR8HRCbuJ2kXk4s/eZu+yGqKkc8Dggryzu
+         o8M2jpJ4DCmScFxykDNc+UX/I549C3QCk6Zup0NspWalu1E7PZ+2tl2K4/RF4tGGe9g5
+         Nsq/WkXC9c6QBjaNAJeYwPn1OaPo7Bsa5RPt+vnUJ8ba6NkhDHad9J785Q7Li4JXw6VW
+         ueT+QyURmFKUDvD/kcUBdVL8KZOCTQ0VnuOF760/AoqRK2GRrgMQTXoQkuuu7f6nKaem
+         hU3Q==
+Received: by 10.112.38.228 with SMTP id j4mr11070672lbk.87.1351459292772; Sun,
+ 28 Oct 2012 14:21:32 -0700 (PDT)
+Received: by 10.152.112.168 with HTTP; Sun, 28 Oct 2012 14:21:32 -0700 (PDT)
+X-Google-Sender-Auth: OQcQ6_Qjl-mUB_1tvalFHDE--X0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208569>
 
+Hi,
 
---zjcmjzIkjQU2rmur
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I managed to have a few missing objects in my development Linux kernel
+repository, which uses another Linux kernel clone as an alternate.
+Fortunately nothing is lost, as all missing objects are unreachable.
+Probably they were in a branch that has been rebased, and the objects existed
+for a small timespan in the alternate when I tried whether a patch created
+in the development tree applied cleanly.
 
-On Sun, Oct 28, 2012 at 09:48:18PM +0100, Jens Lehmann wrote:
-> Am 25.10.2012 02:53, schrieb W. Trevor King:
-> > On Wed, Oct 24, 2012 at 09:15:32PM +0200, Jens Lehmann wrote:
-> >> I still fail to see what adding that functionality to the submodule
-> >> command buys us (unless we also add code which really uses the branch
-> >> setting). What's wrong with doing a simple:
-> >>
-> >>    git config -f .gitmodules submodule.<path>.branch <record_branch>
-> >>
-> >> on the command line when you want to use the branch setting for your
-> >> own purposes? You could easily wrap that into a helper script, no?
-> >=20
-> > Sure.  But why maintain my own helper script if I can edit
-> > git-submodules.sh?  It seems like a number of people are using this
-> > config option, and they generally store the same name in it that they
-> > use to create the submodule.  This way I can save them time too.
->=20
-> But people are already using the "branch" setting in *different* ways:
+Is there a way to force removing unreachable objects in the presence of broken
+links?
 
-And they are usually storing the same string.  Now, more easily.  If
-they want a different string, it is also easier.  If they don't want
-to use --record, they can do things however they were already doing
-them.  I don't see the problem.
+"git prune" doesn't do it, as it aborts when encountering the first
+missing object.
+Same with "git repack -[aA]d".
 
-> Am 23.10.2012 22:55, schrieb W. Trevor King:
-> > As Phil pointed out, doing anything with this variable is ambiguous:
-> >
-> > On Mon, Oct 22, 2012 at 06:03:53PM -0400, Phil Hord wrote:
-> >> Some projects now use the 'branch' config value to record the tracking
-> >> branch for the submodule.  Some ascribe different meaning to the
-> >> configuration if the value is given vs. undefined.  For example, see
-> >> the Gerrit submodule-subscription mechanism.  This change will cause
-> >> those workflows to behave differently than they do now.
->=20
-> I don't have a problem with the amount or complexity of the code being
-> added, But by adding that option we may be giving the impression that it
-> is officially sanctioned, or that it will be kept up to date by further
-> submodule commands.
+"git fsck" reported
+broken link from    tree 1330855dc33c1042b80d4c8ecbb6d56a19557ee8
+              to    tree b6c8c53b804662d6a6435c62b6dec1612bfbeb46
+broken link from    tree f182e2fa155b9684b79ff6e17159d03d4de9a773
+              to    blob d41f9ed0e2aba47ef62b4b4dd211b91cfe474ff8
+missing blob d41f9ed0e2aba47ef62b4b4dd211b91cfe474ff8
+missing tree b6c8c53b804662d6a6435c62b6dec1612bfbeb46
 
-Storing something there will be officially sanctioned.  Using it for
-anything in particular will not be officially sanctioned.  Phil's
-submodule_<var-name> export in foreach will expose the variable so the
-user can do whatever they think is appropriate with it, but it's still
-up to the user to give the option some kind of semantic meaning.
+"git fsck --unreachable HEAD $(git for-each-ref
+--format="%(objectname)" refs/heads)"
+told me about lots of unreachable objects, including the tree objects that
+contain the two broken links.
 
-> I added Shawn to the CC, maybe he can comment on how the "branch"
-> setting is used in Gerrit and what he thinks about adding code to
-> set that with "git submodule add -r <branch> ..." to core git.
+BTW, every time I now do a rebase that triggers a gc (after the actual rebase
+operation has completed), I end up with "(no branch)", so I have to do:
+    git banch -D <branch>
+    git branch <branch>
+    git checkout <branch>
+to get back on the branch.
+This is with git version 1.7.0.4 (1:1.7.0.4-1ubuntu0.2).
 
-Good idea.
+Thanks!
 
-Trevor
+Gr{oetje,eeting}s,
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+                        Geert
 
---zjcmjzIkjQU2rmur
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQjaClAAoJEEUbTsx0l5OMAksP/2ecPu1rLq4PjKm8yRCvowGY
-jqgRoP9h+BTFAmbffXNpaaDTMLno2kEYaxIoiudEqBKFHjogb1lw9JMDl9ZkqpZ0
-djJwgOqCap2KlJC3nz+o2x1vp1IF4CRMJdDEx/+kH00IHjHON4tXFQd4a01DQcSy
-+xxrEhn1O9L7mb1PGgzIQgvhZxXDiHFnFvdckPbcCq7UB8Xx4XsUN0Yho+QI78zv
-YJ6PsyDaiDmoh7LPL2psPRAe98+2/B1zx8B94i4p+W1gi9bx9iw1lX7ZAxVawCpN
-CGx4ghpsd7jHRS4LtBNe9Z8hLeILMRCLPoqvUfyy8iwDjFAXsc0hbJ7SzOhewVda
-AXrlNgzPLuoBV12saQmw4lgm/gX1PCSFZ6DG6YALwO37nCEWDDZJFbDUCmG+w6vF
-/k1IORqdrz+tfvD7RHjRFAEPwJaYgp2D9pWURHbQ4PcNxNZPpLf00Z8rQMSk9Xha
-m99MkFrfpvTXOpBM+OQPWYCZVOZcq15aWr3SUCgJppTm6kKzuCbMqjInSskX2TLn
-sM/J0jv3VrbLLxy0mbyYWI2+PE/lioffTxUosbmymFJsPQ0xsNG8ojoUE9QJPNAN
-LwD30lzJHlfCvwZxDhgYQMdyPs7NbBlmkVzk8300RJ/ycOipIwjkunrA+FCcmPsj
-QZYZLkSt6qkfNzdVYDxg
-=Px5w
------END PGP SIGNATURE-----
-
---zjcmjzIkjQU2rmur--
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
