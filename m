@@ -1,114 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] Teach rm to remove submodules when given with a trailing
- '/'
-Date: Mon, 29 Oct 2012 00:28:18 +0100
-Message-ID: <508DBF92.9090200@web.de>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: git push tags
+Date: Sun, 28 Oct 2012 19:58:20 -0400
+Message-ID: <CAM9Z-n=VGiio0V=SmyXmSA9cBhqGjXaEGfAvh3wLQR+eDQpNNQ@mail.gmail.com>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+	<508D7628.10509@kdbg.org>
+	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
+	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 29 00:35:20 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Chris Rorvick <chris@rorvick.com>, Johannes Sixt <j6t@kdbg.org>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>, Kacper Kornet <draenog@pld-linux.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Oct 29 00:59:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TScNx-0005AL-6J
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 00:35:17 +0100
+	id 1TScky-00010g-RH
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 00:59:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757357Ab2J1XfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 19:35:01 -0400
-Received: from mout.web.de ([212.227.15.3]:59406 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756950Ab2J1X2U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 19:28:20 -0400
-Received: from [192.168.178.41] ([91.3.156.115]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0LyDph-1TMiRi0P6T-0162ow; Mon, 29 Oct 2012 00:28:19
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-X-Enigmail-Version: 1.4.5
-X-Provags-ID: V02:K0:I072OfnDaaNzz1odGMPUk72bvnD0Rim4bxF1gX2pL7H
- ovRe7BtcbuB/W6GdzzHX1K+VDBtWZq+HR0b+SZbJKHBSZRjuQz
- gm5An1y61ajm9rlE2QTfXZyLJgJuaZ09KgNMDw+VeXPJq7adSD
- tZu035blBaiNdpuZTJCDRPYc/RGaSzP3T9EdDW2yp5GiFnyueO
- w8u5AhYW62wZFb6mCSmGg==
+	id S1754681Ab2J1X6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 19:58:22 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:54860 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753489Ab2J1X6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 19:58:22 -0400
+Received: by mail-bk0-f46.google.com with SMTP id jk13so1741365bkc.19
+        for <git@vger.kernel.org>; Sun, 28 Oct 2012 16:58:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ne0DREsy4y31K0IiFl8kqkEDn8JOK+Ty4epIIaa+fLQ=;
+        b=pgNtHB8DxDVAOBRZnqKAzQhAmbn7rSB5wCsGmEBcUgCU20GrXN5VkDlvVPagrQ7b/B
+         yzld9yvZw7Qh5bASB9D5uFZkgamQt8N36sJxSpZXPo0wZtoXtydGi5PhANhn8VdB1BlS
+         DoRUAbtL4u9bV0o++RiuBSmlwhx+Z7oxt2lSriR821F96wmr8ZohCRpdPu7zik0U9LkC
+         01CmSfKUrjijDDsadB9iFMaBOeDdmM2w+sTsrkDMLyHooq6ZqGto0+3GNHKGP1e31xBk
+         PnfhmbUNE6Bdkhi3o7h8AhLrx7yeoTIwJYDprFsmjfZqHVbDrQ/K641XYDx682K1lPqC
+         k9lg==
+Received: by 10.204.11.70 with SMTP id s6mr8989272bks.63.1351468700498; Sun,
+ 28 Oct 2012 16:58:20 -0700 (PDT)
+Received: by 10.205.122.144 with HTTP; Sun, 28 Oct 2012 16:58:20 -0700 (PDT)
+In-Reply-To: <4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208577>
 
-Doing a "git rm submod/" on a submodule results in an error:
-	fatal: pathspec 'submod/' did not match any files
-This is really inconvenient as e.g. using TAB completion in a shell on a
-submodule automatically adds the trailing '/' when it completes the path
-of the submodule directory. The user has then to remove the '/' herself to
-make a "git rm" succeed. Doing a "git rm -r somedir/" is working fine, so
-there is no reason why that shouldn't work for submodules too.
+On Sun, Oct 28, 2012 at 5:49 PM, Philip Oakley <philipoakley@iee.org> wrote:
 
-Teach git rm to not error out when a '/' is appended to the path of a
-submodule. Achieve this by chopping off trailing slashes from the path
-names given if they represent directories. Add tests to make sure that
-logic only applies to directories and not to files.
+> If I read it right it was where two users can tag two different commits with
+> the same tag name [e.g. 'Release_V3.3'] and the last person to push wins, so
+> anyone in the team can change what is to be the released version!
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+Philip,
+Please look at Kacper's patch and Angelo's response to it. He seems to
+be asking that tags not be permitted to be pushed as if doing so were
+a "fast-forward" update.
 
+This weekend I was, in part, trying to figure out what the correct CC
+list for that patch would be, what the documentation change would be,
+what changes would need to be made to the advice, what test would need
+to be included, and so on to build a proper patch bundle. All of that
+while tring to keep the house from "falling in" (I've been doing some
+cleaning) and prepare for the Northeastern USA Coast to be doused and
+blasted by Sandy in about a day and a half. If we decide to continue
+in the path that Kacper and I have stumbled upon (with Angelo's
+prodding) I'd appreciate a little help putting all of this together to
+mesh with the aforementioned patch. (Heck, if there's somebody better
+than me to take this over I'd be game for that too...)
 
-This patch applies on top of the jl/submodule-rm branch merged into
-current next.
-
-
- builtin/rm.c  |  7 +++++++
- t/t3600-rm.sh | 17 +++++++++++++++++
- 2 files changed, 24 insertions(+)
-
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 2aea3b5..5381d3f 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -234,6 +234,13 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
-
-+	/* Remove trailing '/' from directories to find submodules in the index */
-+	for (i = 0; i < argc; i++) {
-+		size_t pathlen = strlen(argv[i]);
-+		if (pathlen && is_directory(argv[i]) && (argv[i][pathlen - 1] == '/'))
-+			argv[i] = xmemdupz(argv[i], pathlen - 1);
-+	}
-+
- 	pathspec = get_pathspec(prefix, argv);
- 	refresh_index(&the_index, REFRESH_QUIET, pathspec, NULL, NULL);
-
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 97254e8..06f6384 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -302,6 +302,23 @@ test_expect_success 'rm removes work tree of unmodified submodules' '
- 	test_cmp expect actual
- '
-
-+test_expect_success 'rm removes a submodule with a trailing /' '
-+	git reset --hard &&
-+	git submodule update &&
-+	git rm submod/ &&
-+	test ! -d submod &&
-+	git status -s -uno --ignore-submodules=none > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rm fails when given a file with a trailing /' '
-+	test_must_fail git rm empty/
-+'
-+
-+test_expect_success 'rm succeeds when given a directory with a trailing /' '
-+	git rm -r frotz/
-+'
-+
- test_expect_success 'rm of a populated submodule with different HEAD fails unless forced' '
- 	git reset --hard &&
- 	git submodule update &&
 -- 
-1.8.0.42.g3346551
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
