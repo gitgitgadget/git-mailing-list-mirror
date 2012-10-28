@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 07/13] remote-hg: match hg merge behavior
-Date: Sun, 28 Oct 2012 04:54:07 +0100
-Message-ID: <1351396453-29042-8-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 09/13] remote-hg: add compat for hg-git author fixes
+Date: Sun, 28 Oct 2012 04:54:09 +0100
+Message-ID: <1351396453-29042-10-git-send-email-felipe.contreras@gmail.com>
 References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
@@ -12,91 +12,181 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 04:55:34 2012
+X-From: git-owner@vger.kernel.org Sun Oct 28 04:55:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSJyI-0003Nu-1j
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 04:55:34 +0100
+	id 1TSJyN-0003Uz-Ig
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 04:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896Ab2J1DzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2012 23:55:17 -0400
+	id S1754924Ab2J1Dz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2012 23:55:26 -0400
 Received: from mail-ee0-f46.google.com ([74.125.83.46]:38829 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531Ab2J1DzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2012 23:55:15 -0400
+	with ESMTP id S1752531Ab2J1DzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2012 23:55:24 -0400
 Received: by mail-ee0-f46.google.com with SMTP id b15so1585004eek.19
-        for <git@vger.kernel.org>; Sat, 27 Oct 2012 20:55:15 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 27 Oct 2012 20:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=dCB8lnJh1Txko+yhZJf1fVFVqivzQAR1MzTpR82f4sE=;
-        b=iS7+d2duVEsDKcWaFjwPoQzjD301mLnJQ9baI7A/EwnbWJN78zTp3yhuX2uBNlP2x/
-         HRyHG4cAV6ZTtxPaenctzmj0Pq9sKvvoqxtPJHqylQd5HMpPtXYOx5hv/ZYa4SzNQM2u
-         60ET3V4A0leYRWzOS4NkH2fgTzkqt5NDbPz+7Np+i1Axv8NIcVThBMRAI+Xku58nBtRU
-         TdwyN3oeI47MwbISm1AjdJXCkgsAeNazXWMDbqgQ5DsMesb6E1X6+bHyfS5zWzxXeJjt
-         R6MjMmyPlQ3S7CkraQB89dqWvniXuEERdk1JSfXNGfhhTRbzAopTSAyDVqxCApCAgEJB
-         MjMA==
-Received: by 10.14.173.195 with SMTP id v43mr47320963eel.39.1351396515177;
-        Sat, 27 Oct 2012 20:55:15 -0700 (PDT)
+        bh=886uGyzAbpbobM+DGt7aFH0c9QP//L4tPB26xHIvYe4=;
+        b=L6OJaDFVg1jUmLre7ARNWOzTaOH1tDQPJhAa2v5MMTNHuibhgLABwGva5qINJYko8T
+         FLAU9S0NHIotGhHvfMrsuTRv5r9Nu22K+e7DbhCFLzOWGfXCbZLnyYpAV+X6zOotFnuC
+         WjZUSOtWn8wuSPi2XZ36Ve/QuKENmmwO9Ry9QEXQiTvQTD+1hv7BgTSaHcQkNa1vkZXe
+         j2dE0oyyNi5lKb0OmI1ONnWQ3C9vjw4QXhTS1ZrNAaikmaycFXpbvM8er8wV8uwj/qoQ
+         bS31oYiAvL1unXDumlgpFQMgG0GwCwMweJTxCi6SLn9QP4PHIosUQC6vsJxHy17T1MaZ
+         xPew==
+Received: by 10.14.179.136 with SMTP id h8mr35771281eem.7.1351396523580;
+        Sat, 27 Oct 2012 20:55:23 -0700 (PDT)
 Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
-        by mx.google.com with ESMTPS id t7sm13223849eel.14.2012.10.27.20.55.12
+        by mx.google.com with ESMTPS id e1sm13235219eem.3.2012.10.27.20.55.21
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 27 Oct 2012 20:55:14 -0700 (PDT)
+        Sat, 27 Oct 2012 20:55:22 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208526>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-hg/git-remote-hg | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ contrib/remote-hg/git-remote-hg | 59 ++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 53 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/remote-hg/git-remote-hg b/contrib/remote-hg/git-remote-hg
-index 1689573..57e54c2 100755
+index 47bb7c1..3bb3192 100755
 --- a/contrib/remote-hg/git-remote-hg
 +++ b/contrib/remote-hg/git-remote-hg
-@@ -406,6 +406,12 @@ def parse_blob(parser):
-     parser.next()
-     return
+@@ -14,6 +14,7 @@ import os
+ import json
+ import shutil
+ import subprocess
++import urllib
  
-+def get_merge_files(repo, p1, p2, files):
-+    for e in repo[p1].files():
-+        if e not in files:
-+            f = { 'ctx' : repo[p1][e] }
-+            files[e] = f
+ #
+ # If you want to switch to hg-git compatibility mode:
+@@ -32,6 +33,7 @@ import subprocess
+ 
+ NAME_RE = re.compile('^([^<>]+)')
+ AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]+)>$')
++AUTHOR_HG_RE = re.compile('^(.*?) ?<(.+?)(?:>(.+)?)?$')
+ RAW_AUTHOR_RE = re.compile('^(\w+) (?:(.+)? )?<(.+)> (\d+) ([+-]\d+)')
+ 
+ def die(msg, *args):
+@@ -149,12 +151,20 @@ class Parser:
+         return sys.stdin.read(size)
+ 
+     def get_author(self):
++        global bad_mail
 +
- def parse_commit(parser):
-     global marks, blob_marks, bmarks, parsed_refs
++        ex = None
+         m = RAW_AUTHOR_RE.match(self.line)
+         if not m:
+             return None
+         _, name, email, date, tz = m.groups()
++        if name and 'ext:' in name:
++            m = re.match('^(.+?) ext:\((.+)\)$', name)
++            if m:
++                name = m.group(1)
++                ex = urllib.unquote(m.group(2))
  
-@@ -450,6 +456,8 @@ def parse_commit(parser):
-         of = files[f]
-         if 'deleted' in of:
-             raise IOError
-+        if 'ctx' in of:
-+            return of['ctx']
-         is_exec = of['mode'] == 'x'
-         is_link = of['mode'] == 'l'
-         return context.memfilectx(f, of['data'], is_link, is_exec, None)
-@@ -472,6 +480,13 @@ def parse_commit(parser):
+-        if email != 'unknown':
++        if email != bad_mail:
+             if name:
+                 user = '%s <%s>' % (name, email)
+             else:
+@@ -162,6 +172,9 @@ class Parser:
+         else:
+             user = name
+ 
++        if ex:
++            user += ex
++
+         tz = int(tz)
+         tz = ((tz / 100) * 3600) + ((tz % 100) * 60)
+         return (user, int(date), -tz)
+@@ -177,9 +190,9 @@ def get_filechanges(repo, ctx, parents):
+     changed, added, removed = [set(sum(e, [])) for e in zip(*l)]
+     return added | changed, removed
+ 
+-def fixup_user(user):
+-    user = user.replace('"', '')
++def fixup_user_git(user):
+     name = mail = None
++    user = user.replace('"', '')
+     m = AUTHOR_RE.match(user)
+     if m:
+         name = m.group(1)
+@@ -188,11 +201,41 @@ def fixup_user(user):
+         m = NAME_RE.match(user)
+         if m:
+             name = m.group(1).strip()
++    return (name, mail)
++
++def fixup_user_hg(user):
++    def sanitize(name):
++        # stole this from hg-git
++        return re.sub('[<>\n]', '?', name.lstrip('< ').rstrip('> '))
++
++    m = AUTHOR_HG_RE.match(user)
++    if m:
++        name = sanitize(m.group(1))
++        mail = sanitize(m.group(2))
++        ex = m.group(3)
++        if ex:
++            name += ' ext:(' + urllib.quote(ex) + ')'
++    else:
++        name = sanitize(user)
++        if '@' in user:
++            mail = name
++        else:
++            mail = None
++
++    return (name, mail)
++
++def fixup_user(user):
++    global mode, bad_mail
++
++    if mode == 'git':
++        name, mail = fixup_user_git(user)
++    else:
++        name, mail = fixup_user_hg(user)
+ 
+     if not name:
+-        name = 'Unknown'
++        name = bad_name
+     if not mail:
+-        mail = 'unknown'
++        mail = bad_mail
+ 
+     return '%s <%s>' % (name, mail)
+ 
+@@ -646,7 +689,7 @@ def do_export(parser):
+ def main(args):
+     global prefix, dirname, branches, bmarks
+     global marks, blob_marks, parsed_refs
+-    global peer, mode
++    global peer, mode, bad_mail, bad_name
+ 
+     alias = args[1]
+     url = args[2]
+@@ -662,8 +705,12 @@ def main(args):
+ 
+     if hg_git_compat:
+         mode = 'hg'
++        bad_mail = 'none@none'
++        bad_name = ''
      else:
-         p2 = '\0' * 20
+         mode = 'git'
++        bad_mail = 'unknown'
++        bad_name = 'Unknown'
  
-+    #
-+    # If files changed from any of the parents, hg wants to know, but in git if
-+    # nothing changed from the first parent, nothing changed.
-+    #
-+    if merge_mark:
-+        get_merge_files(repo, p1, p2, files)
-+
-     ctx = context.memctx(repo, (p1, p2), data,
-             files.keys(), getfilectx,
-             user, (date, tz), extra)
+     if alias[4:] == url:
+         is_tmp = True
 -- 
 1.8.0
