@@ -1,63 +1,81 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: Re: git push tags
-Date: Sun, 28 Oct 2012 14:59:01 -0500
-Message-ID: <CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
-References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<508D7628.10509@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	git <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Oct 28 20:59:17 2012
+From: Patrick Palka <patrick@parcs.ath.cx>
+Subject: [PATCH] Documentation: improve the example of overriding LESS via core.pager
+Date: Sun, 28 Oct 2012 16:12:46 -0400
+Message-ID: <1351455166-2579-1-git-send-email-patrick@parcs.ath.cx>
+Cc: Patrick Palka <patrick@parcs.ath.cx>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 28 21:13:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSZ0u-0002KD-Av
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 20:59:16 +0100
+	id 1TSZEO-00067I-RB
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 21:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405Ab2J1T7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 15:59:04 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:48023 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752923Ab2J1T7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 15:59:02 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n3so2622866lbo.19
-        for <git@vger.kernel.org>; Sun, 28 Oct 2012 12:59:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=xnqv93bOKAzO2lwmDegBg3/MP/wXQScq4t9zoiBO2J8=;
-        b=XsnaaiA4tImY7OEQLeXg7XnJv5Zs4M1jYCP4mszqzLk1bKDolCu0NxhaYf2qk5vhSq
-         UI0ffBh75weFS321uW+pEYuKBdB7BQbIbHTB3N6zsaQDDUhqIJhtRWrjXOave+315cpz
-         uJFMubClOtbZE17wiUz7HxRA7v66xqW1mfHNXHgDox8jOSQaR1hOlSIb/70UwVH0sLhT
-         MQ2BJZ1j6NnvgFApYMS7kygylTkOqmZSPkbFff2NyWFnp54ujF7fDfRvaT8m7wFFpVnd
-         +NrJvC29tAUaD5gXG4Do+yyAWEh2GBestn78/ww3h3gezCPVFKcInPr9j0TGKOh6zA4j
-         9rgQ==
-Received: by 10.112.11.35 with SMTP id n3mr9376923lbb.79.1351454341364; Sun,
- 28 Oct 2012 12:59:01 -0700 (PDT)
-Received: by 10.114.2.45 with HTTP; Sun, 28 Oct 2012 12:59:01 -0700 (PDT)
-In-Reply-To: <508D7628.10509@kdbg.org>
-X-Google-Sender-Auth: jeWiJA_o3tgmyMGQ4NsXkKh9SVo
+	id S1755389Ab2J1UM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 16:12:58 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:34509 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755385Ab2J1UM4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 16:12:56 -0400
+Received: by mail-qa0-f53.google.com with SMTP id c1so1127703qae.19
+        for <git@vger.kernel.org>; Sun, 28 Oct 2012 13:12:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
+        bh=Sdx66Sm1QzDHvxhOV2ibi33p2kqS0Whjdw7d0JnYyB8=;
+        b=TsLh3rDX9hRzCDn4Rnw/QDnvWbvsNR6igjBo0nwE6vB/sXhWDtI71GdAAGaOFpTWlV
+         RWQjQVuZdczM0WKp3kzokvxnErNA7BJupbSgcQZfNMHirplz9h3ja0Ue9eUe6WDqAnAP
+         IkWRXQcb6vv41PUBjaXAOmaiQqV6yCbNzS2uZAtrbd7zT7M666aY23ykb2F/D+6tfKXC
+         qKJvBzns2G6GGpFzdRGShr9ACdeBqQZXTBewjHNZWMU3gmdIiM7X53aGl70N/h/yLCbU
+         MQFgdiup6ujVWnd7kTQQnWzTPLQMLq33Snf9xsAfe1J6K8qNihgwo/EetCR4juxQxHBl
+         P6MA==
+Received: by 10.224.208.68 with SMTP id gb4mr14862013qab.99.1351455175867;
+        Sun, 28 Oct 2012 13:12:55 -0700 (PDT)
+Received: from localhost.localdomain (ool-4354cf0f.dyn.optonline.net. [67.84.207.15])
+        by mx.google.com with ESMTPS id h8sm2740016qap.17.2012.10.28.13.12.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 28 Oct 2012 13:12:55 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+X-Gm-Message-State: ALoCoQl3rgr+HdGs/d1as3uLewg2RR1xTLu1GnK1b2opX849MLmehIyqGiuvybq5Qm2zRI7pA56U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208563>
 
-On Sun, Oct 28, 2012 at 1:15 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Tags are refs, just like branches. "Tags don't move" is just a
-> convention, and git doesn't even respect it (except possibly in one
-> place[1]). You can't reseat tags unless you use -f, which is exactly the
-> same with branches, which you can't reseat unless you use -f.
->
-> [1] By default, git fetch does not fetch tags that it already has.
+You can override an option set in the LESS variable by simply prefixing
+the command line option with `-+`. This is more robust than the previous
+example if the default LESS options are to ever change.
 
-Also, git checkout <tag> puts you on a detached HEAD.  This seems
-pretty significant with regard to Git respecting a "tags don't move"
-convention.
+Signed-off-by: Patrick Palka <patrick@parcs.ath.cx>
+---
+ Documentation/config.txt |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Chris Rorvick
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 11f320b..9a0544c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -538,14 +538,14 @@ core.pager::
+ 	`LESS` variable to some other value.  Alternately,
+ 	these settings can be overridden on a project or
+ 	global basis by setting the `core.pager` option.
+-	Setting `core.pager` has no affect on the `LESS`
++	Setting `core.pager` has no effect on the `LESS`
+ 	environment variable behaviour above, so if you want
+ 	to override git's default settings this way, you need
+ 	to be explicit.  For example, to disable the S option
+ 	in a backward compatible manner, set `core.pager`
+-	to `less -+$LESS -FRX`.  This will be passed to the
+-	shell by git, which will translate the final command to
+-	`LESS=FRSX less -+FRSX -FRX`.
++	to `less -+S`.  This will be passed to the shell by
++	git, which will translate the final command to
++	`LESS=FRSX less -+S`.
+ 
+ core.whitespace::
+ 	A comma separated list of common whitespace problems to
+-- 
+1.7.10.4
