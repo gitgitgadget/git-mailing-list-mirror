@@ -1,96 +1,89 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] Fix git p4 sync errors
-Date: Sun, 28 Oct 2012 11:06:23 -0400
-Message-ID: <20121028150623.GA9249@padd.com>
-References: <AC43C2B4-623F-4590-9F92-6CCA26645EFE@gmail.com>
- <7vwqyjfxwd.fsf@alter.siamese.dyndns.org>
- <F0F92B0A-D37F-40D4-A0DF-43EEDA2818B9@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] Fix t9200 on case insensitive file systems
+Date: Sun, 28 Oct 2012 16:28:19 +0100
+Message-ID: <508D4F13.1090209@web.de>
+References: <201210261818.25620.tboegi@web.de> <20121028111053.GC11434@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Luke Diamand <luke@diamand.org>
-To: Matt Arsenault <arsenm2@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 28 16:06:43 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org, bdwalton@gmail.com, bosch@adacore.com,
+	brian@gernhardtsoftware.com, robin.rosenberg@dewire.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Oct 28 16:30:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSURj-00046Y-UK
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 16:06:40 +0100
+	id 1TSUod-0006fy-2P
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 16:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637Ab2J1PG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 11:06:27 -0400
-Received: from honk.padd.com ([74.3.171.149]:58102 "EHLO honk.padd.com"
+	id S1752395Ab2J1P2Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Oct 2012 11:28:24 -0400
+Received: from mout.web.de ([212.227.17.11]:49924 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752402Ab2J1PG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 11:06:27 -0400
-Received: from arf.padd.com (unknown [50.55.148.232])
-	by honk.padd.com (Postfix) with ESMTPSA id 43C35D02;
-	Sun, 28 Oct 2012 08:06:26 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 09C0C22714; Sun, 28 Oct 2012 11:06:23 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <F0F92B0A-D37F-40D4-A0DF-43EEDA2818B9@gmail.com>
+	id S1752075Ab2J1P2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 11:28:24 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MT8bi-1TsIsP3fvC-00RkgN; Sun, 28 Oct 2012 16:28:20 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121028111053.GC11434@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:JeQVZB0CRzfv5UkDDGKe4PpntYEaYm29p2HbT9CA+1y
+ BFhDsFJZ/KqDXjcLpYmKf9xTyMQn/VTVgbVmegl4LSM35617lS
+ CjhMutk+GJqX2yN8ZUJXQ96SnEPBOpxTl68o85D/7l1BXW+02V
+ l1hRrQIaBbrYYx2K/K0b6j4rWjinPOLQ8w3e6GFsX1CZycq82k
+ icDqhUVg3FlKSPJUY+LHQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208549>
 
-arsenm2@gmail.com wrote on Wed, 24 Oct 2012 19:41 -0700:
-> 
-> On Oct 21, 2012, at 12:06 , Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> >> 
-> >> This solves errors in some cases when syncing renamed files.
-> > 
-> > Can you be a bit more descriptive?  What are "errors in some case"?
-> > 
-> It might just be when files are renamed. I ran into this after months of using it, and I'm skeptical that in that time no files were ever renamed. I'm not sure what was special about the file that was renamed. (There also might have been deleted files in the same commit, not sure if that matters)
+On 28.10.12 12:10, Jeff King wrote:
+> On Fri, Oct 26, 2012 at 06:18:24PM +0200, Torsten B=C3=B6gershausen w=
+rote:
+>=20
+>> t9200 defines $CVSROOT where cvs should init its repository
+>> $CVSROOT is set to $PWD/cvsroot.
+>> cvs init is supposed to create the repository inside $PWD/cvsroot/CV=
+SROOT
+>>
+>> "cvs init" (e.g. version  1.11.23) checks if the last element of the=
+ path is
+>> "CVSROOT", and if a directory with e.g. $PWD/cvsroot/CVSROOT already=
+ exists.
+>>
+>> For such a $CVSROOT cvs refuses to init a repository here:
+>> "Cannot initialize repository under existing CVSROOT:
+>>
+>> On a case insenstive file system cvsroot and CVSROOT are the same di=
+rectories
+>> and t9200 fails.
+>>
+>> Solution: use $PWD/tmp/cvsroot instead of cvsroot $PWD/cvsroot
+>=20
+> Wouldn't tmp/cvsroot have the same problem, since the basename is sti=
+ll
+> cvsroot?
+>=20
+>> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportc=
+ommit.sh
+>> index b59be9a..69934b2 100755
+>> --- a/t/t9200-git-cvsexportcommit.sh
+>> +++ b/t/t9200-git-cvsexportcommit.sh
+>> @@ -19,7 +19,7 @@ then
+>>      test_done
+>>  fi
+>> =20
+>> -CVSROOT=3D$PWD/cvsroot
+>> +CVSROOT=3D$PWD/tmpcvsroot
+>=20
+> Ah, but here you do something different, which makes sense. Should I
+> tweak the commit message?
+>=20
 
-I set up a test case where I did a "p4 move" on a file and tried
-syncing it, with and without "-s" to describe.  It works in both
-cases, for an old (2009.2) and new (2012.1) version of p4.
+Yes, please do so.
 
-The output of -s versus no -s does differ, and the differences
-are different with server version worse yet.  But in no case is
-there ever a set of file differences.  -G does seem to disable
-that.
-
-I'd love to track this down, but can't seem to provoke anything
-on my own.  Let me know if you have any hints based on what is in
-your depot or server/client config.  Or if you see it again.
-
-> > In short, what I am getting at are:
-> > 
-> > - What breaks by not passing "-s"?  What are the user visible
-> >   symptoms?
-> 
-> There's a key error on the line
-> line 2198:        epoch = details["time"]
-> The details object is an error different fields set (I don't remember what it is exactly, I'm not at work right now)
-
-This would happen if describe did not return a "time" field, but
-there's an explicit check for that:
-
-        res = p4CmdList("describe -s %d" % newestRevision)
-        newestTime = None   
-        for r in res:       
-            if r.has_key('time'):
-                newestTime = int(r['time'])
-        if newestTime is None:
-            die("Output from \"describe -s\" on newest change %d did not give a time" %                     
-                newestRevision) 
-        details["time"] = newestTime
-
-so I'm confused how this could happen.  Maybe your version is
-older/different than what is in the git source?
-
-
-I'm not against putting in your patch, since it is true we don't
-want the file diff, and adding "-s" should be harmless in theory.
-And it doesn't cause any existing tests to fail.  It just scares
-me that there's something else going on we haven't figured out.
-
-		-- Pete
+Thanks for spotting,
+/torsten
