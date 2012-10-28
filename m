@@ -1,80 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] mailmap: avoid out-of-bounds memory access
-Date: Sun, 28 Oct 2012 07:02:07 -0400
-Message-ID: <20121028110207.GA11434@sigill.intra.peff.net>
-References: <87k3ub4jjg.fsf@silenus.orebokech.com>
+Subject: Re: Mistake in git-reset documentation
+Date: Sun, 28 Oct 2012 07:07:15 -0400
+Message-ID: <20121028110715.GB11434@sigill.intra.peff.net>
+References: <CABPGWqr7=Rq4qS7yP09t2vMBUJ98NFTSmHUUgMzUQ5=WVrjfqg@mail.gmail.com>
+ <20121028083610.GA26374@shrek.podlesie.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Romain Francoise <romain@orebokech.com>
-X-From: git-owner@vger.kernel.org Sun Oct 28 12:02:30 2012
+Cc: Bojan =?utf-8?B?UGV0cm92acSH?= <bojan85@gmail.com>,
+	git@vger.kernel.org
+To: Krzysztof Mazur <krzysiek@podlesie.net>
+X-From: git-owner@vger.kernel.org Sun Oct 28 12:07:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSQdR-0006dd-86
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 12:02:29 +0100
+	id 1TSQiJ-0002cQ-EK
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 12:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271Ab2J1LCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 07:02:16 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41253 "EHLO
+	id S1751638Ab2J1LHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 07:07:18 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41259 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750825Ab2J1LCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 07:02:15 -0400
-Received: (qmail 7769 invoked by uid 107); 28 Oct 2012 11:02:55 -0000
+	id S1751559Ab2J1LHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 07:07:17 -0400
+Received: (qmail 7891 invoked by uid 107); 28 Oct 2012 11:07:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 28 Oct 2012 07:02:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Oct 2012 07:02:07 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 28 Oct 2012 07:07:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Oct 2012 07:07:15 -0400
 Content-Disposition: inline
-In-Reply-To: <87k3ub4jjg.fsf@silenus.orebokech.com>
+In-Reply-To: <20121028083610.GA26374@shrek.podlesie.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208537>
 
-On Sun, Oct 28, 2012 at 12:49:55AM +0200, Romain Francoise wrote:
+On Sun, Oct 28, 2012 at 09:36:10AM +0100, Krzysztof Mazur wrote:
 
-> AddressSanitizer (http://clang.llvm.org/docs/AddressSanitizer.html)
-> complains of a one-byte buffer underflow in parse_name_and_email() while
-> running the test suite. And indeed, if one of the lines in the mailmap
-> begins with '<', we dereference the address just before the beginning of
-> the buffer when looking for whitespace to remove, before checking that
-> we aren't going too far.
+> -- >8 --
+> Subject: [PATCH] doc: git-reset: make "--<mode>" optional
 > 
-> So reverse the order of the tests to make sure that we don't read
-> outside the buffer.
+> The git-reset's "--<mode>" is an optional argument, however it was
+> documented as required.
+> 
+> Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
 
-Thanks, I think your fix is correct.
+I think this is sane, but...
 
-> diff --git a/mailmap.c b/mailmap.c
-> index 47aa419..ea4b471 100644
-> --- a/mailmap.c
-> +++ b/mailmap.c
-> @@ -118,7 +118,7 @@ static char *parse_name_and_email(char *buffer, char **name,
->  	while (isspace(*nstart) && nstart < left)
->  		++nstart;
->  	nend = left-1;
-> -	while (isspace(*nend) && nend > nstart)
-> +	while (nend > nstart && isspace(*nend))
->  		--nend;
+>  DESCRIPTION
+>  -----------
+> @@ -43,7 +43,7 @@ This means that `git reset -p` is the opposite of `git add -p`, i.e.
+>  you can use it to selectively reset hunks. See the ``Interactive Mode''
+>  section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+>  
+> -'git reset' --<mode> [<commit>]::
+> +'git reset' [--<mode>] [<commit>]::
+>  	This form resets the current branch head to <commit> and
+>  	possibly updates the index (resetting it to the tree of <commit>) and
+>  	the working tree depending on <mode>, which
 
-The fix confused me for a moment, because the problem is not actually in
-the loop condition itself; working backwards from "nend > nstart", we
-will at worst dereference nstart unnecessarily. The real problem is in
-the "nend = left-1" above, which sets the loop precondition outside the
-string to be examined.
-
-So you could also check for "left == nstart" before the loop even
-begins. I think your fix (to just make the loop more robust to that
-precondition) is better, though, as the rest of the code does the right
-thing with such a value of nend.
-
-It looks like t4203 triggers this problem. Curious that valgrind does
-not find it. I guess since it does not have compiler support, it cannot
-find out-of-bound errors on stack buffers. Does the rest of the test
-suite turn up clean with AddressSanitizer?
+Should we say something like "if --<mode> is omitted, defaults to
+"--mixed"?
 
 -Peff
