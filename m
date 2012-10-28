@@ -1,95 +1,91 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Can't understand the behaviour of git-diff --submodule
-Date: Sun, 28 Oct 2012 09:26:27 +0100
-Message-ID: <CAC9WiBim80NgUnjeRMRw9vKQD62TFJ_pxWjO6hzHW4nxcPZ67g@mail.gmail.com>
-References: <CAC9WiBgzbsury2f9FyAu=Pgn31f2uCtq7AvsVWGWEwoV6KbyjA@mail.gmail.com>
-	<508ADFAE.1050800@web.de>
-	<CAC9WiBjiHLJggUzmmx4sPpXNNq=Kz0TOZAzmRShc1AZcPjGvig@mail.gmail.com>
-	<508AED26.3090805@web.de>
-	<CAC9WiBhZWJihPToMawPCxEVkTKL0e-GzUw3qneJMUx-WqSNbjw@mail.gmail.com>
-	<508C6823.5060800@web.de>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: Mistake in git-reset documentation
+Date: Sun, 28 Oct 2012 09:36:10 +0100
+Message-ID: <20121028083610.GA26374@shrek.podlesie.net>
+References: <CABPGWqr7=Rq4qS7yP09t2vMBUJ98NFTSmHUUgMzUQ5=WVrjfqg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Oct 28 09:33:50 2012
+To: Bojan =?iso-8859-2?Q?Petrovi=E6?= <bojan85@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 09:36:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSOJZ-0000y8-LR
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 09:33:49 +0100
+	id 1TSOMA-0003Rf-4H
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 09:36:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754670Ab2J1I0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 04:26:30 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:62754 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754109Ab2J1I01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 04:26:27 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so3830348oag.19
-        for <git@vger.kernel.org>; Sun, 28 Oct 2012 01:26:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Eb1wOUIVyFS6WWRqPLNNjoaUEw06AR2bHd7stQMR32A=;
-        b=QC6yI8esiW7tqUPdCQQoMxQb7boVTRZLTUDxsjefjQGDEvhZTgbTSbv6y8IA99V0NQ
-         1Ht0dVSBUzRW9rcUQ8vx5bx74zqM5YnwFUJ/vgjLMlaMQst82SJm96Pa8Mz96/BxhQdR
-         rOksFpaOzaNiSykSYunK/MCAp8rcDf2XdfZ7jTao2dtP8OGxZNdygAX/AtZ7lEMhuwWK
-         7G93RccR1EzsIAmxZEDUz28+aYHgOUmZ2WWLXH4rAL2UHhcptS8VU8VkZDxm2Y73JSV/
-         O/KB5oHEMDgM1O1vgYY9uY+qa8lLTaV5ZETDF0NNr1XJtzGjv+DQ75f7bU/YMM+D9OX0
-         1b4A==
-Received: by 10.60.14.200 with SMTP id r8mr17464781oec.45.1351412787305; Sun,
- 28 Oct 2012 01:26:27 -0700 (PDT)
-Received: by 10.60.93.163 with HTTP; Sun, 28 Oct 2012 01:26:27 -0700 (PDT)
-In-Reply-To: <508C6823.5060800@web.de>
+	id S1755153Ab2J1IgO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Oct 2012 04:36:14 -0400
+Received: from [93.179.225.50] ([93.179.225.50]:48444 "EHLO shrek.podlesie.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752911Ab2J1IgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 04:36:13 -0400
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 3537562; Sun, 28 Oct 2012 09:36:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <CABPGWqr7=Rq4qS7yP09t2vMBUJ98NFTSmHUUgMzUQ5=WVrjfqg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208534>
 
-On Sun, Oct 28, 2012 at 1:02 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 26.10.2012 22:43, schrieb Francis Moreau:
->> On Fri, Oct 26, 2012 at 10:05 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> [...]
->>>
->>> That is weird, "git diff --submodule" should show that too. Is there
->>> anything unusual about your setup? (The only explanation I can come
->>> up with after checking the code is that your submodule has neither a
->>> .git directory nor a gitfile or the objects directory in there doesn't
->>> contain these commits)
->>
->> Oh now you're asking, I think the submodule has been added by using
->> the --reference option of git-submodule-add.
->>
->>   $ cd configs
->>   $ cat .git
->>   gitdir: ../.git/modules/configs
->
-> Thanks, I suspect the --reference option makes the difference here,
-> I'll check that as soon as I find some time.
+On Sat, Oct 27, 2012 at 01:21:18PM +0200, Bojan Petrovi=E6 wrote:
+> None of the three forms of git-reset accept: "git reset" which is the
+> equivalent of "git reset -mixed".
+>=20
+> Square brackets should be used instead of parentheses for "--soft |
+> --mixed | --hard | --merge | --keep".
+>=20
+> Bojan
 
-Yes that's fairly easy to reproduce:
+Square brackets are also missing in "'git reset' --<mode> [<commit>]".
 
-$ mkdir super
-$ cd super
-$ git init
-$ git submodule add --reference ~/tmp/git-submodule/public/a.git
-~/tmp/git-submodule/public/a.git a
-$ git commit -m "Initial creation of super project"
-$ cd a
-$ date >a.txt
-$ git commit -a -m "add to a.txt a random change"
-$ cd ..
-$ git submodule summary
-* a 2f8803a...a1aa4bf (1):
-  > add to a.txt a random change
-$ git commit -a -m "Include a's changes in super project"
-$ git diff --submodule=log HEAD~1 HEAD
-Submodule a 2f8803a...a1aa4bf (commits not present)
+Bojan, do you want to add a Reported-by line with your name?
 
-Thanks
--- 
-Francis
+Krzysiek
+
+-- >8 --
+Subject: [PATCH] doc: git-reset: make "--<mode>" optional
+
+The git-reset's "--<mode>" is an optional argument, however it was
+documented as required.
+
+Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
+---
+ Documentation/git-reset.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 117e374..1f95292 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git reset' [-q] [<commit>] [--] <paths>...
+ 'git reset' (--patch | -p) [<commit>] [--] [<paths>...]
+-'git reset' (--soft | --mixed | --hard | --merge | --keep) [-q] [<comm=
+it>]
++'git reset' [--soft | --mixed | --hard | --merge | --keep] [-q] [<comm=
+it>]
+=20
+ DESCRIPTION
+ -----------
+@@ -43,7 +43,7 @@ This means that `git reset -p` is the opposite of `gi=
+t add -p`, i.e.
+ you can use it to selectively reset hunks. See the ``Interactive Mode'=
+'
+ section of linkgit:git-add[1] to learn how to operate the `--patch` mo=
+de.
+=20
+-'git reset' --<mode> [<commit>]::
++'git reset' [--<mode>] [<commit>]::
+ 	This form resets the current branch head to <commit> and
+ 	possibly updates the index (resetting it to the tree of <commit>) and
+ 	the working tree depending on <mode>, which
+--=20
+1.8.0.46.gd11dae0
