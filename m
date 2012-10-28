@@ -1,114 +1,117 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: "W. Trevor King" <wking@tremily.us>
 Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Sun, 28 Oct 2012 14:59:33 -0700
-Message-ID: <CAJo=hJt_A5FCCcvR=sZ5Ni+-ZGq+MjxqkONbh9k+A46xBH9jzA@mail.gmail.com>
-References: <20121023204437.GE28592@odin.tremily.us> <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
- <50883E54.4080507@web.de> <20121025005307.GE801@odin.tremily.us> <508D9A12.6010104@web.de>
+Date: Sun, 28 Oct 2012 18:34:31 -0400
+Message-ID: <20121028223431.GF26675@odin.tremily.us>
+References: <20121023204437.GE28592@odin.tremily.us>
+ <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
+ <50883E54.4080507@web.de> <20121025005307.GE801@odin.tremily.us>
+ <508D9A12.6010104@web.de>
+ <CAJo=hJt_A5FCCcvR=sZ5Ni+-ZGq+MjxqkONbh9k+A46xBH9jzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=27ZtN5FSuKKSZcBU
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
 	Nahor <nahor.j+gmane@gmail.com>, Phil Hord <phil.hord@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Oct 28 23:00:09 2012
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 28 23:35:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSatr-00083c-Kx
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 23:00:07 +0100
+	id 1TSbRb-0004Tk-RV
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 23:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab2J1V7z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Oct 2012 17:59:55 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:60715 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752427Ab2J1V7y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Oct 2012 17:59:54 -0400
-Received: by mail-qc0-f174.google.com with SMTP id o22so2297599qcr.19
-        for <git@vger.kernel.org>; Sun, 28 Oct 2012 14:59:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SvxNvxy7729cwyqDKGRwuQ+duUIiIKpR8CbP1e/RWiI=;
-        b=P1f11pZA6ehs6xsYor9iJVRBGhIRaJ1QeOSEP5mVCLuRiWZjygZjW84mHipu8xUU6S
-         CWIrLLwUAcZoCPU4As0XcBxywi2bRao1fOVl6m6ww3C90yUnpP7C8wawXJpnle4B3Yex
-         vT5tPaqLxwZBoHSzec5Q9si+VxdX2EaYJ6Otw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=SvxNvxy7729cwyqDKGRwuQ+duUIiIKpR8CbP1e/RWiI=;
-        b=CsiWbyTd/y9fwgZMO7M7D+KTSuYuJLDh1IgxPQ5BMIGfeyi7mDnFb0vOJhJxzh7roi
-         QMSsNFZxqT3zmRrlufgPZ1eDDZ/dlR+rrOJGwIwPti8wFu3ZZtDw2DljpbNAfVlUUQuE
-         H8ccGXH1EGz58ubCTZ+Fw7oQHzTyUI8kKAr3ijKe0ATI6YSh/q2ur2Uq6P1lAKxRVtNV
-         ELOA4nLTI6z9pAL4OfwagisKw+IK3MtQo0O8smHd1KZ64MJ01iuuWJaFlLy8g5/xDCXC
-         yTF7/7baEnSchSHaVA9v1IP8SB6uDti6nV6VIoyXx88kGRzwfZTH932Tb7jLpI9+D7u5
-         p+fQ==
-Received: by 10.49.127.115 with SMTP id nf19mr20141610qeb.36.1351461593553;
- Sun, 28 Oct 2012 14:59:53 -0700 (PDT)
-Received: by 10.49.35.75 with HTTP; Sun, 28 Oct 2012 14:59:33 -0700 (PDT)
-In-Reply-To: <508D9A12.6010104@web.de>
-X-Gm-Message-State: ALoCoQlHB4HQs7plTPI7COtEv9bRxZdCa1CsWIouSIv+GVqI4AuefNhYWcknryns+sBaGdrinDlU
+	id S1754257Ab2J1Wer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 18:34:47 -0400
+Received: from vms173001pub.verizon.net ([206.46.173.1]:53628 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661Ab2J1Weq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 18:34:46 -0400
+Received: from odin.tremily.us ([unknown] [72.68.106.55])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MCM005BMK1KGU80@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 28 Oct 2012 17:34:33 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id EE69268272D; Sun,
+ 28 Oct 2012 18:34:31 -0400 (EDT)
+Content-disposition: inline
+In-reply-to: <CAJo=hJt_A5FCCcvR=sZ5Ni+-ZGq+MjxqkONbh9k+A46xBH9jzA@mail.gmail.com>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208574>
 
-On Sun, Oct 28, 2012 at 1:48 PM, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
-> Am 23.10.2012 22:55, schrieb W. Trevor King:
->> As Phil pointed out, doing anything with this variable is ambiguous:
->>
->> On Mon, Oct 22, 2012 at 06:03:53PM -0400, Phil Hord wrote:
->>> Some projects now use the 'branch' config value to record the track=
-ing
->>> branch for the submodule.  Some ascribe different meaning to the
->>> configuration if the value is given vs. undefined.  For example, se=
-e
->>> the Gerrit submodule-subscription mechanism.  This change will caus=
-e
->>> those workflows to behave differently than they do now.
->
-> I don't have a problem with the amount or complexity of the code bein=
-g
-> added, But by adding that option we may be giving the impression that=
- it
-> is officially sanctioned, or that it will be kept up to date by furth=
-er
-> submodule commands. I added Shawn to the CC, maybe he can comment on =
-how
-> the "branch" setting is used in Gerrit and what he thinks about addin=
-g
-> code to set that with "git submodule add -r <branch> ..." to core git=
-=2E
 
-Looks like the Gerrit meaning is basically the same as =C6var's. Gerrit
-updates the parent project as if you had done:
+--27ZtN5FSuKKSZcBU
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  $ git submodule foreach 'git checkout $(git config --file
-$toplevel/.gitmodules submodule.$name.branch) && git pull'
-  $ git commit -a -m "Updated submodules"
-  $ git push
+On Sun, Oct 28, 2012 at 02:59:33PM -0700, Shawn Pearce wrote:
+> Looks like the Gerrit meaning is basically the same as =C6var's. Gerrit
+> updates the parent project as if you had done:
+>=20
+>   $ git submodule foreach 'git checkout $(git config --file
+> $toplevel/.gitmodules submodule.$name.branch) && git pull'
+>   $ git commit -a -m "Updated submodules"
+>   $ git push
 
-and it does this automatically each time the submodule's branch is
-modified by the Gerrit server.
+Ah, good, then we *are* all using the option for the same thing.
 
-On Tue, Oct 23, 2012 at 2:57 PM, W. Trevor King <wking@tremily.us> wrot=
-e:
-> I'm not clear on what that means, but they accept special values like
-> '.', so their usage is not compatible with =C6var's proposal.
+> On Tue, Oct 23, 2012 at 2:57 PM, W. Trevor King <wking@tremily.us> wrote:
+> > I'm not clear on what that means, but they accept special values like
+> > '.', so their usage is not compatible with =C6var's proposal.
+>=20
+> "." is a special value to mean use the parent project's branch name.
+> So its more like this:
+>=20
+>   $ git submodule foreach 'git checkout $(git --git-dir $toplevel/.git
+> read-ref HEAD | sed s,^refs/heads/,,) && git pull'
+>   $ git commit -a -m "Updated submodules"
+>   $ git push
+>=20
+> We use "." in Gerrit to make branching an entire forest of projects
+> easier. Setting up dev-fix-yy in the parent project will automatically
+> track dev-fix-yy in each submodule.
 
-"." is a special value to mean use the parent project's branch name.
-So its more like this:
+Ok.  If we wanted "." expansion to be a general submodule thing, it
+would add a special case to Phil's submodule_<var-name> export.  I
+don't think such a special case would be worth the mental overhead,
+but obviously the Gerrit folks think it is.  I don't care either way
+on this one.
 
-  $ git submodule foreach 'git checkout $(git --git-dir $toplevel/.git
-read-ref HEAD | sed s,^refs/heads/,,) && git pull'
-  $ git commit -a -m "Updated submodules"
-  $ git push
+Trevor
 
-We use "." in Gerrit to make branching an entire forest of projects
-easier. Setting up dev-fix-yy in the parent project will automatically
-track dev-fix-yy in each submodule.
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--27ZtN5FSuKKSZcBU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQjbL1AAoJEEUbTsx0l5OMpZYQALXkyLw7knO5LN5x+qvxE1EJ
+EHouAy7ad0YKuVZzn5BLOiqR97CN3Fynp87R1dq/s+d2qP4nroUYxZHewmbIIzcM
+EYI3f895kZE3pe2jVlU/p6YDIodpRPpIL31JLv9akJUmSCT2ztz4SELiqA2+7Xx5
+gYx0TQ3V0GFUpz5CYFiyIL2AbpU+sEOjgS4jBi6qlW6VzE/h2yhxCtVYYm9eOyE6
+232xlUeUL1jPoICimvajTCzUzTPclD9SgqzcXsVNkUQNmEBWQ9DY77k21NhREHuC
+q9FzrS71QsCh4WLXhKrsP7nveFL07NVFQ11JpOtZ+yJEr6Wbtng9dslQIy1GLaXJ
+MIuuAC8wgFWdXankRrqsYQ+dLVU4RaCRy4GVW/oeliQ5i1S59qFxqCdzlM5GKItG
+NVST5JdsM/cQzfD9Nq4HabvK6j4+v7wwvaslH9pLK5oYlK7tJrTMxW06oKsGbtlV
+cW/9lq1R3yWjR4NY7FCjlK4wCxQmUWZS0zTl4zbXdF9JFojAD7xd2PTG6aHkEcs8
+sSGkGTb8hrn7XTNU/NktrDVQ3HnW6hzthUIRtIIqNKG7Da6kdWc5nluxdPJVKLS6
+FLi1flcOXHXiHjW0inFvQ0KnklnhytKpbaZMweeTKd2vse/YVuw8q9qHA5BUHx26
+g0LPrYoxgBxHUMiu+GT8
+=Fjij
+-----END PGP SIGNATURE-----
+
+--27ZtN5FSuKKSZcBU--
