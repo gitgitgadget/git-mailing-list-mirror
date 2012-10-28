@@ -1,57 +1,74 @@
-From: Romain Francoise <romain@orebokech.com>
-Subject: Re: [PATCH] mailmap: avoid out-of-bounds memory access
-Date: Sun, 28 Oct 2012 14:21:33 +0100
-Organization: orebokech dot com
-Message-ID: <87k3ua3f6q.fsf@silenus.orebokech.com>
-References: <87k3ub4jjg.fsf@silenus.orebokech.com>
-	<20121028110207.GA11434@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Mistake in git-reset documentation
+Date: Sun, 28 Oct 2012 14:39:49 +0100
+Message-ID: <m2zk36hg0q.fsf@igel.home>
+References: <CABPGWqr7=Rq4qS7yP09t2vMBUJ98NFTSmHUUgMzUQ5=WVrjfqg@mail.gmail.com>
+	<20121028083610.GA26374@shrek.podlesie.net>
+	<20121028110715.GB11434@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
+Cc: Krzysztof Mazur <krzysiek@podlesie.net>,
+	Bojan =?utf-8?Q?Petrovi?= =?utf-8?Q?=C4=87?= 
+	<bojan85@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 28 14:21:56 2012
+X-From: git-owner@vger.kernel.org Sun Oct 28 14:40:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSSoN-0007WO-ES
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 14:21:55 +0100
+	id 1TST5y-0006j2-Oc
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 14:40:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752378Ab2J1NVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 09:21:35 -0400
-Received: from stringer.orebokech.com ([88.190.240.207]:60541 "EHLO
-	stringer.orebokech.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752250Ab2J1NVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 09:21:35 -0400
-Received: from silenus.orebokech.com (silenus [192.168.1.4])
-	by stringer.orebokech.com (Postfix) with ESMTP id E44FA1880033;
-	Sun, 28 Oct 2012 14:21:33 +0100 (CET)
-Received: by silenus.orebokech.com (Postfix, from userid 1000)
-	id A12D9A034C; Sun, 28 Oct 2012 14:21:33 +0100 (CET)
-In-Reply-To: <20121028110207.GA11434@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 28 Oct 2012 07:02:07 -0400")
+	id S1752636Ab2J1Njy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 09:39:54 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:35661 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752464Ab2J1Njy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 09:39:54 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XqKn313Qmz3hhZw;
+	Sun, 28 Oct 2012 14:39:51 +0100 (CET)
+X-Auth-Info: YdlIXJHjUSXKmuIWISdYS1TNjbFaFClzw0+7mw5iphE=
+Received: from igel.home (ppp-93-104-156-214.dynamic.mnet-online.de [93.104.156.214])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XqKn30fC2zbbcM;
+	Sun, 28 Oct 2012 14:39:51 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 9EF6DCA2A1; Sun, 28 Oct 2012 14:39:50 +0100 (CET)
+X-Yow: I need "RONDO".
+In-Reply-To: <20121028110715.GB11434@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 28 Oct 2012 07:07:15 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208545>
 
 Jeff King <peff@peff.net> writes:
 
-> So you could also check for "left == nstart" before the loop even
-> begins. I think your fix (to just make the loop more robust to that
-> precondition) is better, though, as the rest of the code does the right
-> thing with such a value of nend.
+> On Sun, Oct 28, 2012 at 09:36:10AM +0100, Krzysztof Mazur wrote:
+>
+>>  DESCRIPTION
+>>  -----------
+>> @@ -43,7 +43,7 @@ This means that `git reset -p` is the opposite of `git add -p`, i.e.
+>>  you can use it to selectively reset hunks. See the ``Interactive Mode''
+>>  section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+>>  
+>> -'git reset' --<mode> [<commit>]::
+>> +'git reset' [--<mode>] [<commit>]::
+>>  	This form resets the current branch head to <commit> and
+>>  	possibly updates the index (resetting it to the tree of <commit>) and
+>>  	the working tree depending on <mode>, which
+>
+> Should we say something like "if --<mode> is omitted, defaults to
+> "--mixed"?
 
-Yep.
+Under --mixed it already says "This is the default action", though.
 
-> It looks like t4203 triggers this problem. Curious that valgrind does
-> not find it. I guess since it does not have compiler support, it cannot
-> find out-of-bound errors on stack buffers. Does the rest of the test
-> suite turn up clean with AddressSanitizer?
+Andreas.
 
-I tested your 'master' and your 'pu' with expensive tests enabled and both
-are clean after fixing t4203.
-
-Thanks!
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
