@@ -1,81 +1,78 @@
-From: Patrick Palka <patrick@parcs.ath.cx>
-Subject: [PATCH] Documentation: improve the example of overriding LESS via core.pager
-Date: Sun, 28 Oct 2012 16:12:46 -0400
-Message-ID: <1351455166-2579-1-git-send-email-patrick@parcs.ath.cx>
-Cc: Patrick Palka <patrick@parcs.ath.cx>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 21:13:15 2012
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
+Date: Sun, 28 Oct 2012 21:48:18 +0100
+Message-ID: <508D9A12.6010104@web.de>
+References: <20121023204437.GE28592@odin.tremily.us> <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us> <50883E54.4080507@web.de> <20121025005307.GE801@odin.tremily.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git <git@vger.kernel.org>, Nahor <nahor.j+gmane@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sun Oct 28 21:48:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSZEO-00067I-RB
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 21:13:13 +0100
+	id 1TSZml-0004c4-45
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Oct 2012 21:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755389Ab2J1UM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2012 16:12:58 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:34509 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755385Ab2J1UM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2012 16:12:56 -0400
-Received: by mail-qa0-f53.google.com with SMTP id c1so1127703qae.19
-        for <git@vger.kernel.org>; Sun, 28 Oct 2012 13:12:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
-        bh=Sdx66Sm1QzDHvxhOV2ibi33p2kqS0Whjdw7d0JnYyB8=;
-        b=TsLh3rDX9hRzCDn4Rnw/QDnvWbvsNR6igjBo0nwE6vB/sXhWDtI71GdAAGaOFpTWlV
-         RWQjQVuZdczM0WKp3kzokvxnErNA7BJupbSgcQZfNMHirplz9h3ja0Ue9eUe6WDqAnAP
-         IkWRXQcb6vv41PUBjaXAOmaiQqV6yCbNzS2uZAtrbd7zT7M666aY23ykb2F/D+6tfKXC
-         qKJvBzns2G6GGpFzdRGShr9ACdeBqQZXTBewjHNZWMU3gmdIiM7X53aGl70N/h/yLCbU
-         MQFgdiup6ujVWnd7kTQQnWzTPLQMLq33Snf9xsAfe1J6K8qNihgwo/EetCR4juxQxHBl
-         P6MA==
-Received: by 10.224.208.68 with SMTP id gb4mr14862013qab.99.1351455175867;
-        Sun, 28 Oct 2012 13:12:55 -0700 (PDT)
-Received: from localhost.localdomain (ool-4354cf0f.dyn.optonline.net. [67.84.207.15])
-        by mx.google.com with ESMTPS id h8sm2740016qap.17.2012.10.28.13.12.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 28 Oct 2012 13:12:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-X-Gm-Message-State: ALoCoQl3rgr+HdGs/d1as3uLewg2RR1xTLu1GnK1b2opX849MLmehIyqGiuvybq5Qm2zRI7pA56U
+	id S1755678Ab2J1UsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2012 16:48:24 -0400
+Received: from mout.web.de ([212.227.17.11]:57881 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755671Ab2J1UsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2012 16:48:22 -0400
+Received: from [192.168.178.41] ([91.3.156.115]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0MCZP8-1TbxRp1UmI-009Y6Z; Sun, 28 Oct 2012 21:48:19
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <20121025005307.GE801@odin.tremily.us>
+X-Enigmail-Version: 1.4.5
+X-Provags-ID: V02:K0:bcS1pUVWh3aHf/Oks0vl16kV9zd5N3RXnD3z3LEowwL
+ hrd0M6+gOQuots8hoMtdvkZsZi27bApECY3AGCOoSGqP5t9nRv
+ PyauktLrI2nOoNn+mK4jFcerwquSLsg6/pEpF9mLK/eycGyhtS
+ T5FksgSC4/xlgWEBx3/8yYZyFsOy5Y2Bd+e0offiFRVMv0+Jqr
+ RqRtjYzwMxbj3WyNNuFNQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208564>
 
-You can override an option set in the LESS variable by simply prefixing
-the command line option with `-+`. This is more robust than the previous
-example if the default LESS options are to ever change.
+Am 25.10.2012 02:53, schrieb W. Trevor King:
+> On Wed, Oct 24, 2012 at 09:15:32PM +0200, Jens Lehmann wrote:
+>> I still fail to see what adding that functionality to the submodule
+>> command buys us (unless we also add code which really uses the branch
+>> setting). What's wrong with doing a simple:
+>>
+>>    git config -f .gitmodules submodule.<path>.branch <record_branch>
+>>
+>> on the command line when you want to use the branch setting for your
+>> own purposes? You could easily wrap that into a helper script, no?
+> 
+> Sure.  But why maintain my own helper script if I can edit
+> git-submodules.sh?  It seems like a number of people are using this
+> config option, and they generally store the same name in it that they
+> use to create the submodule.  This way I can save them time too.
 
-Signed-off-by: Patrick Palka <patrick@parcs.ath.cx>
----
- Documentation/config.txt |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+But people are already using the "branch" setting in *different* ways:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 11f320b..9a0544c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -538,14 +538,14 @@ core.pager::
- 	`LESS` variable to some other value.  Alternately,
- 	these settings can be overridden on a project or
- 	global basis by setting the `core.pager` option.
--	Setting `core.pager` has no affect on the `LESS`
-+	Setting `core.pager` has no effect on the `LESS`
- 	environment variable behaviour above, so if you want
- 	to override git's default settings this way, you need
- 	to be explicit.  For example, to disable the S option
- 	in a backward compatible manner, set `core.pager`
--	to `less -+$LESS -FRX`.  This will be passed to the
--	shell by git, which will translate the final command to
--	`LESS=FRSX less -+FRSX -FRX`.
-+	to `less -+S`.  This will be passed to the shell by
-+	git, which will translate the final command to
-+	`LESS=FRSX less -+S`.
- 
- core.whitespace::
- 	A comma separated list of common whitespace problems to
--- 
-1.7.10.4
+Am 23.10.2012 22:55, schrieb W. Trevor King:
+> As Phil pointed out, doing anything with this variable is ambiguous:
+>
+> On Mon, Oct 22, 2012 at 06:03:53PM -0400, Phil Hord wrote:
+>> Some projects now use the 'branch' config value to record the tracking
+>> branch for the submodule.  Some ascribe different meaning to the
+>> configuration if the value is given vs. undefined.  For example, see
+>> the Gerrit submodule-subscription mechanism.  This change will cause
+>> those workflows to behave differently than they do now.
+
+I don't have a problem with the amount or complexity of the code being
+added, But by adding that option we may be giving the impression that it
+is officially sanctioned, or that it will be kept up to date by further
+submodule commands. I added Shawn to the CC, maybe he can comment on how
+the "branch" setting is used in Gerrit and what he thinks about adding
+code to set that with "git submodule add -r <branch> ..." to core git.
