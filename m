@@ -1,75 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 00/13] New remote-hg helper
-Date: Mon, 29 Oct 2012 17:56:32 -0400
-Message-ID: <20121029215631.GF20513@sigill.intra.peff.net>
-References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
- <20121029085045.GA5023@sigill.intra.peff.net>
- <CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com>
- <20121029212643.GA20513@sigill.intra.peff.net>
- <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com>
+Subject: Re: [PATCHv2] git-status: show short sequencer state
+Date: Mon, 29 Oct 2012 17:41:03 -0400
+Message-ID: <20121029214103.GD20513@sigill.intra.peff.net>
+References: <1351022574-27869-1-git-send-email-hordp@cisco.com>
+ <1351022574-27869-2-git-send-email-hordp@cisco.com>
+ <20121025092919.GG8390@sigill.intra.peff.net>
+ <5089633C.8030307@cisco.com>
+ <CABURp0o7b5aZV6jNM=DSweh-8zVgGppxVsXisAcoNk7TxHrdgQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 29 22:56:50 2012
+Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 22:57:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSxKD-0002yv-LO
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 22:56:49 +0100
+	id 1TSxKx-0003kU-Fb
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 22:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755356Ab2J2V4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 17:56:36 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43090 "EHLO
+	id S1761506Ab2J2VlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 17:41:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43058 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752051Ab2J2V4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 17:56:34 -0400
-Received: (qmail 24043 invoked by uid 107); 29 Oct 2012 21:57:15 -0000
+	id S1761503Ab2J2VlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 17:41:05 -0400
+Received: (qmail 23822 invoked by uid 107); 29 Oct 2012 21:41:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 17:57:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 17:56:32 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 17:41:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 17:41:03 -0400
 Content-Disposition: inline
-In-Reply-To: <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com>
+In-Reply-To: <CABURp0o7b5aZV6jNM=DSweh-8zVgGppxVsXisAcoNk7TxHrdgQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208644>
 
-On Mon, Oct 29, 2012 at 10:47:04PM +0100, Felipe Contreras wrote:
+On Mon, Oct 29, 2012 at 02:05:14PM -0400, Phil Hord wrote:
 
-> >> Yeah, the test script is not ready for merging, it needs to check for
-> >> python, hg, and hg-git.
-> >>
-> >> Do you have hg-git installed?
-> >
-> > No. But it's important that it fail gracefully; I can't even take it in
-> > pu if I can't run the test suite in a sane way.
+> I'm currently splitting this out into a series and reconsidering some
+> of it along the way.  I need some guidance.
 > 
-> The contrib part is fine for 'pu'. The tests aren't even meant to
-> exercise stuff in 'contrib', right? There might be some exceptions,
-> but either way, there's plenty of stuff in 'contrib' without any
-> tests. The tests I'm providing are simply a little sugar.
+> I want to support these two modes:
+> 
+>   A.  'git status --short' with sequence tokens added:
+>        ## conflicted
+>        ## merge
+>        ?? untracked-workdir-file
+>        etc.
+> 
+>   B.  Same as (A) but without workdir status:
+>        ## conflicted
+>        ## merge
+> 
+> The user who wants 'A' would initiate it like this:
+>     git status --sequencer
+>   or
+>     git status -S
+> 
+> How do I spell the options for 'B'?  I have come up with these three
+> possibilities:
+>     git --sequencer-only   # Another switch
+>     git --sequencer=only   # An OPTARG parser
+>     git -S -S           # like git-diff -C -C, an OPT_COUNTUP
 
-Yeah, contrib is a bit of a wildcard. Most things do not have tests.
-Completion tests run as part of the main test suite (which to me means
-that completion should arguably be promoted out of contrib). Subtree
-carries its own tests that build on the test suite, but do not run all
-the time.
+Might it be easier to spell 'A' as:
 
-If remote-hg is going to live in contrib, it probably makes sense to
-have its tests live there, too, like subtree. It means less test
-exposure, but the robustness of the tests does not have to be as high.
-You could also have no tests, but since you have them, it seems silly
-not to include them. People know that items in contrib/ may not be as
-mature as the rest of git.
+  git status --short -S
+
+and B as:
+
+  git status -S
+
+this is sort of like how "-b" works (except you cannot currently ask for
+it separately, but arguably you could). If we have a proliferation of
+such options, then we might need config to help turn them on all the
+time (I'd guess people are probably already using aliases to do this).
 
 -Peff
