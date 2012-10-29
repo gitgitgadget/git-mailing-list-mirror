@@ -1,121 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] replace: parse revision argument for -d
-Date: Mon, 29 Oct 2012 14:23:27 +0100
-Message-ID: <24b0f81315ddab8cc37133d5b3bec8aec90ed652.1351516888.git.git@drmicha.warpmail.net>
-References: <508E55B2.6060502@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 29 14:23:50 2012
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: git push tags
+Date: Mon, 29 Oct 2012 14:24:55 +0100
+Message-ID: <CAB9Jk9Ao=T=j=vkiZ-YxQZom353sj42DXEttKfFnwu5x90pWLA@mail.gmail.com>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+	<508D7628.10509@kdbg.org>
+	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
+	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
+	<CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
+	<CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
+	<508E532F.2010109@alum.mit.edu>
+	<20121029103837.GA14614@sigill.intra.peff.net>
+	<CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
+	<20121029113500.GA15597@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Chris Rorvick <chris@rorvick.com>,
+	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 29 14:25:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSpJh-00024U-9Y
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 14:23:45 +0100
+	id 1TSpL3-0003Yy-2t
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 14:25:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756896Ab2J2NXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 09:23:32 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:47498 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756543Ab2J2NX3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Oct 2012 09:23:29 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4D6B820486;
-	Mon, 29 Oct 2012 09:23:29 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 29 Oct 2012 09:23:29 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=epGqf+2/9q0EqvwcY1beU25qX
-	Ic=; b=i85gU3fmI8syOzkuhKFp4FmFEPYzI7Wn5BvJXnx3FFfwDEnT8RpMV0rez
-	R8NAgndT+4gb+mOlMBk7OV1MlTTSWru/NshtbfyWh3fgVacUDxMZ/8n0ublobjFp
-	lOp/w14hFA8Zxvv3YUFporJZ5UYho2KAVM9jyOj5we8uw1Wkto=
-X-Sasl-enc: DqnPGl5g3eQY4jpDasXT+iERD1LjcwIrgrMFq+P3vkh5 1351517008
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id DF40E48265F;
-	Mon, 29 Oct 2012 09:23:28 -0400 (EDT)
-X-Mailer: git-send-email 1.8.0.370.g8cbad08
-In-Reply-To: <508E55B2.6060502@drmicha.warpmail.net>
+	id S1756760Ab2J2NY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 09:24:57 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:47302 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756620Ab2J2NY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 09:24:56 -0400
+Received: by mail-da0-f46.google.com with SMTP id n41so2431750dak.19
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 06:24:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=rdofD9LvhcPYcPLmucsT5BmXvDi2CL8PokegqzZWH/Q=;
+        b=T9fag6bB8mRCM4fyWYsk6GqTa5/v01l6CrVluwZwJ9A8YG5GMDe7ifKixJjgCzYMFl
+         Rvl8HRw6BEFzO7gYk9m6omB9bnByngqRBKEGGHhm7qY3OP9KHfuHWR/FP6wfN1YWdRlE
+         sjZYKvch9Jiqx4msBBBRF9tADPNQf30xn8nI/4+j2zgdtFXEGMyPZWD99Ur0XU8FJwe8
+         ZM/F93ka92Whlb205LNx2IN343RxQ/yJdWjwz6dOPwySgLKzjJvDrPoYqp4f7aXi5Vnc
+         kmvMHAx2SAtu03fh8h+JnGRt1SCoygb15I6UhrLKsyFAif357AEdJ+zs1hYgrQ18bjPq
+         eBKQ==
+Received: by 10.66.83.9 with SMTP id m9mr83288121pay.22.1351517095504; Mon, 29
+ Oct 2012 06:24:55 -0700 (PDT)
+Received: by 10.67.3.101 with HTTP; Mon, 29 Oct 2012 06:24:55 -0700 (PDT)
+In-Reply-To: <20121029113500.GA15597@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208623>
 
-'git replace' parses the revision arguments when it creates replacements
-(so that a sha1 can be abbreviated, e.g.) but not when deleting
-replacements.
+Jeff,
 
-Make it parse the arguments to 'replace -d' in the same way.
+> Then on top of that we can talk about what lightweight tags should do.
+> I'm not sure.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-v2 has the simplified error check as per Jeff, and a reworded message.
-Comes with a free test case, too.
+If tags (even the lightweight ones) do not behave differently from
+branches, then they are of no use, and the main difference is that
+they do not move. So, I would suggest not to move them either.
 
- builtin/replace.c  | 14 ++++++++------
- t/t6050-replace.sh | 11 +++++++++++
- 2 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/replace.c b/builtin/replace.c
-index e3aaf70..7b00055 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -46,24 +46,26 @@ typedef int (*each_replace_name_fn)(const char *name, const char *ref,
- 
- static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
- {
--	const char **p;
-+	const char **p, *q;
- 	char ref[PATH_MAX];
- 	int had_error = 0;
- 	unsigned char sha1[20];
- 
- 	for (p = argv; *p; p++) {
--		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
--					>= sizeof(ref)) {
--			error("replace ref name too long: %.*s...", 50, *p);
-+		q = *p;
-+		if (get_sha1(q, sha1)) {
-+			error("Failed to resolve '%s' as a valid ref.", q);
- 			had_error = 1;
- 			continue;
- 		}
-+		q = sha1_to_hex(sha1);
-+		snprintf(ref, sizeof(ref), "refs/replace/%s", q);
- 		if (read_ref(ref, sha1)) {
--			error("replace ref '%s' not found.", *p);
-+			error("replace ref '%s' not found.", q);
- 			had_error = 1;
- 			continue;
- 		}
--		if (fn(*p, ref, sha1))
-+		if (fn(q, ref, sha1))
- 			had_error = 1;
- 	}
- 	return had_error;
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index 5c87f28..decdc33 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -140,6 +140,17 @@ test_expect_success '"git replace" replacing' '
-      test "$HASH2" = "$(git replace)"
- '
- 
-+test_expect_success '"git replace" resolves sha1' '
-+     SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
-+     git replace -d $SHORTHASH2 &&
-+     git replace $SHORTHASH2 $R &&
-+     git show $HASH2 | grep "O Thor" &&
-+     test_must_fail git replace $HASH2 $R &&
-+     git replace -f $HASH2 $R &&
-+     test_must_fail git replace -f &&
-+     test "$HASH2" = "$(git replace)"
-+'
-+
- # This creates a side branch where the bug in H2
- # does not appear because P2 is created by applying
- # H2 and squashing H5 into it.
--- 
-1.8.0.370.g8cbad08
+-Angelo
