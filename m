@@ -1,110 +1,121 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: git push tags
-Date: Mon, 29 Oct 2012 08:25:45 -0400
-Message-ID: <CAM9Z-nnhVwNFxn+zog5bv_A=PLg0nVGhCeburTGn8242rWAQ7g@mail.gmail.com>
-References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<508D7628.10509@kdbg.org>
-	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
-	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
-	<CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
-	<CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
-	<508E532F.2010109@alum.mit.edu>
-	<20121029103837.GA14614@sigill.intra.peff.net>
-	<CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
-	<20121029113500.GA15597@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Chris Rorvick <chris@rorvick.com>,
-	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
-	Kacper Kornet <draenog@pld-linux.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 29 13:26:07 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] replace: parse revision argument for -d
+Date: Mon, 29 Oct 2012 14:23:27 +0100
+Message-ID: <24b0f81315ddab8cc37133d5b3bec8aec90ed652.1351516888.git.git@drmicha.warpmail.net>
+References: <508E55B2.6060502@drmicha.warpmail.net>
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 29 14:23:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSoPu-0005mo-1R
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 13:26:06 +0100
+	id 1TSpJh-00024U-9Y
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 14:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758901Ab2J2MZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 08:25:49 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:43740 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758795Ab2J2MZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 08:25:46 -0400
-Received: by mail-bk0-f46.google.com with SMTP id jk13so1936140bkc.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 05:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6L55sDSrdy9jw0r2zoOYIIVe+p2dT65AGnir4CmMLDs=;
-        b=ynv9YVu43pzFAYnCGMuDuYOWwoAlo9hUlYQezSrYls7AE7t0ibY5U1O9DVqQoQC8iX
-         /wxheyIfImnCayzQ0ktOM1eB0xYrex8ucrISDghDZCwk2b5bVyO+y95BwQ6C8V1rUMSg
-         hWaCzYsZ+379g2tzaGYMntnF03ncTWBXrDtSJPZskGGjTg5DBhLok3gCnxCu87gyHvmj
-         /6Q4sMp+8zw37AGUysMZ0rIdkIcsbHjQilopsGsHL168HPTnEdmP4/8oWwab1LQEH4Sl
-         +9tsKDRraqbWrasjAXpxQsNF+JOlpVg+Eq8/CNlpVXNyHevnumaa5UVrDouHtN5F6PU8
-         OnNA==
-Received: by 10.204.11.210 with SMTP id u18mr9290024bku.123.1351513545553;
- Mon, 29 Oct 2012 05:25:45 -0700 (PDT)
-Received: by 10.205.122.144 with HTTP; Mon, 29 Oct 2012 05:25:45 -0700 (PDT)
-In-Reply-To: <20121029113500.GA15597@sigill.intra.peff.net>
+	id S1756896Ab2J2NXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 09:23:32 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:47498 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756543Ab2J2NX3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Oct 2012 09:23:29 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4D6B820486;
+	Mon, 29 Oct 2012 09:23:29 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 29 Oct 2012 09:23:29 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=epGqf+2/9q0EqvwcY1beU25qX
+	Ic=; b=i85gU3fmI8syOzkuhKFp4FmFEPYzI7Wn5BvJXnx3FFfwDEnT8RpMV0rez
+	R8NAgndT+4gb+mOlMBk7OV1MlTTSWru/NshtbfyWh3fgVacUDxMZ/8n0ublobjFp
+	lOp/w14hFA8Zxvv3YUFporJZ5UYho2KAVM9jyOj5we8uw1Wkto=
+X-Sasl-enc: DqnPGl5g3eQY4jpDasXT+iERD1LjcwIrgrMFq+P3vkh5 1351517008
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id DF40E48265F;
+	Mon, 29 Oct 2012 09:23:28 -0400 (EDT)
+X-Mailer: git-send-email 1.8.0.370.g8cbad08
+In-Reply-To: <508E55B2.6060502@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208622>
 
-On Mon, Oct 29, 2012 at 7:35 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Oct 29, 2012 at 07:21:52AM -0400, Drew Northup wrote:
->> > I would have expected git to at least complain about updating an
->> > annotated tag with another annotated tag. But it actually uses the same
->> > fast-forward rule, just on the pointed-to commits. So a fast-forward
->> > annotated re-tag will throw away the old tag object completely. Which
->> > seems a bit crazy to me.
->> >
->> > It seems like a no-brainer to me that annotated tags should not replace
->> > each other without a force, no matter where in the refs hierarchy they
->> > go.
->> >
->> > For lightweight tags, I think it's more gray. They are just pointers
->> > into history. Some projects may use them to tag immutable official
->> > versions, but I also see them used as shared bookmarks. Requiring "-f"
->> > may make the latter use more annoying. On the other hand, bookmark tags
->> > tend not to be pushed, or if they are, it is part of a mirror-like
->> > backup which should be forcing all updates anyway.
->>
->> Would that be an endorsement of continuing to build a patch set
->> including the snippet that Kacper posted earlier (1) in response to my
->> comment about not being sure how complicated all of this would be or
->> not?
->
-> That patch just blocks non-forced updates to refs/tags/. I think a saner
-> start would be to disallow updating non-commit objects without a force.
-> We already do so for blobs and trees because they are not (and cannot
-> be) fast forwards. The fact that annotated tags are checked for
-> fast-forward seems to me to be a case of "it happens to work that way"
-> and not anything planned. Since such a push drops the reference to the
-> old version of the tag, it should probably require a force.
->
-> Then on top of that we can talk about what lightweight tags should do.
-> I'm not sure. Following the regular fast-forward rules makes some sense
-> to me, because you are never losing objects. But there may be
-> complications with updating tags in general because of fetch's rules,
-> and we would be better off preventing people from accidentally doing so.
-> I think a careful review of fetch's tag rules would be in order before
-> making any decision there.
->
-> -Peff
+'git replace' parses the revision arguments when it creates replacements
+(so that a sha1 can be abbreviated, e.g.) but not when deleting
+replacements.
 
-Thanks, I had the sinking suspicion that this was going to be more complicated.
+Make it parse the arguments to 'replace -d' in the same way.
 
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+v2 has the simplified error check as per Jeff, and a reworded message.
+Comes with a free test case, too.
+
+ builtin/replace.c  | 14 ++++++++------
+ t/t6050-replace.sh | 11 +++++++++++
+ 2 files changed, 19 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/replace.c b/builtin/replace.c
+index e3aaf70..7b00055 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -46,24 +46,26 @@ typedef int (*each_replace_name_fn)(const char *name, const char *ref,
+ 
+ static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
+ {
+-	const char **p;
++	const char **p, *q;
+ 	char ref[PATH_MAX];
+ 	int had_error = 0;
+ 	unsigned char sha1[20];
+ 
+ 	for (p = argv; *p; p++) {
+-		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
+-					>= sizeof(ref)) {
+-			error("replace ref name too long: %.*s...", 50, *p);
++		q = *p;
++		if (get_sha1(q, sha1)) {
++			error("Failed to resolve '%s' as a valid ref.", q);
+ 			had_error = 1;
+ 			continue;
+ 		}
++		q = sha1_to_hex(sha1);
++		snprintf(ref, sizeof(ref), "refs/replace/%s", q);
+ 		if (read_ref(ref, sha1)) {
+-			error("replace ref '%s' not found.", *p);
++			error("replace ref '%s' not found.", q);
+ 			had_error = 1;
+ 			continue;
+ 		}
+-		if (fn(*p, ref, sha1))
++		if (fn(q, ref, sha1))
+ 			had_error = 1;
+ 	}
+ 	return had_error;
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 5c87f28..decdc33 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -140,6 +140,17 @@ test_expect_success '"git replace" replacing' '
+      test "$HASH2" = "$(git replace)"
+ '
+ 
++test_expect_success '"git replace" resolves sha1' '
++     SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
++     git replace -d $SHORTHASH2 &&
++     git replace $SHORTHASH2 $R &&
++     git show $HASH2 | grep "O Thor" &&
++     test_must_fail git replace $HASH2 $R &&
++     git replace -f $HASH2 $R &&
++     test_must_fail git replace -f &&
++     test "$HASH2" = "$(git replace)"
++'
++
+ # This creates a side branch where the bug in H2
+ # does not appear because P2 is created by applying
+ # H2 and squashing H5 into it.
 -- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+1.8.0.370.g8cbad08
