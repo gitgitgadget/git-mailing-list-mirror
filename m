@@ -1,65 +1,90 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: git push tags
-Date: Mon, 29 Oct 2012 12:31:49 +0100
-Message-ID: <CAB9Jk9CLXgHiLz6P8EeO2NyfzHWZ=x3Kkj7+eZ2_Sby19eE0Ag@mail.gmail.com>
+Date: Mon, 29 Oct 2012 07:35:00 -0400
+Message-ID: <20121029113500.GA15597@sigill.intra.peff.net>
 References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
-	<508D7628.10509@kdbg.org>
-	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
-	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
-	<CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
-	<CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
-	<508E532F.2010109@alum.mit.edu>
-	<20121029103837.GA14614@sigill.intra.peff.net>
-	<CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
+ <508D7628.10509@kdbg.org>
+ <CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
+ <4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
+ <CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
+ <CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
+ <508E532F.2010109@alum.mit.edu>
+ <20121029103837.GA14614@sigill.intra.peff.net>
+ <CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>,
 	Chris Rorvick <chris@rorvick.com>,
 	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>
 To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 29 12:32:11 2012
+X-From: git-owner@vger.kernel.org Mon Oct 29 12:35:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSnZb-0005sj-GK
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 12:32:03 +0100
+	id 1TSncm-0001BS-C6
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 12:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758757Ab2J2Lbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 07:31:51 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:38331 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758747Ab2J2Lbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 07:31:50 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so4202564pbb.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 04:31:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yiqwCpkx6NU87BI38OUPQ8Hw5mMb3JIshbnK/1mtM/I=;
-        b=aLlT93Zsqob5PGvcWUoVE7565+0d7kIAY40AxmES6VqUAKra31NJBEn2eSq8dt6KCG
-         Ki4d7+dDkGb+5QZOwEcei0SaRjpMnp5sOTD+lYVTM/swmuVU4lETqcn9BO58VK66HEdc
-         PxNHkWHFLBIXZNQLFOeSA0eyCSqfyVGdluUTv6PPfxKCiEqmmHjoX5xuqxVw/SEqHcY+
-         jfrrc5+fnfsvEWdL/VdS4xqMRqVa+QmXKi65xBeFaL2KNwBM+tKrk3Leba5Pb08SCRSK
-         sgB3tlv7LSBnJq3+IDcfrEuMlRH2aVN/9zAuwI+7V1wTedz1qA7sWWnEmIP15mPSSKsA
-         ammA==
-Received: by 10.66.86.228 with SMTP id s4mr72009819paz.15.1351510309918; Mon,
- 29 Oct 2012 04:31:49 -0700 (PDT)
-Received: by 10.67.3.101 with HTTP; Mon, 29 Oct 2012 04:31:49 -0700 (PDT)
+	id S1758770Ab2J2LfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 07:35:04 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42675 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758766Ab2J2LfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 07:35:03 -0400
+Received: (qmail 19827 invoked by uid 107); 29 Oct 2012 11:35:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 07:35:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 07:35:00 -0400
+Content-Disposition: inline
 In-Reply-To: <CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208619>
 
-Hi Drew,
+On Mon, Oct 29, 2012 at 07:21:52AM -0400, Drew Northup wrote:
 
-sure. That is a good starting point. I would suggest to block tag
-updates of existing tags if a dedicated option is present in the
-config of the remote repo, like, e.g. pushOverwriteTags.
+> > I would have expected git to at least complain about updating an
+> > annotated tag with another annotated tag. But it actually uses the same
+> > fast-forward rule, just on the pointed-to commits. So a fast-forward
+> > annotated re-tag will throw away the old tag object completely. Which
+> > seems a bit crazy to me.
+> >
+> > It seems like a no-brainer to me that annotated tags should not replace
+> > each other without a force, no matter where in the refs hierarchy they
+> > go.
+> >
+> > For lightweight tags, I think it's more gray. They are just pointers
+> > into history. Some projects may use them to tag immutable official
+> > versions, but I also see them used as shared bookmarks. Requiring "-f"
+> > may make the latter use more annoying. On the other hand, bookmark tags
+> > tend not to be pushed, or if they are, it is part of a mirror-like
+> > backup which should be forcing all updates anyway.
+> 
+> Would that be an endorsement of continuing to build a patch set
+> including the snippet that Kacper posted earlier (1) in response to my
+> comment about not being sure how complicated all of this would be or
+> not?
 
--Angelo
+That patch just blocks non-forced updates to refs/tags/. I think a saner
+start would be to disallow updating non-commit objects without a force.
+We already do so for blobs and trees because they are not (and cannot
+be) fast forwards. The fact that annotated tags are checked for
+fast-forward seems to me to be a case of "it happens to work that way"
+and not anything planned. Since such a push drops the reference to the
+old version of the tag, it should probably require a force.
+
+Then on top of that we can talk about what lightweight tags should do.
+I'm not sure. Following the regular fast-forward rules makes some sense
+to me, because you are never losing objects. But there may be
+complications with updating tags in general because of fetch's rules,
+and we would be better off preventing people from accidentally doing so.
+I think a careful review of fetch's tag rules would be in order before
+making any decision there.
+
+-Peff
