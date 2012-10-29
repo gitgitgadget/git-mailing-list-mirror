@@ -1,120 +1,109 @@
-From: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
-Subject: Re: Git clone fails with "bad pack header", how to get
- remote log
-Date: Mon, 29 Oct 2012 21:18:54 +0400
-Message-ID: <20121029211854.b58c791d30a6c8d68665e574@domain007.com>
-References: <7f498800-ed38-474d-86ad-cb937be68173@googlegroups.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: Re: git push tags
+Date: Mon, 29 Oct 2012 18:23:30 +0100
+Message-ID: <20121029172330.GC8359@camk.edu.pl>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+ <508D7628.10509@kdbg.org>
+ <CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
+ <4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
+ <CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
+ <CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
+ <508E532F.2010109@alum.mit.edu>
+ <20121029103837.GA14614@sigill.intra.peff.net>
+ <CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
+ <20121029113500.GA15597@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Kevin Molcard <kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-X-From: git-users+bncBCWKX34CSUCBBAXVXKCAKGQER4YFPSY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Oct 29 18:19:08 2012
-Return-path: <git-users+bncBCWKX34CSUCBBAXVXKCAKGQER4YFPSY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-wg0-f58.google.com ([74.125.82.58])
+Content-Type: text/plain; charset=utf-8
+Cc: Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Chris Rorvick <chris@rorvick.com>,
+	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 29 18:24:10 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncBCWKX34CSUCBBAXVXKCAKGQER4YFPSY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1TSszT-0005Yn-Hj
-	for gcggu-git-users@m.gmane.org; Mon, 29 Oct 2012 18:19:07 +0100
-Received: by mail-wg0-f58.google.com with SMTP id dt12sf1632609wgb.3
-        for <gcggu-git-users@m.gmane.org>; Mon, 29 Oct 2012 10:18:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :in-reply-to:references:x-mailer:mime-version:x-original-sender
-         :x-original-authentication-results:reply-to:precedence:mailing-list
-         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=z0FOqx/5xxrVErk3dlLinLk0Px98c7+Au8TKv27xBMQ=;
-        b=HBtxBXRClm2qxnI8H4Rrc2G3NFLMeA5XKtJTn5aVWTsh41jjvz7PXspj2Mc0AcSgni
-         5hKGB1LfhgtfggWwIlIZX6Q7bEYk8XbSGVcON1CB985JR0VVOuHAF4VZcI7Yd5vGxf+T
-         d35QNH0HBkANruZ0Gx3hhCRfDoTtRi6PmtWEyCz/ZZLGwon9kGZxRcR488dPpwSNoLBX
-         4g+1AnXyn4KhqmkKLK5Ul4SCgg8+TrvxFOg3zz1uHvrV9YLKXLWLrC86e62lIUpOr5ua
-         MEUu3ga+Xck7uRaaKg2THyrXaRFP7caayIovZf6tvTn0jItbE9IWRG2sHy+ZomSNObGv
-         
-Received: by 10.205.137.11 with SMTP id im11mr2171935bkc.30.1351531139216;
-        Mon, 29 Oct 2012 10:18:59 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.204.155.71 with SMTP id r7ls6791838bkw.6.gmail; Mon, 29 Oct
- 2012 10:18:58 -0700 (PDT)
-Received: by 10.205.123.145 with SMTP id gk17mr6557783bkc.2.1351531138068;
-        Mon, 29 Oct 2012 10:18:58 -0700 (PDT)
-Received: by 10.205.123.145 with SMTP id gk17mr6557781bkc.2.1351531138048;
-        Mon, 29 Oct 2012 10:18:58 -0700 (PDT)
-Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
-        by gmr-mx.google.com with ESMTPS id o9si1011628bko.2.2012.10.29.10.18.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Oct 2012 10:18:57 -0700 (PDT)
-Received-SPF: neutral (google.com: 84.204.203.130 is neither permitted nor denied by best guess record for domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) client-ip=84.204.203.130;
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q9THIsMq016168;
-	Mon, 29 Oct 2012 21:18:55 +0400
-In-Reply-To: <7f498800-ed38-474d-86ad-cb937be68173-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
-X-Original-Sender: flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
- 84.204.203.130 is neither permitted nor denied by best guess record for
- domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) smtp.mail=flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208629>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TSt4J-0002s7-Q5
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 18:24:08 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752897Ab2J2RXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 13:23:41 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:34028 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752276Ab2J2RXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 13:23:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 8ED375F004D;
+	Mon, 29 Oct 2012 18:23:39 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id CJLFfVso8wJ4; Mon, 29 Oct 2012 18:23:31 +0100 (CET)
+Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id C80C65F0046;
+	Mon, 29 Oct 2012 18:23:31 +0100 (CET)
+Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
+	id 1886E43CFD; Mon, 29 Oct 2012 18:23:31 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20121029113500.GA15597@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208630>
 
-On Mon, 29 Oct 2012 09:52:54 -0700 (PDT)
-Kevin Molcard <kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+On Mon, Oct 29, 2012 at 07:35:00AM -0400, Jeff King wrote:
+> On Mon, Oct 29, 2012 at 07:21:52AM -0400, Drew Northup wrote:
 
-> I have a problem with my build system.
-> 
-> I have a remote server with a relatively large repository (around 12
-> GB, each branch having a size of 3 GB). 
-> 
-> I have also 2 build servers (Mac, Windows) that are cloning the repo
-> from the remote.
-> 
-> Sometimes (very often when several git clone are sent at the same
-> time), I have the following error:
->         
->     remote: internal server error
->     fatal: protocol error: bad pack header
-> 
-> I know that it happens when the remote is compressing objects (thanks
-> to `--progress -v` flags) because the last line of the log before the
-> erro is: 
->     remote: Compressing objects:  93% (17959/19284)   [K
-> 
->  * So I have 2 questions, does anybody what is the problem and what
-> should I do?
->  * Is there a way to get a more precise log from the remote to debug
-> this problem?
+> > > I would have expected git to at least complain about updating an
+> > > annotated tag with another annotated tag. But it actually uses the same
+> > > fast-forward rule, just on the pointed-to commits. So a fast-forward
+> > > annotated re-tag will throw away the old tag object completely. Which
+> > > seems a bit crazy to me.
 
-This reminds me of a bug fixed in 1.7.12.1 [1]:
+> > > It seems like a no-brainer to me that annotated tags should not replace
+> > > each other without a force, no matter where in the refs hierarchy they
+> > > go.
 
-* When "git push" triggered the automatic gc on the receiving end, a
-  message from "git prune" that said it was removing cruft leaked to
-  the standard output, breaking the communication protocol.
+> > > For lightweight tags, I think it's more gray. They are just pointers
+> > > into history. Some projects may use them to tag immutable official
+> > > versions, but I also see them used as shared bookmarks. Requiring "-f"
+> > > may make the latter use more annoying. On the other hand, bookmark tags
+> > > tend not to be pushed, or if they are, it is part of a mirror-like
+> > > backup which should be forcing all updates anyway.
 
-In any case, bugs should be reported to the main Git list (which is
-git at vger.kernel.org), not here.
-I'm Cc'ing the main Git list so you'll get any responses from there, if
-any.
+> > Would that be an endorsement of continuing to build a patch set
+> > including the snippet that Kacper posted earlier (1) in response to my
+> > comment about not being sure how complicated all of this would be or
+> > not?
 
-Kevin, please answer to this message (keeping all the Ccs -- use "Reply
-to group" or "Reply to all" in your MUA) and describe exactly what Git
-versions on which platforms your have.
+> That patch just blocks non-forced updates to refs/tags/. I think a saner
+> start would be to disallow updating non-commit objects without a force.
+> We already do so for blobs and trees because they are not (and cannot
+> be) fast forwards. The fact that annotated tags are checked for
+> fast-forward seems to me to be a case of "it happens to work that way"
+> and not anything planned. Since such a push drops the reference to the
+> old version of the tag, it should probably require a force.
 
-1. https://raw.github.com/git/git/master/Documentation/RelNotes/1.7.12.1.txt
+I'm not sure. Looking at 37fde87 ("Fix send-pack for non-commitish
+tags.") I have an impression that Junio allowed for fast-forward pushes
+of annotated tags on purpose. 
+
+> Then on top of that we can talk about what lightweight tags should do.
+> I'm not sure. Following the regular fast-forward rules makes some sense
+> to me, because you are never losing objects. But there may be
+> complications with updating tags in general because of fetch's rules,
+> and we would be better off preventing people from accidentally doing so.
+> I think a careful review of fetch's tag rules would be in order before
+> making any decision there.
+
+The problem with the current behaviour is, that one can never be 100% sure
+that his push will not overwrite someone else tag.
 
 -- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+  Kacper
