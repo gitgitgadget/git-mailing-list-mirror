@@ -1,60 +1,51 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] gitk: handle --full-diff correctly
-Date: Mon, 29 Oct 2012 07:52:25 +0100
-Message-ID: <508E27A9.60105@viscovery.net>
-References: <1351185801-18543-1-git-send-email-felipe.contreras@gmail.com> <1351185801-18543-3-git-send-email-felipe.contreras@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] replace: parse revision argument for -d
+Date: Mon, 29 Oct 2012 02:58:36 -0400
+Message-ID: <20121029065836.GC5102@sigill.intra.peff.net>
+References: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 29 07:52:49 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 29 07:58:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSjDD-0004gA-8g
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 07:52:39 +0100
+	id 1TSjJH-0002G7-Mo
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 07:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751682Ab2J2Gw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 02:52:27 -0400
-Received: from so.liwest.at ([212.33.55.24]:16513 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751113Ab2J2Gw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 02:52:26 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TSjCz-0000Ws-Va; Mon, 29 Oct 2012 07:52:26 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id B27FF1660F;
-	Mon, 29 Oct 2012 07:52:25 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <1351185801-18543-3-git-send-email-felipe.contreras@gmail.com>
-X-Enigmail-Version: 1.4.5
-X-Spam-Score: -1.0 (-)
+	id S1751756Ab2J2G6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 02:58:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41845 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963Ab2J2G6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 02:58:39 -0400
+Received: (qmail 16030 invoked by uid 107); 29 Oct 2012 06:59:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 02:59:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 02:58:36 -0400
+Content-Disposition: inline
+In-Reply-To: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208594>
 
-Am 10/25/2012 19:23, schrieb Felipe Contreras:
-> Otherwise the files are missing from the diff, and the list of files.
-> 
-> We do this by creating a limitdiffs variable specific for the view which
-> can be turned of by using --full-diff.
+On Fri, Oct 26, 2012 at 03:33:27PM +0200, Michael J Gruber wrote:
 
-It would be very helpful if you described the problem. "Try it yourself"
-is not the answer. In particular, what does "correctly" mean in this
-context? Isn't the subject more like "gitk: handle --full-diff" in the
-sense that it wasn't handled at all previously and it did what it happened
-to do?
+>  	for (p = argv; *p; p++) {
+> -		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
+> +		q = *p;
+> +		if (get_sha1(q, sha1))
+> +			warning("Failed to resolve '%s' as a valid ref; taking it literally.", q);
+> +		else
+> +			q = sha1_to_hex(sha1);
 
-The patch breaks gitk's builtin "limit to listed paths" option - with the
-patch, the option is only honored at startup, but not when it is changed
-during the session when --full-diff is not given. Don't know what should
-happen if it is given.
+Doesn't get_sha1 already handle this for 40-byte sha1s (and for anything
+else, it would not work anyway)?
 
--- Hannes
+-Peff
