@@ -1,61 +1,102 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Mon, 29 Oct 2012 18:27:59 -0400
-Message-ID: <20121029222759.GI20513@sigill.intra.peff.net>
-References: <CAJo=hJt_A5FCCcvR=sZ5Ni+-ZGq+MjxqkONbh9k+A46xBH9jzA@mail.gmail.com>
- <20121028223431.GF26675@odin.tremily.us>
- <20121029053401.GB30186@sigill.intra.peff.net>
- <20121029104544.GA2424@odin.tremily.us>
- <20121029105855.GA15075@sigill.intra.peff.net>
- <20121029112945.GD2424@odin.tremily.us>
- <20121029114310.GA16046@sigill.intra.peff.net>
- <CABURp0pFLi+2A+9wi-ZamiRze2u6z+6oyoCsNpWOLq_cq2L1rQ@mail.gmail.com>
- <20121029213652.GC20513@sigill.intra.peff.net>
- <CABURp0otR2S1aOAWwnaFYFGRi_2cCBODbghck-BqUTw2B_ci3A@mail.gmail.com>
+Subject: Re: crash on git diff-tree -Ganything <tree> for new files with
+ textconv filter
+Date: Mon, 29 Oct 2012 18:35:21 -0400
+Message-ID: <20121029223521.GJ20513@sigill.intra.peff.net>
+References: <508C29E4.5000801@arcor.de>
+ <20121028120104.GE11434@sigill.intra.peff.net>
+ <508D8DF7.7040007@arcor.de>
+ <20121029060524.GB4457@sigill.intra.peff.net>
+ <508EE4E4.1080407@arcor.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "W. Trevor King" <wking@tremily.us>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 29 23:28:17 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Mon Oct 29 23:36:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSxof-0007Eq-9d
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 23:28:17 +0100
+	id 1TSxwo-0001KV-KO
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 23:36:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755433Ab2J2W2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 18:28:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43146 "EHLO
+	id S1761078Ab2J2Wf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 18:35:27 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43157 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755328Ab2J2W2C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 18:28:02 -0400
-Received: (qmail 24781 invoked by uid 107); 29 Oct 2012 22:28:43 -0000
+	id S1761051Ab2J2WfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 18:35:24 -0400
+Received: (qmail 24867 invoked by uid 107); 29 Oct 2012 22:36:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 18:28:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 18:27:59 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 18:36:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 18:35:21 -0400
 Content-Disposition: inline
-In-Reply-To: <CABURp0otR2S1aOAWwnaFYFGRi_2cCBODbghck-BqUTw2B_ci3A@mail.gmail.com>
+In-Reply-To: <508EE4E4.1080407@arcor.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208653>
 
-On Mon, Oct 29, 2012 at 06:21:08PM -0400, Phil Hord wrote:
+On Mon, Oct 29, 2012 at 09:19:48PM +0100, Peter Oberndorfer wrote:
 
-> > Maybe instead of blindly converting config into the environment, it
-> > should forward or clear specific known-meaning config.
-> 
-> Well, that's where we started.  I was aiming for the more generic
-> "never needs updating" direction.
+> I could reproduce with my 0x3000 bytes file on linux. The buffer is not
+> read with a trailing null byte it is mapped by mmap in
+> diff_populate_filespec...
+> So i think we will not get away with expecting a trailing null :-/
 
-Then I think you are probably stuck taking the conservative approach of
-not propagating recursively.
+Thanks for the reproduction recipe. I was testing with "git log", which
+does not use the mmap optimization.
 
--Peff
+> For me the key to reproduce the problem was to have 2 commits.
+> Adding the file in the root commit it did not work. [1]
+
+You probably would need to pass "--root" for it to do the diff of the
+initial commit.
+
+The patch below fixes it, but it's terribly inefficient (it just detects
+the situation and reallocates). It would be much better to disable the
+reuse_worktree_file mmap when we populate the filespec, but it is too
+late to pass an option; we may have already populated from an earlier
+diffcore stage.
+
+I guess if we teach the whole diff code that "-G" (and --pickaxe-regex)
+is brittle, we can disable the optimization from the beginning based on
+the diff options. I'll take a look.
+
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index b097fa7..88d1a8f 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -80,6 +80,29 @@ static void fill_one(struct diff_filespec *one,
+ 	if (DIFF_FILE_VALID(one)) {
+ 		*textconv = get_textconv(one);
+ 		mf->size = fill_textconv(*textconv, one, &mf->ptr);
++
++		/*
++		 * Horrible, horrible hack. If we are going to feed the result
++		 * to regexec, we must make sure it is NUL-terminated, but we
++		 * will not be if we have mmap'd a file and never munged it.
++		 *
++		 * We would do much better to turn off the reuse_worktree_file
++		 * optimization in the first place, which is the sole source of
++		 * these mmaps.
++		 */
++		if (one->should_munmap && !*textconv) { mf->ptr =
++			xmallocz(one->size); memcpy(mf->ptr, one->data,
++						    one->size);
++
++			/*
++			 * Attach the result to the filespec, which will
++			 * properly free it eventually.
++			 */
++			munmap(one->data, one->size);
++			one->should_munmap = 0;
++			one->data = mf->ptr;
++			one->should_free = 1;
++		}
+ 	} else {
+ 		memset(mf, 0, sizeof(*mf));
+ 	}
