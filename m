@@ -1,106 +1,78 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: gitweb
-Date: Mon, 29 Oct 2012 08:12:46 +0100
-Message-ID: <CANQwDwd6EP94PEFkEcx8gBX1B5+-95qtjGMD6iU3ao8G+rCbLw@mail.gmail.com>
-References: <20121028165647.b79fe3fcb6784c4ae547439e@lavabit.com> <20121029052815.GA30186@sigill.intra.peff.net>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: git push tags
+Date: Mon, 29 Oct 2012 08:13:36 +0100
+Message-ID: <CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+	<508D7628.10509@kdbg.org>
+	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
+	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: rh <richard_hubbe11@lavabit.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 29 08:13:22 2012
+Cc: Chris Rorvick <chris@rorvick.com>, Johannes Sixt <j6t@kdbg.org>,
+	git <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Oct 29 08:13:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSjXF-0000t3-5E
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 08:13:21 +0100
+	id 1TSjXi-0001MB-Ee
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 08:13:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752493Ab2J2HNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 03:13:09 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:59985 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661Ab2J2HNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 03:13:07 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so4373983oag.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 00:13:06 -0700 (PDT)
+	id S1752958Ab2J2HNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 03:13:38 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:50827 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661Ab2J2HNh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 03:13:37 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so4065826pbb.19
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 00:13:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=xgko8ZVPBnxwKQOEOnsG03l2nQOm0kD8UVdDhRbzhhw=;
-        b=wkErk2I85ZA740LCEBTx6tT8h+pslmbmVsxIl62CJF2zVYzshWgdrAmyJDCWxfjA6W
-         FcGFHIxLJzB/dZSt1FnMkQcL7dHbTjEtp4hQW9HmG/anCuxCMHLgm4ILX97BJlyqPrEW
-         stAXWn2XmMHveqU59ZwY1u92LiPXJvNyrA8d0XGgjcNbdOWMlhmkIuWySyg0zs3/4EYP
-         jGkfbYKw+MgxI5zzZu0Mu01Y8Jz6u9cn8Z9HDzDzCx73Oexxfj3jB1BA8+3f3VphVLlA
-         0tczCAyaf2nv7M8xSWoTkGIlAz42EHnF5WQ+NUI0e4/RZh7eqzCoeh+yeNlQ0ks42JLW
-         1nMw==
-Received: by 10.60.8.103 with SMTP id q7mr8129684oea.70.1351494786513; Mon, 29
- Oct 2012 00:13:06 -0700 (PDT)
-Received: by 10.76.91.134 with HTTP; Mon, 29 Oct 2012 00:12:46 -0700 (PDT)
-In-Reply-To: <20121029052815.GA30186@sigill.intra.peff.net>
+        bh=HKzcktnoytv0flPZkcp3q54xLh5oIxA6ekSUu1uQHXo=;
+        b=0wCqxfZrKEWsMQJ9kGEfM9fthmiwDS5QroTm/TTEsvPc8toVqWHdnfd5ViXaTTaNrM
+         pOHrlqYnm0enpm5wxochyLbUhJgnO8o1YfVCF0X/NSE6ghcX6AKQ/SODIR8TBvNMKLHn
+         kiW0YMhe9ZjsluTY1uyb/o7kIKShb0KPTPJfRmY4rAFMVUBNXLoP9OH+Qm/Hs4nJpXcY
+         c7TwnU7mWQpJ7wF428IexmlBtb4M7mkkEEB+vDtsBc9B1Gau7HPluOLyUqRc+mpu6T3A
+         ByhMxW3RsYu89kb67LDI92BpTVJC1i3E72X1DlYZckSuInWL9VaFuaQ6SmNQ/Kwsgyb0
+         GWeg==
+Received: by 10.66.88.4 with SMTP id bc4mr80847219pab.42.1351494816803; Mon,
+ 29 Oct 2012 00:13:36 -0700 (PDT)
+Received: by 10.67.3.101 with HTTP; Mon, 29 Oct 2012 00:13:36 -0700 (PDT)
+In-Reply-To: <4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208598>
 
-On Mon, Oct 29, 2012 at 6:28 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Oct 28, 2012 at 04:56:47PM -0700, rh wrote:
->
->> I'm not using gitweb I was thinking about using it and was looking at the
->> cgi and saw this in this file:
->> https://github.com/git/git/blob/master/gitweb/gitweb.perl
->>
->> I think I understand the intention but the outcome is wrong.
->>
->> our %highlight_ext = (
->>       # main extensions, defining name of syntax;
->>       # see files in /usr/share/highlight/langDefs/ directory
->>       map { $_ => $_ }
->>       qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl sql make),
->>       # alternate extensions, see /etc/highlight/filetypes.conf
->>       'h' => 'c',
-[...]
-> Yeah, this is wrong. The first map will eat the rest of the list, and
-> you will get "h => h", "cxx => cxx", and so forth. I do not know this
-> chunk of code, but that does not seem like it is the likely intent.
->
-> You could fix it with extra parentheses:
->
->   our %he = (
->     (map { $_ => $_ } qw(py c cpp ...)),
->     'h' => 'c',
->     (map { $_ => 'sh' } qw(bash zsh ksh)),
->     ... etc ...
->   );
->
->> I think the intent is better met with this, (the print is for show)
->>
->> our %he = ();
->> $he{'h'} = 'c';
->> $he{$_} = $_     for (qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl sql make));
->> $he{$_} = 'cpp'  for (qw(cxx c++ cc));
-[...]
+Hi,
 
-> That is more readable to me (though it does lose the obviousness that it
-> is a variable initialization).
->
-> Looks like this was broken since 592ea41 (gitweb: Refactor syntax
-> highlighting support, 2010-04-27). I do not use gitweb (nor highlight)
-> at all, but I'd guess the user-visible impact is that "*.h" files are
-> not correctly highlighted
->
-> Jakub, can you confirm the intent and a fix like the one above makes
-> things better?
+Pro Git, By Scott Chacon says:
 
-Yes, either of those makes things better.
+2.6
 
->                                   (unless highlight does this extension mapping
-> itself, but then why are we doing it here?).
+   "Like most VCSs, Git has the ability to tag specific points in
+history as being important.
+Generally, people use this functionality to mark release points (v1.0,
+and so on)."
 
-Highlight does extension mapping itself... but for that it needs file name,
-and not to be feed file contents from pipe.
+2.6.2:
 
--- 
-Jakub Narebski
+   "A [lightweight] tag is very much like a branch that does not change ..."
+
+Clearly, tags are not the same as branches. They are there for a
+different purpose. If they were exactly the same as branches, there
+would be no need for them.
+Of course, they share some behaviors with branches, and there are
+several commands that handle them in the same way, but the key point
+is that they do not change, or at least they do not do that by
+default. The ability to force changes of tags is there only to correct
+tags that might have set tags to the wrong points by mistake.
+So, what I am telling is that this property must be preserved
+consistently across all commands, including git-push.
+
+-Angelo
