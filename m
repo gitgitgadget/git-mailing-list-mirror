@@ -1,88 +1,112 @@
 From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Mon, 29 Oct 2012 13:38:28 -0400
-Message-ID: <CABURp0pFLi+2A+9wi-ZamiRze2u6z+6oyoCsNpWOLq_cq2L1rQ@mail.gmail.com>
-References: <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
- <50883E54.4080507@web.de> <20121025005307.GE801@odin.tremily.us>
- <508D9A12.6010104@web.de> <CAJo=hJt_A5FCCcvR=sZ5Ni+-ZGq+MjxqkONbh9k+A46xBH9jzA@mail.gmail.com>
- <20121028223431.GF26675@odin.tremily.us> <20121029053401.GB30186@sigill.intra.peff.net>
- <20121029104544.GA2424@odin.tremily.us> <20121029105855.GA15075@sigill.intra.peff.net>
- <20121029112945.GD2424@odin.tremily.us> <20121029114310.GA16046@sigill.intra.peff.net>
+Subject: Re: [PATCHv2] git-status: show short sequencer state
+Date: Mon, 29 Oct 2012 14:05:14 -0400
+Message-ID: <CABURp0o7b5aZV6jNM=DSweh-8zVgGppxVsXisAcoNk7TxHrdgQ@mail.gmail.com>
+References: <1351022574-27869-1-git-send-email-hordp@cisco.com>
+ <1351022574-27869-2-git-send-email-hordp@cisco.com> <20121025092919.GG8390@sigill.intra.peff.net>
+ <5089633C.8030307@cisco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: "W. Trevor King" <wking@tremily.us>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 29 18:39:04 2012
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 19:05:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TStIl-0002Z1-JV
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 18:39:03 +0100
+	id 1TStif-0007lZ-Cp
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 19:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932070Ab2J2Riv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 13:38:51 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:39207 "EHLO
+	id S1758830Ab2J2SFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 14:05:37 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:45162 "EHLO
 	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752741Ab2J2Riu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 13:38:50 -0400
-Received: by mail-la0-f46.google.com with SMTP id h6so3962551lag.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 10:38:49 -0700 (PDT)
+	with ESMTP id S1757098Ab2J2SFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 14:05:36 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so3983628lag.19
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 11:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=gVKfntSJdUBVuCrV55trkxrlcxwxRlji5UXSq8ZifQA=;
-        b=bJIl2SfvrabdnIbIGNSg6SAm73HYEE6J/a4N5Am7OXJ88leUNOOflLF5H3yvNFVqvd
-         FY2SN85VXsanILYQ29y1Md5m/qiCeqmDpIQuivaxqI1QrDkl9RnSdQTtitZqEoDs+iwK
-         Hw1NtiPwnPCUBkpKs53wkpyAew7JZ+7aFLgduwrqnxKnmrKfWFllsS2iQ7LAukvSNEHB
-         2yWRiA2jZvj7CrTyPpEVC9QZaXVy7WvU0zlcYkJT3OebO7De/7EohK0tnQXbkEbWqBDS
-         X8s/PS72gRazAepQW4J/lp7yzT/gMUrVK16/XhYSGEgYryE3jYazDOYqMzeos25adEHS
-         H9Wg==
-Received: by 10.112.30.163 with SMTP id t3mr12256126lbh.56.1351532329054; Mon,
- 29 Oct 2012 10:38:49 -0700 (PDT)
-Received: by 10.114.26.166 with HTTP; Mon, 29 Oct 2012 10:38:28 -0700 (PDT)
-In-Reply-To: <20121029114310.GA16046@sigill.intra.peff.net>
+        bh=IzxL60tH4VPhPS+C1yHoxgitbICSEeJuyqLdLzWlWpE=;
+        b=JqP+HQgBhflbwD4EykttlGavYvG3EdqLCqlDp/iGsJgyfspHjHo7y2FSkEM9KuxCYJ
+         HTQAxYV2dyQ5sGEldP4CdhvRCGvN9CzlubTzXJDzJwLH0Ei4Eqk/xrsi7h2oQBC6M/j9
+         PpF5tFHuatLORpqZVqCFQzlKOxfBimAlEPVi2uMeX4FgWmXpOZFi/0VHAdM8w6BaE1wk
+         Lv19Lfxkrj5iMZk0Q/vwPlrxSPOHk3pQbgs9iBZLbR88QQDZNUGOUEv9nBusUZ36vNSO
+         ZO5Didb5kZeB3X6xWMI3gE8L+uxxNkY85Upu/UsGPhr5+mcpTqWtZJuve96/C6cNi840
+         VF4Q==
+Received: by 10.152.110.229 with SMTP id id5mr28027663lab.36.1351533934747;
+ Mon, 29 Oct 2012 11:05:34 -0700 (PDT)
+Received: by 10.114.26.166 with HTTP; Mon, 29 Oct 2012 11:05:14 -0700 (PDT)
+In-Reply-To: <5089633C.8030307@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208632>
 
-On Mon, Oct 29, 2012 at 7:43 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Oct 29, 2012 at 07:29:45AM -0400, W. Trevor King wrote:
+On Thu, Oct 25, 2012 at 12:05 PM, Phil Hord <hordp@cisco.com> wrote:
 >
->> On Mon, Oct 29, 2012 at 06:58:55AM -0400, Jeff King wrote:
->> > Can you send an updated version of the patch that summarizes the
->> > situation in the commit message?
+> Jeff King wrote:
+>> On Tue, Oct 23, 2012 at 04:02:54PM -0400, Phil Hord wrote:
 >>
->> Sure.  Should I include Phil's $submodule_<var-name> export, or would
->> you rather have that be a separate series?
->
-> I think it probably makes sense as a separate patch in the same series,
-> since it is meant to support the same workflows.
+>>> Teach git-status to report the sequencer state in short form
+>>> using a new --sequencer (-S) switch.  Output zero or more
+>>> simple state token strings indicating the deduced state of the
+>>> git sequencer.
+>>>
+>>> Introduce a common function to determine the current sequencer
+>>> state so the regular status function and this short version can
+>>> share common code.
+>>>
+>>> Add a substate to wt_status_state to track more detailed
+>>> information about a state, such as "conflicted" or "resolved".
+>>> Move the am_empty_patch flage out of wt_status_state and into
+>> This patch ended up quite long. It might be a little easier to review
+>> if it were broken into refactoring steps (I have not looked at it too
+>> closely yet, but it seems like the three paragraphs above could each be
+>> their own commit).
 
-I agree.  I did expect to clean it up some, but also to suffer some
-review.  Feel free to clean it up as you see fit and submit it with
-your series.
+I'm currently splitting this out into a series and reconsidering some
+of it along the way.  I need some guidance.
 
-> I am not sure it is sufficient as-is, though. It does not seem to ever
-> clear variables, only set them, which means that values could leak
-> across iterations of the loop,  [...] E.g., when
-> the first submodule has submodule.*.foo set but the second one does not,
-> you will still end up with $submodule_foo set when you process the
-> second one.
+I want to support these two modes:
 
-Good point.  That should not happen.
+  A.  'git status --short' with sequence tokens added:
+       ## conflicted
+       ## merge
+       ?? untracked-workdir-file
+       etc.
 
-> or down to recursive calls.
+  B.  Same as (A) but without workdir status:
+       ## conflicted
+       ## merge
 
-Frankly, I consider that to be a feature.  However, I can see how it
-would be considered inconsistent in many ways, so it's probably best
-to squash it.  :-\
+The user who wants 'A' would initiate it like this:
+    git status --sequencer
+  or
+    git status -S
+
+How do I spell the options for 'B'?  I have come up with these three
+possibilities:
+    git --sequencer-only   # Another switch
+    git --sequencer=only   # An OPTARG parser
+    git -S -S           # like git-diff -C -C, an OPT_COUNTUP
+
+The first one is easy but weird, imho.
+The second seems silly for just one type of option.
+The last one is cheap to implement, but harder to explain in Documentation/
+
+Any opinions?
 
 Phil
