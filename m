@@ -1,87 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] git-submodule add: Add -r/--record option.
-Date: Mon, 29 Oct 2012 06:58:55 -0400
-Message-ID: <20121029105855.GA15075@sigill.intra.peff.net>
-References: <20121023204437.GE28592@odin.tremily.us>
- <1f6ee2966ffe0f58f4b96ae0efb2ffb13e2fa2d8.1351029479.git.wking@tremily.us>
- <50883E54.4080507@web.de>
- <20121025005307.GE801@odin.tremily.us>
- <508D9A12.6010104@web.de>
- <CAJo=hJt_A5FCCcvR=sZ5Ni+-ZGq+MjxqkONbh9k+A46xBH9jzA@mail.gmail.com>
- <20121028223431.GF26675@odin.tremily.us>
- <20121029053401.GB30186@sigill.intra.peff.net>
- <20121029104544.GA2424@odin.tremily.us>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: git push tags
+Date: Mon, 29 Oct 2012 07:21:52 -0400
+Message-ID: <CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
+References: <CAB9Jk9DMOwhDf3SvMzTmTZiyZg_4pgXx-evrfWkB3U4w-KqtVw@mail.gmail.com>
+	<508D7628.10509@kdbg.org>
+	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
+	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
+	<CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
+	<CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
+	<508E532F.2010109@alum.mit.edu>
+	<20121029103837.GA14614@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Nahor <nahor.j+gmane@gmail.com>, Phil Hord <phil.hord@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Oct 29 11:59:18 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Chris Rorvick <chris@rorvick.com>,
+	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 29 12:22:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSn3n-00047U-K4
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 11:59:11 +0100
+	id 1TSnPz-0003pB-Av
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 12:22:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753001Ab2J2K67 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Oct 2012 06:58:59 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42045 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751582Ab2J2K66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 06:58:58 -0400
-Received: (qmail 19122 invoked by uid 107); 29 Oct 2012 10:59:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 06:59:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 06:58:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20121029104544.GA2424@odin.tremily.us>
+	id S1758681Ab2J2LVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 07:21:54 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:46406 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758668Ab2J2LVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 07:21:54 -0400
+Received: by mail-bk0-f46.google.com with SMTP id jk13so1902524bkc.19
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 04:21:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mYsubj3mkb5s+zOzm0Lf1rc2RVgfgpUvq/o0xxhlzyA=;
+        b=o9B8UGizcxOBGzzfZiPn7Vgizj7hPrqdjSuqwzVvZhPy8rWONQLaVIDJQg4apP8UA1
+         7Pkc0SycPN8zn1QuUqSvutSJzYn/lMIRDTWQ78/reOjYIj84xU+qoHutHCjO5cYjBU6u
+         G2aBHgYVVgXMooA3e89p9YEuK0FT8ie14tz6uDrUM5dR7asyCK/7rsod7NN8DTBUHxSI
+         VQDZeAlQduRpYZs0P+JpG8Ie1yvvOpfgHHSVHjiPgQomBWr2woM6SV6gsJkkGKX5dD4Y
+         eE1wI8g156YCy14eoxmUV/vsiVjdN86BDNk5osnFlfSKQ0CiVxXEOKKqoNGq/xHfelBT
+         KOzw==
+Received: by 10.204.9.3 with SMTP id j3mr9338880bkj.15.1351509712745; Mon, 29
+ Oct 2012 04:21:52 -0700 (PDT)
+Received: by 10.205.122.144 with HTTP; Mon, 29 Oct 2012 04:21:52 -0700 (PDT)
+In-Reply-To: <20121029103837.GA14614@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208616>
 
-On Mon, Oct 29, 2012 at 06:45:44AM -0400, W. Trevor King wrote:
+On Mon, Oct 29, 2012 at 6:38 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Oct 29, 2012 at 10:58:07AM +0100, Michael Haggerty wrote:
+>
+>> I agree with you that it is too easy to create chaos by changing tags in
+>> a published repository and that git should do more to prevent this from
+>> happening without explicit user forcing.  The fact that git internally
+>> handles tags similarly to other references is IMO an excuse for the
+>> current behavior, but not a justification.
+>
+> I would have expected git to at least complain about updating an
+> annotated tag with another annotated tag. But it actually uses the same
+> fast-forward rule, just on the pointed-to commits. So a fast-forward
+> annotated re-tag will throw away the old tag object completely. Which
+> seems a bit crazy to me.
+>
+> It seems like a no-brainer to me that annotated tags should not replace
+> each other without a force, no matter where in the refs hierarchy they
+> go.
+>
+> For lightweight tags, I think it's more gray. They are just pointers
+> into history. Some projects may use them to tag immutable official
+> versions, but I also see them used as shared bookmarks. Requiring "-f"
+> may make the latter use more annoying. On the other hand, bookmark tags
+> tend not to be pushed, or if they are, it is part of a mirror-like
+> backup which should be forcing all updates anyway.
 
-> > > Ah, good, then we *are* all using the option for the same thing.
-> >=20
-> > That makes me more comfortable. Your patch adds support for setting=
- the
-> > variable initially. Does it need any special magic for maintenance,=
- or
-> > is it something that would always be updated by hand?
->=20
-> Everyone we've heard from so far interprets the setting as =E2=80=9Cp=
-ull from
-> $branch in the remote repository $url to update the submodule=E2=80=9D=
-=2E  With
-> Phil's export, that would become
->=20
->   $ git submodule foreach 'git checkout "$submodule_branch" && git pu=
-ll'
->   $ git commit -a -m "Updated submodules"
->   $ git push
->=20
-> As Nahor mentioned on the 23rd, there are a number of ways that the
-> upstream branch could disappear, but Git has no way to know what the
-> new branch setting should be.  This means that even if we make =E2=80=
-=9Cpull
-> from $branch=E2=80=9D interpretation official, we still couldn't do a=
-nything
-> slick about updating it.  So, yes, it will be updated by hand.
+Would that be an endorsement of continuing to build a patch set
+including the snippet that Kacper posted earlier (1) in response to my
+comment about not being sure how complicated all of this would be or
+not?
 
-OK.
+[1] http://article.gmane.org/gmane.comp.version-control.git/208473
 
-Can you send an updated version of the patch that summarizes the
-situation in the commit message?
-
-I also think it is probably worth saying something in the documentation
-for the feature like "Note that this value is not actually used by git;
-however, some external tools and workflows may make use of it."
-
--Peff
+-- 
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
