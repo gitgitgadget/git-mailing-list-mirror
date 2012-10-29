@@ -1,72 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] replace: parse revision argument for -d
-Date: Mon, 29 Oct 2012 05:04:19 -0400
-Message-ID: <20121029090419.GA29464@sigill.intra.peff.net>
-References: <807340e40adb1fc97cd97161fe1fabd292bc79c3.1351258394.git.git@drmicha.warpmail.net>
- <20121029065836.GC5102@sigill.intra.peff.net>
- <508E4637.2060903@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Oct 29 10:04:39 2012
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [PATCH] gitk: Do not select file list entries during diff loading
+Date: Mon, 29 Oct 2012 10:56:50 +0200
+Message-ID: <1ksq2y4.1mzh8yzydp87lM%lists@haller-berlin.de>
+References: <508B08CB.5060702@arcor.de>
+Cc: paulus@samba.org (Paul Mackerras)
+To: kumbayo84@arcor.de (Peter Oberndorfer), git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 29 10:57:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSlGw-000250-5t
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 10:04:39 +0100
+	id 1TSm5g-0000yr-Qa
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 10:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758528Ab2J2JE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 05:04:26 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41960 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758246Ab2J2JEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 05:04:23 -0400
-Received: (qmail 17274 invoked by uid 107); 29 Oct 2012 09:05:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 05:05:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 05:04:19 -0400
-Content-Disposition: inline
-In-Reply-To: <508E4637.2060903@drmicha.warpmail.net>
+	id S1758120Ab2J2J4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 05:56:52 -0400
+Received: from server90.greatnet.de ([83.133.96.186]:56917 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758019Ab2J2J4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 05:56:52 -0400
+Received: from [192.168.0.42] (nat1.ableton.net [217.110.199.117])
+	by server90.greatnet.de (Postfix) with ESMTPA id AC4C22C4074;
+	Mon, 29 Oct 2012 10:56:49 +0100 (CET)
+In-Reply-To: <508B08CB.5060702@arcor.de>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.8.2 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208607>
 
-On Mon, Oct 29, 2012 at 10:02:47AM +0100, Michael J Gruber wrote:
+Peter Oberndorfer <kumbayo84@arcor.de> wrote:
 
-> Jeff King venit, vidit, dixit 29.10.2012 07:58:
-> > On Fri, Oct 26, 2012 at 03:33:27PM +0200, Michael J Gruber wrote:
-> > 
-> >>  	for (p = argv; *p; p++) {
-> >> -		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
-> >> +		q = *p;
-> >> +		if (get_sha1(q, sha1))
-> >> +			warning("Failed to resolve '%s' as a valid ref; taking it literally.", q);
-> >> +		else
-> >> +			q = sha1_to_hex(sha1);
-> > 
-> > Doesn't get_sha1 already handle this for 40-byte sha1s (and for anything
-> > else, it would not work anyway)?
+> Please review/test the patch carefully before applying,
+> since i do not often work with tcl/tk :-)
+
+The patch makes perfect sense to me.  (I'm not a great tcl coder either
+though, and not very familiar with the gitk code; so another review
+would be helpful.)
+
+Just one minor suggestion:
+
+>  proc scrolltext {f0 f1} {
+> -    global searchstring cmitmode ctext
+> +    global searchstring cmitmode ctext ctext_last_scroll_pos
+>      global suppress_highlighting_file_for_this_scrollpos
 > 
-> What is "this"???
+> +    .bleft.bottom.sb set $f0 $f1
+> +    if {$searchstring ne {}} {
+> +        searchmarkvisible 0
+> +    }
+> +
+>      set topidx [$ctext index @0,0]
+> +    if {$topidx eq $ctext_last_scroll_pos} return
+> +    set ctext_last_scroll_pos $topidx
+> +
+>      if {![info exists suppress_highlighting_file_for_this_scrollpos]
+>          || $topidx ne $suppress_highlighting_file_for_this_scrollpos} {
+>          highlightfile_for_scrollpos $topidx
+>      }
 > 
-> So far, "git replace -d <rev>" only accepts a full sha1, because it uses
-> it literally as a ref name "resf/replace/<rev>" without resolving anything.
-> 
-> The patch makes it so that <rev> gets resolved to a sha1 even if it is
-> abbreviated, and then it gets used.
-> 
-> Or do you mean the warning?
+>      catch {unset suppress_highlighting_file_for_this_scrollpos}
+> -
+> -    .bleft.bottom.sb set $f0 $f1
+> -    if {$searchstring ne {}} {
+> -        searchmarkvisible 0
+> -    }
+>  }
 
-Sorry, yeah, I meant the warning and fallback.
+I don't like early returns, they can easily become a source of bugs when
+someone adds more code to the end of a function without realizing that
+there's an early return in the middle.  I'd much rather say something
+like
 
-If I understand correctly, the fallback will never work unless we are
-fed a 40-byte sha1. But get_sha1 should always return a 40-byte sha1
-without doing any further processing.
+    if {$topidx ne $ctext_last_scroll_pos} {
+        if {![info exists suppress_highlighting_file_for_this_scrollpos]
+             || $topidx ne $suppress_highlighting_file_for_this_scrollpos} {
+             highlightfile_for_scrollpos $topidx
+        }
 
--Peff
+        set ctext_last_scroll_pos $topidx
+    }
+
+
+-Stefan
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
