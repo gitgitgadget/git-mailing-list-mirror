@@ -1,86 +1,98 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: merge --no-commit not able to report stats more verbosely?
-Date: Mon, 29 Oct 2012 14:12:32 -0400
-Message-ID: <CABURp0oX5aT=yEbYeDXoOPWj_aRscVBY327_E6uyrrp5TPvcxA@mail.gmail.com>
-References: <k63iai$kbp$1@ger.gmane.org> <20121028112150.GD11434@sigill.intra.peff.net>
+From: Thomas Ackermann <th.acker66@arcor.de>
+Subject: Aw: Re: [Patch 1/1] Wire html for all files in ./technical and
+ ./howto in Makefile
+Date: Mon, 29 Oct 2012 19:33:47 +0100 (CET)
+Message-ID: <884264929.71955.1351535627736.JavaMail.ngmail@webmail09.arcor-online.net>
+References: <20121025094205.GI8390@sigill.intra.peff.net> <139737172.296334.1351014913982.JavaMail.ngmail@webmail16.arcor-online.net>
+ <1531209463.296427.1351015084181.JavaMail.ngmail@webmail16.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 29 19:13:12 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: peff@peff.net, th.acker66@arcor.de
+X-From: git-owner@vger.kernel.org Mon Oct 29 19:34:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TStpn-0007ou-54
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 19:13:11 +0100
+	id 1TSuA1-0006Bh-AI
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 19:34:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932119Ab2J2SMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 14:12:54 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:41713 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756593Ab2J2SMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 14:12:53 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n3so3272343lbo.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 11:12:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WZypwuEWbcmKQ7CnhAq82Muc85RBHcJO7lNr/IBFSUI=;
-        b=sbQ+hxG8eU71EPx50u0PYK4qVgLVbYVKTX52GwwltZb9sQGtDD18mIpceYUAAmhb6G
-         qJ2N2aWgP9HkDutaEgLDk1jVFPZA7RnQSaCmnQ9RWcHcbIJgLIZbmN6beAU0yD/8FCsZ
-         dJqLZArRjROTe80/hFOqZB7pPFdxERQtMY5wZtUeFLLUieNKeoa5fU8+31zAqgzr2T3q
-         gGCXilIbR4g7qUNLagkpxSulA7Xk30ZjfVIpixlPdzoSyNEtjnfNxBPrc0toLvL1veuy
-         UYxBjpJhozfqS7fxrURZioTBWwjz8hc0yfrdFDEvlUFEBroN1qi6lKFRdz8tFae639+l
-         zWvA==
-Received: by 10.152.47.112 with SMTP id c16mr28391193lan.50.1351534372315;
- Mon, 29 Oct 2012 11:12:52 -0700 (PDT)
-Received: by 10.114.26.166 with HTTP; Mon, 29 Oct 2012 11:12:32 -0700 (PDT)
-In-Reply-To: <20121028112150.GD11434@sigill.intra.peff.net>
+	id S1760364Ab2J2Sdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 14:33:49 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:35523 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757336Ab2J2Sds (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Oct 2012 14:33:48 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mx.arcor.de (Postfix) with ESMTP id B97075A6FE;
+	Mon, 29 Oct 2012 19:33:47 +0100 (CET)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id BA8DC46E01A;
+	Mon, 29 Oct 2012 19:33:47 +0100 (CET)
+Received: from webmail09.arcor-online.net (webmail09.arcor-online.net [151.189.8.45])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id AA342197896;
+	Mon, 29 Oct 2012 19:33:47 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net AA342197896
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1351535627; bh=iB/rJjsuWxJAgbQxPNfk1KPgExK/be7wKwW8VYPInBQ=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=Lf/npEuMkcarBF7aUzQhPtl1XaKPRu5A5HpQj+p82Vn6J89mPKSs39l8L5f2QBBCL
+	 hMV4VZBN7KjT3l151Ajv/nJ97X0EP+5huwqfI/5oILpKFjOyd2U7WTjx9ePy7I3Xpn
+	 oJCSuS0Lwdgm42AtL9lRB90mWUDQJjMB3vJP9KSU=
+Received: from [178.7.28.75] by webmail09.arcor-online.net (151.189.8.45) with HTTP (Arcor Webmail); Mon, 29 Oct 2012 19:33:47 +0100 (CET)
+In-Reply-To: <20121025094205.GI8390@sigill.intra.peff.net>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 178.7.28.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208634>
 
-On Sun, Oct 28, 2012 at 7:21 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Oct 22, 2012 at 09:39:31AM -0400, Scott R. Godin wrote:
->
->> As you can see from the below, I can't seem to get it to give me more
->> verbose results of what's being merged (as in the actual merge below)
->> with --stat or -v .. is it supposed to do that?
->
-> Yes. The diffstat is shown for the completed merge, but here:
->
->> (develop)>$ git merge --no-commit --stat -v widget_twitter
->> Automatic merge went well; stopped before committing as requested
->
-> You do not complete the merge.
->
->> (develop|MERGING)>$ git merge --abort
->>
->> (develop)>$ git merge widget_twitter
->> Merge made by the 'recursive' strategy.
->>  .../code/community/Dnd/Magentweet/Model/User.php   |    3 ++-
->>  1 files changed, 2 insertions(+), 1 deletions(-)
->
-> Whereas here you do, and you get a diffstat.
->
-> When you are in the middle of an uncompleted merge and want to know what
-> is happening, you should look at the index using "git status" (to get an
-> overview of what is ready to be committed and what is unmerged), "git
-> diff --cached" (to see what was automatically merged and is ready for
-> commit), and "git diff" (to see conflicted entries that still need to be
-> resolved).
+ 
+This patch addresses Junios comment in WC:
+"Misapplication of a patch fixed; the ones near the tip needs to
+ update the links to point at the html files, though."
 
-I think he is looking for this bit
-    "Merge made by the 'recursive' strategy."
+See older mail in this thread:
+---
+Thomas Ackermann <th.acker66@arcor.de> writes:
 
-But he is seeing this instead:
-    "Automatic merge went well; stopped before committing as requested"
+> BTW1: As only the changes in the doc files where cherry-picked, currently on pu howto-index.sh
+> will create invalid links in howto-index.html because it scans all .txt-files in ./howto for 
+> 'Content-type: text/asciidoc' and if found, creates a reference to a html file. But these are not created
+> for the new asciidoc files. So the changes in Documentation/Makefile which create html for the new  
+> files should be merged also.
 
-Should the "what happened" output be silenced on --no-commit?
+Ah, I didn't notice that.
 
-Phil
+That means that for the patch [6/8], which adds content-type to the
+text files, to be complete, it needs to update Makefile to produce
+html files from them.
+
+Thanks.
+---
+
+So IMHO no open issues with this patch.
+
+----- Original Nachricht ----
+Von:     Jeff King <peff@peff.net>
+An:      Thomas Ackermann <th.acker66@arcor.de>
+Datum:   25.10.2012 11:42
+Betreff: Re: [Patch 1/1] Wire html for all files in ./technical and ./howto
+ in Makefile
+
+> On Tue, Oct 23, 2012 at 07:58:04PM +0200, Thomas Ackermann wrote:
+> 
+> > - target "html" creates html for all files in Documentation/howto and
+> > Documentation/technical
+> 
+> Thanks.
+> 
+
+
+---
+Thomas
