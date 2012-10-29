@@ -1,68 +1,51 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: crash on git diff-tree -Ganything <tree> for new files with
- textconv filter
-Date: Mon, 29 Oct 2012 02:18:54 -0400
-Message-ID: <20121029061854.GA5102@sigill.intra.peff.net>
-References: <508C29E4.5000801@arcor.de>
- <20121028120104.GE11434@sigill.intra.peff.net>
- <508D8DF7.7040007@arcor.de>
- <20121029060524.GB4457@sigill.intra.peff.net>
+Subject: Re: [PATCH] Documentation: improve the example of overriding LESS
+ via core.pager
+Date: Mon, 29 Oct 2012 02:26:57 -0400
+Message-ID: <20121029062657.GB5102@sigill.intra.peff.net>
+References: <1351455166-2579-1-git-send-email-patrick@parcs.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Mon Oct 29 07:19:12 2012
+Cc: git@vger.kernel.org
+To: Patrick Palka <patrick@parcs.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Oct 29 07:27:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSigp-0004i2-3Z
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 07:19:11 +0100
+	id 1TSioc-0004A3-Pw
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 07:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757663Ab2J2GS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 02:18:58 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41830 "EHLO
+	id S1751756Ab2J2G1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 02:27:01 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41834 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756092Ab2J2GS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 02:18:57 -0400
-Received: (qmail 15770 invoked by uid 107); 29 Oct 2012 06:19:39 -0000
+	id S1751069Ab2J2G1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 02:27:00 -0400
+Received: (qmail 15826 invoked by uid 107); 29 Oct 2012 06:27:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 02:19:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 02:18:54 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 02:27:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 02:26:57 -0400
 Content-Disposition: inline
-In-Reply-To: <20121029060524.GB4457@sigill.intra.peff.net>
+In-Reply-To: <1351455166-2579-1-git-send-email-patrick@parcs.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208591>
 
-On Mon, Oct 29, 2012 at 02:05:24AM -0400, Jeff King wrote:
+On Sun, Oct 28, 2012 at 04:12:46PM -0400, Patrick Palka wrote:
 
-> > i have a file with exactly 12288(0x3000) bytes in the repository.
-> > When the file is loaded, the data is placed luckily so the data end
-> > falls at a page boundary.
-> > Later diff_grep() calls regexec() which calls strlen() on the loaded buffer
-> > and ends up reading beyond the actual data into the next page
-> > which is not allocated and causes a pagefault.
-> > Or it could possibly (randomly) match the regex on data that is not
-> > actually part of a file...
-> 
-> Yuck. For the most part, we treat blob content (and generally most
-> object content) as a sized buffer. However, there are some spots which,
-> either through laziness or because a code interface expects a string, we
-> pass the value as a string. This works because the object-reading code
-> puts an extra NUL at the end of our buffer to handle just such an
-> instance. So we might prematurely end if the object contains embedded
-> NULs, but we would never read past the end.
-> 
-> The code to read the output of a textconv filter does not do this
-> explicitly. I would think it would get it for free by virtue of reading
-> into a strbuf, though. I'll try to investigate.
+> You can override an option set in the LESS variable by simply prefixing
+> the command line option with `-+`. This is more robust than the previous
+> example if the default LESS options are to ever change.
 
-I can't seem to replicate the problem here, even under valgrind. Do you
-have a minimal test case?
+Yeah, the current description is quite tortured and complex. I wondered
+if there might be some reason, but I think it is simply that fee7545 was
+over-zealous in adopting the original text. Yours is much more sensible.
+
+Thanks.
 
 -Peff
