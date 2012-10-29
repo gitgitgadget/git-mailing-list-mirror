@@ -1,51 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation: improve the example of overriding LESS
- via core.pager
-Date: Mon, 29 Oct 2012 02:26:57 -0400
-Message-ID: <20121029062657.GB5102@sigill.intra.peff.net>
-References: <1351455166-2579-1-git-send-email-patrick@parcs.ath.cx>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] gitk: simplify file filtering
+Date: Mon, 29 Oct 2012 07:46:36 +0100
+Message-ID: <508E264C.5080005@viscovery.net>
+References: <1351185801-18543-1-git-send-email-felipe.contreras@gmail.com> <1351185801-18543-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Patrick Palka <patrick@parcs.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Oct 29 07:27:15 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 07:47:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSioc-0004A3-Pw
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 07:27:15 +0100
+	id 1TSj7l-0007hu-KA
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Oct 2012 07:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756Ab2J2G1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 02:27:01 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41834 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751069Ab2J2G1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 02:27:00 -0400
-Received: (qmail 15826 invoked by uid 107); 29 Oct 2012 06:27:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 29 Oct 2012 02:27:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2012 02:26:57 -0400
-Content-Disposition: inline
-In-Reply-To: <1351455166-2579-1-git-send-email-patrick@parcs.ath.cx>
+	id S1751162Ab2J2Gqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 02:46:43 -0400
+Received: from so.liwest.at ([212.33.55.24]:19572 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751113Ab2J2Gqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 02:46:42 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TSj7N-0007pV-F2; Mon, 29 Oct 2012 07:46:37 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1E0351660F;
+	Mon, 29 Oct 2012 07:46:37 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <1351185801-18543-2-git-send-email-felipe.contreras@gmail.com>
+X-Enigmail-Version: 1.4.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208592>
 
-On Sun, Oct 28, 2012 at 04:12:46PM -0400, Patrick Palka wrote:
+Am 10/25/2012 19:23, schrieb Felipe Contreras:
+> git diff is perfectly able to do this with '-- files', no need for
+> manual filtering.
 
-> You can override an option set in the LESS variable by simply prefixing
-> the command line option with `-+`. This is more robust than the previous
-> example if the default LESS options are to ever change.
+It would have been very useful if you summarized what the code did before
+this change.
 
-Yeah, the current description is quite tortured and complex. I wondered
-if there might be some reason, but I think it is simply that fee7545 was
-over-zealous in adopting the original text. Yours is much more sensible.
+As for the change itself, it seems to make sense to use git diff's path
+limiting instead of some home-grown method.
 
-Thanks.
-
--Peff
+-- Hannes
