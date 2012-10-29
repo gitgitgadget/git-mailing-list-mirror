@@ -1,7 +1,7 @@
 From: Phil Hord <hordp@cisco.com>
-Subject: [PATCHv2 1/3] Refactor print_state into get_state
-Date: Mon, 29 Oct 2012 19:31:51 -0400
-Message-ID: <1351553513-20385-2-git-send-email-hordp@cisco.com>
+Subject: [PATCHv2 2/3] wt-status: More state retrieval abstraction
+Date: Mon, 29 Oct 2012 19:31:52 -0400
+Message-ID: <1351553513-20385-3-git-send-email-hordp@cisco.com>
 References: <CABURp0qBRvZQvnBbOraQ7c7DRg8v0TjnY+MOGYaWnWwjCqi23Q@mail.gmail.com>
  <1351553513-20385-1-git-send-email-hordp@cisco.com>
 Cc: phil.hord@gmail.com, Jeff King <peff@peff.net>,
@@ -19,111 +19,122 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TSyov-0008Ny-7c
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 00:32:37 +0100
+	id 1TSyov-0008Ny-NG
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 00:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761295Ab2J2XcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2012 19:32:21 -0400
-Received: from rcdn-iport-8.cisco.com ([173.37.86.79]:32416 "EHLO
-	rcdn-iport-8.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761248Ab2J2XcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2012 19:32:20 -0400
+	id S1761321Ab2J2Xc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2012 19:32:27 -0400
+Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:54290 "EHLO
+	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761029Ab2J2XcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2012 19:32:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=2493; q=dns/txt; s=iport;
-  t=1351553540; x=1352763140;
+  d=cisco.com; i=@cisco.com; l=3110; q=dns/txt; s=iport;
+  t=1351553545; x=1352763145;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references;
-  bh=Yur8lIvBpvLYF9J7SA8ysUSEZ7SdHzu6RcOBJeufxOI=;
-  b=SFbxrzhXBtcPROCsmSLlywRyKMzZpmqa4R1fGF0+crTb0jlGIP5DNJCO
-   PBTkaVj7y2GJIoqiIhdM+yBQ7qwUtnwZ6RHbY8KRO4ZWUMkG1nUrHrE9X
-   Cw/AVSnW1FOWcBO2TqqmZ8xFewF8hrmaLpKUrOLXx+eEx5NfguQCRH0US
-   0=;
+  bh=xdMG8Y5Y4papeZSbwoKpV0pSmIDn+VsOs+xaRq2Itrg=;
+  b=MVABv7YQTeL6guMEaKIsUPZKXGXiMXGsXjbT4+4QcTN+Q8yBTtgEkobp
+   escv8xlh4QrI3HBAU2OCSFplJxMDuhY37zyq8XLxCEClUYqgMJE0+KZtv
+   12DEYi7RdO6HyayzcnaV1pcWFAEW3KbIGZcy9Y1pljetGGjv3LdQMtrZO
+   o=;
 X-IronPort-AV: E=Sophos;i="4.80,675,1344211200"; 
-   d="scan'208";a="136660363"
+   d="scan'208";a="133659706"
 Received: from rcdn-core2-4.cisco.com ([173.37.113.191])
-  by rcdn-iport-8.cisco.com with ESMTP; 29 Oct 2012 23:32:19 +0000
+  by rcdn-iport-9.cisco.com with ESMTP; 29 Oct 2012 23:32:25 +0000
 Received: from ipsn-lnx-hordp.cisco.com (dhcp-64-100-104-96.cisco.com [64.100.104.96])
-	by rcdn-core2-4.cisco.com (8.14.5/8.14.5) with ESMTP id q9TNWEaS022087;
-	Mon, 29 Oct 2012 23:32:19 GMT
+	by rcdn-core2-4.cisco.com (8.14.5/8.14.5) with ESMTP id q9TNWEaT022087;
+	Mon, 29 Oct 2012 23:32:24 GMT
 X-Mailer: git-send-email 1.8.0.3.gde9c7d5.dirty
 In-Reply-To: <1351553513-20385-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208658>
 
-Recently git-status learned to display the state of the git
-sequencer in long form to help the user remember an interrupted
-command.  This information is useful to other callers who do
-not want it printed in the same way.
-
-Split the new print_state function into separate get_state and
-print_state functions so others can get this state info and
-share common code.
-
-Signed-off-by: Phil Hord <hordp@cisco.com>
+wt_status_print_state retrieves some sequencer state
+information via wt_status_get_state, but other state
+information it deduces on its own.  Replaces these
+"local knowledge" deductions with wt_status variables
+so we can share more common code in the future.
 ---
- wt-status.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ wt-status.c | 16 +++++++++-------
+ wt-status.h |  3 +++
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/wt-status.c b/wt-status.c
-index 2a9658b..760f52b 100644
+index 760f52b..a888120 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -928,34 +928,41 @@ static void show_bisect_in_progress(struct wt_status *s,
- 	wt_status_print_trailer(s);
- }
- 
--static void wt_status_print_state(struct wt_status *s)
-+static void wt_status_get_state(struct wt_status *s , struct wt_status_state *state)
+@@ -781,7 +781,7 @@ static void show_merge_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
  {
--	const char *state_color = color(WT_STATUS_HEADER, s);
--	struct wt_status_state state;
- 	struct stat st;
- 
--	memset(&state, 0, sizeof(state));
-+	memset(state, 0, sizeof(*state));
- 
-+	/* Determine sequencer activity */
- 	if (!stat(git_path("MERGE_HEAD"), &st)) {
--		state.merge_in_progress = 1;
-+		state->merge_in_progress = 1;
- 	} else if (!stat(git_path("rebase-apply"), &st)) {
- 		if (!stat(git_path("rebase-apply/applying"), &st)) {
--			state.am_in_progress = 1;
-+			state->am_in_progress = 1;
- 			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
--				state.am_empty_patch = 1;
-+				state->am_empty_patch = 1;
- 		} else {
--			state.rebase_in_progress = 1;
-+			state->rebase_in_progress = 1;
+-	if (has_unmerged(s)) {
++	if (state->has_unmerged) {
+ 		status_printf_ln(s, color, _("You have unmerged paths."));
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+@@ -867,9 +867,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
+ {
+-	struct stat st;
+-
+-	if (has_unmerged(s)) {
++	if (state->has_unmerged) {
+ 		status_printf_ln(s, color, _("You are currently rebasing."));
+ 		if (advice_status_hints) {
+ 			status_printf_ln(s, color,
+@@ -879,12 +877,12 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (use \"git rebase --abort\" to check out the original branch)"));
  		}
- 	} else if (!stat(git_path("rebase-merge"), &st)) {
- 		if (!stat(git_path("rebase-merge/interactive"), &st))
--			state.rebase_interactive_in_progress = 1;
-+			state->rebase_interactive_in_progress = 1;
+-	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), &st)) {
++	} else if (state->rebase_in_progress || state->commit_is_pending) {
+ 		status_printf_ln(s, color, _("You are currently rebasing."));
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+ 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
+-	} else if (split_commit_in_progress(s)) {
++	} else if (state->split_in_progress) {
+ 		status_printf_ln(s, color, _("You are currently splitting a commit during a rebase."));
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+@@ -907,7 +905,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+ {
+ 	status_printf_ln(s, color, _("You are currently cherry-picking."));
+ 	if (advice_status_hints) {
+-		if (has_unmerged(s))
++		if (state->has_unmerged)
+ 			status_printf_ln(s, color,
+ 				_("  (fix conflicts and run \"git commit\")"));
  		else
--			state.rebase_in_progress = 1;
-+			state->rebase_in_progress = 1;
- 	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
--		state.cherry_pick_in_progress = 1;
-+		state->cherry_pick_in_progress = 1;
+@@ -955,6 +953,10 @@ static void wt_status_get_state(struct wt_status *s , struct wt_status_state *st
  	}
  	if (!stat(git_path("BISECT_LOG"), &st))
--		state.bisect_in_progress = 1;
-+		state->bisect_in_progress = 1;
-+}
+ 		state->bisect_in_progress = 1;
 +
-+static void wt_status_print_state(struct wt_status *s)
-+{
-+	const char *state_color = color(WT_STATUS_HEADER, s);
-+	struct wt_status_state state;
-+
-+	wt_status_get_state(s, &state);
++	state->has_unmerged = has_unmerged(s);
++	state->split_in_progress = split_commit_in_progress(s);
++	state->commit_is_pending = !stat(git_path("MERGE_MSG"), &st);
+ }
  
- 	if (state.merge_in_progress)
- 		show_merge_in_progress(s, &state, state_color);
+ static void wt_status_print_state(struct wt_status *s)
+diff --git a/wt-status.h b/wt-status.h
+index 236b41f..0b866a2 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -79,6 +79,9 @@ struct wt_status_state {
+ 	int rebase_interactive_in_progress;
+ 	int cherry_pick_in_progress;
+ 	int bisect_in_progress;
++	int split_in_progress;
++	int has_unmerged;
++	int commit_is_pending;
+ };
+ 
+ void wt_status_prepare(struct wt_status *s);
 -- 
 1.8.0.3.gde9c7d5.dirty
