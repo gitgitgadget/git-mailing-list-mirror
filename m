@@ -1,7 +1,8 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 00/14] New remote-hg helper
-Date: Tue, 30 Oct 2012 05:35:22 +0100
-Message-ID: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 02/14] remote-hg: add support for bookmarks
+Date: Tue, 30 Oct 2012 05:35:24 +0100
+Message-ID: <1351571736-4682-3-git-send-email-felipe.contreras@gmail.com>
+References: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -11,137 +12,136 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 05:36:02 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 05:36:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TT3YX-0005SX-L7
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 05:36:02 +0100
+	id 1TT3Ye-0005ey-89
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 05:36:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498Ab2J3Efr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 00:35:47 -0400
+	id S1752514Ab2J3Ef6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 00:35:58 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:56861 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752150Ab2J3Efq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 00:35:46 -0400
+	with ESMTP id S1752500Ab2J3Ef5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 00:35:57 -0400
 Received: by mail-bk0-f46.google.com with SMTP id jk13so2268812bkc.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 21:35:45 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 21:35:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=8LiIlo200sVoznp1rf4E+ulNfmrkA384lw65xqKhpbQ=;
-        b=VUAvYbnOUbK9PzQ7MdO98equoqqmrEcpkyNXGZg7AOpUuo2inFA1NyU7mHFCxVSVE4
-         BoA7zDXGGSL71iX3e0sYsOwgnoimG7evNSs5EaU4blqMVxZWV7wkprFOdmxM/6LZOWlY
-         tgCUkCr01k+l1QaMySRufy1oRc1YwNxSHn+J5BOAYi3walk/2hxiWQpudTw5Q1MRoBbj
-         npfF7LUlaCkVPVpPsJk1DwAbhzbN2+y9mBUce9gJrQrnDKVOgS6KZzpcbquB6tx0mGLZ
-         /whNMCNdBJfwmsgb6Vz38bjFH7XyXwEo6y8AxZgzrT4uF5wfeo31N7dIMJcSmTscgzDY
-         CTjg==
-Received: by 10.204.150.213 with SMTP id z21mr10111982bkv.45.1351571745099;
-        Mon, 29 Oct 2012 21:35:45 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=W1XcUTig2ksK5OVmYuNGJbhpBo3tcIimmzzRu6eIFRE=;
+        b=IiWUNnrP9lAOw1DP4S+L0g17m2jV/qi0T2ocivUccbZEIfezLZKvytil427h8bc+5k
+         N8+uEB26q/+OE6uS0mJCW4cmRuXzloeNfMsQ+0rt7Y6LtV4SsMV14Hsh+Y1K5AcpOO1n
+         nyS62LlTMN2jVZSImx6qCu8HJhL8IH9PCLQDTYtG9XlrlQ/3N+NXuGwaiBzINu9spI6d
+         kNoyPjgLvFZPZ7DEF7w8FdgQHlUnWE52JuMeW389x/FKAhJ4+EQvKg/UqHCxqb39uPEo
+         yYvLgk1sENSv57o239ulw3jdk0hH8ecvE1g3rwiQugmGvEMMiva7W+f8DYLQIf/v+C+f
+         xPNw==
+Received: by 10.204.146.13 with SMTP id f13mr9813510bkv.29.1351571756504;
+        Mon, 29 Oct 2012 21:35:56 -0700 (PDT)
 Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
-        by mx.google.com with ESMTPS id ia2sm5165975bkc.11.2012.10.29.21.35.42
+        by mx.google.com with ESMTPS id j24sm5159280bkv.0.2012.10.29.21.35.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Oct 2012 21:35:44 -0700 (PDT)
+        Mon, 29 Oct 2012 21:35:55 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
+In-Reply-To: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208664>
 
-Hi,
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-hg/git-remote-hg | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-I've ported the tests from hg-git and made sure that the output from remote-hg
-matches the output of hg-git. With these extensive tests I would consider this
-one ready for wide use. Not only do the tests pass, I've compared the generated
-repos of a few projects, and the SHA-1's are exactly the same :)
-
-This remote-hg has advantages other tools don't have:
-
- * Uses transport-helper (git clone hg::path)
- * The code is small
- * The code is simple
- * No external dependencies (other than mercurial)
- * It's easy to install (put into your path)
- * Has extensive tests
- * Active development
- * Has compatibility with hg-git
- * The required patches are available
- * No changes necesary to git core
-
-One important alternative is the one written by Sverre Rabbelier that is now
-maintained and distributed in msysgit. It's hard to evaluate this option as
-there isn't a branch specific to this remote helper so it would be possible to
-evaluate the necessary patches.
-
-To use it add it to your $PATH (e.g. ~/bin).
-
- % git clone hd:///full/path/or/url/to/hg/repo
-
-To run the tests:
-
- % make -C contrib/remote-hg tests
-
-The only caveat is that you need 'python' in your $PATH.
-
-Changes since v4:
-
- * Add new simple biridectional tests (no need for hg-git)
- * Move tests to contrib directory
- * Add dependency checks to the tests
- * Trivial fixes
-
-Changes since v3:
-
- * New extensive tests
- * Add compatibility mode with hg-git
- * Added support for boomkars
- * Add mercurial information to the git msg (branch, renames, extra, etc.)
-
-Changes since v2:
-
- * Added support for pushing
- * Tests copied from original remote-hg
- * Custom default -> master renames removed
- * Code reorganized
-
-Changes since v1:
-
- * Improved documentation
- * Use more common 'python' binary
- * Warn, don't barf when a branch has multiple heads
- * Fixed marks to fetch after cloned
- * Support for cloning/pulling remote repositories
- * Use a more appropriate internal directory (e.g. .git/hg/origin)
- * Fixes for python3
-
-Felipe Contreras (14):
-  Add new remote-hg transport helper
-  remote-hg: add support for bookmarks
-  remote-hg: add support for pushing
-  remote-hg: add support for remote pushing
-  remote-hg: add support to push URLs
-  remote-hg: make sure the encoding is correct
-  remote-hg: match hg merge behavior
-  remote-hg: add support for hg-git compat mode
-  remote-hg: add compat for hg-git author fixes
-  remote-hg: fake bookmark when there's none
-  remote-hg: add support for fake remote
-  remote-hg: add biridectional tests
-  remote-hg: add tests to compare with hg-git
-  remote-hg: add extra author test
-
- contrib/remote-hg/Makefile       |  13 +
- contrib/remote-hg/git-remote-hg  | 773 +++++++++++++++++++++++++++++++++++++++
- contrib/remote-hg/test-hg-git.sh | 464 +++++++++++++++++++++++
- contrib/remote-hg/test.sh        | 241 ++++++++++++
- 4 files changed, 1491 insertions(+)
- create mode 100644 contrib/remote-hg/Makefile
- create mode 100755 contrib/remote-hg/git-remote-hg
- create mode 100755 contrib/remote-hg/test-hg-git.sh
- create mode 100755 contrib/remote-hg/test.sh
-
+diff --git a/contrib/remote-hg/git-remote-hg b/contrib/remote-hg/git-remote-hg
+index 67d39fa..9e29daa 100755
+--- a/contrib/remote-hg/git-remote-hg
++++ b/contrib/remote-hg/git-remote-hg
+@@ -9,7 +9,7 @@
+ # Then you can clone with:
+ # git clone hg::/path/to/mercurial/repo/
+ 
+-from mercurial import hg, ui
++from mercurial import hg, ui, bookmarks
+ 
+ import re
+ import sys
+@@ -232,6 +232,10 @@ def export_ref(repo, name, kind, head):
+ def export_tag(repo, tag):
+     export_ref(repo, tag, 'tags', repo[tag])
+ 
++def export_bookmark(repo, bmark):
++    head = bmarks[bmark]
++    export_ref(repo, bmark, 'bookmarks', head)
++
+ def export_branch(repo, branch):
+     tip = get_branch_tip(repo, branch)
+     head = repo[tip]
+@@ -246,6 +250,7 @@ def do_capabilities(parser):
+ 
+     print "import"
+     print "refspec refs/heads/branches/*:%s/branches/*" % prefix
++    print "refspec refs/heads/*:%s/bookmarks/*" % prefix
+     print "refspec refs/tags/*:%s/tags/*" % prefix
+     print
+ 
+@@ -272,7 +277,7 @@ def list_branch_head(repo, cur):
+     g_head = (head, 'branches', repo[tip])
+ 
+ def do_list(parser):
+-    global branches
++    global branches, bmarks
+ 
+     repo = parser.repo
+     for branch in repo.branchmap():
+@@ -280,11 +285,16 @@ def do_list(parser):
+         if len(heads):
+             branches[branch] = heads
+ 
++    for bmark, node in bookmarks.listbookmarks(repo).iteritems():
++        bmarks[bmark] = repo[node]
++
+     cur = repo.dirstate.branch()
+ 
+     list_branch_head(repo, cur)
+     for branch in branches:
+         print "? refs/heads/branches/%s" % branch
++    for bmark in bmarks:
++        print "? refs/heads/%s" % bmark
+ 
+     for tag, node in repo.tagslist():
+         if tag == 'tip':
+@@ -313,6 +323,9 @@ def do_import(parser):
+         elif ref.startswith('refs/heads/branches/'):
+             branch = ref[len('refs/heads/branches/'):]
+             export_branch(repo, branch)
++        elif ref.startswith('refs/heads/'):
++            bmark = ref[len('refs/heads/'):]
++            export_bookmark(repo, bmark)
+         elif ref.startswith('refs/tags/'):
+             tag = ref[len('refs/tags/'):]
+             export_tag(repo, tag)
+@@ -322,7 +335,7 @@ def do_import(parser):
+     print 'done'
+ 
+ def main(args):
+-    global prefix, dirname, marks, branches
++    global prefix, dirname, marks, branches, bmarks
+ 
+     alias = args[1]
+     url = args[2]
+@@ -330,6 +343,7 @@ def main(args):
+     gitdir = os.environ['GIT_DIR']
+     dirname = os.path.join(gitdir, 'hg', alias)
+     branches = {}
++    bmarks = {}
+ 
+     repo = get_repo(url, alias)
+     prefix = 'refs/hg/%s' % alias
 -- 
 1.8.0
