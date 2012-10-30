@@ -1,71 +1,88 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 4/5] diff: introduce diff.submoduleFormat configuration
- variable
-Date: Tue, 30 Oct 2012 22:26:07 +0100
-Message-ID: <509045EF.9030401@web.de>
-References: <1349196670-2844-1-git-send-email-artagnon@gmail.com> <1349196670-2844-5-git-send-email-artagnon@gmail.com> <506B4418.2050700@web.de> <506C4161.3040201@web.de> <CALkWK0nPJ-8UvyYN800-Tj+mLQtv-vF3SJScb1O8EEiY238Z6w@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/2] completion: simplify __gitcomp test helper
+Date: Tue, 30 Oct 2012 22:27:25 +0100
+Message-ID: <20121030212725.GA15709@goldbirke>
+References: <1350869941-22485-1-git-send-email-felipe.contreras@gmail.com>
+ <1350869941-22485-3-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:26:23 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:28:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJKJ-00040X-1j
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:26:23 +0100
+	id 1TTJLq-00068C-47
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832Ab2J3V0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 17:26:10 -0400
-Received: from mout.web.de ([212.227.15.3]:58055 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752323Ab2J3V0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 17:26:09 -0400
-Received: from [192.168.178.41] ([91.3.154.28]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0MEEMy-1TZyDf1OrA-00FaJC; Tue, 30 Oct 2012 22:26:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <CALkWK0nPJ-8UvyYN800-Tj+mLQtv-vF3SJScb1O8EEiY238Z6w@mail.gmail.com>
-X-Enigmail-Version: 1.4.5
-X-Provags-ID: V02:K0:hBbjzEVqfC8/4kg6cSL8HfzhMTFgNE2rE86W5gItULt
- 2KqR3eA5ZAqY5uHEAKrIX6Z/jOk4UiccpOm+BPutFvtKn8Kyl4
- ZhFay9J2SWb75tyZuSZiqODdK1sDot44zKIdRz5yyKrPHpHx16
- e/1EzO41vnZ72qCvgmUr44/sLY5CMFXzSghhV848AbEsqa35Q5
- ioRcOTnPVQ7ujTOt28Jpg==
+	id S1754073Ab2J3V1p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Oct 2012 17:27:45 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:51939 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752458Ab2J3V1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 17:27:44 -0400
+Received: from localhost6.localdomain6 (p5B130686.dip0.t-ipconnect.de [91.19.6.134])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MaV1V-1TnKGV0jdZ-00KBNE; Tue, 30 Oct 2012 22:27:26 +0100
+Content-Disposition: inline
+In-Reply-To: <1350869941-22485-3-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:7t9rQsRru48TFuf31fCXMlOnjr18UErNEqiMI7rmRPX
+ h7sljLJm4D4jaX4gi/TLlL+EH9DcpvgnS33RL6JBXf+NpY1lt1
+ sM10mGM0NIYIyln1fU0wYwdZanrS/zTQdlWbHgr+PfwN96NttA
+ ia5fRfJveSg6t3+neltmVi65nWQ1GHmAbJGMJY2kvrYYXweZgW
+ o5hAXdL6psDBY7e+pOgJFX3ZEceO0q9FFE1bS6e5GEATy2agjj
+ kHK0TlFppDjsAl7w4FOgM/BVYnTTreBBlEZCrXEAeGVEeZg17p
+ 65KrpL5WiXDQUXHjA5e8U4oVRKkI4PvqDYLY6F7BnJlKP2mG5L
+ Fpm+PohzMeBSbjyXskB0D33wV43fI5zuaMrUPPuEO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208742>
 
-Am 29.10.2012 11:30, schrieb Ramkumar Ramachandra:
-> Jens Lehmann wrote:
->> Am 02.10.2012 21:44, schrieb Jens Lehmann:
->>> Am 02.10.2012 18:51, schrieb Ramkumar Ramachandra:
->>>> Introduce a diff.submoduleFormat configuration variable corresponding
->>>> to the '--submodule' command-line option of 'git diff'.
->>>
->>> Nice. Maybe a better name would be "diff.submodule", as this sets the
->>> default for the "--submodule" option of diff?
->>>
->>> And I think you should also test in t4041 that "--submodule=short"
->>> overrides the config setting.
->>
->> We also need tests which show that setting that config to "log" does
->> not break one of the many users of "git diff" ("stash", "rebase" and
->> "format-patch" come to mind, most probably I missed some others). I
->> suspect we'll have to add "--submodule=short" options to some call
->> sites to keep them working with submodule changes.
-> 
-> Um, why would "stash", "rebase" or "format-patch" be affected by this
-> setting?  They don't operate on submodules at all.  To be sure, I ran
-> all the tests with the following diff and nothing broke.
+On Mon, Oct 22, 2012 at 03:39:01AM +0200, Felipe Contreras wrote:
+> By using print_comp as suggested by SZEDER G=E1bor.
+>=20
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  t/t9902-completion.sh | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 1c6952a..2e7fc06 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -74,15 +74,12 @@ newline=3D$'\n'
 
-They do operate on the submodule commits too (while they don't touch
-submodule work trees) and IIRC rebase applies diffs, so that could
-break when the output of diff changes due to the new config option.
-But it looks like your test did prove that nothing goes wrong there,
-I assume they they use plumbing diff commands which aren't affected
-by the new option.
+This $newline variable was only used to set IFS to a newline inside SQ
+blocks.  AFAICS after this change there are no such places left,
+because print_comp() takes care of IFS, so $newline is not necessary
+anymore.
+
+>  test_gitcomp ()
+>  {
+> +	local -a COMPREPLY &&
+>  	sed -e 's/Z$//' > expected &&
+> -	(
+> -		local -a COMPREPLY &&
+> -		cur=3D"$1" &&
+> -		shift &&
+> -		__gitcomp "$@" &&
+> -		IFS=3D"$newline" &&
+> -		echo "${COMPREPLY[*]}" > out
+> -	) &&
+> +	cur=3D"$1" &&
+> +	shift &&
+> +	__gitcomp "$@" &&
+> +	print_comp &&
+>  	test_cmp expected out
+>  }
+> =20
+> --=20
+> 1.8.0
+>=20
