@@ -1,68 +1,92 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
-Date: Tue, 30 Oct 2012 15:35:19 -0700
-Message-ID: <CAGdFq_iiGpYW-txPaa6mZrxg3mYdOX-Ez9uLF-rB5bAjZd5rWg@mail.gmail.com>
-References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
- <1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
- <CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
- <CAMP44s3MHrG_XeZEodnxemrW-V18+NHnFvi7koyx9mH8XuHc6w@mail.gmail.com>
- <CAGdFq_jJwZMLq=3co13hs7gas6y9kZRTKwcT+CP=n6-24Uv5Og@mail.gmail.com>
- <CAMP44s2QwdZKqJq0BZ5HOtZYiCMxCxycui9EmxxfL+Sa6M_6+g@mail.gmail.com>
- <CAGdFq_h3L-1rPvb=dSYeXqEea+f+g2kRHp7aAjaU-AxjZHB7dQ@mail.gmail.com> <CAMP44s2KNmr7zAvFo2gOR8G=YaoBWiGPCjPY47x00eev6MOAFw@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 1/2] completion: refactor __gitcomp related tests
+Date: Tue, 30 Oct 2012 23:45:58 +0100
+Message-ID: <20121030224558.GN12052@goldbirke>
+References: <1350869941-22485-1-git-send-email-felipe.contreras@gmail.com>
+ <1350869941-22485-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ">" <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 23:36:15 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 23:46:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTKPu-0008Q8-B2
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 23:36:14 +0100
+	id 1TTKZe-0004Cj-SH
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 23:46:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758390Ab2J3WgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 18:36:00 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:38346 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758060Ab2J3Wf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 18:35:59 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so821581obb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 15:35:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mSI5hADZsufAFVDUSev+f1n/wwc3WhiJZH5KvRblqUo=;
-        b=HBCtTWLLjDythK0jfbz8yvF9Y+k+S/UiTYCATnOlvcbMZK9F6zZ5KXWyepT41fNxcc
-         rEcBee3W/4JUhvt4p3L+DJcuNBo4M4s2kl63L6k+Nye3lk7pGPqEkyFTluiAGJ/pkmBj
-         I7ej1laEULGn+I+769Q38Co35dtJwozQMusX++n8sOjs9pZgEDtWih3iudmAi5IPzvIL
-         hl0p6bpijBDULieT24HJOXaOy/A+y+PTRzUNYKAo0byTopTllkQ6fEVotRjJlI5JgeHH
-         FtzBsQiVDlSq6dtGkBbGAh1Rp01uvYYIc+0XLejSqB7/YcdFYSyV5SFI9AgV4/6gliY1
-         IY7Q==
-Received: by 10.60.7.41 with SMTP id g9mr29433321oea.18.1351636559354; Tue, 30
- Oct 2012 15:35:59 -0700 (PDT)
-Received: by 10.60.95.97 with HTTP; Tue, 30 Oct 2012 15:35:19 -0700 (PDT)
-In-Reply-To: <CAMP44s2KNmr7zAvFo2gOR8G=YaoBWiGPCjPY47x00eev6MOAFw@mail.gmail.com>
+	id S934856Ab2J3WqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 18:46:04 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:65281 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932308Ab2J3WqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 18:46:02 -0400
+Received: from localhost6.localdomain6 (p5B130686.dip0.t-ipconnect.de [91.19.6.134])
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0MGXWy-1TXkPe3yQC-00E1PL; Tue, 30 Oct 2012 23:45:59 +0100
+Content-Disposition: inline
+In-Reply-To: <1350869941-22485-2-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:ZLBKc8faZbFqsHN6bD9aE+WKGgKy3EJ6OudVNtz1Tcr
+ wOQZ9rjCpK0DLeB5X8yrr61Ywg1DNt+4VwiiwCMHxzglyZjFXu
+ ws5/+Y9BSSDACPZoWWMdtScrKPI7mIHS+FihbdE+cGxFzT5C3Y
+ 1FLxfnp0AztoGQHrV+eS/5PejnF532waest8mxurkSWDcEKSZE
+ VtT9y/2OSaipvt4mipMoNd0QUywFTGtB+OTCaRZz3GULbR90zd
+ 4AyxhUagL5k8dQuB6bdbmxlTTVO8dTEUpAW2mpWW5scesk3L1N
+ rBfXgne8QM252c+8BnPhUIcU2sBpKDyGHSHScMTpsa9yEfDeDH
+ PIuaD9SZ1K3aQWo0Wo7PRNpxw3afGbt5BHuwUHB/2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208763>
 
-On Tue, Oct 30, 2012 at 3:18 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Which is expected and correct; the branch already points to the right
-> commit, no need for an extra reset.
+On Mon, Oct 22, 2012 at 03:39:00AM +0200, Felipe Contreras wrote:
+> Lots of duplicated code!
+> 
+> No functional changes.
 
-I think you're correct. Thanks for confirming.
+I'm not sure.
+I'm all for removing duplicated application code, but I'm usually more
+conservative when it comes to test code.  The more logic, the more
+possibility for bugs in tests.  So tests should be dead simple, even
+if that means some duplicated test code or the lack of convenience
+functions.
+While this might be considered just a matter of personal preference, ...
 
--- 
-Cheers,
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  t/t9902-completion.sh | 72 ++++++++++++++++-----------------------------------
+>  1 file changed, 23 insertions(+), 49 deletions(-)
+> 
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index cbd0fb6..1c6952a 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -72,87 +72,61 @@ test_completion_long ()
+>  
+>  newline=$'\n'
+>  
+> -test_expect_success '__gitcomp - trailing space - options' '
+> -	sed -e "s/Z$//" >expected <<-\EOF &&
+> -	--reuse-message=Z
+> -	--reedit-message=Z
+> -	--reset-author Z
+> -	EOF
+> +test_gitcomp ()
+> +{
+> +	sed -e 's/Z$//' > expected &&
+>  	(
+>  		local -a COMPREPLY &&
+> -		cur="--re" &&
+> -		__gitcomp "--dry-run --reuse-message= --reedit-message=
+> -				--reset-author" &&
+> +		cur="$1" &&
+> +		shift &&
+> +		__gitcomp "$@" &&
 
-Sverre Rabbelier
+... I was really puzzled by how __gitcomp() gets its arguments here,
+and had to think for a while to figure out why it's not broken.
