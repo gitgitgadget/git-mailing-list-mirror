@@ -1,83 +1,72 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 3/4] fast-export: don't handle uninteresting refs
-Date: Tue, 30 Oct 2012 20:17:53 +0100
-Message-ID: <CAMP44s3LP65XOYFg-tBe_rzT1+gXp=714C-u14mkwxY26r4b=g@mail.gmail.com>
-References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
-	<1351617089-13036-4-git-send-email-felipe.contreras@gmail.com>
-	<20121030185914.GI15167@elie.Belkin>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 00/13] New remote-hg helper
+Date: Tue, 30 Oct 2012 20:33:25 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info>
+References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com> <20121029085045.GA5023@sigill.intra.peff.net> <CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com> <20121029212643.GA20513@sigill.intra.peff.net>
+ <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com> <20121029215631.GF20513@sigill.intra.peff.net> <alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info> <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 20:18:08 2012
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 20:33:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTHKB-0000ZL-MJ
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:18:08 +0100
+	id 1TTHZQ-0003cf-EV
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654Ab2J3TRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 15:17:54 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:37133 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750880Ab2J3TRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 15:17:53 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so628539oag.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 12:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5n+s/Ne88ZeANH7lvxJ7F8QwZFEehhMDTh7RooERDHI=;
-        b=hDfdrAQp97mpcsS2bmJZS8jpjw4X/jobTL48kOAjErrD5bRXPXbfZrYQ8oZ7PC436V
-         fCQT7I7MgJoYzEp+MqMQbP2jIAI0Om2GQWHe7HkXhuG9cTnOJWgoynqS7dO9p7spxelV
-         oyr2bw1TjdbQjbL2gDnAeLl6v8JrypYuBxZ8+p5ah0K34JfBn9E75ZdZBNckquMmkvfC
-         VzVYOKfoJrmeVLaOqJd+jfBfVAdvS8r3tiw2en7hO5KQSH8uNg/g3U1q52waGYMjLg43
-         r/ZclPDzXqS/aPm4ZgtJ8jA3JJ/wgSLEYllhBWDMZ2zCy/b4C+vRGk9nACNxT4/bE4zj
-         yFOw==
-Received: by 10.60.31.241 with SMTP id d17mr29535765oei.107.1351624673284;
- Tue, 30 Oct 2012 12:17:53 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 12:17:53 -0700 (PDT)
-In-Reply-To: <20121030185914.GI15167@elie.Belkin>
+	id S1753316Ab2J3Tdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 15:33:39 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:60748 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751296Ab2J3Tdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 15:33:39 -0400
+Received: (qmail invoked by alias); 30 Oct 2012 19:33:27 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp032) with SMTP; 30 Oct 2012 20:33:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/VbfpAUhLVPT8NQmodctuh0PM91Cd9YnacbXJW7/
+	r4/zBtGRvt/MKP
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208733>
 
-(again to the mailing list)
+Hi Felipe,
 
-On Tue, Oct 30, 2012 at 7:59 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Felipe Contreras wrote:
->
->> They have been marked as UNINTERESTING for a reason, lets respect that.
+On Tue, 30 Oct 2012, Felipe Contreras wrote:
 
-That doesn't say anything.
+> But you mentioned something about cooperation, and I've yet to see how
+> is it that you are planning to cooperate. If you say you don't have time
+> to spend on this, I don't see why I should worry about testing this
+> series of patches.
 
-> and in the examples listed in the patch
-> description the changed behavior does not look like an improvement.
+It has been mentioned before that the communication style including all
+these snarky and nasty comments is not helpful. It is hardly the first
+time that your mails have been insulting, as can be researched easily from
+in the public mailing list archives.
 
-I disagree.
+In light of the indignation when advised to keep the tone down a little,
+it is probable that the mails were never put through the "would I be
+insulted or hurt if I was the recipient of this?" test, as in "do you want
+me to throw away my work?" when you literally asked us to throw away our
+work.
 
-% git log master ^master
+So unlike others, I do not ask you to change your tone, nor your
+willingness to work with others. Instead, I prefer to do other things
+instead.
 
-What do you expect? Nothing.
-
-% git fast-export master ^master
-
-What do you expect? Nothing.
-
-> Worse, the description lists a few examples but gives no convincing
-> explanation to reassure about the lack of bad behavior for examples
-> not listed.
-
-What examples not listed?
-
--- 
-Felipe Contreras
+Hth,
+Johannes
