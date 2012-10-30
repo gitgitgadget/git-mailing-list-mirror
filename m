@@ -1,84 +1,66 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: shawn wilson <ag4ve.us@gmail.com>
 Subject: Re: change symlink
-Date: Tue, 30 Oct 2012 22:19:07 +0100
-Message-ID: <m2mwz3odys.fsf@igel.home>
+Date: Tue, 30 Oct 2012 21:24:47 +0000
+Message-ID: <CAH_OBidWxkhG3o4C4OPP4OxyQQfw_fF_h4C9KR9AnoOZ27=9TQ@mail.gmail.com>
 References: <CAH_OBie-irmpBrJG6KB3W8bgYjQdyVYiUR-SvJPnx1FXUya0uA@mail.gmail.com>
+ <m2mwz3odys.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: shawn wilson <ag4ve.us@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:19:42 2012
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:25:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJDp-0003EF-Db
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:19:41 +0100
+	id 1TTJJN-0002dr-0t
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934722Ab2J3VTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 17:19:14 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:35364 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934669Ab2J3VTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 17:19:12 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3Xrlt34QJqz3hhk2;
-	Tue, 30 Oct 2012 22:19:07 +0100 (CET)
-X-Auth-Info: Ev6QPq/emd7Nm2hY9+S0/pTrNLQxe9TnGtFnyJhV71M=
-Received: from igel.home (ppp-88-217-108-88.dynamic.mnet-online.de [88.217.108.88])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3Xrlt344wdzbbhR;
-	Tue, 30 Oct 2012 22:19:07 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 43985CA2A2; Tue, 30 Oct 2012 22:19:07 +0100 (CET)
-X-Yow: I have accepted Provolone into my life!
-In-Reply-To: <CAH_OBie-irmpBrJG6KB3W8bgYjQdyVYiUR-SvJPnx1FXUya0uA@mail.gmail.com>
-	(shawn wilson's message of "Tue, 30 Oct 2012 21:07:07 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753164Ab2J3VZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 17:25:10 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:53406 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955Ab2J3VZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 17:25:09 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so589590lbo.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 14:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3gX84hK6bJ5Cz9Blrb0SGrUnHWpXvmzkyC2VahZHKlE=;
+        b=rxzpcz5bvaGVWpEcS8oz2B0IX1rTRGx9LMkF0hL1Dd1ZQOZeYja4lW1C/9R9hEbIMg
+         hFiGD6yZFA8cYfL45XZZNsbzRGPMgS8NURptvdi5xZUjZUbetV1uDwQdS1B3InnY1Ss2
+         dnSCFjn++eZ5T+3KgP1FxCgyQfjJtnKqzR897uLBE5L151xjPMPHYj9hImrkFCe5x7+N
+         sQSBJF/s/kh7laYAZ4uTioI0/bU9LV06iKcmLQmMPf7AKulSYbRl+rVO7OA2zGqmAOAP
+         sZZ56u7Ivbdfe9jT7ny3oLFYe0QhsSm0Da4NYPiHXpPmXy7rNhfRsdsApGuAb/1L5NYC
+         F6iw==
+Received: by 10.152.103.38 with SMTP id ft6mr31188124lab.40.1351632308066;
+ Tue, 30 Oct 2012 14:25:08 -0700 (PDT)
+Received: by 10.114.63.42 with HTTP; Tue, 30 Oct 2012 14:24:47 -0700 (PDT)
+In-Reply-To: <m2mwz3odys.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208740>
 
-shawn wilson <ag4ve.us@gmail.com> writes:
+On Tue, Oct 30, 2012 at 9:19 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> shawn wilson <ag4ve.us@gmail.com> writes:
 
-> i'm curious why this is being reported as deleted in status and diff
-> and not modified? this was tested on a build of the master branch of
-> the current git repo (1.8.0).
+>>  % git status
+>> # On branch master
+>> # Changes not staged for commit:
+>> #   (use "git add/rm <file>..." to update what will be committed)
+>> #   (use "git checkout -- <file>..." to discard changes in working directory)
+>> #
+>> #       deleted:    t2
+>> #
+>> no changes added to commit (use "git add" and/or "git commit -a")
 >
-> mkdir t cd t; git --init
+> I'd expected t2/one/test be reported as untracked.
 >
-> touch test
-> git add test
-> git commit test -m "test"
->
-> ln -s test t2
-> git add t2
-> git commit t2 -m "symlink"
->
-> rm t2
-> mkdir -p t2/one
-> ln -s test t2/one/test
-  git add t2/one/test
 
-> this then shows up as:
->
->  % git status
-> # On branch master
-> # Changes not staged for commit:
-> #   (use "git add/rm <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       deleted:    t2
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
-
-I'd expected t2/one/test be reported as untracked.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+that's fine - i can do 'git list-files --others' but should t2 be
+reported as 'deleted'?
