@@ -1,69 +1,119 @@
-From: Mike Norman <mknorman@gmail.com>
-Subject: Re: Links broken in ref docs.
-Date: Tue, 30 Oct 2012 01:07:37 -0700
-Message-ID: <CAJr+XPE17vbqKJuJ4DfjPVfhzvL7B24eJJU-ipqUi3R+7p_yig@mail.gmail.com>
-References: <CAJr+XPGm4djBh+vacG5Ff=Y6aYmWbcUXOV9x2jekgnsGsk4b-g@mail.gmail.com>
-	<CAH5451nFf_SY4K2DS52vhP6VeXSmeikUrc0zy8HK3xmGgs+UGg@mail.gmail.com>
-	<CAJr+XPETQ2Jifns3_dfoB-sLLru2=Jkofb5RrBxLE4Fa9Aqp7A@mail.gmail.com>
-	<CAP2yMaKzLHiqpUtfcNtSFo8aqnbvS9RvCzC-DZvQMBgXvte5jw@mail.gmail.com>
-	<CAO54GHBvWoqZRbDwhQnmjGsBLKfGiv-JTpAakrAjiqEXYHHXPQ@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH v2] fix 'make test' for HP NonStop
+Date: Tue, 30 Oct 2012 10:21:40 +0100
+Message-ID: <005701cdb67f$f8b44d00$ea1ce700$@schmitz-digital.de>
+References: <003101cdb29f$7c8d9490$75a8bdb0$@schmitz-digital.de> <20121029070642.GD5102@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Scott Chacon <schacon@gmail.com>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	git <git@vger.kernel.org>
-To: Kevin <ikke@ikke.info>
-X-From: git-owner@vger.kernel.org Tue Oct 30 09:07:58 2012
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Jeff King'" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 30 10:22:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TT6re-0002qD-9Z
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 09:07:58 +0100
+	id 1TT81O-00080b-Hm
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 10:22:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754662Ab2J3IHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 04:07:41 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:44820 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754987Ab2J3IHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 04:07:38 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so5545857oag.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 01:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QFxuYRScuSq5gDbPhCfBEXhC03LkEiLZCf2K2yyj/l4=;
-        b=hVT6H2HvA+V4ShSw9OfxlRQyKYTyZddbgzaHEUdTLEtGx9VEiPvZFarZ58hj2AX4ln
-         Thbw1n7gyVkcx1MKymodaQqlQrk9Fkvj8+umtoHqoYrfCm0JXTCLSxzILZ3WUNIzN/uV
-         HI6LTLDFPA3cKOG8Y9Tgqm0Z5cmX3DrV8zOjhQdbLjKVFPjI4M3Upq98gNK4HrZphejo
-         MQF2SOE2rdOgUjAklW1t84vCmvZyLzESSPfUCVjjt0eiDK/u4hgOG2lREtJG/7h2zQmr
-         k6MQMHxhY7kFhgUnQmtoE6bOB16QD9N0+L7XNH99viIT9nFWn/kaw8aqDtIYzJ0th0nQ
-         Njlw==
-Received: by 10.60.7.65 with SMTP id h1mr28973072oea.66.1351584457357; Tue, 30
- Oct 2012 01:07:37 -0700 (PDT)
-Received: by 10.76.76.202 with HTTP; Tue, 30 Oct 2012 01:07:37 -0700 (PDT)
-In-Reply-To: <CAO54GHBvWoqZRbDwhQnmjGsBLKfGiv-JTpAakrAjiqEXYHHXPQ@mail.gmail.com>
+	id S1753759Ab2J3JVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 05:21:54 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:50274 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881Ab2J3JVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 05:21:53 -0400
+Received: from DualCore (dsdf-4d0a0818.pool.mediaWays.net [77.10.8.24])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LeQLR-1T3QIs0kKj-00pmAf; Tue, 30 Oct 2012 10:21:51 +0100
+In-Reply-To: <20121029070642.GD5102@sigill.intra.peff.net>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQIlX7q440WLF4KEDuwm97Lh97V6UQEakr3blxlm+mA=
+Content-Language: de
+X-Provags-ID: V02:K0:vVspftPRyUO4p30ucU6tdm0Oz4LS2f8fIYJqUnvKU+2
+ AYkgUbIvmW2E6lSlzdII3/wb6Jmyg8YGz+B1oSq3NddpW3DAte
+ vuYDa9lgs6c9D2bGIMWPjeQg+dxj/qZsmcNUlhESaRScpploxO
+ 07EatlaNtUDuIZhb/9QnnMKKtFFBJa3HuyDY5JeAGehdlCWGzb
+ nzGGobYkZ1ARCEqo87QtLW7u7L9oMU55toB/AZcJkhfnJzjrVi
+ Q6SNTSjd/Qzq9mF3J7/lGGBse2nEGFG8vvSRlEbSIVGpDrg7VT
+ Ifpq4TSfRTLOsFmh2EgSQXb8Y/KMlPpuEuPdah5Ld9nfH+QIb3
+ pX3ErE1cBxjO8OdsnXmcQ3NiYPNKK5hN/yu/D9yjRKiagr7S+7
+ NSHN4GrZ3fAhg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208686>
 
-Not seen any recently. I'm guessing the dev is in the path of
-hurricane Sandy? (Not sarcasm, btw.)
+> From: Jeff King [mailto:peff@peff.net]
+> Sent: Monday, October 29, 2012 8:07 AM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH v2] fix 'make test' for HP NonStop
+> 
+> On Thu, Oct 25, 2012 at 12:57:10PM +0200, Joachim Schmitz wrote:
+> 
+> > diff --git a/Makefile b/Makefile
+> > index f69979e..35380dd 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1381,6 +1381,15 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+> > 	MKDIR_WO_TRAILING_SLASH = YesPlease
+> > 	# RFE 10-120912-4693 submitted to HP NonStop development.
+> > 	NO_SETITIMER = UnfortunatelyYes
+> > +
+> > +	# for 'make test'
+> > +	# some test don't work with /bin/diff, some fail with /bin/tar
+> > +	# some need bash, and some need /usr/local/bin in PATH first
+> > +	SHELL_PATH=/usr/local/bin/bash
+> > +	SANE_TOOL_PATH=/usr/local/bin
+> 
+> I think we can drop these comments, as the reasoning really should just
+> go in the commit message.
 
-On Tue, Oct 30, 2012 at 1:04 AM, Kevin <ikke@ikke.info> wrote:
-> Any follow-up on this?
->
-> On Tue, Oct 23, 2012 at 7:11 AM, Scott Chacon <schacon@gmail.com> wrote:
->>
->> So, this is due to the major AWS outage today.  git-scm.com is hosted
->> on Heroku and thus on AWS.  Heroku is continuing to bring up their
->> database systems in the wake of the massive AWS outage.  Once that is
->> back online, git-scm.com will also be back online.
->>
->> As for the git-fetch issue, we'll look into it once Heroku is back online.
->>
->> Scott
+OK by me.
+ 
+> > +	# as of H06.25/J06.14, we might better use this
+> > +	#SHELL_PATH=/usr/coreutils/bin/bash
+> > +	#SANE_TOOL_PATH=/usr/coreutils/bin:/usr/local/bin
+> 
+> Is there any reason not to put both into the default SANE_TOOL_PATH? If
+> /usr/coreutils/bin does not exist on older versions, it will be a
+> harmless no-op. I guess we arestuck with picking one $SHELL_PATH,
+> though.
+
+And because of that have to modify something anyway...
+But I don't really mind about an extended SANE_TOOL_PATH
+ 
+> -Peff
+
+Bye, Jojo
+
+-- 8< --
+This fixes the vast majority of test failures on HP NonStop.
+Some test don't work with /bin/diff, some fail with /bin/tar,
+so let's put /usr/local/bin in PATH first. 
+Some tests fail with /bin/sh (link to /bin/ksh) so use bash instead
+
+Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+---
+
+Makefile | 9 +++++++++
+1 file changed, 9 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index f69979e..35380dd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1381,6 +1381,10 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+	MKDIR_WO_TRAILING_SLASH = YesPlease
+	# RFE 10-120912-4693 submitted to HP NonStop development.
+	NO_SETITIMER = UnfortunatelyYes
++	SANE_TOOL_PATH=/usr/coreutils/bin:/usr/local/bin 
++	SHELL_PATH=/usr/local/bin/bash
++	# as of H06.25/J06.14, we might better use this
++	#SHELL_PATH=/usr/coreutils/bin/bash
+endif
+ifneq (,$(findstring MINGW,$(uname_S)))
+	pathsep = ;
