@@ -1,77 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] completion: simplify __gitcomp test helper
-Date: Tue, 30 Oct 2012 22:43:10 +0100
-Message-ID: <CAMP44s34yBSurkiCb7bvJFt82_F=hdkFLDyd0o=9Yrsn-TRWqg@mail.gmail.com>
-References: <1350869941-22485-1-git-send-email-felipe.contreras@gmail.com>
-	<1350869941-22485-3-git-send-email-felipe.contreras@gmail.com>
-	<20121030212725.GA15709@goldbirke>
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: Re: change symlink
+Date: Tue, 30 Oct 2012 21:42:44 +0000
+Message-ID: <CAH_OBifch3uuXYHQ1R9vS6xFu8LuY3mUfiPsHcs3F=HMvnBzyg@mail.gmail.com>
+References: <CAH_OBie-irmpBrJG6KB3W8bgYjQdyVYiUR-SvJPnx1FXUya0uA@mail.gmail.com>
+ <m2mwz3odys.fsf@igel.home> <CAH_OBidWxkhG3o4C4OPP4OxyQQfw_fF_h4C9KR9AnoOZ27=9TQ@mail.gmail.com>
+ <m2fw4vod81.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:43:25 2012
+Cc: git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:43:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJam-0000YC-OS
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:43:25 +0100
+	id 1TTJam-0000YC-7E
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934784Ab2J3VnN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Oct 2012 17:43:13 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:54568 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934781Ab2J3VnK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2012 17:43:10 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so776361obb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 14:43:10 -0700 (PDT)
+	id S934776Ab2J3VnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 17:43:07 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:53313 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934759Ab2J3VnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 17:43:06 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so588257lag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 14:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ESsOCtJqVa65KVWO63eNTmqPRGA4WTDywg2Rth7wuKY=;
-        b=iNj6Whh5+rMmeMQWgxcEo468g0CcIIL144SxsfhxBecMOIhNR0e3Sz7B0YirlU7Fkh
-         Vvv5wcNjLRCVWZVr1KVVSKEt2uEJegGGpKhKxulhTAbz4sM9InuSTcB69gKh2GFTADmx
-         R3fZrC7uZvVZQqsGQ/GtFO39kI3o5iLw7HM8eay5IeDKswZ4tIe0H6MDf8O/SlCe/kDS
-         f0nxrSmTxcUe6GFqiXo2FoUO1OfGOSR9ZI53APEKxmXrHO5nmzXvsHNQvzk9Gxw2QR0J
-         bw2OEGdlDCm89IHm6itEURIeVfo7+/s5jr51KyULMyY4pTFPyccg6BVTmF2sHwLiNmnN
-         w4vg==
-Received: by 10.182.52.105 with SMTP id s9mr28934696obo.25.1351633390375; Tue,
- 30 Oct 2012 14:43:10 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 14:43:10 -0700 (PDT)
-In-Reply-To: <20121030212725.GA15709@goldbirke>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UdfyLt0IKh1GJQjCTjivggP1QTOubSDiGtL928S1DoQ=;
+        b=jFiKmbn4GTY3d9q7Z20Ofvzfqm68uwd3hXbkG217ehj2eTdsmEcmlXDwzdn9KnH/3y
+         jdeJ2lIg+L5MXOhhMPo9GdI4oDeHen5RfeYMogE1e2djw5PiEc7+pfBQZDYuelMwwvSd
+         sgU208rpzEOgLBEVF9Ya7mikOFc95TuEjM6d5V3CwcC8iuk5cGzzOo8S2WG+LxdR83Tf
+         W4RfMGkF2Q5AqQ1EfLzMwEGhW+2bNb01WHRccO5F2XVonOkmOMW64A7KF6WESrSf5RTp
+         HITzuAk+CqW3PQKC5uUXtk0KCMUjtu5S7uYQE70Os8VJiHPCBF9cII/X6e6shti9WNYM
+         JTVA==
+Received: by 10.112.37.138 with SMTP id y10mr2476430lbj.121.1351633384683;
+ Tue, 30 Oct 2012 14:43:04 -0700 (PDT)
+Received: by 10.114.63.42 with HTTP; Tue, 30 Oct 2012 14:42:44 -0700 (PDT)
+In-Reply-To: <m2fw4vod81.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208750>
 
-On Tue, Oct 30, 2012 at 10:27 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
- wrote:
-> On Mon, Oct 22, 2012 at 03:39:01AM +0200, Felipe Contreras wrote:
->> By using print_comp as suggested by SZEDER G=C3=A1bor.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  t/t9902-completion.sh | 13 +++++--------
->>  1 file changed, 5 insertions(+), 8 deletions(-)
->>
->> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
->> index 1c6952a..2e7fc06 100755
->> --- a/t/t9902-completion.sh
->> +++ b/t/t9902-completion.sh
->> @@ -74,15 +74,12 @@ newline=3D$'\n'
+On Tue, Oct 30, 2012 at 9:35 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> shawn wilson <ag4ve.us@gmail.com> writes:
 >
-> This $newline variable was only used to set IFS to a newline inside S=
-Q
-> blocks.  AFAICS after this change there are no such places left,
-> because print_comp() takes care of IFS, so $newline is not necessary
-> anymore.
+>> but should t2 be reported as 'deleted'?
+>
+> Sure, that's what you did.
+>
 
-Right, I thought I did that =3D/
+if i do the same to a file (same repo):
 
---=20
-=46elipe Contreras
+touch test2
+git add test2
+git commit test2 -m "test2"
+
+rm test
+ln -s test2 test
+
+git status
+
+# On branch master
+# Changes not staged for commit:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       deleted:    t2
+#       typechange: test
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+why is this different?
