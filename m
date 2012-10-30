@@ -1,105 +1,97 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
-Date: Tue, 30 Oct 2012 19:47:42 +0100
-Message-ID: <CAMP44s3MHrG_XeZEodnxemrW-V18+NHnFvi7koyx9mH8XuHc6w@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/4] fast-export: trivial cleanup
+Date: Tue, 30 Oct 2012 11:55:43 -0700
+Message-ID: <20121030185542.GF15167@elie.Belkin>
 References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
-	<1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
-	<CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
+ <1351617089-13036-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ">" <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Elijah Newren <newren@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 19:48:00 2012
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:56:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTGqz-0004aj-1S
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:47:57 +0100
+	id 1TTGyn-0005rg-Hv
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:56:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965538Ab2J3Srq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 14:47:46 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:50205 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965528Ab2J3Srn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 14:47:43 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so598233oag.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:47:42 -0700 (PDT)
+	id S1755150Ab2J3Szs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 14:55:48 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:42725 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752998Ab2J3Szr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 14:55:47 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so384475pbb.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PbxC6PhMgZlj+CJfg17hmLlTCBLVFqwc7d6/lWrLeq0=;
-        b=SVk7CfmUwqXVtJwvfWsY2Jkq3IMDBmIQElNy8Zt5Lb/0D1CgVNXQeZV38HgnAXDCB/
-         khF4V14gXStuqI+B+LIYPDugjYRQwgG0h7053Codmi9z+QX0E4zQByNdyPJidVLHn8qn
-         Hac4gPkuWdm3mKBjtdxAH5WTsp7w0dfEMrUU9uZhSbG9ce7LFbvD2uO+zbA69xxxxE69
-         cC5ZJ+xl6tsWWABbOqYW0drlOJlLAd0qSgDhZc3/FVjFEC1Vpul+0It6sQO+sfqW3bp/
-         4fcRDqRRFubrBsupkWs2HKEH0LpHx/4rQIwdyXBTqNNK9qNn6Ko/OeX4Vjl1JS5jVdCJ
-         50zg==
-Received: by 10.60.12.233 with SMTP id b9mr30200079oec.95.1351622862323; Tue,
- 30 Oct 2012 11:47:42 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 11:47:42 -0700 (PDT)
-In-Reply-To: <CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Q37O/StDh8MeX3KFxajJ+PJDYyDm18E9ZrOVFwrTV4o=;
+        b=xmEUCmzw5aNjqnH+6WA5ENrklY68qw6so7OJTaFsMdCZ3hhHqJMrnQnV760FNaix/q
+         pKK2a0NZEb9MOoMc6pFFfN3sWWZUctLZv2tdJrXx+S1BWQRgAjybf4TNcCDJVi+Dg2bE
+         w+sLGtvdwJr30aWZGebIjTINxHxtq+yRRj8x49yJOnTxLKasFu6MuIExtKuv0ffMqHQr
+         zAf54mrsz5c/7qlGtyc98Yqgax64Xllt9z4Jum1DjlzfUwhKKRN9DA33smLaSmKnkbGE
+         F4wtLydu66mBx1CO9kg9vx/3vh/xrRqbHzcXcj7dvmeb0AxzyOatgFAFGYNDHNGmBfv7
+         +Wkg==
+Received: by 10.66.78.199 with SMTP id d7mr94933564pax.77.1351623347289;
+        Tue, 30 Oct 2012 11:55:47 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id yi9sm932274pbc.39.2012.10.30.11.55.45
+        (version=SSLv3 cipher=OTHER);
+        Tue, 30 Oct 2012 11:55:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1351617089-13036-2-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208723>
 
-On Tue, Oct 30, 2012 at 7:12 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Tue, Oct 30, 2012 at 10:11 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> When an object has already been exported (and thus is in the marks) it
->> is flagged as SHOWN, so it will not be exported again, even if this time
->> it's exported through a different ref.
->>
->> We don't need the object to be exported again, but we want the ref
->> updated, which doesn't happen.
->>
->> Since we can't know if a ref was exported or not, let's just assume that
->> if the commit was marked (flags & SHOWN), the user still wants the ref
->> updated.
->>
->> So:
->>
->>  % git branch test master
->>  % git fast-export $mark_flags master
->>  % git fast-export $mark_flags test
->>
->> Would export 'test' properly.
->>
->> Additionally, this fixes issues with remote helpers; now they can push
->> refs wich objects have already been exported.
->
-> Won't this also export child (or maybe parent) branches that weren't
-> mentioned? For example:
->
-> $ git branch one
-> $ echo foo > content
-> $ git commit -m two
-> $ git fast-export one
-> $ git fast-export two
->
-> I suspect that one of those will export both one and two. If not, this
-> seems like a great solution to the fast-export problem.
+Felipe Contreras wrote:
 
-Why would it? We are not changing the way objects are exported, the
-only difference is what happens at the end
-(handle_tags_and_duplicates()).
+> Setting commit to commit is a no-op.
 
-And if you are talking about the ref for the reset at the end, it has
-to be both in the list of refs selected by the user (initially in
-&revs.pending), either marked or the object already referenced by
-another ref in the list selected by the user (e.g. fast-export one
-two, where one^{commit} == two^{commit}, and not marked as
-UNINTERESTING (e.g. ^two).
+Wrong description.  This should say:
 
-Cheers.
+	The code uses the idiom of assigning commit to itself to quench a
+	"may be used uninitialized" warning.  Luckily at least modern
+	versions of gcc do not produce that warning here, so we can drop
+	the self-assignment.
 
--- 
-Felipe Contreras
+	This makes the code clearer to human beings, makes static
+	analyzers that do not know that idiom happier, and means that
+	if the code some day evolves to use this variable uninitialized
+	then we will catch it.
+
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+
+With that change, for what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Patch left unsnipped since it doesn't seem to have hit the list.
+
+> ---
+>  builtin/fast-export.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index 12220ad..065f324 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -483,7 +483,7 @@ static void get_tags_and_duplicates(struct object_array *pending,
+>  	for (i = 0; i < pending->nr; i++) {
+>  		struct object_array_entry *e = pending->objects + i;
+>  		unsigned char sha1[20];
+> -		struct commit *commit = commit;
+> +		struct commit *commit;
+>  		char *full_name;
+>  
+>  		if (dwim_ref(e->name, strlen(e->name), sha1, &full_name) != 1)
