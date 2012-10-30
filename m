@@ -1,91 +1,74 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
-Date: Tue, 30 Oct 2012 11:12:24 -0700
-Message-ID: <CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
-References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com> <1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: [PATCH v5 00/14] New remote-hg helper
+Date: Tue, 30 Oct 2012 18:16:05 +0000
+Message-ID: <20121030181604.GY26850@arachsys.com>
+References: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
+ <20121030102526.GN4891@arachsys.com>
+ <CAMP44s1g8rFGP7UOcvp9BEZ1oiSh3+-gYheciqO8Fmghipot8A@mail.gmail.com>
+ <20121030180021.GX26850@arachsys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ">" <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 19:13:34 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:16:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTGJf-0001Mt-6S
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:13:31 +0100
+	id 1TTGMi-0005YL-4M
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965288Ab2J3SNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 14:13:07 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:36909 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965248Ab2J3SNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 14:13:05 -0400
-Received: by mail-qa0-f46.google.com with SMTP id c26so2370389qad.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:13:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8G3xkjXKDhzhUci8hi+QzIpMLq0nlicP+cNSE+dC8Ew=;
-        b=fxUBJPqwk0UDsvPRbIdCYV0vSlaKf5qg7oa1drwjCW/Eaz077EEEZNPjd4KvAkjDM6
-         1fQuF+PheMXpETI69L8hZ3j+/nHXGS3niHsTu3rp0y1dmvoK4nOsyN2defv2BNOvPQZ1
-         1Vh2+aNOgIobc1u1Vu1GEx2Ci9asWNWTTk6PYwt3suP8hUNotjOIsynmgKT2HDx79UPz
-         Dz5FrJEZ/NiKvl3fW8eOgrWkszQxKi0rMligo+PIovcjPt6UjF8dtwSi0rlc58WPBXRW
-         ERvw33VQ/fzWYppz3ik9FS5xxvRA0p7Zc9HdwZxrYp12wvrySIHq3QA7ZtJVWXjlplBk
-         t5PA==
-Received: by 10.224.178.16 with SMTP id bk16mr5104812qab.59.1351620784848;
- Tue, 30 Oct 2012 11:13:04 -0700 (PDT)
-Received: by 10.49.36.195 with HTTP; Tue, 30 Oct 2012 11:12:24 -0700 (PDT)
-In-Reply-To: <1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
+	id S965224Ab2J3SQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 14:16:27 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:54586 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934079Ab2J3SQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 14:16:09 -0400
+Received: from [81.2.114.212] (helo=arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.80)
+	(envelope-from <chris@arachsys.com>)
+	id 1TTGMB-000778-T0; Tue, 30 Oct 2012 18:16:08 +0000
+Content-Disposition: inline
+In-Reply-To: <20121030180021.GX26850@arachsys.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208718>
 
-On Tue, Oct 30, 2012 at 10:11 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> When an object has already been exported (and thus is in the marks) it
-> is flagged as SHOWN, so it will not be exported again, even if this time
-> it's exported through a different ref.
->
-> We don't need the object to be exported again, but we want the ref
-> updated, which doesn't happen.
->
-> Since we can't know if a ref was exported or not, let's just assume that
-> if the commit was marked (flags & SHOWN), the user still wants the ref
-> updated.
->
-> So:
->
->  % git branch test master
->  % git fast-export $mark_flags master
->  % git fast-export $mark_flags test
->
-> Would export 'test' properly.
->
-> Additionally, this fixes issues with remote helpers; now they can push
-> refs wich objects have already been exported.
+Chris Webb <chris@arachsys.com> writes:
 
-Won't this also export child (or maybe parent) branches that weren't
-mentioned? For example:
+> A common idiom when working with hg bookmarks is to completely ignore the
+> (not very useful) hg branches (i.e. all commits are on the default hg
+> branch) and have a bookmark for each line of development used exactly as a
+> git branch would be.
+> 
+> On such a repository, at the moment you will always get a warning about
+> multiple heads on branches/default, even though you actually don't care
+> about branches/default (and would prefer it not to exist) and just want the
+> branches coming from the bookmarks.
 
-$ git branch one
-$ echo foo > content
-$ git commit -m two
-$ git fast-export one
-$ git fast-export two
+Something which you can do with hg clone is
 
-I suspect that one of those will export both one and two. If not, this
-seems like a great solution to the fast-export problem.
+  hg clone http://my.repo/foo#master
 
--- 
+to clone just the history behind the master bookmark from foo. This works
+nicely with git-remote-hg too:
+
+  git clone hg::http://my.repo/foo#master
+
+gives you just origin/master and origin/branches/default, not
+origin/otherbookmark. This is a case where it would be particularly nice to
+be able to kill origin/branches/default and just keep the identical
+origin/master.
+
 Cheers,
 
-Sverre Rabbelier
+Chris.
