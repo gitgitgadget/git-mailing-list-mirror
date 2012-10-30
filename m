@@ -1,67 +1,139 @@
-From: "Aleksey Vasenev" <margtu-fivt@ya.ru>
-Subject: Password parsing fix on windows
-Date: Tue, 30 Oct 2012 13:37:24 +0400
-Message-ID: <op.wmzjomzi945a05@ratio.ispring.lan>
+From: karsten.blees@dcon.de
+Subject: [PATCH] update-index/diff-index: use core.preloadindex to improve
+ performance
+Date: Tue, 30 Oct 2012 10:50:42 +0100
+Message-ID: <OF831F4AE9.23F46743-ONC1257AA7.00353C1F-C1257AA7.00361535@dcon.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=----------YgoOrErbYtYaHWI59MU0iN
+Content-Type: text/plain; charset="US-ASCII"
+Cc: msysgit@googlegroups.com, pro-logic@optusnet.com.au
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 10:45:14 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 11:07:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TT8Ni-0000vF-UG
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 10:45:11 +0100
+	id 1TT8jF-0003ZJ-AV
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 11:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757482Ab2J3Jo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 05:44:58 -0400
-Received: from forward3.mail.yandex.net ([77.88.46.8]:59519 "EHLO
-	forward3.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757055Ab2J3Jo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 05:44:57 -0400
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Oct 2012 05:44:57 EDT
-Received: from smtp1.mail.yandex.net (smtp1.mail.yandex.net [77.88.46.101])
-	by forward3.mail.yandex.net (Yandex) with ESMTP id 9C1F7B418F4
-	for <git@vger.kernel.org>; Tue, 30 Oct 2012 13:37:26 +0400 (MSK)
-Received: from smtp1.mail.yandex.net (localhost [127.0.0.1])
-	by smtp1.mail.yandex.net (Yandex) with ESMTP id 87F4CAA03BC
-	for <git@vger.kernel.org>; Tue, 30 Oct 2012 13:37:26 +0400 (MSK)
-Received: from dev.cpslabs.net (dev.cpslabs.net [91.210.252.146])
-	by smtp1.mail.yandex.net (nwsmtp/Yandex) with ESMTP id bPC45KLZ-bQCegqkn;
-	Tue, 30 Oct 2012 13:37:26 +0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1351589846;
-	bh=/8ovcJRMrJ8OFSLNdOAVaHQTOuzBpcQFznIoN1jMScg=;
-	h=Content-Type:To:Date:Subject:MIME-Version:From:Message-ID:
-	 User-Agent;
-	b=o54lTAGBrBE501mmqOdrcZwgP4e3b+NycSJcEKNPcEuNdEJVMpufWZsxy7PGAkufQ
-	 MdjCJh7YQuqkrO1SSG2cdDC1rObSrM7SmOUYndLUxLy/wefrBe9yzw6LYFJmnv8MaY
-	 C7OvCV6qj6TWotFWGACE6k/S0JYXJuE5iJiYXp7s=
-User-Agent: Opera Mail/12.02 (Win32)
+	id S1757189Ab2J3KHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 06:07:10 -0400
+Received: from mail.dcon.de ([77.244.111.98]:18915 "EHLO MAIL.DCON.DE"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753636Ab2J3KHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 06:07:09 -0400
+X-Greylist: delayed 979 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Oct 2012 06:07:09 EDT
+X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
+X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
+ 30.10.2012 11:07:09,
+	Serialize complete at 30.10.2012 11:07:09
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208689>
 
-------------YgoOrErbYtYaHWI59MU0iN
-Content-Type: text/plain; charset=utf-8; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+'update-index --refresh' and 'diff-index' (without --cached) don't honor
+the core.preloadindex setting yet. Porcelain commands using these (such as
+git [svn] rebase) suffer from this, especially on Windows.
 
+Use read_cache_preload to improve performance.
 
-------------YgoOrErbYtYaHWI59MU0iN
-Content-Disposition: attachment; filename=patch.diff
-Content-Type: application/octet-stream; name="patch.diff"
-Content-Transfer-Encoding: Base64
+Additionally, in builtin/diff.c, don't preload index status if we don't
+access the working copy (--cached).
 
-ZGlmZiAtLWdpdCBhL3BlcmwvR2l0L1NWTi9Qcm9tcHQucG0gYi9wZXJsL0dpdC9T
-Vk4vUHJvbXB0LnBtCmluZGV4IDNhNmY4YWYuLmFlMmFlZGEgMTAwNjQ0Ci0tLSBh
-L3BlcmwvR2l0L1NWTi9Qcm9tcHQucG0KKysrIGIvcGVybC9HaXQvU1ZOL1Byb21w
-dC5wbQpAQCAtMTI0LDcgKzEyNCw3IEBAIHN1YiBfcmVhZF9wYXNzd29yZCB7CiAJ
-aWYgKGV4aXN0cyAkRU5We0dJVF9BU0tQQVNTfSkgewogCQlvcGVuKFBILCAiLXwi
-LCAkRU5We0dJVF9BU0tQQVNTfSwgJHByb21wdCk7CiAJCSRwYXNzd29yZCA9IDxQ
-SD47Ci0JCSRwYXNzd29yZCA9fiBzL1tcMDEyXDAxNV0vLzsgIyBcblxyCisJCSRw
-YXNzd29yZCA9fiBzL1tcMDEyXDAxNV0rLy87ICMgXG5ccgogCQljbG9zZShQSCk7
-CiAJfSBlbHNlIHsKIAkJcHJpbnQgU1RERVJSICRwcm9tcHQ7Cg==
+Results with msysgit on WebKit repo (2GB in 200k files):
 
-------------YgoOrErbYtYaHWI59MU0iN--
+                | update-index | diff-index | rebase
+----------------+--------------+------------+---------
+msysgit-v1.8.0  |       9.157s |    10.536s | 42.791s
++ preloadindex  |       9.157s |    10.536s | 28.725s
++ this patch    |       2.329s |     2.752s | 15.152s
++ fscache [1]   |       0.731s |     1.171s |  8.877s
+
+[1] https://github.com/kblees/git/tree/kb/fscache-v3
+
+Thanks-to: Albert Krawczyk <pro-logic@optusnet.com.au>
+Signed-off-by: Karsten Blees <blees@dcon.de>
+---
+
+Can also be pulled from: 
+https://github.com/kblees/git/tree/kb/update-diff-index-preload-upstream
+
+I thought I might send this upstream directly, as its not msysgit related. 
+More performance figures (for msysgit) can be found in this discussion: 
+https://github.com/pro-logic/git/commit/32c03dd8
+
+Ciao,
+Karsten
+
+ builtin/diff-index.c   |  8 ++++++--
+ builtin/diff.c         | 12 ++++++++----
+ builtin/update-index.c |  1 +
+ 3 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 2eb32bd..1c737f7 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -41,9 +41,13 @@ int cmd_diff_index(int argc, const char **argv, const 
+char *prefix)
+        if (rev.pending.nr != 1 ||
+            rev.max_count != -1 || rev.min_age != -1 || rev.max_age != -1)
+                usage(diff_cache_usage);
+-       if (!cached)
++       if (!cached) {
+                setup_work_tree();
+-       if (read_cache() < 0) {
++               if (read_cache_preload(rev.diffopt.pathspec.raw) < 0) {
++                       perror("read_cache_preload");
++                       return -1;
++               }
++       } else if (read_cache() < 0) {
+                perror("read_cache");
+                return -1;
+        }
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 9650be2..198b921 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -130,8 +130,6 @@ static int builtin_diff_index(struct rev_info *revs,
+                        usage(builtin_diff_usage);
+                argv++; argc--;
+        }
+-       if (!cached)
+-               setup_work_tree();
+        /*
+         * Make sure there is one revision (i.e. pending object),
+         * and there is no revision filtering parameters.
+@@ -140,8 +138,14 @@ static int builtin_diff_index(struct rev_info *revs,
+            revs->max_count != -1 || revs->min_age != -1 ||
+            revs->max_age != -1)
+                usage(builtin_diff_usage);
+-       if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
+-               perror("read_cache_preload");
++       if (!cached) {
++               setup_work_tree();
++               if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
++                       perror("read_cache_preload");
++                       return -1;
++               }
++       } else if (read_cache() < 0) {
++               perror("read_cache");
+                return -1;
+        }
+        return run_diff_index(revs, cached);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 74986bf..ada1dff 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -593,6 +593,7 @@ struct refresh_params {
+ static int refresh(struct refresh_params *o, unsigned int flag)
+ {
+        setup_work_tree();
++       read_cache_preload(NULL);
+        *o->has_errors |= refresh_cache(o->flags | flag);
+        return 0;
+ }
+-- 
+1.8.0.msysgit.0.3.g7d9d98c
