@@ -1,126 +1,71 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v5 1/3] completion: add new __gitcompadd helper
-Date: Wed, 31 Oct 2012 00:18:32 +0100
-Message-ID: <20121030231832.GB15709@goldbirke>
-References: <1350229971-9343-1-git-send-email-felipe.contreras@gmail.com>
- <1350229971-9343-2-git-send-email-felipe.contreras@gmail.com>
- <20121017172808.GD2156@goldbirke>
- <CAMP44s3guAhFe1ACrAzC9T05fCMAejU6Wn+GtYfSpmfJ8EX-xg@mail.gmail.com>
+From: Mike Norman <mknorman@gmail.com>
+Subject: Re: Links broken in ref docs.
+Date: Tue, 30 Oct 2012 16:30:26 -0700
+Message-ID: <CAJr+XPH4MTg_F_YuT=R1mLVwOUYPB0US3w2mZ1+DDvrQV7vVfQ@mail.gmail.com>
+References: <CAJr+XPGm4djBh+vacG5Ff=Y6aYmWbcUXOV9x2jekgnsGsk4b-g@mail.gmail.com>
+	<CAH5451nFf_SY4K2DS52vhP6VeXSmeikUrc0zy8HK3xmGgs+UGg@mail.gmail.com>
+	<CAJr+XPETQ2Jifns3_dfoB-sLLru2=Jkofb5RrBxLE4Fa9Aqp7A@mail.gmail.com>
+	<CAP2yMaKzLHiqpUtfcNtSFo8aqnbvS9RvCzC-DZvQMBgXvte5jw@mail.gmail.com>
+	<CAO54GHBvWoqZRbDwhQnmjGsBLKfGiv-JTpAakrAjiqEXYHHXPQ@mail.gmail.com>
+	<CAJr+XPE17vbqKJuJ4DfjPVfhzvL7B24eJJU-ipqUi3R+7p_yig@mail.gmail.com>
+	<508FAE23.4080704@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 00:18:49 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Kevin <ikke@ikke.info>, Scott Chacon <schacon@gmail.com>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	git <git@vger.kernel.org>
+To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed Oct 31 00:30:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTL56-0003OR-TB
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 00:18:49 +0100
+	id 1TTLGa-0000sX-NC
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 00:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510Ab2J3XSg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Oct 2012 19:18:36 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:61952 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751861Ab2J3XSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 19:18:35 -0400
-Received: from localhost6.localdomain6 (p5B130686.dip0.t-ipconnect.de [91.19.6.134])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MPrBi-1TPVb11Jic-004dHh; Wed, 31 Oct 2012 00:18:33 +0100
-Content-Disposition: inline
-In-Reply-To: <CAMP44s3guAhFe1ACrAzC9T05fCMAejU6Wn+GtYfSpmfJ8EX-xg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:4b2uMHI/PL4mH9xXo+0LMOYnSNgMYI4xS8dx885XbWm
- mmYnROs55iDy1xxe2CKySQ++AddiR5Bvwv+2mJUzRdPQAky1kn
- QAU0qb3YKobdzZVuOOZGTafTxqD95iSELZiKy+qduacqg+29p+
- GDouDYw5206TJVmkDe27pXGR4E/eR7uuHgwxBKEOdnLxP/iSXa
- qKfjbFnqHyAgkn3ibzD2GTkXIWFwKPlVSUR804YKGZcfxFOyDb
- Pqt7LUBcN4/a0oARkXjeLAy4pPhQ+fF0hbodGav+RQjEX7o4uV
- 8iim/QMbWmBZV/rylBIeXVVEHdx5rWQ0sthIL/BT+yJPw1dz4n
- Tl0Zt1n2PQb/r+DZkK1Zex2plvwP0xRfIBOYp03zG
+	id S1751389Ab2J3Xa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 19:30:28 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:33254 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190Ab2J3Xa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 19:30:27 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so863822oag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 16:30:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=J6sjB1WBVXJQWo564py7OgxqIpC3xResQdwaqs3rN1o=;
+        b=cLy4+ybCFXml/EjQMk64HzABSgZdBniE5IAAjJvezU/Pf0g/lMEmCiknsFSvfrPS6f
+         TW4gv4rpYfFiwTNryO80NpTMB5pTnPSOaf1zPwuwyqDoLxrqhTVQqO1HCwsnf1ikRfey
+         auSxycnBMcBZjxuLQEqhC8HI3RbFT7LW4TQ9yP5ZtyCdDA0F++lTzX16Cwmih58xUfe9
+         z7I73i1mSOnLKSG5XrZ+KqiQQ4JsXCletz2Xyg4gN/LuzuB9/8PQ68jR6rCQywSCvviu
+         DEXx1aM8fsNaO8AhhZChT7Qsq3FJp+iKVzeD22DZB9VjwrQCxkfrqhE7lgX28kP/A9W2
+         ou2w==
+Received: by 10.60.7.65 with SMTP id h1mr31065971oea.66.1351639826314; Tue, 30
+ Oct 2012 16:30:26 -0700 (PDT)
+Received: by 10.76.76.202 with HTTP; Tue, 30 Oct 2012 16:30:26 -0700 (PDT)
+In-Reply-To: <508FAE23.4080704@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208770>
 
-On Mon, Oct 22, 2012 at 02:41:21AM +0200, Felipe Contreras wrote:
-> On Wed, Oct 17, 2012 at 7:28 PM, SZEDER G=E1bor <szeder@ira.uka.de> w=
-rote:
-> > On Sun, Oct 14, 2012 at 05:52:49PM +0200, Felipe Contreras wrote:
->=20
-> >> diff --git a/contrib/completion/git-completion.bash b/contrib/comp=
-letion/git-completion.bash
-> >> index d743e56..01325de 100644
-> >> --- a/contrib/completion/git-completion.bash
-> >> +++ b/contrib/completion/git-completion.bash
-> >> @@ -225,6 +225,11 @@ _get_comp_words_by_ref ()
-> >>  fi
-> >>  fi
-> >>
-> >> +__gitcompadd ()
-> >> +{
-> >> +     COMPREPLY=3D($(compgen -W "$1" -P "$2" -S "$4" -- "$3"))
-> >> +}
-> >> +
-> >>  # Generates completion reply with compgen, appending a space to p=
-ossible
-> >>  # completion words, if necessary.
-> >>  # It accepts 1 to 4 arguments:
-> >> @@ -238,13 +243,11 @@ __gitcomp ()
-> >>
-> >>       case "$cur_" in
-> >>       --*=3D)
-> >> -             COMPREPLY=3D()
-> >> +             __gitcompadd
-> >>               ;;
-> >>       *)
-> >>               local IFS=3D$'\n'
-> >> -             COMPREPLY=3D($(compgen -P "${2-}" \
-> >> -                     -W "$(__gitcomp_1 "${1-}" "${4-}")" \
-> >> -                     -- "$cur_"))
-> >> +             __gitcompadd "$(__gitcomp_1 "${1-}" "${4-}")" "${2-}=
-" "$cur_" ""
-> >>               ;;
-> >>       esac
-> >>  }
-> >> @@ -261,7 +264,7 @@ __gitcomp ()
-> >>  __gitcomp_nl ()
-> >>  {
-> >>       local IFS=3D$'\n'
-> >> -     COMPREPLY=3D($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${=
-3-$cur}"))
-> >> +     __gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
-> >>  }
-> >
-> > I feel hesitant about this change.  One of the ways I'm exploring t=
-o
-> > fix the issues with shell metacharacters and expansion in compgen i=
-s
-> > to actually replace compgen.  We already iterate over all possible
-> > completion words in __gitcomp_1(), so it doesn't make much of a
-> > difference to do the filtering for the current word while we are at
-> > it.  However, the way __gitcompadd() encapsulates COMPREPLY=3D($(co=
-mpgen
-> > ...)), and tha basic idea of never touching COMPREPLY directly make
-> > this basically impossible.
->=20
-> How is it impossible? You can still replace compgen, all you have to
-> do is modify __gitcompadd and replace that code with whatever custom
-> code you want. You can change the arguments and everything. The only
-> limitation is that it should be the only place where COMPREPLY is
-> modified, and all is good. Well, it doesn't have to be only _one_
-> place, but the less functions that do this, the better.
+I just checked and the issue seems to be fixed! Clicked around on a
+bunch of previously broken links and they work!
 
-That's exactly the problem: there isn't, there can't be one single
-"whatever custom code I want".
-
-The compgen() in __gitcomp() will be replaced by an enhanced version
-of the loop in __gitcomp_1(), while in __gitcomp_nl() it will be
-replaced by a little awk scriptlet.  And then there is the oddball
-$(git ls-tree |sed magic) in __git_complete_revlist_file(), where
-possible completion words are filenames possibly containing newlines,
-therefore requiring yet another approach.
+On Tue, Oct 30, 2012 at 3:38 AM, Holger Hellmuth (IKS)
+<hellmuth@ira.uka.de> wrote:
+> Am 30.10.2012 09:07, schrieb Mike Norman:
+>
+>> Not seen any recently. I'm guessing the dev is in the path of
+>> hurricane Sandy? (Not sarcasm, btw.)
+>
+>
+> Do you still see failures? I checked out the website just now and it seemed
+> to work flawlessly (at least the links I tried, could not find any Sharing
+> or Updating section). New design since I last visited, more end-user polish.
+>
+>
