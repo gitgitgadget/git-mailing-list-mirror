@@ -1,81 +1,65 @@
-From: shawn wilson <ag4ve.us@gmail.com>
-Subject: change symlink
-Date: Tue, 30 Oct 2012 21:07:07 +0000
-Message-ID: <CAH_OBie-irmpBrJG6KB3W8bgYjQdyVYiUR-SvJPnx1FXUya0uA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Can't understand the behaviour of git-diff --submodule
+Date: Tue, 30 Oct 2012 22:17:14 +0100
+Message-ID: <509043DA.6040606@web.de>
+References: <CAC9WiBgzbsury2f9FyAu=Pgn31f2uCtq7AvsVWGWEwoV6KbyjA@mail.gmail.com> <508ADFAE.1050800@web.de> <CAC9WiBjiHLJggUzmmx4sPpXNNq=Kz0TOZAzmRShc1AZcPjGvig@mail.gmail.com> <508AED26.3090805@web.de> <CAC9WiBhZWJihPToMawPCxEVkTKL0e-GzUw3qneJMUx-WqSNbjw@mail.gmail.com> <508C6823.5060800@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:07:44 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:17:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJ2E-0004xt-CF
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:07:42 +0100
+	id 1TTJBq-0000sh-Ia
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934566Ab2J3VHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 17:07:30 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:37746 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934561Ab2J3VH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 17:07:29 -0400
-Received: by mail-la0-f46.google.com with SMTP id h6so564949lag.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 14:07:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=JNyQ3DtFKA8sEffVglgesjKjmV9nY69l9utqTFXGhNg=;
-        b=TXKIcNhqKVXFi7q3kGmZNDDZSzsMJ0F6l2k25KAloVphpRffrS3IcYWgZwxADOi2ff
-         GK1yx4ljUTwjQ+Gnjn+wmpujqu09FUyx8sGEH2ckt0dwfvIxJnXet2YBZYGloDVmKBoW
-         FSvlXLn6ojZUyHmZghBADH4ay8URdYOFCgSqGmyVtNwwNXc56ACVVPvZ7+DPgmflRW1u
-         Z+jlWF4V7GQiSe5s/iLF8IjDSrsGOLRaaLseis9uywBMNykXWprPqPpPATpBIjD+8Ogh
-         Bq2LsfndDsNAs9zuDj3Or1OVn/jNWiy/1kvtmeU1BOwTZ4Gu0NjP01KkBllNjvPhnB69
-         5sJQ==
-Received: by 10.112.103.135 with SMTP id fw7mr13680532lbb.16.1351631247778;
- Tue, 30 Oct 2012 14:07:27 -0700 (PDT)
-Received: by 10.114.63.42 with HTTP; Tue, 30 Oct 2012 14:07:07 -0700 (PDT)
+	id S934643Ab2J3VRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 17:17:22 -0400
+Received: from mout.web.de ([212.227.17.11]:64120 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934532Ab2J3VRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 17:17:19 -0400
+Received: from [192.168.178.41] ([91.3.154.28]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0MHYHE-1TWcZF2DnA-003xYZ; Tue, 30 Oct 2012 22:17:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <508C6823.5060800@web.de>
+X-Enigmail-Version: 1.4.5
+X-Provags-ID: V02:K0:MjtSwLWdC7zGBKdF+iqLhV08839nDmkgQpYXUzg/zgx
+ 3eORtgdoJcoZBB4bk+G5J6nLrDY0nZzrEejW9XJB2bNwjI1/C4
+ 3ZCKMDs/SWsfwMiF9+dG6lo3DQQRhVXKtKZ3TCPt0Oo9HJvm2z
+ SRnXwHqB429x7ZmGcjIJdF7O29S2boeDC4vBN3dW2joIw6F3Ux
+ gbeRwFYHfSCxxabrAl8hQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208737>
 
-i'm curious why this is being reported as deleted in status and diff
-and not modified? this was tested on a build of the master branch of
-the current git repo (1.8.0).
+Am 28.10.2012 01:02, schrieb Jens Lehmann:
+> Am 26.10.2012 22:43, schrieb Francis Moreau:
+>> On Fri, Oct 26, 2012 at 10:05 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> [...]
+>>>
+>>> That is weird, "git diff --submodule" should show that too. Is there
+>>> anything unusual about your setup? (The only explanation I can come
+>>> up with after checking the code is that your submodule has neither a
+>>> .git directory nor a gitfile or the objects directory in there doesn't
+>>> contain these commits)
+>>
+>> Oh now you're asking, I think the submodule has been added by using
+>> the --reference option of git-submodule-add.
+>>
+>>   $ cd configs
+>>   $ cat .git
+>>   gitdir: ../.git/modules/configs
+> 
+> Thanks, I suspect the --reference option makes the difference here,
+> I'll check that as soon as I find some time.
 
-mkdir t cd t; git --init
-
-touch test
-git add test
-git commit test -m "test"
-
-ln -s test t2
-git add t2
-git commit t2 -m "symlink"
-
-rm t2
-mkdir -p t2/one
-ln -s test t2/one/test
-
-this then shows up as:
-
- % git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add/rm <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       deleted:    t2
-#
-no changes added to commit (use "git add" and/or "git commit -a")
- % git --no-pager diff
-diff --git a/t2 b/t2
-deleted file mode 120000
-index 30d74d2..0000000
---- a/t2
-+++ /dev/null
-@@ -1 +0,0 @@
--test
-\\ No newline at end of file
+Since 1.7.11 and 1.7.10.3 git does handle submodules with alternates
+(which is what --reference uses) correctly. What version are you
+seeing this problem with?
