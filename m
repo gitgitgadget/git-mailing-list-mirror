@@ -1,132 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 3/4] fast-export: don't handle uninteresting refs
-Date: Tue, 30 Oct 2012 11:59:14 -0700
-Message-ID: <20121030185914.GI15167@elie.Belkin>
-References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
- <1351617089-13036-4-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 0/4] fast-export: general fixes
+Date: Tue, 30 Oct 2012 20:06:23 +0100
+Message-ID: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 20:02:11 2012
+	Elijah Newren <newren@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 30 20:06:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTH4f-000586-0I
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:02:05 +0100
+	id 1TTH9F-0002YK-SJ
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934249Ab2J3TBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 15:01:07 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:40656 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965594Ab2J3S7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 14:59:19 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so386508pbb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:59:18 -0700 (PDT)
+	id S934036Ab2J3TGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 15:06:37 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:52686 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755158Ab2J3TGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 15:06:36 -0400
+Received: by mail-bk0-f46.google.com with SMTP id jk13so340997bkc.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 12:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Y932s3Z/YLodpB2swAKXlrm1CxH/1DBAgd3sKpB8FbY=;
-        b=RwQhWahquMgdi27JRMPL2eEucyC+1Nd4yYgn2dU6bm3NDll4u0vIYOVWVSP/SBnSLZ
-         1jS/z5uLdCDt6YliQkBRi4HV9e9VNH3sQOF51Dih1T/M1rBL3PPAeJZRxG1kHRQixeu/
-         NQWQLgcjOCuYwMU908NJimzdsCtb1vVKhWhTMvqxA23w0P6VacmRVl10ew+ZIQrmUAxy
-         nbCY4p5hpizSV2jjViUbu2Oz2ww+POgGsaeIY5Yk60pqRfWvOSOTuxJ7uGAkp94z/IN0
-         9krvj2mp/tDVopztNProbOPW1125a3ULvSHpQmw7KZSvIlUltfMprhLJWgaVioGbOd8S
-         JzUg==
-Received: by 10.68.132.41 with SMTP id or9mr106622023pbb.67.1351623558732;
-        Tue, 30 Oct 2012 11:59:18 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id pw2sm930987pbb.59.2012.10.30.11.59.17
-        (version=SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2012 11:59:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1351617089-13036-4-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=qZzlSyU7BkKL2jUcHOflKYM1UZClp2RHasShw2Zhd+Y=;
+        b=gefyZEjXRdfCHAy4dKqgAzlrRaFjjnyaZCylhxy7/wJsEVrsZUh1ohcVnC0z5joJYr
+         XmC6T8yHoAywVpozeXdVuzwfTpLOYlKgUPR6AX5b6wTyXeCmpKW3riQ+/e+xzkB/TKtH
+         GGFfDGnbjg5/I9FvevcAK4+qCZ49yhE8WMDcWLo0zXukYFC41+0zMnhEgtIFJoohG+IV
+         3SBI2l39T4+TA09KNhfl3mQRRIyEvCeTX1/luMoIHVg/HlzvBeThWXKY35I3ILrElmZl
+         7GW+troSJyg2vv4ebl7pgd0o6NM27eMJTWpdM1BZ4BH2YrtrnWdD4giLgNHxELV45U+N
+         pzpQ==
+Received: by 10.204.8.215 with SMTP id i23mr10242625bki.44.1351623995149;
+        Tue, 30 Oct 2012 12:06:35 -0700 (PDT)
+Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
+        by mx.google.com with ESMTPS id r15sm1970070bkw.9.2012.10.30.12.06.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 30 Oct 2012 12:06:34 -0700 (PDT)
+X-Mailer: git-send-email 1.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208726>
 
-Felipe Contreras wrote:
+Hi,
 
-> They have been marked as UNINTERESTING for a reason, lets respect that.
+Note: sorry for the noise, the first try (v2) was silently eaten by the mailing
+list handler.
 
-This patch looks unsafe, and in the examples listed in the patch
-description the changed behavior does not look like an improvement.
-Worse, the description lists a few examples but gives no convincing
-explanation to reassure about the lack of bad behavior for examples
-not listed.
+First patches are general cleanups and fixes, the last patch fixes a real issue
+that affects remote helpers.
 
-Perhaps this patch has a prerequisite and has come out of order.
+Changes since v2:
 
-Hope that helps,
-Jonathan
+ * Actually send it to the ml
 
-Patch left unsnipped so we can get a copy in the list archive.
+Changes since v1:
 
-> Currently the first ref is handled properly, but not the rest, so:
-> 
->  % git fast-export master ^master
-> 
-> Would currently throw a reset for master (2nd ref), which is not what we
-> want.
-> 
->  % git fast-export master ^foo ^bar ^roo
->  % git fast-export master salsa..tacos
-> 
-> Even if all these refs point to the same object; foo, bar, roo, salsa,
-> and tacos would all get a reset.
-> 
-> This is most certainly not what we want. After this patch, nothing gets
-> exported, because nothing was selected (everything is UNINTERESTING).
-> 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  builtin/fast-export.c  | 7 ++++---
->  t/t9350-fast-export.sh | 6 ++++++
->  2 files changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 065f324..7fb6fe1 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -523,10 +523,11 @@ static void get_tags_and_duplicates(struct object_array *pending,
->  				typename(e->item->type));
->  			continue;
->  		}
-> -		if (commit->util)
-> +		if (commit->util) {
->  			/* more than one name for the same object */
-> -			string_list_append(extra_refs, full_name)->util = commit;
-> -		else
-> +			if (!(commit->object.flags & UNINTERESTING))
-> +				string_list_append(extra_refs, full_name)->util = commit;
-> +		} else
->  			commit->util = full_name;
->  	}
->  }
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index 49bdb44..6ea8f6f 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -440,4 +440,10 @@ test_expect_success 'fast-export quotes pathnames' '
->  	)
->  '
->  
-> +test_expect_success 'proper extra refs handling' '
-> +	git fast-export master ^master master..master > actual &&
-> +	echo -n > expected &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_done
-> -- 
-> 1.8.0
+ * Improved commit messages
+ * Use /dev/null in tests
+ * Add test for remote helpers
+
+Felipe Contreras (4):
+  fast-export: trivial cleanup
+  fast-export: fix comparisson in tests
+  fast-export: don't handle uninteresting refs
+  fast-export: make sure refs are updated properly
+
+ builtin/fast-export.c     | 16 +++++++++++-----
+ t/t5800-remote-helpers.sh | 11 +++++++++++
+ t/t9350-fast-export.sh    | 26 +++++++++++++++++++++++---
+ 3 files changed, 45 insertions(+), 8 deletions(-)
+
+-- 
+1.8.0
