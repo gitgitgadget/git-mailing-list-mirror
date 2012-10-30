@@ -1,80 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH v4 00/13] New remote-hg helper
-Date: Tue, 30 Oct 2012 18:18:57 +0100
-Message-ID: <CAMP44s2b=it8vtFDKd7F2yecm+j7C4N=YfMDt0_3LdFO3_HJNA@mail.gmail.com>
-References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
-	<20121029085045.GA5023@sigill.intra.peff.net>
-	<CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com>
-	<20121029212643.GA20513@sigill.intra.peff.net>
-	<CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com>
-	<20121029215631.GF20513@sigill.intra.peff.net>
-	<CAMP44s1SLpNpbjRXF6QHrOTO=_1=wjPo1_kV3jZV-HXOYXPbnQ@mail.gmail.com>
-	<20121029220604.GA21712@sigill.intra.peff.net>
+Date: Tue, 30 Oct 2012 18:20:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info>
+References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com> <20121029085045.GA5023@sigill.intra.peff.net> <CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com> <20121029212643.GA20513@sigill.intra.peff.net>
+ <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com> <20121029215631.GF20513@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Michael J Gruber <git@drmicha.warpmail.net>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 30 18:19:14 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 18:21:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTFT6-00079h-4c
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 18:19:12 +0100
+	id 1TTFUw-0001Dn-Ta
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 18:21:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964914Ab2J3RS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 13:18:58 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:64253 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964823Ab2J3RS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 13:18:58 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so498703oag.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 10:18:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OWi6qob15cAKoZHvkcS0tJ/h/E92Tp/9dQY0a4zKi6E=;
-        b=P5tNPctKlWer9yT6I+624+HjyWa87LCOZzulbnKBt3IfX6CM09EcAr9/hDM2tzZJOG
-         t80bMH7+NRh4SFgwFQEQ7XtT2VbpAuwBQIeuFOIy0VoSAsEXIrCIIYSge8+YWmTPbcdS
-         tDMtKN6qAg1NLN0ukbfN7vjz7hMxArVrEo+J2W3HtzhpMjjNABnX05YIFpi/Q0Ntc52J
-         i85bkwE7sBwgG0YEUgyy954cBO+aLMKfvuv29LlfchadSQGU3+kUMzea6PvAygJueZW/
-         SJ3Vs+oR9t4T0vgzMH9zFPfgGdBqfZnSc53b29UUuvPVtzfafFV+1R1r6NXoMjyfwFW/
-         pSuA==
-Received: by 10.182.52.105 with SMTP id s9mr28348650obo.25.1351617537254; Tue,
- 30 Oct 2012 10:18:57 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 10:18:57 -0700 (PDT)
-In-Reply-To: <20121029220604.GA21712@sigill.intra.peff.net>
+	id S964922Ab2J3RUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 13:20:54 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:55415 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S933842Ab2J3RUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 13:20:53 -0400
+Received: (qmail invoked by alias); 30 Oct 2012 17:20:50 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp071) with SMTP; 30 Oct 2012 18:20:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+qRco0eayqeebaLBwNCmngSNlt6X5d/WvqUAVZnb
+	UxRpsC4fI4721T
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20121029215631.GF20513@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208710>
 
-On Mon, Oct 29, 2012 at 11:06 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Oct 29, 2012 at 11:02:31PM +0100, Felipe Contreras wrote:
->
->> > If remote-hg is going to live in contrib, it probably makes sense to
->> > have its tests live there, too, like subtree.
->>
->> Probably, I'll check that option.
->>
->> But eventually I think it should be installed by default, unless
->> somebody can come up for a reason not to. For now contrib might be OK.
->
-> I would one day like to have it as part of the main distribution, too,
-> but it would be nice to prove its worth in the field for a while first.
-> I especially would like to find out how it compares in practice with the
-> work that is in msysgit.
+Hi all,
 
-Yeah, I would like to compare it with that work, if only the patches
-were readily available somewhere.
+On Mon, 29 Oct 2012, Jeff King wrote:
 
--- 
-Felipe Contreras
+> On Mon, Oct 29, 2012 at 10:47:04PM +0100, Felipe Contreras wrote:
+> 
+> > >> Yeah, the test script is not ready for merging, it needs to check
+> > >> for python, hg, and hg-git.
+> > >>
+> > >> Do you have hg-git installed?
+> > >
+> > > No. But it's important that it fail gracefully; I can't even take it
+> > > in pu if I can't run the test suite in a sane way.
+> > 
+> > The contrib part is fine for 'pu'. The tests aren't even meant to
+> > exercise stuff in 'contrib', right? There might be some exceptions,
+> > but either way, there's plenty of stuff in 'contrib' without any
+> > tests. The tests I'm providing are simply a little sugar.
+> 
+> Yeah, contrib is a bit of a wildcard. Most things do not have tests.
+
+Given that the tests of remote-hg as in git://github.com/msysgit/git's
+'devel' branch run just fine without additional dependencies (which
+probably triggered the not-quite-constructive and unnecessarily-flaming
+"bloated" comment of Felipe), and given that the code in said branch is
+well-tested and exercised by daily use, and given the fact that my major
+concern was not understood (and probably not addressed), and also given
+the fact that Sverre indicated that he could finalize the work as a 20%
+project, I decided that other projects I have to do unfortunately have a
+too-high priority to take care of testing and measuring the performance of
+the patch series that is discussed in this thread.
+
+Sorry,
+Johannes
+
+P.S.: I would still recommend to have a detailed look at the 'devel'
+branch, in particular the commits starting with "fast-export: do not refer
+to non-existing marks" and ending with "t5801: skip without hg". My
+understanding is that it was completely ignored after a brief and maybe
+too-cursory look. In the least, it has a couple of lessons we learnt the
+hard way, and if git.git is dead set on duplicating the work, making these
+mistakes again could be avoided by learning from our lessons.
