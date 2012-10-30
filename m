@@ -1,71 +1,77 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
-Date: Tue, 30 Oct 2012 22:41:55 +0100
-Message-ID: <CAMP44s0dxW_FGGFQF_gDduFcGr3xri41SF0mvTjxbN-jbYWZ0w@mail.gmail.com>
-References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
-	<1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
-	<CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
-	<CAMP44s3MHrG_XeZEodnxemrW-V18+NHnFvi7koyx9mH8XuHc6w@mail.gmail.com>
-	<CAGdFq_jJwZMLq=3co13hs7gas6y9kZRTKwcT+CP=n6-24Uv5Og@mail.gmail.com>
-	<CAMP44s2QwdZKqJq0BZ5HOtZYiCMxCxycui9EmxxfL+Sa6M_6+g@mail.gmail.com>
-	<20121030213827.GM15167@elie.Belkin>
+Subject: Re: [PATCH 2/2] completion: simplify __gitcomp test helper
+Date: Tue, 30 Oct 2012 22:43:10 +0100
+Message-ID: <CAMP44s34yBSurkiCb7bvJFt82_F=hdkFLDyd0o=9Yrsn-TRWqg@mail.gmail.com>
+References: <1350869941-22485-1-git-send-email-felipe.contreras@gmail.com>
+	<1350869941-22485-3-git-send-email-felipe.contreras@gmail.com>
+	<20121030212725.GA15709@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, ">" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:42:10 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:43:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJZY-0007NM-UE
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:42:09 +0100
+	id 1TTJam-0000YC-OS
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:43:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934743Ab2J3Vl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 17:41:56 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:43037 "EHLO
+	id S934784Ab2J3VnN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Oct 2012 17:43:13 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:54568 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934733Ab2J3Vlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 17:41:55 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so775192obb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 14:41:55 -0700 (PDT)
+	with ESMTP id S934781Ab2J3VnK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2012 17:43:10 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so776361obb.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 14:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NL6hFad7+6hMdS9UOQDyQAagO3c/OS3/XD3Irkhodm0=;
-        b=eXYKNwZlBHtzVSi6Z01+lgWIg/RAAOWs2BcgrTWK3hGdrCUgQ+mMbyBhIDt+bOEIzg
-         it0RHeCtDlemSzUZHop5afbXc7D2EMdvu1t+3vDzpVmxwycw0dHaj1h7joPm9F0LTRRw
-         g2OYpeoXA15KWJNKQX5rosTFlR75hNktMAMbMpX3NQqFHsaFn7K/aAO3s8H/cwY5IcYb
-         yaDpI9v7BW577bOGKa+zaL1GV+acPioX/Yp4gMP2N5n4PxnwHX2bKFiQzDfXvH0y3Yi0
-         hGyU42AO9ZaqCV27sx2tEN7ugHGvsVg4Zidef/4KjAEl1syJK3yFdJDZQEh5Av7190ub
-         rMeA==
-Received: by 10.60.12.233 with SMTP id b9mr30574090oec.95.1351633315337; Tue,
- 30 Oct 2012 14:41:55 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 14:41:55 -0700 (PDT)
-In-Reply-To: <20121030213827.GM15167@elie.Belkin>
+         :cc:content-type:content-transfer-encoding;
+        bh=ESsOCtJqVa65KVWO63eNTmqPRGA4WTDywg2Rth7wuKY=;
+        b=iNj6Whh5+rMmeMQWgxcEo468g0CcIIL144SxsfhxBecMOIhNR0e3Sz7B0YirlU7Fkh
+         Vvv5wcNjLRCVWZVr1KVVSKEt2uEJegGGpKhKxulhTAbz4sM9InuSTcB69gKh2GFTADmx
+         R3fZrC7uZvVZQqsGQ/GtFO39kI3o5iLw7HM8eay5IeDKswZ4tIe0H6MDf8O/SlCe/kDS
+         f0nxrSmTxcUe6GFqiXo2FoUO1OfGOSR9ZI53APEKxmXrHO5nmzXvsHNQvzk9Gxw2QR0J
+         bw2OEGdlDCm89IHm6itEURIeVfo7+/s5jr51KyULMyY4pTFPyccg6BVTmF2sHwLiNmnN
+         w4vg==
+Received: by 10.182.52.105 with SMTP id s9mr28934696obo.25.1351633390375; Tue,
+ 30 Oct 2012 14:43:10 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 14:43:10 -0700 (PDT)
+In-Reply-To: <20121030212725.GA15709@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208749>
 
-On Tue, Oct 30, 2012 at 10:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Felipe Contreras wrote:
->
->> % git fast-export $marks_args one
->> % git fast-export $marks_args one two
+On Tue, Oct 30, 2012 at 10:27 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
+ wrote:
+> On Mon, Oct 22, 2012 at 03:39:01AM +0200, Felipe Contreras wrote:
+>> By using print_comp as suggested by SZEDER G=C3=A1bor.
 >>
->> Then yeah, 'one' will be updated once again in the second command,
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  t/t9902-completion.sh | 13 +++++--------
+>>  1 file changed, 5 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+>> index 1c6952a..2e7fc06 100755
+>> --- a/t/t9902-completion.sh
+>> +++ b/t/t9902-completion.sh
+>> @@ -74,15 +74,12 @@ newline=3D$'\n'
 >
-> That's probably worth a mention in the commit message and tests
-> (test_expect_failure), to save future readers from some confusion.
+> This $newline variable was only used to set IFS to a newline inside S=
+Q
+> blocks.  AFAICS after this change there are no such places left,
+> because print_comp() takes care of IFS, so $newline is not necessary
+> anymore.
 
-It is mentioned in the commit message.
+Right, I thought I did that =3D/
 
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
