@@ -1,79 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: crash on git diff-tree -Ganything <tree> for new files with
- textconv filter
-Date: Tue, 30 Oct 2012 09:12:22 -0400
-Message-ID: <20121030131221.GA19571@sigill.intra.peff.net>
-References: <508C29E4.5000801@arcor.de>
- <20121028120104.GE11434@sigill.intra.peff.net>
- <508D8DF7.7040007@arcor.de>
- <20121029060524.GB4457@sigill.intra.peff.net>
- <508EE4E4.1080407@arcor.de>
- <20121029223521.GJ20513@sigill.intra.peff.net>
- <20121029224705.GA32148@sigill.intra.peff.net>
- <20121030121747.GA4231@sigill.intra.peff.net>
- <da24b6ea-ac9b-46dd-b591-25fd4e8e6504@email.android.com>
+From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
+Date: Tue, 30 Oct 2012 13:15:18 +0100
+Message-ID: <1674207.s6eW8JjC7x@flomedio>
+References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Peter Oberndorfer <kumbayo84@arcor.de>, git@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org, David Michael Barr <b@rr-dav.id.au>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 14:12:40 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 14:17:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTBcT-0005U2-M0
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 14:12:37 +0100
+	id 1TTBhG-00045t-CA
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 14:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754311Ab2J3NMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 09:12:25 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43781 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753546Ab2J3NMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 09:12:24 -0400
-Received: (qmail 32319 invoked by uid 107); 30 Oct 2012 13:13:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Oct 2012 09:13:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2012 09:12:22 -0400
-Content-Disposition: inline
-In-Reply-To: <da24b6ea-ac9b-46dd-b591-25fd4e8e6504@email.android.com>
+	id S1755009Ab2J3NRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 09:17:21 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:35434 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753064Ab2J3NRU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 09:17:20 -0400
+X-Greylist: delayed 3707 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Oct 2012 09:17:20 EDT
+Received: from flomedio.localnet (91-115-94-157.adsl.highway.telekom.at [91.115.94.157])
+	(authenticated bits=0)
+	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q9UCFJcl026008
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 30 Oct 2012 13:15:19 +0100 (CET)
+User-Agent: KMail/4.9.2 (Linux/3.5.0-17-generic; KDE/4.9.2; x86_64; ; )
+In-Reply-To: <7vmx045umh.fsf@alter.siamese.dyndns.org>
+X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
+X-Spam-Scanner: SpamAssassin 3.003000 
+X-Spam-Score-relay: 0.6
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208702>
 
-On Tue, Oct 30, 2012 at 09:46:01PM +0900, Junio C Hamano wrote:
+Sorry for reacting so late, I didn't read the list carefully in the last weeks 
+and my gmail filter somehow didn't trigger on that.
 
-> (1) sounds attractive for more than one reason. In addition to
-> avoidance of this issue, it would bring bug-to-bug compatibility
-> across platforms.
+On Tuesday 02 October 2012 16:20:22 Junio C Hamano wrote:
+> * fa/remote-svn (2012-09-19) 16 commits
+>  - Add a test script for remote-svn
+>  - remote-svn: add marks-file regeneration
+>  - Add a svnrdump-simulator replaying a dump file for testing
+>  - remote-svn: add incremental import
+>  - remote-svn: Activate import/export-marks for fast-import
+>  - Create a note for every imported commit containing svn metadata
+>  - vcs-svn: add fast_export_note to create notes
+>  - Allow reading svn dumps from files via file:// urls
+>  - remote-svn, vcs-svn: Enable fetching to private refs
+>  - When debug==1, start fast-import with "--stats" instead of "--quiet"
+>  - Add documentation for the 'bidi-import' capability of remote-helpers
+>  - Connect fast-import to the remote-helper via pipe, adding 'bidi-import'
+> capability - Add argv_array_detach and argv_array_free_detached
+>  - Add svndump_init_fd to allow reading dumps from arbitrary FDs
+>  - Add git-remote-testsvn to Makefile
+>  - Implement a remote helper for svn in C
+>  (this branch is used by fa/vcs-svn.)
+> 
+>  A GSoC project.
+>  Waiting for comments from mentors and stakeholders.
 
-Yeah. I mentioned breaking the build for people who would now need to
-turn on NO_REGEX. But the only reason to do that is to let people on
-glibc systems use the system version of the tools. A much saner approach
-would be to just always build with our compat regex, and turn NO_REGEX
-into a no-op. We already do the same thing for kwset.
+>From my point of view, this is rather complete. It got eight review cycles on 
+the list.
+Note that the remote helper can only fetch, pushing is not possible at all.
 
-> (4), if we can run grep on streaming data (tweak interface we have for
-> checking out a large blob to the working tree), would let us work on
-> dataset larger than fit in core. Even though it would be much more
-> work, it might turn out to be a better option in the longer run.
+> 
+> 
+> * fa/vcs-svn (2012-09-19) 4 commits
+>  - vcs-svn: remove repo_tree
+>  - vcs-svn/svndump: rewrite handle_node(), begin|end_revision()
+>  - vcs-svn/svndump: restructure node_ctx, rev_ctx handling
+>  - svndump: move struct definitions to .h
+>  (this branch uses fa/remote-svn.)
+> 
+>  A GSoC project.
+>  Waiting for comments from mentors and stakeholders.
 
-Agreed, that would be nice. It's potentially a lot of work, but we could
-probably get by with a special streaming version of diff_populate_filespec.
+This is the result of what I did when I wanted to start implementing branch 
+detection. I found that the existing code is not suitable and restructured it.
 
-The tricky thing is that we have to run the regex matcher progressively
-as we stream data in (since your match might fall in the middle of a
-read boundary). Which is certainly going to require switching off of
-regular regexec. I don't think glibc regex will handle it either,
-though. It looks like pcre can report a partial match at the end of the
-string, and you can either continue with the next chunk (if using
-pcre_dfa) or append and re-start the pattern match (for regular
-pcre_exec).
+The main goal is to seperate svn revision parsing from git commit creation. 
+Because for creating commits, you need to know on which branch to create the 
+commit.
+While for finding out which branch is the right one, you need to read the 
+complete svn revision first to see what dirs are changed and how.
 
-Which means we'd probably have to make streaming matches an optional
-feature, and still do (1) first to fix the correctness issue.
+It is rather invasive and it doesn't make sense without using it later on.
+So I'm not surprised that you may not like it.
+Anyways it passes all existing tests (that doesn't mean it's good of course 
+;))
 
--Peff
+Florian
