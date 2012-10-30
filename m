@@ -1,88 +1,111 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCH] test-lib: avoid full path to store test results
-Date: Tue, 30 Oct 2012 07:58:59 +0100
-Message-ID: <CA+EOSB=Rr8czjVJfA+F6DmHjDUBy0QQ-wd4t-3Uwb1Ksoadr0Q@mail.gmail.com>
-References: <1351570377-894-1-git-send-email-felipe.contreras@gmail.com>
+From: kevin molcard <kev2041@gmail.com>
+Subject: Re: [git-users] Git clone fails with "bad pack header", how to get
+ remote log
+Date: Tue, 30 Oct 2012 08:01:12 +0100
+Message-ID: <508F7B38.5020603@gmail.com>
+References: <7f498800-ed38-474d-86ad-cb937be68173@googlegroups.com> <20121029211854.b58c791d30a6c8d68665e574@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Oct 30 07:59:15 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git-users@googlegroups.com, git@vger.kernel.org
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Oct 30 08:01:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TT5n8-000515-U2
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 07:59:15 +0100
+	id 1TT5pK-0007Kc-4b
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 08:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993Ab2J3G7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 02:59:00 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:48113 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753726Ab2J3G67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 02:58:59 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so7767675iea.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 23:58:59 -0700 (PDT)
+	id S1755164Ab2J3HBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 03:01:18 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:39046 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755137Ab2J3HBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 03:01:17 -0400
+Received: by mail-we0-f174.google.com with SMTP id t9so2767255wey.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 00:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=pqRY8HBdpiF6ogp0+vbTWXU6BNjeg/82AX1Jh+05Iuw=;
-        b=X9WFTxVxohSQUh3WfwaJ/QU5Xa+k7FtJhTo4HG5yKAwcfhVTbfLY653LlzpokKO5AD
-         0V5oGmZNNhGwmuZYy4HIDdyxCEz1n7Z6CITRXbcVSBt5VsFqZg0Ga/WDq7zVKDaSmH/J
-         t5cWgUXbfhj8vgnlyVPQvUiLAoq/wVhrj/HHQsjk/KC1CKi2k6Vq/rPKBUv3QfJWFHXA
-         sXHZCumN7Kwz4qmmIwH3c2jWf9NCke7vwZR4kYUJH8+DhTsw9ojWaBAVw3AHhirf0p2i
-         vxTaKOoPBGaNy4HOpeXt+gdMpd3PtisUySHSWWiVfqWP5xNzOZxqgEQX8LCQgK4ovSN9
-         xtGg==
-Received: by 10.50.236.39 with SMTP id ur7mr598281igc.26.1351580339270; Mon,
- 29 Oct 2012 23:58:59 -0700 (PDT)
-Received: by 10.64.176.237 with HTTP; Mon, 29 Oct 2012 23:58:59 -0700 (PDT)
-In-Reply-To: <1351570377-894-1-git-send-email-felipe.contreras@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=CqDex+otVjZViQUWdXPWhPEpnYb/3eUHZCAF+WBVP5E=;
+        b=0UVA/eOWt/U/GQ/bLIoOnOYQsWmmxUgXbbu/xPYZHRP0IWJ+amn21ENFDnV9IpoEL+
+         Ba1NM46J4nqvr8bdUdg05vVYEnbCGXW4M7mgXg8xvXYjVq0X2dIeJ0u2w9PsOvZ8uOWY
+         IJm8JfVPXg/NVMYyHyzcwc10oLMrAwt3lk3NG5efC3m3amk/HqyZfAuNsCe4UqGQF4xy
+         x9R+hsMc1uFZLfurXYd4m/+TekuUVLI9ncAeraP9G6vnjqeBVumd8G1xYsQghPXrBKlu
+         SZM4yZ8fBdJld2RKZqeBo5GYNhpT8V8p7Vf5be5pT/IVcl5Cg6VrnIoatdr0nl0ca9Bs
+         8X9Q==
+Received: by 10.216.213.152 with SMTP id a24mr17986864wep.224.1351580475978;
+        Tue, 30 Oct 2012 00:01:15 -0700 (PDT)
+Received: from md009.arturia.lan (mey38-2-82-228-181-124.fbx.proxad.net. [82.228.181.124])
+        by mx.google.com with ESMTPS id fg6sm5052393wib.3.2012.10.30.00.01.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 30 Oct 2012 00:01:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:16.0) Gecko/20121005 Thunderbird/16.0
+In-Reply-To: <20121029211854.b58c791d30a6c8d68665e574@domain007.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208682>
 
-The shell word splitting done in base is a bashism, iow not portable.
+Hi Konstantin,
 
-Best
+thanks for the reply.
+The versions of git are:
+- on remote: 1.5.6.5
+- on windows build machine: 1.7.11.msysgit.1
+- on mac build machine: 1.7.3.4
 
-2012/10/30, Felipe Contreras <felipe.contreras@gmail.com>:
-> No reason to use the full path in case this is used externally.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  t/test-lib.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 514282c..5a3d665 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -389,7 +389,8 @@ test_done () {
->  	then
->  		test_results_dir="$TEST_OUTPUT_DIRECTORY/test-results"
->  		mkdir -p "$test_results_dir"
-> -		test_results_path="$test_results_dir/${0%.sh}-$$.counts"
-> +		base=${0##*/}
-> +		test_results_path="$test_results_dir/${base%.sh}-$$.counts"
->
->  		cat >>"$test_results_path" <<-EOF
->  		total $test_count
-> --
-> 1.8.0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+I will try to install latest git version on my remote server and get 
+back to you.
 
--- 
-Inviato dal mio dispositivo mobile
+thanks again
+Kevin
+
+On 10/29/12 6:18 PM, Konstantin Khomoutov wrote:
+> On Mon, 29 Oct 2012 09:52:54 -0700 (PDT)
+> Kevin Molcard <kev2041@gmail.com> wrote:
+>
+>> I have a problem with my build system.
+>>
+>> I have a remote server with a relatively large repository (around 12
+>> GB, each branch having a size of 3 GB).
+>>
+>> I have also 2 build servers (Mac, Windows) that are cloning the repo
+>> from the remote.
+>>
+>> Sometimes (very often when several git clone are sent at the same
+>> time), I have the following error:
+>>          
+>>      remote: internal server error
+>>      fatal: protocol error: bad pack header
+>>
+>> I know that it happens when the remote is compressing objects (thanks
+>> to `--progress -v` flags) because the last line of the log before the
+>> erro is:
+>>      remote: Compressing objects:  93% (17959/19284)   [K
+>>
+>>   * So I have 2 questions, does anybody what is the problem and what
+>> should I do?
+>>   * Is there a way to get a more precise log from the remote to debug
+>> this problem?
+> This reminds me of a bug fixed in 1.7.12.1 [1]:
+>
+> * When "git push" triggered the automatic gc on the receiving end, a
+>    message from "git prune" that said it was removing cruft leaked to
+>    the standard output, breaking the communication protocol.
+>
+> In any case, bugs should be reported to the main Git list (which is
+> git at vger.kernel.org), not here.
+> I'm Cc'ing the main Git list so you'll get any responses from there, if
+> any.
+>
+> Kevin, please answer to this message (keeping all the Ccs -- use "Reply
+> to group" or "Reply to all" in your MUA) and describe exactly what Git
+> versions on which platforms your have.
+>
+> 1. https://raw.github.com/git/git/master/Documentation/RelNotes/1.7.12.1.txt
+>
