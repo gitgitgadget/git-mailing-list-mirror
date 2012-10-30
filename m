@@ -1,67 +1,105 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: Re: [PATCH] =?utf-8?b?cGFyc2VfZGlyc3RhdF9wYXJhbXMoKTo=?= use =?utf-8?b?c3RyaW5nX2xpc3Q=?= to split comma-separated string
-Date: Tue, 30 Oct 2012 18:43:51 +0000 (UTC)
-Message-ID: <loom.20121030T193428-242@post.gmane.org>
-References: <1351443054-10472-1-git-send-email-mhagger@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
+Date: Tue, 30 Oct 2012 19:47:42 +0100
+Message-ID: <CAMP44s3MHrG_XeZEodnxemrW-V18+NHnFvi7koyx9mH8XuHc6w@mail.gmail.com>
+References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
+	<1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
+	<CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 19:44:44 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: ">" <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Elijah Newren <newren@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:48:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTGnq-0000Y5-Ti
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:44:43 +0100
+	id 1TTGqz-0004aj-1S
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932779Ab2J3SoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 14:44:25 -0400
-Received: from plane.gmane.org ([80.91.229.3]:43285 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759668Ab2J3SoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 14:44:15 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TTGnJ-0008HE-60
-	for git@vger.kernel.org; Tue, 30 Oct 2012 19:44:13 +0100
-Received: from 130.36.62.223 ([130.36.62.223])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 19:44:09 +0100
-Received: from kraai by 130.36.62.223 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 19:44:09 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 130.36.62.223 (Mozilla/5.0 (Windows NT 5.1; rv:18.0) Gecko/18.0 Firefox/18.0)
+	id S965538Ab2J3Srq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 14:47:46 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:50205 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965528Ab2J3Srn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 14:47:43 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so598233oag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PbxC6PhMgZlj+CJfg17hmLlTCBLVFqwc7d6/lWrLeq0=;
+        b=SVk7CfmUwqXVtJwvfWsY2Jkq3IMDBmIQElNy8Zt5Lb/0D1CgVNXQeZV38HgnAXDCB/
+         khF4V14gXStuqI+B+LIYPDugjYRQwgG0h7053Codmi9z+QX0E4zQByNdyPJidVLHn8qn
+         Hac4gPkuWdm3mKBjtdxAH5WTsp7w0dfEMrUU9uZhSbG9ce7LFbvD2uO+zbA69xxxxE69
+         cC5ZJ+xl6tsWWABbOqYW0drlOJlLAd0qSgDhZc3/FVjFEC1Vpul+0It6sQO+sfqW3bp/
+         4fcRDqRRFubrBsupkWs2HKEH0LpHx/4rQIwdyXBTqNNK9qNn6Ko/OeX4Vjl1JS5jVdCJ
+         50zg==
+Received: by 10.60.12.233 with SMTP id b9mr30200079oec.95.1351622862323; Tue,
+ 30 Oct 2012 11:47:42 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 11:47:42 -0700 (PDT)
+In-Reply-To: <CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208722>
 
-Michael Haggerty <mhagger <at> alum.mit.edu> writes:
-...
-> -static int parse_dirstat_params(struct diff_options *options, const char ...
-> +static int parse_dirstat_params(struct diff_options *options, const char ...
->  				struct strbuf *errmsg)
->  {
-> -	const char *p = params;
-> -	int p_len, ret = 0;
-> +	char *params_copy = xstrdup(params_string);
-> +	struct string_list params = STRING_LIST_INIT_NODUP;
-> +	int ret = 0;
-> +	int i;
-> 
-> -	while (*p) {
-> -		p_len = strchrnul(p, ',') - p;
-> -		if (!memcmp(p, "changes", p_len)) {
-> +	if (*params_copy)
+On Tue, Oct 30, 2012 at 7:12 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> On Tue, Oct 30, 2012 at 10:11 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> When an object has already been exported (and thus is in the marks) it
+>> is flagged as SHOWN, so it will not be exported again, even if this time
+>> it's exported through a different ref.
+>>
+>> We don't need the object to be exported again, but we want the ref
+>> updated, which doesn't happen.
+>>
+>> Since we can't know if a ref was exported or not, let's just assume that
+>> if the commit was marked (flags & SHOWN), the user still wants the ref
+>> updated.
+>>
+>> So:
+>>
+>>  % git branch test master
+>>  % git fast-export $mark_flags master
+>>  % git fast-export $mark_flags test
+>>
+>> Would export 'test' properly.
+>>
+>> Additionally, this fixes issues with remote helpers; now they can push
+>> refs wich objects have already been exported.
+>
+> Won't this also export child (or maybe parent) branches that weren't
+> mentioned? For example:
+>
+> $ git branch one
+> $ echo foo > content
+> $ git commit -m two
+> $ git fast-export one
+> $ git fast-export two
+>
+> I suspect that one of those will export both one and two. If not, this
+> seems like a great solution to the fast-export problem.
 
-params_copy is set to the value returned by xstrdup, which cannot be NULL.
-This check can be removed and if params_string can be NULL, it should be
-checked before being passed to xstrdup.
+Why would it? We are not changing the way objects are exported, the
+only difference is what happens at the end
+(handle_tags_and_duplicates()).
+
+And if you are talking about the ref for the reset at the end, it has
+to be both in the list of refs selected by the user (initially in
+&revs.pending), either marked or the object already referenced by
+another ref in the list selected by the user (e.g. fast-export one
+two, where one^{commit} == two^{commit}, and not marked as
+UNINTERESTING (e.g. ^two).
+
+Cheers.
+
+-- 
+Felipe Contreras
