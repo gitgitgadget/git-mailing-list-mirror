@@ -1,70 +1,69 @@
 From: szager@google.com
 Subject: [PATCH] Enable parallelism in git submodule update.
-Date: Tue, 30 Oct 2012 11:03:33 -0700
-Message-ID: <50901675.WKMg80aNqNeozrMn%szager@google.com>
+Date: Tue, 30 Oct 2012 11:03:59 -0700
+Message-ID: <5090168f.5e+7ZUFKdYL2Qnw7%szager@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: c@google.com
-To: git@vger.kernel.org, jens.lehmann@web.de, -cc@google.com,
-	hvoigt@hvoigt.net, -cc@google.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Oct 30 19:03:54 2012
+Cc: jens.lehmann@web.de, hvoigt@hvoigt.net, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:04:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTGAG-0005ep-MI
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:03:49 +0100
+	id 1TTGAk-0006K9-FN
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 19:04:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965030Ab2J3SDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 14:03:36 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:47159 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759668Ab2J3SDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 14:03:35 -0400
-Received: by mail-vc0-f202.google.com with SMTP id fy27so60535vcb.1
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:03:34 -0700 (PDT)
+	id S965141Ab2J3SEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 14:04:05 -0400
+Received: from mail-bk0-f74.google.com ([209.85.214.74]:38855 "EHLO
+	mail-bk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759939Ab2J3SEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 14:04:04 -0400
+Received: by mail-bk0-f74.google.com with SMTP id q16so42186bkw.1
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 11:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=date:from:to:cc:subject:message-id:user-agent:mime-version
          :content-type:content-transfer-encoding;
         bh=GeYm5wfpBxApKv5ybp9BSQyKY3MXeG4vuBeFoZCaSFo=;
-        b=MXc4uBbq00wUa3OiUpXjNTSwD+TQsRqqqbJbgcOqD+BUq+AjDsHvDdwPUANMe8eTRE
-         6DCsbuuEHgU8XEAtdrX4gJsGja27FLbWz/yyHeNxrpxOV2yYe+iluuhsLeMKvzleK9KB
-         3DmySdGAzetM27jFuyN5Fm26W+gr+cvvxVNPXFlB10pAmqfiNHESgvf1cdynuRryKYvw
-         FU0Epvl4S0vDxwMOqXVijQxoGFaAWaiaQEkSVHH3JTKy8hRndSjSyh4ZXz+Wq7iPO1Hq
-         vElIYs2opCn1rvUmulLDHBcBK//PlYgjYrZn2PQ1mlRL26C7ouYL05F7K3YevXNqz1kX
-         RzTA==
+        b=eCEtzxcBIcgnQzW/iUQKscNYBgWb55zsclFvdVUgsI4jYtxj3M/YAHrzl4MmDvXsne
+         o1TzV42pqwtIKR/JdTR46d8/PTOUVXcWAXE1Hdj+IHVteBImcJOncTaHJcJjOu6CjBuk
+         pyRpMItLXGpcHVhyVSTiqe61BvOgk3OoH/V8NFI3D3+upj28l1itQW/bAjvf+B5NmJHj
+         ySYdCTut6ZwJGDVOkTafiJZtTXmk5a1NyAcur4+drGfFeDyQa/DgP1c7h4bY4rBuEcn8
+         ZceWfjYVz9XyHzvxSimtjf0PguHtdYDBHQsxTZm+tEHvunV3VM7id8Jt6/ADtvLPiio6
+         4gSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=date:from:to:cc:subject:message-id:user-agent:mime-version
          :content-type:content-transfer-encoding:x-gm-message-state;
         bh=GeYm5wfpBxApKv5ybp9BSQyKY3MXeG4vuBeFoZCaSFo=;
-        b=EAOfYHGhhPyQYY3V8FS9OTDdswp6JmEHv1ZmqRUfu2Rj/hM2pjqsOzILCSacv6dMiJ
-         pHVujHFC7zeULO05zACH08cO0OjXQQgTDFpKD9yNn4mVKgvFqGuT+Hw4/uatIhDR8pbP
-         bo0ISu9V/Q8kAU6CIoJeFbluYxuTO9AqplbCPj7cFIL8VtpfOwp/naF6gqXjDO5ZwJli
-         Avu7vk6NKx5VtInOGEwMrESBWJyFHEIoC6g+fN6dpP6nL6d21XYx//1kbhMqkxWX4+dE
-         WkUuVUbH/GtiCVZDCOtftAwKzYOuMgrfToHQL663L0ijJYnxQUlV+VfheHfuopIluYCI
-         hzLg==
-Received: by 10.236.119.145 with SMTP id n17mr25032234yhh.22.1351620214392;
-        Tue, 30 Oct 2012 11:03:34 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id l1si8016anm.0.2012.10.30.11.03.34
+        b=C857lMH+wbX6FPX6luxQZKjzpoziOZS4KdV0pqGmrpPXrt0B34U2O0S4KpYUi1+o0m
+         keJnw61c2JGeFnQFT3euXHZtShCZPfVWmFfJEs+m8HCTDADUGtUrwaR5soYOzt9mAsUW
+         MW7GUiXs3AMUSgVoKkAzgWLTRIep9nK2ZAztGNnyZjoUPByNAW0DppM8hjkfB2nD1MXH
+         FqmpkPwpKDGuxA4+sOWd+RrRE0DdHDSVPiv56IgtmNTaXteoJszmduF4pNdXedmVIf7v
+         AoC3UgihpYVYuz8KO1YwUVglKeF8REGGboNPvZk0CGIJ6bPcsnMSlaeDeyyy4oMT/TMG
+         Wt2A==
+Received: by 10.14.216.197 with SMTP id g45mr34759368eep.3.1351620241492;
+        Tue, 30 Oct 2012 11:04:01 -0700 (PDT)
+Received: from hpza9.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id z47si323178eel.0.2012.10.30.11.04.01
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Tue, 30 Oct 2012 11:03:34 -0700 (PDT)
+        Tue, 30 Oct 2012 11:04:01 -0700 (PDT)
 Received: from wince.sfo.corp.google.com (wince.sfo.corp.google.com [172.31.53.43])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 30A041E0043;
-	Tue, 30 Oct 2012 11:03:34 -0700 (PDT)
+	by hpza9.eem.corp.google.com (Postfix) with ESMTP id DE7425C0050;
+	Tue, 30 Oct 2012 11:04:00 -0700 (PDT)
 Received: by wince.sfo.corp.google.com (Postfix, from userid 138314)
-	id A603840BDB; Tue, 30 Oct 2012 11:03:33 -0700 (PDT)
+	id 0A73240BDB; Tue, 30 Oct 2012 11:03:59 -0700 (PDT)
 User-Agent: Heirloom mailx 12.5 6/20/10
-X-Gm-Message-State: ALoCoQk4oWleoFBff6oJPm/v1WcS4b52QY4n7KsqHuHm0RuDn7hdet3L1kQjHZS+wAjT9Don67hX30U42mNZX2DLITMcGet3wOknilRJC1+e2uWP0tcwvi4qDI3snPqGXbFY9pJKVm016JLWFZfaoQ/kMR410UCEC6aU3dKHQejer2l7jfDxg7wCevpnfXgdbllTwXpK7q+D
+X-Gm-Message-State: ALoCoQlHwpqHtBy3TMvn9hc4s5ZZ2Mc0xmFuF4+dbKwmqTouVuOgJsRm4W8Txyx3kJTOGBYYslKR02qcObGGgYmxWP4xDVwR9yKJbl/4h6k7V4DesGWkUFBAC/rUTwxH6p3g/pqK5fE5zSUbjYYFYh18UvmWy0ojjWHdgHEARHFqZMUdWRGg1IrWsnOkVV7tYVyFuxGW6kBM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208714>
 
 The --jobs parameter may be used to set the degree of per-submodule
 parallel execution.
