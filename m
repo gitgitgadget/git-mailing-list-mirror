@@ -1,60 +1,97 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: change symlink
-Date: Tue, 30 Oct 2012 22:50:58 +0100
-Message-ID: <m27gq7ochp.fsf@igel.home>
-References: <CAH_OBie-irmpBrJG6KB3W8bgYjQdyVYiUR-SvJPnx1FXUya0uA@mail.gmail.com>
-	<m2mwz3odys.fsf@igel.home>
-	<CAH_OBidWxkhG3o4C4OPP4OxyQQfw_fF_h4C9KR9AnoOZ27=9TQ@mail.gmail.com>
-	<m2fw4vod81.fsf@igel.home>
-	<CAH_OBifch3uuXYHQ1R9vS6xFu8LuY3mUfiPsHcs3F=HMvnBzyg@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
+Date: Tue, 30 Oct 2012 14:59:57 -0700
+Message-ID: <CAGdFq_h3L-1rPvb=dSYeXqEea+f+g2kRHp7aAjaU-AxjZHB7dQ@mail.gmail.com>
+References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
+ <1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
+ <CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
+ <CAMP44s3MHrG_XeZEodnxemrW-V18+NHnFvi7koyx9mH8XuHc6w@mail.gmail.com>
+ <CAGdFq_jJwZMLq=3co13hs7gas6y9kZRTKwcT+CP=n6-24Uv5Og@mail.gmail.com> <CAMP44s2QwdZKqJq0BZ5HOtZYiCMxCxycui9EmxxfL+Sa6M_6+g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: shawn wilson <ag4ve.us@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:51:18 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: ">" <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Elijah Newren <newren@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 23:00:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJiL-0002Cv-LM
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:51:13 +0100
+	id 1TTJrg-0005ct-4e
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 23:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757514Ab2J3VvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 17:51:00 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:56091 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750764Ab2J3Vu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 17:50:59 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XrmZp5xrxz4KK47;
-	Tue, 30 Oct 2012 22:50:58 +0100 (CET)
-X-Auth-Info: 9oxu072I+t1/fLy/vUQZtoNUQYyFoVnrsU4cQBMietQ=
-Received: from igel.home (ppp-88-217-108-88.dynamic.mnet-online.de [88.217.108.88])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XrmZp5fL5zbbj2;
-	Tue, 30 Oct 2012 22:50:58 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 628D1CA2A2; Tue, 30 Oct 2012 22:50:58 +0100 (CET)
-X-Yow: My face is new, my license is expired, and I'm under a doctor's care!!!!
-In-Reply-To: <CAH_OBifch3uuXYHQ1R9vS6xFu8LuY3mUfiPsHcs3F=HMvnBzyg@mail.gmail.com>
-	(shawn wilson's message of "Tue, 30 Oct 2012 21:42:44 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1756124Ab2J3WAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 18:00:39 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:48141 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754866Ab2J3WAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 18:00:38 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so792492oag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 15:00:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=1KRZFPuIExha2Lz77Ej8jjtvz4jmsnfWg6lGgE72Cuk=;
+        b=fYp80ZAIf3hnFBEAqHzlWRkAqWFMQTb0bfsjNuwHY9SUspSr/WPwmpXNiAjXttXdS8
+         EMCvBYshYPaKesDaMWD8C95E3yk0Q4AFMUQNovLO9vCUzv0e6EFfkzVcoy5oS7RCqZTY
+         yruWEgSQUrsVI+39EtxfwmG6MUYmVwo8z9zKFOX0Nj+Kft2Y9a8pGhI3tQlRtPYasWQ9
+         kbEgopgpTzopng5tzfeCC43RMPd3eUEM4N3XfAWmH+JnFuT2+6dBnc6Xatw5v2FiNs3l
+         7GKBYR3x2TEl1fg8Jt9yIQMJMBEg3oIXx9XeXHORVHi0MFxeFWMFn00OD4eJQFao9iRf
+         z2cQ==
+Received: by 10.60.32.5 with SMTP id e5mr11014624oei.46.1351634437806; Tue, 30
+ Oct 2012 15:00:37 -0700 (PDT)
+Received: by 10.60.95.97 with HTTP; Tue, 30 Oct 2012 14:59:57 -0700 (PDT)
+In-Reply-To: <CAMP44s2QwdZKqJq0BZ5HOtZYiCMxCxycui9EmxxfL+Sa6M_6+g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208753>
 
-shawn wilson <ag4ve.us@gmail.com> writes:
+On Tue, Oct 30, 2012 at 2:35 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Tue, Oct 30, 2012 at 10:17 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> On Tue, Oct 30, 2012 at 11:47 AM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> Why would it? We are not changing the way objects are exported, the
+>>> only difference is what happens at the end
+>>> (handle_tags_and_duplicates()).
+>>
+>> Because the marking is per-commit, not per-ref, right?
+>
+> Oh, you meant using marks?
 
-> why is this different?
+No, I meant the 'SHOWN' flag, doesn't it get added per commit, not per
+ref? That is, commit->object.flags & SHOWN refers to the object
+underlying the ref. So I suspect this scenario doesn't pass the tests:
 
-You didn't tell git about t2/one/test.  You need to add it first to make
-it known.
+git init &&
+echo first > content &&
+git add content &&
+git commit -m "first" &&
+git branch first &&
+echo two > content &&
+git commit -m "second" &&
+git branch second &&
+git fast-export first > actual &&
+test_cmp actual expected_first &&
+git fast-export second > actual &&
+test_cmp actual expected_second
 
-Andreas.
+With expected_first being something like:
+<fast-export stream with the first commit>
+<reset command to set first to the right commit>
+
+And expected_second being something like
+<fast export stream with the first and second command>
+<reset command to set first and second to their respective branches>
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Cheers,
+
+Sverre Rabbelier
