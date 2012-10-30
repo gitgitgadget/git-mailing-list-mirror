@@ -1,123 +1,72 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 4/4] fast-export: make sure refs are updated properly
-Date: Tue, 30 Oct 2012 23:18:04 +0100
-Message-ID: <CAMP44s2KNmr7zAvFo2gOR8G=YaoBWiGPCjPY47x00eev6MOAFw@mail.gmail.com>
-References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
-	<1351617089-13036-5-git-send-email-felipe.contreras@gmail.com>
-	<CAGdFq_j1RROOwxDi1FfJZJ6wiP9y9FWzSpc7MXVSvRmgk0sF9A@mail.gmail.com>
-	<CAMP44s3MHrG_XeZEodnxemrW-V18+NHnFvi7koyx9mH8XuHc6w@mail.gmail.com>
-	<CAGdFq_jJwZMLq=3co13hs7gas6y9kZRTKwcT+CP=n6-24Uv5Og@mail.gmail.com>
-	<CAMP44s2QwdZKqJq0BZ5HOtZYiCMxCxycui9EmxxfL+Sa6M_6+g@mail.gmail.com>
-	<CAGdFq_h3L-1rPvb=dSYeXqEea+f+g2kRHp7aAjaU-AxjZHB7dQ@mail.gmail.com>
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: Re: change symlink
+Date: Tue, 30 Oct 2012 22:22:04 +0000
+Message-ID: <CAH_OBidmrJsmw1QQ2WONieA1EQmS_Y4WJ8Mu2Mh90tEPU0uWgw@mail.gmail.com>
+References: <CAH_OBie-irmpBrJG6KB3W8bgYjQdyVYiUR-SvJPnx1FXUya0uA@mail.gmail.com>
+ <m2mwz3odys.fsf@igel.home> <CAH_OBidWxkhG3o4C4OPP4OxyQQfw_fF_h4C9KR9AnoOZ27=9TQ@mail.gmail.com>
+ <m2fw4vod81.fsf@igel.home> <CAH_OBifch3uuXYHQ1R9vS6xFu8LuY3mUfiPsHcs3F=HMvnBzyg@mail.gmail.com>
+ <m27gq7ochp.fsf@igel.home> <CAH_OBif=Zr-3GO3CE4D6O3wJJZysB6=vvmA37K6ujTHTr-un7w@mail.gmail.com>
+ <m2390vobnh.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: ">" <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 23:18:23 2012
+Cc: git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Oct 30 23:22:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTK8a-0002FT-OM
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 23:18:21 +0100
+	id 1TTKCn-0007pE-3G
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 23:22:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752939Ab2J3WSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 18:18:07 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:64767 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751495Ab2J3WSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 18:18:05 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so807046obb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 15:18:04 -0700 (PDT)
+	id S1758220Ab2J3WW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 18:22:27 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:55556 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752463Ab2J3WW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 18:22:26 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so610062lag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 15:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=MgIsTpU/MiX3vBuNbV6v8pvm4MDxn8Gd1wTVVLnh4YQ=;
-        b=JFQAkq7HQ5drgZ2e1SQ9pkbNnPJJluiR8a0jJgCqtK0AF3Nv9NTMaqvghNQorj0gdy
-         2sQzIryx4jAUljSxp3JCM0uK6UspJFHt+dPtLrS6tddjLWkaWVVLJXFkB1v91paoRf8n
-         Kbgvo/FOwlgt5r7ooy2qdXuUDMDXPO824eXAvJayUEkx70Hmm+jgUIMHVL4UUNwwMRD5
-         DkBb8S9xlUAjF46AH8ypk3NtTX4SB3f4Cy84+Y7DJ7tgcpETFeS7exKBYSVuw7UAA9AT
-         1AN1phh6G+sfGgA7ZXCEK68uNtE/aS/BWhM8qlJcRZgz5MLSn/p0RcU2wf6MK4+viQtQ
-         wHTA==
-Received: by 10.182.116.6 with SMTP id js6mr28599163obb.82.1351635484164; Tue,
- 30 Oct 2012 15:18:04 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 15:18:04 -0700 (PDT)
-In-Reply-To: <CAGdFq_h3L-1rPvb=dSYeXqEea+f+g2kRHp7aAjaU-AxjZHB7dQ@mail.gmail.com>
+        bh=EKAtVoYk5THBoUp0SJ0bs/P5/LB/8On7/fDJqJelqac=;
+        b=DM1EBf5CPM8lDoB0eeJq6aMDiLZK9XyPT7nGA01UC+ARoeuyey0hBxcJpoqrd+a3hp
+         yotCR5E6IfiuSuWvGHD498xf3Yq/gbxyGHIuGHGHM+fD7MWdhTNpSrkIUxJZW6n8BKTg
+         gl2e7QIL7/29cXAHCh3HQOovkgy/RyajKhuoOsAQT1KwK3w7gRD4qt1h3ZSVT1Uq1kpp
+         jhwx8sHRBSRkdk8r753dYrRNA79ToO+rdItitLb6K5xe4K0WPltMQYzrd3S46fBN4nT5
+         nAU7pP615naThF+P1UihKMyCwd5kBRVkejoUW6JEP4ZAdGxcoAYw5VwosrN2dZ0cmvqI
+         eaXQ==
+Received: by 10.152.47.97 with SMTP id c1mr31221545lan.37.1351635744798; Tue,
+ 30 Oct 2012 15:22:24 -0700 (PDT)
+Received: by 10.114.63.42 with HTTP; Tue, 30 Oct 2012 15:22:04 -0700 (PDT)
+In-Reply-To: <m2390vobnh.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208760>
 
-On Tue, Oct 30, 2012 at 10:59 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Tue, Oct 30, 2012 at 2:35 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Tue, Oct 30, 2012 at 10:17 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->>> On Tue, Oct 30, 2012 at 11:47 AM, Felipe Contreras
->>> <felipe.contreras@gmail.com> wrote:
->>>> Why would it? We are not changing the way objects are exported, the
->>>> only difference is what happens at the end
->>>> (handle_tags_and_duplicates()).
->>>
->>> Because the marking is per-commit, not per-ref, right?
+On Tue, Oct 30, 2012 at 10:09 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> shawn wilson <ag4ve.us@gmail.com> writes:
+>
+>> and once it's added, status says:
+>> #       renamed:    t2 -> t2/one/test
 >>
->> Oh, you meant using marks?
+>> that's not exactly true, but...
 >
-> No, I meant the 'SHOWN' flag, doesn't it get added per commit, not per
-> ref? That is, commit->object.flags & SHOWN refers to the object
-> underlying the ref. So I suspect this scenario doesn't pass the tests:
-
-Without marks you cannot have the SHOWN mark at that point; we haven't
-traversed the commits.
-
-> git init &&
-> echo first > content &&
-> git add content &&
-> git commit -m "first" &&
-> git branch first &&
-> echo two > content &&
-> git commit -m "second" &&
-> git branch second &&
-> git fast-export first > actual &&
-> test_cmp actual expected_first &&
-> git fast-export second > actual &&
-> test_cmp actual expected_second
+> What's wrong with it?  Both files have the same contents, which is the
+> link target for symlinks.
 >
-> With expected_first being something like:
-> <fast-export stream with the first commit>
-> <reset command to set first to the right commit>
 
-Why would a 'reset' command be expected if the 'first' branch is
-already pointing to the 'first' commit?
+ok, you're right about that (another test where i changed where the
+symlink pointed):
+#       deleted:    test
+#       new file:   test/one/t3
 
-> And expected_second being something like
-> <fast export stream with the first and second command>
-> <reset command to set first and second to their respective branches>
 
-Ditto, plus, why would 'git fast-export second' do anything regarding
-'first'? It wasn't specified in the committish; it's not relevant.
-
-Before an after my patch the output is the same:
-
-% git fast-export first:
-reset refs/heads/first
-commit refs/heads/first
-
-% git fast-export second:
-reset refs/heads/second
-commit refs/heads/second
-commit refs/heads/second
-
-Which is expected and correct; the branch already points to the right
-commit, no need for an extra reset.
-
-Cheers.
-
--- 
-Felipe Contreras
+however (what got me started wondering about this and a point i forgot
+about) - t2/one/test doesn't show up under 'untracked files' in in
+status that scenario. shouldn't it?
