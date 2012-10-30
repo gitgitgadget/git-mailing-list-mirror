@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 1/4] fast-export: trivial cleanup
-Date: Tue, 30 Oct 2012 20:06:24 +0100
-Message-ID: <1351623987-21012-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 2/4] fast-export: fix comparisson in tests
+Date: Tue, 30 Oct 2012 20:06:25 +0100
+Message-ID: <1351623987-21012-3-git-send-email-felipe.contreras@gmail.com>
 References: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
@@ -10,67 +10,85 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 20:07:01 2012
+X-From: git-owner@vger.kernel.org Tue Oct 30 20:07:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTH9O-0002n0-6g
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:06:58 +0100
+	id 1TTH9T-0002vq-Ls
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:07:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934216Ab2J3TGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 15:06:43 -0400
+	id S934227Ab2J3TGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 15:06:49 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:52686 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934115Ab2J3TGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 15:06:42 -0400
+	with ESMTP id S934115Ab2J3TGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 15:06:47 -0400
 Received: by mail-bk0-f46.google.com with SMTP id jk13so340997bkc.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 12:06:41 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 12:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=C8djensifASljo+29dQahc4UEkZob0L8la9JkPYuzYA=;
-        b=iSokV+8Zk2TWuX9CMhJsCdqgdL/90kg5AmMG7coElPrV2AIPzIF7xWU+Je1mA22ihy
-         MN0e5tylETmG3+bEn0tuHARllV3rphKx6tG29irs0i0PoGoKW0ygDrCjFueO5esVevpb
-         fXErPoiFWOVeHLwzc4nOC7hlPwvq0v3vUPJ2WaZTIRMmPsLeUvp3E/hMFpl3UJJxQxyg
-         1OEwDZyf/g7AhEJpcVhmOjIpC+ak5yYz5NjwAlEBxRwf4FVWq6qjSNFitSgbhubwCXFn
-         Adw6IjDGf0/SsXKG8U0OedwtS4DNv6ft0WELSroS+7MZqTw9i+6CrLe4aO5yADCeXNMN
-         CdGQ==
-Received: by 10.204.150.200 with SMTP id z8mr10203412bkv.139.1351624001695;
-        Tue, 30 Oct 2012 12:06:41 -0700 (PDT)
+        bh=3nK4hyrS692DAGc/50tYTiZZ4BHON3sPqHP9kLz5f0I=;
+        b=qS5BaWcrna2dRxRvxWb4cGdNkdSdAVJiIVBArdDHbzLUSaPU9ZQjmvHNPHQNv+uqrv
+         SIqd94tbwmQ7rI8KkFfIiGI6Z7i+YKpwZEiJEQwkT+8G3Pr+pU+bYvbmINLd2WAlmZ2c
+         tgSh61DYJobIy//V6u2nKKe5dtXudp0TOr0p7irSVnhBiq5eBZQdLaIGG6LHMZi8Bzht
+         ROn2LY8MnQlFY4U2IvAO66SnU3siaLTk8GwX7TIeJhS4NtoBTFTHWkVjJFAd7lVxCaOk
+         vq46Xz8DmATXLTws0dDFNT/d0X9tq9vTo3R4hBaAQWKk57B3jV9KhqQR53eJ/VgaUmLX
+         n91w==
+Received: by 10.204.151.9 with SMTP id a9mr10226694bkw.2.1351624006770;
+        Tue, 30 Oct 2012 12:06:46 -0700 (PDT)
 Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
-        by mx.google.com with ESMTPS id k21sm1979512bkv.1.2012.10.30.12.06.38
+        by mx.google.com with ESMTPS id k21sm1979543bkv.1.2012.10.30.12.06.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2012 12:06:40 -0700 (PDT)
+        Tue, 30 Oct 2012 12:06:46 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208728>
 
-Setting commit to commit is a no-op. It might have been there to avoid a
-compiler warning, but if so, it was the compiler to blame.
+First the expected, then the actual, otherwise the diff would be the
+opposite of what we want.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/fast-export.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t9350-fast-export.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 12220ad..065f324 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -483,7 +483,7 @@ static void get_tags_and_duplicates(struct object_array *pending,
- 	for (i = 0; i < pending->nr; i++) {
- 		struct object_array_entry *e = pending->objects + i;
- 		unsigned char sha1[20];
--		struct commit *commit = commit;
-+		struct commit *commit;
- 		char *full_name;
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 3e821f9..49bdb44 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -303,7 +303,7 @@ test_expect_success 'dropping tag of filtered out object' '
+ (
+ 	cd limit-by-paths &&
+ 	git fast-export --tag-of-filtered-object=drop mytag -- there > output &&
+-	test_cmp output expected
++	test_cmp expected output
+ )
+ '
  
- 		if (dwim_ref(e->name, strlen(e->name), sha1, &full_name) != 1)
+@@ -320,7 +320,7 @@ test_expect_success 'rewriting tag of filtered out object' '
+ (
+ 	cd limit-by-paths &&
+ 	git fast-export --tag-of-filtered-object=rewrite mytag -- there > output &&
+-	test_cmp output expected
++	test_cmp expected output
+ )
+ '
+ 
+@@ -351,7 +351,7 @@ test_expect_failure 'no exact-ref revisions included' '
+ 	(
+ 		cd limit-by-paths &&
+ 		git fast-export master~2..master~1 > output &&
+-		test_cmp output expected
++		test_cmp expected output
+ 	)
+ '
+ 
 -- 
 1.8.0
