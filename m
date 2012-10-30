@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 11/14] remote-hg: add support for fake remote
-Date: Tue, 30 Oct 2012 05:35:33 +0100
-Message-ID: <1351571736-4682-12-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 10/14] remote-hg: fake bookmark when there's none
+Date: Tue, 30 Oct 2012 05:35:32 +0100
+Message-ID: <1351571736-4682-11-git-send-email-felipe.contreras@gmail.com>
 References: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
@@ -18,66 +18,76 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TT3ZM-0006S1-EK
+	id 1TT3ZL-0006S1-Oj
 	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 05:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682Ab2J3Egm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 00:36:42 -0400
+	id S1752625Ab2J3Egh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 00:36:37 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:56861 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752520Ab2J3Egl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 00:36:41 -0400
+	with ESMTP id S1752572Ab2J3Egg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 00:36:36 -0400
 Received: by mail-bk0-f46.google.com with SMTP id jk13so2268812bkc.19
-        for <git@vger.kernel.org>; Mon, 29 Oct 2012 21:36:40 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 29 Oct 2012 21:36:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=/uWTFAT1eq15nZUmHCYvJmqkAYc6hWQA02ETWLD8su0=;
-        b=Gr+wP4Ubao2cOwx3HXL0bISsYdgEhyU6z+Yc/mC1ZTFKcdDu+rx5g6YPg30xxiXPx8
-         4Sg2HJ2syZ7k+w8fovnpp0oWKF51O7EIZNpkYtTZT4U8jEQRkGr5B+9r2JlSx/331gwW
-         GzMGgvf8SGEtqH77JSUIxfoWRHquBK8MKPhzKUh6cGICkZJ/8CfrMl3yontRlzfOmool
-         kbh0VJYl3KiQV2gasrvGrPHqzO/oWE+35D1ODSSNLUl9m9A2gPxd3bI6irmh8jPsrjYM
-         5rOyZ8GwaMmXCkbaunDf/cZdhY9nqkrc0ZfvlQgEIpeyOOb+C2QW34sARZfjtOKJnkYt
-         5rZQ==
-Received: by 10.204.11.213 with SMTP id u21mr9654926bku.42.1351571800491;
-        Mon, 29 Oct 2012 21:36:40 -0700 (PDT)
+        bh=485XYqnpeAlNLra5DSgpFwMnDayk6niLxrQnTdxdTrk=;
+        b=enI4roDX1+vUFYZvS2xW73kP5L6th3CBlgYlzqap9I8odyWL2oxSAhGLFkY7G3XhiW
+         tN21Ddw0aRGwNHZVr7KPQcJV3O/ze5Ar1rl4a8a95Lry0YS+NElL09i0OOnV2Yj9jzvq
+         oUvoimAJKCLFy8TlzoxN6si+t/Y0hzCXcCSM+26eh9yHthZVWYccMqY1AV+sfBhtuJBm
+         8RFgxnF6v3BNwPsIB1NDuVXc3pcmI133aXQdD8YqBmdnKKZKKXCUILsAmLTJxzAL8ibY
+         b+WissB5zPnYg4dRIfDriXXtitIcNgLN1eujFsgk2+GGyOCWQZMWckriuYi9qSybY+vy
+         WTDA==
+Received: by 10.204.128.89 with SMTP id j25mr9919489bks.23.1351571795535;
+        Mon, 29 Oct 2012 21:36:35 -0700 (PDT)
 Received: from localhost (ip-109-43-0-40.web.vodafone.de. [109.43.0.40])
-        by mx.google.com with ESMTPS id gy18sm5162092bkc.4.2012.10.29.21.36.37
+        by mx.google.com with ESMTPS id g8sm5163518bkv.6.2012.10.29.21.36.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Oct 2012 21:36:39 -0700 (PDT)
+        Mon, 29 Oct 2012 21:36:34 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208674>
 
-Helpful while testing.
+Or at least no current bookmark.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-hg/git-remote-hg | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ contrib/remote-hg/git-remote-hg | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/remote-hg/git-remote-hg b/contrib/remote-hg/git-remote-hg
-index c41ec95..61c1072 100755
+index c2efadf..c41ec95 100755
 --- a/contrib/remote-hg/git-remote-hg
 +++ b/contrib/remote-hg/git-remote-hg
-@@ -248,7 +248,13 @@ def get_repo(url, alias):
-     myui = ui.ui()
-     myui.setconfig('ui', 'interactive', 'off')
+@@ -422,12 +422,20 @@ def list_branch_head(repo, cur):
+     g_head = (head, 'branches', repo[tip])
  
--    if hg.islocal(url):
-+    if url.startswith("remote://"):
-+        remote = True
-+        url = "file://%s" % url[9:]
+ def list_bookmark_head(repo, cur):
+-    global g_head
++    global g_head, bmarks
+ 
+     head = bookmarks.readcurrent(repo)
+-    if not head:
+-        return
+-    node = repo[head]
++    if head:
++        node = repo[head]
 +    else:
-+        remote = False
++        # fake bookmark from current branch
++        head = cur
++        tip = get_branch_tip(repo, head)
++        if not tip:
++            return
++        node = repo[tip]
++        bmarks[head] = node
 +
-+    if hg.islocal(url) and not remote:
-         repo = hg.repository(myui, url)
-     else:
-         local_path = os.path.join(dirname, 'clone')
+     print "@refs/heads/%s HEAD" % head
+     g_head = (head, 'bookmarks', node)
+ 
 -- 
 1.8.0
