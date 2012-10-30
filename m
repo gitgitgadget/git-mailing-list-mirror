@@ -1,109 +1,164 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] update-index/diff-index: use core.preloadindex
- to improve performance
-Date: Tue, 30 Oct 2012 11:15:37 +0100
-Message-ID: <CABPQNSb6QzxxJpoackhzRz19UWwpxjJ6MPEeptTU9Z0bEaAB+A@mail.gmail.com>
-References: <OF831F4AE9.23F46743-ONC1257AA7.00353C1F-C1257AA7.00361535@dcon.de>
-Reply-To: kusmabite@gmail.com
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: [PATCH v5 00/14] New remote-hg helper
+Date: Tue, 30 Oct 2012 10:25:27 +0000
+Message-ID: <20121030102526.GN4891@arachsys.com>
+References: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, pro-logic@optusnet.com.au
-To: karsten.blees@dcon.de
-X-From: msysgit+bncBDR53PPJ7YHRB4ORX2CAKGQEES5THBI@googlegroups.com Tue Oct 30 11:16:30 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRB4ORX2CAKGQEES5THBI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-da0-f58.google.com ([209.85.210.58])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 11:25:51 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB4ORX2CAKGQEES5THBI@googlegroups.com>)
-	id 1TT8rz-0006T2-W6
-	for gcvm-msysgit@m.gmane.org; Tue, 30 Oct 2012 11:16:28 +0100
-Received: by mail-da0-f58.google.com with SMTP id a18sf54581dak.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 30 Oct 2012 03:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=CJ9+3YxlUgE+RCRVUxC/hMEKTmDtauXjdNHNaEoW0c0=;
-        b=j7sufz/f1q9Aq+exZ2S4NCSgoR4UvFWwDiwtbv7d7mZZcrzRKx/Qv+Suy3B7ec/vfn
-         aNjzf2/POGcCXMNufuUDHGWOcF3p6v7+xmfjogctWGaDAAtvTL3zakc2XRwYi19EMWpY
-         9u/IrJ1CGhNp2SzciJuPfbVJBkx0ituCRvfQ52/tRxxvURuF6VwyN6N4hAnCOpti2Kix
-         tqVzCQqmmC8jlR8jZasKYTTpiXIgXe+9GklcWcgEs2H4H6Dl+dnpHP+pQUvWAnCLQS4w
-         4hblzvPO49EFXWRHha1D/IIBo6aN6F3k2Q7LwfcHVzYjvy6vNCCEIilfO+PPzlOW3Lj9
-         JWVg==
-Received: by 10.52.76.136 with SMTP id k8mr3956986vdw.13.1351592178369;
-        Tue, 30 Oct 2012 03:16:18 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.220.210.197 with SMTP id gl5ls84354vcb.0.gmail; Tue, 30 Oct
- 2012 03:16:17 -0700 (PDT)
-Received: by 10.58.59.73 with SMTP id x9mr12237629veq.39.1351592177882;
-        Tue, 30 Oct 2012 03:16:17 -0700 (PDT)
-Received: by 10.58.59.73 with SMTP id x9mr12237628veq.39.1351592177872;
-        Tue, 30 Oct 2012 03:16:17 -0700 (PDT)
-Received: from mail-vb0-f48.google.com (mail-vb0-f48.google.com [209.85.212.48])
-        by gmr-mx.google.com with ESMTPS id bn19si34590vdb.0.2012.10.30.03.16.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2012 03:16:17 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.212.48 as permitted sender) client-ip=209.85.212.48;
-Received: by mail-vb0-f48.google.com with SMTP id e21so112628vbm.21
-        for <msysgit@googlegroups.com>; Tue, 30 Oct 2012 03:16:17 -0700 (PDT)
-Received: by 10.58.94.109 with SMTP id db13mr57422508veb.39.1351592177787;
- Tue, 30 Oct 2012 03:16:17 -0700 (PDT)
-Received: by 10.58.169.106 with HTTP; Tue, 30 Oct 2012 03:15:37 -0700 (PDT)
-In-Reply-To: <OF831F4AE9.23F46743-ONC1257AA7.00353C1F-C1257AA7.00361535@dcon.de>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.212.48 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208690>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TT914-0001OJ-US
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 11:25:51 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758247Ab2J3KZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 06:25:38 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:58237 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757604Ab2J3KZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 06:25:37 -0400
+Received: from [81.2.114.212] (helo=arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.80)
+	(envelope-from <chris@arachsys.com>)
+	id 1TT90n-0008Rd-Fx; Tue, 30 Oct 2012 10:25:34 +0000
+Content-Disposition: inline
+In-Reply-To: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208691>
 
-On Tue, Oct 30, 2012 at 10:50 AM,  <karsten.blees@dcon.de> wrote:
-> 'update-index --refresh' and 'diff-index' (without --cached) don't honor
-> the core.preloadindex setting yet. Porcelain commands using these (such as
-> git [svn] rebase) suffer from this, especially on Windows.
->
-> Use read_cache_preload to improve performance.
->
-> Additionally, in builtin/diff.c, don't preload index status if we don't
-> access the working copy (--cached).
->
-> Results with msysgit on WebKit repo (2GB in 200k files):
->
->                 | update-index | diff-index | rebase
-> ----------------+--------------+------------+---------
-> msysgit-v1.8.0  |       9.157s |    10.536s | 42.791s
-> + preloadindex  |       9.157s |    10.536s | 28.725s
-> + this patch    |       2.329s |     2.752s | 15.152s
-> + fscache [1]   |       0.731s |     1.171s |  8.877s
->
+Hi. I routinely work with projects in both hg and git, so I'm really
+interested in this. Thanks for working on it! I grabbed the latest version
+from
 
-Wow, awesome results :)
+  https://github.com/felipec/git/blob/fc-remote-hg/contrib/remote-hg/git-remote-hg
 
-This also makes me want to play around with the fscache stuff a bit;
-about an order of magnitude improvement is quite noticeable :)
+and have been trying it out. For the most part, it seems to work very nicely
+for the hg repos I have access to and can test against. I've spotted a couple
+of issues along the way that I thought would be worth reporting.
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+The first is really a symptom of a general difference between hg and git: an hg
+repository can have multiple heads, whereas a git repo has exactly one head. To
+demonstrate:
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+  $ hg init hgtest && cd hgtest
+  $ echo zero >foo && hg add foo && hg commit -m zero
+  $ echo one >foo && hg commit -m one
+  $ hg checkout -r 0
+  1 files updated, 0 files merged, 0 files removed, 0 files unresolved
+  $ echo two >foo && hg commit -m two
+  created new head
+  $ hg log --graph
+  @  changeset:   2:ca09651009cb
+  |  tag:         tip
+  |  parent:      0:9f552c53d116
+  |  user:        Chris Webb <chris@arachsys.com>
+  |  date:        Tue Oct 30 09:33:38 2012 +0000
+  |  summary:     two
+  |
+  | o  changeset:   1:58fad8998339
+  |/   user:        Chris Webb <chris@arachsys.com>
+  |    date:        Tue Oct 30 09:33:25 2012 +0000
+  |    summary:     one
+  |
+  o  changeset:   0:9f552c53d116
+     user:        Chris Webb <chris@arachsys.com>
+     date:        Tue Oct 30 09:33:08 2012 +0000
+     summary:     zero
+
+  $ cd ..
+
+Now if I try to convert this:
+
+  $ git clone hg::$PWD/hgtest gittest
+  Cloning into 'gittest'...
+  WARNING: Branch 'default' has more than one head, consider merging
+  Traceback (most recent call last):
+    File "/home/chris/bin/git-remote-hg", line 773, in <module>
+      sys.exit(main(sys.argv))
+    File "/home/chris/bin/git-remote-hg", line 759, in main
+      do_list(parser)
+    File "/home/chris/bin/git-remote-hg", line 463, in do_list
+      list_branch_head(repo, cur)
+    File "/home/chris/bin/git-remote-hg", line 425, in list_branch_head
+      tip = get_branch_tip(repo, cur)
+    File "/home/chris/bin/git-remote-hg", line 418, in get_branch_tip
+      return repo.branchtip(branch)
+  AttributeError: 'mqrepo' object has no attribute 'branchtip'
+
+Strip the second head and it's fine:
+
+  $ hg -R hgtest strip 2
+  1 files updated, 0 files merged, 0 files removed, 0 files unresolved
+  saved backup bundle to /tmp/hgtest/hgtest/.hg/strip-backup/ca09651009cb-backup.hg
+  $ git clone hg::$PWD/hgtest gittest
+  Cloning into 'gittest'...
+  $
+
+Not sure what the most friendly thing to do here is. Perhaps refuse to
+clone/pull from a repo with multiple heads unless you name the specific head
+you want?
+
+
+The second thing I spotted is the behaviour of bookmarks on push:
+
+  $ hg init hgtest && cd hgtest
+  $ echo zero >foo && hg add foo && hg commit -m zero
+  $ hg bookmark development
+  $ cd ..
+  $ git clone hg::$PWD/hgtest gittest && cd gittest
+  Cloning into 'gittest'...
+  $ git checkout development
+  Branch development set up to track remote branch development from origin.
+  Switched to a new branch 'development'
+  $ echo one >foo && git add foo && git commit -m one
+  [development 9f67dc4] one
+   1 file changed, 1 insertion(+), 1 deletion(-)
+  $ git status
+  # On branch development
+  # Your branch is ahead of 'origin/development' by 1 commit.
+  #
+  nothing to commit
+  $ git push
+  warning: helper reported unexpected status of refs/hg/origin/bookmarks/development
+  To hg::/tmp/hgtest/hgtest
+   * [new branch]      branches/default -> branches/default
+   * [new branch]      development -> development
+  $ hg log -R ../hgtest
+  changeset:   1:1c0714d93864
+  tag:         tip
+  user:        Chris Webb <chris@arachsys.com>
+  date:        Tue Oct 30 09:51:51 2012 +0000
+  summary:     one
+
+  changeset:   0:f56c463398ea
+  bookmark:    development
+  user:        Chris Webb <chris@arachsys.com>
+  date:        Tue Oct 30 09:50:53 2012 +0000
+  summary:     zero
+
+i.e. the development bookmark hasn't been updated by the push. This might be
+connected to the warning message
+
+  warning: helper reported unexpected status of refs/hg/origin/bookmarks/development
+
+I'm testing with hg 2.2.2 and current git master, so I expect this could be a
+python api change in the more recent versions of hg if you don't see the same
+behaviour.
+
+Best wishes,
+
+Chris.
