@@ -1,87 +1,83 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: Re: git push tags
-Date: Tue, 30 Oct 2012 14:11:42 -0500
-Message-ID: <CAEUsAPZE8O0rbMwbc+XxaFC+eB00HAK_d1fBSFnhxzZtGS+WVQ@mail.gmail.com>
-References: <508D7628.10509@kdbg.org>
-	<CAEUsAPYREy=CvPxy_Mzh5icVQo3=NV-AMC096Op0WWODLPH47Q@mail.gmail.com>
-	<4B8097A9D6854CDFA27E7CF6574B37BA@PhilipOakley>
-	<CAB9Jk9BmMMDLsY=kU5o-c4XF6fN3O44h_vXe3d=WF-W9HTBh_g@mail.gmail.com>
-	<CAB9Jk9AOBGL785rSo1FLQd4pKpHRdvmJ21wWsZ=L0z7SF=6Suw@mail.gmail.com>
-	<508E532F.2010109@alum.mit.edu>
-	<20121029103837.GA14614@sigill.intra.peff.net>
-	<CAM9Z-nkf84cV2bYp=NL8an5DjvwP+jL7icb+jwizjHeaq40VhA@mail.gmail.com>
-	<20121029113500.GA15597@sigill.intra.peff.net>
-	<20121029172330.GC8359@camk.edu.pl>
-	<20121029213508.GB20513@sigill.intra.peff.net>
-	<CAEUsAPZhXpZx+d3+2XUyyYQnM5NFB691FLcasnK5k6fS9efQFQ@mail.gmail.com>
-	<CAB9Jk9CC9wjeyggejkVjKgY2HGAFw70hJo-S0S-W-p4gnd2zug@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 3/4] fast-export: don't handle uninteresting refs
+Date: Tue, 30 Oct 2012 20:17:53 +0100
+Message-ID: <CAMP44s3LP65XOYFg-tBe_rzT1+gXp=714C-u14mkwxY26r4b=g@mail.gmail.com>
+References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
+	<1351617089-13036-4-git-send-email-felipe.contreras@gmail.com>
+	<20121030185914.GI15167@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 20:11:58 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Elijah Newren <newren@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 20:18:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTHED-0000jO-51
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:11:57 +0100
+	id 1TTHKB-0000ZL-MJ
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 20:18:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934221Ab2J3TLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 15:11:44 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:61208 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932654Ab2J3TLn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 15:11:43 -0400
-Received: by mail-la0-f46.google.com with SMTP id h6so482362lag.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 12:11:42 -0700 (PDT)
+	id S1751654Ab2J3TRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 15:17:54 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:37133 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750880Ab2J3TRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 15:17:53 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so628539oag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 12:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=aKtzQ5aP4Sow/htNlR9QeK5g7XgO0pWGmUsE4BLmX/U=;
-        b=doyFPIOTb3YHLhCzTwTqXdb/eFBvxgvKPfvGzUQMDX7RMhLLo9YH/ixaUeoqZxaKc0
-         xVXVgMo7oBNc38aUkcYivObNWiAWD5pRuS6uLuMmx2TBi1UU2nAmXnWFHfctHCTrFKnl
-         H7HZl1uAc4HFdQGZIoSw82Fv26ZR4dgVF4I0tHSEp3pI8KwFGf59qe5xMBqfk3zakMZB
-         R9rW3MBJc8D4z74k8POxwRu8ggkCwngZvGQ2j9fXqxbviCUISAl3LUYc2QQUHmFSMqeZ
-         FY7Mb2A974kViQX8ofZ7hQVlq16y7L/0hoj0VwgDh/hWOaVJ1QX41a/2CCmozl5VLPp3
-         mc4w==
-Received: by 10.112.14.107 with SMTP id o11mr13609456lbc.98.1351624302192;
- Tue, 30 Oct 2012 12:11:42 -0700 (PDT)
-Received: by 10.114.2.45 with HTTP; Tue, 30 Oct 2012 12:11:42 -0700 (PDT)
-In-Reply-To: <CAB9Jk9CC9wjeyggejkVjKgY2HGAFw70hJo-S0S-W-p4gnd2zug@mail.gmail.com>
-X-Google-Sender-Auth: zgG-toPW58HJoIih0rn71PvWGNw
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5n+s/Ne88ZeANH7lvxJ7F8QwZFEehhMDTh7RooERDHI=;
+        b=hDfdrAQp97mpcsS2bmJZS8jpjw4X/jobTL48kOAjErrD5bRXPXbfZrYQ8oZ7PC436V
+         fCQT7I7MgJoYzEp+MqMQbP2jIAI0Om2GQWHe7HkXhuG9cTnOJWgoynqS7dO9p7spxelV
+         oyr2bw1TjdbQjbL2gDnAeLl6v8JrypYuBxZ8+p5ah0K34JfBn9E75ZdZBNckquMmkvfC
+         VzVYOKfoJrmeVLaOqJd+jfBfVAdvS8r3tiw2en7hO5KQSH8uNg/g3U1q52waGYMjLg43
+         r/ZclPDzXqS/aPm4ZgtJ8jA3JJ/wgSLEYllhBWDMZ2zCy/b4C+vRGk9nACNxT4/bE4zj
+         yFOw==
+Received: by 10.60.31.241 with SMTP id d17mr29535765oei.107.1351624673284;
+ Tue, 30 Oct 2012 12:17:53 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 12:17:53 -0700 (PDT)
+In-Reply-To: <20121030185914.GI15167@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208732>
 
-On Tue, Oct 30, 2012 at 1:34 PM, Angelo Borsotti
-<angelo.borsotti@gmail.com> wrote:
-> Hi Cris,
+(again to the mailing list)
+
+On Tue, Oct 30, 2012 at 7:59 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Felipe Contreras wrote:
 >
-> I think a key in the config file of the remote repo is better than an
-> option on git-push for what concerns security: it allows the owner of
-> the remote repo to enforce the policy not to overwrite tags, which
-> would not be possible if any user that has push access can --force
-> tags.
->
-> -Angelo
+>> They have been marked as UNINTERESTING for a reason, lets respect that.
 
-Hi Angelo,
+That doesn't say anything.
 
-Security is orthogonal to what this patch is attempting to resolve.
-As Kacper pointed out, you can never be sure you're not going to
-clobber an existing tag in the remote repo.  This patch attempts to
-give git-push better (i.e., less surprising) semantics for tags.  In
-other words, it's should will prevent mistakes, not provide any sort
-of security.
+> and in the examples listed in the patch
+> description the changed behavior does not look like an improvement.
 
-So I don't think a config option is better or worse, it's just trying
-to solve a different problem.
+I disagree.
 
-Thanks,
+% git log master ^master
 
-Chris
+What do you expect? Nothing.
+
+% git fast-export master ^master
+
+What do you expect? Nothing.
+
+> Worse, the description lists a few examples but gives no convincing
+> explanation to reassure about the lack of bad behavior for examples
+> not listed.
+
+What examples not listed?
+
+-- 
+Felipe Contreras
