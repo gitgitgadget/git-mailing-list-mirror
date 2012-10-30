@@ -1,71 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] fix 'make test' for HP NonStop
-Date: Tue, 30 Oct 2012 07:13:09 -0400
-Message-ID: <20121030111308.GA32150@sigill.intra.peff.net>
-References: <003101cdb29f$7c8d9490$75a8bdb0$@schmitz-digital.de>
- <20121029070642.GD5102@sigill.intra.peff.net>
- <005701cdb67f$f8b44d00$ea1ce700$@schmitz-digital.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Why does git-commit --template want the template to be modified
+ ?
+Date: Tue, 30 Oct 2012 12:14:28 +0100
+Message-ID: <508FB694.10506@viscovery.net>
+References: <CAC9WiBjeuy8dpSnp5Jq55hs1-CJUzwpH70GZ1ZGOF2dAAeypaw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Joachim Schmitz <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Tue Oct 30 12:13:28 2012
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 12:14:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TT9l8-0001QZ-RR
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 12:13:27 +0100
+	id 1TT9mQ-0002ow-CY
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 12:14:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932519Ab2J3LNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 07:13:14 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43690 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932070Ab2J3LNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 07:13:13 -0400
-Received: (qmail 31688 invoked by uid 107); 30 Oct 2012 11:13:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Oct 2012 07:13:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2012 07:13:09 -0400
-Content-Disposition: inline
-In-Reply-To: <005701cdb67f$f8b44d00$ea1ce700$@schmitz-digital.de>
+	id S932649Ab2J3LOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 07:14:34 -0400
+Received: from so.liwest.at ([212.33.55.24]:5880 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932070Ab2J3LOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 07:14:34 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TT9m9-0005Cb-5j; Tue, 30 Oct 2012 12:14:29 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id AFD191660F;
+	Tue, 30 Oct 2012 12:14:28 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <CAC9WiBjeuy8dpSnp5Jq55hs1-CJUzwpH70GZ1ZGOF2dAAeypaw@mail.gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208698>
 
-On Tue, Oct 30, 2012 at 10:21:40AM +0100, Joachim Schmitz wrote:
-
-> This fixes the vast majority of test failures on HP NonStop.
-> Some test don't work with /bin/diff, some fail with /bin/tar,
-> so let's put /usr/local/bin in PATH first. 
-> Some tests fail with /bin/sh (link to /bin/ksh) so use bash instead
+Am 10/30/2012 11:53, schrieb Francis Moreau:
+> I'm using git-commit with the --template option. The template I'm
+> given is self sufficient for my purpose but as stated in the
+> documentation, git-commit wants the template to be edited otherwise it
+> aborts the operation.
 > 
-> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
-> ---
-> 
-> Makefile | 9 +++++++++
-> 1 file changed, 9 insertions(+)
-> 
-> diff --git a/Makefile b/Makefile
-> index f69979e..35380dd 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1381,6 +1381,10 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-> 	MKDIR_WO_TRAILING_SLASH = YesPlease
-> 	# RFE 10-120912-4693 submitted to HP NonStop development.
-> 	NO_SETITIMER = UnfortunatelyYes
-> +	SANE_TOOL_PATH=/usr/coreutils/bin:/usr/local/bin 
-> +	SHELL_PATH=/usr/local/bin/bash
-> +	# as of H06.25/J06.14, we might better use this
-> +	#SHELL_PATH=/usr/coreutils/bin/bash
-> endif
-> ifneq (,$(findstring MINGW,$(uname_S)))
-> 	pathsep = ;
+> Is it possible to change this ?
 
-Your patch was whitespace damaged, but I was able to fix it up. Thanks.
+Perhaps you wanted to use --file instead of --template?
 
--Peff
+-- Hannes
