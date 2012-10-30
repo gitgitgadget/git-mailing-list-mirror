@@ -1,88 +1,65 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 2/2] completion: simplify __gitcomp test helper
-Date: Tue, 30 Oct 2012 22:27:25 +0100
-Message-ID: <20121030212725.GA15709@goldbirke>
-References: <1350869941-22485-1-git-send-email-felipe.contreras@gmail.com>
- <1350869941-22485-3-git-send-email-felipe.contreras@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Teach rm to remove submodules when given with a trailing
+ '/'
+Date: Tue, 30 Oct 2012 22:28:23 +0100
+Message-ID: <50904677.2020308@web.de>
+References: <508DBF92.9090200@web.de> <508E2C05.9010109@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:28:02 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:28:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTJLq-00068C-47
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:27:58 +0100
+	id 1TTJMa-0007CQ-LA
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Oct 2012 22:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754073Ab2J3V1p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Oct 2012 17:27:45 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:51939 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752458Ab2J3V1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 17:27:44 -0400
-Received: from localhost6.localdomain6 (p5B130686.dip0.t-ipconnect.de [91.19.6.134])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MaV1V-1TnKGV0jdZ-00KBNE; Tue, 30 Oct 2012 22:27:26 +0100
-Content-Disposition: inline
-In-Reply-To: <1350869941-22485-3-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:7t9rQsRru48TFuf31fCXMlOnjr18UErNEqiMI7rmRPX
- h7sljLJm4D4jaX4gi/TLlL+EH9DcpvgnS33RL6JBXf+NpY1lt1
- sM10mGM0NIYIyln1fU0wYwdZanrS/zTQdlWbHgr+PfwN96NttA
- ia5fRfJveSg6t3+neltmVi65nWQ1GHmAbJGMJY2kvrYYXweZgW
- o5hAXdL6psDBY7e+pOgJFX3ZEceO0q9FFE1bS6e5GEATy2agjj
- kHK0TlFppDjsAl7w4FOgM/BVYnTTreBBlEZCrXEAeGVEeZg17p
- 65KrpL5WiXDQUXHjA5e8U4oVRKkI4PvqDYLY6F7BnJlKP2mG5L
- Fpm+PohzMeBSbjyXskB0D33wV43fI5zuaMrUPPuEO
+	id S1751066Ab2J3V2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 17:28:32 -0400
+Received: from mout.web.de ([212.227.17.11]:50887 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750764Ab2J3V2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 17:28:31 -0400
+Received: from [192.168.178.41] ([91.3.154.28]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0Mdueb-1Tk2SL0fFN-00QAyu; Tue, 30 Oct 2012 22:28:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <508E2C05.9010109@viscovery.net>
+X-Enigmail-Version: 1.4.5
+X-Provags-ID: V02:K0:8vAcLmBq2h0zcvl+Di8RAUhsZC/r7Bh0WKYcmk3o/p8
+ mSVw2g3ceAWHg2zXrWt52LSiQ7YM0X99ZnG9md8wGX2rDKxlot
+ 4ndkpYr9cug5uaurtlszll+1KMTo0yipanmvjnZbCaHbHXzaek
+ DEk7yhip2ozedVIGfu1Zg7b5ewYdpufTG5ozpeQPSigD7CF+Fu
+ EYiWZAmdlKsaDuxnvXDhw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208743>
 
-On Mon, Oct 22, 2012 at 03:39:01AM +0200, Felipe Contreras wrote:
-> By using print_comp as suggested by SZEDER G=E1bor.
->=20
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  t/t9902-completion.sh | 13 +++++--------
->  1 file changed, 5 insertions(+), 8 deletions(-)
->=20
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 1c6952a..2e7fc06 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -74,15 +74,12 @@ newline=3D$'\n'
+Am 29.10.2012 08:11, schrieb Johannes Sixt:
+> Am 10/29/2012 0:28, schrieb Jens Lehmann:
+>> +	/* Remove trailing '/' from directories to find submodules in the index */
+>> +	for (i = 0; i < argc; i++) {
+>> +		size_t pathlen = strlen(argv[i]);
+>> +		if (pathlen && is_directory(argv[i]) && (argv[i][pathlen - 1] == '/'))
+>> +			argv[i] = xmemdupz(argv[i], pathlen - 1);
+>> +	}
+>> +
+>>  	pathspec = get_pathspec(prefix, argv);
+>>  	refresh_index(&the_index, REFRESH_QUIET, pathspec, NULL, NULL);
+> 
+> That's wrong: Either move the check below get_pathspec() (which normalizes
+> backslashes to forward-slashes on Windows) or use is_dir_sep().
 
-This $newline variable was only used to set IFS to a newline inside SQ
-blocks.  AFAICS after this change there are no such places left,
-because print_comp() takes care of IFS, so $newline is not necessary
-anymore.
+Thanks for bringing this up.
 
->  test_gitcomp ()
->  {
-> +	local -a COMPREPLY &&
->  	sed -e 's/Z$//' > expected &&
-> -	(
-> -		local -a COMPREPLY &&
-> -		cur=3D"$1" &&
-> -		shift &&
-> -		__gitcomp "$@" &&
-> -		IFS=3D"$newline" &&
-> -		echo "${COMPREPLY[*]}" > out
-> -	) &&
-> +	cur=3D"$1" &&
-> +	shift &&
-> +	__gitcomp "$@" &&
-> +	print_comp &&
->  	test_cmp expected out
->  }
-> =20
-> --=20
-> 1.8.0
->=20
+> But isn't it somewhat dangerous to check pathspec for existance in the
+> worktree without interpreting them? Think of magic pathspec syntax (that
+> we do not have yet, but which may materialize sometime in the future).
+
+I have to admit I'm not aware of magic pathspec syntax. Do you happen to
+have any pointers where I could look at code doing similar things right?
