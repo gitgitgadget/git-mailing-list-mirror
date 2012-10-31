@@ -1,96 +1,118 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 00/13] New remote-hg helper
-Date: Wed, 31 Oct 2012 06:27:13 -0400
-Message-ID: <20121031102712.GB30879@sigill.intra.peff.net>
-References: <20121029085045.GA5023@sigill.intra.peff.net>
- <CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com>
- <20121029212643.GA20513@sigill.intra.peff.net>
- <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com>
- <20121029215631.GF20513@sigill.intra.peff.net>
- <alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info>
- <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com>
- <alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info>
- <CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com>
- <5090EFCA.7070606@drmicha.warpmail.net>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: Workflow for templates?
+Date: Wed, 31 Oct 2012 11:44:04 +0100
+Message-ID: <20121031104403.GC28437@raven.wolf.lan>
+References: <20121025211522.GA28437@raven.wolf.lan>
+ <3190de06-2eaf-4a39-91aa-9cc34c20fc8e@zcs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 31 11:27:34 2012
+X-From: git-owner@vger.kernel.org Wed Oct 31 11:50:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTVWF-0000eq-MJ
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 11:27:31 +0100
+	id 1TTVsS-0005jX-2U
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 11:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756438Ab2JaK1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2012 06:27:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44931 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756108Ab2JaK1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2012 06:27:17 -0400
-Received: (qmail 12383 invoked by uid 107); 31 Oct 2012 10:27:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 31 Oct 2012 06:27:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2012 06:27:13 -0400
+	id S1756729Ab2JaKuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2012 06:50:15 -0400
+Received: from quechua.inka.de ([193.197.184.2]:34193 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752711Ab2JaKuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2012 06:50:14 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1TTVsB-0005Nz-JC; Wed, 31 Oct 2012 11:50:11 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 87493760D3; Wed, 31 Oct 2012 11:44:04 +0100 (CET)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <5090EFCA.7070606@drmicha.warpmail.net>
+In-Reply-To: <3190de06-2eaf-4a39-91aa-9cc34c20fc8e@zcs>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208805>
 
-On Wed, Oct 31, 2012 at 10:30:50AM +0100, Michael J Gruber wrote:
+On Sat, Oct 27, 2012 at 08:45:45PM +0200, Enrico Weigelt wrote:
+> I'd suggest a 3 level branch hierachy (IOW: the lower level
+> is rebased ontop of the next higher level):
+> 
+> * #0: upstream branch
+> * #1: generic local maintenance branch
+> * #2: per-instance cutomization branches
+> 
+> Normal additions go to the lowest level #2. When you've got
+> some generic commit, you propagate it to the next level
+> (cherry-pick) and rebase layer #2 ontop of it.
+> Now you can send your layer #1 to upstream for integration.
+> 
+> When upstream updated his branch, you simply rebase #1
+> ontop of it, do your checks etc, then proceed to rebasing #3.
+> 
+> You could also introduce more intermediate layers (eg when you've
+> got different groups of similar instance that share certain changes)
 
-> For the record, Johannes is not the only one being kept from looking at
-> this series (further) by the tone of this discussion. Per hominem
-> attacks are neither professional nor helpful. We prefer to discuss code
-> here, just code. From my comments on an earlier version of your series
-> you can see I've tried. The way other comment threads on this series
-> unfolded made me choose to be a mere by-stander again.
+Thanks for the suggestion, Enrico!
 
-Me too. I really like some of the directions the series is taking, and
-as the maintainer, I'd like to pick it up. But there is a big question
-mark for me still about how it relates to the work in msysgit,
-especially:
+I am somewhat unsure whether it would work this way. After all, there seems to
+be an unbreakable rule with git: never rebase published branches.
 
-  - What advantages does this implementation have over the one in
-    msysgit (i.e., new features that the other one does not have)?
+Thus, once I have published my work to other people who also need to work on
+the same localizations as I do, I have no longer the option of rebasing to get
+rid of the localizations and put the generic template stuff for upstream.
 
-  - What disadvantages? If this implementation goes into git.git,
-    the msysgit one is likely to wane in popularity. What will we be
-    losing by doing so? If the answer is not "nothing", how hard would
-    it be to port over the missing bits?
+I guess, my concern is because I have not yet fully understood the problems of
+rebasing, and how to recover from them.
 
-  - The msysgit one got held up by fixes needed for fast-export. Why
-    aren't those a problem for this implementation? If we are using a
-    different strategy that avoids the issue, what are the limitations
-    (if any) of that strategy?
+Maybe I should try to explain the problem in terms of repository
+hierarchy. Let's assume, there is this hierarchy of repositories:
 
-I have a feeling that some of those answers are buried deep within the
-discussion, but I have had a hard time following all of the back and
-forth due to the volume and tone of the discussion. Are we at a point
-now where some of the participants can try to summarize the situation?
+upstream: central repository, containing the generic template
 
-I am not saying that this implementation must be 100% better than the
-msysgit one. I do not want perfect to to be the enemy of good and end up
-with nothing. But at the same time, there really are two competing
-implementations, one of which has received substantially more field use.
-Even though the msysgit one is not in git.git, it seems like the path
-for making it happen exists (even if it has not been followed yet).
-Before merging an alternative implementation, I would want to know what
-we are potentially throwing away from the msysgit side, and make sure
-that we are not following a wrong path that msysgit has already tried
-and found to be lacking.
+foo-site: repository for site foo. Here we have localizations for a specific
+          administrative entity named foo (say, google).
+          This is where clones for production are made from, and production
+          boxes pull from here to be kept up-to-date.
 
--Peff
+foo-prodA: A clone of foo-site, put in production and pulling from a specific
+           branch on foo-site to receive released, blessed updates.
+foo-prodB: Similar to foo-prodA, but on another box.
+           
+foo-devA: A clone of foo-site to make development, releases, and whatever for
+          foo.
+foo-devB: One more clone of foo-site, Developer B is working here.
+
+Then, we might have more administrative entities: bar-site, bar-prodA,
+bar-prodB, bar-devA, bar-devB, for example. This might be Microsoft, for
+example.
+
+Further, foo-devA might be the same person as bar-devA.
+
+So when foo-devA pulls from foo-devB, then foo-devB will create problems when
+he rebases after that pull.
+
+I think I have some kind of misunderstanding here, but I just can't figure
+what it is.
+
+
+Maybe I should try to explain the problem in yet other words:
+
+What I am trying to achieve, is to extend the workflow from development to
+deployment across multiple administrative entities. As a picture:
+
+  upstream     (templates only).
+     ^
+     |
+     v
+  development  (configured, might contain experimental changes)
+     ^
+     |
+     v
+  deployment   (configured)
+
+This workflow should not stop at administrative borders. Just replace foo by
+google and bar by Microsoft to get an idea of what I am trying to achieve.
