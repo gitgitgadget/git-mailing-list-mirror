@@ -1,74 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
-Date: Tue, 30 Oct 2012 23:05:29 -0700
-Message-ID: <20121031060529.GA30432@elie.Belkin>
-References: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
- <1351623987-21012-5-git-send-email-felipe.contreras@gmail.com>
- <20121031003721.GV15167@elie.Belkin>
- <CAGdFq_jNM_48muXJ0BX2ehC=k8T9GLui_QtRO8D8C7h6b5jyHg@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Teach rm to remove submodules when given with a trailing
+ '/'
+Date: Wed, 31 Oct 2012 07:29:32 +0100
+Message-ID: <5090C54C.90902@viscovery.net>
+References: <508DBF92.9090200@web.de> <508E2C05.9010109@viscovery.net> <50904677.2020308@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 07:05:53 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 31 07:29:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTRR1-0007as-4C
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 07:05:51 +0100
+	id 1TTRoE-0001DO-Sg
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 07:29:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822Ab2JaGFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2012 02:05:39 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39254 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753194Ab2JaGFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2012 02:05:38 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so734147pbb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 23:05:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=iH94dqpzuJrEn22G9/yvjLx6LN0SxIJOZxt0Bt0gHuQ=;
-        b=aN8ssDlIVAS+MoHVsggpBVfm3Z50Xi3Tv4pQH5UyNtUo9JU63oJby5zxLY1y9gkkxD
-         b3+iWSdt1fHw5usAoVKHct8Fnrhcgz/sXXL9lRyLBjT76N6LO6tiwcLdGUYE8u/8rMSi
-         DgNrxv3x7e2Z+A5zgA87cKsIqOZPwhdGMDPI/qZmee5m5E54QO1PXGKdJ5fEeIyDZe5v
-         o0nvJ92OtJwqOtNvm1LBCv9WzxUrv0y/YX1BgwDrfDN9Yez+B4qkiJ8RNvC8csQxoy/D
-         ufdEsQzK+7LNLTQKIfX9eCkMRrAZFkXqRTiRrQ/i0hY7t4tgJ09cBtvh/Gv9EkbyNAM4
-         P6tw==
-Received: by 10.68.226.167 with SMTP id rt7mr110435079pbc.94.1351663537619;
-        Tue, 30 Oct 2012 23:05:37 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id c7sm1656405pay.10.2012.10.30.23.05.35
-        (version=SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2012 23:05:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAGdFq_jNM_48muXJ0BX2ehC=k8T9GLui_QtRO8D8C7h6b5jyHg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1753988Ab2JaG3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2012 02:29:38 -0400
+Received: from so.liwest.at ([212.33.55.24]:61467 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752817Ab2JaG3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2012 02:29:38 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TTRnx-0002co-Ls; Wed, 31 Oct 2012 07:29:33 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 50A361660F;
+	Wed, 31 Oct 2012 07:29:33 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <50904677.2020308@web.de>
+X-Enigmail-Version: 1.4.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208799>
 
-Sverre Rabbelier wrote:
+Am 10/30/2012 22:28, schrieb Jens Lehmann:
+> Am 29.10.2012 08:11, schrieb Johannes Sixt:
+>> Am 10/29/2012 0:28, schrieb Jens Lehmann:
+>>> +	/* Remove trailing '/' from directories to find submodules in the index */
+>>> +	for (i = 0; i < argc; i++) {
+>>> +		size_t pathlen = strlen(argv[i]);
+>>> +		if (pathlen && is_directory(argv[i]) && (argv[i][pathlen - 1] == '/'))
+>>> +			argv[i] = xmemdupz(argv[i], pathlen - 1);
+>>> +	}
+>>> +
+>>>  	pathspec = get_pathspec(prefix, argv);
+>>>  	refresh_index(&the_index, REFRESH_QUIET, pathspec, NULL, NULL);
+>>
+>> That's wrong: Either move the check below get_pathspec() (which normalizes
+>> backslashes to forward-slashes on Windows) or use is_dir_sep().
+> 
+> Thanks for bringing this up.
+> 
+>> But isn't it somewhat dangerous to check pathspec for existance in the
+>> worktree without interpreting them? Think of magic pathspec syntax (that
+>> we do not have yet, but which may materialize sometime in the future).
+> 
+> I have to admit I'm not aware of magic pathspec syntax. Do you happen to
+> have any pointers where I could look at code doing similar things right?
 
-> Thanks for the thorough explanation. Perhaps some of that could make
-> it's way into the commit message?
+cmd_mv() in builtin/mv.c looks like a good candidate. It has to check
+whether the destination (the last argument) is a directory.
 
-It's fine with me if it doesn't, since the original commit message
-covers the basics (current behavior and intent of the change) in its
-first two paragraphs and anyone wanting more detail can use
-
-	GIT_NOTES_REF=refs/remotes/charon/notes/full \
-	git show --show-notes <commit>
-
-to find more details.
-
-Thanks,
-Jonathan
+-- Hannes
