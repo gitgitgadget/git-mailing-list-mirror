@@ -1,100 +1,106 @@
-From: kevin molcard <kev2041@gmail.com>
-Subject: Fwd: Re: [git-users] Git clone fails with "bad pack header", how
- to get remote log
-Date: Wed, 31 Oct 2012 15:20:16 +0100
-Message-ID: <509133A0.2050909@gmail.com>
-References: <20121031152837.4c0f8ce84fae14ba36429605@domain007.com>
+From: kevin molcard <kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: Git clone fails with "bad pack header", how to get
+ remote log
+Date: Wed, 31 Oct 2012 15:25:29 +0100
+Message-ID: <509134D9.1050705@gmail.com>
+References: <7f498800-ed38-474d-86ad-cb937be68173@googlegroups.com> <20121029211854.b58c791d30a6c8d68665e574@domain007.com> <508FEAE0.20204@gmail.com> <20121031141955.GC24291@sigill.intra.peff.net>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 31 15:20:38 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>, 
+ git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
+X-From: git-users+bncBCRMXTNY2MBRBXHJYSCAKGQEI54SGLQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Oct 31 15:25:47 2012
+Return-path: <git-users+bncBCRMXTNY2MBRBXHJYSCAKGQEI54SGLQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-la0-f58.google.com ([209.85.215.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTZ9n-0005Gg-AF
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 15:20:35 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935665Ab2JaOUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2012 10:20:23 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:58225 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422815Ab2JaOUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2012 10:20:20 -0400
-Received: by mail-wi0-f172.google.com with SMTP id hq12so4265218wib.1
-        for <git@vger.kernel.org>; Wed, 31 Oct 2012 07:20:19 -0700 (PDT)
+	(envelope-from <git-users+bncBCRMXTNY2MBRBXHJYSCAKGQEI54SGLQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1TTZEj-0003wc-Ae
+	for gcggu-git-users@m.gmane.org; Wed, 31 Oct 2012 15:25:41 +0100
+Received: by mail-la0-f58.google.com with SMTP id p5sf543377lag.3
+        for <gcggu-git-users@m.gmane.org>; Wed, 31 Oct 2012 07:25:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-forwarded-message-id:content-type
-         :content-transfer-encoding;
-        bh=km4h/51MFbQ2cx0dWl6rUGX8XYW4bB2qSjIRDfiL7og=;
-        b=q88c9xDlOzphzkXFEGRuY+BJrQK7uQ+uirBb7VyHRrefQEaHEcqcXOyBWQtznRL4gV
-         L22iyoHAVw5Lx9oEHnXlIJI0gUop3y9Ze94U6I66xIt2zsiF2/TIRMzBiJPj0Iryoknj
-         LvLtLKe2djky/3PA1Y1Ak0K6s5BYHHjO06c6LD+3VSjCeWUr9TwfL9Dhdrl63bfuiXx9
-         TpCF8MqgD08sGcSW/xg/cEp58VeLYxmAoND45/L96OVXEcNh7b5Ycyy9gwgh8CbUGR6d
-         pIoMJd3Cqbt+L84/2rsuoAahQPyj95SoWW45zmK5n7Q3pGhnZF5o2MA1GxdSmOoabAPo
-         552w==
-Received: by 10.216.145.32 with SMTP id o32mr17556202wej.215.1351693219159;
-        Wed, 31 Oct 2012 07:20:19 -0700 (PDT)
-Received: from md009.arturia.lan (mey38-2-82-228-181-124.fbx.proxad.net. [82.228.181.124])
-        by mx.google.com with ESMTPS id gg4sm6006147wib.6.2012.10.31.07.20.17
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=S8+jgpgTflnRBCVJTS8q7nNweLLyD+6UHi3G+tWobUs=;
+        b=ZlFMeaLgH3waahq0sBqy4ySRJMEU1kQP1WesYPT66nwfdKOSqfmvryrwLDpxSLa/0t
+         f3JYgpAXf+mBcXzHmrQ3PvRztOrF0L+lGt+Ud9OKK/APnM52XTnN2KMtf7W4gwjyIx2Z
+         avluB+Rt3Wmu/1fNavqNg86FpM4Ft9LsWMpGnTTtfMRtisKaRlu3pQB9gUM0Z5IZQR+Y
+         6mdQLnNJjze9KfDldERIkAyQklz0tu4QxJHuJhqeI73XPHYttI+1uTkyKsct8Ypm0uLa
+         WRaY+rqlxhgAFN8RdTaGx6MFq1V1pg9Ryq2YX8hG8RX6YxMcNrhOasBixFis7wg3KfAT
+       
+Received: by 10.180.102.130 with SMTP id fo2mr296005wib.2.1351693533004;
+        Wed, 31 Oct 2012 07:25:33 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.180.77.130 with SMTP id s2ls3081567wiw.4.gmail; Wed, 31 Oct
+ 2012 07:25:32 -0700 (PDT)
+Received: by 10.180.84.74 with SMTP id w10mr528025wiy.4.1351693532283;
+        Wed, 31 Oct 2012 07:25:32 -0700 (PDT)
+Received: by 10.180.84.74 with SMTP id w10mr528023wiy.4.1351693532236;
+        Wed, 31 Oct 2012 07:25:32 -0700 (PDT)
+Received: from mail-wg0-f53.google.com (mail-wg0-f53.google.com [74.125.82.53])
+        by gmr-mx.google.com with ESMTPS id bu8si249196wib.2.2012.10.31.07.25.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 31 Oct 2012 07:20:18 -0700 (PDT)
+        Wed, 31 Oct 2012 07:25:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 74.125.82.53 as permitted sender) client-ip=74.125.82.53;
+Received: by mail-wg0-f53.google.com with SMTP id dr1so777828wgb.22
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 31 Oct 2012 07:25:32 -0700 (PDT)
+Received: by 10.180.78.170 with SMTP id c10mr3028282wix.5.1351693532090;
+        Wed, 31 Oct 2012 07:25:32 -0700 (PDT)
+Received: from md009.arturia.lan (mey38-2-82-228-181-124.fbx.proxad.net. [82.228.181.124])
+        by mx.google.com with ESMTPS id dq6sm18181907wib.5.2012.10.31.07.25.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 31 Oct 2012 07:25:31 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:16.0) Gecko/20121005 Thunderbird/16.0
-In-Reply-To: <20121031152837.4c0f8ce84fae14ba36429605@domain007.com>
-X-Forwarded-Message-Id: <20121031152837.4c0f8ce84fae14ba36429605@domain007.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208825>
+In-Reply-To: <20121031141955.GC24291-bBVMEuqLR+SYVEpFpFwlB0AkDMvbqDRI@public.gmane.org>
+X-Original-Sender: kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 74.125.82.53 as permitted sender)
+ smtp.mail=kev2041-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en-US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en-US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en-US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208826>
 
-Hi all again,
-here is my second email :).
-It contains the git versions in my system.
-FYI, I updated git to 1.8.0 on my remote but still having the same issue.
-Another thing that might be interesting is that it seems to happen only 
-when cloning from Windows build machine (i.e. I send 2 clone command on 
-from the mac and 2 from the Windows and it seems to always fails on the 
-Windows).
+Yes I can,
+can you tell me how I have to do that?
 
-Thanks again
+thanks
 Kevin
-
--------- Original Message --------
-Subject: 	Re: [git-users] Git clone fails with "bad pack header", how to 
-get remote log
-Date: 	Wed, 31 Oct 2012 15:28:37 +0400
-From: 	Konstantin Khomoutov <flatworm@users.sourceforge.net>
-To: 	kevin molcard <kev2041@gmail.com>
-CC: 	git-users@googlegroups.com
-
-
-
-On Tue, 30 Oct 2012 08:01:12 +0100
-kevin molcard <kev2041@gmail.com> wrote:
-
-> thanks for the reply.
-> The versions of git are:
-> - on remote: 1.5.6.5
-> - on windows build machine: 1.7.11.msysgit.1
-> - on mac build machine: 1.7.3.4
+On 10/31/12 3:19 PM, Jeff King wrote:
+> On Tue, Oct 30, 2012 at 03:57:36PM +0100, kevin molcard wrote:
 >
-> I will try to install latest git version on my remote server and get
-> back to you.
+>> I tried to install git 1.8 on the remote server and get exactly the
+>> same problem :(.
+>> [...]
+>>>> Sometimes (very often when several git clone are sent at the same
+>>>> time), I have the following error:
+>>>>      remote: internal server error
+>>>>      fatal: protocol error: bad pack header
+> I'm very confused about who is printing "internal server error". The
+> "remote:" indicates that it came to the git client via the sideband,
+> which means it probably came from the stderr of a child process (e.g.,
+> pack-objects). But git does not and has never generated the phrase
+> "internal server error".
+>
+> So what program is producing that? Is there some kind of custom layer
+> that might be run when upload-pack runs "git pack-objects ..."? Can you
+> try running strace on the server?
+>
+> -Peff
+>
 
-Hi, Kevin.
-I noticed my Cc'ed messages did not reach the main Git list for some
-reason (even though I did see these my messages coming from the
-list-management software), and the did not show up on Gmane [1].
-I do not know what's the reason is, so please try forwarding my first
-reply to your original message and the message I'm replying to now
-(with versions of software involved) to that list yourself -- maybe
-you'll be more lucky.
-
-Sorry for the delay.
-
-1. http://thread.gmane.org/gmane.comp.version-control.git/
+-- 
