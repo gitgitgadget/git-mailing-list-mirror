@@ -1,99 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] test-lib: avoid full path to store test results
-Date: Tue, 30 Oct 2012 18:27:30 -0700
-Message-ID: <20121031012730.GY15167@elie.Belkin>
-References: <1351570377-894-1-git-send-email-felipe.contreras@gmail.com>
- <20121030044609.GA10873@elie.Belkin>
- <CAMP44s3ap19TDsSo_fmNqJp+ROWo2Ka8bc35YQmR3mMw375WsQ@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
+Date: Tue, 30 Oct 2012 18:33:04 -0700
+Message-ID: <CAGdFq_jNM_48muXJ0BX2ehC=k8T9GLui_QtRO8D8C7h6b5jyHg@mail.gmail.com>
+References: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
+ <1351623987-21012-5-git-send-email-felipe.contreras@gmail.com> <20121031003721.GV15167@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 02:27:49 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Elijah Newren <newren@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 02:34:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTN5x-0008Ry-0I
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 02:27:49 +0100
+	id 1TTNBx-0007EU-U5
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 02:34:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753626Ab2JaB1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 21:27:36 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:41053 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752041Ab2JaB1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 21:27:35 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so586543pbb.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 18:27:34 -0700 (PDT)
+	id S1759005Ab2JaBdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 21:33:46 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:53428 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757087Ab2JaBdp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 21:33:45 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so2601534qad.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 18:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=a7KqqMkDCwdLeT/MtYpPYv8T2h79WLYX8IUp9RR4V4A=;
-        b=d5yAq6TxXol9bjfG00vZk5caGTxfDIk1jZ5fpqQoP0T9f78RUmy2Ljni4c060IJXsU
-         hbwmnplwmcL9sW6MK+8DwfG0QrBw6Lz7MzAfxS+lWmbunZ2toomgCF1Q3w6CubAH13Uq
-         /wPuelhT5Wg7CCdFxG1zoqr5xcH2LjuHFHK6z4V0HCn+Bye8EWJGvGg/DOaUshOLblFi
-         pcIUcgIqzlXd9PpGT37XavuSS0s5zxtSNqRUt/ByK8m7FlJQIXV7lcxLZ8s87LwDOMsW
-         VN2OtnaAaq5vD1LU+sgK3DI7MTq13E3sfKg+nXYzaSkZSQQAYhtF8m1WB7W6szrVm2JO
-         OnUQ==
-Received: by 10.66.80.166 with SMTP id s6mr89342068pax.21.1351646854814;
-        Tue, 30 Oct 2012 18:27:34 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id o10sm1253150paz.37.2012.10.30.18.27.33
-        (version=SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2012 18:27:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s3ap19TDsSo_fmNqJp+ROWo2Ka8bc35YQmR3mMw375WsQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=a1J2pcFhSnGXLTI30b9Uru4RgDgT+qwzVLz5/vwBT28=;
+        b=r63ojuOd1GDP5d/6koIO+qLtGRA6NtqsSXfAz7PkyaMudtBHuCrULc6HGpBUsKfHVJ
+         0PJmvu5AZPhGbd7SYTMtuK8Z32d1xvyEMv+zfSm5QUDRe9/QqGP5GIEShXziL14bjhsh
+         1NfMOKKMyFkIeXriLb8eV9dVfvwzm76YE8Ssg8ZdnBv7Uha6N681FdpkHweEZD0YYbbz
+         GAoW47BrBZ+6P2/KqBz06amAh5RHdXHFbRLuuLIvYZdVfoZNvOS/qLKSUtg0dNOTzN+7
+         U5Bn2W/eJ/4rYhpaFFyqzbaRMJILNqhm/Q173VlGbvVXRQC7/ZnNnegbERMYb3/M5lrx
+         gpbA==
+Received: by 10.224.17.68 with SMTP id r4mr15131641qaa.21.1351647224435; Tue,
+ 30 Oct 2012 18:33:44 -0700 (PDT)
+Received: by 10.49.36.195 with HTTP; Tue, 30 Oct 2012 18:33:04 -0700 (PDT)
+In-Reply-To: <20121031003721.GV15167@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208779>
 
-Felipe Contreras wrote:
-> On Tue, Oct 30, 2012 at 5:46 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > Felipe Contreras wrote:
-
->>> No reason to use the full path in case this is used externally.
->>>
->>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>
->> "No reason not to" is not a reason to do anything.  What symptoms does
->> this prevent?  Could you describe the benefit of this patch in a
->> paragraph starting "Now you can ..."?
+On Tue, Oct 30, 2012 at 5:37 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Felipe Contreras wrote:
 >
-> ./test-lib.sh: line 394:
-> /home/felipec/dev/git/t/test-results//home/felipec/dev/git/contrib/remote-hg/test-21865.counts:
-> No such file or directory
+>> --- a/builtin/fast-export.c
+>> +++ b/builtin/fast-export.c
+>> @@ -523,11 +523,16 @@ static void get_tags_and_duplicates(struct object_array *pending,
+>>                               typename(e->item->type));
+>>                       continue;
+>>               }
+>> -             if (commit->util) {
+>> -                     /* more than one name for the same object */
+>> +
+>> +             /*
+>> +              * This ref will not be updated through a commit, lets make
+>> +              * sure it gets properly upddated eventually.
+>> +              */
+>> +             if (commit->util || commit->object.flags & SHOWN) {
+>>                       if (!(commit->object.flags & UNINTERESTING))
+>>                               string_list_append(extra_refs, full_name)->util = commit;
+>> -             } else
+>> +             }
+>> +             if (!commit->util)
+>>                       commit->util = full_name;
+>
+> Here's an explanation of why the above makes sense to me.
+>
+> get_tags_and_duplicates() gets called after the marks import and
+> before the revision walk.  It walks through the revs from the
+> commandline and for each one:
+>
+>  - peels it to a refname, and then to a commit
+>  - stores the refname so fast-export knows what arg to pass to
+>    the "commit" command during the revision walk
+>  - if it already had a refname stored, instead adds the
+>    (refname, commit) pair to the extra_refs list, so fast-export
+>    knows to add a "reset" command later.
+>
+> If the commit already has the SHOWN flag set because it was pointed to
+> by a mark, it is not going to come up in the revision walk, so it will
+> not be mentioned in the output stream unless it is added to
+> extra_refs.  That's what this patch does.
+>
+> Incidentally, the change from "else" to "if (!commit->util)" is
+> unnecessary because if a commit is already SHOWN then it will not be
+> encountered in the revision walk so commit->util does not need to be
+> set.
+>
+> If the commit does not have the SHOWN or UNINTERESTING flag set but it
+> is going to get the UNINTERESTING flag set during the walk because of
+> a negative commit listed on the command line, this patch won't help.
 
-Ok, so a description for this patch is
+Thanks for the thorough explanation. Perhaps some of that could make
+it's way into the commit message?
 
-	test: use test's basename to name results file
+-- 
+Cheers,
 
-	Running a test using its full path produces an error:
-
-		$ ~/dev/git/contrib/remote-hg/test-21865.sh
-	[...]
-		./test-lib.sh: line 394: /home/felipec/dev/t/\
-		test-results//home/felipec/dev/git/contrib/remote-hg/\
-		test-21865.counts: No such file or directory
-
-	In --tee and --valgrind modes we already use the basename
-	to name the .out and .exit files; this patch teaches the test-lib
-	to name the .counts file the same way.
-
-That is still not enough to tell if it is a good change, though.
-Should the test results for contrib/remote-hg/test-* be included with
-the results for t/t*.sh when I run "make aggregate-results"?
-
-Before 60d02ccc, git-svn had its own testsuite under contrib/, with
-glue in contrib/git-svn/t/lib-git-svn.sh to use test-lib --- maybe
-that code could provide some inspiration for questions like these.
-
-Hope that helps,
-Jonathan
+Sverre Rabbelier
