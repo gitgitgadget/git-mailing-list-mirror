@@ -1,91 +1,113 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH] test-lib: avoid full path to store test results
-Date: Wed, 31 Oct 2012 10:05:27 +0100
-Message-ID: <5090E9D7.1010706@gmail.com>
-References: <1351570377-894-1-git-send-email-felipe.contreras@gmail.com> <CA+EOSB=Rr8czjVJfA+F6DmHjDUBy0QQ-wd4t-3Uwb1Ksoadr0Q@mail.gmail.com> <20121030070152.GA13324@elie.Belkin> <CA+EOSBmTjwmf+dO-dgU+rGQaVEKDZw7u9ujrh5jYZkPM2zisOA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v4 00/13] New remote-hg helper
+Date: Wed, 31 Oct 2012 10:30:50 +0100
+Message-ID: <5090EFCA.7070606@drmicha.warpmail.net>
+References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com> <20121029085045.GA5023@sigill.intra.peff.net> <CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com> <20121029212643.GA20513@sigill.intra.peff.net> <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com> <20121029215631.GF20513@sigill.intra.peff.net> <alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info> <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com> <alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info> <CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 10:06:03 2012
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 10:31:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTUFN-0001kO-Ad
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 10:06:01 +0100
+	id 1TTUde-0007BS-Bx
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 10:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935238Ab2JaJFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2012 05:05:41 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:49852 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935230Ab2JaJFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2012 05:05:32 -0400
-Received: by mail-bk0-f46.google.com with SMTP id jk13so512354bkc.19
-        for <git@vger.kernel.org>; Wed, 31 Oct 2012 02:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=xEbIWsKr5BdWZD2ZY63kwBKL8vSvGNetBKuCJr/EKU8=;
-        b=KyXjxlJThV3N1slMie01mAboFFEs+rT1HSnQe6bWPGYcAT3quPobM5tu8S4hqTKyYF
-         Ak8cYZVATh6TIZwnct6x3/JmO9CICcHg560AJZRZaz12Q8UoVWHHrfSI7xkf8a3DxSj9
-         JE7V+yeXT/SuLsc0Nuk9gKtyHjYEwqZjA4GgeNT0aYCnUcp0lOfPS4Fl2Idp8WKz9Eqx
-         cjUj7m339oZSfHFTBP86zRVDxvfjg1glI5PF//X0ltVk4/BPkZCnnXpGPVQ0rHuXPDaM
-         0GLLyBG9Nc19VguOedoCtot58T/Rh05ux0q3Yt8gI0fTaF2OBEUB2RMmzMeN3xgM6Ay0
-         qD4g==
-Received: by 10.204.11.133 with SMTP id t5mr11282385bkt.14.1351674331282;
-        Wed, 31 Oct 2012 02:05:31 -0700 (PDT)
-Received: from [192.168.178.21] (host247-100-dynamic.8-87-r.retail.telecomitalia.it. [87.8.100.247])
-        by mx.google.com with ESMTPS id g8sm2543924bkv.6.2012.10.31.02.05.29
-        (version=SSLv3 cipher=OTHER);
-        Wed, 31 Oct 2012 02:05:30 -0700 (PDT)
-In-Reply-To: <CA+EOSBmTjwmf+dO-dgU+rGQaVEKDZw7u9ujrh5jYZkPM2zisOA@mail.gmail.com>
+	id S932870Ab2JaJa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2012 05:30:56 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35523 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932190Ab2JaJay (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Oct 2012 05:30:54 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 05A062014E;
+	Wed, 31 Oct 2012 05:30:53 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Wed, 31 Oct 2012 05:30:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=KHBLGbf6V+aexR84ISpoNe
+	44QBc=; b=F6PAmratqkMx/NTCFIwNVIimnTpEWkAsWNCAQqi4ouSr0FYAFy9/21
+	JUhCyzdkD+8ZeU58bTmYR17mBGjApOD3GgfGvH1ppjDN+1s7BuKkGmrIIyYqLF3f
+	0I8t6yUrBwHMvUplGiaGzhCWlEvpuZBxicFWialV3A1mPGNHDnCDI=
+X-Sasl-enc: biWb/rDlXQQoz6D5lnL5IiMNIMEvOx2nh9FMTRppoiMT 1351675852
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id DDB174827D8;
+	Wed, 31 Oct 2012 05:30:51 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208802>
 
-On 10/30/2012 11:17 PM, Elia Pinto wrote:
-> Thanks. I know that posix support these usages, but exists some
-> traditional shell that not support it.
->
-True, but those shells are not POSIX shells -- the major example that
-comes to mind is the accursed Solaris /bin/sh.
+[quotes heavily cut down by me]
+Felipe Contreras venit, vidit, dixit 30.10.2012 21:15:
+> Hi,
+> 
+> On Tue, Oct 30, 2012 at 8:33 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> On Tue, 30 Oct 2012, Felipe Contreras wrote:
+>>
+>>> But you mentioned something about cooperation, and I've yet to see how
+>>> is it that you are planning to cooperate. If you say you don't have time
+>>> to spend on this, I don't see why I should worry about testing this
+>>> series of patches.
+>>
+>> It has been mentioned before that the communication style including all
+>> these snarky and nasty comments is not helpful.
+> 
 
-Since Git assumes a POSIX shell in its scripts and testsuite, use of
-any POSIX feature should be fine -- until someone can show a real-world
-POSIX shell that (likely due to a bug) fails to grasp such feature, in
-which case a "pragmatic" workaround is needed.
+For the record, Johannes is not the only one being kept from looking at
+this series (further) by the tone of this discussion. Per hominem
+attacks are neither professional nor helpful. We prefer to discuss code
+here, just code. From my comments on an earlier version of your series
+you can see I've tried. The way other comment threads on this series
+unfolded made me choose to be a mere by-stander again.
 
-Oh, and BTW, there are talks (and mostly consensus) among the Autotools
-developers to start requiring a POSIX shell in the configure scripts
-and Makefile recipes in the near future:
+>> and I've yet to see how is it that you are planning to cooperate.
+> 
+> This is also a fact. You haven't provided a branch, you haven't reviewed
+> my implementation, you haven't tried it. You mentioned something about
 
-  <http://lists.gnu.org/archive/html/bug-autoconf/2012-06/msg00009.html>
+This does not become true through iteration. Max' recent post 'On
+git-remote-hg (the "native" one)' [1] points at the msysgit wiki on
+remote-hg [2] and his remote-hg branch [3], which is based on and points
+at Sverre's original branch [4] and mine [5] which is [4] being
+regularly rebased on origin/next. The msysgit devel branch is in heavy
+use; I don't use mine often but run the test suite on every rebase
+before pushing out.
 
-And also, related:
+If the issues that Sverre and Dscho tried to address with their git.git
+core (non-helper) patches turn out to be non-issues then I assume
+everyone will be happy, including them. You and they have thought a lot
+about these things and the way hg-git sync can work. There seems to be
+diagreement about the way fast-export/the remote helpers communicate
+which revs and refs that are to be synced and updated. This is not
+hg-specific, and I suggest to try and clarify that issue as thoroughly
+and calmly as possible. Everyone will benefit, and it will make clearer
+which tests are appropriate, and accordingly which fixes fix real problems.
 
-  <http://lists.gnu.org/archive/html/automake/2012-08/msg00046.html>
-  <http://lists.gnu.org/archive/html/coreutils/2012-10/msg00127.html>
+Orthogonal to this, it seems that all hg-git interfaces could take
+advantage of a "git heads" feature if we resurrect the old ideas (can't
+find the thread right now).
 
->These are described in the
-> autoconf manual, last time i have checked. As the construct ; export
-> var = x should be portable, but it is not.
->
-I don't think POSIX requires that to be portable.
+Hoping for the best,
+Michael
 
-> If this is important these days i don't know.
->
-I hope the above helps to clarify the matter a little.
-
-Regards,
-  Stefano
+[1] http://permalink.gmane.org/gmane.comp.version-control.git/201083
+[2] https://github.com/msysgit/msysgit/wiki/Guide-to-git-remote-hg
+[3] https://github.com/fingolfin/git/tree/remote-hg
+[4] https://github.com/SRabbelier/git/tree/remote-hg
+[5] https://github.com/mjg/git/tree/remote-hg
