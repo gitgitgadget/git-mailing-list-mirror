@@ -1,80 +1,147 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH v2 3/4] fast-export: don't handle uninteresting refs
-Date: Tue, 30 Oct 2012 18:08:23 -0700
-Message-ID: <20121031010823.GX15167@elie.Belkin>
-References: <1351617089-13036-4-git-send-email-felipe.contreras@gmail.com>
- <20121030185914.GI15167@elie.Belkin>
- <CAMP44s3LP65XOYFg-tBe_rzT1+gXp=714C-u14mkwxY26r4b=g@mail.gmail.com>
- <CAMP44s1tFhh3Xqe9tqoDAdtwnGc=kFT6OmAreeP1nbTstweaQQ@mail.gmail.com>
- <20121030214531.GN15167@elie.Belkin>
- <CAMP44s1b+E8a0kdSgREbGzRTFy+nCw4VcjHadd3soQAXRkNzZw@mail.gmail.com>
- <20121030220717.GO15167@elie.Belkin>
- <CAMP44s3ArAQXH+-EbH4MHYaV6fTAWdwGzBdZwzn_qtCABHyonQ@mail.gmail.com>
- <20121030235506.GT15167@elie.Belkin>
- <CAMP44s1ftDijYpZW_Reu5qNi1T_L52_353ngNaRW3W1gz+k9jw@mail.gmail.com>
+Date: Wed, 31 Oct 2012 02:23:08 +0100
+Message-ID: <CAMP44s3pZsDa8w46JWmxFt=BdrxDxnB_r1p50p7eOiaVcjNs-w@mail.gmail.com>
+References: <1351617089-13036-1-git-send-email-felipe.contreras@gmail.com>
+	<1351617089-13036-4-git-send-email-felipe.contreras@gmail.com>
+	<20121030185914.GI15167@elie.Belkin>
+	<20121031005748.GW15167@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Elijah Newren <newren@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 02:08:48 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 02:23:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTMnW-0002Xy-Va
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 02:08:47 +0100
+	id 1TTN1f-000361-MK
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 02:23:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934855Ab2JaBIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2012 21:08:34 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:42464 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933152Ab2JaBId (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2012 21:08:33 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so567522pad.19
-        for <git@vger.kernel.org>; Tue, 30 Oct 2012 18:08:33 -0700 (PDT)
+	id S1752572Ab2JaBXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2012 21:23:11 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:39808 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751271Ab2JaBXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2012 21:23:09 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so941914oag.19
+        for <git@vger.kernel.org>; Tue, 30 Oct 2012 18:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PJ6thUj8aoNtGJRjcWKhmCCAG8d6tEfZ/hXcyT4iYgE=;
-        b=LmQp1C5oUDcTQSJ1wHHvHFPnsurmOXlAgjxsCVSFQMoyPVuU3bKny7LVItPw7nxFoN
-         gQ4KDMOTEJZAwTB3jqYBZQGzKy5IY4giN8YD+aCrQ2zpSV6MShlQiDIdOE3Q4aRHW+qP
-         n/0wSisWcRr+szmMX+XlqAdcuNVCbcJckKPWxSx6Nbh6V5MmzGeEdc3Z7Gfsj5yShlSa
-         R7dLMlflVG3HQf7jjkkFGpCe+IIiSzz/9kPAxOgRoc3BL1SQHkxSBR4hrV2tZoRf7+T8
-         JniyFkK06n3E6DpmwyEcE2bJV1atN7RVsKXVqo7sPf5f2KaVIJd1BxvcJ/Ra/vSMzC5G
-         uFfw==
-Received: by 10.68.137.228 with SMTP id ql4mr108479883pbb.125.1351645713093;
-        Tue, 30 Oct 2012 18:08:33 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id c1sm1233930pav.23.2012.10.30.18.08.31
-        (version=SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2012 18:08:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1ftDijYpZW_Reu5qNi1T_L52_353ngNaRW3W1gz+k9jw@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hOGoFGpHB/gvT8MlSxfFSd+MygPSgYlAwBFOahfrHGk=;
+        b=aHspvsextnlsNZ0v/4so2ERBLwSwWX3rAEZOloyZC640oK6IRyQ084EuepuJRwn032
+         i8RgXKk9WRYRpRiYQ1pSNswP/w2JjFebpSJIQlmaR+2lfC8y5PLqRMS6cox4g4P/TmfS
+         LZN+xzjGlPqfqtF15gCzS0QZrktVhup6rUbTElMw3Ptn9vcFxHLqNxjA4r8jS2IlE7N1
+         ILW8LkPnaX287PAGO8czcxXs9v2QbpumXH2nb/elGA4qCGzK+G3ceQrBBnUTiOBAG8w8
+         yYLomIaNLMaNsS5k9QP15FJ/i8XjgPWvCR25fF434mayaJVmWZ9kPPcs1cx6dwhA+0Az
+         eIgA==
+Received: by 10.182.116.6 with SMTP id js6mr28897932obb.82.1351646588934; Tue,
+ 30 Oct 2012 18:23:08 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Tue, 30 Oct 2012 18:23:08 -0700 (PDT)
+In-Reply-To: <20121031005748.GW15167@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208777>
 
-Felipe Contreras wrote:
+Hi,
 
-> I don't think it's my job to explain to you how 'git fast-export'
-> works.
+On Wed, Oct 31, 2012 at 1:57 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Felipe Contreras wrote:
+>
+>> They have been marked as UNINTERESTING for a reason, lets respect that.
+>
+> So, the above description conveyed zero information, as you mentioned.
 
-Actually, if you are submitting a patch for inclusion, it is your job
-to explain to future readers what the patch does.  Yes, the reader
-might not be deeply familiar with the part of fast-export you are
-modifying.  It might have even been modified since then, by the time
-the reader is looking at the change!
+I meant, this, of course:
+>> They have been marked as UNINTERESTING for a reason, lets respect that.
+>
+> This patch looks unsafe,
 
-Sad but true.
+Which you know, because you received that message without the mistake.
 
-Thanks,
-Jonathan
+> A clearer explanation would be the following:
+>
+>         fast-export: don't emit "reset" command for negative refs
+
+What is a negative ref?
+
+>         When "git fast-export" encounters two refs on the commandline
+
+commandline?
+
+Only two refs? How about four?
+
+>         referring to the same commit, it exports the first during the usual
+>         commit walk and the second using a "reset" command in a final pass
+>         over extra_refs:
+
+That is not exactly true: (next^{commit}).
+
+>                 $ git fast-export master next
+>                 reset refs/heads/master
+>                 commit refs/heads/master
+>                 mark :1
+>                 author Jonathan Nieder <jrnieder@gmail.com> 1351644412 -0700
+>                 committer Jonathan Nieder <jrnieder@gmail.com> 1351644412 -0700
+>                 data 17
+>                 My first commit!
+>
+>                 reset refs/heads/next
+>                 from :1
+
+I don't think this example is good. Where does it say that 'next'
+points to master? Using 'points-to-master' or a 'git branch stable
+master' and using 'master stable'.
+
+Even simpler would be to use 'git fast-export master master'; it would
+show the same behavior.
+
+>         Unfortunately the code to do this doesn't distinguish between positive
+>         and negative refs, producing confusing results:
+>
+>                 $ git fast-export ^master next
+>                 reset refs/heads/next
+>                 from :0
+>
+>                 $ git fast-export master ^next
+>                 reset refs/heads/next
+>                 from :0
+>
+>         Use revs->cmdline instead of revs->pending to iterate over the rev-list
+>         arguments, checking the UNINTERESTING flag bit to distinguish between
+>         positive (master, --all, etc) and negative (next.., --not --all, etc)
+>         revs and avoid enqueueing negative revs in extra_revs.
+
+Use what? You mean, "To solve the problem, lets use".
+
+But this is not correct, cmdline is not being used. Have you even
+looked at the patch?
+
+>         This does not affect revs that were excluded from the revision walk
+>         because pointed to by a mark, since those use the SHOWN bit on the
+>         commit object itself and not UNINTERESTING on the rev_cmdline_entry.
+
+revs? You mean commits?
+
+"excluded because point to by a mark"? Doesn't sound like proper
+grammar. Maybe "excluded because they were pointed to by a mark".
+
+And I don't see why this paragraph is needed at all. Why would the
+reader think marks have anything to do with this? There's no mention
+of marks before.
+
+This might help you, or other people involved in the problem, but not
+anybody else. Anything related to marks is completely orthogonal to
+this patch, and there's no point in mentioning that.
+
+-- 
+Felipe Contreras
