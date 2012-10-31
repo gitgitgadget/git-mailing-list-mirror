@@ -1,133 +1,299 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 00/13] New remote-hg helper
-Date: Wed, 31 Oct 2012 17:11:39 +0100
-Message-ID: <CAMP44s2PDZwTW55NDho9DyB2XZmsG0-KH4e78grJ2OFRVZkfjg@mail.gmail.com>
-References: <1351396453-29042-1-git-send-email-felipe.contreras@gmail.com>
-	<20121029085045.GA5023@sigill.intra.peff.net>
-	<CAMP44s0RVe6i4DpNmaV_n7_5KO_aq2WxCPVafjsTukExRSR5Jw@mail.gmail.com>
-	<20121029212643.GA20513@sigill.intra.peff.net>
-	<CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com>
-	<20121029215631.GF20513@sigill.intra.peff.net>
-	<alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info>
-	<CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com>
-	<alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info>
-	<CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com>
-	<5090EFCA.7070606@drmicha.warpmail.net>
-	<CAMP44s2a7fmxFmdn0CAcVtX8NxVtPdBKH9RY+i_Og53jb1Ju5Q@mail.gmail.com>
-	<509149D9.3070606@drmicha.warpmail.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: pre-receive hook output invalid characters
+Date: Wed, 31 Oct 2012 17:27:18 +0100
+Message-ID: <CABPQNSZqNyKvFKoG6E0+JDaaNnUbWCaFH-WfKE1MicwDH-3TFA@mail.gmail.com>
+References: <1b3d3eb1-ed6c-4d03-8fdb-bf2ba2163647@googlegroups.com> <CABPQNSYj1-aaQieztkLxZjOhBQMqBJy+9POcmMcjGO4-a=EM9Q@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Oct 31 17:12:01 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/alternative; boundary=20cf3071cf1ebf763604cd5d62c2
+Cc: msysgit@googlegroups.com, GIT Mailing-list <git@vger.kernel.org>
+To: mnaoumov@gmail.com
+X-From: msysgit+bncBDR53PPJ7YHRBD5DYWCAKGQEL4E5GZA@googlegroups.com Wed Oct 31 17:28:12 2012
+Return-path: <msysgit+bncBDR53PPJ7YHRBD5DYWCAKGQEL4E5GZA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ob0-f186.google.com ([209.85.214.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTatW-0005Db-21
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Oct 2012 17:11:54 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935777Ab2JaQLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2012 12:11:41 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:33076 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935724Ab2JaQLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2012 12:11:40 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so1582117obb.19
-        for <git@vger.kernel.org>; Wed, 31 Oct 2012 09:11:39 -0700 (PDT)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBD5DYWCAKGQEL4E5GZA@googlegroups.com>)
+	id 1TTb9F-0001zB-En
+	for gcvm-msysgit@m.gmane.org; Wed, 31 Oct 2012 17:28:09 +0100
+Received: by mail-ob0-f186.google.com with SMTP id eq6sf1040654obc.3
+        for <gcvm-msysgit@m.gmane.org>; Wed, 31 Oct 2012 09:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RRbvAbTIbvR/8pMTdMwkbjnj+lHKLSZwBDKesPLz0h0=;
-        b=v73LkWOlXm1YfQX6ZwMjvxN1vkvOLg9N2+biRC4zgGjMg52DCtdLqBAM2VnsYEbIbB
-         P+mHfIvVi5mbZ9ardQvK+raPVYDd986NygNDf+1UwDLlm57x8G33Bq0Cn/+C/1K3oodm
-         KLHgmT3WT56jyZrEiST9M7ppf57ymR5EDczcObuzbajSHGZekX6NkpdYDb2vj8XpJfcO
-         ws0qpqT7kYMtrqsZBqjr7jQEOdo7iHP16y6RU4x+WFeNtTyHGIw0N9eiyvLnPXFhMUf5
-         FjlP7gdGsOlYRhMVD40WujskUokuzycue8Q8aZlCx4L6K2ga1HMvZTQuL0s/cF2TTwQr
-         Q2pQ==
-Received: by 10.60.32.19 with SMTP id e19mr32933011oei.9.1351699899589; Wed,
- 31 Oct 2012 09:11:39 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Wed, 31 Oct 2012 09:11:39 -0700 (PDT)
-In-Reply-To: <509149D9.3070606@drmicha.warpmail.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208837>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:from:date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=+Q1la0rPTr2d5RaxYvuappGUsl825n+tasoz1GlWoDk=;
+        b=GoCwYp8icb0jW36eDqxqLXuUbXm3y3gSCsJ2w5bqZDa9VIYnsN0aL+PtXzJaXwtG+g
+         nVLz4vUIAS8Vtl+k9+eJAyGXiuw4a2n5Q58vg28NTRLzXaGPgepFhDic0h5Vc4MUDRze
+         9t0mJ3z4v1xYZvuLqeWx8yCW5z/G5tLYDB089cXF5ySa0RHdgl0HmQ/wzrvBSoCeTNVT
+         A4MjK6HwogKWjP/KpTJ1LF6OunSoCQUGvi2QD9US2jj1mUb8kr9bna7enjuBoItzZTqP
+         qz8vcCxxhAZ9J+l/HQ9pRWtXs2cthEQEKnNy6gNT7sTRMdx58AlBen++ZPbQIVwz+QOm
+         VKeQ==
+Received: by 10.52.71.82 with SMTP id s18mr6915248vdu.9.1351700880101;
+        Wed, 31 Oct 2012 09:28:00 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.220.219.69 with SMTP id ht5ls1220301vcb.7.gmail; Wed, 31 Oct
+ 2012 09:27:59 -0700 (PDT)
+Received: by 10.58.216.100 with SMTP id op4mr13670559vec.25.1351700879421;
+        Wed, 31 Oct 2012 09:27:59 -0700 (PDT)
+Received: by 10.58.216.100 with SMTP id op4mr13670558vec.25.1351700879403;
+        Wed, 31 Oct 2012 09:27:59 -0700 (PDT)
+Received: from mail-vb0-f53.google.com (mail-vb0-f53.google.com [209.85.212.53])
+        by gmr-mx.google.com with ESMTPS id q19si554686vds.3.2012.10.31.09.27.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 31 Oct 2012 09:27:59 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.212.53 as permitted sender) client-ip=209.85.212.53;
+Received: by mail-vb0-f53.google.com with SMTP id fc21so1739273vbb.40
+        for <msysgit@googlegroups.com>; Wed, 31 Oct 2012 09:27:59 -0700 (PDT)
+Received: by 10.52.66.10 with SMTP id b10mr47473872vdt.71.1351700879209; Wed,
+ 31 Oct 2012 09:27:59 -0700 (PDT)
+Received: by 10.58.169.106 with HTTP; Wed, 31 Oct 2012 09:27:18 -0700 (PDT)
+In-Reply-To: <CABPQNSYj1-aaQieztkLxZjOhBQMqBJy+9POcmMcjGO4-a=EM9Q@mail.gmail.com>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.212.53 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208838>
 
-On Wed, Oct 31, 2012 at 4:55 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Felipe Contreras venit, vidit, dixit 31.10.2012 16:39:
+--20cf3071cf1ebf763604cd5d62c2
+Content-Type: text/plain; charset=ISO-8859-1
+
+On Wed, Oct 31, 2012 at 4:45 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+
+> On Wed, Oct 31, 2012 at 4:24 PM, <mnaoumov@gmail.com> wrote:
 >
->> This is precisely ad hominem; you are ignoring the code, not because
->> of the code, because of the person. This is as ad hominem as it gets.
+>> If you add *pre-receive* hook in your git repository with the following
+>> content
+>>
+>> #!/bin/sh
+>>
+>> echo Message
+>> exit 1
+>>
+>> And then try to push you will get the following
+>>
+>> [image: Git Extensions push]<https://a248.e.akamai.net/camo.github.com/04b160d6fd381c09c7b0a9f30400e981a086fd46/687474703a2f2f692e696d6775722e636f6d2f4431714b722e706e67>
+>>
+>> The bug is about these strange 3 last characters.
+>>
+>> Recently I raised a bug for GitExtensions but it seems to be msysgit
+>> issue as I could reproduce it from PowerShell as well
+>>
+>> https://github.com/gitextensions/gitextensions/issues/1313
+>>
+>>
+
+
+> What you're seeing is most likely a CR (a carriage return character).
+> Windows has CRLF new-lines, and Unix uses only LF.
 >
-> I am not rejecting your code (I reviewed an early series) but reject the
-> communication style and manners displayed in this thread.
-
-All right, you are not rejecting it, but you are staying away from it,
-and presumably if it was coming from somebody else, you wouldn't.
-
->> As for how "professional or helpful" that is, it's debatable. The
->> Linux kernel mailing list is known for being harsh, and yet, they
->> manage to get more things done than any other. They truly look at the
->> code, just the code, they don't consider criticism to the code
->> personally (nobody should), nor linger on any personal beefs that only
->> distract from the end goal.
+> My guess is that echo produces CRLF, and this gets carried through and
+> incorrecly displayed.
 >
-> There are people who choose not to be on that list because of its style.
-> For this list, I think we should follow this list's style, not that one.
 
-And what is this lists' style? I don't see any guidelines anywhere.
+OK, I can reproduce it in Git Bash now, and by doing "git push 2>&1 | od
+-c" I can see that I'm getting "Message\033[K\n".
 
-But my point wasn't that we should follow Linux's style, my point is
-that it's debatable how one should engage in discussions.
+This looks a little bit puzzling, but the sequence matches ANSI_SUFFIX in
+sideband.c. So it seems this is intentional. This dates back to ebe8fa73.
 
-And yet, I haven't seen where exactly did I throw those ad hominem
-attacks. I can point you to where Johannes threw such attacks (or at
-least snarky), to me, but I don't think that's relevant.
+I wonder, shouldn't we check isatty also before assuming ANSI-sequences?
 
->> But enough about Johannes, if I go on to Max's branch and give a try
->> to the code, make a list of issues, run my extensive tests and so on,
->> and make a report of the status, and a comparison with my code. Would
->> that make it more likely for you to stop being a by-stander?
+---8<---
+diff --git a/sideband.c b/sideband.c
+index d5ffa1c..bd3e5a8 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -29,7 +29,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+
+  memcpy(buf, PREFIX, pf);
+  term = getenv("TERM");
+- if (term && strcmp(term, "dumb"))
++ if (isatty(out) && term && strcmp(term, "dumb"))
+  suffix = ANSI_SUFFIX;
+  else
+  suffix = DUMB_SUFFIX;
+---8<---
+
+Thoughts?
+
+Unfortunately, I cannot reproduce it; all my attempts on using a local
+> pre-receive hook seems to cause the following error:
 >
-> Sure, that's what I and others have asked for.
-
-Except nobody ever provided a link to the actual patches. You are the
-first one to do so.
-
->> You accused me of ad hominem, now I ask you; can you ignore any
->> personal biases and look at the code, and only at the code?
+> "error: cannot spawn hooks/pre-receive: No such file or directory"
 >
-> My efforts here prove that I either have no biases or ignore them. I'm
-> not going to ignore the style of communication, though.
+> I have no clue why.
+>
 
-And yet earlier before you said in this list "we prefer to discuss the
-code, just the code", and now you are saying you are not going to
-ignore the style of communication, which is not code, and yet you are
-discussing about it.
+OK, that just me being stupid.
 
-> As a patch
-> submitter, you ("generic you") want the attention of others as
-> reviewers. It's in your own (again "generic you") interest not to put
-> them off, in the same way as it's up to the submitter to argue why a
-> patch is desirable and correct.
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Ah, so you are making me a favor by reviewing the code?
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-How about we concentrate on what's good for the project? Our users
-don't care about petty personal beefs. Support to pull and push
-mercurial repositories, _that_ they do care about.
+--20cf3071cf1ebf763604cd5d62c2
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Cheers.
+On Wed, Oct 31, 2012 at 4:45 PM, Erik Faye-Lund <span dir=3D"ltr">&lt;<a hr=
+ef=3D"mailto:kusmabite@gmail.com" target=3D"_blank">kusmabite@gmail.com</a>=
+&gt;</span> wrote:<br><div class=3D"gmail_quote"><blockquote class=3D"gmail=
+_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:=
+1ex">
 
---
-Felipe Contreras
+<div class=3D"im">On Wed, Oct 31, 2012 at 4:24 PM,  <span dir=3D"ltr">&lt;<=
+a href=3D"mailto:mnaoumov@gmail.com" target=3D"_blank">mnaoumov@gmail.com</=
+a>&gt;</span> wrote:<br></div><div class=3D"gmail_quote"><div class=3D"im">=
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">
+
+
+<div><p style=3D"margin-bottom:15px;color:rgb(51,51,51);font-family:Helveti=
+ca,arial,freesans,clean,sans-serif;line-height:20px;background-color:rgb(25=
+1,251,251)">If you add=A0<strong>pre-receive</strong>=A0hook in your git re=
+pository with the following content</p>
+
+
+<pre style=3D"margin-top:15px;margin-bottom:15px;padding:6px 10px;border:1p=
+x solid rgb(204,204,204);font-family:Consolas,&#39;Liberation Mono&#39;,Cou=
+rier,monospace;background-color:rgb(248,248,248);line-height:19px;overflow:=
+auto;border-top-left-radius:3px;border-top-right-radius:3px;border-bottom-r=
+ight-radius:3px;border-bottom-left-radius:3px;color:rgb(51,51,51)">
+
+<code style=3D"border-style:none;font-size:12px;font-family:Consolas,&#39;L=
+iberation Mono&#39;,Courier,monospace;background-color:transparent;border-t=
+op-left-radius:3px;border-top-right-radius:3px;border-bottom-right-radius:3=
+px;border-bottom-left-radius:3px">#!/bin/sh
+
+echo Message
+exit 1
+</code></pre><p style=3D"margin-top:15px;margin-bottom:15px;color:rgb(51,51=
+,51);font-family:Helvetica,arial,freesans,clean,sans-serif;line-height:20px=
+;background-color:rgb(251,251,251)">And then try to push you will get the f=
+ollowing</p>
+
+
+</div><div><p style=3D"margin-top:15px;margin-bottom:15px;color:rgb(51,51,5=
+1);font-family:Helvetica,arial,freesans,clean,sans-serif;line-height:20px;b=
+ackground-color:rgb(251,251,251)"><a href=3D"https://a248.e.akamai.net/camo=
+.github.com/04b160d6fd381c09c7b0a9f30400e981a086fd46/687474703a2f2f692e696d=
+6775722e636f6d2f4431714b722e706e67" style=3D"color:rgb(65,131,196)" target=
+=3D"_blank"><img alt=3D"Git Extensions push" style=3D"max-width:100%"></a><=
+/p>
+
+
+<p style=3D"margin-top:15px;margin-bottom:15px;color:rgb(51,51,51);font-fam=
+ily:Helvetica,arial,freesans,clean,sans-serif;line-height:20px;background-c=
+olor:rgb(251,251,251)">The bug is about these strange 3 last characters.</p=
+>
+
+
+<p style=3D"margin-top:15px;margin-bottom:0px!important;color:rgb(51,51,51)=
+;font-family:Helvetica,arial,freesans,clean,sans-serif;line-height:20px;bac=
+kground-color:rgb(251,251,251)">Recently I raised a bug for GitExtensions b=
+ut it seems to be msysgit issue as I could reproduce it from PowerShell as =
+well</p>
+
+
+<p style=3D"margin-top:15px;margin-bottom:0px!important;color:rgb(51,51,51)=
+;font-family:Helvetica,arial,freesans,clean,sans-serif;line-height:20px;bac=
+kground-color:rgb(251,251,251)"><a href=3D"https://github.com/gitextensions=
+/gitextensions/issues/1313" target=3D"_blank">https://github.com/gitextensi=
+ons/gitextensions/issues/1313</a><br>
+
+
+</p></div>
+
+<p></p>
+
+</blockquote></div><div></div></div></blockquote><div><br></div><div>=A0</d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
+:1px #ccc solid;padding-left:1ex"><div class=3D"gmail_quote"><div>What you&=
+#39;re seeing is most likely a CR (a=A0carriage=A0return character). Window=
+s has CRLF new-lines, and Unix uses only LF.</div>
+
+<div><br></div><div>My guess is that echo produces CRLF, and this gets carr=
+ied through and incorrecly displayed.</div>
+<div></div></div></blockquote><div>=A0</div><div>OK, I can reproduce it in =
+Git Bash now, and by doing &quot;git push 2&gt;&amp;1 | od -c&quot; I can s=
+ee that I&#39;m getting=A0&quot;Message\033[K\n&quot;.</div><div><br></div>
+
+<div>This looks a little bit puzzling, but the sequence matches=A0ANSI_SUFF=
+IX in sideband.c. So it seems this is intentional. This dates back to=A0ebe=
+8fa73.</div><div><br></div><div>I wonder, shouldn&#39;t we check isatty als=
+o before assuming ANSI-sequences?</div>
+
+<div><br></div><div>---8&lt;---</div><div><div>diff --git a/sideband.c b/si=
+deband.c</div><div>index d5ffa1c..bd3e5a8 100644</div><div>--- a/sideband.c=
+</div><div>+++ b/sideband.c</div><div>@@ -29,7 +29,7 @@ int recv_sideband(c=
+onst char *me, int in_stream, int out)</div>
+
+<div>=A0</div><div>=A0<span class=3D"Apple-tab-span" style=3D"white-space:p=
+re">	</span>memcpy(buf, PREFIX, pf);</div><div>=A0<span class=3D"Apple-tab-=
+span" style=3D"white-space:pre">	</span>term =3D getenv(&quot;TERM&quot;);<=
+/div><div>-<span class=3D"Apple-tab-span" style=3D"white-space:pre">	</span=
+>if (term &amp;&amp; strcmp(term, &quot;dumb&quot;))</div>
+
+<div>+<span class=3D"Apple-tab-span" style=3D"white-space:pre">	</span>if (=
+isatty(out) &amp;&amp; term &amp;&amp; strcmp(term, &quot;dumb&quot;))</div=
+><div>=A0<span class=3D"Apple-tab-span" style=3D"white-space:pre">		</span>=
+suffix =3D ANSI_SUFFIX;</div>
+
+<div>=A0<span class=3D"Apple-tab-span" style=3D"white-space:pre">	</span>el=
+se</div><div>=A0<span class=3D"Apple-tab-span" style=3D"white-space:pre">		=
+</span>suffix =3D DUMB_SUFFIX;</div></div><div>---8&lt;---</div><div><br></=
+div><div>
+Thoughts?=A0</div>
+<div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
+;border-left:1px #ccc solid;padding-left:1ex"><div class=3D"gmail_quote"><d=
+iv></div><div>Unfortunately, I cannot reproduce it; all my attempts on usin=
+g a local pre-receive hook seems to cause the following error:</div>
+
+<div><br></div><div>&quot;error: cannot spawn hooks/pre-receive: No such fi=
+le or directory&quot;</div>
+<div><br></div><div>I have no clue why.</div></div></blockquote><div>=A0</d=
+iv></div>OK, that just me being stupid.
+
+<p></p>
+
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+
+--20cf3071cf1ebf763604cd5d62c2--
