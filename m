@@ -1,82 +1,119 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: crash on git diff-tree -Ganything <tree> for new files with textconv filter
-Date: Thu, 01 Nov 2012 19:19:28 +0000
-Message-ID: <5092CB40.3090707@ramsay1.demon.co.uk>
-References: <508C29E4.5000801@arcor.de> <20121028120104.GE11434@sigill.intra.peff.net> <508D8DF7.7040007@arcor.de> <20121029060524.GB4457@sigill.intra.peff.net> <508EE4E4.1080407@arcor.de> <20121029223521.GJ20513@sigill.intra.peff.net> <20121029224705.GA32148@sigill.intra.peff.net> <20121030121747.GA4231@sigill.intra.peff.net>
+From: "Brian J. Murrell" <brian@interlinx.bc.ca>
+Subject: checkout-index: unable to create file foo (File exists)
+Date: Thu, 01 Nov 2012 16:25:18 -0400
+Message-ID: <k6ulre$bko$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Peter Oberndorfer <kumbayo84@arcor.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 01 20:21:41 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigC658C5D161CBEBDE9F631BF4"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 01 21:30:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TU0Kb-0003I6-Qv
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Nov 2012 20:21:34 +0100
+	id 1TU1P2-00021P-BH
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Nov 2012 21:30:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755229Ab2KATVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2012 15:21:22 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:42795 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751933Ab2KATVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2012 15:21:21 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 9F2AA6F830F;
-	Thu,  1 Nov 2012 19:21:20 +0000 (GMT)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 713336F8148;	Thu,  1 Nov 2012 19:21:19 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;	Thu,  1 Nov 2012 19:21:17 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <20121030121747.GA4231@sigill.intra.peff.net>
-X-MDF-HostID: 3
+	id S1759151Ab2KAUaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2012 16:30:00 -0400
+Received: from plane.gmane.org ([80.91.229.3]:44328 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753244Ab2KAU36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2012 16:29:58 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TU1Ou-0001se-66
+	for git@vger.kernel.org; Thu, 01 Nov 2012 21:30:04 +0100
+Received: from d67-193-214-242.home3.cgocable.net ([67.193.214.242])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Nov 2012 21:30:04 +0100
+Received: from brian by d67-193-214-242.home3.cgocable.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Nov 2012 21:30:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: d67-193-214-242.home3.cgocable.net
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121011 Thunderbird/16.0.1
+X-Enigmail-Version: 1.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208886>
 
-Jeff King wrote:
-> Thinking on it more, my patch, hacky thought it seems, may not be the
-> worst solution. Here are the options that I see:
-> 
->   1. Use a regex library that does not require NUL termination. If we
->      are bound by the regular regexec interface, this is not feasible.
->      But the GNU implementation works on arbitrary-length buffers (you
->      just have to use a slightly different interface), and we already
->      carry it in compat. It would mean platforms which provide a working
->      but non-GNU regexec would have to start defining NO_REGEX.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigC658C5D161CBEBDE9F631BF4
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-I have thought about the possibility of doing this for unrelated reasons
-in the past.
+When we use git on a network filesystem, occasionally and sporadically
+we will see the following from a git checkout command:
 
-On cygwin, there have been two unexpected test passes since about v1.6.0
-(I reported it to the list in passing), like so:
+error: git checkout-index: unable to create file foo (File exists)
 
-    [ ... ]
-    All tests successful.
+Through a very basic grepping and following of the source it seems that
+the core of the error message is coming from write_entry() in entry.c:
 
-    Test Summary Report
-    -------------------
-    t0050-filesystem.sh                              (Wstat: 0 Tests: 9 Failed: 0)
-      TODO passed:   5
-    t7008-grep-binary.sh                             (Wstat: 0 Tests: 20 Failed: 0)
-      TODO passed:   12
-    Files=604, Tests=8439, 11190 wallclock secs ( 2.59 usr  1.59 sys + 7294.86 cusr
-    3416.65 csys = 10715.70 CPU)
-    Result: PASS
+		fd =3D open_output_fd(path, ce, to_tempfile);
+		if (fd < 0) {
+			free(new);
+			return error("unable to create file %s (%s)",
+				path, strerror(errno));
+		}
 
-In particular, t7008.12 passes on cygwin because the regex library apparently
-matches '.' to NUL. Indeed if you add a test_pause to the script and execute
-"grep .fi a" (note grep *not* git-grep) then "Binary file a matches" on Linux,
-cygwin and MinGW. (So I assume the test was added to document a difference in
-behaviour to GNU grep).
+So looking into open_output_fd() there is a call to create_file() which
+does:
 
-So, if we use the GNU interface to the regex routines in compat, then we may
-specify the "grep syntax" for use in git-grep. (Well that's the theory, I've
-not actually tried to code it up, so take this with a pinch of salt! :-P ).
+	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
 
-ATB,
-Ramsay Jones
+I am able to prevent the problem from happening with 100% success by
+simply giving the git checkout a "-q" argument to prevent it from
+emitting progress reports.  This would seem to indicate that the problem
+likely revolves around the fact that the progress reporting uses SIGALRM.=
+
+
+Given that O_CREAT | O_EXCL are used in the open() call and that SIGALRM
+(along with SA_RESTART) is being used frequently to do progress updates,
+it seems reasonable to suspect that the problem is that open() is being
+interrupted (but only after it creates the file and before completing)
+by the progress reporting mechanism's SIGALRM and when the progress
+reporting is done, open() is restarted automatically (due to the use of
+SA_RESTART) and fails because the file exists and O_CREAT | O_EXCL are
+used in the open() call.
+
+Does this seem like a reasonable hypothesis?
+
+If it does, where does the problem lie here?  Is it that SA_RESTART
+should not be used since it's not safe with open() and O_CREAT | O_EXCL
+(and every system call caller should be handling EINTR) or should the
+open() be idempotent so that it can be restarted automatically with
+SA_RESTART?  If open(2) is supposed to be idempotent, it would be most
+useful to have a citation to standard where that is specified.
+
+If open() is not required to be idempotent, it's use with O_CREAT |
+O_EXCL and SA_RESTART seems fatally flawed.
+
+Any insight or opinions would be much appreciated.
+
+Cheers,
+b.
+
+
+--------------enigC658C5D161CBEBDE9F631BF4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iEYEARECAAYFAlCS2q4ACgkQl3EQlGLyuXAdzACghUsTZ3KTUzGiomibtDR63KHp
+8xoAn1yAP9NgU4VbUPBIjc4eexSC4LQ/
+=v/Gs
+-----END PGP SIGNATURE-----
+
+--------------enigC658C5D161CBEBDE9F631BF4--
