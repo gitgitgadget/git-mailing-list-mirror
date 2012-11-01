@@ -1,207 +1,130 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/3] diff: introduce diff.submodule configuration variable
-Date: Thu,  1 Nov 2012 16:13:49 +0530
-Message-ID: <1351766630-4837-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/3] submodule: display summary header in bold
+Date: Thu,  1 Nov 2012 16:13:50 +0530
+Message-ID: <1351766630-4837-4-git-send-email-artagnon@gmail.com>
 References: <1351766630-4837-1-git-send-email-artagnon@gmail.com>
 Cc: Jens Lehmann <Jens.Lehmann@web.de>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 11:44:22 2012
+X-From: git-owner@vger.kernel.org Thu Nov 01 11:44:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TTsG5-0006qR-HY
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Nov 2012 11:44:21 +0100
+	id 1TTsGE-00072O-Tw
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Nov 2012 11:44:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756901Ab2KAKoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2012 06:44:08 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:44883 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756249Ab2KAKoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2012 06:44:06 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so1109665dak.19
-        for <git@vger.kernel.org>; Thu, 01 Nov 2012 03:44:06 -0700 (PDT)
+	id S932107Ab2KAKoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2012 06:44:11 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:61418 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756249Ab2KAKoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2012 06:44:09 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1650246pbb.19
+        for <git@vger.kernel.org>; Thu, 01 Nov 2012 03:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=fBgUzYPNtSDnZM8MLKjXJ7ZKHoOX18jVFzRcxk9eBuk=;
-        b=Ugbja/TF97o8ItVam4sDcZyE9vy3p4FoJRSzUbCN4kC5LaoxM31hCoXjMw8QKQz7Ny
-         S0MPQ5auSqn9/1n9541fQWxtkii20vltdppthkqmm18lFuOSq8mRzAR99nQ8NV0y6S3P
-         4lLAANtzCIN4gD7kxoeUIpbV0gySEWKEFxewU2RkUjTHPnVGIGeyzrq4zKHaObNp936v
-         7Mycmfe1mH2K9wkpl1Kbf8iSMzoZcoxhNfStcRSN+kQ4R1nxRijhPwXPIhHON/VLX0BM
-         luHrCs56vNusDka3Ry7GJWMY5mlt+UEsd2gNUCTpUQH0VCNo33k7R3osk5HhLgvB364E
-         xf4g==
-Received: by 10.68.200.33 with SMTP id jp1mr117161116pbc.54.1351766646026;
-        Thu, 01 Nov 2012 03:44:06 -0700 (PDT)
+        bh=0FksthzVOfrfc0MYih95eAEI2V2mFx6lBKsjEXnHi3g=;
+        b=d6u22xxr8OpPSER3x6+wmHjRAwvG5BlFeT1wSMRwP8rw040iblxEi0IVQljSWB3eUk
+         n7L34f0PIi4xyYe6zSFN2mWeK06pZ4FDtcnHJJ3Ef4BQxgFF3zP4tnhmadGttYlNXUGL
+         1CdIRYrbfRIHaAesED9tf+Fh0p/rOpDcDGPGf06qvkbQjL5sQmrrP2nKn4/ut+PLZQ7Q
+         rxMl5oO2KvHEB72472saB4k7UsVJ2NtgdFxJACLOrd82jprosxBLbNsewzWN5nZ0/joM
+         ZIFd8NBvPNf0SHkAfZy2FLglM8/SeApm72DTOF2oVk6v4XfP0n8oob9iZ7beVjXylEFX
+         VzGg==
+Received: by 10.66.85.227 with SMTP id k3mr109799066paz.79.1351766649479;
+        Thu, 01 Nov 2012 03:44:09 -0700 (PDT)
 Received: from localhost.localdomain ([49.206.137.123])
-        by mx.google.com with ESMTPS id vw4sm3855414pbc.26.2012.11.01.03.44.02
+        by mx.google.com with ESMTPS id vw4sm3855414pbc.26.2012.11.01.03.44.06
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 01 Nov 2012 03:44:04 -0700 (PDT)
+        Thu, 01 Nov 2012 03:44:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
 In-Reply-To: <1351766630-4837-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208872>
 
-Introduce a diff.submodule configuration variable corresponding to the
-'--submodule' command-line option of 'git diff'.
+Currently, 'git diff --submodule' displays output with a bold diff
+header for non-submodules.  So this part is in bold:
+
+    diff --git a/file1 b/file1
+    index 30b2f6c..2638038 100644
+    --- a/file1
+    +++ b/file1
+
+For submodules, the header looks like this:
+
+    Submodule submodule1 012b072..248d0fd:
+
+Unfortunately, it's easy to miss in the output because it's not bold.
+Change this.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Documentation/diff-config.txt    |    7 +++++++
- Documentation/diff-options.txt   |    3 ++-
- builtin/diff.c                   |    4 ++++
- cache.h                          |    1 +
- diff.c                           |    5 +++++
- t/t4041-diff-submodule-option.sh |   30 +++++++++++++++++++++++++++++-
- 6 files changed, 48 insertions(+), 2 deletions(-)
+ diff.c      |    2 +-
+ submodule.c |    8 ++++----
+ submodule.h |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index decd370..89dd634 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -107,6 +107,13 @@ diff.suppressBlankEmpty::
- 	A boolean to inhibit the standard behavior of printing a space
- 	before each empty output line. Defaults to false.
- 
-+diff.submodule::
-+	Specify the format in which differences in submodules are
-+	shown.  The "log" format lists the commits in the range like
-+	linkgit:git-submodule[1] `summary` does.  The "short" format
-+	format just shows the names of the commits at the beginning
-+	and end of the range.  Defaults to short.
-+
- diff.wordRegex::
- 	A POSIX Extended Regular Expression used to determine what is a "word"
- 	when performing word-by-word difference calculations.  Character
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index cf4b216..f4f7e25 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -170,7 +170,8 @@ any of those replacements occurred.
- 	the commits in the range like linkgit:git-submodule[1] `summary` does.
- 	Omitting the `--submodule` option or specifying `--submodule=short`,
- 	uses the 'short' format. This format just shows the names of the commits
--	at the beginning and end of the range.
-+	at the beginning and end of the range.  Can be tweaked via the
-+	`diff.submodule` configuration variable.
- 
- --color[=<when>]::
- 	Show colored diff.
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 9650be2..6d00311 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -297,6 +297,10 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
- 	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
- 
-+	/* Set SUBMODULE_LOG if diff.submodule config var was set */
-+	if (submodule_format_cfg && !strcmp(submodule_format_cfg, "log"))
-+		DIFF_OPT_SET(&rev.diffopt, SUBMODULE_LOG);
-+
- 	if (nongit)
- 		die(_("Not a git repository"));
- 	argc = setup_revisions(argc, argv, &rev, NULL);
-diff --git a/cache.h b/cache.h
-index a58df84..5fc7ba3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1220,6 +1220,7 @@ int add_files_to_cache(const char *prefix, const char **pathspec, int flags);
- 
- /* diff.c */
- extern int diff_auto_refresh_index;
-+extern const char *submodule_format_cfg;
- 
- /* match-trees.c */
- void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, int);
 diff --git a/diff.c b/diff.c
-index 86e5f2a..835eb26 100644
+index 835eb26..115f384 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -29,6 +29,7 @@ static int diff_use_color_default = -1;
- static int diff_context_default = 3;
- static const char *diff_word_regex_cfg;
- static const char *external_diff_cmd_cfg;
-+const char *submodule_format_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
- static int diff_no_prefix;
-@@ -168,6 +169,8 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		diff_stat_graph_width = git_config_int(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.submodule"))
-+		return git_config_string(&submodule_format_cfg, var, value);
- 	if (!strcmp(var, "diff.external"))
- 		return git_config_string(&external_diff_cmd_cfg, var, value);
- 	if (!strcmp(var, "diff.wordregex"))
-@@ -3656,6 +3659,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (!prefixcmp(arg, "--submodule=")) {
- 		if (!strcmp(arg + 12, "log"))
- 			DIFF_OPT_SET(options, SUBMODULE_LOG);
-+		if (!strcmp(arg + 12, "short"))
-+			DIFF_OPT_CLR(options, SUBMODULE_LOG);
+@@ -2244,7 +2244,7 @@ static void builtin_diff(const char *name_a,
+ 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+ 		show_submodule_summary(o->file, one ? one->path : two->path,
+ 				one->sha1, two->sha1, two->dirty_submodule,
+-				del, add, reset);
++				set, del, add, reset);
+ 		return;
  	}
  
- 	/* misc options */
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 6c01d0c..e401814 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -33,6 +33,7 @@ test_create_repo sm1 &&
- add_file . foo >/dev/null
+diff --git a/submodule.c b/submodule.c
+index e3e0b45..c10182e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -258,7 +258,7 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
  
- head1=$(add_file sm1 foo1 foo2)
-+fullhead1=$(cd sm1; git rev-list --max-count=1 $head1)
+ void show_submodule_summary(FILE *f, const char *path,
+ 		unsigned char one[20], unsigned char two[20],
+-		unsigned dirty_submodule,
++		unsigned dirty_submodule, const char *set,
+ 		const char *del, const char *add, const char *reset)
+ {
+ 	struct rev_info rev;
+@@ -292,15 +292,15 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		return;
+ 	}
  
- test_expect_success 'added submodule' "
- 	git add sm1 &&
-@@ -43,6 +44,34 @@ EOF
- 	test_cmp expected actual
- "
+-	strbuf_addf(&sb, "Submodule %s %s..", path,
++	strbuf_addf(&sb, "%sSubmodule %s %s..", set, path,
+ 			find_unique_abbrev(one, DEFAULT_ABBREV));
+ 	if (!fast_backward && !fast_forward)
+ 		strbuf_addch(&sb, '.');
+ 	strbuf_addf(&sb, "%s", find_unique_abbrev(two, DEFAULT_ABBREV));
+ 	if (message)
+-		strbuf_addf(&sb, " %s\n", message);
++		strbuf_addf(&sb, " %s%s\n", message, reset);
+ 	else
+-		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
++		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
+ 	fwrite(sb.buf, sb.len, 1, f);
  
-+test_expect_success 'added submodule, set diff.submodule' "
-+	git config diff.submodule log &&
-+	git add sm1 &&
-+	git diff --cached >actual &&
-+	cat >expected <<-EOF &&
-+Submodule sm1 0000000...$head1 (new submodule)
-+EOF
-+	git config --unset diff.submodule &&
-+	test_cmp expected actual
-+"
-+
-+test_expect_success '--submodule=short overrides diff.submodule' "
-+	git config diff.submodule log &&
-+	git add sm1 &&
-+	git diff --submodule=short --cached >actual &&
-+	cat >expected <<-EOF &&
-+diff --git a/sm1 b/sm1
-+new file mode 160000
-+index 0000000..a2c4dab
-+--- /dev/null
-++++ b/sm1
-+@@ -0,0 +1 @@
-++Subproject commit $fullhead1
-+EOF
-+	git config --unset diff.submodule &&
-+	test_cmp expected actual
-+"
-+
- commit_file sm1 &&
- head2=$(add_file sm1 foo3)
- 
-@@ -73,7 +102,6 @@ EOF
- 	test_cmp expected actual
- "
- 
--fullhead1=$(cd sm1; git rev-list --max-count=1 $head1)
- fullhead2=$(cd sm1; git rev-list --max-count=1 $head2)
- test_expect_success 'modified submodule(forward) --submodule=short' "
- 	git diff --submodule=short >actual &&
+ 	if (!message) {
+diff --git a/submodule.h b/submodule.h
+index f2e8271..997fd06 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -20,7 +20,7 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+ void show_submodule_summary(FILE *f, const char *path,
+ 		unsigned char one[20], unsigned char two[20],
+-		unsigned dirty_submodule,
++		unsigned dirty_submodule, const char *set,
+ 		const char *del, const char *add, const char *reset);
+ void set_config_fetch_recurse_submodules(int value);
+ void check_for_new_submodule_commits(unsigned char new_sha1[20]);
 -- 
 1.7.8.1.362.g5d6df.dirty
