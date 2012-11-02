@@ -1,64 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Wishlist: git commit --no-edit
-Date: Fri, 2 Nov 2012 05:59:54 -0400
-Message-ID: <20121102095954.GB30221@sigill.intra.peff.net>
-References: <nntxt8ice9.fsf@stalhein.lysator.liu.se>
- <vpqfw4sgx33.fsf@grenoble-inp.fr>
+Subject: Re: Overlong lines with git-merge --log
+Date: Fri, 2 Nov 2012 06:05:19 -0400
+Message-ID: <20121102100519.GC30221@sigill.intra.peff.net>
+References: <50932227.3090401@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Niels =?utf-8?Q?M=C3=B6ller?= <nisse@lysator.liu.se>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:00:11 2012
+Cc: git@vger.kernel.org
+To: Tim Janik <timj@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:05:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUE2r-0005aD-4h
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 11:00:09 +0100
+	id 1TUE87-0002MV-1r
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 11:05:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761140Ab2KBJ75 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2012 05:59:57 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54211 "EHLO
+	id S965072Ab2KBKFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 06:05:22 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54223 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760698Ab2KBJ74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 05:59:56 -0400
-Received: (qmail 2292 invoked by uid 107); 2 Nov 2012 10:00:39 -0000
+	id S1750927Ab2KBKFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 06:05:21 -0400
+Received: (qmail 2336 invoked by uid 107); 2 Nov 2012 10:06:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 06:00:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 05:59:54 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 06:06:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 06:05:19 -0400
 Content-Disposition: inline
-In-Reply-To: <vpqfw4sgx33.fsf@grenoble-inp.fr>
+In-Reply-To: <50932227.3090401@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208917>
 
-On Fri, Nov 02, 2012 at 10:42:24AM +0100, Matthieu Moy wrote:
+On Fri, Nov 02, 2012 at 02:30:15AM +0100, Tim Janik wrote:
 
-> nisse@lysator.liu.se (Niels M=C3=B6ller) writes:
->=20
-> > I'd like to have a git commit option which is the opposite of --edi=
-t, to
-> > use the selected commit message as is, without invoking any editor.
-> >
-> > Main use case I see would be
-> >
-> >   git commit --amend --no-edit
->=20
-> Err, isn't this already working? (maybe your version of Git is too ol=
-d,
-> but my 1.7.9.5 does this at least)
+> Using git-merge --log to merge commit messages that spawn multiple lines
+> will produce overlong summary lines.
+> That's because each summary line for a commit includes the entire commit
+> message (all lines concatenated).
+> 
+> According to git-fmt-merge-msg(1), --log should 'populate the log
+> message with one-line descriptions' instead of using the entire commit
+> messages.
+> Which would make a lot of sense, it's just not working as advertised.
 
-Yup, should be working since 1.7.9.
+The "subject" or "first line" is not actually the first line; these days
+it is typically the "first paragraph". The reason is that git always
+expected commit messages to look like:
 
-  $ git tag --contains ':/commit: honour --no-edit' |
-    sort -V |
-    head -1
-  v1.7.9
+  one line describing the change
+
+  more detailed explanation
+  that might go on for several lines
+
+  or even several paragraphs
+
+However, as people imported commits from previous systems, they ended up
+with a lot of commit messages where the closest thing to a subject was
+split across several lines like:
+
+  here's a description of the commit that is probably overly long,
+  but that's how we did it back in CVS days
+
+Taking just the first line of those often cuts off the useful part. It
+was deemed less bad to show the whole message as a subject rather than
+cut it off arbitrarily.
+
+If you are developing with git and not splitting the subject out with a
+blank line, there are a lot of tools that are going to look ugly (e.g.,
+format-patch will generate overly long subjects, "log --oneline" will be
+ugly, and browsers like "tig" and "gitk" may be overwhelmed).
 
 -Peff
