@@ -1,67 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Wrap commit messages on `git commit -m`
-Date: Sat, 3 Nov 2012 01:07:22 +0530
-Message-ID: <CALkWK0n3nvu4neica==bXaGCtDish8cfUhcsmJT0w3ihrq6coA@mail.gmail.com>
-References: <CALkWK0kQ+qCsOa87yY4wma279mp+9h+LFv3qCP_qrNdDyGNcsQ@mail.gmail.com>
- <m3a9v170ca.fsf@black.gullik.net> <CAO54GHDRBDyQYvo-g_xEvsQJRgtfbbT-4-kop8hoSK1D37G44w@mail.gmail.com>
- <20121101221203.GE6213@elie.Belkin>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Set core.ignorecase globally
+Date: Fri, 02 Nov 2012 21:05:16 +0100
+Message-ID: <5094277C.4060207@web.de>
+References: <6DB2AD2A-6531-497E-B87E-0E884C4BCFBE@jetbrains.com> <20121102190337.66a08366de41d29e745b0e4c@domain007.com> <20121102191516.e8b7d448ff76b45990e14b1d@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Kevin <ikke@ikke.info>,
-	=?UTF-8?Q?Lars_Gullik_Bj=C3=B8nnes?= <larsbj@gullik.org>,
-	git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 20:38:00 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>,
+	git@vger.kernel.org
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Nov 02 21:05:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUN43-0007CF-60
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 20:37:59 +0100
+	id 1TUNUi-0001Ga-As
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 21:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419Ab2KBThq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 15:37:46 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:35153 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195Ab2KBTho (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 15:37:44 -0400
-Received: by mail-wg0-f44.google.com with SMTP id dr13so2609397wgb.1
-        for <git@vger.kernel.org>; Fri, 02 Nov 2012 12:37:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=thLfClXhpogFz6jQX91Y7mApcHFM6GR1jw5Ur9ieuHQ=;
-        b=pZB+jN9XL1tCm23B1kzcuWRjpz7+5vRnOoZqjY0yjaw1dcauRQhBkXSl4pV+8DjBxp
-         0LKqGO2Ep/2/pFSJbyFrKkYz6JYstq8iJMgd7OmWWoLuE/HqnB/NuhnVJ6fs6YA1S9q0
-         wxXE3rEFgOoToppvz8x6mueCQiuLPOo5gfp5AZF88kezVODtKsAXYRy6kFdIJQLNTgi6
-         q76gAVGgdUtSAjrSFy895QiO2baLhNSkBEjR+7n+EQ89y3pnJAKT/kgcwsDzDalk9izw
-         YFL+enkU6VfxeJBrDJ6rqWcqced0oZbvS1THNMAzctiKqXZ3mRHMU9yhnb8u5qBJwFeb
-         vJ7g==
-Received: by 10.216.200.163 with SMTP id z35mr960093wen.53.1351885063456; Fri,
- 02 Nov 2012 12:37:43 -0700 (PDT)
-Received: by 10.217.69.201 with HTTP; Fri, 2 Nov 2012 12:37:22 -0700 (PDT)
-In-Reply-To: <20121101221203.GE6213@elie.Belkin>
+	id S1752623Ab2KBUFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 16:05:19 -0400
+Received: from mout.web.de ([212.227.15.3]:63025 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750791Ab2KBUFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 16:05:18 -0400
+Received: from [10.1.101.73] ([212.51.26.5]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0Ls8xf-1TNfzq1A3L-013NJw; Fri, 02 Nov 2012 21:05:13
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <20121102191516.e8b7d448ff76b45990e14b1d@domain007.com>
+X-Provags-ID: V02:K0:wBrwZEy+4nP61CItdpt7e7Prp90+7uCrJW9jdT3W0sV
+ lzzmoSylp5LCEDs/r3rWeMCdq8Di/dOxA6LKhEZfkBe74KS5on
+ J1UqTj6W+NY5pEHlCCBkk3J6xDwDEBbSzTIxRVMFmCEAjic963
+ bKRv5FGh+l8rEuCTG6/WiJq+rMk/GqVFr4m4eiQfx45jOVktDO
+ PSI9JTYKOx87jGo6J5TBQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208970>
 
-Jonathan Nieder wrote:
-> Kevin wrote:
+Am 2012-11-02 16:15, schrieb Konstantin Khomoutov:
+> On Fri, 2 Nov 2012 19:03:37 +0400
+> Konstantin Khomoutov <flatworm@users.sourceforge.net> wrote:
 >
->> As I see it, the problem is not the possibility to add new lines, but
->> colleagues being too lazy to add them.
+>>> Currently, core.ignorecase is set to true on case insensitive system
+>>> like Windows or Mac on `git init` and `git clone`, and this setting
+>>> is local to the created/cloned repository.
+>> [...]
+>>> I suggest to set this globally by default when Git is installed,
+>>> because there is little sense to have this option false on case
+>>> insensitive systems (it will lead to confusions when renaming a file
+>>> by changing only the case of letters).
+>>
+>> Case sensitivity is a property of a file system, not the OS.
+>> What if I mount a device with ext3 file system via ext2fsd driver in
+>> on my Windows workstation?  extN have POSIX semantics so it's
+>> pointless to enforce case insensitivity on them.  The same possibly
+>> applies to NFS mounts.
+>>
+>> Also note that NTFS (at least by default) is case insensitive but is
+>> case preserving, observe:
+> [...]
 >
-> I suspect the underlying problem is that we make it too hard to tell
-> git which text editor to run.
+> On the other hand, on NTFS, if I unset core.ignorecase or set it to
+> false locally, `git mv foo Foo` fails to rename a tracked file "foo"
+> with the "destination file exists" error.  I would say I would expect it
+> to work under the conditions I've just described.  Not sure if this
+> thould be considered a bug in Git for Windows or not -- would be great
+> to hear opinions of the msysgit port developers.
 
-Don't we just use $EDITOR?
+I once made a patch for git and we concluded that is is not worth
+to put that into main git because you always can do:
 
-> Ram, what platform do your colleagues use?
+git mv foo tmp && git mv tmp Foo
+or
+git mv -f foo Foo
 
-Red Hat Enterprise Linux 5.
-
-Ram
+(But use the -f option with care)
+/Torsten
