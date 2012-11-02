@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 04/14] Add new simplified git-remote-testgit
-Date: Fri,  2 Nov 2012 03:02:08 +0100
-Message-ID: <1351821738-17526-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 03/14] Rename git-remote-testgit to git-remote-testpy
+Date: Fri,  2 Nov 2012 03:02:07 +0100
+Message-ID: <1351821738-17526-4-git-send-email-felipe.contreras@gmail.com>
 References: <1351821738-17526-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -16,157 +16,832 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TU6b9-0000fm-Ub
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 03:03:04 +0100
+	id 1TU6b8-0000fm-Vg
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 03:03:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965700Ab2KBCCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2012 22:02:46 -0400
+	id S1762641Ab2KBCCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2012 22:02:43 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:43159 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762642Ab2KBCCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2012 22:02:45 -0400
+	with ESMTP id S1762620Ab2KBCCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2012 22:02:41 -0400
 Received: by mail-bk0-f46.google.com with SMTP id jk13so1234245bkc.19
-        for <git@vger.kernel.org>; Thu, 01 Nov 2012 19:02:44 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 01 Nov 2012 19:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=INKrwiMQQIVzaq+P31vivNl5dO87CxnWjm0wvAogFk4=;
-        b=DzR/2swdIMvcKC2ig0+KKXNjWuOpuoO2fy97y4dQK0k3v+1ZvswPAG1XyEBHtHIFRN
-         AwWyVDs0UsRpbuJsQxUTmsQes0Oain1BVmyJ58cisES4lMbe1o0DtrsfA/Ni+FwOsAbb
-         PRuyzDcK6smg5IWcZ3dX/9hMNFQBajI2Q+OrAppyRzgyMKsRvdIXZTrM2IIRVtZo3fi1
-         PEp4xWKFo90nVWRPwupJ8pxcioQcjBiBkRyl3ShkSGRBXcpHvUHosc+eXtfln2Rrah3K
-         tnnsqqeNBrUn7eeNKHeXW3x3IhfXi8MDJFlhT9e+PVmOgRXfPksiNaB3jIEYrhv0rRwM
-         M+lQ==
-Received: by 10.205.128.148 with SMTP id he20mr21389bkc.99.1351821764683;
-        Thu, 01 Nov 2012 19:02:44 -0700 (PDT)
+        bh=3J9cQIMd5Hrv9yDH9m4itZzZVnX/ebky7kvi/M1/gKE=;
+        b=DGhZiY5Ru8WDSbnzGDvbmKWA0rGlZ4K0tjgi/VL9bxDnQAJUow6i+Dz2xZupfkdcSC
+         YOUE+VdENwRjKbhvedQLqN993R6uF2AxCR4FixrHK2oj5BTDfyWxJQ+neToyMau88kjo
+         Ia8DiJ2T9FZQbFCvHZGy9XcuyxkY8z4XfrpdMqTBwZ0LeFo+Lac3DuoNXN/i1AtjeSx+
+         TuEhkbfkq8TQgpWtaC95TJWLTsKp4XxMv3K8Ui7fRMw3bMenHr1yIpDAbUC3OnpLY50C
+         JEKr0RwFaUqQf7yHnBFvaroviYwZYZ9RxBg0WatMOImEyrw5W57AweF7M+mt3UpGRf31
+         RYYA==
+Received: by 10.204.13.9 with SMTP id z9mr18450bkz.132.1351821760558;
+        Thu, 01 Nov 2012 19:02:40 -0700 (PDT)
 Received: from localhost (ip-109-43-0-51.web.vodafone.de. [109.43.0.51])
-        by mx.google.com with ESMTPS id s20sm5784054bkw.15.2012.11.01.19.02.42
+        by mx.google.com with ESMTPS id ia2sm5773690bkc.11.2012.11.01.19.02.38
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 01 Nov 2012 19:02:43 -0700 (PDT)
+        Thu, 01 Nov 2012 19:02:39 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351821738-17526-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208902>
 
-It's way simpler. It exerceises the same features of remote helpers.
-It's easy to read and understand. It doesn't depend on python.
+This script is not really exercising the remote-helper functionality,
+but more the python framework for remote helpers that live in
+git_remote_helpers.
 
-It does _not_ exercise the python remote helper framework; there's
-another tool and another test for that.
+It's also not a good example of how to write remote-helpers, unless you
+are planning to use python, and even then you might not want to use this
+framework.
 
-For now let's just copy the old remote-helpers test script, although
-some of those tests don't make sense for this testgit (they still pass).
+So let's use a more appropriate name: git-remote-testpy.
 
-In addition, this script would be able to test other features not
-currently being tested.
+A patch that replaces git-remote-testgit with a simpler version is on
+the way.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-remote-testgit.txt |   2 +-
- git-remote-testgit                   |  62 ++++++++++++++++
- t/t5801-remote-helpers.sh            | 134 +++++++++++++++++++++++++++++++++++
- 3 files changed, 197 insertions(+), 1 deletion(-)
- create mode 100755 git-remote-testgit
- create mode 100755 t/t5801-remote-helpers.sh
+ .gitignore                |   2 +-
+ Makefile                  |   2 +-
+ git-remote-testgit.py     | 272 ----------------------------------------------
+ git-remote-testpy.py      | 272 ++++++++++++++++++++++++++++++++++++++++++++++
+ t/t5800-remote-helpers.sh | 148 -------------------------
+ t/t5800-remote-testpy.sh  | 148 +++++++++++++++++++++++++
+ 6 files changed, 422 insertions(+), 422 deletions(-)
+ delete mode 100644 git-remote-testgit.py
+ create mode 100644 git-remote-testpy.py
+ delete mode 100755 t/t5800-remote-helpers.sh
+ create mode 100755 t/t5800-remote-testpy.sh
 
-diff --git a/Documentation/git-remote-testgit.txt b/Documentation/git-remote-testgit.txt
-index 2a67d45..612a625 100644
---- a/Documentation/git-remote-testgit.txt
-+++ b/Documentation/git-remote-testgit.txt
-@@ -19,7 +19,7 @@ testcase for the remote-helper functionality, and as an example to
- show remote-helper authors one possible implementation.
+diff --git a/.gitignore b/.gitignore
+index a188a82..48d1bbb 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -124,7 +124,7 @@
+ /git-remote-ftps
+ /git-remote-fd
+ /git-remote-ext
+-/git-remote-testgit
++/git-remote-testpy
+ /git-repack
+ /git-replace
+ /git-repo-config
+diff --git a/Makefile b/Makefile
+index f69979e..e18ee48 100644
+--- a/Makefile
++++ b/Makefile
+@@ -470,7 +470,7 @@ SCRIPT_PERL += git-relink.perl
+ SCRIPT_PERL += git-send-email.perl
+ SCRIPT_PERL += git-svn.perl
  
- The best way to learn more is to read the comments and source code in
--'git-remote-testgit.py'.
-+'git-remote-testgit'.
+-SCRIPT_PYTHON += git-remote-testgit.py
++SCRIPT_PYTHON += git-remote-testpy.py
+ SCRIPT_PYTHON += git-p4.py
  
- SEE ALSO
- --------
-diff --git a/git-remote-testgit b/git-remote-testgit
-new file mode 100755
-index 0000000..6650402
+ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+deleted file mode 100644
+index ade797b..0000000
+--- a/git-remote-testgit.py
++++ /dev/null
+@@ -1,272 +0,0 @@
+-#!/usr/bin/env python
+-
+-# This command is a simple remote-helper, that is used both as a
+-# testcase for the remote-helper functionality, and as an example to
+-# show remote-helper authors one possible implementation.
+-#
+-# This is a Git <-> Git importer/exporter, that simply uses git
+-# fast-import and git fast-export to consume and produce fast-import
+-# streams.
+-#
+-# To understand better the way things work, one can activate debug
+-# traces by setting (to any value) the environment variables
+-# GIT_TRANSPORT_HELPER_DEBUG and GIT_DEBUG_TESTGIT, to see messages
+-# from the transport-helper side, or from this example remote-helper.
+-
+-# hashlib is only available in python >= 2.5
+-try:
+-    import hashlib
+-    _digest = hashlib.sha1
+-except ImportError:
+-    import sha
+-    _digest = sha.new
+-import sys
+-import os
+-import time
+-sys.path.insert(0, os.getenv("GITPYTHONLIB","."))
+-
+-from git_remote_helpers.util import die, debug, warn
+-from git_remote_helpers.git.repo import GitRepo
+-from git_remote_helpers.git.exporter import GitExporter
+-from git_remote_helpers.git.importer import GitImporter
+-from git_remote_helpers.git.non_local import NonLocalGit
+-
+-def get_repo(alias, url):
+-    """Returns a git repository object initialized for usage.
+-    """
+-
+-    repo = GitRepo(url)
+-    repo.get_revs()
+-    repo.get_head()
+-
+-    hasher = _digest()
+-    hasher.update(repo.path)
+-    repo.hash = hasher.hexdigest()
+-
+-    repo.get_base_path = lambda base: os.path.join(
+-        base, 'info', 'fast-import', repo.hash)
+-
+-    prefix = 'refs/testgit/%s/' % alias
+-    debug("prefix: '%s'", prefix)
+-
+-    repo.gitdir = os.environ["GIT_DIR"]
+-    repo.alias = alias
+-    repo.prefix = prefix
+-
+-    repo.exporter = GitExporter(repo)
+-    repo.importer = GitImporter(repo)
+-    repo.non_local = NonLocalGit(repo)
+-
+-    return repo
+-
+-
+-def local_repo(repo, path):
+-    """Returns a git repository object initalized for usage.
+-    """
+-
+-    local = GitRepo(path)
+-
+-    local.non_local = None
+-    local.gitdir = repo.gitdir
+-    local.alias = repo.alias
+-    local.prefix = repo.prefix
+-    local.hash = repo.hash
+-    local.get_base_path = repo.get_base_path
+-    local.exporter = GitExporter(local)
+-    local.importer = GitImporter(local)
+-
+-    return local
+-
+-
+-def do_capabilities(repo, args):
+-    """Prints the supported capabilities.
+-    """
+-
+-    print "import"
+-    print "export"
+-    print "refspec refs/heads/*:%s*" % repo.prefix
+-
+-    dirname = repo.get_base_path(repo.gitdir)
+-
+-    if not os.path.exists(dirname):
+-        os.makedirs(dirname)
+-
+-    path = os.path.join(dirname, 'git.marks')
+-
+-    print "*export-marks %s" % path
+-    if os.path.exists(path):
+-        print "*import-marks %s" % path
+-
+-    print # end capabilities
+-
+-
+-def do_list(repo, args):
+-    """Lists all known references.
+-
+-    Bug: This will always set the remote head to master for non-local
+-    repositories, since we have no way of determining what the remote
+-    head is at clone time.
+-    """
+-
+-    for ref in repo.revs:
+-        debug("? refs/heads/%s", ref)
+-        print "? refs/heads/%s" % ref
+-
+-    if repo.head:
+-        debug("@refs/heads/%s HEAD" % repo.head)
+-        print "@refs/heads/%s HEAD" % repo.head
+-    else:
+-        debug("@refs/heads/master HEAD")
+-        print "@refs/heads/master HEAD"
+-
+-    print # end list
+-
+-
+-def update_local_repo(repo):
+-    """Updates (or clones) a local repo.
+-    """
+-
+-    if repo.local:
+-        return repo
+-
+-    path = repo.non_local.clone(repo.gitdir)
+-    repo.non_local.update(repo.gitdir)
+-    repo = local_repo(repo, path)
+-    return repo
+-
+-
+-def do_import(repo, args):
+-    """Exports a fast-import stream from testgit for git to import.
+-    """
+-
+-    if len(args) != 1:
+-        die("Import needs exactly one ref")
+-
+-    if not repo.gitdir:
+-        die("Need gitdir to import")
+-
+-    ref = args[0]
+-    refs = [ref]
+-
+-    while True:
+-        line = sys.stdin.readline()
+-        if line == '\n':
+-            break
+-        if not line.startswith('import '):
+-            die("Expected import line.")
+-
+-        # strip of leading 'import '
+-        ref = line[7:].strip()
+-        refs.append(ref)
+-
+-    repo = update_local_repo(repo)
+-    repo.exporter.export_repo(repo.gitdir, refs)
+-
+-    print "done"
+-
+-
+-def do_export(repo, args):
+-    """Imports a fast-import stream from git to testgit.
+-    """
+-
+-    if not repo.gitdir:
+-        die("Need gitdir to export")
+-
+-    update_local_repo(repo)
+-    changed = repo.importer.do_import(repo.gitdir)
+-
+-    if not repo.local:
+-        repo.non_local.push(repo.gitdir)
+-
+-    for ref in changed:
+-        print "ok %s" % ref
+-    print
+-
+-
+-COMMANDS = {
+-    'capabilities': do_capabilities,
+-    'list': do_list,
+-    'import': do_import,
+-    'export': do_export,
+-}
+-
+-
+-def sanitize(value):
+-    """Cleans up the url.
+-    """
+-
+-    if value.startswith('testgit::'):
+-        value = value[9:]
+-
+-    return value
+-
+-
+-def read_one_line(repo):
+-    """Reads and processes one command.
+-    """
+-
+-    sleepy = os.environ.get("GIT_REMOTE_TESTGIT_SLEEPY")
+-    if sleepy:
+-        debug("Sleeping %d sec before readline" % int(sleepy))
+-        time.sleep(int(sleepy))
+-
+-    line = sys.stdin.readline()
+-
+-    cmdline = line
+-
+-    if not cmdline:
+-        warn("Unexpected EOF")
+-        return False
+-
+-    cmdline = cmdline.strip().split()
+-    if not cmdline:
+-        # Blank line means we're about to quit
+-        return False
+-
+-    cmd = cmdline.pop(0)
+-    debug("Got command '%s' with args '%s'", cmd, ' '.join(cmdline))
+-
+-    if cmd not in COMMANDS:
+-        die("Unknown command, %s", cmd)
+-
+-    func = COMMANDS[cmd]
+-    func(repo, cmdline)
+-    sys.stdout.flush()
+-
+-    return True
+-
+-
+-def main(args):
+-    """Starts a new remote helper for the specified repository.
+-    """
+-
+-    if len(args) != 3:
+-        die("Expecting exactly three arguments.")
+-        sys.exit(1)
+-
+-    if os.getenv("GIT_DEBUG_TESTGIT"):
+-        import git_remote_helpers.util
+-        git_remote_helpers.util.DEBUG = True
+-
+-    alias = sanitize(args[1])
+-    url = sanitize(args[2])
+-
+-    if not alias.isalnum():
+-        warn("non-alnum alias '%s'", alias)
+-        alias = "tmp"
+-
+-    args[1] = alias
+-    args[2] = url
+-
+-    repo = get_repo(alias, url)
+-
+-    debug("Got arguments %s", args[1:])
+-
+-    more = True
+-
+-    sys.stdin = os.fdopen(sys.stdin.fileno(), 'r', 0)
+-    while (more):
+-        more = read_one_line(repo)
+-
+-if __name__ == '__main__':
+-    sys.exit(main(sys.argv))
+diff --git a/git-remote-testpy.py b/git-remote-testpy.py
+new file mode 100644
+index 0000000..ade797b
 --- /dev/null
-+++ b/git-remote-testgit
-@@ -0,0 +1,62 @@
-+#!/bin/bash
-+# Copyright (c) 2012 Felipe Contreras
++++ b/git-remote-testpy.py
+@@ -0,0 +1,272 @@
++#!/usr/bin/env python
 +
-+alias="$1"
-+url="$2"
++# This command is a simple remote-helper, that is used both as a
++# testcase for the remote-helper functionality, and as an example to
++# show remote-helper authors one possible implementation.
++#
++# This is a Git <-> Git importer/exporter, that simply uses git
++# fast-import and git fast-export to consume and produce fast-import
++# streams.
++#
++# To understand better the way things work, one can activate debug
++# traces by setting (to any value) the environment variables
++# GIT_TRANSPORT_HELPER_DEBUG and GIT_DEBUG_TESTGIT, to see messages
++# from the transport-helper side, or from this example remote-helper.
 +
-+# huh?
-+url="${url#file://}"
++# hashlib is only available in python >= 2.5
++try:
++    import hashlib
++    _digest = hashlib.sha1
++except ImportError:
++    import sha
++    _digest = sha.new
++import sys
++import os
++import time
++sys.path.insert(0, os.getenv("GITPYTHONLIB","."))
 +
-+dir="$GIT_DIR/testgit/$alias"
-+prefix="refs/testgit/$alias"
-+refspec="refs/heads/*:${prefix}/heads/*"
++from git_remote_helpers.util import die, debug, warn
++from git_remote_helpers.git.repo import GitRepo
++from git_remote_helpers.git.exporter import GitExporter
++from git_remote_helpers.git.importer import GitImporter
++from git_remote_helpers.git.non_local import NonLocalGit
 +
-+gitmarks="$dir/git.marks"
-+testgitmarks="$dir/testgit.marks"
++def get_repo(alias, url):
++    """Returns a git repository object initialized for usage.
++    """
 +
-+export GIT_DIR="$url/.git"
++    repo = GitRepo(url)
++    repo.get_revs()
++    repo.get_head()
 +
-+mkdir -p "$dir"
++    hasher = _digest()
++    hasher.update(repo.path)
++    repo.hash = hasher.hexdigest()
 +
-+test -e "$gitmarks" || echo -n > "$gitmarks"
-+test -e "$testgitmarks" || echo -n > "$testgitmarks"
++    repo.get_base_path = lambda base: os.path.join(
++        base, 'info', 'fast-import', repo.hash)
 +
-+while read line; do
-+    case "$line" in
-+    capabilities)
-+        echo 'import'
-+        echo 'export'
-+        echo "refspec $refspec"
-+        echo "*import-marks $gitmarks"
-+        echo "*export-marks $gitmarks"
-+        echo
-+        ;;
-+    list)
-+        git for-each-ref --format='? %(refname)' 'refs/heads/'
-+        head=$(git symbolic-ref HEAD)
-+        echo "@$head HEAD"
-+        echo
-+        ;;
-+    import*)
-+        # read all import lines
-+        while true; do
-+            ref="${line#* }"
-+            refs="$refs $ref"
-+            read line
-+            test "${line%% *}" != "import" && break
-+        done
++    prefix = 'refs/testgit/%s/' % alias
++    debug("prefix: '%s'", prefix)
 +
-+        echo "feature import-marks=$gitmarks"
-+        echo "feature export-marks=$gitmarks"
-+        git fast-export --use-done-feature --{import,export}-marks="$testgitmarks" $refs | \
-+            sed -e "s#refs/heads/#${prefix}/heads/#g"
-+        ;;
-+    export)
-+        git fast-import --{import,export}-marks="$testgitmarks" --quiet
-+        echo
-+        ;;
-+    '')
-+        exit
-+        ;;
-+    esac
-+done
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
++    repo.gitdir = os.environ["GIT_DIR"]
++    repo.alias = alias
++    repo.prefix = prefix
++
++    repo.exporter = GitExporter(repo)
++    repo.importer = GitImporter(repo)
++    repo.non_local = NonLocalGit(repo)
++
++    return repo
++
++
++def local_repo(repo, path):
++    """Returns a git repository object initalized for usage.
++    """
++
++    local = GitRepo(path)
++
++    local.non_local = None
++    local.gitdir = repo.gitdir
++    local.alias = repo.alias
++    local.prefix = repo.prefix
++    local.hash = repo.hash
++    local.get_base_path = repo.get_base_path
++    local.exporter = GitExporter(local)
++    local.importer = GitImporter(local)
++
++    return local
++
++
++def do_capabilities(repo, args):
++    """Prints the supported capabilities.
++    """
++
++    print "import"
++    print "export"
++    print "refspec refs/heads/*:%s*" % repo.prefix
++
++    dirname = repo.get_base_path(repo.gitdir)
++
++    if not os.path.exists(dirname):
++        os.makedirs(dirname)
++
++    path = os.path.join(dirname, 'git.marks')
++
++    print "*export-marks %s" % path
++    if os.path.exists(path):
++        print "*import-marks %s" % path
++
++    print # end capabilities
++
++
++def do_list(repo, args):
++    """Lists all known references.
++
++    Bug: This will always set the remote head to master for non-local
++    repositories, since we have no way of determining what the remote
++    head is at clone time.
++    """
++
++    for ref in repo.revs:
++        debug("? refs/heads/%s", ref)
++        print "? refs/heads/%s" % ref
++
++    if repo.head:
++        debug("@refs/heads/%s HEAD" % repo.head)
++        print "@refs/heads/%s HEAD" % repo.head
++    else:
++        debug("@refs/heads/master HEAD")
++        print "@refs/heads/master HEAD"
++
++    print # end list
++
++
++def update_local_repo(repo):
++    """Updates (or clones) a local repo.
++    """
++
++    if repo.local:
++        return repo
++
++    path = repo.non_local.clone(repo.gitdir)
++    repo.non_local.update(repo.gitdir)
++    repo = local_repo(repo, path)
++    return repo
++
++
++def do_import(repo, args):
++    """Exports a fast-import stream from testgit for git to import.
++    """
++
++    if len(args) != 1:
++        die("Import needs exactly one ref")
++
++    if not repo.gitdir:
++        die("Need gitdir to import")
++
++    ref = args[0]
++    refs = [ref]
++
++    while True:
++        line = sys.stdin.readline()
++        if line == '\n':
++            break
++        if not line.startswith('import '):
++            die("Expected import line.")
++
++        # strip of leading 'import '
++        ref = line[7:].strip()
++        refs.append(ref)
++
++    repo = update_local_repo(repo)
++    repo.exporter.export_repo(repo.gitdir, refs)
++
++    print "done"
++
++
++def do_export(repo, args):
++    """Imports a fast-import stream from git to testgit.
++    """
++
++    if not repo.gitdir:
++        die("Need gitdir to export")
++
++    update_local_repo(repo)
++    changed = repo.importer.do_import(repo.gitdir)
++
++    if not repo.local:
++        repo.non_local.push(repo.gitdir)
++
++    for ref in changed:
++        print "ok %s" % ref
++    print
++
++
++COMMANDS = {
++    'capabilities': do_capabilities,
++    'list': do_list,
++    'import': do_import,
++    'export': do_export,
++}
++
++
++def sanitize(value):
++    """Cleans up the url.
++    """
++
++    if value.startswith('testgit::'):
++        value = value[9:]
++
++    return value
++
++
++def read_one_line(repo):
++    """Reads and processes one command.
++    """
++
++    sleepy = os.environ.get("GIT_REMOTE_TESTGIT_SLEEPY")
++    if sleepy:
++        debug("Sleeping %d sec before readline" % int(sleepy))
++        time.sleep(int(sleepy))
++
++    line = sys.stdin.readline()
++
++    cmdline = line
++
++    if not cmdline:
++        warn("Unexpected EOF")
++        return False
++
++    cmdline = cmdline.strip().split()
++    if not cmdline:
++        # Blank line means we're about to quit
++        return False
++
++    cmd = cmdline.pop(0)
++    debug("Got command '%s' with args '%s'", cmd, ' '.join(cmdline))
++
++    if cmd not in COMMANDS:
++        die("Unknown command, %s", cmd)
++
++    func = COMMANDS[cmd]
++    func(repo, cmdline)
++    sys.stdout.flush()
++
++    return True
++
++
++def main(args):
++    """Starts a new remote helper for the specified repository.
++    """
++
++    if len(args) != 3:
++        die("Expecting exactly three arguments.")
++        sys.exit(1)
++
++    if os.getenv("GIT_DEBUG_TESTGIT"):
++        import git_remote_helpers.util
++        git_remote_helpers.util.DEBUG = True
++
++    alias = sanitize(args[1])
++    url = sanitize(args[2])
++
++    if not alias.isalnum():
++        warn("non-alnum alias '%s'", alias)
++        alias = "tmp"
++
++    args[1] = alias
++    args[2] = url
++
++    repo = get_repo(alias, url)
++
++    debug("Got arguments %s", args[1:])
++
++    more = True
++
++    sys.stdin = os.fdopen(sys.stdin.fileno(), 'r', 0)
++    while (more):
++        more = read_one_line(repo)
++
++if __name__ == '__main__':
++    sys.exit(main(sys.argv))
+diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
+deleted file mode 100755
+index e7dc668..0000000
+--- a/t/t5800-remote-helpers.sh
++++ /dev/null
+@@ -1,148 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2010 Sverre Rabbelier
+-#
+-
+-test_description='Test remote-helper import and export commands'
+-
+-. ./test-lib.sh
+-
+-if ! test_have_prereq PYTHON ; then
+-	skip_all='skipping git-remote-hg tests, python not available'
+-	test_done
+-fi
+-
+-"$PYTHON_PATH" -c '
+-import sys
+-if sys.hexversion < 0x02040000:
+-    sys.exit(1)
+-' || {
+-	skip_all='skipping git-remote-hg tests, python version < 2.4'
+-	test_done
+-}
+-
+-compare_refs() {
+-	git --git-dir="$1/.git" rev-parse --verify $2 >expect &&
+-	git --git-dir="$3/.git" rev-parse --verify $4 >actual &&
+-	test_cmp expect actual
+-}
+-
+-test_expect_success 'setup repository' '
+-	git init --bare server/.git &&
+-	git clone server public &&
+-	(cd public &&
+-	 echo content >file &&
+-	 git add file &&
+-	 git commit -m one &&
+-	 git push origin master)
+-'
+-
+-test_expect_success 'cloning from local repo' '
+-	git clone "testgit::${PWD}/server" localclone &&
+-	test_cmp public/file localclone/file
+-'
+-
+-test_expect_success 'cloning from remote repo' '
+-	git clone "testgit::file://${PWD}/server" clone &&
+-	test_cmp public/file clone/file
+-'
+-
+-test_expect_success 'create new commit on remote' '
+-	(cd public &&
+-	 echo content >>file &&
+-	 git commit -a -m two &&
+-	 git push)
+-'
+-
+-test_expect_success 'pulling from local repo' '
+-	(cd localclone && git pull) &&
+-	test_cmp public/file localclone/file
+-'
+-
+-test_expect_success 'pulling from remote remote' '
+-	(cd clone && git pull) &&
+-	test_cmp public/file clone/file
+-'
+-
+-test_expect_success 'pushing to local repo' '
+-	(cd localclone &&
+-	echo content >>file &&
+-	git commit -a -m three &&
+-	git push) &&
+-	compare_refs localclone HEAD server HEAD
+-'
+-
+-# Generally, skip this test.  It demonstrates a now-fixed race in
+-# git-remote-testgit, but is too slow to leave in for general use.
+-: test_expect_success 'racily pushing to local repo' '
+-	test_when_finished "rm -rf server2 localclone2" &&
+-	cp -R server server2 &&
+-	git clone "testgit::${PWD}/server2" localclone2 &&
+-	(cd localclone2 &&
+-	echo content >>file &&
+-	git commit -a -m three &&
+-	GIT_REMOTE_TESTGIT_SLEEPY=2 git push) &&
+-	compare_refs localclone2 HEAD server2 HEAD
+-'
+-
+-test_expect_success 'synch with changes from localclone' '
+-	(cd clone &&
+-	 git pull)
+-'
+-
+-test_expect_success 'pushing remote local repo' '
+-	(cd clone &&
+-	echo content >>file &&
+-	git commit -a -m four &&
+-	git push) &&
+-	compare_refs clone HEAD server HEAD
+-'
+-
+-test_expect_success 'fetch new branch' '
+-	(cd public &&
+-	 git checkout -b new &&
+-	 echo content >>file &&
+-	 git commit -a -m five &&
+-	 git push origin new
+-	) &&
+-	(cd localclone &&
+-	 git fetch origin new
+-	) &&
+-	compare_refs public HEAD localclone FETCH_HEAD
+-'
+-
+-test_expect_success 'fetch multiple branches' '
+-	(cd localclone &&
+-	 git fetch
+-	) &&
+-	compare_refs server master localclone refs/remotes/origin/master &&
+-	compare_refs server new localclone refs/remotes/origin/new
+-'
+-
+-test_expect_success 'push when remote has extra refs' '
+-	(cd clone &&
+-	 echo content >>file &&
+-	 git commit -a -m six &&
+-	 git push
+-	) &&
+-	compare_refs clone master server master
+-'
+-
+-test_expect_success 'push new branch by name' '
+-	(cd clone &&
+-	 git checkout -b new-name  &&
+-	 echo content >>file &&
+-	 git commit -a -m seven &&
+-	 git push origin new-name
+-	) &&
+-	compare_refs clone HEAD server refs/heads/new-name
+-'
+-
+-test_expect_failure 'push new branch with old:new refspec' '
+-	(cd clone &&
+-	 git push origin new-name:new-refspec
+-	) &&
+-	compare_refs clone HEAD server refs/heads/new-refspec
+-'
+-
+-test_done
+diff --git a/t/t5800-remote-testpy.sh b/t/t5800-remote-testpy.sh
 new file mode 100755
-index 0000000..67bc8eb
+index 0000000..927eef1
 --- /dev/null
-+++ b/t/t5801-remote-helpers.sh
-@@ -0,0 +1,134 @@
++++ b/t/t5800-remote-testpy.sh
+@@ -0,0 +1,148 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2010 Sverre Rabbelier
 +#
 +
-+test_description='Test remote-helper import and export commands'
++test_description='Test python remote-helper framework'
 +
 +. ./test-lib.sh
++
++if ! test_have_prereq PYTHON ; then
++	skip_all='skipping git-remote-hg tests, python not available'
++	test_done
++fi
++
++"$PYTHON_PATH" -c '
++import sys
++if sys.hexversion < 0x02040000:
++    sys.exit(1)
++' || {
++	skip_all='skipping git-remote-hg tests, python version < 2.4'
++	test_done
++}
 +
 +compare_refs() {
 +	git --git-dir="$1/.git" rev-parse --verify $2 >expect &&
@@ -185,12 +860,12 @@ index 0000000..67bc8eb
 +'
 +
 +test_expect_success 'cloning from local repo' '
-+	git clone "testgit::${PWD}/server" localclone &&
++	git clone "testpy::${PWD}/server" localclone &&
 +	test_cmp public/file localclone/file
 +'
 +
 +test_expect_success 'cloning from remote repo' '
-+	git clone "testgit::file://${PWD}/server" clone &&
++	git clone "testpy::file://${PWD}/server" clone &&
 +	test_cmp public/file clone/file
 +'
 +
@@ -220,11 +895,11 @@ index 0000000..67bc8eb
 +'
 +
 +# Generally, skip this test.  It demonstrates a now-fixed race in
-+# git-remote-testgit, but is too slow to leave in for general use.
++# git-remote-testpy, but is too slow to leave in for general use.
 +: test_expect_success 'racily pushing to local repo' '
 +	test_when_finished "rm -rf server2 localclone2" &&
 +	cp -R server server2 &&
-+	git clone "testgit::${PWD}/server2" localclone2 &&
++	git clone "testpy::${PWD}/server2" localclone2 &&
 +	(cd localclone2 &&
 +	echo content >>file &&
 +	git commit -a -m three &&
