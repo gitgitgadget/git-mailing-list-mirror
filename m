@@ -1,94 +1,94 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: What's cooking in git.git (Oct 2012, #09; Mon, 29)
-Date: Fri, 2 Nov 2012 05:43:00 -0400
-Message-ID: <20121102094259.GA28414@sigill.intra.peff.net>
+Date: Fri, 2 Nov 2012 05:56:32 -0400
+Message-ID: <20121102095632.GA30221@sigill.intra.peff.net>
 References: <20121029102114.GA14497@sigill.intra.peff.net>
  <5092C234.9000307@ramsay1.demon.co.uk>
  <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com>
+ <20121102094259.GA28414@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
 To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 10:43:29 2012
+X-From: git-owner@vger.kernel.org Fri Nov 02 10:56:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUDmd-0005xo-Ho
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 10:43:23 +0100
+	id 1TUDzc-0002Fv-Rv
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 10:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760469Ab2KBJnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 05:43:09 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54193 "EHLO
+	id S932852Ab2KBJ4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 05:56:36 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54206 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760435Ab2KBJnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 05:43:06 -0400
-Received: (qmail 2146 invoked by uid 107); 2 Nov 2012 09:43:48 -0000
+	id S1761150Ab2KBJ4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 05:56:35 -0400
+Received: (qmail 2254 invoked by uid 107); 2 Nov 2012 09:57:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 05:43:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 05:43:00 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 05:57:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 05:56:32 -0400
 Content-Disposition: inline
-In-Reply-To: <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com>
+In-Reply-To: <20121102094259.GA28414@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208915>
 
-On Thu, Nov 01, 2012 at 08:12:20PM -0500, Chris Rorvick wrote:
+On Fri, Nov 02, 2012 at 05:43:00AM -0400, Jeff King wrote:
 
-> > Just FYI, t9604-cvsimport-timestamps.sh is still failing for me.
-> >
-> > I haven't spent too long on this yet, but I had hoped that setting
-> > TZ would sidestep any DST issues. (I have downloaded new tzdata, but
-> > have yet to install - actually I don't really want to!). It is not
-> > clear from the tzset manpage what happens if you use the DST format
-> > for TZ, but you don't provide the start/end date for DST, which is
-> > what this test is doing.
-> >
-> > Perhaps the test should use the non-DST format? e.g. "TZ=CST6 git ..."
-> > Does the test really care about DST? (*if* that is indeed the problem).
-> 
-> It actually looks like your TZ database is fine and the problem is
-> with the conversion to a struct tm.  In each case, the time is
-> localized to the previous TZ value while the offset for the current TZ
-> value.  For example, look at the first commit in the first test.  It
-> converted the timestamp to 18:00 (CST6) while all the rest came
-> through as expected.    I suspect the previous version of cvsimport
-> would exhibit similar behavior with the first imported commit.  What
-> is your platform?
+> Yeah, I think that is it. IIRC, Ramsay is on cygwin, and I noticed this
+> in perl 5.16's POSIX.xs:
+>
+> [...]
+>    * (4) The CRT strftime() "%Z" implementation calls __tzset(). That
+>    * calls CRT tzset(), but only the first time it is called, and in turn
+>    * that uses CRT getenv("TZ") to retrieve the timezone info from the CRT
+>    * local copy of the environment and hence gets the original setting as
+>    * perl never updates the CRT copy when assigning to $ENV{TZ}.
+> [...]
+> I wonder if Ramsay has an older perl that does not do this special
+> hackery right. I'll see if I can dig up where it first appeared.
 
-Yeah, I think that is it. IIRC, Ramsay is on cygwin, and I noticed this
-in perl 5.16's POSIX.xs:
+It looks like that code went into perl 5.11.
 
-  #ifdef WIN32
+I wonder, even with this fix, though, if we need to be calling tzset to
+reliably update from the environment. It sounds like it _should_ happen
+automatically, except that if the CRT is calling the internal tzset, it
+would not do the perl "grab from $ENV" magic. Calling tzset would make
+sure the internal TZ is up to date.
 
-  /*
-   * (1) The CRT maintains its own copy of the environment, separate from
-   * the Win32API copy.
-   *
-   * (2) CRT getenv() retrieves from this copy. CRT putenv() updates this
-   * copy, and then calls SetEnvironmentVariableA() to update the Win32API
-   * copy.
-   *
-   * (3) win32_getenv() and win32_putenv() call GetEnvironmentVariableA() and
-   * SetEnvironmentVariableA() directly, bypassing the CRT copy of the
-   * environment.
-   *
-   * (4) The CRT strftime() "%Z" implementation calls __tzset(). That
-   * calls CRT tzset(), but only the first time it is called, and in turn
-   * that uses CRT getenv("TZ") to retrieve the timezone info from the CRT
-   * local copy of the environment and hence gets the original setting as
-   * perl never updates the CRT copy when assigning to $ENV{TZ}.
-   *
-   * Therefore, we need to retrieve the value of $ENV{TZ} and call CRT
-   * putenv() to update the CRT copy of the environment (if it is different)
-   * whenever we're about to call tzset().
-   [...]
+Ramsay, what happens with this patch on top?
 
-I wonder if Ramsay has an older perl that does not do this special
-hackery right. I'll see if I can dig up where it first appeared.
-
--Peff
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index ceb119d..4c44050 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -24,11 +24,12 @@ use File::Basename qw(basename dirname);
+ use Time::Local;
+ use IO::Socket;
+ use IO::Pipe;
+-use POSIX qw(strftime dup2 ENOENT);
++use POSIX qw(strftime tzset dup2 ENOENT);
+ use IPC::Open2;
+ 
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
++tzset();
+ 
+ our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
+ my (%conv_author_name, %conv_author_email, %conv_author_tz);
+@@ -855,8 +856,10 @@ sub commit {
+ 	}
+ 
+ 	$ENV{'TZ'}=$author_tz;
++	tzset();
+ 	my $commit_date = strftime("%s %z", localtime($date));
+ 	$ENV{'TZ'}="UTC";
++	tzset();
+ 	$ENV{GIT_AUTHOR_NAME} = $author_name;
+ 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
+ 	$ENV{GIT_AUTHOR_DATE} = $commit_date;
