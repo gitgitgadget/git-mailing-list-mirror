@@ -1,118 +1,193 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: What's cooking in git.git (Oct 2012, #09; Mon, 29)
-Date: Fri, 02 Nov 2012 21:33:14 +0000
-Message-ID: <50943C1A.4090706@ramsay1.demon.co.uk>
-References: <20121029102114.GA14497@sigill.intra.peff.net> <5092C234.9000307@ramsay1.demon.co.uk> <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com> <20121102094259.GA28414@sigill.intra.peff.net> <20121102095632.GA30221@sigill.intra.peff.net>
+From: Stefan Zager <szager@google.com>
+Subject: Re: [PATCH] Enable parallelism in git submodule update.
+Date: Fri, 2 Nov 2012 14:49:01 -0700
+Message-ID: <CAHOQ7J_dDSgzr7SRoNG1kSfQCm6dv9ENEskCLpwsmCo-SyViDw@mail.gmail.com>
+References: <5090168f.5e+7ZUFKdYL2Qnw7%szager@google.com>
+	<CAHOQ7J-e=KBOsjoeTWsf1f+LNgaAxN974-FXNMeOy7B-FR0wyg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 02 22:40:13 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jens Lehmann <jens.lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 02 22:49:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUOyF-000356-8o
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 22:40:07 +0100
+	id 1TUP79-0003gP-PS
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 22:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755086Ab2KBVjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 17:39:53 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:36912 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754685Ab2KBVjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 17:39:52 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 10A414005A0;
-	Fri,  2 Nov 2012 21:39:50 +0000 (GMT)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 04818400590;	Fri,  2 Nov 2012 21:39:49 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Fri,  2 Nov 2012 21:39:47 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <20121102095632.GA30221@sigill.intra.peff.net>
-X-MDF-HostID: 19
+	id S1759304Ab2KBVtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 17:49:06 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:53891 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757073Ab2KBVtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 17:49:03 -0400
+Received: by mail-qa0-f53.google.com with SMTP id s11so498048qaa.19
+        for <git@vger.kernel.org>; Fri, 02 Nov 2012 14:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record;
+        bh=I0xnE0OS2J5eFE8nuJQm5mN7zTuKjUCXB55jdfiCgHI=;
+        b=l41HMm74GaOtCJNmJmDNc01WLns70hDUGaT1+vl6IKX1jT4MAUNL5PQnr+sh4r2YLL
+         w8ACVs/ax/ZbGB+4PrVGpWSoS3Govz8tq8oqZ2BQPOgeIu76J2Xy+covhjiJ3ZedeR/j
+         WAZrBQ51flqiRYhiagQNHk8zjfe7CSWNKd4ROjEd+9t15uPcEA5nxx/rFxJJyBX6riJ6
+         ++oxelmZdZMmrvAxLWWCz6vzIyyOHKWBLlMQSv/6SSuFxjyUS2ggfw7U3fzs5XTb8LiY
+         7QeXatXTxhxrM0s5nWNq8z/Rc9k9eXzraeQrFw5eXY0RUuG41nPFVdqxZqvJDXCxU4Pt
+         Hfkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record:x-gm-message-state;
+        bh=I0xnE0OS2J5eFE8nuJQm5mN7zTuKjUCXB55jdfiCgHI=;
+        b=Fh8LmwutfzRP7t5w5bZVvrJMN/zqXn8T1PTkL52pGHMMmbghCkjY7EYg4gCS+jDUOO
+         M+JTJM6fXzA0yUIcVo9rIwj28GDejk2V5mvy9WnzYEUYjOZH0hZcHEDqTcScEf34+kUS
+         AogOGWJHKd/AiEFeGPNDX7i6vb9utxPEfH9LCGRmRqC2lj6H2r1FGRL3pXXZz2HlWjo6
+         eoAzwQW6j8/7OM8Ut+MISrqv3MF5Q20fPgsDKx2XJNTiaYGyLGTtJcHzRIubidut0fKs
+         5nHuPJ/v2T8i03qDsH/tLFkzg39F9q8x0/rkVYjT5xegITIvLLJBLdhGlVtHLrxp30p9
+         1f0g==
+Received: by 10.224.42.8 with SMTP id q8mr4270628qae.77.1351892941784; Fri, 02
+ Nov 2012 14:49:01 -0700 (PDT)
+Received: by 10.49.71.197 with HTTP; Fri, 2 Nov 2012 14:49:01 -0700 (PDT)
+In-Reply-To: <CAHOQ7J-e=KBOsjoeTWsf1f+LNgaAxN974-FXNMeOy7B-FR0wyg@mail.gmail.com>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQnQ/x4+DDLgxHxTb/esCXUWaUd8MNfkslRlv6W5yB6GFtqXedFfQ4wnyok/QunrgjaIBYfRncvxO/EzgUqzaexaHw1IXoivrTFesBVBwXsDFaDwIQXBZxGHs+NdAGnv2SkJeJMczInzIDuIzNxcofEu3nt00BkAYPrUi5h5nqMBMkuQRcm49bDpXQRdpqYTIYnfJoGW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208974>
 
-Jeff King wrote:
-> On Fri, Nov 02, 2012 at 05:43:00AM -0400, Jeff King wrote:
-> 
->> Yeah, I think that is it. IIRC, Ramsay is on cygwin, and I noticed this
->> in perl 5.16's POSIX.xs:
+ping?
+
+On Tue, Oct 30, 2012 at 11:11 AM, Stefan Zager <szager@google.com> wrote:
+> This is a refresh of a conversation from a couple of months ago.
+>
+> I didn't try to implement all the desired features (e.g., smart logic
+> for passing a -j parameter to recursive submodule invocations), but I
+> did address the one issue that Junio insisted on: the code makes a
+> best effort to detect whether xargs supports parallel execution on the
+> host platform, and if it doesn't, then it prints a warning and falls
+> back to serial execution.
+>
+> Stefan
+>
+> On Tue, Oct 30, 2012 at 11:03 AM,  <szager@google.com> wrote:
+>> The --jobs parameter may be used to set the degree of per-submodule
+>> parallel execution.
 >>
->> [...]
->>    * (4) The CRT strftime() "%Z" implementation calls __tzset(). That
->>    * calls CRT tzset(), but only the first time it is called, and in turn
->>    * that uses CRT getenv("TZ") to retrieve the timezone info from the CRT
->>    * local copy of the environment and hence gets the original setting as
->>    * perl never updates the CRT copy when assigning to $ENV{TZ}.
->> [...]
->> I wonder if Ramsay has an older perl that does not do this special
->> hackery right. I'll see if I can dig up where it first appeared.
-
-Hmm, sorry for not specifying this upfront, but this failure is on Linux. ;-)
-(Linux is my main platform, but I like to keep cygwin working because it has
-kept me sane on Windows ever since (about) 1995 ...)
-"Stranger in a strange land" ;-)
-
-This test is skipped on cygwin because I don't have cvs (or cvsps) installed
-on cygwin. (I have cvs-1.11.1p1.tar.gz and cvsps-2.2b1.tar.gz lying around
-on cygwin, so I could probably build them from source and do some testing if
-you would like me too. Just let me know.)
-
-This test is skipped on MinGW because cvsps is not installed. (I have just
-tried building cvsps, but there are compilation errors ...).
-
-I'm using perl v5.8.8 on Linux.
-
-> It looks like that code went into perl 5.11.
-> 
-> I wonder, even with this fix, though, if we need to be calling tzset to
-> reliably update from the environment. It sounds like it _should_ happen
-> automatically, except that if the CRT is calling the internal tzset, it
-> would not do the perl "grab from $ENV" magic. Calling tzset would make
-> sure the internal TZ is up to date.
-> 
-> Ramsay, what happens with this patch on top?
-
-This patch fixes the test for me.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-> index ceb119d..4c44050 100755
-> --- a/git-cvsimport.perl
-> +++ b/git-cvsimport.perl
-> @@ -24,11 +24,12 @@ use File::Basename qw(basename dirname);
->  use Time::Local;
->  use IO::Socket;
->  use IO::Pipe;
-> -use POSIX qw(strftime dup2 ENOENT);
-> +use POSIX qw(strftime tzset dup2 ENOENT);
->  use IPC::Open2;
->  
->  $SIG{'PIPE'}="IGNORE";
->  $ENV{'TZ'}="UTC";
-> +tzset();
->  
->  our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
->  my (%conv_author_name, %conv_author_email, %conv_author_tz);
-> @@ -855,8 +856,10 @@ sub commit {
->  	}
->  
->  	$ENV{'TZ'}=$author_tz;
-> +	tzset();
->  	my $commit_date = strftime("%s %z", localtime($date));
->  	$ENV{'TZ'}="UTC";
-> +	tzset();
->  	$ENV{GIT_AUTHOR_NAME} = $author_name;
->  	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
->  	$ENV{GIT_AUTHOR_DATE} = $commit_date;
-> .
-> 
+>> Signed-off-by: Stefan Zager <szager@google.com>
+>> ---
+>>  Documentation/git-submodule.txt |    8 ++++++-
+>>  git-submodule.sh                |   40 ++++++++++++++++++++++++++++++++++++++-
+>>  2 files changed, 46 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+>> index b4683bb..cb23ba7 100644
+>> --- a/Documentation/git-submodule.txt
+>> +++ b/Documentation/git-submodule.txt
+>> @@ -14,7 +14,8 @@ SYNOPSIS
+>>  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>>  'git submodule' [--quiet] init [--] [<path>...]
+>>  'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
+>> -             [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+>> +             [--reference <repository>] [--merge] [--recursive]
+>> +             [-j|--jobs [jobs]] [--] [<path>...]
+>>  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+>>               [commit] [--] [<path>...]
+>>  'git submodule' [--quiet] foreach [--recursive] <command>
+>> @@ -146,6 +147,11 @@ If the submodule is not yet initialized, and you just want to use the
+>>  setting as stored in .gitmodules, you can automatically initialize the
+>>  submodule with the `--init` option.
+>>  +
+>> +By default, each submodule is treated serially.  You may specify a degree of
+>> +parallel execution with the --jobs flag.  If a parameter is provided, it is
+>> +the maximum number of jobs to run in parallel; without a parameter, all jobs are
+>> +run in parallel.
+>> ++
+>>  If `--recursive` is specified, this command will recurse into the
+>>  registered submodules, and update any nested submodules within.
+>>  +
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index ab6b110..60a5f96 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -8,7 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
+>>  USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <repository> [<path>]
+>>     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>>     or: $dashless [--quiet] init [--] [<path>...]
+>> -   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+>> +   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [-j|--jobs [jobs]] [--] [<path>...]
+>>     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+>>     or: $dashless [--quiet] foreach [--recursive] <command>
+>>     or: $dashless [--quiet] sync [--] [<path>...]"
+>> @@ -500,6 +500,7 @@ cmd_update()
+>>  {
+>>         # parse $args after "submodule ... update".
+>>         orig_flags=
+>> +       jobs="1"
+>>         while test $# -ne 0
+>>         do
+>>                 case "$1" in
+>> @@ -518,6 +519,20 @@ cmd_update()
+>>                 -r|--rebase)
+>>                         update="rebase"
+>>                         ;;
+>> +               -j|--jobs)
+>> +                       case "$2" in
+>> +                       ''|-*)
+>> +                               jobs="0"
+>> +                               ;;
+>> +                       *)
+>> +                               jobs="$2"
+>> +                               shift
+>> +                               ;;
+>> +                       esac
+>> +                       # Don't preserve this arg.
+>> +                       shift
+>> +                       continue
+>> +                       ;;
+>>                 --reference)
+>>                         case "$2" in '') usage ;; esac
+>>                         reference="--reference=$2"
+>> @@ -551,11 +566,34 @@ cmd_update()
+>>                 shift
+>>         done
+>>
+>> +       # Correctly handle the case where '-q' came before 'update' on the command line.
+>> +       if test -n "$GIT_QUIET"
+>> +       then
+>> +               orig_flags="$orig_flags -q"
+>> +       fi
+>> +
+>>         if test -n "$init"
+>>         then
+>>                 cmd_init "--" "$@" || return
+>>         fi
+>>
+>> +       if test "$jobs" != 1
+>> +       then
+>> +               if ( echo test | xargs -P "$jobs" true 2>/dev/null )
+>> +               then
+>> +                       if ( echo test | xargs --max-lines=1 true 2>/dev/null ); then
+>> +                               max_lines="--max-lines=1"
+>> +                       else
+>> +                               max_lines="-L 1"
+>> +                       fi
+>> +                       module_list "$@" | awk '{print $4}' |
+>> +                       xargs $max_lines -P "$jobs" git submodule update $orig_flags
+>> +                       return
+>> +               else
+>> +                       echo "Warn: parallel execution is not supported on this platform."
+>> +               fi
+>> +       fi
+>> +
+>>         cloned_modules=
+>>         module_list "$@" | {
+>>         err=
+>> --
+>> 1.7.7.3
+>>
