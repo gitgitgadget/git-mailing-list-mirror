@@ -1,83 +1,56 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: RFD: fast-import is picky with author names (and maybe it should
- - but how much so?)
-Date: Fri, 02 Nov 2012 15:43:24 +0100
-Message-ID: <5093DC0C.5000603@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 02 15:43:40 2012
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: Set core.ignorecase globally
+Date: Fri, 2 Nov 2012 18:39:26 +0400
+Message-ID: <6DB2AD2A-6531-497E-B87E-0E884C4BCFBE@jetbrains.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 02 15:46:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUITD-0000GW-Gj
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 15:43:39 +0100
+	id 1TUIVt-0003A2-A0
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 15:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829Ab2KBOn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 10:43:27 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:54705 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750876Ab2KBOn0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2012 10:43:26 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8B26D20F59
-	for <git@vger.kernel.org>; Fri,  2 Nov 2012 10:43:25 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 02 Nov 2012 10:43:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to
-	:subject:content-type:content-transfer-encoding; s=smtpout; bh=d
-	bMl341JA2kUh/mIDbXiIeAU6Io=; b=kM5OwHmSSQtY0QJUHnHFDrG9+c/M9xq2H
-	gTOpIP9mca8gseb6Y7z3VQT4HSgsezhTm7Cxx7V3CZ1nS+cDyyM9DvMRk4o07lco
-	ngRO4CHFADzyq817RGw9OEDTnZlNhO44R99diV5PTJVwJ3NnR0R4x9SyZkeD/Hrv
-	fhvl2oi80s=
-X-Sasl-enc: cdRsibPOe4wR161jdyqo19nFk79RNavLoen8Kmjx44tq 1351867405
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 2EB6E8E00A2
-	for <git@vger.kernel.org>; Fri,  2 Nov 2012 10:43:25 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+	id S1753809Ab2KBOqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 10:46:12 -0400
+Received: from mail1.intellij.net ([46.137.178.215]:44629 "EHLO
+	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751933Ab2KBOqL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2012 10:46:11 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Nov 2012 10:46:10 EDT
+Received: (qmail 10641 invoked by uid 89); 2 Nov 2012 14:39:28 -0000
+Received: by simscan 1.1.0 ppid: 10553, pid: 10632, t: 0.0909s
+         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
+Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@195.5.138.42)
+  by ip-10-62-119-91.eu-west-1.compute.internal with ESMTPA; 2 Nov 2012 14:39:28 -0000
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208938>
 
-It seems that our fast-import is super picky with regards to author
-names. I've encountered author names like
+Hi,
 
-Foo Bar<foo.bar@dev.null>
-Foo Bar <foo.bar@dev.null
-foo.bar@dev.null
+Currently, core.ignorecase is set to true on case insensitive system like Windows or Mac on `git init` and `git clone`, and this setting is local to the created/cloned repository.
+Here is the man entry:
 
-in the self-hosting repo of some other dvcs, and the question is how to
-translate them faithfully into a git author name. In general, we try to do
+core.ignorecase
+           If true, this option enables various workarounds to enable git to work better on filesystems that are
+           not case sensitive, like FAT. For example, if a directory listing finds "makefile" when git expects
+           "Makefile", git will assume it is really the same file, and continue to remember it as "Makefile".
 
-fullotherdvcsname <none@none>
+           The default is false, except git-clone(1) or git-init(1) will probe and set core.ignorecase true if
+           appropriate when the repository is created.
 
-if the other system's entry does not parse as a git author name, but
-fast-import does not accept either of
+I suggest to set this globally by default when Git is installed, because there is little sense to have this option false on case insensitive systems (it will lead to confusions when renaming a file by changing only the case of letters). 
 
-Foo Bar<foo.bar@dev.null> <none@none>
-"Foo Bar<foo.bar@dev.null>" <none@none>
-
-because of the way it parses for <>. While the above could be easily
-turned into
-
-Foo Bar <foo.bar@dev.null>
-
-it would not be a faithful representation of the original commit in the
-other dvcs.
-
-So the question is:
-
-- How should we represent botched author entries faithfully?
-
-As a cororollary, fast-import may need to change or not.
-
-Michael
-
-P.S.: Yes, dvcs=hg, and the "earlier" remote-hg helper chokes on these.
-garbage in crash out :(
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
