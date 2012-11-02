@@ -1,93 +1,69 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: Re: What's cooking in git.git (Oct 2012, #09; Mon, 29)
-Date: Thu, 1 Nov 2012 20:12:20 -0500
-Message-ID: <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com>
-References: <20121029102114.GA14497@sigill.intra.peff.net>
-	<5092C234.9000307@ramsay1.demon.co.uk>
+From: Tim Janik <timj@gnu.org>
+Subject: Overlong lines with git-merge --log
+Date: Fri, 02 Nov 2012 02:30:15 +0100
+Message-ID: <50932227.3090401@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Nov 02 02:12:48 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 02 02:30:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TU5oV-0003sM-KX
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 02:12:47 +0100
+	id 1TU65i-00062D-Cg
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 02:30:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759140Ab2KBBMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2012 21:12:24 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:41191 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759527Ab2KBBMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2012 21:12:22 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n3so2305861lbo.19
-        for <git@vger.kernel.org>; Thu, 01 Nov 2012 18:12:20 -0700 (PDT)
+	id S932534Ab2KBBaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2012 21:30:21 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:57154 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932147Ab2KBBaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2012 21:30:20 -0400
+Received: by mail-ee0-f46.google.com with SMTP id b15so1571575eek.19
+        for <git@vger.kernel.org>; Thu, 01 Nov 2012 18:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=z6nCm8GdCLnj6t5CCMyqKd1jVZ6oitxm+hL7dS7bohI=;
-        b=NMzeeKT3XtYzxOlsg9UA6/697cPVFu8jhlvQKPGhaDsV3NFw5Z0ocURnw5rTxaAFGp
-         EVYlv1v5bFypk5UcL1Xb+NDYtrhTvzk2ZRcyRsF81P6xw2TlA4Y1rb8IClEfuxXgTVBz
-         JSizP/1MwWQl6UFHI1rQUCBC0XBqrwNQTnV6BCvhYFdp8z42JFk7J4/8UuGebmBbaNaJ
-         csDCQ0SULgAJONHeRqfXFgwb7L1I5juZZqLlQXKLzmoktQ/1Q70sg2H8g8yIJiuBbj0B
-         1jH9PsiJFK2+U80bI9EoGvTHBUmuqteI12NqVJXM/AC+Gg9rkacwFW02woAQI/rY0hhp
-         ZNHw==
-Received: by 10.112.102.10 with SMTP id fk10mr138779lbb.40.1351818740527; Thu,
- 01 Nov 2012 18:12:20 -0700 (PDT)
-Received: by 10.114.2.45 with HTTP; Thu, 1 Nov 2012 18:12:20 -0700 (PDT)
-In-Reply-To: <5092C234.9000307@ramsay1.demon.co.uk>
-X-Google-Sender-Auth: slxhAbFlNhjV2xKA9DWb__1I_vM
+        h=sender:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=crwkijXProPOkDpE3ZoNNTNhh5yKW8PaM9P6g17NHKo=;
+        b=hH1CcV79ir/AC8fQo4+vnK16W97yr/HogmcUhCwEYr/CWCzomy11gyyGnDDh9LD/Aw
+         ssuxJ5pEw+a9LqzbkQ82Y0jkL9RwRlCLwwBq7hrIUEElq8pmN5a1LRyEjWWamkpeFQXg
+         6Uz/DyvDvvhKLcxObEmYs3hANcWF2ohbijxBwhSXgdZ0u5LphM66Jm85R9SLLsLudTU/
+         Jcg8SgtQbiFTra33IY0IQ6mDpma5ZvO43SvVbXXpueyS35mxo2eLEf3poFaYEYpK02gk
+         feL1rataXNfNM2UROjlW4/JyR4l5Fc4iVco2idy0v1ULRQrsedseFOlE+6DAC1onRaMM
+         am/Q==
+Received: by 10.14.194.71 with SMTP id l47mr1081540een.6.1351819818022;
+        Thu, 01 Nov 2012 18:30:18 -0700 (PDT)
+Received: from [10.111.3.19] (e176194050.adsl.alicedsl.de. [85.176.194.50])
+        by mx.google.com with ESMTPS id g5sm19036017eem.4.2012.11.01.18.30.15
+        (version=SSLv3 cipher=OTHER);
+        Thu, 01 Nov 2012 18:30:16 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208895>
 
-On Thu, Nov 1, 2012 at 1:40 PM, Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
-> Jeff King wrote:
->> What's cooking in git.git (Oct 2012, #09; Mon, 29)
->> --------------------------------------------------
->>
->
-> [snip]
->
->> * cr/cvsimport-local-zone (2012-10-16) 1 commit
->>  - git-cvsimport: allow author-specific timezones
->>
->>  Allows "cvsimport" to read per-author timezone from the author info
->>  file.
->>
->>  Will merge to 'next'.
->
-> Just FYI, t9604-cvsimport-timestamps.sh is still failing for me.
->
-> I haven't spent too long on this yet, but I had hoped that setting
-> TZ would sidestep any DST issues. (I have downloaded new tzdata, but
-> have yet to install - actually I don't really want to!). It is not
-> clear from the tzset manpage what happens if you use the DST format
-> for TZ, but you don't provide the start/end date for DST, which is
-> what this test is doing.
->
-> Perhaps the test should use the non-DST format? e.g. "TZ=CST6 git ..."
-> Does the test really care about DST? (*if* that is indeed the problem).
+Hey all.
 
-It actually looks like your TZ database is fine and the problem is
-with the conversion to a struct tm.  In each case, the time is
-localized to the previous TZ value while the offset for the current TZ
-value.  For example, look at the first commit in the first test.  It
-converted the timestamp to 18:00 (CST6) while all the rest came
-through as expected.    I suspect the previous version of cvsimport
-would exhibit similar behavior with the first imported commit.  What
-is your platform?
+Using git-merge --log to merge commit messages that spawn multiple lines
+will produce overlong summary lines.
+That's because each summary line for a commit includes the entire commit
+message (all lines concatenated).
 
-> Also: Note that the first test calls git-cvsimport twice, first *with*
-> TZ set then again without; I suspect a cut/paste editing error.
+According to git-fmt-merge-msg(1), --log should 'populate the log
+message with one-line descriptions' instead of using the entire commit
+messages.
+Which would make a lot of sense, it's just not working as advertised.
 
-Oops.  The second invocation should have no effect on the repo so the
-unit test is still valid, but that was a mistake for sure.  Thanks.
+Encountered with git version 1.7.9.5.
 
-Chris
+-- 
+Yours sincerely,
+Tim Janik
+
+---
+http://timj.testbit.eu/ - Free software Author
