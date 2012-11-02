@@ -1,60 +1,124 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test-lib: avoid full path to store test results
-Date: Fri, 2 Nov 2012 11:20:51 -0400
-Message-ID: <20121102152051.GB24622@sigill.intra.peff.net>
-References: <1351570377-894-1-git-send-email-felipe.contreras@gmail.com>
- <20121030044609.GA10873@elie.Belkin>
- <CAMP44s3ap19TDsSo_fmNqJp+ROWo2Ka8bc35YQmR3mMw375WsQ@mail.gmail.com>
- <20121031012730.GY15167@elie.Belkin>
- <CAMP44s1xAeW2QZsNwRVRx+DEhYVVdiKbw-y-aNuo6unuv7pYZQ@mail.gmail.com>
- <20121031021318.GB15167@elie.Belkin>
- <CAMP44s3WODA2Vru0Q1b5EWA6_1vdHnPmFfUmDg0Phh0S=76O9w@mail.gmail.com>
- <509167C8.6090600@kdbg.org>
- <20121102131726.GC2598@sigill.intra.peff.net>
- <CAMP44s2bZa4BnTnSv0Zgdh52Vy613R3cWE3nSxXdR4dDVhJAyw@mail.gmail.com>
+Subject: Re: [PATCH] update-index/diff-index: use core.preloadindex
+ to improve performance
+Date: Fri, 2 Nov 2012 11:26:16 -0400
+Message-ID: <20121102152616.GD11170@sigill.intra.peff.net>
+References: <OF831F4AE9.23F46743-ONC1257AA7.00353C1F-C1257AA7.00361535@dcon.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:21:07 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	pro-logic@optusnet.com.au
+To: karsten.blees@dcon.de
+X-From: msysgit+bncBDO2DJFKTEFBBG6MZ6CAKGQEWM5FZ5I@googlegroups.com Fri Nov 02 16:26:34 2012
+Return-path: <msysgit+bncBDO2DJFKTEFBBG6MZ6CAKGQEWM5FZ5I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ia0-f186.google.com ([209.85.210.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUJ3S-0002e0-TJ
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 16:21:07 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757314Ab2KBPUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 11:20:54 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54628 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753591Ab2KBPUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 11:20:54 -0400
-Received: (qmail 5696 invoked by uid 107); 2 Nov 2012 15:21:37 -0000
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBG6MZ6CAKGQEWM5FZ5I@googlegroups.com>)
+	id 1TUJ8g-0008Gc-DW
+	for gcvm-msysgit@m.gmane.org; Fri, 02 Nov 2012 16:26:30 +0100
+Received: by mail-ia0-f186.google.com with SMTP id k10sf2382301iag.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 02 Nov 2012 08:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=BxbjG7oLs1iqxghDSSnyTuGItGtqH2iQ4JwCwHPcuGE=;
+        b=m5DkwSdyU6LYZvrwJHgRD0QSdk49DgttAI1YTWgGg+PO7MpNnxsqj+iwLb4DwhUW9h
+         cWtcJ4vh6KhxyMouJYuntvWurNqT27YzZuq2PZZS/WDqmtFqn6TjarMVnlrU76P/0l7k
+         kPrpED8IpXMJ+EDJ/PcVnZwJDOzPBIe63leVffzBpiL7tE3guNf90h09at8PnnjlGx8p
+         MdiYXUzxzMY0ueo0XKHj3yO5MS+9Ex9IWt6ewkF2LM56AhCqmybAW1s9sgisz1ZseR3S
+         NOCSuVYUTxZf4qiZhOGdGWs4tx19dFLbrLgJymPdGrNgdKvuSCzkaGTqdgEKkfmqSzTn
+       
+Received: by 10.50.242.106 with SMTP id wp10mr854212igc.0.1351869981101;
+        Fri, 02 Nov 2012 08:26:21 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.42.161.7 with SMTP id r7ls8750277icx.9.gmail; Fri, 02 Nov 2012
+ 08:26:19 -0700 (PDT)
+Received: by 10.42.163.135 with SMTP id c7mr1201221icy.13.1351869979088;
+        Fri, 02 Nov 2012 08:26:19 -0700 (PDT)
+Received: by 10.42.163.135 with SMTP id c7mr1201220icy.13.1351869979076;
+        Fri, 02 Nov 2012 08:26:19 -0700 (PDT)
+Received: from peff.net (75-15-5-89.uvs.iplsin.sbcglobal.net. [75.15.5.89])
+        by gmr-mx.google.com with ESMTPS id ul6si298481igb.2.2012.11.02.08.26.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 Nov 2012 08:26:19 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted sender) client-ip=75.15.5.89;
+Received: (qmail 5743 invoked by uid 107); 2 Nov 2012 15:27:02 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 11:21:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 11:20:51 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 11:27:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 11:26:16 -0400
+In-Reply-To: <OF831F4AE9.23F46743-ONC1257AA7.00353C1F-C1257AA7.00361535@dcon.de>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff@peff.net designates 75.15.5.89 as permitted sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <CAMP44s2bZa4BnTnSv0Zgdh52Vy613R3cWE3nSxXdR4dDVhJAyw@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208950>
 
-On Fri, Nov 02, 2012 at 04:17:27PM +0100, Felipe Contreras wrote:
+On Tue, Oct 30, 2012 at 10:50:42AM +0100, karsten.blees@dcon.de wrote:
 
-> > And me, who is trying to figure out what to do with this patch. It is
-> > presented on its own, outside of a series, with only the description "no
-> > reason not to do this".
+> 'update-index --refresh' and 'diff-index' (without --cached) don't honor
+> the core.preloadindex setting yet. Porcelain commands using these (such as
+> git [svn] rebase) suffer from this, especially on Windows.
 > 
-> Yeah, because I think it stands on its own. But I'll include it in the
-> remote-hg patch series, I already have it queued up.
+> Use read_cache_preload to improve performance.
+> 
+> Additionally, in builtin/diff.c, don't preload index status if we don't
+> access the working copy (--cached).
+> 
+> Results with msysgit on WebKit repo (2GB in 200k files):
+> 
+>                 | update-index | diff-index | rebase
+> ----------------+--------------+------------+---------
+> msysgit-v1.8.0  |       9.157s |    10.536s | 42.791s
+> + preloadindex  |       9.157s |    10.536s | 28.725s
+> + this patch    |       2.329s |     2.752s | 15.152s
+> + fscache [1]   |       0.731s |     1.171s |  8.877s
 
-Thanks.
+Cool numbers. On my quad-core SSD Linux box, I saw a few speedups, too.
+Here are the numbers for "update-index --refresh" on the WebKit repo
+(all are wall clock time, best-of-five):
+
+             | before | after
+  -----------+--------+--------
+  cold cache | 4.513s | 2.059s
+  warm cache | 0.252s | 0.164s
+
+Not as dramatic, but still nice. I wonder how a spinning disk would fare
+on the cold-cache case, though.  I also tried it with all but one CPU
+disabled, and the warm cache case was a little bit slower.
+
+Still, I don't think we need to worry about performance regressions,
+because people who don't have a setup suitable for it will not turn on
+core.preloadindex in the first place. And if they have it on, the more
+places we use it, probably the better.
 
 -Peff
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
