@@ -1,66 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Wishlist: git commit --no-edit
-Date: Fri, 2 Nov 2012 08:45:22 -0400
-Message-ID: <20121102124522.GA6817@sigill.intra.peff.net>
-References: <nntxt8ice9.fsf@stalhein.lysator.liu.se>
- <vpqfw4sgx33.fsf@grenoble-inp.fr>
- <20121102095954.GB30221@sigill.intra.peff.net>
- <CACnwZYe-za3Q0qvkfQ=qatB1-8eLUFA6ZzfS41yeqrV=8rVzGA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
+Date: Fri, 2 Nov 2012 09:12:55 -0400
+Message-ID: <20121102131255.GB2598@sigill.intra.peff.net>
+References: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
+ <1351623987-21012-5-git-send-email-felipe.contreras@gmail.com>
+ <20121031003721.GV15167@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 13:45:43 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Elijah Newren <newren@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 14:13:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUGd0-0007BD-Po
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 13:45:39 +0100
+	id 1TUH3f-0000Q8-KV
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 14:13:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010Ab2KBMp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 08:45:26 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54377 "EHLO
+	id S1756042Ab2KBNM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 09:12:58 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54406 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796Ab2KBMpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 08:45:25 -0400
-Received: (qmail 3797 invoked by uid 107); 2 Nov 2012 12:46:07 -0000
+	id S1753102Ab2KBNM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 09:12:57 -0400
+Received: (qmail 3966 invoked by uid 107); 2 Nov 2012 13:13:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 08:46:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 08:45:22 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 09:13:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 09:12:55 -0400
 Content-Disposition: inline
-In-Reply-To: <CACnwZYe-za3Q0qvkfQ=qatB1-8eLUFA6ZzfS41yeqrV=8rVzGA@mail.gmail.com>
+In-Reply-To: <20121031003721.GV15167@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208926>
 
-[+cc git@vger; please keep discussion on list]
+On Tue, Oct 30, 2012 at 05:37:21PM -0700, Jonathan Nieder wrote:
 
-On Fri, Nov 02, 2012 at 10:37:27AM -0200, Thiago Farina wrote:
+> If the commit does not have the SHOWN or UNINTERESTING flag set but it
+> is going to get the UNINTERESTING flag set during the walk because of
+> a negative commit listed on the command line, this patch won't help.
 
-> >> >   git commit --amend --no-edit
-> [...]
-> > Yup, should be working since 1.7.9.
-> [...]
-> I doesn't appear in the help either:
-> 
-> $ git version
-> git version 1.8.0.rc2
-> 
-> $ git commit -h 2>&1 | grep edit
->     -c, --reedit-message <commit>
->                           reuse and edit message from specified commit
->     -e, --edit            force edit of commit
+Right, so my understanding of the situation is that doing this:
 
-Yeah, parse_options doesn't advertise negative forms of boolean options,
-as they are implied. I don't think it's a big deal, especially now that
-it is covered in more detail in the manpage.
+  $ git branch foo master~1
+  $ git fast-export foo master~1..master
 
-I think changing it would probably involve adding "--no-edit" as a
-separate entry in the options struct.
+won't show "foo", which seems wrong to me. _But_ we currently get that
+wrong already, so Felipe's patches are not making anything worse, but
+are fixing some situations (namely when master~1 is not mentioned on the
+command-line, but rather in a marks file).
+
+Is that correct?
+
+If so, then this series isn't regressing behavior; the only downside is
+that it's an incomplete fix. In theory this could get in the way of the
+full fix later on, but given the commit messages and the archive of this
+discussion, it would be simple enough to revert it later in favor of a
+more full fix. Is that accurate?
+
+Sorry if I am belaboring the discussion. I just want to make sure I
+understand the situation before deciding what to do with the topic. It
+sounds like the consensus at this point is "not perfect, but good enough
+to make forward progress".
 
 -Peff
