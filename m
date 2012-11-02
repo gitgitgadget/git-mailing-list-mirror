@@ -1,78 +1,129 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Document 'git commit --no-edit' explicitly
-Date: Fri,  2 Nov 2012 11:39:30 +0100
-Message-ID: <1351852770-13897-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <nnpq3wiaha.fsf@stalhein.lysator.liu.se>
-Cc: peff@peff.net, nisse@lysator.liu.se,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:40:13 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Lack of netiquette, was Re: [PATCH v4 00/13] New remote-hg helper
+Date: Fri, 02 Nov 2012 12:03:15 +0100
+Message-ID: <5093A873.9090701@drmicha.warpmail.net>
+References: <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com> <20121029215631.GF20513@sigill.intra.peff.net> <alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info> <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com> <alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info> <CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com> <5090EFCA.7070606@drmicha.warpmail.net> <20121031102712.GB30879@sigill.intra.peff.net> <alpine.DEB.1.00.1210311900450.7256@s15462909.onlinehome-server.info> <CAMP44s2y-co4TELg28==axRmbF7xq3Qp7U8wjg6XtGAUMgf40w@mail.gmail.com> <20121031185903.GA1480@elie.Belkin> <CAMP44s2-UoT03OeTmM9=nh9wCUt84exPNuHyuThp=WQkxvCNLQ@mail.gmail.com> <alpine.DEB.1.00.1210312126080.7256@s15462909.onlinehome-server
+ .info> <bec4d263-b458-4636-9fa6-1c1202416810@email.android.com> <CAMP44s2G2MGuPH-UXfoKNOpx0cuSE87Uz=6B-7H1MzJHf6VMjA@mail.gmail.com> <50927D29.3020703@lsrfire.ath.cx> <5093949D.4070509@op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Nov 02 12:03:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUEfb-0002ay-3S
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 11:40:11 +0100
+	id 1TUF2B-0000M3-Vi
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 12:03:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754233Ab2KBKjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 06:39:54 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51691 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752806Ab2KBKjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 06:39:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qA2AWfAL025688
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 2 Nov 2012 11:32:41 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1TUEf6-00023b-8l; Fri, 02 Nov 2012 11:39:40 +0100
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1TUEf6-0003ct-5C; Fri, 02 Nov 2012 11:39:40 +0100
-X-Mailer: git-send-email 1.8.0.319.g8abfee4
-In-Reply-To: <nnpq3wiaha.fsf@stalhein.lysator.liu.se>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 02 Nov 2012 11:32:41 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qA2AWfAL025688
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1352457164.85355@ZPluIYADl2RmNoTgRSZtaA
+	id S1755637Ab2KBLDT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2012 07:03:19 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:55147 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755096Ab2KBLDS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2012 07:03:18 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8F2AB208DC;
+	Fri,  2 Nov 2012 07:03:17 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Fri, 02 Nov 2012 07:03:17 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=zd1/AJ18DlwGOEyZvLinW+
+	mm6Kc=; b=d9SUynIx20ndhmic8490QrIfwEISvuZxRPwV/QjCDtCf0IOJvX84Nr
+	t6g6f/VQf6icNLT5U8aA0LJrMt/+7jRPcIVK3oqv+jWB/4EmpTxD3LANdus+KBrT
+	aZioWWPAAqOD/I7wg8o+f53PIsMVWDaZgmdn7ZCdWMPAikGpbX/Rs=
+X-Sasl-enc: U/M/QFzn2ulRGaHBywUQL9YoCkSQsMkapS4KRcNmLo+j 1351854197
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 27DF04825E4;
+	Fri,  2 Nov 2012 07:03:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <5093949D.4070509@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208920>
 
+Andreas Ericsson venit, vidit, dixit 02.11.2012 10:38:
+> On 11/01/2012 02:46 PM, Ren=E9 Scharfe wrote:
+>>
+>> Also, and I'm sure you didn't know that, "Jedem das Seine" (to each
+>> his own) was the slogan of the Buchenwald concentration camp.  For
+>> that reason some (including me) hear the unspoken cynical
+>> half-sentence "and some people just have to be sent to the gas
+>> chamber" when someone uses this proverb.
+>>
+>=20
+> It goes further back than that.
+>=20
+> "Suum cuique pulchrum est" ("To each his own is a beautiful thing") i=
+s
+> a latin phrase said to be used frequently in the roman senate when
+> senators politely agreed to disagree and let a vote decide the outcom=
+e
+> rather than debating further.
+>=20
+> Please don't let the twisted views of whatever nazi idiot thought it
+> meant "you may have the wrong faith and therefore deserve to die, so =
+you
+> shall" pollute it. The original meaning is both poetic and democratic=
+,
+> and I firmly believe most people have the original meaning to the for=
+e
+> of their mind when using it. After all, very few people knowingly quo=
+te
+> nazi concentration camp slogans.
+>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-I was tempted to merge the paragraph with --edit::, but I thought this
-may add confusion. The use-cases for --edit and --no-edit are really
-different so I went for a separate paragraph, right below the --edit one.
+In fact, many German terms and words are "forbidden area" since Nazi
+times, but I don't think this one carries the same connotation.
 
- Documentation/git-commit.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+But that is a side track.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 3acf2e7..44b4347 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -188,6 +188,11 @@ OPTIONS
- 	commit log message unmodified.  This option lets you
- 	further edit the message taken from these sources.
- 
-+--no-edit::
-+	Use the selected commit message without launching an editor.
-+	For example, `git commit --amend --no-edit` amends a commit
-+	without changing its commit message.
-+
- --amend::
- 	Used to amend the tip of the current branch. Prepare the tree
- 	object you would want to replace the latest commit as usual
--- 
-1.8.0.319.g8abfee4
+Collaboration (and code review is a form of collaboration) requires
+communication. The linked code of conduct pages describe quite well how
+to ensure a productive environment in which "everyone" feels comfortabl=
+e
+communicating and collaborating. But even reading pages like these
+requires a common sense (of the many undefined terms therein), a sense
+which is usually present here on the list, and thus renders a page like
+these unnecessary for us. Once there is a lack of commonality, there is
+a lack of agreement about those undefined terms (what constitutes a
+personal attack etc.).
+
+Consequently, the only practical test for commonality and community
+acceptance appears to be just that: commonality and community
+acceptance. If many people in a community consider a tone or formulatio=
+n
+offensive, then it is offensive by the very definition of common sense
+(common to that community), and there's no point at all in arguing abou=
+t
+it. If I don't like a community's sense I either deal with it or leave =
+it.
+
+It's really not that different from coding style. If we prefer
+
+if (cond) {
+
+over
+
+if (cond)
+{
+
+then you either do it that way or your code gets rejected. The
+difference is that coding style is easier to define, of course. The
+common thing is that there's no point in arguing about it.
+
+Michael
