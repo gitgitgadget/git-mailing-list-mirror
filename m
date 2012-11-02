@@ -1,83 +1,98 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
-Date: Fri, 2 Nov 2012 16:35:29 +0100
-Message-ID: <CAMP44s1QPNCASyz3sVHPkJGv+PqrV5_Rt1ymVavupkaCtr-DJQ@mail.gmail.com>
-References: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
-	<1351623987-21012-5-git-send-email-felipe.contreras@gmail.com>
-	<20121031003721.GV15167@elie.Belkin>
-	<20121102131255.GB2598@sigill.intra.peff.net>
-	<alpine.DEB.1.00.1211021612320.7256@s15462909.onlinehome-server.info>
-	<20121102151955.GA24622@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] update-index/diff-index: use core.preloadindex
+ to improve performance
+Date: Fri, 2 Nov 2012 11:38:00 -0400
+Message-ID: <20121102153800.GE11170@sigill.intra.peff.net>
+References: <OF831F4AE9.23F46743-ONC1257AA7.00353C1F-C1257AA7.00361535@dcon.de>
+ <20121102152616.GD11170@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Elijah Newren <newren@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:35:44 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	pro-logic@optusnet.com.au
+To: karsten.blees@dcon.de
+X-From: msysgit+bncBDO2DJFKTEFBBW6RZ6CAKGQELOXOBPY@googlegroups.com Fri Nov 02 16:38:13 2012
+Return-path: <msysgit+bncBDO2DJFKTEFBBW6RZ6CAKGQELOXOBPY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f186.google.com ([209.85.216.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUJHb-0000sx-FA
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 16:35:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656Ab2KBPfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 11:35:31 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:54215 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953Ab2KBPfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 11:35:30 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so3717380obb.19
-        for <git@vger.kernel.org>; Fri, 02 Nov 2012 08:35:29 -0700 (PDT)
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBW6RZ6CAKGQELOXOBPY@googlegroups.com>)
+	id 1TUJK0-0003Sa-Se
+	for gcvm-msysgit@m.gmane.org; Fri, 02 Nov 2012 16:38:13 +0100
+Received: by mail-qc0-f186.google.com with SMTP id y9sf2405816qcp.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 02 Nov 2012 08:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nt6D4Plqz0yreysVHmYxYtlXqP2AHcf+6Mfm9wbvqa8=;
-        b=PWfbjgfP/FccBKpP+vMHghrp9DFDRAXnb9gbkPCoOG0DHcZr+ud/zOQvTzcjjxDpBZ
-         8Le2WSXHXdoeKzDWnSQZbAmdCRJp812pXNLajmBdvYVD9g3gIZfOSNUoJmhUxKvZpywx
-         WdJVpo1ExV0GlaeufSyyO50bPiBEjAi9KJeW67eDhkDTYBDVNFHz7tqh2qCHB9H63g0Z
-         ufweDsdXM6BXc6HCjOkTBwO+OpPWQ/98rJbSZ64iWd13fYMflcLzXh1buhRdxP+HW7ig
-         tQLp1vo3v9KpT7UKF4LS4cWpp5nupY3/hKa9kZs+usKOiezT2PI9ScqKOSJPpBdktOTq
-         zzSA==
-Received: by 10.182.235.46 with SMTP id uj14mr1637557obc.40.1351870529729;
- Fri, 02 Nov 2012 08:35:29 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Fri, 2 Nov 2012 08:35:29 -0700 (PDT)
-In-Reply-To: <20121102151955.GA24622@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208952>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=zmON2ZpVbJHUS+tiDk26bwSKLhPPtW0Z2SBEkucNjng=;
+        b=lIEiehbSGXDl8Qg8FURNPPtm5lFj18iEXF2m3yMbf3EjGgqTqU3Q7fHr4thB5yPc/V
+         Sw8U1kJUsmYOA5g1L7jjvWGK3cq5+aZ5pa4wrDHXhhF7MiMOxmF3pVXjsZ/x4NQYlJTf
+         O3t+c6wXLOtCRrD5zpvF41NqBRWGX0lCYtfVtv1tCpK/dIJcUQJvKM+uomPHakVegoRr
+         oZVDEukIIYYV50K6oUHPscNN7cUSNNE/h5v7yxW7kNCqsbRN5f3Z1g2ojAE8CauDijK5
+         ik5WuqeIa7w/cUdlczyZZK5a1NZcuv5JKzVntUGNcZZ99FKqA5QxSIJZ5cXb3daspDoO
+       
+Received: by 10.50.169.7 with SMTP id aa7mr874279igc.2.1351870683682;
+        Fri, 02 Nov 2012 08:38:03 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.41.194 with SMTP id h2ls3778572igl.4.canary; Fri, 02 Nov
+ 2012 08:38:02 -0700 (PDT)
+Received: by 10.42.118.1 with SMTP id v1mr1245791icq.17.1351870682974;
+        Fri, 02 Nov 2012 08:38:02 -0700 (PDT)
+Received: by 10.42.118.1 with SMTP id v1mr1245790icq.17.1351870682959;
+        Fri, 02 Nov 2012 08:38:02 -0700 (PDT)
+Received: from peff.net (75-15-5-89.uvs.iplsin.sbcglobal.net. [75.15.5.89])
+        by gmr-mx.google.com with ESMTPS id hr6si305109igc.0.2012.11.02.08.38.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 Nov 2012 08:38:02 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted sender) client-ip=75.15.5.89;
+Received: (qmail 6022 invoked by uid 107); 2 Nov 2012 15:38:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 11:38:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 11:38:00 -0400
+In-Reply-To: <20121102152616.GD11170@sigill.intra.peff.net>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff@peff.net designates 75.15.5.89 as permitted sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208953>
 
-On Fri, Nov 2, 2012 at 4:19 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Nov 02, 2012 at 04:17:14PM +0100, Johannes Schindelin wrote:
+On Fri, Nov 02, 2012 at 11:26:16AM -0400, Jeff King wrote:
 
->> May I just ask to include a summary of that rationale into the commit
->> message rather than relying on people having internet access and knowing
->> where to look? Adding the following to the commit message would be good
->> enough for me:
->>
->>       Note that
->>
->>               $ git branch foo master~1
->>               $ git fast-export foo master~1..master
->>
->>       still does not update the "foo" ref, but a partial fix is better
->>       than no fix.
->
-> Yes, I think that makes a lot of sense.
->
-> Felipe, I notice that you sent out a big "fast-export improvements"
-> series. Does that supersede this?
+> Still, I don't think we need to worry about performance regressions,
+> because people who don't have a setup suitable for it will not turn on
+> core.preloadindex in the first place. And if they have it on, the more
+> places we use it, probably the better.
 
-Yes. I noticed this patch fixes other tests.
+BTW, your patch was badly damaged in transit (wrapped, and tabs
+converted to spaces). I was able to fix it up, but please check your
+mailer's settings.
 
-Cheers.
+-Peff
 
 -- 
-Felipe Contreras
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
