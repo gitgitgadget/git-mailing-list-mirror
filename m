@@ -1,37 +1,37 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=1.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 7278 invoked by uid 107); 2 Nov 2012 17:37:03 -0000
+Received: (qmail 8572 invoked by uid 107); 2 Nov 2012 21:13:53 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Fri, 02 Nov 2012 13:36:59 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Fri, 02 Nov 2012 17:13:49 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763145Ab2KBRgL (ORCPT <rfc822;peff@peff.net>);
-	Fri, 2 Nov 2012 13:36:11 -0400
-Received: from plane.gmane.org ([80.91.229.3]:42142 "EHLO plane.gmane.org"
+	id S1754154Ab2KBVNA (ORCPT <rfc822;peff@peff.net>);
+	Fri, 2 Nov 2012 17:13:00 -0400
+Received: from plane.gmane.org ([80.91.229.3]:53811 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763032Ab2KBRgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 13:36:09 -0400
+	id S1752502Ab2KBVM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 17:12:59 -0400
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TULAD-00081V-8i
-	for git@vger.kernel.org; Fri, 02 Nov 2012 18:36:13 +0100
+	id 1TUOY6-00024z-HH
+	for git@vger.kernel.org; Fri, 02 Nov 2012 22:13:06 +0100
 Received: from ip68-6-43-149.sb.sd.cox.net ([68.6.43.149])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Nov 2012 18:36:13 +0100
+        for <git@vger.kernel.org>; Fri, 02 Nov 2012 22:13:06 +0100
 Received: from richard_hubbe11 by ip68-6-43-149.sb.sd.cox.net with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Nov 2012 18:36:13 +0100
+        for <git@vger.kernel.org>; Fri, 02 Nov 2012 22:13:06 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 To:	git@vger.kernel.org
 From:	rh <richard_hubbe11@lavabit.com>
 Subject: Re: [PATCH] gitweb.perl: fix %highlight_ext
-Date:	Fri, 2 Nov 2012 10:41:21 -0700
-Message-ID: <20121102104121.4f81a160e4e6368dde3a8373@lavabit.com>
+Date:	Fri, 2 Nov 2012 14:18:09 -0700
+Message-ID: <20121102141809.caf5cbc07f08769fd6a302ad@lavabit.com>
 References: <20121029094207.deafafed22ea70fbc4fbd4bb@lavabit.com>
 	<20121102145425.GC11170@sigill.intra.peff.net>
 Mime-Version: 1.0
@@ -51,6 +51,9 @@ Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
+X-Status: A
+
+Peff and the Final Arbiter,
 
 On Fri, 2 Nov 2012 10:54:25 -0400
 Jeff King <peff@peff.net> wrote:
@@ -100,10 +103,20 @@ Jeff King <peff@peff.net> wrote:
 > 
 >   1. It isn't formatted to apply with git-am. Please use
 >      git-format-patch.
+
+git format-patch command wouldn't work for me. I can see that you
+don't need more stuff to do but not knowing git I couldn't find the
+correct incantation to do this part. A problem with the files not
+being in a git repo I think. I'll spare you details.
+
 > 
 >   2. The commit message does not explain the reason for the change.
 > 
 >   3. It isn't signed-off.
+
+These I've done and submitted the patch again. (even though format
+is probably not going to work with git-am.
+
 > 
 > The first two are things I can fix up (though it is inconvenient for
 > me to do so), but the third is a show-stopper.  Please look through
@@ -112,10 +125,5 @@ Jeff King <peff@peff.net> wrote:
 > 
 > -Peff
 
-Thanks for taking the time to explain the workflow. If I can figure all this
-out I will try to do what's needed.  This is feeling like a strange cult
-that I've bumped into!
-
--- 
-"...she's got smarts and never farts and owns a chain of liquor stores."
+Thanks for your patience and help.
 
