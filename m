@@ -1,118 +1,83 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: bisect: "Needed a single revision" message is confusing
-Date: Fri, 02 Nov 2012 15:10:27 +0100
-Message-ID: <5093D453.3050907@drmicha.warpmail.net>
-References: <CAO5QaZkZYxvSYoAQGgrrH1ULM8rnwX5=0Ln-_zfh8OwdegNNoA@mail.gmail.com>
+Subject: RFD: fast-import is picky with author names (and maybe it should
+ - but how much so?)
+Date: Fri, 02 Nov 2012 15:43:24 +0100
+Message-ID: <5093DC0C.5000603@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Daniel Bonniot <bonniot@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 15:10:43 2012
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 02 15:43:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUHxL-00082o-5u
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 15:10:43 +0100
+	id 1TUITD-0000GW-Gj
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 15:43:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762868Ab2KBOKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 10:10:30 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35746 "EHLO
+	id S1752829Ab2KBOn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 10:43:27 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:54705 "EHLO
 	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752606Ab2KBOK3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2012 10:10:29 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id CA98B20C86;
-	Fri,  2 Nov 2012 10:10:28 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1750876Ab2KBOn0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2012 10:43:26 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8B26D20F59
+	for <git@vger.kernel.org>; Fri,  2 Nov 2012 10:43:25 -0400 (EDT)
 Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute5.internal (MEProxy); Fri, 02 Nov 2012 10:10:28 -0400
+  by compute2.internal (MEProxy); Fri, 02 Nov 2012 10:43:25 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=wvnRSma0ga6MQfL7SSz/++
-	/+m1w=; b=bppAJdqxgq+co3I4mHBU+MZPCJD/OtFT9mdA+GnH1TaHfjrDiBXiLJ
-	TnbR7logV2WkiCCMx+W7oY2wQjRZm7GivSTuST1jEBCTnj11Of27jJBiMO3IOhR6
-	v4HbhlYidJD4qMmW5KWG5K7BBC1lB0efvVbrfwN0VF9c+hPWBrqpE=
-X-Sasl-enc: kfU8ys3X8D2QGLuzT5gwDdcddQD7ii32GwLpCnFSbScj 1351865428
+	messagingengine.com; h=message-id:date:from:mime-version:to
+	:subject:content-type:content-transfer-encoding; s=smtpout; bh=d
+	bMl341JA2kUh/mIDbXiIeAU6Io=; b=kM5OwHmSSQtY0QJUHnHFDrG9+c/M9xq2H
+	gTOpIP9mca8gseb6Y7z3VQT4HSgsezhTm7Cxx7V3CZ1nS+cDyyM9DvMRk4o07lco
+	ngRO4CHFADzyq817RGw9OEDTnZlNhO44R99diV5PTJVwJ3NnR0R4x9SyZkeD/Hrv
+	fhvl2oi80s=
+X-Sasl-enc: cdRsibPOe4wR161jdyqo19nFk79RNavLoen8Kmjx44tq 1351867405
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 58ABC8E04AF;
-	Fri,  2 Nov 2012 10:10:28 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 2EB6E8E00A2
+	for <git@vger.kernel.org>; Fri,  2 Nov 2012 10:43:25 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
-In-Reply-To: <CAO5QaZkZYxvSYoAQGgrrH1ULM8rnwX5=0Ln-_zfh8OwdegNNoA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208937>
 
-Daniel Bonniot venit, vidit, dixit 02.11.2012 14:23:
-> Hi,
-> 
-> Suppose I'm doing a git bisect, say:
-> 
-> $ git bisect good 8c7a786b6c8eae8eac91083cdc9a6e337bc133b0
-> 
-> That works fine. The sha1 could also be a substring, as long as it's
-> unambiguous, e.g.:
-> 
-> $ git bisect good 8c7a786b6c
-> 
-> Now if it's ambiguous, I get an error message:
-> 
-> $ git bisect good 8
-> fatal: Needed a single revision
-> Bad rev input: 8
-> 
-> All fine and good. But what if I somehow input a non-existing sha1 (in
-> my case see [1]), e,g:
-> 
-> $ git bisect good 8c7a786b6c8eae8eac91083cdc9a6e337bc133b1
-> fatal: Needed a single revision
-> Bad rev input: 8c7a786b6c8eae8eac91083cdc9a6e337bc133b1
-> 
-> I understand that technically both "no revision" and "multiple
-> revisions" qualify as "not a single revision", but they correspond to
-> quite different situations. I think it would be more helpful to get
-> different error messages, something like:
-> 
-> Bad rev input: 8 refers to multiple revisions
-> Bad rev input: 8c7a786b6c8eae8eac91083cdc9a6e337bc133b1 does not refer
-> to a valid revision
-> 
-> (and avoid outputing the "fatal: Needed a single revision" message).
-> 
-> Is this a good idea? Anybody can think of better error messages?
-> 
-> I'm not familiar with the code base at all, but I could give a try at
-> implementing it, unless it's trivial enough that someone does it
-> earlier. After a quick look, it looks like either git-bisect itself or
-> rev-parse would need to be touched, any pointers and hints welcome.
-> 
-> Cheers,
-> 
-> Daniel
-> 
-> [1] if you want to know, I got a sha1 from one repository and used it
-> in another, which probably should work, except that when using git-svn
-> they don't. And the "single revision" error message lead me on a
-> tangent.
-> 
+It seems that our fast-import is super picky with regards to author
+names. I've encountered author names like
 
-The error comes from rev-parse, which is called by bisect. The problem
-is that
+Foo Bar<foo.bar@dev.null>
+Foo Bar <foo.bar@dev.null
+foo.bar@dev.null
 
-git rev-parse deadbeef
-git rev-parse --verify deadbeef
+in the self-hosting repo of some other dvcs, and the question is how to
+translate them faithfully into a git author name. In general, we try to do
 
-give two very different error messages (if there's no dead beef there),
-and that "git ref-parse --verify" gives the same error message for
-non-existing as for ambiguous revs.
+fullotherdvcsname <none@none>
 
-There are 3 places in builtins/rev-parse.c which call
-die_no_single_rev(), and at least some of them should probably choose
-the error message more carefully.
+if the other system's entry does not parse as a git author name, but
+fast-import does not accept either of
 
-Cheers,
+Foo Bar<foo.bar@dev.null> <none@none>
+"Foo Bar<foo.bar@dev.null>" <none@none>
+
+because of the way it parses for <>. While the above could be easily
+turned into
+
+Foo Bar <foo.bar@dev.null>
+
+it would not be a faithful representation of the original commit in the
+other dvcs.
+
+So the question is:
+
+- How should we represent botched author entries faithfully?
+
+As a cororollary, fast-import may need to change or not.
+
 Michael
+
+P.S.: Yes, dvcs=hg, and the "earlier" remote-hg helper chokes on these.
+garbage in crash out :(
