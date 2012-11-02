@@ -1,124 +1,121 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 16313 invoked by uid 107); 14 Jun 2012 08:20:34 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=unavailable autolearn_force=no version=3.4.0
+Received: (qmail 7278 invoked by uid 107); 2 Nov 2012 17:37:03 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Thu, 14 Jun 2012 04:20:33 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Fri, 02 Nov 2012 13:36:59 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755090Ab2FNIUZ (ORCPT <rfc822;peff@peff.net>);
-	Thu, 14 Jun 2012 04:20:25 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36293 "EHLO shiva.imag.fr"
+	id S1763145Ab2KBRgL (ORCPT <rfc822;peff@peff.net>);
+	Fri, 2 Nov 2012 13:36:11 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42142 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754912Ab2FNIUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 04:20:22 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8BGeY021444
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2012 10:11:16 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sf5Ht-0006XW-R6; Thu, 14 Jun 2012 10:20:17 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sf5Ht-0007rM-P8; Thu, 14 Jun 2012 10:20:17 +0200
-From:	y@imag.fr
-To:	git@vger.kernel.org, gitster@pobox.com
-Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2] fixup! 38388c8 reword message when splitting a commit.
-Date:	Thu, 14 Jun 2012 10:20:14 +0200
-Message-Id: <1339662014-30173-2-git-send-email-y>
-X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
-In-Reply-To: <1339662014-30173-1-git-send-email-y>
-References: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
- <1339662014-30173-1-git-send-email-y>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Jun 2012 10:11:16 +0200 (CEST)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5E8BGeY021444
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check:	1340266276.86051@eyZGexNYU+8asfPNSxrdFw
+	id S1763032Ab2KBRgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 13:36:09 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TULAD-00081V-8i
+	for git@vger.kernel.org; Fri, 02 Nov 2012 18:36:13 +0100
+Received: from ip68-6-43-149.sb.sd.cox.net ([68.6.43.149])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Nov 2012 18:36:13 +0100
+Received: from richard_hubbe11 by ip68-6-43-149.sb.sd.cox.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Nov 2012 18:36:13 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To:	git@vger.kernel.org
+From:	rh <richard_hubbe11@lavabit.com>
+Subject: Re: [PATCH] gitweb.perl: fix %highlight_ext
+Date:	Fri, 2 Nov 2012 10:41:21 -0700
+Message-ID: <20121102104121.4f81a160e4e6368dde3a8373@lavabit.com>
+References: <20121029094207.deafafed22ea70fbc4fbd4bb@lavabit.com>
+	<20121102145425.GC11170@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ip68-6-43-149.sb.sd.cox.net
+User-Agent: dsodnetnin
+X-Mailer: EZnn0.37p
+X-Newsreader: EZnn0.37p
+X-Gmane-NNTP-Posting-Host: EZnn0.37p
+Original-Received: from slem by 1.1 with local
+X-No-Archive: yes
+Archive: no
+X-Archive: expiry=11
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+On Fri, 2 Nov 2012 10:54:25 -0400
+Jeff King <peff@peff.net> wrote:
 
-The "splitting a commit" is a sub-case of the "rebase" case, hence,
-mention rebase like this:
+> On Mon, Oct 29, 2012 at 09:42:07AM -0700, rh wrote:
+> 
+> > I also consolidated exts where applicable.
+> > i.e. c and h maps to c
+> > 
+> > 
+> > -- 
+> > 
+> > diff --git a/a/gitweb.cgi b/b/gitweb.cgi
+> > index 060db27..155b238 100755
+> > --- a/a/gitweb.cgi
+> > +++ b/b/gitweb.cgi
+> > @@ -246,19 +246,19 @@ our %highlight_basename = (
+> >         'Makefile' => 'make',
+> >  );
+> >  # match by extension
+> > +
+> >  our %highlight_ext = (
+> >         # main extensions, defining name of syntax;
+> >         # see files in /usr/share/highlight/langDefs/ directory
+> > -       map { $_ => $_ }
+> > -               qw(py c cpp rb java css php sh pl js tex bib xml
+> > awk bat ini spec tcl sql make),
+> > +       (map { $_ => $_ } qw(py rb java css js tex bib xml awk bat
+> > ini spec tcl sql)),
+> >         # alternate extensions, see /etc/highlight/filetypes.conf
+> > -       'h' => 'c',
+> > -       map { $_ => 'sh'  } qw(bash zsh ksh),
+> > -       map { $_ => 'cpp' } qw(cxx c++ cc),
+> > -       map { $_ => 'php' } qw(php3 php4 php5 phps),
+> > -       map { $_ => 'pl'  } qw(perl pm), # perhaps also 'cgi'
+> > -       map { $_ => 'make'} qw(mak mk),
+> > -       map { $_ => 'xml' } qw(xhtml html htm),
+> > +       (map { $_ => 'c'   } qw(c h)),
+> > +       (map { $_ => 'sh'  } qw(sh bash zsh ksh)),
+> > +       (map { $_ => 'cpp' } qw(cpp cxx c++ cc)),
+> > +       (map { $_ => 'php' } qw(php php3 php4 php5 phps)),
+> > +       (map { $_ => 'pl'  } qw(pl perl pm)), # perhaps also 'cgi'
+> > +       (map { $_ => 'make'} qw(make mak mk)),
+> > +       (map { $_ => 'xml' } qw(xml xhtml html htm)),
+> 
+> I think the patch itself looks OK, but:
+> 
+>   1. It isn't formatted to apply with git-am. Please use
+>      git-format-patch.
+> 
+>   2. The commit message does not explain the reason for the change.
+> 
+>   3. It isn't signed-off.
+> 
+> The first two are things I can fix up (though it is inconvenient for
+> me to do so), but the third is a show-stopper.  Please look through
+> Documentation/SubmittingPatches, especially the bit about the
+> Developer's Certificate of Origin, and re-send.
+> 
+> -Peff
 
-  # You are currently splitting a commit during a rebase.
+Thanks for taking the time to explain the workflow. If I can figure all this
+out I will try to do what's needed.  This is feeling like a strange cult
+that I've bumped into!
 
-This makes the message consistant with "editing a commit":
-
-  # You are currently editing a commit during a rebase.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- t/t7512-status-help.sh | 8 ++++----
- wt-status.c            | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 3ce384a..b3f6eb9 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -210,7 +210,7 @@ test_expect_success 'status when splitting a commit' '
- 	git reset HEAD^ &&
- 	cat >expected <<-\EOF &&
- 	# Not currently on any branch.
--	# You are currently splitting a commit.
-+	# You are currently splitting a commit during a rebase.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
- 	# Changes not staged for commit:
-@@ -290,7 +290,7 @@ test_expect_success 'status: (continue first edit) second edit and split' '
- 	git reset HEAD^ &&
- 	cat >expected <<-\EOF &&
- 	# Not currently on any branch.
--	# You are currently splitting a commit.
-+	# You are currently splitting a commit during a rebase.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
- 	# Changes not staged for commit:
-@@ -359,7 +359,7 @@ test_expect_success 'status: (amend first edit) second edit and split' '
- 	git reset HEAD^ &&
- 	cat >expected <<-\EOF &&
- 	# Not currently on any branch.
--	# You are currently splitting a commit.
-+	# You are currently splitting a commit during a rebase.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
- 	# Changes not staged for commit:
-@@ -433,7 +433,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
- 	git reset HEAD^ &&
- 	cat >expected <<-\EOF &&
- 	# Not currently on any branch.
--	# You are currently splitting a commit.
-+	# You are currently splitting a commit during a rebase.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
- 	# Changes not staged for commit:
-diff --git a/wt-status.c b/wt-status.c
-index e65716d..c749267 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -886,7 +886,7 @@ static void show_rebase_in_progress(struct wt_status *s,
- 			status_printf_ln(s, color,
- 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
- 	} else if (split_commit_in_progress(s)) {
--		status_printf_ln(s, color, _("You are currently splitting a commit."));
-+		status_printf_ln(s, color, _("You are currently splitting a commit during a rebase."));
- 		if (advice_status_hints)
- 			status_printf_ln(s, color,
- 				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
 -- 
-1.7.11.rc0.57.g84a04c7
+"...she's got smarts and never farts and owns a chain of liquor stores."
 
