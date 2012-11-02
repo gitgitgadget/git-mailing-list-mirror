@@ -1,79 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
-Date: Fri, 2 Nov 2012 07:55:55 -0700
-Message-ID: <20121102145555.GA14774@elie.Belkin>
-References: <1351623987-21012-1-git-send-email-felipe.contreras@gmail.com>
- <1351623987-21012-5-git-send-email-felipe.contreras@gmail.com>
- <20121031003721.GV15167@elie.Belkin>
- <20121102131255.GB2598@sigill.intra.peff.net>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Set core.ignorecase globally
+Date: Fri, 2 Nov 2012 19:03:37 +0400
+Message-ID: <20121102190337.66a08366de41d29e745b0e4c@domain007.com>
+References: <6DB2AD2A-6531-497E-B87E-0E884C4BCFBE@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 02 15:56:23 2012
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 16:04:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUIfV-0005Qh-8r
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 15:56:21 +0100
+	id 1TUImu-000539-Mp
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 16:04:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348Ab2KBO4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 10:56:07 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:41736 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755308Ab2KBO4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 10:56:04 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so2511253pad.19
-        for <git@vger.kernel.org>; Fri, 02 Nov 2012 07:56:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=moYGQOAplAwJqoh5VYYOE79e+M2KFdutRJ+QeJljmHo=;
-        b=u5CoxSaM+iqSvn2gkk1qrSRb3l15aOdFK4ZgH5TlpL4DN/VddJgKHghzThpGY0nVD8
-         3ojjzSgtMCXm2zeqR4SHSKmvko5t9xv3Pfyk5E+NkI0/3/Yosm5qsb/zIK6DZQjYUcvQ
-         sIMPuiSvHoJVQiZ16vbCYHR3Cx1Ng/jW2GpqFlCYY7X5bNCePe8rNtZYeJPdmd379x6+
-         4WhzlNKJ20cygekGrnUSNo89iyW49NvAneVJB93SxW+P7B72I9pEPBKQUWzM4LoIjLIW
-         z8Wq5irkD4G9lArpNr/GeJ8aqgm7/z68KiMhNXQXl4qasV6dbfvtfZFmLwpHfhFehdSy
-         7bFw==
-Received: by 10.66.76.98 with SMTP id j2mr5899860paw.65.1351868163947;
-        Fri, 02 Nov 2012 07:56:03 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id o10sm5836230paz.37.2012.11.02.07.56.01
-        (version=SSLv3 cipher=OTHER);
-        Fri, 02 Nov 2012 07:56:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20121102131255.GB2598@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1755465Ab2KBPDn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2012 11:03:43 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:54770 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752806Ab2KBPDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 11:03:42 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id qA2F3bRn026492;
+	Fri, 2 Nov 2012 19:03:38 +0400
+In-Reply-To: <6DB2AD2A-6531-497E-B87E-0E884C4BCFBE@jetbrains.com>
+X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208944>
 
-Jeff King wrote:
+On Fri, 2 Nov 2012 18:39:26 +0400
+Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com> wrote:
 
-> If so, then this series isn't regressing behavior; the only downside is
-> that it's an incomplete fix. In theory this could get in the way of the
-> full fix later on, but given the commit messages and the archive of this
-> discussion, it would be simple enough to revert it later in favor of a
-> more full fix. Is that accurate?
->
-> Sorry if I am belaboring the discussion. I just want to make sure I
-> understand the situation before deciding what to do with the topic. It
-> sounds like the consensus at this point is "not perfect, but good enough
-> to make forward progress".
+> Currently, core.ignorecase is set to true on case insensitive system
+> like Windows or Mac on `git init` and `git clone`, and this setting
+> is local to the created/cloned repository.
+[...]
+> I suggest to set this globally by default when Git is installed,
+> because there is little sense to have this option false on case
+> insensitive systems (it will lead to confusions when renaming a file
+> by changing only the case of letters).=20
 
-Patch 1, 2, and 4 are good modulo their descriptions.  They should
-work fine without patch 3.
+Case sensitivity is a property of a file system, not the OS.
+What if I mount a device with ext3 file system via ext2fsd driver in on
+my Windows workstation?  extN have POSIX semantics so it's pointless to
+enforce case insensitivity on them.  The same possibly applies to NFS
+mounts.
 
-Patch 3 is a regression in comprehensibility.  I think we can do
-better.  Maybe all it would take is a less confusing description, and
-tweaks to the code (to loop over revs->cmdline instead of
-revs->pending) could come on top.
+Also note that NTFS (at least by default) is case insensitive but is
+case preserving, observe:
+
+C:\tmp>dir /b
+foo
+
+C:\tmp>rename foo Foo
+
+C:\tmp>dir /b
+=46oo
+
+C:\tmp>del fOO
+
+C:\tmp>dir /b
+
+C:\tmp>ver
+
+Microsoft Windows XP [=F7=C5=D2=D3=C9=D1 5.1.2600]
+
+I don't really know what to make out of this, but I'd not change the
+defaults until the reasons to do this are not really pressing (and
+they're not for now).
