@@ -1,10 +1,10 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 04/14] Add new simplified git-remote-testgit
-Date: Fri, 2 Nov 2012 16:42:42 +0100
-Message-ID: <CAMP44s0n_O-7j329WyTxsWgVbCV2mEAnPG-WQeWBFdmHdfOjnQ@mail.gmail.com>
+Subject: Re: [PATCH v4 09/14] remote-testgit: report success after an import
+Date: Fri, 2 Nov 2012 16:46:39 +0100
+Message-ID: <CAMP44s2ZPbda7yJ9UtOhWMqaKp4TaAgoyeUWUSrt0vco7RK+Tw@mail.gmail.com>
 References: <1351821738-17526-1-git-send-email-felipe.contreras@gmail.com>
-	<1351821738-17526-5-git-send-email-felipe.contreras@gmail.com>
-	<5093D0DD.3050801@gmail.com>
+	<1351821738-17526-10-git-send-email-felipe.contreras@gmail.com>
+	<5093D193.3030108@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -14,139 +14,95 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Sverre Rabbelier <srabbelier@gmail.com>
 To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:42:57 2012
+X-From: git-owner@vger.kernel.org Fri Nov 02 16:46:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUJOa-0008KO-Gs
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 16:42:56 +0100
+	id 1TUJSQ-0003oc-GB
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 16:46:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757636Ab2KBPmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2012 11:42:43 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:42553 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757441Ab2KBPmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 11:42:42 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so3760975oag.19
-        for <git@vger.kernel.org>; Fri, 02 Nov 2012 08:42:42 -0700 (PDT)
+	id S1757935Ab2KBPql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 11:46:41 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:55914 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757849Ab2KBPqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 11:46:40 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so3728863obb.19
+        for <git@vger.kernel.org>; Fri, 02 Nov 2012 08:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=YK7WoW59PAPEIh4JpMBwuJcrAvTas8Onp/NZ8CwoSqc=;
-        b=lzpJqE4Xw08t1JBsXbicwaQ51NZBRwumfbwBqow3H8zwHyyaUPh25y3L9m32ew512q
-         I66yn9zKEm1hOqbmo9TheRyafIii8gD0iZ7pFoALJ/ldIr1FW1su1tBZYi9ZkFFizfKH
-         X/vAiYurSaBT3TMinfRe8FVHw3+f3rrcRnC552wsZuJnfdFBmaOqpdwD2Pc3F+IV9deD
-         j2gZTpieT6srZydnpSRY6aQK6584xdTokCRV08glkrIa9+h7uFvqRfTI4HZ0rgxNTLnk
-         WGcNl13POyCPpJIYl8YwSJ22dLMlZ8cW2KVRwzU++d+qH9sorH/P5usC6Gxu61SfcKSX
-         6CZw==
-Received: by 10.60.1.164 with SMTP id 4mr1679319oen.96.1351870962129; Fri, 02
- Nov 2012 08:42:42 -0700 (PDT)
-Received: by 10.60.4.74 with HTTP; Fri, 2 Nov 2012 08:42:42 -0700 (PDT)
-In-Reply-To: <5093D0DD.3050801@gmail.com>
+        bh=x8Xq6WbZlEja3NI3kBB5YooiUkbAYdrQn3sw99cy/UA=;
+        b=0LEntDsi7zR8TIfbR9BstZhVtviipM6k/L+GL1VPlISXgOFw48sNK61PymCYy6iQqJ
+         CepniA9ve8FVUyz92UdXZJjhV3ciDdPSX0gqg6tsQuCGrfkqOMOWwpGttipO/JhmEmZF
+         SPqtN2fWgONYgTJBDLCv+ZfGgU1K5CcmJ+GLCri/Gvy813sqZq2nHDh76rna4YRVkTU/
+         rAutfUNFYEKJv6+Nt3C6N4wgn9oI9bnwABegAP4OokJ8SKakmm/c23Etd/1DEw+FdBeX
+         Bd/n2MzjMy/w3jhSpw7E8Ey5CnJip9LZ9Lbh9ndeIpPGEDTwoSdDnyOatHVaQmMxdBRh
+         m/1g==
+Received: by 10.182.235.46 with SMTP id uj14mr1665990obc.40.1351871199847;
+ Fri, 02 Nov 2012 08:46:39 -0700 (PDT)
+Received: by 10.60.4.74 with HTTP; Fri, 2 Nov 2012 08:46:39 -0700 (PDT)
+In-Reply-To: <5093D193.3030108@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208955>
 
-On Fri, Nov 2, 2012 at 2:55 PM, Stefano Lattarini
+On Fri, Nov 2, 2012 at 2:58 PM, Stefano Lattarini
 <stefano.lattarini@gmail.com> wrote:
-
->> +#!/bin/bash
+> On 11/02/2012 03:02 AM, Felipe Contreras wrote:
+>> Doesn't make a difference for the tests, but it does for the ones
+>> seeking reference.
 >>
-> I think git can't assume the existence of bash unconditionally, neither
-> in its scripts, nor in its tests (the exception being the tests on
-> bash completion, of course).  This script probably need to be re-written
-> to be a valid POSIX shell script.
-
-Well, this is a _reference_ script, and that is used only for testing
-purposes. The test itself can be like the bash completion tests, and
-simply be skipped.
-
-The reason I chose bash is because associative arrays, which you see
-in a later patch.
-
-> It almost is, anyway, apart from the nits below ...
->
->> +# Copyright (c) 2012 Felipe Contreras
->> +
->> +alias="$1"
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  git-remote-testgit | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
 >>
-> Just FYI: the double quoting here (and in several variable assignments
-> below) is redundant.  You can portably write it as:
->
->     alias=$1
->
-> and still be safe in the face of spaces and metacharacters in $1.
-> I'm not sure whether the Git coding guidelines suggest the use of
-> quoting in this situation though; if this is the case, feel free
-> to disregard my observation.
-
-What happens when you call this with:
-
- ./script "alias with spaces"
-
->> +url="$2"
+>> diff --git a/git-remote-testgit b/git-remote-testgit
+>> index 6c348b0..4e8b356 100755
+>> --- a/git-remote-testgit
+>> +++ b/git-remote-testgit
+>> @@ -59,7 +59,18 @@ while read line; do
+>>              sed -e "s#refs/heads/#${prefix}/heads/#g"
+>>          ;;
+>>      export)
+>> +        declare -A before after
 >> +
->> +# huh?
->> +url="${url#file://}"
+> If you convert this script to be a valid POSIX shell script (as I've
+> suggested in my reply to [PATCH v4 04/14]), you'll need to get rid of
+> this bashism (and those below) as well.
+
+Yeah, but I don't want to. I originally used transitory files, and
+used esoteric options of diff to do the same (which were probably not
+portable).
+
+In the end I liked this approach much better.
+
+If you have a solution for this that works in POSIX shell, I'll be
+glad to consider it, but for the moment, I think a simple, easy to
+understand and maintain code is more important, and if it needs bash,
+so be it.
+
+>> +        eval $(git for-each-ref --format='before[%(refname)]=%(objectname)')
 >> +
->> +dir="$GIT_DIR/testgit/$alias"
->> +prefix="refs/testgit/$alias"
->> +refspec="refs/heads/*:${prefix}/heads/*"
+>>          git fast-import --{import,export}-marks="$testgitmarks" --quiet
 >> +
->> +gitmarks="$dir/git.marks"
->> +testgitmarks="$dir/testgit.marks"
+>> +        eval $(git for-each-ref --format='after[%(refname)]=%(objectname)')
 >> +
->> +export GIT_DIR="$url/.git"
->> +
-> I believe this should be rewritten as:
->
->   GIT_DIR="$url/.git"; export GIT_DIR
->
-> in order to be portable to all the POSIX shells targeted by Git.
+>> +        for ref in "${!after[@]}"; do
+>> +            test "${before[$ref]}" ==  "${after[$ref]}" && continue
+>> +            echo "ok $ref"
+>> +        done
+>>          echo
+>>          ;;
+>>      '')
 
-_If_ we want this as POSIX, yeah.
-
->> +mkdir -p "$dir"
->> +
->> +test -e "$gitmarks" || echo -n > "$gitmarks"
->> +test -e "$testgitmarks" || echo -n > "$testgitmarks"
->> +
-> The '-n' option to echo is not portable.  To create an empty
-> file, you can just use
->
->    : > file
->
-> or
->
->    true > file
-
-All right, thanks.
-
->> +while read line; do
->> +    case "$line" in
->>
-> Useless double quoting (my previous observation about Git coding
-> guidelines applies here as well, of course).
-
-What if line has multiple spaces? To me it makes sense to quote it.
-
->> +        echo "feature import-marks=$gitmarks"
->> +        echo "feature export-marks=$gitmarks"
->> +        git fast-export --use-done-feature --{import,export}-marks="$testgitmarks" $refs | \
->>
-> Better avoid the tricky {foo,bar} bashism:
->
->     git fast-export --use-done-feature \
->                     --import-marks="$testgitmarks" \
->                     --export-marks="$testgitmarks" \
->                     $refs | \
-
-If that's what we want, yeah.
+Cheers.
 
 -- 
 Felipe Contreras
