@@ -1,67 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Wishlist: git commit --no-edit
-Date: Fri, 02 Nov 2012 10:42:24 +0100
-Message-ID: <vpqfw4sgx33.fsf@grenoble-inp.fr>
-References: <nntxt8ice9.fsf@stalhein.lysator.liu.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Oct 2012, #09; Mon, 29)
+Date: Fri, 2 Nov 2012 05:43:00 -0400
+Message-ID: <20121102094259.GA28414@sigill.intra.peff.net>
+References: <20121029102114.GA14497@sigill.intra.peff.net>
+ <5092C234.9000307@ramsay1.demon.co.uk>
+ <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: nisse@lysator.liu.se (Niels =?iso-8859-1?Q?M=F6ller?=)
-X-From: git-owner@vger.kernel.org Fri Nov 02 10:42:47 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 10:43:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUDm1-0005Ih-3i
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 10:42:45 +0100
+	id 1TUDmd-0005xo-Ho
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Nov 2012 10:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757026Ab2KBJmc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2012 05:42:32 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50104 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754099Ab2KBJma (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2012 05:42:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qA29ZQgw016295
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 2 Nov 2012 10:35:26 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TUDlh-0001CJ-6p; Fri, 02 Nov 2012 10:42:25 +0100
-In-Reply-To: <nntxt8ice9.fsf@stalhein.lysator.liu.se> ("Niels
- \=\?iso-8859-1\?Q\?M\=F6ller\=22's\?\=
-	message of "Fri, 02 Nov 2012 10:26:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 02 Nov 2012 10:35:26 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qA29ZQgw016295
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1352453726.95614@XRQKotMsTojb798g8CpKVw
+	id S1760469Ab2KBJnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2012 05:43:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54193 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760435Ab2KBJnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2012 05:43:06 -0400
+Received: (qmail 2146 invoked by uid 107); 2 Nov 2012 09:43:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Nov 2012 05:43:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2012 05:43:00 -0400
+Content-Disposition: inline
+In-Reply-To: <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208914>
 
-nisse@lysator.liu.se (Niels M=F6ller) writes:
+On Thu, Nov 01, 2012 at 08:12:20PM -0500, Chris Rorvick wrote:
 
-> I'd like to have a git commit option which is the opposite of --edit,=
- to
-> use the selected commit message as is, without invoking any editor.
->
-> Main use case I see would be
->
->   git commit --amend --no-edit
+> > Just FYI, t9604-cvsimport-timestamps.sh is still failing for me.
+> >
+> > I haven't spent too long on this yet, but I had hoped that setting
+> > TZ would sidestep any DST issues. (I have downloaded new tzdata, but
+> > have yet to install - actually I don't really want to!). It is not
+> > clear from the tzset manpage what happens if you use the DST format
+> > for TZ, but you don't provide the start/end date for DST, which is
+> > what this test is doing.
+> >
+> > Perhaps the test should use the non-DST format? e.g. "TZ=CST6 git ..."
+> > Does the test really care about DST? (*if* that is indeed the problem).
+> 
+> It actually looks like your TZ database is fine and the problem is
+> with the conversion to a struct tm.  In each case, the time is
+> localized to the previous TZ value while the offset for the current TZ
+> value.  For example, look at the first commit in the first test.  It
+> converted the timestamp to 18:00 (CST6) while all the rest came
+> through as expected.    I suspect the previous version of cvsimport
+> would exhibit similar behavior with the first imported commit.  What
+> is your platform?
 
-Err, isn't this already working? (maybe your version of Git is too old,
-but my 1.7.9.5 does this at least)
+Yeah, I think that is it. IIRC, Ramsay is on cygwin, and I noticed this
+in perl 5.16's POSIX.xs:
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+  #ifdef WIN32
+
+  /*
+   * (1) The CRT maintains its own copy of the environment, separate from
+   * the Win32API copy.
+   *
+   * (2) CRT getenv() retrieves from this copy. CRT putenv() updates this
+   * copy, and then calls SetEnvironmentVariableA() to update the Win32API
+   * copy.
+   *
+   * (3) win32_getenv() and win32_putenv() call GetEnvironmentVariableA() and
+   * SetEnvironmentVariableA() directly, bypassing the CRT copy of the
+   * environment.
+   *
+   * (4) The CRT strftime() "%Z" implementation calls __tzset(). That
+   * calls CRT tzset(), but only the first time it is called, and in turn
+   * that uses CRT getenv("TZ") to retrieve the timezone info from the CRT
+   * local copy of the environment and hence gets the original setting as
+   * perl never updates the CRT copy when assigning to $ENV{TZ}.
+   *
+   * Therefore, we need to retrieve the value of $ENV{TZ} and call CRT
+   * putenv() to update the CRT copy of the environment (if it is different)
+   * whenever we're about to call tzset().
+   [...]
+
+I wonder if Ramsay has an older perl that does not do this special
+hackery right. I'll see if I can dig up where it first appeared.
+
+-Peff
