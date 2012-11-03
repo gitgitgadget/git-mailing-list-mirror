@@ -1,86 +1,126 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Enable parallelism in git submodule update.
-Date: Sat, 03 Nov 2012 20:13:52 +0100
-Message-ID: <50956CF0.3030401@web.de>
-References: <5090168f.5e+7ZUFKdYL2Qnw7%szager@google.com> <CAHOQ7J-e=KBOsjoeTWsf1f+LNgaAxN974-FXNMeOy7B-FR0wyg@mail.gmail.com> <50953B52.3070107@web.de> <CABURp0pkv714k_+S2seTtdHMNJFzkgijYuNuWcfNvnF+c21cDg@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH] git p4: catch p4 describe errors
+Date: Sat, 3 Nov 2012 19:07:01 -0400
+Message-ID: <20121103230701.GA11267@padd.com>
+References: <1351593879401-7570219.post@n2.nabble.com>
+ <20121103140946.GB4651@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 03 20:14:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Arthur <a.foulon@amesys.fr>, Matt Arsenault <arsenm2@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 04 00:07:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUjAX-0005cH-4S
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Nov 2012 20:14:09 +0100
+	id 1TUmoB-0003JP-Rf
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 00:07:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769Ab2KCTN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2012 15:13:56 -0400
-Received: from mout.web.de ([212.227.15.4]:58553 "EHLO mout.web.de"
+	id S1752762Ab2KCXHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2012 19:07:06 -0400
+Received: from honk.padd.com ([74.3.171.149]:47274 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751113Ab2KCTNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2012 15:13:55 -0400
-Received: from [192.168.178.41] ([91.3.179.97]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0M89uv-1T8XXl3yWv-00wAEu; Sat, 03 Nov 2012 20:13:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <CABURp0pkv714k_+S2seTtdHMNJFzkgijYuNuWcfNvnF+c21cDg@mail.gmail.com>
-X-Enigmail-Version: 1.4.5
-X-Provags-ID: V02:K0:V/ibgpdJkWgOdRN0DTRzhZfkb97XP22NAPct9Jtw6Zg
- o9P7b8FhPuTVrbqHUC9Np8DwOcIKzUaXRPksxcSWeVD186EQK3
- 37/5BCa5ZI6hpy/wPmNVEpqGQtfEH7UKwuSs+gKA35I92UR+JL
- HcQQs7H3G1S7MvxC7eFQcf7tpKrIg9rXZuxnxcU7XcUu+Jlc0W
- Enp4BEv0eYSRF4ETHR65Q==
+	id S1751184Ab2KCXHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2012 19:07:04 -0400
+Received: from arf.padd.com (unknown [50.55.148.232])
+	by honk.padd.com (Postfix) with ESMTPSA id 4C7F1D27;
+	Sat,  3 Nov 2012 16:07:03 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 1102522B90; Sat,  3 Nov 2012 19:07:01 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20121103140946.GB4651@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208985>
 
-Am 03.11.2012 19:44, schrieb Phil Hord:
-> On Sat, Nov 3, 2012 at 11:42 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> Am 30.10.2012 19:11, schrieb Stefan Zager:
->>> This is a refresh of a conversation from a couple of months ago.
->>>
->>> I didn't try to implement all the desired features (e.g., smart logic
->>> for passing a -j parameter to recursive submodule invocations), but I
->>> did address the one issue that Junio insisted on: the code makes a
->>> best effort to detect whether xargs supports parallel execution on the
->>> host platform, and if it doesn't, then it prints a warning and falls
->>> back to serial execution.
->>
->> I suspect not passing on --jobs recursively like you do here is the
->> right thing to do, as that would give exponential growth of jobs with
->> recursion depth, which makes no sense to me.
-> 
-> On the other hand, since $jobs is still defined when the recursive
-> call to is made to 'eval cmd_update "$orig_flags"', I suspect the
-> value *is* passed down recursively.
+Group the two calls to "p4 describe" into a new helper function,
+and try to validate the p4 results.  The current behavior when p4
+describe fails is to die with a python backtrace.  The new behavior
+will print the full response.
 
-But for $jobs != 1 Stefan's code doesn't use eval cmd_update but
-starts the submodule script again:
+Based-on-patch-by: Matt Arsenault <arsenm2@gmail.com>
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
 
-+                       xargs $max_lines -P "$jobs" git submodule update $orig_flags
+Arthur and Matt, you've both had intermittent "p4 describe"
+errors.  I've not been able to repeat this or come up with
+a possible root cause.  But it is clear that the error handling
+in this area is weak.
 
-That should get rid of the $jobs setting, or am I missing something?
+Can you continue using git-p4 with this patch applied?  If
+it fails again, at least we'll get some interesting output.
 
->  Maybe $jobs should be manually
-> reset before recursing -- unless it is "0" -- though I expect someone
-> would feel differently if she had one submodule on level 1 and 10
-> submodules on level 2.  She would be surprised, then, when  --jobs=10
-> seemed to have little affect on performance.
+This is appropriate for upstream too, since it should do no harm
+and might flush out a bug at some point.  It includes "-s" on
+both p4 describe calls now as Matt suggested.
 
-Hmm, good point. However we implement that, it should at least be
-properly documented in the man page (and in the use case you describe
-a "git submodule foreach 'git submodule update -j 10'" could be the
-solution if we choose to not propagate the jobs option).
+		-- Pete
 
->  So maybe it is best to
-> leave it as it is, excepting that the apparent attempt not to pass the
-> switch down is probably misleading.
+ git-p4.py | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
-I didn't test it, but I think it should work (famous last words ;-).
+diff --git a/git-p4.py b/git-p4.py
+index 882b1bb..e51a081 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -169,6 +169,29 @@ def p4_reopen(type, f):
+ def p4_move(src, dest):
+     p4_system(["move", "-k", wildcard_encode(src), wildcard_encode(dest)])
+ 
++def p4_describe(change):
++    """Make sure it returns a valid result by checking for
++       the presence of field "time".  Return a dict of the
++       results."""
++
++    ds = p4CmdList(["describe", "-s", str(change)])
++    if len(ds) != 1:
++        die("p4 describe -s %d did not return 1 result: %s" % (change, str(ds)))
++
++    d = ds[0]
++
++    if "p4ExitCode" in d:
++        die("p4 describe -s %d exited with %d: %s" % (change, d["p4ExitCode"],
++                                                      str(d)))
++    if "code" in d:
++        if d["code"] == "error":
++            die("p4 describe -s %d returned error code: %s" % (change, str(d)))
++
++    if "time" not in d:
++        die("p4 describe -s %d returned no \"time\": %s" % (change, str(d)))
++
++    return d
++
+ #
+ # Canonicalize the p4 type and return a tuple of the
+ # base type, plus any modifiers.  See "p4 help filetypes"
+@@ -2543,7 +2566,7 @@ class P4Sync(Command, P4UserMap):
+     def importChanges(self, changes):
+         cnt = 1
+         for change in changes:
+-            description = p4Cmd(["describe", str(change)])
++            description = p4_describe(change)
+             self.updateOptionDict(description)
+ 
+             if not self.silent:
+@@ -2667,14 +2690,8 @@ class P4Sync(Command, P4UserMap):
+ 
+         # Use time from top-most change so that all git p4 clones of
+         # the same p4 repo have the same commit SHA1s.
+-        res = p4CmdList("describe -s %d" % newestRevision)
+-        newestTime = None
+-        for r in res:
+-            if r.has_key('time'):
+-                newestTime = int(r['time'])
+-        if newestTime is None:
+-            die("\"describe -s\" on newest change %d did not give a time")
+-        details["time"] = newestTime
++        res = p4_describe(newestRevision)
++        details["time"] = res["time"]
+ 
+         self.updateOptionDict(details)
+         try:
+-- 
+1.7.12.1.457.g468b3ef
