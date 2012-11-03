@@ -1,60 +1,103 @@
-From: Matt Arsenault <arsenm2@gmail.com>
-Subject: Re: [PATCH] git p4: catch p4 describe errors
-Date: Sat, 3 Nov 2012 16:12:07 -0700
-Message-ID: <5747DA7F-485C-4AF3-88A4-B19F517C1E11@gmail.com>
-References: <1351593879401-7570219.post@n2.nabble.com> <20121103140946.GB4651@padd.com> <20121103230701.GA11267@padd.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4 clone @all error
+Date: Sat, 3 Nov 2012 19:13:05 -0400
+Message-ID: <20121103231305.GB11267@padd.com>
+References: <1351593879401-7570219.post@n2.nabble.com>
+ <CABYiQp=1HEW=53U2Rck5vckhq0PB3C9iuanoXeVvNG6Xv5+oHg@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Arthur <a.foulon@amesys.fr>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 00:12:24 2012
+Cc: Arthur <a.foulon@amesys.fr>, git@vger.kernel.org
+To: Thomas Berg <merlin66b@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 00:13:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUmt6-0007KT-DY
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 00:12:24 +0100
+	id 1TUmu3-00089F-GI
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 00:13:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756222Ab2KCXMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2012 19:12:12 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:54129 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782Ab2KCXML convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Nov 2012 19:12:11 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so3162938pad.19
-        for <git@vger.kernel.org>; Sat, 03 Nov 2012 16:12:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=uVmKz3MEqCWMAe0ATfSOhD1IzheYbzONWZERsoOFttA=;
-        b=Kknwlj1JKtEHReV0DbjOujlm5W8cRr4h/jK4LIsLmXrmtLc5J/UtRZII4LLwu4F/8q
-         1I73z3uzQGSdxyvOBmqPm167SWKvlTcxFG2v3YwKpICfPhoqZGHFC3dsEkhYLj2w237S
-         ogIIww+u1llM9bGr3L0ier00RziiIXRs8u2wKTbDCV59dOCK0YHT612EXeRY87w68i6w
-         0GK4JI8pUAiCdy87jUa97R1UaOw3/ji+VXa0jUkTrG4In0yBxzVkQyfWlLxDlrMxPCqY
-         xDm4xMsEWCfPxTqb6HwFty+AwXG1qlJ0xZIi8BShFlme02QyxMDlJMiRgON67BGz04a9
-         2mGQ==
-Received: by 10.68.137.234 with SMTP id ql10mr18097406pbb.158.1351984330735;
-        Sat, 03 Nov 2012 16:12:10 -0700 (PDT)
-Received: from [192.168.1.13] (c-76-102-117-203.hsd1.ca.comcast.net. [76.102.117.203])
-        by mx.google.com with ESMTPS id iu8sm7985413pbc.71.2012.11.03.16.12.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Nov 2012 16:12:10 -0700 (PDT)
-In-Reply-To: <20121103230701.GA11267@padd.com>
-X-Mailer: Apple Mail (2.1499)
+	id S1756699Ab2KCXNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2012 19:13:12 -0400
+Received: from honk.padd.com ([74.3.171.149]:45618 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751782Ab2KCXNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2012 19:13:09 -0400
+Received: from arf.padd.com (unknown [50.55.148.232])
+	by honk.padd.com (Postfix) with ESMTPSA id 104A3D27;
+	Sat,  3 Nov 2012 16:13:08 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id CF25624301; Sat,  3 Nov 2012 19:13:05 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CABYiQp=1HEW=53U2Rck5vckhq0PB3C9iuanoXeVvNG6Xv5+oHg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/208987>
 
-
-On Nov 3, 2012, at 16:07 , Pete Wyckoff <pw@padd.com> wrote:
+merlin66b@gmail.com wrote on Wed, 31 Oct 2012 15:01 +0100:
+> On Tue, Oct 30, 2012 at 11:44 AM, Arthur <a.foulon@amesys.fr> wrote:
+> > The problem :
+> >
+> > Importing revision 7727 (100%)Traceback (most recent call last):
+> >   File "/usr/bin/git-p4", line 3183, in <module>
+> >     main()
+> >   File "/usr/bin/git-p4", line 3177, in main
+> >     if not cmd.run(args):
+> >   File "/usr/bin/git-p4", line 3048, in run
+> >     if not P4Sync.run(self, depotPaths):
+> >   File "/usr/bin/git-p4", line 2911, in run
+> >     self.importChanges(changes)
+> >   File "/usr/bin/git-p4", line 2618, in importChanges
+> >     self.initialParent)
+> >   File "/usr/bin/git-p4", line 2198, in commit
+> >     epoch = details["time"]
+> > KeyError: 'time'
 > 
-> Arthur and Matt, you've both had intermittent "p4 describe"
-> errors.  I've not been able to repeat this or come up with
-> a possible root cause.  But it is clear that the error handling
-> in this area is weak.
-I tried this week to find the commit that caused the problem, but there were too many to sift through so I haven't managed to see it again either
+> Are you permanently converting a project, or are you planning to
+> continue submitting to perforce with git-p4?
+> 
+> I have seen similar bugs myself when using the --detect-branches
+> option.
+
+I hope --detect-branches is unrelated to any problems related to
+p4 describe, because it is used identically both with and without
+the option.  But you never know.
+
+> The branch detection in git-p4 is flaky anyway: it is limited
+> what it can handle, and it used to require correct perforce branch
+> specs at least, so I would recommend not using it unless you know what
+> it is doing under the hood.
+
+It relies on heuristics because the git idea of branches doesn't
+have a direct analog in p4, even though p4 users will organize
+their files and directories in ways that suggest branches.  The
+way it works is described in the BRANCH DETECTION part of the
+git-p4.1 man page.
+
+The man page also explains how you can use a config variable
+to explicitly define the branch relationships.  This might help:
+
+git-p4.branchList::
+        List of branches to be imported when branch detection is
+        enabled.  Each entry should be a pair of branch names separated
+        by a colon (:).  This example declares that both branchA and
+        branchB were created from main:
+
+	git config       git-p4.branchList main:branchA
+	git config --add git-p4.branchList main:branchB
+
+It still only works for branches at the same "level" of the
+depot path.
+
+> Instead I would just clone a single branch at a time (drop the
+> --detect-branches) and work on that.
+> 
+> I do this even in the rare cases when I need more than one perforce
+> branch in the same git repo - there are other ways to achieve the same
+> thing.
+
+Yep, that should alway works.
+
+		-- Pete
