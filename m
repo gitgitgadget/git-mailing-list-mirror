@@ -1,251 +1,175 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/3] Add new remote-bzr transport helper
-Date: Sun,  4 Nov 2012 03:22:01 +0100
-Message-ID: <1351995723-20396-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 3/3] remote-bzr: add simple tests
+Date: Sun,  4 Nov 2012 03:22:03 +0100
+Message-ID: <1351995723-20396-4-git-send-email-felipe.contreras@gmail.com>
 References: <1351995723-20396-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 03:22:32 2012
+X-From: git-owner@vger.kernel.org Sun Nov 04 03:22:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUpr5-0000bs-NP
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 03:22:32 +0100
+	id 1TUprF-0000ke-L4
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 03:22:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570Ab2KDCWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2012 22:22:19 -0400
+	id S1752916Ab2KDCW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2012 22:22:27 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:45078 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752318Ab2KDCWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2012 22:22:17 -0400
+	with ESMTP id S1752809Ab2KDCWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2012 22:22:25 -0400
 Received: by mail-bk0-f46.google.com with SMTP id jk13so1658012bkc.19
-        for <git@vger.kernel.org>; Sat, 03 Nov 2012 19:22:16 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 03 Nov 2012 19:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=2vyZtwe2tQHUBke5QvMA3py0cEjc7SWLfgXaqx0NXcg=;
-        b=0QMZUwmHMLc9//O2vZy2pQjB3oQdmAxU5ohKsnNKA1Ur2fO3w9V7rslGhqrSFRAThS
-         6EzJ7jdjDpF7ox/C5a1F+vATZmvNslXJArkHWmDLG0lsrTuCHZ+efFN+F6AHkXrsIDIE
-         vWCbvNngaeF+vS1nF0tUp+sXcLsQSEgLsuedvSKOUal4Y08MmT+UYgxPAojQNAz42JAy
-         YlqRMyRjXTLcr+kdDlNeuGfEG2Da/h2pInBPyNC3sCLBVKYddcT5CKiKIfmQfdKJw+xD
-         7wZ5/Cf5O1Bt1+7zlZvQg9IGvlfljjQXppz9O2T7nNQ6BTNB7Ou/V6cIq8S3NTDAVo2y
-         5bsg==
-Received: by 10.204.157.145 with SMTP id b17mr1405093bkx.68.1351995735986;
-        Sat, 03 Nov 2012 19:22:15 -0700 (PDT)
+        bh=G5WTmEWZGGzXd5ppI3huWB1c2q6eUZsrtJku8K20bOY=;
+        b=fxzz8V8G76XMnPrz9+3dE82A+Bv6OSCvsHJYStemypDY+P1WojbubJL+v7AeG4yPqy
+         ci7R9Afvb0dyLp/2xuQVoeH1hMO/55co6hZwXoHxxhdzprZY/HQQg4IfztkTTq5iUwV0
+         496QQCsMZV5myaBcRG7yfiN88vYEjXvOKKS4lK54AxhQz9C+taDeZt2nVfwSjr9qSv2q
+         4h7XxGQFy7eAjxDLWJZ0Y+TkgLQgmOACk08q55qJ1tDdLGTkNGM0FzDkedb6yr4HUBeV
+         VeWr+5hg+bStwh4cJs+O/f2IycIU2DpekK7rO+pzCPY/XWc5pV1frglHwDBWYA3SY/og
+         qTCg==
+Received: by 10.204.129.211 with SMTP id p19mr1445457bks.94.1351995743814;
+        Sat, 03 Nov 2012 19:22:23 -0700 (PDT)
 Received: from localhost (ip-109-43-0-39.web.vodafone.de. [109.43.0.39])
-        by mx.google.com with ESMTPS id e13sm7947465bkw.12.2012.11.03.19.22.13
+        by mx.google.com with ESMTPS id r15sm7944622bkw.9.2012.11.03.19.22.21
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Nov 2012 19:22:15 -0700 (PDT)
+        Sat, 03 Nov 2012 19:22:22 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351995723-20396-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209007>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-bzr | 187 ++++++++++++++++++++++++++++++++++
- 1 file changed, 187 insertions(+)
- create mode 100755 contrib/remote-helpers/git-remote-bzr
+ contrib/remote-helpers/test-bzr.sh | 111 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 111 insertions(+)
+ create mode 100755 contrib/remote-helpers/test-bzr.sh
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
 new file mode 100755
-index 0000000..76a609a
+index 0000000..8594ffc
 --- /dev/null
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -0,0 +1,187 @@
-+#!/usr/bin/env python
++++ b/contrib/remote-helpers/test-bzr.sh
+@@ -0,0 +1,111 @@
++#!/bin/sh
 +#
 +# Copyright (c) 2012 Felipe Contreras
 +#
 +
-+# Just copy to your ~/bin, or anywhere in your $PATH.
-+# Then you can clone with:
-+# git clone bzr::/path/to/mercurial/repo/
-+#
-+# You need to have bzr-fastimport installed:
-+# http://wiki.bazaar.canonical.com/BzrFastImport
-+#
-+# You might also need to find this line bzr-fastimport's
-+# code, and modify it:
-+#
-+# self._use_known_graph = False
++test_description='Test remote-bzr'
 +
-+import sys
++. ./test-lib.sh
 +
++if ! test_have_prereq PYTHON; then
++	skip_all='skipping remote-bzr tests; python not available'
++	test_done
++fi
++
++if ! "$PYTHON_PATH" -c 'import bzrlib'; then
++	skip_all='skipping remote-bzr tests; bzr not available'
++	test_done
++fi
++
++cmd=<<EOF
 +import bzrlib
 +bzrlib.initialize()
-+
 +import bzrlib.plugin
 +bzrlib.plugin.load_plugins()
++import bzrlib.plugins.fastimport
++EOF
 +
-+import bzrlib.revisionspec
++if ! "$PYTHON_PATH" -c "$cmd"; then
++	echo "consider setting BZR_PLUGIN_PATH=$HOME/.bazaar/plugins" 1>&2
++	skip_all='skipping remote-bzr tests; bzr-fastimport not available'
++	test_done
++fi
 +
-+from bzrlib.plugins.fastimport import exporter as bzr_exporter
++check () {
++	(cd $1 &&
++	git log --format='%s' -1 &&
++	git symbolic-ref HEAD) > actual &&
++	(echo $2 &&
++	echo "refs/heads/$3") > expected &&
++	test_cmp expected actual
++}
 +
-+import sys
-+import os
-+import json
++bzr whoami "A U Thor <author@example.com>"
 +
-+def die(msg, *args):
-+    sys.stderr.write('ERROR: %s\n' % (msg % args))
-+    sys.exit(1)
++test_expect_success 'cloning' '
++  (bzr init bzrrepo &&
++  cd bzrrepo &&
++  echo one > content &&
++  bzr add content &&
++  bzr commit -m one
++  ) &&
 +
-+def warn(msg, *args):
-+    sys.stderr.write('WARNING: %s\n' % (msg % args))
++  git clone "bzr::$PWD/bzrrepo" gitrepo &&
++  check gitrepo one master
++'
 +
-+class Marks:
++test_expect_success 'pulling' '
++  (cd bzrrepo &&
++  echo two > content &&
++  bzr commit -m two
++  ) &&
 +
-+    def __init__(self, path):
-+        self.path = path
-+        self.tips = {}
-+        self.load()
++  (cd gitrepo && git pull) &&
 +
-+    def load(self):
-+        if not os.path.exists(self.path):
-+            return
++  check gitrepo two master
++'
 +
-+        tmp = json.load(open(self.path))
-+        self.tips = tmp['tips']
++test_expect_success 'pushing' '
++  (cd gitrepo &&
++  echo three > content &&
++  git commit -a -m three &&
++  git push
++  ) &&
 +
-+    def dict(self):
-+        return { 'tips': self.tips }
++  echo three > expected &&
++  cat bzrrepo/content > actual &&
++  test_cmp expected actual
++'
 +
-+    def store(self):
-+        json.dump(self.dict(), open(self.path, 'w'))
++test_expect_success 'roundtrip' '
++  (cd gitrepo &&
++  git pull &&
++  git log --format="%s" -1 origin/master > actual) &&
++  echo three > expected &&
++  test_cmp expected actual &&
 +
-+    def __str__(self):
-+        return str(self.dict())
++  (cd gitrepo && git push && git pull) &&
 +
-+    def get_tip(self, branch):
-+        return self.tips.get(branch, '1')
++  (cd bzrrepo &&
++  echo four > content &&
++  bzr commit -m four
++  ) &&
 +
-+    def set_tip(self, branch, tip):
-+        self.tips[branch] = tip
++  (cd gitrepo && git pull && git push) &&
 +
-+class Parser:
++  check gitrepo four master &&
 +
-+    def __init__(self, repo):
-+        self.repo = repo
-+        self.line = self.get_line()
++  (cd gitrepo &&
++  echo five > content &&
++  git commit -a -m five &&
++  git push && git pull
++  ) &&
 +
-+    def get_line(self):
-+        return sys.stdin.readline().strip()
++  (cd bzrrepo && bzr revert) &&
 +
-+    def __getitem__(self, i):
-+        return self.line.split()[i]
++  echo five > expected &&
++  cat bzrrepo/content > actual &&
++  test_cmp expected actual
++'
 +
-+    def check(self, word):
-+        return self.line.startswith(word)
-+
-+    def each_block(self, separator):
-+        while self.line != separator:
-+            yield self.line
-+            self.line = self.get_line()
-+
-+    def __iter__(self):
-+        return self.each_block('')
-+
-+    def next(self):
-+        self.line = self.get_line()
-+        if self.line == 'done':
-+            self.line = None
-+
-+def export_branch(branch, name):
-+    global prefix, dirname
-+
-+    marks_path = os.path.join(dirname, 'marks-bzr')
-+    ref = '%s/heads/%s' % (prefix, name)
-+    tip = marks.get_tip(name)
-+    start = "before:%s" % tip
-+    rev1 = bzrlib.revisionspec.RevisionSpec.from_string(start)
-+    rev2 = bzrlib.revisionspec.RevisionSpec.from_string(None)
-+
-+    exporter = bzr_exporter.BzrFastExporter(branch,
-+        outf=sys.stdout, ref=ref,
-+        checkpoint=None,
-+        import_marks_file=marks_path,
-+        export_marks_file=marks_path,
-+        revision=[rev1, rev2],
-+        verbose=None, plain_format=True,
-+        rewrite_tags=False)
-+    exporter.run()
-+
-+    marks.set_tip(name, branch.last_revision())
-+
-+def do_import(parser):
-+    global dirname
-+
-+    branch = parser.repo
-+    path = os.path.join(dirname, 'marks-git')
-+
-+    print "feature done"
-+    if os.path.exists(path):
-+        print "feature import-marks=%s" % path
-+    print "feature export-marks=%s" % path
-+    sys.stdout.flush()
-+
-+    while parser.check('import'):
-+        ref = parser[1]
-+        if ref.startswith('refs/heads/'):
-+            name = ref[len('refs/heads/'):]
-+            export_branch(branch, name)
-+        parser.next()
-+
-+    print 'done'
-+
-+    sys.stdout.flush()
-+
-+def do_capabilities(parser):
-+    print "import"
-+    print "refspec refs/heads/*:%s/heads/*" % prefix
-+    print
-+
-+def do_list(parser):
-+    print "? refs/heads/%s" % 'master'
-+    print "@refs/heads/%s HEAD" % 'master'
-+    print
-+
-+def main(args):
-+    global marks, prefix, dirname
-+
-+    alias = args[1]
-+    url = args[2]
-+
-+    d = bzrlib.controldir.ControlDir.open(url)
-+    repo = d.open_branch()
-+
-+    prefix = 'refs/bzr/%s' % alias
-+
-+    gitdir = os.environ['GIT_DIR']
-+    dirname = os.path.join(gitdir, 'bzr', alias)
-+
-+    if not os.path.exists(dirname):
-+        os.makedirs(dirname)
-+
-+    marks_path = os.path.join(dirname, 'marks-int')
-+    marks = Marks(marks_path)
-+
-+    parser = Parser(repo)
-+    for line in parser:
-+        if parser.check('capabilities'):
-+            do_capabilities(parser)
-+        elif parser.check('list'):
-+            do_list(parser)
-+        elif parser.check('import'):
-+            do_import(parser)
-+        else:
-+            die('unhandled command: %s' % line)
-+        sys.stdout.flush()
-+
-+    marks.store()
-+
-+sys.exit(main(sys.argv))
++test_done
 -- 
 1.8.0
