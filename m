@@ -1,97 +1,91 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 5/5] string_list_add_refs_from_colon_sep(): use string_list_split()
-Date: Sun,  4 Nov 2012 08:07:10 +0100
-Message-ID: <1352012830-13591-6-git-send-email-mhagger@alum.mit.edu>
-References: <1352012830-13591-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 04 08:08:02 2012
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Wrap commit messages on `git commit -m`
+Date: Sun, 4 Nov 2012 01:27:05 -0600
+Message-ID: <CALUzUxrdCw6nPLzeLHij+CjHsPO3w=e0nUdjBL=P7rqJtZ+t3A@mail.gmail.com>
+References: <CALkWK0kQ+qCsOa87yY4wma279mp+9h+LFv3qCP_qrNdDyGNcsQ@mail.gmail.com>
+ <m3a9v170ca.fsf@black.gullik.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Lars_Gullik_Bj=F8nnes?= <larsbj@gullik.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 08:28:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUuJL-0001EE-9M
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 08:07:59 +0100
+	id 1TUudG-0004ms-6i
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 08:28:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125Ab2KDHHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2012 02:07:42 -0500
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:44795 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752035Ab2KDHHj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2012 02:07:39 -0500
-X-AuditID: 12074413-b7f786d0000008bb-de-5096143a98e6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 98.92.02235.A3416905; Sun,  4 Nov 2012 02:07:38 -0500 (EST)
-Received: from michael.fritz.box (p57A25973.dip.t-dialin.net [87.162.89.115])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qA477Hw8028486
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 4 Nov 2012 02:07:37 -0500
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1352012830-13591-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDIsWRmVeSWpSXmKPExsUixO6iqGslMi3AYNJCDYuuK91MFg29V5gt
-	bq+Yz2zxo6WH2YHF4+/7D0wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xvm3p9gK
-	vnFVtPS9YGtg7ObsYuTkkBAwkfh3cAUjhC0mceHeerYuRi4OIYHLjBJfN25ngnDOMEkcOnCc
-	DaSKTUBXYlFPMxOILSIgK/H98EawbmaBXInF726zg9jCAsES01/uBathEVCVuLrlN1gNr4CL
-	xM0ty5khtslJfNjzCKyeU8BVYsOVNpYuRg6gZS4SnW/rJzDyLmBkWMUol5hTmqubm5iZU5ya
-	rFucnJiXl1qka66Xm1mil5pSuokREj7COxh3nZQ7xCjAwajEw/trxdQAIdbEsuLK3EOMkhxM
-	SqK8ngLTAoT4kvJTKjMSizPii0pzUosPMUpwMCuJ8G75DFTOm5JYWZValA+TkuZgURLnVVui
-	7ickkJ5YkpqdmlqQWgSTleHgUJLgLRIGGipYlJqeWpGWmVOCkGbi4AQRXCAbeIA2VIAU8hYX
-	JOYWZ6ZDFJ1iVJQS5zUCSQiAJDJK8+AGwCL9FaM40D/CvP+FgKp4gEkCrvsV0GAmoMHbL00B
-	GVySiJCSamCsY9ziMds18uT62K0XO9jvqTH0nJ7WJ8r4sNi5q5AjcV7Lp74HDW7y65MfrA3f
-	uFsl+uC5c3VPF6plGFezsZx1Py4f+eSz08PXpWLBr+NSON7k7FAQCBC/rLLs4KFZTT2MW1j8
-	Pr3WdNgbaThl7Vc+a+7cvSzc86615AU2RtdvZM/+7/h1ep4SS3FGoqEWc1FxIgAs 
+	id S1752138Ab2KDH1c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2012 02:27:32 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:52890 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128Ab2KDH1c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2012 02:27:32 -0500
+Received: by mail-ob0-f174.google.com with SMTP id uo13so4809443obb.19
+        for <git@vger.kernel.org>; Sun, 04 Nov 2012 00:27:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fRYH/LAsoJXUrytCd6xNafFZQAZKj613U45khLTkly8=;
+        b=ltxDtTMgoRmCr0oZ+v+/JlN451KU2sjF04OjLc4mGNEs5uK9/UvsOSaR0JN2wXUns0
+         36VsLCTehxhOtI01ouq6SV+gk5GGElE+Clf9YQ9eQuwAYj5/4lYu2BbLNIFvQYyUxoc6
+         BGI0uTB9WsakNW8kn6j0c7OgywIHwYr/CWjXeOtIP1tDg0BxqetRAIA8qm9D43lSrXEe
+         /f84uINYcYJslUIoRHOdm3jLkhJaNuxArartGPdytn0A4y1gWYuJH0vuUaAMBy0eHhJw
+         wsb18Nge6dAezYtkBGSBrKyJt2wzmGXA5ZdHr8W0Bcxzfr/ZmUruQyhENezdxWeT+LEu
+         fEsA==
+Received: by 10.182.64.34 with SMTP id l2mr5208475obs.28.1352014046412; Sun,
+ 04 Nov 2012 00:27:26 -0700 (PDT)
+Received: by 10.76.151.166 with HTTP; Sun, 4 Nov 2012 00:27:05 -0700 (PDT)
+In-Reply-To: <m3a9v170ca.fsf@black.gullik.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209021>
 
-It makes for simpler code than strbuf_split().
+On Thu, Nov 1, 2012 at 11:29 AM, Lars Gullik Bj=F8nnes <larsbj@gullik.o=
+rg> wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+> | Hi,
+>>
+> | Some of my colleagues are lazy to fire up an editor and write prope=
+r
+> | commit messages- they often write one-liners using `git commit -m`.
+> | However, that line turns out to be longer than 72 characters, and t=
+he
+> | resulting `git log` output is ugly.  So, I was wondering if it woul=
+d
+> | be a good idea to wrap these one-liners to 72 characters
+> | automatically.
+>
+> git commit -m 'foo: fix this problem
+>
+> This problem is fixed by doing foo,
+> bar and baz.
+>
+> Signed-off-by: me
+> '
+>
+> works.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- notes.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+Perhaps a deeper issue is that the implicit email format
+(subject-body) for commit messages, is, well, implicit. New users of
+git who type git-commit -m '...' isn't going to know that those few
+characters will all be lumped on a "subject" line, forever screwing
+themselves when they review the output of git-log, git-rebase
+--interactive, etc. (can't remember off the top of my head if
+git-format-patch would chop off long subjects and move it to the
+body), which may be a significant period of time (and thus commits)
+later.
 
-diff --git a/notes.c b/notes.c
-index 63b2a09..b823701 100644
---- a/notes.c
-+++ b/notes.c
-@@ -943,23 +943,18 @@ void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
- void string_list_add_refs_from_colon_sep(struct string_list *list,
- 					 const char *globs)
- {
--	struct strbuf globbuf = STRBUF_INIT;
--	struct strbuf **split;
-+	struct string_list split = STRING_LIST_INIT_NODUP;
-+	char *globs_copy = xstrdup(globs);
- 	int i;
- 
--	strbuf_addstr(&globbuf, globs);
--	split = strbuf_split(&globbuf, ':');
-+	string_list_split_in_place(&split, globs_copy, ':', -1);
-+	string_list_remove_empty_items(&split, 0);
- 
--	for (i = 0; split[i]; i++) {
--		if (split[i]->len && split[i]->buf[split[i]->len-1] == ':')
--			strbuf_setlen(split[i], split[i]->len-1);
--		if (!split[i]->len)
--			continue;
--		string_list_add_refs_by_glob(list, split[i]->buf);
--	}
-+	for (i = 0; i < split.nr; i++)
-+		string_list_add_refs_by_glob(list, split.items[i].string);
- 
--	strbuf_list_free(split);
--	strbuf_release(&globbuf);
-+	string_list_clear(&split, 0);
-+	free(globs_copy);
- }
- 
- static int notes_display_config(const char *k, const char *v, void *cb)
--- 
-1.8.0
+While I don't have any ideas on how to improve on this, hopefully this
+gets recognized as an issue in the first place.
+
+--=20
+Cheers,
+Ray Chuan
