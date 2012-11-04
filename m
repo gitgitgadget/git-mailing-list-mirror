@@ -1,139 +1,130 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH as/check-ignore] t0007: fix tests on Windows
-Date: Sun, 04 Nov 2012 22:07:54 +0100
-Message-ID: <5096D92A.7090600@kdbg.org>
-References: <1350282212-4270-1-git-send-email-pclouds@gmail.com> <1350282486-4646-1-git-send-email-pclouds@gmail.com> <1350282486-4646-12-git-send-email-pclouds@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH] git p4: RCS expansion should not span newlines
+Date: Sun, 4 Nov 2012 17:04:02 -0500
+Message-ID: <20121104220402.GA9160@padd.com>
+References: <CACtYWOYOSxmogJHy70McsRVf0m2PVuu=q+pDZ2-gAza7vpeEiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Adam Spiers <git@adamspiers.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 22:08:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Goard <cgoard@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 04 23:08:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TV7QP-0005L5-DU
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 22:08:09 +0100
+	id 1TV8Mh-0001ed-OB
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 23:08:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178Ab2KDVH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2012 16:07:57 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:61258 "EHLO bsmtp.bon.at"
+	id S1751860Ab2KDWEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2012 17:04:09 -0500
+Received: from honk.padd.com ([74.3.171.149]:54458 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752075Ab2KDVH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2012 16:07:56 -0500
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Nov 2012 16:07:56 EST
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 367E2CDF87;
-	Sun,  4 Nov 2012 22:07:55 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id BAB0B19F40E;
-	Sun,  4 Nov 2012 22:07:54 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
-In-Reply-To: <1350282486-4646-12-git-send-email-pclouds@gmail.com>
+	id S1751242Ab2KDWEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2012 17:04:07 -0500
+Received: from arf.padd.com (unknown [50.55.148.232])
+	by honk.padd.com (Postfix) with ESMTPSA id 6EAE8D27;
+	Sun,  4 Nov 2012 14:04:06 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id F087222AF9; Sun,  4 Nov 2012 17:04:02 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CACtYWOYOSxmogJHy70McsRVf0m2PVuu=q+pDZ2-gAza7vpeEiA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209042>
 
-The value of $global_excludes is sometimes part of the output
-that is tested for. Since git on Windows only sees DOS style paths,
-we have to ensure that the "expected" values are constructed in
-the same manner. To account for this, use $(pwd) to set the value
-of global_excludes.
+This bug was introduced in cb585a9 (git-p4: keyword
+flattening fixes, 2011-10-16).  The newline character
+is indeed special, and $File$ expansions should not try
+to match across multiple lines.
 
-Additionally, add a SYMLINKS prerequisite to the tests involving
-symbolic links.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Based-on-patch-by: Chris Goard <cgoard@gmail.com>
+Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- t/t0007-ignores.sh | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/t/t0007-ignores.sh b/t/t0007-ignores.sh
-index 7fd7e53..5d2b8f2 100755
---- a/t/t0007-ignores.sh
-+++ b/t/t0007-ignores.sh
-@@ -5,7 +5,7 @@ test_description=check-ignore
- . ./test-lib.sh
+cgoard@gmail.com wrote on Mon, 16 Jul 2012 12:49 -0700:
+> Hi. Noticed an apparent bug in git-p4 related to RCS keyword
+> expansion. Some files in our Perforce repository have malformed RCS
+> keywords, e.g. "$Revision:" without a closing $. Perforce doesn't
+> expand these, obviously, but when a change to this file is imported
+> into git, everything up to the next $, on another line much later in
+> the file, is deleted. Seems to be due to multi-line matching of RCS
+> keywords. One fix is:
+> 
+> diff --git a/git-p4.py b/git-p4.py
+> index f895a24..ae7b431 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -215,7 +215,7 @@ def p4_keywords_regexp_for_type(base, type_mods):
+>          pattern = r"""
+>              \$              # Starts with a dollar, followed by...
+>              (%s)            # one of the keywords, followed by...
+> -            (:[^$]+)?       # possibly an old expansion, followed by...
+> +            (:[^\n$]+)?     # possibly an old expansion, followed by...
+>              \$              # another dollar
+>              """ % kwords
+>          return pattern
+
+Chris,
+
+I finally got around to building a test-case for this.  The bug
+has been in since around 1.7.7, so I won't call this exactly
+urgent, even though it is blatantly buggy as is.
+
+Will try to get it into the next release.
+
+Thanks,
+
+		-- Pete
+
+ git-p4.py             |  2 +-
+ t/t9810-git-p4-rcs.sh | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index 882b1bb..7d6c928 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -227,7 +227,7 @@ def p4_keywords_regexp_for_type(base, type_mods):
+         pattern = r"""
+             \$              # Starts with a dollar, followed by...
+             (%s)            # one of the keywords, followed by...
+-            (:[^$]+)?       # possibly an old expansion, followed by...
++            (:[^$\n]+)?     # possibly an old expansion, followed by...
+             \$              # another dollar
+             """ % kwords
+         return pattern
+diff --git a/t/t9810-git-p4-rcs.sh b/t/t9810-git-p4-rcs.sh
+index fe30ad8..0c2fc3e 100755
+--- a/t/t9810-git-p4-rcs.sh
++++ b/t/t9810-git-p4-rcs.sh
+@@ -155,6 +155,25 @@ test_expect_success 'cleanup after failure' '
+ 	)
+ '
  
- init_vars () {
--	global_excludes="$HOME/global-excludes"
-+	global_excludes="$(pwd)/global-excludes"
- }
- 
- enable_global_excludes () {
-@@ -77,18 +77,24 @@ test_check_ignore () {
- }
- 
- test_expect_success_multi () {
-+	prereq=
-+	if test $# -eq 4
-+	then
-+		prereq=$1
-+		shift
-+	fi
- 	testname="$1" expect_verbose="$2" code="$3"
- 
- 	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
- 
--	test_expect_success "$testname" "
-+	test_expect_success $prereq "$testname" "
- 		expect '$expect' &&
- 		$code
- 	"
- 
- 	for quiet_opt in '-q' '--quiet'
- 	do
--		test_expect_success "$testname${quiet_opt:+ with $quiet_opt}" "
-+		test_expect_success $prereq "$testname${quiet_opt:+ with $quiet_opt}" "
- 			expect '' &&
- 			$code
- 		"
-@@ -97,7 +103,7 @@ test_expect_success_multi () {
- 
- 	for verbose_opt in '-v' '--verbose'
- 	do
--		test_expect_success "$testname${verbose_opt:+ with $verbose_opt}" "
-+		test_expect_success $prereq "$testname${verbose_opt:+ with $verbose_opt}" "
- 			expect '$expect_verbose' &&
- 			$code
- 		"
-@@ -108,7 +114,10 @@ test_expect_success_multi () {
- test_expect_success 'setup' '
- 	init_vars
- 	mkdir -p a/b/ignored-dir a/submodule b &&
--	ln -s b a/symlink &&
-+	if test_have_prereq SYMLINKS
-+	then
-+		ln -s b a/symlink
-+	fi &&
- 	(
- 		cd a/submodule &&
- 		git init &&
-@@ -326,16 +335,16 @@ test_expect_success 'cd to ignored sub-directory with -v' '
++# perl $File:: bug check
++test_expect_success 'ktext expansion should not expand multi-line $File::' '
++	(
++		cd "$cli" &&
++		cat >lv.pm <<-\EOF
++		my $wanted = sub { my $f = $File::Find::name;
++				    if ( -f && $f =~ /foo/ ) {
++		EOF
++		p4 add -t ktext lv.pm &&
++		p4 submit -d "lv.pm"
++	) &&
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		test_cmp "$cli/lv.pm" lv.pm
++	)
++'
++
  #
- # test handling of symlinks
- 
--test_expect_success_multi 'symlink' '' '
-+test_expect_success_multi SYMLINKS 'symlink' '' '
- 	test_check_ignore "a/symlink" 1
- '
- 
--test_expect_success_multi 'beyond a symlink' '' '
-+test_expect_success_multi SYMLINKS 'beyond a symlink' '' '
- 	test_check_ignore "a/symlink/foo" 128 &&
- 	test_stderr "fatal: '\''a/symlink/foo'\'' is beyond a symbolic link"
- '
- 
--test_expect_success_multi 'beyond a symlink from subdirectory' '' '
-+test_expect_success_multi SYMLINKS 'beyond a symlink from subdirectory' '' '
- 	(
- 		cd a &&
- 		test_check_ignore "symlink/foo" 128
+ # Do not scrub anything but +k or +ko files.  Sneak a change into
+ # the cli file so that submit will get a conflict.  Make sure that
 -- 
-1.8.0.rc0.45.g6c9d890
+1.7.12.1.457.g468b3ef
