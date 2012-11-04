@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 3/3] remote-bzr: add simple tests
-Date: Sun,  4 Nov 2012 03:22:03 +0100
-Message-ID: <1351995723-20396-4-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 2/3] remote-bzr: add support for pushing
+Date: Sun,  4 Nov 2012 03:22:02 +0100
+Message-ID: <1351995723-20396-3-git-send-email-felipe.contreras@gmail.com>
 References: <1351995723-20396-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -13,163 +13,107 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUprF-0000ke-L4
+	id 1TUprF-0000ke-5s
 	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 03:22:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916Ab2KDCW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2012 22:22:27 -0400
+	id S1752746Ab2KDCWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2012 22:22:22 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:45078 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752809Ab2KDCWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2012 22:22:25 -0400
+	with ESMTP id S1752731Ab2KDCWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2012 22:22:21 -0400
 Received: by mail-bk0-f46.google.com with SMTP id jk13so1658012bkc.19
-        for <git@vger.kernel.org>; Sat, 03 Nov 2012 19:22:23 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 03 Nov 2012 19:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=G5WTmEWZGGzXd5ppI3huWB1c2q6eUZsrtJku8K20bOY=;
-        b=fxzz8V8G76XMnPrz9+3dE82A+Bv6OSCvsHJYStemypDY+P1WojbubJL+v7AeG4yPqy
-         ci7R9Afvb0dyLp/2xuQVoeH1hMO/55co6hZwXoHxxhdzprZY/HQQg4IfztkTTq5iUwV0
-         496QQCsMZV5myaBcRG7yfiN88vYEjXvOKKS4lK54AxhQz9C+taDeZt2nVfwSjr9qSv2q
-         4h7XxGQFy7eAjxDLWJZ0Y+TkgLQgmOACk08q55qJ1tDdLGTkNGM0FzDkedb6yr4HUBeV
-         VeWr+5hg+bStwh4cJs+O/f2IycIU2DpekK7rO+pzCPY/XWc5pV1frglHwDBWYA3SY/og
-         qTCg==
-Received: by 10.204.129.211 with SMTP id p19mr1445457bks.94.1351995743814;
-        Sat, 03 Nov 2012 19:22:23 -0700 (PDT)
+        bh=l0E3/7a2xFhrrQqP/pU1PfFb4V9hQkypAc5euFpJSNg=;
+        b=RX0Wb/qRzhIbkKBw9qsHsJkYd7WvtahnnxpEseGLmJWlPWLNK8G2h/32D648ZG53Mr
+         m8QP31J+QaqdGMiKs6O3t8kpU7xdoYUYau4Hza5Yj/hEfC/NeImiKPz0UHXPnTbOxkB4
+         llbOWGYrH4dNVYtx3Hnhme9iNNxnAHNSiEbxk4VQyGoDGSGNqUYgbb4dCSuPcp2fRik9
+         DXXLIGalAGu081CScHKw0EOcaAioEjOks+tSa1hCtAcNXR8NiS8bEZjhkmKraPC6W1T5
+         l8xGtMJzoKzz3FpshFZ/h63Tl9ZX5n3GCEYk+CxZUXhJopcFCgsdAurvuUrLoYmHkG9x
+         xEng==
+Received: by 10.204.128.201 with SMTP id l9mr1398397bks.66.1351995739886;
+        Sat, 03 Nov 2012 19:22:19 -0700 (PDT)
 Received: from localhost (ip-109-43-0-39.web.vodafone.de. [109.43.0.39])
-        by mx.google.com with ESMTPS id r15sm7944622bkw.9.2012.11.03.19.22.21
+        by mx.google.com with ESMTPS id e3sm7944179bks.7.2012.11.03.19.22.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Nov 2012 19:22:22 -0700 (PDT)
+        Sat, 03 Nov 2012 19:22:18 -0700 (PDT)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1351995723-20396-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209008>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/test-bzr.sh | 111 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 111 insertions(+)
- create mode 100755 contrib/remote-helpers/test-bzr.sh
+ contrib/remote-helpers/git-remote-bzr | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-new file mode 100755
-index 0000000..8594ffc
---- /dev/null
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -0,0 +1,111 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 Felipe Contreras
-+#
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index 76a609a..de37217 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -26,6 +26,9 @@ bzrlib.plugin.load_plugins()
+ import bzrlib.revisionspec
+ 
+ from bzrlib.plugins.fastimport import exporter as bzr_exporter
++from bzrlib.plugins.fastimport.processors import generic_processor as bzr_generic_processor
 +
-+test_description='Test remote-bzr'
++import fastimport.parser
+ 
+ import sys
+ import os
+@@ -140,9 +143,38 @@ def do_import(parser):
+ 
+     sys.stdout.flush()
+ 
++def do_export(parser):
++    global dirname
 +
-+. ./test-lib.sh
++    parser.next() # can't handle 'done'?
 +
-+if ! test_have_prereq PYTHON; then
-+	skip_all='skipping remote-bzr tests; python not available'
-+	test_done
-+fi
++    controldir = parser.repo.bzrdir
 +
-+if ! "$PYTHON_PATH" -c 'import bzrlib'; then
-+	skip_all='skipping remote-bzr tests; bzr not available'
-+	test_done
-+fi
++    path = os.path.join(dirname, 'marks-bzr')
++    params = { 'import-marks': path, 'export-marks': path }
 +
-+cmd=<<EOF
-+import bzrlib
-+bzrlib.initialize()
-+import bzrlib.plugin
-+bzrlib.plugin.load_plugins()
-+import bzrlib.plugins.fastimport
-+EOF
++    proc = bzr_generic_processor.GenericProcessor(controldir, params)
++    p = fastimport.parser.ImportParser(sys.stdin)
++    proc.process(p.iter_commands)
 +
-+if ! "$PYTHON_PATH" -c "$cmd"; then
-+	echo "consider setting BZR_PLUGIN_PATH=$HOME/.bazaar/plugins" 1>&2
-+	skip_all='skipping remote-bzr tests; bzr-fastimport not available'
-+	test_done
-+fi
++    if parser.repo.last_revision() != marks.get_tip('master'):
++        print 'ok %s' % 'refs/heads/master'
 +
-+check () {
-+	(cd $1 &&
-+	git log --format='%s' -1 &&
-+	git symbolic-ref HEAD) > actual &&
-+	(echo $2 &&
-+	echo "refs/heads/$3") > expected &&
-+	test_cmp expected actual
-+}
++    print
 +
-+bzr whoami "A U Thor <author@example.com>"
+ def do_capabilities(parser):
++    global dirname
 +
-+test_expect_success 'cloning' '
-+  (bzr init bzrrepo &&
-+  cd bzrrepo &&
-+  echo one > content &&
-+  bzr add content &&
-+  bzr commit -m one
-+  ) &&
+     print "import"
++    print "export"
+     print "refspec refs/heads/*:%s/heads/*" % prefix
 +
-+  git clone "bzr::$PWD/bzrrepo" gitrepo &&
-+  check gitrepo one master
-+'
++    path = os.path.join(dirname, 'marks-git')
 +
-+test_expect_success 'pulling' '
-+  (cd bzrrepo &&
-+  echo two > content &&
-+  bzr commit -m two
-+  ) &&
++    if os.path.exists(path):
++        print "*import-marks %s" % path
++    print "*export-marks %s" % path
 +
-+  (cd gitrepo && git pull) &&
-+
-+  check gitrepo two master
-+'
-+
-+test_expect_success 'pushing' '
-+  (cd gitrepo &&
-+  echo three > content &&
-+  git commit -a -m three &&
-+  git push
-+  ) &&
-+
-+  echo three > expected &&
-+  cat bzrrepo/content > actual &&
-+  test_cmp expected actual
-+'
-+
-+test_expect_success 'roundtrip' '
-+  (cd gitrepo &&
-+  git pull &&
-+  git log --format="%s" -1 origin/master > actual) &&
-+  echo three > expected &&
-+  test_cmp expected actual &&
-+
-+  (cd gitrepo && git push && git pull) &&
-+
-+  (cd bzrrepo &&
-+  echo four > content &&
-+  bzr commit -m four
-+  ) &&
-+
-+  (cd gitrepo && git pull && git push) &&
-+
-+  check gitrepo four master &&
-+
-+  (cd gitrepo &&
-+  echo five > content &&
-+  git commit -a -m five &&
-+  git push && git pull
-+  ) &&
-+
-+  (cd bzrrepo && bzr revert) &&
-+
-+  echo five > expected &&
-+  cat bzrrepo/content > actual &&
-+  test_cmp expected actual
-+'
-+
-+test_done
+     print
+ 
+ def do_list(parser):
+@@ -178,6 +210,8 @@ def main(args):
+             do_list(parser)
+         elif parser.check('import'):
+             do_import(parser)
++        elif parser.check('export'):
++            do_export(parser)
+         else:
+             die('unhandled command: %s' % line)
+         sys.stdout.flush()
 -- 
 1.8.0
