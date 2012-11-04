@@ -1,59 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add rm to submodule command.
-Date: Sun, 4 Nov 2012 08:43:24 -0500
-Message-ID: <20121104134324.GA31623@sigill.intra.peff.net>
-References: <1351877171-3176-1-git-send-email-lindenle@gmail.com>
+Subject: Re: [PATCH] gitweb.perl: fix %highlight_ext
+Date: Sun, 4 Nov 2012 08:45:03 -0500
+Message-ID: <20121104134503.GB31623@sigill.intra.peff.net>
+References: <20121029094207.deafafed22ea70fbc4fbd4bb@lavabit.com>
+ <20121102145425.GC11170@sigill.intra.peff.net>
+ <20121102141809.caf5cbc07f08769fd6a302ad@lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Alex Linden Levy <lindenle@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 14:43:42 2012
+Cc: git@vger.kernel.org
+To: rh <richard_hubbe11@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 14:45:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TV0UG-00059p-WE
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 14:43:41 +0100
+	id 1TV0Vr-000608-W3
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 14:45:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667Ab2KDNn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2012 08:43:28 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56597 "EHLO
+	id S1753605Ab2KDNpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2012 08:45:06 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56604 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752313Ab2KDNn1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2012 08:43:27 -0500
-Received: (qmail 23782 invoked by uid 107); 4 Nov 2012 13:44:11 -0000
+	id S1753839Ab2KDNpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2012 08:45:05 -0500
+Received: (qmail 23821 invoked by uid 107); 4 Nov 2012 13:45:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 04 Nov 2012 08:44:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 04 Nov 2012 08:43:24 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 04 Nov 2012 08:45:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 04 Nov 2012 08:45:03 -0500
 Content-Disposition: inline
-In-Reply-To: <1351877171-3176-1-git-send-email-lindenle@gmail.com>
+In-Reply-To: <20121102141809.caf5cbc07f08769fd6a302ad@lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209028>
 
-On Fri, Nov 02, 2012 at 10:26:11AM -0700, Alex Linden Levy wrote:
+On Fri, Nov 02, 2012 at 02:18:09PM -0700, rh wrote:
 
-> This change removes the config entries in .gitmodules and adds it.
-> ---
+> > I think the patch itself looks OK, but:
+> > 
+> >   1. It isn't formatted to apply with git-am. Please use
+> >      git-format-patch.
+> 
+> git format-patch command wouldn't work for me. I can see that you
+> don't need more stuff to do but not knowing git I couldn't find the
+> correct incantation to do this part. A problem with the files not
+> being in a git repo I think. I'll spare you details.
 
-Signoff?
+The usual procedure is:
 
->  git-submodule.sh | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 61 insertions(+), 1 deletion(-)
+  1. hack hack hack
 
-No documentation or tests?
+  2. git commit
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ab6b110..29d950f 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
+  3. git format-patch
 
-I'd defer to submodule experts on whether the steps to 'rm' the
-submodule make sense. Jens?
+And if you are not in a git repo, step 0 is "git init". :)
 
 -Peff
