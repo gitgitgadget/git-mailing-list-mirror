@@ -1,141 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Oct 2012, #09; Mon, 29)
-Date: Sun, 4 Nov 2012 07:29:26 -0500
-Message-ID: <20121104122926.GD336@sigill.intra.peff.net>
-References: <20121029102114.GA14497@sigill.intra.peff.net>
- <5092C234.9000307@ramsay1.demon.co.uk>
- <CAEUsAPb7hUViLn7V7v65r6mOqRHr+180ynRX8K9t3nuJVyePfg@mail.gmail.com>
- <20121102094259.GA28414@sigill.intra.peff.net>
- <20121102095632.GA30221@sigill.intra.peff.net>
- <50943C1A.4090706@ramsay1.demon.co.uk>
+From: Raja R Harinath <harinath@hurrynot.org>
+Subject: Re: [msysGit] Re: Git for Windows and line endings
+Date: Sun, 04 Nov 2012 18:07:53 +0530
+Message-ID: <878vahee72.fsf@hariville.hurrynot.org>
+References: <CADKp0pyy=Nnv29LyhzAOX4B5wJNYnZ0h5d7zxNRyZxV2OGUSjg@mail.gmail.com>
+	<CABPQNSZE7TP0G-uW1b1nbsNgpxYCEiD5KefS62GB5gZbWyZXDQ@mail.gmail.com>
+	<alpine.DEB.1.00.1210190801490.2695@bonsai2>
+	<CADKp0pxuFsSEeZoeemyaqhSJEcsjj1arEOsF4Ub8=76y7tkwHg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sun Nov 04 13:29:44 2012
+Content-Type: text/plain
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 04 13:39:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TUzKh-0000zk-9z
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 13:29:43 +0100
+	id 1TUzUM-00067G-2I
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 13:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003Ab2KDM3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2012 07:29:30 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56545 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752502Ab2KDM33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2012 07:29:29 -0500
-Received: (qmail 23323 invoked by uid 107); 4 Nov 2012 12:30:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 04 Nov 2012 07:30:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 04 Nov 2012 07:29:26 -0500
-Content-Disposition: inline
-In-Reply-To: <50943C1A.4090706@ramsay1.demon.co.uk>
+	id S1751300Ab2KDMic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2012 07:38:32 -0500
+Received: from plane.gmane.org ([80.91.229.3]:35057 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750877Ab2KDMib (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2012 07:38:31 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TUzTJ-0005W6-Nb
+	for git@vger.kernel.org; Sun, 04 Nov 2012 13:38:37 +0100
+Received: from 122.172.0.47 ([122.172.0.47])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 04 Nov 2012 13:38:37 +0100
+Received: from harinath by 122.172.0.47 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 04 Nov 2012 13:38:37 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 122.172.0.47
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.2.50 (gnu/linux)
+Cancel-Lock: sha1:5VuBRCAiGzuMiRvKKQwEdD2Rlmc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209026>
 
-On Fri, Nov 02, 2012 at 09:33:14PM +0000, Ramsay Jones wrote:
+Hi,
 
-> >> I wonder if Ramsay has an older perl that does not do this special
-> >> hackery right. I'll see if I can dig up where it first appeared.
-> 
-> Hmm, sorry for not specifying this upfront, but this failure is on Linux. ;-)
+Chris B <chris.blaszczynski@gmail.com> writes:
+[snip]
+> - Windows has been able to cope with UNIX line endings a long time; no
+> developer is using a default Notepad to open files with high
+> expectations. Any Windows development tool and editor worth anything
+> I've used is able to handle both just fine.
+> - VIM also handles Windows line endings just fine as well. I just
+> tested it on a Linux machine. Maybe old version? (pure VI is not even
+> on this machine but hard to press these days it can't handle it.)
+> - The files in .git folder are in UNIX format anyway, so why are those
+> not also included in line ending changes? Isn't is because there is a
+> Windows app (msysgit) running on Windows that expects the UNIX line
+> ending? So in the same manor, someone might have a Windows system
+> using some Cygwin components perhaps, or a Windows C program possibly
+> poorly written or just old, that demand some text files to be left
+> alone in the format we saved it.
 
-Ah, that's helpful to know.
+There are several subtleties in LF handling with mixed systems.  Here's
+my write-up in:
 
-> (Linux is my main platform, but I like to keep cygwin working because it has
-> kept me sane on Windows ever since (about) 1995 ...)
-> "Stranger in a strange land" ;-)
+  https://github.com/mono/mono/blob/master/.gitattributes
 
-I used a different trick around the same time to keep me sane from
-Windows, but I think it involved "dd" and "/dev/zero"...
+for an example set of trade-offs.  Quoting in full since it's fairly short.
 
-> I'm using perl v5.8.8 on Linux.
+- Hari
 
-Yeah, that is the problem. Calling localtime_r repeatedly while changing
-the timezone does not work on some platforms:
-
-  https://rt.perl.org/rt3/Public/Bug/Display.html?id=26136
-
-The fix (to call tzset each time) went into perl 5.10.0.
-
-> > Ramsay, what happens with this patch on top?
-> 
-> This patch fixes the test for me.
-
-Great. I was guessing blindly when I wrote it, but having seen the perl
-bug above, it all makes sense.
-
-We should probably wrap it. I'm planning to queue this on top of Chris's
-patch:
-
--- >8 --
-Subject: [PATCH] cvsimport: work around perl tzset issue
-
-On many platforms, the first invocation of localtime_r will
-check $TZ in the environment, but subsequent invocations
-will use a cache value. That means that setting $ENV{TZ} in
-the middle of the program may or may not have an effect on
-later calls to localtime.  Perl 5.10.0 and later handles
-this automatically for us, but we try to remain portable
-back to 5.8. Work around it by calling tzset ourselves.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-cvsimport.perl | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
-
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index ceb119d..0a31ebd 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -24,11 +24,11 @@ use File::Basename qw(basename dirname);
- use Time::Local;
- use IO::Socket;
- use IO::Pipe;
--use POSIX qw(strftime dup2 ENOENT);
-+use POSIX qw(strftime tzset dup2 ENOENT);
- use IPC::Open2;
- 
- $SIG{'PIPE'}="IGNORE";
--$ENV{'TZ'}="UTC";
-+set_timezone('UTC');
- 
- our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
- my (%conv_author_name, %conv_author_email, %conv_author_tz);
-@@ -99,6 +99,15 @@ sub write_author_info($) {
- 	close ($f);
- }
- 
-+# Versions of perl before 5.10.0 may not automatically check $TZ each
-+# time localtime is run (most platforms will do so only the first time).
-+# We can work around this by using tzset() to update the internal
-+# variable whenever we change the environment.
-+sub set_timezone {
-+	$ENV{TZ} = shift;
-+	tzset();
-+}
-+
- # convert getopts specs for use by git config
- my %longmap = (
- 	'A:' => 'authors-file',
-@@ -854,9 +863,9 @@ sub commit {
- 		}
- 	}
- 
--	$ENV{'TZ'}=$author_tz;
-+	set_timezone($author_tz);
- 	my $commit_date = strftime("%s %z", localtime($date));
--	$ENV{'TZ'}="UTC";
-+	set_timezone('UTC');
- 	$ENV{GIT_AUTHOR_NAME} = $author_name;
- 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
- 	$ENV{GIT_AUTHOR_DATE} = $commit_date;
--- 
-1.8.0.207.gdf2154c
+# CRLF Handling
+# -------------
+#
+# The ideal situation would be to do no EOL normalization.  Each file
+# would have a default EOL, and tools on Windows and Linux would handle
+# both EOL formats.
+#
+# We're not in the ideal world.  A popular editor on Windows (possibly
+# Visual Studio) silently introduces EOL corruption -- it displays an
+# LF-file normally, but any newly added lines have CRLF.  On Linux,
+# Emacs and versions of VI handle LF-files and CRLF-files properly.
+# However, emacs doesn't like files with both LF and CRLF EOLs.  Editing
+# the file without additional action will increase the EOL corruption
+# in the file.
+#
+# Another vector for mixed EOLs is scripts.  We mostly don't have scripts
+# that add new lines -- so we rarely see this.  However, one major event
+# in the tree was the addition of copyright headers using a script.  That
+# script introduced EOL corruption.
+#
+# Any automated EOL normalization of files already in the repository will
+# cause difficulties in traversing histories, assigning blame, etc.  So, we
+# don't want to change what's in the repository significantly, even if it
+# causes trouble.
+#
+# What we do now:
+#
+# a) we ensure that there's no further corruption of LF-files.  So, we use
+#    git's 'crlf' attribute on those files to ensure that things are fine
+#    when we work on Windows.  We could use 'crlf=input', but it doesn't buy
+#    us much -- we might as well be working with consistent EOLs for files in
+#    working directories as well as in the repository
+#
+# b) if the file already of CRLFs, we don't do any normalization.  We use '-crlf'
+#    so that git doesn't do any EOL-conversion of the file.  As I said, this
+#    is mostly harmless on Linux.  We can't mark these files as 'crlf' or use
+#    the new (git 1.7.2) 'eol=crlf' attribute, since it changes the contents
+#    _inside_ the repository [1], and hence makes history traversal annoying.
+#    So, we live with occasional EOL corruption.
+#
+# c) We can handle mixed-EOL files on a case-by-case basis, converting them to
+#    LF- or CRLF-files based on which causes fewer lines to change
+#
+# d) We try to ensure no further headaches, by declaring EOL normalization on
+#    code files, and Unix-flavoured files, like shell-scripts, makefiles, etc.
+#
+# [1] GIT use LFs as the normalized internal representation.
