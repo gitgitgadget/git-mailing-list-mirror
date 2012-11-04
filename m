@@ -1,63 +1,98 @@
-From: Joern Huxhorn <jhuxhorn@googlemail.com>
-Subject: git svn problem, probably a regression
-Date: Sun, 4 Nov 2012 21:31:17 +0100
-Message-ID: <36370AA5-4BB9-4D36-95A7-BB3DA315C9E6@googlemail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 21:31:37 2012
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 14/13] wildmatch: fix tests that fail on Windows due to path
+ mangling
+Date: Sun, 04 Nov 2012 22:00:31 +0100
+Message-ID: <5096D76F.5090907@kdbg.org>
+References: <1350282212-4270-1-git-send-email-pclouds@gmail.com> <1350282362-4505-1-git-send-email-pclouds@gmail.com> <1350282362-4505-13-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 22:01:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TV6r1-0003aA-Oi
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 21:31:36 +0100
+	id 1TV7Jb-0001uU-Cg
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Nov 2012 22:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751682Ab2KDUbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2012 15:31:23 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:52753 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751187Ab2KDUbW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2012 15:31:22 -0500
-Received: by mail-ee0-f46.google.com with SMTP id b15so2615120eek.19
-        for <git@vger.kernel.org>; Sun, 04 Nov 2012 12:31:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version:x-mailer;
-        bh=YN/Be2fSIwHvsb0klTOAOe25YbDtLl9+V0BCUuis76U=;
-        b=idCh9QvMhmfSbdPowr1pi15PF4dPRigyZBvhQ8XAOQ4LToGXahiOPwnFjHgQBJeRPm
-         8qqniMp5nd3Vb1AEaYhR56/E1ig9ntPbgJct67/RjoWwNIS54NIJLsas54Q7hV3eUxFz
-         zNIJBjOuDWOigNsC7CbaFTSe2I+ga1QErXLFeDSASzaiX9/RVwK0i+OnFWGdwjIB/lV5
-         WRiqsuzpa0ks8HFdTefxPOJ2uLIekOmDahZJhpB2oaRb12rgT1tACLS/wrfTOPJ+8CSQ
-         Gl+2SX/TWl4MvV9tHNwBlyWHHZhLFaU7Bbc134IzsG2i+InqZALXa5nIMutgHxZh8F11
-         DobA==
-Received: by 10.14.184.2 with SMTP id r2mr28856489eem.43.1352061081160;
-        Sun, 04 Nov 2012 12:31:21 -0800 (PST)
-Received: from [192.168.2.160] (p579DD3E0.dip.t-dialin.net. [87.157.211.224])
-        by mx.google.com with ESMTPS id z43sm42680042een.16.2012.11.04.12.31.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 Nov 2012 12:31:20 -0800 (PST)
-X-Mailer: Apple Mail (2.1499)
+	id S1752016Ab2KDVAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2012 16:00:53 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:38313 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751275Ab2KDVAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2012 16:00:53 -0500
+Received: from bsmtp.bon.at (unknown [192.168.181.107])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id 73D3C1193F9
+	for <git@vger.kernel.org>; Sun,  4 Nov 2012 22:00:51 +0100 (CET)
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id B999813004E;
+	Sun,  4 Nov 2012 22:00:32 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id EED6119F40E;
+	Sun,  4 Nov 2012 22:00:31 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
+In-Reply-To: <1350282362-4505-13-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209040>
 
-git svn failed on me with the following error while cloning an SVN repository:
-r1216 = fcf69d5102378ee41217d60384b96549bf2173cb (refs/remotes/svn/trunk)
-Found possible branch point: svn+ssh://<repositoryName>@<IP address>/trunk => svn+ssh://<repositoryName>@<IP address>/tags/xxxx_2008-10-22, 1216
-Use of uninitialized value $u in substitution (s///) at /usr/local/Cellar/git/1.8.0/lib/Git/SVN.pm line 106.
-Use of uninitialized value $u in concatenation (.) or string at /usr/local/Cellar/git/1.8.0/lib/Git/SVN.pm line 106.
-refs/remotes/svn/asset-manager-redesign: 'svn+ssh://<IP address>' not found in ''
+Patterns beginning with a slash are converted to Windows paths before
+test-wildmatch gets to see them. Use a different first character. This
+does change the meaning of the test because the slash is special. But:
 
-I'm running git 1.8.0 via Homebrew on OS X. It was called via svn2git but I doubt that this is the culprit.
-A colleague of mine was able to perform the same operation with git 1.7.x (not sure which) on Debian so I assume that this is a regression.
+- The first pair of changed lines the test is about '*' matching an empty
+  string, which does not need the slash.
 
-I just wanted to let you know.
+- The second pair of changed lines the test is about a sequence of '*/',
+  and I think we can afford to test without the leading slash.
 
-Cheers,
-Joern.
+One case is unchanged:
+
+    match 1 x '/foo' '**/foo'
+
+Even though the test is about ** matching zero levels at the beginning of
+a path, on Windows, '**' actually matches something because /foo is
+converted to c:\path\to\msys\foo. Let's be lazy and let this pass.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ After this change, there are still 3 failing tests that are in connection
+ with [[:xdigit:]]. Don't know, yet, what's going on there.
+
+ t/t3070-wildmatch.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index e6ad6f4..74c0f7c 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -95,8 +95,8 @@ match 0 0 ']' '[!]-]'
+ match 1 x 'a' '[!]-]'
+ match 0 0 '' '\'
+ match 0 x '\' '\'
+-match 0 x '/\' '*/\'
+-match 1 x '/\' '*/\\'
++match 0 x '-\' '*-\'
++match 1 x '-\' '*-\\'
+ match 1 1 'foo' 'foo'
+ match 1 1 '@foo' '@foo'
+ match 0 0 'foo' '@foo'
+@@ -187,8 +187,8 @@ match 0 0 '-' '[[-\]]'
+ match 1 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+ match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+ match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 1 1 '/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' '/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+-match 0 0 '/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' '/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 1 1 'adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' '*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 0 0 'adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' '*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+ match 1 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n*t'
+ match 0 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*n*t'
+ 
+-- 
+1.8.0.rc0.45.g6c9d890
