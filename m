@@ -1,73 +1,73 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: [PATCH] Clarify how content states are to be built as the
- fast-import stream is interpreted.
-Date: Sun, 4 Nov 2012 23:31:01 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121105043101.GA24687@thyrsus.com>
-Reply-To: esr@thyrsus.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 05:33:44 2012
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/2] Another minor cleanup involving string_lists
+Date: Mon,  5 Nov 2012 09:41:21 +0100
+Message-ID: <1352104883-21053-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 05 09:42:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVENX-0004Q6-U2
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 05:33:40 +0100
+	id 1TVIFy-0001eT-DM
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 09:42:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677Ab2KEEbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2012 23:31:17 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:49269
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751118Ab2KEEbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2012 23:31:17 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id DD7394065B; Sun,  4 Nov 2012 23:31:01 -0500 (EST)
-Content-Disposition: inline
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753408Ab2KEIlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2012 03:41:53 -0500
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:56307 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753052Ab2KEIlw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2012 03:41:52 -0500
+X-AuditID: 1207440f-b7fde6d00000095c-0a-50977bcf8653
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 8A.95.02396.FCB77905; Mon,  5 Nov 2012 03:41:51 -0500 (EST)
+Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qA58fjnO015704
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 5 Nov 2012 03:41:49 -0500
+X-Mailer: git-send-email 1.8.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqHu+enqAwelWTYuuK91MFg29V5gt
+	bq+Yz2zxo6WH2YHF4+/7D0wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xv7NbewF
+	nRwV55YeY25gvMzWxcjJISFgIvFpZgMLhC0mceHeeqA4F4eQwGVGiU+3prFCOKeZJK7/WgHW
+	wSagK7Gop5kJxBYRkJX4fngjI4jNLJArsfjdbXYQW1jAUeJy9wowm0VAVeLBmZ9gG3gFXCS+
+	rjjFCrFNTuLDnkfsExi5FzAyrGKUS8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzRS00p3cQI
+	CQj+HYxd62UOMQpwMCrx8H6UmB4gxJpYVlyZe4hRkoNJSZR3ZSVQiC8pP6UyI7E4I76oNCe1
+	+BCjBAezkggvBwNQjjclsbIqtSgfJiXNwaIkzqu+RN1PSCA9sSQ1OzW1ILUIJivDwaEkwSsD
+	DHwhwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFCoxxcDgx0kxQO0VwGknbe4IDEX
+	KArReopRl+Pom7kPGYVY8vLzUqXEeb1BigRAijJK8+BWwOL/FaM40MfCvKYgVTzA1AE36RXQ
+	EiagJdsvTQFZUpKIkJJqYOx/mlNQc/+bR7btZ8EdF9sywq7M+ze/SfiTUmW6v8pJqX9iLa9E
+	WvSXxq1Y+bIsxe6CaILiIuaUNCmLd3revwMED+mpp+5akf9u4Q7ZzKudGen721a+N8xIFp7b
+	GMs0wVrCx0X5S+UtyS9bbFVO34/kVsq0D5s5u+rNtftf6u02WLvFOl0LVmIpzkg0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209052>
 
+Nothing really earthshattering here.  But it's funny how every time I
+look closely at a site where I think string_lists could be used, I
+find problems with the old code.  In this case is_absolute_path() is
+called with an argument that is not a null-terminated string, which is
+incorrect (though harmless because the function only looks at the
+first two bytes of the string).
 
----
- Documentation/git-fast-import.txt |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Another peculiarity of the (old and new) code is that it rejects
+"comments" even in paths taken from the colon-separated environment
+variable GIT_ALTERNATE_OBJECT_DIRECTORIES.  The fix would be to change
+link_alt_odb_entries() to take a string_list and let the callers strip
+out comments when appropriate.  But it didn't seem worth the extra
+code.
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 6603a7a..959e4d3 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -442,7 +442,9 @@ their syntax.
- ^^^^^^
- The `from` command is used to specify the commit to initialize
- this branch from.  This revision will be the first ancestor of the
--new commit.
-+new commit.  The state of the tree built at this commit will begin
-+with the state at the `from` commit, and be altered by the content
-+modifications in this commit.
- 
- Omitting the `from` command in the first commit of a new branch
- will cause fast-import to create that commit with no ancestor. This
-@@ -492,7 +494,9 @@ existing value of the branch.
- 
- `merge`
- ^^^^^^^
--Includes one additional ancestor commit.  If the `from` command is
-+Includes one additional ancestor commit.  The additional ancestry
-+link does not change the way the tree state is built at this commit.
-+If the `from` command is
- omitted when creating a new branch, the first `merge` commit will be
- the first ancestor of the current commit, and the branch will start
- out with no files.  An unlimited number of `merge` commands per
--- 
-1.7.9.5
+Michael Haggerty (2):
+  link_alt_odb_entries(): use string_list_split_in_place()
+  link_alt_odb_entries(): take (char *, len) rather than two pointers
 
+ sha1_file.c | 50 ++++++++++++++++++++++----------------------------
+ 1 file changed, 22 insertions(+), 28 deletions(-)
 
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.8.0
