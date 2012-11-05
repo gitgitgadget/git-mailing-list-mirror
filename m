@@ -1,8 +1,7 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v2 3/5] push: flag updates
-Date: Sun,  4 Nov 2012 21:08:26 -0600
-Message-ID: <1352084908-32333-4-git-send-email-chris@rorvick.com>
-References: <1352084908-32333-1-git-send-email-chris@rorvick.com>
+Subject: [PATCH v2 0/5] push: update remote tags only with force
+Date: Sun,  4 Nov 2012 21:08:23 -0600
+Message-ID: <1352084908-32333-1-git-send-email-chris@rorvick.com>
 Cc: Chris Rorvick <chris@rorvick.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Jeff King <peff@peff.net>,
@@ -12,84 +11,47 @@ Cc: Chris Rorvick <chris@rorvick.com>,
 	Johannes Sixt <j6t@kdbg.org>,
 	Kacper Kornet <draenog@pld-linux.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 04:09:09 2012
+X-From: git-owner@vger.kernel.org Mon Nov 05 04:09:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVD3h-0002cf-97
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 04:09:05 +0100
+	id 1TVD3h-0002cf-PH
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 04:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759Ab2KEDIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752753Ab2KEDIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 4 Nov 2012 22:08:42 -0500
-Received: from [38.98.186.242] ([38.98.186.242]:32042 "HELO burner.cogcap.com"
+Received: from [38.98.186.242] ([38.98.186.242]:34039 "HELO burner.cogcap.com"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752524Ab2KEDIk (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752501Ab2KEDIk (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 4 Nov 2012 22:08:40 -0500
 Received: by burner.cogcap.com (Postfix, from userid 10028)
-	id A547B2B09C6; Sun,  4 Nov 2012 21:08:39 -0600 (CST)
+	id 5AEE72B09C4; Sun,  4 Nov 2012 21:08:39 -0600 (CST)
 X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1352084908-32333-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209049>
 
-If the reference exists on the remote and the the update is not a
-delete, then mark as an update.  This is in preparation for handling
-tags and branches differently when pushing.
+Patch series to prevent push from updating remote tags w/o forcing them.
+Split out original patch to ease review.
 
-Signed-off-by: Chris Rorvick <chris@rorvick.com>
----
- cache.h  |    1 +
- remote.c |   19 ++++++++++++-------
- 2 files changed, 13 insertions(+), 7 deletions(-)
+Chris Rorvick (5):
+  push: return reject reasons via a mask
+  push: add advice for rejected tag reference
+  push: flag updates
+  push: flag updates that require force
+  push: update remote tags only with force
 
-diff --git a/cache.h b/cache.h
-index bc2fc9a..1d10761 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1003,6 +1003,7 @@ struct ref {
- 		merge:1,
- 		nonfastforward:1,
- 		forwardable:1,
-+		update:1,
- 		deletion:1;
- 	enum {
- 		REF_STATUS_NONE = 0,
-diff --git a/remote.c b/remote.c
-index 5ecd58d..3d43bb5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1323,15 +1323,20 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 			  old->type == OBJ_COMMIT && new->type == OBJ_COMMIT);
- 		}
- 
--		ref->nonfastforward =
-+		ref->update =
- 			!ref->deletion &&
--			!is_null_sha1(ref->old_sha1) &&
--			(!has_sha1_file(ref->old_sha1)
--			  || !ref_newer(ref->new_sha1, ref->old_sha1));
-+			!is_null_sha1(ref->old_sha1);
- 
--		if (ref->nonfastforward && !ref->force && !force_update) {
--			ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
--			continue;
-+		if (ref->update) {
-+			ref->nonfastforward =
-+				ref->update &&
-+				(!has_sha1_file(ref->old_sha1)
-+				  || !ref_newer(ref->new_sha1, ref->old_sha1));
-+
-+			if (ref->nonfastforward && !ref->force && !force_update) {
-+				ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
-+				continue;
-+			}
- 		}
- 	}
- }
--- 
-1.7.1
+ Documentation/git-push.txt |   10 +++++-----
+ builtin/push.c             |   24 +++++++++++++++---------
+ builtin/send-pack.c        |    6 ++++++
+ cache.h                    |    7 ++++++-
+ remote.c                   |   39 +++++++++++++++++++++++++++++++--------
+ t/t5516-fetch-push.sh      |   30 +++++++++++++++++++++++++++++-
+ transport-helper.c         |    6 ++++++
+ transport.c                |   25 +++++++++++++++----------
+ transport.h                |   10 ++++++----
+ 9 files changed, 119 insertions(+), 38 deletions(-)
