@@ -1,52 +1,64 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: why '--init' in git-submodule update
-Date: Mon, 5 Nov 2012 17:30:51 +0100
-Message-ID: <CAC9WiBgpHWFGW-z5fnQR_EWnfGJUw+G3b7C6tYMGuVu1S-kP9A@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCHv2 2/2] git p4: add support for 'p4 move' in P4Submit
+Date: Mon, 5 Nov 2012 17:37:15 +0000 (UTC)
+Message-ID: <loom.20121105T183530-627@post.gmane.org>
+References: <1342135740-30290-1-git-send-email-pw@padd.com> <1342135740-30290-3-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 17:31:06 2012
+X-From: git-owner@vger.kernel.org Mon Nov 05 18:37:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVPZp-0003QT-7y
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 17:31:05 +0100
+	id 1TVQcL-0004Uv-5B
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 18:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430Ab2KEQaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2012 11:30:52 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:38377 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754412Ab2KEQav (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2012 11:30:51 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so5871088obb.19
-        for <git@vger.kernel.org>; Mon, 05 Nov 2012 08:30:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=mYzOp2UiCxbRegBC81ksphahDN87j+yiO357DweCH3g=;
-        b=SvRBZR4yrpYh3/ZBV2lPyzJKTfjYJZTPnY8Fp/tcrvPz1xZR7AvxN0ER0HL5Gh3Q/C
-         SYe2ngs4x4DqX7oVO1WOUibYORj7qNVOd2eWnOxlK98TFo8u5FsR15vinwL3tctCMq7m
-         ouTfrLlXA2TdMrva4ji7llb0BDGYEKWmFMhkdg38NuMTQEj+VqePS5jr5uh2wsKwqieB
-         hKiq5K6XkjU37LfwHqwYsm92/o5hOxrVS9iUQ2E8s5gs7u8O0xlPuNUYGjfQ+BaKTBxE
-         98Y6kJoXMUVIPvhcn3bv1mBbvVK5ppQWeoh2WY0jePLyajjczMUGbf3bMmT9peIyJsgt
-         WmgQ==
-Received: by 10.60.172.48 with SMTP id az16mr8098946oec.64.1352133051289; Mon,
- 05 Nov 2012 08:30:51 -0800 (PST)
-Received: by 10.60.93.163 with HTTP; Mon, 5 Nov 2012 08:30:51 -0800 (PST)
+	id S1754521Ab2KERhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2012 12:37:32 -0500
+Received: from plane.gmane.org ([80.91.229.3]:53862 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753768Ab2KERhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2012 12:37:31 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TVQcC-0004P3-HX
+	for git@vger.kernel.org; Mon, 05 Nov 2012 18:37:36 +0100
+Received: from 57.79.130.182 ([57.79.130.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Nov 2012 18:37:36 +0100
+Received: from vitor.hda by 57.79.130.182 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Nov 2012 18:37:36 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 57.79.130.182 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209077>
 
-Hello,
+Pete Wyckoff <pw <at> padd.com> writes:
 
-I'm wondering why the --init option from git-submodule-update is not
-at least the defaut. Or even wilder, why this option exists at all and
-git-submodule-update always behave like --init was always passed.
+> 
+> From: Gary Gibbons <ggibbons <at> perforce.com>
+> 
+> For -M option (detectRenames) in P4Submit, use 'p4 move' rather
+> than 'p4 integrate'.  Check Perforce server for exisitence of
+> 'p4 move' and use it if present, otherwise revert to 'p4 integrate'.
+> 
 
-Thanks
---
-Francis
+Hi Pete,
+
+I've just been hit by a situation where this command is available but is
+disabled in the server. I don't know what is the best approach to avoid
+this issue.
+
+Thanks,
+Vitor
