@@ -1,192 +1,130 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH v4 00/13] New remote-hg helper
-Date: Mon, 05 Nov 2012 15:13:04 +0100
-Message-ID: <5097C970.9010901@drmicha.warpmail.net>
-References: <alpine.DEB.1.00.1210301809060.7256@s15462909.onlinehome-server.info> <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com> <alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info> <CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com> <5090EFCA.7070606@drmicha.warpmail.net> <CAMP44s2a7fmxFmdn0CAcVtX8NxVtPdBKH9RY+i_Og53jb1Ju5Q@mail.gmail.com> <509149D9.3070606@drmicha.warpmail.net> <CAMP44s2oKMog5GygrAag8SOdwhQJr4gCZxZAwWUo-ERDzni0ag@mail.gmail.com> <CAMP44s0KFJW2F3gbO_Xd9QKrZ1OoxvUCvecU084-zH2UDqXKag@mail.gmail.com> <CAMP44s3UHQE69O__EVK29uN_VPdZN=a0-Gczeh-Tbjp1ZAAbJw@mail.gmail.com> <20121102144827.GB11170@sigill.intra.peff.net> <CAMP44s1P5Y_H24=ZKS5n_rUORf1dTiqg3qXm3bHcOiQ8K12PUQ@mail.gmail.com> <CAMP44s1mbNBUspJ8SX=VwGSXthxWAHkrQLFR
- xzyCzkupLYSagA@mail.gmail.com>
+Subject: Re: git log --graph --oneline - false parent-child visualization
+Date: Mon, 05 Nov 2012 15:17:33 +0100
+Message-ID: <5097CA7D.50301@drmicha.warpmail.net>
+References: <CAMn6BBaeWfwa_mAyTBFOmFYs0GwUauzqZZP+NWM=8f0_hKDz3Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 15:13:27 2012
+Cc: git@vger.kernel.org
+To: martyone <martyone@ubedi.net>
+X-From: git-owner@vger.kernel.org Mon Nov 05 15:17:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVNQc-0008Iz-3V
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 15:13:26 +0100
+	id 1TVNUq-0002Xk-7a
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 15:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447Ab2KEONK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2012 09:13:10 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50277 "EHLO
+	id S1754349Ab2KEORf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2012 09:17:35 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33705 "EHLO
 	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751182Ab2KEONH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2012 09:13:07 -0500
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 2A02820969;
-	Mon,  5 Nov 2012 09:13:07 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute4.internal (MEProxy); Mon, 05 Nov 2012 09:13:07 -0500
+	by vger.kernel.org with ESMTP id S1754341Ab2KEORf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2012 09:17:35 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 7B9F320856;
+	Mon,  5 Nov 2012 09:17:34 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 05 Nov 2012 09:17:34 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=f7HnBYMcgdGh+BQAsPy/3L
-	PbUBY=; b=K4ExUfQxN8Fa9e0xgfiSRR35CyHMmGwpi5JVW/o1dhxEp0MvTyJRKM
-	pbVOPxBCPSbF4WLJgX0093JQXZ2jxk4adR5+gxhli+mxA7qw9C6blN6eLULlsYLk
-	uDxs4CdbYAwSTT1SXBHEWhlqX9Gz8/79qNc7r+TzCQWsqVx/Uqje0=
-X-Sasl-enc: OeLfhVmFUhNonRg29RF2AQmITqJcgAFIFxbidnBetTaA 1352124786
+	:content-transfer-encoding; s=smtpout; bh=pf39dn8EegWnqI6euYz7bP
+	OiWOM=; b=u72/m6SQZ8SW7kYtkiNOpin688xYYhFVi5lYV92wuGZG7R1rY8IHUv
+	kwlkxOW5Pt9Y0KfdBaCL+Vmypc8uIDAai/ZND7JY1uu7ST9ZWWN0Gp89FYtgslXw
+	ssUmQWT/md7S0UZXWNErVWPb8cYwWX2dtSjzz3nmkQdGj1gL9sSR4=
+X-Sasl-enc: 7VoOg+1/p5z5bpXwY0tLkJVHV7/SscoeL4aNqe70D80B 1352125054
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E91B34827D5;
-	Mon,  5 Nov 2012 09:13:05 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 06FA88E00DE;
+	Mon,  5 Nov 2012 09:17:33 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
-In-Reply-To: <CAMP44s1mbNBUspJ8SX=VwGSXthxWAHkrQLFRxzyCzkupLYSagA@mail.gmail.com>
+In-Reply-To: <CAMn6BBaeWfwa_mAyTBFOmFYs0GwUauzqZZP+NWM=8f0_hKDz3Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209061>
 
-Felipe Contreras venit, vidit, dixit 02.11.2012 19:01:
-> On Fri, Nov 2, 2012 at 5:41 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Fri, Nov 2, 2012 at 3:48 PM, Jeff King <peff@peff.net> wrote:
->>> On Thu, Nov 01, 2012 at 05:08:52AM +0100, Felipe Contreras wrote:
->>>
->>>>> Turns out msysgit's remote-hg is not exporting the whole repository,
->>>>> that's why it's faster =/
->>>>
->>>> It seems the reason is that it would only export to the point where
->>>> the branch is checked out. After updating the to the tip I noticed
->>>> there was a performance difference.
->>>>
->>>> I investigated and found two reasons:
->>>>
->>>> 1) msysgit's version doesn't export files twice, I've now implemented the same
->>>> 2) msysgit's version uses a very simple algorithm to find out file changes
->>>>
->>>> This second point causes msysgit to miss some file changes. Using the
->>>> same algorithm I get the same performance, but the output is not
->>>> correct.
->>>
->>> Do you have a test case that demonstrates this? It would be helpful for
->>> reviewers, but also helpful to msysgit people if they want to fix their
->>> implementation.
->>
->> Cloning the mercurial repo:
->>
->> % hg log --stat -r 131
->> changeset:   131:c9d51742471c
->> parent:      127:44538462d3c8
->> user:        jake@edge2.net
->> date:        Sat May 21 11:35:26 2005 -0700
->> summary:     moving hgweb to mercurial subdir
->>
->>  hgweb.py           |  377
->> ------------------------------------------------------------------------------------------
->>  mercurial/hgweb.py |  377
->> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>  2 files changed, 377 insertions(+), 377 deletions(-)
->>
->> % git show --stat 1f9bcfe7cc3d7af7b4533895181acd316ce172d8
->> commit 1f9bcfe7cc3d7af7b4533895181acd316ce172d8
->> Author: jake@edge2.net <none@none>
->> Date:   Sat May 21 11:35:26 2005 -0700
->>
->>     moving hgweb to mercurial subdir
->>
->>  mercurial/hgweb.py | 377
->> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 377 insertions(+)
+martyone venit, vidit, dixit 05.11.2012 13:57:
+> Hello,
 > 
-> I talked with some people in #mercurial, and apparently there is a
-> concept of a 'changelog' that is supposed to store these changes, but
-> since the format has changed, the content of it is unreliable. That's
-> not a big problem because it's used mostly for reporting purposes
-> (log, query), not for doing anything reliable.
-
-Is the changelog stored in the repo (i.e. generated by the hg version at
-commit time) or generated on the fly (i.e. generated by the hg version
-at hand)? See also below.
-
-> To reliably see the changes, one has to compare the 'manifest' of the
-> revisions involved, which contain *all* the files in them.
-
-'manifest' == '(exploded) tree', right? Just making sure my hg fu is not
-subzero.
-
-> That's what I was doing already, but I found a more efficient way to
-> do it. msysGit is using the changelog, which is quite fast, but not
-> reliable.
+> the combination of --graph and --oneline sometimes produces output
+> which is -- at least for me -- not clear about parent-child relation
+> between commits. I noticed it when using with --simplify-by-decoration
+> switch but it should not be specific to the use of this switch.
 > 
-> Unfortunately while going trough mercurial's code, I found an issue,
-> and it turns out that 1) is not correct.
+> See this example output (git version 1.7.11.3)
 > 
-> In mercurial, a file hash contains also the parent file nodes, which
-> means that even if two files have the same content, they would not
-> have the same hash, so there's no point in keeping track of them to
-> avoid extracting the data unnecessarily, because in order to make sure
-> they are different, you need to extract the data anyway, defeating the
-> purpose.
-
-Do I understand correctly that neither the msysgit version nor yours can
-detect duplicate blobs (without requesting them) because of that sha1 issue?
-
-I'm really wondering why a file blob hash carries its history along in
-the sha1. This appears completely strange to gitters (being brain washed
-about "content tracking"), but may be due to hg's extensive use of
-delta, or really: delta chains (which do have their merit on the server
-side).
-
-> Which means mercurial doesn't really behave as one would expect:
+> | | | * eead15f (origin/branchA) Lorem ipsum dolor sit amet
+> | |_|/
+> |/| |
+> | | | * 8da3b9f (origin/branchB) Consectetur adipisicing elit
+> | | |/
+> | | | * c4d6b9a (origin/branchC) Sed do eiusmod tempor incididunt ut labore
+> | | | * d623246 (origin/branchD) Ut enim ad minim veniam
+> | | |/
+> | | | * 458d305 (origin/btanchE) Quis nostrud exercitation ullamco laboris
+> | | |/
 > 
-> # add files with the same content
+> Here it seems commit c4d6b9a is based on d623246. But when the format
+> is more-than-oneline (or when checked with gitk), it is clear there is
+> no relation between commits c4d6b9a and d623246.
 > 
->  $ echo a > a
->   $ hg ci -Am adda
->   adding a
->   $ echo a >> a
->   $ hg ci -m changea
->   $ echo a > a
->   $ hg st --rev 0
->   $ hg ci -m reverta
->   $ hg log -G --template '{rev} {desc}\n'
->   @  2 reverta
->   |
->   o  1 changea
->   |
->   o  0 adda
+> | | | * commit eead15f (origin/branchA)
+> | |_|/  Author: John Doe <john.doe@example.net>
+> |/| |
+> | | |       Lorem ipsum dolor sit amet
+> | | |
+> | | | * commit 8da3b9f (origin/branchB)
+> | | |/  Author: John Doe <john.doe@example.net>
+> | | |
+> | | |       Consectetur adipisicing elit
+> | | |
+> | | | * commit c4d6b9a (origin/branchC)
+> | | |   Author: John Doe <john.doe@example.net>
+> | | |
+> | | |       Sed do eiusmod tempor incididunt ut labore
+> | | |
+> | | | * commit d623246 (origin/branchD)
+> | | |/  Author: John Doe <john.doe@example.net>
+> | | |
+> | | |       Ut enim ad minim veniam
+> | | |
+> | | | * commit 458d305 (origin/branchE)
+> | | |/  Author: John Doe <john.doe@example.net>
+> | | |
+> | | |       Quis nostrud exercitation ullamco laboris
+> | | |
 > 
-> # check the difference between the first and the last revision
+> Correct output produced with --oneline switch should output an extra
+> newline when commit has no parent listed:
 > 
->   $ hg st --rev 0:2
->   M a
->   $ hg cat -r 0 a
->   a
->   $ hg cat -r 2 a
->   a
+> | | | * eead15f (origin/branchA) Lorem ipsum dolor sit amet
+> | |_|/
+> |/| |
+> | | | * 8da3b9f (origin/branchB) Consectetur adipisicing elit
+> | | |/
+> | | | * c4d6b9a (origin/branchC) Sed do eiusmod tempor incididunt ut labore
+> | | |
+> | | | * d623246 (origin/branchD) Ut enim ad minim veniam
+> | | |/
+> | | | * 458d305 (origin/btanchE) Quis nostrud exercitation ullamco laboris
+> | | |/
+> 
+> Best Regards,
+> Martin
+> 
 
-That is really scary. What use is "hg stat --rev" then? Not blaming you
-for hg, of course.
+Yes, you have the same problem when you simply have two disjoint
+branches: They're listed "concatenated". The problem is that log --graph
+uses the single symbol "*" for many different cases, independent of the
+number of ingoing or outgoing lines. There are two solutions:
 
-On that tangent, I just noticed recently that hg has no python api.
-Seriously [1]. They even tell us not to use the internal python api.
-msysgit has been lacking support for newer hg, and you've had to add
-support for older versions (hg 1.9 will be around on quite some
-stable/LTS/EL distro releases) after developing on newer/current ones.
-I'm wondering how well that scales in the long term (telling from
-git-svn experience: it does not scale well), or whether using some
-stable api like 'hgapi' would be a huge bottleneck.
+- use more spacing
+- use more symbols (like tig does) and stay compact
 
-Cheers,
+Feel free to experiment ;)
+
 Michael
-
-[1] http://mercurial.selenic.com/wiki/MercurialApi
-
-Really funny to see they recommend the command line as api ;)
