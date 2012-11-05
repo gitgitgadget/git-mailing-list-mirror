@@ -1,67 +1,59 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Like commit -a, but...
-Date: Mon, 5 Nov 2012 21:29:48 +0100
-Message-ID: <20121105202948.GA17505@inner.h.apk.li>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: why '--init' in git-submodule update
+Date: Mon, 5 Nov 2012 22:30:09 +0100
+Message-ID: <20121105213004.GA2797@book.hvoigt.net>
+References: <CAC9WiBgpHWFGW-z5fnQR_EWnfGJUw+G3b7C6tYMGuVu1S-kP9A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 22:03:50 2012
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 22:36:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVTpl-0007SF-Ic
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 22:03:49 +0100
+	id 1TVULd-0002qB-Ae
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 22:36:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933118Ab2KEVDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2012 16:03:36 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:35961 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933073Ab2KEVDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2012 16:03:35 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id qA5KTm317749;
-	Mon, 5 Nov 2012 21:29:48 +0100
+	id S932258Ab2KEVgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2012 16:36:32 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:59808 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932162Ab2KEVgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2012 16:36:31 -0500
+X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Nov 2012 16:36:31 EST
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1TVUFF-0005rz-GB; Mon, 05 Nov 2012 22:30:09 +0100
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+In-Reply-To: <CAC9WiBgpHWFGW-z5fnQR_EWnfGJUw+G3b7C6tYMGuVu1S-kP9A@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209084>
 
-Hi all,
+Hi,
 
-I have a workflow for which I can't quite find the git tooling.
+On Mon, Nov 05, 2012 at 05:30:51PM +0100, Francis Moreau wrote:
+> I'm wondering why the --init option from git-submodule-update is not
+> at least the defaut. Or even wilder, why this option exists at all and
+> git-submodule-update always behave like --init was always passed.
 
-Essentially what I want is like 'git commit -a', except that I
-want the resulting commit on a branch I name instead of the current
-one, and I want my current index not being modified. At the moment
-I emulate that via
+That was a design decision. People may not be interested in all
+submodules but just a subset they are working with. E.g. think of a
+large media directory as a submodule the developers might not be
+interested in having it around all the time because only the designers
+are heavily working with it.
 
-  git commit -a -m TEMP": `date` $*" && \
-  git push -f nsd master:temp && \
-  git reset HEAD^ && \
+So the rationale is that you should ask for a certain submodule to be
+initialized to get it. If there is demand for it we could of course think
+about offering a config option in .gitmodules to allow enabling it by
+default for some submodules.
 
-but that a) changes the index (ok, not that bad), and it
-will change my current commit in the case that there are
-no unmodified files (no commit -> head doesn't point
-where I want). Ok, that can be prevented by --allow-empty.
-
-But still I'd like to know if there is a cleaner solution,
-esp. with respect to the index.
-
-(Ah, the point of all this is to take the exact current worktree and
-push it to a compile&deploy server; I don't want to chop my work into
-commits before I even could compile it.)
-
-Andreas
-
-
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Cheers Heiko
