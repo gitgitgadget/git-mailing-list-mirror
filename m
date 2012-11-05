@@ -1,113 +1,163 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/2] link_alt_odb_entries(): take (char *, len) rather than two pointers
-Date: Mon,  5 Nov 2012 09:41:23 +0100
-Message-ID: <1352104883-21053-3-git-send-email-mhagger@alum.mit.edu>
-References: <1352104883-21053-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 05 09:42:33 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Lack of netiquette, was Re: [PATCH v4 00/13] New remote-hg helper
+Date: Mon, 05 Nov 2012 10:25:34 +0100
+Message-ID: <5097860E.5040607@drmicha.warpmail.net>
+References: <CAMP44s3L0ycSQFU9s157V7e-GryUdojtQ3Vk_-d2wtPf9NFtbg@mail.gmail.com> <CAMP44s3CEGqUav-ijnzm7osD70LsjRLyOEeV3bF-LWYTCEPCSQ@mail.gmail.com> <alpine.DEB.1.00.1210302027410.7256@s15462909.onlinehome-server.info> <CAMP44s0akZ7_Nd1Q1AaZJuXnyTJv2MzNqDus76Y82y4LbWVO+Q@mail.gmail.com> <5090EFCA.7070606@drmicha.warpmail.net> <20121031102712.GB30879@sigill.intra.peff.net> <alpine.DEB.1.00.1210311900450.7256@s15462909.onlinehome-server.info> <CAMP44s2y-co4TELg28==axRmbF7xq3Qp7U8wjg6XtGAUMgf40w@mail.gmail.com> <20121031185903.GA1480@elie.Belkin> <CAMP44s2-UoT03OeTmM9=nh9wCUt84exPNuHyuThp=WQkxvCNLQ@mail.gmail.com> <alpine.DEB.1.00.1210312126080.7256@s15462909.onlinehome-server.info> <bec4d263-b458-4636-9fa6-1c1202416810@email.android.com> <CAMP44s2G2MGuPH-UXfoKNOpx0cuSE87Uz=6B-7H1MzJHf6VMjA@
+ mail.gmail.com> <50927D29.3020703@lsrfire.ath.cx> <5093949D.4070509@op5.se> <5093A873.9090701@drmicha.warpmail.net> <CAMP44s0yk3k1awYbJCcReBDEAjMyfHtKH70S7v2ZOJ1u5OcBAw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>,
+	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 10:25:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVIGG-0001oH-Qj
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 09:42:25 +0100
+	id 1TVIwK-0002Zp-7X
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 10:25:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753424Ab2KEImB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2012 03:42:01 -0500
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:52906 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753412Ab2KEIl5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2012 03:41:57 -0500
-X-AuditID: 1207440e-b7f036d0000008b5-8b-50977bd46641
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id C4.92.02229.4DB77905; Mon,  5 Nov 2012 03:41:56 -0500 (EST)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qA58fjnQ015704
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 5 Nov 2012 03:41:55 -0500
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1352104883-21053-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqHulenqAwb8tKhZdV7qZLBp6rzBb
-	3F4xn9niR0sPswOLx9/3H5g8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujA032tgK
-	3gtU9E1dwdLA+Iy3i5GTQ0LAROLFv7nsELaYxIV769m6GLk4hAQuM0pMXrIJyjnNJPHwzy+w
-	KjYBXYlFPc1MILaIgKzE98MbGUFsZoFcicXvboPVCAtESKx+1czaxcjBwSKgKrFhCQ9ImFfA
-	RWLqnItsEMvkJD7seQRWzingKrH22AJmEFsIqGbDr4nMExh5FzAyrGKUS8wpzdXNTczMKU5N
-	1i1OTszLSy3SNdbLzSzRS00p3cQICR++HYzt62UOMQpwMCrx8H6QmB4gxJpYVlyZe4hRkoNJ
-	SZR3ZSVQiC8pP6UyI7E4I76oNCe1+BCjBAezkggvBwNQjjclsbIqtSgfJiXNwaIkzqu2RN1P
-	SCA9sSQ1OzW1ILUIJivDwaEkwTuvCqhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQj
-	HhQZ8cXA2ABJ8QDtXQHSzltckJgLFIVoPcWoy3H0zdyHjEIsefl5qVLivDNAigRAijJK8+BW
-	wJLFK0ZxoI+FeQ+CVPEAEw3cpFdAS5iAlmy/NAVkSUkiQkqqgXGem/vRNnGZ2FOTjp7QvPE9
-	ccLr9m9OLLPlnvc67J+9KGUhy8kt4d08jMVvbTJ0NPtmP/l2eWPN4cKO77N7Ss5tOFAV9PRj
-	tB9P06V7iVfXe7llBZxavjeRNfhG9+5fcf/cNUs0D513TS47HD3rQKuO0WrX9eLy 
+	id S1752500Ab2KEJZj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2012 04:25:39 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:60541 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751761Ab2KEJZi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2012 04:25:38 -0500
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 228C5204E7;
+	Mon,  5 Nov 2012 04:25:37 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Mon, 05 Nov 2012 04:25:37 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=cQMPo7Y0j1Z3dC//pv/ks5
+	zWEDg=; b=cxiUvSYoiZ1hL95AaRgx7n52qQbjQV4UT4JZGffb6nGvasxHZgpFS2
+	/G4La2xYHvystcxVDdOqnR0KXjHfhmRVS2+rVPT8DcgPLi+Faw1M7gtFUiLhk+2G
+	7QWeyMv+M26ZRaLamiRmT6hOBcQphyGcycWohpz6sNN4vLj7kSHBQ=
+X-Sasl-enc: TqqR/SSPg9TlK17dBo3E4PDbF1KguHN0npXEjfN25kWI 1352107536
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8DD488E04D0;
+	Mon,  5 Nov 2012 04:25:35 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <CAMP44s0yk3k1awYbJCcReBDEAjMyfHtKH70S7v2ZOJ1u5OcBAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209055>
 
-Change link_alt_odb_entries() to take the length of the "alt"
-parameter rather than a pointer to the end of the "alt" string.  This
-is the more common calling convention and simplifies the code a tiny
-bit.
+=46elipe Contreras venit, vidit, dixit 02.11.2012 17:09:
+> On Fri, Nov 2, 2012 at 12:03 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Andreas Ericsson venit, vidit, dixit 02.11.2012 10:38:
+>>> On 11/01/2012 02:46 PM, Ren=C3=A9 Scharfe wrote:
+>>>>
+>>>> Also, and I'm sure you didn't know that, "Jedem das Seine" (to eac=
+h
+>>>> his own) was the slogan of the Buchenwald concentration camp.  For
+>>>> that reason some (including me) hear the unspoken cynical
+>>>> half-sentence "and some people just have to be sent to the gas
+>>>> chamber" when someone uses this proverb.
+>>>>
+>>>
+>>> It goes further back than that.
+>>>
+>>> "Suum cuique pulchrum est" ("To each his own is a beautiful thing")=
+ is
+>>> a latin phrase said to be used frequently in the roman senate when
+>>> senators politely agreed to disagree and let a vote decide the outc=
+ome
+>>> rather than debating further.
+>>>
+>>> Please don't let the twisted views of whatever nazi idiot thought i=
+t
+>>> meant "you may have the wrong faith and therefore deserve to die, s=
+o you
+>>> shall" pollute it. The original meaning is both poetic and democrat=
+ic,
+>>> and I firmly believe most people have the original meaning to the f=
+ore
+>>> of their mind when using it. After all, very few people knowingly q=
+uote
+>>> nazi concentration camp slogans.
+>>>
+>>
+>> In fact, many German terms and words are "forbidden area" since Nazi
+>> times, but I don't think this one carries the same connotation.
+>>
+>> But that is a side track.
+>>
+>> Collaboration (and code review is a form of collaboration) requires
+>> communication. The linked code of conduct pages describe quite well =
+how
+>> to ensure a productive environment in which "everyone" feels comfort=
+able
+>> communicating and collaborating.
+>=20
+> Yes, but that's assuming we want "everyone" to feel comfortable
+> communicating and collaborating.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- sha1_file.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+I put "everyone" in quotes because you can never reach 100%, so
+"everyone" means almost everyone.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index c352413..40b2329 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -317,7 +317,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base, int
- 	return 0;
- }
- 
--static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
-+static void link_alt_odb_entries(const char *alt, int len, int sep,
- 				 const char *relative_base, int depth)
- {
- 	struct string_list entries = STRING_LIST_INIT_NODUP;
-@@ -330,7 +330,7 @@ static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
- 		return;
- 	}
- 
--	alt_copy = xmemdupz(alt, ep - alt);
-+	alt_copy = xmemdupz(alt, len);
- 	string_list_split_in_place(&entries, alt_copy, sep, -1);
- 	for (i = 0; i < entries.nr; i++) {
- 		const char *entry = entries.items[i].string;
-@@ -371,7 +371,7 @@ void read_info_alternates(const char * relative_base, int depth)
- 	map = xmmap(NULL, mapsz, PROT_READ, MAP_PRIVATE, fd, 0);
- 	close(fd);
- 
--	link_alt_odb_entries(map, map + mapsz, '\n', relative_base, depth);
-+	link_alt_odb_entries(map, mapsz, '\n', relative_base, depth);
- 
- 	munmap(map, mapsz);
- }
-@@ -385,7 +385,7 @@ void add_to_alternates_file(const char *reference)
- 	if (commit_lock_file(lock))
- 		die("could not close alternates file");
- 	if (alt_odb_tail)
--		link_alt_odb_entries(alt, alt + strlen(alt), '\n', NULL, 0);
-+		link_alt_odb_entries(alt, strlen(alt), '\n', NULL, 0);
- }
- 
- void foreach_alt_odb(alt_odb_fn fn, void *cb)
-@@ -409,7 +409,7 @@ void prepare_alt_odb(void)
- 	if (!alt) alt = "";
- 
- 	alt_odb_tail = &alt_odb_list;
--	link_alt_odb_entries(alt, alt + strlen(alt), PATH_SEP, NULL, 0);
-+	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
- 
- 	read_info_alternates(get_object_directory(), 0);
- }
--- 
-1.8.0
+Undeniably, the answers in this and the other threads show that on the
+git mailing list, "everyone" wants "everyone" to feel comfortable
+communicating and collaborating.
+
+> I cite again the example of the Linux
+> kernel, where certainly not "everyone" feels that way. But somehow
+
+It's a different list with different standards and tone, so it doesn't
+really matter for our list. That being said:
+
+> they manage to be perhaps the most successful software project in
+> history. And I would argue even more: it's _because_ not everyone
+> feels comfortable, it's because ideas and code are criticized freely,
+> and because only the ones that do have merit stand. If you are able t=
+o
+> take criticism, and you are not emotionally and personally attacked t=
+o
+> your code and your ideas, you would thrive in this environment. If yo=
+u
+> don't want your precious little baby code to fight against the big
+> guys, then you shouldn't send it out to the world.
+
+=46or one thing, contributors on the kernel list are open to technical
+arguments, and that includes the arguments of others; just like we are
+here. On the other hand, you seem to rebuke "any" (most) technical
+argument in harsh words as if it were a personal attack; at least that'=
+s
+how your answers come across to me (and apparently others). That really
+makes it difficult for most of us here to argue with you technically,
+which is a pity. That lack of openness for the arguments of others woul=
+d
+make your life difficult on the kernel list also.
+
+A completely different issue is that of language. You talk German on a
+German list and English on an international list. You talk "kernel
+English" on the kernel list, which is full of words and phrases you
+would never use in a normal social setting where you talk to people in
+person; it would be completely unacceptable. Here on the Git list, we
+prefer to talk like in a normal, albeit colloquial social setting. If
+you're open for advice: just imagine talking to the people here in
+person, to colleagues across your desk, and you have a good guideline.
+
+And no, using the same or similar language does not make us the same at
+all. Using the same language is the natural prerequisite for successful
+communication.
+
+=46elipe, please try to see the efforts many of us are making here in
+order to keep you as a contributor, and reward it by accepting the
+advice to revise your language: colleague to colleague.
+
+Michael
