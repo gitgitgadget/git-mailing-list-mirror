@@ -1,64 +1,76 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCHv2 2/2] git p4: add support for 'p4 move' in P4Submit
-Date: Mon, 5 Nov 2012 17:37:15 +0000 (UTC)
-Message-ID: <loom.20121105T183530-627@post.gmane.org>
-References: <1342135740-30290-1-git-send-email-pw@padd.com> <1342135740-30290-3-git-send-email-pw@padd.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: checkout-index: unable to create file foo (File exists)
+Date: Mon, 5 Nov 2012 12:53:40 -0500
+Message-ID: <20121105175340.GA889@padd.com>
+References: <k6ulre$bko$1@ger.gmane.org>
+ <20121104221018.GB9160@padd.com>
+ <5097DA5C.9020603@interlinx.bc.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 18:37:47 2012
+Cc: git@vger.kernel.org
+To: "Brian J. Murrell" <brian@interlinx.bc.ca>
+X-From: git-owner@vger.kernel.org Mon Nov 05 18:53:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVQcL-0004Uv-5B
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 18:37:45 +0100
+	id 1TVQs2-0006Fc-64
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 18:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521Ab2KERhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2012 12:37:32 -0500
-Received: from plane.gmane.org ([80.91.229.3]:53862 "EHLO plane.gmane.org"
+	id S1754129Ab2KERxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2012 12:53:45 -0500
+Received: from honk.padd.com ([74.3.171.149]:55342 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753768Ab2KERhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2012 12:37:31 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TVQcC-0004P3-HX
-	for git@vger.kernel.org; Mon, 05 Nov 2012 18:37:36 +0100
-Received: from 57.79.130.182 ([57.79.130.182])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Nov 2012 18:37:36 +0100
-Received: from vitor.hda by 57.79.130.182 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Nov 2012 18:37:36 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 57.79.130.182 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0)
+	id S1750901Ab2KERxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2012 12:53:44 -0500
+Received: from arf.padd.com (unknown [50.55.148.232])
+	by honk.padd.com (Postfix) with ESMTPSA id 38716D02;
+	Mon,  5 Nov 2012 09:53:43 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id E395822B86; Mon,  5 Nov 2012 12:53:40 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <5097DA5C.9020603@interlinx.bc.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209078>
 
-Pete Wyckoff <pw <at> padd.com> writes:
-
+brian@interlinx.bc.ca wrote on Mon, 05 Nov 2012 10:25 -0500:
+> On 12-11-04 05:10 PM, Pete Wyckoff wrote:
+> > Which network filesystem and OS are you using?
 > 
-> From: Gary Gibbons <ggibbons <at> perforce.com>
+> The filesystem is Lustre.  So not only is it networked, it is
+> distributed where the namespace and data store are handled by different
+> nodes, to it's not at all as atomic as NFS-on-(say-)ext4.  Given that,
+> it's entirely possible to imagine a scenario where a namespace (MDT in
+> the Lustre nomenclature) operation could get interrupted after the
+> namespace entry has been created but before the open(2) completes.  So
+> the question here is who's responsibility is it to handle that situation?
+
+That's all in the filesystem.  Hopefully it doesn't really work
+like that because the fs is incosistent at this point.
+
+ERESTARTSYS handling is done entirely in the kernel, not in glibc
+and not git.  A possible in-kernel fix is not to handle any
+signals (except KILL) when waiting for the open mechanics to
+finish.
+
+> > The third option is
+> > that there is a bug in the filesystem client.
 > 
-> For -M option (detectRenames) in P4Submit, use 'p4 move' rather
-> than 'p4 integrate'.  Check Perforce server for exisitence of
-> 'p4 move' and use it if present, otherwise revert to 'p4 integrate'.
-> 
+> Yep.  But before we can go on to determining a bug, the proper/expected
+> behavior needs to be determined.  I guess that's taking this a bit OT
+> for this list though.  I'm not really sure where else to go to determine
+> this though.  :-(
 
-Hi Pete,
+You could toss this to lustre support.  Or try first to come up
+with a reduced testcase with lots of opens and SIGALRMs racing
+against each other.  Maybe xfstests or some other suite might
+also tickle the bug.
 
-I've just been hit by a situation where this command is available but is
-disabled in the server. I don't know what is the best approach to avoid
-this issue.
+I don't think it is feasible to try to handle this error
+condition in applications.
 
-Thanks,
-Vitor
+		-- Pete
