@@ -1,61 +1,101 @@
-From: hong zhang <henryzhang62@yahoo.com>
-Subject: how the commit ID come from in GIT?
-Date: Mon, 5 Nov 2012 12:04:06 -0800 (PST)
-Message-ID: <1352145846.26267.YahooMailClassic@web141404.mail.bf1.yahoo.com>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
+Subject: Re: how the commit ID come from in GIT?
+Date: Mon, 5 Nov 2012 15:26:22 -0500
+Message-ID: <20121105202621.GA31625@google.com>
+References: <1352145846.26267.YahooMailClassic@web141404.mail.bf1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 21:10:04 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: hong zhang <henryzhang62@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 21:26:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVSzg-0008B4-IW
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 21:10:00 +0100
+	id 1TVTFm-0001Tb-Pf
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Nov 2012 21:26:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754689Ab2KEUJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2012 15:09:47 -0500
-Received: from nm12-vm0.bullet.mail.bf1.yahoo.com ([98.139.213.140]:39351 "EHLO
-	nm12-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754600Ab2KEUJq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2012 15:09:46 -0500
-X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Nov 2012 15:09:46 EST
-Received: from [98.139.214.32] by nm12.bullet.mail.bf1.yahoo.com with NNFMP; 05 Nov 2012 20:04:08 -0000
-Received: from [98.139.212.221] by tm15.bullet.mail.bf1.yahoo.com with NNFMP; 05 Nov 2012 20:04:08 -0000
-Received: from [127.0.0.1] by omp1030.mail.bf1.yahoo.com with NNFMP; 05 Nov 2012 20:04:08 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 130218.72416.bm@omp1030.mail.bf1.yahoo.com
-Received: (qmail 26668 invoked by uid 60001); 5 Nov 2012 20:04:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1352145847; bh=2zraZo3K33OgtNrIlWMkjVNK1n8sSjs8zorSXvrICJ8=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type; b=m2usy3KsfhkufYwD8zyWOMIk1tXPBJt1J53g1uwtMeJOtPixkEjS0pqFSEwzY6gJ3UVhKJOU007U/5idDHGzrCFOwo+jL0uUd6rz8Hvj3372DkpcSN3NMZ0T63X0+rOYKFBBGyCFKnwoJvld3L2SPt0SE6eShM0Q9RXdhIfa7Ic=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=M60VVtfHkn3wIEMAOOGPn9YH7YL6gWPLb06uOH0EumWLd885swFB8bl4ypeB4old6hEqZ8T5kmeaemWpuhXtxnfMpn+et1SKEMp0DNOFUIgr1gjUwr/Nm0OGqaY8jT2oYUH7jkEWOsNvhVoELf1jMwjR0w7/eLRWSLE13mVugqk=;
-X-YMail-OSG: JpfRCWcVM1nmpWbx9jH9.lXkvcrl39NqtmMYoVeLm7W31Xk
- wuYX.IU4fJiZWBc7cVfgQInCOF3nhonK1iMkaxGrK.bI_3NN0RmDOwQwWrt4
- n7lj9j1yQ7nuTQP2oSfJCAByhR30QGiau1Oq1Bw5dsH6kLx.EwJJVTGi4xxb
- waURi71PZ8WaWybbyfO5agkl_jovj64CRVuKCCvYtf5iEEbcPfZlQuwyNd_M
- GUn8tKugqJ4fp5zQlWdFdq.9HRY6_6dvMJ79Y8.NK4ttwxkuMeaszAlpLxwf
- 9qK2bidGWgEX4OKp5WK38x8VGxordGQl1rnIVsEp0rqdJwJftdWiqfP2_LtW
- bqZ8YMmgQgO2kxO72CZf3SLUhYBVJ5Lo5Fv.jfgh4MBRUYtYeiENHedmAoPk
- 5Vgr2bMGBCT4W1EI46NWrg7nICV71OUTCMhWR_QjF2psWg8QmHLZI8S5nY3c
- X8e9t8jyp61MMXZ3MvZNPFBIpA0VeM.Mq2aAINZYPkd_rCy4-
-Received: from [192.100.106.40] by web141404.mail.bf1.yahoo.com via HTTP; Mon, 05 Nov 2012 12:04:06 PST
-X-Rocket-MIMEInfo: 001.001,TGlzdCwNCg0KQ291bGQgYW55b25lIGV4cGxhaW4gaG93IHRoZSBnaXQgY29tbWl0IElEIHdpbGwgaW5jbHVkZSBhbGwgdGhlIGZpbGVzIHRoYXQgZGV2bG9wZXIgbWFrZXMgY2hhbmdlcyBvbj8NCg0KSG93IGdpdCBjb21taXQgSUQgd29ya3M_DQoNClRoYW5rcyBmb3IgYW55IGhlbHAhDQoNCi0tLWhlbnJ5ATABAQEB
-X-Mailer: YahooMailClassic/15.0.8 YahooMailWebService/0.8.123.460
+	id S1753907Ab2KEU0Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2012 15:26:25 -0500
+Received: from mail-wi0-f202.google.com ([209.85.212.202]:65193 "EHLO
+	mail-wi0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753627Ab2KEU0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2012 15:26:25 -0500
+Received: by mail-wi0-f202.google.com with SMTP id hr7so274245wib.1
+        for <git@vger.kernel.org>; Mon, 05 Nov 2012 12:26:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0UBIZjqU1Umy34zTAz8T7nOEnNmi1ugaItj95X4B69c=;
+        b=WC8abjNbZbKBUMQ1yalx+JbdPTswG7phg8nNS2XX2i89BWMp2WafQXkV7unG0ZMLem
+         yZidLtWwcHh41W9LztDygr3Ie5L02lwLlm5ZQRdizJkY/pVrjFpRbAnkQJ6wA3tcuYeC
+         DETV1ZWkh2yqPgB9zMQ0GWLgAnKMN6dzJklZNMXMiacdmZttKI3x7GZ3UWSXay1ILYSY
+         SBUK/9VWx3Bp0hXvjY+8lqn3rcE/N4lM5tmuMJLpQZqDYMLtzr5PIaKOwAX2YPSagySl
+         KOBs2kFzsCcEYTb7k7jpPWKYG8FttLABXKGTH4zoG5J/FV6YZyNPnIsh/Z3nf5FtwNey
+         e0HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent:x-gm-message-state;
+        bh=0UBIZjqU1Umy34zTAz8T7nOEnNmi1ugaItj95X4B69c=;
+        b=cZBaJKjjKuqkDWIGGhE138eRrW9iNifuZx5jvt9CBYbmblJGA8SGA/YI1+ssmOmmqi
+         oWj6PCnObGGTNvxWGnurb/wSjnzCUlT7ojpUQBd7ydsXYAljOfZeQ1QFKdWd3jDyc4PQ
+         f1VWKspoGOylMa4wGcDgrqt9nwV8i8H9eKoy9i/531PdTpOKDYEmxi+J9VuvTQ70lzLR
+         AxlT5x6VzLST83efrM/UqH9QahSondi7IKLcg9HgUkvdjp7DaVGWtAe3LFrPd5Zk+NhJ
+         9kefC5ojukcrCirXiJ83K6t6vTD79YvNjU02R6KoFYom6nH4LHGgyYruadjRqjvuePEs
+         tqzA==
+Received: by 10.14.204.3 with SMTP id g3mr10447481eeo.7.1352147183838;
+        Mon, 05 Nov 2012 12:26:23 -0800 (PST)
+Received: from hpza9.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id z47si3389544eel.0.2012.11.05.12.26.23
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Mon, 05 Nov 2012 12:26:23 -0800 (PST)
+Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
+	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 8AAAF5C0050;
+	Mon,  5 Nov 2012 12:26:23 -0800 (PST)
+Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
+	id D7ED761004; Mon,  5 Nov 2012 15:26:22 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1352145846.26267.YahooMailClassic@web141404.mail.bf1.yahoo.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Gm-Message-State: ALoCoQkJjDRAhRcq1YCQZJJD05ebOSdWSud9ZsIb2mdrSwtpc7oZfDXxHH61M0udSyEkMRWTBD9dcVnS6Rk0XbKRc/qdxod+vyJcwjZezU1qV1EAHfRAvCS4X5XRF4QueUAdFcIPVbcAfeZwQqwA9xWIaWTefERkuI4OtFf69PpVn+0Sr5AZG3dRAln9tZs+5MnHvga4qMn4LZvZG9OAffhJCQudwkkKVg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209081>
 
-List,
+On Monday, November 05, 2012 at 15:04 EST,
+     hong zhang <henryzhang62@yahoo.com> wrote:
 
-Could anyone explain how the git commit ID will include all the files that devloper makes changes on?
+> Could anyone explain how the git commit ID will include all the files
+> that devloper makes changes on?
+>
+> How git commit ID works?
 
-How git commit ID works?
+In short, a Git commit points to a tree object that describes the full
+state of the source tree plus metadata like the commit author, date,
+description, and a pointer to the commit object(s) that preceded the
+commit. The commit id itself is the SHA-1 of the contents of the commit
+object. Any change of the source tree will affect the top-level tree
+object's SHA-1 which in turn affects the SHA-1 of the commit. Also,
+because a commit contains the timestamp of the commit object's creation
+even two commits that are content-wise identical will have different
+SHA-1s.
 
-Thanks for any help!
+If you haven't read it, the Pro Git books explains Git's object model i=
+n
+detail: http://git-scm.com/book/en/Git-Internals-Git-Objects
 
----henry
+That description is quite detailed, and most users don't need to go tha=
+t
+deep.
+
+--=20
+Magnus B=E4ck
+baeck@google.com
