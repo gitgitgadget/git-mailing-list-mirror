@@ -1,83 +1,101 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Support for a series of patches, i.e. patchset or changeset?
-Date: Tue, 06 Nov 2012 08:44:00 +0100
-Message-ID: <5098BFC0.6040709@viscovery.net>
-References: <CAMPhdO_33CPJv2hAvPuJ10KZ7v_fgP9P2kV_WLVK2tapjQQ5=A@mail.gmail.com> <5097C190.80406@drmicha.warpmail.net> <CAMPhdO-1ar52QGuSzbyFBSKMf48fDb6Bbxw5u3PCuVYxkO2=3w@mail.gmail.com> <5097CFCB.7090506@drmicha.warpmail.net> <CAMPhdO-Z3E352KbTvnrxJqCecAUGfHCwOoFRUKzObh35uLnrSw@mail.gmail.com> <5098B09B.7060501@viscovery.net> <CAMPhdO_yK02r4c5tTZxFGikmcPiG4G=PMzsPrYOtKCR51Ep0sw@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/4] strbuf_split_buf(): use ALLOC_GROW()
+Date: Tue, 06 Nov 2012 08:54:07 +0100
+Message-ID: <5098C21F.6030803@alum.mit.edu>
+References: <1352011614-29334-1-git-send-email-mhagger@alum.mit.edu> <1352011614-29334-2-git-send-email-mhagger@alum.mit.edu> <20121104114101.GA336@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Eric Miao <eric.y.miao@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 08:44:22 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 06 08:54:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVdpc-0004Zf-9m
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Nov 2012 08:44:20 +0100
+	id 1TVdzM-0002Hq-1U
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Nov 2012 08:54:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929Ab2KFHoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2012 02:44:06 -0500
-Received: from so.liwest.at ([212.33.55.23]:49941 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753669Ab2KFHoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2012 02:44:05 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TVdpJ-0002kA-By; Tue, 06 Nov 2012 08:44:01 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 2030A1660F;
-	Tue,  6 Nov 2012 08:44:01 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <CAMPhdO_yK02r4c5tTZxFGikmcPiG4G=PMzsPrYOtKCR51Ep0sw@mail.gmail.com>
-X-Enigmail-Version: 1.4.5
-X-Spam-Score: -1.0 (-)
+	id S1753567Ab2KFHyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2012 02:54:11 -0500
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:59330 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753505Ab2KFHyL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Nov 2012 02:54:11 -0500
+X-AuditID: 12074412-b7f216d0000008e3-29-5098c222e679
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id C8.F1.02275.222C8905; Tue,  6 Nov 2012 02:54:10 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qA67s7eJ008067
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 6 Nov 2012 02:54:08 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+In-Reply-To: <20121104114101.GA336@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEKsWRmVeSWpSXmKPExsUixO6iqKt0aEaAwY9eHouuK91MFg29V5gt
+	frT0MDswezzr3cPocfGSssfnTXIBzFHcNkmJJWXBmel5+nYJ3Bm3N7xjLXjFVzFh/yrmBsa3
+	3F2MnBwSAiYShzv7WCFsMYkL99azdTFycQgJXGaUWLnqDCOEc4xJ4s+cCWwgVbwC2hJXb11j
+	ArFZBFQlDrVcAutmE9CVWNTTDBYXFQiTWLPnEBNEvaDEyZlPWEBsEQFZie+HNzKC2MwC1hIr
+	Xh8GqxEWsJU4c3wD1LJVjBIL9/wCS3AKWEqc7e0GauYAalCXWD9PCKJXXmL72znMExgFZiFZ
+	MQuhahaSqgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdM30cjNL9FJTSjcxQkJXaAfj+pNy
+	hxgFOBiVeHgFxGYECLEmlhVX5h5ilORgUhLl/bAHKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE
+	d8c2oBxvSmJlVWpRPkxKmoNFSZz352J1PyGB9MSS1OzU1ILUIpisDAeHkgSvwUGgRsGi1PTU
+	irTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQpMYXA2MVJMUDtLf1AMje4oLEXKAoROspRmOO
+	o2/mPmTk+Ng47yGjEEtefl6qlDivCsgmAZDSjNI8uEWwpPWKURzob2FeD5AqHmDCg5v3CmgV
+	E9Cq7ZemgKwqSURISTUwclx2WvznSv2J6AP3Xry4yDphqXzcof8BNtEnM0+//sQ/41r6cbHt
+	Lr6OBx5vdjP4aGvTz3ODe9KsppjTM2R/Fv1+ybFQICTvAVt79KnLD4Wr4ypb9u+K 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209102>
 
-Am 11/6/2012 7:56, schrieb Eric Miao:
-> On Tue, Nov 6, 2012 at 2:39 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Am 11/6/2012 1:58, schrieb Eric Miao:
->>> E.g. when we merged a series of patches:
->>>
->>>   [PATCH 00/08]
->>>   [PATCH 01/08]
->>>   ...
->>>   [PATCH 08/08]
->>>
->>> How do we know this whole series after merged when only one of these
->>> commits are known?
->>
->> You can use git name-rev. For example:
->>
->> $ git name-rev 9284bdae3
->> 9284bdae3 remotes/origin/pu~2^2~7
->>
->> This tell you that the series was merged two commits before origin/pu, and
->> then it is the 7th from the tip of the series. Now you can
->>
->> $ git log origin/pu~2^..origin/pu~2^2
->>
->> to see the whole series.
+On 11/04/2012 12:41 PM, Jeff King wrote:
+> On Sun, Nov 04, 2012 at 07:46:51AM +0100, Michael Haggerty wrote:
 > 
-> I'm just curious how this is implemented in git, are we keeping the info
-> of the series that's applied in a whole?
+>> Use ALLOC_GROW() rather than inline code to manage memory in
+>> strbuf_split_buf().  Rename "pos" to "nr" because it better describes
+>> the use of the variable and it better conforms to the "ALLOC_GROW"
+>> idiom.
+> 
+> I suspect this was not used originally because ALLOC_GROW relies on
+> alloc_nr, which does fast growth early on. At (x+16)*3/2, we end up with
+> 24 slots for the first allocation. We are typically splitting 1 or 2
+> values.
+> 
+> It probably doesn't make a big difference in practice, though, as we're
+> talking about wasting less than 200 bytes on a 64-bit platform, and we
+> do not tend to keep large numbers of split lists around.
 
-If the maintainer did his job well, then everything that you had in [PATCH
-01/08] ... [PATCH 08/08] is in the commits of the series, and [PATCH
-00/08] (the cover letter) is in the commit that merged the series.
+I did a little bit of archeology, and found out that
 
-Anything else that I didn't mention but you consider as "the info of the
-series"?
+* ALLOC_GROW() did indeed exist when this code was developed, so it
+  *could have* been used.
 
-> But this still looks like be inferred basing on a branch head, and I'm
-> afraid this may not be applicable in every case.
+* OTOH, I didn't find any indication on the mailing list that the
+  choice not to use ALLOC_GROW() was a conscious decision.
 
-What's the problem? That it's inferred? Or that it needs a branch head?
+So history doesn't give us much guidance.
 
--- Hannes
+If the size of the initial allocation is a concern, then I would suggest
+adding a macro like ALLOC_SET_SIZE(ary,nr,alloc) that could be called to
+initialize the size to some number less than 24.  Such a macro might be
+useful elsewhere, too.  It wouldn't, of course, slow the growth rate
+*after* the first allocation.
+
+FWIW, the "max" parameter of strbuf_split*() is only used in one place,
+though strbuf_split*() is used in some other places where not too many
+substrings would be expected.
+
+I am working on some patch series that will eliminate even more uses of
+strbuf_split*(), so I won't work more on optimizing its resource usage
+unless somebody gives me a stronger nudge.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
