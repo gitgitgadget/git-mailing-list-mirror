@@ -1,48 +1,74 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Workflow for templates?
-Date: Tue, 6 Nov 2012 22:07:19 +0100
-Message-ID: <20121106210719.GG28437@raven.wolf.lan>
-References: <20121025211522.GA28437@raven.wolf.lan>
- <3190de06-2eaf-4a39-91aa-9cc34c20fc8e@zcs>
- <20121031104403.GC28437@raven.wolf.lan>
- <20121106195045.GD28437@raven.wolf.lan>
- <871B6C10EBEFE342A772D1159D13208537AA184A@umechphj.easf.csd.disa.mil>
+From: Damien Robert <damien.olivier.robert+gmane@gmail.com>
+Subject: git ls-files --ignored and ignored directory
+Date: Tue, 6 Nov 2012 21:19:05 +0000 (UTC)
+Message-ID: <k7bus9$o9t$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 06 22:08:08 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 06 22:19:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVqNT-0004vv-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Nov 2012 22:08:07 +0100
+	id 1TVqYZ-0002i9-8T
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Nov 2012 22:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283Ab2KFVHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2012 16:07:53 -0500
-Received: from quechua.inka.de ([193.197.184.2]:52150 "EHLO mail.inka.de"
+	id S1752874Ab2KFVTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2012 16:19:23 -0500
+Received: from plane.gmane.org ([80.91.229.3]:36920 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751141Ab2KFVHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2012 16:07:53 -0500
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1TVqNE-0001MP-0n; Tue, 06 Nov 2012 22:07:52 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id C86A3760DF; Tue,  6 Nov 2012 22:07:19 +0100 (CET)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <871B6C10EBEFE342A772D1159D13208537AA184A@umechphj.easf.csd.disa.mil>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751871Ab2KFVTU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2012 16:19:20 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TVqYP-0002cX-HG
+	for git@vger.kernel.org; Tue, 06 Nov 2012 22:19:25 +0100
+Received: from phare.normalesup.org ([129.199.129.80])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Nov 2012 22:19:25 +0100
+Received: from damien.olivier.robert+gmane by phare.normalesup.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Nov 2012 22:19:25 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: phare.normalesup.org
+X-Newsreader: Flrn (0.9.20070704)
+X-Start-date: Tue, 06 Nov 2012 22:12:36 +0100 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209122>
 
-On Tue, Nov 06, 2012 at 08:21:25PM +0000, Pyeron, Jason J CTR (US) wrote:
-> Maybe I lost sight of your problem. Can you give a specific example of where "it" does not work?
+I would like to use git ls-files to show all the ignored files, including
+directory.
 
-I guess it's _me_ who's lost. I can't figure how this is supposed to
-work. Maybe you have an example?
+As an example of setup:
+
+mkdir /tmp/git && cd /tmp/git
+git init
+mkdir a b
+touch a/a
+touch b/b
+cat >.gitignore << EOF
+a/
+b/*
+EOF
+
+Then if I do:
+$ git ls-files --exclude-standard --ignored --others
+b/b
+$ git ls-files --exclude-standard --ignored --others --directory
+a/
+
+In the first case I was expecting
+a/a
+b/b
+and in the second case
+a/
+b/
+
+Is there a way to get the behavior I'd like? Thanks!
