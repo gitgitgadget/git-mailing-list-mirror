@@ -1,64 +1,103 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 14/13] wildmatch: fix tests that fail on Windows due to
- path mangling
-Date: Tue, 6 Nov 2012 19:47:13 +0700
-Message-ID: <CACsJy8DEH53mA4fDyZwbVsbyGcNY8b54Sn1p5-rto6r_h48dkA@mail.gmail.com>
-References: <1350282212-4270-1-git-send-email-pclouds@gmail.com>
- <1350282362-4505-1-git-send-email-pclouds@gmail.com> <1350282362-4505-13-git-send-email-pclouds@gmail.com>
- <5096D76F.5090907@kdbg.org>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: git-p4 clone @all error
+Date: Tue, 6 Nov 2012 13:54:48 +0000 (UTC)
+Message-ID: <loom.20121106T135442-279@post.gmane.org>
+References: <1351593879401-7570219.post@n2.nabble.com> <CABYiQp=1HEW=53U2Rck5vckhq0PB3C9iuanoXeVvNG6Xv5+oHg@mail.gmail.com> <20121103231305.GB11267@padd.com> <1352109747598-7570575.post@n2.nabble.com> <20121105221212.GA12003@padd.com> <20121106002515.5b7eba50@fenix.utopia.dhis.org> <1352192140569-7570622.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Nov 06 13:48:01 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 06 14:55:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TViZS-0004Oh-JE
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Nov 2012 13:47:58 +0100
+	id 1TVjca-0004yS-C1
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Nov 2012 14:55:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311Ab2KFMrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2012 07:47:45 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:49936 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751152Ab2KFMro (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2012 07:47:44 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so325206oag.19
-        for <git@vger.kernel.org>; Tue, 06 Nov 2012 04:47:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wTjiR25+X0YqtyrqtGdUK3zp/p5XYV97PU0bN+2Gk8k=;
-        b=UsOS39QR1I4N5apicu1cZ67a8fiXrgWhPqZsEt4eQx746u/I5Fz0zYQaKeT/rWFynt
-         vq6bCG5gmB+F6Wigb8j3BQRBSp0LDPGNWvomZAQ+CYX1PGYMp7cpcLfyBfU6GBKSiwCw
-         cRuSeOfzfewaJPbMT1v+PeWxeYdX9OcABH9+sCNBlvRqktrmReE3VR6hlGxVu7sIN1Du
-         ay+GTJlKarSxo6VHTtsk/XUSUIjIoEarhdoR3kXaHI5dDpVhuKQaUuN32jb3QvhVPsKf
-         BDGnalm0cx2oVN1A/BhC8xmKyba3yGtlffVren3iwN5pG7ru8ijzoHtuSHWfvi4vowM4
-         48Xw==
-Received: by 10.60.6.227 with SMTP id e3mr703489oea.22.1352206064081; Tue, 06
- Nov 2012 04:47:44 -0800 (PST)
-Received: by 10.182.64.82 with HTTP; Tue, 6 Nov 2012 04:47:13 -0800 (PST)
-In-Reply-To: <5096D76F.5090907@kdbg.org>
+	id S1751785Ab2KFNzC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2012 08:55:02 -0500
+Received: from plane.gmane.org ([80.91.229.3]:58848 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750989Ab2KFNzB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2012 08:55:01 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TVjcR-0004uB-LK
+	for git@vger.kernel.org; Tue, 06 Nov 2012 14:55:07 +0100
+Received: from 57.79.130.182 ([57.79.130.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Nov 2012 14:55:07 +0100
+Received: from vitor.hda by 57.79.130.182 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Nov 2012 14:55:07 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 57.79.130.182 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209110>
 
-On Mon, Nov 5, 2012 at 4:00 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Patterns beginning with a slash are converted to Windows paths before
-> test-wildmatch gets to see them. Use a different first character.
+Arthur <a.foulon <at> amesys.fr> writes:
 
-Or we could prepend the paths with something, which is then cut out by
-test-wildmatch. Not sure if it's intuitive to look at the tests
-though.
+>=20
+> Thanks for your support,
+>=20
+> If i get latest r=C3=A9vision on Perforce i have this errors :
+>=20
+> /    590 errors reported
+>     Librarian checkout
+> depot/mainline/02_subsystem/10_arinc_429/00_cots/01_bsp_aim/original
+> files/api429decryption.txt failed.
+>     open for read:
+> depot/mainline/02_subsystem/10_arinc_429/00_cots/01_bsp_aim/original
+> files/api429decryption.txt,v: Le fichier spcifi est introuvable.
+>     Librarian checkout
+> depot/mainline/02_subsystem/10_arinc_429/00_cots/01_bsp_aim/original
+> files/api429linuxrelnotes.pdf failed.
+>     open for read:
+> depot/mainline/02_subsystem/10_arinc_429/00_cots/01_bsp_aim/original
+> files/api429linuxrelnotes.pdf,d\1.1150: Le chemin d'accs spcifi est
+> introuvable.
+>     Librarian checkout
+> depot/mainline/02_subsystem/10_arinc_429/00_cots/01_bsp_aim/original
+> files/lien vers readme.txt failed.
+>     .../
+>=20
+> Perforce can't find the files because they were removed. (option
+> obliterate...)
+> So the error on the Perforce clone may come from this.
 
->  After this change, there are still 3 failing tests that are in connection
->  with [[:xdigit:]]. Don't know, yet, what's going on there.
+To be honest, I don't know how git-p4 behaves when obliterate is used.
 
-the wildmatch tests or fnmatch ones?
--- 
-Duy
+> How i can show git-p4.branchList ?
+>
+> My depot structure :
+>=20
+> MAINLINE
+>   DEV_DATA
+>   RELEASE_1.0
+>   RELEASE_1.0.0
+>=20
+
+This tells me you did not setup the branchList configuration. In your
+~/.gitconfig please add the following:
+
+[git-p4]
+    branchList =3D DEV_DATA:RELEASE_1.0
+    branchList =3D DEV_DATA:RELEASE_1.0.0
+
+This assumes that the RELEASE branches are integrated from DEV_DATA.
+After the import is successful you can move the [git-p4] from
+~/.gitconfig to .git/config of the git repository.
+
+Please make sure you keep in CC, because I'm not subscribed to the
+mailing list.
+
+Vitor
