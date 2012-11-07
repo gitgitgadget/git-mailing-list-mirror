@@ -1,66 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: crash on git diff-tree -Ganything <tree> for new files with
- textconv filter
-Date: Wed, 7 Nov 2012 16:13:39 -0500
-Message-ID: <20121107211339.GA29184@sigill.intra.peff.net>
-References: <508C29E4.5000801@arcor.de>
- <20121028120104.GE11434@sigill.intra.peff.net>
- <508D8DF7.7040007@arcor.de>
- <20121029060524.GB4457@sigill.intra.peff.net>
- <508EE4E4.1080407@arcor.de>
- <20121029223521.GJ20513@sigill.intra.peff.net>
- <509ACE63.9070007@arcor.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC] Add a new email notification script to "contrib"
+Date: Wed, 7 Nov 2012 22:47:53 +0100
+Message-ID: <CACBZZX6=e6_qO=wMcxLdUAc6XxYpdiP-9RPRsCXrVC_iuJ11Jg@mail.gmail.com>
+References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu> <50092C8C.3000305@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 22:13:57 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	=?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Nov 07 22:48:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWCwe-0007eb-I1
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 22:13:56 +0100
+	id 1TWDU3-0000Lc-NJ
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 22:48:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767Ab2KGVNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2012 16:13:43 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34556 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752497Ab2KGVNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2012 16:13:43 -0500
-Received: (qmail 21811 invoked by uid 107); 7 Nov 2012 21:14:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Nov 2012 16:14:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Nov 2012 16:13:39 -0500
-Content-Disposition: inline
-In-Reply-To: <509ACE63.9070007@arcor.de>
+	id S1753221Ab2KGVsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2012 16:48:14 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:62992 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753200Ab2KGVsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2012 16:48:13 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so2187959oag.19
+        for <git@vger.kernel.org>; Wed, 07 Nov 2012 13:48:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=aSLV85eWyWkNdmMwyH+057SMKlGbpPetJ20PaIYLzjc=;
+        b=VJKR/OBE56i0Ss/X/nRR5dY2VHL6pk0+NYwwoe0XJ3rqTUVfe+rnLCRDzSrA/BBZmI
+         D8uOvgUT4SXju9W564yivkricIhuJ0MKZEUnQ3JoZYEMLI/UYpkIoQbu2q6c2kx9b1AP
+         3vpk7vAlEpGon39mC0VH+V9kXG3dQ3haL/d7oxkoJnvjAG0FmN4zd/K/y9tY3q6HMxok
+         QpAjuE8EVhH+57RuZc1yQW1+GbBFaQFght2WF4BR9zI8ROybWJF8Fv8+YcugxA3Hli2D
+         eJG3lxT1q3JfHXiy+paLy6lZcItprUdA4k+znKy+3eVZBLdXrpZeU9viiOtqNbIz9Qga
+         VM5w==
+Received: by 10.60.12.106 with SMTP id x10mr1455569oeb.10.1352324893286; Wed,
+ 07 Nov 2012 13:48:13 -0800 (PST)
+Received: by 10.60.93.225 with HTTP; Wed, 7 Nov 2012 13:47:53 -0800 (PST)
+In-Reply-To: <50092C8C.3000305@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209143>
 
-On Wed, Nov 07, 2012 at 10:10:59PM +0100, Peter Oberndorfer wrote:
+On Fri, Jul 20, 2012 at 12:01 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 07/14/2012 08:59 AM, mhagger@alum.mit.edu wrote:
+>>
+>> Add a new Python script, contrib/hooks/post-receive-multimail.py, that
+>> can be used to send notification emails describing pushes into a git
+>> repository.  [...]
+>
+>
+> Thanks to everybody for your feedback.  I will try to incorporate it in a
+> new version of the script, which I will put forward as a replacement for
+> contrib/hooks/post-receive-email rather than as an alternative.  But I have
+> very little open-sourcing time these days, and will be on vacation next
+> week, so please be patient (or feel free to lend a hand if you are so
+> inclined).
 
-> >> For me the key to reproduce the problem was to have 2 commits.
-> >> Adding the file in the root commit it did not work. [1]
-> > You probably would need to pass "--root" for it to do the diff of the
-> > initial commit.
-> >
-> > The patch below fixes it, but it's terribly inefficient (it just detects
-> > the situation and reallocates). It would be much better to disable the
-> > reuse_worktree_file mmap when we populate the filespec, but it is too
-> > late to pass an option; we may have already populated from an earlier
-> > diffcore stage.
-> Hi,
-> I tested your patch, and i can confirm it fixes the problem for me.
-> (also on my real world test in msysgit)
-
-Thanks for the report. I'd still like to pursue using a regex library
-that does not require NUL-termination, but I've been distracted by other
-things. I'm going to hold back my copy-to-a-NUL-buffer patch for now and
-see if I can get to the regex thing this week.
-
--Peff
+I'm curious as to whether you got around to this? I'd be interested in
+updates on this script.
