@@ -1,74 +1,56 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-clone and unreliable links?
-Date: Wed, 7 Nov 2012 07:54:53 -0800
-Message-ID: <CAJo=hJtJPnQFjvz8AAQjf5Rze-_99vF_tYi9CqJ7fiW245Dv1w@mail.gmail.com>
-References: <20121107153519.GI28437@raven.wolf.lan>
+From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+Subject: Re: Workflow for templates?
+Date: Wed, 07 Nov 2012 17:03:07 +0100
+Message-ID: <509A863B.4090805@ira.uka.de>
+References: <20121025211522.GA28437@raven.wolf.lan> <3190de06-2eaf-4a39-91aa-9cc34c20fc8e@zcs> <20121031104403.GC28437@raven.wolf.lan> <20121106195045.GD28437@raven.wolf.lan> <871B6C10EBEFE342A772D1159D13208537AA184A@umechphj.easf.csd.disa.mil> <20121106210719.GG28437@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Josef Wolf <jw@raven.inka.de>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 07 16:55:34 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Josef Wolf <jw@raven.inka.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 07 16:58:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TW7yX-0001GZ-Mf
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 16:55:34 +0100
+	id 1TW81B-0003Mp-Qo
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 16:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546Ab2KGPzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2012 10:55:16 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:61674 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922Ab2KGPzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2012 10:55:14 -0500
-Received: by mail-qa0-f46.google.com with SMTP id n12so551289qat.19
-        for <git@vger.kernel.org>; Wed, 07 Nov 2012 07:55:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=TdvCs36o0djASycmbMv9N2dp6VaGxWu2bLVvpb8ftVY=;
-        b=Cg/WCa0x5Q+LIjzdyPF3WI0wgJrTlMtH8JStKhgdiKXvkcj0n5hzoNuUKPKCRYk5FS
-         uCapuoRCEhu8T1Xi+DgWYfzK+jWwWNsZmXmoPacmHn3P3X7a0svdnpBMnj3We+Pgwf89
-         QIgbcQTkWXM5zL4ebfgTyUZUKzKQ54XOcgdBo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:x-gm-message-state;
-        bh=TdvCs36o0djASycmbMv9N2dp6VaGxWu2bLVvpb8ftVY=;
-        b=eKrvcixi/a2y2pulH+ajRd3z6BerI7kFPqxCkxqALfNIWd/AsOt8WVMSZ2IxXFngqu
-         x/1QUc6UrhJapYNAztzyyG8j77syPR/0HyfYlOnaqDd9WLGCBm/n3kIr7HiPqXsMuqkj
-         53pi/jpz+9gu++UkkfSJH3ILrxgEB2bCXA/x960hSIx57HgymGJMg4SSapXh5f34+KQN
-         9KAGvfisU2SSiVPT+QETFDUHy80aBD0V2AgA23lWaQqVUAo+YpKrpxOC0xpAUaZ0WeBW
-         KpK9bwfSBprad57bTietLQj1nJGRdySlFbdWew/JrVl2XeHUr3aRbcEfoOsX76PTnmK7
-         6TpQ==
-Received: by 10.224.185.79 with SMTP id cn15mr7539944qab.14.1352303713976;
- Wed, 07 Nov 2012 07:55:13 -0800 (PST)
-Received: by 10.49.60.198 with HTTP; Wed, 7 Nov 2012 07:54:53 -0800 (PST)
-In-Reply-To: <20121107153519.GI28437@raven.wolf.lan>
-X-Gm-Message-State: ALoCoQmMqCbc9I9Vek02ZT/JT/BSl1I44BH4ufrcQoV/H08mFBle+ouMllxzLYcruD9xvFyGsy6+
+	id S1752369Ab2KGP6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2012 10:58:04 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:50266 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751432Ab2KGP6C (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2012 10:58:02 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1TW80q-0008Ab-6b; Wed, 07 Nov 2012 16:58:01 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
+	id 1TW80p-0003jI-VK; Wed, 07 Nov 2012 16:57:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
+In-Reply-To: <20121106210719.GG28437@raven.wolf.lan>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1352303881.240611000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209136>
 
-On Wed, Nov 7, 2012 at 7:35 AM, Josef Wolf <jw@raven.inka.de> wrote:
-> When using git-clone over an unreliable link (say, UMTS) and the network goes
-> down, git-clone deletes everything what was downloaded. When the network goes
-> up again and you restart git-clone, it has to start over from the
-> beginning. Then, eventually, the network goes down again, and everything is
-> deleted again.
+Am 06.11.2012 22:07, schrieb Josef Wolf:
+> On Tue, Nov 06, 2012 at 08:21:25PM +0000, Pyeron, Jason J CTR (US) wrote:
+>> Maybe I lost sight of your problem. Can you give a specific example of where "it" does not work?
 >
-> Is there a way to omit the deleting step, so the second invocation would start
-> where the first invocation was interrupted?
+> I guess it's _me_ who's lost. I can't figure how this is supposed to
+> work. Maybe you have an example?
 
-No, because a clone is not resumable.
+Let me ask a different question: What is wrong with cherry-picking 
+downstream changes to your upstream branch? Without rebasing it to 
+downstream.
 
-The best way to obtain a repository over an unstable link is to ask
-the repository owner to make a bundle file with `git bundle create
---heads --tags` and serve the file using standard HTTP or rsync, which
-are resumable protocols. After you download the file, you can clone or
-fetch from the bundle to initialize your local repository, and then
-run git fetch to incrementally update to anything that is more recent
-than the bundle's creation.
+That might mean there is a rather useless merge downstream later on, but 
+that's the price you pay for not doing the change in a development branch.
