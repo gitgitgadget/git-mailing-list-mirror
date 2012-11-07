@@ -1,75 +1,70 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: why '--init' in git-submodule update
-Date: Wed, 7 Nov 2012 08:10:45 +0100
-Message-ID: <CAC9WiBhvEX8VCprytK8HMTdFX+iQE7K=a4cKb8MphhpDowaw6A@mail.gmail.com>
-References: <CAC9WiBgpHWFGW-z5fnQR_EWnfGJUw+G3b7C6tYMGuVu1S-kP9A@mail.gmail.com>
-	<20121105213004.GA2797@book.hvoigt.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] push/pull: adjust missing upstream help text to changed
+ interface
+Date: Wed, 07 Nov 2012 09:22:38 +0100
+Message-ID: <509A1A4E.5060805@drmicha.warpmail.net>
+References: <00F68AED-5D59-44F2-B0F1-E541881BC2CB@uva.nl> <bd710e422cb8ca0cec4cf52ea3c9ddb284d6c60d.1352197626.git.git@drmicha.warpmail.net> <03ff9252-71dc-4c28-a542-d65d16ba6549@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Nov 07 08:11:02 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeroen van der Ham <vdham@uva.nl>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 09:22:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TVzmu-0000oL-H8
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 08:11:00 +0100
+	id 1TW0uT-00015t-Qm
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 09:22:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310Ab2KGHKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2012 02:10:46 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:60278 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751285Ab2KGHKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2012 02:10:46 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so1286677obb.19
-        for <git@vger.kernel.org>; Tue, 06 Nov 2012 23:10:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=37lKhGSbPxUuucZz2NbRfQokx/V4XPGwhAkYUqtrfjk=;
-        b=t/lwUiuxvXSsAZ3HULlYfetukfRAgxMWI8QMKyyohHGAQyHT1EhgASC9d1DrOZlweu
-         w5P6txzg92B5FfVEBUY+E0EdMdAl8MywIzRT61WS755WwZn887olr3bW25/LltsoxB3w
-         BgP7rJzr4ivY/9LOeN3In53ccwoe3fd9zSqffyDXD7gHSgwTAmcBVEg51MNCYF92wv3i
-         PGllbIFupjqmIP3w0FAwWAEN2gGD6B4mX4ZFRevi3WQrbFZTzrMGkDyNK/w5twqLKCto
-         21V/oNFCSCB03EBcDUkEdpv4KqTHQ3CjYccvryuhxMgTv4dVnFAr9hODtJX387GaEFhr
-         SsUQ==
-Received: by 10.60.169.38 with SMTP id ab6mr1355907oec.139.1352272245635; Tue,
- 06 Nov 2012 23:10:45 -0800 (PST)
-Received: by 10.60.93.163 with HTTP; Tue, 6 Nov 2012 23:10:45 -0800 (PST)
-In-Reply-To: <20121105213004.GA2797@book.hvoigt.net>
+	id S1751434Ab2KGIWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2012 03:22:41 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:57452 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751346Ab2KGIWk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2012 03:22:40 -0500
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 15EF320865;
+	Wed,  7 Nov 2012 03:22:40 -0500 (EST)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Wed, 07 Nov 2012 03:22:40 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=rskleAShAS907BEXXVXnSM
+	XCZiM=; b=H1vVv2Gq1++OvqtJ5fFOZB+AguRr0SJ9mytO7UZNRT4eusZl8Le4H7
+	8HH2D/uPCmhjHa63HnkQ5C/ZipHS953t96o8ITrGUAdp5ddc7TNrJdHbXwktR+mS
+	6vbcieQ9Zr8dF7IqiGKZT5prfY9FzzMuTWd3P5oJYNk8Kle7fZ5fw=
+X-Sasl-enc: DvVXB+7QRymcUG5K/LB/epQvsL0d/8lhA8HyNctPRSe6 1352276559
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5A933482655;
+	Wed,  7 Nov 2012 03:22:39 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <03ff9252-71dc-4c28-a542-d65d16ba6549@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209131>
 
-Hi,
+Junio C Hamano venit, vidit, dixit 06.11.2012 15:45:
+> 
+> 
+> Michael J Gruber <git@drmicha.warpmail.net> wrote:
+> 
+>> Yes, I'm in low hanging fruits mood.
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> 
+> It is called tying loose ends, and is very important. Very much appreciated.
 
-On Mon, Nov 5, 2012 at 10:30 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> Hi,
->
-> On Mon, Nov 05, 2012 at 05:30:51PM +0100, Francis Moreau wrote:
->> I'm wondering why the --init option from git-submodule-update is not
->> at least the defaut. Or even wilder, why this option exists at all and
->> git-submodule-update always behave like --init was always passed.
->
-> That was a design decision. People may not be interested in all
-> submodules but just a subset they are working with. E.g. think of a
-> large media directory as a submodule the developers might not be
-> interested in having it around all the time because only the designers
-> are heavily working with it.
->
+;)
 
-Thanks for explaining.
+By the way: The gotcha with the signed-off-by after the note is due to
+my old format-patch-notes being tripped up by the recent restructuring;
+your version in next get's it right. I've dumped my old branch, and I
+hope the maintainer in chief will shuffle around the s-o-b where it belongs.
 
-Another possible solution was to check if one or several submodules
-are already checkout. If so then update only them. If none of them is
-checkout then assume --init is passed and init all of them. Same if a
-path is passed and this path corresponds to a submodule not checkout
-yet.
-
---
-Francis
+Michael
