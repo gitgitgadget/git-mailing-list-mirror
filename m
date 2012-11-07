@@ -1,69 +1,88 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC] Add a new email notification script to "contrib"
-Date: Wed, 7 Nov 2012 22:47:53 +0100
-Message-ID: <CACBZZX6=e6_qO=wMcxLdUAc6XxYpdiP-9RPRsCXrVC_iuJ11Jg@mail.gmail.com>
-References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu> <50092C8C.3000305@alum.mit.edu>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: [PATCH/RFC] launch_editor: ignore SIGINT while the editor has
+ control
+Date: Wed, 7 Nov 2012 23:00:28 +0100
+Message-ID: <20121107220027.GA17463@shrek.podlesie.net>
+References: <20121107191652.842C52E8089@grass.foxharp.boston.ma.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	=?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Nov 07 22:48:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Paul Fox <pgf@foxharp.boston.ma.us>
+X-From: git-owner@vger.kernel.org Wed Nov 07 23:00:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWDU3-0000Lc-NJ
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 22:48:28 +0100
+	id 1TWDfv-00011k-KB
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 23:00:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221Ab2KGVsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2012 16:48:14 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:62992 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753200Ab2KGVsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2012 16:48:13 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so2187959oag.19
-        for <git@vger.kernel.org>; Wed, 07 Nov 2012 13:48:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=aSLV85eWyWkNdmMwyH+057SMKlGbpPetJ20PaIYLzjc=;
-        b=VJKR/OBE56i0Ss/X/nRR5dY2VHL6pk0+NYwwoe0XJ3rqTUVfe+rnLCRDzSrA/BBZmI
-         D8uOvgUT4SXju9W564yivkricIhuJ0MKZEUnQ3JoZYEMLI/UYpkIoQbu2q6c2kx9b1AP
-         3vpk7vAlEpGon39mC0VH+V9kXG3dQ3haL/d7oxkoJnvjAG0FmN4zd/K/y9tY3q6HMxok
-         QpAjuE8EVhH+57RuZc1yQW1+GbBFaQFght2WF4BR9zI8ROybWJF8Fv8+YcugxA3Hli2D
-         eJG3lxT1q3JfHXiy+paLy6lZcItprUdA4k+znKy+3eVZBLdXrpZeU9viiOtqNbIz9Qga
-         VM5w==
-Received: by 10.60.12.106 with SMTP id x10mr1455569oeb.10.1352324893286; Wed,
- 07 Nov 2012 13:48:13 -0800 (PST)
-Received: by 10.60.93.225 with HTTP; Wed, 7 Nov 2012 13:47:53 -0800 (PST)
-In-Reply-To: <50092C8C.3000305@alum.mit.edu>
+	id S1753362Ab2KGWAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2012 17:00:31 -0500
+Received: from shrek-modem2.podlesie.net ([83.13.132.46]:34998 "EHLO
+	shrek.podlesie.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752377Ab2KGWAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2012 17:00:30 -0500
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 22C82524; Wed,  7 Nov 2012 23:00:28 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20121107191652.842C52E8089@grass.foxharp.boston.ma.us>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209144>
 
-On Fri, Jul 20, 2012 at 12:01 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 07/14/2012 08:59 AM, mhagger@alum.mit.edu wrote:
->>
->> Add a new Python script, contrib/hooks/post-receive-multimail.py, that
->> can be used to send notification emails describing pushes into a git
->> repository.  [...]
->
->
-> Thanks to everybody for your feedback.  I will try to incorporate it in a
-> new version of the script, which I will put forward as a replacement for
-> contrib/hooks/post-receive-email rather than as an alternative.  But I have
-> very little open-sourcing time these days, and will be on vacation next
-> week, so please be patient (or feel free to lend a hand if you are so
-> inclined).
+On Wed, Nov 07, 2012 at 02:16:52PM -0500, Paul Fox wrote:
+> the user's editor likely catches SIGINT (ctrl-C).  but if the user
+> spawns a command from the editor and uses ctrl-C to kill that command,
+> the SIGINT will likely also kill git itself.  (depending on the
+> editor, this can leave the terminal in an unusable state.)
+> 
+> Signed-off-by: Paul Fox <pgf@foxharp.boston.ma.us>
+> 
+>  editor.c |    6 +++++-
+>  1 files changed, 5 insertions(+), 1 deletions(-)
+> 
+> diff --git a/editor.c b/editor.c
+> index d834003..775f22d 100644
+> --- a/editor.c
+> +++ b/editor.c
+> @@ -37,8 +37,12 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+>  
+>  	if (strcmp(editor, ":")) {
+>  		const char *args[] = { editor, path, NULL };
+> +		int ret;
+>  
+> -		if (run_command_v_opt_cd_env(args, RUN_USING_SHELL, NULL, env))
+> +		sigchain_push(SIGINT, SIG_IGN);
+> +		ret = run_command_v_opt_cd_env(args, RUN_USING_SHELL, NULL, env);
+> +		sigchain_pop(SIGINT);
+> +		if (ret)
+>  			return error("There was a problem with the editor '%s'.",
+>  					editor);
+>  	}
 
-I'm curious as to whether you got around to this? I'd be interested in
-updates on this script.
+Looks and works good, except for warnings:
+
+editor.c: In function 'launch_editor':
+editor.c:42:3: warning: implicit declaration of function 'sigchain_push' [-Wimplicit-function-declaration]
+editor.c:44:3: warning: implicit declaration of function 'sigchain_pop' [-Wimplicit-function-declaration]
+
+"sigchain.h" should be included, something like:
+
+diff --git a/editor.c b/editor.c
+index 775f22d..3ca361b 100644
+--- a/editor.c
++++ b/editor.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "strbuf.h"
+ #include "run-command.h"
++#include "sigchain.h"
+ 
+ #ifndef DEFAULT_EDITOR
+ #define DEFAULT_EDITOR "vi"
+
+Krzysiek
