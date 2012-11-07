@@ -1,79 +1,66 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: [PATCH/RFC] launch_editor: ignore SIGINT while the editor has
- control
-Date: Wed, 7 Nov 2012 23:00:28 +0100
-Message-ID: <20121107220027.GA17463@shrek.podlesie.net>
-References: <20121107191652.842C52E8089@grass.foxharp.boston.ma.us>
+From: Paul Fox <pgf@foxharp.boston.ma.us>
+Subject: Re: [PATCH/RFC] launch_editor: ignore SIGINT while the editor has control
+Date: Wed, 07 Nov 2012 18:35:15 -0500
+Message-ID: <20121107233515.107ED2E8089@grass.foxharp.boston.ma.us>
+References: <20121107191652.842C52E8089@grass.foxharp.boston.ma.us> <20121107220027.GA17463@shrek.podlesie.net> (sfid-20121107_170809_946190_2B68162F)
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Paul Fox <pgf@foxharp.boston.ma.us>
-X-From: git-owner@vger.kernel.org Wed Nov 07 23:00:46 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Krzysztof Mazur <krzysiek@podlesie.net>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 08 00:35:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWDfv-00011k-KB
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 23:00:43 +0100
+	id 1TWF9e-0001yh-VI
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 00:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362Ab2KGWAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2012 17:00:31 -0500
-Received: from shrek-modem2.podlesie.net ([83.13.132.46]:34998 "EHLO
-	shrek.podlesie.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752377Ab2KGWAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2012 17:00:30 -0500
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id 22C82524; Wed,  7 Nov 2012 23:00:28 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20121107191652.842C52E8089@grass.foxharp.boston.ma.us>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753716Ab2KGXfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2012 18:35:16 -0500
+Received: from colo.foxharp.net ([166.84.7.52]:35438 "EHLO colo.foxharp.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752672Ab2KGXfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2012 18:35:16 -0500
+Received: from grass.foxharp.boston.ma.us (localhost [127.0.0.1])
+	by colo.foxharp.net (Postfix) with ESMTP id 272B3540E4;
+	Wed,  7 Nov 2012 18:32:26 -0500 (EST)
+Received: by grass.foxharp.boston.ma.us (Postfix, from userid 406)
+	id 107ED2E8089; Wed,  7 Nov 2012 18:35:15 -0500 (EST)
+Received: from grass (localhost [127.0.0.1])
+	by grass.foxharp.boston.ma.us (Postfix) with ESMTP id 0E39A2E8007;
+	Wed,  7 Nov 2012 18:35:15 -0500 (EST)
+In-reply-to: <20121107220027.GA17463@shrek.podlesie.net> (sfid-20121107_170809_946190_2B68162F)
+Content-ID: <11455.1352331314.1@grass>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209145>
 
-On Wed, Nov 07, 2012 at 02:16:52PM -0500, Paul Fox wrote:
-> the user's editor likely catches SIGINT (ctrl-C).  but if the user
-> spawns a command from the editor and uses ctrl-C to kill that command,
-> the SIGINT will likely also kill git itself.  (depending on the
-> editor, this can leave the terminal in an unusable state.)
-> 
-> Signed-off-by: Paul Fox <pgf@foxharp.boston.ma.us>
-> 
->  editor.c |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
-> 
-> diff --git a/editor.c b/editor.c
-> index d834003..775f22d 100644
-> --- a/editor.c
-> +++ b/editor.c
-> @@ -37,8 +37,12 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
->  
->  	if (strcmp(editor, ":")) {
->  		const char *args[] = { editor, path, NULL };
-> +		int ret;
->  
-> -		if (run_command_v_opt_cd_env(args, RUN_USING_SHELL, NULL, env))
-> +		sigchain_push(SIGINT, SIG_IGN);
-> +		ret = run_command_v_opt_cd_env(args, RUN_USING_SHELL, NULL, env);
-> +		sigchain_pop(SIGINT);
-> +		if (ret)
->  			return error("There was a problem with the editor '%s'.",
->  					editor);
->  	}
+the user's editor likely catches SIGINT (ctrl-C).  but if the user
+spawns a command from the editor and uses ctrl-C to kill that command,
+the SIGINT will likely also kill git itself.  (depending on the
+editor, this can leave the terminal in an unusable state.)
 
-Looks and works good, except for warnings:
+Signed-off-by: Paul Fox <pgf@foxharp.boston.ma.us>
+---
 
-editor.c: In function 'launch_editor':
-editor.c:42:3: warning: implicit declaration of function 'sigchain_push' [-Wimplicit-function-declaration]
-editor.c:44:3: warning: implicit declaration of function 'sigchain_pop' [-Wimplicit-function-declaration]
+krzysztof wrote:
+...
+ > editor.c: In function 'launch_editor':
+ > editor.c:42:3: warning: implicit declaration of function 'sigchain_push' [-Wimplicit-function-declaration]
+ > editor.c:44:3: warning: implicit declaration of function 'sigchain_pop' [-Wimplicit-function-declaration]
 
-"sigchain.h" should be included, something like:
+sigh.  i had that initially, lost the patch, and then recreated
+without it.  but i'm surprised my build (i did rebuild! :-) doesn't
+emit those errors.  in any case, here's the fixed patch.
+
+ editor.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
 diff --git a/editor.c b/editor.c
-index 775f22d..3ca361b 100644
+index d834003..3ca361b 100644
 --- a/editor.c
 +++ b/editor.c
 @@ -1,6 +1,7 @@
@@ -84,5 +71,23 @@ index 775f22d..3ca361b 100644
  
  #ifndef DEFAULT_EDITOR
  #define DEFAULT_EDITOR "vi"
+@@ -37,8 +38,12 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+ 
+ 	if (strcmp(editor, ":")) {
+ 		const char *args[] = { editor, path, NULL };
++		int ret;
+ 
+-		if (run_command_v_opt_cd_env(args, RUN_USING_SHELL, NULL, env))
++		sigchain_push(SIGINT, SIG_IGN);
++		ret = run_command_v_opt_cd_env(args, RUN_USING_SHELL, NULL, env);
++		sigchain_pop(SIGINT);
++		if (ret)
+ 			return error("There was a problem with the editor '%s'.",
+ 					editor);
+ 	}
+-- 
+1.7.5.4
 
-Krzysiek
+
+=---------------------
+ paul fox, pgf@foxharp.boston.ma.us (arlington, ma, where it's 26.6 degrees)
