@@ -1,74 +1,84 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCHv2 2/2] git p4: add support for 'p4 move' in P4Submit
-Date: Wed, 7 Nov 2012 21:06:58 +0000
-Message-ID: <CAOpHH-VRhOHqeROfjeLBQxqft23VemJZntGNJ-y7CX0A8N3q1A@mail.gmail.com>
-References: <1342135740-30290-1-git-send-email-pw@padd.com>
- <1342135740-30290-3-git-send-email-pw@padd.com> <loom.20121105T183530-627@post.gmane.org>
- <20121105175724.GB889@padd.com>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: Re: crash on git diff-tree -Ganything <tree> for new files with textconv
+ filter
+Date: Wed, 07 Nov 2012 22:10:59 +0100
+Message-ID: <509ACE63.9070007@arcor.de>
+References: <508C29E4.5000801@arcor.de> <20121028120104.GE11434@sigill.intra.peff.net> <508D8DF7.7040007@arcor.de> <20121029060524.GB4457@sigill.intra.peff.net> <508EE4E4.1080407@arcor.de> <20121029223521.GJ20513@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pete Wyckoff <pw@padd.com>, ggibons@perforce.com
-X-From: git-owner@vger.kernel.org Wed Nov 07 22:07:45 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 07 22:12:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWCqd-000380-ED
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 22:07:43 +0100
+	id 1TWCut-0006Og-7L
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Nov 2012 22:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444Ab2KGVHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2012 16:07:30 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:36216 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751018Ab2KGVH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2012 16:07:29 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y32so1421721iag.19
-        for <git@vger.kernel.org>; Wed, 07 Nov 2012 13:07:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=qY063p9qdVrCA3/e2UMgleH0hQxyTMOWTEu1lPGhsZM=;
-        b=Gla/bCq5tzP2VG/5tDOJthDsInHl5CpCw6ct94t/4jTF3aqyCjutwdJU6q8MB59tl9
-         8jMmrw6QCqpmr3nB/uymjJeNFOXayY+CT8y6UuhrMhyeVcmC2X/vwjeP2s8Q6LRS1+Vj
-         ka0GRYLFv81HoU3oad7txMP1iO2+rGaSUZ6zValYbtGr8gvkr/5fgyuWPd1MgoamtaFz
-         WlzDFyEf+vSqRKhbbhlzqM33bGSNxeducUAHORF9y1cbHwlcy6KU72EKLb4GGxLYW4Br
-         A9XFuYrLBLLHuFxOHwRFHxLUQQ6ZLxbC62q9yhXq9/G0f+L10BOi/QfAii8hGGYWdPeI
-         kzlw==
-Received: by 10.50.17.162 with SMTP id p2mr6130555igd.9.1352322448857; Wed, 07
- Nov 2012 13:07:28 -0800 (PST)
-Received: by 10.64.81.33 with HTTP; Wed, 7 Nov 2012 13:06:58 -0800 (PST)
-In-Reply-To: <20121105175724.GB889@padd.com>
+	id S1752555Ab2KGVLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2012 16:11:53 -0500
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:42315 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752105Ab2KGVLw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2012 16:11:52 -0500
+Received: from mail-in-19-z2.arcor-online.net (mail-in-19-z2.arcor-online.net [151.189.8.36])
+	by mx.arcor.de (Postfix) with ESMTP id AED59E4185;
+	Wed,  7 Nov 2012 22:11:50 +0100 (CET)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-19-z2.arcor-online.net (Postfix) with ESMTP id A6E373F83BF;
+	Wed,  7 Nov 2012 22:11:50 +0100 (CET)
+Received: from [10.0.0.5] (88-117-62-181.adsl.highway.telekom.at [88.117.62.181])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-02.arcor-online.net (Postfix) with ESMTPA id 378BB30940;
+	Wed,  7 Nov 2012 22:11:50 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net 378BB30940
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1352322710; bh=WTln8qztFy/8ZhKW7x7aOTZ/7AIh96BjW+TMtIFaFlI=;
+	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	b=Nt4b0lJHAfCPSmJRZvuPrl2RtG1ZCin5Cb6dUzO3u51dvq7vVF+1gAjxfrDrqUgjb
+	 XHx1sS1DJNjw7wM/SZB5nH46mHq0a+7o9yBRPlDfettTTSstTsxwO92PqO2sKoITNt
+	 53HY3hIZ75+Ts312l11stD2cqyMVWnm/kQq4avA4=
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+In-Reply-To: <20121029223521.GJ20513@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209141>
 
-On Mon, Nov 5, 2012 at 5:57 PM, Pete Wyckoff <pw@padd.com> wrote:
-> vitor.hda@gmail.com wrote on Mon, 05 Nov 2012 17:37 +0000:
->> Hi Pete,
->>
->> I've just been hit by a situation where this command is available but is
->> disabled in the server. I don't know what is the best approach to avoid
->> this issue.
+On 2012-10-29 23:35, Jeff King wrote:
+> On Mon, Oct 29, 2012 at 09:19:48PM +0100, Peter Oberndorfer wrote:
 >
-> Really?  The command exists in the server because it returns the
-> text output for "p4 help move".  But "p4 move" itself fails
-> because it is somehow disabled in the server?
+>> I could reproduce with my 0x3000 bytes file on linux. The buffer is not
+>> read with a trailing null byte it is mapped by mmap in
+>> diff_populate_filespec...
+>> So i think we will not get away with expecting a trailing null :-/
+> Thanks for the reproduction recipe. I was testing with "git log", which
+> does not use the mmap optimization.
 >
-> I didn't even know it was possible to administratively disable
-> commands.
+>> For me the key to reproduce the problem was to have 2 commits.
+>> Adding the file in the root commit it did not work. [1]
+> You probably would need to pass "--root" for it to do the diff of the
+> initial commit.
 >
-> What's the actual error message?  And versions of your client and
-> server (p4 -V, p4d -V, p4 info).
->
-> Any ideas Gary?
+> The patch below fixes it, but it's terribly inefficient (it just detects
+> the situation and reallocates). It would be much better to disable the
+> reuse_worktree_file mmap when we populate the filespec, but it is too
+> late to pass an option; we may have already populated from an earlier
+> diffcore stage.
+Hi,
+I tested your patch, and i can confirm it fixes the problem for me.
+(also on my real world test in msysgit)
 
-I don't feel comfortable in testing this again because I'm working in a
-production server. Can Gary provide any details on this type of
-configuration on the server side?
+Again, thanks a lot!
+Greetings Peter
 
-Vitor
+> I guess if we teach the whole diff code that "-G" (and --pickaxe-regex)
+> is brittle, we can disable the optimization from the beginning based on
+> the diff options. I'll take a look.
+>
+> <snip patch>
