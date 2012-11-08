@@ -1,158 +1,108 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC] Add a new email notification script to "contrib"
-Date: Thu, 08 Nov 2012 13:17:43 +0100
-Message-ID: <509BA2E7.4080102@alum.mit.edu>
-References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu> <50092C8C.3000305@alum.mit.edu> <CACBZZX6=e6_qO=wMcxLdUAc6XxYpdiP-9RPRsCXrVC_iuJ11Jg@mail.gmail.com> <509B7E6B.1030407@alum.mit.edu> <CACBZZX5FihEMSyrws-D7GyWvxtpMCPwvaiM18ZqOBaoBcvEjDA@mail.gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [RFC/PATCH] __git_ps1: migrate out of contrib/completion
+Date: Thu, 8 Nov 2012 08:19:10 -0500
+Message-ID: <20121108131910.GE23491@zaya.teonanacatl.net>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+ <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+ <20121025005106.GA9112@elie.Belkin>
+ <3B606942-D194-4148-AF6E-1F3283C983ED@googlemail.com>
+ <20121025074549.GC15790@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	=?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 13:18:03 2012
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="E39vaYmALEf/7YXx"
+Cc: Danny Yates <mail4danny@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Anders Kaseorg <andersk@MIT.EDU>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ted Pavlic <ted@tedpavlic.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+	Dan McGee <dan@archlinux.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 14:19:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWR3a-0006XN-UC
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 13:18:03 +0100
+	id 1TWS1B-0007T9-JQ
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 14:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436Ab2KHMRt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2012 07:17:49 -0500
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:53272 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755390Ab2KHMRr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2012 07:17:47 -0500
-X-AuditID: 1207440c-b7f616d00000270b-6b-509ba2eb991a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 2D.48.09995.BE2AB905; Thu,  8 Nov 2012 07:17:47 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qA8CHiwP004664
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 8 Nov 2012 07:17:45 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
-In-Reply-To: <CACBZZX5FihEMSyrws-D7GyWvxtpMCPwvaiM18ZqOBaoBcvEjDA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA01SbUhTURju3Lu549yN45zzZGK1EKOYKZgsEA0VXD8KI+jzh9306Gbbndx7
-	J1sUzISSlWBgkFP7sE/TEkNLJciGaCmBnylhhR9JaWBmFhh93OtQ+3N4zvu8z/NwzvtCWtuj
-	jIRWTiQ8x9oMQWqFVpWxxThbW5UV/6kXmro/jihMD6fHKJN36CJl8pQN0aaBhUalqXiKN9VP
-	jqlMc6//0nuguc33TmW+/L1bae4f2GpeeBxt7hicDMpSHgtJPsmKRQet+dzOlBMhlpalK3Th
-	hSjX2z/NtAeU6r0gGGKUiKeHf6oCWI/73jcGeYEaatEgwFVtnarApYvCLzqblF4AIYN24POd
-	SBYoUAz2X29fFgchI669VELJOBwdwg3P/MuYQaH4VeWUQsY6lIkXf9dTsieN/BTuarq/3BSG
-	0nFddSsVCCujcEPFM1omgtEB7PFWUHIwjWJx4zWtXKbRJlzSUkWXA+T7L8O31uX7r+sGoB+A
-	aNbmtBvtrNUmkByjkMNyHOGNCXF2qxhHcp2PQeD/Na3gx6MoP0AQGDSMVlGVpVWyRYLb7gcb
-	IGUIZ47elErrTzpy3RZWsGTzThsR/ABD2qBjYLnEMbms+zThHSvURqgwRDAxt2P3a1E+K5JT
-	hBQSfoWNgtCAmW2yaShP8okrz2oT12gKBsvm6kidQLhcwrNO0ZItDzVbkKYqUxopN0uWM0Ih
-	a5eqAWkP2A3ni6+NAzjw/KZ0ekprx4FWwTk4EhnB6GUBkgUWJ7cat7KCMyBCen0Ykyx3aaQF
-	XXWdkQIpKVB4c1UOFNk1KtID1HkpSxcdm9l8MdVf8LRfn9Y3Eloy4kr4tTRxSxeb 
+	id S1755637Ab2KHNTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2012 08:19:20 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:47455 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755626Ab2KHNTQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 08:19:16 -0500
+Received: by mail-qa0-f46.google.com with SMTP id n12so1226966qat.19
+        for <git@vger.kernel.org>; Thu, 08 Nov 2012 05:19:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WXqAjF0ZP5y/01XB79z4G45ALJAMGo3dG5yAEhLzSI0=;
+        b=RYGcrjg1MlH2GqvAEd2p90WMEhM9v7NKHTxZOfDJFKfloRg1xFg6wVbAm9lDMdorli
+         6UZdQKMyOcaQ/B3HD0/MK2Ay1j8RAbf/urxDj42mOLsz3PUpSLFI55i6Nz+u7nbEpCYV
+         ifg4usqvkg5rAGaWbLuyob5HrmocVhM3bUOSPAPavSYkvdl+ANGK42GmBoThK/TfzACy
+         6Fy2STJQqHeJEF721N6aCCKhrC5PDcpIH7pefICjn3WfzcCEbaw2uJhrmSjpg/BDBT7E
+         MCQYDye3RYa4/qfFBXTrQJ+NH0TPE8t2H6MM9ANArLXF/yBz2NxeJPmLTFOuBG5qJUeQ
+         1FDg==
+Received: by 10.49.25.163 with SMTP id d3mr3422373qeg.20.1352380755754;
+        Thu, 08 Nov 2012 05:19:15 -0800 (PST)
+Received: from zaya.teonanacatl.net (zaya.teonanacatl.net. [2001:470:5:873:862b:2bff:fe5e:698b])
+        by mx.google.com with ESMTPS id q7sm13997417qeo.6.2012.11.08.05.19.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 08 Nov 2012 05:19:14 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20121025074549.GC15790@elie.Belkin>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209156>
 
-On 11/08/2012 12:39 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> [...]
 
-I'm glad it's getting some use.  Thanks for the feedback.
+--E39vaYmALEf/7YXx
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'll test it out some more, the issues I've had with it so far in
-> migrating from the existing script + some custom hacks we have to it
-> have been:
->=20
->  * Overly verbose default templates, easy to overwrite now. Might sen=
-d
->    patches for some of them.
+Jonathan Nieder wrote:
+> Different installers put the git-prompt.sh shell library at different=20
+> places on the installed system, so there is no shared location users=20
+> can count on:
+>
+>  Fedora - /etc/profile.d/git-prompt.sh
 
-The templating is currently not super flexible nor very well documented=
-,
-but simple changes should be easy enough.  I mostly carried over the
-text explanations from the old post-receive-email script; it is true
-that they are quite verbose.
+FWIW, we moved it to /usr/share/git-core/contrib/completion/ -- it was=20
+only ever in /etc/profile.d in an unreleased version of Fedora for a=20
+short time.  (Side note: at some point, we'll likely install most or=20
+all of contrib under /usr/share/git-core/contrib in Fedora.)
 
->  * No ability to link to a custom gitweb, probably easy now.
-
-What do you mean by "a custom gitweb"?  What are the commitmail issues
-involved?
-
->  * If someone only pushes one commit I'd like to only have one e-mail
->    with the diff, but if they push multiple commits I'd like to have =
-a
->    summary e-mail and replies to that which have the patches.
->=20
->    It only seemed to support the latter mode, so you send out two
->    e-mails for pushing one commit.
-
-That's correct, and I've also thought about the feature that you
-described.  I think it would be pretty easy to implement; it is only no=
-t
-quite obvious to which mailing list(s?) such emails should be sent.
-
->  * Ability to limit the number of lines, but not line length, that's
->    handy for some template repositories. Should be easy to add
-
-Should too-long lines be folded or truncated?  Either way, it should be
-pretty straightforward (Python even has a textwrap module that could be
-used).
-
-> But in addition to that we have our own custom E-Mail notification
-> scripts for:
->=20
->  * People can subscribe to changes to certain files. I.e. if you
->    modify very_important.c we'll send an E-Mail to a more widely seen
->    review list.
->=20
->  * Invididuals can also edit a config file to watch individual files =
-/
->    glob patterns of files, e.g. src/main.c or src/crypto*
-
-I implemented something like this back when we were using Subversion,
-but it didn't get much use and seemed like more configuration hassle
-than it was worth.
-
-If this were implemented and I asked for notifications about a
-particular file, and a particular reference change affects the file,
-what should I see?
-
-* The summary email for the reference change (yes/no)?
-
-* Detail emails for all commits within the reference change, or only fo=
-r
-the individual commits that modify the file?
-
-* Should the detail emails include the full patch for the corresponding
-commit, or only the diffs affecting the file(s) of interest?  (The
-latter would start to get expensive, because the script would have to
-generate individual emails per subscriber instead of letting sendmail
-fan the emails out across all subscribers.)
-
-> I think a good way to support that would be to have either a path to =
-a
-> config file with those watch specs, or a command so you could run "gi=
-t
-> show ..." on some repo users can push to.
-
-*How* this feature would be configured depends strongly on how the repo
-is hosted.  For example, gitolite has a well-developed scheme for how
-the server should be configured, and it would make sense to work
-together with that.  Other people might configure user access via LDAP
-or Apache.
-
-> But overall it's very nice. I'll make some time to test it in my
-> organization (with lots of commits and people reading commit e-mails)=
-=2E
-
-Cool, thanks!
-
-Michael
+Having it in a more standard location would be excellent, it would=20
+avoid bugs like: https://bugzilla.redhat.com/show_bug.cgi?id=3D854061 :)
 
 --=20
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Oh, very funny!  Now tell the one that doesn't suck.
+       -- Stewie Griffin
+
+
+--E39vaYmALEf/7YXx
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQFDBAEBCAAtBQJQm7FOJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjrsQIAI+gyGLH+BPZtvfSHxlaQz39mCUE3Rwvq/h6
+HQH3Gmpd6iGp+IAmDeMoZg+4vf48sGZv6kyYhvcyAcWCRLNW3emUFFSfHRqhWimb
+bV69vUno7rOe+mHzyZym1JOBQyyOs0/sSdueB4P7xWq/tzjH30xjNBVJnVSagwwJ
+GJmRLkC1EAbvrJoQleer42vTqRx1L/Yff3u82vcA17F+IIIxemRvoBmIYQ5SOoTi
+P8Sp5Ri+++SKLhiZMMOIcUS7PwQNXn0YVmiQSpEel7g6IOsyqQfWNXp0WeJp5sxl
+2MvwPxpUpGlIPo5vNlbRDYgI3sW+EBLHgUw6F0OUmK0z6UwI4uI=
+=rVnq
+-----END PGP SIGNATURE-----
+
+--E39vaYmALEf/7YXx--
