@@ -1,51 +1,57 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git p4: RCS expansion should not span newlines
-Date: Thu, 8 Nov 2012 12:47:27 -0500
-Message-ID: <20121108174727.GJ15560@sigill.intra.peff.net>
-References: <CACtYWOYOSxmogJHy70McsRVf0m2PVuu=q+pDZ2-gAza7vpeEiA@mail.gmail.com>
- <20121104220402.GA9160@padd.com>
+Subject: Re: [PATCH] gitweb.perl: fix %highlight_ext mappings
+Date: Thu, 8 Nov 2012 13:01:57 -0500
+Message-ID: <20121108180157.GK15560@sigill.intra.peff.net>
+References: <20121104094555.a46992b6d836c1e09524d2cc@lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Chris Goard <cgoard@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 18:47:46 2012
+Cc: git@vger.kernel.org
+To: rh <richard_hubbe11@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 19:02:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWWCe-0005tY-UP
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 18:47:45 +0100
+	id 1TWWQj-0007Io-HI
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 19:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756210Ab2KHRrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2012 12:47:32 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36514 "EHLO
+	id S1756544Ab2KHSCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2012 13:02:03 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36527 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754563Ab2KHRrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 12:47:31 -0500
-Received: (qmail 31316 invoked by uid 107); 8 Nov 2012 17:48:17 -0000
+	id S1756500Ab2KHSCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 13:02:01 -0500
+Received: (qmail 31381 invoked by uid 107); 8 Nov 2012 18:02:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 12:48:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 12:47:27 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 13:02:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 13:01:57 -0500
 Content-Disposition: inline
-In-Reply-To: <20121104220402.GA9160@padd.com>
+In-Reply-To: <20121104094555.a46992b6d836c1e09524d2cc@lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209179>
 
-On Sun, Nov 04, 2012 at 05:04:02PM -0500, Pete Wyckoff wrote:
+On Sun, Nov 04, 2012 at 09:45:55AM -0800, rh wrote:
 
-> This bug was introduced in cb585a9 (git-p4: keyword
-> flattening fixes, 2011-10-16).  The newline character
-> is indeed special, and $File$ expansions should not try
-> to match across multiple lines.
+> The previous change created a dictionary of one-to-one elements when
+> the intent was to map mutliple related types to one main type.
+> e.g. bash, ksh, zsh, sh all map to sh since they share similar syntax
+> This makes the mapping as the original change intended.
 > 
-> Based-on-patch-by: Chris Goard <cgoard@gmail.com>
-> Signed-off-by: Pete Wyckoff <pw@padd.com>
+> Signed-off-by: Richard Hubbell <richard_hubbe11@lavabit.com>
 
-Thanks, I'll queue this for 'maint'. Seems obviously correct to me.
+Thanks.
+
+> diff --git a/gitweb.cgi.orig b/gitweb.cgi
+> index 060db27..155b238 100755
+> --- a/gitweb.cgi.orig
+> +++ b/gitweb.cgi
+
+This is not the name of the source file in git.git, so "git am" choked.
+I was able to fix it up locally, though. No need to resend.
 
 -Peff
