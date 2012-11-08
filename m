@@ -1,95 +1,66 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Revert option for git add --patch
-Date: Thu, 8 Nov 2012 10:15:03 -0500
-Message-ID: <20121108151501.GB15560@sigill.intra.peff.net>
-References: <EE89F0A1-1C07-4597-B654-035F657AD09F@me.com>
+Subject: Re: [PATCH/RFC] launch_editor: ignore SIGINT while the editor has
+ control
+Date: Thu, 8 Nov 2012 10:33:31 -0500
+Message-ID: <20121108153331.GC15560@sigill.intra.peff.net>
+References: <20121107191652.842C52E8089@grass.foxharp.boston.ma.us>
+ <20121107220027.GA17463@shrek.podlesie.net>
+ <20121107233515.107ED2E8089@grass.foxharp.boston.ma.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Nathan Broadbent <nathan.f77@gmail.com>
-To: Jonathon Mah <jmah@me.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 16:15:24 2012
+Cc: git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>,
+	gitster@pobox.com
+To: Paul Fox <pgf@foxharp.boston.ma.us>
+X-From: git-owner@vger.kernel.org Thu Nov 08 16:33:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWTpC-0004p4-SS
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 16:15:23 +0100
+	id 1TWU73-0000Qj-Q2
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 16:33:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755941Ab2KHPPI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2012 10:15:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36334 "EHLO
+	id S1754983Ab2KHPdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2012 10:33:36 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36354 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751930Ab2KHPPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 10:15:07 -0500
-Received: (qmail 30072 invoked by uid 107); 8 Nov 2012 15:15:52 -0000
+	id S1752194Ab2KHPdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 10:33:35 -0500
+Received: (qmail 30169 invoked by uid 107); 8 Nov 2012 15:34:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 10:15:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 10:15:03 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 10:34:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 10:33:31 -0500
 Content-Disposition: inline
-In-Reply-To: <EE89F0A1-1C07-4597-B654-035F657AD09F@me.com>
+In-Reply-To: <20121107233515.107ED2E8089@grass.foxharp.boston.ma.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209165>
 
-On Thu, Nov 08, 2012 at 12:57:19AM -0800, Jonathon Mah wrote:
+On Wed, Nov 07, 2012 at 06:35:15PM -0500, Paul Fox wrote:
 
-> I find myself performing similar actions to you: using git add -p to
-> stage hunks, sometimes editing the staged patch; and keeping mental
-> notes of things I wanted to revert, sometimes changing them in the
-> editor in another window, and sometimes reverting them after the add
-> session with git checkout -p).
+> the user's editor likely catches SIGINT (ctrl-C).  but if the user
+> spawns a command from the editor and uses ctrl-C to kill that command,
+> the SIGINT will likely also kill git itself.  (depending on the
+> editor, this can leave the terminal in an unusable state.)
+> 
+> Signed-off-by: Paul Fox <pgf@foxharp.boston.ma.us>
 
-Yeah, I often use a similar workflow. A related one is:
+Thanks, I think this makes sense.
 
-  (1) Make lots of unrelated changes in the working tree.
+> krzysztof wrote:
+> ...
+>  > editor.c: In function 'launch_editor':
+>  > editor.c:42:3: warning: implicit declaration of function 'sigchain_push' [-Wimplicit-function-declaration]
+>  > editor.c:44:3: warning: implicit declaration of function 'sigchain_pop' [-Wimplicit-function-declaration]
+> 
+> sigh.  i had that initially, lost the patch, and then recreated
+> without it.  but i'm surprised my build (i did rebuild! :-) doesn't
+> emit those errors.  in any case, here's the fixed patch.
 
-      $ hack hack hack
-
-  (2) Pick out hunks for the first commit.
-
-      $ git add -p
-
-  (3) Put the rest of the changes aside.
-
-      $ git stash -k
-
-  (4) Test (and possibly tweak) the result, then commit.
-
-      $ make test
-      $ git commit -m "topic 1"
-
-  (5) Bring back the stashed changes.
-
-      $ git stash pop
-
-  (6) If there are still interesting changes, goto step 2.
-
-  (7) Otherwise, discard with "git reset --hard" or "git checkout -p".
-
-I.e., iterating on the changes to put them into several different
-commits (and achieving a clean, testable state before making each
-commit).
-
-The downside of these workflows is that you have to say "no" to hunks
-multiple times (one per iteration) instead of just sorting them in a
-single pass. This works OK in practice, but it might be nice to have a
-tool that makes a single pass and lets you drop hunks into buckets
-(topic 1 vs topic 2 vs discard), and then apply the buckets in order,
-stopping to test, tweak, and commit after each one.
-
-> The interactive staging-and-editing tool could be improved, but I'm
-> not sure that tool should be called 'git add -p'. git add doesn't
-> touch the working tree =E2=80=94 at least I hope not, because I would=
-n't
-> expect it.
-
-Right. I think the idea of one-pass tool is a good one, but it should
-not be called "git add -p".
+gcc will not warn about implicit declarations by default; try compiling
+with "-Wall".
 
 -Peff
