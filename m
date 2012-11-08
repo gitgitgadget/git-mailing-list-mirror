@@ -1,78 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] diff: introduce diff.submodule configuration variable
-Date: Thu, 8 Nov 2012 15:51:10 -0500
-Message-ID: <20121108205110.GB8376@sigill.intra.peff.net>
-References: <1351766630-4837-1-git-send-email-artagnon@gmail.com>
- <1351766630-4837-3-git-send-email-artagnon@gmail.com>
+From: Uri Moszkowicz <uri@4refs.com>
+Subject: Re: Long clone time after "done."
+Date: Thu, 8 Nov 2012 15:49:32 -0600
+Message-ID: <CAMJd5ARLCk_WQTbyLciv0LnrMa_J0YstNsrq-hLYM5DXiO0hLA@mail.gmail.com>
+References: <CAMJd5AQBbnFqT5xrFuPOEsJevwDE=jUgBVFZ5KqTZk5zv5+NOw@mail.gmail.com>
+ <CAMJd5ASL1UPfzUmfXqACuYuGhXQjJLqbsjq7dfpRpF4K-hZFtA@mail.gmail.com>
+ <20121108155607.GD15560@sigill.intra.peff.net> <CAMJd5AQ24u11BH6rMAHvR95N4ys6KHfEQKD1uLzr+=TDgN_69Q@mail.gmail.com>
+ <20121108203332.GQ15560@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 21:51:30 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 08 22:50:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWZ4T-0006Np-1V
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 21:51:29 +0100
+	id 1TWZzE-00017Z-1h
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 22:50:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756935Ab2KHUvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2012 15:51:15 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36708 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756785Ab2KHUvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 15:51:14 -0500
-Received: (qmail 325 invoked by uid 107); 8 Nov 2012 20:52:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 15:52:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 15:51:10 -0500
-Content-Disposition: inline
-In-Reply-To: <1351766630-4837-3-git-send-email-artagnon@gmail.com>
+	id S1757151Ab2KHVtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2012 16:49:55 -0500
+Received: from mx71.nozonenet.com ([204.14.89.24]:44755 "EHLO
+	mail3.nozonenet.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756531Ab2KHVty (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 16:49:54 -0500
+Received: (qmail 15110 invoked by uid 399); 8 Nov 2012 16:49:53 -0500
+Received: from mail-ie0-f174.google.com (smtp@4refs.com@209.85.223.174)
+  (de-)crypted with TLSv1: RC4-SHA [128/128] DN=unknown
+  by mail3.nozonenet.com with ESMTPSAM; 8 Nov 2012 16:49:53 -0500
+X-Originating-IP: 209.85.223.174
+X-Sender: smtp@4refs.com
+Received: by mail-ie0-f174.google.com with SMTP id k13so4990616iea.19
+        for <git@vger.kernel.org>; Thu, 08 Nov 2012 13:49:52 -0800 (PST)
+Received: by 10.42.57.10 with SMTP id b10mr8447836ich.54.1352411392629; Thu,
+ 08 Nov 2012 13:49:52 -0800 (PST)
+Received: by 10.64.28.231 with HTTP; Thu, 8 Nov 2012 13:49:32 -0800 (PST)
+In-Reply-To: <20121108203332.GQ15560@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209192>
 
-On Thu, Nov 01, 2012 at 04:13:49PM +0530, Ramkumar Ramachandra wrote:
+I'm using RHEL4. Looks like perf is only available with RHEL6.
 
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index 9650be2..6d00311 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -297,6 +297,10 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->  	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
->  	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
->  
-> +	/* Set SUBMODULE_LOG if diff.submodule config var was set */
-> +	if (submodule_format_cfg && !strcmp(submodule_format_cfg, "log"))
-> +		DIFF_OPT_SET(&rev.diffopt, SUBMODULE_LOG);
-> +
+heads: 308
+tags: 9614
 
-Yuck. Why is this parsing happening in cmd_diff?
+Looking up the tags that way took a very long time by the way. "git
+tag | wc -l" was much quicker. I've already pruned a lot of tags to
+get to this number as well. The original repository had ~37k tags
+since we used to tag every commit with CVS.
 
-Wouldn't you want it to kick in for "git log --submodule", too? It seems
-like it should go into diff_setup(), and the porcelain/plumbing aspect
-should be controlled by parsing it in git_diff_ui_config or
-git_diff_basic_config. See how diff_no_prefix and diff_mnemonic prefix
-are handled for an example.
+All my tags are packed so cat-file doesn't work:
+fatal: git cat-file refs/tags/some-tag: bad file
 
-Then you can keep the parsing logic for "log" in diff.c. And you should
-factor it out into a function so that the command-line option and the
-config parser can share the same code. I know it's only one line now,
-but anybody who wants to add an option will have to update both places.
-See the parsing of diff.dirstat for an example.
-
->  	else if (!prefixcmp(arg, "--submodule=")) {
->  		if (!strcmp(arg + 12, "log"))
->  			DIFF_OPT_SET(options, SUBMODULE_LOG);
-> +		if (!strcmp(arg + 12, "short"))
-> +			DIFF_OPT_CLR(options, SUBMODULE_LOG);
->  	}
-
-Much better (although arguably should go in a separate patch). Should we
-also produce an error if somebody says "--submodule=foobar"?
-
--Peff
+On Thu, Nov 8, 2012 at 2:33 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Nov 08, 2012 at 11:20:29AM -0600, Uri Moszkowicz wrote:
+>
+>> I tried the patch but it doesn't appear to have helped :( Clone time
+>> with it was ~32m.
+>
+> That sounds ridiculously long.
+>
+>> Do you all by any chance have a tool to obfuscate a repository?
+>> Probably I still wouldn't be permitted to distribute it but might make
+>> the option slightly more palatable. Anything else that I can do to
+>> help debug this problem?
+>
+> I don't have anything already written. What platform are you on? If it's
+> Linux, can you try using "perf" to record where the time is going?
+>
+> How many refs do you have? What does:
+>
+>   echo "heads: $(git for-each-ref refs/heads | wc -l)"
+>   echo " tags: $(git for-each-ref refs/tags | wc -l)"
+>
+> report? How long does it take to look up a tag, like:
+>
+>   time git cat-file tag refs/tags/some-tag
+>
+> ?
+>
+> -Peff
