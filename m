@@ -1,74 +1,75 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] strbuf_split_buf(): use ALLOC_GROW()
-Date: Thu, 8 Nov 2012 11:38:03 -0500
-Message-ID: <20121108163803.GE15560@sigill.intra.peff.net>
-References: <1352011614-29334-1-git-send-email-mhagger@alum.mit.edu>
- <1352011614-29334-2-git-send-email-mhagger@alum.mit.edu>
- <20121104114101.GA336@sigill.intra.peff.net>
- <5098C21F.6030803@alum.mit.edu>
+Subject: Re: Fwd: [PATCH] Remove terminal symbols from non-terminal console
+Date: Thu, 8 Nov 2012 11:51:06 -0500
+Message-ID: <20121108165106.GF15560@sigill.intra.peff.net>
+References: <CABHRWd1T=a8Mze20G9koiTr0L2Nrq0g3vGLC9mEZ7rA45vgfSA@mail.gmail.com>
+ <CABHRWd16k6B4Ybvc4k7z29_A9Q2wZVXA__Bov8Pst4cc2H0cmg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Nov 08 17:38:22 2012
+Cc: git <git@vger.kernel.org>, gitster <gitster@pobox.com>
+To: Michael Naumov <mnaoumov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 17:51:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWV7V-00012Q-7O
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 17:38:21 +0100
+	id 1TWVKE-0001Tn-4P
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Nov 2012 17:51:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756356Ab2KHQiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2012 11:38:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36425 "EHLO
+	id S1756408Ab2KHQvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2012 11:51:13 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36443 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756357Ab2KHQiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 11:38:07 -0500
-Received: (qmail 30608 invoked by uid 107); 8 Nov 2012 16:38:53 -0000
+	id S1756395Ab2KHQvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 11:51:10 -0500
+Received: (qmail 30672 invoked by uid 107); 8 Nov 2012 16:51:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 11:38:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 11:38:03 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Nov 2012 11:51:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2012 11:51:06 -0500
 Content-Disposition: inline
-In-Reply-To: <5098C21F.6030803@alum.mit.edu>
+In-Reply-To: <CABHRWd16k6B4Ybvc4k7z29_A9Q2wZVXA__Bov8Pst4cc2H0cmg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209172>
 
-On Tue, Nov 06, 2012 at 08:54:07AM +0100, Michael Haggerty wrote:
+On Tue, Nov 06, 2012 at 10:17:21AM +1100, Michael Naumov wrote:
 
-> > I suspect this was not used originally because ALLOC_GROW relies on
-> > alloc_nr, which does fast growth early on. At (x+16)*3/2, we end up with
-> > 24 slots for the first allocation. We are typically splitting 1 or 2
-> > values.
-> > 
-> > It probably doesn't make a big difference in practice, though, as we're
-> > talking about wasting less than 200 bytes on a 64-bit platform, and we
-> > do not tend to keep large numbers of split lists around.
+> As per discussion on msysgit user group:
+> https://groups.google.com/forum/?fromgroups=#!topic/msysgit/U_a982_a3rc/discussion
+> we found the following patch is required to get rid of weird terminal
+> characters for other tools such as GitExtensions for Windows
 > 
-> I did a little bit of archeology, and found out that
-> 
-> * ALLOC_GROW() did indeed exist when this code was developed, so it
->   *could have* been used.
-> 
-> * OTOH, I didn't find any indication on the mailing list that the
->   choice not to use ALLOC_GROW() was a conscious decision.
-> 
-> So history doesn't give us much guidance.
+> ---8<---
 
-Thanks for digging.
+Please follow SubmittingPatches (missing signoff, weird use of scissors
+marker that cuts out your commit message, and your commit message should
+summarize the discussion).
 
-> If the size of the initial allocation is a concern, then I would suggest
-> adding a macro like ALLOC_SET_SIZE(ary,nr,alloc) that could be called to
-> initialize the size to some number less than 24.  Such a macro might be
-> useful elsewhere, too.  It wouldn't, of course, slow the growth rate
-> *after* the first allocation.
+> @@ -29,7 +29,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+> 
+>   memcpy(buf, PREFIX, pf);
+>   term = getenv("TERM");
+> - if (term && strcmp(term, "dumb"))
+> + if (isatty(out) && term && strcmp(term, "dumb"))
+>   suffix = ANSI_SUFFIX;
+>   else
+>   suffix = DUMB_SUFFIX;
 
-I think we are getting into premature optimization territory. Let's
-take your series as a cleanup, and we can worry about micro-optimizing
-the allocation if and when it ever becomes an issue.
+Is that right? The "out" fd is where we send sideband 1, and it is
+almost always not going to be a tty. The suffix should be sent with
+sideband 2, which goes to stderr. So I'd think you would want to check
+isatty(2).
+
+Also, most isatty checks also need to cover the case that a pager has
+already been started.  That is probably not worth worrying about here,
+though, as we shouldn't be using a pager for commands that do network
+communications (and if we do, omitting the magic line-clearing signal is
+probably a sane thing to do).
+
+I think the overall goal is a step in the right direction, though.
 
 -Peff
