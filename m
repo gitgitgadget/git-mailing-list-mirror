@@ -1,94 +1,187 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: make remote_heads config setting work.
-Date: Thu, 08 Nov 2012 20:40:11 -0800
-Message-ID: <7vk3tvqthw.fsf@alter.siamese.dyndns.org>
-References: <20121105235047.GA78156@redoubt.spodhuis.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net
-To: Phil Pennock <phil@apcera.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 05:40:37 2012
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v3 2/3] git-submodule foreach: export .gitmodules settings as
+ variables
+Date: Thu, 08 Nov 2012 22:35:13 -0500
+Message-ID: <2121ce36cf4eb02385255cbd5b0bbd1dcc803113.1352431675.git.wking@tremily.us>
+References: <cover.1352431674.git.wking@tremily.us>
+Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 09 05:43:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWgOR-0000hM-MA
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 05:40:36 +0100
+	id 1TWgQn-0002I5-1t
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 05:43:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090Ab2KIEkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2012 23:40:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56165 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751439Ab2KIEkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 23:40:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D479A8AEE;
-	Thu,  8 Nov 2012 23:40:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5e/P0XDPvc0HCncXfhl/wGdue2E=; b=D1rUAq
-	FA8d+wc2TSq4fb60CJsVy4dzHpFb7ee+EJiTMgtw6nT3AArpK0Ztm2WZvw5RHJ07
-	REarsH+unLFWaL3xA9CX0AmZTNH5qDc0oRcauLS7/mGmR7JytQ5ciBCgExqYbkxy
-	cmlHpVfkp8KAp/o2uXX3fulA5SLrtNkjOQ2HA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GPMYGB5vDclvXpDaeSJXeKDwAINBEpvw
-	g86hdd11SzCPc4k1zej2DUQngp4LO1vxgQWuklVKIlERP5FbYlY93M+Pv+nmnFoS
-	Qiqro3FjLh9BTKR4joW4B4tpN35L0+gEDM8MrMEuAsGMCC7e6f+uflc6zDsFrrO3
-	XSwcBojhbcY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C28188AED;
-	Thu,  8 Nov 2012 23:40:13 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35F238AEC; Thu,  8 Nov 2012
- 23:40:13 -0500 (EST)
-In-Reply-To: <20121105235047.GA78156@redoubt.spodhuis.org> (Phil Pennock's
- message of "Mon, 5 Nov 2012 18:50:47 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8D0135AC-2A27-11E2-A1F5-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752680Ab2KIEmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2012 23:42:47 -0500
+Received: from vms173011pub.verizon.net ([206.46.173.11]:52538 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751439Ab2KIEmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 23:42:46 -0500
+X-Greylist: delayed 3608 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Nov 2012 23:42:46 EST
+Received: from odin.tremily.us ([unknown] [72.68.90.158])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MD7004B8BMJQ400@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 08 Nov 2012 21:42:20 -0600 (CST)
+Received: from localhost (tyr.tremily.us [192.168.0.5])
+	by odin.tremily.us (Postfix) with ESMTP id E462D68EDC6; Thu,
+ 08 Nov 2012 22:42:18 -0500 (EST)
+X-Mailer: git-send-email 1.8.0.3.gc2eb43a
+In-reply-to: <cover.1352431674.git.wking@tremily.us>
+In-reply-to: <cover.1352431674.git.wking@tremily.us>
+References: <20121029222759.GI20513@sigill.intra.peff.net>
+ <cover.1352431674.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209204>
 
-Phil Pennock <phil@apcera.com> writes:
+From: "W. Trevor King" <wking@tremily.us>
 
-> @@ -2702,6 +2702,7 @@ sub git_get_project_config {
->  		$key = lc($key);
->  	}
->  	$key =~ s/^gitweb\.//;
-> +	$key =~ s/_//g;
->  	return if ($key =~ m/\W/);
->  
->  	# type sanity check
+This makes it easy to access per-submodule variables.  For example,
 
-The idea to strip "_" from "remote_heads" to create "remoteheads" is
-fine, but I am not sure if the implementation is good.
+  git submodule foreach 'git checkout $(git config --file $toplevel/.gitmodules submodule.$name.branch) && git pull'
 
-Looking at the code before this part:
+can now be reduced to
 
-	if (my ($hi, $mi, $lo) = ($key =~ /^([^.]*)\.(.*)\.([^.]*)$/)) {
-		$key = join(".", lc($hi), $mi, lc($lo));
-	} else {
-		$key = lc($key);
-	}
-	$key =~ s/^gitweb\.//;
-	return if ($key =~ m/\W/);
+  git submodule foreach 'git checkout $submodule_branch && git pull'
 
-the new code is munding the $hi and $mi parts, while the mistaken
-configuration this patch is trying to correct is about the $lo part,
-and possibly the $hi part, but never the $mi part.
+Every submodule.<name>.<opt> setting from .gitmodules is available as
+a $submodule_<sanitized-opt> variable.  These variables are not
+propagated recursively into nested submodules.
 
-It is expected that $hi will always be gitweb, and I suspect that
-there may not be any "per something" configuration variable (e.g.
-"gitweb.master.blame" may be used to override the default value
-given by "gitweb.blame" only for the master branch), that uses $mi
-part, so it might not matter to munge the entire $key like this
-patch does with the current code.
+Signed-off-by: W. Trevor King <wking@tremily.us>
+Based-on-patch-by: Phil Hord <phil.hord@gmail.com>
+---
+ Documentation/git-submodule.txt |  3 +++
+ git-sh-setup.sh                 | 20 ++++++++++++++++++++
+ git-submodule.sh                | 16 ++++++++++++++++
+ t/t7407-submodule-foreach.sh    | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 68 insertions(+)
+ mode change 100644 => 100755 git-sh-setup.sh
 
-But that makes it even more important to get this part right _now_;
-otherwise, it is likely that this new code will introduce a bug to
-a future patch that adds "per something" configuration support.
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index cbec363..9a99826 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -175,6 +175,9 @@ foreach::
+ 	$path is the name of the submodule directory relative to the
+ 	superproject, $sha1 is the commit as recorded in the superproject,
+ 	and $toplevel is the absolute path to the top-level of the superproject.
++	In addition, every submodule.<name>.<opt> setting from .gitmodules
++	is available as the variable $submodule_<sanitized_opt>.  These
++	variables are not propagated recursively into nested submodules.
+ 	Any submodules defined in the superproject but not checked out are
+ 	ignored by this command. Unless given `--quiet`, foreach prints the name
+ 	of each submodule before evaluating the command.
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+old mode 100644
+new mode 100755
+index ee0e0bc..179a920
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -222,6 +222,26 @@ clear_local_git_env() {
+ 	unset $(git rev-parse --local-env-vars)
+ }
+ 
++# Remove any suspect characters from a user-generated variable name.
++sanitize_variable_name() {
++	VAR_NAME="$1"
++	printf '%s' "$VAR_NAME" |
++	sed -e 's/^[^a-zA-Z]/_/' -e 's/[^a-zA-Z0-9]/_/g'
++}
++
++# Return a command for setting a new variable.
++# Neither the variable name nor the variable value passed to this
++# function need to be sanitized.  You need to eval the returned
++# string, because new variables set by the function itself don't
++# effect the calling process.
++set_user_variable() {
++	VAR_NAME="$1"
++	VAR_VALUE="$2"
++	VAR_NAME=$(sanitize_variable_name "$VAR_NAME")
++	VAR_VALUE=$(printf '%s' "$VAR_VALUE" |
++		sed -e 's/\\/\\\\/g' -e 's/"/\\"/g')
++	printf '%s=%s;\n' "$VAR_NAME" "\"$VAR_VALUE\""
++}
+ 
+ # Platform specific tweaks to work around some commands
+ case $(uname -s) in
+diff --git a/git-submodule.sh b/git-submodule.sh
+index bc33112..e4d26f9 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -434,8 +434,24 @@ cmd_foreach()
+ 				clear_local_git_env
+ 				# we make $path available to scripts ...
+ 				path=$sm_path
++
++				# make all submodule variables available to scripts
++				eval $(
++					git config -f .gitmodules --get-regexp "^submodule\.${name}\..*" |
++					sed -e "s|^submodule\.${name}\.||" |
++					while read VAR_NAME VAR_VALUE ; do
++						VAR_NAME=$(printf '%s' "$VAR_NAME" | tr A-Z a-z)
++						set_user_variable "submodule_${VAR_NAME}" "$VAR_VALUE"
++					done)
++				UNSET_CMD=$(set |
++					sed -n -e 's|^\(submodule_[a-z_]*\)=.*$|\1|p' |
++					while read VAR_NAME ; do
++						printf 'unset %s;\n' "$VAR_NAME"
++					done)
++
+ 				cd "$sm_path" &&
+ 				eval "$@" &&
++				eval "$UNSET_CMD" &&
+ 				if test -n "$recursive"
+ 				then
+ 					cmd_foreach "--recursive" "$@"
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 9b69fe2..46ac746 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -313,4 +313,33 @@ test_expect_success 'command passed to foreach --recursive retains notion of std
+ 	test_cmp expected actual
+ '
+ 
++cat > expect <<EOF
++Entering 'nested1'
++nested1 nested1 wonky"value
++Entering 'nested1/nested2'
++nested2 nested2 another wonky"value
++Entering 'nested1/nested2/nested3'
++nested3 nested3
++Entering 'nested1/nested2/nested3/submodule'
++submodule submodule
++Entering 'sub1'
++sub1 sub1
++Entering 'sub2'
++sub2 sub2
++Entering 'sub3'
++sub3 sub3
++EOF
++
++test_expect_success 'test foreach environment variables' '
++	(
++		cd clone2 &&
++		git config -f .gitmodules submodule.nested1.wonky-var "wonky\"value" &&
++		git config -f nested1/.gitmodules submodule.nested2.wonky-var "another wonky\"value" &&
++		git submodule foreach --recursive "echo \$path \$submodule_path \$submodule_wonky_var" > ../actual
++	) &&
++	test_i18ncmp expect actual
++'
++#
++#"echo \$toplevel-\$name-\$submodule_path-\$submodule_url"
++
+ test_done
+-- 
+1.8.0.3.gc2eb43a
