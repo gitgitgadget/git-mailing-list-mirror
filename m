@@ -1,76 +1,62 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: git commit/push can fail silently when clone omits ".git"
-Date: Fri, 9 Nov 2012 19:42:27 +0100
-Message-ID: <20121109184225.GA1190@book.hvoigt.net>
-References: <CAABvdFyn=_2JKHYA_jAduoNAti3U0YFHbdU94esm=m8R0s2LcA@mail.gmail.com> <20121108185643.GN15560@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jeffrey S. Haemer" <jeffrey.haemer@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Issues <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 09 19:51:41 2012
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCHv3 0/4] git-status short sequencer state info
+Date: Fri,  9 Nov 2012 13:56:21 -0500
+Message-ID: <1352487385-5929-1-git-send-email-hordp@cisco.com>
+References: <1351553513-20385-1-git-send-email-hordp@cisco.com>
+Cc: phil.hord@gmail.com, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 19:56:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWtg3-00064r-O3
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 19:51:40 +0100
+	id 1TWtl9-0001hN-DM
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 19:56:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907Ab2KISv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2012 13:51:26 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.24]:44334 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753526Ab2KISvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 13:51:25 -0500
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1TWtXA-0007k6-1q; Fri, 09 Nov 2012 19:42:28 +0100
-Content-Disposition: inline
-In-Reply-To: <20121108185643.GN15560@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754025Ab2KIS4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 13:56:41 -0500
+Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:26070 "EHLO
+	rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753526Ab2KIS4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2012 13:56:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=427; q=dns/txt; s=iport;
+  t=1352487400; x=1353697000;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=IWwu40PseyvbmL87naSYNrSxzCkq5GGWMXDq+H84z2s=;
+  b=DnzGGPHjntNKsuUyYIfIQPzjebNMs5adpca0sf4nbpu4Yw7Oj5jAuW3+
+   KChkgFA8IS+b1WzmO7BtQCuacDfY8iGxS1xv4lcuLnbVZrQU0mxyJq8UF
+   xWi5B0Ye/9wnREocUFdT3v/N7dEmRKCIwlbufUIkLpFUkI+mCIb5V723I
+   k=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EADpRnVCtJV2c/2dsb2JhbABEw0OBCIIfAQEEEgFmEFFXO4dongmgFo83gycDiFqNIY5YgWuDDQ
+X-IronPort-AV: E=McAfee;i="5400,1158,6891"; a="140711655"
+Received: from rcdn-core-5.cisco.com ([173.37.93.156])
+  by rcdn-iport-4.cisco.com with ESMTP; 09 Nov 2012 18:56:40 +0000
+Received: from ipsn-lnx-hordp.cisco.com (dhcp-64-100-104-96.cisco.com [64.100.104.96])
+	by rcdn-core-5.cisco.com (8.14.5/8.14.5) with ESMTP id qA9IudCC020062;
+	Fri, 9 Nov 2012 18:56:39 GMT
+X-Mailer: git-send-email 1.8.0.3.gde9c7d5.dirty
+In-Reply-To: <1351553513-20385-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209237>
 
-Hi,
+I think this series is fairly complete at this point. I am still
+missing some tests in 4/4, but only because I am not sure how to
+induce those conditions.  Maybe I should enlist help from $(git-blame).
 
-On Thu, Nov 08, 2012 at 01:56:43PM -0500, Jeff King wrote:
-> Unfortunately, the patch below which does that seems to make t7407 very
-> unhappy. It looks like the submodule test uses "git clone ." and
-> "git-submodule add" expects the "/." to still be at the end of the
-> configured URL when processing relative submodule paths. I'm not sure if
-> that is important, or an unnecessary brittleness in the submodule code.
-> 
-> Jens, Heiko?
-
-After some analysis it seems to me that the test deviates from the
-expected behavior. For relative urls we have documented that if we have
-a remote in the superproject a relative submodule path is relative to that
-remotes url.
-
-In the test super has been cloned from ".". So the tests root directory
-should be the directory the submodule path is relative to. That would
-be ./submodule (since submodule is also in the root directory) and not
-../submodule.
-
-Before your patch a "/." was added to the origin of super and "/." is
-currently counted as a path component.
-
-So we have another corner case here: When your superproject was cloned
-from "." the urls you currently have to specify with submodule add are
-wrong (one ".." to much).
-
-Since this is a change in behaviour I would like to further think about
-the implications this brings if we fix this. Not sure how many people
-clone from ".". The correct behavior (as documented) is the one you
-introduce with your patch. If we decide to fix this we should also correct
-the path calculation in git-submodule.sh.
-
-Cheers Heiko
+ [PATCHv3 1/4] Refactor print_state into get_state
+ [PATCHv3 2/4] wt-status: More state retrieval abstraction
+ [PATCHv3 3/4] git-status: show short sequencer state
+ [PATCHv3 4/4] Add tests for git-status --sequencer
