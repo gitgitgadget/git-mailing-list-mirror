@@ -1,114 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bash completion of "addable" files for `git add`
-Date: Fri, 9 Nov 2012 11:27:50 -0500
-Message-ID: <20121109162750.GC19725@sigill.intra.peff.net>
-References: <5E69B894-C392-4DD5-A4F1-723DA1A3D059@zitc.de>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Fri, 9 Nov 2012 17:29:27 +0100
+Message-ID: <20121109162919.GA922@book.hvoigt.net>
+References: <cover.1352431674.git.wking@tremily.us> <fb2d915cf60160c200b84df88c6112c1c2d4eefd.1352431674.git.wking@tremily.us> <7v390jqlep.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Andreas Zeidler <az@zitc.de>
-X-From: git-owner@vger.kernel.org Fri Nov 09 17:28:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 17:29:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWrRB-0004rd-76
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 17:28:09 +0100
+	id 1TWrSn-0006H4-Vf
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 17:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754269Ab2KIQ1z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2012 11:27:55 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40145 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753462Ab2KIQ1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 11:27:55 -0500
-Received: (qmail 8084 invoked by uid 107); 9 Nov 2012 16:28:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Nov 2012 11:28:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Nov 2012 11:27:50 -0500
+	id S1754522Ab2KIQ3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 11:29:39 -0500
+Received: from smtprelay06.ispgateway.de ([80.67.31.96]:39697 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754509Ab2KIQ3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2012 11:29:38 -0500
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1TWrSU-0007IX-9X; Fri, 09 Nov 2012 17:29:30 +0100
 Content-Disposition: inline
-In-Reply-To: <5E69B894-C392-4DD5-A4F1-723DA1A3D059@zitc.de>
+In-Reply-To: <7v390jqlep.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209228>
 
-On Fri, Nov 09, 2012 at 02:22:27PM +0100, Andreas Zeidler wrote:
+Hi,
 
-> so here's a patch adding bash completion on `git add` for modified,
-> updated and untracked files.  i've also set up a pull request =E2=80=94=
- before
-> i found `Documentation/SubmittingPatches`.  fwiw, it's at
-> https://github.com/git/git/pull/29
+On Thu, Nov 08, 2012 at 11:34:54PM -0800, Junio C Hamano wrote:
+> "W. Trevor King" <wking@tremily.us> writes:
+> 
+> > By remaining agnostic on the variable usage, this patch makes
+> > submodule setup more convenient for all parties.
+> 
+> I personally do not think "remaining agnostic on the usage" is a
+> good thing, at least for any option to commands at the higher level
+> on the stack, such as "git submodule".  I am afraid that giving an
+> easier way to set up a variable with undefined semantics may make
+> setup more confusing for all parties.  One party gives one specific
+> meaning to the field, while another party uses it for something
+> slightly different.
+> 
+> I would not object to "git config submodule.$name.branch $value", on
+> the other hand.  "git config" can be used to set a piece of data
+> that has specific meaning, but as a low-level tool, it is not
+> _limited_ to variables that have defined meaning.
 
-Please put cover letter material like this after the "---" divider, or
-include a "-- >8 --" scissors line before your commit. Either helps "gi=
-t
-am" realize which content should go into the commit message.
+I think we should agree on a behavior for this option and implement it
+the same time when add learns about it. When we were discussing floating
+submodules as an important option for the gerrit people I already started
+to implement a proof of concept. Please have a look here:
 
-> From cbac6caee7e788569562cb7138eb698cc46a1b8f Mon Sep 17 00:00:00 200=
-1
-> From: Andreas Zeidler <az@zitc.de>
-> Date: Fri, 9 Nov 2012 13:05:43 +0100
+https://github.com/hvoigt/git/commits/hv/floating_submodules
 
-Please omit these lines, as they are redundant with your email header.
+AFAIK this does not yet implement the same behaviour the gerrit tools
+offer for this option. The main reason behind that was because I do not
+know the typical workflow behind such an option. So I am open to
+changes.
 
-> Subject: [PATCH] add bash completion for "addable" files
+Maybe you can use or base your work on this implementation for submodule
+update.
 
-This one is useful, but it would be even better if it were the subject
-of your email. :)
+Without submodule update using this option I think it would be better to
+implement this option in the tool you are using instead of submodule add.
+Everything else feels incomplete to me.
 
-> +__git_addable ()
-> +{
-> +	local dir=3D"$(__gitdir)"
-> +	if [ -d "$dir" ]; then
-> +		git --git-dir=3D"$dir" status --short --untracked=3Dall |\
-> +			egrep '^.[UM?] ' | sed 's/^.. //'
-> +		return
-> +	fi
-> +}
-
-You would want to use the stable, scriptable "--porcelain" output, so
-the completion is not broken by future changes to the "--short" format.
-However, I do not think using "git status" is the best option. It
-computes three things:
-
-  1. The diff between HEAD and index.
-
-  2. The diff between index and working tree.
-
-  3. The list of untracked files.
-
-But you only care about (2) and (3), so you are wasting time computing
-(1).  I think the list you want could be generated with:
-
-  git diff-files --name-only
-  git ls-files --exclude-standard -o
-
-and then you do not need to worry about grep or sed at all.
-
-> @@ -810,6 +820,11 @@ _git_add ()
->  			--ignore-errors --intent-to-add
->  			"
->  		return
-> +		;;
-> +	*)
-> +		__gitcomp "$(__git_addable)"
-> +		return
-> +		;;
-
-I think you'd want to use __gitcomp_nl to handle filenames with spaces.
-
-Speaking of which, the output of status (or of the commands I mentioned=
-)
-may have quoting applied to pathnames. I think that is not something we
-handle very well right now in the completion, so it may not be worth
-worrying about for this particular patch.
-
-Other than those comments, I think the intent of your patch makes a lot
-of sense.
-
--Peff
+Cheers Heiko
