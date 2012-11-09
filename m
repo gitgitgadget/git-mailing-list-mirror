@@ -1,106 +1,242 @@
-From: Eric Miao <eric.y.miao@gmail.com>
-Subject: Re: Support for a series of patches, i.e. patchset or changeset?
-Date: Fri, 9 Nov 2012 10:14:34 +0800
-Message-ID: <CAMPhdO8Sy8ZuXyWbvch+fXzbSVdmwC69a-KaLBRBGX8MVGxv_A@mail.gmail.com>
-References: <CAMPhdO_33CPJv2hAvPuJ10KZ7v_fgP9P2kV_WLVK2tapjQQ5=A@mail.gmail.com>
- <5097C190.80406@drmicha.warpmail.net> <CAMPhdO-1ar52QGuSzbyFBSKMf48fDb6Bbxw5u3PCuVYxkO2=3w@mail.gmail.com>
- <5097CFCB.7090506@drmicha.warpmail.net> <CAMPhdO-Z3E352KbTvnrxJqCecAUGfHCwOoFRUKzObh35uLnrSw@mail.gmail.com>
- <20121108190944.GO15560@sigill.intra.peff.net>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Thu, 08 Nov 2012 22:35:12 -0500
+Message-ID: <fb2d915cf60160c200b84df88c6112c1c2d4eefd.1352431674.git.wking@tremily.us>
+References: <cover.1352431674.git.wking@tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 09 03:15:10 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 09 04:42:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWe7i-0003cr-5R
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 03:15:10 +0100
+	id 1TWfUI-0003WI-Rd
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 04:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756641Ab2KICO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2012 21:14:56 -0500
-Received: from mail-la0-f46.google.com ([209.85.215.46]:37695 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754044Ab2KICO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 21:14:56 -0500
-Received: by mail-la0-f46.google.com with SMTP id h6so2630846lag.19
-        for <git@vger.kernel.org>; Thu, 08 Nov 2012 18:14:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4yIQTcWnWpcYzaxvadV35V0wIAvj2U74FN7U+H52Vmo=;
-        b=OWBOWmQmlCu6BvD3ha5CGXAdPJyohnzFJSSRDeo5qv6uuuLgSia2/ppuqrEkCPIUAK
-         g008MvFfXY+kiM1bV9nBvZxrIsGlMp3Ae54sefY9bZnCSJPymMrNZnQkS2hkFrFV/N/F
-         oSL7QSSNGApXFkn1ZnZrgNnKhPRykClC+17v/ZoZNVrJ2CLdhFJPO8gP7xOA4R6dqvjE
-         9lB9F2G1Lh1PZ5ofNUEp1b1KRGNl6o3c6RtPnArjKKBYDWdRQ7/U7E9Sh8ZmQ5r/UjUO
-         2uyDsMhFLhdRTzp3DeD5so936GgCCnp6EOpaJvFX4wWUDkSt0HliWCosxW5cmMUOTxiY
-         +4JA==
-Received: by 10.152.106.171 with SMTP id gv11mr9469402lab.26.1352427294712;
- Thu, 08 Nov 2012 18:14:54 -0800 (PST)
-Received: by 10.114.75.1 with HTTP; Thu, 8 Nov 2012 18:14:34 -0800 (PST)
-In-Reply-To: <20121108190944.GO15560@sigill.intra.peff.net>
+	id S1757492Ab2KIDmV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2012 22:42:21 -0500
+Received: from vms173001pub.verizon.net ([206.46.173.1]:56613 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757447Ab2KIDmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2012 22:42:20 -0500
+Received: from odin.tremily.us ([unknown] [72.68.90.158])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MD700GAFBMJDY20@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 08 Nov 2012 21:42:20 -0600 (CST)
+Received: from localhost (tyr.tremily.us [192.168.0.5])
+	by odin.tremily.us (Postfix) with ESMTP id BBDEF68EDC4; Thu,
+ 08 Nov 2012 22:42:18 -0500 (EST)
+X-Mailer: git-send-email 1.8.0.3.gc2eb43a
+In-reply-to: <cover.1352431674.git.wking@tremily.us>
+In-reply-to: <cover.1352431674.git.wking@tremily.us>
+References: <20121029222759.GI20513@sigill.intra.peff.net>
+ <cover.1352431674.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209200>
 
-On Fri, Nov 9, 2012 at 3:09 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 06, 2012 at 08:58:35AM +0800, Eric Miao wrote:
->
->> > So, then the question is: What do you know/have? Is your patch the
->> > output of "git format-patch", "git diff", or just some sort of diff
->> > without any git information?
->>
->> That doesn't matter, all the info can be obtained from the SHA1 id, the
->> question is: do we have a mechanism in git (or hopefully we could add)
->> to record the patchset or series the patch belongs to, without people to
->> guess heuristically.
->>
->> E.g. when we merged a series of patches:
->>
->>   [PATCH 00/08]
->>   [PATCH 01/08]
->>   ...
->>   [PATCH 08/08]
->>
->> How do we know this whole series after merged when only one of these
->> commits are known?
->
-> Others have described how you can infer this structure from the history
-> graph, but as you noted, the graph does not always match the series that
-> was sent, nor does it contain some of the meta information about the
-> cover letter, associated discussions, etc.
->
-> If you want to track the mapping between mailed patches (or any other
-> form of changeset id) to commits, you can put it in git in one of two
-> places:
->
->   1. In a pseudo-header at the end of the commit message. E.g., you
->      could use the message-id of the cover letter as a unique identifier
->      for the changeset, and put "Changeset: $MID" at the end of each
->      commit message. Then you can use "--grep" to find other entries
->      from the same changeset.
->
->   2. You can use git-notes to store the same information outside of the
->      commit message. This doesn't get pushed around automatically with
->      the history, but it means your commit messages are not polluted,
->      and you can make annotations after the commits are set in stone.
->
-> I do not use Gerrit, but I recall that they do something like (1) to
-> mark changesets. For git development, one of the contributors does (2)
-> to point notes at mailing list threads (I think he uses a script to
-> match up mails and commits after the fact).
+=46rom: "W. Trevor King" <wking@tremily.us>
 
-Thanks Jeff, this is the answer I'm looking for, really appreciated to
-get it explained so clearly.
+This option allows you to record a submodule.<name>.branch option in
+=2Egitmodules.  Git does not currently use this configuration option fo=
+r
+anything, but users have used it for several things, so it makes sense
+to add some syntactic sugar for initializing the value.
 
->
-> But fundamentally the idea of "this is a set of logical changes" is not
-> represented in git's DAG. It's up to you to store changeset tokens
-> if you care about them.
+Current consumers:
 
-Sure, I completely understand and agree we should keep git simple enough.
+=C3=86var uses this setting to designate the upstream branch for pullin=
+g
+submodule updates:
+
+  $ git submodule foreach 'git checkout $(git config --file $toplevel/.=
+gitmodules submodule.$name.branch) && git pull'
+
+as he describes in
+
+  commit f030c96d8643fa0a1a9b2bd9c2f36a77721fb61f
+  Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+  Date:   Fri May 21 16:10:10 2010 +0000
+
+    git-submodule foreach: Add $toplevel variable
+
+Gerrit uses the same interpretation for the setting, but because
+Gerrit has direct access to the subproject repositories, it updates
+the superproject repositories automatically when a subproject changes.
+Gerrit also accepts the special value '.', which it expands into the
+superproject's branch name.
+
+By remaining agnostic on the variable usage, this patch makes
+submodule setup more convenient for all parties.
+
+[1] https://gerrit.googlesource.com/gerrit/+/master/Documentation/user-=
+submodules.txt
+
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/git-submodule.txt | 11 ++++++++++-
+ git-submodule.sh                | 19 ++++++++++++++++++-
+ t/t7400-submodule-basic.sh      | 25 +++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
+ule.txt
+index b4683bb..cbec363 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodule=
+s
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch] [-f|--force]
++'git submodule' [--quiet] add [-b branch] [--record[=3D<branch>]] [-f|=
+--force]
+ 	      [--reference <repository>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>=
+=2E..]
+ 'git submodule' [--quiet] init [--] [<path>...]
+@@ -209,6 +209,15 @@ OPTIONS
+ --branch::
+ 	Branch of repository to add as submodule.
+=20
++-r::
++--record::
++	Record a branch name used as `submodule.<path>.branch` in
++	`.gitmodules` for future reference.  If you do not list an explicit
++	name here, the name given with `--branch` will be recorded.  If that
++	is not set either, `HEAD` will be recorded.  Because the branch name
++	is optional, you must use the equal-sign form (`-r=3D<branch>`), not
++	`-r <branch>`.
++
+ -f::
+ --force::
+ 	This option is only valid for add and update commands.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b110..bc33112 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
+=20
+ dashless=3D$(basename "$0" | sed -e 's/-/ /')
+-USAGE=3D"[--quiet] add [-b branch] [-f|--force] [--reference <reposito=
+ry>] [--] <repository> [<path>]
++USAGE=3D"[--quiet] add [-b branch] [--record[=3D<branch>]] [-f|--force=
+] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path=
+>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force=
+] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<=
+path>...]
+@@ -20,6 +20,8 @@ require_work_tree
+=20
+ command=3D
+ branch=3D
++record_branch=3D
++record_branch_empty=3D
+ force=3D
+ reference=3D
+ cached=3D
+@@ -257,6 +259,12 @@ cmd_add()
+ 			branch=3D$2
+ 			shift
+ 			;;
++		-r | --record)
++			record_branch_empty=3Dtrue
++			;;
++		-r=3D* | --record=3D*)
++			record_branch=3D"${1#*=3D}"
++			;;
+ 		-f | --force)
+ 			force=3D$1
+ 			;;
+@@ -328,6 +336,11 @@ cmd_add()
+ 	git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
+ 	die "$(eval_gettext "'\$sm_path' already exists in the index")"
+=20
++	if test -z "$record_branch" && test "$record_branch_empty" =3D "true"
++	then
++		record_branch=3D"${branch:=3DHEAD}"
++	fi
++
+ 	if test -z "$force" && ! git add --dry-run --ignore-missing "$sm_path=
+" > /dev/null 2>&1
+ 	then
+ 		eval_gettextln "The following path is ignored by one of your .gitign=
+ore files:
+@@ -366,6 +379,10 @@ Use -f if you really want to add it." >&2
+=20
+ 	git config -f .gitmodules submodule."$sm_path".path "$sm_path" &&
+ 	git config -f .gitmodules submodule."$sm_path".url "$repo" &&
++	if test -n "$branch"
++	then
++		git config -f .gitmodules submodule."$sm_path".branch "$record_branc=
+h"
++	fi &&
+ 	git add --force .gitmodules ||
+ 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+ }
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 5397037..88ae74c 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -133,6 +133,7 @@ test_expect_success 'submodule add --branch' '
+ 	(
+ 		cd addtest &&
+ 		git submodule add -b initial "$submodurl" submod-branch &&
++		test -z "$(git config -f .gitmodules submodule.submod-branch.branch)=
+" &&
+ 		git submodule init
+ 	) &&
+=20
+@@ -211,6 +212,30 @@ test_expect_success 'submodule add with ./, /.. an=
+d // in path' '
+ 	test_cmp empty untracked
+ '
+=20
++test_expect_success 'submodule add --record' '
++	(
++		cd addtest &&
++		git submodule add -r "$submodurl" submod-record-head &&
++		test "$(git config -f .gitmodules submodule.submod-record-head.branc=
+h)" =3D "HEAD"
++	)
++'
++
++test_expect_success 'submodule add --record --branch' '
++	(
++		cd addtest &&
++		git submodule add -r -b initial "$submodurl" submod-auto-record &&
++		test "$(git config -f .gitmodules submodule.submod-auto-record.branc=
+h)" =3D "initial"
++	)
++'
++
++test_expect_success 'submodule add --record=3D<name> --branch' '
++	(
++		cd addtest &&
++		git submodule add -r=3Dfinal -b initial "$submodurl" submod-record &=
+&
++		test "$(git config -f .gitmodules submodule.submod-record.branch)" =3D=
+ "final"
++	)
++'
++
+ test_expect_success 'setup - add an example entry to .gitmodules' '
+ 	GIT_CONFIG=3D.gitmodules \
+ 	git config submodule.example.url git://example.com/init.git
+--=20
+1.8.0.3.gc2eb43a
