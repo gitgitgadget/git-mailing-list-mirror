@@ -1,98 +1,60 @@
-From: Ulrich =?utf-8?B?U3DDtnJsZWlu?= <uqs@spoerlein.net>
-Subject: git merge commits are non-deterministic? what changed?
-Date: Fri, 9 Nov 2012 14:31:32 +0100
-Message-ID: <20121109133132.GK69724@acme.spoerlein.net>
+From: Bogolisk <bogolisk@gmail.com>
+Subject: Re: Revert option for git add --patch
+Date: Fri, 9 Nov 2012 14:09:06 +0000 (UTC)
+Message-ID: <loom.20121109T150732-186@post.gmane.org>
+References: <EE89F0A1-1C07-4597-B654-035F657AD09F@me.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 09 15:02:03 2012
+X-From: git-owner@vger.kernel.org Fri Nov 09 15:09:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWp9j-0002l9-9G
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 15:01:59 +0100
+	id 1TWpH5-0008DY-8h
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 15:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552Ab2KIOBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2012 09:01:46 -0500
-Received: from acme.spoerlein.net ([88.198.49.12]:14195 "EHLO
-	acme.spoerlein.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342Ab2KIOBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 09:01:45 -0500
-X-Greylist: delayed 1810 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Nov 2012 09:01:45 EST
-Received: from localhost (acme.spoerlein.net [IPv6:2a01:4f8:131:23c2::1])
-	by acme.spoerlein.net (8.14.5/8.14.5) with ESMTP id qA9DVWsk008922
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Fri, 9 Nov 2012 14:31:33 +0100 (CET)
-	(envelope-from uqs@spoerlein.net)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spoerlein.net;
-	s=dkim200908; t=1352467894;
-	bh=Nd+QeBIm4hh7v/1HgtkC03dESwOSL3kyE+i8mXb49Tg=;
-	h=Date:From:To:Subject;
-	b=ffXbosR7LIoy/4Cqu+3XUTJ30APnSvm/R0AsrXVGWpCukAhmZ83UhB4HB3iuY+oza
-	 1hBcymtoPnqR5oycDkC+OMC9Pt+PHDGizB125RHNIU/YuyBVszjpcuvTFyRYsuPZhf
-	 4GLGB0mgugccRKc2qYU9TDbiUt88aTOKguTSimtU=
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753538Ab2KIOJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 09:09:22 -0500
+Received: from plane.gmane.org ([80.91.229.3]:43547 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753522Ab2KIOJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2012 09:09:21 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TWpGw-00089A-Pn
+	for git@vger.kernel.org; Fri, 09 Nov 2012 15:09:29 +0100
+Received: from 173-195-49.74.tel-ott.com ([173-195-49.74.tel-ott.com])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Nov 2012 15:09:26 +0100
+Received: from bogolisk by 173-195-49.74.tel-ott.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Nov 2012 15:09:26 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 173.195.49.74 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209220>
 
-Hi all,
+Jonathon Mah <jmah <at> me.com> writes:
 
-I'm running a couple of conversions from SVN to git, using a slightly
-hacked version of svn2git (because it can cope with multiple branches
-and is several orders of magnitude faster than git-svn).
+> 
+> Nathan,
+> 
+> I find myself performing similar actions to you: using git add -p to stage 
+hunks, sometimes editing the
+> staged patch; and keeping mental notes of things I wanted to revert, sometimes 
+changing them in the editor
+> in another window, and sometimes reverting them after the add session with git 
+checkout -p).
 
-Anyway, when doing some verification runs, using the same version of
-svn2git, but different versions of git, I get different commit hashes,
-and I tracked it down to the ordering of the parents inside a merge
-commit.
-
-version 1.7.9.2
-% git show --format=raw e209a83|head
-commit e209a83c1e0a387c88a44f3a8f2be2670ed85eae
-tree de2d7c6726a45428d4a310da2acd8839daf9f85f
-parent 5fba0401c23a594e4ad5e807bf14a5439645a358
-parent 25062ba061871945759b3baa833fe64969383e40
-parent 89bebeef185ed08424fc548f8569081c6add2439
-parent c7d5f60d3a7e2e3c4da23b157c62504667344438
-parent e7bc108f0d6a394050818a4af64a59094d3c793e
-parent 48231afadc40013e6bfda56b04a11ee3a602598f
-author rgrimes <rgrimes@FreeBSD.org> 739897097 +0000
-committer rgrimes <rgrimes@FreeBSD.org> 739897097 +0000
-
-vs
-
-git version 1.8.0
-% git show --format=raw 42f0fad|head
-commit 42f0fadccab6eefc7ffdc1012345b42ad45e36c2
-tree de2d7c6726a45428d4a310da2acd8839daf9f85f
-parent 5fba0401c23a594e4ad5e807bf14a5439645a358
-parent 25062ba061871945759b3baa833fe64969383e40
-parent 89bebeef185ed08424fc548f8569081c6add2439
-parent 48231afadc40013e6bfda56b04a11ee3a602598f
-parent c7d5f60d3a7e2e3c4da23b157c62504667344438
-parent e7bc108f0d6a394050818a4af64a59094d3c793e
-author rgrimes <rgrimes@FreeBSD.org> 739897097 +0000
-committer rgrimes <rgrimes@FreeBSD.org> 739897097 +0000
-
-I haven't verified to see if that ordering is stable within a git
-version, but the fact that it changed across versions clearly means that
-I cannot depend on this currently (I have never seen this problem in two
-years, so I blame git 1.8.0 ...)
-
-Two questions:
-1. Can we impose a stable ordering of the commits being recorded in a
-merge commit? Listing parents in chronological order or something like
-that.
-
-2. Why the hell is the commit hash dependent on the ordering of the
-parent commits? IMHO it should sort the set of parents before
-calculating the hash ...
-
-Help?
-Uli
+Other front-ends like Egg and Magit has been providing the ability to move hunks 
+back and forth, for a long time.
