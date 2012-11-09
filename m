@@ -1,81 +1,84 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH v3 2/3] git-submodule foreach: export .gitmodules
-	settings as variables
-Date: Fri, 9 Nov 2012 17:45:22 +0100
-Message-ID: <20121109164516.GB922@book.hvoigt.net>
-References: <20121029222759.GI20513@sigill.intra.peff.net> <cover.1352431674.git.wking@tremily.us> <2121ce36cf4eb02385255cbd5b0bbd1dcc803113.1352431675.git.wking@tremily.us>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2] replace: parse revision argument for -d
+Date: Fri, 9 Nov 2012 11:48:08 -0500
+Message-ID: <20121109164808.GE19725@sigill.intra.peff.net>
+References: <508E55B2.6060502@drmicha.warpmail.net>
+ <24b0f81315ddab8cc37133d5b3bec8aec90ed652.1351516888.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Fri Nov 09 17:46:15 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Nov 09 17:48:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWria-0002II-Qc
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 17:46:09 +0100
+	id 1TWrkr-0004H8-BK
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 17:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754737Ab2KIQpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2012 11:45:47 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.31.29]:41360 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754729Ab2KIQp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 11:45:27 -0500
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1TWrhr-0000aO-SK; Fri, 09 Nov 2012 17:45:24 +0100
+	id S1754806Ab2KIQsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 11:48:17 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40173 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754661Ab2KIQsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2012 11:48:13 -0500
+Received: (qmail 8389 invoked by uid 107); 9 Nov 2012 16:49:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Nov 2012 11:49:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Nov 2012 11:48:08 -0500
 Content-Disposition: inline
-In-Reply-To: <2121ce36cf4eb02385255cbd5b0bbd1dcc803113.1352431675.git.wking@tremily.us>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <24b0f81315ddab8cc37133d5b3bec8aec90ed652.1351516888.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209232>
 
-Hi,
+On Mon, Oct 29, 2012 at 02:23:27PM +0100, Michael J Gruber wrote:
 
-On Thu, Nov 08, 2012 at 10:35:13PM -0500, W. Trevor King wrote:
-> From: "W. Trevor King" <wking@tremily.us>
+> 'git replace' parses the revision arguments when it creates replacements
+> (so that a sha1 can be abbreviated, e.g.) but not when deleting
+> replacements.
 > 
-> This makes it easy to access per-submodule variables.  For example,
+> Make it parse the arguments to 'replace -d' in the same way.
 > 
->   git submodule foreach 'git checkout $(git config --file $toplevel/.gitmodules submodule.$name.branch) && git pull'
-> 
-> can now be reduced to
-> 
->   git submodule foreach 'git checkout $submodule_branch && git pull'
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> v2 has the simplified error check as per Jeff, and a reworded message.
+> Comes with a free test case, too.
 
-What other use cases are there? Would the need for this maybe go away
-once you had floating submodules following branches?
+I noticed this today in my pile of "to look at" patches. Sorry for being
+slow.
 
-The whole thing looks like its adding some complex code which is not so
-easy to read. I would like to make sure its worth it.
+>  	for (p = argv; *p; p++) {
+> -		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
+> -					>= sizeof(ref)) {
+> -			error("replace ref name too long: %.*s...", 50, *p);
+> +		q = *p;
+> +		if (get_sha1(q, sha1)) {
+> +			error("Failed to resolve '%s' as a valid ref.", q);
+>  			had_error = 1;
+>  			continue;
+>  		}
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index bc33112..e4d26f9 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -434,8 +434,24 @@ cmd_foreach()
->  				clear_local_git_env
->  				# we make $path available to scripts ...
->  				path=$sm_path
-> +
-> +				# make all submodule variables available to scripts
-> +				eval $(
-> +					git config -f .gitmodules --get-regexp "^submodule\.${name}\..*" |
+Looks reasonable.
 
-For completeness you should make the variables possible to override by
-repository from the local repository configuration like all other
-submodule options that are read directly from .gitmodules.
+> +		q = sha1_to_hex(sha1);
+> +		snprintf(ref, sizeof(ref), "refs/replace/%s", q);
+>  		if (read_ref(ref, sha1)) {
+> -			error("replace ref '%s' not found.", *p);
+> +			error("replace ref '%s' not found.", q);
 
-Cheers Heiko
+I worry a little about assuming that "q", which points to a static
+internal buffer of sha1_to_hex, is still valid after calling read_ref.
+We'll end up in resolve_ref, which might need to do considerable work
+(e.g., loading the whole packed refs file). Just grepping for
+sha1_to_hex, I don't think it is a problem currently, but it might be
+worth copying the value (you could even point into the "ref" buffer to
+avoid dealing with an extra allocation).
+
+Other than that, it looks good to me.
+
+-Peff
