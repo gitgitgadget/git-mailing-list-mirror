@@ -1,129 +1,97 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] cache-tree: invalidate i-t-a paths after writing trees
-Date: Fri,  9 Nov 2012 18:04:00 +0700
-Message-ID: <1352459040-14452-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cache-tree: invalidate i-t-a paths after writing trees
+Date: Fri, 09 Nov 2012 03:57:47 -0800
+Message-ID: <7vy5ibouo4.fsf@alter.siamese.dyndns.org>
 References: <3E62F933-76CD-4578-8684-21444EAA454F@JonathonMah.com>
+ <1352459040-14452-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Jonathon Mah <me@JonathonMah.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 09 12:04:26 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathon Mah <me@JonathonMah.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:58:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWmNr-00020O-5k
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 12:04:23 +0100
+	id 1TWnDo-0006UX-Pp
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 12:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752428Ab2KILEK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2012 06:04:10 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:57501 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752414Ab2KILEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 06:04:07 -0500
-Received: by mail-pa0-f46.google.com with SMTP id hz1so2709802pad.19
-        for <git@vger.kernel.org>; Fri, 09 Nov 2012 03:04:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=W3rA/QuR+sRrwJEZUBVi/U4sqOpum86STqwjPRa9VHE=;
-        b=hI7+kMXHH7naNlx6mbjsr5GBbjZvN6iewm1bUZ8cppdXCK2PM65QSEcM4q6ILUqj/X
-         sbbbG74SJpDJmhp/GjKVfqM2PmIZ7ryVfbbXL0ns8BtU5+StcT8YSRalw8hRgKo1XlpU
-         P/uehoj4LJXFDFfXMIN1GaO+uQw9ZH9PhQMl3mf0d/6/1QNJLwB0aDK7UspW0tCMagZY
-         TBDAtjgjHaed28LkwMHn8IaXGwefQwyTQ+9Xwnz6VaU/+SnJ/798pB/R8rz9W0DzLdOP
-         KbMNBsDpKV3mAMmVKwFPAHmEfiLV2Le+YxdsBUpHG+NJSMBidmfQHCwwhFzxkftViYNa
-         gJzQ==
-Received: by 10.68.193.136 with SMTP id ho8mr32189927pbc.98.1352459047276;
-        Fri, 09 Nov 2012 03:04:07 -0800 (PST)
-Received: from lanh ([115.74.37.170])
-        by mx.google.com with ESMTPS id nd6sm17580082pbc.68.2012.11.09.03.04.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Nov 2012 03:04:06 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 09 Nov 2012 18:04:05 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <3E62F933-76CD-4578-8684-21444EAA454F@JonathonMah.com>
+	id S1752679Ab2KIL5v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2012 06:57:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50076 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752399Ab2KIL5u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2012 06:57:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7585F8A8A;
+	Fri,  9 Nov 2012 06:57:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XEh4RTGQOXfL
+	p868HeUZr5HdFrE=; b=WtSg7hMCnN0g24r/1jb3HPErykEFpIwlUxdBBzF4/8zr
+	lYhopKbPQly5aw2dhJ8nuTx5MC7iuWahK8YM809oYrEI0wMOeDHyImpap46D2AK0
+	txYkKfqqLyXLd4HG8tkNaeOPWKnBcL3Eq2yqhiUYLMZAK5bmaoQBX/w1FF4A2eM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=D2K5c9
+	0A+g9L4yKt+kiNX/JfNqgxrGcNADOnTQUW6kbJ9eqMNm6ZuDUc75QjVGgRfDjWe2
+	Bgf1AXZbThkJmqwQm85npwiUuaUAVacVWZrnte4Svqy3HVDjggwEGG3ksuVzJQVS
+	u3NG8lnn58mSGD1e0p1hw/UCFZvY1FuxZfN6U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 630528A89;
+	Fri,  9 Nov 2012 06:57:49 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6B368A88; Fri,  9 Nov 2012
+ 06:57:48 -0500 (EST)
+In-Reply-To: <1352459040-14452-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 9 Nov
+ 2012 18:04:00 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AE8EC0E4-2A64-11E2-9D54-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209214>
 
-Intent-to-add entries used to forbid writing trees so it was not a
-problem. After commit 3f6d56d (commit: ignore intent-to-add entries
-instead of refusing - 2012-02-07), an index with i-t-a entries can
-write trees. However, the commit forgets to invalidate all paths
-leading to i-t-a entries. With fully valid cache-tree (e.g. after
-commit or write-tree), diff operations may prefer cache-tree to index
-and not see i-t-a entries in the index, because cache-tree does not
-have them.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-The invalidation is done after calling update_one() in
-cache_tree_update() for simplicity because it's probably not worth the
-complexity of changing a recursive function and the performance
-bottleneck won't likely fall to this new loop, rather in
-write_sha1_file or hash_sha1_file. But this means that if update_one()
-has new call sites, they must re-do the same what this commit does to
-avoid the same fault.
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 28ed657..30a8018 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -381,6 +381,9 @@ int cache_tree_update(struct cache_tree *it,
+>  	i =3D update_one(it, cache, entries, "", 0, flags);
+>  	if (i < 0)
+>  		return i;
+> +	for (i =3D 0; i < entries; i++)
+> +		if (cache[i]->ce_flags & CE_INTENT_TO_ADD)
+> +			cache_tree_invalidate_path(it, cache[i]->name);
+>  	return 0;
+>  }
 
-Reported-by: Jonathon Mah <me@JonathonMah.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- cache-tree.c          |  3 +++
- t/t2203-add-intent.sh | 20 ++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+I notice there is another special case for CE_REMOVE but there is
+nothing that adjusts the cache-tree for these entries in the current
+codebase.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 28ed657..30a8018 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -381,6 +381,9 @@ int cache_tree_update(struct cache_tree *it,
- 	i =3D update_one(it, cache, entries, "", 0, flags);
- 	if (i < 0)
- 		return i;
-+	for (i =3D 0; i < entries; i++)
-+		if (cache[i]->ce_flags & CE_INTENT_TO_ADD)
-+			cache_tree_invalidate_path(it, cache[i]->name);
- 	return 0;
- }
-=20
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index ec35409..2a4a749 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -62,5 +62,25 @@ test_expect_success 'can "commit -a" with an i-t-a e=
-ntry' '
- 	git commit -a -m all
- '
-=20
-+test_expect_success 'cache-tree invalidates i-t-a paths' '
-+	git reset --hard &&
-+	mkdir dir &&
-+	: >dir/foo &&
-+	git add dir/foo &&
-+	git commit -m foo &&
-+
-+	: >dir/bar &&
-+	git add -N dir/bar &&
-+	git diff --cached --name-only >actual &&
-+	echo dir/bar >expect &&
-+	test_cmp expect actual &&
-+
-+	git write-tree >/dev/null &&
-+
-+	git diff --cached --name-only >actual &&
-+	echo dir/bar >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
-=20
---=20
-1.8.0.rc2.23.g1fb49df
+I suspect the original code before we (perhaps incorrectly) updated
+the code not to error out upon I-T-A entries was fine only because
+we do not attempt to fully populate the cache-tree during a merge in
+the unpack-trees codepath, which will mark the index entries that
+are to be removed with CE_REMOVE in the resulting index.
+
+The solution implemented with this patch will break if we start
+updating the cache tree after a successful merge in unpack-trees, I
+suspect.
+
+An alternative might be to add a "phoney" bit next to "used" in the
+cache_tree structure, mark the cache tree as phoney when we skip an
+entry marked as CE_REMOVE or CE_ITA, and make the postprocessing
+loop this patch adds aware of that bit, instead of iterating over
+the index entries; instead, it would recurse the resulting cache
+tree and invalidate parts of the tree that have subtrees with the
+"phoney" bit set, or something.
