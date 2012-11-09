@@ -1,187 +1,71 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v3 2/3] git-submodule foreach: export .gitmodules settings as
- variables
-Date: Thu, 08 Nov 2012 22:35:13 -0500
-Message-ID: <2121ce36cf4eb02385255cbd5b0bbd1dcc803113.1352431675.git.wking@tremily.us>
-References: <cover.1352431674.git.wking@tremily.us>
-Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 09 05:43:05 2012
+From: "Robertson, Bruce E" <bruce.e.robertson@intel.com>
+Subject: RE: orphan blob or what?
+Date: Fri, 9 Nov 2012 06:23:45 +0000
+Message-ID: <83A029C68381A840ACDE22C814EE27492247BBB5@ORSMSX101.amr.corp.intel.com>
+References: <87a9urlj23.fsf@intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 09 07:24:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWgQn-0002I5-1t
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 05:43:01 +0100
+	id 1TWi0X-0004qm-4g
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Nov 2012 07:24:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680Ab2KIEmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2012 23:42:47 -0500
-Received: from vms173011pub.verizon.net ([206.46.173.11]:52538 "EHLO
-	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439Ab2KIEmq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2012 23:42:46 -0500
-X-Greylist: delayed 3608 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Nov 2012 23:42:46 EST
-Received: from odin.tremily.us ([unknown] [72.68.90.158])
- by vms173011.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MD7004B8BMJQ400@vms173011.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 08 Nov 2012 21:42:20 -0600 (CST)
-Received: from localhost (tyr.tremily.us [192.168.0.5])
-	by odin.tremily.us (Postfix) with ESMTP id E462D68EDC6; Thu,
- 08 Nov 2012 22:42:18 -0500 (EST)
-X-Mailer: git-send-email 1.8.0.3.gc2eb43a
-In-reply-to: <cover.1352431674.git.wking@tremily.us>
-In-reply-to: <cover.1352431674.git.wking@tremily.us>
-References: <20121029222759.GI20513@sigill.intra.peff.net>
- <cover.1352431674.git.wking@tremily.us>
+	id S1751820Ab2KIGXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 01:23:48 -0500
+Received: from mga03.intel.com ([143.182.124.21]:59966 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750771Ab2KIGXr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2012 01:23:47 -0500
+Received: from azsmga002.ch.intel.com ([10.2.17.35])
+  by azsmga101.ch.intel.com with ESMTP; 08 Nov 2012 22:23:46 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.80,743,1344236400"; 
+   d="scan'208";a="166257408"
+Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
+  by AZSMGA002.ch.intel.com with ESMTP; 08 Nov 2012 22:23:46 -0800
+Received: from orsmsx152.amr.corp.intel.com (10.22.226.39) by
+ ORSMSX104.amr.corp.intel.com (10.22.225.131) with Microsoft SMTP Server (TLS)
+ id 14.1.355.2; Thu, 8 Nov 2012 22:23:46 -0800
+Received: from orsmsx101.amr.corp.intel.com ([169.254.8.82]) by
+ ORSMSX152.amr.corp.intel.com ([169.254.8.48]) with mapi id 14.01.0355.002;
+ Thu, 8 Nov 2012 22:23:46 -0800
+Thread-Topic: orphan blob or what?
+Thread-Index: AQHNvhCa2yNfjOCL5k2vJl9bnpT1dZfhCMMA
+In-Reply-To: <87a9urlj23.fsf@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.22.254.139]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209205>
 
-From: "W. Trevor King" <wking@tremily.us>
+Please excuse one inaccuracy: I did a 'git pull' not a clone. So it could be an old .idx file at my end possibly.
 
-This makes it easy to access per-submodule variables.  For example,
+Thanks,
+bruce
 
-  git submodule foreach 'git checkout $(git config --file $toplevel/.gitmodules submodule.$name.branch) && git pull'
+-----Original Message-----
+From: Robertson, Bruce E 
+Sent: Thursday, November 08, 2012 4:25 PM
+To: git@vger.kernel.org
+Subject: orphan blob or what?
 
-can now be reduced to
+In today's and older clones of https://github.com/mirrors/linux.git I find this object, 6fa98ea0ae40f9a38256f11e5dc270363f785aee, that I can't figure out how to eliminate^h^h^h^h^h^h^h^h^hget rid of. I don't see it in 'git fsck', 'git gc --aggressive --prune' doesn't seem to prune it, can't see it via 'git log'. And yet
 
-  git submodule foreach 'git checkout $submodule_branch && git pull'
+linux/.git/objects/pack$ git verify-pack -v *.idx | grep 6fa98ea0ae40f9a38256f11e5dc270363f785aee
+6fa98ea0ae40f9a38256f11e5dc270363f785aee blob   1519697 124840 515299673
+8231eaa31ce1107c1463deb6ec33f61618aedbb9 blob   67 63 515424513 1 6fa98ea0ae40f9a38256f11e5dc270363f785aee
+f21a8c1b9d47736fa4e27def66f04b9fe2b4bc53 blob   90 83 515424576 1 6fa98ea0ae40f9a38256f11e5dc270363f785aee
 
-Every submodule.<name>.<opt> setting from .gitmodules is available as
-a $submodule_<sanitized-opt> variable.  These variables are not
-propagated recursively into nested submodules.
-
-Signed-off-by: W. Trevor King <wking@tremily.us>
-Based-on-patch-by: Phil Hord <phil.hord@gmail.com>
----
- Documentation/git-submodule.txt |  3 +++
- git-sh-setup.sh                 | 20 ++++++++++++++++++++
- git-submodule.sh                | 16 ++++++++++++++++
- t/t7407-submodule-foreach.sh    | 29 +++++++++++++++++++++++++++++
- 4 files changed, 68 insertions(+)
- mode change 100644 => 100755 git-sh-setup.sh
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index cbec363..9a99826 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -175,6 +175,9 @@ foreach::
- 	$path is the name of the submodule directory relative to the
- 	superproject, $sha1 is the commit as recorded in the superproject,
- 	and $toplevel is the absolute path to the top-level of the superproject.
-+	In addition, every submodule.<name>.<opt> setting from .gitmodules
-+	is available as the variable $submodule_<sanitized_opt>.  These
-+	variables are not propagated recursively into nested submodules.
- 	Any submodules defined in the superproject but not checked out are
- 	ignored by this command. Unless given `--quiet`, foreach prints the name
- 	of each submodule before evaluating the command.
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-old mode 100644
-new mode 100755
-index ee0e0bc..179a920
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -222,6 +222,26 @@ clear_local_git_env() {
- 	unset $(git rev-parse --local-env-vars)
- }
- 
-+# Remove any suspect characters from a user-generated variable name.
-+sanitize_variable_name() {
-+	VAR_NAME="$1"
-+	printf '%s' "$VAR_NAME" |
-+	sed -e 's/^[^a-zA-Z]/_/' -e 's/[^a-zA-Z0-9]/_/g'
-+}
-+
-+# Return a command for setting a new variable.
-+# Neither the variable name nor the variable value passed to this
-+# function need to be sanitized.  You need to eval the returned
-+# string, because new variables set by the function itself don't
-+# effect the calling process.
-+set_user_variable() {
-+	VAR_NAME="$1"
-+	VAR_VALUE="$2"
-+	VAR_NAME=$(sanitize_variable_name "$VAR_NAME")
-+	VAR_VALUE=$(printf '%s' "$VAR_VALUE" |
-+		sed -e 's/\\/\\\\/g' -e 's/"/\\"/g')
-+	printf '%s=%s;\n' "$VAR_NAME" "\"$VAR_VALUE\""
-+}
- 
- # Platform specific tweaks to work around some commands
- case $(uname -s) in
-diff --git a/git-submodule.sh b/git-submodule.sh
-index bc33112..e4d26f9 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -434,8 +434,24 @@ cmd_foreach()
- 				clear_local_git_env
- 				# we make $path available to scripts ...
- 				path=$sm_path
-+
-+				# make all submodule variables available to scripts
-+				eval $(
-+					git config -f .gitmodules --get-regexp "^submodule\.${name}\..*" |
-+					sed -e "s|^submodule\.${name}\.||" |
-+					while read VAR_NAME VAR_VALUE ; do
-+						VAR_NAME=$(printf '%s' "$VAR_NAME" | tr A-Z a-z)
-+						set_user_variable "submodule_${VAR_NAME}" "$VAR_VALUE"
-+					done)
-+				UNSET_CMD=$(set |
-+					sed -n -e 's|^\(submodule_[a-z_]*\)=.*$|\1|p' |
-+					while read VAR_NAME ; do
-+						printf 'unset %s;\n' "$VAR_NAME"
-+					done)
-+
- 				cd "$sm_path" &&
- 				eval "$@" &&
-+				eval "$UNSET_CMD" &&
- 				if test -n "$recursive"
- 				then
- 					cmd_foreach "--recursive" "$@"
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-index 9b69fe2..46ac746 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -313,4 +313,33 @@ test_expect_success 'command passed to foreach --recursive retains notion of std
- 	test_cmp expected actual
- '
- 
-+cat > expect <<EOF
-+Entering 'nested1'
-+nested1 nested1 wonky"value
-+Entering 'nested1/nested2'
-+nested2 nested2 another wonky"value
-+Entering 'nested1/nested2/nested3'
-+nested3 nested3
-+Entering 'nested1/nested2/nested3/submodule'
-+submodule submodule
-+Entering 'sub1'
-+sub1 sub1
-+Entering 'sub2'
-+sub2 sub2
-+Entering 'sub3'
-+sub3 sub3
-+EOF
-+
-+test_expect_success 'test foreach environment variables' '
-+	(
-+		cd clone2 &&
-+		git config -f .gitmodules submodule.nested1.wonky-var "wonky\"value" &&
-+		git config -f nested1/.gitmodules submodule.nested2.wonky-var "another wonky\"value" &&
-+		git submodule foreach --recursive "echo \$path \$submodule_path \$submodule_wonky_var" > ../actual
-+	) &&
-+	test_i18ncmp expect actual
-+'
-+#
-+#"echo \$toplevel-\$name-\$submodule_path-\$submodule_url"
-+
- test_done
--- 
-1.8.0.3.gc2eb43a
+Thanks,
+bruce
