@@ -1,101 +1,68 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: git-reset man page
-Date: Sat, 10 Nov 2012 16:57:18 +0100
-Message-ID: <20121110155718.GA29321@shrek.podlesie.net>
-References: <CAB9Jk9AdTBJotrB0fndZawMWH6hS4PW_5bHwecwY5Vz7=TnYAA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Help requested - trying to build a tool doing whole-tree commits
+Date: Sat, 10 Nov 2012 08:57:41 -0800
+Message-ID: <7vlie9pf96.fsf@alter.siamese.dyndns.org>
+References: <20121109182024.81074BC66D4@golux>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, peff@peff.net
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 17:04:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 17:58:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXDXR-0003hh-A5
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 17:04:05 +0100
+	id 1TXENo-0000eh-FH
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 17:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061Ab2KJQDt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 11:03:49 -0500
-Received: from shrek-modem1.podlesie.net ([83.18.25.171]:55545 "EHLO
-	shrek.podlesie.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751991Ab2KJQDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 11:03:49 -0500
-X-Greylist: delayed 386 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Nov 2012 11:03:48 EST
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id C0592707; Sat, 10 Nov 2012 16:57:18 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CAB9Jk9AdTBJotrB0fndZawMWH6hS4PW_5bHwecwY5Vz7=TnYAA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752083Ab2KJQ57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 11:57:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56824 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751069Ab2KJQ56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2012 11:57:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 408E59EFE;
+	Sat, 10 Nov 2012 11:57:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=3RPuMUDRIEByHfMGZfQEvJVUg88=; b=HB8nZd
+	unSmKCXyuiwPL56TknUt53SooHqfsJz+54CHakqrOnARbGH4qTNSmEiEFixZhuYh
+	K+sUZM30mjKi/kbBUMrGRA9J66HFxKgEAaljwbvHUkJH8mPrkB13UcLVUNu4irx/
+	bINzNTP/ISKNrB+TJvdtILlqmVna8u52NiXes=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b+ZHGslb9SB/YP80B/jjVrvEwoR/8vWm
+	Sn9cSIfn1LZF3nYuZzPGCYWe56R9kaFqMeAKiiffmggLXI6hTuUUdycoT/N2hlCY
+	QRF97HCfulUGSZ7Rq0qONQtssae1nj9EcA4snz3ILDaI2CMoMz1kW73Svcdw7gMT
+	kVNp2XSCuwk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DEF09EFD;
+	Sat, 10 Nov 2012 11:57:57 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E49649EF6; Sat, 10 Nov 2012
+ 11:57:46 -0500 (EST)
+In-Reply-To: <20121109182024.81074BC66D4@golux> (unknown@unknown.invalid's
+ message of "Fri, 9 Nov 2012 13:20:24 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C0AFC694-2B57-11E2-9CE5-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209283>
 
-On Sat, Nov 10, 2012 at 10:55:13AM +0100, Angelo Borsotti wrote:
-> Hi
->=20
-> the man page of git-reset, synopsys, does not allow for an
-> argumentless call, and the description does not tell either what is
-> the meaning of it.
+Unknown <unknown@unknown.invalid> writes:
 
-This issue was already reported by Bojan Petrovi=E6:
-http://thread.gmane.org/gmane.comp.version-control.git/208505
+> (Apologies if this arrives twice. I'm on the road, with somewhat flaky email.)
+>
+> Because of my work on reposurgeon, I am sometimes asked to produce git
+> repositories for very old projects that not only are still using CVS
+> but have ancient releases not in the CVS repository, preserved only
+> as tarballs.
 
-and fixed in commit d505865be5c7d72abb74318940e8c4c52aa0db5f
-(doc: git-reset: make "<mode>" optional) in master branch.
-
-"git reset" is equivalent to "git reset --mixed".
-
-> Suggested changes:
->=20
-> first line of synopsis:
->=20
->       gitt reset [-q] [<commit>] [ [--] <pathspec> ...]
->=20
-> Description: append to the end of the first paragraph:
->=20
->      "If no <pathspecs> are specified, all the index entries are rese=
-t."
->=20
-> I would suggest to change <paths> with <pathspec> in all the man page
-> because paths in the glossary are called pathspecs.
->=20
-
-The <paths> issue seems to be bigger - "<path>", "<paths>" and "<pathsp=
-ec>"
-are mixed in whole manual:
-
-$ cat Documentation/*.txt | grep -o '<path[^>]*>' | sort | uniq -c |
-sort -n -r
-    125 <path>
-     17 <paths>
-     10 <pathspec>
-      2 <pathtemplate>
-      2 <path-pattern>
-      1 <path_to>
-      1 <path_from>
-
-In commands it's even worse:
-$ cat builtin/*.c | grep -o '<path[^>]*>' | sort | uniq -c | sort -n -r
-     14 <path>
-     15 <paths>
-
-Note: <path> is not always used for pathspec.
-
-In git-checkout manual in synopsis "<paths>" is used, but in descriptio=
-n
-"<pathspec>".
-
-
-Maybe we should just add that <paths> is an shortcut for <pathspec>
-and fix places where paths and pathspec are mixed or <path> is used as
-<pathspec>.
-
-
-Thanks,
-
-Krzysiek
+Perhaps not exactly what you are looking for, but don't we have
+import-tar somewhere in contrib/fast-import hierarchy (sorry, not on
+a machine yet, and I cannot give more details).
