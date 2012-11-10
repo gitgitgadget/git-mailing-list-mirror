@@ -1,130 +1,132 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: Re: [PATCH v2 0/5] push: update remote tags only with force
-Date: Fri, 9 Nov 2012 19:15:49 -0600
-Message-ID: <CAEUsAPbmimoEVoJjvXkOFacs-X6hu5b0NO1sHZ9eSSRM07yPFA@mail.gmail.com>
-References: <1352084908-32333-1-git-send-email-chris@rorvick.com>
-	<20121109183834.GB22164@sigill.intra.peff.net>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Rename edge case...
+Date: Fri, 9 Nov 2012 21:01:03 -0500
+Message-ID: <CAEBDL5UGxGqE+-P54KeZnV=2Tx6Rpx=MXowJ9RdH5WPuDTg0hw@mail.gmail.com>
+References: <CAEBDL5U+OSTCAqgWoApE_m21Nef24Wqvt78oB6qqV4oEvU0vXQ@mail.gmail.com>
+	<20121109160925.GA19725@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 10 02:20:37 2012
+X-From: git-owner@vger.kernel.org Sat Nov 10 03:01:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWzkS-0002zb-QR
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 02:20:37 +0100
+	id 1TX0Nt-0000dw-Bn
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 03:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859Ab2KJBPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2012 20:15:52 -0500
-Received: from mail-la0-f46.google.com ([209.85.215.46]:51331 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713Ab2KJBPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 20:15:51 -0500
-Received: by mail-la0-f46.google.com with SMTP id h6so3391542lag.19
-        for <git@vger.kernel.org>; Fri, 09 Nov 2012 17:15:49 -0800 (PST)
+	id S1751750Ab2KJCBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 21:01:06 -0500
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:63171 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166Ab2KJCBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2012 21:01:04 -0500
+Received: by mail-ia0-f174.google.com with SMTP id y32so3178508iag.19
+        for <git@vger.kernel.org>; Fri, 09 Nov 2012 18:01:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date
          :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=JpKpqgpMXNBlse2j22XWBUjLZARBsMmZRpOdqK6ZIzY=;
-        b=R39VtQIIwCcfoPsOL0EDxnqh/2jP02YLWtGj5rXZyjvldoLJROGLBNrvG4RghFHJmk
-         q4cI677h1LqV9yqylQvHe77Nxb6CmDWXstknBY0FRhB/ynqL8tcNQO57uGGnC09wrXKX
-         e3Tit24EdiY+GRD7qCxANeaZ8ea2RcfRNPHpXuyV7o5yVN4pJ6wLVnDYgzesrKPBtKbA
-         bJRSDilqPpBY3gwIz9JlY7lcsB2WrsK4lo2LY4ea1fMNwZWpal71VQdI1oI1p6iJy6ww
-         C6BCIr0tkpXlrGzpx3oZqXn4vVeaCToezOn6+oRZ9oeWAgkZMhWuzToe3wOCmGunw//Y
-         ioRA==
-Received: by 10.152.105.103 with SMTP id gl7mr11991590lab.10.1352510149751;
- Fri, 09 Nov 2012 17:15:49 -0800 (PST)
-Received: by 10.114.2.45 with HTTP; Fri, 9 Nov 2012 17:15:49 -0800 (PST)
-In-Reply-To: <20121109183834.GB22164@sigill.intra.peff.net>
-X-Google-Sender-Auth: RiwoO0f1p-_NQNzrFcCPIfbWSTQ
+        bh=mz9qLnpPJyA/PWYJlC3vJLPuzJSCs9aUKj9AaoYBiYs=;
+        b=vIKTLHT0eFw31nVJDhRtiuj/cmYnrkt3QzswcRbS9fWVPGxn5zLNHLfCu5kYpCIn02
+         sUVqyZZNV6UF54XXG/spjvzjqYO+lyq0zpL86vxPUqjiLF3n26buuln1rrS2qq2uBeuB
+         GVECi3tVQ/MjRcFNHSaJqrj/uOfXf73Enx72y9UsytBdZmu9w609o5nzU8Cl0nyLhm0i
+         p9Gz3goqQNCT6E9ktc5+EQPQiDVebCM6E4Jdd3yPBiP1YLbSSo3Pjn1qg+usC/S+07td
+         UFDLcFsrKTLBOzWvBDTA2IlE00QkSi8G6FNuM73m/BMUrwW87tOb+aLQ2/ttSE/wrH1Y
+         ruwA==
+Received: by 10.43.116.135 with SMTP id fi7mr12742023icc.3.1352512863494; Fri,
+ 09 Nov 2012 18:01:03 -0800 (PST)
+Received: by 10.50.2.106 with HTTP; Fri, 9 Nov 2012 18:01:03 -0800 (PST)
+In-Reply-To: <20121109160925.GA19725@sigill.intra.peff.net>
+X-Google-Sender-Auth: F8ZhWPxRD6ewVT8OizJKRBR4kDM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209257>
 
-On Fri, Nov 9, 2012 at 12:38 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, Nov 04, 2012 at 09:08:23PM -0600, Chris Rorvick wrote:
+On Fri, Nov 9, 2012 at 11:09 AM, Jeff King <peff@peff.net> wrote:
+[snip]
+> Right. If the source didn't go away, it would be a copy. We can do copy
+> detection, but it is not quite as obvious what a merge should do with a
+> copy (apply the change to the original? To the copy? In both places? You
+> would really want hunk-level copy detection for it to make any sense).
+
+Yeah, I wasn't advocating that.  More along the lines of what you're
+talking about below...
+
+> Usually git deals with this double-rename case through the use of
+> "break" or "rewrite" detection. We notice that the old "foo.txt" and the
+> new "foo.txt" do not look very much like each other, and break the
+> modification apart into an add and a delete. That makes each side
+> eligible for rename detection, and we can end up finding the pairs of
+> renames above.
+
+I did try using the -B option, and it did detect that foo.txt was
+renamed to fooOld.txt, but it didn't show fooNew.txt being renamed to
+foo.txt.  I'm running git 1.7.12.3.  It could be that 1.8.0 does
+better, but I haven't tried.
+
+> So in theory it just as simple as a one-liner to turn on break-detection
+> in merge-recursive. Sadly, that only reveals more issues with how
+> merge-recursive handles renames. See this thread, which has pointers to
+> the breakages at the end:
 >
->> Patch series to prevent push from updating remote tags w/o forcing them.
->> Split out original patch to ease review.
->>
->> Chris Rorvick (5):
->>   push: return reject reasons via a mask
->>   push: add advice for rejected tag reference
->>   push: flag updates
->>   push: flag updates that require force
->>   push: update remote tags only with force
->>
->>  Documentation/git-push.txt |   10 +++++-----
->>  builtin/push.c             |   24 +++++++++++++++---------
->>  builtin/send-pack.c        |    6 ++++++
->>  cache.h                    |    7 ++++++-
->>  remote.c                   |   39 +++++++++++++++++++++++++++++++--------
->>  t/t5516-fetch-push.sh      |   30 +++++++++++++++++++++++++++++-
->>  transport-helper.c         |    6 ++++++
->>  transport.c                |   25 +++++++++++++++----------
->>  transport.h                |   10 ++++++----
->>  9 files changed, 119 insertions(+), 38 deletions(-)
+>   http://thread.gmane.org/gmane.comp.version-control.git/169944
+
+Thank you.  I'll definitely read up on this.
+
+> I've become convinced that the best way forward with merge-recursive is
+> to scrap and rewrite it. It tries to do things in a muddled order, which
+> makes it very brittle to changes like this. I think it needs to have an
+> internal representation of the tree that can represent all of the
+> conflicts, and then follow a few simple phases:
 >
-> I have not looked carefully at this topic yet, but I did try merging it
-> to "pu" and found that it had some textual conflicts with the
-> nd/builtin-to-libgit topic, which moves some builtin/send-pack.c code to
-> send-pack.c. Since I am graduating that topic to master, I went ahead
-> and just rebased your topic on top.
+>   1. "structural" 3-way merge handling renames, breaks, typechanges,
+>      etc. Each path in tree might show things like D/F conflicts, or it
+>      might show content-level merges that still need to happen, even if
+>      the content from those merges is not coming from the same paths in
+>      the source trees.
 >
-> If you do a re-roll, please use an updated master, and feel free to
-> grab (and double-check!) the rebase I am about to send out in 'pu'. I
-> also included the minor signed/unsigned pointer warning fixup in the
-> rebase, too.
+>   2. Resolve content-level 3-way merges at each path.
 >
-> -Peff
+>   3. Compare the proposed tree to the working tree and list any problems
+>      (e.g., untracked files or local modifications that will be
+>      overwritten).
+>
+> Right now it tries to do these things interleaved as it processes paths,
+> and as a result we've had many bugs (e.g., the content-level merge
+> conflating the content originally at a path and something that was
+> renamed into place, and missing corner cases where we actually overwrite
+> untracked files that should be considered precious).
+>
+> But that is just off the top of my head. I haven't looked at the topic
+> in quite a while (and I haven't even started working on any such
+> rewrite).
 
-Thanks, I've rebased and checked against the changes in pu.  Looks
-good to me.  I have a couple of other minor fixes (see below for
-details.)  I'll include these in an update if there is sufficient
-interest in this.
+That certainly sounds like a better approach.
 
-Chris
+>> So I played locally with a few ideas, and was surprised to find out
+>> that even breaking up the two renames into two separate commits git
+>> still didn't follow it.
+>
+> Right, because the merge only looks at the end points. Try doing a
+> "diff -M" between your endpoints with and without "-B". We do not have
+> any double-renames in git.git, but you can find "-B" helping a similar
+> case: most of a file's content is moved elsewhere, but some small amount
+> remains. For example, try this in git.git, with and without -B:
+>
+>   git show -M --stat --summary --patch 043a449
+>
+> It finds the rename only with "-B", which would help a merge (it also
+> makes the diff shorter and more readable, as you can see what was
+> changed as the content migrated to the new file).
 
--- 8< --
-diff --git a/remote.c b/remote.c
-index fde2a79..b025a38 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1351,9 +1351,8 @@ void set_ref_status_for_push(struct ref
-*remote_refs, int send
+I've played with the -B option before, and it's definitely nice in
+certain cases.
 
-                if (ref->update) {
-                        ref->nonfastforward =
--                               ref->update &&
--                               (!has_sha1_file(ref->old_sha1)
--                                 || !ref_newer(ref->new_sha1, ref->old_sha1));
-+                               !has_sha1_file(ref->old_sha1)
-+                                 || !ref_newer(ref->new_sha1, ref->old_sha1);
+Thank you for taking the time to write all this up.  It was very informative!
 
-                        if (!ref->forwardable) {
-                                ref->requires_force = 1;
-diff --git a/transport.c b/transport.c
-index c183971..a380ad7 100644
---- a/transport.c
-+++ b/transport.c
-@@ -749,7 +749,7 @@ void transport_print_push_status(const char *dest,
-struct ref *r
-                        else
-                                *reject_mask |= REJECT_NON_FF_OTHER;
-                } else if (ref->status == REF_STATUS_REJECT_ALREADY_EXISTS) {
--                               *reject_mask |= REJECT_ALREADY_EXISTS;
-+                       *reject_mask |= REJECT_ALREADY_EXISTS;
-                }
-        }
- }
+-John
