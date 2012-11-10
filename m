@@ -1,132 +1,313 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Rename edge case...
-Date: Fri, 9 Nov 2012 21:01:03 -0500
-Message-ID: <CAEBDL5UGxGqE+-P54KeZnV=2Tx6Rpx=MXowJ9RdH5WPuDTg0hw@mail.gmail.com>
-References: <CAEBDL5U+OSTCAqgWoApE_m21Nef24Wqvt78oB6qqV4oEvU0vXQ@mail.gmail.com>
-	<20121109160925.GA19725@sigill.intra.peff.net>
+From: Enrico Weigelt <enrico.weigelt@vnc.biz>
+Subject: Re: Workflow for templates?
+Date: Sat, 10 Nov 2012 08:13:49 +0100 (CET)
+Message-ID: <bbc40624-f95d-48c9-83ed-fd70430226a4@zcs>
+References: <20121031104403.GC28437@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 10 03:01:22 2012
+To: Josef Wolf <jw@raven.inka.de>
+X-From: git-owner@vger.kernel.org Sat Nov 10 08:14:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TX0Nt-0000dw-Bn
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 03:01:21 +0100
+	id 1TX5Gh-0002OQ-47
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 08:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751750Ab2KJCBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2012 21:01:06 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:63171 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166Ab2KJCBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 21:01:04 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y32so3178508iag.19
-        for <git@vger.kernel.org>; Fri, 09 Nov 2012 18:01:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=mz9qLnpPJyA/PWYJlC3vJLPuzJSCs9aUKj9AaoYBiYs=;
-        b=vIKTLHT0eFw31nVJDhRtiuj/cmYnrkt3QzswcRbS9fWVPGxn5zLNHLfCu5kYpCIn02
-         sUVqyZZNV6UF54XXG/spjvzjqYO+lyq0zpL86vxPUqjiLF3n26buuln1rrS2qq2uBeuB
-         GVECi3tVQ/MjRcFNHSaJqrj/uOfXf73Enx72y9UsytBdZmu9w609o5nzU8Cl0nyLhm0i
-         p9Gz3goqQNCT6E9ktc5+EQPQiDVebCM6E4Jdd3yPBiP1YLbSSo3Pjn1qg+usC/S+07td
-         UFDLcFsrKTLBOzWvBDTA2IlE00QkSi8G6FNuM73m/BMUrwW87tOb+aLQ2/ttSE/wrH1Y
-         ruwA==
-Received: by 10.43.116.135 with SMTP id fi7mr12742023icc.3.1352512863494; Fri,
- 09 Nov 2012 18:01:03 -0800 (PST)
-Received: by 10.50.2.106 with HTTP; Fri, 9 Nov 2012 18:01:03 -0800 (PST)
-In-Reply-To: <20121109160925.GA19725@sigill.intra.peff.net>
-X-Google-Sender-Auth: F8ZhWPxRD6ewVT8OizJKRBR4kDM
+	id S1751301Ab2KJHNx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 02:13:53 -0500
+Received: from zcs.vnc.biz ([83.144.240.118]:44654 "EHLO zcs.vnc.biz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751178Ab2KJHNw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 02:13:52 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by zcs.vnc.biz (Postfix) with ESMTP id 9F896460009;
+	Sat, 10 Nov 2012 08:13:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at vnc.biz
+Received: from zcs.vnc.biz ([127.0.0.1])
+	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VkJIHJbd859K; Sat, 10 Nov 2012 08:13:49 +0100 (CET)
+Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
+	by zcs.vnc.biz (Postfix) with ESMTP id B0295622259;
+	Sat, 10 Nov 2012 08:13:49 +0100 (CET)
+In-Reply-To: <20121031104403.GC28437@raven.wolf.lan>
+X-Originating-IP: [91.43.209.211]
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209258>
 
-On Fri, Nov 9, 2012 at 11:09 AM, Jeff King <peff@peff.net> wrote:
-[snip]
-> Right. If the source didn't go away, it would be a copy. We can do copy
-> detection, but it is not quite as obvious what a merge should do with a
-> copy (apply the change to the original? To the copy? In both places? You
-> would really want hunk-level copy detection for it to make any sense).
 
-Yeah, I wasn't advocating that.  More along the lines of what you're
-talking about below...
+> I am somewhat unsure whether it would work this way. After all, there
+> seems to
+> be an unbreakable rule with git: never rebase published branches.
 
-> Usually git deals with this double-rename case through the use of
-> "break" or "rewrite" detection. We notice that the old "foo.txt" and the
-> new "foo.txt" do not look very much like each other, and break the
-> modification apart into an add and a delete. That makes each side
-> eligible for rename detection, and we can end up finding the pairs of
-> renames above.
+I dont see a big problem if you just tell the downstreams to rebase
+instead of merge downwards.
 
-I did try using the -B option, and it did detect that foo.txt was
-renamed to fooOld.txt, but it didn't show fooNew.txt being renamed to
-foo.txt.  I'm running git 1.7.12.3.  It could be that 1.8.0 does
-better, but I haven't tried.
+That's eg. my default approach for handling things like local
+customizations. The fine thing here is that you'll always have a
+clear separation between upstream development and your customizations.
 
-> So in theory it just as simple as a one-liner to turn on break-detection
-> in merge-recursive. Sadly, that only reveals more issues with how
-> merge-recursive handles renames. See this thread, which has pointers to
-> the breakages at the end:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/169944
+Let's say, you have once forked at release tag v1.2.3, added 3
+customization commits and later rebase onto v1.2.4, you'll still
+have your 3 customization commits ontop of the upstream release.
+With merge, you'll get more and more merge commits mixed later
+coming customizations, and a migh higher chance of repeating conflicts.
 
-Thank you.  I'll definitely read up on this.
+I'd suggest some general rules:
 
-> I've become convinced that the best way forward with merge-recursive is
-> to scrap and rewrite it. It tries to do things in a muddled order, which
-> makes it very brittle to changes like this. I think it needs to have an
-> internal representation of the tree that can represent all of the
-> conflicts, and then follow a few simple phases:
->
->   1. "structural" 3-way merge handling renames, breaks, typechanges,
->      etc. Each path in tree might show things like D/F conflicts, or it
->      might show content-level merges that still need to happen, even if
->      the content from those merges is not coming from the same paths in
->      the source trees.
->
->   2. Resolve content-level 3-way merges at each path.
->
->   3. Compare the proposed tree to the working tree and list any problems
->      (e.g., untracked files or local modifications that will be
->      overwritten).
->
-> Right now it tries to do these things interleaved as it processes paths,
-> and as a result we've had many bugs (e.g., the content-level merge
-> conflating the content originally at a path and something that was
-> renamed into place, and missing corner cases where we actually overwrite
-> untracked files that should be considered precious).
->
-> But that is just off the top of my head. I haven't looked at the topic
-> in quite a while (and I haven't even started working on any such
-> rewrite).
+* strict branch hierachy
+* downstreams always rebase instead of merge
+* probably use --onto rebase
+* development is always happening in topic-branches, that will be
+  rebased before merge into their upstream --> fast-forward only
 
-That certainly sounds like a better approach.
+> Maybe I should try to explain the problem in terms of repository
+> hierarchy. Let's assume, there is this hierarchy of repositories:
 
->> So I played locally with a few ideas, and was surprised to find out
->> that even breaking up the two renames into two separate commits git
->> still didn't follow it.
->
-> Right, because the merge only looks at the end points. Try doing a
-> "diff -M" between your endpoints with and without "-B". We do not have
-> any double-renames in git.git, but you can find "-B" helping a similar
-> case: most of a file's content is moved elsewhere, but some small amount
-> remains. For example, try this in git.git, with and without -B:
->
->   git show -M --stat --summary --patch 043a449
->
-> It finds the rename only with "-B", which would help a merge (it also
-> makes the diff shorter and more readable, as you can see what was
-> changed as the content migrated to the new file).
+Let's talk about branches instead - repos are just containers for
+branches (and tags, etc). If all people are practically in the same
+administrative domain (or sort of), you can even use one single
+repo for that (not counting developer's and target system's local
+clones).
 
-I've played with the -B option before, and it's definitely nice in
-certain cases.
+> upstream: central repository, containing the generic template
+>=20
+> foo-site: repository for site foo. Here we have localizations for a
+> specific
+>           administrative entity named foo (say, google).
+>           This is where clones for production are made from, and
+>           production
+>           boxes pull from here to be kept up-to-date.
 
-Thank you for taking the time to write all this up.  It was very informative!
+Only the non-customized boxes will pull from here - if there's any bit
+that needs to be changed, add separate branches for them.
 
--John
+And "pull" always means rebase.
+
+When a new upstream release comes out (and is properly validated), it
+will be rebased ontop of that.
+
+> foo-devA: A clone of foo-site to make development, releases, and
+> whatever for foo.
+> foo-devB: One more clone of foo-site, Developer B is working here.
+
+Developers should use topic branches, which are regularily rebased
+ontop of their upstream, especially before commit and final validation.
+
+> Further, foo-devA might be the same person as bar-devA.
+
+He'll use separate branches anyways. Everything else is just a matter
+of proper naming scheme.
+
+=46or example, if you're using a central (bare) repository (again: not
+counting the developer's locl clones), you could use something like
+an <site>+"/" branch name prefix.
+
+By the way: you really should use non-conflicting tag names (eg.
+adding some <site>+"/" or <site>+"-" prefix), otherwise you'll
+easiy run into conflicts, because per default retrieved and local
+tags will all be in some namespace - you'll probably dont like to
+set up separate namespaces for individual remotes (which is quite
+easy to forget ;-o). Better consider tag names to be really global.
+
+> So when foo-devA pulls from foo-devB, then foo-devB will create
+> problems when he rebases after that pull.
+
+pull (or probably: remote update) is different from merge or rebase
+essentially, pull is a combination of remote update and an automatic
+merge from or rebase onto (depending on the configuration) the
+coresponding upstream branch.
+
+> What I am trying to achieve, is to extend the workflow from
+> development to
+> deployment across multiple administrative entities. As a picture:
+>=20
+>   upstream     (templates only).
+>      ^
+>      |
+>      v
+>   development  (configured, might contain experimental changes)
+>      ^
+>      |
+>      v
+>   deployment   (configured)
+>=20
+> This workflow should not stop at administrative borders. Just replace
+> foo by
+> google and bar by Microsoft to get an idea of what I am trying to
+> achieve.
+
+We're talking about two entirely different things here:
+
+a) repositories: container that hold references to histories
+   (branches, tags, etc)
+
+b) branches and their semantic releations
+
+
+Repositories:
+
+As git is fully distributed, it doesnt really matter where repositories
+are. Developers (and other parties accessing the code) will most likely
+have their own local clone. But "clone of X" means nothing more than ju=
+st
+happens to have some remote attachment to repo X.
+
+So, the semantics of
+
+    git clone /path/to/my/funny-project
+
+is the same like:
+
+    ( git init funny-project && \
+        cd cd funny-project && \
+        git remote add origin /path/to/my/funny-project && \
+        git remote update origin && \
+        git checkout origin/master -b master )
+
+So, let's look at the individual steps:
+
+   #1: git init funny-project
+   --> ( mkdir funny-project && cd funny-dir && git init )
+   --> creates an empty repository
+
+   #2: git remote add origin /path/to/my/funny-project
+   --> configures an remote called "origin" with url "/path/to/my/funnl=
+y-project"
+       and confgures it to sync the remote-side's references from refs/=
+heads/*
+       to locally refs/remotes/origin/*, and remote-side's refs/tags/* =
+to
+       locally refs/tags (without overwriting existing tag references)
+
+   #3: git remote update origin
+   --> do the actual syncing from remote "origin", get the remote ref l=
+ist,
+       download all yet objects (that are required for the refs to be s=
+ynced)
+       and adds/updates the refs into the according target namespaces
+       (BTW: if a branch was removed on remote side, the local copy in
+       refs/remotes/<remote-name>/* wont be deleted - you'll need to ca=
+ll
+       git remote prune <remote-name> for that)
+
+   #4: git checkout origin/master -b master
+   --> copies the current refs/remotes/origin/master ref to refs/heads/=
+master
+       and checks out that new local branch (IOW: sets the refs/HEAD sy=
+mbolic
+       ref to refs/heads/master and copies index and working tree from =
+the
+       head commit)
+
+Branches are something completely different:
+
+Logically, a branch is a history of commits with parent-child-relations=
+hip
+(mathematically spoken, it's an directed acyclic graph): each commit ma=
+y
+have a variable number of parent commits.
+
+Technically, what we usally call "branch" is in fact an name (reference
+in refs/heads/* namespace) which point at the head commit of that local
+branch. When you do git commit, it creates a new commit object from the
+index, adds some metadata (eg. your commit message) and sets the curren=
+t=20
+branch reference (usually that one where the symbolic reference refs/HE=
+AD
+points to) to the new commit object's SHA-key. IOW: you add a new objec=
+t
+in front of the DAG and move the pointer one step forward in the line.
+
+When you do a merge (no matter if the source is remote or local - it ju=
+st
+needs to be an locally available object), there're essentially two thin=
+gs
+that can happen:
+
+a) your source is an direct descendant of the target branch (IOW: the
+   target's current head commit appears somewhere in the source's histo=
+ry),
+   it will just move the current branch forward to the merge source
+   (moves the head pointer and updates index and worktree)
+   this is called "fast-forward" (in fact, it the fastest kind of merge=
+)
+
+b) your source is not direct descendant: source tree will be actually
+   merged into index/worktree, possibly make break when there're confli=
+cts
+   to be resolved manually, and create a new commit containing the curr=
+ent
+   (now merged) index and two parent poiters, to source and to previous
+   merge target.
+
+Now what is rebase ?
+
+A rebase rewrites history in various ways (in fact, you can do a lot mo=
+re
+things than just simple rebasing, eg. edit or drop older commits, etc).
+
+=46or example 'git rebase origin/master' will look for the latest commo=
+n
+ancestor of both the current and the target treeish (eg. refs/remotes/m=
+aster),
+start from that tree'ish and apply the changes that happend from the la=
+st
+common ancestor until your current branch head ontop of that treeish,
+(possibly asking the user to manually resolve some conflicts), and then
+replaces the current branch head by the final head.
+
+As it changes history, it should be used wisely.
+
+A common problem with using rebase and public branches is:
+
+* upstream changes history (eg. because he rebased onto his upstream)
+* downstream (per default) merges this upstream into his branch
+--> git will see two entirely different branches get merged, so
+    there's some good change of nasty conflicts, and history will
+    easily get really ugly
+
+So, if you do rebase your public branch, downstreams should also do so
+(rebase their local branches ontop of your public branch instead of
+merging yours into theirs).
+
+By the way: there are several more kinds of rebases, which are very
+interesting for complex or sophisticated workflows, eg:
+
+* --ontop rebase: instead of letting git find out the starting point
+  of commit sequence to apply on target treeish, you'll define it
+  explicitly (eg. if you want it to forget about things previous to
+  the starting treeish).
+* interactive rebase:=20
+  a) is able to reconstruct merges
+  b) allows to cut into the sequence and change, drop or add new commit=
+s
+
+These operations are very useful for cleaning up the history, especiall=
+y
+with things like topic-branch workflow (eg. if you originally have some
+hackish and unclean commits and you wanna put an clean and self-consist=
+ant
+one into your mainline instead).
+
+
+cu
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
+
+Enrico Weigelt=20
+VNC - Virtual Network Consult GmbH=20
+Head Of Development=20
+
+Pariser Platz 4a, D-10117 Berlin
+Tel.: +49 (30) 3464615-20
+=46ax: +49 (30) 3464615-59
+
+enrico.weigelt@vnc.biz; www.vnc.de=20
