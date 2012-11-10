@@ -1,125 +1,112 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: RFD: fast-import is picky with author names (and maybe it should
- - but how much so?)
-Date: Sat, 10 Nov 2012 19:43:18 +0100
-Message-ID: <CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
-References: <5093DC0C.5000603@drmicha.warpmail.net>
-	<20121108200919.GP15560@sigill.intra.peff.net>
-	<509CCCBC.8010102@drmicha.warpmail.net>
-	<CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>
-	<509E8EB2.7040509@drmicha.warpmail.net>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Sat, 10 Nov 2012 13:44:37 -0500
+Message-ID: <20121110184437.GC2739@mjolnir>
+References: <cover.1352431674.git.wking@tremily.us>
+ <fb2d915cf60160c200b84df88c6112c1c2d4eefd.1352431674.git.wking@tremily.us>
+ <7v390jqlep.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Nov 10 19:43:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 19:45:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXG1l-0008IB-Bv
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 19:43:33 +0100
+	id 1TXG3U-00013g-QR
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 19:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752438Ab2KJSnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 13:43:20 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:53609 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752218Ab2KJSnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 13:43:19 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so5072303obb.19
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 10:43:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YXZa9gjE09h32auOkYk00IfxZUa2JWMcd4Lyrf+73ck=;
-        b=E383qbQJm0VgqiF+8BfBXsJnwMWLV/wKMd/DSIwbX3Woo7NsgePtHVhG68FSRSnfjx
-         kZK2z89tFz80O9EI494QJuerW57MrrfM8RH6m9f2lrxf4e0czXLdQwTGbUfvXzHZ0CBt
-         lMISW8ikFqKlfDCN6LvGUQLaMb6CFloXuZHXIfGhCLS83rHGuuUspLsxnIL8nbh1y/Ty
-         4wFna/94mdQ83PkcUNvtu21og3dUvQ5ufSm+dZAhrDXYNg+pU0cD3KZs3V3LsgGRhIlR
-         H8VlRpwjE1wJ4+Anl1RwPEi6agC2LEvmhGx9NyPLrt0XrGtxmwNsoQOo6jUOMCPZHKs/
-         1Gdg==
-Received: by 10.60.20.1 with SMTP id j1mr1892537oee.46.1352572998882; Sat, 10
- Nov 2012 10:43:18 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sat, 10 Nov 2012 10:43:18 -0800 (PST)
-In-Reply-To: <509E8EB2.7040509@drmicha.warpmail.net>
+	id S1752461Ab2KJSpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 13:45:07 -0500
+Received: from vms173011pub.verizon.net ([206.46.173.11]:45086 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752402Ab2KJSpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2012 13:45:06 -0500
+Received: from mjolnir.tremily.us ([unknown] [69.141.221.103])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MDA00IJ5C2K6J00@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 10 Nov 2012 12:44:46 -0600 (CST)
+Received: by mjolnir.tremily.us (Postfix, from userid 1000)
+	id A4271271CAB; Sat, 10 Nov 2012 13:44:37 -0500 (EST)
+Content-disposition: inline
+In-reply-to: <7v390jqlep.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209291>
 
-On Sat, Nov 10, 2012 at 6:28 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Felipe Contreras venit, vidit, dixit 09.11.2012 15:34:
->> On Fri, Nov 9, 2012 at 10:28 AM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>
->>> Hg seems to store just anything in the author field ("committer"). The
->>> various interfaces that are floating around do some behind-the-back
->>> conversion to git format. The more conversions they do, the better they
->>> seem to work (no erroring out) but I'm wondering whether it's really a
->>> good thing, or whether we should encourage a more diligent approach
->>> which requires a user to map non-conforming author names wilfully.
->>
->> So you propose that when somebody does 'git clone hg::hg hg-git' the
->> thing should fail. I hope you don't think it's too unbecoming for me
->> to say that I disagree.
->
-> There is no need to disagree with a proposal I haven't made. I would
-> disagree with the proposal that I haven't made, too.
+On Thu, Nov 08, 2012 at 11:34:54PM -0800, Junio C Hamano wrote:
+> "W. Trevor King" <wking@tremily.us> writes:
+> 
+> > By remaining agnostic on the variable usage, this patch makes
+> > submodule setup more convenient for all parties.
+> 
+> I personally do not think "remaining agnostic on the usage" is a
+> good thing, at least for any option to commands at the higher level
+> on the stack, such as "git submodule".  I am afraid that giving an
+> easier way to set up a variable with undefined semantics may make
+> setup more confusing for all parties.  One party gives one specific
+> meaning to the field, while another party uses it for something
+> slightly different.
+> 
+> I would not object to "git config submodule.$name.branch $value", on
+> the other hand.  "git config" can be used to set a piece of data
+> that has specific meaning, but as a low-level tool, it is not
+> _limited_ to variables that have defined meaning.
 
-All right, we shouldn't encourage a more diligent approach which
-requires a user to map author names then.
+This is what I'm doing now:
 
->> IMO it should be git fast-import the one that converts these bad
->> authors, not every single tool out there. Maybe throw a warning, but
->> that's all. Or maybe generate a list of bad authors ready to be filled
->> out. That way when a project is doing a real conversion, say, when
->> moving to git, they can run the conversion once and see which authors
->> are bad and not multiple times, each try taking longer than the next.
->
-> As Jeff pointed out, git-fast-import expects output conforming to a
-> certain standard, and that's not going to change. import is agnostic to
-> where its import stream is coming from. Only the producer of that stream
-> can have additional information about the provenience of the stream's
-> data which may aid (possibly together with user input or choices) in
-> transforming that into something conforming.
+  $ git submodule add -b <branch> <repo> <path>
+  $ git config --file .gitmodules submodule.<path>.branch <branch>
+  $ git submodule foreach 'git checkout $(git config --file $toplevel/.gitmodules submodule.$name.branch) && git pull'
 
-We already know where the import of those streams come from:
-mercurial, bazaar, etc. There's absolutely nothing the tools exporting
-data from those repositories can do, except try to convert all kind of
-weird names--and many tools do it poorly.
+With my second patch (Phil's config export), that becomes
 
-So, the options are:
+  $ git submodule add -b <branch> <repo> <path>
+  $ git config --file .gitmodules submodule.<path>.branch <branch>
+  $ git submodule foreach 'git checkout $submodule_branch && git pull'
 
-a) Leave the name conversion to the export tools, and when they miss
-some weird corner case, like 'Author <email', let the user face the
-consequences, perhaps after an hour of the process.
+With my first patch, that becomes
 
-We know there are sources of data that don't have git-formatted author
-names, so we know every tool out there must do this checking.
+  $ git submodule add -rb <branch> <repo> <path>
+  $ git submodule foreach 'git checkout $submodule_branch && git pull'
 
-In addition to that, let the export tool decide what to do when one of
-these bad names appear, which in many cases probably means do nothing,
-so the user would not even see that such a bad name was there, which
-might not be what they want.
+This seems pretty useful to me, but I'm still using
+submodule.<name>.branch explicitly as a user, and Git is not
+interpreting the option directly.  Users are free to store whatever
+they like in that option, and use it however they wish:
 
-b) Do the name conversion in fast-import itself, perhaps optionally,
-so if a tool missed some weird corner case, the user does not have to
-face the consequences.
+  $ git submodule foreach 'do-crazy-stuff.sh $submodule_branch'
 
-The tool writers don't have to worry about this, so we would not have
-tools out there doing a half-assed job of this.
+If we need a semantic interpretation to justify -r/--record, everyone
+that's chimed in so far has agreed on the same interpretation.  I
+wouldn't be averse to
 
-And what happens when such bad names end up being consistent: warning,
-a scaffold mapping of bad names, etc.
+  $ git submodule add -rb <branch> <repo> <path>
+  $ git submodule pull-branch
 
+which makes the foreach pull logic internal.  However, there has been
+a reasonable amount of resistance to this workflow in the past, so I
+thought that a patch series that avoided a semantic interpretation
+would be more acceptable.
 
-One is bad for the users, and the tools writers, only disadvantages,
-the other is good for the users and the tools writers, only
-advantages.
+If neither an agnostic -r/--record or a semantic pull-branch command
+are acceptable, I suppose we'll have to drop my first and third
+patches and only keep the second.
+
+Trevor
 
 -- 
-Felipe Contreras
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
