@@ -1,148 +1,91 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] t9402: sed -i is not portable
-Date: Sat, 10 Nov 2012 09:01:44 +0100
-Message-ID: <201211100901.45223.tboegi@web.de>
+From: Enrico Weigelt <enrico.weigelt@vnc.biz>
+Subject: Re: bare vs non-bare <1.7 then >=1.7 ?
+Date: Sat, 10 Nov 2012 09:23:07 +0100 (CET)
+Message-ID: <e4dc73e8-69f9-4695-b8f7-cbc0f04e8197@zcs>
+References: <509B8552.4080303@rktmb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mmogilvi_git@miniinfo.net, tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 09:02:09 2012
+Cc: Git Issues <git@vger.kernel.org>
+To: Mihamina Rakotomandimby <mihamina@rktmb.org>
+X-From: git-owner@vger.kernel.org Sat Nov 10 09:28:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TX60z-0001Zc-UT
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 09:02:06 +0100
+	id 1TX6QB-0002Pd-SZ
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 09:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967Ab2KJIBx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 03:01:53 -0500
-Received: from mout.web.de ([212.227.15.3]:61541 "EHLO mout.web.de"
+	id S1752092Ab2KJIXL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 03:23:11 -0500
+Received: from zcs.vnc.biz ([83.144.240.118]:47758 "EHLO zcs.vnc.biz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751682Ab2KJIBw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 03:01:52 -0500
-Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0LyUgM-1TIVhI1Tpm-015E48; Sat, 10 Nov 2012 09:01:50 +0100
-X-Provags-ID: V02:K0:SuK+dI5F227eLe3PGaoEgmcc+Kk+0KEdHCB6jDeq/Ox
- EZROwYN1zzsUEMjse9MsZfSKw8cERLrtZG8xfuIVVjYioKLbJR
- lMpAlAGl4kdUAAsipW/skhVoilp5DgmIBjRBPyhl9gXr7rlBbK
- Yxeo+ZrZkYABe8JKzMQBA0aYTlXg/OOVu+QpRXuoBNXe5/w7Qb
- exm8v8hr29M9W6j4vgj2w==
+	id S1751949Ab2KJIXJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 03:23:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by zcs.vnc.biz (Postfix) with ESMTP id 6A921460009;
+	Sat, 10 Nov 2012 09:23:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at vnc.biz
+Received: from zcs.vnc.biz ([127.0.0.1])
+	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id krOq2Un4Qa6N; Sat, 10 Nov 2012 09:23:07 +0100 (CET)
+Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
+	by zcs.vnc.biz (Postfix) with ESMTP id DDC7B622259;
+	Sat, 10 Nov 2012 09:23:07 +0100 (CET)
+In-Reply-To: <509B8552.4080303@rktmb.org>
+X-Originating-IP: [91.43.209.211]
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209263>
 
-The command line
-sed -i -e "s/foo/bar/" filename
-works as expected under GNU/Linux:
-all "foo" are replaced by "bar" in the file "filename"
 
-sed on other systems like e.g. Mac OS X creates a backup file
-called filename-e, because the -i must be followed by a file name.
-As the -i is not in POSIX either, avoid it completely
+> When experimenting in order to train some colleagues, I saw that If I
+> clone a repository, I couldn't push to it because it was a non-bare
+> one.
+> Searchin for some explanations, I found this ressource:
+> http://www.bitflop.com/document/111
 
-Improve check_end_tree() and check_end_full_tree() to use test_cmp,
-and use the && between each line.
+That's just a precaution (technically it's not necessary, just stops
+you from doing some dumb things). Suppose the following scenario:
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
-This must be applied on peff/pu
+* non-bare repository A, with branch 'master' currently checked out.
+* clone B -> somebody's working on branch 'master' (which was forked=20
+  from A's master)
+* on A, somebody did some local changes
+* meanwhile somebody pushes the branch 'master' from B to A
+* after that, on A, new commit to 'master'.
 
- t/t9402-git-cvsserver-refs.sh | 44 ++++++++++++++++++++++-------------=
---------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+Weird things can happen, eg. the changes coming from B completely
+reverted by the new commit in A.
 
-diff --git a/t/t9402-git-cvsserver-refs.sh b/t/t9402-git-cvsserver-refs=
-=2Esh
-index 858ef0f..5138f14 100755
---- a/t/t9402-git-cvsserver-refs.sh
-+++ b/t/t9402-git-cvsserver-refs.sh
-@@ -28,27 +28,26 @@ check_file() {
- }
-=20
- check_end_tree() {
--    sandbox=3D"$1"
--    expectCount=3D$(wc -l < "$WORKDIR/check.list")
--    cvsCount=3D$(find "$sandbox" -name CVS -prune -o -type f -print | =
-wc -l)
--    test x"$cvsCount" =3D x"$expectCount"
--    stat=3D$?
--    echo "check_end $sandbox : $stat cvs=3D$cvsCount expect=3D$expectC=
-ount" \
--	>> "$WORKDIR/check.log"
--    return $stat
-+    sandbox=3D"$1" &&
-+    wc -l < "$WORKDIR/check.list" > expected &&
-+    find "$sandbox" -type f | grep -v "/CVS" > "$WORKDIR/check.cvsCoun=
-t" &&
-+    wc -l < "$WORKDIR/check.cvsCount" >actual &&
-+    test_cmp expected actual &&
-+		rm expected actual &&
-+		sort < "$WORKDIR/check.list" > expected &&
-+		sort < "$WORKDIR/check.cvsCount" | sed -e "s%cvswork/%%" >actual &&
-+    test_cmp expected actual &&
-+		rm expected actual
- }
-=20
- check_end_full_tree() {
--    sandbox=3D"$1"
--    ver=3D"$2"
--    expectCount=3D$(wc -l < "$WORKDIR/check.list")
--    cvsCount=3D$(find "$sandbox" -name CVS -prune -o -type f -print | =
-wc -l)
--    gitCount=3D$(git ls-tree -r "$2" | wc -l)
--    test x"$cvsCount" =3D x"$expectCount" -a x"$gitCount" =3D x"$expec=
-tCount"
--    stat=3D$?
--    echo "check_end $sandbox : $stat cvs=3D$cvsCount git=3D$gitCount e=
-xpect=3D$expectCount" \
--	>> "$WORKDIR/check.log"
--    return $stat
-+    sandbox=3D"$1" &&
-+    sort < "$WORKDIR/check.list" >expected &&
-+    find "$sandbox" -name CVS -prune -o -type f -print | sed -e "s%$sa=
-ndbox/%%" | sort >act1 &&
-+		test_cmp expected act1 &&
-+    git ls-tree -r "$2" | sed -e "s/^.*blob [0-9a-fA-F]*[	 ]*//" | sor=
-t > act2 &&
-+		test_cmp expected act2 &&
-+    rm expected act1 act2
- }
-=20
- #########
-@@ -155,7 +154,8 @@ test_expect_success 'cvs co b1 [cvswork3]' '
-=20
- test_expect_success 'edit cvswork3 and save diff' '
-     ( cd cvswork3 &&
--      sed -i -e "s/line1/line1 - data/" adir/afile &&
-+      sed -e "s/line1/line1 - data/" adir/afile >adir/afileNEW &&
-+			mv -f adir/afileNEW adir/afile &&
-       echo "afile5" > adir/afile5 &&
-       rm t2 &&
-       cvs -f add adir/afile5 &&
-@@ -168,7 +168,8 @@ test_expect_success 'setup v1.2 on b1' '
-     git checkout b1 &&
-     echo "new v1.2" > t3 &&
-     rm t2 &&
--    sed -i -e "s/line3/line3 - more data/" adir/afile &&
-+    sed -e "s/line3/line3 - more data/" adir/afile >adir/afileNEW &&
-+		mv -f adir/afileNEW adir/afile &&
-     rm adir/a2file &&
-     echo "a3file" >> adir/a3file &&
-     echo "bfile line 3" >> adir/bdir/bfile &&
-@@ -300,7 +301,8 @@ test_expect_success 'root dir rm file [cvswork2]' '
-=20
- test_expect_success 'subdir edit/add/rm files [cvswork2' '
-     ( cd cvswork2 &&
--      sed -i -e "s/line 1/line 1 (v2)/" adir/bdir/bfile &&
-+      sed -e "s/line 1/line 1 (v2)/" adir/bdir/bfile >adir/bdir/bfileN=
-EW &&
-+      mv -f adir/bdir/bfileNEW adir/bdir/bfile &&
-       rm adir/bdir/b2file &&
-       cd adir &&
-       cvs -f rm bdir/b2file &&
+Unless nobody pushes to the branch currently checked and later somebody
+doing local changes after that, there shouldn't be any real technical
+problem. But then, you most likely wont need an worktree anyways.
+
+Wait, there *is* an usecase for such things, deploying trees (eg. webap=
+ps)
+some server:
+
+ * application is developed in git
+ * the final production-system tree is maintained in certian branch
+ * a post-update hook acts on a specific production branch and does
+   something like git checkout --detach <treeish>
+
+
+cu
 --=20
-1.7.12
+Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
+
+Enrico Weigelt=20
+VNC - Virtual Network Consult GmbH=20
+Head Of Development=20
+
+Pariser Platz 4a, D-10117 Berlin
+Tel.: +49 (30) 3464615-20
+=46ax: +49 (30) 3464615-59
+
+enrico.weigelt@vnc.biz; www.vnc.de=20
