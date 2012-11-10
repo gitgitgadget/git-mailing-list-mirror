@@ -1,132 +1,86 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: RFD: fast-import is picky with author names (and maybe it should
- - but how much so?)
-Date: Sat, 10 Nov 2012 14:25:57 -0500
-Message-ID: <509EAA45.8020005@gmail.com>
-References: <5093DC0C.5000603@drmicha.warpmail.net>	<20121108200919.GP15560@sigill.intra.peff.net>	<509CCCBC.8010102@drmicha.warpmail.net>	<CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>	<509E8EB2.7040509@drmicha.warpmail.net> <CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Kalle Olavi Niemitalo <kon@iki.fi>
+Subject: Re: What's cooking in git.git (Nov 2012, #02; Fri, 9)
+Date: Sat, 10 Nov 2012 21:32:15 +0200
+Message-ID: <871ug15k5c.fsf@Niukka.kon.iki.fi>
+References: <20121109192336.GA9401@sigill.intra.peff.net>
+	<87a9uq5tql.fsf@Niukka.kon.iki.fi>
+	<20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 10 20:26:22 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Fox <pgf@foxharp.boston.ma.us>
+X-From: git-owner@vger.kernel.org Sat Nov 10 20:31:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXGh9-0004wa-GH
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 20:26:19 +0100
+	id 1TXGlw-0008JB-AP
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 20:31:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550Ab2KJT0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 14:26:06 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:56978 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265Ab2KJT0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 14:26:04 -0500
-Received: by mail-yh0-f46.google.com with SMTP id m54so1000800yhm.19
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 11:26:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=lnCcXj6qyO6xqmTnwdnWlA6Nfirg08dOt+Yche/F/eU=;
-        b=eyiytOejnAcHz8t6WV7FH42ZedevPvHhQOEWA+BqDAzfKJhPRkKgAKfnZf2X6w7fB8
-         eUuYOjCWrKRHtyg/rPUeAoggTwJiPIzOvfYGv+wIaeiBvKGnJ8tY6dzQvXARESAwfgUl
-         N8a9bzWxPJUg1Lc2HpqzDAkGXNoGR6uRCORdg3m42JZ3CymyvESKk/PQ84jOTrUkW3iJ
-         8ciKr4h8dl3Ou01GdwMnPWln7mTLMyLez+By6U9N7AIGyCyTh7XkbYoui5+7SPNYaZbQ
-         KUnf6fAyfQYy7z50fofJI3uRQWUDa9piLU28qopTy7injsWaCJvlc8S5WgsXTYfwlAg+
-         2nHA==
-Received: by 10.236.123.136 with SMTP id v8mr15087850yhh.75.1352575563215;
-        Sat, 10 Nov 2012 11:26:03 -0800 (PST)
-Received: from [10.0.1.132] ([97.104.180.2])
-        by mx.google.com with ESMTPS id e18sm2123505yhi.0.2012.11.10.11.26.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 10 Nov 2012 11:26:02 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20121027 Icedove/3.0.11
-In-Reply-To: <CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
+	id S1752572Ab2KJTa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 14:30:58 -0500
+Received: from sirokuusama.dnainternet.net ([83.102.40.133]:55101 "EHLO
+	sirokuusama.dnainternet.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752265Ab2KJTa5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 14:30:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by sirokuusama.dnainternet.net (Postfix) with ESMTP id 456E13F975;
+	Sat, 10 Nov 2012 21:30:56 +0200 (EET)
+X-Virus-Scanned: DNA Postiturva at dnainternet.net
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from sirokuusama.dnainternet.net ([83.102.40.133])
+	by localhost (sirokuusama.dnainternet.net [127.0.0.1]) (DNA Postiturva, port 10041)
+	with ESMTP id z4p0HjAzjiEH; Sat, 10 Nov 2012 21:30:55 +0200 (EET)
+Received: from omenapuu.dnainternet.net (omenapuu.dnainternet.net [83.102.40.212])
+	by sirokuusama.dnainternet.net (Postfix) with ESMTP id B79673F912;
+	Sat, 10 Nov 2012 21:30:55 +0200 (EET)
+Received: from Niukka.Niemitalo.private (85-131-104-149.bb.dnainternet.fi [85.131.104.149])
+	by omenapuu.dnainternet.net (Postfix) with ESMTP id 754572BAED;
+	Sat, 10 Nov 2012 21:30:53 +0200 (EET)
+In-Reply-To: <20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us> (Paul
+	Fox's message of "Sat, 10 Nov 2012 10:52:09 -0500")
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.51 (gnu/linux)
+X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209301>
 
-On 11/10/2012 01:43 PM, Felipe Contreras wrote:
-> On Sat, Nov 10, 2012 at 6:28 PM, Michael J Gruber
-> <git@drmicha.warpmail.net>  wrote:
->> Felipe Contreras venit, vidit, dixit 09.11.2012 15:34:
->>> On Fri, Nov 9, 2012 at 10:28 AM, Michael J Gruber
->>> <git@drmicha.warpmail.net>  wrote:
->>>
->>>> Hg seems to store just anything in the author field ("committer"). The
->>>> various interfaces that are floating around do some behind-the-back
->>>> conversion to git format. The more conversions they do, the better they
->>>> seem to work (no erroring out) but I'm wondering whether it's really a
->>>> good thing, or whether we should encourage a more diligent approach
->>>> which requires a user to map non-conforming author names wilfully.
->>>
->>> So you propose that when somebody does 'git clone hg::hg hg-git' the
->>> thing should fail. I hope you don't think it's too unbecoming for me
->>> to say that I disagree.
->>
->> There is no need to disagree with a proposal I haven't made. I would
->> disagree with the proposal that I haven't made, too.
->
-> All right, we shouldn't encourage a more diligent approach which
-> requires a user to map author names then.
->
->>> IMO it should be git fast-import the one that converts these bad
->>> authors, not every single tool out there. Maybe throw a warning, but
->>> that's all. Or maybe generate a list of bad authors ready to be filled
->>> out. That way when a project is doing a real conversion, say, when
->>> moving to git, they can run the conversion once and see which authors
->>> are bad and not multiple times, each try taking longer than the next.
->>
->> As Jeff pointed out, git-fast-import expects output conforming to a
->> certain standard, and that's not going to change. import is agnostic to
->> where its import stream is coming from. Only the producer of that stream
->> can have additional information about the provenience of the stream's
->> data which may aid (possibly together with user input or choices) in
->> transforming that into something conforming.
->
-> We already know where the import of those streams come from:
-> mercurial, bazaar, etc. There's absolutely nothing the tools exporting
-> data from those repositories can do, except try to convert all kind of
-> weird names--and many tools do it poorly.
->
-> So, the options are:
->
-> a) Leave the name conversion to the export tools, and when they miss
-> some weird corner case, like 'Author<email', let the user face the
-> consequences, perhaps after an hour of the process.
->
-> We know there are sources of data that don't have git-formatted author
-> names, so we know every tool out there must do this checking.
->
-> In addition to that, let the export tool decide what to do when one of
-> these bad names appear, which in many cases probably means do nothing,
-> so the user would not even see that such a bad name was there, which
-> might not be what they want.
->
-> b) Do the name conversion in fast-import itself, perhaps optionally,
-> so if a tool missed some weird corner case, the user does not have to
-> face the consequences.
->
-> The tool writers don't have to worry about this, so we would not have
-> tools out there doing a half-assed job of this.
->
-> And what happens when such bad names end up being consistent: warning,
-> a scaffold mapping of bad names, etc.
->
->
-> One is bad for the users, and the tools writers, only disadvantages,
-> the other is good for the users and the tools writers, only
-> advantages.
->
+Paul Fox <pgf@foxharp.boston.ma.us> writes:
 
-c) Do the name conversion, and whatever other cleanup and manipulations 
-you're interesting in, in a filter between the exporter and git-fast-import.
+> when i implemented the change, i wondered if some twisted emacs
+> workflow would be an issue. ;-)  and i almost blocked SIGQUIT as
+> well -- the two programs i looked at for precedent (CVS and MH) both
+> block both SIGQUIT and SIGINT when spawning an editor.
+>
+> but since emacs users must have dealt with CVS for a long time before
+> dealing with git, how might they have done so?
+
+I think I usually ran CVS via vc.el, which prompts for a commit
+message in Emacs before it runs cvs commit.  So CVS did not need
+to run $EDITOR.
+
+I just tried emacsclient with CVS 1.12.13-MirDebian-9, and it
+behaves somewhat differently from Git with pf/editor-ignore-sigint.
+When I tell Emacs to send SIGINT to the *Shell* buffer, CVS prompts:
+
+cvs commit: warning: editor session failed
+
+Log message unchanged or not specified
+a)bort, c)ontinue, e)dit, !)reuse this message unchanged for remaining dirs
+Action: (continue) 
+
+and then I can choose to abort.
+
+With strace, it looks like CVS sets SIG_IGN as the handler of
+SIGINT and SIGQUIT only in the parent process after forking, not
+in the child process that executes the editor.
+
+CVS also temporarily blocks signals by calling sigprocmask, but
+it undoes that before it forks or waits for the child process.
