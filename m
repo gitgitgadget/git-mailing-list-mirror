@@ -1,57 +1,81 @@
-From: Andy Hawkins <andy@gently.org.uk>
-Subject: Re: old folders returning
-Date: Sat, 10 Nov 2012 17:41:51 +0000 (UTC)
-Organization: Gently
-Message-ID: <slrnk9t4ev.qhg.andy@atom.gently.org.uk>
-References: <CAN4PrMavggqn3ZM1atde5CADjszzLOvPoQasjRZfUvRKrqS-uA@mail.gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 18:51:45 2012
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] remote-curl.c: Fix a gcc warning
+Date: Sat, 10 Nov 2012 18:34:51 +0000
+Message-ID: <509E9E4B.6020705@ramsay1.demon.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 10 19:36:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXFDb-0004vk-8U
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 18:51:43 +0100
+	id 1TXFuW-00032R-Az
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 19:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751347Ab2KJRsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 12:48:41 -0500
-Received: from plane.gmane.org ([80.91.229.3]:60603 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751233Ab2KJRsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 12:48:40 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TXFAl-0002no-4C
-	for git@vger.kernel.org; Sat, 10 Nov 2012 18:48:47 +0100
-Received: from cpc2-swin2-0-0-cust495.3-1.cable.virginmedia.com ([81.109.93.240])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 18:48:47 +0100
-Received: from andy by cpc2-swin2-0-0-cust495.3-1.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 18:48:47 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cpc2-swin2-0-0-cust495.3-1.cable.virginmedia.com
-User-Agent: slrn/pre1.0.0-18 (Linux)
+	id S1752196Ab2KJSfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 13:35:51 -0500
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:55006 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751823Ab2KJSfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2012 13:35:50 -0500
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 03C7912833F;
+	Sat, 10 Nov 2012 18:35:49 +0000 (GMT)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 5AACF12833A;	Sat, 10 Nov 2012 18:35:48 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tch.inty.net (Postfix) with ESMTP;	Sat, 10 Nov 2012 18:35:47 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209288>
 
-Hi,
 
-In article <CAN4PrMavggqn3ZM1atde5CADjszzLOvPoQasjRZfUvRKrqS-uA@mail.gmail.com>,
-           David Coombes<webeire@gmail.com> wrote:
-> The only suggestion I can think of is that the name wasn't cleared
-> after the "git add *" and then git went looking for an earlier copy.
-> But seems the issue is with the git client as well because of the
-> modified time. If it were pulled then the modified time would've
-> changed, so it must have been taken from an earlier commit on my local
-> branch.
+In particular, gcc complains as follows:
 
-Did you git rm the 'old' name of the folder?
+        CC remote-curl.o
+    remote-curl.c: In function `rpc_service':
+    remote-curl.c:403: warning: 'gzip_size' might be used uninitialized \
+        in this function
 
-Andy
+The 'gzip_size' variable would not, in fact, be used uninitialized.
+However, in order to suppress the warning, we simply initialize the
+variable to zero in it's declaration.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Jeff,
+
+Could you please squash this into commit df126e108 ("remote-curl: hoist
+gzip buffer size to top of post_rpc", 31-10-2012), which is part of
+your 'jk/maint-http-half-auth-fetch' branch.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ remote-curl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/remote-curl.c b/remote-curl.c
+index d8b3600..9a8b123 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -400,7 +400,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 	struct curl_slist *headers = NULL;
+ 	int use_gzip = rpc->gzip_request;
+ 	char *gzip_body = NULL;
+-	size_t gzip_size;
++	size_t gzip_size = 0;
+ 	int err, large_request = 0;
+ 
+ 	/* Try to load the entire request, if we can fit it into the
+-- 
+1.8.0
