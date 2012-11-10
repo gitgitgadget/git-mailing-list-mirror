@@ -1,55 +1,57 @@
-From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
-Subject: overriding/removing inherited credential.helper
-Date: Sat, 10 Nov 2012 23:12:50 +0800
-Message-ID: <CAHtLG6QaHOOYgVFPyOWo44-jTX__cd0dCyu+vs+Uf4_U-HxySw@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Bizarre problem cloning repo from Codeplex
+Date: Sat, 10 Nov 2012 16:23:31 +0100
+Message-ID: <m2k3tteb2k.fsf@igel.home>
+References: <508B133D.3090300@game-point.net>
+	<6c843260-6190-469a-aa53-243ac440b0fd@zcs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 16:13:27 2012
+Content-Type: text/plain
+Cc: Jeremy Morton <admin@game-point.net>, git <git@vger.kernel.org>
+To: Enrico Weigelt <enrico.weigelt@vnc.biz>
+X-From: git-owner@vger.kernel.org Sat Nov 10 16:25:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXCkQ-0000x9-9Z
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 16:13:26 +0100
+	id 1TXCw3-00015v-7e
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 16:25:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931Ab2KJPMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 10:12:53 -0500
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:60054 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751747Ab2KJPMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 10:12:52 -0500
-Received: by mail-lb0-f174.google.com with SMTP id n3so3711507lbo.19
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 07:12:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=1WRHECOZmU/2NX8Dm53RnoUS7RT+KIm/Vc2SzFcuKPI=;
-        b=pk14XVch25i5XF/krckTC6OhP23YR69kJwpsln2YcoqJzgB4gowXF6u5gMrM/e4tjK
-         cmDHMwwGKHj7FUhj1+79sIK0SnhyE3/zmf7BnQm+jtJjbxZ49YK/DHNxv4bROghjvrSj
-         dLw2YmZ7AVPhwpIXINxb5qcqxE5csdU+lO1e7b8DcUvRSLuEZKFHFxv44LsLNjcJOgSP
-         i3j4uSqu8wCm37T6kh/UxCHyYzqVzO3JNdAYfP3yU1rI13F74Ds78wIatiqhzMBUDtwg
-         ZIPKZhA2rekHmXBFI0I5yqQLa8xHFgdAPdvo6v38q9TID+5jZvd1dHmcV+0/fiVOtRW7
-         DX0Q==
-Received: by 10.112.50.205 with SMTP id e13mr5973460lbo.63.1352560370949; Sat,
- 10 Nov 2012 07:12:50 -0800 (PST)
-Received: by 10.112.47.71 with HTTP; Sat, 10 Nov 2012 07:12:50 -0800 (PST)
+	id S1751750Ab2KJPXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 10:23:39 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:48696 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859Ab2KJPXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2012 10:23:38 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XzMSh5SFHz4KK4N;
+	Sat, 10 Nov 2012 16:23:32 +0100 (CET)
+X-Auth-Info: lYjWSnoUT9fuFIEEbLJXk4DuQ20nuuTq18xt83yMJ0s=
+Received: from igel.home (ppp-88-217-120-210.dynamic.mnet-online.de [88.217.120.210])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XzMSh2WQrzbbck;
+	Sat, 10 Nov 2012 16:23:32 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id B4BF5CA2A4; Sat, 10 Nov 2012 16:23:31 +0100 (CET)
+X-Yow: I like your SNOOPY POSTER!!
+In-Reply-To: <6c843260-6190-469a-aa53-243ac440b0fd@zcs> (Enrico Weigelt's
+	message of "Sat, 10 Nov 2012 08:49:53 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209279>
 
-In credential.c, line 67:
+Enrico Weigelt <enrico.weigelt@vnc.biz> writes:
 
-    if (!strcmp(key, "helper"))
-        string_list_append(&c->helpers, value);
+> Their webserver seems to be configured quite restrictively
+> (eg. cannot access files like 'packed-refs').
 
-In global config, I add one credential helper.
-But I do not want to use any credential helper in a specific repository.
-Currently there is no way in local config to override and remove
-inherited credential helper.
-Of course, I do not want to change global config.
+Probably it just doesn't exist.
 
-Could you suggest a patch?
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
