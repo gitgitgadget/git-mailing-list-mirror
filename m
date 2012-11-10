@@ -1,101 +1,96 @@
 From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Re: Workflow for templates?
-Date: Sat, 10 Nov 2012 08:27:10 +0100 (CET)
-Message-ID: <f3537815-e1ea-4242-ac49-9d5a1e4f0511@zcs>
-References: <509A863B.4090805@ira.uka.de>
+Subject: Re: Bizarre problem cloning repo from Codeplex
+Date: Sat, 10 Nov 2012 08:49:53 +0100 (CET)
+Message-ID: <6c843260-6190-469a-aa53-243ac440b0fd@zcs>
+References: <508B133D.3090300@game-point.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Nov 10 08:31:35 2012
+Cc: git <git@vger.kernel.org>
+To: Jeremy Morton <admin@game-point.net>
+X-From: git-owner@vger.kernel.org Sat Nov 10 08:50:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TX5XS-0005qk-GU
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 08:31:34 +0100
+	id 1TX5pR-0001kS-IF
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 08:50:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751351Ab2KJH1N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 02:27:13 -0500
-Received: from zcs.vnc.biz ([83.144.240.118]:15787 "EHLO zcs.vnc.biz"
+	id S1751625Ab2KJHt4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 02:49:56 -0500
+Received: from zcs.vnc.biz ([83.144.240.118]:18886 "EHLO zcs.vnc.biz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751281Ab2KJH1M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 02:27:12 -0500
+	id S1751415Ab2KJHtz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 02:49:55 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 96D4E622260;
-	Sat, 10 Nov 2012 08:27:11 +0100 (CET)
+	by zcs.vnc.biz (Postfix) with ESMTP id 50BFF622260;
+	Sat, 10 Nov 2012 08:49:54 +0100 (CET)
 X-Virus-Scanned: amavisd-new at vnc.biz
 Received: from zcs.vnc.biz ([127.0.0.1])
 	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TZJDo4ELcZh6; Sat, 10 Nov 2012 08:27:10 +0100 (CET)
+	with ESMTP id rzj3JNa+XWyY; Sat, 10 Nov 2012 08:49:53 +0100 (CET)
 Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id D7862622259;
-	Sat, 10 Nov 2012 08:27:10 +0100 (CET)
-In-Reply-To: <509A863B.4090805@ira.uka.de>
+	by zcs.vnc.biz (Postfix) with ESMTP id D3397622259;
+	Sat, 10 Nov 2012 08:49:53 +0100 (CET)
+In-Reply-To: <508B133D.3090300@game-point.net>
 X-Originating-IP: [91.43.209.211]
 X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209260>
 
 
-> Let me ask a different question: What is wrong with cherry-picking
-> downstream changes to your upstream branch? Without rebasing it to
-> downstream.
+> I'm trying to clone the following repository from Codeplex:
+>=20
+> https://git01.codeplex.com/entityframework.git
+>=20
+> git downloads all the objects, creates the directory
+> "entityframework",
+> then displays "error: RPC failed; result=3D56, HTTP code =3D 200" and
+> immediately deletes the directory.
+>=20
+> I can clone other HTTPS repos with this git installation, for example
+> from Bitbucket and Github.  It's git 1.7.10.4 on Debian. =20
 
-Naah, dont rebase the upstream ontop of downstream - this doenst make
-any sense (yeah, my devs sometimes doing exatly this wong ;-o).
+reproduced it on Ubuntu precise, git-1.7.9.5
 
-Instead, as you just said, cherry-pick the good commits into your
-upstream branch and rebase your downstreams ontop of that. (doesnt
-make any difference if this is done by different people or in different
-administrative domains).
+When starting with an empty repo, adding the url as remote and calling
+git remote update origin:
 
-> That might mean there is a rather useless merge downstream later on,
-> but that's the price you pay for not doing the change in a developmen=
-t
-> branch.
+> Fetching origin
+> WARNING: gnome-keyring:: couldn't connect to: /tmp/keyring-5cWq1d/pkc=
+s11: No such file or directory
+> remote: Counting objects: 21339, done.
+> remote: Compressing objects: 100% (3778/3778), done.
+> remote: Total 21339 (delta 17180), reused 21339 (delta 17180)
+> Receiving objects: 100% (21339/21339), 11.24 MiB | 1.04 MiB/s, done.
+> error: RPC failed; result=3D56, HTTP code =3D 200
+> Resolving deltas: 100% (17180/17180), done.
+> error: Could not fetch origin
 
-That's one of the things rebase is for: not having your history filled
-up with merges at all, but always have your local cutomizations added
-ontop of the current upstream.
+But: refs/remotes/origin/master is added and looks sane (git fsck
+shows no errors).
 
-By the way: I'm also using this hierachy for package maintenance to
-different target distros:
+Subsequent 'git remote update' calls look good:
 
-   upstream branch
-         |
-         |----> upstream release tag X.Y.Z
-         |
-        \ /
-   bugfix branch (maint-X-Y-Z) =3D> general (eg. distro-agnostig) fixes=
- go here
-         |
-         |-----> maintenance release tag X.Y.Z.A
-         |
-        \ /
-   dist branch (mydist-X-Y-Z) =3D> distro-specific customizations (eg.
-         |                       packaging control files, etc) go here
-         |------> dist package release tags X.Y.Z.A-B
+> Fetching origin
 
+Even after manually removing the ref and re-running update,
+everything look fine:
 
-Usually I do quick hotfixes in the dist branch (and assigning new dist =
-version number),
-then copy the dist branch into some topic-branch, rebase into latest bu=
-gfix branch,
-cherry-pick the interesting commit(s) into the bugfix branch. When I do=
- a new bugfix
-release (from by bugfix branch), I rebase the dist branch ontop the lat=
-est bugfix
-release tag, fix dist-package version numbers and run the dist-specific=
- build and=20
-testing pipeline.
+> Fetching origin
+> WARNING: gnome-keyring:: couldn't connect to: /tmp/keyring-5cWq1d/pkc=
+s11: No such file or directory
+> From https://git01.codeplex.com/entityframework
+>  * [new branch]      master     -> origin/master
 
-Here's some example for it: https://github.com/vnc-biz/redmine-core
+Their webserver seems to be configured quite restrictively
+(eg. cannot access files like 'packed-refs').
+
+Is there a way to trace the actual HTTP calls ?
 
 
 cu
