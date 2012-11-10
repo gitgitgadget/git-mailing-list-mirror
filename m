@@ -1,111 +1,85 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: What's cooking in git.git (Nov 2012, #02; Fri, 9)
-Date: Sat, 10 Nov 2012 13:32:50 +0100
-Message-ID: <20121110123250.GR12052@goldbirke>
-References: <20121109192336.GA9401@sigill.intra.peff.net>
- <CAMP44s3yVtQ4wGqVTyHN-VfAM7iRo9WfNnAu+ns7Zkc_cPBH3g@mail.gmail.com>
- <20121110003331.GA12567@sigill.intra.peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Workflow for templates?
+Date: Sat, 10 Nov 2012 13:44:53 -0000
+Organization: OPDS
+Message-ID: <E2479326E6B94EFEAEE8816FD926F36F@PhilipOakley>
+References: <7f1bbe94-b3f6-4728-960d-19e89e8e4166@zcs>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 10 13:33:24 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>, "Josef Wolf" <jw@raven.inka.de>
+To: "Enrico Weigelt" <enrico.weigelt@vnc.biz>
+X-From: git-owner@vger.kernel.org Sat Nov 10 14:44:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXAFX-0004Uf-9g
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 13:33:23 +0100
+	id 1TXBMf-00051E-OM
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 14:44:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357Ab2KJMdI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 07:33:08 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:50062 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910Ab2KJMdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 07:33:05 -0500
-Received: from localhost6.localdomain6 (p5B130AB1.dip0.t-ipconnect.de [91.19.10.177])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0MMJXF-1TPkeU2edR-008Zsw; Sat, 10 Nov 2012 13:32:51 +0100
-Content-Disposition: inline
-In-Reply-To: <20121110003331.GA12567@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:Fd001R4PhGv4z+OnAR3zcMjdAEzly8UKUaZaV8GxoPn
- 3mad7m+Jm/RCyk1kSeDrxwZUyeZ5QLSM45ZNXd66tNqWh1AO0a
- 0Z7WpkDaUlY4GJz9Qffhdmy2dyMZLB0Ubq/mu8++6v4B1u1ks3
- +oux/hu4e/Ei59jA8UUW/V5FWpVbSJ1xKWjqYj/U8YpJ5jT7Xy
- wWl7dOm9LStvwEBc76rJiQkbfz5lBZX+EalBByE0keJholCe5E
- 2sQ+pPgOFtfiUnPpBogrr0O/s4KtV1idcFprmyAQYlLqn93SUa
- 6BzOSrph+oYndQhacFQJdEVaGtjw5zIxJ9J9GwgUlzTOlZC3xi
- 72o6Q2/hPuKB+vEcUjXs=
+	id S1751435Ab2KJNog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 08:44:36 -0500
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:63672 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751113Ab2KJNof (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 08:44:35 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArANAFRZnlBcHm+W/2dsb2JhbABEhhmFP7Z4AQECgQCBCYIZBQEBBAEIAQEZFR4BARUMCwIDBQIBAxUBBAIFIQICFAEEGgYHFwYKCQgCAQIDAYdzCqoxkjqBIopzCkYxHDWDZTJhA410mEqCbw
+X-IronPort-AV: E=Sophos;i="4.80,751,1344207600"; 
+   d="scan'208";a="399361224"
+Received: from host-92-30-111-150.as13285.net (HELO PhilipOakley) ([92.30.111.150])
+  by out1.ip05ir2.opaltelecom.net with SMTP; 10 Nov 2012 13:44:34 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209274>
 
-Hi,
+From: "Enrico Weigelt" <enrico.weigelt@vnc.biz> Sent: Saturday, November 
+10, 2012 10:29 AM
+>> This is often the key point that requires the 'new mindset'. Most
+>> folk
+>> use/used the directory heirarchy (subtle distinction with the .git
+>> 'repo' directory heirarchy to be noted) as a way of separating
+>> ownership
+>> between groups. They find it very hard to undo the old mindset and
+>> use
+>> branches _instead of_ directories for the different group
+>> configurations.
+>
+> hmm, is this really a psychological issue ?
 
-On Fri, Nov 09, 2012 at 07:33:31PM -0500, Jeff King wrote:
-> On Sat, Nov 10, 2012 at 12:21:48AM +0100, Felipe Contreras wrote:
-> > > * fc/completion-test-simplification (2012-10-29) 2 commits
-> > >  - completion: simplify __gitcomp test helper
-> > >  - completion: refactor __gitcomp related tests
-> > >
-> > >  Clean up completion tests.
-> > >
-> > >  There were some comments on the list.
-> > >
-> > >  Expecting a re-roll.
-> >=20
-> > The second patch I can re-roll, but the first patch needs some
-> > external input. My preference is that tests should also be simple a=
-nd
-> > maintainable, SZEDER's preference is that tests are better being
-> > explicit and verbose (even if harder to maintain) to minimize possi=
-ble
-> > issues in the tests.
->=20
-> I think it is better to keep the tests simple and maintainable.
+Oh absolutely.   It is very very hard to unlearn stuff, especially bad 
+habits that have had to become ingrained to make them work adequately! 
+It's like re-learning an alternative to a well loved mnemonic. "CLAP".
 
-Maintainable?  There is nothing to maintain here.  Users' completion
-scripts depend on __gitcomp(), so its behavior shouldn't be changed.
-It can only be extended by a fifth parameter or by quoting words when
-necessary, but these future changes must not alter the current
-behavior checked by these tests, therefore even then these tests must
-be left intact.
+>
+> well, many years ago, i've seen a talk about git (maybe by linus 
+> himself),
+> which started with something like "forget everything you know abozt 
+> scm" ...
 
-Simple?  Currently you only need to look at __gitcomp() and the test
-itself to understand what's going on.  With this series you'll also
-need to look at test_gitcomp(), figure out what its parameters are
-supposed to mean, and possibly get puzzled on the way why __gitcomp()
-is now seemingly called with only one parameter.
+Most folk don't know why the old way used to be right, and is now so 
+wrong, so they can't rationalize the change. Hence find the change very 
+difficult.
 
-So, I don't see much benefit in this series (except the part to use
-print_comp instead of "change IFS && echo", but that's already done in
-this patch:
-http://article.gmane.org/gmane.comp.version-control.git/207927).
+[Other than git..] Current SCM methods were established before the 
+Titanic sank and are based on drawing office practice, and were 
+transfered and applied to code printouts (which are simply machining 
+instructions to a compiler). The modern zero cost replication of 
+"Master" drawings/code printouts has destroyed the original reasons for 
+the old practices (protect the aluable unique master). Similarly the new 
+paradigm of "how can I verify that this is a proper copy of the master" 
+isn't understood.
 
-OTOH, this series has some serious drawbacks.
-
-It makes debugging more difficult.  While working on the quoting
-issues I managed to break completion tests many-many times lately.  In
-normal tests I could add a few debugging instructions to the failed
-test to find out where the breakage lies, without affecting other
-tests.  However, if the failed test uses the test_completion() helper,
-then I have to add debugging instructions to test_completion() itself,
-too.  This is bad, because many tests use this helper function and are
-therefore affected by the debugging instructions, producing truckloads
-of output making it difficult to dig out the relevant parts, or, worse
-yet, causing breakages in other tests.  With this series the same
-difficulties will come to __gitcomp() tests, too.
-
-It can also encourage writing bad tests, similar to those that managed
-to cram many test_completion() lines into a single tests, giving me
-headaches to figure out what went wrong this time.
-
-
-Best,
-G=E1bor
+Definately a psychological issue when your whole world is being turned 
+upside down ;-)
