@@ -1,122 +1,130 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2012, #02; Fri, 9)
-Date: Sat, 10 Nov 2012 01:44:20 +0100
-Message-ID: <CAMP44s058Km_=xUn8UvwYwuk0DStTB3bMYu-HPsQWDF-pT_6EQ@mail.gmail.com>
-References: <20121109192336.GA9401@sigill.intra.peff.net>
-	<CAMP44s3yVtQ4wGqVTyHN-VfAM7iRo9WfNnAu+ns7Zkc_cPBH3g@mail.gmail.com>
-	<20121110003331.GA12567@sigill.intra.peff.net>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH v2 0/5] push: update remote tags only with force
+Date: Fri, 9 Nov 2012 19:15:49 -0600
+Message-ID: <CAEUsAPbmimoEVoJjvXkOFacs-X6hu5b0NO1sHZ9eSSRM07yPFA@mail.gmail.com>
+References: <1352084908-32333-1-git-send-email-chris@rorvick.com>
+	<20121109183834.GB22164@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 10 01:44:35 2012
+X-From: git-owner@vger.kernel.org Sat Nov 10 02:20:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TWzBa-00015w-Ga
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 01:44:34 +0100
+	id 1TWzkS-0002zb-QR
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 02:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143Ab2KJAoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2012 19:44:21 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:52994 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751694Ab2KJAoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2012 19:44:21 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so4640708oag.19
-        for <git@vger.kernel.org>; Fri, 09 Nov 2012 16:44:20 -0800 (PST)
+	id S1750859Ab2KJBPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2012 20:15:52 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:51331 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750713Ab2KJBPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2012 20:15:51 -0500
+Received: by mail-la0-f46.google.com with SMTP id h6so3391542lag.19
+        for <git@vger.kernel.org>; Fri, 09 Nov 2012 17:15:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=lhuMU7htdXA0tuUsk8p91oZv7P5r7vJgPwgwLkBpkSc=;
-        b=zW2dBo39yU6A7Sh8RVFnvVezG7hRy9AMVZfVPGJrWEk4EL3kdwBITSVgDRSXm1HDhn
-         w1qrq9iMKsJqSX0ro8jIUhHrmSMoY3mx4eyjDZ90Hn+NZvIn7hOl/giYSEA/A7keVry0
-         fvxVBorDQZ91k0tGLXvFcc7QFbVjL6J2sRKIMe9RXJcWYWUP4dy6gb6Uks5/3QIlM9ag
-         HSW+hfq7ZvYBJ8sISgrmroMfALC5k8TRWBRXtO/KM1LFEpVw6IRTyRr9cFzdIbGAef6b
-         hvUdEmfFNcjGC4FtBpI7DUFLI77EzMyj44K4vDBbx7PVmZbnFbqxn3xBPLZoeaSu64V/
-         N5tg==
-Received: by 10.60.32.19 with SMTP id e19mr9509472oei.9.1352508260265; Fri, 09
- Nov 2012 16:44:20 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Fri, 9 Nov 2012 16:44:20 -0800 (PST)
-In-Reply-To: <20121110003331.GA12567@sigill.intra.peff.net>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=JpKpqgpMXNBlse2j22XWBUjLZARBsMmZRpOdqK6ZIzY=;
+        b=R39VtQIIwCcfoPsOL0EDxnqh/2jP02YLWtGj5rXZyjvldoLJROGLBNrvG4RghFHJmk
+         q4cI677h1LqV9yqylQvHe77Nxb6CmDWXstknBY0FRhB/ynqL8tcNQO57uGGnC09wrXKX
+         e3Tit24EdiY+GRD7qCxANeaZ8ea2RcfRNPHpXuyV7o5yVN4pJ6wLVnDYgzesrKPBtKbA
+         bJRSDilqPpBY3gwIz9JlY7lcsB2WrsK4lo2LY4ea1fMNwZWpal71VQdI1oI1p6iJy6ww
+         C6BCIr0tkpXlrGzpx3oZqXn4vVeaCToezOn6+oRZ9oeWAgkZMhWuzToe3wOCmGunw//Y
+         ioRA==
+Received: by 10.152.105.103 with SMTP id gl7mr11991590lab.10.1352510149751;
+ Fri, 09 Nov 2012 17:15:49 -0800 (PST)
+Received: by 10.114.2.45 with HTTP; Fri, 9 Nov 2012 17:15:49 -0800 (PST)
+In-Reply-To: <20121109183834.GB22164@sigill.intra.peff.net>
+X-Google-Sender-Auth: RiwoO0f1p-_NQNzrFcCPIfbWSTQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209256>
 
-On Sat, Nov 10, 2012 at 1:33 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Nov 10, 2012 at 12:21:48AM +0100, Felipe Contreras wrote:
+On Fri, Nov 9, 2012 at 12:38 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Nov 04, 2012 at 09:08:23PM -0600, Chris Rorvick wrote:
 >
->> > * fc/fast-export-fixes (2012-11-08) 14 commits
->> >  - fast-export: don't handle uninteresting refs
->> >  - fast-export: make sure updated refs get updated
->> >  - fast-export: fix comparison in tests
->> >  - fast-export: trivial cleanup
->> >  - remote-testgit: make clear the 'done' feature
->> >  - remote-testgit: report success after an import
->> >  - remote-testgit: exercise more features
->> >  - remote-testgit: cleanup tests
->> >  - remote-testgit: remove irrelevant test
->> >  - remote-testgit: get rid of non-local functionality
->> >  - Add new simplified git-remote-testgit
->> >  - Rename git-remote-testgit to git-remote-testpy
->> >  - remote-testgit: fix direction of marks
->> >  - fast-export: avoid importing blob marks
->> >
->> >  Improvements to fix fast-export bugs, including how refs pointing to
->> >  already-seen commits are handled. An earlier 4-commit version of this
->> >  series looked good to me, but this much-expanded version has not seen
->> >  any comments.
->> >
->> >  Needs review.
+>> Patch series to prevent push from updating remote tags w/o forcing them.
+>> Split out original patch to ease review.
 >>
->> I can send the previous 4-commit version if needed, the only thing
->> that changed is the commit messages.
->
-> In the actual code, perhaps, but aren't there significant changes to the
-> git-remote-testgit infrastructure that were not originally present? That
-> could use some review.
->
-> I also seem to recall that the tests in this version rely on the presence of bash;
-> don't we still need to mark the tests with a prerequisite?
-
-I meant in the 4-commits.
-
->> > * fc/completion-test-simplification (2012-10-29) 2 commits
->> >  - completion: simplify __gitcomp test helper
->> >  - completion: refactor __gitcomp related tests
->> >
->> >  Clean up completion tests.
->> >
->> >  There were some comments on the list.
->> >
->> >  Expecting a re-roll.
+>> Chris Rorvick (5):
+>>   push: return reject reasons via a mask
+>>   push: add advice for rejected tag reference
+>>   push: flag updates
+>>   push: flag updates that require force
+>>   push: update remote tags only with force
 >>
->> The second patch I can re-roll, but the first patch needs some
->> external input. My preference is that tests should also be simple and
->> maintainable, SZEDER's preference is that tests are better being
->> explicit and verbose (even if harder to maintain) to minimize possible
->> issues in the tests.
+>>  Documentation/git-push.txt |   10 +++++-----
+>>  builtin/push.c             |   24 +++++++++++++++---------
+>>  builtin/send-pack.c        |    6 ++++++
+>>  cache.h                    |    7 ++++++-
+>>  remote.c                   |   39 +++++++++++++++++++++++++++++++--------
+>>  t/t5516-fetch-push.sh      |   30 +++++++++++++++++++++++++++++-
+>>  transport-helper.c         |    6 ++++++
+>>  transport.c                |   25 +++++++++++++++----------
+>>  transport.h                |   10 ++++++----
+>>  9 files changed, 119 insertions(+), 38 deletions(-)
 >
-> I think it is better to keep the tests simple and maintainable. If there
-> are multiple ways to do things and they all need testing, then that
-> should be clear from the tests, not done haphazardly because some tests
-> happen to use a different way of doing things.
+> I have not looked carefully at this topic yet, but I did try merging it
+> to "pu" and found that it had some textual conflicts with the
+> nd/builtin-to-libgit topic, which moves some builtin/send-pack.c code to
+> send-pack.c. Since I am graduating that topic to master, I went ahead
+> and just rebased your topic on top.
+>
+> If you do a re-roll, please use an updated master, and feel free to
+> grab (and double-check!) the rebase I am about to send out in 'pu'. I
+> also included the minor signed/unsigned pointer warning fixup in the
+> rebase, too.
+>
+> -Peff
 
-Good, that's what my first patch does; no functional changes, just
-refactor code into a single function.
+Thanks, I've rebased and checked against the changes in pu.  Looks
+good to me.  I have a couple of other minor fixes (see below for
+details.)  I'll include these in an update if there is sufficient
+interest in this.
 
-> I seem to recall there was a one-liner fix that needed to be rolled in,
-> which is why I held it out of next.
+Chris
 
-Yes, that I can reroll.
+-- 8< --
+diff --git a/remote.c b/remote.c
+index fde2a79..b025a38 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1351,9 +1351,8 @@ void set_ref_status_for_push(struct ref
+*remote_refs, int send
 
-Cheers.
+                if (ref->update) {
+                        ref->nonfastforward =
+-                               ref->update &&
+-                               (!has_sha1_file(ref->old_sha1)
+-                                 || !ref_newer(ref->new_sha1, ref->old_sha1));
++                               !has_sha1_file(ref->old_sha1)
++                                 || !ref_newer(ref->new_sha1, ref->old_sha1);
 
--- 
-Felipe Contreras
+                        if (!ref->forwardable) {
+                                ref->requires_force = 1;
+diff --git a/transport.c b/transport.c
+index c183971..a380ad7 100644
+--- a/transport.c
++++ b/transport.c
+@@ -749,7 +749,7 @@ void transport_print_push_status(const char *dest,
+struct ref *r
+                        else
+                                *reject_mask |= REJECT_NON_FF_OTHER;
+                } else if (ref->status == REF_STATUS_REJECT_ALREADY_EXISTS) {
+-                               *reject_mask |= REJECT_ALREADY_EXISTS;
++                       *reject_mask |= REJECT_ALREADY_EXISTS;
+                }
+        }
+ }
