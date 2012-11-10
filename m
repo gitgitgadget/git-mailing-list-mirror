@@ -1,66 +1,63 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: git-reset man page
-Date: Sat, 10 Nov 2012 21:46:33 +0100
-Message-ID: <20121110204633.GA29363@shrek.podlesie.net>
-References: <CAB9Jk9AdTBJotrB0fndZawMWH6hS4PW_5bHwecwY5Vz7=TnYAA@mail.gmail.com>
- <20121110155718.GA29321@shrek.podlesie.net>
- <7v8va9p6pn.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: What's cooking in git.git (Nov 2012, #02; Fri, 9)
+Date: Sat, 10 Nov 2012 22:12:16 +0100
+Message-ID: <m28va9duxb.fsf@igel.home>
+References: <20121109192336.GA9401@sigill.intra.peff.net>
+	<87a9uq5tql.fsf@Niukka.kon.iki.fi>
+	<20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
+	<871ug15k5c.fsf@Niukka.kon.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	git <git@vger.kernel.org>, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 21:46:52 2012
+Content-Type: text/plain
+Cc: Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
+To: Kalle Olavi Niemitalo <kon@iki.fi>
+X-From: git-owner@vger.kernel.org Sat Nov 10 22:12:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXHx4-000245-1y
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 21:46:50 +0100
+	id 1TXILx-0003Ff-Sn
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 22:12:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752622Ab2KJUqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 15:46:36 -0500
-Received: from shrek-modem1.podlesie.net ([83.18.25.171]:54114 "EHLO
-	shrek.podlesie.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752322Ab2KJUqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 15:46:35 -0500
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id D4F665C5; Sat, 10 Nov 2012 21:46:33 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v8va9p6pn.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752688Ab2KJVMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 16:12:20 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:41011 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752451Ab2KJVMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2012 16:12:19 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XzWC56VDQz4KK4N;
+	Sat, 10 Nov 2012 22:12:17 +0100 (CET)
+X-Auth-Info: D+f219Lir9LJJdRK7diQFqE/F93GXojtPC2x7etkKZs=
+Received: from igel.home (ppp-88-217-120-210.dynamic.mnet-online.de [88.217.120.210])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XzWC52fjHzbbg0;
+	Sat, 10 Nov 2012 22:12:17 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id BCD7BCA2A4; Sat, 10 Nov 2012 22:12:16 +0100 (CET)
+X-Yow: Isn't this my STOP?!
+In-Reply-To: <871ug15k5c.fsf@Niukka.kon.iki.fi> (Kalle Olavi Niemitalo's
+	message of "Sat, 10 Nov 2012 21:32:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209306>
 
-On Sat, Nov 10, 2012 at 12:02:12PM -0800, Junio C Hamano wrote:
-> Krzysztof Mazur <krzysiek@podlesie.net> writes:
-> 
-> > Maybe we should just add that <paths> is an shortcut for <pathspec>
-> > and fix places where paths and pathspec are mixed or <path> is used as
-> > <pathspec>.
-> 
-> We should unify uses of <paths> and <path> (the former should be
-> <path>... or something).
+Kalle Olavi Niemitalo <kon@iki.fi> writes:
 
-Currently in most cases "<paths>..." is used ;)
+> With strace, it looks like CVS sets SIG_IGN as the handler of
+> SIGINT and SIGQUIT only in the parent process after forking, not
+> in the child process that executes the editor.
+>
+> CVS also temporarily blocks signals by calling sigprocmask, but
+> it undoes that before it forks or waits for the child process.
 
-> 
-> Some places you need to give exact path (iow, these places you
-> cannot use pathspec), while most other places pathspec
-> (i.e. matching pattern) is accepted.
+This emulates what system(3) does.
 
-I know, thats why I added a note that "<path> is not always used for pathspec".
+Andreas.
 
-> 
-> The manual correctly updated will most likely to use both <path> and
-> <pathspec> appropriately.
-
-So we should always use "<path>" for exact path, and "<pathspec>" for
-pathspecs patterns as defined in gitglossary. I think it's better
-to avoid "<paths>" and always use "<path>..." or "<pathspec>...".
-
-Krzysiek
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
