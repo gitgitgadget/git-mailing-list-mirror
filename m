@@ -1,62 +1,80 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: git-reset man page
-Date: Sat, 10 Nov 2012 10:55:13 +0100
-Message-ID: <CAB9Jk9AdTBJotrB0fndZawMWH6hS4PW_5bHwecwY5Vz7=TnYAA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Workflow for templates?
+Date: Sat, 10 Nov 2012 09:56:01 -0000
+Organization: OPDS
+Message-ID: <F9FF8107FA8F4CBD8C3D87B907BAE9E3@PhilipOakley>
+References: <bbc40624-f95d-48c9-83ed-fd70430226a4@zcs>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 10 10:55:34 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Enrico Weigelt" <enrico.weigelt@vnc.biz>,
+	"Josef Wolf" <jw@raven.inka.de>
+X-From: git-owner@vger.kernel.org Sat Nov 10 10:56:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TX7mn-0003X1-Vz
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 10:55:34 +0100
+	id 1TX7nT-00041e-Fs
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 10:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805Ab2KJJzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 04:55:15 -0500
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:34992 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704Ab2KJJzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 04:55:14 -0500
-Received: by mail-qc0-f174.google.com with SMTP id o22so3046163qcr.19
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 01:55:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=FMdLJdMR8XX4neTowWntlV8qV7qTLwEc04Io0ec4y0s=;
-        b=ICXSWNWWdEkjj7yYdOQNadRo9gpX4wk8j65iuGCcU1WaKRIvWaqLiOaRiT87rE+aDV
-         Us8E+/LKZETnEoBFQJPvkDCuQjkSb6W1IqOUl9IWhPU63VqNGQt5nlfNg8J2Q6/TclDF
-         jyIu2qYH/pCxHTNQtRJzPfGoe5O1sronYESNmb+pR3B/hbp/LiqwBSY3oOAqmHG5UXH0
-         9GKXaj+Hdkgf9pLxvcpPFhidsiG5I2tHxq3PCEyAVgTP6WDWgpON6suquLPpJccuc34Y
-         +1zpoqKaCMGMi5gQjJts5YpAxUgoAgEZT9ACLjz+SbOPd4QBLhLfEqBUoh/a4x57rLvy
-         Q7Kw==
-Received: by 10.224.70.140 with SMTP id d12mr18693634qaj.53.1352541313208;
- Sat, 10 Nov 2012 01:55:13 -0800 (PST)
-Received: by 10.229.77.96 with HTTP; Sat, 10 Nov 2012 01:55:13 -0800 (PST)
+	id S1750886Ab2KJJ4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2012 04:56:01 -0500
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:3873 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750734Ab2KJJ4A (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 04:56:00 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArANACTrnVBcHm+W/2dsb2JhbABEhhmFP7Z2AQECf4EJghkFAQEEAQgBARkVHgEBIQUGAgMFAgEDFQEEAgUhAgIUAQQaBgcXBgESCAIBAgMBh3MKqxiSTYEiinJQMRw1g2UyYQONdJhKgm8
+X-IronPort-AV: E=Sophos;i="4.80,750,1344207600"; 
+   d="scan'208";a="390435813"
+Received: from host-92-30-111-150.as13285.net (HELO PhilipOakley) ([92.30.111.150])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 10 Nov 2012 09:55:58 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209267>
 
-Hi
+From: "Enrico Weigelt" <enrico.weigelt@vnc.biz> Sent: Saturday, November
+10, 2012 7:13 AM
 
-the man page of git-reset, synopsys, does not allow for an
-argumentless call, and the description does not tell either what is
-the meaning of it.
-Suggested changes:
+I've picked out Enrico's key points.
 
-first line of synopsis:
+>> Maybe I should try to explain the problem in terms of repository
+>> hierarchy. Let's assume, there is this hierarchy of repositories:
+>
+> Let's talk about branches instead - repos are just containers for
+> branches (and tags, etc).
 
-      gitt reset [-q] [<commit>] [ [--] <pathspec> ...]
+This is often the key point that requires the 'new mindset'. Most folk
+use/used the directory heirarchy (subtle distinction with the .git
+'repo' directory heirarchy to be noted) as a way of separating ownership
+between groups. They find it very hard to undo the old mindset and use
+branches _instead of_ directories for the different group
+configurations.
 
-Description: append to the end of the first paragraph:
+Teaching git is easy. Undoing the old mindset is hard hard hard. [it's
+still hard]
 
-     "If no <pathspecs> are specified, all the index entries are reset."
 
-I would suggest to change <paths> with <pathspec> in all the man page
-because paths in the glossary are called pathspecs.
+> By the way: you really should use non-conflicting tag names (eg.
+> adding some <site>+"/" or <site>+"-" prefix), otherwise you'll
+> easiy run into conflicts, because per default retrieved and local
+> tags will all be in some namespace
+>          Better consider tag names to be really global.
 
--Angelo Borsotti
+Definitely.
+
+Apologies if it's a bit of bike-shedding.
+
+Philip
