@@ -1,79 +1,67 @@
 From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Re: bare vs non-bare <1.7 then >=1.7 ?
-Date: Sat, 10 Nov 2012 09:23:07 +0100 (CET)
-Message-ID: <e4dc73e8-69f9-4695-b8f7-cbc0f04e8197@zcs>
-References: <509B8552.4080303@rktmb.org>
+Subject: Re: Support for a series of patches, i.e. patchset or changeset?
+Date: Sat, 10 Nov 2012 09:52:21 +0100 (CET)
+Message-ID: <6df0df49-afb9-4faf-9a2d-6f397f3a167a@zcs>
+References: <CAMPhdO8Sy8ZuXyWbvch+fXzbSVdmwC69a-KaLBRBGX8MVGxv_A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Issues <git@vger.kernel.org>
-To: Mihamina Rakotomandimby <mihamina@rktmb.org>
-X-From: git-owner@vger.kernel.org Sat Nov 10 09:28:09 2012
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Eric Miao <eric.y.miao@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 09:56:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TX6QB-0002Pd-SZ
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 09:28:08 +0100
+	id 1TX6ro-00053W-BV
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Nov 2012 09:56:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092Ab2KJIXL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 03:23:11 -0500
-Received: from zcs.vnc.biz ([83.144.240.118]:47758 "EHLO zcs.vnc.biz"
+	id S1751696Ab2KJIwX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 03:52:23 -0500
+Received: from zcs.vnc.biz ([83.144.240.118]:42427 "EHLO zcs.vnc.biz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751949Ab2KJIXJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 03:23:09 -0500
+	id S1751605Ab2KJIwX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 03:52:23 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 6A921460009;
-	Sat, 10 Nov 2012 09:23:08 +0100 (CET)
+	by zcs.vnc.biz (Postfix) with ESMTP id 0A1F046000A;
+	Sat, 10 Nov 2012 09:52:22 +0100 (CET)
 X-Virus-Scanned: amavisd-new at vnc.biz
 Received: from zcs.vnc.biz ([127.0.0.1])
 	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id krOq2Un4Qa6N; Sat, 10 Nov 2012 09:23:07 +0100 (CET)
+	with ESMTP id IoVWvPdfaknd; Sat, 10 Nov 2012 09:52:21 +0100 (CET)
 Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id DDC7B622259;
-	Sat, 10 Nov 2012 09:23:07 +0100 (CET)
-In-Reply-To: <509B8552.4080303@rktmb.org>
+	by zcs.vnc.biz (Postfix) with ESMTP id 989D9460009;
+	Sat, 10 Nov 2012 09:52:21 +0100 (CET)
+In-Reply-To: <CAMPhdO8Sy8ZuXyWbvch+fXzbSVdmwC69a-KaLBRBGX8MVGxv_A@mail.gmail.com>
 X-Originating-IP: [91.43.209.211]
 X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209264>
 
+<snip>
 
-> When experimenting in order to train some colleagues, I saw that If I
-> clone a repository, I couldn't push to it because it was a non-bare
-> one.
-> Searchin for some explanations, I found this ressource:
-> http://www.bitflop.com/document/111
+yet another idea:
 
-That's just a precaution (technically it's not necessary, just stops
-you from doing some dumb things). Suppose the following scenario:
+you coud always put your patchsets into separate branches,
+rebase them ontop target branch before merging, and then
+do an non-ff-merge, which will make the history look like:
 
-* non-bare repository A, with branch 'master' currently checked out.
-* clone B -> somebody's working on branch 'master' (which was forked=20
-  from A's master)
-* on A, somebody did some local changes
-* meanwhile somebody pushes the branch 'master' from B to A
-* after that, on A, new commit to 'master'.
-
-Weird things can happen, eg. the changes coming from B completely
-reverted by the new commit in A.
-
-Unless nobody pushes to the branch currently checked and later somebody
-doing local changes after that, there shouldn't be any real technical
-problem. But then, you most likely wont need an worktree anyways.
-
-Wait, there *is* an usecase for such things, deploying trees (eg. webap=
-ps)
-some server:
-
- * application is developed in git
- * the final production-system tree is maintained in certian branch
- * a post-update hook acts on a specific production branch and does
-   something like git checkout --detach <treeish>
+* merged origin/feature_foo
+|\
+| * first preparation fo feature foo
+| * part a
+| * part b
+|/
+* merged origin/bugfix_blah
+|\
+| * fixing bug blah
+|/
+*
 
 
 cu
