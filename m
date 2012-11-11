@@ -1,97 +1,59 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: RFD: fast-import is picky with author names (and maybe it should
- - but how much so?)
-Date: Sun, 11 Nov 2012 13:41:10 +0100
-Message-ID: <CAMP44s1dsEU=E8tdgMYxWFyFw+F03bstdb5o7Ww_-RCQPd3R0w@mail.gmail.com>
-References: <5093DC0C.5000603@drmicha.warpmail.net>
-	<20121108200919.GP15560@sigill.intra.peff.net>
-	<509CCCBC.8010102@drmicha.warpmail.net>
-	<CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>
-	<509E8EB2.7040509@drmicha.warpmail.net>
-	<CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
-	<509EAA45.8020005@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Test failures in contrib/remote-helpers
+Date: Sun, 11 Nov 2012 18:18:40 +0530
+Message-ID: <CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com>
+References: <CALkWK0mU5O3Rqznkx-qn8VLFEgsMzOba1i8onSvf8X3FBeTs6g@mail.gmail.com>
+ <CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Sun Nov 11 13:41:25 2012
+Cc: Git List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 13:49:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXWqr-0005LN-05
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 13:41:25 +0100
+	id 1TXWyU-0000mb-Pa
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 13:49:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807Ab2KKMlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 07:41:12 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:45814 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396Ab2KKMlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 07:41:11 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so5440029oag.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 04:41:10 -0800 (PST)
+	id S1752946Ab2KKMtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 07:49:04 -0500
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:37947 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752769Ab2KKMtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 07:49:03 -0500
+Received: by mail-wi0-f172.google.com with SMTP id hm6so1732127wib.1
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 04:49:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=wnMxropOIm9BdZ+iyWNUf+wCX2LFz819poMhlKO3qGw=;
-        b=TZkG3xOMJ/Z8Zv3nwdSkriu7jN0iQK90VU5ffetXiJK0/BedjjTvqhDzSqwgPlid+J
-         YuLfavXIOQlo/9DJqbBgkOJl5tqwP/Llg5bfPiByFyock+28MfOCRQIzdeb4lX/4VJKq
-         UfXVp+XpdAf4RVQFru0GPY22sFhNusPQvMQIxFr08zcC8h9Ep/UfxWvdzkzp/UFxgGc9
-         CVdviWJSz+w+u77qAJ3SjDIzvT26im97yvn3tihv23PUUSHc6aFUz8UT+2loxpIvqHl0
-         Km0wmPimfhGBJH2EwiIKv601b7av5l2qpSckpyokmMH+X9qJhXg0/X0AxL3hxLgWKxTf
-         yRWQ==
-Received: by 10.182.38.101 with SMTP id f5mr13051336obk.80.1352637670689; Sun,
- 11 Nov 2012 04:41:10 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 04:41:10 -0800 (PST)
-In-Reply-To: <509EAA45.8020005@gmail.com>
+        bh=510z45UiIZ1hoHcncBqXVHCkZrbdlg5y5j4s7JXcOck=;
+        b=KEMf4WNvYTqNunNc5P+KFC9VSAe9/Qd3/G5jDAWcmImLv9HFACg2Z+kgXK/+ySn0FH
+         9nKxjzplApGXLJIP96OUg1V/j+AiZC3hmnjnQG9SCuLw93xZLwAvHi9H5sUcPwW/5Xvi
+         z0sl6Kr7PkQfcUwsPK3FZlqW2PrvARY8GtSGO7tBmo2ewkYoq7uEHM00DjV4Ej3PJmT7
+         /8Rp403MtWpSPcF+aC3spbhfDr7MZ2MF5MuhytsAw/kT40aXe6a2LA10rwILERcqOE1N
+         ZI8U1zLu/7kt8tPCFO+6xTDdTjhe5RcE+w/aPVSXQeoBJ1seAZhMi1zCzikEN30V06si
+         /XBg==
+Received: by 10.180.8.100 with SMTP id q4mr10702349wia.16.1352638141186; Sun,
+ 11 Nov 2012 04:49:01 -0800 (PST)
+Received: by 10.217.61.2 with HTTP; Sun, 11 Nov 2012 04:48:40 -0800 (PST)
+In-Reply-To: <CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209349>
 
-On Sat, Nov 10, 2012 at 8:25 PM, A Large Angry SCM <gitzilla@gmail.com> wrote:
-> On 11/10/2012 01:43 PM, Felipe Contreras wrote:
-
->> So, the options are:
->>
->> a) Leave the name conversion to the export tools, and when they miss
->> some weird corner case, like 'Author<email', let the user face the
->> consequences, perhaps after an hour of the process.
->>
->> We know there are sources of data that don't have git-formatted author
->> names, so we know every tool out there must do this checking.
->>
->> In addition to that, let the export tool decide what to do when one of
->> these bad names appear, which in many cases probably means do nothing,
->> so the user would not even see that such a bad name was there, which
->> might not be what they want.
->>
->> b) Do the name conversion in fast-import itself, perhaps optionally,
->> so if a tool missed some weird corner case, the user does not have to
->> face the consequences.
->>
->> The tool writers don't have to worry about this, so we would not have
->> tools out there doing a half-assed job of this.
->>
->> And what happens when such bad names end up being consistent: warning,
->> a scaffold mapping of bad names, etc.
->>
->>
->> One is bad for the users, and the tools writers, only disadvantages,
->> the other is good for the users and the tools writers, only
->> advantages.
->>
+Felipe Contreras wrote:
+> On Sun, Nov 11, 2012 at 11:32 AM, Ramkumar Ramachandra
+> <artagnon@gmail.com> wrote:
+>> I'm experiencing test failures in contrib/remote-helpers.
 >
-> c) Do the name conversion, and whatever other cleanup and manipulations
-> you're interesting in, in a filter between the exporter and git-fast-import.
+> Which are your versions of hg, and bzr?
 
-Such a filter would probably be quite complicated, and would decrease
-performance.
+Mercurial Distributed SCM (version 1.9.1)
+Bazaar (bzr) 2.4.1
 
--- 
-Felipe Contreras
+Ram
