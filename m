@@ -1,80 +1,61 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Reviews on mailing-list
-Date: Sun, 11 Nov 2012 12:56:48 +0530
-Message-ID: <CALkWK0mpzc8jXs5=HhO0Bk78UgwKt+JGOThB6z_4AnEYmz_=+w@mail.gmail.com>
-References: <CA+ZXwZOnZZyk_KWmLLLNChWb1R_Av1s5jM4PsLFWKaG8BB+uXQ@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: What's cooking in git.git (Nov 2012, #02; Fri, 9)
+Date: Sun, 11 Nov 2012 09:58:51 +0100
+Message-ID: <m2ehk0tt10.fsf@linux-m68k.org>
+References: <20121109192336.GA9401@sigill.intra.peff.net>
+	<87a9uq5tql.fsf@Niukka.kon.iki.fi>
+	<20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
+	<871ug15k5c.fsf@Niukka.kon.iki.fi>
+	<20121110220811.DC6A42E8B68@grass.foxharp.boston.ma.us>
+	<87wqxs4o6f.fsf@Niukka.kon.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <sop@google.com>
-To: =?UTF-8?Q?Deniz_T=C3=BCrkoglu?= <deniz@spotify.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 08:27:52 2012
+Content-Type: text/plain
+Cc: Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
+To: Kalle Olavi Niemitalo <kon@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Nov 11 09:59:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXRxO-0007YZ-Ry
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 08:27:51 +0100
+	id 1TXTNv-0006g9-8q
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 09:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226Ab2KKH1L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2012 02:27:11 -0500
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:54685 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188Ab2KKH1K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2012 02:27:10 -0500
-Received: by mail-wi0-f170.google.com with SMTP id hm9so1540853wib.1
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 23:27:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ljuaCEPASSrqL4Szqa+qqtPUZbEYkliGMdZ8pcg1VzU=;
-        b=Ls4g1+AAAn74AwEv8Mr1DxErxYT2SIhVZPGLoOaHlXuNVTysBKD85T6Vrm/lbUjdqk
-         r1LEeYRBMFFWSNnAEba6HrGxPzzfk8Lks72OjFUzZ5gRKe3tLPGMRoCNJsKo7lOazspY
-         wQG2Pefq/YKDEpD4JkUDN+8nmoEN4Dmv+hlSyT0MzkkV3JpfGxs8C4g06HVNj9UKMC6I
-         vBTNKvaSGSdkA9Iz12tonInUVIZWK161uUBL6F5hJUVi3OxUC8hZZXn2CJeUznxp+K88
-         ezRcQCLxzy/D2uoQGuR2HlqMX0SAC4SeAIVZPFHYpYKMhBKDBF/UmykeTnPvjKfNiL92
-         BsQQ==
-Received: by 10.180.95.201 with SMTP id dm9mr9838889wib.3.1352618828686; Sat,
- 10 Nov 2012 23:27:08 -0800 (PST)
-Received: by 10.217.61.2 with HTTP; Sat, 10 Nov 2012 23:26:48 -0800 (PST)
-In-Reply-To: <CA+ZXwZOnZZyk_KWmLLLNChWb1R_Av1s5jM4PsLFWKaG8BB+uXQ@mail.gmail.com>
+	id S1751748Ab2KKI66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 03:58:58 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:54365 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751507Ab2KKI6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 03:58:55 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XzptP2Lkvz3hhdv;
+	Sun, 11 Nov 2012 09:58:52 +0100 (CET)
+X-Auth-Info: WgaQE3iGa6ACIllm2q5Pgr7wFI7L+5zPuQfgZUmXdJ4=
+Received: from linux.local (ppp-93-104-148-16.dynamic.mnet-online.de [93.104.148.16])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XzptN4t8GzbbfX;
+	Sun, 11 Nov 2012 09:58:52 +0100 (CET)
+Received: by linux.local (Postfix, from userid 501)
+	id CCF8C14EC0E; Sun, 11 Nov 2012 09:58:51 +0100 (CET)
+X-Yow: Yow!  Am I cleansed yet?!
+In-Reply-To: <87wqxs4o6f.fsf@Niukka.kon.iki.fi> (Kalle Olavi Niemitalo's
+	message of "Sun, 11 Nov 2012 09:02:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209327>
 
-Deniz T=C3=BCrkoglu wrote:
-> I have spoken to Shawn Pearce (gerrit project lead, google) and he
-> said he is OK with hosting the gerrit instance.
->
-> I would like to hear your thoughts on this.
+Kalle Olavi Niemitalo <kon@iki.fi> writes:
 
-I personally think email is by far the best interface for patches,
-reviews, and discussions.  Git patches are very high-volume, and not
-everyone can read everything.  People should have the flexibility to
-choose the client they'd like to use to read patches and follow-ups;
-the freedom to use a scriptable client like Gnus is very important to
-me. Primarily, I want people to be able to:
-1. Choose what to read, by scripting Gnus to score email that they'd
-likely find relevant.
-2. Try out new patches on the list, by assigning one keybinding to
-git-am a series.
-3. Display email the way they like.  Many email clients have features
-to run filters through emails.
-4. Read patches/ follow-ups offline, while travelling (on a phone, for
-instance).  The GMail app, for instance, downloads mails for offline
-viewing.
-5. Interact with other lists seamlessly (the kernel list, for
-instance).  Email is a universal interface on which lists can be CC'ed
-easily.
+> and neither process blocked any signals (not even SIGCHLD as system(3)
+> would).
 
-I'm not attacking a specific web interface, but I don't see how any of
-the following would be possible even with the most advanced web
-interface.  Besides, nobody has made a proper case for using one.
-Therefore, I'm strongly opposed to the move.
+If you don't have a SIGCHLD handler it won't matter anyway.
 
-Ram
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
