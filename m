@@ -1,70 +1,93 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH 0/5] ignore SIGINT while editor runs
-Date: Sun, 11 Nov 2012 23:08:43 +0100
-Message-ID: <m2mwynkd1w.fsf@igel.home>
-References: <20121109192336.GA9401@sigill.intra.peff.net>
-	<87a9uq5tql.fsf@Niukka.kon.iki.fi>
-	<20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
-	<871ug15k5c.fsf@Niukka.kon.iki.fi>
-	<20121110220811.DC6A42E8B68@grass.foxharp.boston.ma.us>
-	<87wqxs4o6f.fsf@Niukka.kon.iki.fi>
-	<20121111154846.GA13188@sigill.intra.peff.net>
-	<20121111163100.GB13188@sigill.intra.peff.net>
-	<20121111191520.GA9474@shrek.podlesie.net>
-	<20121111202419.7602E2E8B6A@grass.foxharp.boston.ma.us>
-	<20121111204305.GA20599@shrek.podlesie.net>
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: [PATCH v5 00/14] New remote-hg helper
+Date: Sun, 11 Nov 2012 22:17:13 +0000
+Message-ID: <20121111221712.GB2774@arachsys.com>
+References: <1351571736-4682-1-git-send-email-felipe.contreras@gmail.com>
+ <20121030102526.GN4891@arachsys.com>
+ <CAMP44s1g8rFGP7UOcvp9BEZ1oiSh3+-gYheciqO8Fmghipot8A@mail.gmail.com>
+ <20121030180021.GX26850@arachsys.com>
+ <CAMP44s1-VOetN+e49UgJtpbpwYN2EBVYBzw5j_KoqXu6sbbaHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Fox <pgf@foxharp.boston.ma.us>, Jeff King <peff@peff.net>,
-	Kalle Olavi Niemitalo <kon@iki.fi>, git@vger.kernel.org
-To: Krzysztof Mazur <krzysiek@podlesie.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 23:10:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 23:17:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXfjE-0002OA-QR
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 23:10:09 +0100
+	id 1TXfqS-0005Ph-UQ
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 23:17:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198Ab2KKWIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 17:08:52 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:48788 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751959Ab2KKWIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 17:08:51 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3Y08Pn0hCXz3hhl6;
-	Sun, 11 Nov 2012 23:08:44 +0100 (CET)
-X-Auth-Info: Z9Sy7x88ugykEaiVM6NH25z6hsjaJrs7HKGqrx1D4kY=
-Received: from igel.home (ppp-93-104-148-16.dynamic.mnet-online.de [93.104.148.16])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3Y08Pm51vczbbcw;
-	Sun, 11 Nov 2012 23:08:44 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 17D63CA2A4; Sun, 11 Nov 2012 23:08:43 +0100 (CET)
-X-Yow: My EARS are GONE!!
-In-Reply-To: <20121111204305.GA20599@shrek.podlesie.net> (Krzysztof Mazur's
-	message of "Sun, 11 Nov 2012 21:43:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752780Ab2KKWRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 17:17:23 -0500
+Received: from alpha.arachsys.com ([91.203.57.7]:52512 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752303Ab2KKWRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 17:17:23 -0500
+Received: from [81.2.114.212] (helo=arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.80)
+	(envelope-from <chris@arachsys.com>)
+	id 1TXfqD-0004VM-RJ; Sun, 11 Nov 2012 22:17:22 +0000
+Content-Disposition: inline
+In-Reply-To: <CAMP44s1-VOetN+e49UgJtpbpwYN2EBVYBzw5j_KoqXu6sbbaHA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209451>
 
-Krzysztof Mazur <krzysiek@podlesie.net> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> That's why I'm proposing in case of SIGQUIT just killing the editor
-> (SIGTERM is sufficient for ed).
->
-> So git will ignore SIGINT, but die on SIGQUIT (and kill editor
-> that ignores SIGQUIT).
+> Implemented now. I'm not handling the 'tip' revision, but most likely
+> it's also the '.' revision. In this case a fake 'master' bookmark will
+> be created to track that revision.
 
-system(3) also ignores SIGQUIT.
+Hi Felipe. Sorry for the slow response, I've been snowed under with work and
+have only just got around to testing your latest version.
 
-Andreas.
+The new remote-hg.track-branches=false option is great and does exactly what
+I was hoping for. For the benefit of the list archives, one natural way to
+use it is
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+  git clone -c remote-hg.track-branches=false hg::foo
+
+when cloning the relevant repositories, if you don't want the setting
+globally for every hg-remote clone.
+
+During testing, I've seen some strange behaviour which I think is caused by
+using the . revision instead of tip:
+
+$ hg init h
+$ hg init h2
+$ ( cd h && touch foo && hg add foo && hg commit -m foo && hg push ../h2 )
+pushing to ../h2
+searching for changes
+adding changesets
+adding manifests
+adding file changes
+added 1 changesets with 1 changes to 1 files
+$ git clone hg::h g
+Cloning into 'g'...
+$ git clone hg::h2 g2
+Cloning into 'g2'...
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
+$
+
+The reason for this is that by default . == null (not tip) in the repo h2
+which we pushed into from h. The hg equivalent of a bare repo typically has a
+null checkout like this. (Actually, the checkout of HEAD seems to break
+whenever . is different from tip, not just when it's null as in this example.)
+
+Apart from this, everything seems solid and works well. Really useful; thanks!
+
+Best wishes,
+
+Chris.
