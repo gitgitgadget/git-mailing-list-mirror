@@ -1,112 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] diff: introduce diff.submodule configuration variable
-Date: Sun, 11 Nov 2012 10:09:22 -0500
-Message-ID: <20121111150922.GA10140@sigill.intra.peff.net>
-References: <1351766630-4837-1-git-send-email-artagnon@gmail.com>
- <1351766630-4837-3-git-send-email-artagnon@gmail.com>
- <20121108205110.GB8376@sigill.intra.peff.net>
- <CALkWK0=zTCXki2c=ugRXE485ps2=OWag7mdzVJW93cnsypwkiA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 16:09:43 2012
+From: Heinrich Schuchardt <xypron.glpk@gmx.de>
+Subject: [PATCH] gitweb: add readme to overview page
+Date: Sun, 11 Nov 2012 16:32:42 +0100
+Message-ID: <1352647962-21910-1-git-send-email-xypron.glpk@gmx.de>
+Cc: xypron.glpk@gmx.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 11 16:33:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXZAL-0001tJ-TW
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 16:09:42 +0100
+	id 1TXZXI-00030Z-Cx
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 16:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753089Ab2KKPJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 10:09:28 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43866 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752577Ab2KKPJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 10:09:27 -0500
-Received: (qmail 32437 invoked by uid 107); 11 Nov 2012 15:10:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 11 Nov 2012 10:10:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Nov 2012 10:09:22 -0500
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=zTCXki2c=ugRXE485ps2=OWag7mdzVJW93cnsypwkiA@mail.gmail.com>
+	id S1753255Ab2KKPdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 10:33:10 -0500
+Received: from mailout-eu.gmx.com ([213.165.64.43]:56630 "HELO
+	mailout-eu.gmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753150Ab2KKPdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 10:33:09 -0500
+Received: (qmail invoked by alias); 11 Nov 2012 15:33:08 -0000
+Received: from xdsl-78-35-188-85.netcologne.de (EHLO family2.heinrich-schuchardt.de) [78.35.188.85]
+  by mail.gmx.com (mp-eu001) with SMTP; 11 Nov 2012 16:33:08 +0100
+X-Authenticated: #41704822
+X-Provags-ID: V01U2FsdGVkX18wt0NFo8UwR2eR8jrg+sdOhRE59Mw/Iba9+cnj45
+	OJ045Yx4fxMa/l
+X-Mailer: git-send-email 1.7.10.4
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209393>
 
-On Sun, Nov 11, 2012 at 08:20:27PM +0530, Ramkumar Ramachandra wrote:
+For repositories it is possible to maintain a README.html which will
+be shown on the summary page. This is not possible for the server
+root.
 
-> >> diff --git a/builtin/diff.c b/builtin/diff.c
-> >> index 9650be2..6d00311 100644
-> >> --- a/builtin/diff.c
-> >> +++ b/builtin/diff.c
-> >> @@ -297,6 +297,10 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
-> >>       DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
-> >>       DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
-> >>
-> >> +     /* Set SUBMODULE_LOG if diff.submodule config var was set */
-> >> +     if (submodule_format_cfg && !strcmp(submodule_format_cfg, "log"))
-> >> +             DIFF_OPT_SET(&rev.diffopt, SUBMODULE_LOG);
-> >> +
-> >
-> > Yuck. Why is this parsing happening in cmd_diff?
-> 
-> Blame Jens- see this thread |
-> http://thread.gmane.org/gmane.comp.version-control.git/206816/focus=206815
+German law requires to provide contact data on the web server. This
+data could easily be entered in the overview page using a README.html.
 
-I don't think that is the right path, as at means that the option can
-only ever affect diff, not other porcelains. I was thinking something
-more like this (completely untested):
+Furthermore it is possible to put the repositories not directly into
+the root directory but into a subdirectory. Here also a README.html
+would be helpful to indicate what the subdirectory is about.
 
-diff --git a/diff.c b/diff.c
-index e89a201..74f4fc6 100644
---- a/diff.c
-+++ b/diff.c
-@@ -37,6 +37,13 @@ static int diff_stat_graph_width;
- static int diff_dirstat_permille_default = 30;
- static struct diff_options default_diff_options;
- 
-+/*
-+ * 0 for "short", 1 for "log". This should probably just be an enum, and
-+ * SUBMODULE_LOG lifted up from being a bit in the options to being its own
-+ * struct member.
-+ */
-+static int diff_submodule_default;
-+
- static char diff_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_RESET,
- 	GIT_COLOR_NORMAL,	/* PLAIN */
-@@ -178,6 +185,19 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "diff.ignoresubmodules"))
- 		handle_ignore_submodules_arg(&default_diff_options, value);
- 
-+	if (!strcmp(var, "diff.submodule")) {
-+		/* XXX this should be factored out from the command-line parser */
-+		if (!value)
-+			return config_error_nonbool(var);
-+		else if (!strcmp(var, "short"))
-+			diff_submodule_default = 0;
-+		else if (!strcmp(var, "log"))
-+			diff_submodule_default = 1;
-+		else
-+			return error("unknown %s value: %s", var, value);
-+		return 0;
-+	}
-+
- 	if (git_color_config(var, value, cb) < 0)
- 		return -1;
- 
-@@ -3193,6 +3213,9 @@ void diff_setup(struct diff_options *options)
- 		options->a_prefix = "a/";
- 		options->b_prefix = "b/";
+The patch introduces README.html functionality for the root directory
+and all subdirectories.
+
+Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
+---
+ gitweb/gitweb.perl |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 10ed9e5..30cd028 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6369,6 +6369,18 @@ sub git_project_list {
  	}
-+
-+	if (diff_submodule_default)
-+		DIFF_OPT_SET(options, SUBMODULE_LOG);
- }
  
- void diff_setup_done(struct diff_options *options)
+ 	git_project_search_form($searchtext, $search_use_regexp);
++    # If XSS prevention is on, we don't include README.html.
++    # TODO: Allow a readme in some safe format.
++	my $path = "/";
++	if (defined $project_filter) {
++	    $path .= $project_filter;
++	}
++    if (!$prevent_xss && -s "$projectroot$path/README.html") {
++        print "<div class=\"title\">readme</div>\n" .
++              "<div class=\"readme\">\n";
++        insert_file("$projectroot$path/README.html");
++        print "\n</div>\n"; # class="readme"
++    }
+ 	git_project_list_body(\@list, $order);
+ 	git_footer_html();
+ }
+-- 
+1.7.10.4
