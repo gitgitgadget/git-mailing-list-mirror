@@ -1,59 +1,64 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Test failures in contrib/remote-helpers
-Date: Sun, 11 Nov 2012 18:18:40 +0530
-Message-ID: <CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com>
-References: <CALkWK0mU5O3Rqznkx-qn8VLFEgsMzOba1i8onSvf8X3FBeTs6g@mail.gmail.com>
- <CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
+Subject: Re: [PATCH] contrib/remote-helpers: setup ui.username in test-hg.sh
+Date: Sun, 11 Nov 2012 18:20:32 +0530
+Message-ID: <CALkWK0kjYDtzS3tk9EurWya+w+aohuzqBC-2sqiuZ6emdXhPyA@mail.gmail.com>
+References: <CALkWK0kguFpA3ExSt7YKtugWq-0FvNQ=QFaKUo6uUjt8+=5mfw@mail.gmail.com>
+ <CAMP44s3cx9EHfM7wEX3zV-MXqX11VusYj8W9cL63mFTUq+_C+Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 13:49:21 2012
+X-From: git-owner@vger.kernel.org Sun Nov 11 13:52:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXWyU-0000mb-Pa
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 13:49:19 +0100
+	id 1TXX1c-0002LM-OY
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 13:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946Ab2KKMtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 07:49:04 -0500
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:37947 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752769Ab2KKMtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 07:49:03 -0500
-Received: by mail-wi0-f172.google.com with SMTP id hm6so1732127wib.1
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 04:49:01 -0800 (PST)
+	id S1753355Ab2KKMwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 07:52:02 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:53004 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753318Ab2KKMux (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 07:50:53 -0500
+Received: by mail-we0-f174.google.com with SMTP id t9so2409406wey.19
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 04:50:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=510z45UiIZ1hoHcncBqXVHCkZrbdlg5y5j4s7JXcOck=;
-        b=KEMf4WNvYTqNunNc5P+KFC9VSAe9/Qd3/G5jDAWcmImLv9HFACg2Z+kgXK/+ySn0FH
-         9nKxjzplApGXLJIP96OUg1V/j+AiZC3hmnjnQG9SCuLw93xZLwAvHi9H5sUcPwW/5Xvi
-         z0sl6Kr7PkQfcUwsPK3FZlqW2PrvARY8GtSGO7tBmo2ewkYoq7uEHM00DjV4Ej3PJmT7
-         /8Rp403MtWpSPcF+aC3spbhfDr7MZ2MF5MuhytsAw/kT40aXe6a2LA10rwILERcqOE1N
-         ZI8U1zLu/7kt8tPCFO+6xTDdTjhe5RcE+w/aPVSXQeoBJ1seAZhMi1zCzikEN30V06si
-         /XBg==
-Received: by 10.180.8.100 with SMTP id q4mr10702349wia.16.1352638141186; Sun,
- 11 Nov 2012 04:49:01 -0800 (PST)
-Received: by 10.217.61.2 with HTTP; Sun, 11 Nov 2012 04:48:40 -0800 (PST)
-In-Reply-To: <CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
+        bh=PF304ShyfyoR+/8UqAiJsDGO8H9ggbCyxUtD5VtvHIs=;
+        b=xPckW8Vcp0fiQf8Yj++3RMAYtShsMRKGEjg4mMaqUsJ2ElW1PnERk/w9BFAfP53db8
+         Ymie/FT6Jo4SFPX90/lDNWoZ5R/tNF3kxWoeyegbnaqB1UGOLOo/Xtkzc6MbYqWxm579
+         9WdjcgCX8j2LFasA33XTtXR99kEIs+TCBJVMzeBwTTnHTBIoFwHvmfsAfbPN5V7zsW3i
+         plmGx4z8P4/u2uWJYyCh05an0MOm0afLB2PaE5X9+ObfrM9fTHn43Kd8VMggnWgBn9+r
+         KyaJ+RGUWWF4hC3CMSFPGx8RvL02BzVf6j6m8DPNhlxskdOZqsNY2bfsF9+zgCe9FIoo
+         N1tA==
+Received: by 10.216.140.33 with SMTP id d33mr6695803wej.68.1352638252402; Sun,
+ 11 Nov 2012 04:50:52 -0800 (PST)
+Received: by 10.217.61.2 with HTTP; Sun, 11 Nov 2012 04:50:32 -0800 (PST)
+In-Reply-To: <CAMP44s3cx9EHfM7wEX3zV-MXqX11VusYj8W9cL63mFTUq+_C+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209350>
 
 Felipe Contreras wrote:
-> On Sun, Nov 11, 2012 at 11:32 AM, Ramkumar Ramachandra
+> On Sun, Nov 11, 2012 at 11:41 AM, Ramkumar Ramachandra
 > <artagnon@gmail.com> wrote:
->> I'm experiencing test failures in contrib/remote-helpers.
+>> test-hg.sh forgets to set ui.username, which is required for `hg
+>> commit`.  Fix this.
 >
-> Which are your versions of hg, and bzr?
+> Hmm, I get 'no username found, using 'felipec@nysa' instead', but
+> everything works fine.
 
-Mercurial Distributed SCM (version 1.9.1)
-Bazaar (bzr) 2.4.1
+I get:
+
+  abort: no username supplied (see "hg help config")
+
+And the test aborts.
 
 Ram
