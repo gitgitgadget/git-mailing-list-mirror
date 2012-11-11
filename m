@@ -1,105 +1,98 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Reviews on mailing-list
-Date: Sun, 11 Nov 2012 13:14:43 +0100
-Message-ID: <CAMP44s2P-nhAGgj9nuJ3cKqb6+enAthwiUNS8QTZn8MP1poJ2g@mail.gmail.com>
+Date: Sun, 11 Nov 2012 13:24:14 +0100
+Message-ID: <CAMP44s2GF03sKDA141d_5zY0tTDpBKqyb1hqoBmBJBbod-FL7w@mail.gmail.com>
 References: <CA+ZXwZOnZZyk_KWmLLLNChWb1R_Av1s5jM4PsLFWKaG8BB+uXQ@mail.gmail.com>
 	<CAMP44s2AvaAs-dn_eoSFWoLHBQk5QrrV=zYTOpRi2nEywoua4w@mail.gmail.com>
-	<CACnwZYekU0CYnqQT8L2siJbUsn=T9qowgth94TWc8KN472Ziag@mail.gmail.com>
+	<CA+ZXwZO8tpGi7_njbFx6w2ZAWoySVb2Bcc+DSupLenKrNAGV_A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Deniz_T=C3=BCrkoglu?= <deniz@spotify.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Shawn Pearce <sop@google.com>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 13:14:59 2012
+To: =?UTF-8?Q?Deniz_T=C3=BCrkoglu?= <deniz@spotify.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 13:24:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXWRG-00075Y-EL
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 13:14:58 +0100
+	id 1TXWaT-00044R-T9
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 13:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542Ab2KKMOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 07:14:44 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57342 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751456Ab2KKMOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 07:14:44 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so5408665obb.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 04:14:43 -0800 (PST)
+	id S1752723Ab2KKMYQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2012 07:24:16 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:44023 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752538Ab2KKMYP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2012 07:24:15 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so5434428oag.19
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 04:24:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=czgFc0hqXf1LLbkUfetDfSh99gHr71xJNQFsgJo5jJg=;
-        b=wr4QjZpagRfauF1//mPmE2ihrKhkWAqkmQVQW4wnoYjwt3iALEEdJsmoWsDO22RYJ1
-         ZN5a4DitELJXSN5iFC/mRe4A/t2ZajjAHvUmcbn2jcI6DTM70bLGIyauPR0RwMB6SMMA
-         inaUERPvSxmkbr47XTMZi5ZCslC1Vee6KriaM4+q+M38CM2kaWCvFMOjrIvdEOqgHZfw
-         gQExK+S0CFEYgnRAnGG731tE2v8eFwijKgU2xNJSVriXJNv72OLZP2VqshHYnjaVU6yV
-         tqni0774Og3kakwHhk8FSBtNcwm6W/Xesmu7dsVghoYLo800ynVBvKId5WXiviSMHfK+
-         Q/8w==
-Received: by 10.182.52.105 with SMTP id s9mr12920669obo.25.1352636083545; Sun,
- 11 Nov 2012 04:14:43 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 04:14:43 -0800 (PST)
-In-Reply-To: <CACnwZYekU0CYnqQT8L2siJbUsn=T9qowgth94TWc8KN472Ziag@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=SITyjstfLEr2zpowi/SeBDtB2nyw4wF27CoHViRcnhI=;
+        b=M8pdh3hkxz8U70vElCTgPLvpLG+8Opci96w21jZx6H0UEOSFXKr/6LuMUn7qnTJHQg
+         fBQbU/AnBgUj3Mv3hqFW/+/bqrvU42Dyr1cm2FXoXFiFuMUBYqKh0xaZcYPWK0peWsGs
+         aO19ZZ/RDyLV/PWwSYHI2JPC82lIE6FQwjTObTOPfsPU4HYEN6OfYoHgCVuwjMjU30rE
+         avGW1zy1TH5mkiDx8AuUHTu+5efb+32VLUl1zbkSMlyZXe/MgUL6v3DGuGwEqvpeau67
+         x7b4lOrqwX6FyFpwpke+y4zDpbiVyerLyT7ogDgQIuKpcldbhQhqGbwqQibZtwVk4Mri
+         qFoQ==
+Received: by 10.60.31.241 with SMTP id d17mr12115662oei.107.1352636654602;
+ Sun, 11 Nov 2012 04:24:14 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 04:24:14 -0800 (PST)
+In-Reply-To: <CA+ZXwZO8tpGi7_njbFx6w2ZAWoySVb2Bcc+DSupLenKrNAGV_A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209346>
 
-On Sun, Nov 11, 2012 at 2:13 AM, Thiago Farina <tfransosi@gmail.com> wrote:
-> On Sat, Nov 10, 2012 at 9:40 PM, Felipe Contreras
-
+On Sun, Nov 11, 2012 at 2:28 AM, Deniz T=C3=BCrkoglu <deniz@spotify.com=
+> wrote:
+> On Sat, Nov 10, 2012 at 3:40 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Sun, Nov 11, 2012 at 12:19 AM, Deniz T=C3=BCrkoglu <deniz@spotify=
+=2Ecom> wrote:
+>>
+>>> This is my first mail to the git mailing list. I have been followin=
+g
+>>> the list for some time now and I would like to suggest moving the
+>>> reviews out of the mailing list, for example to a gerrit instance, =
+I
+>>> believe it would improve the commits and the mailing list. I have a
+>>> filter on 'PATCH', but I feel I miss some of the discussion, and
+>>> things that I would be interested in.
+>>>
+>>> I have spoken to Shawn Pearce (gerrit project lead, google) and he
+>>> said he is OK with hosting the gerrit instance.
+>>>
+>>> I would like to hear your thoughts on this.
+>>
 >> Personally I think reviews on the mailing list is far superior than
 >> any other review methods. I've even blogged about it and all the
 >> reasons[1]. Gerrit is better than bugzilla, but it still requires a
 >> web browser, and logging in.
->>
-> Requiring a web browser is a huge requirement, ham??
+>
+> I disagree that the current approach is optimal. Bugzilla is a
+> bug-tracker and is not meant to be used for reviews. I believe in
+> using the right tool for the right job. An e-mail should be concise
+> and to the point, in this case only contain the discussion. This will
+> help it to reach a wider audience and be more useful when people
+> stumble upon it through a google search.
 
-Yes. Today people can use any mail interface: web, console-based,
-graphical. They can use Gmail clients in their phone, or IMAP, or
-whatever.
+I don't understand what you are saying. If you google 'git reviews on
+mailing lit', you will find results like this:
 
-Requiring everyone to use a web browser would limit the amount of ways
-people can review patches. Also, not everyone has javascript enabled
-in their browser (I assume Gerrit needs that).
+http://article.gmane.org/gmane.comp.version-control.git/209313
 
-> How come that can
-> be an impediment to move forward way of this awkward way of reviewing
-> patches through email?
+You don't get any patches because you didn't search for patches, and
+either way Google would not filter out the results from gerrit either.
+=46or example: googing 'cyanogenmod "Remove tabs from GNexusParts" will
+throw:
 
-It's not awkward, it's the most sensible way.
+http://review.cyanogenmod.org/
 
-You just replied to my mail the same way I would reply to a patch.
-
-> Switching to Gerrit would mean everyone would
-> be using the same tool instead of anyone using its own email client
-> (gmail, mutt, thunderbird, whatever...)
-
-Yes, that's bad.
-
-> and having to figure out git
-> format-patch, git send-email (--reply-to where?).
-
-No need to figure anything.
-
-% git config sendemail.to git@vger.kernel.org
-% git send-email @{upstream}..
-
-Done.
-
-> There are a lot of issues of having to use email for reviewing patches
-> that I think Gerrit is a superior alternative.
-
-There are no issues. It works for Linux, qemu, libav, ffmpeg, git, and
-many other projects.
-
-> And many people are arguing for it!
-
-Nope, they are not.
-
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
