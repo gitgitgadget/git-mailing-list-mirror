@@ -1,130 +1,108 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/3] submodule: display summary header in bold
-Date: Sun, 11 Nov 2012 22:29:06 +0530
-Message-ID: <1352653146-3932-4-git-send-email-artagnon@gmail.com>
-References: <1352653146-3932-1-git-send-email-artagnon@gmail.com>
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 11 17:59:42 2012
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: RFD: fast-import is picky with author names (and maybe it should
+ - but how much so?)
+Date: Sun, 11 Nov 2012 12:00:44 -0500
+Message-ID: <509FD9BC.7050204@gmail.com>
+References: <5093DC0C.5000603@drmicha.warpmail.net>	<20121108200919.GP15560@sigill.intra.peff.net>	<509CCCBC.8010102@drmicha.warpmail.net>	<CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>	<509E8EB2.7040509@drmicha.warpmail.net>	<CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>	<509EAA45.8020005@gmail.com> <CAMP44s1dsEU=E8tdgMYxWFyFw+F03bstdb5o7Ww_-RCQPd3R0w@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 18:01:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXasn-00058n-1s
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 17:59:41 +0100
+	id 1TXauB-0005q9-8X
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 18:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187Ab2KKQ7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 11:59:25 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:60413 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753084Ab2KKQ7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 11:59:23 -0500
-Received: by mail-pa0-f46.google.com with SMTP id hz1so3774268pad.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 08:59:23 -0800 (PST)
+	id S1753146Ab2KKRAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 12:00:54 -0500
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:45871 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693Ab2KKRAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 12:00:53 -0500
+Received: by mail-gh0-f174.google.com with SMTP id g15so1085384ghb.19
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 09:00:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Huc6x3oqxbZrXG2Rke+s6fiapa1a+Aljl5fAFIQFIbk=;
-        b=bX7VqNMYscy4XdpaXwEPKq/LUMGCCqDQp2G5p3ni8n0Ozktnr8//lSTGL4pwwa5e+m
-         rCxjqatiR3YMeBITt6qvZa3/P8IL3F+EHF6vmvMxs44geqyi3NBfKXKbOTpkxsjLqHVI
-         s+aTrSXCKjsI+m5HlHQ2hBsswlLw3yTF+HplbaQ8R78ARai8X9XuEcL00JogE3Zyb3+l
-         B/378i46VqZJRzcy3ugY0he4VTi2xtha8TyiGHmYeoiJbIOKhcYctaRQlmMHJyZ17Yxx
-         whVPpQ+JIrCiqUdX2T+l1UbL8aMc3tNtWvZH6z9/ajKTGuvNZdp1mmIOE6m3yfvCOSDo
-         wCjA==
-Received: by 10.68.135.42 with SMTP id pp10mr51254430pbb.159.1352653163274;
-        Sun, 11 Nov 2012 08:59:23 -0800 (PST)
-Received: from localhost.localdomain ([49.206.137.123])
-        by mx.google.com with ESMTPS id s1sm2824079paz.0.2012.11.11.08.59.20
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=YcMIKFRvsqkbryg3xrm8cp7h6okn5Vv9sdyiR5/lcqE=;
+        b=y72zcZ0BhcIFgqwVf/cTK+pC/JVHTQ/8LV0/DvLZXdwjE4FJNPFuvS8f1zWdSndpwf
+         aMmJqNfw0FdZ0s1Uc11DbelqR+ovLpoOMDl65vEgI0nRzVtjQI2Aq4K2LWLAEVvHMgbQ
+         PWy2V2LzOkOvcw5ngqO9zyX9r3YVTVxXzY/zBbIZabgpSWQN+/V6jNlnlA66IqvKtXjE
+         e7aHUxhqMqAKixAR4oNKOpkmEl8cE9hWHYNP1eVYOoa8bIBVWzjhTe5xphaSPg1wQI/h
+         m+bDFFwtGoFTkDdNO3Y2aJbXWsPwvPm+qVyInVoF2+jEpNZQNIFkAFcMzjVoKXDXpAl9
+         sF0Q==
+Received: by 10.236.143.4 with SMTP id k4mr17479223yhj.111.1352653250595;
+        Sun, 11 Nov 2012 09:00:50 -0800 (PST)
+Received: from [10.0.1.132] ([97.104.180.2])
+        by mx.google.com with ESMTPS id g6sm3869426ani.5.2012.11.11.09.00.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Nov 2012 08:59:22 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
-In-Reply-To: <1352653146-3932-1-git-send-email-artagnon@gmail.com>
+        Sun, 11 Nov 2012 09:00:50 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20121027 Icedove/3.0.11
+In-Reply-To: <CAMP44s1dsEU=E8tdgMYxWFyFw+F03bstdb5o7Ww_-RCQPd3R0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209413>
 
-Currently, 'git diff --submodule' displays output with a bold diff
-header for non-submodules.  So this part is in bold:
+On 11/11/2012 07:41 AM, Felipe Contreras wrote:
+> On Sat, Nov 10, 2012 at 8:25 PM, A Large Angry SCM<gitzilla@gmail.com>  wrote:
+>> On 11/10/2012 01:43 PM, Felipe Contreras wrote:
+>
+>>> So, the options are:
+>>>
+>>> a) Leave the name conversion to the export tools, and when they miss
+>>> some weird corner case, like 'Author<email', let the user face the
+>>> consequences, perhaps after an hour of the process.
+>>>
+>>> We know there are sources of data that don't have git-formatted author
+>>> names, so we know every tool out there must do this checking.
+>>>
+>>> In addition to that, let the export tool decide what to do when one of
+>>> these bad names appear, which in many cases probably means do nothing,
+>>> so the user would not even see that such a bad name was there, which
+>>> might not be what they want.
+>>>
+>>> b) Do the name conversion in fast-import itself, perhaps optionally,
+>>> so if a tool missed some weird corner case, the user does not have to
+>>> face the consequences.
+>>>
+>>> The tool writers don't have to worry about this, so we would not have
+>>> tools out there doing a half-assed job of this.
+>>>
+>>> And what happens when such bad names end up being consistent: warning,
+>>> a scaffold mapping of bad names, etc.
+>>>
+>>>
+>>> One is bad for the users, and the tools writers, only disadvantages,
+>>> the other is good for the users and the tools writers, only
+>>> advantages.
+>>>
+>>
+>> c) Do the name conversion, and whatever other cleanup and manipulations
+>> you're interesting in, in a filter between the exporter and git-fast-import.
+>
+> Such a filter would probably be quite complicated, and would decrease
+> performance.
+>
 
-    diff --git a/file1 b/file1
-    index 30b2f6c..2638038 100644
-    --- a/file1
-    +++ b/file1
+Really?
 
-For submodules, the header looks like this:
+The fast import stream protocol is pretty simple. All the filter really 
+needs to do is pass through everything that isn't a 'commit' command. 
+And for the 'commit' command, it only needs to do something with the 
+'author' and 'committer' lines; passing through everything else.
 
-    Submodule submodule1 012b072..248d0fd:
-
-Unfortunately, it's easy to miss in the output because it's not bold.
-Change this.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- diff.c      |    2 +-
- submodule.c |    8 ++++----
- submodule.h |    2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index b486070..51c0d6c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2267,7 +2267,7 @@ static void builtin_diff(const char *name_a,
- 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
- 		show_submodule_summary(o->file, one ? one->path : two->path,
- 				one->sha1, two->sha1, two->dirty_submodule,
--				del, add, reset);
-+				set, del, add, reset);
- 		return;
- 	}
- 
-diff --git a/submodule.c b/submodule.c
-index e3e0b45..c10182e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -258,7 +258,7 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- 
- void show_submodule_summary(FILE *f, const char *path,
- 		unsigned char one[20], unsigned char two[20],
--		unsigned dirty_submodule,
-+		unsigned dirty_submodule, const char *set,
- 		const char *del, const char *add, const char *reset)
- {
- 	struct rev_info rev;
-@@ -292,15 +292,15 @@ void show_submodule_summary(FILE *f, const char *path,
- 		return;
- 	}
- 
--	strbuf_addf(&sb, "Submodule %s %s..", path,
-+	strbuf_addf(&sb, "%sSubmodule %s %s..", set, path,
- 			find_unique_abbrev(one, DEFAULT_ABBREV));
- 	if (!fast_backward && !fast_forward)
- 		strbuf_addch(&sb, '.');
- 	strbuf_addf(&sb, "%s", find_unique_abbrev(two, DEFAULT_ABBREV));
- 	if (message)
--		strbuf_addf(&sb, " %s\n", message);
-+		strbuf_addf(&sb, " %s%s\n", message, reset);
- 	else
--		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
-+		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
- 	fwrite(sb.buf, sb.len, 1, f);
- 
- 	if (!message) {
-diff --git a/submodule.h b/submodule.h
-index f2e8271..997fd06 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -20,7 +20,7 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
- int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- void show_submodule_summary(FILE *f, const char *path,
- 		unsigned char one[20], unsigned char two[20],
--		unsigned dirty_submodule,
-+		unsigned dirty_submodule, const char *set,
- 		const char *del, const char *add, const char *reset);
- void set_config_fetch_recurse_submodules(int value);
- void check_for_new_submodule_commits(unsigned char new_sha1[20]);
--- 
-1.7.8.1.362.g5d6df.dirty
+I agree that an additional filter _may_ decrease performance somewhat if 
+you are already CPU constrained. But I suspect that the effect would be 
+negligible compared to the all of the SHA-1 calculations.
