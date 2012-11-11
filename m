@@ -1,58 +1,119 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/5] run-command: drop silent_exec_failure arg from wait_or_whine
-Date: Sun, 11 Nov 2012 19:13:00 +0100
-Message-ID: <CAMP44s3_CDHhcEe_ponW__=TdG_c1DQyLU1VG4UCzOC=MxW9mQ@mail.gmail.com>
-References: <20121111163100.GB13188@sigill.intra.peff.net>
-	<20121111165544.GC19850@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFD: fast-import is picky with author names (and maybe it should
+ - but how much so?)
+Date: Sun, 11 Nov 2012 13:14:06 -0500
+Message-ID: <20121111181406.GA21654@sigill.intra.peff.net>
+References: <20121108200919.GP15560@sigill.intra.peff.net>
+ <509CCCBC.8010102@drmicha.warpmail.net>
+ <CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>
+ <509E8EB2.7040509@drmicha.warpmail.net>
+ <CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
+ <509EAA45.8020005@gmail.com>
+ <CAMP44s1dsEU=E8tdgMYxWFyFw+F03bstdb5o7Ww_-RCQPd3R0w@mail.gmail.com>
+ <509FD9BC.7050204@gmail.com>
+ <20121111171518.GA20115@sigill.intra.peff.net>
+ <CAMP44s1mny-fBCxywM0V=AgEoxV5EZdDWc_0NK3gepcKf32nww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Kalle Olavi Niemitalo <kon@iki.fi>,
-	Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 19:13:17 2012
+Content-Type: text/plain; charset=utf-8
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 19:14:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXc20-0002NA-4x
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 19:13:16 +0100
+	id 1TXc36-0002t9-JJ
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 19:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333Ab2KKSNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 13:13:01 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:52702 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753231Ab2KKSNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 13:13:01 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so5581541oag.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 10:13:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=MD7M8pEDxdNmgm07qisAEyefXe7mJbI2qJNAVAlrXLY=;
-        b=pI2JBXHXSZoaB/1fx0HgES0auSqfI3E39ZjxyBTIWmfv0Eu2nW0n4lKNCT0C95ukpv
-         SL8MddJ2iwNmBdqoUIxOlVpwiz3VzwVhtmk+YuzImzkqOfyz8WFdm6JgLQJok6V93Gt0
-         ivJ84MYpMwDoUH7EI79qIeSVjjTGDK5Ua0I1dLVby9uh2Ox1q1z++eaTDz6+7p9P9Fso
-         YDinORE+WDX0iXT8/NZHuhHaXES0s7bOv17a9mHtg9rX34rRWslbkSnGIUs1v5uKmf8/
-         QMa/s6ZgVDOeLBaAMrwR+YB4s8ukHlCofZWKfx1BCGiPScdDcxZOHC3Ozle7HRuZiDRB
-         hp6g==
-Received: by 10.60.32.19 with SMTP id e19mr13080023oei.9.1352657580430; Sun,
- 11 Nov 2012 10:13:00 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 10:13:00 -0800 (PST)
-In-Reply-To: <20121111165544.GC19850@sigill.intra.peff.net>
+	id S1753335Ab2KKSOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 13:14:10 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44064 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753005Ab2KKSOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 13:14:09 -0500
+Received: (qmail 3206 invoked by uid 107); 11 Nov 2012 18:14:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 11 Nov 2012 13:14:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Nov 2012 13:14:06 -0500
+Content-Disposition: inline
+In-Reply-To: <CAMP44s1mny-fBCxywM0V=AgEoxV5EZdDWc_0NK3gepcKf32nww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209434>
 
-On Sun, Nov 11, 2012 at 5:55 PM, Jeff King <peff@peff.net> wrote:
-> We do not actually use this parameter; instead we complain
-> from the child itself (for fork/exec) or from start_command
-> (if we are using spawn on Windows).
+On Sun, Nov 11, 2012 at 06:45:32PM +0100, Felipe Contreras wrote:
 
-FWIW I noticed the same while looking at that code. Looks good to me.
+> > If there is a standard filter, then what is the advantage in doing it as
+> > a pipe? Why not just teach fast-import the same trick (and possibly make
+> > it optional)? That would be simpler, more efficient, and it would make
+> > it easier for remote helpers to turn it on (they use a command-line
+> > switch rather than setting up an extra process).
+> 
+> Right, but instead of a command-line switch it probably should be
+> enabled on the stream:
+> 
+>   feature clean-authors
+> 
+> Or something.
 
--- 
-Felipe Contreras
+Yeah, I was thinking it would need a feature switch to the remote helper
+to turn on the command-line, but I forgot that fast-import can take
+feature lines directly.
+
+> > We can clean up and normalize
+> > things like whitespace (and we probably should if we do not do so
+> > already). But beyond that, we have no context about the name; only the
+> > exporter has that.
+> 
+> There is no context.
+
+There may not be a lot, but there is some:
+
+> These are exactly the same questions every exporter must answer. And
+> there's no answer, because the field is not a git author, it's a
+> mercurial user, or a bazaar committer, or who knows what.
+
+The exporter knows that the field is a mercurial user (or whatever).
+Fast-import does not even know that, and cannot apply any rules or
+heuristics about the format of a mercurial user string, what is common
+in the mercurial world, etc. It may not be a lot of context in some
+cases (I do not know anything about mercurial's formats, so I can't say
+what knowledge is available). But at least the exporter has a chance at
+domain-specific interpretation of the string. Fast-import has no chance,
+because it does not know the domain.
+
+I've snipped the rest of your argument, which is basically that
+mercurial does not have any context at all, and knowing that it is a
+mercurial author is useless.  I am not sure that is true; even knowing
+that it is a free-form field versus something structured (e.g., we know
+CVS authors are usernames on the server server) is useful.
+
+But I would agree there are probably multiple systems that are like
+mercurial in that the author field is usually something like "name
+<email>", but may be arbitrary text (I assume bzr is the same way, but
+you would know better than me).  So it may make sense to have some stock
+algorithm to try to convert arbitrary almost-name-and-email text into
+name and email to reduce duplication between exporters, but:
+
+  1. It must be turned on explicitly by the exporter, since we do not
+     want to munge more structured input from clueful exporters.
+
+  2. The exporter should only turn it on after replacing its own munging
+     (e.g., it shouldn't be adding junk like <none@none>; fast-import
+     would need to receive as pristine an input as possible).
+
+  3. Exporters should not use it if they have any broken-down
+     representation at all. Even knowing that the first half is a human
+     name and the second half is something else would give it a better
+     shot at cleaning than fast-import would get.
+
+     Alternatively, the feature could enable the exporter to pass a more
+     structured ident to git.
+
+-Peff
