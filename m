@@ -1,113 +1,86 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: t9350-fast-export.sh broken on peff/pu under Mac OS X
-Date: Sun, 11 Nov 2012 01:58:33 +0100
-Message-ID: <CAMP44s3SSjDqA9cvG9T=-oVH0ADndbxi1MkWF6wR9gxcoCi_xg@mail.gmail.com>
-References: <509E66B0.3040308@web.de>
-	<CAMP44s2sKL4CJ_wcM7U9mYPX6bkaQA8hgDM6Z0QEj2TACh-8DQ@mail.gmail.com>
-	<7v4nkxozep.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0dQ8EeCkHo8Lh3odG3qQoeLFModec+7doLeTHnZoJ_pg@mail.gmail.com>
-	<509EEF09.6060109@gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: Reviews on mailing-list
+Date: Sat, 10 Nov 2012 23:13:35 -0200
+Message-ID: <CACnwZYekU0CYnqQT8L2siJbUsn=T9qowgth94TWc8KN472Ziag@mail.gmail.com>
+References: <CA+ZXwZOnZZyk_KWmLLLNChWb1R_Av1s5jM4PsLFWKaG8BB+uXQ@mail.gmail.com>
+	<CAMP44s2AvaAs-dn_eoSFWoLHBQk5QrrV=zYTOpRi2nEywoua4w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 01:58:49 2012
+Cc: =?UTF-8?Q?Deniz_T=C3=BCrkoglu?= <deniz@spotify.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <sop@google.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 02:18:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXLsv-0007MQ-5O
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 01:58:49 +0100
+	id 1TXMBe-00031L-Qb
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 02:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834Ab2KKA6e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 19:58:34 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:39721 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578Ab2KKA6d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 19:58:33 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so5213949obb.19
-        for <git@vger.kernel.org>; Sat, 10 Nov 2012 16:58:33 -0800 (PST)
+	id S1751590Ab2KKBNh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2012 20:13:37 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:39279 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751344Ab2KKBNg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2012 20:13:36 -0500
+Received: by mail-la0-f46.google.com with SMTP id h6so3806074lag.19
+        for <git@vger.kernel.org>; Sat, 10 Nov 2012 17:13:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=Cxaxr2pk7oOieGxNOkjmV/ZaECroSgVrD29FXIWt4Oc=;
-        b=iTVDtR0w0umuM+fWn/BPINSP+ySpEzSy72qRaDGpFcSk9LqzngZIptEh0jlLZ2gcd0
-         cO03bnksHjACHBUIJok6jpvZbmG3NrTHkNL+hwI78g9v/p4lE+Tr7nQfsaJmbKgTNLgE
-         JiZI7mdj5JdGCoa8DyFEB2q+6u1brMmQCM7k6z5Fyj9127ZWhT3TmA166ZCtD4kZPTkk
-         mmXmYHoZiDWHVfUv21GsqK4oYx6DoL8Kz/rDsExADDzlyoBD92JmbWzWej5aA2bNecwB
-         MQnNrIQJb+30PXHBz9/3WFUzmBVChFztOH2UTVk/CHSR9PxX1Er7OmqjIp9HeNrV7+XY
-         Y3mg==
-Received: by 10.182.116.6 with SMTP id js6mr11913530obb.82.1352595513127; Sat,
- 10 Nov 2012 16:58:33 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sat, 10 Nov 2012 16:58:33 -0800 (PST)
-In-Reply-To: <509EEF09.6060109@gmail.com>
+        bh=TiZCjvF5uzWL3ZkrUFRRJ4qI1/vVI8itJSVYzZMDsEU=;
+        b=KJJGQu3+wrm9AqXmQFEPe3w4GXXS+7QrWM44CWsFMZ4+kHPNCGyUPDtyxdO7Ax+puE
+         CGKoyHkCTD9jIUNDeCS+luqBFeLxwJ0eCuNuYS/RK57EO1EmCT6gviwTtu+nMoIbFEq6
+         2dVgkG32gSSEfumbXda67J+lhQZCWBNNnKGUi5HjUD9tWSz5VjI7niXR8NSrbqI6xtBZ
+         A1epYWssHkJ9UcXGtC6K/VeqNMjsKRxTIrPPH5O8GKkPDzTtjs4eCqGm9cZIBERymLra
+         +2ZmrFZH+W8v6H3rik53+vPSsabt2Xw3hPbDGnwJqpFvNS8A2FQshcqMvlaReicJypf4
+         vSFQ==
+Received: by 10.112.38.163 with SMTP id h3mr6171488lbk.134.1352596415340; Sat,
+ 10 Nov 2012 17:13:35 -0800 (PST)
+Received: by 10.112.138.104 with HTTP; Sat, 10 Nov 2012 17:13:35 -0800 (PST)
+In-Reply-To: <CAMP44s2AvaAs-dn_eoSFWoLHBQk5QrrV=zYTOpRi2nEywoua4w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209319>
 
-On Sun, Nov 11, 2012 at 1:19 AM, Stefano Lattarini
-<stefano.lattarini@gmail.com> wrote:
-> On 11/11/2012 12:11 AM, Felipe Contreras wrote:
->> On Sat, Nov 10, 2012 at 11:39 PM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> On Sat, Nov 10, 2012 at 3:37 PM, Torsten B=C3=B6gershausen <tboegi=
-@web.de> wrote:
->>>>> The short version:
->>>>> echo -n doesn't seem to be portable.
->>>>> The following works for me:
->>>>
->>>> Right, I was supposed to change that to:
->>>>
->>>>   true > marks-cur &&
->>>
->>> Please make it like so:
->>>
->>>         >marks-cur &&
->>>
->>> No command is necessary when creating an empty file or truncating a=
-n
->>> existing file to empty, and no SP between redirection and its targe=
-t.
+On Sat, Nov 10, 2012 at 9:40 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Sun, Nov 11, 2012 at 12:19 AM, Deniz T=C3=BCrkoglu <deniz@spotify.=
+com> wrote:
+>
+>> This is my first mail to the git mailing list. I have been following
+>> the list for some time now and I would like to suggest moving the
+>> reviews out of the mailing list, for example to a gerrit instance, I
+>> believe it would improve the commits and the mailing list. I have a
+>> filter on 'PATCH', but I feel I miss some of the discussion, and
+>> things that I would be interested in.
 >>
->> That hangs on zsh (presumably waiting for stdin).
+>> I have spoken to Shawn Pearce (gerrit project lead, google) and he
+>> said he is OK with hosting the gerrit instance.
 >>
-> Unless you set:
+>> I would like to hear your thoughts on this.
 >
->     NULLCMD=3D:
+> Personally I think reviews on the mailing list is far superior than
+> any other review methods. I've even blogged about it and all the
+> reasons[1]. Gerrit is better than bugzilla, but it still requires a
+> web browser, and logging in.
 >
-> early in your test script.
->
-> Or, to be extra-safe, you could steal this initialization code from
-> autoconf:
->
->     # Be more Bourne compatible.
->     if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; =
-then
->       emulate sh
->       NULLCMD=3D:
->       setopt NO_GLOB_SUBST
->       # Pre-4.2 versions of Zsh do word splitting on ${1+"$@"}, which
->       # is contrary to our usage.  Disable this feature.
->       alias -g '${1+"$@"}'=3D'"$@"'
+Requiring a web browser is a huge requirement, ham?? How come that can
+be an impediment to move forward way of this awkward way of reviewing
+patches through email? Switching to Gerrit would mean everyone would
+be using the same tool instead of anyone using its own email client
+(gmail, mutt, thunderbird, whatever...) and having to figure out git
+format-patch, git send-email (--reply-to where?).
 
-It doesn't seem like zsh listens to that variable in sh mode:
+There are a lot of issues of having to use email for reviewing patches
+that I think Gerrit is a superior alternative.
 
-% zsh -c 'emulate sh; NULLCMD=3Dfoobar; > content'
+And many people are arguing for it!
 
-And it doesn't seem like NO_GLOB_SUBST is needed any more.
-
-I think it doesn't hurt to do 'true > marks-cur', but whatever.
-
-Cheers.
-
---=20
-=46elipe Contreras
+Let's move on...
