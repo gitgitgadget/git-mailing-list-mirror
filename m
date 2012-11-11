@@ -1,90 +1,83 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: RFD: fast-import is picky with author names (and maybe it should
- - but how much so?)
-Date: Sun, 11 Nov 2012 18:49:49 +0100
-Message-ID: <CAMP44s2ec-m0Jta2bQeg2McKAFCR6MSSP4nQx3-T=2W=3xUeyw@mail.gmail.com>
-References: <5093DC0C.5000603@drmicha.warpmail.net>
-	<20121108200919.GP15560@sigill.intra.peff.net>
-	<509CCCBC.8010102@drmicha.warpmail.net>
-	<CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>
-	<509E8EB2.7040509@drmicha.warpmail.net>
-	<CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
-	<509EAA45.8020005@gmail.com>
-	<CAMP44s1dsEU=E8tdgMYxWFyFw+F03bstdb5o7Ww_-RCQPd3R0w@mail.gmail.com>
-	<509FD9BC.7050204@gmail.com>
-	<CAMP44s1pWm_n-SwB5Bi8UxM-oRG=4dGXq7jVKx_E1rcoRaXaHw@mail.gmail.com>
-	<509FE2EA.3020407@gmail.com>
+Subject: Re: [PATCH v5 01/15] fast-export: avoid importing blob marks
+Date: Sun, 11 Nov 2012 18:53:05 +0100
+Message-ID: <CAMP44s1BKD8NO5QSg2G_H6OM2vV7=h9T7r14zPVfZ7+3ddXFBA@mail.gmail.com>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
+	<1352642392-28387-2-git-send-email-felipe.contreras@gmail.com>
+	<509FD425.5030702@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Sun Nov 11 18:50:04 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Nov 11 18:53:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXbfX-0000x6-UW
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 18:50:04 +0100
+	id 1TXbik-0002Ld-A5
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 18:53:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782Ab2KKRtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 12:49:50 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:45139 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752048Ab2KKRtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 12:49:50 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so5547284obb.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 09:49:49 -0800 (PST)
+	id S1752932Ab2KKRxI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2012 12:53:08 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:44424 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752754Ab2KKRxG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2012 12:53:06 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so5572250oag.19
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 09:53:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=21hredvZdewcSlUoG0jn9mj/GKekxjbiuCUA+l7IFP8=;
-        b=R+m3jwvzwImdeDV184pOhuieWXZQEsh97eKBiurI5ZW3obhFD/1kURX45q8ZeGs3bZ
-         VSlilJHnZPXb/zvcTAEAGsCZkeYc7ewvT1glLVzREed2vmIPJh2kmeE8KAL2RnD6Mx7N
-         vm+EvqfCU1EUxrpzaEECAiWWNj4CI4Gj5ieRY9CBay8867VQti/9ilykJmhMvfiZ0lbs
-         1/FobdZQsZHB+V7ZTxXzgzmqmd3izT+y96GOwdY4Bnc8dt3T/ZUsxwW8mPKRjmzUBSQO
-         vEpJl6bQYTgXZWLDDDhZy6B5zcZitilN0qsNj+pdIgqtai9qAGYcu6wVgzWIbk/g6Nrz
-         EqgQ==
-Received: by 10.182.116.6 with SMTP id js6mr13248153obb.82.1352656189524; Sun,
- 11 Nov 2012 09:49:49 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 09:49:49 -0800 (PST)
-In-Reply-To: <509FE2EA.3020407@gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=6kvDd2HB5ypAIaBlLhU14ReBzpJiLcXY7tlsJbAk8x8=;
+        b=OrcAMAozkqZcnHJnS6h2QZAS+FKJ7PI8DC93bexPYkVJlLj1mIT6AdYKK0e9QbmHT6
+         ZKwdgtuqGDzF7Uh5Xb33X8fLfEucQUbt/vMSgXXF2LGhxWZctU9eNPjB4JNqVqEG8iAA
+         WJLbyGB66JxbC+gBO81yxF6jCs9OrlKdHYGouxwdxKfJxDTCPkWVZMc+Iri6M7ImMHPX
+         MUmCeXdvN4QnkqHU78OF2X1yUfLoy3MHp1nf5w1FnQeip1eiVsnwi/rkPu5GV9yu0TfQ
+         9BhGSo6esbOOXNcyEcRkClamhJ4qm00jQnoWgUlzORsptCKZBg1kUjpB/cHQkAPA1z2+
+         T4nQ==
+Received: by 10.182.52.105 with SMTP id s9mr13478771obo.25.1352656385603; Sun,
+ 11 Nov 2012 09:53:05 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 09:53:05 -0800 (PST)
+In-Reply-To: <509FD425.5030702@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209429>
 
-On Sun, Nov 11, 2012 at 6:39 PM, A Large Angry SCM <gitzilla@gmail.com> wrote:
-> On 11/11/2012 12:16 PM, Felipe Contreras wrote:
-
->> And how do you propose to find the commit commands without parsing all
->> the other commands? If you randomly look for lines that begin with
->> 'commit /refs' you might end up in the middle of a commit message or
->> the contents of a file.
+On Sun, Nov 11, 2012 at 5:36 PM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 11.11.12 14:59, Felipe Contreras wrote:
+>> test_expect_success 'test biridectionality' '
+>> +     echo -n > marks-cur &&
+>> +     echo -n > marks-new &&
+> Unless I messed up the patch:
 >
-> I didn't say you didn't have to parse the protocol. I said that the protocol
-> is pretty simple.
+> Minor issue: still a typo "biridectionality"
+> Major issue:  "echo -n" is still not portable.
 
-Parsing is never simple.
+Yeah.
 
->>> I agree that an additional filter _may_ decrease performance somewhat if
->>> you
->>> are already CPU constrained. But I suspect that the effect would be
->>> negligible compared to the all of the SHA-1 calculations.
->>
->> Well. If it's so easy surely you can write one quickly, and I can measure
->> it.
+> Could we simply use
 >
-> Not my itch; You care, you do it.
+> touch  marks-cur  &&
+> touch marks-new
 
-It was your idea, I don't care.
+Unless somebody else already modified those marks. Better be safe than =
+sorry.
 
-If it's so simple, why don't you do it? Because it's not that simple.
-And anyway it will have a performance penalty.
-
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
