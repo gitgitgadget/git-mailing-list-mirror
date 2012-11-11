@@ -1,73 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/5] ignore SIGINT while editor runs
-Date: Sun, 11 Nov 2012 11:31:00 -0500
-Message-ID: <20121111163100.GB13188@sigill.intra.peff.net>
-References: <20121109192336.GA9401@sigill.intra.peff.net>
- <87a9uq5tql.fsf@Niukka.kon.iki.fi>
- <20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
- <871ug15k5c.fsf@Niukka.kon.iki.fi>
- <20121110220811.DC6A42E8B68@grass.foxharp.boston.ma.us>
- <87wqxs4o6f.fsf@Niukka.kon.iki.fi>
- <20121111154846.GA13188@sigill.intra.peff.net>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v5 01/15] fast-export: avoid importing blob marks
+Date: Sun, 11 Nov 2012 17:36:53 +0100
+Message-ID: <509FD425.5030702@web.de>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com> <1352642392-28387-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
-To: Kalle Olavi Niemitalo <kon@iki.fi>
-X-From: git-owner@vger.kernel.org Sun Nov 11 17:35:36 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 17:37:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXaVR-0003eY-68
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 17:35:33 +0100
+	id 1TXaX7-0004Mw-Vu
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 17:37:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753469Ab2KKQbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 11:31:04 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43910 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752559Ab2KKQbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 11:31:03 -0500
-Received: (qmail 426 invoked by uid 107); 11 Nov 2012 16:31:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 11 Nov 2012 11:31:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Nov 2012 11:31:00 -0500
-Content-Disposition: inline
-In-Reply-To: <20121111154846.GA13188@sigill.intra.peff.net>
+	id S1753514Ab2KKQhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 11:37:03 -0500
+Received: from mout.web.de ([212.227.17.12]:54153 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752235Ab2KKQhB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 11:37:01 -0500
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0M1XDJ-1TDJp10IhN-00tuBS; Sun, 11 Nov 2012 17:36:56 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <1352642392-28387-2-git-send-email-felipe.contreras@gmail.com>
+X-Provags-ID: V02:K0:cyYHqRgWm5ro9VhVgOxKuvHWwZQ+/GtVS76CaLs2srS
+ H/nzC5RpgnvROEyZJ8PzuTFfeZcO49BqqEdz8BZR/ppOIMyKwP
+ fm/aL12Q6gpR0Cws3WcF8pTj/2w690eTblwmZJmmdgRfO/Fykn
+ LdyUavMTTOtxHmdZrwnSANBVzE1oaRUubn4USlz6KXi6EOh8UW
+ llAlgNfvSkgjxb6Gf52Dg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209396>
 
-On Sun, Nov 11, 2012 at 10:48:46AM -0500, Jeff King wrote:
+On 11.11.12 14:59, Felipe Contreras wrote:
+> test_expect_success 'test biridectionality' '
+> +	echo -n > marks-cur &&
+> +	echo -n > marks-new &&
+Unless I messed up the patch:
 
-> Silly me. When I thought through the impact of Paul's patch, I knew that
-> we would notice signal death of the editor. But I totally forgot to
-> consider that the blocked signal is inherited by the child process. I
-> think we just need to move the signal() call to after we've forked. Like
-> this (on top of Paul's patch):
-> [...]
-> Note that this will give you a slightly verbose message from git.
-> Potentially we could notice editor death due to SIGINT and suppress the
-> message, under the assumption that the user hit ^C and does not need to
-> be told.
+Minor issue: still a typo "biridectionality"
+Major issue:  "echo -n" is still not portable.
 
-Here's a series that I think should resolve the situation for everybody.
+Could we simply use
 
-  [1/5]: launch_editor: refactor to use start/finish_command
+touch  marks-cur  &&
+touch marks-new
 
-The cleanup I sent out a few minutes ago.
 
-  [2/5]: launch_editor: ignore SIGINT while the editor has control
-
-Paul's patch rebased on my 1/5.
-
-  [3/5]: run-command: drop silent_exec_failure arg from wait_or_whine
-  [4/5]: run-command: do not warn about child death by SIGINT
-  [5/5]: launch_editor: propagate SIGINT from editor to git
-
-Act more like current git when the editor dies from SIGINT.
-
--Peff
+/Torsten
