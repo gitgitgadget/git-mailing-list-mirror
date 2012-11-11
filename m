@@ -1,78 +1,143 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/3] diff: introduce diff.submodule configuration variable
-Date: Sun, 11 Nov 2012 20:20:27 +0530
-Message-ID: <CALkWK0=zTCXki2c=ugRXE485ps2=OWag7mdzVJW93cnsypwkiA@mail.gmail.com>
-References: <1351766630-4837-1-git-send-email-artagnon@gmail.com>
- <1351766630-4837-3-git-send-email-artagnon@gmail.com> <20121108205110.GB8376@sigill.intra.peff.net>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Sun, 11 Nov 2012 10:00:48 -0500
+Message-ID: <20121111150047.GA22608@odin.tremily.us>
+References: <cover.1352431674.git.wking@tremily.us>
+ <fb2d915cf60160c200b84df88c6112c1c2d4eefd.1352431674.git.wking@tremily.us>
+ <7v390jqlep.fsf@alter.siamese.dyndns.org> <20121110184437.GC2739@mjolnir>
+ <7vzk2oo2d2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 15:51:03 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=gBBFr7Ir9EOA20Yy
+Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 16:02:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXYsJ-00036U-FC
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:51:03 +0100
+	id 1TXZ3X-0007b6-Ez
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 16:02:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812Ab2KKOuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 09:50:50 -0500
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:60817 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752049Ab2KKOut (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 09:50:49 -0500
-Received: by mail-wi0-f172.google.com with SMTP id hm6so1780831wib.1
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:50:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vldGxpvosoYxeapP/9RXvo9ltyyvoS5KqdKGh5CCzm8=;
-        b=ELVkjPRkIovc+FKZI7Yd4NvUgz6UN/pkjONmWIy0SsKhAqL8MlFX5JUcIgZIteC8Oe
-         xrYerczwM7v13yC95Lf0fQ23k2VPUmgGFzV27Cx3+6o7K8dKRXu/N5/Q4e1peL9zYn0n
-         YyQmn8JEkeM1RMnNBnlAqXivrFuyspBQwhJ89DWHSU1z26sZEX+Ia2DywybqKj39Fw6L
-         8l3U6EaYQ6W/czeos+Cok4C5PvgZ4h3vlShsm3+ccHBZqOswm4Qn4E3bUQ3fI4tFB4ln
-         CsyYgEpND9iIlZ+dNfP/PB3HiVaxjIXyNtYAv9yASqPshzg3O6EfuZLAH7qR2iBbJgYJ
-         IVPg==
-Received: by 10.180.99.5 with SMTP id em5mr11072514wib.8.1352645448264; Sun,
- 11 Nov 2012 06:50:48 -0800 (PST)
-Received: by 10.217.61.2 with HTTP; Sun, 11 Nov 2012 06:50:27 -0800 (PST)
-In-Reply-To: <20121108205110.GB8376@sigill.intra.peff.net>
+	id S1752879Ab2KKPAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 10:00:53 -0500
+Received: from vms173001pub.verizon.net ([206.46.173.1]:60813 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752535Ab2KKPAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 10:00:52 -0500
+Received: from odin.tremily.us ([unknown] [72.68.100.219])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MDB00D1ZWDCQD50@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 11 Nov 2012 09:00:49 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 21A4D690B43; Sun,
+ 11 Nov 2012 10:00:48 -0500 (EST)
+Content-disposition: inline
+In-reply-to: <7vzk2oo2d2.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209390>
 
-Jeff King wrote:
-> On Thu, Nov 01, 2012 at 04:13:49PM +0530, Ramkumar Ramachandra wrote:
->
->> diff --git a/builtin/diff.c b/builtin/diff.c
->> index 9650be2..6d00311 100644
->> --- a/builtin/diff.c
->> +++ b/builtin/diff.c
->> @@ -297,6 +297,10 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->>       DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
->>       DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
->>
->> +     /* Set SUBMODULE_LOG if diff.submodule config var was set */
->> +     if (submodule_format_cfg && !strcmp(submodule_format_cfg, "log"))
->> +             DIFF_OPT_SET(&rev.diffopt, SUBMODULE_LOG);
->> +
->
-> Yuck. Why is this parsing happening in cmd_diff?
 
-Blame Jens- see this thread |
-http://thread.gmane.org/gmane.comp.version-control.git/206816/focus=206815
+--gBBFr7Ir9EOA20Yy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Then you can keep the parsing logic for "log" in diff.c. And you should
-> factor it out into a function so that the command-line option and the
-> config parser can share the same code. I know it's only one line now,
-> but anybody who wants to add an option will have to update both places.
-> See the parsing of diff.dirstat for an example.
+On Sun, Nov 11, 2012 at 02:33:45AM -0800, Junio C Hamano wrote:
+> The change seems to think "branch" is the _only_ thing the user
+> might want to record per submodule upon "git submodule add".
 
-Done.  I'll send out the new series shortly.
+I felt that earlier floating/tracking submodule patches were biting
+off more than they could chew, so I was looking for a lightweight fix
+to make the tracking workflow easier.  It seems like I ended up with
+something that is too lightweight ;).
 
-Ram
+> On the other hand, if this were one small part of a series to define
+> the "tip following mode" where (at least)
+>=20
+>  (1) "git submodule update [$path]" makes sure that the checkout of
+>      the submodule at $path matches the commit at the tip of the
+>      branch named by submodule.$name.branch in .gitmodules of the
+>      superproject, instead of the commit that is recorded in the
+>      index of the superproject; and
+
+As I mentioned earlier, I think
+
+  $ git submodule update [$path]
+
+should keep its current =E2=80=9Ccheckout the already-registered SHA=E2=80=
+=9D
+functionality, with
+
+  $ git submodule update --pull [$path]
+
+pulling the tracked branch.  I'll add a patch implementing this to v4.
+
+In order to avoid losing (or creating) local-only submodule commits,
+I'll probably bail (with an error) on non-fast-forward pulls.  Can
+anyone else think of other safety concerns?
+
+This means that I'll probably drop Phil's $submodule_* export in v4,
+because the only explicit use we have for it is this branch tracking.
+I still think it is a useful idea, but it may not be useful enough to
+be worth the complexity.
+
+>  (2) "git diff [$path]" and friends in the superproject compares the
+>      HEAD of the checkout of the submodule at $path with the tip of
+>      the branch named by submodule.$name.branch in .gitmodules of
+>      the superproject, instead of the commit that is recorded in the
+>      index of the superproject.
+>=20
+
+Hmm.  =E2=80=9Cgit diff=E2=80=9D compares the working tree with the local H=
+EAD (just a
+SHA for submodules), so I don't think it should care about the status
+of a remote branch.  This sounds like you want something like:
+
+  $ git submodule foreach 'git diff origin/$submodule_branch'
+
+Perhaps this is enough motivation for keeping $submodule_* exports?
+
+> and the option were called something like "--follow-branch=3D$branch",
+> =E2=80=A6
+
+I'll replace -r/--record with --follow-branch in v4.
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--gBBFr7Ir9EOA20Yy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQn72dAAoJEEUbTsx0l5OM9o4P/0qQ5F3tSWPHlZdkk1LdsTHj
+It5xbdD34m676q1uT8hptTtzUOVDKsKvistYPEX5X4M/34K1/UEuqKbxVyU+7iv3
+tKNcUx3chvqK6NSxHvrI9Z1bbDFaZYNWJuErfkoFU1UnTGrgQZtsgQe8iSlUbNV9
+TWs40bnaLHJLCa+UHV3qRXyjxs4D/bhCLmaZa8PKJ6ACGvaw0eeqQ44dbV15VxM+
+Ev2e/V31n3CGbupmye+0s0mMAyvIsdASDBpnq7dzSdu6pukHfHY4ZzFibIQslAnp
+jXlVbUjVS609PCAtKucy8JrplzKsUlAkpSvfd6RHYAq92DVMxl4pwAfohDHWz2BT
++MkcZOHKlqvP9StSMVzS9R1mLN0wv0w2ct9gfPHi8m+bZUEsZQ9XypoASxWlBnCZ
+s+xs4aVpJIGMjX/PPCXySLg7g+qDUHxzfAF40EDgp6VBpYZ1PGQE3OQs1pWd92u2
+mYdaMiGJWD4QnMhZM+WZeWaTE/Ro/MAUx2+dU0Z9fzxuRwhg1aO6fmV2uCXmz+rq
+GdHt3HgSxzYtkoNEguvyLV3PcjfTkjWPMxx6Q/qzz0VOzGwmJmZ2GD1Z2b9U1DTK
+atKhQPnfb2X6tIuJ/NM/cGixtCMF0GBIYv6S6KCi6PCsBxnJQ3JhW1om6sH0742m
+SMYw8oO4s2KqZdxmFcbL
+=eJ+v
+-----END PGP SIGNATURE-----
+
+--gBBFr7Ir9EOA20Yy--
