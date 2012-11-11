@@ -1,113 +1,80 @@
-From: Kalle Olavi Niemitalo <kon@iki.fi>
-Subject: Re: What's cooking in git.git (Nov 2012, #02; Fri, 9)
-Date: Sun, 11 Nov 2012 09:02:48 +0200
-Message-ID: <87wqxs4o6f.fsf@Niukka.kon.iki.fi>
-References: <20121109192336.GA9401@sigill.intra.peff.net>
-	<87a9uq5tql.fsf@Niukka.kon.iki.fi>
-	<20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
-	<871ug15k5c.fsf@Niukka.kon.iki.fi>
-	<20121110220811.DC6A42E8B68@grass.foxharp.boston.ma.us>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Reviews on mailing-list
+Date: Sun, 11 Nov 2012 12:56:48 +0530
+Message-ID: <CALkWK0mpzc8jXs5=HhO0Bk78UgwKt+JGOThB6z_4AnEYmz_=+w@mail.gmail.com>
+References: <CA+ZXwZOnZZyk_KWmLLLNChWb1R_Av1s5jM4PsLFWKaG8BB+uXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Fox <pgf@foxharp.boston.ma.us>
-X-From: git-owner@vger.kernel.org Sun Nov 11 08:01:57 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <sop@google.com>
+To: =?UTF-8?Q?Deniz_T=C3=BCrkoglu?= <deniz@spotify.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 08:27:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXRYJ-0008Bn-Fc
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 08:01:55 +0100
+	id 1TXRxO-0007YZ-Ry
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 08:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170Ab2KKHBc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 02:01:32 -0500
-Received: from saarni.dnainternet.net ([83.102.40.136]:41905 "EHLO
-	saarni.dnainternet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751077Ab2KKHBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 02:01:31 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by saarni.dnainternet.net (Postfix) with ESMTP id 8A00460366;
-	Sun, 11 Nov 2012 09:01:29 +0200 (EET)
-X-Virus-Scanned: DNA Postiturva at dnainternet.net
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from saarni.dnainternet.net ([83.102.40.136])
-	by localhost (saarni.dnainternet.net [127.0.0.1]) (DNA Postiturva, port 10041)
-	with ESMTP id f-NvMju3Qs1d; Sun, 11 Nov 2012 09:01:28 +0200 (EET)
-Received: from omenapuu.dnainternet.net (omenapuu.dnainternet.net [83.102.40.212])
-	by saarni.dnainternet.net (Postfix) with ESMTP id D9E6B60342;
-	Sun, 11 Nov 2012 09:01:28 +0200 (EET)
-Received: from Niukka.Niemitalo.private (85-131-104-149.bb.dnainternet.fi [85.131.104.149])
-	by omenapuu.dnainternet.net (Postfix) with ESMTP id 950732BAD5;
-	Sun, 11 Nov 2012 09:01:26 +0200 (EET)
-In-Reply-To: <20121110220811.DC6A42E8B68@grass.foxharp.boston.ma.us> (Paul
-	Fox's message of "Sat, 10 Nov 2012 17:08:11 -0500")
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.51 (gnu/linux)
-X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
+	id S1751226Ab2KKH1L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2012 02:27:11 -0500
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:54685 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188Ab2KKH1K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2012 02:27:10 -0500
+Received: by mail-wi0-f170.google.com with SMTP id hm9so1540853wib.1
+        for <git@vger.kernel.org>; Sat, 10 Nov 2012 23:27:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ljuaCEPASSrqL4Szqa+qqtPUZbEYkliGMdZ8pcg1VzU=;
+        b=Ls4g1+AAAn74AwEv8Mr1DxErxYT2SIhVZPGLoOaHlXuNVTysBKD85T6Vrm/lbUjdqk
+         r1LEeYRBMFFWSNnAEba6HrGxPzzfk8Lks72OjFUzZ5gRKe3tLPGMRoCNJsKo7lOazspY
+         wQG2Pefq/YKDEpD4JkUDN+8nmoEN4Dmv+hlSyT0MzkkV3JpfGxs8C4g06HVNj9UKMC6I
+         vBTNKvaSGSdkA9Iz12tonInUVIZWK161uUBL6F5hJUVi3OxUC8hZZXn2CJeUznxp+K88
+         ezRcQCLxzy/D2uoQGuR2HlqMX0SAC4SeAIVZPFHYpYKMhBKDBF/UmykeTnPvjKfNiL92
+         BsQQ==
+Received: by 10.180.95.201 with SMTP id dm9mr9838889wib.3.1352618828686; Sat,
+ 10 Nov 2012 23:27:08 -0800 (PST)
+Received: by 10.217.61.2 with HTTP; Sat, 10 Nov 2012 23:26:48 -0800 (PST)
+In-Reply-To: <CA+ZXwZOnZZyk_KWmLLLNChWb1R_Av1s5jM4PsLFWKaG8BB+uXQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209326>
 
-Paul Fox <pgf@foxharp.boston.ma.us> writes:
+Deniz T=C3=BCrkoglu wrote:
+> I have spoken to Shawn Pearce (gerrit project lead, google) and he
+> said he is OK with hosting the gerrit instance.
+>
+> I would like to hear your thoughts on this.
 
-> you're sending SIGINT to the cvs commit command, and that causes the
-> editor to die right away?
+I personally think email is by far the best interface for patches,
+reviews, and discussions.  Git patches are very high-volume, and not
+everyone can read everything.  People should have the flexibility to
+choose the client they'd like to use to read patches and follow-ups;
+the freedom to use a scriptable client like Gnus is very important to
+me. Primarily, I want people to be able to:
+1. Choose what to read, by scripting Gnus to score email that they'd
+likely find relevant.
+2. Try out new patches on the list, by assigning one keybinding to
+git-am a series.
+3. Display email the way they like.  Many email clients have features
+to run filters through emails.
+4. Read patches/ follow-ups offline, while travelling (on a phone, for
+instance).  The GMail app, for instance, downloads mails for offline
+viewing.
+5. Interact with other lists seamlessly (the kernel list, for
+instance).  Email is a universal interface on which lists can be CC'ed
+easily.
 
-That's right.  It is not a quirk of shell-mode in Emacs, because
-I get the same result with ^C in xterm too.
+I'm not attacking a specific web interface, but I don't see how any of
+the following would be possible even with the most advanced web
+interface.  Besides, nobody has made a proper case for using one.
+Therefore, I'm strongly opposed to the move.
 
-% EDITOR="$HOME/prefix/x86_64-unknown-linux-gnu/bin/emacsclient --current-frame"
-% export EDITOR
-% cvs commit BUGIT
-Waiting for Emacs...^Ccvs commit: warning: editor session failed
-
-Log message unchanged or not specified
-a)bort, c)ontinue, e)dit, !)reuse this message unchanged for remaining dirs
-Action: (continue) a
-cvs [commit aborted]: aborted by user
-% 
-
-While cvs was waiting from emacsclient:
-
-% cat /proc/2030/stat
-2030 (cvs) S 1849 2030 1849 34816 2030 4202496 598 0 0 0 0 0 0 0 20 0 1 0 94752537 34254848 410 18446744073709551615 140168182550528 140168183348316 140737407935424 140737407931680 140168163193950 0 0 6 20513 0 0 0 17 2 0 0 0 0 0
-% grep 'Name\|Pid\|Sig' /proc/2030/status
-Name:	cvs
-Pid:	2030
-PPid:	1849
-TracerPid:	0
-SigQ:	0/28998
-SigPnd:	0000000000000000
-SigBlk:	0000000000000000
-SigIgn:	0000000000000006
-SigCgt:	0000000180005021
-% cat /proc/2031/stat
-2031 (emacsclient) S 2030 2030 1849 34816 2030 4202496 155 0 0 0 0 0 0 0 20 0 1 0 94752538 4169728 81 18446744073709551615 4194304 4210620 140735996104016 140735996095456 140664960886018 0 0 0 0 0 0 0 17 1 0 0 0 0 0
-% grep 'Name\|Pid\|Sig' /proc/2031/status
-Name:	emacsclient
-Pid:	2031
-PPid:	2030
-TracerPid:	0
-SigQ:	0/28998
-SigPnd:	0000000000000000
-SigBlk:	0000000000000000
-SigIgn:	0000000000000000
-SigCgt:	0000000000000000
-%
-
-which I interpret to mean both processes were in process group
-2030, the cvs process ignored SIGINT and SIGQUIT, the emacsclient
-process neither ignored nor handled any signals, and neither
-process blocked any signals (not even SIGCHLD as system(3) would).
-When ^C in the terminal sent SIGINT to the process group, it
-terminated the emacsclient process only.
-
-If git did the same thing as cvs here, i.e. ignore the signals in
-the parent process only and check the exit status of the editor,
-I think that would be OK.
+Ram
