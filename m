@@ -1,69 +1,60 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: [PATCH 0/5] ignore SIGINT while editor runs
-Date: Sun, 11 Nov 2012 20:15:20 +0100
-Message-ID: <20121111191520.GA9474@shrek.podlesie.net>
-References: <20121109192336.GA9401@sigill.intra.peff.net>
- <87a9uq5tql.fsf@Niukka.kon.iki.fi>
- <20121110155209.75EFC2E8B68@grass.foxharp.boston.ma.us>
- <871ug15k5c.fsf@Niukka.kon.iki.fi>
- <20121110220811.DC6A42E8B68@grass.foxharp.boston.ma.us>
- <87wqxs4o6f.fsf@Niukka.kon.iki.fi>
- <20121111154846.GA13188@sigill.intra.peff.net>
- <20121111163100.GB13188@sigill.intra.peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/5] launch_editor: propagate SIGINT from editor to git
+Date: Sun, 11 Nov 2012 20:48:38 +0100
+Message-ID: <50A00116.8060604@kdbg.org>
+References: <20121111163100.GB13188@sigill.intra.peff.net> <20121111165706.GE19850@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Kalle Olavi Niemitalo <kon@iki.fi>,
 	Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 20:15:41 2012
+X-From: git-owner@vger.kernel.org Sun Nov 11 20:49:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXd0M-0003hN-Cv
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 20:15:38 +0100
+	id 1TXdWc-0000rT-08
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 20:48:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753311Ab2KKTPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 14:15:24 -0500
-Received: from [93.179.225.50] ([93.179.225.50]:60711 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751656Ab2KKTPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 14:15:23 -0500
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id BAF31581; Sun, 11 Nov 2012 20:15:20 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20121111163100.GB13188@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752695Ab2KKTso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 14:48:44 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:56197 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752016Ab2KKTsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 14:48:43 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id BC507130045;
+	Sun, 11 Nov 2012 20:48:40 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 1E56219F371;
+	Sun, 11 Nov 2012 20:48:38 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
+In-Reply-To: <20121111165706.GE19850@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209440>
 
-On Sun, Nov 11, 2012 at 11:31:00AM -0500, Jeff King wrote:
-> 
-> Here's a series that I think should resolve the situation for everybody.
-> 
->   [1/5]: launch_editor: refactor to use start/finish_command
-> 
-> The cleanup I sent out a few minutes ago.
-> 
->   [2/5]: launch_editor: ignore SIGINT while the editor has control
-> 
-> Paul's patch rebased on my 1/5.
-> 
->   [3/5]: run-command: drop silent_exec_failure arg from wait_or_whine
->   [4/5]: run-command: do not warn about child death by SIGINT
->   [5/5]: launch_editor: propagate SIGINT from editor to git
-> 
-> Act more like current git when the editor dies from SIGINT.
-> 
+Am 11.11.2012 17:57, schrieb Jeff King:
+> @@ -51,6 +51,8 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+>  		sigchain_push(SIGINT, SIG_IGN);
+>  		ret = finish_command(&p);
+>  		sigchain_pop(SIGINT);
+> +		if (WIFSIGNALED(ret) && WTERMSIG(ret) == SIGINT)
+> +			raise(SIGINT);
 
-Looks ok, but what about SIGQUIT? Some editors like GNU ed (0.4 and 1.6)
-ignore SIGQUIT, and after SIGQUIT git dies, but editor is still running.
-After pressing any key ed receives -EIO and prints "stdin: Input/output
-error". GNU ed 1.6 then exits, but ed 0.4 prints this error forever.
-Maybe git should kill the editor in such case?
+The return value of finish_command() is already a digested version of
+waitpid's status value. According to
+Documentation/technical/api-run-command.txt:
 
-Krzysiek
+. If the program terminated due to a signal, then the return value is
+the signal number - 128, ...
+
+the correct condition would be
+
+		if (ret == SIGINT - 128)
+
+-- Hannes
