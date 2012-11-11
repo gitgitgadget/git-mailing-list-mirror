@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 01/15] fast-export: avoid importing blob marks
-Date: Sun, 11 Nov 2012 14:59:38 +0100
-Message-ID: <1352642392-28387-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 03/15] remote-helpers: fix failure message
+Date: Sun, 11 Nov 2012 14:59:40 +0100
+Message-ID: <1352642392-28387-4-git-send-email-felipe.contreras@gmail.com>
 References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -16,100 +16,75 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 15:00:47 2012
+X-From: git-owner@vger.kernel.org Sun Nov 11 15:00:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXY5e-0007Zj-HJ
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:00:46 +0100
+	id 1TXY5l-0007eN-Am
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:00:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091Ab2KKOAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 09:00:32 -0500
+	id S1752640Ab2KKOAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 09:00:40 -0500
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:62032 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750846Ab2KKOAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 09:00:31 -0500
+	with ESMTP id S1752577Ab2KKOAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 09:00:40 -0500
 Received: by mail-bk0-f46.google.com with SMTP id jk13so2062168bkc.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:00:31 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:00:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=orhMZfsPY2NvU/bwKcxIon1Z9U8sFT60aQ5ZpDpIRCI=;
-        b=ju5ftSdVUpKgCHadJuvy+CioqUCav9Pa32tI4JIxeU9LK/3le+6uPZdZ5mCN40ap/4
-         XNWDm69/Yw9NF5/jhK+LRytU4EWR5qqE5GvCLduliCKu68/kuwfkFdFK/naee+rCLlqw
-         d2YMH+/5k2eXbVPndIcIJCeiXxm9Gi8Q/HjasjspDFO+W+QRshSgtp0z+Z14CLDfPy6X
-         U+LhOB4DSvAsX50f/g3HfAMbqBNe++85IBJaoQ6mk/DP3yLm0sr6XoztDay1MrGDxtas
-         4vGTU5AfqGnxnfkODBBhUCt9hcnzyLP4xGIwT7O0tr7v3omwnG9yRdyxIyz0MQ0lFyw8
-         Jo1g==
-Received: by 10.204.13.20 with SMTP id z20mr5839324bkz.75.1352642430958;
-        Sun, 11 Nov 2012 06:00:30 -0800 (PST)
+        bh=VzUcZAJ7AdHhFHV6GuaHwW8agHjGbbH4hNPM+5MuKDs=;
+        b=aUGS1T3KuqPX6MZiEylKmW43kb9bvNMPc4wbq9Umfv47RTza70SVovrpfbig3tzbNT
+         oLGeLBS6KuSpwhfXZKbV9xBcnJEYuB0td/14zRGEb+B4yuQBtAOZWQWMo2WMF4dyLm5W
+         TOkBhH4V/PPrzflhSrwI1dFb5Ejiqupbjv7xrf4GhzLv33219lzV8S/Eox6+Lvrry+Rq
+         omgr1t5XVDsCZ1UKpfzFjLFtsQKM5DO2e7mwcLA7tj4uluVxK6/cvwI3DfhQpyI82a57
+         1bGKBE6gSUc+Jsoap3sp0+f/ZWtf76DGU4L1vuuiZNVmajDJuGGqt8LI+2Hb9gicA1zh
+         zjAQ==
+Received: by 10.205.137.7 with SMTP id im7mr5885645bkc.25.1352642439094;
+        Sun, 11 Nov 2012 06:00:39 -0800 (PST)
 Received: from localhost (ip-109-43-0-127.web.vodafone.de. [109.43.0.127])
-        by mx.google.com with ESMTPS id e3sm1490118bks.7.2012.11.11.06.00.28
+        by mx.google.com with ESMTPS id n27sm1494770bkw.0.2012.11.11.06.00.36
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Nov 2012 06:00:30 -0800 (PST)
+        Sun, 11 Nov 2012 06:00:38 -0800 (PST)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209357>
 
-We want to be able to import, and then export, using the same marks, so
-that we don't push things that the other side already received.
-
-Unfortunately, fast-export doesn't store blobs in the marks, but
-fast-import does. This creates a mismatch when fast export is reusing a
-mark that was previously stored by fast-import.
-
-There is no point in one tool saving blobs, and the other not, but for
-now let's just check in fast-export that the objects are indeed commits.
+This is remote-testgit, not remote-hg.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/fast-export.c  |  4 ++++
- t/t9350-fast-export.sh | 14 ++++++++++++++
- 2 files changed, 18 insertions(+)
+ t/t5800-remote-helpers.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 12220ad..a06fe10 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -614,6 +614,10 @@ static void import_marks(char *input_file)
- 		if (object->flags & SHOWN)
- 			error("Object %s already has a mark", sha1_to_hex(sha1));
+diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
+index e7dc668..d46fa40 100755
+--- a/t/t5800-remote-helpers.sh
++++ b/t/t5800-remote-helpers.sh
+@@ -8,7 +8,7 @@ test_description='Test remote-helper import and export commands'
+ . ./test-lib.sh
  
-+		if (object->type != 1)
-+			/* only commits */
-+			continue;
-+
- 		mark_object(object, mark);
- 		if (last_idnum < mark)
- 			last_idnum = mark;
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 3e821f9..0c8d828 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -440,4 +440,18 @@ test_expect_success 'fast-export quotes pathnames' '
- 	)
- '
+ if ! test_have_prereq PYTHON ; then
+-	skip_all='skipping git-remote-hg tests, python not available'
++	skip_all='skipping remote-testgit tests, python not available'
+ 	test_done
+ fi
  
-+test_expect_success 'test biridectionality' '
-+	echo -n > marks-cur &&
-+	echo -n > marks-new &&
-+	git init marks-test &&
-+	git fast-export --export-marks=marks-cur --import-marks=marks-cur --branches | \
-+	git --git-dir=marks-test/.git fast-import --export-marks=marks-new --import-marks=marks-new &&
-+	(cd marks-test &&
-+	git reset --hard &&
-+	echo Wohlauf > file &&
-+	git commit -a -m "back in time") &&
-+	git --git-dir=marks-test/.git fast-export --export-marks=marks-new --import-marks=marks-new --branches | \
-+	git fast-import --export-marks=marks-cur --import-marks=marks-cur
-+'
-+
- test_done
+@@ -17,7 +17,7 @@ import sys
+ if sys.hexversion < 0x02040000:
+     sys.exit(1)
+ ' || {
+-	skip_all='skipping git-remote-hg tests, python version < 2.4'
++	skip_all='skipping remote-testgit tests, python version < 2.4'
+ 	test_done
+ }
+ 
 -- 
 1.8.0
