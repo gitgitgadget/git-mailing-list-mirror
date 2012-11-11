@@ -1,89 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/5] launch_editor: ignore SIGINT while the editor has control
-Date: Sun, 11 Nov 2012 11:58:56 -0500
-Message-ID: <20121111165855.GA19962@sigill.intra.peff.net>
-References: <20121111163100.GB13188@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
-To: Kalle Olavi Niemitalo <kon@iki.fi>
-X-From: git-owner@vger.kernel.org Sun Nov 11 17:59:12 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v3 0/3] Introduce diff.submodule
+Date: Sun, 11 Nov 2012 22:29:03 +0530
+Message-ID: <1352653146-3932-1-git-send-email-artagnon@gmail.com>
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 11 17:59:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXasK-0004wZ-2Q
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 17:59:12 +0100
+	id 1TXasa-00053S-5D
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 17:59:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577Ab2KKQ67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 11:58:59 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43978 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751212Ab2KKQ66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 11:58:58 -0500
-Received: (qmail 1255 invoked by uid 107); 11 Nov 2012 16:59:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 11 Nov 2012 11:59:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Nov 2012 11:58:56 -0500
-Content-Disposition: inline
-In-Reply-To: <20121111163100.GB13188@sigill.intra.peff.net>
+	id S1752804Ab2KKQ7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 11:59:15 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:59164 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752132Ab2KKQ7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 11:59:14 -0500
+Received: by mail-da0-f46.google.com with SMTP id n41so2391580dak.19
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 08:59:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=qxJjzmuLlE8voKxHKGr1kbUTmf9msYZKV/MgjCT60QQ=;
+        b=rodpskiowlg3q0tXGpIMitINar/lemknvaIBCpRn1+FGr7ozNS0TDQqtx7tlunlS79
+         QJIGn8FpgWZiKVn3/1wls+SbgaYVWCoinJZ0F6I7TNPR/UpWXlqKeNlhbBDudP3zgZMP
+         s0dNN44RvaTpJuH55KZYWgYIhRHmXaQKf3hvdEksuopywCKvrlsNPQXZxG7ThAt5dURO
+         XxL4BWM4uA+AtpdAuxQxKjIKRQ4vYaOx1Z6+mdLeGK5Ci8Oea676byG97hpj3bwj0j/6
+         CnEiWOgKceMERM56zIkbz+MwSqgxF44daiaGCahMu0o56miCJ5dDdzQpOA7Ce2Dhw6kM
+         Ddhg==
+Received: by 10.68.233.136 with SMTP id tw8mr44418824pbc.133.1352653154094;
+        Sun, 11 Nov 2012 08:59:14 -0800 (PST)
+Received: from localhost.localdomain ([49.206.137.123])
+        by mx.google.com with ESMTPS id s1sm2824079paz.0.2012.11.11.08.59.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 11 Nov 2012 08:59:13 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209409>
 
-From: Paul Fox <pgf@foxharp.boston.ma.us>
+v1 is here: http://mid.gmane.org/1349196670-2844-1-git-send-email-artagnon@gmail.com
+v2 is here: http://mid.gmane.org/1351766630-4837-1-git-send-email-artagnon@gmail.com
 
-The user's editor likely catches SIGINT (ctrl-C).  but if
-the user spawns a command from the editor and uses ctrl-C to
-kill that command, the SIGINT will likely also kill git
-itself (depending on the editor, this can leave the terminal
-in an unusable state).
+This version was prepared in response to Peff's review of v2.  As
+suggested, I've created a separate function which both '--submodule'
+and 'diff.submodule' use to set/ unset SUBMODULE_OPT.
 
-Signed-off-by: Paul Fox <pgf@foxharp.boston.ma.us>
-Signed-off-by: Jeff King <peff@peff.net>
----
-Whoops, my original sending of this actually had Paul in the email's
-From field, not in the pseudo-header of the commit. Apologies if you
-receive an extra forged copy.
+Ram
 
- editor.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Ramkumar Ramachandra (3):
+  Documentation: move diff.wordRegex from config.txt to diff-config.txt
+  diff: introduce diff.submodule configuration variable
+  submodule: display summary header in bold
 
-diff --git a/editor.c b/editor.c
-index 842f782..28aae85 100644
---- a/editor.c
-+++ b/editor.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "strbuf.h"
- #include "run-command.h"
-+#include "sigchain.h"
- 
- #ifndef DEFAULT_EDITOR
- #define DEFAULT_EDITOR "vi"
-@@ -38,6 +39,7 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 	if (strcmp(editor, ":")) {
- 		const char *args[] = { editor, path, NULL };
- 		struct child_process p;
-+		int ret;
- 
- 		memset(&p, 0, sizeof(p));
- 		p.argv = args;
-@@ -46,7 +48,10 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 		if (start_command(&p) < 0)
- 			return error("unable to start editor '%s'", editor);
- 
--		if (finish_command(&p))
-+		sigchain_push(SIGINT, SIG_IGN);
-+		ret = finish_command(&p);
-+		sigchain_pop(SIGINT);
-+		if (ret)
- 			return error("There was a problem with the editor '%s'.",
- 					editor);
- 	}
+ Documentation/config.txt         |    6 -----
+ Documentation/diff-config.txt    |   13 +++++++++++
+ Documentation/diff-options.txt   |    3 +-
+ cache.h                          |    1 +
+ diff.c                           |   42 +++++++++++++++++++++++++++++++++----
+ submodule.c                      |    8 +++---
+ submodule.h                      |    2 +-
+ t/t4041-diff-submodule-option.sh |   30 ++++++++++++++++++++++++++-
+ 8 files changed, 87 insertions(+), 18 deletions(-)
+
 -- 
-1.8.0.207.gdf2154c
+1.7.8.1.362.g5d6df.dirty
