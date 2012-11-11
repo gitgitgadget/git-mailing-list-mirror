@@ -1,122 +1,63 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v4 3/6] Color skipped tests blue
-Date: Sun, 11 Nov 2012 02:04:14 +0000
-Message-ID: <20121111020355.GA11565@gmail.com>
-References: <20120919201326.GA23016@sigill.intra.peff.net>
- <1348086263-27555-1-git-send-email-git@adamspiers.org>
- <20120921061325.GA15867@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 03:15:51 2012
+From: Henrich Schuchardt <xypron.glpk@gmx.de>
+Subject: [PATCH] gitweb: git_summary - show $project in title
+Date: Sun, 11 Nov 2012 06:20:58 +0100
+Message-ID: <1352611258-11450-1-git-send-email-xypron.glpk@gmx.de>
+Cc: xypron.glpk@gmx.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 11 06:28:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXN5T-0005kF-8B
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 03:15:51 +0100
+	id 1TXQ5b-0008V3-59
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 06:28:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090Ab2KKCN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2012 21:13:56 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:54788 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001Ab2KKCNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2012 21:13:55 -0500
-X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Nov 2012 21:13:55 EST
-Received: from localhost (9.c.4.7.c.a.1.d.d.3.0.3.d.d.1.1.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:11dd:303d:d1ac:74c9])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id B4DAE2E5D5;
-	Sun, 11 Nov 2012 02:04:14 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20120921061325.GA15867@sigill.intra.peff.net>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751370Ab2KKF16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 00:27:58 -0500
+Received: from mailout-eu.gmx.com ([213.165.64.43]:49802 "HELO
+	mailout-eu.gmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750721Ab2KKF15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 00:27:57 -0500
+X-Greylist: delayed 409 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Nov 2012 00:27:57 EST
+Received: (qmail invoked by alias); 11 Nov 2012 05:21:06 -0000
+Received: from xdsl-78-35-178-184.netcologne.de (EHLO family2.heinrich-schuchardt.de) [78.35.178.184]
+  by mail.gmx.com (mp-eu005) with SMTP; 11 Nov 2012 06:21:06 +0100
+X-Authenticated: #41704822
+X-Provags-ID: V01U2FsdGVkX1/JDnFDCaLJ0oduEtVARjiBwnIMAut5zVz8Uem2g/
+	7FRDF+jeoNHlMY
+X-Mailer: git-send-email 1.7.10.4
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209323>
 
-On Fri, Sep 21, 2012 at 02:13:25AM -0400, Jeff King wrote:
-> On Wed, Sep 19, 2012 at 09:24:23PM +0100, Adam Spiers wrote:
-> 
-> >  t/test-lib.sh | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 5293830..78c88c2 100755
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -182,13 +182,13 @@ then
-> >  		error)
-> >  			tput bold; tput setaf 1;; # bold red
-> >  		skip)
-> > -			tput bold; tput setaf 2;; # bold green
-> > +			tput setaf 4;;            # blue
-> >  		warn)
-> >  			tput bold; tput setaf 3;; # bold yellow
-> >  		pass)
-> >  			tput setaf 2;;            # green
-> >  		info)
-> > -			tput setaf 3;;            # brown
-> > +			tput setaf 3;;            # yellow/brown
-> 
-> I happened to be running a test script with "-v" earlier today, and I
-> noticed that the "expecting success..." dump of the test contents is
-> also yellow. By your new rules, shouldn't it be blue?
-> 
-> I think it is matching the "info" type, which from the discussion should
-> be blue, no?
+Gitweb pages are structured by divs of class title with grey background.
+The shortlog, and the log page show the project name as the first title.
+Page summary only shows an empty grey box above the project details.
+This provides an inconstent user experience.
 
-It uses the "default" colour:
+This patch adds the missing project title.
 
-    say >&3 "expecting success: $2"
+Signed-off-by: Henrich Schuchardt <xypron.glpk@gmx.de>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-where say is defined:
-
-    say () {
-            say_color info "$*"
-    }
-
-Many other messages are output in this default colour too, and I never
-proposed to change it.  The only time in the discussion where blue was
-associated with "info" was in this sentence I wrote in the
-commit message for the patch altering the colour of "skip" messages:
-
-   "However, it's more informational than cautionary, so instead we
-    use blue which is a universal color for information signs."
-
-Whilst it could also be applied to "info", I don't think it would be a
-good idea to have the "skip" and "info" colours *both* as bold blue.
-It seems to me more important that the "skip" messages should visually
-stand out more than "info", since they are rarer and a more notable
-level of information than the latter (especially if --verbose is
-used).  Additionally, yellow is already somewhat overloaded (yellow
-for "info" and bold yellow for "warn").  Therefore I would suggest
-changing "info" to perhaps bold white or bold cyan.  Or "skip" could
-be magenta and "info" blue.  But now we are heading down a slippery
-slope; it'll be near impossible to please everyone.  Any final
-thoughts?
-
-> Maybe it is just my terminal. I see it is labeled as "brown" here, but
-> it looks very yellow (and I am using the stock xterm colors. According
-> to:
-> 
->   https://en.wikipedia.org/wiki/ANSI_colors
-> 
-> It looks it really is brown on some platforms.
-
-Yes, it can be.
-
-> I'm not sure if it is
-> worth worrying about.  I don't really want to get into configurable
-> colors just for the test-suite output.
-
-Agreed.  There is no indisputably correct combination.  However, I
-think that, modulo a tweak for the above, we are definitely in the
-right ball park.  The main thing is that the traffic light colour
-scheme is adhered to, and that different types of message are clearly
-visually separated, with more important ones standing out more than
-less important ones.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 10ed9e5..3e1c452 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6451,7 +6451,7 @@ sub git_summary {
+ 	git_header_html();
+ 	git_print_page_nav('summary','', $head);
+ 
+-	print "<div class=\"title\">&nbsp;</div>\n";
++	print "<div class=\"title\">$project</div>\n";
+ 	print "<table class=\"projects_list\">\n" .
+ 	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n";
+         unless ($omit_owner) {
+-- 
+1.7.10.4
