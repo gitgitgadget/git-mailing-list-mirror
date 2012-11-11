@@ -1,60 +1,78 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/5] launch_editor: propagate SIGINT from editor to git
-Date: Sun, 11 Nov 2012 20:48:38 +0100
-Message-ID: <50A00116.8060604@kdbg.org>
-References: <20121111163100.GB13188@sigill.intra.peff.net> <20121111165706.GE19850@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Test failures in contrib/remote-helpers
+Date: Sun, 11 Nov 2012 20:50:35 +0100
+Message-ID: <CAMP44s14J_D_pZuRL4zrc1iphxf7tnFuA4Vpx7d1JTDUts84uw@mail.gmail.com>
+References: <CALkWK0mU5O3Rqznkx-qn8VLFEgsMzOba1i8onSvf8X3FBeTs6g@mail.gmail.com>
+	<CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
+	<CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Kalle Olavi Niemitalo <kon@iki.fi>,
-	Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 20:49:01 2012
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 20:50:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXdWc-0000rT-08
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 20:48:58 +0100
+	id 1TXdYQ-0001gr-8K
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 20:50:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695Ab2KKTso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 14:48:44 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:56197 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752016Ab2KKTsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 14:48:43 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id BC507130045;
-	Sun, 11 Nov 2012 20:48:40 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1E56219F371;
-	Sun, 11 Nov 2012 20:48:38 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
-In-Reply-To: <20121111165706.GE19850@sigill.intra.peff.net>
+	id S1752923Ab2KKTuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 14:50:37 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:62189 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752131Ab2KKTug (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 14:50:36 -0500
+Received: by mail-ob0-f174.google.com with SMTP id uo13so5599167obb.19
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 11:50:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=9cjwekIl+Duidw2pTEh4xMJMXZ46sF7rJlq+AeyO9Y0=;
+        b=OpD3wch8/lknrFh0sLHE4oMBkt0taWSKAm4mL3tsDJOGsecSP7/vBTSnzn8Y3IEJYH
+         czjLl2KRyrjwDIG05uZ+Ov+RTOM48SudyxHxuPIo3B/rdaMsi65omqBiT/afYdYUYZoN
+         DK5KkdKBAaUfCKClFn+1D0W9MDBnoZRz0P4A5lKfLrcjibFdC6qfmV57NfTGo6N1m9Bt
+         N+6bkHGcu68jWojByTY+RikDwgApq81QqELQQLpe1R0La/4XicjPe0kxkaE7EXEH7BHL
+         cS2kXndAEHlalJgy7IYl90hjrweYGG29FEw3dQQpzy4S9qs8jKeKHCmsmk21/R8AGN06
+         TNQw==
+Received: by 10.60.12.233 with SMTP id b9mr13167231oec.95.1352663436005; Sun,
+ 11 Nov 2012 11:50:36 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Sun, 11 Nov 2012 11:50:35 -0800 (PST)
+In-Reply-To: <CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209441>
 
-Am 11.11.2012 17:57, schrieb Jeff King:
-> @@ -51,6 +51,8 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
->  		sigchain_push(SIGINT, SIG_IGN);
->  		ret = finish_command(&p);
->  		sigchain_pop(SIGINT);
-> +		if (WIFSIGNALED(ret) && WTERMSIG(ret) == SIGINT)
-> +			raise(SIGINT);
+On Sun, Nov 11, 2012 at 1:48 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> On Sun, Nov 11, 2012 at 11:32 AM, Ramkumar Ramachandra
+>> <artagnon@gmail.com> wrote:
+>>> I'm experiencing test failures in contrib/remote-helpers.
+>>
+>> Which are your versions of hg, and bzr?
+>
+> Mercurial Distributed SCM (version 1.9.1)
 
-The return value of finish_command() is already a digested version of
-waitpid's status value. According to
-Documentation/technical/api-run-command.txt:
+I can reproduce the issue, this fixes it for versions up to 1.8:
 
-. If the program terminated due to a signal, then the return value is
-the signal number - 128, ...
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -294,7 +294,7 @@ def export_ref(repo, name, kind, head):
+     if tip and tip == head.rev():
+         # nothing to do
+         return
+-    revs = repo.revs('%u:%u' % (tip, head))
++    revs = xrange(tip, head.rev() + 1)
+     count = 0
 
-the correct condition would be
+     revs = [rev for rev in revs if not marks.is_marked(rev)]
 
-		if (ret == SIGINT - 128)
+I don't think it makes sense to aim anything lower.
 
--- Hannes
+-- 
+Felipe Contreras
