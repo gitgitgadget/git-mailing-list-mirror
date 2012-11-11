@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 09/15] remote-testgit: exercise more features
-Date: Sun, 11 Nov 2012 14:59:46 +0100
-Message-ID: <1352642392-28387-10-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 11/15] remote-testgit: make clear the 'done' feature
+Date: Sun, 11 Nov 2012 14:59:48 +0100
+Message-ID: <1352642392-28387-12-git-send-email-felipe.contreras@gmail.com>
 References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -16,158 +16,69 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 15:01:28 2012
+X-From: git-owner@vger.kernel.org Sun Nov 11 15:01:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXY6E-0007s4-Uv
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:01:23 +0100
+	id 1TXY6M-0007td-12
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856Ab2KKOBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 09:01:07 -0500
+	id S1752603Ab2KKOBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 09:01:14 -0500
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:62032 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692Ab2KKOBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 09:01:04 -0500
+	with ESMTP id S1751692Ab2KKOBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 09:01:12 -0500
 Received: by mail-bk0-f46.google.com with SMTP id jk13so2062168bkc.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:01:03 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=FW6zHheh8D6mCoH5J7QonG+AyPCi+0VTcKmyeeZlNCk=;
-        b=Xkwy7Q9PkbRugNeiXdwIACOU5ru3ar9SUsqcuwONJSabjQ8SnMOaU9EZBREDiXVqIX
-         FROTpxGMyCzZqpgnyW/Asoz9KloNZLe3Om5XGOhDZzWj4kvHnNYkASCoIpTkSKVs4Vlg
-         UE19WElLgjbqgYvqU0zi+fGvh4kQUVcjIPptjkMyfaYCq99rBY4TyVNJhOhKsJ65AbQ9
-         /5GaOpEQnWjWbYhP6cBQ/eVARRzpFohA1XucP0YspFP4Ub7X/zSuq4rB4CR/V1Yz/zct
-         cS5EwRiX1qD+yRXbxaq3tsAlk7SvomWqNzseOZj5uR2DxY3fSPKG5JXWWMiANKxFFFTW
-         uNVQ==
-Received: by 10.204.148.214 with SMTP id q22mr5768962bkv.128.1352642463779;
-        Sun, 11 Nov 2012 06:01:03 -0800 (PST)
+        bh=0UyvuGbYRzGWxtcsUEHnLCBRIwf/Nbdl5cTxV5IvsdU=;
+        b=I101085cN1yVMeaWhBImpKGt9PS21kcoBvjQlTJgAgptdG5ouibHzryVC0+YxTRr/l
+         kps+vW8tBOqsuHFuPwS0ze7qzhCisdEFCbKgdph1w7qt77/8u884L5RecXE+SNx5nOfA
+         aydFqNVEGwT9GmCODDHI5w1EVaM3pN6CQlXotX1TK3m/cHGF5Wo56+nas6YRBYvn5VgG
+         y1UGu1sSOV0OrHVqtMMlbQq2bFavYFa6P70T9fMn6ktBhOU5FhlqkYvtMZhcMNLe9icd
+         mhVy5sjJcdTaPv4zwQPcA5ja7W4VJIBBc21yZXa7ZGX+RE9VWGt5sapllG7u7lxKBdHA
+         sa1A==
+Received: by 10.204.7.136 with SMTP id d8mr5901134bkd.85.1352642471361;
+        Sun, 11 Nov 2012 06:01:11 -0800 (PST)
 Received: from localhost (ip-109-43-0-127.web.vodafone.de. [109.43.0.127])
-        by mx.google.com with ESMTPS id go4sm1147162bkc.15.2012.11.11.06.01.01
+        by mx.google.com with ESMTPS id g8sm1491227bkv.6.2012.11.11.06.01.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Nov 2012 06:01:02 -0800 (PST)
+        Sun, 11 Nov 2012 06:01:10 -0800 (PST)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209366>
 
-Unfortunately they do not work.
+People seeking for reference would find it useful.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- git-remote-testgit        | 18 +++++++++++++----
- t/t5801-remote-helpers.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 4 deletions(-)
- mode change 100755 => 100644 t/t5801-remote-helpers.sh
+ git-remote-testgit | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/git-remote-testgit b/git-remote-testgit
-index fe73c36..31c7533 100755
+index 698effc..812321e 100755
 --- a/git-remote-testgit
 +++ b/git-remote-testgit
-@@ -6,24 +6,34 @@ url=$2
+@@ -55,8 +55,10 @@ while read line; do
  
- dir="$GIT_DIR/testgit/$alias"
- prefix="refs/testgit/$alias"
--refspec="refs/heads/*:${prefix}/heads/*"
-+
-+default_refspec="refs/heads/*:${prefix}/heads/*"
-+
-+refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
- 
- gitmarks="$dir/git.marks"
- testgitmarks="$dir/testgit.marks"
- 
-+test -z "$refspec" && prefix="refs"
-+
- export GIT_DIR="$url/.git"
- 
- mkdir -p "$dir"
- 
--test -e "$gitmarks" || > "$gitmarks"
--test -e "$testgitmarks" || > "$testgitmarks"
-+if [ -z "$GIT_REMOTE_TESTGIT_NO_MARKS" ]; then
-+	test -e "$gitmarks" || > "$gitmarks"
-+	test -e "$testgitmarks" || > "$testgitmarks"
-+else
-+	> "$gitmarks"
-+	> "$testgitmarks"
-+fi
- 
- while read line; do
- 	case $line in
- 	capabilities)
- 		echo 'import'
- 		echo 'export'
--		echo "refspec $refspec"
-+		test -n "$refspec" && echo "refspec $refspec"
- 		echo "*import-marks $gitmarks"
- 		echo "*export-marks $gitmarks"
- 		echo
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-old mode 100755
-new mode 100644
-index bc0b5f7..31940c9
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -110,4 +110,53 @@ test_expect_failure 'push new branch with old:new refspec' '
- 	compare_refs local HEAD server refs/heads/new-refspec
- '
- 
-+test_expect_failure 'cloning without refspec' '
-+	GIT_REMOTE_TESTGIT_REFSPEC="" \
-+	git clone "testgit::${PWD}/server" local2 &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
-+test_expect_failure 'pulling without refspecs' '
-+	(cd local2 &&
-+	git reset --hard &&
-+	GIT_REMOTE_TESTGIT_REFSPEC="" git pull) &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
-+test_expect_failure 'pushing without refspecs' '
-+	(cd local2 &&
-+	echo content >>file &&
-+	git commit -a -m three &&
-+	GIT_REMOTE_TESTGIT_REFSPEC="" git push) &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
-+test_expect_failure 'pulling with straight refspec' '
-+	(cd local2 &&
-+	GIT_REMOTE_TESTGIT_REFSPEC="*:*" git pull) &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
-+test_expect_failure 'pushing with straight refspec' '
-+	(cd local2 &&
-+	echo content >>file &&
-+	git commit -a -m three &&
-+	GIT_REMOTE_TESTGIT_REFSPEC="*:*" git push) &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
-+test_expect_failure 'pulling without marks' '
-+	(cd local2 &&
-+	GIT_REMOTE_TESTGIT_NO_MARKS=1 git pull) &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
-+test_expect_failure 'pushing without marks' '
-+	(cd local2 &&
-+	echo content >>file &&
-+	git commit -a -m three &&
-+	GIT_REMOTE_TESTGIT_NO_MARKS=1 git push) &&
-+	compare_refs local2 HEAD server HEAD
-+'
-+
- test_done
+ 		echo "feature import-marks=$gitmarks"
+ 		echo "feature export-marks=$gitmarks"
+-		git fast-export --use-done-feature --{import,export}-marks="$testgitmarks" $refs | \
++		echo "feature done"
++		git fast-export --{import,export}-marks="$testgitmarks" $refs | \
+ 			sed -e "s#refs/heads/#${prefix}/heads/#g"
++		echo "done"
+ 		;;
+ 	export)
+ 		before=$(git for-each-ref --format='%(refname) %(objectname)')
 -- 
 1.8.0
