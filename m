@@ -1,118 +1,127 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Test failures in contrib/remote-helpers
-Date: Sun, 11 Nov 2012 16:02:48 +0530
-Message-ID: <CALkWK0mU5O3Rqznkx-qn8VLFEgsMzOba1i8onSvf8X3FBeTs6g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Sun, 11 Nov 2012 02:33:45 -0800
+Message-ID: <7vzk2oo2d2.fsf@alter.siamese.dyndns.org>
+References: <cover.1352431674.git.wking@tremily.us>
+ <fb2d915cf60160c200b84df88c6112c1c2d4eefd.1352431674.git.wking@tremily.us>
+ <7v390jqlep.fsf@alter.siamese.dyndns.org> <20121110184437.GC2739@mjolnir>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 11 11:33:29 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sun Nov 11 11:34:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXUqz-0007bQ-Q9
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 11:33:26 +0100
+	id 1TXUrb-0007zl-8s
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 11:34:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496Ab2KKKdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 05:33:12 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:39544 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933Ab2KKKdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 05:33:11 -0500
-Received: by mail-wi0-f178.google.com with SMTP id hr7so1636285wib.1
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 02:33:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=XgAdicgX0QjSi1cAfkBranvqF/bVEN4j8yOz0Djc1vY=;
-        b=JyzgLIVwxAjeLQjG/lvDU6PJ8rbBn64Wstoz8J0hoLfSuisikd4JbfjaWff9OO/Yvr
-         4D80B5sNGmf8ODNp/fpywLpij/lJF2PeQsOHLR83zFEHnkDX28Vfic9KfHT/gOLrCpfB
-         7BU/JWGk9gNDEZBnyzpJDS0Bdl3rrSCKZa7fmZr87tEkIYrB4Sy7NE/bDRFN90OFMt3l
-         9CXj1LRvea3VO+k4khWsA2WlDZ2v6y4cFQhCNhVgfAbErjx1w8QJnbYCoBPJj8GBd5Ro
-         wDhxtKaXuu4g31wNuJYJiMwglwSleqTSk1MKdkh99kbn1OdyBlESLN8zjQfSG8EiQE1O
-         tlhQ==
-Received: by 10.216.140.33 with SMTP id d33mr6595567wej.68.1352629989794; Sun,
- 11 Nov 2012 02:33:09 -0800 (PST)
-Received: by 10.217.61.2 with HTTP; Sun, 11 Nov 2012 02:32:48 -0800 (PST)
+	id S1751696Ab2KKKdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 05:33:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32902 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750969Ab2KKKdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 05:33:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DCD79115;
+	Sun, 11 Nov 2012 05:33:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lM1ccDoerhWG+7Bg5Oqi9an8380=; b=U61CU/
+	6zqNaRw5wxwbpr0+oQN1uCUxYFH/IxrXDO2PCzEAypoe6l5c4JETvtUCcQFrZrNH
+	k0znvA/MIqpt0CDPMVkNmJEFANYE418MroN11V5QITMVnpohNOs1pNtiMRCTOaNr
+	NVIiPJK8XCHlHfY6312jJVFqBcVqzSOSVkg6Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z20MLWVmg0sICIMNLHK3+fySHVXDco18
+	oiSPhrvf82TKEHar3OpbDkiG1V2uS+YlCNHLiv6ajQ5r+CokvWs3f+/nNUS65nTr
+	Hco5RcndV7/RR+sa1noooZ9oAgkF18tBwlK74Q4aILVY3wuX4M37dhUU0/qFJO73
+	b+coTj0JbhM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6ACEC9114;
+	Sun, 11 Nov 2012 05:33:48 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96C769113; Sun, 11 Nov 2012
+ 05:33:47 -0500 (EST)
+In-Reply-To: <20121110184437.GC2739@mjolnir> (W. Trevor King's message of
+ "Sat, 10 Nov 2012 13:44:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4698E27A-2BEB-11E2-ACE2-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209333>
 
-Hi,
+"W. Trevor King" <wking@tremily.us> writes:
 
-I'm experiencing test failures in contrib/remote-helpers.
+> On Thu, Nov 08, 2012 at 11:34:54PM -0800, Junio C Hamano wrote:
+>
+>> I would not object to "git config submodule.$name.branch $value", on
+>> the other hand.  "git config" can be used to set a piece of data
+>> that has specific meaning, but as a low-level tool, it is not
+>> _limited_ to variables that have defined meaning.
+>
+> This is what I'm doing now:
+>
+>   $ git submodule add -b <branch> <repo> <path>
+>   $ git config --file .gitmodules submodule.<path>.branch <branch>
+>   $ git submodule foreach 'git checkout $(git config --file $toplevel/.gitmodules submodule.$name.branch) && git pull'
+>
+> With my second patch (Phil's config export), that becomes
+>
+>   $ git submodule add -b <branch> <repo> <path>
+>   $ git config --file .gitmodules submodule.<path>.branch <branch>
+>   $ git submodule foreach 'git checkout $submodule_branch && git pull'
+>
+> With my first patch, that becomes
+>
+>   $ git submodule add -rb <branch> <repo> <path>
+>   $ git submodule foreach 'git checkout $submodule_branch && git pull'
+>
+> This seems pretty useful to me,...
 
->From the first test in test-bzr.sh:
+Ah, this reminds me of another thing I noticed when I saw that
+patch.  The change seems to think "branch" is the _only_ thing the
+user might want to record per submodule upon "git submodule add".
+As an interface to muck with an uninterpreted random configuration,
+it squats on a good option name for setting one single and arbitrary
+variable---quite a selfish change that is not acceptable.
 
-Traceback (most recent call last):
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-bzr",
-line 672, in <module>
-    sys.exit(main(sys.argv))
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-bzr",
-line 651, in main
-    repo = get_repo(url, alias)
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-bzr",
-line 608, in get_repo
-    origin = bzrlib.controldir.ControlDir.open(url)
-AttributeError: type object 'ControlDir' has no attribute 'open'
+Calling the option "--record-branch-for-submodule" or something more
+specific might alleviate the problem, but then it would become even
+less useful as a short-hand for "config submodule.$name.branch", I
+would suspect.
 
->From the first test in test-hg.sh:
+On the other hand, if this were one small part of a series to define
+the "tip following mode" where (at least)
 
-Traceback (most recent call last):
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 785, in <module>
-    sys.exit(main(sys.argv))
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 773, in main
-    do_import(parser)
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 500, in do_import
-    export_head(repo)
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 397, in export_head
-    export_ref(repo, g_head[0], 'bookmarks', g_head[1])
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 297, in export_ref
-    revs = repo.revs('%u:%u' % (tip, head))
-AttributeError: 'localrepository' object has no attribute 'revs'
-fatal: stream ends early
-fast-import: dumping crash report to
-/home/likewise-open/ANT/ramkum/src/git/t/trash
-directory.test-hg/gitrepo/.git/fast_import_crash_24346
-fatal: Error while running fast-import
+ (1) "git submodule update [$path]" makes sure that the checkout of
+     the submodule at $path matches the commit at the tip of the
+     branch named by submodule.$name.branch in .gitmodules of the
+     superproject, instead of the commit that is recorded in the
+     index of the superproject; and
 
->From the first test in test-hg-bidi.sh:
+ (2) "git diff [$path]" and friends in the superproject compares the
+     HEAD of the checkout of the submodule at $path with the tip of
+     the branch named by submodule.$name.branch in .gitmodules of
+     the superproject, instead of the commit that is recorded in the
+     index of the superproject.
 
-Traceback (most recent call last):
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 785, in <module>
-    sys.exit(main(sys.argv))
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 773, in main
-    do_import(parser)
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 500, in do_import
-    export_head(repo)
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 397, in export_head
-    export_ref(repo, g_head[0], 'bookmarks', g_head[1])
-  File "/home/likewise-open/ANT/ramkum/src/git/contrib/remote-helpers/git-remote-hg",
-line 297, in export_ref
-    revs = repo.revs('%u:%u' % (tip, head))
-AttributeError: 'localrepository' object has no attribute 'revs'
-fatal: stream ends early
-fast-import: dumping crash report to
-/home/likewise-open/ANT/ramkum/src/git/t/trash
-directory.test-hg-bidi/tmp/gitrepo2/.git/fast_import_crash_25121
-fatal: Error while running fast-import
+and the option were called something like "--follow-branch=$branch",
+it would make much more sense for its initial implementation to set
+the name of the branch to submodule.$name.branch variable.  Later
+iterations of such a feature may want to do more than just setting
+that single variable but that is a part of the implementation detail
+of the tip following mode the users do not have to know about, just
+like setting the submodule.$name.branch variable is.
 
-I can't `import hggit` (I don't know how hg-git is distributed), so I
-didn't run test-hg-hg-git.sh.
-
-I'm currently investigating.
-
-Ram
+So in that sense, too, I would be somewhat unhappy to see this
+change in the current form to go in.
