@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 5/7] remote-bzr: add simple tests
-Date: Sun, 11 Nov 2012 15:19:56 +0100
-Message-ID: <1352643598-8500-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 2/7] remote-bzr: add support for pushing
+Date: Sun, 11 Nov 2012 15:19:53 +0100
+Message-ID: <1352643598-8500-3-git-send-email-felipe.contreras@gmail.com>
 References: <1352643598-8500-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -13,163 +13,428 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXYOy-0007nI-OZ
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:20:45 +0100
+	id 1TXYOx-0007nI-AF
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Nov 2012 15:20:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867Ab2KKOUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2012 09:20:33 -0500
+	id S1752204Ab2KKOUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 09:20:23 -0500
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:47320 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752864Ab2KKOUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2012 09:20:31 -0500
+	with ESMTP id S1752171Ab2KKOUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 09:20:22 -0500
 Received: by mail-bk0-f46.google.com with SMTP id jk13so2064575bkc.19
-        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:20:30 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 11 Nov 2012 06:20:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=G5WTmEWZGGzXd5ppI3huWB1c2q6eUZsrtJku8K20bOY=;
-        b=JJz4sIFpKgk0DcB4YnP5W5T9qZSkn9TLPHl8wPTQW0axR1U5xOfIDvv/lcYPL6jQBm
-         cPAzCELzOJ8bSO3KFZ9yzVcIOPc+CiA9PYpac3a/dta7igU1C8zYVSt27W5gdgRP9etC
-         HdoxWw9uwIG2oIKmERq6O9pJcrJ9ktGwUYEplfYb8wtccfnxNRDfenRsQR1iHlpkBZ2t
-         bnWRZsnM/D3zS9MUv9uBgRZN86le3N41t3KftNd6pmplGB3AexPsJbGzzpP/n2cxd6mC
-         8Zazg6tEoZDpgmCiiJfbXulAkUnei01NKmXCOjy5Hfqyz4Fr3AmErifG0ixfMf0tTIa2
-         qP0w==
-Received: by 10.204.157.144 with SMTP id b16mr5917612bkx.19.1352643630589;
-        Sun, 11 Nov 2012 06:20:30 -0800 (PST)
+        bh=km1CAOw7scruU8dmlYgoIH2/N7CEZxIyveIekpoxGVM=;
+        b=pWLQhu47mhac4HK1ovmqp13MGUsGArnU8B8pFzST/tSLZDHWy9Z2CuddP+udY59f8a
+         JO/a3rQDikQ9cjTHMf8Wt1Yd3IWUJ4ep56jBfgW7Ne29CDY21dOoX9x+t+JAyBCea4up
+         iGq/M4b+dDI97/f+uwFJQSphG6VwsHwPFuldEDoeEGy2pNIfIAG3VmfmpIsMaMeA3E2x
+         VYPtPHSOl+T1Ip88gpfEmA45fsUTg9s+0LqqiGmKBxw4VfpLEviCcPlBDC+fuBOW6OJu
+         SY/TM1RNvh+Un12LNk9mIpBnZtNAlP38T3gJ9PlUUjZ4MgLPRkkL+zxC4HVvLqTQcxgu
+         PIbA==
+Received: by 10.204.147.212 with SMTP id m20mr1079871bkv.103.1352643621204;
+        Sun, 11 Nov 2012 06:20:21 -0800 (PST)
 Received: from localhost (ip-109-43-0-127.web.vodafone.de. [109.43.0.127])
-        by mx.google.com with ESMTPS id go4sm1162594bkc.15.2012.11.11.06.20.28
+        by mx.google.com with ESMTPS id n27sm1510316bkw.0.2012.11.11.06.20.19
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Nov 2012 06:20:29 -0800 (PST)
+        Sun, 11 Nov 2012 06:20:20 -0800 (PST)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1352643598-8500-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209378>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/test-bzr.sh | 111 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 111 insertions(+)
- create mode 100755 contrib/remote-helpers/test-bzr.sh
+ contrib/remote-helpers/git-remote-bzr | 295 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 295 insertions(+)
 
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-new file mode 100755
-index 0000000..8594ffc
---- /dev/null
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -0,0 +1,111 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 Felipe Contreras
-+#
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index b6be9d6..8366234 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -22,13 +22,17 @@ bzrlib.initialize()
+ import bzrlib.plugin
+ bzrlib.plugin.load_plugins()
+ 
++import bzrlib.generate_ids
 +
-+test_description='Test remote-bzr'
+ import sys
+ import os
+ import json
+ import re
++import StringIO
+ 
+ NAME_RE = re.compile('^([^<>]+)')
+ AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]*)>$')
++RAW_AUTHOR_RE = re.compile('^(\w+) (.+)? <(.*)> (\d+) ([+-]\d+)')
+ 
+ def die(msg, *args):
+     sys.stderr.write('ERROR: %s\n' % (msg % args))
+@@ -46,6 +50,7 @@ class Marks:
+         self.path = path
+         self.tips = {}
+         self.marks = {}
++        self.rev_marks = {}
+         self.last_mark = 0
+         self.load()
+ 
+@@ -58,6 +63,9 @@ class Marks:
+         self.marks = tmp['marks']
+         self.last_mark = tmp['last-mark']
+ 
++        for rev, mark in self.marks.iteritems():
++            self.rev_marks[mark] = rev
 +
-+. ./test-lib.sh
+     def dict(self):
+         return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark }
+ 
+@@ -70,6 +78,9 @@ class Marks:
+     def from_rev(self, rev):
+         return self.marks[rev]
+ 
++    def to_rev(self, mark):
++        return self.rev_marks[mark]
 +
-+if ! test_have_prereq PYTHON; then
-+	skip_all='skipping remote-bzr tests; python not available'
-+	test_done
-+fi
+     def next_mark(self):
+         self.last_mark += 1
+         return self.last_mark
+@@ -82,6 +93,11 @@ class Marks:
+     def is_marked(self, rev):
+         return self.marks.has_key(rev)
+ 
++    def new_mark(self, rev, mark):
++        self.marks[rev] = mark
++        self.rev_marks[mark] = rev
++        self.last_mark = mark
 +
-+if ! "$PYTHON_PATH" -c 'import bzrlib'; then
-+	skip_all='skipping remote-bzr tests; bzr not available'
-+	test_done
-+fi
+     def get_tip(self, branch):
+         return self.tips.get(branch, None)
+ 
+@@ -116,10 +132,35 @@ class Parser:
+         if self.line == 'done':
+             self.line = None
+ 
++    def get_mark(self):
++        i = self.line.index(':') + 1
++        return int(self.line[i:])
 +
-+cmd=<<EOF
-+import bzrlib
-+bzrlib.initialize()
-+import bzrlib.plugin
-+bzrlib.plugin.load_plugins()
-+import bzrlib.plugins.fastimport
-+EOF
++    def get_data(self):
++        if not self.check('data'):
++            return None
++        i = self.line.index(' ') + 1
++        size = int(self.line[i:])
++        return sys.stdin.read(size)
 +
-+if ! "$PYTHON_PATH" -c "$cmd"; then
-+	echo "consider setting BZR_PLUGIN_PATH=$HOME/.bazaar/plugins" 1>&2
-+	skip_all='skipping remote-bzr tests; bzr-fastimport not available'
-+	test_done
-+fi
++    def get_author(self):
++        m = RAW_AUTHOR_RE.match(self.line)
++        if not m:
++            return None
++        _, name, email, date, tz = m.groups()
++        committer = '%s <%s>' % (name, email)
++        tz = int(tz)
++        tz = ((tz / 100) * 3600) + ((tz % 100) * 60)
++        return (committer, int(date), tz)
 +
-+check () {
-+	(cd $1 &&
-+	git log --format='%s' -1 &&
-+	git symbolic-ref HEAD) > actual &&
-+	(echo $2 &&
-+	echo "refs/heads/$3") > expected &&
-+	test_cmp expected actual
-+}
+ def rev_to_mark(rev):
+     global marks
+     return marks.from_rev(rev)
+ 
++def mark_to_rev(mark):
++    global marks
++    return marks.to_rev(mark)
 +
-+bzr whoami "A U Thor <author@example.com>"
+ def fixup_user(user):
+     name = mail = None
+     user = user.replace('"', '')
+@@ -295,9 +336,255 @@ def do_import(parser):
+ 
+     sys.stdout.flush()
+ 
++def parse_blob(parser):
++    global blob_marks
 +
-+test_expect_success 'cloning' '
-+  (bzr init bzrrepo &&
-+  cd bzrrepo &&
-+  echo one > content &&
-+  bzr add content &&
-+  bzr commit -m one
-+  ) &&
++    parser.next()
++    mark = parser.get_mark()
++    parser.next()
++    data = parser.get_data()
++    blob_marks[mark] = data
++    parser.next()
 +
-+  git clone "bzr::$PWD/bzrrepo" gitrepo &&
-+  check gitrepo one master
-+'
++class CustomTree():
 +
-+test_expect_success 'pulling' '
-+  (cd bzrrepo &&
-+  echo two > content &&
-+  bzr commit -m two
-+  ) &&
++    def __init__(self, repo, revid, parents, files):
++        global files_cache
 +
-+  (cd gitrepo && git pull) &&
++        self.repo = repo
++        self.revid = revid
++        self.parents = parents
++        self.updates = files
 +
-+  check gitrepo two master
-+'
++        def copy_tree(revid):
++            files = files_cache[revid] = {}
++            tree = repo.repository.revision_tree(revid)
++            repo.lock_read()
++            try:
++                for path, entry in tree.iter_entries_by_dir():
++                    files[path] = entry.file_id
++            finally:
++                repo.unlock()
++            return files
 +
-+test_expect_success 'pushing' '
-+  (cd gitrepo &&
-+  echo three > content &&
-+  git commit -a -m three &&
-+  git push
-+  ) &&
++        if len(parents) == 0:
++            self.base_id = bzrlib.revision.NULL_REVISION
++            self.base_files = {}
++        else:
++            self.base_id = parents[0]
++            self.base_files = files_cache.get(self.base_id, None)
++            if not self.base_files:
++                self.base_files = copy_tree(self.base_id)
 +
-+  echo three > expected &&
-+  cat bzrrepo/content > actual &&
-+  test_cmp expected actual
-+'
++        self.files = files_cache[revid] = self.base_files.copy()
 +
-+test_expect_success 'roundtrip' '
-+  (cd gitrepo &&
-+  git pull &&
-+  git log --format="%s" -1 origin/master > actual) &&
-+  echo three > expected &&
-+  test_cmp expected actual &&
++    def last_revision(self):
++        return self.base_id
 +
-+  (cd gitrepo && git push && git pull) &&
++    def iter_changes(self):
++        changes = []
 +
-+  (cd bzrrepo &&
-+  echo four > content &&
-+  bzr commit -m four
-+  ) &&
++        def get_parent(dirname, basename):
++            parent_fid = self.base_files.get(dirname, None)
++            if parent_fid:
++                return parent_fid
++            parent_fid = self.files.get(dirname, None)
++            if parent_fid:
++                return parent_fid
++            if basename == '':
++                return None
++            d = add_entry(dirname, 'directory')
++            return d[0]
 +
-+  (cd gitrepo && git pull && git push) &&
++        def add_entry(path, kind):
++            dirname, basename = os.path.split(path)
++            parent_fid = get_parent(dirname, basename)
++            fid = bzrlib.generate_ids.gen_file_id(path)
++            change = (fid,
++                    (None, path),
++                    True,
++                    (False, True),
++                    (None, parent_fid),
++                    (None, basename),
++                    (None, kind),
++                    (None, False))
++            self.files[path] = change[0]
++            changes.append(change)
++            return change
 +
-+  check gitrepo four master &&
++        def update_entry(path, kind):
++            dirname, basename = os.path.split(path)
++            fid = self.base_files[path]
++            parent_fid = get_parent(dirname, basename)
++            change = (fid,
++                    (path, path),
++                    True,
++                    (True, True),
++                    (None, parent_fid),
++                    (None, basename),
++                    (None, kind),
++                    (None, False))
++            self.files[path] = change[0]
++            changes.append(change)
++            return change
 +
-+  (cd gitrepo &&
-+  echo five > content &&
-+  git commit -a -m five &&
-+  git push && git pull
-+  ) &&
++        def remove_entry(path, kind):
++            dirname, basename = os.path.split(path)
++            fid = self.base_files[path]
++            parent_fid = get_parent(dirname, basename)
++            change = (fid,
++                    (path, None),
++                    True,
++                    (True, False),
++                    (parent_fid, None),
++                    (None, None),
++                    (None, None),
++                    (None, None))
++            del self.files[path]
++            changes.append(change)
++            return change
 +
-+  (cd bzrrepo && bzr revert) &&
++        for path, f in self.updates.iteritems():
++            if 'deleted' in f:
++                remove_entry(path, 'file')
++            elif path in self.base_files:
++                update_entry(path, 'file')
++            else:
++                add_entry(path, 'file')
 +
-+  echo five > expected &&
-+  cat bzrrepo/content > actual &&
-+  test_cmp expected actual
-+'
++        return changes
 +
-+test_done
++    def get_file_with_stat(self, file_id, path=None):
++        return (StringIO.StringIO(self.updates[path]['data']), None)
++
++def parse_commit(parser):
++    global marks, blob_marks, bmarks, parsed_refs
++    global mode
++
++    parents = []
++
++    ref = parser[1]
++    parser.next()
++
++    if ref != 'refs/heads/master':
++        die("bzr doesn't support multiple branches; use 'master'")
++
++    commit_mark = parser.get_mark()
++    parser.next()
++    author = parser.get_author()
++    parser.next()
++    committer = parser.get_author()
++    parser.next()
++    data = parser.get_data()
++    parser.next()
++    if parser.check('from'):
++        parents.append(parser.get_mark())
++        parser.next()
++    while parser.check('merge'):
++        parents.append(parser.get_mark())
++        parser.next()
++
++    files = {}
++
++    for line in parser:
++        if parser.check('M'):
++            t, m, mark_ref, path = line.split(' ', 3)
++            mark = int(mark_ref[1:])
++            f = { 'mode' : m, 'data' : blob_marks[mark] }
++        elif parser.check('D'):
++            t, path = line.split(' ')
++            f = { 'deleted' : True }
++        else:
++            die('Unknown file command: %s' % line)
++        files[path] = f
++
++    repo = parser.repo
++
++    committer, date, tz = committer
++    parents = [str(mark_to_rev(p)) for p in parents]
++    revid = bzrlib.generate_ids.gen_revision_id(committer, date)
++    props = {}
++    props['branch-nick'] = repo.nick
++
++    mtree = CustomTree(repo, revid, parents, files)
++    changes = mtree.iter_changes()
++
++    repo.lock_write()
++    try:
++        builder = repo.get_commit_builder(parents, None, date, tz, committer, props, revid, False)
++        try:
++            list(builder.record_iter_changes(mtree, mtree.last_revision(), changes))
++            builder.finish_inventory()
++            builder.commit(data.decode('utf-8', 'replace'))
++        except Exception, e:
++            builder.abort()
++            raise
++    finally:
++        repo.unlock()
++
++    parsed_refs[ref] = revid
++    marks.new_mark(revid, commit_mark)
++
++def parse_reset(parser):
++    global parsed_refs
++
++    ref = parser[1]
++    parser.next()
++
++    if ref != 'refs/heads/master':
++        die("bzr doesn't support multiple branches; use 'master'")
++
++    # ugh
++    if parser.check('commit'):
++        parse_commit(parser)
++        return
++    if not parser.check('from'):
++        return
++    from_mark = parser.get_mark()
++    parser.next()
++
++    parsed_refs[ref] = mark_to_rev(from_mark)
++
++def do_export(parser):
++    global parsed_refs, dirname
++
++    parser.next()
++
++    for line in parser.each_block('done'):
++        if parser.check('blob'):
++            parse_blob(parser)
++        elif parser.check('commit'):
++            parse_commit(parser)
++        elif parser.check('reset'):
++            parse_reset(parser)
++        elif parser.check('tag'):
++            pass
++        elif parser.check('feature'):
++            pass
++        else:
++            die('unhandled export command: %s' % line)
++
++    repo = parser.repo
++
++    for ref, revid in parsed_refs.iteritems():
++        if ref == 'refs/heads/master':
++            repo.generate_revision_history(revid, marks.get_tip('master'))
++        print "ok %s" % ref
++    print
++
+ def do_capabilities(parser):
++    global dirname
++
+     print "import"
++    print "export"
+     print "refspec refs/heads/*:%s/heads/*" % prefix
++
++    path = os.path.join(dirname, 'marks-git')
++
++    if os.path.exists(path):
++        print "*import-marks %s" % path
++    print "*export-marks %s" % path
++
+     print
+ 
+ def do_list(parser):
+@@ -316,6 +603,9 @@ def get_repo(url, alias):
+ def main(args):
+     global marks, prefix, dirname
+     global tags, filenodes
++    global blob_marks
++    global parsed_refs
++    global files_cache
+ 
+     alias = args[1]
+     url = args[2]
+@@ -323,6 +613,9 @@ def main(args):
+     prefix = 'refs/bzr/%s' % alias
+     tags = {}
+     filenodes = {}
++    blob_marks = {}
++    parsed_refs = {}
++    files_cache = {}
+ 
+     gitdir = os.environ['GIT_DIR']
+     dirname = os.path.join(gitdir, 'bzr', alias)
+@@ -343,6 +636,8 @@ def main(args):
+             do_list(parser)
+         elif parser.check('import'):
+             do_import(parser)
++        elif parser.check('export'):
++            do_export(parser)
+         else:
+             die('unhandled command: %s' % line)
+         sys.stdout.flush()
 -- 
 1.8.0
