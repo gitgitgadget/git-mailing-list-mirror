@@ -1,104 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2] replace: parse revision argument for -d
-Date: Mon, 12 Nov 2012 09:51:34 +0100
-Message-ID: <50A0B896.8050700@drmicha.warpmail.net>
-References: <508E55B2.6060502@drmicha.warpmail.net> <24b0f81315ddab8cc37133d5b3bec8aec90ed652.1351516888.git.git@drmicha.warpmail.net> <20121109164808.GE19725@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Documentation/log: fix description of format.pretty
+Date: Mon, 12 Nov 2012 15:09:38 +0530
+Message-ID: <CALkWK0nR_9mWDKzKygR379x3L=d4bGKKo27AP-2Y=+coc7H+sQ@mail.gmail.com>
+References: <CALkWK0=hdmYF2VoOZY4F7+yPD8D0rBnPY-tvp5pryRWp-0WBeg@mail.gmail.com>
+ <20121112080527.GB3581@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 12 09:51:52 2012
+Cc: Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 10:40:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXpkF-00038D-38
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 09:51:51 +0100
+	id 1TXqV4-0001PA-V4
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 10:40:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab2KLIvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 03:51:36 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:34213 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751489Ab2KLIvg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 03:51:36 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8143620677;
-	Mon, 12 Nov 2012 03:51:35 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 12 Nov 2012 03:51:35 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=UG2/2KAolnxnd0oIfpxIhI
-	8U40k=; b=WJG4eCiOu872H07Sx6L1mgKa4fvzaGD7aE/ya7KeX256wqYg69Mf8u
-	iujwGL5Eo1DoEw9AJ4rVjkldmt5Qm3nu4C4hVzyE7Fbo2BNXplPWL+DJpql04Gje
-	pjAm4+wL0hghQd86H0CqTmWG70uXxRPa0m1tJN3BnQnt2aAyz7hk4=
-X-Sasl-enc: CHxHNb/UdBcqFq685bQNIe3xExGRuDJ+5P50MignU4yE 1352710295
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 01A068E0515;
-	Mon, 12 Nov 2012 03:51:34 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
-In-Reply-To: <20121109164808.GE19725@sigill.intra.peff.net>
+	id S1751251Ab2KLJj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 04:39:59 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:60380 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750929Ab2KLJj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 04:39:58 -0500
+Received: by mail-ob0-f174.google.com with SMTP id uo13so5997871obb.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 01:39:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qOg8anwcCM3aP9Q24kFpLZvleSloFXKEA3HLE3PkfPI=;
+        b=uNHcsRl42Czeu8FuHY4dmuOWhMbVe0fBuajHKx1aCvhUbCddaxyQ8D9yXd9H8bbm34
+         pRWFePo/g4GPFaAyHmWnqMVJDHFxBic3dErPW3K2ZCeycd1OHFMXMnuwuDWvh0j/jIB3
+         sshmTbvn0RNwlTLfrDBki50SF2cxSQ6SNCXGHwc7/9eCxCSLOQIWp/Tmgo+E61j91sq1
+         NwbFJsBoiANbESoxaeEvZTkA0zxnIyx9yYG+m9LiaLUxe+5eJ4RD7KBLZt7gmYYdrnk5
+         +AIfvH4gc1Dz29jAK5Swxv+BzumdSMlpOKyCpwvviGjWLp/+OVxxAPqCegfVXLGHVjJ9
+         7/7A==
+Received: by 10.60.31.199 with SMTP id c7mr13897401oei.126.1352713198266; Mon,
+ 12 Nov 2012 01:39:58 -0800 (PST)
+Received: by 10.76.168.40 with HTTP; Mon, 12 Nov 2012 01:39:38 -0800 (PST)
+In-Reply-To: <20121112080527.GB3581@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209473>
 
-Jeff King venit, vidit, dixit 09.11.2012 17:48:
-> On Mon, Oct 29, 2012 at 02:23:27PM +0100, Michael J Gruber wrote:
-> 
->> 'git replace' parses the revision arguments when it creates replacements
->> (so that a sha1 can be abbreviated, e.g.) but not when deleting
->> replacements.
->>
->> Make it parse the arguments to 'replace -d' in the same way.
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->> v2 has the simplified error check as per Jeff, and a reworded message.
->> Comes with a free test case, too.
-> 
-> I noticed this today in my pile of "to look at" patches. Sorry for being
-> slow.
+Hi Jonathan,
 
-No problem. This is not urgent, and it takes some effort to look at code
-amongst all those black-and-white discussions. [It even takes effort to
-refrain from responding when you words are being twisted around...]
+Jonathan Nieder wrote:
+> Hi Ram,
+>
+> Ramkumar Ramachandra wrote:
+>
+>> 59893a88 (Documentation/log: add a CONFIGURATION section, 2010-05-08)
+>> mentioned that `format.pretty` is the default for the `--format`
+>> option.  Such an option never existed,
+>
+> False.  Have you tried it?
 
->>  	for (p = argv; *p; p++) {
->> -		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
->> -					>= sizeof(ref)) {
->> -			error("replace ref name too long: %.*s...", 50, *p);
->> +		q = *p;
->> +		if (get_sha1(q, sha1)) {
->> +			error("Failed to resolve '%s' as a valid ref.", q);
->>  			had_error = 1;
->>  			continue;
->>  		}
-> 
-> Looks reasonable.
-> 
->> +		q = sha1_to_hex(sha1);
->> +		snprintf(ref, sizeof(ref), "refs/replace/%s", q);
->>  		if (read_ref(ref, sha1)) {
->> -			error("replace ref '%s' not found.", *p);
->> +			error("replace ref '%s' not found.", q);
-> 
-> I worry a little about assuming that "q", which points to a static
-> internal buffer of sha1_to_hex, is still valid after calling read_ref.
-> We'll end up in resolve_ref, which might need to do considerable work
-> (e.g., loading the whole packed refs file). Just grepping for
-> sha1_to_hex, I don't think it is a problem currently, but it might be
-> worth copying the value (you could even point into the "ref" buffer to
-> avoid dealing with an extra allocation).
+Oops, I read about `--pretty` in pretty-formats.txt and didn't realize
+that `--format` existed.  However, your patch is still wrong because
+there seems to be a subtle (and confusing) difference between
+`--pretty` and `--format`.  In the latter, you can't omit the format,
+and expect it to be picked up from format.pretty:
 
-We could just leave '*p' as it is (after all, that was the user input),
-or use 'ref+strlen("refs/replace/")'.
+  $ git log --format
+  fatal: unrecognized argument: --format
 
-I wasn't aware of the volatile nature of the return value. Thanks for
-spotting!
+Instead, you have to specify the format explicitly:
 
-Michael
+  $ git log --format=medium
+
+So, we should change the commit message in my patch?
+
+Ram
