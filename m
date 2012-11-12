@@ -1,93 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/8] Fix GIT_CEILING_DIRECTORIES that contain symlinks
-Date: Mon, 12 Nov 2012 09:47:25 -0800
-Message-ID: <7v4nkuiuhe.fsf@alter.siamese.dyndns.org>
-References: <1350799057-13846-1-git-send-email-mhagger@alum.mit.edu>
- <7v7gqkgvxe.fsf@alter.siamese.dyndns.org>
- <CAJDDKr4ki+NjSeuZpAU6bM=YAQ_3mdHCtawstdCqe9Ewvp=arQ@mail.gmail.com>
- <508E0FAC.5050600@alum.mit.edu>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCHv3 3/4] git-status: show short sequencer state
+Date: Mon, 12 Nov 2012 13:14:50 -0500
+Message-ID: <50A13C9A.8070108@cisco.com>
+References: <1351553513-20385-1-git-send-email-hordp@cisco.com> <1352487385-5929-1-git-send-email-hordp@cisco.com> <1352487385-5929-4-git-send-email-hordp@cisco.com> <7vip9aiuk8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	David Reiss <dreiss@facebook.com>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	"Lars R. Damerow" <lars@pixar.com>, Jeff King <peff@peff.net>,
-	Marc Jordan <marc.jordan@disneyanimation.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:47:46 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, phil.hord@gmail.com,
+	Jeff King <peff@peff.net>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 19:15:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXy6p-0007FQ-0B
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:47:43 +0100
+	id 1TXyXL-0003Sr-IE
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 19:15:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753994Ab2KLRr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 12:47:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43768 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753988Ab2KLRr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 12:47:28 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB010976A;
-	Mon, 12 Nov 2012 12:47:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=EqW1YWkOt08FpMCn/z+lzpHzh9s=; b=qcfqPFHcJfmDZ8/HN+Vn
-	cMObaVoPhzZQmsaRfcIDd9tA7ClfIak4s4pQX4XzdipHVoFECu8SJjFi4kBL38nX
-	0lJlHCDNz/4E6cCS0b+jMptVSE1l4Knfv4LZtWoO2PXU2E5WlDlnXp/jVakkNWXf
-	w3QOpkW1kqoeo19d1jLk/VU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=RtMBk6u+n4eP0JtiDDZxkNUgNKd3OkrecQrEP2OpGqXPkM
-	T+CuZ0fow+sYVIzIfOfQb/MuVCQBLWaKPlgO2BVTj1IVyZL+cppWQphN06wp9IbW
-	PggB0m2sEQKM6kN3/HgVEgiLyNrNVLxPWuVgNJc8yNtYgfFQE4dDRNVhbxPnI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D84649769;
-	Mon, 12 Nov 2012 12:47:27 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 387B89766; Mon, 12 Nov 2012
- 12:47:27 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 05ED3224-2CF1-11E2-A9BF-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751573Ab2KLSOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 13:14:53 -0500
+Received: from rcdn-iport-6.cisco.com ([173.37.86.77]:49188 "EHLO
+	rcdn-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988Ab2KLSOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 13:14:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=1748; q=dns/txt; s=iport;
+  t=1352744093; x=1353953693;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=3qSOyV94SKpIpEegg622eZQqGoPZRxSrTRFJ396gIOw=;
+  b=NbXyUkE5by+RhE35Ey84WhqsdlMfJKlXL2d8vMm4W6vp3fvUvsU3wzyO
+   q4CooDubY4PdI6pMoSUZgVn4cgboeN9xFjizpyw7NfyCa830NXUv3rdI8
+   QqoxlPt0H4WvjiR0JcLCQfzj5uXp9sCayf3987ELj0A0Quo+YwD8++dx5
+   Y=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av8EAOY7oVCtJXHA/2dsb2JhbABEw1qBCIIeAQEBBBIBZQEQCxgJFg8JAwIBAgFFBg0BBQIBAR6HaJl0n3qSXwOIWo0ihWuIbYFrgw0
+X-IronPort-AV: E=McAfee;i="5400,1158,6894"; a="141375544"
+Received: from rcdn-core2-5.cisco.com ([173.37.113.192])
+  by rcdn-iport-6.cisco.com with ESMTP; 12 Nov 2012 18:14:52 +0000
+Received: from [64.100.104.138] (dhcp-64-100-104-138.cisco.com [64.100.104.138])
+	by rcdn-core2-5.cisco.com (8.14.5/8.14.5) with ESMTP id qACIEpP5011349;
+	Mon, 12 Nov 2012 18:14:51 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+In-Reply-To: <7vip9aiuk8.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.5
+X-TagToolbar-Keys: D20121112131450960
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209506>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> The log message of the original commit (0454dd93bf) described the
-> following scenario: a /home partition under which user home directories
-> are automounted, and setting GIT_CEILING_DIRECTORIES=/home to avoid
-> hitting /home/.git, /home/.git/objects, and /home/objects (which would
-> attempt to automount those directories).  I believe that this scenario
-> would not be slowed down by my patches.
+Junio C Hamano wrote:
+> Phil Hord <hordp@cisco.com> writes:
 >
-> How do you use GIT_CEILING_DIRECTORIES that the proposed changes cause a
-> slowdown?
-
-Yeah, I was also wondering about that.
-
-David?
-
->> Is there another way to accomplish this without the performance hit?
->> Maybe something that can be solved with configuration?
+>> State token strings which may be emitted and their meanings:
+>>     merge              a merge is in progress
+>>     am                 an am is in progress
+>>     am-is-empty        the am patch is empty
+>>     rebase             a rebase is in progress
+>>     rebase-interactive an interactive rebase is in progress
+>>     cherry-pick        a cherry-pick is in progress
+>>     bisect             a bisect is in progress
+>>     conflicted         there are unresolved conflicts
+>>     commit-pending     a commit operation is waiting to be completed
+>>     splitting          interactive rebase, commit is being split
+>>
+>> I also considered adding these tokens, but I decided it was not
+>> appropriate since these changes are not sequencer-related.  But
+>> it is possible I am being too short-sighted or have chosen the
+>> switch name poorly.
+>>     changed-index  Changes exist in the index
+>>     changed-files  Changes exist in the working directory
+>>     untracked      New files exist in the working directory
+> I tend to agree; unlike all the normal output from "status -s" that
+> are per-file, the above are the overall states of the working tree.
 >
-> Without doing the symlink expansion there is no way for git to detect
-> that GIT_CEILING_DIRECTORIES contains symlinks and is therefore
-> ineffective.  So the user has no warning about the misconfiguration
-> (except that git runs slowly).
+> It is just that most of the "overall states" look as if they are
+> dominated by "sequencer states", but that is only because you chose
+> to call states related to things like "am" and "bisect" that are not
+> sequencer states as such.
 >
-> On 10/29/2012 02:42 AM, Junio C Hamano wrote:
->> Perhaps not canonicalize elements on the CEILING list ourselves? If
->> we make it a user error to put symlinked alias in the variable, and
->> document it clearly, wouldn't it suffice?
->
-> There may be no other choice.  (That, and fix the test suite in another
-> way to tolerate a $PWD that involves symlinks.)
+> It probably should be called the tree state, working tree state, or
+> somesuch.
+
+I think you are agreeing that I chose the switch name poorly, right?
+
+Do you think '--tree-state' is an acceptable switch or do you have other
+suggestions?
+
+Phil
