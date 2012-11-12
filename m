@@ -1,86 +1,104 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: "git imap-send" with HTML preformatting broken for multipart messages
-Date: Mon, 12 Nov 2012 09:43:13 +0100
-Message-ID: <50A0B6A1.80101@alum.mit.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2] replace: parse revision argument for -d
+Date: Mon, 12 Nov 2012 09:51:34 +0100
+Message-ID: <50A0B896.8050700@drmicha.warpmail.net>
+References: <508E55B2.6060502@drmicha.warpmail.net> <24b0f81315ddab8cc37133d5b3bec8aec90ed652.1351516888.git.git@drmicha.warpmail.net> <20121109164808.GE19725@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git discussion list <git@vger.kernel.org>,
-	Jeremy White <jwhite@codeweavers.com>,
-	Mike McCormack <mike@codeweavers.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 09:43:34 2012
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 12 09:51:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXpcC-0007j7-Kb
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 09:43:32 +0100
+	id 1TXpkF-00038D-38
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 09:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413Ab2KLInS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 03:43:18 -0500
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:45910 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750852Ab2KLInS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 03:43:18 -0500
-X-AuditID: 1207440e-b7f036d0000008b5-97-50a0b6a5c1cf
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 49.45.02229.5A6B0A05; Mon, 12 Nov 2012 03:43:17 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qAC8hE39001034
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 12 Nov 2012 03:43:16 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsUixO6iqLt024IAg0k3JS26rnQzWVw+OZfR
-	4s6TVnYHZo8vVxuZPD5vkgtgiuK2SUosKQvOTM/Tt0vgzth+9ChbwR/Oio8rJzA1ME7k6GLk
-	5JAQMJG4PGUfK4QtJnHh3nq2LkYuDiGBy4wS/+ecZ4ZwjjNJ9PaeA6viFdCUWL/oGRuIzSKg
-	KrFv0Xcwm01AV2JRTzMTiC0qECaxZs8hJoh6QYmTM5+wgAwSEehllFh97jxYQljAT2LCx2Xs
-	IDazgI7Eu74HzBC2vMT2t3OYJzDyzkLSPwtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm
-	5aUW6Rrr5WaW6KWmlG5ihIQb3w7G9vUyhxgFOBiVeHg3OiwIEGJNLCuuzD3EKMnBpCTKK7sZ
-	KMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd5oIUI43JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEk
-	NTs1tSC1CCYrw8GhJMG7YytQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoyuKL
-	gXEGkuIB2jsXpJ23uCAxFygK0XqK0Zjj6Ju5Dxk5PjbOe8goxJKXn5cqJc47HaRUAKQ0ozQP
-	bhEs0bxiFAf6W5j3BkgVDzBJwc17BbSKCWhV45E5IKtKEhFSUg2MbcrmW7xe73Pf6H3lGe+N
-	CC8rP5n7LfLXyz4oX7D3rHxwy3XV24BpU6rEe/mfPraXXhvkV7JqScLU7TEv5Nr2bWJrPxQl
-	5X369ad8noDpTcfMl/ZX312+PLzGPmP+G+4CHxez5u3iL457RTpZ+p6NnTV/uZ7Z 
+	id S1751559Ab2KLIvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 03:51:36 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:34213 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751489Ab2KLIvg (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 03:51:36 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8143620677;
+	Mon, 12 Nov 2012 03:51:35 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 12 Nov 2012 03:51:35 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=UG2/2KAolnxnd0oIfpxIhI
+	8U40k=; b=WJG4eCiOu872H07Sx6L1mgKa4fvzaGD7aE/ya7KeX256wqYg69Mf8u
+	iujwGL5Eo1DoEw9AJ4rVjkldmt5Qm3nu4C4hVzyE7Fbo2BNXplPWL+DJpql04Gje
+	pjAm4+wL0hghQd86H0CqTmWG70uXxRPa0m1tJN3BnQnt2aAyz7hk4=
+X-Sasl-enc: CHxHNb/UdBcqFq685bQNIe3xExGRuDJ+5P50MignU4yE 1352710295
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 01A068E0515;
+	Mon, 12 Nov 2012 03:51:34 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <20121109164808.GE19725@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209472>
 
-I just noticed that "git imap-send" with imap.preformattedHTML turned on
-is broken for multipart messages.  The problem is that "git imap-send"
-embeds *everything* after the main email header in <pre></pre> and
-HTML-escapes it, instead of splitting out the email parts and quoting
-their bodies individually.
+Jeff King venit, vidit, dixit 09.11.2012 17:48:
+> On Mon, Oct 29, 2012 at 02:23:27PM +0100, Michael J Gruber wrote:
+> 
+>> 'git replace' parses the revision arguments when it creates replacements
+>> (so that a sha1 can be abbreviated, e.g.) but not when deleting
+>> replacements.
+>>
+>> Make it parse the arguments to 'replace -d' in the same way.
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>> v2 has the simplified error check as per Jeff, and a reworded message.
+>> Comes with a free test case, too.
+> 
+> I noticed this today in my pile of "to look at" patches. Sorry for being
+> slow.
 
-Ironically, the "git imap-send" manpage specifically lists the typical
-usage as
+No problem. This is not urgent, and it takes some effort to look at code
+amongst all those black-and-white discussions. [It even takes effort to
+refrain from responding when you words are being twisted around...]
 
-    git format-patch --signoff --stdout --attach origin | git imap-send
+>>  	for (p = argv; *p; p++) {
+>> -		if (snprintf(ref, sizeof(ref), "refs/replace/%s", *p)
+>> -					>= sizeof(ref)) {
+>> -			error("replace ref name too long: %.*s...", 50, *p);
+>> +		q = *p;
+>> +		if (get_sha1(q, sha1)) {
+>> +			error("Failed to resolve '%s' as a valid ref.", q);
+>>  			had_error = 1;
+>>  			continue;
+>>  		}
+> 
+> Looks reasonable.
+> 
+>> +		q = sha1_to_hex(sha1);
+>> +		snprintf(ref, sizeof(ref), "refs/replace/%s", q);
+>>  		if (read_ref(ref, sha1)) {
+>> -			error("replace ref '%s' not found.", *p);
+>> +			error("replace ref '%s' not found.", q);
+> 
+> I worry a little about assuming that "q", which points to a static
+> internal buffer of sha1_to_hex, is still valid after calling read_ref.
+> We'll end up in resolve_ref, which might need to do considerable work
+> (e.g., loading the whole packed refs file). Just grepping for
+> sha1_to_hex, I don't think it is a problem currently, but it might be
+> worth copying the value (you could even point into the "ref" buffer to
+> avoid dealing with an extra allocation).
 
-which is broken if imap.preformattedHTML is set.
+We could just leave '*p' as it is (after all, that was the user input),
+or use 'ref+strlen("refs/replace/")'.
 
-It seems to me that rather than fix "git imap-send" (which would require
-it to become more complicated), it would be better to teach "git
-format-patch" how to do preformatting and restrict "git imap-send" to
-sending messages verbatim to an IMAP server.  Moving the functionality
-to "git format-patch" would also make it possible to create preformatted
-emails to be used with other transports.
-
-Oh, and, by the way, "git imap-send" is utterly untested by the test
-suite.  The fact that it is intrinsically hard to test without lots of
-extra infrastructure is another argument for making it as stupid as
-possible.
-
-I don't plan to work on this.
+I wasn't aware of the volatile nature of the return value. Thanks for
+spotting!
 
 Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
