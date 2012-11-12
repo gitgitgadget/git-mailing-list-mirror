@@ -1,93 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 3/4] git-status: show short sequencer state
-Date: Mon, 12 Nov 2012 09:45:43 -0800
-Message-ID: <7vip9aiuk8.fsf@alter.siamese.dyndns.org>
-References: <1351553513-20385-1-git-send-email-hordp@cisco.com>
- <1352487385-5929-1-git-send-email-hordp@cisco.com>
- <1352487385-5929-4-git-send-email-hordp@cisco.com>
+Subject: Re: Strange behaviour of git diff branch1 ... branch2
+Date: Mon, 12 Nov 2012 09:46:51 -0800
+Message-ID: <7vbof2iuic.fsf@alter.siamese.dyndns.org>
+References: <20121026212650.GB2612@pug.qqx.org>
+ <CACsJy8CX4Wbf3Bqez2kcQ7NGYMkqXC8MK+=hrH4iaev+0ZrQ8Q@mail.gmail.com>
+ <4ecbe65e-4b56-4a49-96c3-1ea8b3f0c473@email.android.com>
+ <CACsJy8BkKRxp9AQW0M0vDSL8Mb16VGSrZ1OnQpwCrERWKVLSyA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, phil.hord@gmail.com,
-	Jeff King <peff@peff.net>, konglu@minatec.inpg.fr,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:46:02 2012
+Cc: git@vger.kernel.org, Aaron Schrab <aaron@schrab.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:47:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXy5B-0006Tn-Hi
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:46:01 +0100
+	id 1TXy6G-00070V-UV
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:47:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754011Ab2KLRps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 12:45:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42272 "EHLO
+	id S1753981Ab2KLRq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 12:46:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43368 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753929Ab2KLRpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 12:45:46 -0500
+	id S1753929Ab2KLRqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 12:46:55 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DE3B9650;
-	Mon, 12 Nov 2012 12:45:46 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 014AC971F;
+	Mon, 12 Nov 2012 12:46:54 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=OVHm+rHcUDLNWtRupkZWW1PKjR4=; b=NgO/mWQAPIpAFBTrMG9E
-	eLjULFUURC06q5S51delqqeeB6RvA/GKPNEKobG5RkHIsw8v5HEJY8hDkGABkl5p
-	wW2QhQ0w+jVudSvyeeH1s+tNAbFMXnROaVtVSN1QoK9wExl0w4QN1/w0CtU+Swp8
-	WWdjVHcaAjmkLHThchWCyq8=
+	 s=sasl; bh=NbH7En/QX0DJs2BCJgA3lGK8ykE=; b=D9mvzW7+4GPnGBqXhsrf
+	2NjBhHeCv3MdappjpFp9PmZ0jwkb3+sGgtX51KRtJmf6Ww2xON/myRy3ZdvdsIpt
+	VO+mSQ3y2aQTDVu1c6zk176qJ41mPKbNDqP4nuldQQHyjYGNp4KCDCf+NQcHVMvl
+	xvpiWuwqGK9ho9nPrfIhbS0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=ToDxuXkjhGp5Ur0c1BJ+C1howaQzmChR+iZC/Ar2l/xjdm
-	1gOc+dqTXU0KUAb+C+8pxfdxU/EzHvXNJ4ImYN+K9qgdBNRGrz6eSrB2qiBANvMd
-	TnbMI9eyELybtx5JD+EbYuCftnewV8hVd7V/sSlunUQYG1uXCB60FM+m17kuE=
+	 q=dns; s=sasl; b=gZKKXLatVXQvXniacU1bM45ftizUInuNcKe0/qBIs8UQ9s
+	dkfoUb8D6RhhtLJ4bb0ntJJzqroQMawYUsucDW0e9IGRinu4vFeGvUgs1G8MGtcf
+	Bh/BMH56xjE3afbsgt38WfedRoJe6SkfkndclILDgjd6/bbGd6ZmfuwjfWWcg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE634964E;
-	Mon, 12 Nov 2012 12:45:45 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4809971D;
+	Mon, 12 Nov 2012 12:46:53 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63A36964B; Mon, 12 Nov 2012
- 12:45:45 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54449971A; Mon, 12 Nov 2012
+ 12:46:53 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C93CBB74-2CF0-11E2-9CF4-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F1B5C7DA-2CF0-11E2-ABDD-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209504>
 
-Phil Hord <hordp@cisco.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> State token strings which may be emitted and their meanings:
->     merge              a merge is in progress
->     am                 an am is in progress
->     am-is-empty        the am patch is empty
->     rebase             a rebase is in progress
->     rebase-interactive an interactive rebase is in progress
->     cherry-pick        a cherry-pick is in progress
->     bisect             a bisect is in progress
->     conflicted         there are unresolved conflicts
->     commit-pending     a commit operation is waiting to be completed
->     splitting          interactive rebase, commit is being split
+> On Sat, Oct 27, 2012 at 7:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>>>
+>>>Notice the --cc in the first line, which is combined diff. Usually
+>>>combined-diff is between two points and one parent. Though somehow git
+>>>passes 4 parents down combined-diff.c:show_combined_header, as you can
+>>>see in the "index" line. I think we should fix rev parsing code as it
+>>>does not make sense to pass 4 identical parents this way.
+>>
+>> The two heads home from HEAD...HEAD the user has on the command line.
+>>
+>> The user is getting exactly what she asked; there is nothing to fix.
 >
-> I also considered adding these tokens, but I decided it was not
-> appropriate since these changes are not sequencer-related.  But
-> it is possible I am being too short-sighted or have chosen the
-> switch name poorly.
->     changed-index  Changes exist in the index
->     changed-files  Changes exist in the working directory
->     untracked      New files exist in the working directory
+> Is there any use case where HEAD...HEAD (or "..." alone) is actually useful?
 
-I tend to agree; unlike all the normal output from "status -s" that
-are per-file, the above are the overall states of the working tree.
+That is an invalid question, implying a proposal that will introduce
+more confusion to the users while hurting the code.
 
-It is just that most of the "overall states" look as if they are
-dominated by "sequencer states", but that is only because you chose
-to call states related to things like "am" and "bisect" that are not
-sequencer states as such.
-
-It probably should be called the tree state, working tree state, or
-somesuch.
+There is no use case where "cat A >>A" is actually useful, either,
+but it does not mean "cat A >>A" should be special cased to do
+something different from what it happens to do in line with the case
+where "cat A >>B" does.  I think "diff ..." or "diff HEAD...HEAD"
+are the same as that example.
