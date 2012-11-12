@@ -1,65 +1,95 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [PATCH 2/2] send-email: add series-cc-cmd option
-Date: Mon, 12 Nov 2012 15:40:36 -0800
-Message-ID: <1352763636.18715.28.camel@joe-AO722>
-References: <1352653463-1923-1-git-send-email-felipe.contreras@gmail.com>
-	 <1352653463-1923-3-git-send-email-felipe.contreras@gmail.com>
-	 <CALkWK0mRKznNN7750h=k6aE3OJ7hBLVC-G51gEYi2+NuYjPWrQ@mail.gmail.com>
-	 <1352760759.18715.7.camel@joe-AO722>
-	 <CAMP44s0B42yt8eugYSjYweoX8WOXXF1f-0N-5FuUyrY5rgCiow@mail.gmail.com>
-	 <1352761982.18715.20.camel@joe-AO722>
-	 <CAMP44s2EyMcYHYGvxZnj90qD5ms2YZ5O6gXv_TTES0H72vUm0g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] send-email: add proper default sender
+Date: Tue, 13 Nov 2012 00:42:02 +0100
+Message-ID: <CAMP44s0emar-C27SX-FDsUVB6Sevuy4fBFHuO2OD6xELCEjmGg@mail.gmail.com>
+References: <1352653610-2090-1-git-send-email-felipe.contreras@gmail.com>
+	<20121112233546.GG10531@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Pascal Obry <pascal@obry.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 00:40:49 2012
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 13 00:42:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY3cX-00073y-Af
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 00:40:49 +0100
+	id 1TY3dy-0007sx-Fa
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 00:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754287Ab2KLXkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 18:40:36 -0500
-Received: from perches-mx.perches.com ([206.117.179.246]:36993 "EHLO
-	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754010Ab2KLXkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 18:40:35 -0500
-Received: from [173.51.221.202] (account joe@perches.com HELO [192.168.1.167])
-  by labridge.com (CommuniGate Pro SMTP 5.0.14)
-  with ESMTPA id 19833302; Mon, 12 Nov 2012 15:40:35 -0800
-In-Reply-To: <CAMP44s2EyMcYHYGvxZnj90qD5ms2YZ5O6gXv_TTES0H72vUm0g@mail.gmail.com>
-X-Mailer: Evolution 3.6.0-0ubuntu3 
+	id S1753970Ab2KLXmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 18:42:04 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:59028 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753539Ab2KLXmC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 18:42:02 -0500
+Received: by mail-ob0-f174.google.com with SMTP id uo13so6842204obb.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 15:42:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wbKeCb4PSrya9YHiLf3HLacViftiwCDQ9prZCdr7K6w=;
+        b=eFLq4HVOB5MFS5g3D0v0lQPo8Y3+WUwwU4dWGt4KALeCCsFcHgEX8uX+eUKWENP8/L
+         AWs3Dm46U2ZuGCZLCMHr7rn4PSxotvXOCY06rKq5aMXLGXLjE4XgI87nDgqeuE06iYqu
+         3UB9sh9wGegIwDXRA0v8tcYmRQs0hN+zYEMc2l6H1JxYIfXGzO32EsMYeEWl0QQifGRk
+         TubIBoAIdMlC2WiKUAHIfsI5NvQRPUrA4DpK4cMsq5nO2POfKRUNYkmFen/+9F9cTYpI
+         Ie5IDF8/Mg6q09kDnJl2uWqyBYZQZ4Roqw2DqGnc9WiutuTzII4Zvq34nm+zS+o9i5Ir
+         J+JA==
+Received: by 10.182.116.6 with SMTP id js6mr16399898obb.82.1352763722165; Mon,
+ 12 Nov 2012 15:42:02 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Mon, 12 Nov 2012 15:42:02 -0800 (PST)
+In-Reply-To: <20121112233546.GG10531@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209549>
 
-On Tue, 2012-11-13 at 00:37 +0100, Felipe Contreras wrote:
-> On Tue, Nov 13, 2012 at 12:13 AM, Joe Perches <joe@perches.com> wrote:
-> > On Tue, 2012-11-13 at 00:03 +0100, Felipe Contreras wrote:
-[]
-> >> For --to-cmd and --cc-cmd? So basically you check the dirname of the
-> >> argument passed?
-> >
-> > yes. basename and dirname
-> 
-> Well, the basename is irrelevant, because you don't care witch
-> particular patch is being sent, you are going to process all of them
-> every time.
+On Tue, Nov 13, 2012 at 12:35 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Nov 11, 2012 at 06:06:50PM +0100, Felipe Contreras wrote:
+>
+>> There's no point in asking this over and over if the user already
+>> properly configured his/her name and email.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>
+>> I got really tired of 'git send-email' always asking me from which address to send mails... that's already configured.
+>
+> It should be defaulting to your regular git ident, and you just have to
+> hit enter, right?
 
-Well, I do different actions on cover letter patches
-than other patches because for patch sets that touch
-lots of files, the cc list can be _very_ long and
-that can run afoul of other issues like maximum
-recipient counts for various mailing lists.
+Yes.
 
-cheers, Joe
+> I think it's probably reasonable to skip that "enter" in most cases. But
+> I'm not sure why we ever asked in the first place. What do people input
+> there if they are not taking the default?
+
+Beats me.
+
+> Why not use Git::ident_person() here? It saves some code, and would also
+> respect environment variables. Or better yet...
+
+I assume there was a reason why that code was asking for input;
+precisely because it would use the environment variables. For some
+reason the user might have exported GIT_AUTHOR_EMAIL, or maybe EMAIL
+is not right, or the full name config.
+
+OTOH user.name/.email configurations come clearly from the user.
+
+>>  my $prompting = 0;
+>>  if (!defined $sender) {
+>>       $sender = $repoauthor || $repocommitter || '';
+>
+> Why not just use $repoauthor or $repocommitter, as the prompt default
+> already does?
+
+See above.
+
+Cheers.
+
+-- 
+Felipe Contreras
