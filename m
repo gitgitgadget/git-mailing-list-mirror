@@ -1,61 +1,51 @@
-From: Kevin <ikke@ikke.info>
+From: Douglas Mencken <dougmencken@gmail.com>
 Subject: Re: [regression] Newer gits cannot clone any remote repos
-Date: Mon, 12 Nov 2012 18:12:16 +0100
-Message-ID: <CAO54GHC9ibTwxqLnk1vGSo9R011HE05JOL1mgpTGzeWX7cCcwQ@mail.gmail.com>
+Date: Mon, 12 Nov 2012 12:13:19 -0500
+Message-ID: <CACYvZ7hPAejfjqXQFEHO0DySPN9xmvGgvK7gqj=4qX-XKz0VHQ@mail.gmail.com>
 References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
+	<CAO54GHA=r8WUK3okm2imVkoB=SuZ=3o+wwdwLr_rmPXhdFzG_g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git <git@vger.kernel.org>
-To: Douglas Mencken <dougmencken@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:12:54 2012
+To: Kevin <ikke@ikke.info>
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:13:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXxZ5-0007Kb-Vn
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:12:52 +0100
+	id 1TXxZm-0007n3-6s
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:13:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890Ab2KLRMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 12:12:38 -0500
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:61115 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832Ab2KLRMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 12:12:38 -0500
-Received: by mail-wg0-f44.google.com with SMTP id dr13so4335248wgb.1
-        for <git@vger.kernel.org>; Mon, 12 Nov 2012 09:12:36 -0800 (PST)
+	id S1752251Ab2KLRNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 12:13:21 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:51234 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992Ab2KLRNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 12:13:20 -0500
+Received: by mail-lb0-f174.google.com with SMTP id n3so4828134lbo.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 09:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=Wp27a6FbdGD9rMqYIrTcuk4ppftDbGk/R0FCts1KNzk=;
-        b=BwcdSb+k/Yj3wJxl3iIljKq8Hle7kZI41/Gh3QNQE7EF7OXhJPOCXZWGySkwYN8ZBD
-         sOAQIsK8QcW/RBvhzQuKMRUGb7YpoOQM/kW7BIoHSeGwu8J3tfsLtZKT5f7ZnXmBgqgE
-         pZ+lTiz/HzpN3aXCoJZNoeMSKfhrzngTsHhdDZxERCfweCW3J+zivSAjNpqWWmvOZ+xd
-         eIeM7VGhzJqWvVuNw1ogWKsAAcoiOSliZghqsgvOq/IbSOIOAM/Pz9fCb/gXJ5jPmHG6
-         bsWCH9J6mvXO7DO/pqwTHszXACZlvojj99Rwj2tt2o0wmKVjClsO96EVuF40xnLN8++P
-         tBBA==
-Received: by 10.216.202.138 with SMTP id d10mr8641851weo.46.1352740356481;
- Mon, 12 Nov 2012 09:12:36 -0800 (PST)
-Received: by 10.227.29.101 with HTTP; Mon, 12 Nov 2012 09:12:16 -0800 (PST)
-In-Reply-To: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
-X-Google-Sender-Auth: AQpNJlOt13AratwGw3Dh4lePfeQ
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wkiI0rf5nloFO53xb2jIcctfV6KTLFeY8B9oXPMAOpk=;
+        b=xzv1wmWzNCf1sCSHBlrHwcZIc56MPqwRmAtB2Al3Q0e2CWz2JujcawOp7J/IiquD9d
+         74pGrvZTB1av+3N2OfdpamQkWp8UXi3Q1du1jgNfX7NIGEvKlULZFD7vm3m28hcw8vnT
+         YS6l+A+VCGM6F0df87WHFmAlEluvckk/9Tf9isVTVUqgnlad22mu1BP15HCTjoxvHGWe
+         l8p394meXCsOVZ7bnKFkAqMi+rnJJZN8LbMwMO4OP9f2lJ3VsLZq556aLdRLcMY+Nz7+
+         7q5ng6/3FaL9UylMjO+1GCi8ZaROIo3reage/JClhaH7fkaRzGNoA4jNal7JKLvm57Um
+         4qcw==
+Received: by 10.112.48.133 with SMTP id l5mr8199256lbn.53.1352740399284; Mon,
+ 12 Nov 2012 09:13:19 -0800 (PST)
+Received: by 10.112.22.6 with HTTP; Mon, 12 Nov 2012 09:13:19 -0800 (PST)
+In-Reply-To: <CAO54GHA=r8WUK3okm2imVkoB=SuZ=3o+wwdwLr_rmPXhdFzG_g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209490>
 
-Maybe handy to say that you're on a Powerpc platform.
+> Maybe handy to say that you're on a Powerpc platform.
 
-On Mon, Nov 12, 2012 at 5:32 PM, Douglas Mencken <dougmencken@gmail.com> wrote:
-> *Any* git clone fails with:
->
-> fatal: premature end of pack file, 106 bytes missing
-> fatal: index-pack failed
->
-> At first, I tried 1.8.0, and it failed. Then I tried to build 1.7.10.5
-> then, and it worked. Then I tried 1.7.12.2, but it fails the same way
-> as 1.8.0.
-> So I decided to git bisect.
->
+My host, build and target is: powerpc-linux-gnu
