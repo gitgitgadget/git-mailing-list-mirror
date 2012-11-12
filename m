@@ -1,55 +1,61 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Candidates for sequencer?
-Date: Tue, 13 Nov 2012 03:16:51 +0530
-Message-ID: <CALkWK0n0tTZ3EgzeesOr2B1LjeEUjTnWQh5dDfW28jA1ia0-gA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] send-email: add series-cc-cmd option
+Date: Tue, 13 Nov 2012 03:21:17 +0530
+Message-ID: <CALkWK0mRKznNN7750h=k6aE3OJ7hBLVC-G51gEYi2+NuYjPWrQ@mail.gmail.com>
+References: <1352653463-1923-1-git-send-email-felipe.contreras@gmail.com> <1352653463-1923-3-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 22:47:32 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Joe Perches <joe@perches.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Pascal Obry <pascal@obry.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 22:52:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY1qo-0007eP-OP
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 22:47:27 +0100
+	id 1TY1vC-000235-1e
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 22:51:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647Ab2KLVrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 16:47:12 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:49484 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752462Ab2KLVrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 16:47:12 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so6751248obb.19
-        for <git@vger.kernel.org>; Mon, 12 Nov 2012 13:47:11 -0800 (PST)
+	id S1753439Ab2KLVvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 16:51:39 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:57335 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878Ab2KLVvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 16:51:38 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so6759194oag.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 13:51:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=DixwQ/sQ0CK7JN9025CLRi9wr8eEKkWgCrrIk3Ponps=;
-        b=Jjdb8klC8qBO1CLPVfIPP+RqbjnC2KfsKxDAYCebLhC/GY1S+9v503vF36fvYWyf3e
-         72YqjvOryc08JvkTldm8IVX3S+m+eCLDDDH0mWoG6hhnYRvVtvI7twzPeayxHI9Y09LA
-         4k7xvBQU92RQ66IW+YCdLc57Mv9x067In9HKbU9rhY2rfsFzIuSEblHU/kIAFSerPy/Q
-         kCcqzYicb0DQSRm2faltGY5YBzdl2sEzdMnNQ3u1dP/iSCA5ATTCU4lRpqcZlldlNFrv
-         EM3AdhTj0Opy3V2ejxWr2sdxWsKId2hJjaJGI7Wr/ljin7tNXKwMnNY6BISxyCeNRbeU
-         6p0w==
-Received: by 10.182.240.109 with SMTP id vz13mr12761919obc.81.1352756831730;
- Mon, 12 Nov 2012 13:47:11 -0800 (PST)
-Received: by 10.76.168.40 with HTTP; Mon, 12 Nov 2012 13:46:51 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hj6+WGuBf75tb5p/agBrglzi8Vme4EbEQ7F54DfveWQ=;
+        b=QxWlv2WgKZ52pRC485sIUXnDxoKIDbhVcUHrPWzDWlTk89LC5aJXdnoYmCeGefYOFL
+         zam/1Ec14WNC1ymE+BwwQDavVUzb18iMmAOPO+vrFTqzdv66Lj1d10/kf2KmVnBtBnE5
+         OX3XIvxXe8Mv6f0fYHzfhCErdgr7dmZ2AVdagd7SfX/1fUghd3dV0rSy4q/hmGCHLx5U
+         In/Hu/R9AMlcDDg2tYCP0kndkF0r9IEeBq9ehUWuKe5sOk/BPigMKcA+TAaTiCDToJMk
+         sybi7JWyOICG3WjsAxv1hROgYvbXnvisFA4EuAZ5kYHdUFfpmEGupwfMzeX9AEUqnss7
+         Pp6w==
+Received: by 10.182.41.6 with SMTP id b6mr16499616obl.23.1352757097804; Mon,
+ 12 Nov 2012 13:51:37 -0800 (PST)
+Received: by 10.76.168.40 with HTTP; Mon, 12 Nov 2012 13:51:17 -0800 (PST)
+In-Reply-To: <1352653463-1923-3-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209533>
 
-Hi,
+Felipe Contreras wrote:
+> cc-cmd is only per-file, and many times receipients get lost without
+> seing the full patch series.
 
-I'd like to get more commands to call into sequencer.c, so that we can
-(finally) implement a sensible `git continue` and `git abort`.
-Currently, am and rebase come to mind, but they are shell scripts and
-I don't see how we can make them call into sequencer.c.  Is there any
-way to make sequencer.c more useful?  Should we implement a `git
-continue` and `git reset` anyway, lifting code from 83c750ac to check
-the tree state?
+s/seing/seeing
+
+> [...]
+
+Looks good otherwise.
 
 Ram
