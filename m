@@ -1,91 +1,124 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [BUG] gitweb: XSS vulnerability of RSS feed
-Date: Mon, 12 Nov 2012 22:13:27 +0100
-Message-ID: <CANQwDwdRTeaVS5cMic5gv9SP1A8Z1vruOsZBFfMDQDTZHBAtvQ@mail.gmail.com>
-References: <20121111232820.284510@gmx.net> <CAM9Z-n=6xsC7yiKJ+NU-CxNPxEXWmJzvXLUocgZgWPQnuK6G4Q@mail.gmail.com>
- <20121112202413.GD4623@sigill.intra.peff.net> <20121112202701.GE4623@sigill.intra.peff.net>
- <7vmwymh83r.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH 1/1] status: Allow for short-form via config option
+Date: Mon, 12 Nov 2012 16:17:42 -0500
+Message-ID: <20121112211742.GJ4623@sigill.intra.peff.net>
+References: <1352674383-23654-1-git-send-email-thomas@xteddy.org>
+ <1352674383-23654-2-git-send-email-thomas@xteddy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Drew Northup <n1xim.email@gmail.com>,
-	glpk xypron <xypron.glpk@gmx.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 22:14:04 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Mon Nov 12 22:18:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY1KV-0004Hq-5R
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 22:14:03 +0100
+	id 1TY1OK-0006X7-DO
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 22:18:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399Ab2KLVNt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2012 16:13:49 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:33637 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753265Ab2KLVNs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 16:13:48 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so6722141oag.19
-        for <git@vger.kernel.org>; Mon, 12 Nov 2012 13:13:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=JKsS4ss0U8THD4upbkobqlm6951kwdz3mzsosMTwa08=;
-        b=jj3a/KlhF37eIXzq7tenr/6EXouOh6MWI8NGQVVQg1AgmlKriFP1+3dRCw2LtZRcgp
-         sR1C5uzRHvlmmmVRKd5LZNFaYguC5r6mLcK/sh59Vrgtt9TlrqQVj/DA9PCAoHLOSJ0j
-         Y5Xgp7H8YElRpuDUhgasrcPK8UZUhU3rc3c9GoVydtgO6gCi8lH0IpxzP2QMlImZwfJU
-         7ble8FqEHI2nWvLOOgBi9SKLAA3XBAurHDLtSBiUPz5QclzvW6B7a1cn0BnMl2s86PyA
-         kk8SmAwMqJCV410Pu2l/7Lch30BK8WHPDXgftRvqwC0wxzRq+75dgVGsFD/R0gsjdr7c
-         Ctfg==
-Received: by 10.60.8.103 with SMTP id q7mr15333652oea.70.1352754828102; Mon,
- 12 Nov 2012 13:13:48 -0800 (PST)
-Received: by 10.76.91.134 with HTTP; Mon, 12 Nov 2012 13:13:27 -0800 (PST)
-In-Reply-To: <7vmwymh83r.fsf@alter.siamese.dyndns.org>
+	id S1753559Ab2KLVRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 16:17:46 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45043 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753265Ab2KLVRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 16:17:46 -0500
+Received: (qmail 14219 invoked by uid 107); 12 Nov 2012 21:18:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Nov 2012 16:18:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2012 16:17:42 -0500
+Content-Disposition: inline
+In-Reply-To: <1352674383-23654-2-git-send-email-thomas@xteddy.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209527>
 
-On Mon, Nov 12, 2012 at 9:36 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jeff King <peff@peff.net> writes:
->> On Mon, Nov 12, 2012 at 03:24:13PM -0500, Jeff King wrote:
->>
->>> I think the right answer is going to be a well-placed call to esc_h=
-tml.
->>
->> I'm guessing the right answer is this:
->>
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 10ed9e5..a51a8ba 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -8055,6 +8055,7 @@ sub git_feed {
->>               $feed_type =3D 'history';
->>       }
->>       $title .=3D " $feed_type";
->> +     $title =3D esc_html($title);
->>       my $descr =3D git_get_project_description($project);
->>       if (defined $descr) {
->>               $descr =3D esc_html($descr);
->>
->> but I did not test it (and I am not that familiar with gitweb, so it=
- is
->> a slight guess from spending 5 minutes grepping and reading).
->
-> Yeah, that looks correct, given the way how the other variables
-> emitted with the same "print" like $descr and $owner are formed.
+On Sun, Nov 11, 2012 at 10:53:03PM +0000, Thomas Adam wrote:
 
-It looks like good solution to me too.
+> It is currently not possible to use the short-form output of git status
+> without declaring an alias to do so.
+> 
+> This isn't always desirable therfore, define a git config option which can
+> be set to display the short-form:  status.shortwithbranch
 
-Nb. the problems with feed are mainly because it is generated
-by hand even more than HTML (which uses CGI.pm).
+We usually try to avoid booleans for selection among options, even if
+there is currently only one useful option. That way, it makes it easier
+to extend later when another option presents itself.  So having
+"status.format" that you could set to "short", "long", or "porcelain"
+would make more sense (although "short" is likely to be the only useful
+one currently).
 
---=20
-Jakub Nar=EAbski
+And then we can have a separate boolean like "status.branch" to show the
+branch by default when showing short format. That would would naturally
+extend to more booleans as other options are added (Phil Hord's recent
+"show tree state" patches come to mind).
 
---=20
-Jakub Narebski
+We also need to consider the impact of options on scripts. I think
+status.format should be OK, since any script calling "git status" would
+have to explicitly pass "--porcelain" already, which would override this
+option. But we would want to make sure that "status.branch" would not
+affect the porcelain.
+
+> ---
+>  builtin/commit.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+
+It would need documentation, and tests would be good both to make sure
+the feature works, but also to demonstrate that it does not break
+--porcelain.
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index a17a5df..552a9f1 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1142,6 +1142,18 @@ static int git_status_config(const char *k, const char *v, void *cb)
+>  			return error(_("Invalid untracked files mode '%s'"), v);
+>  		return 0;
+>  	}
+> +
+> +	if (!strcmp(k, "status.shortwithbranch")) {
+> +		if (git_config_bool(k, v)) {
+> +			if (!v)
+> +				return config_error_nonbool(k);
+> +			else if(!strcmp(v, "true")) {
+> +				status_format = STATUS_FORMAT_SHORT;
+> +				s->show_branch = 1;
+> +			}
+> +			return 0;
+> +		}
+> +	}
+
+I'm not sure what is going on with the extra nonbool and "true" check.
+Shouldn't it just be:
+
+  if (git_config_bool(k, v)) {
+          status_format = STATUS_FORMAT_SHORT;
+          s->show_branch = 1;
+  }
+  else {
+          /* what do we do when it is false? */
+  }
+  return 0;
+
+If we follow my suggestions above, then it would be more like:
+
+  if (!strcmp(k, "status.format")) {
+          if (!v)
+                  return config_error_nonbool(k);
+          return parse_status_format(v, &status_format);
+  }
+  if (!strcmp(k, "status.branch")) {
+          s->show_branch = git_config_bool(k, v);
+          return 0;
+  }
+
+but that would still have to resolve the setting of show_branch when
+--porcelain is in use. I think you would need to store the
+config-derived value separately, and then only fill it into
+s->show_branch if no value was given on the command-line _and_ we are
+not showing the porcelain format.
+
+-Peff
