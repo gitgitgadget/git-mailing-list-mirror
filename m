@@ -1,270 +1,116 @@
-From: Marc Khouzam <marc.khouzam@gmail.com>
-Subject: Fwd: [PATCH] Add tcsh-completion support to contrib by using git-completion.bash
-Date: Mon, 12 Nov 2012 15:07:46 -0500
-Message-ID: <CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
-References: <CAFj1UpE6OtJEojaED1_DZJD0kU=nVsFE_w8xa0oJE-6auCU2rw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git-sh-setup: refactor ident-parsing functions
+Date: Mon, 12 Nov 2012 12:08:37 -0800
+Message-ID: <7vzk2mh9dm.fsf@alter.siamese.dyndns.org>
+References: <20121018072207.GA1605@sigill.intra.peff.net>
+ <20121018072522.GA9999@sigill.intra.peff.net>
+ <7vpq3ik97i.fsf@alter.siamese.dyndns.org>
+ <20121112194434.GB4623@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 21:08:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 12 21:08:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY0Ib-0000Bu-IR
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 21:08:02 +0100
+	id 1TY0JT-0000hG-Oy
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 21:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270Ab2KLUHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 15:07:47 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:37287 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753250Ab2KLUHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 15:07:46 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k13so9632503iea.19
-        for <git@vger.kernel.org>; Mon, 12 Nov 2012 12:07:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=69sm5U3YExmvzzezkYBId5+IP9M0WJ9RWke51n11eEo=;
-        b=HfS01iY+ln5zRjq4/Oa5jkZpa0e8Vv9pnGi/nJ1NUXr+9lFmWqqByH+N+ficHWbBb8
-         /+f1cWznwLwHUEGzQcT8xnLdkbpp0/Xn7zRJTv0D+hbuu3Fb6MiDY0kh9luiDMGihqDV
-         BXw3QiyMarYfx5oNhVF0I8ypnJOTajPUFNmWtg7zGikD2GAjkHukN/pjURnC00riyiae
-         lBKVq3KZqlmdGQ5q/hQXmPvMGphAvPcP03COwU3PgnoO7mr4VdTreozrLna5fycAktBH
-         w72xMoLEKJrCuMAuY8h/HDb0j+pUhtuECN6VbDWD2CyEEnDx+bm6vz9tPx+gmgbbtXCI
-         CdBg==
-Received: by 10.42.68.68 with SMTP id w4mr19380660ici.30.1352750866201; Mon,
- 12 Nov 2012 12:07:46 -0800 (PST)
-Received: by 10.64.132.39 with HTTP; Mon, 12 Nov 2012 12:07:46 -0800 (PST)
-In-Reply-To: <CAFj1UpE6OtJEojaED1_DZJD0kU=nVsFE_w8xa0oJE-6auCU2rw@mail.gmail.com>
+	id S1752332Ab2KLUIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 15:08:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39409 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751912Ab2KLUIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 15:08:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D17B59C72;
+	Mon, 12 Nov 2012 15:08:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/AOhSxBl4+v375NDtgF3CC4TEX8=; b=Eo0SM8
+	g5Za8/6aVEqMz5a5aoAQiiHcqXttQIkUwBLDzq8nPBOA+RUzHAANURZegN/MY3Ct
+	p7POeHPE5xm/8FVxuyhYJSO7tbEYox25WsNDbrEu7hH7WyP0fekiE2oLmphstN9e
+	qXBMEEg5dTPT9u1EiXP23K5dMVtLHJs6jQ7r0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iVAooow7iE7Crz6frLmwI7WHJvbiAEO+
+	SHAyuXRvNgjJ6Ivx7kOWg1fyqOYpd7ZnSQQ6OlZ4yf6BdwO+XEzXP9jrzYNZaKX5
+	7BgqsGM3P13QWfRHydYiGEjnZzQZ5Hwj4q2ik7TSf6DzN0mFBgH2oLQDJUAJe+aC
+	JEPTRlCQH04=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C00C79C71;
+	Mon, 12 Nov 2012 15:08:40 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AA8A9C6F; Mon, 12 Nov 2012
+ 15:08:40 -0500 (EST)
+In-Reply-To: <20121112194434.GB4623@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 12 Nov 2012 14:44:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C022F288-2D04-11E2-855A-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209515>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-this patch allows tcsh-users to get the benefits of the awesome
-git-completion.bash script.  It could also help other shells do the same.
+> Changing the interface for get_author_ident_from_commit would be a pain,
+> but if we just wanted to help filter-branch, we could do something like
+> this:
 
-==
+Yes, that is the direction I was alluding to.
 
-The current tcsh-completion support for Git, as can be found on the
-internet, takes the approach of defining the possible completions
-explicitly.  This has the obvious draw-back to require constant
-updating as the Git code base evolves.
+Callers of get_author_ident_from_commit can also do the same and
+avoid rebuilding the same $pick_author_script over and over again,
+or get_author_ident_from_commit can do so for its callers.
 
-The approach taken by this commit is to to re-use the advanced bash
-completion script and use its result for tcsh completion.  This is
-achieved by executing (versus sourcing) the bash script and
-outputting the completion result for tcsh consumption.
-
-Three solutions were looked at to implement this approach with (A)
-being retained:
-
-  A) Modifications:
-          git-completion.bash and new git-completion.tcsh
-
-     Modify the existing git-completion.bash script to support
-     being sourced using bash (as now), but also executed using bash.
-     When being executed, the script will output the result of the
-     computed completion to be re-used elsewhere (e.g., in tcsh).
-     Pros:
-       1- allows the git-completion.bash script to easily be re-used
-       2- tcsh support is mostly isolated in git-completion.tcsh
-     Cons (for tcsh users only):
-       1- requires the user to copy both git-completion.tcsh and
-          git-completion.bash to ${HOME}
-       2- requires bash script to have a fixed name and location:
-          ${HOME}/.git-completion.bash
-
-  B) Modifications:
-          git-completion.bash
-
-     Modify the existing git-completion.bash script to support
-     being sourced using bash (as now), but also executed using bash,
-     and sourced using tcsh.
-     Pros:
-       1- only requires the user to deal with a single file
-       2- maintenance more obvious for tcsh since it is entirely part
-          of the same git-completion.bash script.
-     Cons:
-       1- tcsh support could affect bash support as they share the
-          same script
-       2- small tcsh section must use syntax suitable for both tcsh
-          and bash and must be at the beginning of the script
-       3- requires the user to explicitly make the script executable
-          when using tcsh (for tcsh users only)
-       4- requires script to have a fixed name and location:
-          ${HOME}/.git-completion.sh (for tcsh users only)
-
-  C) Modifications:
-          New git-completion.tcsh
-
-     Provide a short tcsh script that converts git-completion.bash
-     into an executable script suitable to be used by tcsh.
-     Pros:
-       1- tcsh support is entirely isolated in git-completion.tcsh
-       2- new tcsh script can be as complex as needed
-     Cons (for tcsh users only):
-       1- requires the user to copy both git-completion.tcsh and
-          git-completion.bash to ${HOME}
-       2- requires bash script to have a fixed name and location:
-          ${HOME}/.git-completion.bash
-       3- sourcing the new script will generate a third script
-
-Approach (A) was selected to keep the tcsh completion support well
-isolated without introducing excessive complexity.
-
-Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
-
-==
-
-With the changes applied, tcsh users should:
-
-#    1) Copy both this file and the bash completion script to your
-${HOME} directory
-#       using the names ${HOME}/.git-completion.tcsh and
-${HOME}/.git-completion.bash.
-#    2) Add the following line to your .tcshrc/.cshrc:
-#        source ${HOME}/.git-completion.tcsh
-
-The code can be found on GitHub.
-Option (A):
-https://github.com/marckhouzam/git/commit/86d3a8e740ae85b4b4462c997a0fd969b1b2d24c
-
-Option (B):
-https://github.com/marckhouzam/git/commit/e64606541682eaf66c0a56aceff279ca6e1d06cd
-
-Option (C):
-https://github.com/marckhouzam/git/commit/59792455f1e6a98d3ffeb828f4cff1ded0e4ed37
-
-Thanks
-
-Marc
-
----
- contrib/completion/git-completion.bash |   53 +++++++++++++++++++++++++++++++-
- contrib/completion/git-completion.tcsh |   34 ++++++++++++++++++++
- 2 files changed, 86 insertions(+), 1 deletions(-)
- create mode 100755 contrib/completion/git-completion.tcsh
-
-diff --git a/contrib/completion/git-completion.bash
-b/contrib/completion/git-completion.bash
-index be800e0..6d4b57a 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1,4 +1,6 @@
--#!bash
-+#!/bin/bash
-+# The above line is important as this script can be executed when used
-+# with another shell such as tcsh
- #
- # bash/zsh completion support for core Git.
- #
-@@ -2481,3 +2483,52 @@ __git_complete gitk __gitk_main
- if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
- __git_complete git.exe __git_main
- fi
-+
-+# Method that will output the result of the completion done by
-+# the bash completion script, so that it can be re-used in another
-+# context than the bash complete command.
-+# It accepts 1 to 2 arguments:
-+# 1: The command-line to complete
-+# 2: The index of the word within argument #1 in which the cursor is
-+#    located (optional). If parameter 2 is not provided, it will be
-+#    determined as best possible using parameter 1.
-+_git_complete_with_output ()
-+{
-+       # Set COMP_WORDS to the command-line as bash would.
-+       COMP_WORDS=($1)
-+
-+       # Set COMP_CWORD to the cursor location as bash would.
-+       if [ -n "$2" ]; then
-+               COMP_CWORD=$2
-+       else
-+               # Assume the cursor is at the end of parameter #1.
-+               # We must check for a space as the last character which will
-+               # tell us that the previous word is complete and the cursor
-+               # is on the next word.
-+               if [ "${1: -1}" == " " ]; then
-+                       # The last character is a space, so our
-location is at the end
-+                       # of the command-line array
-+                       COMP_CWORD=${#COMP_WORDS[@]}
-+               else
-+                       # The last character is not a space, so our
-location is on the
-+                       # last word of the command-line array, so we
-must decrement the
-+                       # count by 1
-+                       COMP_CWORD=$((${#COMP_WORDS[@]}-1))
-+               fi
-+       fi
-+
-+       # Call _git() or _gitk() of the bash script, based on the first
-+       # element of the command-line
-+       _${COMP_WORDS[0]}
-+
-+       # Print the result that is stored in the bash variable ${COMPREPLY}
-+       for i in ${COMPREPLY[@]}; do
-+               echo "$i"
-+       done
-+}
-+
-+if [ -n "$1" ] ; then
-+  # If there is an argument, we know the script is being executed
-+  # so go ahead and run the _git_complete_with_output function
-+  _git_complete_with_output "$1" "$2"
-+fi
-diff --git a/contrib/completion/git-completion.tcsh
-b/contrib/completion/git-completion.tcsh
-new file mode 100755
-index 0000000..7b7baea
---- /dev/null
-+++ b/contrib/completion/git-completion.tcsh
-@@ -0,0 +1,34 @@
-+#!tcsh
-+#
-+# tcsh completion support for core Git.
-+#
-+# Copyright (C) 2012 Marc Khouzam <marc.khouzam@gmail.com>
-+# Distributed under the GNU General Public License, version 2.0.
-+#
-+# This script makes use of the git-completion.bash script to
-+# determine the proper completion for git commands under tcsh.
-+#
-+# To use this completion script:
-+#
-+#    1) Copy both this file and the bash completion script to your
-${HOME} directory
-+#       using the names ${HOME}/.git-completion.tcsh and
-${HOME}/.git-completion.bash.
-+#    2) Add the following line to your .tcshrc/.cshrc:
-+#        source ${HOME}/.git-completion.tcsh
-+
-+# One can change the below line to use a different location
-+set __git_tcsh_completion_script = ${HOME}/.git-completion.bash
-+
-+# Check that the user put the script in the right place
-+if ( ! -e ${__git_tcsh_completion_script} ) then
-+       echo "ERROR in git-completion.tcsh script.  Cannot find:
-${__git_tcsh_completion_script}.  Git completion will not work."
-+       exit
-+endif
-+
-+# Make the script executable if it is not
-+if ( ! -x ${__git_tcsh_completion_script} ) then
-+       chmod u+x ${__git_tcsh_completion_script}
-+endif
-+
-+complete git  'p/*/`${__git_tcsh_completion_script} "${COMMAND_LINE}"
-| sort | uniq`/'
-+complete gitk 'p/*/`${__git_tcsh_completion_script} "${COMMAND_LINE}"
-| sort | uniq`/'
-+
---
-1.7.0.4
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index 5314249..7a693ba 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -74,7 +74,7 @@ finish_ident() {
+>  }
+>  
+>  set_ident () {
+> -	parse_ident_from_commit author AUTHOR committer COMMITTER
+> +	parse_ident_from_commit_via_script "$ident_script"
+>  	finish_ident AUTHOR
+>  	finish_ident COMMITTER
+>  }
+> @@ -93,6 +93,7 @@ if [ "$(is_bare_repository)" = false ]; then
+>  	require_clean_work_tree 'rewrite branches'
+>  fi
+>  
+> +ident_script=$(pick_ident_script author AUTHOR committer COMMITTER)
+>  tempdir=.git-rewrite
+>  filter_env=
+>  filter_tree=
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index 22f0aed..1e20e17 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -225,10 +225,17 @@ pick_ident_script () {
+>  	echo '/^$/q'
+>  }
+>  
+> +# Feed a pick_ident_script return value to sed. Use this instead of
+> +# parse_ident_from_commit below if you are going to be parsing commits in a
+> +# tight loop and want to save a process.
+> +parse_ident_from_commit_via_script() {
+> +	LANG=C LC_ALL=C sed -ne "$1"
+> +}
+> +
+>  # Create a pick-script as above and feed it to sed. Stdout is suitable for
+>  # feeding to eval.
+>  parse_ident_from_commit () {
+> -	LANG=C LC_ALL=C sed -ne "$(pick_ident_script "$@")"
+> +	parse_ident_from_commit_via_script "$(pick_ident_script "$@")"
+>  }
+>  
+>  # Parse the author from a commit given as an argument. Stdout is suitable for
