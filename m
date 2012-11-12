@@ -1,114 +1,171 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/log: fix description of format.pretty
-Date: Mon, 12 Nov 2012 09:42:51 -0800
-Message-ID: <7vwqxqk99g.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0=hdmYF2VoOZY4F7+yPD8D0rBnPY-tvp5pryRWp-0WBeg@mail.gmail.com>
- <20121112080527.GB3581@elie.Belkin>
- <CALkWK0nR_9mWDKzKygR379x3L=d4bGKKo27AP-2Y=+coc7H+sQ@mail.gmail.com>
- <20121112153855.GA3546@elie.Belkin>
+Subject: Re: [PATCH 1/2] git-sh-setup: refactor ident-parsing functions
+Date: Mon, 12 Nov 2012 09:44:01 -0800
+Message-ID: <7vpq3ik97i.fsf@alter.siamese.dyndns.org>
+References: <20121018072207.GA1605@sigill.intra.peff.net>
+ <20121018072522.GA9999@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:43:09 2012
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:44:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXy2O-0005CU-50
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:43:08 +0100
+	id 1TXy3Y-0005jq-Fk
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 18:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753795Ab2KLRmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 12:42:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39860 "EHLO
+	id S1753883Ab2KLRoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 12:44:06 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40487 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751984Ab2KLRmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 12:42:54 -0500
+	id S1751984Ab2KLRoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 12:44:04 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BB569420;
-	Mon, 12 Nov 2012 12:42:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5184E949E;
+	Mon, 12 Nov 2012 12:44:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=EF1y6VU8Mgi28S2qlV2r0kQ0xlQ=; b=JjPDVlhCoh8WtSw7fUa2
-	xiTBha/ZL22Fz4EFhOoLqUNqWq+W4nYO8k7hju3csPmrYQLitfoB0VSdAcZZLH6s
-	p2it9dSnfcssCUhVB0IydykCpaZQbXOolm6rV2+yleOGmBOxHEXmcWXdQZ1/NMr3
-	LxOWl8ILgne/xGeuKLVbHLg=
+	 s=sasl; bh=IPxowZgmDFAUaHvrnsyfqiwYioA=; b=I5srnDKwrdFOX9L+zgxJ
+	PmCOMRjLDQSAN2LeYvKV53FT3yEAdYPAarZ0X+ntrBmW2uzow4jbscuK7tmeJevf
+	O68rUOnAJwfMLOsK+QR+PqQjBOt1LxLuylxbhdyZPomMHKW0d/uwQIL0HX+INeEQ
+	RXKAljO9fO52ogsAlw6xg7M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=eyqxyAjJBhqJ0N0wLPzI3fZtBEoQtEDiE/oQ3GaqSGD4Z2
-	S+b5rm9v4dQ3viO3xPpYs8FjbPXFWeoAZutro/5ma4UunrtaXwN5I3F29NOS4meg
-	LXfF50bA6TvGb+THN4h3yO8LInRMeoVwd4dZHhoYsLR1tlNevcbKj8KRbDSS0=
+	 q=dns; s=sasl; b=hzvOyDQJLZLS1Pk3yh2lzmvaWfG649fSyxl4rreqqd+Ryg
+	Gsnz01Bu2+/Ts2sYaCKvg36sbq9crFxaSyePSJTvp/3GCf9qfiCY1gfioUZya3YH
+	TSZ+0dKPPUoQmvh58cccgFmGQyjhnX3n7TAdrllVLQ2cL5suDZqvleJJ1q2Cs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59DEE941F;
-	Mon, 12 Nov 2012 12:42:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D6D2949D;
+	Mon, 12 Nov 2012 12:44:04 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A900C941B; Mon, 12 Nov 2012
- 12:42:52 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B0B0949B; Mon, 12 Nov 2012
+ 12:44:02 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 62451E0C-2CF0-11E2-8D9F-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8C341C2C-2CF0-11E2-9F31-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209497>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Ramkumar Ramachandra wrote:
+> The only ident-parsing function we currently provide is
+> get_author_ident_from_commit. This is not very
+> flexible for two reasons:
 >
->> Oops, I read about `--pretty` in pretty-formats.txt and didn't realize
->> that `--format` existed.  However, your patch is still wrong because
->> there seems to be a subtle (and confusing) difference between
->> `--pretty` and `--format`.  In the latter, you can't omit the format,
->> and expect it to be picked up from format.pretty:
->>
->>   $ git log --format
->>   fatal: unrecognized argument: --format
-
-We probably should say "--format needs an argument" here.
-
-> ... It is based on the
-> following text from Documentation/config.txt:
+>   1. It takes a commit as an argument, and can't read from
+>      commit headers saved on disk.
 >
-> 	format.pretty::
-> 		The default pretty format for log/show/whatchanged command,
-> 		See linkgit:git-log[1], linkgit:git-show[1],
-> 		linkgit:git-whatchanged[1].
+>   2. It will only parse authors, not committers.
 >
-> I do imagine it can be made clearer.  s/--format/--pretty/ does not go
-> far enough --- it only replaces one confusing explanation with
-> another.
+> This patch provides a more flexible interface which will
+> parse multiple idents from a commit provide on stdin. We can
+> easily use it as a building block for the current function
+> to retain compatibility.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Since we are counting processes in this series, I should note that this
+> actually adds a subshell invocation for each call, since it went from:
+>
+>   script='...'
+>   sed $script
+>
+> to:
+>
+>   sed "$(make_script)"
+>
+> For filter-branch, which is really the only high-performance caller we
+> have, this is negated by the fact that it will do author and committer
+> at the same time, saving us an extra subshell (in addition to an extra
+> sed invocation).
 
-The --format and --pretty are more or less the same thing since
-3a4c1a5 (Add --format that is a synonym to --pretty, 2009-02-24).
-The --format option was added as a synonym because majority of new
-users who have never heard of --pretty found it more natural; in
-that sense, Ram's patch goes backwards.
+Given that pick-ident-script is a const function, a caller that
+repeatedly call is could call it once and use it in a variable, no?
 
-The entry in config.txt came from 94c22a5 (log/show/whatchanged:
-introduce format.pretty configuration, 2008-03-02) that predates the
-synonym, and originally it was to allow
-
-    [format] pretty = fuller
-
-to make "git log" by default use "git log --pretty=fuller" in the
-configuration; back then there wasn't a support for custom formats
-like
-
-    [format] pretty = "%h %s"
-
-until 3640754 (Give short-hands to --pretty=tformat:%formatstring,
-2009-02-24) introduced it.
-
-"The default pretty format" in the description was written to refer
-to the original "raw/medium/short/email/full/fuller" set, but these
-days, we accept anything that you can write after "--pretty=" (or
-its synonym "--format=") on the command line.
-
-This is one of the reasons why I do not want to see abbreviated
-descriptions for configuration variables duplicated in the manual
-pages of individual commands, as the practice tends to lead to this
-kind of confusion.
+>
+>  git-sh-setup.sh | 62 +++++++++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 43 insertions(+), 19 deletions(-)
+>
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index ee0e0bc..22f0aed 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -191,28 +191,52 @@ get_author_ident_from_commit () {
+>  	fi
+>  }
+>  
+> +# Generate a sed script to parse identities from a commit.
+> +#
+> +# Reads the commit from stdin, which should be in raw format (e.g., from
+> +# cat-file or "--pretty=raw").
+> +#
+> +# The first argument specifies the ident line to parse (e.g., "author"), and
+> +# the second specifies the environment variable to put it in (e.g., "AUTHOR"
+> +# for "GIT_AUTHOR_*"). Multiple pairs can be given to parse author and
+> +# committer.
+> +pick_ident_script () {
+> +	while test $# -gt 0
+> +	do
+> +		lid=$1; shift
+> +		uid=$1; shift
+> +		printf '%s' "
+> +		/^$lid /{
+> +			s/'/'\\\\''/g
+> +			h
+> +			s/^$lid "'\([^<]*\) <[^>]*> .*$/\1/'"
+> +			s/.*/GIT_${uid}_NAME='&'/p
+> +
+> +			g
+> +			s/^$lid "'[^<]* <\([^>]*\)> .*$/\1/'"
+> +			s/.*/GIT_${uid}_EMAIL='&'/p
+> +
+> +			g
+> +			s/^$lid "'[^<]* <[^>]*> \(.*\)$/@\1/'"
+> +			s/.*/GIT_${uid}_DATE='&'/p
+> +		}
+> +		"
+> +	done
+> +	echo '/^$/q'
+> +}
+> +
+> +# Create a pick-script as above and feed it to sed. Stdout is suitable for
+> +# feeding to eval.
+> +parse_ident_from_commit () {
+> +	LANG=C LC_ALL=C sed -ne "$(pick_ident_script "$@")"
+> +}
+> +
+> +# Parse the author from a commit given as an argument. Stdout is suitable for
+> +# feeding to eval to set the usual GIT_* ident variables.
+>  get_author_ident_from_commit () {
+> -	pick_author_script='
+> -	/^author /{
+> -		s/'\''/'\''\\'\'\''/g
+> -		h
+> -		s/^author \([^<]*\) <[^>]*> .*$/\1/
+> -		s/.*/GIT_AUTHOR_NAME='\''&'\''/p
+> -
+> -		g
+> -		s/^author [^<]* <\([^>]*\)> .*$/\1/
+> -		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
+> -
+> -		g
+> -		s/^author [^<]* <[^>]*> \(.*\)$/@\1/
+> -		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
+> -
+> -		q
+> -	}
+> -	'
+>  	encoding=$(git config i18n.commitencoding || echo UTF-8)
+>  	git show -s --pretty=raw --encoding="$encoding" "$1" -- |
+> -	LANG=C LC_ALL=C sed -ne "$pick_author_script"
+> +	parse_ident_from_commit author AUTHOR
+>  }
+>  
+>  # Clear repo-local GIT_* environment variables. Useful when switching to
