@@ -1,71 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Update cygwin.c for new mingw-64 win32 api headers
-Date: Mon, 12 Nov 2012 15:58:32 -0500
-Message-ID: <20121112205832.GI4623@sigill.intra.peff.net>
-References: <1352679440-4098-1-git-send-email-mlevedahl@gmail.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [BUG] gitweb: XSS vulnerability of RSS feed
+Date: Mon, 12 Nov 2012 22:13:27 +0100
+Message-ID: <CANQwDwdRTeaVS5cMic5gv9SP1A8Z1vruOsZBFfMDQDTZHBAtvQ@mail.gmail.com>
+References: <20121111232820.284510@gmx.net> <CAM9Z-n=6xsC7yiKJ+NU-CxNPxEXWmJzvXLUocgZgWPQnuK6G4Q@mail.gmail.com>
+ <20121112202413.GD4623@sigill.intra.peff.net> <20121112202701.GE4623@sigill.intra.peff.net>
+ <7vmwymh83r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 21:59:16 2012
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Drew Northup <n1xim.email@gmail.com>,
+	glpk xypron <xypron.glpk@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 22:14:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY16A-0003Hk-4v
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 21:59:14 +0100
+	id 1TY1KV-0004Hq-5R
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 22:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753535Ab2KLU6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 15:58:37 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45019 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753392Ab2KLU6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 15:58:36 -0500
-Received: (qmail 14042 invoked by uid 107); 12 Nov 2012 20:59:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Nov 2012 15:59:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2012 15:58:32 -0500
-Content-Disposition: inline
-In-Reply-To: <1352679440-4098-1-git-send-email-mlevedahl@gmail.com>
+	id S1753399Ab2KLVNt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2012 16:13:49 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:33637 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753265Ab2KLVNs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 16:13:48 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so6722141oag.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 13:13:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JKsS4ss0U8THD4upbkobqlm6951kwdz3mzsosMTwa08=;
+        b=jj3a/KlhF37eIXzq7tenr/6EXouOh6MWI8NGQVVQg1AgmlKriFP1+3dRCw2LtZRcgp
+         sR1C5uzRHvlmmmVRKd5LZNFaYguC5r6mLcK/sh59Vrgtt9TlrqQVj/DA9PCAoHLOSJ0j
+         Y5Xgp7H8YElRpuDUhgasrcPK8UZUhU3rc3c9GoVydtgO6gCi8lH0IpxzP2QMlImZwfJU
+         7ble8FqEHI2nWvLOOgBi9SKLAA3XBAurHDLtSBiUPz5QclzvW6B7a1cn0BnMl2s86PyA
+         kk8SmAwMqJCV410Pu2l/7Lch30BK8WHPDXgftRvqwC0wxzRq+75dgVGsFD/R0gsjdr7c
+         Ctfg==
+Received: by 10.60.8.103 with SMTP id q7mr15333652oea.70.1352754828102; Mon,
+ 12 Nov 2012 13:13:48 -0800 (PST)
+Received: by 10.76.91.134 with HTTP; Mon, 12 Nov 2012 13:13:27 -0800 (PST)
+In-Reply-To: <7vmwymh83r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209526>
 
-On Sun, Nov 11, 2012 at 07:17:20PM -0500, Mark Levedahl wrote:
+On Mon, Nov 12, 2012 at 9:36 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jeff King <peff@peff.net> writes:
+>> On Mon, Nov 12, 2012 at 03:24:13PM -0500, Jeff King wrote:
+>>
+>>> I think the right answer is going to be a well-placed call to esc_h=
+tml.
+>>
+>> I'm guessing the right answer is this:
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 10ed9e5..a51a8ba 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -8055,6 +8055,7 @@ sub git_feed {
+>>               $feed_type =3D 'history';
+>>       }
+>>       $title .=3D " $feed_type";
+>> +     $title =3D esc_html($title);
+>>       my $descr =3D git_get_project_description($project);
+>>       if (defined $descr) {
+>>               $descr =3D esc_html($descr);
+>>
+>> but I did not test it (and I am not that familiar with gitweb, so it=
+ is
+>> a slight guess from spending 5 minutes grepping and reading).
+>
+> Yeah, that looks correct, given the way how the other variables
+> emitted with the same "print" like $descr and $owner are formed.
 
-> The cygwin project recently switched to a new implementation of the
-> windows api, now using header files from the mingw-64 project. These
-> new header files are incompatible with the way cygwin.c included the
-> old headers: cygwin.c can be compiled using the new or the older (mingw)
-> headers, but different files must be included in different order for each
-> to work. The new headers are in use only for the current release series
-> (based upon the v1.7.x dll version). The previous release series using
-> the v1.5 dll is kept available but unmaintained for use on older versions
-> of Windows. So, patch cygwin.c to use the new include ordering only if
-> the dll version is 1.7 or higher.
+It looks like good solution to me too.
 
-I have very little knowledge of cygwin compatibility, so thanks for a
-nice explanation.  I'll queue it in 'pu' for now, and hopefully we can
-get some test reports from other cygwin folks (on new and old cygwin).
+Nb. the problems with feed are mainly because it is generated
+by hand even more than HTML (which uses CGI.pm).
 
-> diff --git a/Makefile b/Makefile
-> index f69979e..1cc5d96 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1082,6 +1082,7 @@ ifeq ($(uname_O),Cygwin)
->  		NO_SYMLINK_HEAD = YesPlease
->  		NO_IPV6 = YesPlease
->  		OLD_ICONV = UnfortunatelyYes
-> +		V15_MINGW_HEADERS = YesPlease
->  	endif
+--=20
+Jakub Nar=EAbski
 
-The "if" part of the conditional that did not make it into the context
-above is an expr match for "1.6.*" From the name, I would think that we
-would want to use these headers on cygwin 1.5.* , too. Is v1.5 too old
-to care about now?
-
--Peff
+--=20
+Jakub Narebski
