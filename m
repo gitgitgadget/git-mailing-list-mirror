@@ -1,89 +1,92 @@
-From: "McHenry, Matt" <mmchenry@carnegielearning.com>
-Subject: RE: git-svn with ignore-paths misses/skips some revisions during
- fetch
-Date: Mon, 12 Nov 2012 10:00:52 -0500
-Message-ID: <D377A9280DB18546A2471214D5CBB0E9054C3B4CF6@exchdb01>
-References: <D377A9280DB18546A2471214D5CBB0E9054C25E071@exchdb01>
- <be90fa6b-3927-47cb-9306-6dbb7bac2c04@zcs>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation/log: fix description of format.pretty
+Date: Mon, 12 Nov 2012 07:38:55 -0800
+Message-ID: <20121112153855.GA3546@elie.Belkin>
+References: <CALkWK0=hdmYF2VoOZY4F7+yPD8D0rBnPY-tvp5pryRWp-0WBeg@mail.gmail.com>
+ <20121112080527.GB3581@elie.Belkin>
+ <CALkWK0nR_9mWDKzKygR379x3L=d4bGKKo27AP-2Y=+coc7H+sQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Enrico Weigelt <enrico.weigelt@vnc.biz>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:01:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:39:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXvVf-0002bf-Vv
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 16:01:12 +0100
+	id 1TXw6Z-0003MR-RX
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 16:39:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab2KLPA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 10:00:57 -0500
-Received: from webmail.carnegielearning.com ([67.109.87.207]:54065 "EHLO
-	webmail.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753306Ab2KLPA4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 10:00:56 -0500
-Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
- ([127.0.0.1]) with mapi; Mon, 12 Nov 2012 10:00:53 -0500
-Thread-Topic: git-svn with ignore-paths misses/skips some revisions during
- fetch
-Thread-Index: Ac2/GRuTxoDeo+f0Ru2P0Mp1deM9qgBy8hbw
-In-Reply-To: <be90fa6b-3927-47cb-9306-6dbb7bac2c04@zcs>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+	id S1753773Ab2KLPjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 10:39:06 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:41571 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753686Ab2KLPjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 10:39:04 -0500
+Received: by mail-pa0-f46.google.com with SMTP id hz1so4365036pad.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 07:39:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=7/bpTV5AmQQMxZMgLjAyUtJ3OfrmkeaOxz3oE/fh4uE=;
+        b=HO0+91cGK7+p93a1HWQmohmeqc82uphbis5z7dF8A4Q2X55VYU8JYlYdKTdGX1e7f0
+         QwlWEoiIHykZ05ZOeptL/7/QCIvvrZfYof4zMDwZOiFjm/kwrWji69uv1ClVqqwArbx2
+         Jhg9n4ZcihnoO4/NHyW9KjAdOK/SS5OwHKFMd18k8opQALilO2smJggYJPHIkq76R6TQ
+         VM1GrvsaK/q9TCN9FHCwTzqKO9uuUzlWutdJ303GnK5YBPGkQnrHgsKtsUPZ0+rcIzbG
+         TRodNHjfT+5wQMA3fv+ZvooWpUo3CUsQCowk05DuCsh5i5mUX5erWiinKEpMvu2pMYTw
+         ElUQ==
+Received: by 10.68.227.162 with SMTP id sb2mr59672667pbc.4.1352734742757;
+        Mon, 12 Nov 2012 07:39:02 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id ve6sm4347480pbc.58.2012.11.12.07.39.00
+        (version=SSLv3 cipher=OTHER);
+        Mon, 12 Nov 2012 07:39:01 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0nR_9mWDKzKygR379x3L=d4bGKKo27AP-2Y=+coc7H+sQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209480>
 
-DQpFbnJpY28gYXNrZWQ6DQo+IENvdWxkIGl0IGJlIHRoYXQgY2VydGFpbiBmaWxlcyBzcGVudCBw
-YXJ0cyBvZiB0aGVpciBoaXN0b3JpY2FsIGxpZmV0aW1lDQo+IGluc2lkZSB0aGUgaWdub3JlZCBw
-YXRocyA/DQoNCg0KICAgICAgICBJIGxlZnQgb3V0IG9uZSBwb3NzaWJseSBpbXBvcnRhbnQgcGll
-Y2Ugb2YgaW5mb3JtYXRpb246IE15IGluaXRpYWwgJ2dpdCBzdm4gZmV0Y2gnIHVzZWQgJy1yJyB0
-byAiY2F1dGVyaXplIiB0aGUgaGlzdG9yeSwgYm90aCBiZWNhdXNlIHRoZXJlIGlzIGEgbG90IG9m
-IGl0IChhbG1vc3QgMTIgeWVhcnMpIGFuZCBiZWNhdXNlIHRoZSByZXBvc2l0b3J5IHdhcyByZW9y
-Z2FuaXplZCBzaWduaWZpY2FudGx5IGFmdGVyIGEgY3ZzIC0+IHN2biBtaWdyYXRpb24uICBUaGUg
-Zmlyc3QgcmV2aXNpb24gSSBoYXZlIGlzIHI4Mzg3NToNCg0KJCBnaXQgbG9nIC0tbWF4LXBhcmVu
-dHM9MCAtLWFsbCAtLWRhdGUtb3JkZXIgfCB0YWlsIC1uIDENCiAgICBnaXQtc3ZuLWlkOiBzdm46
-Ly9kZXYuY2FybmVnaWVsZWFybmluZy5jb20vdHJ1bmtAODM4NzUgNzUyZmNjOTQtY2QyMi0wNDEw
-LWJhYTgtZWY1NGFjMmM2OTczDQoNCg0KICAgICAgICBTbyB0byBhbnN3ZXIgRW5yaWNvJ3MgcXVl
-c3Rpb246IFByaW9yIHRvIHRoZSBpbml0aWFsIHJldmlzaW9uIHRoYXQgd2FzIGZldGNoZWQgaW50
-byBnaXQsIHRoZXNlIGZpbGVzIGRpZCBsaXZlIGluIGEgZGlmZmVyZW50IHRvcC1sZXZlbCBkaXJl
-Y3RvcnkuICBIb3dldmVyIGl0J3Mgbm90IG9uZSB0aGF0J3MgbWF0Y2hlZCBieSB0aGUgJ2lnbm9y
-ZS1wYXRocycgcmVnZXguICBIZXJlJ3Mgb25lIGV4YW1wbGU6DQoNCiQgc3ZuIGxvZyAtdiBzdm46
-Ly9kZXYvYnJhbmNoZXMvbG9jYWxpemF0aW9uLW1lcmdlL2J1aWxkcHJvY2Vzcy9hbnRmaWxlcy9k
-bWcueG1sIHwgZ3JlcCAvZG1nLnhtbCB8IHVuaXEgLWMNCiAgICAgIDkgICAgTSAvYnJhbmNoZXMv
-bG9jYWxpemF0aW9uLW1lcmdlL2J1aWxkcHJvY2Vzcy9hbnRmaWxlcy9kbWcueG1sDQogICAgIDM1
-ICAgIE0gL3RydW5rL2J1aWxkcHJvY2Vzcy9hbnRmaWxlcy9kbWcueG1sDQogICAgICAxICAgIEEg
-L3RydW5rL2J1aWxkcHJvY2Vzcy9hbnRmaWxlcy9kbWcueG1sIChmcm9tIC90cnVuay9idWlsZHBy
-b2Nlc3MvYXNzZW1ibGUtc3VwcG9ydC9kbWcueG1sOjQ4MzA1KQ0KICAgICAgMSAgICBEIC90cnVu
-ay9idWlsZHByb2Nlc3MvYXNzZW1ibGUtc3VwcG9ydC9kbWcueG1sDQogICAgIDU3ICAgIE0gL3Ry
-dW5rL2Fzc2VtYmxlLXN1cHBvcnQvZG1nLnhtbA0KICAgICAgMSAgICBBIC90cnVuay9hc3NlbWJs
-ZS1zdXBwb3J0L2RtZy54bWwNCg0KDQpIZXJlIGFyZSB0aGUgc3ZuIHJldmlzaW9ucyB0aGF0IGV4
-cGxhaW4gdGhlIHRyYW5zaXRpb24gZnJvbSAnYXNzZW1ibGUtc3VwcG9ydCcgdG8gJ2J1aWxkcHJv
-Y2Vzcy9hc3NlbWJsZS1zdXBwb3J0JywganVzdCBhZnRlciB0aGUgY3ZzIC0+IHN2biBtaWdyYXRp
-b24uDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KcjQ4MzAzIHwgbWF0dCB8IDIwMDYtMTEtMjcgMTQ6NTY6
-MTAgLTA1MDAgKE1vbiwgMjcgTm92IDIwMDYpIHwgMSBsaW5lDQpDaGFuZ2VkIHBhdGhzOg0KICAg
-RCAvb2xkLXRydW5rL2Fzc2VtYmxlLXN1cHBvcnQNCiAgIEEgL3RydW5rL2J1aWxkcHJvY2Vzcy9h
-c3NlbWJsZS1zdXBwb3J0IChmcm9tIC9vbGQtdHJ1bmsvYXNzZW1ibGUtc3VwcG9ydDo0ODMwMikN
-Cg0KbW92aW5nIG9sZCBhc3NlbWJsZS1zdXBwb3J0IGludG8gbmV3IGJ1aWxkcHJvY2Vzcw0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpyNDgyNDggfCBtYXR0IHwgMjAwNi0xMS0yMiAxMzo0MTo0MiAtMDUwMCAo
-V2VkLCAyMiBOb3YgMjAwNikgfCAxIGxpbmUNCkNoYW5nZWQgcGF0aHM6DQogICBBIC9vbGQtdHJ1
-bmsgKGZyb20gL3RydW5rOjQ4MjQ3KQ0KICAgRCAvdHJ1bmsNCg0KbW92aW5nIG9sZCB0cnVuayBv
-dXQgb2YgdGhlIHdheQ0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCg0KDQpNYXR0IE1jSGVucnkNClNvZnR3
-YXJlIERldmVsb3Blcg0KQ2FybmVnaWUgTGVhcm5pbmcsIEluYy4NCig4ODgpIDg1MS03MDk0IHgx
-NTAgdG9sbCBmcmVlDQooNDEyKSA2OTAtMjQ0NCBmYXgNCm1tY2hlbnJ5QGNhcm5lZ2llbGVhcm5p
-bmcuY29tDQp3d3cuY2FybmVnaWVsZWFybmluZy5jb20NCg0KRGVjaXNpb24gMjAxMjogRWxlY3Rp
-b24gTWF0aCB8IEVuZ2FnaW5nIFZpZGVvIENvbnRlbnQgfCBGUkVFIEludGVyYWN0aXZlIE1hdGgg
-UHJvYmxlbXMNCmh0dHA6Ly93d3cubmJjbGVhcm4uY29tL3BvcnRhbC9zaXRlL2xlYXJuL2RlY2lz
-aW9uMjAxMg0KDQo=
+Ramkumar Ramachandra wrote:
+
+> Oops, I read about `--pretty` in pretty-formats.txt and didn't realize
+> that `--format` existed.  However, your patch is still wrong because
+> there seems to be a subtle (and confusing) difference between
+> `--pretty` and `--format`.  In the latter, you can't omit the format,
+> and expect it to be picked up from format.pretty:
+>
+>   $ git log --format
+>   fatal: unrecognized argument: --format
+
+You can do
+
+	$ git log
+
+and format.pretty will still take effect.  In other words, setting
+format.pretty to "foo" is somewhat like making
+
+	$ git log
+
+do
+
+	$ git log --format=foo
+
+which is what the text is supposed to explain.  It is based on the
+following text from Documentation/config.txt:
+
+	format.pretty::
+		The default pretty format for log/show/whatchanged command,
+		See linkgit:git-log[1], linkgit:git-show[1],
+		linkgit:git-whatchanged[1].
+
+I do imagine it can be made clearer.  s/--format/--pretty/ does not go
+far enough --- it only replaces one confusing explanation with
+another.
+
+Hoping that clarifies,
+Jonathan
