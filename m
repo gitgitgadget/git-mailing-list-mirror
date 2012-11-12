@@ -1,65 +1,66 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Re: Bizarre problem cloning repo from Codeplex
-Date: Mon, 12 Nov 2012 01:59:27 +0100 (CET)
-Message-ID: <09766c5a-faa0-48dc-8c0a-6551cf3b5db9@zcs>
-References: <m2k3tteb2k.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Thanking the interim maintainer
+Date: Sun, 11 Nov 2012 19:12:26 -0800
+Message-ID: <7vlie7ldk5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeremy Morton <admin@game-point.net>, git <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 02:04:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: peff@peff.net
+X-From: git-owner@vger.kernel.org Mon Nov 12 04:12:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXiS6-0000Wm-ME
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 02:04:38 +0100
+	id 1TXkS4-0002Zm-4x
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 04:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370Ab2KLA73 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2012 19:59:29 -0500
-Received: from zcs.vnc.biz ([83.144.240.118]:46063 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751142Ab2KLA72 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2012 19:59:28 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 6CDF46228C1;
-	Mon, 12 Nov 2012 01:59:27 +0100 (CET)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SmvgD1LaC+WY; Mon, 12 Nov 2012 01:59:27 +0100 (CET)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 0774D622278;
-	Mon, 12 Nov 2012 01:59:27 +0100 (CET)
-In-Reply-To: <m2k3tteb2k.fsf@igel.home>
-X-Originating-IP: [91.43.207.232]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
+	id S1751549Ab2KLDMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2012 22:12:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48804 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751262Ab2KLDM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2012 22:12:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD7F7984A;
+	Sun, 11 Nov 2012 22:12:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=r
+	aLgGhq7iKXjSfdZDSZ8djLJoYI=; b=DuXGR07itVY7Uo5AdoEJt5C8g5v03qOxp
+	jjuVfX2WJbZWi4kdYpOsD2vhULzyhXP+bky/Swk8qXdl9hKUUrnfLEjWCTmupbLZ
+	5LvrubPtIQQke3KZ+bjxSe48TAPQSDA+gp1oOOYlSUO0ZPe8DYhpiDYuBbANMJOB
+	o0HtF/LHfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=NR4GG+T/JViKie4U3WloTwjeYkeTwDZGhYkYEo6OTD0W+YrjwcZSICqH
+	i91AL0CqAfcy96h3iEvyLE9A2Q5Gf2CoEp7d2e3AC8APa1lhMERgUD6+HrUBbHhv
+	DS6asQFGCkD4jj/mnrVEaWyomyGGnE66MwqiRpZlfey6+oVx9Cg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 991D29849;
+	Sun, 11 Nov 2012 22:12:28 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E85249848; Sun, 11 Nov 2012
+ 22:12:27 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C9E5F326-2C76-11E2-9D6E-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209461>
 
-> > Their webserver seems to be configured quite restrictively
-> > (eg. cannot access files like 'packed-refs').
->=20
-> Probably it just doesn't exist.
+I am physically back but still am far from catching up with the list
+traffic (yet).  After skimming my inbox, it appears that you have
+done a magnificent job keeping track of topics in flight and merging
+low-risk fixes early to the 'master' branch.
 
-Aren' these files requied ?
+I am hoping that I can ask you to do another issue of "What's
+cooking" (or two) while I catch up with the traffic, to collect all
+worthy patches that are already published on the list ;-).  After
+that, let us arrange for me to pick up the tips of topic branches
+you have and take it over (just telling me to run "log --oneline
+master..pu" might be sufficient if there is no "tentatively ejected"
+topic).
 
-
-cu
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
-
-Enrico Weigelt=20
-VNC - Virtual Network Consult GmbH=20
-Head Of Development=20
-
-Pariser Platz 4a, D-10117 Berlin
-Tel.: +49 (30) 3464615-20
-=46ax: +49 (30) 3464615-59
-
-enrico.weigelt@vnc.biz; www.vnc.de=20
+Thanks.
