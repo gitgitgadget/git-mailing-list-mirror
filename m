@@ -1,82 +1,116 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH v5 11/15] remote-testgit: make clear the 'done' feature
-Date: Mon, 12 Nov 2012 12:20:56 +0100
-Message-ID: <EA56F0CC-7C93-491F-A076-4A1AA9593ED0@quendi.de>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com> <1352642392-28387-12-git-send-email-felipe.contreras@gmail.com> <29291552-880A-4FEB-88E0-A73A1C7742F7@quendi.de> <CAMP44s0o1eP+aeT0AHu4uP1NPLqJq56qUDb-+F_x5NjoJCnf+A@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 12:21:31 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git merge commits are non-deterministic? what changed?
+Date: Mon, 12 Nov 2012 12:27:31 +0100
+Message-ID: <50A0DD23.4040800@drmicha.warpmail.net>
+References: <20121109133132.GK69724@acme.spoerlein.net> <m2y5iarf5s.fsf@igel.home> <20121109154245.GP69724@acme.spoerlein.net> <vpq390idb8v.fsf@grenoble-inp.fr> <20121109161647.GB19725@sigill.intra.peff.net> <20121109182753.GQ69724@acme.spoerlein.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: =?UTF-8?B?VWxyaWNoIFNww7ZybGVpbg==?= <uqs@spoerlein.net>
+X-From: git-owner@vger.kernel.org Mon Nov 12 12:27:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TXs54-0003d7-FJ
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 12:21:30 +0100
+	id 1TXsBA-0006ah-Nv
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Nov 2012 12:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447Ab2KLLVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 06:21:16 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:45899 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751386Ab2KLLVP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 06:21:15 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TXs4W-0003EK-Ck; Mon, 12 Nov 2012 12:20:56 +0100
-In-Reply-To: <CAMP44s0o1eP+aeT0AHu4uP1NPLqJq56qUDb-+F_x5NjoJCnf+A@mail.gmail.com>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1352719275;cb23dcdd;
+	id S1752544Ab2KLL1e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2012 06:27:34 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:48380 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752467Ab2KLL1d (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2012 06:27:33 -0500
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5CA9320A35;
+	Mon, 12 Nov 2012 06:27:33 -0500 (EST)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute5.internal (MEProxy); Mon, 12 Nov 2012 06:27:33 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=doflAe/FZhMFuJKcf9Iq1y
+	OAWSs=; b=eSj7suQL+BfgpU3hHQ4wBDFDAOlfGILwIaMOk15Oj9K+LC6L1Q75vA
+	7Db4LWp2oVeu/EFDjrOlO3ZC6gQwZGY/hi89A4bDss1124tshAjIMhs3gxorl1pA
+	OOPJn2SaJ8qb9/stAKc2j6rF5A01R50vroYCWfA6G7qoQMYaQiTuI=
+X-Sasl-enc: SpDo+k288BEkHEoZ/K4P83KbMEgdQJrNYPy/fmOe52iJ 1352719653
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8B00E482786;
+	Mon, 12 Nov 2012 06:27:32 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <20121109182753.GQ69724@acme.spoerlein.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209475>
 
+Ulrich Sp=C3=B6rlein venit, vidit, dixit 09.11.2012 19:27:
+> On Fri, 2012-11-09 at 11:16:47 -0500, Jeff King wrote:
+>> On Fri, Nov 09, 2012 at 04:52:48PM +0100, Matthieu Moy wrote:
+>>
+>>> Ulrich Sp=C3=B6rlein <uqs@spoerlein.net> writes:
+>>>
+>>>>>> 2. Why the hell is the commit hash dependent on the ordering of =
+the
+>>>>>> parent commits? IMHO it should sort the set of parents before
+>>>>>> calculating the hash ...
+>>>>>
+>>>>> What would be the sort key?
+>>>>
+>>>> Trivially, the hash of the parents itself. So you'd always get
+>>>>
+>>>> ...
+>>>> parent 0000
+>>>> parent 1111
+>>>> parent aaaa
+>>>> parent ffff
+>>>
+>>> That would change the behavior of --first-parent. Or you'd need to
+>>> compute the sha1 of the sorted list, but keep the unsorted one in t=
+he
+>>> commit. Possible, but weird ;-).
+>>
+>> Right. The reason that merge parents are stored in the order given o=
+n
+>> the command line is not random or because it was not considered. It
+>> encodes a valuable piece of information: did the user merge "foo" in=
+to
+>> "bar", or did they merge "bar" into "foo"?
+>>
+>> So I think this discussion is going in the wrong direction; git shou=
+ld
+>> never sort the parents, because the order is meaningful. The origina=
+l
+>> complaint was that a run of svn2git produced different results on tw=
+o
+>> different git versions. The important question to me is: did svn2git
+>> feed the parents to git in the same order?
+>>
+>> If it did, and git produced different results, then that is a seriou=
+s
+>> bug.
+>>
+>> If it did not, then the issue needs to be resolved in svn2git (which
+>> _may_ want to sort the parents that it feeds to git, but it would de=
+pend
+>> on whether the order it is currently presenting is meaningful).
+>=20
+> Yeah, thanks, looks like I have some more work to do. I don't quite g=
+et
+> how it could come up with a different order, seeing that it is using =
+svn
+> as the base.
+>=20
+> Will run some more experiments, thanks for the info so far.
 
-On 11.11.2012, at 22:22, Felipe Contreras wrote:
+There was a change in the order in which "git cherry-pick A B C" applie=
+s
+the commits. It's the only odering affecting change in 1.8.0 that I can
+think of right now.
 
-> On Sun, Nov 11, 2012 at 9:49 PM, Max Horn <max@quendi.de> wrote:
->> 
->> On 11.11.2012, at 14:59, Felipe Contreras wrote:
->> 
->>> People seeking for reference would find it useful.
->> 
->> Hm, I don't understand this commit message. Probably means I am j git fast-export --use-done-featureust too dumb, but since I am one of those people who would likely be seeking for reference, I would really appreciate if it could clarified. Like, for example, I don't see how the patch below makes anything "clear", it just seems to change the "import" command of git-remote-testgit to make use of the 'done' feature?
-> 
-> No, the done feature was there already, but not so visible: git
-> fast-export --use-done-feature <-there. Which is the problem, it's too
-> easy to miss, therefore the need to make it clear.
-
-
-Aha, now I understand what this patch is about. So I would suggest this alternate commit message:
-
-  remote-testgit: make it explicit clear that we use the 'done' feature
-
-  Previously we relied on passing '--use-done-feature ' to git fast-export, which is
-  easy to miss when looking at this script. Since remote-testgit is also a reference
-  implementation, we now explicitly output 'feature done' / 'done' to make it
-  crystal clear that we implement this feature.
-
-
-Or perhaps a little bit less verbose. With a commit message like the above, I think I would have grokked the patch right away. With the original message, that was not the case (else I wouldn't have wrote my initial email). And even though I now understand (or at least believe to understand) the patch, I don't think the original message is that helpful... indeed, "make clear the 'done' feature" is ambiguous. You meant it as "make clear the 'done' feature is implemented / used", while I understood it as "make clear what the 'done' feature is about". Looking at the patch can help to resolve that, but (a) my wrong interpretation threw me off-track and (b) I thought that the point of commit messages was to give an overview of a patch without having to look at it...
-So at the very least, the message should explain what exactly is "made clear".
-
-Anyway, a small change to the commit message hopefully will not be a problem. :-)
-
-
-Cheers,
-Max
+Michael
