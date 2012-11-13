@@ -1,117 +1,105 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: Fwd: [PATCH] Add tcsh-completion support to contrib by using
- git-completion.bash
-Date: Wed, 14 Nov 2012 00:46:36 +0100
-Message-ID: <20121113234636.GS12052@goldbirke>
-References: <CAFj1UpE6OtJEojaED1_DZJD0kU=nVsFE_w8xa0oJE-6auCU2rw@mail.gmail.com>
- <CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
- <20121113111448.GA3817@goldbirke>
- <CAFj1UpGxx_9GHSnJRpe8hDGB6OTio1mcN71LKcR0pxhSVx2xDw@mail.gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCHv3 3/4] git-status: show short sequencer state
+Date: Tue, 13 Nov 2012 18:50:47 -0500
+Message-ID: <50A2DCD7.4050909@cisco.com>
+References: <1351553513-20385-1-git-send-email-hordp@cisco.com> <1352487385-5929-1-git-send-email-hordp@cisco.com> <1352487385-5929-4-git-send-email-hordp@cisco.com> <7vip9aiuk8.fsf@alter.siamese.dyndns.org> <50A13C9A.8070108@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, felipe.contreras@gmail.com
-To: Marc Khouzam <marc.khouzam@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:46:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, phil.hord@gmail.com,
+	Jeff King <peff@peff.net>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:51:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYQBw-00073a-F0
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 00:46:52 +0100
+	id 1TYQFz-0002D9-VY
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 00:51:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951Ab2KMXqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 18:46:39 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:62374 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146Ab2KMXqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 18:46:38 -0500
-Received: from localhost6.localdomain6 (p5B13079E.dip0.t-ipconnect.de [91.19.7.158])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0M83Dl-1TLGur3v4D-00w3La; Wed, 14 Nov 2012 00:46:37 +0100
-Content-Disposition: inline
-In-Reply-To: <CAFj1UpGxx_9GHSnJRpe8hDGB6OTio1mcN71LKcR0pxhSVx2xDw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:JMQCO9/u8yRMyF/Rmn4B9XBYEqvBFKHczzSxDK66sab
- WRZbDCgdNTerlYA/b7OAZdEGzISco54yE0s2/CmVpwaMZjbxbM
- RguKPGMB3dU+s0BsVncmp/Cq6ZCZeeRahUdUDh+4Mez8agQyC5
- YnX3NUNkjcgQqJjwdIFOe1Nq3h2gDrKklsQXr/vxrrSIU9b4DI
- H7nRGZTlsYlzjOSc7LIw7EJBmhQKFRtkf3Y5iHY4mSk2ckB+6n
- utjfyhckQJXtxkN9DaYIw9aRAxqSX70IH1PsMv8w0ov83bkIOV
- xMRiS524gldaYalsXbM+UBnAr+o9ObakXCEFwSuRnJNY5h71lD
- CvMgDFdTtti7l/BpbzXUh56riicvSJ8cHvrzP5IXk
+	id S1755974Ab2KMXuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 18:50:50 -0500
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:59857 "EHLO
+	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755928Ab2KMXut (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 18:50:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2065; q=dns/txt; s=iport;
+  t=1352850649; x=1354060249;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=qQhGQRMuZ5vTSXA55cVq/OuYdkhlz9lBpsjrAe/2GrY=;
+  b=KX8uk9i/102lSX7q5V/eBe4sz4sY4vUi0b6u2QvotQvAJ1Isxxvg7A+m
+   1PW23UFxiOfBQmYEVNPxvMZMBrC5AlpOBl6CrbFnDEV3KfXwyOF9sKYMD
+   Oq3/xbyyaRcU+XJ2KuY2UGx29h1citqHqNfS7JyoWa23n1NFDjGV4mIUr
+   4=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av8EAL3bolCtJV2d/2dsb2JhbABEwzeBCIIeAQEBBBIBZQEQCxgJFg8JAwIBAgFFBg0BBQIBAR6HaJsOj2WQJJJ+A4hajSKFa4htgWuDDQ
+X-IronPort-AV: E=McAfee;i="5400,1158,6895"; a="142074222"
+Received: from rcdn-core-6.cisco.com ([173.37.93.157])
+  by rcdn-iport-5.cisco.com with ESMTP; 13 Nov 2012 23:50:49 +0000
+Received: from [64.100.104.138] (dhcp-64-100-104-138.cisco.com [64.100.104.138])
+	by rcdn-core-6.cisco.com (8.14.5/8.14.5) with ESMTP id qADNomPl026742;
+	Tue, 13 Nov 2012 23:50:48 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+In-Reply-To: <50A13C9A.8070108@cisco.com>
+X-Enigmail-Version: 1.4.5
+X-TagToolbar-Keys: D20121113185047561
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209687>
 
-Hi,
+Phil Hord wrote:
+> Junio C Hamano wrote:
+>> Phil Hord <hordp@cisco.com> writes:
+>>
+>>> State token strings which may be emitted and their meanings:
+>>>     merge              a merge is in progress
+>>>     am                 an am is in progress
+>>>     am-is-empty        the am patch is empty
+>>>     rebase             a rebase is in progress
+>>>     rebase-interactive an interactive rebase is in progress
+>>>     cherry-pick        a cherry-pick is in progress
+>>>     bisect             a bisect is in progress
+>>>     conflicted         there are unresolved conflicts
+>>>     commit-pending     a commit operation is waiting to be completed
+>>>     splitting          interactive rebase, commit is being split
+>>>
+>>> I also considered adding these tokens, but I decided it was not
+>>> appropriate since these changes are not sequencer-related.  But
+>>> it is possible I am being too short-sighted or have chosen the
+>>> switch name poorly.
+>>>     changed-index  Changes exist in the index
+>>>     changed-files  Changes exist in the working directory
+>>>     untracked      New files exist in the working directory
+>> I tend to agree; unlike all the normal output from "status -s" that
+>> are per-file, the above are the overall states of the working tree.
+>>
+>> It is just that most of the "overall states" look as if they are
+>> dominated by "sequencer states", but that is only because you chose
+>> to call states related to things like "am" and "bisect" that are not
+>> sequencer states as such.
+>>
+>> It probably should be called the tree state, working tree state, or
+>> somesuch.
+> I think you are agreeing that I chose the switch name poorly, right?
+>
+> Do you think '--tree-state' is an acceptable switch or do you have other
+> suggestions?
+>
 
-On Tue, Nov 13, 2012 at 03:12:44PM -0500, Marc Khouzam wrote:
-> >> +if [ -n "$1" ] ; then
-> >> +  # If there is an argument, we know the script is being executed
-> >> +  # so go ahead and run the _git_complete_with_output function
-> >> +  _git_complete_with_output "$1" "$2"
-> >
-> > Where does the second argument come from?  Below you run this script
-> > as '${__git_tcsh_completion_script} "${COMMAND_LINE}"', i.e. $2 is
-> > never set.  Am I missing something?
-> 
-> This second argument is optional and, if present, will be put in
-> $COMP_CWORD.  If not present, $COMP_CWORD must be computed
-> from $1.  Also see comment above _git_complete_with_output ().
-> tcsh does not provide me with this information, so I cannot make use of it.
-> However, I thought it would be more future-proof to allow it for other shells
-> which may have that information.
-> 
-> It is not necessary for tcsh, so I can remove if you prefer?
+I've been calling these 'tokens' myself.  A token is a word-or-phrase I
+can parse easily with the default $IFS, for simpler script handling.
 
-I see.  I read those comments and understood what it is about.  I was
-just surprised that the code is there to make use of it, yet it's not
-specified when invoking that function.
+I'm happy to make that official and use --tokens and -T, but I suspect a
+more appropriate name is available.
 
-Since it's a trivial piece of code, I would say let's keep it.  Could
-you please add a sentence about it (that it's for possible future
-users and it's not used at the moment) to the commit message for
-future reference?
-
-> >> +complete git  'p/*/`${__git_tcsh_completion_script} "${COMMAND_LINE}"
-> >> | sort | uniq`/'
-> >> +complete gitk 'p/*/`${__git_tcsh_completion_script} "${COMMAND_LINE}"
-> >> | sort | uniq`/'
-> >
-> > Is the 'sort | uniq' really necessary?  After the completion function
-> > returns Bash automatically sorts the elements in COMPREPLY and removes
-> > any duplicates.  Doesn't tcsh do the same?  I have no idea about tcsh
-> > completion.
-> 
-> On my machine, tcsh does not remove duplicates.  It does sort the results
-> but that is done after I've run 'uniq', which is too late.  I'm not
-> happy about this
-> either, but the other option is to improve git-completion.bash to
-> avoid duplicates,
-> which seemed less justified.
-
-Ok.  Then keep it for the time being, and we'll see what we can do to
-avoid those duplicates.
-
-> > Does the git completion script returns any duplicates at all?
-> 
-> It does.  'help' is returned twice for example.
-
-Right.  Now that you mentioned it, I remember I noticed it a while
-ago, too.  I even wrote a patch to fix it, but not sure what became of
-it.  Will try to dig it up.
-
-> Also, when completing 'git checkout ' in the git repo, I can see multiple
-> 'todo' branches, as well as 'master', 'pu', 'next', etc.
-> 
-> You can actually try it without tcsh by running my proposed version of
-> git-completion.bash like this:
-> 
-> cd git/contrib/completion
-> bash git-completion.bash "git checkout " | sort | uniq --repeated
-
-Interesting, I can't reproduce.  Are the duplicates also there, if you
-start a bash, source git-completion.bash, and run __git_refs ?
+Phil
