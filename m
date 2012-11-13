@@ -1,167 +1,121 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] send-email: stop asking when we have an ident
-Date: Tue, 13 Nov 2012 20:19:24 +0100
-Message-ID: <1352834364-2674-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Felipe Contreras 2nd <felipe.contreras+2@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:19:55 2012
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH nd/wildmatch] Correct Git's version of isprint and isspace
+Date: Tue, 13 Nov 2012 20:41:08 +0100
+Message-ID: <50A2A254.9030908@kdbg.org>
+References: <507E9FDE.7080706@cs.tu-berlin.de> <1352803572-14547-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	schnhrr@cs.tu-berlin.de, rene.scharfe@lsrfire.ath.cx
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 20:41:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYM1X-0005Xv-2z
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:19:51 +0100
+	id 1TYMMR-0002T4-20
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:41:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747Ab2KMTTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 14:19:37 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:32971 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752261Ab2KMTTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 14:19:36 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so732896bkw.19
-        for <git@vger.kernel.org>; Tue, 13 Nov 2012 11:19:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=f7ofRitOV8xidA+XM/mDQdeP+cEeW9lfamyo4csEY8I=;
-        b=zb/J+3XDmzEe3Xt16Tu+qMwGyq5TT0yyvXgo7YN0sIvnS5z1MAQzz/MjaeBO7WJYSh
-         BJyH8Bn/QBJ+Ezf1V3ctj4NO392LVeVZRkzXG0QsfHDA0gLJdyQMnbpH+fP23C9em9ll
-         OOnOkJVwNJ/NhjLagOnQqV94kspVhP0PRNNU+oqUUiQ8bYmdxbiFKcs+6ZT95BQUfX3y
-         NgR8f835d6to3+/5C9iXC9RdAVy8eIJKTM2SSSjtc/bAnKF7+ur337WGcsKw5HqZiGkd
-         NoF2csAo6cVqbtAcNhn7g1MSYURcqcxKpo6brICn7UEgMKmSZFpQX6jg7bgvhI5oKX/w
-         oHwg==
-Received: by 10.205.130.9 with SMTP id hk9mr8541647bkc.52.1352834375422;
-        Tue, 13 Nov 2012 11:19:35 -0800 (PST)
-Received: from localhost (ip-109-43-0-94.web.vodafone.de. [109.43.0.94])
-        by mx.google.com with ESMTPS id 1sm6583067bks.3.2012.11.13.11.19.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Nov 2012 11:19:34 -0800 (PST)
-X-Mailer: git-send-email 1.8.0
+	id S1754146Ab2KMTlN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 14:41:13 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:16878 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752821Ab2KMTlM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 14:41:12 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 9447B10016;
+	Tue, 13 Nov 2012 20:41:09 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 1482019F30E;
+	Tue, 13 Nov 2012 20:41:09 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
+In-Reply-To: <1352803572-14547-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209661>
 
-From: Felipe Contreras 2nd <felipe.contreras+2@gmail.com>
+Am 13.11.2012 11:46, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> @@ -14,11 +14,11 @@ enum {
+>  	P =3D GIT_PATHSPEC_MAGIC, /* other non-alnum, except for ] and } */
+>  	X =3D GIT_CNTRL,
+>  	U =3D GIT_PUNCT,
+> -	Z =3D GIT_CNTRL | GIT_SPACE
+> +	Z =3D GIT_CNTRL_SPACE
+>  };
+> =20
+> -const unsigned char sane_ctype[256] =3D {
+> -	X, X, X, X, X, X, X, X, X, Z, Z, X, X, Z, X, X,		/*   0.. 15 */
+> +const unsigned int sane_ctype[256] =3D {
+> +	X, X, X, X, X, X, X, X, X, Z, Z, Z, Z, Z, X, X,		/*   0.. 15 */
+>  	X, X, X, X, X, X, X, X, X, X, X, X, X, X, X, X,		/*  16.. 31 */
+>  	S, P, P, P, R, P, P, P, R, R, G, R, P, P, R, P,		/*  32.. 47 */
+>  	D, D, D, D, D, D, D, D, D, D, P, P, P, P, P, G,		/*  48.. 63 */
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 02f48f6..4ed3f94 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -474,8 +474,8 @@ extern const char tolower_trans_tbl[256];
+>  #undef ispunct
+>  #undef isxdigit
+>  #undef isprint
+> -extern const unsigned char sane_ctype[256];
+> -#define GIT_SPACE 0x01
+> +extern const unsigned int sane_ctype[256];
+> +#define GIT_CNTRL_SPACE 0x01
+>  #define GIT_DIGIT 0x02
+>  #define GIT_ALPHA 0x04
+>  #define GIT_GLOB_SPECIAL 0x08
+> @@ -483,9 +483,10 @@ extern const unsigned char sane_ctype[256];
+>  #define GIT_PATHSPEC_MAGIC 0x20
+>  #define GIT_CNTRL 0x40
+>  #define GIT_PUNCT 0x80
+> -#define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask=
+)) !=3D 0)
+> +#define GIT_SPACE 0x100
+> +#define sane_istest(x,mask) ((sane_ctype[(unsigned int)(x)] & (mask)=
+) !=3D 0)
+>  #define isascii(x) (((x) & ~0x7f) =3D=3D 0)
+> -#define isspace(x) sane_istest(x,GIT_SPACE)
+> +#define isspace(x) sane_istest(x,GIT_SPACE | GIT_CNTRL_SPACE)
+>  #define isdigit(x) sane_istest(x,GIT_DIGIT)
+>  #define isalpha(x) sane_istest(x,GIT_ALPHA)
+>  #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
+> @@ -493,7 +494,7 @@ extern const unsigned char sane_ctype[256];
+>  #define isupper(x) sane_iscase(x, 0)
+>  #define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
+>  #define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REG=
+EX_SPECIAL)
+> -#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
+> +#define iscntrl(x) (sane_istest(x,GIT_CNTRL | GIT_CNTRL_SPACE))
+>  #define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
+>  		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
+>  #define isxdigit(x) (hexval_table[x] !=3D -1)
 
-Currently we keep getting questions even when the user has properly
-configured his full name and password:
+So we have two properties that overlap:
 
- Who should the emails appear to be from?
- [Felipe Contreras <felipe.contreras@gmail.com>]
+      SSSSSSSSSS
+   CCCCCCCC
 
-And once a question pops up, other questions are turned on. This is
-annoying.
+You seem to generate partions:
 
-The reason this is safe is because currently the script fails completely
-when the autohor (or committer) is not correct, so we won't even be
-reaching this point in the code.
+   XXXYYYYYZZZZZ
 
-The scenarios, and the current situation:
+then assign individual bits to each partition. Now each entry in the
+lookup table has only one bit set. Then you define isxxx() to check for
+one of the two possible bits:
 
-1) No information at all, no fully qualified domain name
+   iscntrl is X or Y
+   isspace is Y or Z
 
-fatal: empty ident name (for <felipec@nysa.(none)>) not allowed
+But shouldn't you just assign one bit for S and another one for C, have
+entries in the lookup table with more than one bit set, and check for
+only one bit in the isxxx macro?
 
-2) Only full name
+That way you don't run out of bits as easily as you do with this patch.
 
-fatal: unable to auto-detect email address (got 'felipec@nysa.(none)')
-
-3) Full name + fqdm
-
-Who should the emails appear to be from?
-[Felipe Contreras <felipec@nysa.felipec.org>]
-
-4) Full name + EMAIL
-
-Who should the emails appear to be from?
-[Felipe Contreras <felipe.contreras@gmail.com>]
-
-5) User configured
-6) GIT_COMMITTER
-7) GIT_AUTHOR
-
-All these are the same as 4)
-
-After this patch:
-
-1) 2) won't change: git send-email would still die
-
-4) 5) 6) 7) will change: git send-email won't ask the user
-
-This is good, that's what we would expect, because the identity is
-explicit.
-
-3) will change: git send-email won't ask the user
-
-This is bad, because we will try with an address such as
-'felipec@nysa.felipec.org', which is most likely not what the user
-wants, but the user will get warned by default, and if not, most likley
-the sending won't work, which the user can easily fix.
-
-The worst possible scenario is that such a mail address does work, and
-the user sends an email from that addres unintentionally, when in fact
-the user expected to correct that address in the propmpt.
-
-This is a very, very, very unlikely scenario, with many dependencies:
-
-1) No configured user.name/user.email
-2) No specified $EMAIL
-3) No configured sendemail.from
-4) No specified --from argument
-5) A fully qualified domain name
-6) A full name in the geckos field
-7) A sendmail configuration that allows sending from this domain name
-8) confirm=never, or
-8.1) confirm configuration not hitting, or
-8.2) Getting the error, not being aware of it
-9) The user expecting to correct this address in the prompt
-
-In a more likely scenario where 7) is not the case (can't send from
-nysa.felipec.org), the user will simply see the mail was not sent
-properly, and fix the problem.
-
-The much more likely scenario though, is where 5) is not the case
-(nysa.(none)), and git send-email will fail right away like it does now.
-
-So the likelyhood of this affecting anybody seriously is very very slim,
-and the chances of this affecting somebody slightly are still very
-small. The vast majority, if not all, of git users won't be affected
-negatively, and a lot will benefit from this.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- git-send-email.perl | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index aea66a0..503e551 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -748,16 +748,11 @@ if (!$force) {
- 	}
- }
- 
--my $prompting = 0;
- if (!defined $sender) {
- 	$sender = $repoauthor || $repocommitter || '';
--	$sender = ask("Who should the emails appear to be from? [$sender] ",
--	              default => $sender,
--		      valid_re => qr/\@.*\./, confirm_only => 1);
--	print "Emails will be sent from: ", $sender, "\n";
--	$prompting++;
- }
- 
-+my $prompting = 0;
- if (!@initial_to && !defined $to_cmd) {
- 	my $to = ask("Who should the emails be sent to (if any)? ",
- 		     default => "",
--- 
-1.8.0
+-- Hannes
