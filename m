@@ -1,91 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: add proper default sender
-Date: Mon, 12 Nov 2012 16:55:13 -0800
-Message-ID: <7v1ufygw3y.fsf@alter.siamese.dyndns.org>
-References: <1352653610-2090-1-git-send-email-felipe.contreras@gmail.com>
- <20121112233546.GG10531@sigill.intra.peff.net>
- <CAMP44s0emar-C27SX-FDsUVB6Sevuy4fBFHuO2OD6xELCEjmGg@mail.gmail.com>
- <20121113000217.GH10531@sigill.intra.peff.net>
- <20121113000637.GI10531@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] send-email: add series-cc-cmd option
+Date: Tue, 13 Nov 2012 02:01:59 +0100
+Message-ID: <CAMP44s1gF7scb2RtZ9V9cz58y8KQuQfRk_4wsCML1JyheScP=g@mail.gmail.com>
+References: <1352653463-1923-1-git-send-email-felipe.contreras@gmail.com>
+	<1352653463-1923-3-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0mRKznNN7750h=k6aE3OJ7hBLVC-G51gEYi2+NuYjPWrQ@mail.gmail.com>
+	<1352760759.18715.7.camel@joe-AO722>
+	<7vd2zigwx6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 01:55:35 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Joe Perches <joe@perches.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Pascal Obry <pascal@obry.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 02:02:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY4mr-0005ZH-N1
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 01:55:34 +0100
+	id 1TY4tL-0001Ss-Js
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 02:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753757Ab2KMAzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 19:55:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51000 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753630Ab2KMAzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 19:55:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BA27AF2A;
-	Mon, 12 Nov 2012 19:55:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N6whhtNAAyb/7nKvv8+9GcCEmvo=; b=nOCp53
-	70zQuJvaT89F9JyJEqrRYs7fRookYvEO4ej+XipKBpUek1aJwy6KIhJoUap0GoPb
-	vrmBTrtvtdCLXYmByhxIEelWdXs91ZCZw1FVJt06QQOfTpB4gLzL7tf/Y99e2L9t
-	mvBU03K+xYNoaBE0YjduQJKbrCD18WXOi3/q0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oM23pFwRomzTSsdf2ojbCWrDotytqIu5
-	xjpiqudadXCzo3x/YTkrXz1bWOiG18MKTfxRsLiJ/YuJ96X3dBkSbeevkqvytoHc
-	jxm7WrqDONyihbPjtm2DFrgB1EcWhfyZoSeTqLyfQnX1HkB3eW7HrOiVwvza09Ur
-	zxnI+SQmhxo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 097DFAF29;
-	Mon, 12 Nov 2012 19:55:16 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 537AEAF28; Mon, 12 Nov 2012
- 19:55:15 -0500 (EST)
-In-Reply-To: <20121113000637.GI10531@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 12 Nov 2012 19:06:37 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C94B63EA-2D2C-11E2-9AAD-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753943Ab2KMBCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 20:02:00 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:46360 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753914Ab2KMBB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 20:01:59 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so6908705oag.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 17:01:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YeXOI3cSWNSwehdEPKnNBxhu0KkjRRWGpVtH38hPqRM=;
+        b=dB/YvIKlqEJNcgyq6u4EHYCEOXzCCpDmruLCOBCYvZSnASQRyDpirvcGkHY971FU7m
+         1V6o5ZUcPEyhQW/pR/SWGZhVJcI36jZbUmAvPIaF7CifcOTm8MS2lxJKMzlhIARdmBuS
+         iEIVKoBYfNxJH27Jn/PJwnv3Q4OWf0Qg7eApjugqL0qbJeUl7qxqHZC22wTrwm5KoNM9
+         q7s2RdJoX4dMW+4PcFvKJcvqCpJri1tM9cJSh7h/XQ4jvFMBgb0ox0t13pBkrc+zJqNu
+         ll2XDPwUQpeNEH2lrkFsrBp+NMt1Hw+wqJSmA5Y6g3WRL0w3ODxoHttsu/ZMVIVAe6a1
+         zlYQ==
+Received: by 10.182.52.105 with SMTP id s9mr16797168obo.25.1352768519370; Mon,
+ 12 Nov 2012 17:01:59 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Mon, 12 Nov 2012 17:01:59 -0800 (PST)
+In-Reply-To: <7vd2zigwx6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209557>
 
-Jeff King <peff@peff.net> writes:
-
-> On Mon, Nov 12, 2012 at 07:02:17PM -0500, Jeff King wrote:
+On Tue, Nov 13, 2012 at 1:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Joe Perches <joe@perches.com> writes:
 >
->> The one distinction that would make sense to me is pausing to ask when
->> we use "implicit" methods to look up the ident, like concatenating the
->> username with the hostname to get the email.
+>> On Tue, 2012-11-13 at 03:21 +0530, Ramkumar Ramachandra wrote:
+>>> Felipe Contreras wrote:
+>>> > cc-cmd is only per-file, and many times receipients get lost without
+>>> > seing the full patch series.
+>>>
+>>> s/seing/seeing
+>>>
+>>> > [...]
+>>>
+>>> Looks good otherwise.
+>>
+>> s/receipients/recipients/ too
+>>
+>> Practically this is ok but I think it's unnecessary.
+>>
+>> Output from git format-patch is always in a single
+>> directory.
 >
-> By the way, I suspect this is the answer to "what do people type for
-> this prompt". It is probably more about a safety on bad ident than it is
-> about people routinely updating the information. I actually think it
-> would make more sense to drop the prompt entirely and just die when the
-> user has not given us a usable ident.
+> Sorry, but I do not see how the usefulness (or necessity) of this
+> new option is connected to the fact that you can tell the command to
+> write the patches into a single (possibly new) directory.  Care to
+> explain?
 
-Yeah, I agree with pretty much everything you said in this thread
-(including that environment and config are equally likely to reflect
-user's wish and it does not make much sense to treat environment as
-more suspicious).
+Basically 'git send-email' would do something like this:
+git format-patch -10 -o /tmp
+for x in /tmp/*; do cc_cmd $x; done
 
-> But maybe people who do one-off format-patches would rather type
-> their name in a prompt than set an environment variable and re-run
-> the program.
+And the cc-cmd would do something like:
+cc_cmd() { do_stuff_with $(dirname $1)/*.patch }
 
-s/one-off format-patches/one-off send-email/.  I think dying will
-force them to configure their names once (so that later invocations
-do not have to stop) while prompting will force them to type their
-names every time, so the current behaviour is probably a false
-economy.  As long as we caution users in the release notes, it
-probably is OK to change the command to die.
+-- 
+Felipe Contreras
