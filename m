@@ -1,78 +1,101 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [BUG] gitweb: XSS vulnerability of RSS feed
-Date: Tue, 13 Nov 2012 18:22:56 +0100
-Message-ID: <CANQwDwcNXPhA3Qe2K_GLuh3F8DObDQ+Wn_PHhTkJqM+4D+SK0w@mail.gmail.com>
-References: <20121111232820.284510@gmx.net> <CAM9Z-n=6xsC7yiKJ+NU-CxNPxEXWmJzvXLUocgZgWPQnuK6G4Q@mail.gmail.com>
- <20121112202413.GD4623@sigill.intra.peff.net> <CAM9Z-nkuHj8MWLfWsvY=EqHXCUS+Pk5Ezv6m5J+cnh7cQHNc_g@mail.gmail.com>
- <20121113170452.GE20361@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: add proper default sender
+Date: Tue, 13 Nov 2012 09:23:50 -0800
+Message-ID: <7vvcd9e7rt.fsf@alter.siamese.dyndns.org>
+References: <20121112233546.GG10531@sigill.intra.peff.net>
+ <CAMP44s0emar-C27SX-FDsUVB6Sevuy4fBFHuO2OD6xELCEjmGg@mail.gmail.com>
+ <20121113000217.GH10531@sigill.intra.peff.net>
+ <CAMP44s16y9WSmnTdb04EMSzXVgzfYP7pSMo6qZi0HY0bjouA0w@mail.gmail.com>
+ <20121113032727.GA8387@sigill.intra.peff.net>
+ <CAMP44s0SDHVzSd-8Rq7Z1sbiQ6m0pxX+2pgx16_DoWnHeyNsNQ@mail.gmail.com>
+ <20121113040104.GA9361@sigill.intra.peff.net>
+ <CAMP44s1w3oZhEUM-cnO=kECH2bhdOTGVuKy8JS4uhWFbA_oi3w@mail.gmail.com>
+ <20121113074720.GA18746@sigill.intra.peff.net>
+ <7vpq3hfpm7.fsf@alter.siamese.dyndns.org>
+ <20121113171445.GG20361@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Drew Northup <n1xim.email@gmail.com>,
-	glpk xypron <xypron.glpk@gmx.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	"Jason J Pyeron CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Andreas Schwab <schwab@linux-m68k.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 18:23:37 2012
+X-From: git-owner@vger.kernel.org Tue Nov 13 18:24:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYKD1-00080k-56
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 18:23:35 +0100
+	id 1TYKDd-0008PR-6O
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 18:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932187Ab2KMRXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 12:23:21 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:50063 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932172Ab2KMRXS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 12:23:18 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so439887obb.19
-        for <git@vger.kernel.org>; Tue, 13 Nov 2012 09:23:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hPdQ4A9yB9we0AlOEpHf0b0PIh8AuwwQyROuuoTV3NY=;
-        b=fU9O5BNKZc9iYmkdlqo/4jXQhCEJZ+AZfPBuG5KqSZxLIgTKpa3aKPCSxB+EAEKSRm
-         7iCYL73ac2Iz90psj5SFdY5mlZ7b/5f9xsEAGIgQKS14ro6aBvZN/XXJtgC1dAE0b+DA
-         IuxZ9M2uwGzRzLCmesSMRVAdoSGl4ssYV6+b+5NVVItgexkP3sxIByd+lW3GZHQMxkUH
-         ua8lb+0TECQBPs2U63iQAnw5uZhheHWObqJHm5hrUi1F6+rv50mlRzzNaDBxtTIDQbKd
-         HfGKQ4+LE94WHqzv1ygdSBBHg85Xlbj7uNxNucKHDbdmVN66/5161v3GoCMJNJNK/jPG
-         kRyQ==
-Received: by 10.60.14.198 with SMTP id r6mr17404045oec.115.1352827398268; Tue,
- 13 Nov 2012 09:23:18 -0800 (PST)
-Received: by 10.76.91.134 with HTTP; Tue, 13 Nov 2012 09:22:56 -0800 (PST)
-In-Reply-To: <20121113170452.GE20361@sigill.intra.peff.net>
+	id S932194Ab2KMRX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 12:23:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58510 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932151Ab2KMRXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 12:23:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 594F29BE1;
+	Tue, 13 Nov 2012 12:23:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DEcN9mjYLM3y+4SqbTsBHfASUKM=; b=Zw4syZ
+	GlDiCmY76Ip+FWNMqZx/0EyuJjcW2Md8h3ZMPSw4pmm3Z+38WSsKyrbO2ePwUm7g
+	JQRPB/q84q3xxZQiNK92y5krSQy0odBGI3Fcdrs5CQ5ahFMFhUlpj8ZjTlR8Fbuw
+	vFKlN61FjsNmNQ0R7vv3QXQEHY9K9iyHiLnYo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eDcT811eUQeRY62NyfiFkVNweqjwzmMU
+	CNxZ2QHemTpBSjXgv7PD+ntFjp+bisT8ZJkapnhn1ajIOYMww0Dz6oWASLaMOADE
+	GQOXNAUx9agye3rDvBDXTUW8b6GIFIneFU5zWZ40EwQvaKsBB9u1IqcYu8+8lyXA
+	4zylFk6PwVg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44AC69BDE;
+	Tue, 13 Nov 2012 12:23:52 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F84E9BDD; Tue, 13 Nov 2012
+ 12:23:51 -0500 (EST)
+In-Reply-To: <20121113171445.GG20361@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 13 Nov 2012 12:14:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E4923C52-2DB6-11E2-A10D-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209645>
 
-On Tue, Nov 13, 2012 at 6:04 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 13, 2012 at 09:44:06AM -0500, Drew Northup wrote:
+Jeff King <peff@peff.net> writes:
 
->> Besides, inserting one call to esc_html only fixes one attack path. I
->> didn't look to see if all others were already covered.
+> On Tue, Nov 13, 2012 at 08:13:04AM -0800, Junio C Hamano wrote:
 >
-> Properly quoting output is something that the web framework should do
-> for you. gitweb uses CGI.pm, which does help with that, but we do not
-> use it consistently. If there are other problematic areas, I think the
-> best path forward is to use our framework more.
+>> >> That's right, AUTHOR_IDENT would fall back to the default email and full name.
+>> >
+>> > Yeah, I find that somewhat questionable in the current behavior, and I'd
+>> > consider it a bug. Typically we prefer the committer ident when given a
+>> > choice (e.g., for writing reflog entries).
+>> 
+>> Just to make sure I follow the discussion correctly, do you mean
+>> that the bug is that we pick a fuzzy AUTHOR when COMMITTER is
+>> specified more concretely and we usually use COMMIITTER for this
+>> kind of thing in the first place but send-email does not in this
+>> case (I do not see "git var GIT_AUTHOR_IDENT" returning value from
+>> the implicit logic as a bug in this case---just making sure).
+>
+> Having discussed more, I think there are two questionable things:
+>
+>   1. Preferring author over committer
+>
+>   2. Failing to fall back to committer when author is implicit or bogus
+>      (because "git var" dies).
+>
+> I think (1) may fall into the "this is not how I would do it today, but
+> it is not worth a possible regression" category.
+>
+> I think (2) might be worth fixing, though. Certainly when the author is
+> bogus (by IDENT_STRICT rules), which I think was the original intent of
+> the "$repoauthor || $repocommitter" code. Probably when the author ident
+> is implicit, though that is more hazy to me.
 
-Well, calling CGI.pm a _framework_ is overly generous, but it does
-include some HTML generation subroutines / methods, and gitweb
-makes use of them, especially $cgi->a() for links.
-
-But it cannot help in this case, because here we are generating XML:
-RSS or Atom feed. There was proposal some time ago to switch
-to using XML::FeedPP or XML::Atom::Feed + XML::RSS::Feed for
-feed generation.
-
-Perhaps it is high time to switch to some Perl web (micro)framework,
-like Dancer, Mojolicious or Catalyst... but not requiring extra modules
-has its advantages (and there always exist Gitalist).
--- 
-Jakub Narebski
+I agree with both points.  Thanks.
