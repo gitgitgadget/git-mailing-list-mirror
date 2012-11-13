@@ -1,91 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] send-email: add series-cc-cmd option
-Date: Mon, 12 Nov 2012 16:37:41 -0800
-Message-ID: <7vd2zigwx6.fsf@alter.siamese.dyndns.org>
-References: <1352653463-1923-1-git-send-email-felipe.contreras@gmail.com>
- <1352653463-1923-3-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0mRKznNN7750h=k6aE3OJ7hBLVC-G51gEYi2+NuYjPWrQ@mail.gmail.com>
- <1352760759.18715.7.camel@joe-AO722>
+Subject: Re: [PATCH] gitweb: git_summary - show $project in title
+Date: Mon, 12 Nov 2012 16:46:16 -0800
+Message-ID: <7v625agwiv.fsf@alter.siamese.dyndns.org>
+References: <1352611258-11450-1-git-send-email-xypron.glpk@gmx.de>
+ <20121112232513.GF10531@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Pascal Obry <pascal@obry.net>
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 01:37:59 2012
+Cc: Henrich Schuchardt <xypron.glpk@gmx.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 13 01:46:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY4Vq-0004l6-9h
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 01:37:58 +0100
+	id 1TY4e9-0000y1-2v
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 01:46:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462Ab2KMAhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 19:37:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44373 "EHLO
+	id S1753083Ab2KMAqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 19:46:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47774 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783Ab2KMAho (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 19:37:44 -0500
+	id S1752930Ab2KMAqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 19:46:19 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C470DAC2A;
-	Mon, 12 Nov 2012 19:37:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3383BADA2;
+	Mon, 12 Nov 2012 19:46:19 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dNdUBea/lOIJtSZCFof03X3y2Lo=; b=tMLLTN
-	18gfEcRFIigMDF/VKmMfX0kfQfSpmOd9ruSWB300hES1NH1+oWTP5g9KrlUBhO7v
-	jCHU4b92NRgcaEUvO1oACRGBMaIkKGRB40w7duAyv0Lcpi3Pw1qd9BrLV64FD2pY
-	0oh+upLBwNkQbqwaq0WDIouQbNO5TaP5oPxvA=
+	:content-type; s=sasl; bh=NtUx8lQpLGFL3g3oaNWcm+3vbWo=; b=Xdp7pt
+	xW2FC016/DuhqGlALHkPIOfO73bsVz1eimDDPbC1kEL/uqixDrSUO/mxl6Mvi6eU
+	GZwxWG7ct4qnNvkGuLmQnK1wkE61CpOQYWa2KbiSnv8oEIraSwZUU4TILG0QU96H
+	o5y1HsZYMsOMhtf7OEfhPy8xCUf1aWvc0MqoI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YTGmZo4bmEIeQFiYFXUAKAaCWe7PVbYi
-	IWUiUC9e+Onwh/c20cGxCRLKzesTOpEQ5wrBdVJ6jo6SnXuN6gcXYV0JpNoJ+Uru
-	HSApIj/n5Ha0IXLb9WR80PZwfqjaPVCZ3VBJR+Ni4LU2prPuVD2JG0j5M/yD5DKV
-	muvKjm59zMI=
+	:content-type; q=dns; s=sasl; b=U99WHlyboeDvn/fuQ+iDIC93TBbnJ72/
+	YOkfeRo4gT9wECpuukdqKfNOWBfWh7XYlxxdlZWCXxyvTEARKURQL8mih7zEd5yP
+	MB29dy/0yz5e5QF8NGMoHHJ/LwYF2Hs1TY1/8Jxmo45M1dc8QVAfljGhZf8iCNe7
+	O8qGKKF7wfM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B275BAC29;
-	Mon, 12 Nov 2012 19:37:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20B43ADA1;
+	Mon, 12 Nov 2012 19:46:19 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19137AC28; Mon, 12 Nov 2012
- 19:37:42 -0500 (EST)
-In-Reply-To: <1352760759.18715.7.camel@joe-AO722> (Joe Perches's message of
- "Mon, 12 Nov 2012 14:52:39 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F622ADA0; Mon, 12 Nov 2012
+ 19:46:18 -0500 (EST)
+In-Reply-To: <20121112232513.GF10531@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 12 Nov 2012 18:25:14 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 561C7D2A-2D2A-11E2-B635-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 895CF470-2D2B-11E2-A99B-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209554>
 
-Joe Perches <joe@perches.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Tue, 2012-11-13 at 03:21 +0530, Ramkumar Ramachandra wrote:
->> Felipe Contreras wrote:
->> > cc-cmd is only per-file, and many times receipients get lost without
->> > seing the full patch series.
->> 
->> s/seing/seeing
->> 
->> > [...]
->> 
->> Looks good otherwise.
+> On Sun, Nov 11, 2012 at 06:20:58AM +0100, Henrich Schuchardt wrote:
 >
-> s/receipients/recipients/ too
+>> Gitweb pages are structured by divs of class title with grey background.
+>> The shortlog, and the log page show the project name as the first title.
+>> Page summary only shows an empty grey box above the project details.
+>> This provides an inconstent user experience.
+>> 
+>> This patch adds the missing project title.
+>> 
+>> Signed-off-by: Henrich Schuchardt <xypron.glpk@gmx.de>
+>> ---
+>>  gitweb/gitweb.perl |    2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 10ed9e5..3e1c452 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -6451,7 +6451,7 @@ sub git_summary {
+>>  	git_header_html();
+>>  	git_print_page_nav('summary','', $head);
+>>  
+>> -	print "<div class=\"title\">&nbsp;</div>\n";
+>> +	print "<div class=\"title\">$project</div>\n";
 >
-> Practically this is ok but I think it's unnecessary.
->
-> Output from git format-patch is always in a single
-> directory.
+> I do not have any opinion on whether the intent of the change is good or
+> not, but shouldn't $project be run through esc_html() here?
 
-Sorry, but I do not see how the usefulness (or necessity) of this
-new option is connected to the fact that you can tell the command to
-write the patches into a single (possibly new) directory.  Care to
-explain?
-
-> My work flow is to use a script for --to and --cc
-> lines that can be set to emit the same addresses for
-> all files in a patch series or generate different
-> addresses per patch file.
+I think the answer is yes.  And if $project needs to be escaped, the
+git_feed function you fixed today has another codepath that needs to
+be fixed.  When git_get_project_description($project) returns undef,
+the description is taken from $project without any escaping.
