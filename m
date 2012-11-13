@@ -1,156 +1,207 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: RFD: fast-import is picky with author names (and maybe it should
- - but how much so?)
-Date: Tue, 13 Nov 2012 19:15:59 +0100
-Message-ID: <CAMP44s18diic3KQtH5weCv-sVJXj4Pv-QnAaTeHTbrxk-=+3Gw@mail.gmail.com>
-References: <CAMP44s3Lhxzcj93=e8TXwqAVvGJBKhZEVX33G8Q=n2+8+UfCww@mail.gmail.com>
-	<509E8EB2.7040509@drmicha.warpmail.net>
-	<CAMP44s219Zi2NPt2vA+6Od_sVstFK85OXZK-9K1OCFpVh220+A@mail.gmail.com>
-	<509EAA45.8020005@gmail.com>
-	<CAMP44s1dsEU=E8tdgMYxWFyFw+F03bstdb5o7Ww_-RCQPd3R0w@mail.gmail.com>
-	<509FD9BC.7050204@gmail.com>
-	<20121111171518.GA20115@sigill.intra.peff.net>
-	<CAMP44s1mny-fBCxywM0V=AgEoxV5EZdDWc_0NK3gepcKf32nww@mail.gmail.com>
-	<20121111181406.GA21654@sigill.intra.peff.net>
-	<CAMP44s1m8sAD9D0F-6b=+dm_AvLb_4_f7h=3A_VMYMDUEcTW7g@mail.gmail.com>
-	<20121112214127.GA10531@sigill.intra.peff.net>
-	<CAMP44s1gA1P-Lr1M=7RDRqFQmvQAtNnB+yAJfKC1gk3XUjbfCQ@mail.gmail.com>
-	<50A21DB9.7070700@drmicha.warpmail.net>
+Subject: Re: [PATCH] Add tcsh-completion support to contrib by using git-completion.bash
+Date: Tue, 13 Nov 2012 19:31:45 +0100
+Message-ID: <CAMP44s3imos4DksroRkZ3K6una5H916gvtqttJQna8yGG8XhsQ@mail.gmail.com>
+References: <CAFj1UpE6OtJEojaED1_DZJD0kU=nVsFE_w8xa0oJE-6auCU2rw@mail.gmail.com>
+	<CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, A Large Angry SCM <gitzilla@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 19:16:32 2012
+Cc: git@vger.kernel.org
+To: Marc Khouzam <marc.khouzam@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 19:32:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYL2E-0007pN-Ne
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 19:16:31 +0100
+	id 1TYLHE-0000iK-5m
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 19:32:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261Ab2KMSQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 13:16:01 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:57814 "EHLO
+	id S1755264Ab2KMSbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 13:31:46 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:65468 "EHLO
 	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566Ab2KMSQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 13:16:00 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so7712883oag.19
-        for <git@vger.kernel.org>; Tue, 13 Nov 2012 10:15:59 -0800 (PST)
+	with ESMTP id S1752005Ab2KMSbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 13:31:46 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so7729724oag.19
+        for <git@vger.kernel.org>; Tue, 13 Nov 2012 10:31:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=IV3UkqNNg6/f4eZezuSSIv6Zm83cNghEdIdJG3ORdFk=;
-        b=ofo4cyIVkM28t5ebhIRfw9l/ZbUH/6qhDY4XJnYtHxDKNQkVMi4ShDHGNwx/EP9urz
-         FfNG7rUO4/6BwM8d8wM2bUnSXDqD2ViEDP6Rau15Gki/Pe95p+FKMRYElsRpslM95RrS
-         jIhQasAkYfE4XfpOTRgNNLn9aszwPiVb34F7i/u9GE6B8lyemU9aNij9+s95zdkxo73n
-         AY0n7HM7uTFy6WK5EU1jzuXmRQvAyloHdmo1NkDSU9xN/HPz7DgoWKyD9cL2xMc8qQEe
-         pXnCVUjrgNDCD4AfLfxRahsid/IAJPj4i+nXLb/bOQsC8mCdLJOh4g/MQLSrYlaFuVJx
-         ThWA==
-Received: by 10.60.26.234 with SMTP id o10mr17681806oeg.85.1352830559584; Tue,
- 13 Nov 2012 10:15:59 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Tue, 13 Nov 2012 10:15:59 -0800 (PST)
-In-Reply-To: <50A21DB9.7070700@drmicha.warpmail.net>
+        bh=nuc9v2AKSXh/5QXI69JHR0i48Tg2jTnEbDqJpgbeVVE=;
+        b=urjYK+2QYfL35EX5O76It0RPqpSyGHGuGZXR9fJ2k4mJq15uf69LqVjH2eWAixxRj1
+         BGszFDWLQ+YVjmkp03Ub6sqRpbnK0eIbAA5Ek5QoG6OKeIw1qY/NthZW/O1wXk0JoZbm
+         szQwEVIuTzCoC1JfU7m10YVnASMGy8vULCLNZN6GUOcuGGlBkNbJAl/qzfEzV249JqsY
+         JffJMY1AJ/RVU6nJpkdhkBvUbVL7d9bLKmPRrKFubWCwa0K4pC7kbc18z3lUQRFnrn0m
+         kRtkRToHKEDRQ8em6IwBSjpyhgNiN8mbI2DXr2AmaZ/Of0BDe8LjumvzlNI1D5IsyEOq
+         gtWA==
+Received: by 10.182.116.6 with SMTP id js6mr18545840obb.82.1352831505379; Tue,
+ 13 Nov 2012 10:31:45 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Tue, 13 Nov 2012 10:31:45 -0800 (PST)
+In-Reply-To: <CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209653>
 
-On Tue, Nov 13, 2012 at 11:15 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Felipe Contreras venit, vidit, dixit 12.11.2012 23:47:
->> On Mon, Nov 12, 2012 at 10:41 PM, Jeff King <peff@peff.net> wrote:
->>> On Sun, Nov 11, 2012 at 07:48:14PM +0100, Felipe Contreras wrote:
->>>
->>>>>   3. Exporters should not use it if they have any broken-down
->>>>>      representation at all. Even knowing that the first half is a human
->>>>>      name and the second half is something else would give it a better
->>>>>      shot at cleaning than fast-import would get.
->>>>
->>>> I'm not sure what you mean by this. If they have name and email, then
->>>> sure, it's easy.
->>>
->>> But not as easy as just printing it. What if you have this:
->>>
->>>   name="Peff <angle brackets> King"
->>>   email="<peff@peff.net>"
->>>
->>> Concatenating them does not produce a valid git author name. Sending the
->>> concatenation through fast-import's cleanup function would lose
->>> information (namely, the location of the boundary between name and
->>> email).
->>
->> Right. Unfortunately I'm not aware of any DSCM that does that.
->>
->>> Similarly, one might have other structured data (e.g., CVS username)
->>> where the structure is a useful hint, but some conversion to name+email
->>> is still necessary.
->>
->> CVS might be the only one that has such structured data. I think in
->> subversion the username has no meaning. A 'felipec' subversion
->> username is as bad as a mercurial 'felipec' username.
+On Mon, Nov 12, 2012 at 9:07 PM, Marc Khouzam <marc.khouzam@gmail.com> wrote:
+
+> this patch allows tcsh-users to get the benefits of the awesome
+> git-completion.bash script.  It could also help other shells do the same.
+
+Maybe you can try to take a look at the same for zsh:
+http://article.gmane.org/gmane.comp.version-control.git/208173
+
+> ---
+>  contrib/completion/git-completion.bash |   53 +++++++++++++++++++++++++++++++-
+>  contrib/completion/git-completion.tcsh |   34 ++++++++++++++++++++
+>  2 files changed, 86 insertions(+), 1 deletions(-)
+>  create mode 100755 contrib/completion/git-completion.tcsh
 >
-> In subversion, the username has the clearly defined meaning of being a
-> username on the subversion host. If the host is, e.g., a sourceforge
-> site then I can easily look up the user profile and convert the username
-> into a valid e-mail address (<username>@users.sf.net). That is the
-> advantage that the exporter (together with user knowledge) has over the
-> importer.
->
-> If the initial clone process aborts after every single "unknown" user
-> it's no fun, of course. On the other hand, if an incremental clone
-> (fetch) let's commits with unknown author sneak in it's no fun either
-> (because I may want to fetch in crontab and publish that converted beast
-> automatically). That is why I proposed neither approach.
->
-> Most conveniently, the export side of a remote helper would
->
-> - do "obvious" automatic lossless transformations
-> - use an author map for other names
+> diff --git a/contrib/completion/git-completion.bash
+> b/contrib/completion/git-completion.bash
+> index be800e0..6d4b57a 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1,4 +1,6 @@
+> -#!bash
+> +#!/bin/bash
+> +# The above line is important as this script can be executed when used
+> +# with another shell such as tcsh
+>  #
+>  # bash/zsh completion support for core Git.
+>  #
+> @@ -2481,3 +2483,52 @@ __git_complete gitk __gitk_main
+>  if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
+>  __git_complete git.exe __git_main
+>  fi
+> +
+> +# Method that will output the result of the completion done by
+> +# the bash completion script, so that it can be re-used in another
+> +# context than the bash complete command.
+> +# It accepts 1 to 2 arguments:
+> +# 1: The command-line to complete
+> +# 2: The index of the word within argument #1 in which the cursor is
+> +#    located (optional). If parameter 2 is not provided, it will be
+> +#    determined as best possible using parameter 1.
+> +_git_complete_with_output ()
+> +{
+> +       # Set COMP_WORDS to the command-line as bash would.
+> +       COMP_WORDS=($1)
+> +
+> +       # Set COMP_CWORD to the cursor location as bash would.
+> +       if [ -n "$2" ]; then
+> +               COMP_CWORD=$2
+> +       else
+> +               # Assume the cursor is at the end of parameter #1.
+> +               # We must check for a space as the last character which will
+> +               # tell us that the previous word is complete and the cursor
+> +               # is on the next word.
+> +               if [ "${1: -1}" == " " ]; then
+> +                       # The last character is a space, so our
+> location is at the end
+> +                       # of the command-line array
+> +                       COMP_CWORD=${#COMP_WORDS[@]}
+> +               else
+> +                       # The last character is not a space, so our
+> location is on the
+> +                       # last word of the command-line array, so we
+> must decrement the
+> +                       # count by 1
+> +                       COMP_CWORD=$((${#COMP_WORDS[@]}-1))
+> +               fi
+> +       fi
+> +
+> +       # Call _git() or _gitk() of the bash script, based on the first
+> +       # element of the command-line
+> +       _${COMP_WORDS[0]}
 
-This should be done by fast-import. It doesn't make any sense that
-every remote helper and fast-exporter out there have their own way of
-mapping authors (or none).
+You might want to use __${COMP_WORDS[0]}_main instead.
 
-> - For names not covered by the above (or having an empty map entry):
-> Stop exporting commits but continue parsing commits and amend the author
-> map with any unknown usernames (empty entry), and warn the user.
-> (crontab script can notify me based on the return code.)
+> +
+> +       # Print the result that is stored in the bash variable ${COMPREPLY}
+> +       for i in ${COMPREPLY[@]}; do
+> +               echo "$i"
+> +       done
+> +}
+> +
+> +if [ -n "$1" ] ; then
+> +  # If there is an argument, we know the script is being executed
+> +  # so go ahead and run the _git_complete_with_output function
+> +  _git_complete_with_output "$1" "$2"
+> +fi
 
-Stop exporting commits but continue parsing commits? I don't know what
-that means.
+Why do you need this function in this file? You can very easily add
+this function to git-completion.tcsh.
 
-fast-import should try it's best to clean it up, warn the user, sure,
-but also store the missing entry on a file, so that it can be filed
-later (if the user so wishes).
+> diff --git a/contrib/completion/git-completion.tcsh
+> b/contrib/completion/git-completion.tcsh
+> new file mode 100755
+> index 0000000..7b7baea
+> --- /dev/null
+> +++ b/contrib/completion/git-completion.tcsh
+> @@ -0,0 +1,34 @@
+> +#!tcsh
+> +#
+> +# tcsh completion support for core Git.
+> +#
+> +# Copyright (C) 2012 Marc Khouzam <marc.khouzam@gmail.com>
+> +# Distributed under the GNU General Public License, version 2.0.
+> +#
+> +# This script makes use of the git-completion.bash script to
+> +# determine the proper completion for git commands under tcsh.
+> +#
+> +# To use this completion script:
+> +#
+> +#    1) Copy both this file and the bash completion script to your
+> ${HOME} directory
+> +#       using the names ${HOME}/.git-completion.tcsh and
+> ${HOME}/.git-completion.bash.
+> +#    2) Add the following line to your .tcshrc/.cshrc:
+> +#        source ${HOME}/.git-completion.tcsh
+> +
+> +# One can change the below line to use a different location
+> +set __git_tcsh_completion_script = ${HOME}/.git-completion.bash
+> +
+> +# Check that the user put the script in the right place
+> +if ( ! -e ${__git_tcsh_completion_script} ) then
+> +       echo "ERROR in git-completion.tcsh script.  Cannot find:
+> ${__git_tcsh_completion_script}.  Git completion will not work."
+> +       exit
+> +endif
+> +
+> +# Make the script executable if it is not
+> +if ( ! -x ${__git_tcsh_completion_script} ) then
+> +       chmod u+x ${__git_tcsh_completion_script}
+> +endif
 
-> If the cloning involves a "foreign clone" (like the hg clone behind the
-> scene) then the runtime of the second pass should be much smaller. In
-> principle, one could even store all blobs and trees on the first run and
-> skip that step on the second, but that would rely on immutability on the
-> foreign side, so I dunno. (And to check the sha1, we have to get the
-> blob anyways.)
+Why not just source it?
 
-No. There's no concept of partial clones... Either you clone, or you don't.
+> +complete git  'p/*/`${__git_tcsh_completion_script} "${COMMAND_LINE}"
+> | sort | uniq`/'
+> +complete gitk 'p/*/`${__git_tcsh_completion_script} "${COMMAND_LINE}"
+> | sort | uniq`/'
 
-Wait if the remote helper didn't notice that the author was bad?
-fast-import could just just leave everything up to that point, warn
-abut what happened, and exit, but the exporter side would die in the
-middle of exporting, and it might end up in a bad state, not saving
-marks, or who knows what.
+This seems to be very different from bash's 'complete'. I wonder if
+the 'complete' commands in the original script cause any problems.
+Maybe only if you source it, but then again, I would expect a warning
+or something when you run it.
 
-It wouldn't work.
+But you can use the trick I did with zsh so you can source it:
 
-The cloning should be full, and the bad authors stored in a scaffold author map.
+complete ()
+{
+	# do nothing
+	return 0
+}
 
-> As for the format for incomplete entries (foo <some@where>), a technical
-> guideline should suffice for those that follow guidelines.
+. "$script"
 
-fast-import should do that.
+It looks like in your case you would need to save the old complete()
+function though, or somehow restore it. If you go for this method, you
+use the __*_main functions though.
 
 Cheers.
 
