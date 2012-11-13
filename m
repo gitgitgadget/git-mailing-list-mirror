@@ -1,78 +1,65 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH nd/wildmatch] Correct Git's version of isprint and isspace
-Date: Tue, 13 Nov 2012 11:50:15 -0800
-Message-ID: <CA+55aFynRG-CbSp-aLoo1iZTvfBWMgt6kwrPiQjSZJ0ZzraDKQ@mail.gmail.com>
-References: <507E9FDE.7080706@cs.tu-berlin.de> <1352803572-14547-1-git-send-email-pclouds@gmail.com>
- <50A29C3A.1070000@lsrfire.ath.cx> <CA+55aFwsjpOop=4mVkx4e=zw5LH41sD9x-b_WMo4Hvo7ygjEtQ@mail.gmail.com>
+From: Douglas Mencken <dougmencken@gmail.com>
+Subject: Re: [regression] Newer gits cannot clone any remote repos
+Date: Tue, 13 Nov 2012 14:55:10 -0500
+Message-ID: <CACYvZ7jMC5xw4LxiuG5m+=grpQEg+wZb_7BaU4Xn-r7ix=S-bw@mail.gmail.com>
+References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
+	<50A2978D.6080805@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, schnhrr@cs.tu-berlin.de
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:50:58 2012
+Cc: git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Nov 13 20:55:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYMVZ-0008J1-BZ
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:50:53 +0100
+	id 1TYMa1-0002Qp-FR
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:55:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755494Ab2KMTuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 14:50:40 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:53605 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754329Ab2KMTuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 14:50:39 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so611793obb.19
-        for <git@vger.kernel.org>; Tue, 13 Nov 2012 11:50:38 -0800 (PST)
+	id S1755694Ab2KMTzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 14:55:14 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:43215 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755689Ab2KMTzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 14:55:13 -0500
+Received: by mail-la0-f46.google.com with SMTP id h6so5741575lag.19
+        for <git@vger.kernel.org>; Tue, 13 Nov 2012 11:55:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=OtWb8axOPRJIe4MC+WwThYOXcrptOEPze3dXD6OtGrw=;
-        b=SctHCPow3UUgX8cQFaePUsJf9hSoj3CE7+kGtQLtJpRLNflmldA3ZkPcRAkYBXMxIS
-         mIM5gTc7mJK2BRS3OLNVdogNmC+4qPnZyAqLPF9EvjU0J3dlCE2c+2QXPiAs1yVHyb/H
-         7VIAnAGcmsqHmdA5C07737VK4CZGDbpdtbnNwHCDnIPmk9SLF7OoAA+MVxBCcol2b1Nu
-         cyj2zDStAgZXb4R3XXAFQGHdYQZqIy72rD3kEpmlLD6KMon8x0kHZo54bNTWDFYvKFrj
-         kwQZjMCq/EFzOWF0bYeQUtY3j5JnXrqFzolh9kYl1UUjIXfDIhmr+WCQzQExF2fo8/Ey
-         bVcg==
-Received: by 10.60.32.135 with SMTP id j7mr17853203oei.132.1352836235633; Tue,
- 13 Nov 2012 11:50:35 -0800 (PST)
-Received: by 10.76.2.242 with HTTP; Tue, 13 Nov 2012 11:50:15 -0800 (PST)
-In-Reply-To: <CA+55aFwsjpOop=4mVkx4e=zw5LH41sD9x-b_WMo4Hvo7ygjEtQ@mail.gmail.com>
-X-Google-Sender-Auth: su3BpnEyqYkq8w5Jlo7NwNz3dts
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=QZA9twl2EPwk+Vknd2OErTDbXReDU/gxtjJCZbtR+TY=;
+        b=Tff5+HN33Pt/wHKZuDVvHFPLuXnNh+Pao37y6cNmB3Bf1H2msj5Reu7uhHxdt4GyJ0
+         GcdTb8BWNyHQREgnfCTAQjX/f7uB0xw6wqgz8By19TXp0gdRMvs0CDwaCl9tuxMkij7R
+         yyF6u9bxaFsvAu540azt6vyhUjO6yGfuMDXFedHJNb6+Vfr6ub0+jrt1LrgsOvBEB0S0
+         5vTYZ3HI95u1B+27MCRgMp5gAPBA3IU/KSCU0nZXdlP0oXN6MK/FojjcNP/kCLynPzKC
+         TjOogZ06qJXHFX3ntUUF/ggHnCxqZR3TvPPw8Lw4iCCj1BWsSUYM87La0/EmTIhyzF9+
+         zrIA==
+Received: by 10.152.162.1 with SMTP id xw1mr15195654lab.3.1352836511329; Tue,
+ 13 Nov 2012 11:55:11 -0800 (PST)
+Received: by 10.112.22.6 with HTTP; Tue, 13 Nov 2012 11:55:10 -0800 (PST)
+In-Reply-To: <50A2978D.6080805@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209664>
 
-On Tue, Nov 13, 2012 at 11:40 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> I have to wonder why you care? As far as I'm concerned, the only valid
-> space is space, TAB and CR/LF.
->
-> Anything else is *noise*, not space. What's the reason for even caring?
+>  Could you try re-building git with the
+> NO_THREAD_SAFE_PREAD build variable set?
 
-Btw, expanding the whitespace selection may actually be very
-counter-productive. It is used primarily for things like removing
-extraneous space at the end of lines etc, and for that, the current
-selection of SPACE, TAB and LF/CR is the right thing to do.
+Yeah! It works!!!
 
-Adding things like FF etc - that are *technically* whitespace, but
-aren't the normal kind of silent whitespace - is potentially going to
-change things too much. People might *want* a form-feed in their
-messages, for all we know.
+--- evil/Makefile
++++ good/Makefile
+@@ -957,6 +957,7 @@
+ 	HAVE_PATHS_H = YesPlease
+ 	LIBC_CONTAINS_LIBINTL = YesPlease
+ 	HAVE_DEV_TTY = YesPlease
++	NO_THREAD_SAFE_PREAD = YesPlease
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	NO_STRLCPY = YesPlease
 
-So I really object to changing things "just because". There's a reason
-we do our own ctype.c: it avoids the crazy crap. It avoids the idiotic
-localization issues, and it avoids the ambiguous cases.
-
-So just let it be, unless you have some major real reason to actually
-care about a real-world case. And if you do, please explain it. Don't
-change things just because.
-
-               Linus
+With this, I do have correctly working git clone.
