@@ -1,80 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
-Date: Tue, 13 Nov 2012 14:57:28 -0800
-Message-ID: <7vobj1cdrb.fsf@alter.siamese.dyndns.org>
-References: <20121113175205.GA26960@sigill.intra.peff.net>
+From: Joe Perches <joe@perches.com>
+Subject: Re: bug?  git format-patch -M -D then git am fails
+Date: Tue, 13 Nov 2012 15:06:02 -0800
+Message-ID: <1352847962.17444.27.camel@joe-AO722>
+References: <1352846721.17444.24.camel@joe-AO722>
+	 <7vsj8dcdv6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 23:57:45 2012
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, David Miller <davem@davemloft.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:06:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYPQP-0006VZ-52
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 23:57:45 +0100
+	id 1TYPYd-0004EN-J8
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 00:06:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755917Ab2KMW5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 17:57:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65535 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755410Ab2KMW5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 17:57:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBF2FA3D4;
-	Tue, 13 Nov 2012 17:57:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ExmznVFfH6/ypIzr2O8QM6J41Is=; b=hLF7Av
-	Z4FcAc+kgQ3Qnm885HqebiUbt7hFZdDkN5QMEEN3zfF+9rTTGOUfRyDttpZZPaG+
-	6JXeWATDqLuYguZBuuvSKZcg42DgW2h6mXjlCBt3S5h2Rp3ilOIeNkJOw+ZZiXYU
-	VlqvYhbNr1X+vHvrpjj+jgwtX6ZLURJfP5RkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZOaEv8plOhqRkACbLnuIJCrRC55GhBWK
-	ibv832ICa20GUgrxz35b+mfGyCEPgVGFDjG5c94wzTQGSRpnFthev6hi2u8Dankj
-	75OOY4GdGaPraAnLiE1187MsMJ5AgLKajCoyyikz7lwBFzhUGJsvVIdme9/YPK88
-	sfS8WSdykdc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA554A3D3;
-	Tue, 13 Nov 2012 17:57:30 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FA92A3D1; Tue, 13 Nov 2012
- 17:57:30 -0500 (EST)
-In-Reply-To: <20121113175205.GA26960@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 13 Nov 2012 12:52:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 80970316-2DE5-11E2-BD76-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753575Ab2KMXGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 18:06:00 -0500
+Received: from perches-mx.perches.com ([206.117.179.246]:47688 "EHLO
+	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753296Ab2KMXF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 18:05:59 -0500
+Received: from [173.51.221.202] (account joe@perches.com HELO [192.168.1.167])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 19837769; Tue, 13 Nov 2012 15:05:59 -0800
+In-Reply-To: <7vsj8dcdv6.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.6.0-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209682>
 
-Jeff King <peff@peff.net> writes:
+On Tue, 2012-11-13 at 14:55 -0800, Junio C Hamano wrote:
+> Joe Perches <joe@perches.com> writes:
+> 
+> > (Sorry about the partial message.
+> >  evolution and ctrl-enter sends, grumble...)
+> >
+> > If a file is deleted with git rm and a patch
+> > is then generated with git format-patch -M -D
+> > git am is unable to apply the resultant patch.
+> >
+> > Is this working as designed?
+> 
+> I would say it is broken as designed and it is even documented.
+> 
+> Please run "git format-patch --help | less" and then type
+> "/--irreversible-delete" to find:
+> 
+>     The resulting patch is not meant to be applied with patch nor
+>     git apply; this is solely for people who want to just
+>     concentrate on reviewing the text after the change.
 
-> What's cooking in git.git (Nov 2012, #03; Tue, 13)
-> --------------------------------------------------
->
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.
->
-> This is my final "what's cooking" as interim maintainer. I didn't
-> graduate anything to master, but I updated my plans for each topic to
-> give Junio an idea of where I was.
->
-> You can find the changes described here in the integration branches of
-> my repository at:
->
->   git://github.com/peff/git.git
->
-> Until Junio returns, kernel.org and the other "usual" places will not be
-> updated.
+yeah, it's just that not using -D can result in
+some unfortunately large patches being sent to
+mailing lists.  I don't believe that reversibility
+is a really useful aspect of deletion patches
+when there are known git repositories involved.
 
-And now the "usual places" have been updated with the same tips of
-integration branches (the broken-out https://github.com/gitster/git
-repository, too).
+cheers, Joe
