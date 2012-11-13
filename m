@@ -1,77 +1,80 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Test failures in contrib/remote-helpers
-Date: Tue, 13 Nov 2012 10:59:32 +0530
-Message-ID: <CALkWK0=+HGzLpFNPn_mo2_zt+pqYs230ZK4x3SweiFcXCD5zHQ@mail.gmail.com>
-References: <CALkWK0mU5O3Rqznkx-qn8VLFEgsMzOba1i8onSvf8X3FBeTs6g@mail.gmail.com>
- <CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
- <CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com> <CAMP44s1E7qKCPTH1MMuOwJkW8opmD+Q6bzD6j1-KM039g-Uq2g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] diff: introduce diff.submodule configuration variable
+Date: Tue, 13 Nov 2012 00:33:36 -0500
+Message-ID: <20121113053336.GA10995@sigill.intra.peff.net>
+References: <1352653146-3932-1-git-send-email-artagnon@gmail.com>
+ <1352653146-3932-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 06:30:07 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 06:33:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY94Z-0000GJ-2b
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 06:30:07 +0100
+	id 1TY98F-00020T-2b
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 06:33:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753123Ab2KMF3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 00:29:53 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:39047 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751627Ab2KMF3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 00:29:53 -0500
-Received: by mail-ob0-f174.google.com with SMTP id uo13so7049961obb.19
-        for <git@vger.kernel.org>; Mon, 12 Nov 2012 21:29:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+wt2v+cMmqHpjy0/CGpy5thsOpx46f8ANl8wTdSxAXM=;
-        b=hMqa0p6b7I6vLlJr1NlcZ7hcw9JvWYdxEjYNeQ2tJMNEDKaEH4ox4FtNTYSmzDStji
-         bIA4N2Sn8vRwBbLJu1yRoZA9Fp0BLyjtLGX86MA7QMJGTddZy/ai94IMLCn5ZblVwFxP
-         g38plVKcs+fW9TbMEfviGQOopAWJwpU29mt/1R0zX1qS+whzBgReWFwAt2KCKlD0RxsW
-         g4D+b4KYIq2ykb5LXgYgQe6wYb9MHpXvKIBJxWfFMFHsyRuoTDiYkqezpSr4fk0IyXgG
-         cGyAGQBQHsOhpQLshWm3waXZGlZ857z6RJTmri39LNGbu0AH2D52zzbH5LGUuz85ssHy
-         C99Q==
-Received: by 10.60.28.36 with SMTP id y4mr16133479oeg.13.1352784592407; Mon,
- 12 Nov 2012 21:29:52 -0800 (PST)
-Received: by 10.76.168.40 with HTTP; Mon, 12 Nov 2012 21:29:32 -0800 (PST)
-In-Reply-To: <CAMP44s1E7qKCPTH1MMuOwJkW8opmD+Q6bzD6j1-KM039g-Uq2g@mail.gmail.com>
+	id S1753069Ab2KMFdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 00:33:41 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45571 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751722Ab2KMFdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 00:33:41 -0500
+Received: (qmail 19786 invoked by uid 107); 13 Nov 2012 05:34:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Nov 2012 00:34:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Nov 2012 00:33:36 -0500
+Content-Disposition: inline
+In-Reply-To: <1352653146-3932-3-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209576>
 
-Felipe Contreras wrote:
-> And here's the one for bzr:
->
-> --- a/contrib/remote-helpers/git-remote-bzr
-> +++ b/contrib/remote-helpers/git-remote-bzr
-> @@ -646,12 +646,12 @@ def get_repo(url, alias):
->      global dirname, peer
->
->      clone_path = os.path.join(dirname, 'clone')
-> -    origin = bzrlib.controldir.ControlDir.open(url)
-> +    origin = bzrlib.bzrdir.BzrDir.open(url)
->      remote_branch = origin.open_branch()
->
->      if os.path.exists(clone_path):
->          # pull
-> -        d = bzrlib.controldir.ControlDir.open(clone_path)
-> +        d = bzrlib.bzrdir.BzrDir.open(clone_path)
->          branch = d.open_branch()
->          result = branch.pull(remote_branch, [], None, False)
->      else:
->
-> I have other fixes to run up to 2.0.
+On Sun, Nov 11, 2012 at 10:29:05PM +0530, Ramkumar Ramachandra wrote:
 
-Works for me.  All four tests pass now.
-Reported-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Tested-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> +static int parse_submodule_params(struct diff_options *options, const char *value,
+> +				struct strbuf *errmsg)
+> +{
+> +	if (!strcmp(value, "log"))
+> +		DIFF_OPT_SET(options, SUBMODULE_LOG);
+> +	else if (!strcmp(value, "short"))
+> +		DIFF_OPT_CLR(options, SUBMODULE_LOG);
+> +	else {
+> +		strbuf_addf(errmsg, _("'%s'"), value);
+> +		return 1;
+> +	}
+> +	return 0;
+> +}
 
-Ram
+I think "-1" would be the more normal error return.
+
+> @@ -223,6 +238,15 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+>  		return 0;
+>  	}
+>  
+> +	if (!strcmp(var, "diff.submodule")) {
+
+Shouldn't this be in git_diff_ui_config so it does not affect scripts
+calling plumbing?
+
+> +		struct strbuf errmsg = STRBUF_INIT;
+> +		if (parse_submodule_params(&default_diff_options, value, &errmsg))
+> +			warning(_("Unknown value for 'diff.submodule' config variable: %s"),
+> +				errmsg.buf);
+> +		strbuf_release(&errmsg);
+> +		return 0;
+> +	}
+
+Hmm. This strbuf error handling strikes me as very clunky, considering
+that it does not pass any useful information out of the parse function
+(it always just adds '$value' to the error string).  Wouldn't it be
+simpler to just have parse_submodule_params return -1, and then let the
+caller warn or generate an error as appropriate?
+
+-Peff
