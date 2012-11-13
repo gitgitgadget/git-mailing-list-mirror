@@ -1,65 +1,72 @@
-From: Douglas Mencken <dougmencken@gmail.com>
-Subject: Re: [regression] Newer gits cannot clone any remote repos
-Date: Tue, 13 Nov 2012 14:55:10 -0500
-Message-ID: <CACYvZ7jMC5xw4LxiuG5m+=grpQEg+wZb_7BaU4Xn-r7ix=S-bw@mail.gmail.com>
-References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
-	<50A2978D.6080805@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Tue, 13 Nov 2012 12:01:05 -0800
+Message-ID: <7vbof1e0hq.fsf@alter.siamese.dyndns.org>
+References: <20121113175205.GA26960@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:55:30 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 13 21:01:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYMa1-0002Qp-FR
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:55:29 +0100
+	id 1TYMfj-0005ny-P2
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 21:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755694Ab2KMTzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 14:55:14 -0500
-Received: from mail-la0-f46.google.com ([209.85.215.46]:43215 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755689Ab2KMTzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 14:55:13 -0500
-Received: by mail-la0-f46.google.com with SMTP id h6so5741575lag.19
-        for <git@vger.kernel.org>; Tue, 13 Nov 2012 11:55:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QZA9twl2EPwk+Vknd2OErTDbXReDU/gxtjJCZbtR+TY=;
-        b=Tff5+HN33Pt/wHKZuDVvHFPLuXnNh+Pao37y6cNmB3Bf1H2msj5Reu7uhHxdt4GyJ0
-         GcdTb8BWNyHQREgnfCTAQjX/f7uB0xw6wqgz8By19TXp0gdRMvs0CDwaCl9tuxMkij7R
-         yyF6u9bxaFsvAu540azt6vyhUjO6yGfuMDXFedHJNb6+Vfr6ub0+jrt1LrgsOvBEB0S0
-         5vTYZ3HI95u1B+27MCRgMp5gAPBA3IU/KSCU0nZXdlP0oXN6MK/FojjcNP/kCLynPzKC
-         TjOogZ06qJXHFX3ntUUF/ggHnCxqZR3TvPPw8Lw4iCCj1BWsSUYM87La0/EmTIhyzF9+
-         zrIA==
-Received: by 10.152.162.1 with SMTP id xw1mr15195654lab.3.1352836511329; Tue,
- 13 Nov 2012 11:55:11 -0800 (PST)
-Received: by 10.112.22.6 with HTTP; Tue, 13 Nov 2012 11:55:10 -0800 (PST)
-In-Reply-To: <50A2978D.6080805@ramsay1.demon.co.uk>
+	id S1755713Ab2KMUBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 15:01:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61430 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755689Ab2KMUBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 15:01:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30FE1A6BB;
+	Tue, 13 Nov 2012 15:01:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y2UDYZNjERnOtx+1oyDBhkwktk0=; b=UbKwkn
+	vYfoTXaanMq+7gKl0/dgY/Ma7zy470P1LnW2yV7Ry08iXWDh1bd2l4zdtgMuk+aj
+	TODgYuXwZqGymY5a/FCsju1LtS1IZmruPyKsVb2VIJ2iJ6DZZNMcThZf5XkyIle4
+	LOpVulT7GWqlojHOWW+0TsYH0y1mL1/mBU91g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F0ePx8h9YNfxL/WBwPZHbRnn1zQm7e27
+	3nm8b9prMvMiuwo/7FM/Gdczz6j8A+GqHf0vceeiMbAmrv8nXCztETRWYUi+qfjh
+	NlHELfmxnpSi2Ibv0tvVY8jchB6fMwciBS3Pv73nywH1B96dLUEOA5Nc8/oTFHtZ
+	HQmJVcr2Jyw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AC25A6BA;
+	Tue, 13 Nov 2012 15:01:07 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F094A6B9; Tue, 13 Nov 2012
+ 15:01:06 -0500 (EST)
+In-Reply-To: <20121113175205.GA26960@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 13 Nov 2012 12:52:06 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DC3A943A-2DCC-11E2-8A33-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209665>
 
->  Could you try re-building git with the
-> NO_THREAD_SAFE_PREAD build variable set?
+Jeff King <peff@peff.net> writes:
 
-Yeah! It works!!!
+> This is my final "what's cooking" as interim maintainer. I didn't
+> graduate anything to master, but I updated my plans for each topic to
+> give Junio an idea of where I was.
 
---- evil/Makefile
-+++ good/Makefile
-@@ -957,6 +957,7 @@
- 	HAVE_PATHS_H = YesPlease
- 	LIBC_CONTAINS_LIBINTL = YesPlease
- 	HAVE_DEV_TTY = YesPlease
-+	NO_THREAD_SAFE_PREAD = YesPlease
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
+After exploding the first-parent history between your master..pu
+into component topics and recreating one new merge-fix for
+nd/wildmatch topic, I think I now know how to rebuild your
+integration branches.
 
-With this, I do have correctly working git clone.
+I still haven't caught up with the past discussions (and still am
+slightly jetlagged), but I think I can take it over from here with
+help from contributors.
+
+Thanks.
