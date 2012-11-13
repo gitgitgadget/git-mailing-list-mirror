@@ -1,95 +1,64 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: checkout from neighbour branch  undeletes a path?
-Date: Tue, 13 Nov 2012 22:34:00 +0400
-Organization: '
-Message-ID: <20121113183400.GE6561@external.screwed.box>
-References: <20121113152341.GC6561@external.screwed.box>
- <7v8va5fo7g.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [regression] Newer gits cannot clone any remote repos
+Date: Tue, 13 Nov 2012 18:55:09 +0000
+Message-ID: <50A2978D.6080805@ramsay1.demon.co.uk>
+References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Peter Vereshagin <peter@vereshagin.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 19:34:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Douglas Mencken <dougmencken@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 19:57:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYLJk-0002X7-52
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 19:34:36 +0100
+	id 1TYLfe-0000Vd-RZ
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 19:57:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755451Ab2KMSeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 13:34:22 -0500
-Received: from ns1.skyriver.ru ([89.108.118.221]:61455 "EHLO mx1.skyriver.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752005Ab2KMSeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 13:34:21 -0500
-Received: from localhost (SIPB-TOR.MIT.EDU [18.187.1.68])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id 8D0C25B07;
-	Tue, 13 Nov 2012 22:34:17 +0400 (MSK)
-Content-Disposition: inline
-In-Reply-To: <7v8va5fo7g.fsf@alter.siamese.dyndns.org>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
- 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
+	id S1755523Ab2KMS5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 13:57:01 -0500
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:33883 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753083Ab2KMS47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 13:56:59 -0500
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id ECC1EA0C07F;
+	Tue, 13 Nov 2012 18:56:58 +0000 (GMT)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 61066A0C081;	Tue, 13 Nov 2012 18:56:58 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Tue, 13 Nov 2012 18:56:57 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+In-Reply-To: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
+X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209655>
 
-Hello.
+Douglas Mencken wrote:
+> *Any* git clone fails with:
+> 
+> fatal: premature end of pack file, 106 bytes missing
+> fatal: index-pack failed
+> 
+> At first, I tried 1.8.0, and it failed. Then I tried to build 1.7.10.5
+> then, and it worked. Then I tried 1.7.12.2, but it fails the same way
+> as 1.8.0.
+> So I decided to git bisect.
+> 
+> b8a2486f1524947f232f657e9f2ebf44e3e7a243 is the first bad commit
+> ``index-pack: support multithreaded delta resolving''
 
-2012/11/13 08:43:31 -0800 Junio C Hamano <gitster@pobox.com> => To Peter Vereshagin :
-JCH> Peter Vereshagin <peter@vereshagin.org> writes:
-JCH> 
-JCH> > Am wondering if 'checkout branch path' undeletes the files?
-JCH> 
-JCH> "git checkout branch path" (by the way, "branch" does not have to be
-JCH> a branch name; any commit object name would do, like "git checkout
-JCH> HEAD^^ hello.c") is a way to check out named path(s) out of the
-JCH> named commit.
-JCH> 
-JCH> If the commit "branch" has "path" in it, its contents are checked
-JCH> out to "path" in your current working tree (and the entry in the
-JCH> index updated to match it).
-JCH> 
-JCH> If you happen to have removed "path" in your current working tree
-JCH> before running that command, it might look as if there is some
-JCH> undelete going on, but that is a wrong way to look at things.  The
-JCH> version of "path" in the "branch" may or may not be similar to what
-JCH> you have removed earlier.
-JCH> 
+This looks like the same problem I had on cygwin, which lead to
+commit c0f86547c ("index-pack: Disable threading on cygwin", 26-06-2012).
 
+I didn't notice which platform you are on, but maybe you also have a
+thread-unsafe pread()? Could you try re-building git with the
+NO_THREAD_SAFE_PREAD build variable set?
 
-Hello.
+HTH.
 
-I solved my problem by mean of 'git rm' instead of 'rm'.
-
-I knew what you said here. Shortly, the difference for my case was:
-
- - I check out the pathdir from the commit in which the pathdir/file00 was
-   already removed.
-
- - The current branch 'branch01' has no idea the file00 was removed. But I
-   removed file00 and this is what 'branch01' assumes when I commit n ext time.
-
-But git assumes I need 'file00' although it doesn't exist in the commit I
-checkout path from. It doesn't exist by itself before I checkout that path
-neither.
-
-How can I know which one of the 'file00' versions is being checked out: the one
-that did exist in the 'branch00' (the where I checkout path from) before I
-removed it or the one existing in HEAD but not in the work-tree? And why this
-and not that?
-
-If it is the one that exists in a current branch but was deleted from trhe
-work-tree [d4f7c70] than why it is being checked out not from the commit
-supplied as an argument to git?
-
-If it is the one that existed [c3e78ff] before the commit I checkout path from
-than why it is being checked out while it doesn't exist in that commit already?
-
-Thank you.
-
---
-Peter Vereshagin <peter@vereshagin.org> (http://vereshagin.org) pgp: A0E26627 
+ATB,
+Ramsay Jones
