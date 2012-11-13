@@ -1,87 +1,91 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Test failures in contrib/remote-helpers
-Date: Tue, 13 Nov 2012 01:35:29 +0100
-Message-ID: <CAMP44s1E7qKCPTH1MMuOwJkW8opmD+Q6bzD6j1-KM039g-Uq2g@mail.gmail.com>
-References: <CALkWK0mU5O3Rqznkx-qn8VLFEgsMzOba1i8onSvf8X3FBeTs6g@mail.gmail.com>
-	<CAMP44s1TLyKoHVouwgCFqi-vwA6rUBYJZXTA7JDFX6bfyQ7_tw@mail.gmail.com>
-	<CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] send-email: add series-cc-cmd option
+Date: Mon, 12 Nov 2012 16:37:41 -0800
+Message-ID: <7vd2zigwx6.fsf@alter.siamese.dyndns.org>
+References: <1352653463-1923-1-git-send-email-felipe.contreras@gmail.com>
+ <1352653463-1923-3-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0mRKznNN7750h=k6aE3OJ7hBLVC-G51gEYi2+NuYjPWrQ@mail.gmail.com>
+ <1352760759.18715.7.camel@joe-AO722>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 01:35:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Pascal Obry <pascal@obry.net>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 01:37:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TY4Tg-0003dY-Ga
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 01:35:44 +0100
+	id 1TY4Vq-0004l6-9h
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 01:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780Ab2KMAfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2012 19:35:31 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:53152 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751200Ab2KMAfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2012 19:35:30 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so6889262oag.19
-        for <git@vger.kernel.org>; Mon, 12 Nov 2012 16:35:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OBJC3feBh1cWK0xLLKUyJwfw/rmJv4rUrjLklrBtvUE=;
-        b=vF9wugOx9C+Vn2QFtb34NJ+WFqRdbMkhA7e62nmkhJDQZCEmxPW6EyGPyCZzxldNLM
-         LNz79tkKBdlW6iBL20RXWDWFs3aJ/tlwNhgJ1DplUZ/o7A+1aoyUkhaLUR9SLxzu9Y2o
-         6qg573003wPl++r6nDJnrBVV9n/SZ+6pI29ELvHsEAua68mcExOeq9VTDBcqHHliDxb+
-         Qi2rl8Gn8gk63aIMCN3D6n58ELjrP92W/YnQ0pDBpNfDx1Y0+A2wKOfunyHGIFugXmWx
-         Q1kdpmf5qhpid3rZa5UbDilMPvkgYOHHxT9vmivWikqQlqPiPaBbPsu9TgRW3NyAk4Mn
-         31Iw==
-Received: by 10.60.20.1 with SMTP id j1mr6961519oee.46.1352766929818; Mon, 12
- Nov 2012 16:35:29 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Mon, 12 Nov 2012 16:35:29 -0800 (PST)
-In-Reply-To: <CALkWK0k9trxx8NC1GWw-yYzBKhFchrvg2JLeBtyoAkokmv9A0w@mail.gmail.com>
+	id S1752462Ab2KMAhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2012 19:37:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44373 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751783Ab2KMAho (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2012 19:37:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C470DAC2A;
+	Mon, 12 Nov 2012 19:37:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dNdUBea/lOIJtSZCFof03X3y2Lo=; b=tMLLTN
+	18gfEcRFIigMDF/VKmMfX0kfQfSpmOd9ruSWB300hES1NH1+oWTP5g9KrlUBhO7v
+	jCHU4b92NRgcaEUvO1oACRGBMaIkKGRB40w7duAyv0Lcpi3Pw1qd9BrLV64FD2pY
+	0oh+upLBwNkQbqwaq0WDIouQbNO5TaP5oPxvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YTGmZo4bmEIeQFiYFXUAKAaCWe7PVbYi
+	IWUiUC9e+Onwh/c20cGxCRLKzesTOpEQ5wrBdVJ6jo6SnXuN6gcXYV0JpNoJ+Uru
+	HSApIj/n5Ha0IXLb9WR80PZwfqjaPVCZ3VBJR+Ni4LU2prPuVD2JG0j5M/yD5DKV
+	muvKjm59zMI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B275BAC29;
+	Mon, 12 Nov 2012 19:37:43 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19137AC28; Mon, 12 Nov 2012
+ 19:37:42 -0500 (EST)
+In-Reply-To: <1352760759.18715.7.camel@joe-AO722> (Joe Perches's message of
+ "Mon, 12 Nov 2012 14:52:39 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 561C7D2A-2D2A-11E2-B635-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209553>
 
-On Sun, Nov 11, 2012 at 1:48 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> On Sun, Nov 11, 2012 at 11:32 AM, Ramkumar Ramachandra
->> <artagnon@gmail.com> wrote:
->>> I'm experiencing test failures in contrib/remote-helpers.
->>
->> Which are your versions of hg, and bzr?
+Joe Perches <joe@perches.com> writes:
+
+> On Tue, 2012-11-13 at 03:21 +0530, Ramkumar Ramachandra wrote:
+>> Felipe Contreras wrote:
+>> > cc-cmd is only per-file, and many times receipients get lost without
+>> > seing the full patch series.
+>> 
+>> s/seing/seeing
+>> 
+>> > [...]
+>> 
+>> Looks good otherwise.
 >
-> Mercurial Distributed SCM (version 1.9.1)
-> Bazaar (bzr) 2.4.1
+> s/receipients/recipients/ too
+>
+> Practically this is ok but I think it's unnecessary.
+>
+> Output from git format-patch is always in a single
+> directory.
 
-And here's the one for bzr:
+Sorry, but I do not see how the usefulness (or necessity) of this
+new option is connected to the fact that you can tell the command to
+write the patches into a single (possibly new) directory.  Care to
+explain?
 
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -646,12 +646,12 @@ def get_repo(url, alias):
-     global dirname, peer
-
-     clone_path = os.path.join(dirname, 'clone')
--    origin = bzrlib.controldir.ControlDir.open(url)
-+    origin = bzrlib.bzrdir.BzrDir.open(url)
-     remote_branch = origin.open_branch()
-
-     if os.path.exists(clone_path):
-         # pull
--        d = bzrlib.controldir.ControlDir.open(clone_path)
-+        d = bzrlib.bzrdir.BzrDir.open(clone_path)
-         branch = d.open_branch()
-         result = branch.pull(remote_branch, [], None, False)
-     else:
-
-I have other fixes to run up to 2.0.
-
-Cheers.
-
--- 
-Felipe Contreras
+> My work flow is to use a script for --to and --cc
+> lines that can be set to emit the same addresses for
+> all files in a patch series or generate different
+> addresses per patch file.
