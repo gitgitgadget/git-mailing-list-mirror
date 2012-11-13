@@ -1,110 +1,221 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
-Date: Tue, 13 Nov 2012 13:20:18 -0800
-Message-ID: <7v4nktdwtp.fsf@alter.siamese.dyndns.org>
-References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH] update-index/diff-index: use core.preloadindex
+ to improve performance
+Date: Tue, 13 Nov 2012 22:51:46 +0100
+Message-ID: <50A2C0F2.20606@gmail.com>
+References: <20121102153800.GE11170@sigill.intra.peff.net> <OF27D0F811.18A373FB-ONC1257AB5.0055809D-C1257AB5.0055B47D@dcon.de> <7v4nktfo35.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 22:20:38 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: karsten.blees@dcon.de, Jeff King <peff@peff.net>, 
+ git@vger.kernel.org, msysgit@googlegroups.com, 
+ pro-logic@optusnet.com.au
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCH3XYXLXQDBB4MBROCQKGQENU22KPQ@googlegroups.com Tue Nov 13 22:52:00 2012
+Return-path: <msysgit+bncBCH3XYXLXQDBB4MBROCQKGQENU22KPQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f186.google.com ([209.85.217.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYNuO-00024A-5P
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 22:20:36 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932154Ab2KMVUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 16:20:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43731 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932073Ab2KMVUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 16:20:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14448A427;
-	Tue, 13 Nov 2012 16:20:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=ps8vU2f4O/4DCr41KXSWXSFRf24=; b=LaWS3CO71OnqAlHWVqTp
-	Bg8IuzD33mXbb5yj68TImv/vbqRhE93L03vfrImWfStHKrLaLU1WOUCK0H0UrWUq
-	6o12mHShB1il/zAuHmV/5TsT9pH3DGJwl8jYMM/EJ9wf9YrDbMljcU6MrEErRgVl
-	M4z/UNhx6PlTnw8jzW3CPew=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=eD2OpGV/vzGt51DLNVA2Z8Ry4FKOqYarFdFGOdD2Bngd//
-	AML69eYl6jQU5tHn7l6o6dkixJMzbganNuWUGlQSxOPagRDnaMMl9s/o6rpO4eSa
-	wNCbkpn45v6dZRH1sOUcN4VjQpRAK3wxn1vVbYi5AXVNXvadFQQ2nAmkPs+6M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F40C1A426;
-	Tue, 13 Nov 2012 16:20:20 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47F06A425; Tue, 13 Nov 2012
- 16:20:20 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDAD879E-2DD7-11E2-8CF4-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209675>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB4MBROCQKGQENU22KPQ@googlegroups.com>)
+	id 1TYOOi-0000Iv-92
+	for gcvm-msysgit@m.gmane.org; Tue, 13 Nov 2012 22:51:56 +0100
+Received: by mail-lb0-f186.google.com with SMTP id y2sf1157546lbk.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 13 Nov 2012 13:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=2wNvS0wWtMHRwnfMcyU/2lAY3W2DrfzHD/t+OBe+/4E=;
+        b=jCkyMVAnLIKy91oqx2FzgzwUdxO0uW/oN1I6Vq2hT9hh+A/DdYmIf0o3tmANuM3uyE
+         Ft82NCGZQm8JA3H5/ZaoN/6u6ODH2+vOrntwgU8KIWMzURvqXFW2fJx9AvoSsS8ErTV+
+         9eocG8GljGke+Ifnt25B5UFeawg3fTkGWiJ/PB7EyujMpL28afu9hptYPxCgmYCd7IzV
+         SkAsw7KlyXPelmXGbwoyTmhuCL0odoIMJGCfMjva300Gtsp2C684milEKpVFr6d5mbti
+         /N7cLlUTHSH3+0gizhZphj6mRqmAnnwm2Bs+6kpyl1fhsOqW 
+Received: by 10.180.97.194 with SMTP id ec2mr2233416wib.0.1352843506625;
+        Tue, 13 Nov 2012 13:51:46 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.14.198.201 with SMTP id v49ls5297949een.0.gmail; Tue, 13 Nov
+ 2012 13:51:44 -0800 (PST)
+Received: by 10.14.216.197 with SMTP id g45mr24632281eep.3.1352843504934;
+        Tue, 13 Nov 2012 13:51:44 -0800 (PST)
+Received: by 10.14.216.197 with SMTP id g45mr24632279eep.3.1352843504920;
+        Tue, 13 Nov 2012 13:51:44 -0800 (PST)
+Received: from mail-ee0-f50.google.com (mail-ee0-f50.google.com [74.125.83.50])
+        by gmr-mx.google.com with ESMTPS id z47si2688391eel.0.2012.11.13.13.51.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 13 Nov 2012 13:51:44 -0800 (PST)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 74.125.83.50 as permitted sender) client-ip=74.125.83.50;
+Received: by mail-ee0-f50.google.com with SMTP id c41so5360572eek.37
+        for <msysgit@googlegroups.com>; Tue, 13 Nov 2012 13:51:44 -0800 (PST)
+Received: by 10.14.203.132 with SMTP id f4mr79615787eeo.11.1352843504789;
+        Tue, 13 Nov 2012 13:51:44 -0800 (PST)
+Received: from [10.1.101.50] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPS id s1sm25253633eem.9.2012.11.13.13.51.43
+        (version=SSLv3 cipher=OTHER);
+        Tue, 13 Nov 2012 13:51:44 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <7v4nktfo35.fsf@alter.siamese.dyndns.org>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of karsten.blees@gmail.com designates 74.125.83.50 as permitted
+ sender) smtp.mail=karsten.blees@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209676>
 
-Chris Rorvick <chris@rorvick.com> writes:
+Am 13.11.2012 17:46, schrieb Junio C Hamano:
+> karsten.blees@dcon.de writes:
+>=20
+> If anything, "fix your mailer" probably is the policy you are
+> looking for, I think.
 
-> Minor changes since from v2 set.  Reposting primarily because I mucked
-> up the Cc: list (again) and hoping to route feedback to the appropriate
-> audience.
->
-> This patch set can be divided into two sets:
->
->   1. Provide useful advice for rejected tag references.
->
->      push: return reject reasons via a mask
->      push: add advice for rejected tag reference
->
->      Recommending a merge to resolve a rejected tag update seems
->      nonsensical since the tag does not come along for the ride.  These
->      patches change the advice for rejected tags to suggest using
->      "push -f".
+Well then...I've cloned myself @gmail, I hope this is better.
 
-Below, I take that you mean by "tag reference" everything under
-refs/tags/ (not limited to "annotated tag objects", but also
-lightweight tags).
+Just some provoking thoughts...(if I may):
 
-Given that the second point below is to strongly discourage updating
-of existing any tag, it might be even better to advise *not* to push
-tags in the first place, instead of destructive "push -f", no?
+RFC-5322 recommends wrapping lines at 78, and mail relays and gateways are =
+allowed to change message content according to the capabilities of the rece=
+iver (RFC-5598). In essence, plaintext mail is completely unsuitable for pr=
+eformatted text such as source code.
 
->   2. Require force when updating tag references, even on a fast-forward.
->
->      push: flag updates
->      push: flag updates that require force
->      push: update remote tags only with force
->
->      An email thread initiated by Angelo Borsotti did not come to a
->      consensus on how push should behave with regard to tag references.
+On the other hand, git tries to solve the very problem of distributed sourc=
+e code management, and consistency by strong sha-1 checksums is on the top =
+of the feature list.
 
-I think the original motivation of allowing fast-forward updates to
-tags was for people who wanted to have "today's recommended version"
-tag that can float from day to day. I tend to think that was a
-misguided notion and it is better implemented with a tip of a
-branch (iow, I personally am OK with the change to forbid tag
-updates altogether, without --force).
+It is somehow hard to believe that contributing to git itself should only b=
+e possible using the most unreliable of protocols. Don't you trust your own=
+ software?
 
->      I think a key point is that you currently cannot be sure your push
->      will not clobber a tag (lightweight or not) in the remote.
 
-"Do not update, only add new" may be a good feature, but at the same
-time I have this suspicion that its usefulness may not necessarily
-be limited to refs/tags/* hierarchy.
+-- >8 --
+Subject: [PATCH] update-index/diff-index: use core.preloadindex to improve =
+performance
 
-I dunno.
+'update-index --refresh' and 'diff-index' (without --cached) don't honor
+the core.preloadindex setting yet. Porcelain commands using these (such as
+git [svn] rebase) suffer from this, especially on Windows.
+
+Use read_cache_preload to improve performance.
+
+Additionally, in builtin/diff.c, don't preload index status if we don't
+access the working copy (--cached).
+
+Results with msysgit on WebKit repo (2GB in 200k files):
+
+                | update-index | diff-index | rebase
+----------------+--------------+------------+---------
+msysgit-v1.8.0  |       9.157s |    10.536s | 42.791s
++ preloadindex  |       9.157s |    10.536s | 28.725s
++ this patch    |       2.329s |     2.752s | 15.152s
++ fscache [1]   |       0.731s |     1.171s |  8.877s
+
+[1] https://github.com/kblees/git/tree/kb/fscache-v3
+
+Thanks-to: Albert Krawczyk <pro-logic@optusnet.com.au>
+Signed-off-by: Karsten Blees <blees@dcon.de>
+---
+
+Can also be pulled from: https://github.com/kblees/git/tree/kb/update-diff-=
+index-preload-upstream
+
+More performance figures (for msysgit) can be found in this discussion: htt=
+ps://github.com/pro-logic/git/commit/32c03dd8
+
+
+ builtin/diff-index.c   |  8 ++++++--
+ builtin/diff.c         | 12 ++++++++----
+ builtin/update-index.c |  1 +
+ 3 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 2eb32bd..1c737f7 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -41,9 +41,13 @@ int cmd_diff_index(int argc, const char **argv, const ch=
+ar *prefix)
+ 	if (rev.pending.nr !=3D 1 ||
+ 	    rev.max_count !=3D -1 || rev.min_age !=3D -1 || rev.max_age !=3D -1)
+ 		usage(diff_cache_usage);
+-	if (!cached)
++	if (!cached) {
+ 		setup_work_tree();
+-	if (read_cache() < 0) {
++		if (read_cache_preload(rev.diffopt.pathspec.raw) < 0) {
++			perror("read_cache_preload");
++			return -1;
++		}
++	} else if (read_cache() < 0) {
+ 		perror("read_cache");
+ 		return -1;
+ 	}
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 9650be2..198b921 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -130,8 +130,6 @@ static int builtin_diff_index(struct rev_info *revs,
+ 			usage(builtin_diff_usage);
+ 		argv++; argc--;
+ 	}
+-	if (!cached)
+-		setup_work_tree();
+ 	/*
+ 	 * Make sure there is one revision (i.e. pending object),
+ 	 * and there is no revision filtering parameters.
+@@ -140,8 +138,14 @@ static int builtin_diff_index(struct rev_info *revs,
+ 	    revs->max_count !=3D -1 || revs->min_age !=3D -1 ||
+ 	    revs->max_age !=3D -1)
+ 		usage(builtin_diff_usage);
+-	if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
+-		perror("read_cache_preload");
++	if (!cached) {
++		setup_work_tree();
++		if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
++			perror("read_cache_preload");
++			return -1;
++		}
++	} else if (read_cache() < 0) {
++		perror("read_cache");
+ 		return -1;
+ 	}
+ 	return run_diff_index(revs, cached);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 74986bf..ada1dff 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -593,6 +593,7 @@ struct refresh_params {
+ static int refresh(struct refresh_params *o, unsigned int flag)
+ {
+ 	setup_work_tree();
++	read_cache_preload(NULL);
+ 	*o->has_errors |=3D refresh_cache(o->flags | flag);
+ 	return 0;
+ }
+--=20
+1.8.0.msysgit.0.3.g7d9d98c
+
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
