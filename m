@@ -1,121 +1,66 @@
-From: Johannes Sixt <j6t@kdbg.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH nd/wildmatch] Correct Git's version of isprint and isspace
-Date: Tue, 13 Nov 2012 20:41:08 +0100
-Message-ID: <50A2A254.9030908@kdbg.org>
+Date: Tue, 13 Nov 2012 11:40:58 -0800
+Message-ID: <CA+55aFwsjpOop=4mVkx4e=zw5LH41sD9x-b_WMo4Hvo7ygjEtQ@mail.gmail.com>
 References: <507E9FDE.7080706@cs.tu-berlin.de> <1352803572-14547-1-git-send-email-pclouds@gmail.com>
+ <50A29C3A.1070000@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	schnhrr@cs.tu-berlin.de, rene.scharfe@lsrfire.ath.cx
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:41:34 2012
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, schnhrr@cs.tu-berlin.de
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Nov 13 20:41:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYMMR-0002T4-20
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:41:27 +0100
+	id 1TYMMZ-0002Y1-EN
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 20:41:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754146Ab2KMTlN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 14:41:13 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:16878 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752821Ab2KMTlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 14:41:12 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9447B10016;
-	Tue, 13 Nov 2012 20:41:09 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1482019F30E;
-	Tue, 13 Nov 2012 20:41:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
-In-Reply-To: <1352803572-14547-1-git-send-email-pclouds@gmail.com>
+	id S1754585Ab2KMTlW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 14:41:22 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:40151 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754303Ab2KMTlV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Nov 2012 14:41:21 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so601058obb.19
+        for <git@vger.kernel.org>; Tue, 13 Nov 2012 11:41:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zfoLKvTa7sKOZ/xATrqfeyC7CnYUgJJ7cPIsD9bNUP4=;
+        b=oAD7vetBzkeBIyLJ4hIoTv54HY20u2CV5aXIjqfCqK5BD2vVlknAlQR/UCsVKARWQV
+         MufdhA8f11vDDVboOV34KJaIyR/r/5IxiNzlqrG2UhTXVp7uUQmwbk+SIlawhxL93/mk
+         i5h4u8Z/00yOBWj0BKfGatmnj/oGxP4h5Q6HqJPdtQVm2/wSjKhO97LHudRDqBgEbRVp
+         5iJwlYcn5cg2vfUUyPutJHrjFbNoNKfAycqrqBuH+dtIdjntapJTxopXDoh6A2e3Ap7z
+         lufTMD3ZEPg42rGwF65sJtRGdnkdyyb1W9jJ+zllrGNIKiMj9JwD+5eq3D0erZK+DJIP
+         ah6Q==
+Received: by 10.60.29.34 with SMTP id g2mr3679871oeh.112.1352835679472; Tue,
+ 13 Nov 2012 11:41:19 -0800 (PST)
+Received: by 10.76.2.242 with HTTP; Tue, 13 Nov 2012 11:40:58 -0800 (PST)
+In-Reply-To: <50A29C3A.1070000@lsrfire.ath.cx>
+X-Google-Sender-Auth: v0m33xKAbrQTTdvs2AphyAgRYO8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209662>
 
-Am 13.11.2012 11:46, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
-> @@ -14,11 +14,11 @@ enum {
->  	P =3D GIT_PATHSPEC_MAGIC, /* other non-alnum, except for ] and } */
->  	X =3D GIT_CNTRL,
->  	U =3D GIT_PUNCT,
-> -	Z =3D GIT_CNTRL | GIT_SPACE
-> +	Z =3D GIT_CNTRL_SPACE
->  };
-> =20
-> -const unsigned char sane_ctype[256] =3D {
-> -	X, X, X, X, X, X, X, X, X, Z, Z, X, X, Z, X, X,		/*   0.. 15 */
-> +const unsigned int sane_ctype[256] =3D {
-> +	X, X, X, X, X, X, X, X, X, Z, Z, Z, Z, Z, X, X,		/*   0.. 15 */
->  	X, X, X, X, X, X, X, X, X, X, X, X, X, X, X, X,		/*  16.. 31 */
->  	S, P, P, P, R, P, P, P, R, R, G, R, P, P, R, P,		/*  32.. 47 */
->  	D, D, D, D, D, D, D, D, D, D, P, P, P, P, P, G,		/*  48.. 63 */
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 02f48f6..4ed3f94 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -474,8 +474,8 @@ extern const char tolower_trans_tbl[256];
->  #undef ispunct
->  #undef isxdigit
->  #undef isprint
-> -extern const unsigned char sane_ctype[256];
-> -#define GIT_SPACE 0x01
-> +extern const unsigned int sane_ctype[256];
-> +#define GIT_CNTRL_SPACE 0x01
->  #define GIT_DIGIT 0x02
->  #define GIT_ALPHA 0x04
->  #define GIT_GLOB_SPECIAL 0x08
-> @@ -483,9 +483,10 @@ extern const unsigned char sane_ctype[256];
->  #define GIT_PATHSPEC_MAGIC 0x20
->  #define GIT_CNTRL 0x40
->  #define GIT_PUNCT 0x80
-> -#define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask=
-)) !=3D 0)
-> +#define GIT_SPACE 0x100
-> +#define sane_istest(x,mask) ((sane_ctype[(unsigned int)(x)] & (mask)=
-) !=3D 0)
->  #define isascii(x) (((x) & ~0x7f) =3D=3D 0)
-> -#define isspace(x) sane_istest(x,GIT_SPACE)
-> +#define isspace(x) sane_istest(x,GIT_SPACE | GIT_CNTRL_SPACE)
->  #define isdigit(x) sane_istest(x,GIT_DIGIT)
->  #define isalpha(x) sane_istest(x,GIT_ALPHA)
->  #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
-> @@ -493,7 +494,7 @@ extern const unsigned char sane_ctype[256];
->  #define isupper(x) sane_iscase(x, 0)
->  #define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
->  #define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REG=
-EX_SPECIAL)
-> -#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
-> +#define iscntrl(x) (sane_istest(x,GIT_CNTRL | GIT_CNTRL_SPACE))
->  #define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
->  		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
->  #define isxdigit(x) (hexval_table[x] !=3D -1)
+On Tue, Nov 13, 2012 at 11:15 AM, Ren=E9 Scharfe
+<rene.scharfe@lsrfire.ath.cx> wrote:
+>
+> Linus, do you remember if you left them out on purpose?
 
-So we have two properties that overlap:
+Umm, no.
 
-      SSSSSSSSSS
-   CCCCCCCC
+I have to wonder why you care? As far as I'm concerned, the only valid
+space is space, TAB and CR/LF.
 
-You seem to generate partions:
+Anything else is *noise*, not space. What's the reason for even caring?
 
-   XXXYYYYYZZZZZ
-
-then assign individual bits to each partition. Now each entry in the
-lookup table has only one bit set. Then you define isxxx() to check for
-one of the two possible bits:
-
-   iscntrl is X or Y
-   isspace is Y or Z
-
-But shouldn't you just assign one bit for S and another one for C, have
-entries in the lookup table with more than one bit set, and check for
-only one bit in the isxxx macro?
-
-That way you don't run out of bits as easily as you do with this patch.
-
--- Hannes
+                  Linus
