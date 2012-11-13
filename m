@@ -1,176 +1,305 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re: [PATCH] git tag --contains : avoid stack overflow
-Date: Tue, 13 Nov 2012 01:08:38 -0500
-Message-ID: <20121113060838.GD10995@sigill.intra.peff.net>
-References: <1352568970-4669-1-git-send-email-jeanjacques.lafay@gmail.com>
- <03ED9D50D1F64467863C051959CFC433@PhilipOakley>
- <d9843c09-3ca9-406e-9df8-78603235d985@googlegroups.com>
- <509FD668.20609@lsrfire.ath.cx>
- <20121111165431.GA25884@sigill.intra.peff.net>
- <CA+TMuX2p4ck0qXijH+OOcBoveBC42U8PqnXdisau57RXwt1isg@mail.gmail.com>
- <20121112231453.GA21679@sigill.intra.peff.net>
- <alpine.DEB.1.00.1211130114180.13573@bonsai2>
- <20121113034605.GB8387@sigill.intra.peff.net>
- <7vwqxqf6li.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] send-email: add proper default sender
+Date: Tue, 13 Nov 2012 07:42:58 +0100
+Message-ID: <CAMP44s1w3oZhEUM-cnO=kECH2bhdOTGVuKy8JS4uhWFbA_oi3w@mail.gmail.com>
+References: <1352653610-2090-1-git-send-email-felipe.contreras@gmail.com>
+	<20121112233546.GG10531@sigill.intra.peff.net>
+	<CAMP44s0emar-C27SX-FDsUVB6Sevuy4fBFHuO2OD6xELCEjmGg@mail.gmail.com>
+	<20121113000217.GH10531@sigill.intra.peff.net>
+	<CAMP44s16y9WSmnTdb04EMSzXVgzfYP7pSMo6qZi0HY0bjouA0w@mail.gmail.com>
+	<20121113032727.GA8387@sigill.intra.peff.net>
+	<CAMP44s0SDHVzSd-8Rq7Z1sbiQ6m0pxX+2pgx16_DoWnHeyNsNQ@mail.gmail.com>
+	<20121113040104.GA9361@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	msysgit@googlegroups.com, Git List <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDO2DJFKTEFBB2WHQ6CQKGQE7VANMCQ@googlegroups.com Tue Nov 13 07:08:56 2012
-Return-path: <msysgit+bncBDO2DJFKTEFBB2WHQ6CQKGQE7VANMCQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ye0-f186.google.com ([209.85.213.186])
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 13 07:43:15 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBB2WHQ6CQKGQE7VANMCQ@googlegroups.com>)
-	id 1TY9g6-000131-1s
-	for gcvm-msysgit@m.gmane.org; Tue, 13 Nov 2012 07:08:54 +0100
-Received: by mail-ye0-f186.google.com with SMTP id q5sf5563881yen.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 12 Nov 2012 22:08:43 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TYADK-00089K-Os
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 07:43:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751485Ab2KMGnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 01:43:00 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:40929 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751067Ab2KMGm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 01:42:59 -0500
+Received: by mail-ob0-f174.google.com with SMTP id uo13so7083491obb.19
+        for <git@vger.kernel.org>; Mon, 12 Nov 2012 22:42:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :references:mime-version:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type:content-disposition;
-        bh=yn5PiS29Ohl1E2XGInkJk2wrebefmgKejFQ9GywuNBU=;
-        b=cuEjAY2HoxQditL9y0aZh5FeXvGZpsf88SDbEUwp77qOep3g32GthGGpOKVboxshJL
-         UaZ+mvFm4kLeHnDzFXmXfe3/8vvYIJLhCjFEUs5lFetOJhkT7vaqOnLKMM8YRhrYnOYo
-         maam2PU1YLK21hn70ngN0gSYwe2REqWc85hSY0UFC0jTA2A08M34uuzY8IQfVtJPirHM
-         1ZnQHV/k/w6uQdsbYGnryPqhPKv37Q5eNszwGU/kzAktajFWhYd5eJZIH75VZQtDioz8
-         EfYy6OroCmy/Jyi7nQdbhSZZWYbi35TLEwSNH/UfaBiHD4qiVuSI8YTuWVo04c7OAjcV
-       
-Received: by 10.50.212.69 with SMTP id ni5mr5719306igc.5.1352786923439;
-        Mon, 12 Nov 2012 22:08:43 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.42.200.203 with SMTP id ex11ls10537645icb.6.gmail; Mon, 12 Nov
- 2012 22:08:42 -0800 (PST)
-Received: by 10.43.115.73 with SMTP id fd9mr13395634icc.2.1352786922663;
-        Mon, 12 Nov 2012 22:08:42 -0800 (PST)
-Received: by 10.43.115.73 with SMTP id fd9mr13395633icc.2.1352786922593;
-        Mon, 12 Nov 2012 22:08:42 -0800 (PST)
-Received: from peff.net (75-15-5-89.uvs.iplsin.sbcglobal.net. [75.15.5.89])
-        by gmr-mx.google.com with ESMTPS id ge7si1028100igb.0.2012.11.12.22.08.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 12 Nov 2012 22:08:42 -0800 (PST)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted sender) client-ip=75.15.5.89;
-Received: (qmail 20218 invoked by uid 107); 13 Nov 2012 06:09:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Nov 2012 01:09:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Nov 2012 01:08:38 -0500
-In-Reply-To: <7vwqxqf6li.fsf@alter.siamese.dyndns.org>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of peff@peff.net designates 75.15.5.89 as permitted sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209579>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UQD/3JtPYhrgpei3qBT9OX207S0OnDQgjqDHFgMIARA=;
+        b=UB6pb+mdzGLt9qGQRk1O76/BrjbO54AQAhvyNiMsg8sWT8qkUEuGvdtWa3jNxCRfbn
+         vXI/R7PRNtno++ZUtRWGZt6NkvBDYU6bJl8w9UMfT2HYj7u5zwvWXhfoiBTla9yLtKqL
+         eVlTy3zXAmtes9sTrBxiHXwKF0QYAeEjGlia2UymCpHwPGR9qxq9BUX2g+bQfBr9WZPd
+         l85nvmWyM+sfk8Cy8bgeOoUo02KG3IO0SWROBDTvZLG5gFIVIg6l6HemraKbKo3AjAsq
+         lNcDKXOLXipfga/EGfvfEpqv2SOSkGkvJyDGLmZI7KYkhFrc9f8zvqVfV1R2oXWvbOyE
+         1d5g==
+Received: by 10.60.20.1 with SMTP id j1mr7478115oee.46.1352788978897; Mon, 12
+ Nov 2012 22:42:58 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Mon, 12 Nov 2012 22:42:58 -0800 (PST)
+In-Reply-To: <20121113040104.GA9361@sigill.intra.peff.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209580>
 
-On Mon, Nov 12, 2012 at 08:51:37PM -0800, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > Yeah. We tolerate a certain amount of skew (24 hours for --name-rev, and
-> > 5 broken commits in a row for --since). But the big ones are usually
-> > software bugs (the big kernel ones were from broken "guilt", I think) or
-> > broken imports (when I published a bunch of skew statistics last year,
-> > the interesting ones were all imports; I don't know if they were
-> > software bugs, or just garbage in, garbage out).
-> 
-> I was hoping that 2e6bdd3 (test-generation: compute generation
-> numbers and clock skews, 2012-09-04) may be a good first step to
-> come up with a practical and cheap solution on top of it.
+On Tue, Nov 13, 2012 at 5:01 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 13, 2012 at 04:55:25AM +0100, Felipe Contreras wrote:
 >
-> The traversal can be fooled by clock skews when it sees a commit
-> that has a timestamp that is older than it should, causing it to
-> give up, incorrectly thinking that there won't be newer commits that
-> it is interested in behind the problematic commit.
+>> > No, it's not. Those broken names do not come from the environment, but
+>> > from our last-resort guess of the hostname.
+>>
+>> That depends how you define environment, but fine, the point is that
+>> it happens.
+>
+> If you have a strawman definition that does not have anything to do with
+> what I said in my original email, then yes, it could happen.
 
-I wrote a similar skew-finding tool last year, though some of the
-numbers it came up with were different (I remember having many fewer
-skewed commits in the kernel repo).
+It happens, I've seen commits with (none) not that long ago.
 
-One problem is that it identifies commits which behave badly with
-certain algorithms, but it does not identify commits which are wrong.
-If I skew backwards, it will find my commit. But if I skew forwards, it
-will label my children as wrong.
+> But as I
+> said already, "git var" uses IDENT_STRICT and will not allow such broken
+> names.
 
-> The logic implemented by the change is to identify these problematic
-> commits, and we could record these commits with the value of the
-> timestamps they should have had (e.g. the timestamp of the newest
-> ancestor for each of these commits) in a notes tree.  Then the
-> traversal logic (commit-list-insert-by-date) could be updated use
-> that "corrected" timestamp instead not to be fooled by the clock
-> skew.
-> 
-> Such a notes tree can be built once and updated by only "appending",
-> as a commit will never acquire more ancestors in its parents chain
-> once it is made.
-> 
-> Is it too simplistic, or too costly?  In git.git we have three such
-> commits whose timestamp need to be corrected, while in the Linux
-> kernel there were 2.2k skewed commits when I counted them a few
-> months ago.
+Since 1.7.11, sure. But not everyone is using such a recent version of
+git, and people with fully qualified domains would still get unwanted
+behavior.
 
-This came up in the big generations discussion last summer, and I think
-I even implemented a proof of concept. I couldn't find the actual code,
-though but only that I got "pleasing performance results using a notes
-tree to store a list of commits with bogus timestamps":
+>> > We long ago switched to
+>> > printing the name as a warning when we have made such a guess (bb1ae3f),
+>> > then more recently started rejecting them outright (8c5b1ae).
+>>
+>> Right, but these would still happen:
+>>
+>> michael <michael@michael-laptop.michael.org>
+>
+> Did you read my email? I explicitly proposed that we would _not_ allow
+> send-email to use implicit email addresses constructed in that way.
 
-  http://article.gmane.org/gmane.comp.version-control.git/161101
+I'm not talking about git send-email, I'm talking about your comment
+'it has always been the case that you can use git without setting
+user.*', which has caused issues with wrong author/commmitter names in
+commits, and will probably continue to do so.
 
-It is a little wasteful in space if you have a lot of skewed commits
-(the notes tree stores a 160-bit hash pointing to a blob object storing
-a 32-bit integer).
+>> > But in the meantime you are causing a regression for anybody who expects
+>> > GIT_AUTHOR_NAME to override user.email when running git-send-email (and
+>> > you have taken away the prompt that they could have used to notice and
+>> > correct it).
+>>
+>> I think they can survive. If anybody like this exists.
+>
+> Sorry, but that is not how things work on this project. You do not get
+> to cause regressions because you are too lazy to implement the feature
+> _you_ want in a way that does not break other people.
 
-My personal preference at this point would be:
+That doesn't change the fact that they would survive, and the fact
+that those users don't actually exist.
 
-  1. introduce an auxiliary metadata file that would live alongside the
-     pack index and contain generation numbers
+But let's look at the current situation closely:
 
-  2. generate the metadata file during pack indexing.
+PERL5LIB=~/dev/git/perl ./git-send-email.perl --confirm=always -1
 
-  3. If we have a generation metadata file, but a particular object is
-     not in it, compute the generation; this should be quick because we
-     will hit a file with a stored generation eventually
+1) No information at all
 
-  4. If we do not have any generation metadata files, or if grafts or
-     replace objects are in use, do not use cutoffs in algorithms. Be
-     safe but slow.
+fatal: empty ident name (for <felipec@nysa.(none)>) not allowed
 
-On the other hand, just switching to doing a single traversal instead of
-one merge-base computation per tag already got rid of the really awful
-performance cases. Nobody has complained since that went in, so maybe
-nobody cares about shaving a few seconds per operation down to a few
-tens of milliseconds. The real win was shaving tens of seconds down to a
-few seconds.
+2) Full Name + full hostname
 
--Peff
+Who should the emails appear to be from? [Felipe Contreras
+<felipec@nysa.felipec.org>]
+
+That's right, ident doesn't fail, and that's not the mail address I
+specified, it's *implicit*.
+
+3) Full Name + EMAIL
+
+Who should the emails appear to be from? [Felipe Contreras
+<felipe.contreras@gmail.com>]
+
+4) config user
+
+Who should the emails appear to be from? [Felipe Contreras 2nd
+<felipe.contreras+2@gmail.com>]
+
+5) GIT_COMMITTER
+
+Who should the emails appear to be from? [Felipe Contreras 2nd
+<felipe.contreras+2@gmail.com>]
+
+Whoa, what happened there?
+
+Well:
+
+  $sender = $repoauthor || $repocommitter || '';
+  ($repoauthor) = Git::ident_person(@repo, 'author');
+  % ./git var GIT_AUTHOR_IDENT
+  Felipe Contreras 2nd <felipe.contreras+2@gmail.com> 1352783223 +0100
+
+That's right, AUTHOR_IDENT would fall back to the default email and full name.
+
+Hmm, I wonder...
+
+5.1) GIT_COMMITER without anything else
+
+fatal: empty ident name (for <felipec@nysa.(none)>) not allowed
+var GIT_AUTHOR_IDENT: command returned error: 128
+
+Why? Because:
+
+% PERL5LIB=~/dev/git/perl perl -e 'use Git; printf("%s\n",
+Git::ident_person(@repo, 'author'));'
+fatal: empty ident name (for <felipec@nysa.(none)>) not allowed
+
+($repoauthor) = Git::ident_person(@repo, 'author');
+($repocommitter) = Git::ident_person(@repo, 'committer');
+
+So $repoauthor || $repocommiter is pointless.
+
+6) GIT_AUTHOR
+
+Who should the emails appear to be from? [Felipe Contreras 4th
+<felipe.contreras+4@gmail.com>]
+
+What about after my change?
+
+6.1) GIT_AUTHOR without anything else
+
+fatal: empty ident name (for <felipec@nysa.(none)>) not allowed
+var GIT_COMMITTER_IDENT: command returned error: 128
+
+4) config user
+
+From: Felipe Contreras 2nd <felipe.contreras+2@gmail.com>
+
+5) GIT_COMMITTER
+
+From: Felipe Contreras 2nd <felipe.contreras+2@gmail.com>
+
+6) GIT_AUTHOR
+
+From: Felipe Contreras 2nd <felipe.contreras+2@gmail.com>
+
+And what about your proposed change?
+
+2) Full Name + full hostname
+
+./git var GIT_EXPLICIT_IDENT
+0
+
+6.1) GIT_AUTHOR without anything else
+
+Even if the previous problem was solved:
+
+export GIT_AUTHOR_NAME='Felipe Contreras 4th'; export
+GIT_AUTHOR_EMAIL='felipe.contreras+4@gmail.com'
+./git var GIT_EXPLICIT_IDENT
+0
+
+No explicit ident? This is most certainly not what the user would expect.
+
+And then:
+
+5.2) GIT_COMMITTER with Full Name and full hostname
+
+export GIT_COMMITTER_NAME='Felipe Contreras 3nd'; export
+GIT_COMMITTER_EMAIL='felipe.contreras+3@gmail.com'
+./git var GIT_EXPLICIT_IDENT
+1
+
+From: Felipe Contreras <felipec@nysa.felipec.org>
+
+It is explicit, yeah, but 'git send-email' would not be picking the
+committer, it would pick the author.
+
+> I tried to help you by pointing you in the right direction and even
+> providing a sample "git var" patch.
+
+Are you 100% sure that was the right direction?
+
+I think the right approach is more along these lines:
+
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -748,16 +748,11 @@ if (!$force) {
+        }
+ }
+
+-my $prompting = 0;
+ if (!defined $sender) {
+        $sender = $repoauthor || $repocommitter || '';
+-       $sender = ask("Who should the emails appear to be from? [$sender] ",
+-                     default => $sender,
+-                     valid_re => qr/\@.*\./, confirm_only => 1);
+-       print "Emails will be sent from: ", $sender, "\n";
+-       $prompting++;
+ }
+
++my $prompting = 0;
+ if (!@initial_to && !defined $to_cmd) {
+        my $to = ask("Who should the emails be sent to (if any)? ",
+                     default => "",
+diff --git a/ident.c b/ident.c
+index a4bf206..c73ba82 100644
+--- a/ident.c
++++ b/ident.c
+@@ -291,9 +291,9 @@ const char *fmt_ident(const char *name, const char *email,
+        }
+
+        if (strict && email == git_default_email.buf &&
+-           strstr(email, "(none)")) {
++               !(user_ident_explicitly_given & IDENT_MAIL_GIVEN)) {
+                fputs(env_hint, stderr);
+-               die("unable to auto-detect email address (got '%s')", email);
++               die("no explicit email address");
+        }
+
+        if (want_date) {
+
+With that we get:
+
+2) Full Name + full hostname
+
+fatal: no explicit email address
+
+3) Full Name + EMAIL
+
+From: Felipe Contreras <felipe.contreras@gmail.com>
+
+4) config user
+
+From: Felipe Contreras 2nd <felipe.contreras+2@gmail.com>
+
+5) GIT_COMMITTER
+
+From: Felipe Contreras 2nd <felipe.contreras+2@gmail.com>
+
+(as buggy as before)
+
+6) GIT_AUTHOR
+
+From: Felipe Contreras 4th <felipe.contreras+4@gmail.com>
+
+Not only will this fix 'git send-email', but it will also fix 'git
+commit' so that we don't end up with authors such as 'Felipe Contreras
+<felipec@nysa.felipec.org>' ever again.
+
+> But it is not my itch to scratch.
+
+Suit yourself, it's only git users that would get hurt. I can always
+use my own 'git send-email' (as I am doing right now).
+
+Cheers.
 
 -- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Felipe Contreras
