@@ -1,80 +1,110 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [regression] Newer gits cannot clone any remote repos
-Date: Tue, 13 Nov 2012 21:51:43 +0100
-Message-ID: <50A2B2DF.1080704@web.de>
-References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com> <50A2978D.6080805@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
+Date: Tue, 13 Nov 2012 13:20:18 -0800
+Message-ID: <7v4nktdwtp.fsf@alter.siamese.dyndns.org>
+References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Douglas Mencken <dougmencken@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Nov 13 21:52:02 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 22:20:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYNSi-0007mr-Fk
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 21:52:00 +0100
+	id 1TYNuO-00024A-5P
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 22:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755801Ab2KMUvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 15:51:47 -0500
-Received: from mout.web.de ([212.227.15.4]:51925 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755687Ab2KMUvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 15:51:46 -0500
-Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0MYw31-1TlJjf0sZX-00VdBm; Tue, 13 Nov 2012 21:51:44 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <50A2978D.6080805@ramsay1.demon.co.uk>
-X-Provags-ID: V02:K0:hx0EB6/1lYyUv1RyFrma+OiYQhFO+qYel1tUVeHu/KD
- 40E1g7elikObIYWz24QgPSM8CBAnaQcOSkJdptiDV7FN1+qibn
- thhxlHDUGTd3989yZZSbhOS4ts0a//v6ljqt0OdBCpTVwC+fUp
- 91sKCmuPfFhmZmw6ifQrJ0AYOjMLUP8C8F49glMVzomWF4Vlth
- 9cwWVsLjqUP1n6+ULj8Bg==
+	id S932154Ab2KMVUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2012 16:20:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43731 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932073Ab2KMVUV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 16:20:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14448A427;
+	Tue, 13 Nov 2012 16:20:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=ps8vU2f4O/4DCr41KXSWXSFRf24=; b=LaWS3CO71OnqAlHWVqTp
+	Bg8IuzD33mXbb5yj68TImv/vbqRhE93L03vfrImWfStHKrLaLU1WOUCK0H0UrWUq
+	6o12mHShB1il/zAuHmV/5TsT9pH3DGJwl8jYMM/EJ9wf9YrDbMljcU6MrEErRgVl
+	M4z/UNhx6PlTnw8jzW3CPew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=eD2OpGV/vzGt51DLNVA2Z8Ry4FKOqYarFdFGOdD2Bngd//
+	AML69eYl6jQU5tHn7l6o6dkixJMzbganNuWUGlQSxOPagRDnaMMl9s/o6rpO4eSa
+	wNCbkpn45v6dZRH1sOUcN4VjQpRAK3wxn1vVbYi5AXVNXvadFQQ2nAmkPs+6M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F40C1A426;
+	Tue, 13 Nov 2012 16:20:20 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47F06A425; Tue, 13 Nov 2012
+ 16:20:20 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EDAD879E-2DD7-11E2-8CF4-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209675>
 
-On 13.11.12 19:55, Ramsay Jones wrote:
-> Douglas Mencken wrote:
->> *Any* git clone fails with:
->>
->> fatal: premature end of pack file, 106 bytes missing
->> fatal: index-pack failed
->>
->> At first, I tried 1.8.0, and it failed. Then I tried to build 1.7.10.5
->> then, and it worked. Then I tried 1.7.12.2, but it fails the same way
->> as 1.8.0.
->> So I decided to git bisect.
->>
->> b8a2486f1524947f232f657e9f2ebf44e3e7a243 is the first bad commit
->> ``index-pack: support multithreaded delta resolving''
-> 
-> This looks like the same problem I had on cygwin, which lead to
-> commit c0f86547c ("index-pack: Disable threading on cygwin", 26-06-2012).
-> 
-> I didn't notice which platform you are on, but maybe you also have a
-> thread-unsafe pread()? Could you try re-building git with the
-> NO_THREAD_SAFE_PREAD build variable set?
-> 
-> HTH.
-> 
-> ATB,
-> Ramsay Jones
+Chris Rorvick <chris@rorvick.com> writes:
 
-This is interesting.
-I had the same problem on a PowerPC 
-(Old PowerBook G4 running Linux).
+> Minor changes since from v2 set.  Reposting primarily because I mucked
+> up the Cc: list (again) and hoping to route feedback to the appropriate
+> audience.
+>
+> This patch set can be divided into two sets:
+>
+>   1. Provide useful advice for rejected tag references.
+>
+>      push: return reject reasons via a mask
+>      push: add advice for rejected tag reference
+>
+>      Recommending a merge to resolve a rejected tag update seems
+>      nonsensical since the tag does not come along for the ride.  These
+>      patches change the advice for rejected tags to suggest using
+>      "push -f".
 
-Using NO_THREAD_SAFE_PREAD helped, thanks for the hint.
-(After recompiling without NO_THREAD_SAFE_PREAD I could clone
-from this machine again, so the problem is not really reproducable)
+Below, I take that you mean by "tag reference" everything under
+refs/tags/ (not limited to "annotated tag objects", but also
+lightweight tags).
 
-Are there more people running PowerPC (on the server side) ?
-/Torsten
+Given that the second point below is to strongly discourage updating
+of existing any tag, it might be even better to advise *not* to push
+tags in the first place, instead of destructive "push -f", no?
 
- 
+>   2. Require force when updating tag references, even on a fast-forward.
+>
+>      push: flag updates
+>      push: flag updates that require force
+>      push: update remote tags only with force
+>
+>      An email thread initiated by Angelo Borsotti did not come to a
+>      consensus on how push should behave with regard to tag references.
+
+I think the original motivation of allowing fast-forward updates to
+tags was for people who wanted to have "today's recommended version"
+tag that can float from day to day. I tend to think that was a
+misguided notion and it is better implemented with a tip of a
+branch (iow, I personally am OK with the change to forbid tag
+updates altogether, without --force).
+
+>      I think a key point is that you currently cannot be sure your push
+>      will not clobber a tag (lightweight or not) in the remote.
+
+"Do not update, only add new" may be a good feature, but at the same
+time I have this suspicion that its usefulness may not necessarily
+be limited to refs/tags/* hierarchy.
+
+I dunno.
