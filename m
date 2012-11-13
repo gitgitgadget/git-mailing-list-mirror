@@ -1,84 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Notes in format-patch
-Date: Tue, 13 Nov 2012 08:29:53 -0800
-Message-ID: <7vhaotfou6.fsf@alter.siamese.dyndns.org>
-References: <50A0B896.8050700@drmicha.warpmail.net>
- <a35a8f44b908bded0b475b02e7917011fb3bf90b.1352728712.git.git@drmicha.warpmail.net> <50A2213B.4060505@drmicha.warpmail.net>
+Subject: Re: Commit message problem of reverting multiple commits
+Date: Tue, 13 Nov 2012 08:34:49 -0800
+Message-ID: <7vd2zhfoly.fsf@alter.siamese.dyndns.org>
+References: <CAHtLG6Qn68TFVnd_8LSf6OMqHZduAFgk0Hd46E3vKgFHCjpksQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 17:30:14 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 17:35:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYJNK-00030h-Rd
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 17:30:11 +0100
+	id 1TYJS7-0005pD-4X
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Nov 2012 17:35:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540Ab2KMQ35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 11:29:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55029 "EHLO
+	id S1755181Ab2KMQex convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 11:34:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57954 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752108Ab2KMQ34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 11:29:56 -0500
+	id S1754765Ab2KMQew convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Nov 2012 11:34:52 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C027EA681;
-	Tue, 13 Nov 2012 11:29:55 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1438FA858;
+	Tue, 13 Nov 2012 11:34:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ciQAaYfJp+Sf0Cq8bfPkEvSMR+E=; b=Nkt8a1
-	T5EBJusjJsVnEmar+PRChSCbmU7zp8fdY7o5MZd56/Kel6YhzaOFvYn9hmiITCCZ
-	0dCfmFCspT7PqMMghC6pzUQADgEXAIpBcukEe+fzePo7+GbOec6JcxnYkRojo+4E
-	szNYkPe6llC53atkQfwXlPfE9D9gd6nOm9LwE=
+	:content-type:content-transfer-encoding; s=sasl; bh=KMrL4JIhYghP
+	M69b1hp3DhnoErI=; b=OtKAWg5EMQlzkZJXbDtNhQQOgd5HQjpSav48xZHpBulz
+	oBbM2O0VkdqEvCgI/wqq3knA6GO1V/K7JEEovZgzHNJ1/mORMvijV6GEzTOarFHF
+	E8P0UMzfhAy33yTPB3Pi92hbYGE6L9UVR9aR2s16n/quc7pD517B+qZmShFB+is=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y8DGSqqLlkLMn5IpsS1CBnQ0/bYl4chg
-	gGldWwGnJQzKcnBcFauz+7yvC+zMaPAFSPGHHaum//8oHxWIIFBQnbs9DucoBRYo
-	+e7oSxBPZIOObQZVvJX+Jm1dK8JKJMlu/sVVoWRoBZ2D8lVreMEbMvPdGhHRkMee
-	yZEfzOmZDno=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=VjU0SF
+	iqnLl09NGal2wXKdT8Seli4BhYsS9++Nl9FBnnej1jfh3C1DA9hq4O4IeAzgRxab
+	PMA95fCGvCoEsZeUxV+Dz0NUYZl4Ucexoi1VgWCRVKmKcHoTfb4XySKtAhMXwsZS
+	/RNrCG2yvU4SD0WZKFFtPRjioYkb0nFlzdq0o=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACC61A67F;
-	Tue, 13 Nov 2012 11:29:55 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 000FCA856;
+	Tue, 13 Nov 2012 11:34:51 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FD46A67C; Tue, 13 Nov 2012
- 11:29:54 -0500 (EST)
-In-Reply-To: <50A2213B.4060505@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Tue, 13 Nov 2012 11:30:19 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 551FCA854; Tue, 13 Nov 2012
+ 11:34:51 -0500 (EST)
+In-Reply-To: <CAHtLG6Qn68TFVnd_8LSf6OMqHZduAFgk0Hd46E3vKgFHCjpksQ@mail.gmail.com>
+ (=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Tue, 13 Nov 2012 23:15:59
+ +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B69EBCA-2DAF-11E2-85A8-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0C032514-2DB0-11E2-912A-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209630>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+=E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
 
-> Michael J Gruber venit, vidit, dixit 12.11.2012 15:18:
->> 'git replace' parses the revision arguments when it creates replacements
->> (so that a sha1 can be abbreviated, e.g.) but not when deleting
->> replacements.
->> 
->> Make it parse the argument to 'replace -d' in the same way.
->> 
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->> 
->> Notes:
->>     v3 safeguards the hex buffer against reuse
->>  builtin/replace.c  | 16 ++++++++++------
->>  t/t6050-replace.sh | 11 +++++++++++
->>  2 files changed, 21 insertions(+), 6 deletions(-)
->> 
->> diff --git a/builtin/replace.c b/builtin/replace.c
+> I ran git 1.8.0 command line
 >
-> By the way - Junio, is that the intented outcome of "format-patch
-> --notes"? I would rather put the newline between the note and the
-> diffstat...
+> git revert --no-commit rev1 rev2
+>
+> I see a prepared commit message like
+>
+> Revert "<description from one commit>"
+> This reverts commit <SHA1 of one commit>.
+>
+>
+> The actual revert content is correct - it is all the relevant commits
+> that were selected. I expect the message to reflect this:
+>
+> Revert "<description from commit1>", "<description from commit2>"
+> This reverts commits <SHA1 of commit1>, <SHA1 of commit2>.
 
-I do not mind (actually I personally would prefer to see) a blank
-line between the three-dash and "Notes:", but I agree that we should
-have a blank line before the diffstat block.
+Hrmph.  I actually think the revert-content is not correct.
+
+I think the command should not take more than one commit on the
+command line when --no-commit is in use in the first place (the same
+thing can be said for cherry-pick).  After all, "git revert rev1
+rev2" is to revert rev1 and then rev2 independently, so unless that
+option is spelled "--squash", the resulting history should have two
+commits that reverts rev1 and rev2 independently.
