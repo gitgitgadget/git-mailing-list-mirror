@@ -1,65 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/6] ident: make user_ident_explicitly_given private
-Date: Wed, 14 Nov 2012 11:11:05 -0800
-Message-ID: <20121114191104.GB3860@sigill.intra.peff.net>
-References: <20121113164845.GD20361@sigill.intra.peff.net>
- <20121113164931.GA12626@sigill.intra.peff.net>
- <20121114164457.GA6858@elie.Belkin>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCHv3 3/4] git-status: show short sequencer state
+Date: Wed, 14 Nov 2012 14:14:18 -0500
+Message-ID: <50A3ED8A.9080604@cisco.com>
+References: <1351553513-20385-1-git-send-email-hordp@cisco.com> <1352487385-5929-1-git-send-email-hordp@cisco.com> <1352487385-5929-4-git-send-email-hordp@cisco.com> <7vip9aiuk8.fsf@alter.siamese.dyndns.org> <50A13C9A.8070108@cisco.com> <50A2DCD7.4050909@cisco.com> <7vy5i4b9d8.fsf@alter.siamese.dyndns.org> <50A3A040.7040304@cisco.com> <7vfw4caxkh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 20:11:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, phil.hord@gmail.com,
+	Jeff King <peff@peff.net>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 20:14:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYiMu-0006dk-29
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 20:11:24 +0100
+	id 1TYiQI-0001L9-BB
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 20:14:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423254Ab2KNTLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 14:11:09 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48552 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161019Ab2KNTLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 14:11:08 -0500
-Received: (qmail 5522 invoked by uid 107); 14 Nov 2012 19:11:56 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 14:11:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 11:11:05 -0800
-Content-Disposition: inline
-In-Reply-To: <20121114164457.GA6858@elie.Belkin>
+	id S1423274Ab2KNTOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 14:14:22 -0500
+Received: from rcdn-iport-3.cisco.com ([173.37.86.74]:33998 "EHLO
+	rcdn-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423253Ab2KNTOT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 14:14:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2211; q=dns/txt; s=iport;
+  t=1352920459; x=1354130059;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=u2KRzaM4imZ+BNZ1K0t3AGkc/KFskCCfXRhOh2RsLsE=;
+  b=Dbe7I8e6EWEQYdX8c9Dm+aAMUtD0y81LZO/Rc3xBstpBmQs2bTihv5Yg
+   2xTB651pLwylWih2KOXOuJL8JsWDgN0PGBBJUgYV4VRAqX+f26/mpOPBr
+   yxx1ChHH7XMp+ltrTBQ8OL5YB/lR8zdW21qV0a5LB33tB6wiSb7kBiglK
+   A=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av8EAKvso1CtJXG+/2dsb2JhbABEwziBCIIeAQEBAwESAWUBEAsYCRYPCQMCAQIBRQYNAQUCAQEeh2IGmyegE5JZA4hajSKFa4htgWuDDQ
+X-IronPort-AV: E=McAfee;i="5400,1158,6896"; a="142445147"
+Received: from rcdn-core2-3.cisco.com ([173.37.113.190])
+  by rcdn-iport-3.cisco.com with ESMTP; 14 Nov 2012 19:14:18 +0000
+Received: from [64.100.104.138] (dhcp-64-100-104-138.cisco.com [64.100.104.138])
+	by rcdn-core2-3.cisco.com (8.14.5/8.14.5) with ESMTP id qAEJEIeG031683;
+	Wed, 14 Nov 2012 19:14:18 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+In-Reply-To: <7vfw4caxkh.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.5
+X-TagToolbar-Keys: D20121114141418141
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209741>
 
-On Wed, Nov 14, 2012 at 08:44:57AM -0800, Jonathan Nieder wrote:
 
-> > -#define IDENT_NAME_GIVEN 01
-> > -#define IDENT_MAIL_GIVEN 02
-> > -#define IDENT_ALL_GIVEN (IDENT_NAME_GIVEN|IDENT_MAIL_GIVEN)
-> > -extern int user_ident_explicitly_given;
-> >  extern int user_ident_sufficiently_given(void);
-> 
-> In v1.5.6-rc0~56^2 (2008-05-04) "user_ident_explicitly_given" was
-> introduced as a global for communication between config, ident, and
-> builtin-commit.  In v1.7.0-rc0~72^2 (2010-01-07) readers switched to
-> using the common wrapper user_ident_sufficiently_given().  After
-> v1.7.11-rc1~15^2~18 (2012-05-21) the var is only written in ident.c,
-> and the variable can finally be made static.
+Junio C Hamano wrote:
+> Phil Hord <hordp@cisco.com> writes:
+>
+>> Consider the usage:
+>>
+>>   git status   # show work-tree status
+>>   git status --short  # show short work-tree status
+>>   git status --tokens  # show work-tree status in token form
+> OK, your --tokens is more about *how* things are output, but it is
+> unclear how it would interact with --short.  I had an impression
+> that you are basing your output on the short output, whose existing
+> record include "##" (that shows the branch names and states), and
+> "MM", "A " and friends (that show the per-file states), by adding
+> new record types that shows tree-wide states.
 
-Thanks for digging up the history. I remembered trying to do this before
-during the ident refactoring that went into v1.7.11, but it didn't work
-then for some reason (I think it was probably an earlier iteration of
-the series, and then I forgot to revisit it during the final one).
+I am, but I don't much care for the "##" prefix, especially when
+combined with --null, for example.  I'm inclined to remove it when
+--short is not provided, specifically to give scripts an easier time of
+parsing.  But scripts are likely to need "--porcelain" as well, and
+currently that implies "--short".  But I suppose another combination
+could be meaningful.
 
-I'll add your explanation to the commit message if I re-roll.
+  # tokens only
+  $ git status --tree
+  changed-files
 
--Peff
+  # tokens and short-status
+  $ git status --tree --short  
+  ## changed-files
+   M foo.txt
+
+  # short-status only
+  $ git status --porcelain
+   M foo.txt
+
+  # tokens only?
+  $ git status --tree --porcelain
+  changed-files
+
+I think this spaghettify's the ui too much.  Maybe this instead:
+
+  # undecorated tokens only
+  $ git status --tree=porcelain
+  changed-files
+
+
+>
+>> But maybe "--tokens" has some better meaning that someone will want to
+>> use in the future.  I'm not married to it.  But "git status" already
+>> means "Show the working tree status".  So "git status --show-tree-state"
+>> sounds redundant or meaningless.
+> I didn't mean to say that you have to spell out all these words;
+> "show" and "state" are redundant.
+>
+> The important part is that unlike the existing "per-file" state the
+> "status" command is showing, the option is to add "tree-wide" state
+> to the output, and my suggestion was to pick a word that makes it
+> clear, rather than using "output is done using tokens" without
+> saying "what is being output in tokenized form".
+
+Thanks for clarifying. 
+
+Phil
