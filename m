@@ -1,71 +1,72 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [regression] Newer gits cannot clone any remote repos
-Date: Thu, 15 Nov 2012 00:15:03 +0100
-Message-ID: <m28va3epzc.fsf@igel.home>
-References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
-	<50A2978D.6080805@ramsay1.demon.co.uk> <50A2B2DF.1080704@web.de>
-	<m2pq3h9ll1.fsf@igel.home>
-	<CACYvZ7jwjVsW4=QSbxFVL8N269DE4=tv8_WvZ0gVOw6B+WLP=w@mail.gmail.com>
-	<mvmvcd8f8ml.fsf@g208.suse.de>
-	<CACYvZ7g7nCgQmcnwJYxvx5hJ+Y8rCQOBQyWYLZOt8NT5BTwTrw@mail.gmail.com>
+From: Javier Domingo <javierdo1@gmail.com>
+Subject: Fwd: Local clones aka forks disk size optimization
+Date: Thu, 15 Nov 2012 00:42:00 +0100
+Message-ID: <CALZVapmO61d8yXfXXGx6Qc444ka+8n7HabuNRt0rJdE5qy_7aQ@mail.gmail.com>
+References: <CALZVapmG+HL0SQx8zx=Cfz5pWv84hJq90x-7VdjA0m2Z4dC34A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-To: Douglas Mencken <dougmencken@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 00:15:29 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 00:42:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYmB4-0005O4-2n
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 00:15:26 +0100
+	id 1TYmbM-00082R-Me
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 00:42:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945934Ab2KNXPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 18:15:10 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:46418 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945923Ab2KNXPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 18:15:09 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3Y21kx26wnz4KK74;
-	Thu, 15 Nov 2012 00:15:05 +0100 (CET)
-X-Auth-Info: EQL03PddJRER2Gbes1Txz5LppEgeReeQF+OkFcBssLk=
-Received: from igel.home (ppp-93-104-155-125.dynamic.mnet-online.de [93.104.155.125])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3Y21kx1PvpzbcZJ;
-	Thu, 15 Nov 2012 00:15:05 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id D7E69CA2A4; Thu, 15 Nov 2012 00:15:04 +0100 (CET)
-X-Yow: I am KING BOMBA of Sicily!..I will marry LUCILLE BALL next Friday!
-In-Reply-To: <CACYvZ7g7nCgQmcnwJYxvx5hJ+Y8rCQOBQyWYLZOt8NT5BTwTrw@mail.gmail.com>
-	(Douglas Mencken's message of "Wed, 14 Nov 2012 13:01:01 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S2992454Ab2KNXmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 18:42:22 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:64954 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754409Ab2KNXmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 18:42:21 -0500
+Received: by mail-vc0-f174.google.com with SMTP id fk26so1082063vcb.19
+        for <git@vger.kernel.org>; Wed, 14 Nov 2012 15:42:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=GK1og+T0EzH1faLfJsTyMK2z+4A1O7btruYAwqi68Pk=;
+        b=E0su1+JGbhzMk4zodGglEtezcoqjUSX5FHAtVW/6zHCja8ZxmjuhriJSotKtKGB+yr
+         fhWaKSD6F75G2xwFykRQbiTOFk4cSsScWKjjZaeYMLmG5h28bfdi2LW2eIW4oSHGfLwZ
+         +IYAaSQtPE65615gipn2RZ1lcKDFz0dhhPG28H3shu4LVpksmf/GtgIXS/4tXmpwzQFQ
+         o/M8ymr950QRVEUweUnfj3jxqM7SqUqzJdkrSQZ6hTmtEsQQLodk8J0CjCI6hCmo+DC7
+         sygsvTYl/Z/Nge+yVA+eX7XV0JIKvKfqXCUwXAfp66EzIiDuqxANDSYnEObldTZUqWNB
+         TljA==
+Received: by 10.52.71.44 with SMTP id r12mr4061191vdu.41.1352936540528; Wed,
+ 14 Nov 2012 15:42:20 -0800 (PST)
+Received: by 10.58.33.200 with HTTP; Wed, 14 Nov 2012 15:42:00 -0800 (PST)
+In-Reply-To: <CALZVapmG+HL0SQx8zx=Cfz5pWv84hJq90x-7VdjA0m2Z4dC34A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209758>
 
-Douglas Mencken <dougmencken@gmail.com> writes:
+Hi,
 
->>>> I cannot reproduce the problem (on openSUSE 12.2).
->>>
->>> You do need multiple CPU/multi-core machine, as I got it.
->>
->> Which is what I have.
->
-> Then try to build *vanilla* git 1.8.0,
+I have come up with this while doing some local forks for work.
+Currently, when you clone a repo using a path (not file:/// protocol)
+you get all the common objects linked.
 
-Which is what I did.
+But as you work, each one will continue growing on its way, although
+they may have common objects.
 
-> not OpenSuSE's one (with a lot of patches inside srcrpm).
+Is there any way to avoid this? I mean, can something be done in git,
+that it checks for (when pulling) the same objects in the other forks?
 
-Which lot of patches?
+Thought this doesn't make much sense in clients, when you have to
+maintain 20 forks of very big projects in server side, it eats
+precious disk space.
 
-Andreas.
+I don't know how if this should have [RFC] in the subject or what. But
+here is my idea.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+As hardlinking is already done by git, if it checked for how many
+links there are for its files, it would be able to find other dirs
+where to search. The easier way is checking for the most ancient pack.
+
+Hope you like this idea,
+
+Javier Domingo
