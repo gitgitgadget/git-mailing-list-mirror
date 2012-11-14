@@ -1,96 +1,62 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
-Date: Wed, 14 Nov 2012 09:19:21 +0100
-Message-ID: <20121114081921.GA20876@camk.edu.pl>
-References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
- <7v4nktdwtp.fsf@alter.siamese.dyndns.org>
- <CAEUsAPYvrR6WsVWCvwoEWA21gzL6Sib0sTyx-c_2tH=8ni69yQ@mail.gmail.com>
- <CAEUsAPZtF-L5J_g1L5d44BKveoAnJ81PatX94fFS4FM=iW33KA@mail.gmail.com>
+From: Martin Lichtin <lichtin@yahoo.com>
+Subject: Git does not understand absolute Win'dos' path
+Date: Wed, 14 Nov 2012 01:12:09 -0800 (PST)
+Message-ID: <1352884329.28981.YahooMailNeo@web162504.mail.bf1.yahoo.com>
+Reply-To: Martin Lichtin <lichtin@yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 09:19:47 2012
+Content-Type: text/plain; charset=us-ascii
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 14 10:12:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYYCI-0002x3-1E
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 09:19:46 +0100
+	id 1TYZ1J-0003Bj-1c
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 10:12:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932432Ab2KNITc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 03:19:32 -0500
-Received: from moat.camk.edu.pl ([148.81.175.50]:54431 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755450Ab2KNITb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 03:19:31 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 043E65F004A;
-	Wed, 14 Nov 2012 09:18:46 +0100 (CET)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id lpJipgCo8A0v; Wed, 14 Nov 2012 09:18:38 +0100 (CET)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 0DC515F0049;
-	Wed, 14 Nov 2012 09:18:38 +0100 (CET)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id B402443CFD; Wed, 14 Nov 2012 09:19:21 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CAEUsAPZtF-L5J_g1L5d44BKveoAnJ81PatX94fFS4FM=iW33KA@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932144Ab2KNJMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 04:12:13 -0500
+Received: from nm30-vm0.bullet.mail.bf1.yahoo.com ([98.139.213.126]:23184 "EHLO
+	nm30-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753514Ab2KNJML (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2012 04:12:11 -0500
+Received: from [98.139.215.142] by nm30.bullet.mail.bf1.yahoo.com with NNFMP; 14 Nov 2012 09:12:10 -0000
+Received: from [98.139.212.221] by tm13.bullet.mail.bf1.yahoo.com with NNFMP; 14 Nov 2012 09:12:10 -0000
+Received: from [127.0.0.1] by omp1030.mail.bf1.yahoo.com with NNFMP; 14 Nov 2012 09:12:10 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 59827.53482.bm@omp1030.mail.bf1.yahoo.com
+Received: (qmail 52092 invoked by uid 60001); 14 Nov 2012 09:12:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1352884329; bh=sDW6+I7zSKXu5vJ+lr+oFD2xYQwPrbOSxLF4HXcybSU=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type; b=rHMgV5abGLLsj5c1lXN5li2w4sVTpkeGSfEQmCn5Xilq6PChwKC5QeLcV/tiAxWkHcqS4OYj0lZB2i6hAJZkK8DYys7Clo6s6JzUBxDjlUzSkWS/VrjGtIQVPnIsUnEYO5c/Y4oQCd2ImGnz1lQ7VGuy/LWRpIRB0qydPVKDgTA=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type;
+  b=S1D6dCmA+kPQC2CZDXiXuGTndUHpvJjWSPgnxM4UE2Az2cYfIJ0dH5xenmJHwDBZcOWw94CF+AwBJQQUzSA1MGhl2EssI3Po16/dnuSJJ+DJFx+lTVAN+YCx1IJq6Sz+hZ1sOYU6EdfiUYDhLCywaAwYKfGskfuMD2vtVePJkb8=;
+X-YMail-OSG: 2bSN1h4VM1nxxz8wX91zKqIRSAxjMdjbSOUeDb2jw2Os4YU
+ KyF6YK9jYM2DiFfBmcJSdThevw_vs8eNabyJ05kB4AAiIH_uOqfvijWpvggi
+ xVzCTjIIWpj4cXkFdG4.BG8SyinxhqQQnYqGQITjtrX2WkQiSRkEAUYByv3R
+ 30c2B6_scXlA29ynjLIaaOyTxJOngamzXNVyFMBQSgbubYKC6AMBQWty7R2N
+ ioU1ldlKkFUYUPkwvbwMtTZc7hE6S9Bs8yM1lRZ02pT3MmKhO7KsQqVO1IEd
+ jcYT1sT4qhoFWbmeQpv4s_PePi.1QJYLZcqRSsDcfM9dqHurc5e9tp.wZ1Fk
+ UUlBT217AZEHkMaKsaN_kASaebWOfc58PhMvnK9.6nXg.2Bbpccg2ui9qRxf
+ FZ0z5qApGmT_IRywh9WTJgzggZSoGf1tAGFlakMJSgdDP6AQetP26Mb_WFy7
+ OlsBFy68VyRjm3KaRaFX0XxgQ46aX0eOd1I_N3tC4
+Received: from [193.73.134.253] by web162504.mail.bf1.yahoo.com via HTTP; Wed, 14 Nov 2012 01:12:09 PST
+X-Rocket-MIMEInfo: 001.001,SGkKCk1hdmVuJ3MgcmVsZWFzZSBwbHVnaW4gcHJlcGFyZXMgYSBjYWxsIEdpdCBsaWtlIGluIHRoaXMgZXhhbXBsZToKCmNtZC5leGUgL1ggL0MgImdpdCBjb21taXQgLS12ZXJib3NlIC1GIEM6XGN5Z3dpblx0bXBcbWF2ZW4tc2NtLTkxNTc3MTAyMC5jb21taXQgcG9tLnhtbCIKCkdpdCBkb2Vzbid0IHNlZW0gdG8gdW5kZXJzdGFuZCB0aGUgLUYgYXJndW1lbnQgYW5kIHRyZWF0cyBpdCBsaWtlIGEgcmVsYXRpdmUgcGF0aCAocmVsYXRpdmUgdG8gdGhlIHJlcG9zaXRvcnkgcm9vdCk6CgokIGNtZC5leGUgL1gBMAEBAQE-
+X-Mailer: YahooMailWebService/0.8.123.460
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209705>
 
-On Wed, Nov 14, 2012 at 12:29:14AM -0600, Chris Rorvick wrote:
+Hi
 
-> >>   2. Require force when updating tag references, even on a fast-forward.
+Maven's release plugin prepares a call Git like in this example:
 
-> >>      push: flag updates
-> >>      push: flag updates that require force
-> >>      push: update remote tags only with force
+cmd.exe /X /C "git commit --verbose -F C:\cygwin\tmp\maven-scm-915771020.commit pom.xml"
 
-> >>      An email thread initiated by Angelo Borsotti did not come to a
-> >>      consensus on how push should behave with regard to tag references.
+Git doesn't seem to understand the -F argument and treats it like a relative path (relative to the repository root):
 
-> > I think the original motivation of allowing fast-forward updates to
-> > tags was for people who wanted to have "today's recommended version"
-> > tag that can float from day to day. I tend to think that was a
-> > misguided notion and it is better implemented with a tip of a
-> > branch (iow, I personally am OK with the change to forbid tag
-> > updates altogether, without --force).
-
-> >>      I think a key point is that you currently cannot be sure your push
-> >>      will not clobber a tag (lightweight or not) in the remote.
-
-> > "Do not update, only add new" may be a good feature, but at the same
-> > time I have this suspicion that its usefulness may not necessarily
-> > be limited to refs/tags/* hierarchy.
-
-> > I dunno.
-
-> Are you suggesting allowing forwards for just refs/heads/*?  I
-> initially went this route based on some feedback in the original
-> thread, but being that specific broke a couple tests in t5516 (i.e.,
-> pushing to refs/remotes/origin/master and another into refs/tmp/*.)
-> My initial thought was that I'd broken something and I need to modify
-> the patch, but now I think I should just modify those tests.  Branches
-> are restricted to refs/heads/* (if I understand correctly), so
-> allowing fast-forwards when pushing should be limited to this
-> hierarchy, too.
-
-What about notes? I think they should be treated in the same way as
-branches. My impression is that tags are exceptional in this respect.
-
--- 
-  Kacper
+$ cmd.exe /X /C "git commit --verbose -F C:\cygwin\tmp\commit pom.xml"
+fatal: could not read log file 'mytestdir/C:\cygwin\tmp\commit': No such file or directory
