@@ -1,103 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
-Date: Wed, 14 Nov 2012 09:32:40 -0800
-Message-ID: <7vmwykay4n.fsf@alter.siamese.dyndns.org>
-References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
- <7v4nktdwtp.fsf@alter.siamese.dyndns.org>
- <CAEUsAPYvrR6WsVWCvwoEWA21gzL6Sib0sTyx-c_2tH=8ni69yQ@mail.gmail.com>
- <CAEUsAPZtF-L5J_g1L5d44BKveoAnJ81PatX94fFS4FM=iW33KA@mail.gmail.com>
- <7v390ccoak.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9DAwaLw2bTqj5x_zxRcFqn7s=nmGi=Jc_SD38vFoszBZg@mail.gmail.com>
+Subject: Re: [PATCHv3 3/4] git-status: show short sequencer state
+Date: Wed, 14 Nov 2012 09:44:46 -0800
+Message-ID: <7vfw4caxkh.fsf@alter.siamese.dyndns.org>
+References: <1351553513-20385-1-git-send-email-hordp@cisco.com>
+ <1352487385-5929-1-git-send-email-hordp@cisco.com>
+ <1352487385-5929-4-git-send-email-hordp@cisco.com>
+ <7vip9aiuk8.fsf@alter.siamese.dyndns.org> <50A13C9A.8070108@cisco.com>
+ <50A2DCD7.4050909@cisco.com> <7vy5i4b9d8.fsf@alter.siamese.dyndns.org>
+ <50A3A040.7040304@cisco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chris Rorvick <chris@rorvick.com>, git <git@vger.kernel.org>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 18:33:03 2012
+Cc: git@vger.kernel.org, phil.hord@gmail.com,
+	Jeff King <peff@peff.net>, konglu@minatec.inpg.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 18:45:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYgpd-0007ME-PD
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 18:32:58 +0100
+	id 1TYh1M-0008BV-6e
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 18:45:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933017Ab2KNRco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 12:32:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38435 "EHLO
+	id S1423117Ab2KNRou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 12:44:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46379 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932978Ab2KNRcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 12:32:43 -0500
+	id S1423096Ab2KNRot (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 12:44:49 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D21A9F14;
-	Wed, 14 Nov 2012 12:32:42 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23A0DA331;
+	Wed, 14 Nov 2012 12:44:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LNTQGZWLN3T6nl9rqSuKH+PxdZ0=; b=BwMaP8
-	udJX5bTGULkcJoaNQclMEWVYAp+Py07IKZ0UeDgK/4kE5Ibb52VfU44mWGsAuhIW
-	ZtAJbsRDFwDg7ZN+tfgfJrgdz7/Z3Ex1nGmSsSuy0ySuP8GZo37sshKVfAkR8KGF
-	MBvjDV85BumP2rw6BuKnjv9yrmv7u/K9RRnhs=
+	:content-type; s=sasl; bh=QqLnmJT7++7vWHp/gG0EQPnhiUk=; b=whlTS9
+	5WLAoEUhZV/D+CAn3n+ax4qNqYMqu/eb3qZdv2XbMXmpW3AYx83EjJwcZxvMW1Xb
+	TSPnxXrqPhCfZ1RZZLJ+6aE1PqjDvz3fpo3edpunZFqHSZqyU9OWyy7q09kolG8A
+	iYiOr9Kq5drzYNqf0cFZUz+Vg7Owpo6Jesv3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aTdG5Y7mCwYWReoI38pUWN+0SSbWh1j2
-	SUHNrBsv0lCQ/l8uB326HCUs3r4odQS1surwIbf7gmQakTH7EGBTBNkbgETBREGU
-	1FCVkCyMMCAyTiqoSof+AqToWTJIunP7e1xNQJ6zsi2yspqxIIfxoh+TtlZVopPH
-	oGyXs0amUUc=
+	:content-type; q=dns; s=sasl; b=VC5WU+LdXio806mBJGZWpABBMYECd22a
+	nRtPFVinPuxC5vPiEXBmw/O5nEkuDzbjSc+4aPoYhDPMRjC4e0XQktVMQg3beAz8
+	6tXs8hk3Rvc9vrFigWGBjasV3arIQhPvrut82U1WfAwBu5JXWADyFUiPt3J0BA6C
+	2NjTJIN8XFk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A1FD9F13;
-	Wed, 14 Nov 2012 12:32:42 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 117DBA330;
+	Wed, 14 Nov 2012 12:44:49 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D92BE9F0D; Wed, 14 Nov 2012
- 12:32:41 -0500 (EST)
-In-Reply-To: <CAB9Jk9DAwaLw2bTqj5x_zxRcFqn7s=nmGi=Jc_SD38vFoszBZg@mail.gmail.com> (Angelo
- Borsotti's message of "Wed, 14 Nov 2012 15:58:54 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72657A32D; Wed, 14 Nov 2012
+ 12:44:48 -0500 (EST)
+In-Reply-To: <50A3A040.7040304@cisco.com> (Phil Hord's message of "Wed, 14
+ Nov 2012 08:44:32 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B0B5CFA-2E81-11E2-B729-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FC1E1AF4-2E82-11E2-9B4D-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209733>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+Phil Hord <hordp@cisco.com> writes:
 
-> actually, I proposed to add a key in config files, e.g.
-> pushTagsNoChange to be set in the remote repo do disallow changes to
-> tags, similar to pushNonFastForward that disallows non-fastforward
-> changes to branches. I still have the impression that this is simple
-> and clear, and allows the owner of the remote repository to enforce
-> the policy s/he wants on her/his repository.
+> Consider the usage:
+>
+>   git status   # show work-tree status
+>   git status --short  # show short work-tree status
+>   git status --tokens  # show work-tree status in token form
 
-That is an independent issue of deciding to accept or reject
-receiving a push from outside, no?  You can implement any such
-policy in the pre-receive hook on the receiving end with a simple
-and clear manner, instead of adding specific logic to enforce a
-single hardcoded policy to the code that is flipped on with a
-configuration variable.
+OK, your --tokens is more about *how* things are output, but it is
+unclear how it would interact with --short.  I had an impression
+that you are basing your output on the short output, whose existing
+record include "##" (that shows the branch names and states), and
+"MM", "A " and friends (that show the per-file states), by adding
+new record types that shows tree-wide states.
 
-In any case, I thought this series was about users who run "push"
-voluntarily stopping themselves from pushing updates to tags that
-may happen to fast-forward, so if we were to go with the
-configuration route, the suggestion would be more like
+> But maybe "--tokens" has some better meaning that someone will want to
+> use in the future.  I'm not married to it.  But "git status" already
+> means "Show the working tree status".  So "git status --show-tree-state"
+> sounds redundant or meaningless.
 
-    [push]
-	updateNeedsForce = refs/tags/:refs/frotz/
+I didn't mean to say that you have to spell out all these words;
+"show" and "state" are redundant.
 
-or perhaps
-
-    [remote "origin"]
-	updateNeedsForce = refs/tags/:refs/frotz/
-
-if we want to configure it per-remote, to specify that you would
-need to say "--force" to update the refs in the listed hierarchies.
-
-Then your patch series could become just the matter of declaring
-that the value of push.updateNeedsForce, when unspecified, defaults
-to "refs/tags/".
+The important part is that unlike the existing "per-file" state the
+"status" command is showing, the option is to add "tree-wide" state
+to the output, and my suggestion was to pick a word that makes it
+clear, rather than using "output is done using tokens" without
+saying "what is being output in tokenized form".
