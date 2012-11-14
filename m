@@ -1,76 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
-Date: Wed, 14 Nov 2012 11:02:29 -0800
-Message-ID: <20121114190228.GA3860@sigill.intra.peff.net>
-References: <20121113175205.GA26960@sigill.intra.peff.net>
- <50A2B14C.9040608@web.de>
- <50A2F17D.4010907@gmail.com>
+Subject: Re: [PATCH 1/6] ident: make user_ident_explicitly_given private
+Date: Wed, 14 Nov 2012 11:11:05 -0800
+Message-ID: <20121114191104.GB3860@sigill.intra.peff.net>
+References: <20121113164845.GD20361@sigill.intra.peff.net>
+ <20121113164931.GA12626@sigill.intra.peff.net>
+ <20121114164457.GA6858@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 20:02:52 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 20:11:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYiEb-0000BE-Iq
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 20:02:49 +0100
+	id 1TYiMu-0006dk-29
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 20:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423163Ab2KNTCf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 14:02:35 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48541 "EHLO
+	id S1423254Ab2KNTLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 14:11:09 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48552 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423156Ab2KNTCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 14:02:35 -0500
-Received: (qmail 5390 invoked by uid 107); 14 Nov 2012 19:03:23 -0000
+	id S1161019Ab2KNTLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 14:11:08 -0500
+Received: (qmail 5522 invoked by uid 107); 14 Nov 2012 19:11:56 -0000
 Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 14:03:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 11:02:29 -0800
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 14:11:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 11:11:05 -0800
 Content-Disposition: inline
-In-Reply-To: <50A2F17D.4010907@gmail.com>
+In-Reply-To: <20121114164457.GA6858@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209740>
 
-On Tue, Nov 13, 2012 at 08:18:53PM -0500, Mark Levedahl wrote:
+On Wed, Nov 14, 2012 at 08:44:57AM -0800, Jonathan Nieder wrote:
 
-> On 11/13/2012 03:45 PM, Torsten B=C3=B6gershausen wrote:
-> >>* ml/cygwin-mingw-headers (2012-11-12) 1 commit
-> >>  - Update cygwin.c for new mingw-64 win32 api headers
-> >>
-> >>  Make git work on newer cygwin.
-> >>
-> >>  Will merge to 'next'.
-> >(Sorry for late answer, I managed to test the original patch minutes=
- before Peff merged it to pu)
-> >(And thanks for maintaining git)
-> >
-> >Is everybody using cygwin happy with this?
-> >
-> >I managed to compile on a fresh installed cygwin,
-> >but failed to compile under 1.7.7, see below.
-> >Is there a way we can achieve to compile git both under "old" and "n=
-ew" cygwin 1.7 ?
-> >Or is this not worth the effort?
-> >
-> I found no version info defined that could be used to automatically
-> switch between the old and current headers. You can always
->=20
->     make V15_MINGW_HEADERS=3D1 ...
->=20
-> to force using the old set if you do not wish to update your installa=
-tion.
+> > -#define IDENT_NAME_GIVEN 01
+> > -#define IDENT_MAIL_GIVEN 02
+> > -#define IDENT_ALL_GIVEN (IDENT_NAME_GIVEN|IDENT_MAIL_GIVEN)
+> > -extern int user_ident_explicitly_given;
+> >  extern int user_ident_sufficiently_given(void);
+> 
+> In v1.5.6-rc0~56^2 (2008-05-04) "user_ident_explicitly_given" was
+> introduced as a global for communication between config, ident, and
+> builtin-commit.  In v1.7.0-rc0~72^2 (2010-01-07) readers switched to
+> using the common wrapper user_ident_sufficiently_given().  After
+> v1.7.11-rc1~15^2~18 (2012-05-21) the var is only written in ident.c,
+> and the variable can finally be made static.
 
-Should we keep the code change, then, but not flip the default (i.e.,
-make people on the newer version opt into it)? I am not clear on how
-common the newer include system is. Of course, auto-detecting would be
-the ideal.
+Thanks for digging up the history. I remembered trying to do this before
+during the ident refactoring that went into v1.7.11, but it didn't work
+then for some reason (I think it was probably an earlier iteration of
+the series, and then I forgot to revisit it during the final one).
+
+I'll add your explanation to the commit message if I re-roll.
 
 -Peff
