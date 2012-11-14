@@ -1,117 +1,123 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
-Date: Wed, 14 Nov 2012 22:13:28 +0100
-Message-ID: <50A40978.2060504@web.de>
-References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de> <50A2F17D.4010907@gmail.com> <20121114190228.GA3860@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: creation of empty branches
+Date: Wed, 14 Nov 2012 13:27:33 -0800
+Message-ID: <7vmwyjan96.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9CaBECT7c_M9HvCbB8mFYGvdsmq_jFW4DF4NCO8Narnmw@mail.gmail.com>
+ <CAH5451mkcszgJxziKn3q3OwSDM-qQ71PtT5+UWb=PG7VYAcFyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGE=?= =?UTF-8?B?dXNlbg==?= 
-	<tboegi@web.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 14 22:13:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 22:27:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYkHL-0005fV-6K
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 22:13:47 +0100
+	id 1TYkV0-0007vP-JO
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 22:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423338Ab2KNVNc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 16:13:32 -0500
-Received: from mout.web.de ([212.227.15.3]:53959 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932253Ab2KNVNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 16:13:31 -0500
-Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0MNc1S-1TfuCp1kMM-006is0; Wed, 14 Nov 2012 22:13:29 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <20121114190228.GA3860@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:uQlVr+JFr4vdia5kZKa7yWaJeaJ/KFm/e1TVd1AsBRc
- TR73ZWRi86wD7n6Ynzz4WEYbVN6kYtRtE4mNwLCEybLtLOZJgr
- m1mqLNKNYfyk+FY+bxJEPf121YtVxS0E4/lGNd1vBlkmqLhr7r
- iIYB0E4v/oQj+m9t4ZE3D3eZfHnC7RfNZ/fImURQiH0QtgwYZQ
- m3SnAOHab4vL+4j+0A8hA==
+	id S1423356Ab2KNV1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 16:27:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48708 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422641Ab2KNV1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 16:27:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C26409724;
+	Wed, 14 Nov 2012 16:27:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dDFYbzG+T2b9fO47dNifHF6NUWI=; b=YwR1Mm
+	Hp+uxXnRyMkCsYkGWPLewFA5Mhllyqd817i8Lsebhuy7fGYCIk+VeEbOuc4Qbk3Q
+	JQDHnlYId7bBMLz1f+0v10277d9KGnEjh+4RQZerpxZScVzczacAlMv0uj0pb0Vs
+	r2ogfiz2OfbOzSlUbmB58mBBiAw+NTcDVE5GY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WQnKkEAmBuYab5K5z1YS40n+Nn5SgS+n
+	PKyX+nWlP1rGuZ8EthORdTmjWWeQkqfEGtK8+TL2UVyozRwIRn2nBTGoWzwKe9Cq
+	nwDHLNgnpQSPJFbEep3SrAFk6UFHI7Q3h4WyvN45auCYEVV8A0eoJbqBbgtgMWrd
+	IzYFkoEl0UU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B05F19723;
+	Wed, 14 Nov 2012 16:27:35 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05AF89722; Wed, 14 Nov 2012
+ 16:27:34 -0500 (EST)
+In-Reply-To: <CAH5451mkcszgJxziKn3q3OwSDM-qQ71PtT5+UWb=PG7VYAcFyQ@mail.gmail.com> (Andrew
+ Ardill's message of "Wed, 14 Nov 2012 23:54:44 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B3108F6-2EA2-11E2-A8E6-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209754>
 
-On 14.11.12 20:02, Jeff King wrote:
-> On Tue, Nov 13, 2012 at 08:18:53PM -0500, Mark Levedahl wrote:
->=20
->> On 11/13/2012 03:45 PM, Torsten B=C3=B6gershausen wrote:
->>>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
->>>>  - Update cygwin.c for new mingw-64 win32 api headers
->>>>
->>>>  Make git work on newer cygwin.
->>>>
->>>>  Will merge to 'next'.
->>> (Sorry for late answer, I managed to test the original patch minute=
-s before Peff merged it to pu)
->>> (And thanks for maintaining git)
->>>
->>> Is everybody using cygwin happy with this?
->>>
->>> I managed to compile on a fresh installed cygwin,
->>> but failed to compile under 1.7.7, see below.
->>> Is there a way we can achieve to compile git both under "old" and "=
-new" cygwin 1.7 ?
->>> Or is this not worth the effort?
->>>
->> I found no version info defined that could be used to automatically
->> switch between the old and current headers. You can always
->>
->>     make V15_MINGW_HEADERS=3D1 ...
->>
->> to force using the old set if you do not wish to update your install=
-ation.
->=20
-> Should we keep the code change, then, but not flip the default (i.e.,
-> make people on the newer version opt into it)? I am not clear on how
-> common the newer include system is. Of course, auto-detecting would b=
-e
-> the ideal.
->=20
-> -Peff
-There are a couple of things which we may want consider:
-a) the name V15_MINGW_HEADERS:
-  It indicates that this is true for Version 1.5 (of what?)
-  If I assume Cygwin version 1.5 , then this name is confusing.
-  Even cygwin versions like 1.7.7 use the same (or similar) include fil=
-es as 1.5
-  A better name could be CYGWIN_USE_MINGW_HEADERS (or the like) and to =
-revert the logic.
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-b) Autodetection:
-  (Just loud thinking), running=20
-$grep mingw /usr/include/w32api/winsock2.h
- * This file is part of the mingw-w64 runtime package.
-#include <_mingw_unicode.h>
+> Since git branch has the default behaviour to create a branch 'in the
+> background' it makes sense to fail when trying to create a new branch
+> this way from an empty branch. The error message should be improved to
+> handle this edge case in a nicer way. If we allow for renaming empty
+> branches (described below) then the message can be even more helpful.
+> Instead of
+>     fatal: Not a valid object name: 'master'.
+> perhaps
+>     fatal: Cannot create branch 'foo' from empty branch 'master'. To
+> rename 'master' use 'git branch -m master foo'.
 
-on cygwin 1.7.17 indicates that we can use grep in the Makefile to auto=
-detect the "mingw headers"
+The first new sentence is a definite improvement, but I do not think
+the advice in the second sentence is necessarily a good idea,
+because it is dubious that the user is likely to have wanted to
+rename 'master' to something else.  "git branch foo master" (or its
+moral equivalent "git checkout -b foo" while on master) is a wish to
+have a history that ends in 'foo' *forked* from history of 'master',
+but because you do not even have anything on 'master' yet, you
+cannot fork the history, as you explained earlier (snipped).  In
+that sense, 'empty branch' is a slight misnomer---as far as "git
+branch foo master" is concerned, the 'master' branch does not yet
+exist (and that is why we often call it an "unborn branch", not
+"empty").
 
-Something like this in Makefile:
-+ifeq ($(shell grep mingw /usr/include/w32api/winsock2.h />/dev/null 2>=
-/dev/null && echo y),y)
-+	CYGWIN_USE_MINGW_HEADERS=3DYesPlease
-+endif
+    fatal: cannot fork master's history that does not exist yet.
 
-c) I'm not sure if we want to change cygwin.c or git-compat-util.h for =
-this.
+would be more accurate description of the situation.
 
-I can prepare a proper patch within the next couple of days
+> So explicitly, I am proposing the following behaviour changes:
+>
+> When trying to create a new branch without specifying a start point,
+> if HEAD points to an empty branch, error with a more useful message
+> that assumes the user might want to rename the empty branch.
 
-/Torsten
+I do not think that is the right assumption in the first place.  It
+is very likely that the user does not yet know how Git works when
+she attempts to fork from a history that does not exist.  It is also
+very likely that she is expecting, after "git branch foo master"
+succeeds when 'master' is yet to be born, have two branches 'foo'
+and 'master', so that "git checkout foo" and "git checkout master"
+can be done subsequently.
 
+But that expectation is wrong, and it would help the user in the
+longer run to correct that expectation.  "We assume you wanted to
+rename 'master' to 'foo'" is a logical consequence that changing
+HEAD that points at an unborn 'master' to point at an unborn 'foo'
+is the best (or closest) thing the user can do, *if* the user
+understands that the current branch being unborn is a special state
+and there can only be one such unborn branch (that is, the current
+one).  The user who gets this error message, however, clearly does
+not understand that, so it is not a logical consequence to her at
+all.  The advice does not help her, but instead invites "No, I did
+not want to rename it, I wanted to have 'foo' without losing
+'master'", leading to even more confusion.
 
+> When trying to create a new branch whilst specifying an empty branch
+> as the start point,
+>   if HEAD points to the same empty branch that is listed as the start
+> point, error with a more useful message that assumes the user might
+> want to rename the empty branch.
+>   otherwise error due to invalid ref
 
-
-
-
-
-=20
+See above (for all the other cases, too).
