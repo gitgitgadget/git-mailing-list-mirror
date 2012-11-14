@@ -1,268 +1,103 @@
-From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: RE: push branch descriptions
-Date: Wed, 14 Nov 2012 17:21:03 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D13208537AABCCA@umechphj.easf.csd.disa.mil>
-References: <CAB9Jk9ABenaj=R0a6OW2GCsin8PdDCW3ZbuQbu6G0jnGG3s+sA@mail.gmail.com>
-	<7vr4nwb832.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9BN6vTnpPa8rv1Yumn2Os=XU=tEn3=j2QJJK1GpajY=VQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
+Date: Wed, 14 Nov 2012 09:32:40 -0800
+Message-ID: <7vmwykay4n.fsf@alter.siamese.dyndns.org>
+References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
+ <7v4nktdwtp.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPYvrR6WsVWCvwoEWA21gzL6Sib0sTyx-c_2tH=8ni69yQ@mail.gmail.com>
+ <CAEUsAPZtF-L5J_g1L5d44BKveoAnJ81PatX94fFS4FM=iW33KA@mail.gmail.com>
+ <7v390ccoak.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9DAwaLw2bTqj5x_zxRcFqn7s=nmGi=Jc_SD38vFoszBZg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_0041_01CDC262.37350EA0"
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 14 18:21:38 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Rorvick <chris@rorvick.com>, git <git@vger.kernel.org>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 18:33:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYgeb-0007pE-5t
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 18:21:33 +0100
+	id 1TYgpd-0007ME-PD
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 18:32:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423087Ab2KNRVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 12:21:18 -0500
-Received: from edge-mech.mail.mil ([214.21.82.9]:5583 "EHLO edge-mech.mail.mil"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423073Ab2KNRVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 12:21:17 -0500
-Received: from UMECHPIA.easf.csd.disa.mil (214.21.83.149) by
- umechpid.easf.csd.disa.mil (214.21.82.9) with Microsoft SMTP Server (TLS) id
- 14.2.309.2; Wed, 14 Nov 2012 17:21:03 +0000
-Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.5.252]) by
- UMECHPIA.easf.csd.disa.mil ([214.21.83.149]) with mapi id 14.02.0309.003;
- Wed, 14 Nov 2012 17:21:03 +0000
-Thread-Topic: push branch descriptions
-Thread-Index: AQHNwjiQYyg8sEltz0WxGzIecPmoPZfpW5iYgAAO5ICAAA05AA==
-In-Reply-To: <CAB9Jk9BN6vTnpPa8rv1Yumn2Os=XU=tEn3=j2QJJK1GpajY=VQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [214.21.83.188]
+	id S933017Ab2KNRco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 12:32:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38435 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932978Ab2KNRcn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 12:32:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D21A9F14;
+	Wed, 14 Nov 2012 12:32:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LNTQGZWLN3T6nl9rqSuKH+PxdZ0=; b=BwMaP8
+	udJX5bTGULkcJoaNQclMEWVYAp+Py07IKZ0UeDgK/4kE5Ibb52VfU44mWGsAuhIW
+	ZtAJbsRDFwDg7ZN+tfgfJrgdz7/Z3Ex1nGmSsSuy0ySuP8GZo37sshKVfAkR8KGF
+	MBvjDV85BumP2rw6BuKnjv9yrmv7u/K9RRnhs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aTdG5Y7mCwYWReoI38pUWN+0SSbWh1j2
+	SUHNrBsv0lCQ/l8uB326HCUs3r4odQS1surwIbf7gmQakTH7EGBTBNkbgETBREGU
+	1FCVkCyMMCAyTiqoSof+AqToWTJIunP7e1xNQJ6zsi2yspqxIIfxoh+TtlZVopPH
+	oGyXs0amUUc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A1FD9F13;
+	Wed, 14 Nov 2012 12:32:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D92BE9F0D; Wed, 14 Nov 2012
+ 12:32:41 -0500 (EST)
+In-Reply-To: <CAB9Jk9DAwaLw2bTqj5x_zxRcFqn7s=nmGi=Jc_SD38vFoszBZg@mail.gmail.com> (Angelo
+ Borsotti's message of "Wed, 14 Nov 2012 15:58:54 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4B0B5CFA-2E81-11E2-B729-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209732>
 
-------=_NextPart_000_0041_01CDC262.37350EA0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-> -----Original Message-----
-> From: Angelo Borsotti
-> Sent: Wednesday, November 14, 2012 9:51 AM
-> 
-> Hi Junio,
-> 
-> > It would conceptually be a lot cleaner to treat updating of remote
-> > Ibranch description as a separate "repository management" class of
-> > Ioperation, similar to setting the repository description stored in
-> > I$GIT_DIR/description.
-> 
-> I agree, it should be a distinct operation. I was thinking that when
-> you have a remote bare repository, the normal way of adding contents
-> to it is to push to it, and thus also adding a description should be
-> done with some sort of pushing. Creating branches is also normally
-> done with a push (think how difficult it is to create a branch in a
-> bare repository when the HEAD is not set ...).
+> actually, I proposed to add a key in config files, e.g.
+> pushTagsNoChange to be set in the remote repo do disallow changes to
+> tags, similar to pushNonFastForward that disallows non-fastforward
+> changes to branches. I still have the impression that this is simple
+> and clear, and allows the owner of the remote repository to enforce
+> the policy s/he wants on her/his repository.
 
-Only if the push were to create the branch...
+That is an independent issue of deciding to accept or reject
+receiving a push from outside, no?  You can implement any such
+policy in the pre-receive hook on the receiving end with a simple
+and clear manner, instead of adding specific logic to enforce a
+single hardcoded policy to the code that is flipped on with a
+configuration variable.
 
+In any case, I thought this series was about users who run "push"
+voluntarily stopping themselves from pushing updates to tags that
+may happen to fast-forward, so if we were to go with the
+configuration route, the suggestion would be more like
 
-> On 14 November 2012 14:57, Junio C Hamano <gitster@pobox.com> wrote:
-> > Angelo Borsotti <angelo.borsotti@gmail.com> writes:
-> >
-> >> currently, there is no means to push a branch description to a
-> remote
-> >> repository. It is possible to create a branch, but not to set its
-> >> description.
-> >
-> > Correct.  You have to go to the remote repository and run "git
-> > branch --edit-description" there; there is currently no way to do
-> > this remotely, which may be an issue, but...
-> >
-> >> Would not be more correct to push also branch descriptions when
-> >> branches are pushed?
-> >
-> > ... I do not think "git push" is the best place to do so, given the
-> > inherently local nature of branches and branch descriptions.
-> >
-> > Imagine the project creates a branch "magic" to enhance its system
-> > with magic words.  The description for the "magic" branch in the
-> > project may say "support magic words" or something.
-> >
-> > You and your friend are tasked to add a handful of magic words,
-> > e.g. "xyzzy", "frotz" and "nitfol".  You may start your work like so
-> > on your "magic-xyzzy" branch:
-> >
-> >     $ git clone git://example.com/zork.git/
-> >     $ git checkout -b magic-xyzzy -t origin/magic
+    [push]
+	updateNeedsForce = refs/tags/:refs/frotz/
 
-And here the branch description should copy from origin/magic.
+or perhaps
 
-> >
-> > And you say something like "add xyzzy magic" in its branch
-> > description.
-> >
-> >     $ git branch --edit-description magic-xyzzy
-> >
+    [remote "origin"]
+	updateNeedsForce = refs/tags/:refs/frotz/
 
-And now it is edited
+if we want to configure it per-remote, to specify that you would
+need to say "--force" to update the refs in the listed hierarchies.
 
-> > After finishing your work, you may push it
-> >
-> >     $ git push origin magic-xyzzy:magic
-> >
-> > Should the description of the subtask "add xyzzy magic" overwrite
-> > the purpose of the project wide "magic" branch "support magic words"?
-> > Most likely not.
-
-Never overwrite anything.
-
-> >
-> > The local nature of the description becomes even more clear if you
-> > imagine the case where the push at the last stage gets rejected due
-> > to non-fast-forward error (in other words, your friend has already
-> > pushed her support of the "frotz" magic to the "magic" branch.
-> >
-> > In fact, you would normally not directly push your magic-xyzzy
-> > branch to the magic branch, but you would do something like this
-> > once you are done:
-> >
-> >     $ git checkout -b magic -t origin/magic
-> >     $ git pull origin ;# to update with her work
-> >     $ git merge magic-xyzzy
-> >     $ git push origin magic
-> >
-> > And the last "merge" is where the description for your magic-xyzzy
-> > is used to fill the commit log template for you to explain your
-> > merge (that is, you are merging a branch whose description is "add
-> > xyzzy magic").  There is no reason to propagate the description of
-> > your magic-xyzzy topic to the description of shared magic branch
-> > when you push, as this merge commit already records what the branch
-> > that was merged was about.
-> >
-> > So you could modify "git push" to set the branch description when
-> > you push to create a branch remotely, but in general, "git push"
-> > should not be updating the branch description with the description
-> > of your local branch.  This comes as a consequence of the fact that
-> > the purpose of the branch in the remote central repository is, more
-> > often than not, different from the purpose of the corresponding
-> > branch in your repository.
-> >
-
-But pulling such into a new branch should copy the description (unless explicitly set)
-
-> > It would conceptually be a lot cleaner to treat updating of remote
-> > branch description as a separate "repository management" class of
-> > operation, similar to setting the repository description stored in
-> > $GIT_DIR/description.
-
-
-------=_NextPart_000_0041_01CDC262.37350EA0
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-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
-GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
-uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
-TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
-TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
-WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
-hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
-gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
-YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
-AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
-L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
-BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
-BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
-cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
-YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
-BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
-xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
-he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
-ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
-BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
-BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MjExMTQxNzE4NTVaMCMGCSqGSIb3DQEJBDEWBBSt3XcGM53A8RbDuWiM9tT8+fTzITBYBgkqhkiG
-9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
-MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
-FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
-BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBAJHcZ/58
-tcpKezSo97BYEM0st1XgsdW4MFvdLPfleTeThjB2SxKjTO2fH5AFM0RkbzDP0rqyE8XMDVM43ALa
-o9yvCcBsTmoFS3MC5qReeGvPnWe+wSbJUDeLlmi4wjF+Oxh49LGs7nKtwkjmJir0HJ5GudVMM9GD
-/lcXphMdqtlgqC56rKJWK2vHssVctqmfD5Vcy6I2VOkHc2/0YDmhFC5bLauMWWYlVsDZoqI8GXoN
-X21YCIp4Vn4mthBirRCmxgAbLGgySw9DhHv5qJfXYPwxmzbJS/NeRoS47KfUAY2zWxXHK6t0ofeg
-fG4dUWdcOkLaoSFocwW8NfYciE1OuCkAAAAAAAA=
-
-------=_NextPart_000_0041_01CDC262.37350EA0--
+Then your patch series could become just the matter of declaring
+that the value of push.updateNeedsForce, when unspecified, defaults
+to "refs/tags/".
