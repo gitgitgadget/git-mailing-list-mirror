@@ -1,82 +1,62 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: creation of empty branches
-Date: Wed, 14 Nov 2012 11:10:07 +0100
-Message-ID: <CAB9Jk9CaBECT7c_M9HvCbB8mFYGvdsmq_jFW4DF4NCO8Narnmw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: push branch descriptions
+Date: Wed, 14 Nov 2012 16:03:54 +0530
+Message-ID: <CALkWK0meYVEe8OezEU2Oe-dQSZuo0ETwxXq3qWXzopH7x3msJA@mail.gmail.com>
+References: <CAB9Jk9ABenaj=R0a6OW2GCsin8PdDCW3ZbuQbu6G0jnGG3s+sA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 14 11:10:31 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 11:34:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYZvQ-0000gQ-Tg
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 11:10:29 +0100
+	id 1TYaIf-00019S-3W
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 11:34:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161089Ab2KNKKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 05:10:12 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:35238 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161008Ab2KNKKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 05:10:08 -0500
-Received: by mail-da0-f46.google.com with SMTP id n41so127788dak.19
-        for <git@vger.kernel.org>; Wed, 14 Nov 2012 02:10:08 -0800 (PST)
+	id S1755113Ab2KNKeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 05:34:15 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:56422 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754819Ab2KNKeO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 05:34:14 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so235676obb.19
+        for <git@vger.kernel.org>; Wed, 14 Nov 2012 02:34:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=lIqu+Ew5OoFTEhMwCNVw25B+GXUYTN0Nn2UK7ZnlKLA=;
-        b=iLnNgrJza8hrNkWaMt9+ou82N80vjIKP1NJxVNd9S2lLaB+Me2cozB2w+lYvgamJAt
-         IidSBRSk5634fFaTuWhNyda5GJtzUffHPhgJ7u8Vwo1Mm29QfvzXcE8Twvs6Set3mIrL
-         qbT+hnBZoltVtEIvbOcj5m+2+vcBpL6oFEz1GTma5d8cOAEdssVS+R39F/4G+ss8llEb
-         vlZGpL45llAeAla7rO2hRqqJ0WyAUTlJPGVRzIgdyuvlDbAYXBxB29UXGsAFQ+wwHJ8P
-         g0ZEazfQGPR+qLaZZblbvos6hB22M4/PtCdafzL5Kn67IVuGYNEPJwwMGdObB8T8vy0v
-         O0Dw==
-Received: by 10.66.73.102 with SMTP id k6mr5847792pav.22.1352887808173; Wed,
- 14 Nov 2012 02:10:08 -0800 (PST)
-Received: by 10.67.3.101 with HTTP; Wed, 14 Nov 2012 02:10:07 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ove/rzcY/3SOqV6YF5YfuFNh85F3P8rjcEuj3Dwb9gU=;
+        b=XXUUeHidmltnNUfZkbIk0L3Rl+/Ee1jWXrmAxNk/LhHdNCWd1A8/3DX7Rnin9nkd6w
+         kM8zB3j/0UaOFt5XH7XvHoItmwTJjpwbA0c9/VkRoJPIOYKBjlmcKL8s0kTeSbpVXTE3
+         IxqyteDvwbqp9lphOVyM9m//uhqDKc9XjEgEdtvJXTKyHlMU2B64aZtDj6Eyj473x3yx
+         WuQCexRlZjJgw54tMcokhtYNg6DL/13Z5h4O6Y745smyH0Y2mDqCMUeSvsE/9jgg7Yj+
+         hOX/JzsvgO3zvFsN9ook7jjGvgnd1y1i4ZvJSkNoAfYs6qCI0VJrXi/HQGyxIq+wtaNI
+         Wu8A==
+Received: by 10.60.28.36 with SMTP id y4mr19549046oeg.13.1352889254150; Wed,
+ 14 Nov 2012 02:34:14 -0800 (PST)
+Received: by 10.76.168.40 with HTTP; Wed, 14 Nov 2012 02:33:54 -0800 (PST)
+In-Reply-To: <CAB9Jk9ABenaj=R0a6OW2GCsin8PdDCW3ZbuQbu6G0jnGG3s+sA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209709>
 
 Hi,
 
-the man page of git checkout does not describe the behavior of
-git-checkout when asked to create empty branches. E.g.:
+Angelo Borsotti wrote:
+> currently, there is no means to push a branch description to a remote
+> repository. It is possible to create a branch, but not to set its
+> description.
+> Would not be more correct to push also branch descriptions when
+> branches are pushed?
 
-$ git init myrepo
-$ cd myrepo
-$ git checkout -b newbranch
+Branch descriptions are currently stored in .git/config (see
+branch.<branchname>.description), and are hence intended to be local.
+But yes, it would be nice to have it synced with the remote- I have no
+clue how to make that possible though.
 
-the last command actually changes only the HEAD. It displays no output
-telling the user that no switch to a new branch is done. Moreover, it
-can be entered again without receiving any error message (unlike the
-creation ot non-empty branches, which is instead rejected).
-I would suggest to add to the DESCRIPTION, after the paragraph: "If -b
-is given ...":
-
-    "If the repository does not contain any branch, no new branch is
-created, but the HEAD is set to refer to it."
-
-Moreover, it is often reported (e.g. in the progit book) that git
-checkout -b is equivalent to git branch; git checkout, and this is
-true when nonempty branches are created, but it is not when the
-repository is empty:
-
-$ git init myrepo
-$ cd myrepo
-$ git branch master
-fatal: Not a valid object name: 'master'.
-
-however:
-$ git checkout -b master
-.... no error
-
-This seems quite strange and difficult to understand: why should git
-branch master issue an error while git checkout does not? I have the
-impression that also git branch should not issue an error in this
-case.
-
--Angelo Borsotti
+Ram
