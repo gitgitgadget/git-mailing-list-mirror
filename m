@@ -1,70 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/6] send-email: do not prompt for explicit repo ident
-Date: Wed, 14 Nov 2012 12:05:05 -0800
-Message-ID: <20121114200505.GA13317@sigill.intra.peff.net>
-References: <20121113164845.GD20361@sigill.intra.peff.net>
- <20121113165327.GF12626@sigill.intra.peff.net>
- <20121114171827.GE6858@elie.Belkin>
+From: petesea@bigfoot.com
+Subject: git init shared=group with a subdir
+Date: Wed, 14 Nov 2012 12:00:03 -0800 (PST)
+Message-ID: <alpine.OSX.2.00.1211141107180.737@nikto-air>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 21:05:24 2012
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 14 21:10:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYjDA-0000GK-1q
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 21:05:24 +0100
+	id 1TYjHi-0003T0-2Y
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 21:10:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423244Ab2KNUFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 15:05:09 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48620 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423097Ab2KNUFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 15:05:08 -0500
-Received: (qmail 6425 invoked by uid 107); 14 Nov 2012 20:05:57 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 15:05:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 12:05:05 -0800
-Content-Disposition: inline
-In-Reply-To: <20121114171827.GE6858@elie.Belkin>
+	id S1423247Ab2KNUJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 15:09:52 -0500
+Received: from out01.dlls.pa.frontiernet.net ([199.224.80.228]:56921 "EHLO
+	out01.dlls.pa.frontiernet.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1423139Ab2KNUJv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2012 15:09:51 -0500
+X-Greylist: delayed 583 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Nov 2012 15:09:51 EST
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AggFAEr3o1AyLoOQ/2dsb2JhbABEv36DPoMoPQKKBwESp2WFMoQCBIonjzKDJwOIWqB1
+X-Originating-IP: [50.46.131.144]
+Received: from relay01.dlls.pa.frontiernet.net ([199.224.80.244])
+  by out01.dlls.pa.frontiernet.net with ESMTP; 14 Nov 2012 20:00:06 +0000
+X-Previous-IP: 50.46.131.144
+Received: from localhost.localdomain (50-46-131-144.evrt.wa.frontiernet.net [50.46.131.144])
+	by relay01.dlls.pa.frontiernet.net (Postfix) with ESMTPA id 774D330C0ED
+	for <git@vger.kernel.org>; Wed, 14 Nov 2012 20:00:05 +0000 (UTC)
+Received: from nikto-air (nikto-air [192.168.0.103])
+	by localhost.localdomain (8.14.2/8.14.2) with ESMTP id qAEK03Nx025232
+	for <git@vger.kernel.org>; Wed, 14 Nov 2012 12:00:04 -0800
+X-X-Sender: pete@nikto-air
+User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209749>
 
-On Wed, Nov 14, 2012 at 09:18:27AM -0800, Jonathan Nieder wrote:
+I believe there may be a bug when initializing a new repository relating 
+to the directory permissions when the --shared=group option is used and 
+the repository is within a sub-directory.
 
-> > The test scripts need to be adjusted to not expect a prompt
-> > for the sender, since they always have the author explicitly
-> > defined in the environment. Unfortunately, we cannot
-> > reliably test that prompting still happens in the implicit
-> > case, as send-email will produce inconsistent results
-> > depending on the machine config (if we cannot find a FQDN,
-> > "git var" will barf, causing us to exit early;
-> 
-> At first this sounded like a bug to me --- how could the user keep
-> working without the sysadmin intervening?
-> 
-> But then I remembered that the user can set her name and email in
-> .gitconfig and probably would want to in such a setup anyway.
+The following will create the "test.git" directory with 2775 permissions 
+(which is as expected):
 
-Right. They would already have to to make commits, for example.
+   $ ls -ld test.git
+   ls: cannot access test.git: No such file or directory
+   $ git init --bare --shared=group test.git
+   Initialized empty shared Git repository in /tmp/test.git/
+   $ ls -ld test.git
+   drwxrwsr-x 7 pete users 4096 2012-11-14 11:15 test.git
 
-> When someone writes such a test, I think it could check that git
-> either prompts or writes a message advising to configure the user
-> email, no?  Waiting until later for that seems fine to me, though.
+This following will also create the "test.git" directory with 2775 
+permissions, BUT the "subdir" directory ends up with 755 permissions:
 
-Yes. The problem is that the behavior and output are dependent on
-factors outside the test suite, so we would have to check that one of
-the possible expected outcomes happens. But I think there are really
-only two such outcomes (neglecting that the ident itself can have
-arbitrary content, but we do not have to check the actual content).
+   $ ls -ld subdir
+   ls: cannot access subdir: No such file or directory
+   $ git init --bare --shared=group subdir/test.git
+   Initialized empty shared Git repository in /tmp/subdir/test.git/
+   $ ls -ld subdir subdir/test.git
+   drwxr-xr-x 3 pete users 4096 2012-11-14 11:16 subdir
+   drwxrwsr-x 7 pete users 4096 2012-11-14 11:16 subdir/test.git
 
--Peff
+Assuming the "subdir" directory doesn't already exist and is created by 
+the "git init" command AND the --shared=group option is used, then 
+shouldn't the "subdir" directory also have 2775 permissions?
