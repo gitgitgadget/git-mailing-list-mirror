@@ -1,108 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/6] var: accept multiple variables on the command line
-Date: Wed, 14 Nov 2012 11:26:02 -0800
-Message-ID: <20121114192602.GC3860@sigill.intra.peff.net>
-References: <20121113164845.GD20361@sigill.intra.peff.net>
- <20121113165247.GC12626@sigill.intra.peff.net>
- <20121114170148.GB6858@elie.Belkin>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH nd/wildmatch] Correct Git's version of isprint and isspace
+Date: Wed, 14 Nov 2012 20:30:36 +0100
+Message-ID: <50A3F15C.7000200@lsrfire.ath.cx>
+References: <507E9FDE.7080706@cs.tu-berlin.de> <1352803572-14547-1-git-send-email-pclouds@gmail.com> <50A29C3A.1070000@lsrfire.ath.cx> <CA+55aFwsjpOop=4mVkx4e=zw5LH41sD9x-b_WMo4Hvo7ygjEtQ@mail.gmail.com> <CA+55aFynRG-CbSp-aLoo1iZTvfBWMgt6kwrPiQjSZJ0ZzraDKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 20:26:26 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, schnhrr@cs.tu-berlin.de
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Nov 14 20:31:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYibQ-0001dn-Bp
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 20:26:24 +0100
+	id 1TYifq-0005KD-2N
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 20:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423358Ab2KNT0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 14:26:07 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48569 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423233Ab2KNT0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 14:26:05 -0500
-Received: (qmail 5759 invoked by uid 107); 14 Nov 2012 19:26:53 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 14:26:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 11:26:02 -0800
-Content-Disposition: inline
-In-Reply-To: <20121114170148.GB6858@elie.Belkin>
+	id S1423213Ab2KNTao convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 14:30:44 -0500
+Received: from india601.server4you.de ([85.25.151.105]:43829 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161019Ab2KNTan (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 14:30:43 -0500
+Received: from [192.168.2.105] (p4FFDB891.dip.t-dialin.net [79.253.184.145])
+	by india601.server4you.de (Postfix) with ESMTPSA id 6FC33130;
+	Wed, 14 Nov 2012 20:30:41 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <CA+55aFynRG-CbSp-aLoo1iZTvfBWMgt6kwrPiQjSZJ0ZzraDKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209743>
 
-On Wed, Nov 14, 2012 at 09:01:48AM -0800, Jonathan Nieder wrote:
+Am 13.11.2012 20:50, schrieb Linus Torvalds:
+> On Tue, Nov 13, 2012 at 11:40 AM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> I have to wonder why you care? As far as I'm concerned, the only val=
+id
+>> space is space, TAB and CR/LF.
+>>
+>> Anything else is *noise*, not space. What's the reason for even cari=
+ng?
+>
+> Btw, expanding the whitespace selection may actually be very
+> counter-productive. It is used primarily for things like removing
+> extraneous space at the end of lines etc, and for that, the current
+> selection of SPACE, TAB and LF/CR is the right thing to do.
+>
+> Adding things like FF etc - that are *technically* whitespace, but
+> aren't the normal kind of silent whitespace - is potentially going to
+> change things too much. People might *want* a form-feed in their
+> messages, for all we know.
 
-> >  DESCRIPTION
-> >  -----------
-> > -Prints a git logical variable.
-> > +Prints one or more git logical variables, separated by newlines.
-> > +
-> > +Note that some variables may contain newlines themselves
-> 
-> Maybe a -z option to NUL-terminate values would be useful some day.
+The patch was motivated by the integration of the wildmatch library,=20
+which exposes named character classes to users.  It replaces a call of=20
+fnmatch in match_pathname.  Users probably expect [:space:] to mean the=
+=20
+same in git as in other programs.
 
-Yeah, I thought about that but stopped short. The intended caller in my
-series is Git.pm, whose command() splits on newlines. Although it is
-perl...I suspect doing:
+I never saw a vertical tab and I can't imagine what it's used for.  I'd=
+=20
+expect form-feeds to be matched as space, though.  Didn't see them very=
+=20
+often, admittedly.
 
-  local $/ = "\0";
-  my @entries = command(...);
+Nevertheless, it's unfortunate that we have an isspace() that *almost*=20
+does what the widely known thing of the same name does.  I'd shy away=20
+from changing git's version directly, because it's used more than a=20
+hundred times in the code, and estimating the impact of adding \v and \=
+f=20
+to it.  Perhaps renaming it to isgitspace() is a good first step,=20
+followed by adding a "standard" version of isspace() for wildmatch?
 
-would work. For ident variables, we know they don't contain a newline,
-though.
-
-> > --- a/builtin/var.c
-> > +++ b/builtin/var.c
-> > @@ -73,8 +73,7 @@ static int show_config(const char *var, const char *value, void *cb)
-> >  
-> >  int cmd_var(int argc, const char **argv, const char *prefix)
-> >  {
-> > -	const char *val = NULL;
-> > -	if (argc != 2)
-> > +	if (argc < 2)
-> >  		usage(var_usage);
-> >  
-> >  	if (strcmp(argv[1], "-l") == 0) {
-> 
-> What should happen if I pass "-l" followed by other arguments?
-
-Good catch. Probably we should just call usage() once we see "-l"
-and (argc > 2), which matches the previous behavior. I don't see much
-point in listing specific variables after having listed them all.
-
-I was also tempted to convert to parse_options, but I don't think that
-really buys us anything (we could detect the option in "git var foo -l
-bar", but since we are not going to do anything useful in such a case,
-there is not much point).
-
-> > +	test_tick &&
-> > +	echo "A U Thor <author@example.com> 1112911993 -0700" >expect &&
-> 
-> Do we need to hardcode the timestamp?  Something like
-> 
-> 	test_cmp_filtered () {
-> 		expect=$1 actual=$2 &&
-> 		sed -e 's/[0-9][0-9]* [-+][0-9][0-9][0-9][0-9]/TIMESTAMP" \
-> 			<"$actual" >"$actual.filtered" &&
-> 		test_cmp "$expect" "$actual.filtered"
-> 	}
-
-No, we don't have to. I was just hoping to keep the tests simple by not
-doing any parsing trickery. The test_tick keeps it stable, but as you
-note, it is not robust to reordering. I think it would be sufficient to
-just put $GIT_COMMITTER_DATE into the expected output.
-
-I'll fix both in a re-roll.
-
-Thanks.
-
--Peff
+Ren=C3=A9
