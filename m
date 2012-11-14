@@ -1,72 +1,102 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
-Date: Tue, 13 Nov 2012 18:58:28 -0500
-Message-ID: <CAM9Z-nmy+4yvTXLoaO5mkyMC0sv3Vv8x6s2O6WgVdN+ev-W2Aw@mail.gmail.com>
-References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: Fwd: [PATCH] Add tcsh-completion support to contrib by using
+ git-completion.bash
+Date: Wed, 14 Nov 2012 01:09:09 +0100
+Message-ID: <20121114000909.GA14953@goldbirke>
+References: <CAFj1UpE6OtJEojaED1_DZJD0kU=nVsFE_w8xa0oJE-6auCU2rw@mail.gmail.com>
+ <CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:58:48 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Marc Khouzam <marc.khouzam@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 01:09:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYQNP-0007v5-W3
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 00:58:44 +0100
+	id 1TYQXv-0007TL-DP
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 01:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756014Ab2KMX6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2012 18:58:30 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:37601 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755983Ab2KMX63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 18:58:29 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so812640bkw.19
-        for <git@vger.kernel.org>; Tue, 13 Nov 2012 15:58:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=niULlymyikezXgirL3hU/CFkZxX5qFOq9Z8PYhY/SCw=;
-        b=WgiAcowi8V+q/16R2zCaLJIndkMmXDrLjLOtK6FbY3gE9FFekeTJYMVLRKGsNGoQ99
-         TVsWxJ8chyrb4+zhdKYwMrItvop3tH6L5l3GITAkKs4/EJwuC7EVsr8E6e8MYjEmSo39
-         mxXYF+ObJtcinsaIK/DGvW+ppLYVJjVbit3f/0DLcsUvynDORMWQ9mAb2yrVqVxaGcsK
-         RtoDknZs5fE40uOWLxtunzkeeeaxXQXHB+dpRD+Uqos/WYmKCyx0mhxYIfbVqmkVqVa7
-         uk+dR5eQ12Pj9ScqtzqiLO4aJaHm35No8fnDOUpeRIe+jyURtEhv0TPtaglue64qm9Vs
-         aJSg==
-Received: by 10.204.13.28 with SMTP id z28mr771209bkz.113.1352851108363; Tue,
- 13 Nov 2012 15:58:28 -0800 (PST)
-Received: by 10.205.122.144 with HTTP; Tue, 13 Nov 2012 15:58:28 -0800 (PST)
-In-Reply-To: <1352693288-7396-1-git-send-email-chris@rorvick.com>
+	id S1756083Ab2KNAJO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 19:09:14 -0500
+Received: from moutng.kundenserver.de ([212.227.17.8]:65017 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756039Ab2KNAJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 19:09:12 -0500
+Received: from localhost6.localdomain6 (p5B13079E.dip0.t-ipconnect.de [91.19.7.158])
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0Ll0b7-1T0TER1bCH-00bCRB; Wed, 14 Nov 2012 01:09:10 +0100
+Content-Disposition: inline
+In-Reply-To: <CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:q/l4472d4nM6HEzcbdBkk4/rQBjQnSH3nHi47bEPDRm
+ TXPIlAPT52f+BlobB80URdCM/0EggkXG+1V+7bvtGWTur76hSW
+ 5GdbIWxlZ8iFn0PYhh66uBkFV5VTHWN+/68VRXZldMkgbh5eNi
+ tCN6SlzUZX6vhXZMTJRoL4BM2rslmHkviLBc4QOG9ZGbeupA2j
+ RbWBxWpBL/sCe054vaH7YHnu/RaPcKaIsmnD/dUc0KLptQl/1O
+ 51mSOXiB0k2XMw6MeiFWMCHYnCXbpU0knrWWfn2ADwf9DvMtUr
+ OpK6hTOu8O6TocmmAqtksBjauknJXwcO/LETbEty0vC0AUDgcF
+ tuWxqKFZFLXGfNR0Hu5aKnK19Yqv0hNmsi1u7w/Sh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209689>
 
-On Sun, Nov 11, 2012 at 11:08 PM, Chris Rorvick <chris@rorvick.com> wrote:
-> Minor changes since from v2 set.
-.....
+Hi,
 
->      An email thread initiated by Angelo Borsotti did not come to a
->      consensus on how push should behave with regard to tag references.
 
-Minor Nit: Without the link to gmane it is an exercise left to the
-reviewer to find that you're talking about this thread:
-http://thread.gmane.org/gmane.comp.version-control.git/208354
+I've got two more comments.
 
-Cheers.
+On Mon, Nov 12, 2012 at 03:07:46PM -0500, Marc Khouzam wrote:
+> @@ -2481,3 +2483,52 @@ __git_complete gitk __gitk_main
+>  if [ Cygwin =3D "$(uname -o 2>/dev/null)" ]; then
+>  __git_complete git.exe __git_main
+>  fi
+> +
+> +# Method that will output the result of the completion done by
+> +# the bash completion script, so that it can be re-used in another
+> +# context than the bash complete command.
+> +# It accepts 1 to 2 arguments:
+> +# 1: The command-line to complete
+> +# 2: The index of the word within argument #1 in which the cursor is
+> +#    located (optional). If parameter 2 is not provided, it will be
+> +#    determined as best possible using parameter 1.
+> +_git_complete_with_output ()
 
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+We differentiate between _git_whatever() and __git_whatever()
+functions.  The former performs completion for the 'whatever' git
+command/alias, the latter is a completion helper function.  This
+is a helper function, so it should begin with double underscores.
+
+> +{
+> +       # Set COMP_WORDS to the command-line as bash would.
+> +       COMP_WORDS=3D($1)
+> +
+> +       # Set COMP_CWORD to the cursor location as bash would.
+> +       if [ -n "$2" ]; then
+
+A while ago the completion script was made 'set -u'-clean.  (If 'set
+-u' is enabled, then it's an error to access undefined variables).
+I'm not sure how many people are out there who'd use this script for
+tcsh while having 'set -u' in their profile...  probably not that
+many.  Still, I think it would be great to keep it up.
+
+Here $2 would be undefined, so accessingit it would cause an error
+under those semantincs.  Please use ${2-} instead (use empty string
+when undefined).
+
+> +if [ -n "$1" ] ; then
+
+Same here.
+
+> +  # If there is an argument, we know the script is being executed
+> +  # so go ahead and run the _git_complete_with_output function
+> +  _git_complete_with_output "$1" "$2"
+
+And here.
+
+Thanks
+G=E1bor
