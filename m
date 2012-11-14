@@ -1,99 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git init shared=group with a subdir
-Date: Wed, 14 Nov 2012 12:29:45 -0800
-Message-ID: <7vr4nw9bd2.fsf@alter.siamese.dyndns.org>
-References: <alpine.OSX.2.00.1211141107180.737@nikto-air>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Wed, 14 Nov 2012 22:13:28 +0100
+Message-ID: <50A40978.2060504@web.de>
+References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de> <50A2F17D.4010907@gmail.com> <20121114190228.GA3860@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: petesea@bigfoot.com
-X-From: git-owner@vger.kernel.org Wed Nov 14 21:31:20 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGE=?= =?UTF-8?B?dXNlbg==?= 
+	<tboegi@web.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 14 22:13:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYjb3-0000sI-O4
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 21:30:06 +0100
+	id 1TYkHL-0005fV-6K
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 22:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423398Ab2KNU3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 15:29:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48634 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423232Ab2KNU3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 15:29:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F7A9A76A;
-	Wed, 14 Nov 2012 15:29:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jl2j9VdxpTMZy3P0Z//gnTQA0OM=; b=JlFx2J
-	yXYE57L3/mP1YxjqpNdrG8nXcnSUI0F1u2ekQ9QhIVgdGzV1MOpN2dRt5fClGBYt
-	SQWjX9PqNrI1FO3bj2dqnv8SbFynZiLO4KHVJpkRc9fmslpvojZZQXY4G/eAosXS
-	kbvHA4gxleJYJvO4K8CDSayaM+Q+tKhGftcK0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dupwXDEKeKp8rjxvnrdfbyxCcHpp6MMc
-	neDRtsDW/iN+K80WX6aRlh6dhgi34jsHfQ1ZIl847Y8UKHfEm3yyx15sRhbHFbMS
-	oaXEgL7RLftXJA10GY7ye+4rEr+tZ+JDzvOz+CFHjB6ftEabd8pLTE4wEZtSlO24
-	Uzl1fVoj9so=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BE4BA769;
-	Wed, 14 Nov 2012 15:29:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3E8DA767; Wed, 14 Nov 2012
- 15:29:49 -0500 (EST)
-In-Reply-To: <alpine.OSX.2.00.1211141107180.737@nikto-air>
- (petesea@bigfoot.com's message of "Wed, 14 Nov 2012 12:00:03 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09C239BC-2E9A-11E2-BCAD-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1423338Ab2KNVNc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 16:13:32 -0500
+Received: from mout.web.de ([212.227.15.3]:53959 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932253Ab2KNVNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 16:13:31 -0500
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0MNc1S-1TfuCp1kMM-006is0; Wed, 14 Nov 2012 22:13:29 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <20121114190228.GA3860@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:uQlVr+JFr4vdia5kZKa7yWaJeaJ/KFm/e1TVd1AsBRc
+ TR73ZWRi86wD7n6Ynzz4WEYbVN6kYtRtE4mNwLCEybLtLOZJgr
+ m1mqLNKNYfyk+FY+bxJEPf121YtVxS0E4/lGNd1vBlkmqLhr7r
+ iIYB0E4v/oQj+m9t4ZE3D3eZfHnC7RfNZ/fImURQiH0QtgwYZQ
+ m3SnAOHab4vL+4j+0A8hA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209753>
 
-petesea@bigfoot.com writes:
+On 14.11.12 20:02, Jeff King wrote:
+> On Tue, Nov 13, 2012 at 08:18:53PM -0500, Mark Levedahl wrote:
+>=20
+>> On 11/13/2012 03:45 PM, Torsten B=C3=B6gershausen wrote:
+>>>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
+>>>>  - Update cygwin.c for new mingw-64 win32 api headers
+>>>>
+>>>>  Make git work on newer cygwin.
+>>>>
+>>>>  Will merge to 'next'.
+>>> (Sorry for late answer, I managed to test the original patch minute=
+s before Peff merged it to pu)
+>>> (And thanks for maintaining git)
+>>>
+>>> Is everybody using cygwin happy with this?
+>>>
+>>> I managed to compile on a fresh installed cygwin,
+>>> but failed to compile under 1.7.7, see below.
+>>> Is there a way we can achieve to compile git both under "old" and "=
+new" cygwin 1.7 ?
+>>> Or is this not worth the effort?
+>>>
+>> I found no version info defined that could be used to automatically
+>> switch between the old and current headers. You can always
+>>
+>>     make V15_MINGW_HEADERS=3D1 ...
+>>
+>> to force using the old set if you do not wish to update your install=
+ation.
+>=20
+> Should we keep the code change, then, but not flip the default (i.e.,
+> make people on the newer version opt into it)? I am not clear on how
+> common the newer include system is. Of course, auto-detecting would b=
+e
+> the ideal.
+>=20
+> -Peff
+There are a couple of things which we may want consider:
+a) the name V15_MINGW_HEADERS:
+  It indicates that this is true for Version 1.5 (of what?)
+  If I assume Cygwin version 1.5 , then this name is confusing.
+  Even cygwin versions like 1.7.7 use the same (or similar) include fil=
+es as 1.5
+  A better name could be CYGWIN_USE_MINGW_HEADERS (or the like) and to =
+revert the logic.
 
->   $ ls -ld subdir
->   ls: cannot access subdir: No such file or directory
->   $ git init --bare --shared=group subdir/test.git
->   Initialized empty shared Git repository in /tmp/subdir/test.git/
->   $ ls -ld subdir subdir/test.git
->   drwxr-xr-x 3 pete users 4096 2012-11-14 11:16 subdir
->   drwxrwsr-x 7 pete users 4096 2012-11-14 11:16 subdir/test.git
->
-> Assuming the "subdir" directory doesn't already exist and is created
-> by the "git init" command AND the --shared=group option is used, then
-> shouldn't the "subdir" directory also have 2775 permissions?
+b) Autodetection:
+  (Just loud thinking), running=20
+$grep mingw /usr/include/w32api/winsock2.h
+ * This file is part of the mingw-w64 runtime package.
+#include <_mingw_unicode.h>
 
-People who access this "test.git" does not need to be able to write
-into subdir/foobar, so the lack of w bit for the group is perfectly
-fine, no?  Depending on to whom you would want to expose things
-other than "test.git" in "subdir", the desirable set of the
-permission bits on "subdir" itself would be different, but the "git
-init" command line does not give us enough information to infer what
-exact mode is needed.
+on cygwin 1.7.17 indicates that we can use grep in the Makefile to auto=
+detect the "mingw headers"
 
-At least we should give r-x to the parent directories for the
-classes of users to whom we give rwx to the repository itself.  In
-your example, since we give rwx to user=pete and group=users on
-"test.git", "subdir" should have r-x (or better) for user=pete and
-group=users, so that result happens to be correct.
+Something like this in Makefile:
++ifeq ($(shell grep mingw /usr/include/w32api/winsock2.h />/dev/null 2>=
+/dev/null && echo y),y)
++	CYGWIN_USE_MINGW_HEADERS=3DYesPlease
++endif
 
-But I do not think we did the right thing by design but it turned
-out to be correct by accident.  If your umask were 077 or something
-tight, I suspect that we end up creating "subdir" with "rwx------",
-and group members wouldn't be able to access "test.git".  We may
-want to loosen it down to "rwxr-x---" in such a case, but doing so
-unconditionally risks exposing things inside "subdir" other than
-"test.git" to your group members, and worse yet, we would be doing
-so without telling the user.  If your umask is set to a tight value,
-it is likely that you did so on purpose, and it is debatable if it
-is a good thing to do.  It is safer to create these leading
-directories like "subdir" honoring the umask, give the user a chance
-to make sure that other things in "subdir" can be exposed to people
-who have access to "test.git", and let the user handle the
-permission (perhaps running "chmod g+rx subdir" as necessary).  And
-that is the behaviour you are observing, I think.
+c) I'm not sure if we want to change cygwin.c or git-compat-util.h for =
+this.
+
+I can prepare a proper patch within the next couple of days
+
+/Torsten
+
+
+
+
+
+
+
+=20
