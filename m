@@ -1,91 +1,84 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] completion: remove 'help' duplicate from porcelain commands
-Date: Wed, 14 Nov 2012 01:49:30 +0100
-Message-ID: <20121114004930.GT12052@goldbirke>
-References: <CAFj1UpE6OtJEojaED1_DZJD0kU=nVsFE_w8xa0oJE-6auCU2rw@mail.gmail.com>
- <CAFj1UpFd9X8Jq5o7B4m35i=merBDvOo4NOtwth=UnG2S5X_rGw@mail.gmail.com>
- <20121113111448.GA3817@goldbirke>
- <CAFj1UpGxx_9GHSnJRpe8hDGB6OTio1mcN71LKcR0pxhSVx2xDw@mail.gmail.com>
- <20121113234636.GS12052@goldbirke>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Tue, 13 Nov 2012 20:18:53 -0500
+Message-ID: <50A2F17D.4010907@gmail.com>
+References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: felipe.contreras@gmail.com
-To: Marc Khouzam <marc.khouzam@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 01:50:00 2012
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 14 02:19:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYRAw-0001Lc-Oz
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 01:49:55 +0100
+	id 1TYRdI-0005VD-7X
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 02:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756076Ab2KNAtl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 19:49:41 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:60654 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756041Ab2KNAtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2012 19:49:40 -0500
-Received: from localhost6.localdomain6 (p5B13079E.dip0.t-ipconnect.de [91.19.7.158])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0MM0VQ-1Tg9Kg2h6C-0088bY; Wed, 14 Nov 2012 01:49:30 +0100
-Content-Disposition: inline
-In-Reply-To: <20121113234636.GS12052@goldbirke>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:E4lgXs6ECAqVU7bH6mF9iMUCnJk+/bfxBosgJwwPXO2
- F6cgwBj5gxM1qkJDBrk8wjyu6FBrd0iocEqgohgzucLnCW64l/
- m1ACgUBTkeXuVXlAr8wo0HKPRUqF75Q9PucB/MApWKz6Mmp6BC
- fFTVGRywezOylDkbrwPuhdZlRLYxZyb3UHvIxOEGz6PQlsURun
- JV2FEQjSURNA3T7xZe/5OINe44AXf6/We7MJVAuS3y9oWM6OJq
- c3d95X3RBrjlOEI4rtMAQ3EnIXiihvTo3d/FnUAQctY6wfe0dn
- eismLcytmlEHDa9PulkISwWT2J+7eKM0m5dZ6PIG/6AXz+3hZg
- hz4xoQa6bLTwFRe7UJGdCLv2QDcg7TbFz4ec1NYv4
+	id S932274Ab2KNBS5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2012 20:18:57 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:46238 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932152Ab2KNBS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2012 20:18:57 -0500
+Received: by mail-vc0-f174.google.com with SMTP id fk26so8073313vcb.19
+        for <git@vger.kernel.org>; Tue, 13 Nov 2012 17:18:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=NdS6ih3camXB59SpHifJ5P7DfrXV0RKFWfe9MFz3NBM=;
+        b=Ep3lEqy+xc0hg2ARYccYYk7hT7jc7RdPAw14cz3Qs5qjOj4jyN71ST/1FfZUETEdQe
+         0fbkh6IoufxfNKvRU/COTXhaq4+cQ2KbDGvbmVoslFBHPfr/k0TjtAS7YXX1Gcxt+H0x
+         psYH1Y0ODTB+Sk85ZL/a/KV3ocIfDcTiJ6zZXja0D9tL8/LOJFK7RKjnlc9xkj4MUNjF
+         rPV1M4oUK5IGBJviKNZsbLJntHWBq8yItK7ORCKGUpWZicR9s6mHmBYT77prmqta/OAN
+         oGeB15kepm9ujPbFW0CAdnZFyp30w2Rj2HkKqxRkZW+6IUVPiwEeCi24qjB26VsKCV25
+         VYLg==
+Received: by 10.52.74.6 with SMTP id p6mr279817vdv.124.1352855936322;
+        Tue, 13 Nov 2012 17:18:56 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-107-139.washdc.fios.verizon.net. [173.79.107.139])
+        by mx.google.com with ESMTPS id dq8sm11071968vdc.4.2012.11.13.17.18.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 13 Nov 2012 17:18:54 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121029 Thunderbird/16.0.2
+In-Reply-To: <50A2B14C.9040608@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209692>
 
-The list of all git commands is computed from the output of 'git help
--a', which already includes 'help', so there is no need to explicitly
-add it once more when computing the list of porcelain commands.
+On 11/13/2012 03:45 PM, Torsten B=C3=B6gershausen wrote:
+>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
+>>   - Update cygwin.c for new mingw-64 win32 api headers
+>>
+>>   Make git work on newer cygwin.
+>>
+>>   Will merge to 'next'.
+> (Sorry for late answer, I managed to test the original patch minutes =
+before Peff merged it to pu)
+> (And thanks for maintaining git)
+>
+> Is everybody using cygwin happy with this?
+>
+> I managed to compile on a fresh installed cygwin,
+> but failed to compile under 1.7.7, see below.
+> Is there a way we can achieve to compile git both under "old" and "ne=
+w" cygwin 1.7 ?
+> Or is this not worth the effort?
+> /Torsten
+>
+>
+>
+I found no version info defined that could be used to automatically=20
+switch between the old and current headers. You can always
 
-Note that 'help' wasn't actually offered twice because of this,
-because Bash filters duplicates from possible completion words.
+     make V15_MINGW_HEADERS=3D1 ...
 
-Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
----
+to force using the old set if you do not wish to update your installati=
+on.
 
-> > > Does the git completion script returns any duplicates at all?
-> >=20
-> > It does.  'help' is returned twice for example.
->=20
-> Right.  Now that you mentioned it, I remember I noticed it a while
-> ago, too.  I even wrote a patch to fix it, but not sure what became o=
-f
-> it.  Will try to dig it up.
-
-Here it is.  It turns out I wrote it in May this year, but according to
-gmane and my mailbox never sent it out.
-
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index bc0657a2..b7b1a834 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -585,7 +585,7 @@ __git_list_porcelain_commands ()
- {
- 	local i IFS=3D" "$'\n'
- 	__git_compute_all_commands
--	for i in "help" $__git_all_commands
-+	for i in $__git_all_commands
- 	do
- 		case $i in
- 		*--*)             : helper pattern;;
---=20
-1.8.0.128.g441b4b3
+Mark
