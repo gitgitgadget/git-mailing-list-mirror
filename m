@@ -1,81 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Notes in format-patch
-Date: Wed, 14 Nov 2012 10:17:49 +0100
-Message-ID: <50A361BD.2010806@drmicha.warpmail.net>
-References: <50A0B896.8050700@drmicha.warpmail.net> <a35a8f44b908bded0b475b02e7917011fb3bf90b.1352728712.git.git@drmicha.warpmail.net> <50A2213B.4060505@drmicha.warpmail.net> <7vhaotfou6.fsf@alter.siamese.dyndns.org> <7vzk2le918.fsf@alter.siamese.dyndns.org> <7vr4nxe7nf.fsf@alter.siamese.dyndns.org> <7vfw4de5oc.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Git does not understand absolute Win'dos' path
+Date: Wed, 14 Nov 2012 10:45:40 +0100
+Message-ID: <50A36844.3090000@viscovery.net>
+References: <1352884329.28981.YahooMailNeo@web162504.mail.bf1.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 10:18:08 2012
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Martin Lichtin <lichtin@yahoo.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 10:46:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYZ6l-0007Hz-Cl
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 10:18:07 +0100
+	id 1TYZXm-0001ER-CH
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Nov 2012 10:46:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932766Ab2KNJRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 04:17:53 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:55795 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753514Ab2KNJRv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2012 04:17:51 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 44B8620BF9;
-	Wed, 14 Nov 2012 04:17:51 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 14 Nov 2012 04:17:51 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=qzsks/Zd3MI9yxByAHfk6Y
-	PFMCI=; b=sX5ox8135PqOuWJF2so8k+0EBRW6m4O9U/ewIgPAclC6uCUOUYzIyH
-	k3TM395MCYCXV9LHyok6nGpyAWDAoFRMF71r222ur4xhsRyJ4Pj9FVITDIw0A2sQ
-	Y/7/R38gO8KftVWBJjhI/46SHUPUFDqA4SwxLpOED9v08kOTpSiBA=
-X-Sasl-enc: G4W/6XSI81VPPo+T2vYX+qyR/GWPSJGTZCCS7PUITnSf 1352884671
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A7933482748;
-	Wed, 14 Nov 2012 04:17:50 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
-In-Reply-To: <7vfw4de5oc.fsf@alter.siamese.dyndns.org>
+	id S932863Ab2KNJpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 04:45:47 -0500
+Received: from so.liwest.at ([212.33.55.23]:23314 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932820Ab2KNJpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 04:45:45 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TYZXR-0007Mo-NP; Wed, 14 Nov 2012 10:45:41 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 433E41660F;
+	Wed, 14 Nov 2012 10:45:41 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <1352884329.28981.YahooMailNeo@web162504.mail.bf1.yahoo.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209707>
 
-Junio C Hamano venit, vidit, dixit 13.11.2012 19:09:
-> Junio C Hamano <gitster@pobox.com> writes:
+Am 11/14/2012 10:12, schrieb Martin Lichtin:
+> Maven's release plugin prepares a call Git like in this example:
 > 
->> ... and it is broken X-<.
->>
->> The blank line should be added before the diffstat, not after the
->> notes message (t3307 shows a case where we give notes without
->> diffstat, and we shouldn't be adding an extra blank line in that
->> case.
+> cmd.exe /X /C "git commit --verbose -F
+> C:\cygwin\tmp\maven-scm-915771020.commit pom.xml"
 > 
-> Second try.
+> Git doesn't seem to understand the -F argument and treats it like a
+> relative path (relative to the repository root):
 > 
-> -- >8 --
-> Subject: format-patch: add a blank line between notes and diffstat
-> 
-> The last line of the note text comes immediately before the diffstat
-> block, making the latter unnecessarily harder to view.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  log-tree.c | 31 +++++++++++++++++++++----------
->  1 file changed, 21 insertions(+), 10 deletions(-)
+> $ cmd.exe /X /C "git commit --verbose -F C:\cygwin\tmp\commit pom.xml" 
+> fatal: could not read log file 'mytestdir/C:\cygwin\tmp\commit': No
+> such file or directory
 
-Thanks, that patch works. I'm curious, though, where the empty line
-between the --- and your diffstat comes from. Do you have an empty note?
-I'm not getting any (origin/next+your patch).
+According to the code, this should not happen if you are using msysgit.
+For this reason, I guess you are using Cygwin git. Right?
 
-The fact that we don't usually have that empty line was the reason why I
-preferred to have no empty line between the --- and the "Note:".
+I don't know what Cygwin programs are supposed to do if they receive an
+argument that looks like a Windows style absolute path.
 
-Michael
+OTOH, it could be argued that Maven should not treat a Cygwin program like
+a DOS program, and it should pass the path in the POSIXy form
+/c/cygwin/tmp/commit or /tmp/commit.
+
+-- Hannes
