@@ -1,392 +1,84 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: gitpacker progress report and a question
-Date: Thu, 15 Nov 2012 16:28:18 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121115212818.GA21558@thyrsus.com>
-Reply-To: esr@thyrsus.com
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] Unify appending signoff in format-patch, commit and sequencer
+Date: Thu, 15 Nov 2012 12:42:41 -0800
+Message-ID: <CA+sFfMcfGbGDeXKZD1o4pmhbrJ1E5WgV3qrQBPT3eH=W54tNGw@mail.gmail.com>
+References: <1352982778-28631-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="SUOF0GtieIMvvwua"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 22:29:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 22:37:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZ703-0006Zj-8g
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 22:29:27 +0100
+	id 1TZ77Q-0005bE-81
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 22:37:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321Ab2KOV24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 16:28:56 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:58736
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab2KOV2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 16:28:54 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 072724065B; Thu, 15 Nov 2012 16:28:18 -0500 (EST)
-Content-Disposition: inline
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751255Ab2KOVgp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2012 16:36:45 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:59147 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239Ab2KOVgn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2012 16:36:43 -0500
+Received: by mail-vc0-f174.google.com with SMTP id fk26so2180050vcb.19
+        for <git@vger.kernel.org>; Thu, 15 Nov 2012 13:36:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=nR3GmjlT1wOg875LyTTOQyv6Ubij2ii2s7WAMK5JsfU=;
+        b=CVr+G92RFubXXiXiVtHDnI9yjbsGQf6qaZMicNKkJQ5NA5AONgEchWQX1+mFkuhDEr
+         P04Qqjz1yHh0Kht1fb3iadSEhH4hefyr8NsuIkiMZhoPtCu8lRg6Jw7GQ99LgKdTY/J0
+         21kDVQJ2FGZg8CTBUxukcGivt6DTMU3vbLa4xB7hUbNKy54M3kcrIjPokSVTk++mkTlW
+         RIaVnWzm6c9t3R4REMCd3S4TMeLaFHVCpKujG4GSUf9HO608nVy+seCr88SWxbzpeQUL
+         cM6EOh/7MIcq9WLHjd/bWkvdSgr4g1XHvI9DzvRung8vqZ3TixAyypLmWraXnX/Iendo
+         Gs7w==
+Received: by 10.220.152.11 with SMTP id e11mr3087391vcw.61.1353012162107; Thu,
+ 15 Nov 2012 12:42:42 -0800 (PST)
+Received: by 10.58.220.9 with HTTP; Thu, 15 Nov 2012 12:42:41 -0800 (PST)
+In-Reply-To: <1352982778-28631-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209847>
 
+On Thu, Nov 15, 2012 at 4:32 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> There are two implementations of append_signoff in log-tree.c and
+> sequencer.c, which do more or less the same thing. This patch
+>
+>  - teaches sequencer.c's append_signoff() not to append the signoff i=
+f
+>    it's already there but not at the bottom
+>
+>  - removes log-tree.c's
+>
+>  - make sure "Signed-off-by: foo" in the middle of a line is not
+>    counted as a sign off
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Interestingly this patch triggers the fault that it fixes.
+>  I was surprised that there was no blank line before my S-o-b
+>  and thought I broke something. It turns out I used unmodified
+>  format-patch and it mistook the S-o-b quote as true S-o-b line.
+>  The modified one puts the blank line back.
 
---SUOF0GtieIMvvwua
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Heh, yeah I noticed this bug yesterday when I submitted my changes
+affecting the same area of code (sequence.c).  Glad I didn't waste too
+much time fixing it.
 
-Some days ago I reported that I was attempting to write a tool that could
-(a) take a git repo and unpack it into a tarball sequence plus a metadata log,
-(b) reverse that operation, packing a tarball and log sequence into a repo.
+Have you looked at this:
 
-Thanks in part to advice by Andreas Schwab and in part to looking at the
-text of the p4 import script, this effort has succeeded.  A proof of
-concept is enclosed.  It isn't documented yet, and has not been tested
-on a repository with branches or merges in the history, but I am confident
-that the distance from here to a finished and tested tool is short. 
+   http://thread.gmane.org/gmane.comp.version-control.git/209781
 
-The immediate intended use is for importing older projects that are
-available only as sequences of release tarballs, but there are other
-sorts of repository surgery that would become easier using it.
+That series doesn't duplicate your work, but the two series's should
+be resolved.
 
-I'm still looking for a better name for it and would welcome suggestions.
-
-Before I do much further work, I need to determine how this will be shipped.
-I see two possibilities: either I ship it as a small standalone project,
-or it becomes a git subcommand shipped with the git suite. How I document 
-it and set up its tests would differ between these two cases.
-
-Is there a process for submitting new subcommands?  What are the 
-test-suite and documentation requirements?
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
---SUOF0GtieIMvvwua
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=gitpacker
-
-#!/usr/bin/env python
-"""
-gitpacker - assemble tree sequences into repository histories
-
-Requires git and cpio.
-"""
-import sys, os, getopt, subprocess, time, tempfile
-
-DEBUG_GENERAL  = 1
-DEBUG_PROGRESS = 2
-DEBUG_COMMANDS = 3
-
-class Fatal(Exception):
-    "Unrecoverable error."
-    def __init__(self, msg):
-        Exception.__init__(self)
-        self.msg = msg
-
-class Baton:
-    "Ship progress indications to stdout."
-    def __init__(self, prompt, endmsg='done', enable=False):
-        self.prompt = prompt
-        self.endmsg = endmsg
-        self.countfmt = None
-        self.counter = 0
-        if enable:
-            self.stream = sys.stdout
-        else:
-            self.stream = None
-        self.count = 0
-        self.time = 0
-    def __enter__(self):
-        if self.stream:
-            self.stream.write(self.prompt + "...")
-            if os.isatty(self.stream.fileno()):
-                self.stream.write(" \010")
-            self.stream.flush()
-        self.count = 0
-        self.time = time.time()
-        return self
-    def startcounter(self, countfmt, initial=1):
-        self.countfmt = countfmt
-        self.counter = initial
-    def bumpcounter(self):
-        if self.stream is None:
-            return
-        if os.isatty(self.stream.fileno()):
-            if self.countfmt:
-                update = self.countfmt % self.counter
-                self.stream.write(update + ("\010" * len(update)))
-                self.stream.flush()
-            else:
-                self.twirl()
-        self.counter = self.counter + 1
-    def endcounter(self):
-        if self.stream:
-            w = len(self.countfmt % self.count)
-            self.stream.write((" " * w) + ("\010" * w))
-            self.stream.flush()
-        self.countfmt = None
-    def twirl(self, ch=None):
-        "One twirl of the baton."
-        if self.stream is None:
-            return
-        if os.isatty(self.stream.fileno()):
-            if ch:
-                self.stream.write(ch)
-                self.stream.flush()
-                return
-            else:
-                update = "-/|\\"[self.count % 4]
-                self.stream.write(update + ("\010" * len(update)))
-                self.stream.flush()
-        self.count = self.count + 1
-    def __exit__(self, extype, value_unused, traceback_unused):
-        if extype == KeyboardInterrupt:
-            self.endmsg = "interrupted"
-        if extype == Fatal:
-            self.endmsg = "aborted by error"
-        if self.stream:
-            self.stream.write("...(%2.2f sec) %s.\n" \
-                              % (time.time() - self.time, self.endmsg))
-        return False
-
-def do_or_die(dcmd, legend=""):
-    "Either execute a command or raise a fatal exception."
-    if legend:
-        legend = " "  + legend
-    if verbose >= DEBUG_COMMANDS:
-        sys.stdout.write("executing '%s'%s\n" % (dcmd, legend))
-    try:
-        retcode = subprocess.call(dcmd, shell=True)
-        if retcode < 0:
-            raise Fatal("child was terminated by signal %d." % -retcode)
-        elif retcode != 0:
-            raise Fatal("child returned %d." % retcode)
-    except (OSError, IOError) as e:
-        raise Fatal("execution of %s%s failed: %s" % (dcmd, legend, e))
-
-def capture_or_die(dcmd, legend=""):
-    "Either execute a command and capture its output or die."
-    if legend:
-        legend = " "  + legend
-    if verbose >= DEBUG_COMMANDS:
-        sys.stdout.write("executing '%s'%s\n" % (dcmd, legend))
-    try:
-        return subprocess.check_output(dcmd, shell=True)
-    except subprocess.CalledProcessError as e:
-        if e.returncode < 0:
-            raise Fatal("child was terminated by signal %d." % -e.returncode)
-        elif e.returncode != 0:
-            sys.stderr.write("gitpacker: child returned %d." % e.returncode)
-        sys.exit(1)
-    
-def git_pack(indir, outdir, quiet=False):
-    "Pack a tree sequence and associated logfile into a repository"
-    do_or_die("mkdir %s; git init -q %s" % (outdir, outdir))
-    logfile = os.path.join(indir, "log")
-    commit_id = [None]
-    state = 0
-    parents = []
-    comment = committername = authorname = ""
-    commitdate = authordate = commitemail = authoremail = ""
-    commitcount = 1;
-    linecount = 0
-    with Baton("Packing", enable=not quiet) as baton:
-        for line in open(logfile):
-            if verbose > DEBUG_PROGRESS:
-                print "Looking at: '%s'" % repr(line)
-            if state == 0:
-                if line == '\n':
-                    state = 1
-                else:
-                    try:
-                        space = line.index(' ')
-                        leader = line[:space]
-                        follower = line[space:].strip()
-                        if leader == "commit":
-                            commit = follower
-                        elif leader == "parent":
-                            parents.append(follower)
-                        elif leader not in ("author", "committer"):
-                            raise Fatal("unexpected log attribute at %s" \
-                                        % repr(line))
-                        elif leader == "committer":
-                            (committername, committeremail, committerdate) = [x.strip() for x in follower.replace('>','<').split('<')]
-                        elif leader == "author":
-                            (authorname, authoremail, authordate) = [x.strip() for x in follower.replace('>','<').split('<')]
-                    except ValueError:
-                        raise Fatal('"%s", line %d: ill-formed log entry' % (logfile, linecount))
-            elif state == 1:
-                if line == ".\n":
-                    if verbose > DEBUG_PROGRESS:
-                        print "Interpretation begins"
-                    os.chdir(outdir)
-                    if commitcount > 1:
-                        do_or_die("rm `git ls-tree --name-only HEAD`")
-                    if verbose > DEBUG_PROGRESS:
-                        print "Copying"
-                    os.chdir("%s/%d" % (indir, commitcount))
-                    do_or_die("find . -print | cpio -pd --quiet %s" % (outdir,))
-                    os.chdir(outdir)
-                    do_or_die("git add -A") 
-                    tree_id = capture_or_die("git write-tree").strip()
-                    if verbose > DEBUG_PROGRESS:
-                        print "Tree ID is", tree_id
-                    (_, commentfile) = tempfile.mkstemp()
-                    with open(commentfile, "w") as cfp:
-                        cfp.write(comment)
-                    command = "git commit-tree %s " % tree_id
-                    command += " ".join(map(lambda p: "-p " + commit_id[int(p)],parents))
-                    command += "<'%s'" % commentfile
-                    environment = ""
-                    environment += " GIT_AUTHOR_NAME='%s' " % authorname
-                    environment += " GIT_AUTHOR_EMAIL='%s' " % authoremail 
-                    environment += " GIT_AUTHOR_DATE='%s' " % authordate 
-                    environment += " GIT_COMMITTER_NAME='%s' " % committername
-                    environment += " GIT_COMMITTER_EMAIL='%s' " % committeremail 
-                    environment += " GIT_COMMITTER_DATE='%s' " % committerdate 
-                    commit_id.append(capture_or_die(environment + command).strip())
-                    do_or_die("git update-ref HEAD %s" % commit_id[-1])
-                    os.remove(commentfile)
-                    state = 0
-                    parents = []
-                    comment = committername = authorname = ""
-                    committerdate = authordate = committeremail = authoremail = ""
-                    commitcount += 1
-                    baton.twirl()
-                    if maxcommit != 0 and commitcount >= maxcommit:
-                        break
-                else:
-                    if line.startswith("."):
-                        line = line[1:]
-                    comment += line
-
-def git_unpack(indir, outdir, quiet=False):
-    "Unpack a repository into a tree sequence and associated logfile."
-    rawlogfile = os.path.join(outdir, "rawlog")
-    with Baton("Unpacking", enable=not quiet) as baton:
-        do_or_die("rm -fr %s; mkdir %s" % (outdir, outdir))
-        baton.twirl()
-        do_or_die("cd %s; git log --all --reverse --format=raw >%s" % (indir, rawlogfile))
-        baton.twirl()
-        commitcount = 1
-        commit_map = {}
-        os.chdir(indir)
-        try:
-            for line in open(rawlogfile):
-                baton.twirl()
-                if line.startswith("commit "):
-                    commit = line.split()[1]
-                    commit_map[commit] = commitcount
-                    do_or_die("git checkout %s 2>/dev/null; mkdir %s/%d" \
-                              % (commit, outdir, commitcount))
-                    do_or_die("git ls-tree -r --name-only --full-tree %s | cpio -pd --quiet %s/%d"
-                              % (commit, outdir, commitcount))
-                    commitcount += 1
-
-        finally:
-            do_or_die("git reset --hard >/dev/null; git checkout master >/dev/null 2>&1")
-        cooked = os.path.join(outdir, "log")
-        body_latch = False
-        try:
-            with open(cooked, "w") as wfp:
-                linecount = 0
-                for line in open(rawlogfile):
-                    linecount += 1
-                    if line[0].isspace():
-                        if line.startswith(" " * 4):
-                            line = line[4:]
-                            # Old-school byte stuffing.
-                            if line.startswith("."):
-                                line = "." + line
-                    else:
-                        space = line.index(' ')
-                        leader = line[:space]
-                        follower = line[space:].strip()
-                        if leader == "tree":
-                            continue
-                        if leader == "commit" and linecount > 1:
-                            wfp.write(".\n")
-                        # FIXME: Check that log raw emits one parent per line
-                        if leader in ("commit", "parent"):
-                            line = "%s %s\n" % (leader, commit_map[follower])
-                            body_latch = False
-                        elif leader not in ("author", "committer"):
-                            raise Fatal("unexpected log attribute at %s" \
-                                        % repr(line))
-                    if line == '\n':
-                        if not body_latch:
-                            body_latch = True
-                        else:
-                            continue
-                    wfp.write(line)
-                wfp.write(".\n")
-        except (ValueError, IndexError, KeyError):
-            raise Fatal("log rewrite failed on %s" % repr(line))
-    os.remove(rawlogfile)
-
-if __name__ == '__main__':
-    (options, arguments) = getopt.getopt(sys.argv[1:], "ci:m:o:qxv")
-    mode = 'auto'
-    indir = '.'
-    outdir = None
-    quiet = False
-    maxcommit = 0
-    verbose = 0
-    for (opt, val) in options:
-        if opt == '-x':
-            mode = 'unpack'
-        elif opt == '-c':
-            mode = 'pack'
-        elif opt == '-m':
-            indir = int(val)
-        elif opt == '-i':
-            indir = val
-        elif opt == '-o':
-            outdir = val
-        elif opt == '-q':
-            quiet = True
-        elif opt == '-v':
-            verbose += 1
-    if not os.path.exists(indir):
-        sys.stderr.write("gitpacker: input directory %s must exist.\n" % indir)
-        sys.exit(1)
-    if mode == 'auto':
-        if os.path.exists(os.path.join(indir, ".git")):
-            mode = 'unpack'
-        else:
-            mode = 'pack'
-    assert mode == 'pack' or mode == 'unpack'
-    if outdir is None:
-        if mode == 'pack':
-            outdir = indir + "/packed"
-        elif mode == 'unpack':
-            outdir = indir + "/unpacked"
-    if os.path.exists(outdir):
-        sys.stderr.write("gitpacker: output directory %s must not exist.\n" % outdir)
-        sys.exit(1)
-    indir = os.path.abspath(indir)
-    outdir = os.path.abspath(outdir)
-    if verbose >= DEBUG_PROGRESS:
-        sys.stderr.write("gitpacker: %s from %s to %s.\n" % (mode, indir, outdir))
-    try:
-        try:
-            here = os.getcwd()
-            if mode == 'pack':
-                git_pack(indir, outdir, quiet=quiet)
-            elif mode == 'unpack':
-                git_unpack(indir, outdir, quiet=quiet)
-        finally:
-            os.chdir(here)
-    except Fatal, e:
-        sys.stderr.write(e.msg + "\n")
-        sys.exit(1)
-    except KeyboardInterrupt:
-        pass
-
-# end
-
-
---SUOF0GtieIMvvwua--
+-Brandon
