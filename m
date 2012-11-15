@@ -1,75 +1,66 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 4/8] ident: keep separate "explicit" flags for author
- and committer
-Date: Thu, 15 Nov 2012 00:04:57 -0800
-Message-ID: <20121115080457.GD8429@elie.Belkin>
+Subject: Re: [PATCHv2 5/8] var: accept multiple variables on the command line
+Date: Thu, 15 Nov 2012 00:10:12 -0800
+Message-ID: <20121115081012.GE8429@elie.Belkin>
 References: <20121115003029.GA17550@sigill.intra.peff.net>
- <20121115003413.GD17819@sigill.intra.peff.net>
+ <20121115003504.GE17819@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 15 09:05:41 2012
+X-From: git-owner@vger.kernel.org Thu Nov 15 09:10:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYuSB-0006jS-PZ
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 09:05:40 +0100
+	id 1TYuWw-0002Bw-BU
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 09:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992888Ab2KOIFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 03:05:04 -0500
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:57289 "EHLO
+	id S2992889Ab2KOIKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 03:10:19 -0500
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:58451 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992684Ab2KOIFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 03:05:02 -0500
-Received: by mail-pb0-f46.google.com with SMTP id wy7so981556pbc.19
-        for <git@vger.kernel.org>; Thu, 15 Nov 2012 00:05:02 -0800 (PST)
+	with ESMTP id S2992679Ab2KOIKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 03:10:18 -0500
+Received: by mail-pb0-f46.google.com with SMTP id wy7so984229pbc.19
+        for <git@vger.kernel.org>; Thu, 15 Nov 2012 00:10:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=GpGjdZUH/otm/oji0ubpIDhycu0bg78c/Wye8pO1whA=;
-        b=MeBC+XItJGX1tUS2v0J9KvgDAJ18Guu4jSv3530E7B9HU1uZGR5ZxM9S/ev0wODGHm
-         fJloiWxF8OjEUHmwfgF8t8rcSF9lVVzLfYLr5vEHIs50B+AOCwmkhWfoRvZTEn508ruL
-         sllf3ShBhGzk9TzALzqd6KCtqqyeaDxzoiv9IjoLAnkW/DBgUwIaAniNIvgngy50+1KW
-         SMHXIWko366UvgO8dBCsOibExLHeVR55BNuXEOBe7JKoRn2N/luc9aPoim1a3/5KMI1P
-         TX9f1xT935u27Zl5EUxxVuVAyW8WcAEW4rHOMZIY2qp1zJXRQuIJ9ZUNTRuaN2/RvXMz
-         OYnA==
-Received: by 10.68.235.208 with SMTP id uo16mr2282403pbc.65.1352966701988;
-        Thu, 15 Nov 2012 00:05:01 -0800 (PST)
+        bh=ZAXu/5FSxJyfpsYr5is5+INgY43Yhihpml4EFkoMqTE=;
+        b=jPf57RcerLT3+9o9Tz2jjkbfmPURF4XMadV2giQv0ridal14XT+tuu+D8VxgyhIVtF
+         I/LcLzEOn1D14mh1gAGXPgozKPZ3UPUanDwcYYuhc5Dd7jLrTwq6RImPkCRdI3ZdYjdU
+         XU35b1JxKW6Dokz8ZTiz2AaE3aYccfPK4BeXGOAMNWhk4tP+hhEobteDinPcFbvFixEV
+         CZU3PziyZHnmFrrxlZ6mFCvuQw6PYtIEJojpbqVh3idUL33siQN5kYeaXQWLkgLTg2ds
+         mwkjyTT6VFatW6rdtRCNi9+DpI6TafByrFA8N8jY2DGEq8Mn8b7v7sc27oxfpipjfKJ6
+         KQ0g==
+Received: by 10.68.252.168 with SMTP id zt8mr2396020pbc.43.1352967017610;
+        Thu, 15 Nov 2012 00:10:17 -0800 (PST)
 Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id c1sm9341248pav.23.2012.11.15.00.04.59
+        by mx.google.com with ESMTPS id o5sm9344020paz.32.2012.11.15.00.10.15
         (version=SSLv3 cipher=OTHER);
-        Thu, 15 Nov 2012 00:05:00 -0800 (PST)
+        Thu, 15 Nov 2012 00:10:16 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20121115003413.GD17819@sigill.intra.peff.net>
+In-Reply-To: <20121115003504.GE17819@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209806>
 
 Jeff King wrote:
 
->   1. GIT_COMMITTER_* is set explicitly, but we fallback for
->      GIT_AUTHOR. We claim the ident is explicit, even though
->      the author is not.
->
->   2. GIT_AUTHOR_* is set and we ask for author ident, but
->      not committer ident. We will claim the ident is
->      implicit, even though it is explicit.
->
-> This patch uses two variables instead of one, updates both
-> when we set the "fallback" values, and updates them
-> individually when we read from the environment.
+> This patch lets callers specify multiple variables, and
+> prints one per line.
+[...]
+> Signed-off-by: Jeff King <peff@peff.net>
 
-Nice problem description.  The fixed behavior makes sense to me, for
-what it's worth.
+Very pleasantly done --- thanks.  For what it's worth, assuming this
+is tested, I can't see any reason not to apply it.
 
-Not about this patch, but: in case (1), shouldn't the author fall
-back to $GIT_COMMITER_NAME?
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
