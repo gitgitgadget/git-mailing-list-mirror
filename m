@@ -1,95 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
-Date: Thu, 15 Nov 2012 02:43:59 -0800
-Message-ID: <20121115104345.GA32465@sigill.intra.peff.net>
-References: <20121115003029.GA17550@sigill.intra.peff.net>
- <20121115003640.GH17819@sigill.intra.peff.net>
- <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
- <20121115083315.GA23377@sigill.intra.peff.net>
- <CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 11:44:23 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] status: add advice on how to push/pull to tracking branch
+Date: Thu, 15 Nov 2012 11:45:00 +0100
+Message-ID: <1352976300-20159-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 15 11:45:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYwvm-00060w-Vw
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 11:44:23 +0100
+	id 1TYwwu-00078X-Kr
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 11:45:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993022Ab2KOKoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 05:44:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49236 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964838Ab2KOKoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 05:44:07 -0500
-Received: (qmail 15192 invoked by uid 107); 15 Nov 2012 10:44:55 -0000
-Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 05:44:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 02:43:59 -0800
-Content-Disposition: inline
-In-Reply-To: <CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
+	id S2993077Ab2KOKpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 05:45:18 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:56317 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992967Ab2KOKpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 05:45:16 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qAFAaICX016493
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 15 Nov 2012 11:36:18 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1TYwwR-0005cA-9G; Thu, 15 Nov 2012 11:45:03 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1TYwwR-0005G7-4r; Thu, 15 Nov 2012 11:45:03 +0100
+X-Mailer: git-send-email 1.8.0.319.g8abfee4
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 15 Nov 2012 11:36:18 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: qAFAaICX016493
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1353580582.22352@TXbLMM27mRJauxNaepUnOA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209814>
 
-On Thu, Nov 15, 2012 at 11:28:46AM +0100, Felipe Contreras wrote:
 
-> I tried both:
-> 
-> ok 19 # skip implicit ident prompts for sender (missing AUTOIDENT of
-> PERL,AUTOIDENT)
-> ok 20 - broken implicit ident aborts send-email
-> 
-> ok 19 - implicit ident prompts for sender
-> ok 20 # skip broken implicit ident aborts send-email (missing
-> !AUTOIDENT of PERL,!AUTOIDENT)
-> 
-> However, it would be much easier if ident learned to check
-> GIT_TEST_FAKE_HOSTNAME, or something.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+I thought this was obvious enough not to deserve an advice, but a
+colleague of mine had troubles with "commited but not pushed" changes.
+Maybe an additional advice would have helped. After all, it's an
+advice, and can be deactivated ...
 
-Yes, it would be. It has two downsides:
+ remote.c                   | 13 ++++++++++---
+ t/t2020-checkout-detach.sh |  1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-  1. The regular git code has to be instrumented to respect the
-     variable, so it can potentially affect git in production use
-     outside of the test suite. Since such code is simple, though, it is
-     probably not a big risk.
-
-  2. We would not actually exercise the code paths for doing
-     hostname and GECOS lookup. We do not test their resulting values,
-     so the coverage is not great now, but we do at least run the code,
-     which would let a run with "--valgrind" check it. I guess we could
-     go through the motions of assembling the ident and then replace
-     it at the end with the fake value.
-
-I don't have a strong opinion either way.
-
-> > One whose system is configured in such a way that git can produce an
-> > automatic ident (i.e., has a non-blank GECOS name and a FQDN).
-> 
-> And doesn't have any of the following:
-> 
->  * configured user.name/user.email
->  * specified $EMAIL
->  * configured sendemail.from
->  * specified --from argument
-> 
-> Very unlikely.
-
-That is certainly the opinion you have stated already. I'm not sure I
-agree. Linus, for example, was an advocate of such a configuration early
-on in git's history. I don't think he still runs that way, though.
-
-> And then, what would be the consequences of not receiving this prompt?
-
-An email would be sent with the generated identity.
-
--Peff
+diff --git a/remote.c b/remote.c
+index 04fd9ea..9c19689 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1627,13 +1627,15 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+-	if (!num_theirs)
++	if (!num_theirs) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is ahead of '%s' by %d commit.\n",
+ 			   "Your branch is ahead of '%s' by %d commits.\n",
+ 			   num_ours),
+ 			base, num_ours);
+-	else if (!num_ours)
++		strbuf_addf(sb,
++			_("  (use \"git push\" to publish your local commits)\n"));
++	} else if (!num_ours) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is behind '%s' by %d commit, "
+ 			       "and can be fast-forwarded.\n",
+@@ -1641,7 +1643,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			       "and can be fast-forwarded.\n",
+ 			   num_theirs),
+ 			base, num_theirs);
+-	else
++		strbuf_addf(sb,
++			_("  (use \"git pull\" to update your local branch)\n"));
++	} else {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch and '%s' have diverged,\n"
+ 			       "and have %d and %d different commit each, "
+@@ -1651,6 +1655,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			       "respectively.\n",
+ 			   num_theirs),
+ 			base, num_ours, num_theirs);
++		strbuf_addf(sb,
++			_("  (use \"git pull\" to merge the remote branch into yours)\n"));
++	}
+ 	return 1;
+ }
+ 
+diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+index 8100537..5d68729 100755
+--- a/t/t2020-checkout-detach.sh
++++ b/t/t2020-checkout-detach.sh
+@@ -151,6 +151,7 @@ test_expect_success 'checkout does not warn leaving reachable commit' '
+ 
+ cat >expect <<'EOF'
+ Your branch is behind 'master' by 1 commit, and can be fast-forwarded.
++  (use "git pull" to update your local branch)
+ EOF
+ test_expect_success 'tracking count is accurate after orphan check' '
+ 	reset &&
+-- 
+1.8.0.319.g8abfee4
