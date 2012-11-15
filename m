@@ -1,149 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
-Date: Thu, 15 Nov 2012 00:23:16 -0800
-Message-ID: <20121115082316.GG8429@elie.Belkin>
+Date: Thu, 15 Nov 2012 00:33:17 -0800
+Message-ID: <20121115083315.GA23377@sigill.intra.peff.net>
 References: <20121115003029.GA17550@sigill.intra.peff.net>
  <20121115003640.GH17819@sigill.intra.peff.net>
+ <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 15 09:23:37 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 09:33:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYujX-0004FD-Cr
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 09:23:35 +0100
+	id 1TYutD-0003d2-Rx
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 09:33:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab2KOIXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 03:23:22 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:39531 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754028Ab2KOIXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 03:23:21 -0500
-Received: by mail-da0-f46.google.com with SMTP id n41so569381dak.19
-        for <git@vger.kernel.org>; Thu, 15 Nov 2012 00:23:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=mMwtUHdL6Ui8eudNwcJwYg+bDp//7ZACZT5RmWAI2O4=;
-        b=GHIpltr2QtkXI1iXsk68iPOZNYeeIuQObnFXzsk38MfdWOpU3TPamQCvestAh+PSsE
-         SzV+Czr6ZJ8PhTCNsyd9I6SYXV8niaox+kw9SxSX3xzIS9pwC2yAR18WjCU+5HOLyDd/
-         LU97bFXWx/8UL6LQE6AcmGxrqytn3pvcfvBAzIQqkDfFwNYzb+n1gmrux6G02DtobXJf
-         w8lXvuiSKQkRffMM7/DxcaKut3gnqQ47dk4kJaS8tXeChUjSyVBKpBiD4cWuxzfqcxru
-         x+7MCjozrm01hztEY5LZojbK34NZQP0mqf1Y91EhMjVbdKhkQrREPKtw6rkuNzbogHh0
-         CQGg==
-Received: by 10.68.227.230 with SMTP id sd6mr2507069pbc.41.1352967800924;
-        Thu, 15 Nov 2012 00:23:20 -0800 (PST)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id x6sm9362676pav.29.2012.11.15.00.23.19
-        (version=SSLv3 cipher=OTHER);
-        Thu, 15 Nov 2012 00:23:20 -0800 (PST)
+	id S1756200Ab2KOIdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 03:33:22 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49171 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755772Ab2KOIdV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 03:33:21 -0500
+Received: (qmail 14465 invoked by uid 107); 15 Nov 2012 08:34:10 -0000
+Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 03:34:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 00:33:17 -0800
 Content-Disposition: inline
-In-Reply-To: <20121115003640.GH17819@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209810>
 
-Jeff King wrote:
+On Thu, Nov 15, 2012 at 03:08:42AM +0100, Felipe Contreras wrote:
 
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -191,15 +191,47 @@ test_expect_success $PREREQ 'Show all headers' '
->  
->  test_expect_success $PREREQ 'Prompting works' '
->  	clean_fake_sendmail &&
-> -	(echo "Example <from@example.com>"
-> -	 echo "to@example.com"
-> +	(echo "to@example.com"
->  	 echo ""
->  	) | GIT_SEND_EMAIL_NOTTY=1 git send-email \
->  		--smtp-server="$(pwd)/fake.sendmail" \
->  		$patches \
->  		2>errors &&
-> +		grep "^From: A U Thor <author@example.com>\$" msgtxt1 &&
-> +		grep "^To: to@example.com\$" msgtxt1
-> +'
+> I don't think there's any need for all that, this does the trick:
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index aea66a0..503e551 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -748,16 +748,11 @@ if (!$force) {
+>         }
+>  }
+> 
+> -my $prompting = 0;
+>  if (!defined $sender) {
+>         $sender = $repoauthor || $repocommitter || '';
+> -       $sender = ask("Who should the emails appear to be from? [$sender] ",
+> -                     default => $sender,
+> -                     valid_re => qr/\@.*\./, confirm_only => 1);
+> -       print "Emails will be sent from: ", $sender, "\n";
+> -       $prompting++;
+>  }
+> 
+> +my $prompting = 0;
+> 
+> This passes all the current tests and the ones you added.
 
-The indentation seems strange here --- are the new "grep" lines
-continuations of the git send-email line?
+It may pass on your system, but it will not on a system that meets the
+AUTOIDENT prerequisite (it fails the new t9001.19 on my system; I
+suspect your system config is such that we skip t9001.19 and run
+t9001.20, whereas mine is the opposite).
 
-It's probably easier to change the structure completely:
+> Which kind of user will get the prompt with your patch, that would
+> miss it with mine?
 
-	clean_fake_sendmail &&
-	echo to@examples.com >prompt.input &&
-	echo >>prompt.input &&
-	GIT_SEND_EMAIL_NOTTY=1 \
-		git send-email --smtp-server=... $patches <prompt.input &&
-	grep "^From: A U Thor <authorident@example.com>\$" msgtxt1 &&
-	grep "^To: to@example.com\$" msgtxt1
+One whose system is configured in such a way that git can produce an
+automatic ident (i.e., has a non-blank GECOS name and a FQDN).
 
-> +test_expect_success $PREREQ,AUTOIDENT 'implicit ident prompts for sender' '
-> +	clean_fake_sendmail &&
-> +	(echo "Example <from@example.com>" &&
-> +	 echo "to@example.com" &&
-> +	 echo ""
-> +	) |
-> +	(sane_unset GIT_AUTHOR_NAME &&
-> +	 sane_unset GIT_AUTHOR_EMAIL &&
-> +	 sane_unset GIT_COMMITTER_NAME &&
-> +	 sane_unset GIT_COMMITTER_EMAIL &&
-> +	 GIT_SEND_EMAIL_NOTTY=1 git send-email \
-> +		--smtp-server="$(pwd)/fake.sendmail" \
-> +		$patches \
-> +		2>errors &&
->  		grep "^From: Example <from@example.com>\$" msgtxt1 &&
->  		grep "^To: to@example.com\$" msgtxt1
-> +	)
-> +'
-
-Likewise:
-
-	clean_fake_sendmail &&
-	echo "Example <from@example.com>" >prompt.in &&
-	echo to@example.com >>prompt.in
-	echo >>prompt.in &&
-	(
-		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL &&
-		sane_unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL &&
-		GIT_SEND_EMAIL_NOTTY=1 \
-			git send-email --smtp-server=... $patches <prompt.in
-	) &&
-	grep "^From: Example <from@example.com>\$" msgtxt1 &&
-	grep "^To: to@example.com\$" msgtxt1
-
-> +test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email' '
-> +	clean_fake_sendmail &&
-> +	(sane_unset GIT_AUTHOR_NAME &&
-> +	 sane_unset GIT_AUTHOR_EMAIL &&
-> +	 sane_unset GIT_COMMITTER_NAME &&
-> +	 sane_unset GIT_COMMITTER_EMAIL &&
-> +	 GIT_SEND_EMAIL_NOTTY=1 && export GIT_SEND_EMAIL_NOTTY &&
-> +	 test_must_fail git send-email \
-> +		--smtp-server="$(pwd)/fake.sendmail" \
-> +		$patches </dev/null 2>errors.out &&
-> +		test_i18ngrep "tell me who you are" errors.out
-> +	)
->  '
-
-Likewise:
-
-	clean_fake_sendmail &&
-	(
-		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL &&
-		sane_unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL &&
-		GIT_SEND_EMAIL_NOTTY=1 \
-			git send-email --smtp-server=... $patches </dev/null 2>err
-	) &&
-	test_i18ngrep "[Tt]ell me who you are" err
-
-For what it's worth, with or without such changes,
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+-Peff
