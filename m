@@ -1,75 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] config: don't segfault when given --path with a missing
- value
-Date: Thu, 15 Nov 2012 10:15:28 -0800
-Message-ID: <20121115181527.GA22506@sigill.intra.peff.net>
-References: <20121115161758.GC6157@sigill.intra.peff.net>
- <1353003001-22600-1-git-send-email-cmn@elego.de>
+From: Patrick Lehner <lehner.patrick@gmx.de>
+Subject: `git mv` has ambiguous error message for non-existing target
+Date: Thu, 15 Nov 2012 19:54:56 +0100
+Message-ID: <50A53A80.4080203@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Nov 15 19:15:48 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 19:55:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZ3yd-0006xB-45
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 19:15:47 +0100
+	id 1TZ4ap-00089t-KU
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 19:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1768649Ab2KOSPd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2012 13:15:33 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49653 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1768630Ab2KOSPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 13:15:32 -0500
-Received: (qmail 19106 invoked by uid 107); 15 Nov 2012 18:16:19 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 13:16:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 10:15:28 -0800
-Content-Disposition: inline
-In-Reply-To: <1353003001-22600-1-git-send-email-cmn@elego.de>
+	id S1768706Ab2KOSzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 13:55:00 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:38396 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1423636Ab2KOSy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 13:54:59 -0500
+Received: (qmail invoked by alias); 15 Nov 2012 18:54:57 -0000
+Received: from 188-194-118-2-dynip.superkabel.de (EHLO [192.168.1.110]) [188.194.118.2]
+  by mail.gmx.net (mp072) with SMTP; 15 Nov 2012 19:54:57 +0100
+X-Authenticated: #36416844
+X-Provags-ID: V01U2FsdGVkX1/K0zFvFEHKE4S9LqyAEDi31J7G/cMqzyZLEGiWrC
+	n9YGXA5Cp2Hrz+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209839>
 
-On Thu, Nov 15, 2012 at 10:10:01AM -0800, Carlos Mart=C3=ADn Nieto wrot=
-e:
+Hey guys,
 
-> When given a variable without a value, such as '[section] var' and
-> asking git-config to treat it as a path, git_config_pathname returns
-> an error and doesn't modify its output parameter. show_config assumes
-> that the call is always successful and sets a variable to indicate
-> that vptr should be freed. In case of an error however, trying to do
-> this will cause the program to be killed, as it's pointing to memory
-> in the stack.
->=20
-> Detect the error and return immediately to avoid freeing or accessing
-> the uninitialed memory in the stack.
->=20
-> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+as was brought up on #github today, the "git mv" command has a bit of a 
+little-helping output message when the target directory (or any 
+intermediate directories) dont exist.
 
-Acked-by: Jeff King <peff@peff.net>
+To reproduce:
+- cd into a git repo
+- assuming "filea.txt" is an existing file in the CWD, and "dirb" is 
+neither a file nor a directory in the CWD, use the command "git mv 
+filea.txt dirb/filea.txt"
+- this will produce an error message like `fatal: renaming 'filea.sh' 
+failed: No such file or directory`
 
-> Yeah, that's more sensible. I didn't notice that the buffer never get=
-s
-> written to in this codepath, and the trying to print it out is silly
-> when we know that there is nothing valid to print.
+It does not mention that the problem is, in fact, the target directory 
+not existing. This seems to be mostly a problem for users unfamiliar 
+with bash/*nix console commands. Although it is documented that git mv 
+will not create intermediate folders (which is fine, because neither 
+does mv), the error message might lead to believe a problem exists with 
+the source file.
 
-> Thanks for the review. I've included your test as well, which really
-> makes all of this your code.
+Expanding the error message to "No such file or directory: 'dirb/' " 
+would probably clear this up.
 
-Eh, I guess so. You did the hard part of finding it, though. ;)
-
-> Do we have some equivalent of a Basically-writen-by line?
-
-Nothing structured. But I am comfortable enough with the number of time=
-s
-I am mentioned in "git log" already, so don't worry about it.
-
--Peff
+Best regards and thanks to anyone who could improve this,
+Patrick
