@@ -1,119 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: creation of empty branches
-Date: Thu, 15 Nov 2012 09:12:33 -0800
-Message-ID: <20121115171230.GB18108@sigill.intra.peff.net>
-References: <CAB9Jk9CaBECT7c_M9HvCbB8mFYGvdsmq_jFW4DF4NCO8Narnmw@mail.gmail.com>
- <CAH5451mkcszgJxziKn3q3OwSDM-qQ71PtT5+UWb=PG7VYAcFyQ@mail.gmail.com>
- <7vmwyjan96.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?IkphbiBILiBTY2jDtm5oZXJyIg==?= <schnhrr@cs.tu-berlin.de>
+Subject: Re: [PATCH] wildmatch: correct isprint and isspace
+Date: Thu, 15 Nov 2012 18:13:25 +0100
+Message-ID: <50A522B5.7080206@cs.tu-berlin.de>
+References: <1352803572-14547-1-git-send-email-pclouds@gmail.com> <1352981983-22005-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 18:12:55 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	rene.scharfe@lsrfire.ath.cx, Johannes Sixt <j6t@kdbg.org>,
+	torvalds@linux-foundation.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 18:14:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZ2zj-0003NY-Tr
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 18:12:52 +0100
+	id 1TZ30j-0004Gx-HJ
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 18:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1768493Ab2KORMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 12:12:38 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49585 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1768440Ab2KORMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 12:12:37 -0500
-Received: (qmail 18464 invoked by uid 107); 15 Nov 2012 17:13:26 -0000
-Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 12:13:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 09:12:33 -0800
-Content-Disposition: inline
-In-Reply-To: <7vmwyjan96.fsf@alter.siamese.dyndns.org>
+	id S1768444Ab2KORNk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2012 12:13:40 -0500
+Received: from mail.eecsit.tu-berlin.de ([130.149.17.13]:46589 "EHLO
+	mail.cs.tu-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1768123Ab2KORNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 12:13:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost-12225.cs.tu-berlin.de (Postfix) with ESMTP id 2967A7533
+	for <git@vger.kernel.org>; Thu, 15 Nov 2012 18:13:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at cs.tu-berlin.de (including SpamAssassin)
+Received: from mailhost.cs.tu-berlin.de ([127.0.0.1])
+	by localhost (mail.cs.tu-berlin.de [127.0.0.1]) (amavisd-new, port 12224)
+	with ESMTP id aaFfxxnprj6N 17364-03;
+	Thu, 15 Nov 2012 18:13:25 +0100 (CET) 13793
+Received: from [130.149.91.59] (asahi.kbs.tu-berlin.de [130.149.91.59])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: schnhrr)
+	by mailhost.cs.tu-berlin.de (Postfix) with ESMTPSA;
+	Thu, 15 Nov 2012 18:13:25 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.7) Gecko/20120919 Thunderbird/10.0.7
+In-Reply-To: <1352981983-22005-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209833>
 
-On Wed, Nov 14, 2012 at 01:27:33PM -0800, Junio C Hamano wrote:
+Am 15.11.2012 13:19, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+>  On Thu, Nov 15, 2012 at 2:30 AM, Ren=C3=A9 Scharfe <rene.scharfe@lsr=
+fire.ath.cx> wrote:
+>  > Nevertheless, it's unfortunate that we have an isspace() that *alm=
+ost* does
+>  > what the widely known thing of the same name does.  I'd shy away f=
+rom
+>  > changing git's version directly, because it's used more than a hun=
+dred times
+>  > in the code, and estimating the impact of adding \v and \f to it.
+>  > Perhaps renaming it to isgitspace() is a good first step, followed=
+ by
+>  > adding a "standard" version of isspace() for wildmatch?
+>=20
+>  There are just too many call sites of isspace() and there is a risk
+>  of new call sites coming in independently. So I think keeping isspac=
+e()
+>  as-is and using a different name for the standard version is probabl=
+y
+>  a better choice.
 
-> > Instead of
-> >     fatal: Not a valid object name: 'master'.
-> > perhaps
-> >     fatal: Cannot create branch 'foo' from empty branch 'master'. To
-> > rename 'master' use 'git branch -m master foo'.
-> 
-> The first new sentence is a definite improvement, but I do not think
-> the advice in the second sentence is necessarily a good idea,
-> because it is dubious that the user is likely to have wanted to
-> rename 'master' to something else.  "git branch foo master" (or its
-> moral equivalent "git checkout -b foo" while on master) is a wish to
-> have a history that ends in 'foo' *forked* from history of 'master',
-> but because you do not even have anything on 'master' yet, you
-> cannot fork the history, as you explained earlier (snipped).  In
-> that sense, 'empty branch' is a slight misnomer---as far as "git
-> branch foo master" is concerned, the 'master' branch does not yet
-> exist (and that is why we often call it an "unborn branch", not
-> "empty").
-> 
->     fatal: cannot fork master's history that does not exist yet.
-> 
-> would be more accurate description of the situation.
+After having a closer look, where wildmatch is actually used -- matchin=
+g
+filenames -- and I've not yet seen \v or \f in a filename, it's possibl=
+y
+unnecessary to do anything about isspace() right now.
 
-I agree with most of your reasoning. I think simply using Andrew's first
-sentence is a little more clear to a new user, even though it may be
-less technically precise, but I don't have a strong opinion.
+(It's probably more an issue that filenames can be localized, and we on=
+ly
+support unlocalized character classes.)
 
-That still leaves "checkout -b". I do not see it as a problem that "git
-branch foo" does not work whereas "git checkout -b foo" does; we
-special-case the latter because it can do something sensible, whereas
-there is nothing sensible for "git branch foo" to do. However, I think
-it is missing one piece:
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 02f48f6..d4c3fda 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -486,6 +486,7 @@ extern const unsigned char sane_ctype[256];
+>  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask=
+)) !=3D 0)
+>  #define isascii(x) (((x) & ~0x7f) =3D=3D 0)
+>  #define isspace(x) sane_istest(x,GIT_SPACE)
+> +#define isspace_posix(x) (((x) >=3D 9 && (x) <=3D 13) || (x) =3D=3D =
+32)
+>  #define isdigit(x) sane_istest(x,GIT_DIGIT)
+>  #define isalpha(x) sane_istest(x,GIT_ALPHA)
+>  #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
+> @@ -499,7 +500,8 @@ extern const unsigned char sane_ctype[256];
+>  #define isxdigit(x) (hexval_table[x] !=3D -1)
 
--- >8 --
-Subject: checkout: print a message when switching unborn branches
+This was from a previous patch, but maybe: "hexval_table[(unsigned char=
+)x]"
 
-When we switch to a new branch using checkout, we usually output a
-message indicating what happened. However, when we switch from an unborn
-branch to a new branch, we do not print anything, which may leave the
-user wondering what happened.
+>  #define isprint(x) (sane_istest(x, GIT_ALPHA | GIT_DIGIT | GIT_SPACE=
+ | \
+>  		GIT_PUNCT | GIT_REGEX_SPECIAL | GIT_GLOB_SPECIAL | \
+> -		GIT_PATHSPEC_MAGIC))
+> +		GIT_PATHSPEC_MAGIC) && \
+> +		(x) >=3D 32)
 
-The reason is that the unborn branch is a special case (see abe1998),
-and does not follow the usual switch_branches code path. Let's add a
-similar informational message to the special case to match the usual
-code path.
+May I suggest the current is_print() implementation in master:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Two possible tweaks:
+#define isprint(x) ((x) >=3D 0x20 && (x) <=3D 0x7e)
 
-  1. The message is the same as "git checkout -b" when we are actually
-     moving to a new branch. We could optionally mention that the branch
-     is empty or unborn.
 
-  2. We do not check whether the old unborn branch has the same name as
-     the new one. So you get "Switched to a new branch..." if you try to
-     checkout the same branch. We'd have to pass more information into
-     the special case to detect this. I don't know if we care.
+To summarize my opinion:
 
- builtin/checkout.c | 3 +++
- 1 file changed, 3 insertions(+)
+I no longer see a reason to correct isspace() (unless somebody with an =
+actual
+use case complains), and a more POSIXly isprint() is already in master.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 781295b..a9c1b5a 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -951,6 +951,9 @@ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
- 	strbuf_addf(&branch_ref, "refs/heads/%s", opts->new_branch);
- 	status = create_symref("HEAD", branch_ref.buf, "checkout -b");
- 	strbuf_release(&branch_ref);
-+	if (!opts->quiet)
-+		fprintf(stderr, _("Switched to a new branch '%s'\n"),
-+			opts->new_branch);
- 	return status;
- }
- 
+=3D> Nothing to do. :)
+
+Regards
+Jan
