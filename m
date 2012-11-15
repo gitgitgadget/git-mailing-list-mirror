@@ -1,107 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/5] push: update remote tags only with force
-Date: Wed, 14 Nov 2012 16:09:10 -0800
-Message-ID: <7v8va3afrt.fsf@alter.siamese.dyndns.org>
-References: <1352693288-7396-1-git-send-email-chris@rorvick.com>
- <7v4nktdwtp.fsf@alter.siamese.dyndns.org>
- <CAEUsAPYvrR6WsVWCvwoEWA21gzL6Sib0sTyx-c_2tH=8ni69yQ@mail.gmail.com>
- <CAEUsAPZtF-L5J_g1L5d44BKveoAnJ81PatX94fFS4FM=iW33KA@mail.gmail.com>
- <7v390ccoak.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9DAwaLw2bTqj5x_zxRcFqn7s=nmGi=Jc_SD38vFoszBZg@mail.gmail.com>
- <7vmwykay4n.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Wed, 14 Nov 2012 16:16:35 -0800
+Message-ID: <20121115001635.GA17370@sigill.intra.peff.net>
+References: <20121113175205.GA26960@sigill.intra.peff.net>
+ <50A2B14C.9040608@web.de>
+ <50A2F17D.4010907@gmail.com>
+ <20121114190228.GA3860@sigill.intra.peff.net>
+ <50A40978.2060504@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Rorvick <chris@rorvick.com>, git <git@vger.kernel.org>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 01:09:28 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 15 01:16:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYn1L-0002AT-Eo
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 01:09:27 +0100
+	id 1TYn8W-0007ag-Sj
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 01:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946000Ab2KOAJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 19:09:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64329 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1945955Ab2KOAJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 19:09:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22D11A1BE;
-	Wed, 14 Nov 2012 19:09:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YwyNBNKsBdShWjLQ7PTYfeqvM+g=; b=ZB/t+A
-	rf3KIPNBXfJR/x+pO4lgvTJEUYFSteW6Rl1qQLP0DLUR0Cy2fPcFp40H3Pxl6CLb
-	NevYmLhPGB9HfnkocONpLtxyQLkOa6/OqIdprL5tA3kQmRukjkCxysIIDgZTGPSb
-	Szd/aW/zA/phBhmZcdd3DIm5euY4gK2OGE1tY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ykunfWOi9bazfkcgzxbkQe+m66BQaqXp
-	Jqtjvw+NX8Jc9xBb5+z9juac8LEYL7binBXoVwHheEV/lOV88eWmxfZc5SGJ4lM4
-	xHp0r0oaZnAO8Gxl4mWlKjpIYVy2KArD6KYkd9mSNRPMYtd5JLjRtXhf6ybCHV9d
-	8G2yvbPxKNQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C1CEA1BD;
-	Wed, 14 Nov 2012 19:09:12 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D138A1BC; Wed, 14 Nov 2012
- 19:09:11 -0500 (EST)
-In-Reply-To: <7vmwykay4n.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 14 Nov 2012 09:32:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AEC54EA4-2EB8-11E2-B534-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933236Ab2KOAQj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 19:16:39 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48775 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933080Ab2KOAQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 19:16:38 -0500
+Received: (qmail 8678 invoked by uid 107); 15 Nov 2012 00:17:27 -0000
+Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 19:17:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 16:16:35 -0800
+Content-Disposition: inline
+In-Reply-To: <50A40978.2060504@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209763>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Nov 14, 2012 at 10:13:28PM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-Addendum.
+> >>>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
+> >>>>  - Update cygwin.c for new mingw-64 win32 api headers
+> >>>>
+> >>>>  Make git work on newer cygwin.
+> >>>>
+> >>>>  Will merge to 'next'.
 
-> In any case, I thought this series was about users who run "push"
-> voluntarily stopping themselves from pushing updates to tags that
-> may happen to fast-forward, so if we were to go with the
-> configuration route, the suggestion would be more like
->
->     [push]
-> 	updateNeedsForce = refs/tags/:refs/frotz/
->
-> or perhaps
->
->     [remote "origin"]
-> 	updateNeedsForce = refs/tags/:refs/frotz/
->
-> if we want to configure it per-remote, to specify that you would
-> need to say "--force" to update the refs in the listed hierarchies.
->
-> Then your patch series could become just the matter of declaring
-> that the value of push.updateNeedsForce, when unspecified, defaults
-> to "refs/tags/".
+I'm cc-ing Junio in case he missed the discussion; my original plan had
+been to move this topic right to 'next' to get exposure from other
+cygwin people. But it seems we have already got that, and it might need
+re-rolling, so it probably makes sense to hold back until the discussio=
+n
+reaches a conclusion.
 
-The above is not a "you should do it this way" suggestion, by the
-way.
+> There are a couple of things which we may want consider:
+> a) the name V15_MINGW_HEADERS:
+>   It indicates that this is true for Version 1.5 (of what?)
+>   If I assume Cygwin version 1.5 , then this name is confusing.
+>   Even cygwin versions like 1.7.7 use the same (or similar) include f=
+iles as 1.5
+>   A better name could be CYGWIN_USE_MINGW_HEADERS (or the like) and t=
+o revert the logic.
 
-I was just explaining what I meant by "it may be a good feature, but
-may not necessarily be limited to refs/tags" in my earlier message
-in a different way "... and a possible design that lifts the
-limitation may go like this".
+Regardless of flipping the logic, I agree that having CYGWIN in the nam=
+e
+makes a lot of sense.
 
-I am *not* convinced that the "refs/tags/ is the only special
-hierarchy whose contents should not move" is a bad limitation we
-should avoid, but if it indeed is a bad limitation, the above is one
-possible way to think about avoiding it.
+> b) Autodetection:
+>   (Just loud thinking), running=20
+> $grep mingw /usr/include/w32api/winsock2.h
+>  * This file is part of the mingw-w64 runtime package.
+> #include <_mingw_unicode.h>
+>=20
+> on cygwin 1.7.17 indicates that we can use grep in the Makefile to
+> autodetect the "mingw headers"
 
-Thanks.
+Hmm. Can we rely on the /usr/include bit, though?
+
+I assume a test-compile would be sufficient, but currently we do not do
+anything more magic than "uname" in the Makefile itself to determine
+defaults.  Maybe it would be better to do the detection in the configur=
+e
+script? And then eventually flip the default in the Makefile once
+sufficient time has passed for most people to want the new format (whic=
+h
+would not be necessary for people using autoconf, but would help people
+who do not).
+
+-Peff
