@@ -1,73 +1,78 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [regression] Newer gits cannot clone any remote repos
-Date: Thu, 15 Nov 2012 19:51:29 +0700
-Message-ID: <CACsJy8Atj0WsFaYTZE9y9+tu1+L2LumVOk3sUj-t9iKbiqsBZw@mail.gmail.com>
-References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
- <50A2978D.6080805@ramsay1.demon.co.uk> <CACYvZ7jMC5xw4LxiuG5m+=grpQEg+wZb_7BaU4Xn-r7ix=S-bw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] config: don't segfault when given --path with a missing
+ value
+Date: Thu, 15 Nov 2012 08:08:49 -0800
+Message-ID: <20121115160847.GA6157@sigill.intra.peff.net>
+References: <1352868604-20459-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-To: Douglas Mencken <dougmencken@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 13:52:21 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Nov 15 17:09:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYyvc-00072d-O5
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 13:52:21 +0100
+	id 1TZ204-0005hN-Tu
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 17:09:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767715Ab2KOMwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 07:52:04 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:58936 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767705Ab2KOMwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 07:52:01 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so624319eaa.19
-        for <git@vger.kernel.org>; Thu, 15 Nov 2012 04:52:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kUVX4JZf4+13h89UD4d/I0HA1kZRNh1jzJ+f3JLEGPw=;
-        b=PH9uqcl8krIbJj2pk9Pgg+hwVHJyMlHocSAc1hhBh3MHrq77wp5uaLOX60xenvobje
-         3AwhpW3JebC8X2aVvA8flJsQ+WksNBdXvV4SYvUSjUtj7jUOu88/S6mYBBCpQnutk8aN
-         VnU2LQCTBM3wIGiuUsiSwtpJRRlGajVLpFrbuxAIlO0ULCy0rDEUYMrL9DOcNii1W1+V
-         Fmu7qbNGibsF8Ocw2ppN6WEI5gnQsIuEIoF3xz7VeqXNl6PddWizk1V6SQAxj9ZmjPju
-         +DZdqJe+KW+lN1Ze/2LNs441XnmC6WLCY8W7BtzDHHVBPmy8WfcAFIleHue8ApNKjjLm
-         ECuA==
-Received: by 10.14.173.137 with SMTP id v9mr3423445eel.41.1352983920775; Thu,
- 15 Nov 2012 04:52:00 -0800 (PST)
-Received: by 10.14.220.73 with HTTP; Thu, 15 Nov 2012 04:51:29 -0800 (PST)
-In-Reply-To: <CACYvZ7jMC5xw4LxiuG5m+=grpQEg+wZb_7BaU4Xn-r7ix=S-bw@mail.gmail.com>
+	id S1768361Ab2KOQIx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2012 11:08:53 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49499 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1768346Ab2KOQIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 11:08:53 -0500
+Received: (qmail 17474 invoked by uid 107); 15 Nov 2012 16:09:42 -0000
+Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 11:09:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 08:08:49 -0800
+Content-Disposition: inline
+In-Reply-To: <1352868604-20459-1-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209822>
 
-On Wed, Nov 14, 2012 at 2:55 AM, Douglas Mencken <dougmencken@gmail.com> wrote:
->>  Could you try re-building git with the
->> NO_THREAD_SAFE_PREAD build variable set?
->
-> Yeah! It works!!!
->
-> --- evil/Makefile
-> +++ good/Makefile
-> @@ -957,6 +957,7 @@
->         HAVE_PATHS_H = YesPlease
->         LIBC_CONTAINS_LIBINTL = YesPlease
->         HAVE_DEV_TTY = YesPlease
-> +       NO_THREAD_SAFE_PREAD = YesPlease
->  endif
->  ifeq ($(uname_S),GNU/kFreeBSD)
->         NO_STRLCPY = YesPlease
->
-> With this, I do have correctly working git clone.
+On Tue, Nov 13, 2012 at 08:50:04PM -0800, Carlos Mart=C3=ADn Nieto wrot=
+e:
 
-Sorry you had to figure that out the hard way. Could you make it a
-proper patch? I'm surprised that Linux pread does not behave the same
-way across platforms though. Or maybe it only happens with certain
-Linux versions. What version are you using?
--- 
-Duy
+> When given a variable without a value, such as '[section] var' and
+> asking git-config to treat it as a path, git_config_pathname returns
+> an error and doesn't modify its output parameter. show_config assumes
+> that the call is always successful and sets a variable to indicate
+> that vptr should be freed. In case of an error however, trying to do
+> this will cause the program to be killed, as it's pointing to memory
+> in the stack.
+
+Whoops.
+
+> Set the must_free_vptr flag depending on the return value of
+> git_config_pathname so it's accurate.
+
+That is definitely the right thing to do. But do we also need to take
+note of the error for later? After this code:
+
+>  	} else if (types =3D=3D TYPE_PATH) {
+> -		git_config_pathname(&vptr, key_, value_);
+> -		must_free_vptr =3D 1;
+> +		must_free_vptr =3D !git_config_pathname(&vptr, key_, value_);
+
+We don't have any clue that nothing got written into vptr. Which means
+it still points at the stack buffer "value", which contains
+uninitialized bytes. We will later try to print it, thinking it has the
+expanded path in it.
+
+Do we need something like:
+
+  if (!git_config_pathname(&vptr, key_, value_))
+          must_free_vptr =3D 1;
+  else
+          vptr =3D "";
+
+?
+
+-Peff
