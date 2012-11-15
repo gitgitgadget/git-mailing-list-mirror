@@ -1,68 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-email: add proper default sender
-Date: Wed, 14 Nov 2012 17:50:52 -0800
-Message-ID: <20121115015052.GA19131@sigill.intra.peff.net>
-References: <20121113032727.GA8387@sigill.intra.peff.net>
- <CAMP44s0SDHVzSd-8Rq7Z1sbiQ6m0pxX+2pgx16_DoWnHeyNsNQ@mail.gmail.com>
- <20121113040104.GA9361@sigill.intra.peff.net>
- <CAMP44s1w3oZhEUM-cnO=kECH2bhdOTGVuKy8JS4uhWFbA_oi3w@mail.gmail.com>
- <20121113074720.GA18746@sigill.intra.peff.net>
- <CAMP44s1NdK9mw3Qz_sk1Zvg0gS6E+V0BuCfDutz8-8YD_App=Q@mail.gmail.com>
- <20121113164845.GD20361@sigill.intra.peff.net>
- <CAMP44s3sBj0iYsCLUpiouUB8PXRwLORDEyD_+dWKrSsMP+TOaw@mail.gmail.com>
- <20121115000726.GA16910@sigill.intra.peff.net>
- <CAMP44s3vYP6zR6sKxgVSoZUySxcAuR7MioMeT1WDAnU0PtZKGA@mail.gmail.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Wed, 14 Nov 2012 20:50:43 -0500
+Message-ID: <50A44A73.8020007@gmail.com>
+References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de> <50A2F17D.4010907@gmail.com> <20121114190228.GA3860@sigill.intra.peff.net> <50A40978.2060504@web.de> <20121115001635.GA17370@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 02:51:10 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 02:51:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYobl-0007Zk-Mn
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:51:10 +0100
+	id 1TYoc1-0007kA-32
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:51:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992597Ab2KOBu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 20:50:56 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48913 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992580Ab2KOBuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 20:50:55 -0500
-Received: (qmail 10325 invoked by uid 107); 15 Nov 2012 01:51:44 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 20:51:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 17:50:52 -0800
-Content-Disposition: inline
-In-Reply-To: <CAMP44s3vYP6zR6sKxgVSoZUySxcAuR7MioMeT1WDAnU0PtZKGA@mail.gmail.com>
+	id S2992603Ab2KOBvL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 20:51:11 -0500
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:60524 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992580Ab2KOBvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 20:51:10 -0500
+Received: by mail-vb0-f46.google.com with SMTP id ff1so1197910vbb.19
+        for <git@vger.kernel.org>; Wed, 14 Nov 2012 17:51:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=vS9I8JlotQur/rNnK714GVdw3IlyC37Jq7Al7miY3MM=;
+        b=akBCjqHlhd0PkI8iIeX3WUKDDj37Jov+FBw3aeLgLug7ET0h+FHJEeNz7lFoP45OxU
+         5wQpafkDQzxrIAmsSacy6TmzdTquTwxUCglh5g0nbQXurlRtp+7euvy0KMUwI2cVoYBW
+         idvf/+9ulpIyHSQHU7K2iKiqjFvyGY+B/c2vaWPs6JKuu/BVcAvw8yYd9QQq/u8WwK+5
+         7J1K3rkV4oMzfwA76XQN5+yjj6k1vnyW2f2mJZ9OMyxKQaZMMR8GgtmntIQv0wCDTWOE
+         EkPASiGVDXwqUzkgYlb+iaX+kgTgn7AqzJpTVRkzj1wcbmzGXhIF5vcRLfK9Ako/96tA
+         ftzA==
+Received: by 10.52.180.225 with SMTP id dr1mr4388020vdc.2.1352944269421;
+        Wed, 14 Nov 2012 17:51:09 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-107-139.washdc.fios.verizon.net. [173.79.107.139])
+        by mx.google.com with ESMTPS id y15sm12877458vdt.9.2012.11.14.17.50.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 14 Nov 2012 17:50:55 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121029 Thunderbird/16.0.2
+In-Reply-To: <20121115001635.GA17370@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209789>
 
-On Thu, Nov 15, 2012 at 02:41:50AM +0100, Felipe Contreras wrote:
+On 11/14/2012 07:16 PM, Jeff King wrote:
+> On Wed, Nov 14, 2012 at 10:13:28PM +0100, Torsten B=C3=B6gershausen w=
+rote:
+> b) Autodetection:
+>    (Just loud thinking), running
+> $grep mingw /usr/include/w32api/winsock2.h
+>   * This file is part of the mingw-w64 runtime package.
+> #include <_mingw_unicode.h>
+>
+> on cygwin 1.7.17 indicates that we can use grep in the Makefile to
+> autodetect the "mingw headers"
+> Hmm. Can we rely on the /usr/include bit, though?
+>
+> I assume a test-compile would be sufficient, but currently we do not =
+do
+> anything more magic than "uname" in the Makefile itself to determine
+> defaults.  Maybe it would be better to do the detection in the config=
+ure
+> script? And then eventually flip the default in the Makefile once
+> sufficient time has passed for most people to want the new format (wh=
+ich
+> would not be necessary for people using autoconf, but would help peop=
+le
+> who do not).
+>
+> -Peff
+>
 
-> But that I meant that when I introduce a regression it's like I'm
-> killing all that is good and sacred about git, and when you do it's
-> everything but that.
+Cygwin changed the win32api implementation, and the old is not just no=20
+longer supported for the current release series, but virtually=20
+impossible to even install (several new packages are now installed, the=
+=20
+old package is in the "obsolete" category, i.e., not available). The=20
+older cygwin 1.5 dll + utilities can be installed afresh, so that is wh=
+y=20
+I set up to switch based upon dll version - the proposed test(s) and=20
+configuration would be to have git maintain compatibility with an=20
+unsupported Cygwin configuration. I just don't think this is worth the=20
+maintenance burden, but of course I am not the maintainer, just=20
+expressing my opinion.
 
-The rhetoric in this statement is a good indication that there is
-nothing productive to come from our discussing it anymore.
+I have no trouble renaming the macro to whatever seems to clarify thing=
+s.
 
-> > If you want to seriously propose changing the behavior of "git commit",
-> > I think the best thing would be to make a real patch, laying out the
-> > pros and cons in the commit message, and post it. I would not be
-> > surprised if the other list participants have stopped reading our thread
-> > at this point, and the idea is going otherwise unnoticed.
-> 
-> I would, if I saw any chance in it actually going through.
-
-Well, it certainly will not go through if you do not try.
-
--Peff
+Mark
