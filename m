@@ -1,88 +1,99 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 3/5] sequencer.c: handle rfc2822 continuation lines correctly
-Date: Wed, 14 Nov 2012 17:37:52 -0800
-Message-ID: <1352943474-15573-3-git-send-email-drafnel@gmail.com>
-References: <1352943474-15573-1-git-send-email-drafnel@gmail.com>
-Cc: Brandon Casey <drafnel@gmail.com>,
+Subject: [PATCH] usage.c: detect recursion in die routines and bail out immediately
+Date: Wed, 14 Nov 2012 17:45:52 -0800
+Message-ID: <1352943952-16964-1-git-send-email-drafnel@gmail.com>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
 	Brandon Casey <bcasey@nvidia.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 02:45:46 2012
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 15 02:46:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYoWY-0003Wh-DR
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:45:46 +0100
+	id 1TYoX4-0003vx-VA
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:46:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992539Ab2KOBpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 20:45:32 -0500
+	id S2992612Ab2KOBqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 20:46:03 -0500
 Received: from mail-ye0-f174.google.com ([209.85.213.174]:38353 "EHLO
 	mail-ye0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992516Ab2KOBpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 20:45:31 -0500
+	with ESMTP id S2992617Ab2KOBqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 20:46:00 -0500
 Received: by mail-ye0-f174.google.com with SMTP id m12so244209yen.19
-        for <git@vger.kernel.org>; Wed, 14 Nov 2012 17:45:31 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 14 Nov 2012 17:46:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Vo/94mzgES97phBKjW/BVFRzsG12VK6TdKEZqGnQgsU=;
-        b=kHReEIp/zYDrdpVFW3MUaXCMtqduZh2goyjSWIqCmGDyfxCqkfCw3PMOLpOY4s6suu
-         lUjEzYk0srQHN8xvzUL+KUUbOVj2ZDIxa1mI9nTCDR5Ie77h9j262TEv16VUj0aMk0l+
-         TgXCyLdkSTnxPc3/TZ/7j1LFnOtbZpcHSrv1FeGISuSD3Ai99FytaziTVuujmmROl4Qp
-         M5lNfP9jQyFd2rKfUy97uTfOr7dA9XLHtbbzlTytArkMHIWliniKdYKe2MrNmV8TxBqZ
-         Mema5kFfIzQWJSuyzquc0kx20aZjF8jvOGkB9VVg4sz/0/865IHprhON4IVB62dYQWg1
-         I6AQ==
-Received: by 10.101.50.11 with SMTP id c11mr8118415ank.5.1352943492005;
-        Wed, 14 Nov 2012 17:38:12 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=djkbCg11P1OIYk015ZQ9mpfOThmMgX7uPqk9pFfawnY=;
+        b=ZD453BVw/gYEf0TKsD/pMFwsWAn+m5btUPMlEesiy7c/yfyKoNziJcCUU9/hbFrLj0
+         RQTDsfklaw9E+b0Bv0UJKDbZURO6HqLtwtnIO2mh2FZKOa+VfDndV7poehU1jRaaGwvP
+         vqlxh37SJrM1dXeZ7egweLExpzWNAhNZ1KY1nPTZUkqAUV0+A6EMXir1CVZ0oKmxY4MV
+         7Cq6xgCLHzvk58yZ/F7btCLyntPNBit3Nk+MRFUEwBwjQRp527qi3hIbFjk0Og3/fuml
+         sVQ1p+204JPNhd85HdHIc4KWSEi86JD5IderJVwdhdgqVz3oAQjJabhXlcpsorOpP5B0
+         xvDw==
+Received: by 10.101.136.16 with SMTP id o16mr8051561ann.74.1352943960505;
+        Wed, 14 Nov 2012 17:46:00 -0800 (PST)
 Received: from charliebrown.corp.google.com ([216.239.55.194])
-        by mx.google.com with ESMTPS id y9sm4775632anh.20.2012.11.14.17.38.10
+        by mx.google.com with ESMTPS id z28sm14653873yhh.7.2012.11.14.17.45.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Nov 2012 17:38:11 -0800 (PST)
+        Wed, 14 Nov 2012 17:45:59 -0800 (PST)
 X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1352943474-15573-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209787>
 
-ends_rfc2822_footer() was incorrectly checking whether the current line
-was a continuation of the previous line.  It was actually checking the
-next line instead of the current line.  Let's fix this and mark the test
-as expect_success.
+It is theoretically possible for a die handler to get into a state of
+infinite recursion.  For example, if a die handler called another function
+which itself called die().  Let's at least detect this situation, inform the
+user, and call exit.
 
 Signed-off-by: Brandon Casey <bcasey@nvidia.com>
 ---
- sequencer.c              | 2 +-
- t/t3511-cherry-pick-x.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ usage.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/sequencer.c b/sequencer.c
-index be0cb8b..01edec2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1040,7 +1040,7 @@ static int ends_rfc2822_footer(struct strbuf *sb, int ignore_footer)
- 			; /* do nothing */
- 		k++;
+diff --git a/usage.c b/usage.c
+index a2a6678..8eab281 100644
+--- a/usage.c
++++ b/usage.c
+@@ -6,6 +6,8 @@
+ #include "git-compat-util.h"
+ #include "cache.h"
  
--		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
-+		if ((buf[i] == ' ' || buf[i] == '\t') && !first)
- 			continue;
++static int dying;
++
+ void vreportf(const char *prefix, const char *err, va_list params)
+ {
+ 	char msg[4096];
+@@ -82,6 +84,12 @@ void NORETURN die(const char *err, ...)
+ {
+ 	va_list params;
  
- 		first = 0;
-diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
-index b4e5c65..b2098e0 100755
---- a/t/t3511-cherry-pick-x.sh
-+++ b/t/t3511-cherry-pick-x.sh
-@@ -52,7 +52,7 @@ test_expect_success 'cherry-pick -s inserts blank line after non-rfc2822 footer'
- 	test_cmp expect actual
- '
++	if (dying) {
++		fputs("fatal: recursion detected in die handler\n", stderr);
++		exit(128);
++	}
++	dying = 1;
++
+ 	va_start(params, err);
+ 	die_routine(err, params);
+ 	va_end(params);
+@@ -94,6 +102,13 @@ void NORETURN die_errno(const char *fmt, ...)
+ 	char str_error[256], *err;
+ 	int i, j;
  
--test_expect_failure 'cherry-pick -s not confused by rfc2822 continuation line' '
-+test_expect_success 'cherry-pick -s not confused by rfc2822 continuation line' '
- 	pristine_detach initial &&
- 	git cherry-pick -s rfc2822-base &&
- 	cat <<-EOF >expect &&
++	if (dying) {
++		fputs("fatal: recursion detected in die_errno handler\n",
++			stderr);
++		exit(128);
++	}
++	dying = 1;
++
+ 	err = strerror(errno);
+ 	for (i = j = 0; err[i] && j < sizeof(str_error) - 1; ) {
+ 		if ((str_error[j++] = err[i++]) != '%')
 -- 
 1.8.0
