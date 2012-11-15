@@ -1,90 +1,80 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 1/5 v2] t/test-lib-functions.sh: allow to specify the tag name to test_commit
-Date: Wed, 14 Nov 2012 21:49:30 -0800
-Message-ID: <1352958570-18724-1-git-send-email-drafnel@gmail.com>
-References: <20121115032005.GA20677@ftbfs.org>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <bcasey@nvidia.com>
-To: kraai@ftbfs.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 06:50:05 2012
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Thu, 15 Nov 2012 06:54:25 +0100
+Message-ID: <50A48391.9090207@web.de>
+References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de> <50A2F17D.4010907@gmail.com> <20121114190228.GA3860@sigill.intra.peff.net> <50A40978.2060504@web.de> <20121115001635.GA17370@sigill.intra.peff.net> <50A44A73.8020007@gmail.com> <20121115015608.GB19131@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGE=?= =?UTF-8?B?dXNlbg==?= 
+	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 06:55:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYsKz-0001UZ-5O
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 06:50:05 +0100
+	id 1TYsPj-00051t-NO
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 06:55:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750923Ab2KOFtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 00:49:49 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:63040 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750733Ab2KOFts (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 00:49:48 -0500
-Received: by mail-pa0-f46.google.com with SMTP id hz1so841040pad.19
-        for <git@vger.kernel.org>; Wed, 14 Nov 2012 21:49:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=2FnDZ0geJ+70qloa2pYdpznOL6c1emvWGYunPQQ+Fac=;
-        b=lmRR8zDMAArAJR80EMO/v6+UUBDzd5AYd2TZYLW/NGfJ26N5scwXL6g+pH/eNqyyEM
-         67owNAtjJ/ep58kwZMW238yIu03QH6q0RMzyeVNiRXDrbKXCwd2mjzNz6rt1U+HUgzGs
-         ZIEqTx+9MuqPp6TJgZJegu/XYwmJLQl9Pq1GviI7ffx0V7d7g3Esutc53B+5DOHtaBHY
-         d933NSmH6Pjk6LH2Ttbwe0np+2DcCQqNOdd9oEcwJR5in48KIK/UTKd8PB0Ob93u1Gy1
-         Fgf6C93PiYlJroUHBh//N+KsCRKGJ2d7LtXz2oE/cs4cHiKGrKU3j6HjTbRSlPYvx8sw
-         ZgwA==
-Received: by 10.69.0.10 with SMTP id au10mr1572232pbd.18.1352958588009;
-        Wed, 14 Nov 2012 21:49:48 -0800 (PST)
-Received: from charliebrown.hsd1.ca.comcast.net. (c-98-248-42-122.hsd1.ca.comcast.net. [98.248.42.122])
-        by mx.google.com with ESMTPS id c8sm9161883pav.4.2012.11.14.21.49.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Nov 2012 21:49:47 -0800 (PST)
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <20121115032005.GA20677@ftbfs.org>
+	id S1751144Ab2KOFy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 00:54:28 -0500
+Received: from mout.web.de ([212.227.17.11]:61140 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750801Ab2KOFy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 00:54:27 -0500
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0Laky4-1Ssz5V2WTo-00krmP; Thu, 15 Nov 2012 06:54:26 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <20121115015608.GB19131@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:WkdTsSmqzXg1ODHWeFv2fYQ0oB2Obcz8Ng5alFtVtQ4
+ Ie8vpWB9DyWxvnBN7V6CZP6BVMEo49P9rsba/pDem9wrvvyZwj
+ 2tWUp+La+feoTYHIqcn4aVl+nRcjQPLHnc4Fes7FvXgyU9sfSI
+ mp98e1Y9h1o97i64aGGQM3TRqpgOZts/W0ezeflImtJiDQRvge
+ PCQwWvFAy6qcyIIuBFpDw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209798>
 
-The <message> part of test_commit() may not be appropriate for a tag name.
-So let's allow test_commit to accept a fourth argument to specify the tag
-name.
+On 15.11.12 02:56, Jeff King wrote:
+> On Wed, Nov 14, 2012 at 08:50:43PM -0500, Mark Levedahl wrote:
+> 
+>> Cygwin changed the win32api implementation, and the old is not just
+>> no longer supported for the current release series, but virtually
+>> impossible to even install (several new packages are now installed,
+>> the old package is in the "obsolete" category, i.e., not available).
+>> The older cygwin 1.5 dll + utilities can be installed afresh, so that
+>> is why I set up to switch based upon dll version - the proposed
+>> test(s) and configuration would be to have git maintain compatibility
+>> with an unsupported Cygwin configuration. I just don't think this is
+>> worth the maintenance burden, but of course I am not the maintainer,
+>> just expressing my opinion.
+> 
+> OK. I don't have a strong opinion either, as I don't know what's normal
+> in the Cygwin world, and that is probably the most important thing to
+> follow for the default. I got the impression that "normal" is changing
+> to the new way, but Torsten's message made me wonder if were there quite
+> yet (if there was some issue with upgrades versus new fresh installs).
+> 
+> But I have no real cygwin knowledge, so I'll bow out and let you guys
+> discuss.
+> 
 
-Signed-off-by: Brandon Casey <bcasey@nvidia.com>
----
- t/test-lib-functions.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+My understanding:
+Either use people cygwin 1.5 or they use cygwin 1.7, and in this case
+the installation is updated frequently.
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 8889ba5..9e2b8b8 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -135,12 +135,13 @@ test_pause () {
- 	fi
- }
- 
--# Call test_commit with the arguments "<message> [<file> [<contents>]]"
-+# Call test_commit with the arguments "<message> [<file> [<contents> [<tag>]]]"
- #
- # This will commit a file with the given contents and the given commit
--# message.  It will also add a tag with <message> as name.
-+# message.  It will also add a tag with <message> as name unless <tag> is
-+# given.
- #
--# Both <file> and <contents> default to <message>.
-+# <file>, <contents>, and <tag> all default to <message>.
- 
- test_commit () {
- 	notick= &&
-@@ -168,7 +169,7 @@ test_commit () {
- 		test_tick
- 	fi &&
- 	git commit $signoff -m "$1" &&
--	git tag "$1"
-+	git tag "${4:-$1}"
- }
- 
- # Call test_merge with the arguments "<message> <commit>", where <commit>
--- 
-1.8.0
+Peff or Junio, please go ahead with the patch.
+
+If it turns out that we want to support cygwin installations like 1.7.7
+which could be upgraded, but are not upgraded since they are
+"production machines we do not dare to touch" we can still improve
+the autodetection.
+
+Thanks for the responses.
+/Torsten
