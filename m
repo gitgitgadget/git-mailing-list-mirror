@@ -1,85 +1,83 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Local clones aka forks disk size optimization
-Date: Thu, 15 Nov 2012 11:18:27 +1100
-Message-ID: <CAH5451nW2esQR8XaAttT3tYJZEw1Nj3OEMgkHsMZrZDxhcRXHw@mail.gmail.com>
-References: <CALZVapmG+HL0SQx8zx=Cfz5pWv84hJq90x-7VdjA0m2Z4dC34A@mail.gmail.com>
- <CALZVapmO61d8yXfXXGx6Qc444ka+8n7HabuNRt0rJdE5qy_7aQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Wed, 14 Nov 2012 16:19:02 -0800
+Message-ID: <7v4nkrafbd.fsf@alter.siamese.dyndns.org>
+References: <20121113175205.GA26960@sigill.intra.peff.net>
+ <50A2B14C.9040608@web.de> <50A2F17D.4010907@gmail.com>
+ <20121114190228.GA3860@sigill.intra.peff.net> <50A40978.2060504@web.de>
+ <20121115001635.GA17370@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Javier Domingo <javierdo1@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 01:19:04 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 01:19:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYnAc-0000ei-MZ
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 01:19:03 +0100
+	id 1TYnAv-0000sp-7Q
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 01:19:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933243Ab2KOASt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 19:18:49 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:44918 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933080Ab2KOASs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 19:18:48 -0500
-Received: by mail-qa0-f46.google.com with SMTP id c11so2292415qad.19
-        for <git@vger.kernel.org>; Wed, 14 Nov 2012 16:18:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=B97rIBfnLS8DEaxYIqe/PS7FOaQqPBy9jGF/FEQ1v7o=;
-        b=M8fywpsGuJw43pnwiylmGw1piuT2RruaOfxvtz7WnyB6DOl6+PWCbW7ERSpyEkLSe1
-         ObWfK5eqOXFWW9RTJWFg3CNjyo/I5ZwqFa+od/LqMF+LV+9sh2YIF9cm0aW6OBxlDK1i
-         Wl3qG57W8qn5XcryYyk2bLS67j51JGtzZvK5riMa/JRIndJFpibErm1SGhpmFTQguy8n
-         fKdpjobdCiQUGjxQt63uaQVLBCGNQOrIi1efUwBLqIcntampuAleYYjoXtwF3wcpUIzu
-         DVkscirCnsMM1ITDKMA1LxlBVxtxb/6+HAGzGhn617QosKPYfcTkpv2pt0sP1jHj7zjU
-         mZag==
-Received: by 10.229.102.79 with SMTP id f15mr2698910qco.1.1352938728075; Wed,
- 14 Nov 2012 16:18:48 -0800 (PST)
-Received: by 10.49.119.65 with HTTP; Wed, 14 Nov 2012 16:18:27 -0800 (PST)
-In-Reply-To: <CALZVapmO61d8yXfXXGx6Qc444ka+8n7HabuNRt0rJdE5qy_7aQ@mail.gmail.com>
+	id S933260Ab2KOATH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2012 19:19:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36029 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933080Ab2KOATF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2012 19:19:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDE1DA3D1;
+	Wed, 14 Nov 2012 19:19:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=gS1Y/n8YsgeO
+	+OJwzLRugdZ3SR4=; b=uulSCn+Kt2k+/x5ro4Rz13X0EQ7Sl9FkrTO5NIK4eoc6
+	tF7MiwqccHwaTGjcpLeMBWibDPg7VmK7D2x52zm50IrX8PavzUSogfYbja0ORopN
+	seyATRvKKCPsRs3wBBKA5IrSOFe/OK7eVjKcseiUqo4atRT2RvimD3siExsNvLw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Bab0bA
+	Y+ONvLy4tXh2BDCHWgfgo54Eg/goZY3KfgQU/8XdQzPofJhtAraUjGZv7V9MnCoA
+	viXXhucAiIS35UpyDZXcpwmPsnjTZCAlCGWK7UtE7osdmED4MHK2tbuPeBX0stYX
+	4Qnq1SD7iT1oTPJMDgnE0/kyLNlNfhpNkjZnk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB187A3D0;
+	Wed, 14 Nov 2012 19:19:04 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D7A7A3CF; Wed, 14 Nov 2012
+ 19:19:04 -0500 (EST)
+In-Reply-To: <20121115001635.GA17370@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 14 Nov 2012 16:16:35 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1020BDB8-2EBA-11E2-AB8E-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209765>
 
-On 15 November 2012 10:42, Javier Domingo <javierdo1@gmail.com> wrote:
-> Hi,
->
-> I have come up with this while doing some local forks for work.
-> Currently, when you clone a repo using a path (not file:/// protocol)
-> you get all the common objects linked.
->
-> But as you work, each one will continue growing on its way, although
-> they may have common objects.
->
-> Is there any way to avoid this? I mean, can something be done in git,
-> that it checks for (when pulling) the same objects in the other forks?
+Jeff King <peff@peff.net> writes:
 
-Have you seen alternates? From [1]:
-
-> How to share objects between existing repositories?
-> ---------------------------------------------------------------------------
+> On Wed, Nov 14, 2012 at 10:13:28PM +0100, Torsten B=C3=B6gershausen w=
+rote:
 >
-> Do
+>> >>>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
+>> >>>>  - Update cygwin.c for new mingw-64 win32 api headers
+>> >>>>
+>> >>>>  Make git work on newer cygwin.
+>> >>>>
+>> >>>>  Will merge to 'next'.
 >
-> echo "/source/git/project/.git/objects/" > .git/objects/info/alternates
->
-> and then follow it up with
->
-> git repack -a -d -l
->
-> where the '-l' means that it will only put local objects in the pack-file
-> (strictly speaking, it will put any loose objects from the alternate tree
-> too, so you'll have a fully packed archive, but it won't duplicate objects
-> that are already packed in the alternate tree).
+> I'm cc-ing Junio in case he missed the discussion; my original plan h=
+ad
+> been to move this topic right to 'next' to get exposure from other
+> cygwin people. But it seems we have already got that, and it might ne=
+ed
+> re-rolling, so it probably makes sense to hold back until the discuss=
+ion
+> reaches a conclusion.
 
-[1] https://git.wiki.kernel.org/index.php/GitFaq#How_to_share_objects_between_existing_repositories.3F
-
-
-Regards,
-
-Andrew Ardill
+Thanks for a reminder; that is what I did.
