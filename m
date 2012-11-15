@@ -1,92 +1,122 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Re: Local clones aka forks disk size optimization
-Date: Thu, 15 Nov 2012 02:15:07 +0100
-Message-ID: <CALZVapmBM78UtjAiNm2VoeWuetCiyxN70mTxbG14SQh5a5RCeQ@mail.gmail.com>
-References: <CALZVapmG+HL0SQx8zx=Cfz5pWv84hJq90x-7VdjA0m2Z4dC34A@mail.gmail.com>
- <CALZVapmO61d8yXfXXGx6Qc444ka+8n7HabuNRt0rJdE5qy_7aQ@mail.gmail.com>
- <CAH5451nW2esQR8XaAttT3tYJZEw1Nj3OEMgkHsMZrZDxhcRXHw@mail.gmail.com>
- <CALZVap=kOwOpxeu8+_+5uQYZz3GNC8Ep_JeK7WCQHtu+Hn3rUw@mail.gmail.com> <CAH5451m4saVa7-NLbVbXp7q8ca5_0N4FLk3wYaqxLT=AE5frbw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] pickaxe: use textconv for -S counting
+Date: Wed, 14 Nov 2012 17:21:31 -0800
+Message-ID: <20121115012131.GA17894@sigill.intra.peff.net>
+References: <20121028124540.GF11434@sigill.intra.peff.net>
+ <20121028124701.GB24548@sigill.intra.peff.net>
+ <7vk3tpcd0w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 02:15:49 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Peter Oberndorfer <kumbayo84@arcor.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 02:21:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYo3U-0007Uo-FB
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:15:44 +0100
+	id 1TYo9M-0003Tk-Qn
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992494Ab2KOBPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 20:15:30 -0500
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:35432 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992491Ab2KOBP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 20:15:29 -0500
-Received: by mail-vc0-f174.google.com with SMTP id fk26so1148112vcb.19
-        for <git@vger.kernel.org>; Wed, 14 Nov 2012 17:15:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JCFOk0JlnnaOA/+fEB9yMuRztpBKQ64kBBeZ2CCVgI4=;
-        b=xWA/qGoiya8CXCW7+Tv2jdd5f5otVoVBsOf2eHcaSVQbg5wa2cr3aksl5P5wyN+gow
-         v63QYOKzUBsS6xv3vhGEvcuHFZtr1DOUa3Y5V+h2fy3cwLSosB8/4klElmoZZgwaCDE8
-         6dClhLmduFrdO8ct0V3YgC54E6QXJIKqeDD09zmduqSY4XqdWDByTC9k3OkIv4IFSad8
-         W2IXYXId8jhWgVh30HQfwjoaauNiH8Fal641cul1bDD3PoKiwpGgIR9aOKbo4kldnZTC
-         MD6l4vCzv9VonxLNhPYxd/whDxg054jzt/8PdEWLCaT3MjszzHfEuLVM76+ckECm5tVO
-         jPqA==
-Received: by 10.52.71.44 with SMTP id r12mr4309617vdu.41.1352942128173; Wed,
- 14 Nov 2012 17:15:28 -0800 (PST)
-Received: by 10.58.33.200 with HTTP; Wed, 14 Nov 2012 17:15:07 -0800 (PST)
-In-Reply-To: <CAH5451m4saVa7-NLbVbXp7q8ca5_0N4FLk3wYaqxLT=AE5frbw@mail.gmail.com>
+	id S964847Ab2KOBVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 20:21:35 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48885 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964820Ab2KOBVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 20:21:34 -0500
+Received: (qmail 9768 invoked by uid 107); 15 Nov 2012 01:22:23 -0000
+Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 20:22:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 17:21:31 -0800
+Content-Disposition: inline
+In-Reply-To: <7vk3tpcd0w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209778>
 
-Hi Andrew,
+On Tue, Nov 13, 2012 at 03:13:19PM -0800, Junio C Hamano wrote:
 
-Doing this would require I got tracked which one comes from which. So
-it would imply some logic (and db) over it. With the hardlinking way,
-it wouldn't require anything. The idea is that you don't have to do
-anything else in the server.
+> >  static int has_changes(struct diff_filepair *p, struct diff_options *o,
+> >  		       regex_t *regexp, kwset_t kws)
+> >  {
+> > +	struct userdiff_driver *textconv_one = get_textconv(p->one);
+> > +	struct userdiff_driver *textconv_two = get_textconv(p->two);
+> > +	mmfile_t mf1, mf2;
+> > +	int ret;
+> > +
+> >  	if (!o->pickaxe[0])
+> >  		return 0;
+> >  
+> > -	if (!DIFF_FILE_VALID(p->one)) {
+> > -		if (!DIFF_FILE_VALID(p->two))
+> > -			return 0; /* ignore unmerged */
+> 
+> What happened to this part that avoids showing nonsense for unmerged
+> paths?
 
-I understand that it would be imposible to do it for windows users
-(but using cygwin), but for *nix ones yes...
-Javier Domingo
+It's moved down. fill_one will return an empty mmfile if
+!DIFF_FILE_VALID, so we end up here:
 
+        fill_one(p->one, &mf1, &textconv_one);
+        fill_one(p->two, &mf2, &textconv_two);
 
-2012/11/15 Andrew Ardill <andrew.ardill@gmail.com>:
-> On 15 November 2012 11:40, Javier Domingo <javierdo1@gmail.com> wrote:
->> Hi Andrew,
->>
->> The problem about that, is that if I want to delete the first repo, I
->> will loose objects... Or does that repack also hard-link the objects
->> in other repos? I don't want to accidentally loose data, so it would
->> be nice that althought avoided to repack things, it would also
->> hardlink them.
->
-> Hi Javier, check out the section below the one I linked earlier:
->
->> How to stop sharing objects between repositories?
->>
->> To copy the shared objects into the local repository, repack without the -l flag
->>
->> git repack -a
->>
->> Then remove the pointer to the alternate object store
->>
->> rm .git/objects/info/alternates
->>
->> (If the repository is edited between the two steps, it could become corrupted
->> when the alternates file is removed. If you're unsure, you can use git fsck to
->> check for corruption. If things go wrong, you can always recover by replacing
->> the alternates file and starting over).
->
-> Regards,
->
-> Andrew Ardill
+        if (!mf1.ptr) {
+                if (!mf2.ptr)
+                        ret = 0; /* ignore unmerged */
+
+Prior to this change, we didn't use fill_one, so we had to check manually.
+
+> > +	/*
+> > +	 * If we have an unmodified pair, we know that the count will be the
+> > +	 * same and don't even have to load the blobs. Unless textconv is in
+> > +	 * play, _and_ we are using two different textconv filters (e.g.,
+> > +	 * because a pair is an exact rename with different textconv attributes
+> > +	 * for each side, which might generate different content).
+> > +	 */
+> > +	if (textconv_one == textconv_two && diff_unmodified_pair(p))
+> > +		return 0;
+> 
+> I am not sure about this part that cares about the textconv.
+> 
+> Wouldn't the normal "git diff A B" skip the filepair that are
+> unmodified in the first place at the object name level without even
+> looking at the contents (see e.g. diff_flush_patch())?
+
+Hmph. The point was to find the case when the paths are different (e.g.,
+in a rename), and therefore the textconvs might be different. But I
+think I missed the fact that diff_unmodified_pair will note the
+difference in paths. So just calling diff_unmodified_pair would be
+sufficient, as the code prior to my patch does.
+
+I thought the point was an optimization to avoid comparing contains() on
+the same data (which we can know will match without looking at it).
+Exact renames are the obvious one, but they are not handled here. So I
+am not sure of the point (to catch "git diff $blob1 $blob2" when the two
+are identical? I am not sure at what layer we cull that from the diff
+queue).
+
+So there is room for optimization here on exact renames, but
+diff_unmodified_pair is too forgiving of what is interesting (a rename
+is interesting to diff_flush_patch, because it wants to mention the
+rename, but it is not interesting to pickaxe, because we did not change
+the content, and it could be culled here).
+
+I don't know that it is that big a deal in general. Pure renames are
+going to be the minority of blobs we look at, so it is probably not even
+measurable. You could construct a pathological case (e.g., an otherwise
+small repo with a 2G file, rename the 2G file without modification, then
+running "git log -Sfoo" will unnecessarily load the giant blob while
+examining the rename commit).
+
+> Shouldn't this part of the code emulating that behaviour no matter
+> what textconv filter(s) are configured for these paths?
+
+Yeah, I just missed that it is checking the path already. It may still
+make sense to tighten the optimization, but that is a separate issue. It
+should just check diff_unmodified_pair as before; textconv only matters
+if you are trying to optimize out exact renames.
+
+-Peff
