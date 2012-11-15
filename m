@@ -1,82 +1,107 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
-Date: Thu, 15 Nov 2012 20:35:34 +0100
-Message-ID: <50A54406.5080309@web.de>
-References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de> <50A53CF0.7040809@ramsay1.demon.co.uk>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] status: add advice on how to push/pull to tracking branch
+Date: Thu, 15 Nov 2012 20:40:09 +0100
+Message-ID: <vpqmwyid59i.fsf@grenoble-inp.fr>
+References: <1352976300-20159-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vr4nu92hm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>, mlevedahl@gmail.com,
-	git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Nov 15 20:36:20 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 20:45:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZ5EX-0001Fh-T9
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 20:36:18 +0100
+	id 1TZ5NY-0000ia-39
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 20:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1768793Ab2KOTgC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2012 14:36:02 -0500
-Received: from mout.web.de ([212.227.17.12]:54327 "EHLO mout.web.de"
+	id S1768846Ab2KOTpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 14:45:22 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:51183 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1768775Ab2KOTgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 14:36:01 -0500
-Received: from wanderer.site ([195.67.191.23]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0Lylrf-1TCNc73FSB-015Pa3; Thu, 15 Nov 2012 20:35:45
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
-In-Reply-To: <50A53CF0.7040809@ramsay1.demon.co.uk>
-X-Provags-ID: V02:K0:zPhv3kioTs3qt+buJs5LShg0LgTuYSUXupeBuk00eLy
- wJVtGCH5SjEaQpV0Y9cls0nYoKeunFfl/VPLdpzM8BG8foPJ+Y
- MZ0gKYGanjWZY4OiHsXmCp/mgSAY7b0OFZEVdXftFLAUZ90t9Y
- nSz7i45VqYkKJmhyyWH7O16pLtT0KXnnMYpq97f/dMa64bmpZ3
- y75zE4Ygy3rAXZThN6jmQ==
+	id S1768600Ab2KOTpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 14:45:21 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qAFJVNv4013220
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 15 Nov 2012 20:31:23 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TZ5IH-0007ha-HM; Thu, 15 Nov 2012 20:40:09 +0100
+In-Reply-To: <7vr4nu92hm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 15 Nov 2012 09:53:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 15 Nov 2012 20:31:23 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: qAFJVNv4013220
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1353612684.92858@n529ed722CGKOXB4ob4RQQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209845>
 
-On 11/15/2012 08:05 PM, Ramsay Jones wrote:
-> Torsten B=C3=B6gershausen wrote:
->>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
->>>   - Update cygwin.c for new mingw-64 win32 api headers
->>>
->>>   Make git work on newer cygwin.
->>>
->>>   Will merge to 'next'.
->>
->> (Sorry for late answer, I managed to test the original patch minutes=
- before Peff merged it to pu)
->> (And thanks for maintaining git)
->>
->> Is everybody using cygwin happy with this?
->
-> I am still on cygwin 1.5.22 and quite happy that this patch does
-> not (seem) to cause any problems. ;-P
->
->> I managed to compile on a fresh installed cygwin,
->> but failed to compile under 1.7.7, see below.
->> Is there a way we can achieve to compile git both under "old" and "n=
-ew" cygwin 1.7 ?
->> Or is this not worth the effort?
->
-> Did the cygwin project not bump an api version number somewhere?
->
-> ATB,
-> Ramsay Jones
-Ramsay,
-you can run uname -r to see the version number.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I myself haven't fully understood all the consequences,
-somewhere between 1.7.7 and 1.7.17 the include files had been changed.
+>> -	if (!num_theirs)
+>> +	if (!num_theirs) {
+>>  		strbuf_addf(sb,
+>>  			Q_("Your branch is ahead of '%s' by %d commit.\n",
+>>  			   "Your branch is ahead of '%s' by %d commits.\n",
+>>  			   num_ours),
+>>  			base, num_ours);
+>> -	else if (!num_ours)
+>> +		strbuf_addf(sb,
+>> +			_("  (use \"git push\" to publish your local commits)\n"));
+>> +	} else if (!num_ours) {
+>
+> The message should make it clear that the two words in double quotes
+> only hint what command is used to "publish your local commits" and
+> not to be taken as literal "here is what you exactly would type",
+> but I do not think that is what I would get from this if I were a
+> total newbie who would need this advise.
+>
+> It is even more true given that this is showing an arbitrary, and
+> more likely than not a non-current branch, especially with the
+> recent move from "matching" to "simple" where a naive use of "git
+> push" is to push the branch that is currently checked out and no
+> other branches.
 
-If this has consequences for using e.g. winsock2.dll, I want to know=20
-myself ;-)
+I don't understand what you mean by "non-current". If you mean a local
+branch not pointed to by HEAD, then I don't understand the remark, as
+the message is shown by "git status" (looking more closely, it is also
+shown by "git checkout", but after switching branch so also showing a
+message about the current branch) and precisely talks about the current
+branch. If you mean that the upsteam branch has a name different from
+the local one, then with "push.default=simple", argumentless "git push"
+will fail and show a detailed explanation to the user, which I find
+acceptable.
 
-/Torsten
+I can tweak the advice to show the full "git push" command with
+push.default=matching/current, but first, I'd like to understand your
+remark.
+
+>> +		strbuf_addf(sb,
+>> +			_("  (use \"git pull\" to update your local branch)\n"));
+>> +	} else {
+>
+> Likewise, and the non-currentness of the branch being described is
+> even worse in here, as unlike "git push" that can still be used to
+> push a non-current branch, "git pull" is never to be used to update
+> local branch that is not current, which means the advice must mention
+> "git checkout" somewhere.
+
+I understand this remark even less. We're showing a message about the
+current branch and its upstream branch. In which case would "git pull"
+not do the right thing?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
