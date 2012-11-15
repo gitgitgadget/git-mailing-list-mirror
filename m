@@ -1,67 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
-Date: Wed, 14 Nov 2012 17:56:08 -0800
-Message-ID: <20121115015608.GB19131@sigill.intra.peff.net>
-References: <20121113175205.GA26960@sigill.intra.peff.net>
- <50A2B14C.9040608@web.de>
- <50A2F17D.4010907@gmail.com>
- <20121114190228.GA3860@sigill.intra.peff.net>
- <50A40978.2060504@web.de>
- <20121115001635.GA17370@sigill.intra.peff.net>
- <50A44A73.8020007@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
+Date: Thu, 15 Nov 2012 03:08:42 +0100
+Message-ID: <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
+References: <20121115003029.GA17550@sigill.intra.peff.net>
+	<20121115003640.GH17819@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 02:56:34 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 03:09:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYogs-0003NM-9E
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 02:56:26 +0100
+	id 1TYosz-00047q-DM
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 03:08:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992625Ab2KOB4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 20:56:12 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48923 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992614Ab2KOB4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 20:56:11 -0500
-Received: (qmail 10466 invoked by uid 107); 15 Nov 2012 01:57:00 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 20:57:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 17:56:08 -0800
-Content-Disposition: inline
-In-Reply-To: <50A44A73.8020007@gmail.com>
+	id S933144Ab2KOCIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 21:08:43 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:43607 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755467Ab2KOCIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 21:08:43 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so1199121oag.19
+        for <git@vger.kernel.org>; Wed, 14 Nov 2012 18:08:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wGVGKgFAva1p8oo/Uv/7ASmLs/gr6NOQIJRIFsUsNGM=;
+        b=PzJBZOzBHNDqG1TZ5vHINaGm1XouPCrQF1YWUPkglpWCqGCZsBi5jGj2vpL/aS9blK
+         vKxkoYyqe+PfXc986yXowppMiSn/aSEoKZ0O5DyrMG/YQ3Q39bGjcH04vICxFKabPn4P
+         nCmH5AGQoDeiej71fjMvxZvRh7SUPuT+0bMegHlJs2hBinQbBMdQIRoAjzn2W4iDms5I
+         CDxWvBKaYFfQRPsP1kpDF1VZR8Pv5C6FinJ8Yu/QDa6yxsbsIOjuiIpS/0CM8EICy39i
+         pEawx0QWAc/hTHarCXP+6h/FsGQOzyrhe5CerOAz0yIZCMRE7qtTYn0zJsiu6C8Cbwog
+         3M1A==
+Received: by 10.60.26.234 with SMTP id o10mr21560004oeg.85.1352945322775; Wed,
+ 14 Nov 2012 18:08:42 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Wed, 14 Nov 2012 18:08:42 -0800 (PST)
+In-Reply-To: <20121115003640.GH17819@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209791>
 
-On Wed, Nov 14, 2012 at 08:50:43PM -0500, Mark Levedahl wrote:
+On Thu, Nov 15, 2012 at 1:36 AM, Jeff King <peff@peff.net> wrote:
 
-> Cygwin changed the win32api implementation, and the old is not just
-> no longer supported for the current release series, but virtually
-> impossible to even install (several new packages are now installed,
-> the old package is in the "obsolete" category, i.e., not available).
-> The older cygwin 1.5 dll + utilities can be installed afresh, so that
-> is why I set up to switch based upon dll version - the proposed
-> test(s) and configuration would be to have git maintain compatibility
-> with an unsupported Cygwin configuration. I just don't think this is
-> worth the maintenance burden, but of course I am not the maintainer,
-> just expressing my opinion.
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 5a7c29d..0c49b32 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -436,9 +436,8 @@ if (0) {
+>         }
+>  }
+>
+> -my ($repoauthor, $repocommitter);
+> -($repoauthor) = Git::ident_person(@repo, 'author');
+> -($repocommitter) = Git::ident_person(@repo, 'committer');
+> +my ($repoauthor, $author_explicit) = Git::ident_person(@repo, 'author');
+> +my ($repocommitter, $committer_explicit) = Git::ident_person(@repo, 'committer');
+>
+>  # Verify the user input
+>
+> @@ -755,12 +754,17 @@ if (!$force) {
+>
+>  my $prompting = 0;
+>  if (!defined $sender) {
+> -       $sender = $repoauthor || $repocommitter || '';
+> -       $sender = ask("Who should the emails appear to be from? [$sender] ",
+> -                     default => $sender,
+> -                     valid_re => qr/\@.*\./, confirm_only => 1);
+> -       print "Emails will be sent from: ", $sender, "\n";
+> -       $prompting++;
+> +       ($sender, my $explicit) =
+> +               defined $repoauthor ? ($repoauthor, $author_explicit) :
+> +               defined $repocommitter ? ($repocommitter, $committer_explicit) :
+> +               ('', 0);
+> +       if (!$explicit) {
+> +               $sender = ask("Who should the emails appear to be from? [$sender] ",
+> +                             default => $sender,
+> +                             valid_re => qr/\@.*\./, confirm_only => 1);
+> +               print "Emails will be sent from: ", $sender, "\n";
+> +               $prompting++;
+> +       }
+>  }
+>
+>  if (!@initial_to && !defined $to_cmd) {
 
-OK. I don't have a strong opinion either, as I don't know what's normal
-in the Cygwin world, and that is probably the most important thing to
-follow for the default. I got the impression that "normal" is changing
-to the new way, but Torsten's message made me wonder if were there quite
-yet (if there was some issue with upgrades versus new fresh installs).
+I don't think there's any need for all that, this does the trick:
 
-But I have no real cygwin knowledge, so I'll bow out and let you guys
-discuss.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index aea66a0..503e551 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -748,16 +748,11 @@ if (!$force) {
+        }
+ }
 
--Peff
+-my $prompting = 0;
+ if (!defined $sender) {
+        $sender = $repoauthor || $repocommitter || '';
+-       $sender = ask("Who should the emails appear to be from? [$sender] ",
+-                     default => $sender,
+-                     valid_re => qr/\@.*\./, confirm_only => 1);
+-       print "Emails will be sent from: ", $sender, "\n";
+-       $prompting++;
+ }
+
++my $prompting = 0;
+
+This passes all the current tests and the ones you added.
+
+Which kind of user will get the prompt with your patch, that would
+miss it with mine?
+
+Cheers.
+
+-- 
+Felipe Contreras
