@@ -1,116 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] status: add advice on how to push/pull to tracking branch
-Date: Thu, 15 Nov 2012 11:45:00 +0100
-Message-ID: <1352976300-20159-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 15 11:45:38 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
+Date: Thu, 15 Nov 2012 03:13:47 -0800
+Message-ID: <20121115111334.GA1879@sigill.intra.peff.net>
+References: <20121115003029.GA17550@sigill.intra.peff.net>
+ <20121115003640.GH17819@sigill.intra.peff.net>
+ <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
+ <20121115083315.GA23377@sigill.intra.peff.net>
+ <CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
+ <20121115104345.GA32465@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 12:14:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYwwu-00078X-Kr
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 11:45:32 +0100
+	id 1TYxOX-0006yv-S6
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 12:14:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993077Ab2KOKpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 05:45:18 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:56317 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992967Ab2KOKpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 05:45:16 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qAFAaICX016493
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 15 Nov 2012 11:36:18 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1TYwwR-0005cA-9G; Thu, 15 Nov 2012 11:45:03 +0100
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1TYwwR-0005G7-4r; Thu, 15 Nov 2012 11:45:03 +0100
-X-Mailer: git-send-email 1.8.0.319.g8abfee4
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 15 Nov 2012 11:36:18 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qAFAaICX016493
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1353580582.22352@TXbLMM27mRJauxNaepUnOA
+	id S1423609Ab2KOLNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 06:13:52 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49267 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423250Ab2KOLNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 06:13:51 -0500
+Received: (qmail 15513 invoked by uid 107); 15 Nov 2012 11:14:40 -0000
+Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 06:14:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 03:13:47 -0800
+Content-Disposition: inline
+In-Reply-To: <20121115104345.GA32465@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209815>
 
+On Thu, Nov 15, 2012 at 02:43:58AM -0800, Jeff King wrote:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-I thought this was obvious enough not to deserve an advice, but a
-colleague of mine had troubles with "commited but not pushed" changes.
-Maybe an additional advice would have helped. After all, it's an
-advice, and can be deactivated ...
+> > And doesn't have any of the following:
+> > 
+> >  * configured user.name/user.email
+> >  * specified $EMAIL
+> >  * configured sendemail.from
+> >  * specified --from argument
+> > 
+> > Very unlikely.
+> 
+> That is certainly the opinion you have stated already. I'm not sure I
+> agree. Linus, for example, was an advocate of such a configuration early
+> on in git's history. I don't think he still runs that way, though.
+> 
+> > And then, what would be the consequences of not receiving this prompt?
+> 
+> An email would be sent with the generated identity.
 
- remote.c                   | 13 ++++++++++---
- t/t2020-checkout-detach.sh |  1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+I suspect you did not need me to answer that question, but were setting
+it up as a rhetorical trap to mention the final confirmation, which I
+failed to note in my response.
 
-diff --git a/remote.c b/remote.c
-index 04fd9ea..9c19689 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1627,13 +1627,15 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
--	if (!num_theirs)
-+	if (!num_theirs) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
- 			   "Your branch is ahead of '%s' by %d commits.\n",
- 			   num_ours),
- 			base, num_ours);
--	else if (!num_ours)
-+		strbuf_addf(sb,
-+			_("  (use \"git push\" to publish your local commits)\n"));
-+	} else if (!num_ours) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is behind '%s' by %d commit, "
- 			       "and can be fast-forwarded.\n",
-@@ -1641,7 +1643,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 			       "and can be fast-forwarded.\n",
- 			   num_theirs),
- 			base, num_theirs);
--	else
-+		strbuf_addf(sb,
-+			_("  (use \"git pull\" to update your local branch)\n"));
-+	} else {
- 		strbuf_addf(sb,
- 			Q_("Your branch and '%s' have diverged,\n"
- 			       "and have %d and %d different commit each, "
-@@ -1651,6 +1655,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 			       "respectively.\n",
- 			   num_theirs),
- 			base, num_ours, num_theirs);
-+		strbuf_addf(sb,
-+			_("  (use \"git pull\" to merge the remote branch into yours)\n"));
-+	}
- 	return 1;
- }
- 
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index 8100537..5d68729 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -151,6 +151,7 @@ test_expect_success 'checkout does not warn leaving reachable commit' '
- 
- cat >expect <<'EOF'
- Your branch is behind 'master' by 1 commit, and can be fast-forwarded.
-+  (use "git pull" to update your local branch)
- EOF
- test_expect_success 'tracking count is accurate after orphan check' '
- 	reset &&
--- 
-1.8.0.319.g8abfee4
+I think a much more compelling argument/commit message for your
+suggested patch would be:
+
+  We currently prompt the user for the "From" address. This is an
+  inconvenience in the common case that the user has configured their
+  identity in the environment, but is meant as a safety check for when
+  git falls back to an implicitly generated identity (which may or may
+  not be valid).
+
+  That safety check is not really necessary, though, as by default
+  send-email will prompt the user for a final confirmation before
+  sending out any message. The likelihood that a user has both bothered
+  to turn off this default _and_ not configured any identity (nor
+  checked that the automatic identity is valid) is rather low.
+
+I could accept that line of reasoning.  I see that this argument is
+buried deep in your commit message, but I will admit to not reading your
+9-point list of conditions all that closely, as the first 7 points are,
+in my opinion, not relevant (and I had already read and disagreed with
+them in other messages).
+
+-Peff
