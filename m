@@ -1,79 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
-Date: Thu, 15 Nov 2012 00:33:17 -0800
-Message-ID: <20121115083315.GA23377@sigill.intra.peff.net>
-References: <20121115003029.GA17550@sigill.intra.peff.net>
- <20121115003640.GH17819@sigill.intra.peff.net>
- <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: use cases for git namespaces
+Date: Thu, 15 Nov 2012 14:03:32 +0530
+Message-ID: <CAMK1S_gczLajro0aZ5ftUmt_vhxA+yAr_5pCZknJ2bxhykYRXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 09:33:43 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 09:34:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYutD-0003d2-Rx
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 09:33:36 +0100
+	id 1TYutd-0003xB-IW
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 09:34:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756200Ab2KOIdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 03:33:22 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49171 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755772Ab2KOIdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 03:33:21 -0500
-Received: (qmail 14465 invoked by uid 107); 15 Nov 2012 08:34:10 -0000
-Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 03:34:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 00:33:17 -0800
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
+	id S1756084Ab2KOIdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 03:33:43 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:48770 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756020Ab2KOIde (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 03:33:34 -0500
+Received: by mail-ee0-f46.google.com with SMTP id b15so802357eek.19
+        for <git@vger.kernel.org>; Thu, 15 Nov 2012 00:33:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=foO2k1D/1wGYAzdoUd+kS7MQcemwiKWjL9GsCDVC080=;
+        b=WvZhxVwtRQ8l2xwbU2XIISKfGqOwSEqEOAMsjWdwSl8/atckiO3DRhGtWpyyfxX/bw
+         0qwlsRnznxLNoowQBUcKRkXdUtMDsKvx0u/7Ee6nfi1gQX0xDKZcx2GHEv7ViXBY5r1e
+         IA6yVnEFsJb2aBPq3iGooQeINNATYEWlsFOTAhOk2tMeDziWhKe515P7WGNiamCNc3eu
+         FL9WrBTzPmNruYeLlAZCatuLP/m0szhjHiLSJ3GnDrHsAMT1NyoD8Er8hmm3j59tFOEU
+         6A1o0ekzP1Izfzxbhx8N/5UigCqktiCyt7NsF7Vk4FfRCZHhdmw8/oMEKrDm8rwj5Vby
+         uW5w==
+Received: by 10.14.209.201 with SMTP id s49mr1749565eeo.7.1352968413042; Thu,
+ 15 Nov 2012 00:33:33 -0800 (PST)
+Received: by 10.223.132.211 with HTTP; Thu, 15 Nov 2012 00:33:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209811>
 
-On Thu, Nov 15, 2012 at 03:08:42AM +0100, Felipe Contreras wrote:
+Hi,
 
-> I don't think there's any need for all that, this does the trick:
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index aea66a0..503e551 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -748,16 +748,11 @@ if (!$force) {
->         }
->  }
-> 
-> -my $prompting = 0;
->  if (!defined $sender) {
->         $sender = $repoauthor || $repocommitter || '';
-> -       $sender = ask("Who should the emails appear to be from? [$sender] ",
-> -                     default => $sender,
-> -                     valid_re => qr/\@.*\./, confirm_only => 1);
-> -       print "Emails will be sent from: ", $sender, "\n";
-> -       $prompting++;
->  }
-> 
-> +my $prompting = 0;
-> 
-> This passes all the current tests and the ones you added.
+It seems to me that whatever namespaces can do, can functionally be
+done using just a subdirectory of branches.   The only real
+differences I can see are (a) a client sees less branch clutter, and
+(b) a fetch/clone pulls down less if the big stuff is in another
+namespace.
 
-It may pass on your system, but it will not on a system that meets the
-AUTOIDENT prerequisite (it fails the new t9001.19 on my system; I
-suspect your system config is such that we skip t9001.19 and run
-t9001.20, whereas mine is the opposite).
+I would like to understand what other uses/reasons were thought of.
 
-> Which kind of user will get the prompt with your patch, that would
-> miss it with mine?
+I looked for discussion on the ml archives.  I found the patch series
+but could not easily find much *discussion* of the feature and its
+design.  I found one post [1] that indicated that "part of the
+rationale..." (being what I described above), but I would like to
+understand the *rest* of the rationale.
 
-One whose system is configured in such a way that git can produce an
-automatic ident (i.e., has a non-blank GECOS name and a FQDN).
+Pointers to gmane are also fine, or brief descriptions of uses [being]
+made of this.
 
--Peff
+[1]: http://article.gmane.org/gmane.comp.version-control.git/175832/match=namespace
+
+Thanks
+
+-- 
+Sitaram
