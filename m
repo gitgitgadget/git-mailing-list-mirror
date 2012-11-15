@@ -1,68 +1,82 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: Git does not understand absolute Win'dos' path
-Date: Thu, 15 Nov 2012 19:20:04 +0000
-Message-ID: <50A54064.9060003@ramsay1.demon.co.uk>
-References: <1352884329.28981.YahooMailNeo@web162504.mail.bf1.yahoo.com> <50A36844.3090000@viscovery.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Thu, 15 Nov 2012 20:35:34 +0100
+Message-ID: <50A54406.5080309@web.de>
+References: <20121113175205.GA26960@sigill.intra.peff.net> <50A2B14C.9040608@web.de> <50A53CF0.7040809@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Lichtin <lichtin@yahoo.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Nov 15 20:23:01 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>, mlevedahl@gmail.com,
+	git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Nov 15 20:36:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZ51g-0006cP-3T
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 20:23:00 +0100
+	id 1TZ5EX-0001Fh-T9
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 20:36:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1768773Ab2KOTWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 14:22:42 -0500
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:39512 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1768727Ab2KOTWl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 14:22:41 -0500
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 991DEA648C0;
-	Thu, 15 Nov 2012 19:22:40 +0000 (GMT)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id F31BFA6487E;	Thu, 15 Nov 2012 19:22:39 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;	Thu, 15 Nov 2012 19:22:39 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <50A36844.3090000@viscovery.net>
-X-MDF-HostID: 8
+	id S1768793Ab2KOTgC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2012 14:36:02 -0500
+Received: from mout.web.de ([212.227.17.12]:54327 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1768775Ab2KOTgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 14:36:01 -0500
+Received: from wanderer.site ([195.67.191.23]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0Lylrf-1TCNc73FSB-015Pa3; Thu, 15 Nov 2012 20:35:45
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
+In-Reply-To: <50A53CF0.7040809@ramsay1.demon.co.uk>
+X-Provags-ID: V02:K0:zPhv3kioTs3qt+buJs5LShg0LgTuYSUXupeBuk00eLy
+ wJVtGCH5SjEaQpV0Y9cls0nYoKeunFfl/VPLdpzM8BG8foPJ+Y
+ MZ0gKYGanjWZY4OiHsXmCp/mgSAY7b0OFZEVdXftFLAUZ90t9Y
+ nSz7i45VqYkKJmhyyWH7O16pLtT0KXnnMYpq97f/dMa64bmpZ3
+ y75zE4Ygy3rAXZThN6jmQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209844>
 
-Johannes Sixt wrote:
-> Am 11/14/2012 10:12, schrieb Martin Lichtin:
->> Maven's release plugin prepares a call Git like in this example:
+On 11/15/2012 08:05 PM, Ramsay Jones wrote:
+> Torsten B=C3=B6gershausen wrote:
+>>> * ml/cygwin-mingw-headers (2012-11-12) 1 commit
+>>>   - Update cygwin.c for new mingw-64 win32 api headers
+>>>
+>>>   Make git work on newer cygwin.
+>>>
+>>>   Will merge to 'next'.
 >>
->> cmd.exe /X /C "git commit --verbose -F
->> C:\cygwin\tmp\maven-scm-915771020.commit pom.xml"
+>> (Sorry for late answer, I managed to test the original patch minutes=
+ before Peff merged it to pu)
+>> (And thanks for maintaining git)
 >>
->> Git doesn't seem to understand the -F argument and treats it like a
->> relative path (relative to the repository root):
->>
->> $ cmd.exe /X /C "git commit --verbose -F C:\cygwin\tmp\commit pom.xml" 
->> fatal: could not read log file 'mytestdir/C:\cygwin\tmp\commit': No
->> such file or directory
-> 
-> According to the code, this should not happen if you are using msysgit.
-> For this reason, I guess you are using Cygwin git. Right?
-> 
-> I don't know what Cygwin programs are supposed to do if they receive an
-> argument that looks like a Windows style absolute path.
-> 
-> OTOH, it could be argued that Maven should not treat a Cygwin program like
-> a DOS program, and it should pass the path in the POSIXy form
-> /c/cygwin/tmp/commit or /tmp/commit.
+>> Is everybody using cygwin happy with this?
+>
+> I am still on cygwin 1.5.22 and quite happy that this patch does
+> not (seem) to cause any problems. ;-P
+>
+>> I managed to compile on a fresh installed cygwin,
+>> but failed to compile under 1.7.7, see below.
+>> Is there a way we can achieve to compile git both under "old" and "n=
+ew" cygwin 1.7 ?
+>> Or is this not worth the effort?
+>
+> Did the cygwin project not bump an api version number somewhere?
+>
+> ATB,
+> Ramsay Jones
+Ramsay,
+you can run uname -r to see the version number.
 
-I would argue precisely this! :-D
+I myself haven't fully understood all the consequences,
+somewhere between 1.7.7 and 1.7.17 the include files had been changed.
 
-ATB,
-Ramsay Jones
+If this has consequences for using e.g. winsock2.dll, I want to know=20
+myself ;-)
+
+/Torsten
