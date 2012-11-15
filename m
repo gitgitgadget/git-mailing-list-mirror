@@ -1,131 +1,229 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
-Date: Thu, 15 Nov 2012 03:50:20 -0800
-Message-ID: <20121115115018.GA3437@sigill.intra.peff.net>
-References: <20121115003029.GA17550@sigill.intra.peff.net>
- <20121115003640.GH17819@sigill.intra.peff.net>
- <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
- <20121115083315.GA23377@sigill.intra.peff.net>
- <CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
- <20121115104345.GA32465@sigill.intra.peff.net>
- <20121115111334.GA1879@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 12:50:40 2012
+From: Marc Khouzam <marc.khouzam@gmail.com>
+Subject: [PATCH] tcsh-completion re-using git-completion.bash
+Date: Thu, 15 Nov 2012 06:51:09 -0500
+Message-ID: <1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
+References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
+Cc: Marc Khouzam <marc.khouzam@gmail.com>
+To: szeder@ira.uka.de, git@vger.kernel.org, felipe.contreras@gmail.com
+X-From: git-owner@vger.kernel.org Thu Nov 15 12:52:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYxxv-0004MJ-QM
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 12:50:40 +0100
+	id 1TYxzI-0005fE-5v
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 12:52:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993281Ab2KOLuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 06:50:25 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49304 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2993197Ab2KOLuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 06:50:24 -0500
-Received: (qmail 16108 invoked by uid 107); 15 Nov 2012 11:51:13 -0000
-Received: from m8c0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.140)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Nov 2012 06:51:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2012 03:50:20 -0800
-Content-Disposition: inline
-In-Reply-To: <20121115111334.GA1879@sigill.intra.peff.net>
+	id S1767653Ab2KOLvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 06:51:48 -0500
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:61948 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993197Ab2KOLvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 06:51:35 -0500
+Received: by mail-ia0-f174.google.com with SMTP id y25so947423iay.19
+        for <git@vger.kernel.org>; Thu, 15 Nov 2012 03:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=M//W+OcbnAQd+ZdDOOOqzOquKkX4gRtvfXmmxRpsYfE=;
+        b=nPLjdcv0hrHW+XNyLQ1RSWeXejThTaXTEvkQXEssKzlPyOEDFFEKC7VGgi1GHmcwz3
+         WNtGYRHxytiLOb+AlUZAJxNf+qr2ympHSM7e8FoJK1C8Kgr+oXUXXT/Z8Q9XKZ12+uak
+         TwA9/V2twOIwe5OCEv0adCJb0iOL7rdMF2GVPGWbwzOrMK07VudWyFOJzViQDuQlT0kk
+         CrrTDoFADr75jFIb8XMiFFI+laY7SRmiQRSf6sICWAnUMCEwwp6uiHDgE1tZ+DQJf6AV
+         kievanON/s/GRpLCmj5AZHveT51C6RFnpZyGAbuOutTd0zxcjJyaxUxpww0mvRceIrdY
+         70nA==
+Received: by 10.50.237.103 with SMTP id vb7mr642407igc.29.1352980294842;
+        Thu, 15 Nov 2012 03:51:34 -0800 (PST)
+Received: from khouz.dyn.lmc.ericsson.se (modemcable168.70-160-184.mc.videotron.ca. [184.160.70.168])
+        by mx.google.com with ESMTPS id we6sm3475311igb.8.2012.11.15.03.51.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 15 Nov 2012 03:51:34 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.1.g9fe2839
+In-Reply-To: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209817>
 
-On Thu, Nov 15, 2012 at 03:13:47AM -0800, Jeff King wrote:
+The current tcsh-completion support for Git, as can be found on the
+Internet, takes the approach of defining the possible completions
+explicitly.  This has the obvious draw-back to require constant
+updating as the Git code base evolves.
 
-> I think a much more compelling argument/commit message for your
-> suggested patch would be:
-> 
->   We currently prompt the user for the "From" address. This is an
->   inconvenience in the common case that the user has configured their
->   identity in the environment, but is meant as a safety check for when
->   git falls back to an implicitly generated identity (which may or may
->   not be valid).
-> 
->   That safety check is not really necessary, though, as by default
->   send-email will prompt the user for a final confirmation before
->   sending out any message. The likelihood that a user has both bothered
->   to turn off this default _and_ not configured any identity (nor
->   checked that the automatic identity is valid) is rather low.
+The approach taken by this commit is to to re-use the advanced bash
+completion script and use its result for tcsh completion.  This is
+achieved by executing (versus sourcing) the bash script and
+outputting the completion result for tcsh consumption.
 
-If that is the route we want to go, then we should obviously drop my
-series in favor of your final patch. I think it would also need a test
-update, no?
+Three solutions were looked at to implement this approach with (A)
+being retained:
 
-I think a more concise commit message would help, too. I disagree with a
-great deal of the reasoning in your existing message, but those parts
-turn out not to be relevant. The crux of the issue is that the safety
-check is not necessary because there is already one (i.e., point 8 of
-your list).  Feel free to use any or all of my text above.
+  A) Modifications:
+          git-completion.bash and new git-completion.tcsh
 
->From my series, there were a few cleanups that might be worth salvaging.
-Here is a rundown by patch:
+     Modify the existing git-completion.bash script to support
+     being sourced using bash (as now), but also executed using bash.
+     When being executed, the script will output the result of the
+     computed completion to be re-used elsewhere (e.g., in tcsh).
 
-  [1/8]: test-lib: allow negation of prerequisites
+     The modification to git-completion.bash is made not to be
+     tcsh-specific, but to allow future users to also re-use its
+     output.  Therefore, to be general, git-completion.bash accepts a
+     second optional parameter, which is not used by tcsh, but could
+     prove useful for other users.
 
-This stands on its own, and is something I have wanted a few times in
-the past. However, since there is no immediate user, I don't know if it
-is worth doing or not.
+     Pros:
+       1- allows the git-completion.bash script to easily be re-used
+       2- tcsh support is mostly isolated in git-completion.tcsh
+     Cons (for tcsh users only):
+       1- requires the user to copy both git-completion.tcsh and
+          git-completion.bash to ${HOME}
+       2- requires bash script to have a fixed name and location:
+          ${HOME}/.git-completion.bash
 
-  [2/8]: t7502: factor out autoident prerequisite
+  B) Modifications:
+          git-completion.bash
 
-A minor cleanup and possible help to future tests, but since there are
-no other callers now, not sure if it is worth it.
+     Modify the existing git-completion.bash script to support
+     being sourced using bash (as now), but also executed using bash,
+     and sourced using tcsh.
 
-  [3/8]: ident: make user_ident_explicitly_given static
+     Pros:
+       1- only requires the user to deal with a single file
+       2- maintenance more obvious for tcsh since it is entirely part
+          of the same git-completion.bash script.
+     Cons:
+       1- tcsh support could affect bash support as they share the
+          same script
+       2- small tcsh section must use syntax suitable for both tcsh
+          and bash and must be at the beginning of the script
+       3- requires script to have a fixed name and location:
+          ${HOME}/.git-completion.sh (for tcsh users only)
 
-A cleanup that is worth doing, I think.
+  C) Modifications:
+          New git-completion.tcsh
 
-  [4/8]: ident: keep separate "explicit" flags for author and committer
+     Provide a short tcsh script that converts git-completion.bash
+     into an executable script suitable to be used by tcsh.
 
-Another cleanup.  This is "more correct", in that it handles the corner
-cases I mentioned in the commit message. But no current code cares about
-those corner cases, because the only real caller is git-commit, and this
-is a purely internal interface. I could take or leave it.
+     Pros:
+       1- tcsh support is entirely isolated in git-completion.tcsh
+       2- new tcsh script can be as complex as needed
+     Cons (for tcsh users only):
+       1- requires the user to copy both git-completion.tcsh and
+          git-completion.bash to ${HOME}
+       2- requires bash script to have a fixed name and location:
+          ${HOME}/.git-completion.bash
+       3- sourcing the new script will generate a third script
 
-  [5/8]: var: accept multiple variables on the command line
+Approach (A) was selected to keep the tcsh completion support well
+isolated without introducing excessive complexity.
 
-The tests for this can be split out; we currently don't have "git var"
-tests at all, so increasing our test coverage is reasonable. The
-multiple variables thing is potentially useful, but there are simply not
-that many callers of "git var", and nobody has been asking for such a
-feature (we could use it to save a process in git-send-email, but it is
-probably not worth the complexity).
+Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
+---
 
-  [6/8]: var: provide explicit/implicit ident information
-  [7/8]: Git.pm: teach "ident" to query explicitness
+Here is the updated version of the patch.
+I got git send-email to work, so I hope the formatting will be correct.
 
-These two should probably be dropped. They would lock us into supporting
-the explicit/implicit variables in "git var", for no immediate benefit.
+Thanks in advance.
 
-  [8/8]: send-email: do not prompt for explicit repo ident
+Marc
 
-Obviously drop.
+ contrib/completion/git-completion.bash |   47 ++++++++++++++++++++++++++++++++
+ contrib/completion/git-completion.tcsh |   29 +++++++++++++++++++
+ 2 files changed, 76 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/completion/git-completion.tcsh
 
-> I could accept that line of reasoning.  I see that this argument is
-> buried deep in your commit message, but I will admit to not reading your
-> 9-point list of conditions all that closely, as the first 7 points are,
-> in my opinion, not relevant (and I had already read and disagreed with
-> them in other messages).
-
-If it sounds like I am blaming you here, I am to some degree. But I am
-also blaming myself. I should have read your commit message more
-carefully, and I'm sorry for not doing so. I hope we can both try harder
-to avoid getting side-tracked on arguing about issues that turned out
-not to be important at all (of course, we cannot know which part of the
-discussion will turn out to be important, but I think there some
-obviously unproductive parts of this discussion).
-
--Peff
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index be800e0..d71a016 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2481,3 +2481,50 @@ __git_complete gitk __gitk_main
+ if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
+ __git_complete git.exe __git_main
+ fi
++
++# Method that will output the result of the completion done by
++# the bash completion script, so that it can be re-used in another
++# context than the bash complete command.
++# It accepts 1 to 2 arguments:
++# 1: The command-line to complete
++# 2: The index of the word within argument #1 in which the cursor is
++#    located (optional). If parameter 2 is not provided, it will be
++#    determined as best possible using parameter 1.
++__git_complete_with_output ()
++{
++	# Set COMP_WORDS in a way that can be handled by the bash script.
++	COMP_WORDS=($1)
++
++	# Set COMP_CWORD to the cursor location as bash would.
++	if [ -n "${2-}" ]; then
++		COMP_CWORD=$2
++	else
++		# Assume the cursor is at the end of parameter #1.
++		# We must check for a space as the last character which will
++		# tell us that the previous word is complete and the cursor
++		# is on the next word.
++		if [ "${1: -1}" == " " ]; then
++			# The last character is a space, so our location is at the end
++			# of the command-line array
++			COMP_CWORD=${#COMP_WORDS[@]}
++		else
++			# The last character is not a space, so our location is on the
++			# last word of the command-line array, so we must decrement the
++			# count by 1
++			COMP_CWORD=$((${#COMP_WORDS[@]}-1))
++		fi
++	fi
++
++	# Call _git() or _gitk() of the bash script, based on the first
++	# element of the command-line
++	_${COMP_WORDS[0]}
++
++	local IFS=$'\n'
++	echo "${COMPREPLY[*]}"
++}
++
++if [ -n "${1-}" ] ; then
++  # If there is an argument, we know the script is being executed
++  # so go ahead and run the _git_complete_with_output function
++  __git_complete_with_output "${1-}" "${2-}"
++fi
+diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
+new file mode 100644
+index 0000000..6096ea8
+--- /dev/null
++++ b/contrib/completion/git-completion.tcsh
+@@ -0,0 +1,29 @@
++#!tcsh
++#
++# tcsh completion support for core Git.
++#
++# Copyright (C) 2012 Marc Khouzam <marc.khouzam@gmail.com>
++# Distributed under the GNU General Public License, version 2.0.
++#
++# This script makes use of the git-completion.bash script to
++# determine the proper completion for git commands under tcsh.
++#
++# To use this completion script:
++#
++#    1) Copy both this file and the bash completion script to your ${HOME} directory
++#       using the names ${HOME}/.git-completion.tcsh and ${HOME}/.git-completion.bash.
++#    2) Add the following line to your .tcshrc/.cshrc:
++#        source ${HOME}/.git-completion.tcsh
++
++# One can change the below line to use a different location
++set __git_tcsh_completion_script = ${HOME}/.git-completion.bash
++
++# Check that the user put the script in the right place
++if ( ! -e ${__git_tcsh_completion_script} ) then
++	echo "ERROR in git-completion.tcsh script.  Cannot find: ${__git_tcsh_completion_script}.  Git completion will not work."
++	exit
++endif
++
++complete git  'p/*/`bash ${__git_tcsh_completion_script} "${COMMAND_LINE}" | sort | uniq`/'
++complete gitk 'p/*/`bash ${__git_tcsh_completion_script} "${COMMAND_LINE}" | sort | uniq`/'
++
+-- 
+1.7.0.4
