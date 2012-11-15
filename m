@@ -1,154 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
-Date: Wed, 14 Nov 2012 16:36:40 -0800
-Message-ID: <20121115003640.GH17819@sigill.intra.peff.net>
-References: <20121115003029.GA17550@sigill.intra.peff.net>
+From: Javier Domingo <javierdo1@gmail.com>
+Subject: Re: Local clones aka forks disk size optimization
+Date: Thu, 15 Nov 2012 01:40:58 +0100
+Message-ID: <CALZVap=kOwOpxeu8+_+5uQYZz3GNC8Ep_JeK7WCQHtu+Hn3rUw@mail.gmail.com>
+References: <CALZVapmG+HL0SQx8zx=Cfz5pWv84hJq90x-7VdjA0m2Z4dC34A@mail.gmail.com>
+ <CALZVapmO61d8yXfXXGx6Qc444ka+8n7HabuNRt0rJdE5qy_7aQ@mail.gmail.com> <CAH5451nW2esQR8XaAttT3tYJZEw1Nj3OEMgkHsMZrZDxhcRXHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 01:36:58 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 01:41:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TYnRy-0004vX-6v
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 01:36:58 +0100
+	id 1TYnWQ-00088w-6I
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Nov 2012 01:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933261Ab2KOAgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2012 19:36:44 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48859 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933222Ab2KOAgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2012 19:36:43 -0500
-Received: (qmail 9373 invoked by uid 107); 15 Nov 2012 00:37:32 -0000
-Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Nov 2012 19:37:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2012 16:36:40 -0800
-Content-Disposition: inline
-In-Reply-To: <20121115003029.GA17550@sigill.intra.peff.net>
+	id S964810Ab2KOAlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2012 19:41:20 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:62624 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755462Ab2KOAlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2012 19:41:19 -0500
+Received: by mail-vc0-f174.google.com with SMTP id fk26so1124347vcb.19
+        for <git@vger.kernel.org>; Wed, 14 Nov 2012 16:41:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YmWkLiqUF+HFpjao7RwpOsWd7XOwvRvegiGvuviW4LM=;
+        b=MeWJzcnAu6C1Cr4C1eCalirKddcY9+NvihSPEURRE73MQjrxoEI5pRIVwdh9ryzkTe
+         kWbuPUDkzU+yoPc37yCfnBhYesXHTjMdtRUlSURf5xLKwqTL0e/oZ8Rz18DPmg8KeIIu
+         Q9zS9h9xJuLcuAD2+GPe5koVfFon4QEmoMHml3NTfDu1A6+X+Zq7RUnNMn3Ig3ta/ljz
+         ZENzYNdMk0MbRi360KHLEmbqt+2h0QQCYYDaYsl9fZwwZ4s6Cw8JtGKM2IKDRIRNw8fa
+         oVEbH+PZ8xrfLoHDPo9p7Dsewxrl+/MePLAkpu/49HhybwFxXn61NikedMVS/f/hgn8u
+         sBmA==
+Received: by 10.58.207.196 with SMTP id ly4mr34311941vec.6.1352940078660; Wed,
+ 14 Nov 2012 16:41:18 -0800 (PST)
+Received: by 10.58.33.200 with HTTP; Wed, 14 Nov 2012 16:40:58 -0800 (PST)
+In-Reply-To: <CAH5451nW2esQR8XaAttT3tYJZEw1Nj3OEMgkHsMZrZDxhcRXHw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209775>
 
-If git-send-email is configured with sendemail.from, we will
-not prompt the user for the "From" address of the emails.
-If it is not configured, we prompt the user, but provide the
-repo author or committer as a default.  Even though we
-probably have a sensible value for the default, the prompt
-is a safety check in case git generated an incorrect
-implicit ident string.
+Hi Andrew,
 
-Now that Git.pm will tell us whether the ident is implicit or
-explicit, we can stop prompting in the explicit case, saving
-most users from having to see the prompt at all.
+The problem about that, is that if I want to delete the first repo, I
+will loose objects... Or does that repack also hard-link the objects
+in other repos? I don't want to accidentally loose data, so it would
+be nice that althought avoided to repack things, it would also
+hardlink them.
+Javier Domingo
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-send-email.perl   | 22 +++++++++++++---------
- t/t9001-send-email.sh | 36 ++++++++++++++++++++++++++++++++++--
- 2 files changed, 47 insertions(+), 11 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5a7c29d..0c49b32 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -436,9 +436,8 @@ if (0) {
- 	}
- }
- 
--my ($repoauthor, $repocommitter);
--($repoauthor) = Git::ident_person(@repo, 'author');
--($repocommitter) = Git::ident_person(@repo, 'committer');
-+my ($repoauthor, $author_explicit) = Git::ident_person(@repo, 'author');
-+my ($repocommitter, $committer_explicit) = Git::ident_person(@repo, 'committer');
- 
- # Verify the user input
- 
-@@ -755,12 +754,17 @@ if (!$force) {
- 
- my $prompting = 0;
- if (!defined $sender) {
--	$sender = $repoauthor || $repocommitter || '';
--	$sender = ask("Who should the emails appear to be from? [$sender] ",
--	              default => $sender,
--		      valid_re => qr/\@.*\./, confirm_only => 1);
--	print "Emails will be sent from: ", $sender, "\n";
--	$prompting++;
-+	($sender, my $explicit) =
-+		defined $repoauthor ? ($repoauthor, $author_explicit) :
-+		defined $repocommitter ? ($repocommitter, $committer_explicit) :
-+		('', 0);
-+	if (!$explicit) {
-+		$sender = ask("Who should the emails appear to be from? [$sender] ",
-+			      default => $sender,
-+			      valid_re => qr/\@.*\./, confirm_only => 1);
-+		print "Emails will be sent from: ", $sender, "\n";
-+		$prompting++;
-+	}
- }
- 
- if (!@initial_to && !defined $to_cmd) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 6c6af7d..0fe0b8e 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -191,15 +191,47 @@ test_expect_success $PREREQ 'Show all headers' '
- 
- test_expect_success $PREREQ 'Prompting works' '
- 	clean_fake_sendmail &&
--	(echo "Example <from@example.com>"
--	 echo "to@example.com"
-+	(echo "to@example.com"
- 	 echo ""
- 	) | GIT_SEND_EMAIL_NOTTY=1 git send-email \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches \
- 		2>errors &&
-+		grep "^From: A U Thor <author@example.com>\$" msgtxt1 &&
-+		grep "^To: to@example.com\$" msgtxt1
-+'
-+
-+test_expect_success $PREREQ,AUTOIDENT 'implicit ident prompts for sender' '
-+	clean_fake_sendmail &&
-+	(echo "Example <from@example.com>" &&
-+	 echo "to@example.com" &&
-+	 echo ""
-+	) |
-+	(sane_unset GIT_AUTHOR_NAME &&
-+	 sane_unset GIT_AUTHOR_EMAIL &&
-+	 sane_unset GIT_COMMITTER_NAME &&
-+	 sane_unset GIT_COMMITTER_EMAIL &&
-+	 GIT_SEND_EMAIL_NOTTY=1 git send-email \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches \
-+		2>errors &&
- 		grep "^From: Example <from@example.com>\$" msgtxt1 &&
- 		grep "^To: to@example.com\$" msgtxt1
-+	)
-+'
-+
-+test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email' '
-+	clean_fake_sendmail &&
-+	(sane_unset GIT_AUTHOR_NAME &&
-+	 sane_unset GIT_AUTHOR_EMAIL &&
-+	 sane_unset GIT_COMMITTER_NAME &&
-+	 sane_unset GIT_COMMITTER_EMAIL &&
-+	 GIT_SEND_EMAIL_NOTTY=1 && export GIT_SEND_EMAIL_NOTTY &&
-+	 test_must_fail git send-email \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches </dev/null 2>errors.out &&
-+		test_i18ngrep "tell me who you are" errors.out
-+	)
- '
- 
- test_expect_success $PREREQ 'tocmd works' '
--- 
-1.8.0.207.gdf2154c
+2012/11/15 Andrew Ardill <andrew.ardill@gmail.com>:
+> On 15 November 2012 10:42, Javier Domingo <javierdo1@gmail.com> wrote:
+>> Hi,
+>>
+>> I have come up with this while doing some local forks for work.
+>> Currently, when you clone a repo using a path (not file:/// protocol)
+>> you get all the common objects linked.
+>>
+>> But as you work, each one will continue growing on its way, although
+>> they may have common objects.
+>>
+>> Is there any way to avoid this? I mean, can something be done in git,
+>> that it checks for (when pulling) the same objects in the other forks?
+>
+> Have you seen alternates? From [1]:
+>
+>> How to share objects between existing repositories?
+>> ---------------------------------------------------------------------------
+>>
+>> Do
+>>
+>> echo "/source/git/project/.git/objects/" > .git/objects/info/alternates
+>>
+>> and then follow it up with
+>>
+>> git repack -a -d -l
+>>
+>> where the '-l' means that it will only put local objects in the pack-file
+>> (strictly speaking, it will put any loose objects from the alternate tree
+>> too, so you'll have a fully packed archive, but it won't duplicate objects
+>> that are already packed in the alternate tree).
+>
+> [1] https://git.wiki.kernel.org/index.php/GitFaq#How_to_share_objects_between_existing_repositories.3F
+>
+>
+> Regards,
+>
+> Andrew Ardill
