@@ -1,118 +1,72 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] tcsh-completion re-using git-completion.bash
-Date: Fri, 16 Nov 2012 21:04:06 +0100
-Message-ID: <CAMP44s3S4c7ciJNurxGdS2o_TDJJDkGK73dtCGji+C1NoV+Jvw@mail.gmail.com>
-References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
-	<1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
-	<CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
-	<CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
-	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
-	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
-	<CAMP44s1RvMSBu2RJqKw9ne4cJyMO4dbFc-gW2HgsN2-uviv=fA@mail.gmail.com>
-	<CAFj1UpHMc-bHJgSZKY13YH_69TXkz-50g5xpLA6C+Eh0aqcN9A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
+Date: Fri, 16 Nov 2012 12:11:08 -0800
+Message-ID: <20121116201107.GA5740@sigill.intra.peff.net>
+References: <CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
+ <20121115083315.GA23377@sigill.intra.peff.net>
+ <CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
+ <20121115104345.GA32465@sigill.intra.peff.net>
+ <20121115111334.GA1879@sigill.intra.peff.net>
+ <7vvcd6954q.fsf@alter.siamese.dyndns.org>
+ <20121115172845.GA20298@sigill.intra.peff.net>
+ <7vzk2i6s9h.fsf@alter.siamese.dyndns.org>
+ <20121116190811.GB2310@sigill.intra.peff.net>
+ <CAMP44s2+0vFUwK+ATe-jDTRYG=kE=zFF4X_JAMZExgVw0Vtfgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: szeder@ira.uka.de, git@vger.kernel.org
-To: Marc Khouzam <marc.khouzam@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 21:04:26 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 21:11:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZS9J-0006Ca-PX
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 21:04:26 +0100
+	id 1TZSG5-0003z9-NO
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 21:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350Ab2KPUEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 15:04:08 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:63123 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739Ab2KPUEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 15:04:07 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so3163338obb.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 12:04:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pom9xDAMthw07X6yx6lGw9jHIz6tC5tquSFkBqQJQZI=;
-        b=THhVneirMYzvpgjFVjf3tMpzlmoL5DWRv9OZw6EyeoYMWY8ZX9DbDql8GaLQZq+OPi
-         RidUa16DE+6SrOrm41zEYMb+waD/269c461A85T+C47d5zPXCPNRr/lQAt8AV0Ex8nRZ
-         RaOXmmamSOZzql8ycAUCzQqFuVrwBsY2fpuEKBsiGqTG08EY1MJmeNxCIv5v1O9BHJ5l
-         jzMjfo9ke1bWx8q/7GjuYsNLbiRtZhHIFahEpG56VfVyWqaf8V/liPKa6CmgiyAYk8mI
-         XBeMBMWxeqJFrXPMLSTM7+uWoJBlTMZ34GDyVZ7M8AePuSfFTWD4vqV+vqkgEW9DTdBh
-         nfgQ==
-Received: by 10.60.32.19 with SMTP id e19mr4990445oei.9.1353096246738; Fri, 16
- Nov 2012 12:04:06 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 12:04:06 -0800 (PST)
-In-Reply-To: <CAFj1UpHMc-bHJgSZKY13YH_69TXkz-50g5xpLA6C+Eh0aqcN9A@mail.gmail.com>
+	id S1753480Ab2KPULM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 15:11:12 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50615 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753381Ab2KPULL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 15:11:11 -0500
+Received: (qmail 30608 invoked by uid 107); 16 Nov 2012 20:12:00 -0000
+Received: from 204-16-157-26-static.ipnetworksinc.net (HELO sigill.intra.peff.net) (204.16.157.26)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Nov 2012 15:12:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Nov 2012 12:11:08 -0800
+Content-Disposition: inline
+In-Reply-To: <CAMP44s2+0vFUwK+ATe-jDTRYG=kE=zFF4X_JAMZExgVw0Vtfgw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209904>
 
-On Fri, Nov 16, 2012 at 7:20 PM, Marc Khouzam <marc.khouzam@gmail.com> wrote:
-> On Fri, Nov 16, 2012 at 12:18 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Fri, Nov 16, 2012 at 4:48 PM, Marc Khouzam <marc.khouzam@gmail.com> wrote:
->>> On Fri, Nov 16, 2012 at 10:33 AM, Felipe Contreras
->>> <felipe.contreras@gmail.com> wrote:
->>
->>>> Is it possible to just check if this is a login shell?
->>>
->>> I think it would be nice to allow the user to manually
->>> source git-completion.tcsh, in case they want to make
->>> manual modifications to it.
->>
->> Yeah, they could still do that... because they would be running in a
->> login shell.
->>
->> What I meant is that if the user does: tcsh
->> my_script_that_has_nothing_to_do_with_completion.sh, they would not be
->> executing this whole script.
->
-> Oh, I see now.
->
-> I can put a check in the script for the existence of the $prompt variable.
-> This will indicate if it is a login shell or not.
-> However, a good .cshrc file should already have such a check to avoid
-> sourcing a bunch of useless things.  So, I personally think that we
-> should not add it to the git-completion.tcsh script but let the tcsh
-> user decide to do it herself.  But I don't mind being overruled :)
+On Fri, Nov 16, 2012 at 08:57:43PM +0100, Felipe Contreras wrote:
 
-Sounds sensible to me.
+> > I'm not sure how orthogonal it is. The latter half of my series is about
+> > exposing the user_ident_sufficiently_given() flag. If we go with
+> > Felipe's patch, then that exposed information has no users, and it may
+> > not be worth it (OTOH, it's possible that some third-party script may
+> > want it).
+> 
+> Well, who is using user_ident_sufficiently_given() in the first place?
+> I think 'git commit' might be suffering from the same problem that
+> prompted you to split it.
 
->>> I think the most user-friendly option is to actually re-generate the
->>> script each time.  It feels wrong, but it works well :)
->>
->> I'm not too strongly opposed to add that function to the bash
->> completion, but to do it only for tcsh doesn't sound right, specially
->> when there are other alternatives.
->
-> I agree, and this is why I made the proposed
-> __git_complete_with_output () generic.  That way it could be
-> used by other shells or programs.  But at this time, only tcsh
-> would make use of it.
->
-> If you think having __git_complete_with_output () could
-> be useful for others, I think we should go with solution (A).
-> If you don't think so, or if it is better to wait until a need
-> arises first, then solution (C) will work fine.
+It is just `git commit` now. It does not suffer from the problems that
+prompted the author/committer split:
 
-I don't see how it could be useful to others, and if we find out that
-it could, we can always move the code.
+  http://article.gmane.org/gmane.comp.version-control.git/209635
 
->> Correct me if I'm wrong, but very few people use tcsh.
->
-> Less than I originally thought, when I started working
-> on this patch :-\  But I'm still hoping that the those people
-> will be a little happier with their git completion.
+To expand on what I wrote there, we cannot hit case 2 because we always
+ask for the committer within the same process. Case 1 is not
+interesting, because we would only fail to show it if is identical to a
+non-implicit committer (so even if it was implicit, we know that it is a
+sane value).
 
-I think they would :) But we don't need to modify bash's script for
-that (for now).
-
-Cheers.
-
--- 
-Felipe Contreras
+-Peff
