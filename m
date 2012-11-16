@@ -1,115 +1,72 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 2/5] t/t3511: demonstrate breakage in cherry-pick -s
-Date: Thu, 15 Nov 2012 18:40:30 -0800
-Message-ID: <CA+sFfMfvZg5An5sZ4TvXM5k_op5WwhvKgma3Mq4bX9NG-a6-Cg@mail.gmail.com>
-References: <1352943474-15573-1-git-send-email-drafnel@gmail.com>
-	<1352943474-15573-2-git-send-email-drafnel@gmail.com>
-	<7v8va28g1c.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Unify appending signoff in format-patch, commit and sequencer
+Date: Fri, 16 Nov 2012 11:13:42 +0700
+Message-ID: <CACsJy8ABogKMujC9KhDeLXkwLpd0pkg03hqWzbH0Lmi0A7xoCA@mail.gmail.com>
+References: <1352982778-28631-1-git-send-email-pclouds@gmail.com> <CA+sFfMcfGbGDeXKZD1o4pmhbrJ1E5WgV3qrQBPT3eH=W54tNGw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Brandon Casey <bcasey@nvidia.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 03:42:07 2012
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 05:14:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZBsc-0005el-P0
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 03:42:07 +0100
+	id 1TZDJz-0006JL-Qp
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 05:14:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751148Ab2KPCkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2012 21:40:31 -0500
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:62903 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751024Ab2KPCkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2012 21:40:31 -0500
-Received: by mail-vb0-f46.google.com with SMTP id ff1so2426370vbb.19
-        for <git@vger.kernel.org>; Thu, 15 Nov 2012 18:40:30 -0800 (PST)
+	id S1751166Ab2KPEON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2012 23:14:13 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:63545 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751144Ab2KPEON (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2012 23:14:13 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so2434236obb.19
+        for <git@vger.kernel.org>; Thu, 15 Nov 2012 20:14:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=yOPQ7TorZjJkN9e1j/242wN11xzFOiDy5cuhv3Qggcw=;
-        b=EdXOJOkOlUIFwn/Z2OjeAb8GGkdPWuytVsMnqbEjIn4w6RTPC9k7iWPsMal9f0I6cY
-         p4516JzDj80OovD6d+jCo4dhWAi3lkW6Uvok5zipOqQnBWmbL/rBiJ5KhHe0prydk1HO
-         qgGbm0hZm9SDb7hRMMorqfAUSthDGZ3OE510VTQg4LnnN8flsONfSuWq9GU6jxEymxTF
-         5+LHqYLUsgIkhdMG4dQ0bIWBPnr9RjIKLcWFpJNHQUcMyHmTE0xrpmn1iZxq38QzYDnc
-         Lvt72LhsHhU3TdAowzbaJ5OVIgtkIP3d8ADMHpu30VUqDXiW0mY997nZctYIycZlbu6L
-         o5Ug==
-Received: by 10.52.17.244 with SMTP id r20mr1798052vdd.29.1353033630270; Thu,
- 15 Nov 2012 18:40:30 -0800 (PST)
-Received: by 10.58.220.9 with HTTP; Thu, 15 Nov 2012 18:40:30 -0800 (PST)
-In-Reply-To: <7v8va28g1c.fsf@alter.siamese.dyndns.org>
+        bh=qJup/CuKFNo1iNFUn17rUk2Lj9KdFPWT+Rg5zgTiiSQ=;
+        b=bzfj4z2gq0eafVs+6GarUhX1xbS9lnau6NO8EtnvtsQ0UVanB+uXf2QaiWWGOY6KYy
+         0Mz7AQLmUzYuzxjol+kgb3w2aERoi5GHUnusp0KFVAkd+5KTpqIkfALukmhuibtms4Ls
+         KahpQ32KezNLwlSBhzLTfH+ZrZdRHXBwAuOy1rjsWxiBkZQPD2JnM22Ck+xtgTitvMK7
+         KmLy+bS1j9Yeo2UbtIJf8Of0HMU7ZiXHJXRMtwvAX6LOT42uERh71ca8sya8g+Pu/0mU
+         aRr/gbU2J3JudGVmFAyCeL1hejUOZiHXR/rOd5vLUHWL2ETic39qw+3K3PVF8O8ojJ/Z
+         p5pw==
+Received: by 10.182.38.101 with SMTP id f5mr2862491obk.80.1353039252410; Thu,
+ 15 Nov 2012 20:14:12 -0800 (PST)
+Received: by 10.182.40.163 with HTTP; Thu, 15 Nov 2012 20:13:42 -0800 (PST)
+In-Reply-To: <CA+sFfMcfGbGDeXKZD1o4pmhbrJ1E5WgV3qrQBPT3eH=W54tNGw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209860>
 
-On Thu, Nov 15, 2012 at 5:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Casey <drafnel@gmail.com> writes:
+On Fri, Nov 16, 2012 at 3:42 AM, Brandon Casey <drafnel@gmail.com> wrote:
+>>  Interestingly this patch triggers the fault that it fixes.
+>>  I was surprised that there was no blank line before my S-o-b
+>>  and thought I broke something. It turns out I used unmodified
+>>  format-patch and it mistook the S-o-b quote as true S-o-b line.
+>>  The modified one puts the blank line back.
 >
->> The cherry-pick -s functionality is currently broken in two ways.
->>
->>    1. handling of rfc2822 continuation lines has a bug, and the
->>       continuation lines are not handled correctly.
+> Heh, yeah I noticed this bug yesterday when I submitted my changes
+> affecting the same area of code (sequence.c).  Glad I didn't waste too
+> much time fixing it.
 >
-> This is not limited to you, but people should think twice when
-> writing "has a bug" and "are not handled correctly" in their log
-> message.  Did you write what the expected and actual behaviours?
-
-Yeah, I wasn't clear here.  The "bug" was that the incorrect index
-variable was being used, which caused the wrong line to be examined to
-see if it was an rfc2822 continuation line.  I could have mentioned
-that.
-
->> +rfc2822_mesg="$non_rfc2822_mesg
->> +
->> +Signed-off-by: A.U. Thor
->> + <author@example.com>
->> +Signed-off-by: B.U. Thor <buthor@example.com>"
+> Have you looked at this:
 >
-> The S-o-b: lines are meant to record people's contact info in human
-> readable forms, and folding the lines like the above makes it a lot
-> harder to read.  They typically do not have to be folded.
-
-Well, I wasn't adding functionality here, I was only fixing what I
-noticed was broken when I started touching this code.
-
-> Besides, the footer lines are *not* RFC2822 headers (and are not
-> used as such when send-email comes up with Cc: list) in the first
-> place; have we ever said anything about supporting the RFC2822 line
-> folding in the commit footer?  If not (and I am reasonably sure we
-> never have), I personally think we should actively *discourage* line
-> folding there.
-
-That's fine with me.  I can't think of a reason that would make it
-necessary to support line continuation.
-
->>       i.e. we should produce this:
->>
->>          Signed-off-by: A.U. Thor <author@example.com>
->>          (cherry picked from )
->>          Signed-off-by: C O Mmitter <committer@example.com>
->>
->>       not
->>
->>          Signed-off-by: A.U. Thor <author@example.com>
->>          (cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
->>
->>          Signed-off-by: C O Mmitter <committer@example.com>
+>    http://thread.gmane.org/gmane.comp.version-control.git/209781
 >
-> I can buy that, but then this makes it very clear that these footer
-> lines are not shaped like RFC2822 headers, no?
+> That series doesn't duplicate your work, but the two series's should
+> be resolved.
 
-The lines that are _not_ "(cherry picked from ...)" lines do follow
-the format defined by rfc2822 for header lines (mostly).  That's
-probably why the author of the function in sequencer.c that checks for
-a s-o-b footer named it "ends_rfc2822_footer".
-
-I'll remove the *broken* existing code that was intended to support
-continuation lines and submit a new patch.
-
--Brandon
+Thanks I'm watching that discussion now and probably will rebase on
+top of yours once it's finalized. I actually wrote this patch a while
+ago, just waiting for nd/builtin-to-libgit to graduate because of some
+linking issues this patch causes. I can wait a bit longer until yours
+graduates.
+-- 
+Duy
