@@ -1,102 +1,106 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
-Date: Fri, 16 Nov 2012 20:57:43 +0100
-Message-ID: <CAMP44s2+0vFUwK+ATe-jDTRYG=kE=zFF4X_JAMZExgVw0Vtfgw@mail.gmail.com>
-References: <20121115003029.GA17550@sigill.intra.peff.net>
-	<20121115003640.GH17819@sigill.intra.peff.net>
-	<CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
-	<20121115083315.GA23377@sigill.intra.peff.net>
-	<CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
-	<20121115104345.GA32465@sigill.intra.peff.net>
-	<20121115111334.GA1879@sigill.intra.peff.net>
-	<7vvcd6954q.fsf@alter.siamese.dyndns.org>
-	<20121115172845.GA20298@sigill.intra.peff.net>
-	<7vzk2i6s9h.fsf@alter.siamese.dyndns.org>
-	<20121116190811.GB2310@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] tcsh-completion re-using git-completion.bash
+Date: Fri, 16 Nov 2012 11:59:17 -0800
+Message-ID: <7v4nkpmi96.fsf@alter.siamese.dyndns.org>
+References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
+ <1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
+ <CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
+ <CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
+ <CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
+ <CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
+ <CAFj1UpGmoEiLeHPh8LaUGLktV55YbTthi1wMNjLDn6vFMSdMwQ@mail.gmail.com>
+ <CAMP44s3rwUw1QaADgm0xVOK3ebPNVSa06QdN5voNniD2acsz0g@mail.gmail.com>
+ <CAFj1UpEMugSrGv53ajvCm=F_wOFm4qr1bnsR5NRPsvgC_fRs5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 16 20:58:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Marc Khouzam <marc.khouzam@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 20:59:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZS35-0000Rg-48
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 20:57:59 +0100
+	id 1TZS4c-0001uV-U4
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 20:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484Ab2KPT5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 14:57:45 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:35643 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751365Ab2KPT5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 14:57:44 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so3158492oag.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 11:57:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qpkJKKVRVBeCxbRtu+LNa09ebOX5174CbCn41lNFckk=;
-        b=y3Z9a2QFk6V1L8tvZZTTyfauRw07HhXTxGOpIzmR2PJCEPglc0bAfwpCAXxU4lnbRC
-         n11lI2+usywmJ+lWPpKmNQx+EHmQDpufxfBzW1WdJss/raX8KPXSoh5wl6FhBjKc6y+q
-         GhS4CHk6wkuNXPbIREiIPLCaThjWSvn/lOF0HAxzM/GMsZUKgFX50sD+kTPPoVPHuj8G
-         pvwFNFkw9E/ytHZm/AbpKd3BAPq/dKiSeuCvvfwGMJoVSI3eUYjyNZe+4df4MlHSlrET
-         pE0/DJouBwyUtqcqCmnKS7CjyfjaFzP3aSCx2C3Vr0+8w+S497XlDL7pNq3OphLwEpAn
-         IyOQ==
-Received: by 10.60.32.19 with SMTP id e19mr4972169oei.9.1353095864013; Fri, 16
- Nov 2012 11:57:44 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 11:57:43 -0800 (PST)
-In-Reply-To: <20121116190811.GB2310@sigill.intra.peff.net>
+	id S1753311Ab2KPT7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 14:59:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62837 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751495Ab2KPT7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 14:59:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABCB6A4AC;
+	Fri, 16 Nov 2012 14:59:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gbYEjlkHCit2KQKfqDQ3Jvvhrlo=; b=DXW3C3
+	Dhu8PZOpZjwUe+GAz+4n6eqbbMu/Sa+sVFti+ikzGUZmRNx9qKiZm4B1jJq8KmRU
+	NUEyLXK5viBMFJyWxMVGeypibKGNpe84JJ02NnjziqSfzPwsaFdFOoNief/6/wW6
+	IknJqt4X+dMTsC78kKnsf+QqE4Gp9A12S4GdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=khykTPGn479hrM95JaTNiJHuOTAH/X5M
+	DyyjQTHRPRk9rRS0UHiGeiJGiwOldsQffTnewJAZX+fo2FKYLnBqtKmVw6nGDmDn
+	PRKWKCjwwPxhQrffjRPT8aPgR9b4y8lrHzOSjriDX5+rs8oOoblfW3NKYJGshlxY
+	7PpXWA83iK4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 978A6A4AB;
+	Fri, 16 Nov 2012 14:59:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA694A4A8; Fri, 16 Nov 2012
+ 14:59:18 -0500 (EST)
+In-Reply-To: <CAFj1UpEMugSrGv53ajvCm=F_wOFm4qr1bnsR5NRPsvgC_fRs5Q@mail.gmail.com> (Marc
+ Khouzam's message of "Fri, 16 Nov 2012 13:43:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B518FC2-3028-11E2-B0F6-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209900>
 
-On Fri, Nov 16, 2012 at 8:08 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Nov 15, 2012 at 09:17:30PM -0800, Junio C Hamano wrote:
+Marc Khouzam <marc.khouzam@gmail.com> writes:
+
+> The current tcsh-completion support for Git, as can be found on the
+> Internet, takes the approach of defining the possible completions
+> explicitly.  This has the obvious draw-back to require constant
+> updating as the Git code base evolves.
+> ...
+>   C) Modifications:
+>           New git-completion.tcsh
 >
->> Jeff King <peff@peff.net> writes:
->>
->> > That is a good question. That confirmation step does come after they
->> > have typed their cover letter. However, if they are using --compose,
->> > they are dumped in their editor with something like:
->> >
->> >   From Jeff King <peff@peff.net> # This line is ignored.
->> >   GIT: Lines beginning in "GIT:" will be removed.
->> >   GIT: Consider including an overall diffstat or table of contents
->> >   GIT: for the patch you are writing.
->> >   GIT:
->> >   GIT: Clear the body content if you don't wish to send a summary.
->> >   From: Jeff King <peff@peff.net>
->> >   Subject:
->> >   In-Reply-To:
->> >
->> > which I think would count as sufficient notice of the address being
->> > used.
->>
->> OK.  Tentatively I replaced your old series with these 8 patches
->> including the last one, as I tend to agree with the value the
->> earlier clean-up in the series gives us in the longer term.  As you
->> and Felipe discussed, we may want to replace the last one with a
->> simpler "don't bother asking" patch, but I think that is more or
->> less an orthogonal issue.
+>      Provide a short tcsh script that generates another script
+>      which extends git-completion.bash.  This new script can be
+>      used by tcsh to perform completion.
 >
-> I'm not sure how orthogonal it is. The latter half of my series is about
-> exposing the user_ident_sufficiently_given() flag. If we go with
-> Felipe's patch, then that exposed information has no users, and it may
-> not be worth it (OTOH, it's possible that some third-party script may
-> want it).
+>      Pros:
+>        1- tcsh support is entirely isolated in git-completion.tcsh
+>        2- new tcsh script can be as complex as needed
+>      Cons (for tcsh users only):
+>        1- requires the user to copy both git-completion.tcsh and
+>           git-completion.bash to ${HOME}
+>        2- requires bash script to have a fixed name and location:
+>           ${HOME}/.git-completion.bash
+>        3- sourcing the new script will generate a third script
+> 
+> Approach (C) was selected avoid any modification to git-completion.bash.
+>
+> Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
+> ---
+>
+> As suggested, I put the 'sort | uniq' inside the script.
+> In that case, I don't need to worry about aliases since 'sort |uniq' will
+> be executed in bash, for which the tcsh user surely doesn't have aliases setup.
 
-Well, who is using user_ident_sufficiently_given() in the first place?
-I think 'git commit' might be suffering from the same problem that
-prompted you to split it.
+OK, so does this look OK to everybody (it does, looking at the
+difference between v3 and this one, to me)?
 
-Cheers.
+The patch may deserve a Reviewed-by: by Felipe, by the way.  I can
+add one while applying.
 
--- 
-Felipe Contreras
+Thanks.
