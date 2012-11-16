@@ -1,217 +1,78 @@
-From: Marc Khouzam <marc.khouzam@gmail.com>
-Subject: [PATCH v4] tcsh-completion re-using git-completion.bash
-Date: Fri, 16 Nov 2012 13:43:45 -0500
-Message-ID: <CAFj1UpEMugSrGv53ajvCm=F_wOFm4qr1bnsR5NRPsvgC_fRs5Q@mail.gmail.com>
-References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
-	<1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
-	<CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
-	<CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
-	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
-	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
-	<CAFj1UpGmoEiLeHPh8LaUGLktV55YbTthi1wMNjLDn6vFMSdMwQ@mail.gmail.com>
-	<CAMP44s3rwUw1QaADgm0xVOK3ebPNVSa06QdN5voNniD2acsz0g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2012, #03; Tue, 13)
+Date: Fri, 16 Nov 2012 10:52:36 -0800
+Message-ID: <7vlie1mlcb.fsf@alter.siamese.dyndns.org>
+References: <20121113175205.GA26960@sigill.intra.peff.net>
+ <50A2B14C.9040608@web.de> <50A2F17D.4010907@gmail.com>
+ <20121114190228.GA3860@sigill.intra.peff.net> <50A40978.2060504@web.de>
+ <20121115001635.GA17370@sigill.intra.peff.net> <50A44A73.8020007@gmail.com>
+ <20121115015608.GB19131@sigill.intra.peff.net> <50A48391.9090207@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Mark Levedahl <mlevedahl@gmail.com>,
 	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 19:44:02 2012
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Nov 16 19:52:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZQtU-0002Bh-QZ
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 19:44:01 +0100
+	id 1TZR26-0001cc-KO
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 19:52:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662Ab2KPSnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 13:43:47 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:61182 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418Ab2KPSnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 13:43:46 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so1884776iay.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 10:43:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=peozpkx/JzjPh4CGtrKRM1h4ydZyt1hLyTXt+NmYbjs=;
-        b=GF6nDoilEcAD9RGtTc1RK8TLarPYVBi8Zgyj98l/9YHsvchKIppWDLAQ6JRy/Yqhuf
-         gBupKAV/X2f+ovYL0caEKZmHPP/J5FWqIFewOT3qkAZK4QoZRAHsIvmfOnf8KmuSGhix
-         /x2t+EgFEyuCsFkKxS/sXJk3Axy4Vjz+SmUWvmncqVRU5YLP03iXn3fusg2pC7+qOqs6
-         iLvMnvxEXrRzTGu9ClyTMYelNqGiFiNhYt2KOchMDkf4tNl8QMS5As1XBx1yV4TXNfTO
-         fr44ivZOMh0wtxMFfi+nx0Kpg+5qF3evUmh9ui6xFWIsQnnpJE/xPwr1EWEtEbqoSSg0
-         RmzA==
-Received: by 10.50.33.232 with SMTP id u8mr4244040igi.39.1353091425890; Fri,
- 16 Nov 2012 10:43:45 -0800 (PST)
-Received: by 10.64.132.39 with HTTP; Fri, 16 Nov 2012 10:43:45 -0800 (PST)
-In-Reply-To: <CAMP44s3rwUw1QaADgm0xVOK3ebPNVSa06QdN5voNniD2acsz0g@mail.gmail.com>
+	id S1753086Ab2KPSwk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2012 13:52:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55887 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752993Ab2KPSwj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Nov 2012 13:52:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD717AD63;
+	Fri, 16 Nov 2012 13:52:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=F2fYNDYnQkhK
+	cIsSaH0TpNPsSQY=; b=gDrvC2Kp69P7Vey0+KhIk4Rxv120lsxYDcPYQFzox3sC
+	w4NQ5sxURs20OOj+Bg3TgNHuzJ7KHPwYstW5kEEdID6csvcGTiOsKwcuSbJFvBU7
+	WWDYeWv/cC7L/y649j5GJPRNGfHJ5bhtqiksCiS9lU27nH5rwnBcaDz7tU8jD64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Si66s4
+	1E/ic7K+IDkxkBKV5EG8O03FxtVvNq3Jhmpml/O9oxiUNzlNx4g7tSRib8rEfm6y
+	6u+vP/+dj8x1LolBIV6YFpva7axyEMG+ZEwFVgbQ5wt5D8UzifqXAqOIyMT/6fwD
+	vs5m1uEL1lyB5t3F+1Oui/311/xnSRkYl7FrQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA9B1AD60;
+	Fri, 16 Nov 2012 13:52:38 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C10CAD5F; Fri, 16 Nov 2012
+ 13:52:38 -0500 (EST)
+In-Reply-To: <50A48391.9090207@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of "Thu, 15 Nov 2012 06:54:25 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CAA11CA4-301E-11E2-8AC2-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209893>
 
-The current tcsh-completion support for Git, as can be found on the
-Internet, takes the approach of defining the possible completions
-explicitly.  This has the obvious draw-back to require constant
-updating as the Git code base evolves.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-The approach taken by this commit is to to re-use the advanced bash
-completion script and use its result for tcsh completion.  This is
-achieved by sourcing the bash script and outputting the completion
-result for tcsh consumption.
+> My understanding:
+> Either use people cygwin 1.5 or they use cygwin 1.7, and in this case
+> the installation is updated frequently.
+>
+> Peff or Junio, please go ahead with the patch.
+>
+> If it turns out that we want to support cygwin installations like 1.7=
+=2E7
+> which could be upgraded, but are not upgraded since they are
+> "production machines we do not dare to touch" we can still improve
+> the autodetection.
 
-Three solutions were looked at to implement this approach with (C)
-being retained:
-
-  A) Modifications:
-          git-completion.bash and new git-completion.tcsh
-
-     Modify the existing git-completion.bash script to support
-     being sourced using bash (as now), but also executed using bash.
-     When being executed, the script will output the result of the
-     computed completion to be re-used elsewhere (e.g., in tcsh).
-
-     The modification to git-completion.bash is made not to be
-     tcsh-specific, but to allow future users to also re-use its
-     output.  Therefore, to be general, git-completion.bash accepts a
-     second optional parameter, which is not used by tcsh, but could
-     prove useful for other users.
-
-     Pros:
-       1- allows the git-completion.bash script to easily be re-used
-       2- tcsh support is mostly isolated in git-completion.tcsh
-     Cons (for tcsh users only):
-       1- requires the user to copy both git-completion.tcsh and
-          git-completion.bash to ${HOME}
-       2- requires bash script to have a fixed name and location:
-          ${HOME}/.git-completion.bash
-
-  B) Modifications:
-          git-completion.bash
-
-     Modify the existing git-completion.bash script to support
-     being sourced using bash (as now), but also executed using bash,
-     and sourced using tcsh.
-
-     Pros:
-       1- only requires the user to deal with a single file
-       2- maintenance more obvious for tcsh since it is entirely part
-          of the same git-completion.bash script.
-     Cons:
-       1- tcsh support could affect bash support as they share the
-          same script
-       2- small tcsh section must use syntax suitable for both tcsh
-          and bash and must be at the beginning of the script
-       3- requires script to have a fixed name and location:
-          ${HOME}/.git-completion.sh (for tcsh users only)
-
-  C) Modifications:
-          New git-completion.tcsh
-
-     Provide a short tcsh script that generates another script
-     which extends git-completion.bash.  This new script can be
-     used by tcsh to perform completion.
-
-     Pros:
-       1- tcsh support is entirely isolated in git-completion.tcsh
-       2- new tcsh script can be as complex as needed
-     Cons (for tcsh users only):
-       1- requires the user to copy both git-completion.tcsh and
-          git-completion.bash to ${HOME}
-       2- requires bash script to have a fixed name and location:
-          ${HOME}/.git-completion.bash
-       3- sourcing the new script will generate a third script
-
-Approach (C) was selected avoid any modification to git-completion.bash.
-
-Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
----
-
-As suggested, I put the 'sort | uniq' inside the script.
-In that case, I don't need to worry about aliases since 'sort |uniq' will
-be executed in bash, for which the tcsh user surely doesn't have aliases setup.
-
-Thanks
-
-Marc
-
-
- contrib/completion/git-completion.tcsh | 63 ++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
- create mode 100644 contrib/completion/git-completion.tcsh
-
-diff --git a/contrib/completion/git-completion.tcsh
-b/contrib/completion/git-completion.tcsh
-new file mode 100644
-index 0000000..f0327fc
---- /dev/null
-+++ b/contrib/completion/git-completion.tcsh
-@@ -0,0 +1,63 @@
-+#!tcsh
-+#
-+# tcsh completion support for core Git.
-+#
-+# Copyright (C) 2012 Marc Khouzam <marc.khouzam@gmail.com>
-+# Distributed under the GNU General Public License, version 2.0.
-+#
-+# When sourced, this script will generate a new script that uses
-+# the git-completion.bash script provided by core Git.  This new
-+# script can be used by tcsh to perform git completion.
-+# The current script also issues the necessary tcsh 'complete'
-+# commands.
-+#
-+# To use this completion script:
-+#
-+#    1) Copy both this file and the bash completion script to ${HOME}.
-+#       You _must_ use the name ${HOME}/.git-completion.bash for the
-+#       bash script.
-+#       (e.g. ~/.git-completion.tcsh and ~/.git-completion.bash).
-+#    2) Add the following line to your .tcshrc/.cshrc:
-+#        source ~/.git-completion.tcsh
-+
-+set __git_tcsh_completion_original_script = ${HOME}/.git-completion.bash
-+set __git_tcsh_completion_script = ${HOME}/.git-completion.tcsh.bash
-+
-+cat << EOF > ${__git_tcsh_completion_script}
-+#!bash
-+#
-+# This script is GENERATED and will be overwritten automatically.
-+# Do not modify it directly.  Instead, modify the git-completion.tcsh
-+# script provided by Git core.
-+#
-+
-+source ${__git_tcsh_completion_original_script}
-+
-+# Set COMP_WORDS in a way that can be handled by the bash script.
-+COMP_WORDS=(\$1)
-+
-+# The cursor is at the end of parameter #1.
-+# We must check for a space as the last character which will
-+# tell us that the previous word is complete and the cursor
-+# is on the next word.
-+if [ "\${1: -1}" == " " ]; then
-+       # The last character is a space, so our location is at the end
-+       # of the command-line array
-+       COMP_CWORD=\${#COMP_WORDS[@]}
-+else
-+       # The last character is not a space, so our location is on the
-+       # last word of the command-line array, so we must decrement the
-+       # count by 1
-+       COMP_CWORD=\$((\${#COMP_WORDS[@]}-1))
-+fi
-+
-+# Call _git() or _gitk() of the bash script, based on the first
-+# element of the command-line
-+_\${COMP_WORDS[0]}
-+
-+IFS=\$'\n'
-+echo "\${COMPREPLY[*]}" | sort | uniq
-+EOF
-+
-+complete git  'p/*/`bash ${__git_tcsh_completion_script} "${COMMAND_LINE}"`/'
-+complete gitk 'p/*/`bash ${__git_tcsh_completion_script} "${COMMAND_LINE}"`/'
---
-1.8.0.1.g9fe2839
+OK.  I moved the topic forward but we may still want to rename the
+name of the macro to have CYGWIN somewhere in the name.
