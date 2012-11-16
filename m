@@ -1,82 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cloning a namespace downloads all the objects
-Date: Fri, 16 Nov 2012 08:43:13 -0800
-Message-ID: <7vvcd57b32.fsf@alter.siamese.dyndns.org>
-References: <CAMK1S_hdsgXoPcSn__htpGCpmCsAGb9j+m+SvxtO_69eqC92gA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] tcsh-completion re-using git-completion.bash
+Date: Fri, 16 Nov 2012 18:18:50 +0100
+Message-ID: <CAMP44s1RvMSBu2RJqKw9ne4cJyMO4dbFc-gW2HgsN2-uviv=fA@mail.gmail.com>
+References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
+	<1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
+	<CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
+	<CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
+	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
+	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Fri Nov 16 17:43:40 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: szeder@ira.uka.de, git@vger.kernel.org
+To: Marc Khouzam <marc.khouzam@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 18:19:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZP0t-0008Ha-FE
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 17:43:31 +0100
+	id 1TZPZJ-0006Uq-PP
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 18:19:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847Ab2KPQnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 11:43:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43082 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752782Ab2KPQnQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 11:43:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E714EA35F;
-	Fri, 16 Nov 2012 11:43:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AEDV8U3+FaRfsqgO6HEWBfnqW3k=; b=RVu5+8
-	1UkFbyS2nw8LyQwF9sX0X9WxK0eOG2kt148/Xit8eLtkO4GOdaAI8VHcmky5XQYE
-	ZOgnUUimC6ai/Qd7Cb1qcsDJJiBEKZizzQ5XhmN/S3EKgYqQpQYRco1PyzsDj2s1
-	hUzAGkImhXXE+t5gseaunv2O3mbgT0eexNDcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uMIrxKmC3WAmyB3W1NMZlFjnjAo5sokW
-	YghdwpgmZJC7/vIZKlDdN2J96QX1lam/gRxZ4KOx9IlECuEIO6M0rv98hqHz4vPi
-	lp7MmamGiYANKnRQCrS+a/syuNqDFtOZya8PuyxnsKmYEzZcP7ZJFOs1Jv7v6NTb
-	EzWvGjJHpD8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9144A35D;
-	Fri, 16 Nov 2012 11:43:15 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43C0DA35A; Fri, 16 Nov 2012
- 11:43:15 -0500 (EST)
-In-Reply-To: <CAMK1S_hdsgXoPcSn__htpGCpmCsAGb9j+m+SvxtO_69eqC92gA@mail.gmail.com> (Sitaram
- Chamarty's message of "Fri, 16 Nov 2012 22:04:41 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B79DE612-300C-11E2-ADA7-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752668Ab2KPRSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 12:18:52 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:42371 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184Ab2KPRSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 12:18:51 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so3005145oag.19
+        for <git@vger.kernel.org>; Fri, 16 Nov 2012 09:18:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hSOVeTKQllbDIstY+AkXaZJg2T6+o5lnLnjD1sB8ixU=;
+        b=o/FtLGjH64Q9mpDsKSlqMWUlSz+W8FO1DA+jzUJhRgBhtC9MMbe0r7h+lO7SJ4btFR
+         JpNr7oWg4/UlAyuR+bkUefh90r0daXXC34Xhw1JnBKX4GC9vDuQjvpdJHRdpCB6JrQix
+         7oW1AlJF4ZnetOVdrVhg0p5Nw6fzTwOOD2dR6sRE/kP2IwyLLdANtGVAGIq16u1rNCXD
+         svFrHNzqnLRZO6njNXmdracKTJyTfncdNVDQOtkz/rXTeEnLMazsz04wWgAh+55j3KsT
+         /bXSM2dACcwMbgwCxg/S/W6b9HvuQ5d77+AR/o5cvy56XcEmpLkkmgg0CreER2dyfQu1
+         Ir7g==
+Received: by 10.60.12.225 with SMTP id b1mr4451428oec.96.1353086330864; Fri,
+ 16 Nov 2012 09:18:50 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 09:18:50 -0800 (PST)
+In-Reply-To: <CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209885>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+On Fri, Nov 16, 2012 at 4:48 PM, Marc Khouzam <marc.khouzam@gmail.com> wrote:
+> On Fri, Nov 16, 2012 at 10:33 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 
-> Hi,
+>> Is it possible to just check if this is a login shell?
 >
-> I have a repo on a server, which contains, as namespaces, the contents
-> of several different repos of varying sizes.  When I run a clone
-> command for the smallest of the namespaces (I have a script that
-> intercepts the clone and sets GIT_NAMESPACE appropriately), I get the
-> correct set of refs, but *all* the objects from *all* the namespaces.
->
-> And since no refs from the other namespaces have come down, a 'git gc
-> --prune=now', run immediately after, reduces the size of
-> ".git/objects" to the size I would expect for just that small
-> namespace.
->
-> In effect, it is bringing down data that is not reachable and will be
-> wiped out on the next gc.
->
-> Is this expected?
+> I think it would be nice to allow the user to manually
+> source git-completion.tcsh, in case they want to make
+> manual modifications to it.
 
-I do not think so.
+Yeah, they could still do that... because they would be running in a
+login shell.
 
-This was done with a series between a1bea2c (ref namespaces:
-infrastructure, 2011-07-05) and bf7930c (ref namespaces: tests,
-2011-07-21); Josh, care to comment on and to look into it?
+What I meant is that if the user does: tcsh
+my_script_that_has_nothing_to_do_with_completion.sh, they would not be
+executing this whole script.
+
+> I think the most user-friendly option is to actually re-generate the
+> script each time.  It feels wrong, but it works well :)
+
+I'm not too strongly opposed to add that function to the bash
+completion, but to do it only for tcsh doesn't sound right, specially
+when there are other alternatives. Correct me if I'm wrong, but very
+few people use tcsh.
+
+-- 
+Felipe Contreras
