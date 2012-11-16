@@ -1,72 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: cloning a namespace downloads all the objects
-Date: Fri, 16 Nov 2012 09:34:18 -0800
-Message-ID: <20121116173416.GA13268@sigill.intra.peff.net>
-References: <CAMK1S_hdsgXoPcSn__htpGCpmCsAGb9j+m+SvxtO_69eqC92gA@mail.gmail.com>
- <7vvcd57b32.fsf@alter.siamese.dyndns.org>
+From: Enrico Weigelt <enrico.weigelt@vnc.biz>
+Subject: Auto-repo-repair
+Date: Fri, 16 Nov 2012 18:51:45 +0100 (CET)
+Message-ID: <dbae3a06-c14b-4c06-9863-ae4771968fe1@zcs>
+References: <0c0e34a4-16ab-40a0-9293-af94e34e4290@zcs>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Josh Triplett <josh@joshtriplett.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 18:34:48 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 16 18:52:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZPoV-00073w-1J
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 18:34:47 +0100
+	id 1TZQ5B-0000q8-1a
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 18:52:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621Ab2KPRe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 12:34:28 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50502 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751981Ab2KPReZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 12:34:25 -0500
-Received: (qmail 29023 invoked by uid 107); 16 Nov 2012 17:35:14 -0000
-Received: from mcb0536d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.5.203)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Nov 2012 12:35:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Nov 2012 09:34:18 -0800
-Content-Disposition: inline
-In-Reply-To: <7vvcd57b32.fsf@alter.siamese.dyndns.org>
+	id S1752506Ab2KPRvr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2012 12:51:47 -0500
+Received: from zcs.vnc.biz ([83.144.240.118]:48609 "EHLO zcs.vnc.biz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752106Ab2KPRvq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Nov 2012 12:51:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by zcs.vnc.biz (Postfix) with ESMTP id BFDFA62289E
+	for <git@vger.kernel.org>; Fri, 16 Nov 2012 18:51:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at vnc.biz
+Received: from zcs.vnc.biz ([127.0.0.1])
+	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TNjhNRmF7Im7 for <git@vger.kernel.org>;
+	Fri, 16 Nov 2012 18:51:45 +0100 (CET)
+Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
+	by zcs.vnc.biz (Postfix) with ESMTP id 524E2622259
+	for <git@vger.kernel.org>; Fri, 16 Nov 2012 18:51:45 +0100 (CET)
+In-Reply-To: <0c0e34a4-16ab-40a0-9293-af94e34e4290@zcs>
+X-Originating-IP: [91.43.211.84]
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209888>
 
-On Fri, Nov 16, 2012 at 08:43:13AM -0800, Junio C Hamano wrote:
+Hi folks,
 
-> > I have a repo on a server, which contains, as namespaces, the contents
-> > of several different repos of varying sizes.  When I run a clone
-> > command for the smallest of the namespaces (I have a script that
-> > intercepts the clone and sets GIT_NAMESPACE appropriately), I get the
-> > correct set of refs, but *all* the objects from *all* the namespaces.
-> >
-> > And since no refs from the other namespaces have come down, a 'git gc
-> > --prune=now', run immediately after, reduces the size of
-> > ".git/objects" to the size I would expect for just that small
-> > namespace.
-> >
-> > In effect, it is bringing down data that is not reachable and will be
-> > wiped out on the next gc.
-> >
-> > Is this expected?
-> 
-> I do not think so.
-> 
-> This was done with a series between a1bea2c (ref namespaces:
-> infrastructure, 2011-07-05) and bf7930c (ref namespaces: tests,
-> 2011-07-21); Josh, care to comment on and to look into it?
+suppose the following scenario:
 
-I'd guess that the "create_full_pack" logic in create_pack_file is to
-blame. The client asked for everything we advertised, so we pass "--all"
-to pack-objects rather than giving it the specific list of tips.
+I've broken some repo (missing objects), eg by messing something up
+w/ alternates, broken filesystem, or whatever. And I've got a bunch
+of remotes which (together) contain all of the lost objects.
 
-We'd have to either fix that logic, or teach the pack-objects subprocess
-to respect GIT_NAMESPACE when processing --all.
+Now I'd like to run some $magic_command which automatically fetches
+all the missing objects and so repair my local repo.
 
--Peff
+Is this already possible right now ?
+
+
+thx
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
+
+Enrico Weigelt=20
+VNC - Virtual Network Consult GmbH=20
+Head Of Development=20
+
+Pariser Platz 4a, D-10117 Berlin
+Tel.: +49 (30) 3464615-20
+=46ax: +49 (30) 3464615-59
+
+enrico.weigelt@vnc.biz; www.vnc.de=20
