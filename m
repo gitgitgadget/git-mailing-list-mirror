@@ -1,131 +1,100 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 5/6] completion: refactor __gitcomp related tests
-Date: Fri, 16 Nov 2012 20:53:56 +0100
-Message-ID: <CAMP44s2ESxhQQGxy-E4LpiBwPnZLgVwBFDk4Ck90ySTXdC=DYA@mail.gmail.com>
-References: <1352644558-9410-1-git-send-email-felipe.contreras@gmail.com>
-	<1352644558-9410-6-git-send-email-felipe.contreras@gmail.com>
-	<7v8va1mkcv.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCHv2 8/8] send-email: do not prompt for explicit repo ident
+Date: Fri, 16 Nov 2012 20:57:43 +0100
+Message-ID: <CAMP44s2+0vFUwK+ATe-jDTRYG=kE=zFF4X_JAMZExgVw0Vtfgw@mail.gmail.com>
+References: <20121115003029.GA17550@sigill.intra.peff.net>
+	<20121115003640.GH17819@sigill.intra.peff.net>
+	<CAMP44s0d+g7bXCnOf55jZNNFS6uJ+4BDowx5uYxWBP4xA+-0zA@mail.gmail.com>
+	<20121115083315.GA23377@sigill.intra.peff.net>
+	<CAMP44s2NBGDRLUKhBTU+kNy7Fyn8T6qm3nneSbS4rrNN1oPgdw@mail.gmail.com>
+	<20121115104345.GA32465@sigill.intra.peff.net>
+	<20121115111334.GA1879@sigill.intra.peff.net>
+	<7vvcd6954q.fsf@alter.siamese.dyndns.org>
+	<20121115172845.GA20298@sigill.intra.peff.net>
+	<7vzk2i6s9h.fsf@alter.siamese.dyndns.org>
+	<20121116190811.GB2310@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 20:54:14 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 16 20:58:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZRzP-0005My-TH
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 20:54:12 +0100
+	id 1TZS35-0000Rg-48
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 20:57:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408Ab2KPTx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 14:53:57 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:63325 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751044Ab2KPTx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 14:53:57 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so3153666obb.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 11:53:56 -0800 (PST)
+	id S1751484Ab2KPT5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 14:57:45 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:35643 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751365Ab2KPT5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 14:57:44 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so3158492oag.19
+        for <git@vger.kernel.org>; Fri, 16 Nov 2012 11:57:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=bosAkvNeMEqIpqewMrM0PE3d9Qzw37lhiwpZ746dbXI=;
-        b=D9uQJNvmFaWqJ7Xig1huNd2k5GGLky5yilQ7Axdg1REr7CGJuLfhhpyT1L0QY7eNaR
-         ZBeJ7OovrlxTpTrExhotPB4WViONhIGpFjW3MQC87HLf3h1anSArtWlx2lgHzWKHkomq
-         Y2kJrYeXBJx3ydM6KOHfHqM1MqHnDIIrprYMHfWa2vg8StsIrlLRSRAS+Z0M3pUbnneX
-         RFo5HhVywx/aMwweVXqq/r6OVXZiNo/1ZC+3eDeDE3m6slH7f0AWaBwUZyZUe3shmLh3
-         MOnJ0MIGG0X3FU6Ez0FGd02fw8X7ta9TaQa+rNsTTUJDI2jJfPJvAfkiAhdH2t6wngUq
-         RWdw==
-Received: by 10.182.10.6 with SMTP id e6mr4799835obb.16.1353095636869; Fri, 16
- Nov 2012 11:53:56 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 11:53:56 -0800 (PST)
-In-Reply-To: <7v8va1mkcv.fsf@alter.siamese.dyndns.org>
+        bh=qpkJKKVRVBeCxbRtu+LNa09ebOX5174CbCn41lNFckk=;
+        b=y3Z9a2QFk6V1L8tvZZTTyfauRw07HhXTxGOpIzmR2PJCEPglc0bAfwpCAXxU4lnbRC
+         n11lI2+usywmJ+lWPpKmNQx+EHmQDpufxfBzW1WdJss/raX8KPXSoh5wl6FhBjKc6y+q
+         GhS4CHk6wkuNXPbIREiIPLCaThjWSvn/lOF0HAxzM/GMsZUKgFX50sD+kTPPoVPHuj8G
+         pvwFNFkw9E/ytHZm/AbpKd3BAPq/dKiSeuCvvfwGMJoVSI3eUYjyNZe+4df4MlHSlrET
+         pE0/DJouBwyUtqcqCmnKS7CjyfjaFzP3aSCx2C3Vr0+8w+S497XlDL7pNq3OphLwEpAn
+         IyOQ==
+Received: by 10.60.32.19 with SMTP id e19mr4972169oei.9.1353095864013; Fri, 16
+ Nov 2012 11:57:44 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 11:57:43 -0800 (PST)
+In-Reply-To: <20121116190811.GB2310@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209899>
 
-On Fri, Nov 16, 2012 at 8:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Not asking for a re-roll but am asking for clarification so that I
-> can locally update before queuing.
+On Fri, Nov 16, 2012 at 8:08 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Nov 15, 2012 at 09:17:30PM -0800, Junio C Hamano wrote:
 >
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Lots of duplicated code!
->
-> ... removed, you mean?
-
-Yes.
-
->> No functional changes.
+>> Jeff King <peff@peff.net> writes:
 >>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  t/t9902-completion.sh | 76 ++++++++++++++++++---------------------------------
->>  1 file changed, 27 insertions(+), 49 deletions(-)
+>> > That is a good question. That confirmation step does come after they
+>> > have typed their cover letter. However, if they are using --compose,
+>> > they are dumped in their editor with something like:
+>> >
+>> >   From Jeff King <peff@peff.net> # This line is ignored.
+>> >   GIT: Lines beginning in "GIT:" will be removed.
+>> >   GIT: Consider including an overall diffstat or table of contents
+>> >   GIT: for the patch you are writing.
+>> >   GIT:
+>> >   GIT: Clear the body content if you don't wish to send a summary.
+>> >   From: Jeff King <peff@peff.net>
+>> >   Subject:
+>> >   In-Reply-To:
+>> >
+>> > which I think would count as sufficient notice of the address being
+>> > used.
 >>
->> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
->> index 59cdbfd..66c7af6 100755
->> --- a/t/t9902-completion.sh
->> +++ b/t/t9902-completion.sh
->> @@ -71,87 +71,65 @@ test_completion ()
->>
->>  newline=$'\n'
->>
->> -test_expect_success '__gitcomp - trailing space - options' '
->> -     sed -e "s/Z$//" >expected <<-\EOF &&
->> -     --reuse-message=Z
->> -     --reedit-message=Z
->> -     --reset-author Z
->> -     EOF
->> +# Test __gitcomp.
->> +# Arguments are:
->> +# 1: typed text so far (cur)
->> +# *: arguments to pass to __gitcomp
+>> OK.  Tentatively I replaced your old series with these 8 patches
+>> including the last one, as I tend to agree with the value the
+>> earlier clean-up in the series gives us in the longer term.  As you
+>> and Felipe discussed, we may want to replace the last one with a
+>> simpler "don't bother asking" patch, but I think that is more or
+>> less an orthogonal issue.
 >
-> s/\*/remainder/, perhaps?  I think you shift $1 out and do not pass
-> it to __gitcomp.
+> I'm not sure how orthogonal it is. The latter half of my series is about
+> exposing the user_ident_sufficiently_given() flag. If we go with
+> Felipe's patch, then that exposed information has no users, and it may
+> not be worth it (OTOH, it's possible that some third-party script may
+> want it).
 
-Right, by * I meant the rest.
-
-> And expected output is from the standard input just like
-> test_completion?
-
-Correct.
-
->> +test_gitcomp ()
->> +{
->> +     sed -e 's/Z$//' > expected &&
->>       (
->>               local -a COMPREPLY &&
->> -             cur="--re" &&
->> -             __gitcomp "--dry-run --reuse-message= --reedit-message=
->> -                             --reset-author" &&
->> +             cur="$1" &&
->> +             shift &&
->> +             __gitcomp "$@" &&
->>               IFS="$newline" &&
->>               echo "${COMPREPLY[*]}" > out
->>       ) &&
->>       test_cmp expected out
->> +}
->> +
->> +test_expect_success '__gitcomp - trailing space - options' '
->> +     test_gitcomp "--re" "--dry-run --reuse-message= --reedit-message=
->> +             --reset-author" <<-EOF
->> +     --reuse-message=Z
->> +     --reedit-message=Z
->> +     --reset-author Z
->> +     EOF
->>  '
->
-> Nice shrinkage.
-
-That's a comment about the whole patch series I hope :)
+Well, who is using user_ident_sufficiently_given() in the first place?
+I think 'git commit' might be suffering from the same problem that
+prompted you to split it.
 
 Cheers.
 
