@@ -1,79 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] status: add advice on how to push/pull to tracking branch
-Date: Fri, 16 Nov 2012 10:27:03 +0100
-Message-ID: <vpqy5i1c2zc.fsf@grenoble-inp.fr>
-References: <1352976300-20159-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vr4nu92hm.fsf@alter.siamese.dyndns.org>
-	<vpqmwyid59i.fsf@grenoble-inp.fr>
-	<7vmwyi8rjt.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Crash when pushing large binary file
+Date: Fri, 16 Nov 2012 17:11:25 +0700
+Message-ID: <CACsJy8DsKc5_i6VKeYv69ikQXQPwEh3UOa5_bLaa4ss5vLxOng@mail.gmail.com>
+References: <CA+AoP-n07k0r11O6ShOT8jHiX+TL+=p8sZoei+Gi+9gG_YyJqA@mail.gmail.com>
+ <CACsJy8AAd0odtLDiZ+A+MhX1En_G97gF2uoHjVeJvekznY3JSw@mail.gmail.com> <CA+AoP-keNcjGLtxbb9t7sggur1e+XmbMN5apVJfEdfhqU2-JGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 10:27:29 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Thomas Gay <tgay@tokyois.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 11:12:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZICu-0005S2-3i
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 10:27:28 +0100
+	id 1TZIuC-00009T-8j
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 11:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751217Ab2KPJ1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 04:27:13 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:47815 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750826Ab2KPJ1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 04:27:12 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qAG9JOri003511
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 16 Nov 2012 10:19:24 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TZICW-0007vw-BW; Fri, 16 Nov 2012 10:27:04 +0100
-In-Reply-To: <7vmwyi8rjt.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 15 Nov 2012 13:49:58 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Nov 2012 10:19:24 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qAG9JOri003511
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1353662367.22108@qTD84PLwj7w0uXJdjOd39Q
+	id S1751433Ab2KPKL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 05:11:58 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:35931 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751365Ab2KPKL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 05:11:57 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so2618094obb.19
+        for <git@vger.kernel.org>; Fri, 16 Nov 2012 02:11:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2K403OvFV8U+MTqECb08QLi4erUEOmXkNo+wx8pxDO0=;
+        b=pRmrFYNFs4Wt+KBPVJ2Jp0hCwTLxC9LhYNy13bWnmskT64vGbIcREy3odEAtx+muWi
+         2KzPUhi4eHNLf/uBx4XJqshY6UMoLvRTNjfiUWKI9y7uta+OiJlFBvSoHv5fVVLykDfK
+         zPUFYronwrtm7NsXG/B9Wu2vDPItDkflVmck4lm8TVbL6q5Z6qG+/Xl6xUtIWrW+hvX4
+         TGYiA+8EyCqSPKxzxarp8oC5ckIWyLuphbY2jOCPrr+mkeDheB2kBlNRkxRyD2kx5MRp
+         ewoj1ty9uFHoRLmfNaTkLu/X2ZupeJRA9SvXin64uP4vtuTnlwCGxHGgc87DYDRGULiw
+         gS3g==
+Received: by 10.60.13.132 with SMTP id h4mr3505892oec.72.1353060717268; Fri,
+ 16 Nov 2012 02:11:57 -0800 (PST)
+Received: by 10.182.27.3 with HTTP; Fri, 16 Nov 2012 02:11:25 -0800 (PST)
+In-Reply-To: <CA+AoP-keNcjGLtxbb9t7sggur1e+XmbMN5apVJfEdfhqU2-JGQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209868>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, Nov 16, 2012 at 1:54 PM, Thomas Gay <tgay@tokyois.com> wrote:
+>> If you set receive.unpacklimit to 1 on the receiving end, does it still crash?
 >
->> I don't understand what you mean by "non-current". If you mean a local
->> branch not pointed to by HEAD, then I don't understand the remark, as
->> the message is shown by "git status" (looking more closely, it is also
->> shown by "git checkout", but after switching branch so also showing a
->> message about the current branch) and precisely talks about the current
->> branch.
->
-> Ah, Ok, I somehow thought that "branch -v" would also use this
-> information, and/or during my absense this function from remote.c
-> got linked into "git remote show" ;-)
+> Yes. The crash log looks the same too.
 
-OK.
+If it still says "unpack-objects died of signal 11" then it was not
+done the right way. The receiving end can use either unpack-objects or
+index-pack for storing the objects. I know unpack-objects is not ready
+for large blobs (though I cannot explain your crash log, that's why I
+still need you to test it this way). I was hoping to force it use
+index-pack and see it still crashes. If it does, we have other
+problems than unpack-objects not being ready for large blobs. If it
+does not, I'd say it's a known issue with a known solution (I was
+planning on merging unpack-objects functionality back to index-pack).
 
-> So it is not an issue right now, but we will have to worry about the
-> messaging when we start using this to describe a branch that is not
-> currently checked out.
+We can try again this way. index-pack will be used if the number of
+transfer objects exceeds 100 (by default). You are pusing 16 objects,
+which is why unpack-objects is used. We can try to push garbage to the
+other end to meet the 100 limit, then reset the branch at the other
+end later. You can run "git gc" early on the other end to clean up
+garbage, or it'll be done automatically at some point in future. Make
+sure there is no changes in index and worktree, or adjust you may want
+to change the last four commands slightly.
 
-(Anyway, we'd have to reword it a bit: saying "Your branch ..." would be
-wrong in this case)
-
+mkdir tmp
+for i in `seq 200`;do echo $i > tmp/$i; git add $i; done
+git commit -m 'useless stuff'
+git push <where?>   # should not crash again
+git reset --hard HEAD^
+git push <same-where?-above>
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
