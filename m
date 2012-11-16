@@ -1,89 +1,107 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v4 0/4] Introduce diff.submodule
-Date: Fri, 16 Nov 2012 16:15:02 +0530
-Message-ID: <CALkWK0k65oyz1FWdyjjHLjj-DS75cdfk_8Vd3NV4OwzS+--VaA@mail.gmail.com>
-References: <1352821367-3611-1-git-send-email-artagnon@gmail.com>
- <20121115162331.GD6157@sigill.intra.peff.net> <20121115162524.GE6157@sigill.intra.peff.net>
- <20121115163356.GF6157@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Local clones aka forks disk size optimization
+Date: Fri, 16 Nov 2012 12:25:29 +0100
+Message-ID: <50A622A9.4040709@drmicha.warpmail.net>
+References: <CALZVapmG+HL0SQx8zx=Cfz5pWv84hJq90x-7VdjA0m2Z4dC34A@mail.gmail.com> <CALZVapmO61d8yXfXXGx6Qc444ka+8n7HabuNRt0rJdE5qy_7aQ@mail.gmail.com> <CAH5451nW2esQR8XaAttT3tYJZEw1Nj3OEMgkHsMZrZDxhcRXHw@mail.gmail.com> <CALZVap=kOwOpxeu8+_+5uQYZz3GNC8Ep_JeK7WCQHtu+Hn3rUw@mail.gmail.com> <CAH5451m4saVa7-NLbVbXp7q8ca5_0N4FLk3wYaqxLT=AE5frbw@mail.gmail.com> <CALZVapmBM78UtjAiNm2VoeWuetCiyxN70mTxbG14SQh5a5RCeQ@mail.gmail.com> <CAH5451=Tk=zjkYbK0720VBkAA12VRCAE_Dx8bBkoXba60ho8AA@mail.gmail.com> <CAMK1S_ioQQWXaOO8Na=7M4QhaaUNQ8ySVM-E_2bk6m4TyvRpeA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 16 11:47:34 2012
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Javier Domingo <javierdo1@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 12:25:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZJSO-0002mT-Rb
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 11:47:33 +0100
+	id 1TZK3Y-0000iD-IO
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 12:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029Ab2KPKpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 05:45:24 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:61080 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750817Ab2KPKpX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 05:45:23 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so2639711obb.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 02:45:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DOrnqypDElTuy+VLzVNxjYLHgUYuXE08SZl49ix41/w=;
-        b=gKbksfu4xD6nI77ICARb6bzuCHr1jERfoete+yKRY8bPvBoaSh+ZNSHHduV8Shx9hY
-         n3OTSBGxh27vR44a0ObNFrzfiO5bR047CSrMad1ElHsjDgZeUOpYzt7I6feY05NPkkWa
-         hYvo/ScfU2awNQefZyLq3vyqPj2zmZA7ZyTSXB31oA3wTvV7FeThBvVpcX2rbujKHQhq
-         VqieRIZ1veBa3cebmow7/LY2JUewRVHAVMyCNzLpK4tu1rq/+P1sP3WP6fWCiTGvl5VT
-         1Q+0VHBMhfv+dpvf8cy24sjqrPSuLBHbEvR43Irfj72fFoiO6gMgD0vB7kOdZtnE+7OH
-         4rFg==
-Received: by 10.60.171.201 with SMTP id aw9mr3403708oec.126.1353062722590;
- Fri, 16 Nov 2012 02:45:22 -0800 (PST)
-Received: by 10.76.168.40 with HTTP; Fri, 16 Nov 2012 02:45:02 -0800 (PST)
-In-Reply-To: <20121115163356.GF6157@sigill.intra.peff.net>
+	id S1752124Ab2KPLZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 06:25:34 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:39725 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751749Ab2KPLZc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Nov 2012 06:25:32 -0500
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id DAE44205AB;
+	Fri, 16 Nov 2012 06:25:30 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute5.internal (MEProxy); Fri, 16 Nov 2012 06:25:30 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=7nBJOTxX0uJ6Xxc6kCAQRX
+	18RC8=; b=m3ZM6vM2nF2RBYbssxL/ZXtkqVymDWfYeFbiBIA9/EQPriRUGs9U76
+	tbAgbitNoFZKC26v1WXupW4F9Ky+qxkZqirYCf7z70wjy0wmeTI7sV5uFx8hwhPO
+	YuANetpnODaZJEahHAgyJyaCCakOUC4sFErNBrUaC1m51jaBPpGWU=
+X-Sasl-enc: 7Jc/DE+DoHwpNm2Va4AjvdwxR8sL1diL10sJAwpGG1TM 1353065130
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 2D50F8E01F8;
+	Fri, 16 Nov 2012 06:25:30 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121016 Thunderbird/16.0.1
+In-Reply-To: <CAMK1S_ioQQWXaOO8Na=7M4QhaaUNQ8ySVM-E_2bk6m4TyvRpeA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209871>
 
-Jeff King wrote:
-> It may be worth squashing this test into patch 3:
+Sitaram Chamarty venit, vidit, dixit 15.11.2012 04:44:
+> On Thu, Nov 15, 2012 at 7:04 AM, Andrew Ardill <andrew.ardill@gmail.com> wrote:
+>> On 15 November 2012 12:15, Javier Domingo <javierdo1@gmail.com> wrote:
+>>> Hi Andrew,
+>>>
+>>> Doing this would require I got tracked which one comes from which. So
+>>> it would imply some logic (and db) over it. With the hardlinking way,
+>>> it wouldn't require anything. The idea is that you don't have to do
+>>> anything else in the server.
+>>>
+>>> I understand that it would be imposible to do it for windows users
+>>> (but using cygwin), but for *nix ones yes...
+>>> Javier Domingo
+>>
+>> Paraphrasing from git-clone(1):
+>>
+>> When cloning a repository, if the source repository is specified with
+>> /path/to/repo syntax, the default is to clone the repository by making
+>> a copy of HEAD and everything under objects and refs directories. The
+>> files under .git/objects/ directory are hardlinked to save space when
+>> possible. To force copying instead of hardlinking (which may be
+>> desirable if you are trying to make a back-up of your repository)
+>> --no-hardlinks can be used.
+>>
+>> So hardlinks should be used where possible, and if they are not try
+>> upgrading Git.
+>>
+>> I think that covers all the use cases you have?
+> 
+> I am not sure it does.  My understanding is this:
+> 
+> 'git clone -l' saves space on the initial clone, but subsequent pushes
+> end up with the same objects duplicated across all the "forks"
+> (assuming most of the forks keep up with some canonical repo).
+> 
+> The alternates mechanism can give you ongoing savings (as long as you
+> push to the "main" repo first), but it is dangerous, in the words of
+> the git-clone manpage.  You have to be confident no one will delete a
+> ref from the "main" repo and then do a gc or let it auto-gc.
+> 
+> He's looking for something that addresses both these issues.
+> 
+> As an additional idea, I suspect this is what the namespaces feature
+> was created for, but I am not sure, and have never played with it till
+> now.
+> 
+> Maybe someone who knows namespaces very well will chip in...
+> 
 
-Looks good.  Thanks.
+I dunno about namespaces, but a safe route with alternates seems to be:
 
-> BTW, while writing the test, I noticed two minor nits with your tests:
->
->   1. They can use test_config, which is simpler (you do not need to
->      unset yourself after the test) and safer (the unset happens via
->      test_when_finished, so it works even if the test fails).
+Provide one "main" clone which is bare, pulls automatically, and is
+there to stay (no pruning), so that all others can use that as a
+reliable alternates source.
 
-I see.  Can you squash this in?
-
--- 8< --
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index e401814..876800f 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -56,7 +56,7 @@ EOF
- "
-
- test_expect_success '--submodule=short overrides diff.submodule' "
--	git config diff.submodule log &&
-+	test_config diff.submodule log &&
- 	git add sm1 &&
- 	git diff --submodule=short --cached >actual &&
- 	cat >expected <<-EOF &&
-@@ -68,7 +68,6 @@ index 0000000..a2c4dab
- @@ -0,0 +1 @@
- +Subproject commit $fullhead1
- EOF
--	git config --unset diff.submodule &&
- 	test_cmp expected actual
- "
-
->   2. You can still indent expected output when using <<-.
-
-I know;  however, I wanted to be consistent with the surrounding code.
-
-Ram
+Michael
