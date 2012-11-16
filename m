@@ -1,203 +1,65 @@
-From: Thomas Gay <tgay@tokyois.com>
-Subject: Crash when pushing large binary file
-Date: Fri, 16 Nov 2012 14:44:32 +0900
-Message-ID: <CA+AoP-n07k0r11O6ShOT8jHiX+TL+=p8sZoei+Gi+9gG_YyJqA@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Crash when pushing large binary file
+Date: Fri, 16 Nov 2012 13:25:04 +0700
+Message-ID: <CACsJy8AAd0odtLDiZ+A+MhX1En_G97gF2uoHjVeJvekznY3JSw@mail.gmail.com>
+References: <CA+AoP-n07k0r11O6ShOT8jHiX+TL+=p8sZoei+Gi+9gG_YyJqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=e89a8f6467174e04ed04ce96442f
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 16 06:45:36 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Thomas Gay <tgay@tokyois.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 07:25:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZEk6-0000Z5-11
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 06:45:30 +0100
+	id 1TZFN9-0001Jm-4z
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 07:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750892Ab2KPFoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 00:44:54 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:53576 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799Ab2KPFox (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 00:44:53 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k13so3134070iea.19
-        for <git@vger.kernel.org>; Thu, 15 Nov 2012 21:44:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :x-gm-message-state;
-        bh=aR5FMHqF3+1s4EQd9x1NEBjDB6PsF0qehA4N2iwr0OQ=;
-        b=T899DQlu5GvxhFAbD5D4Pb1X2cCPosRqEhQPiCzsyK+FvmKj54Ly7LAZdvpJrsEDSc
-         Hd8he6NpUf9qJG0eia+QxityDPqx2cO695bBSPfmoZXoosudKJ6AfmSOAWraDtY3CrgS
-         9K7aMiJ+oUtNxToCfEChCnUI27JwqPLfhS5MAIY/OTN+NOflGIe5bWhdzEVlbkZy8foO
-         XnEQqINQIuc47LzMtoTSf/4c8nyC7JaJdSho0n0ZSYKKqlJUpjQqXe2EP8I6YzJq++eM
-         P2zmuzqI1cAxVt48CGcp+rBMBXSqajM4XSHKv97X1A9zJTyLgfeWmCCAU2xplXGASiPC
-         PZ8A==
-Received: by 10.50.6.169 with SMTP id c9mr2182647iga.24.1353044693222; Thu, 15
- Nov 2012 21:44:53 -0800 (PST)
-Received: by 10.64.41.37 with HTTP; Thu, 15 Nov 2012 21:44:32 -0800 (PST)
-X-Gm-Message-State: ALoCoQk4qnc0P5xfyvf3I1MAmTykHlkkQ+d5ja3PIfqg/RlaBIt1QQV/EAuNwDu/jLTp0Jsw4ily
+	id S1751358Ab2KPGZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 01:25:36 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:57915 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750999Ab2KPGZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 01:25:35 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so2496096obb.19
+        for <git@vger.kernel.org>; Thu, 15 Nov 2012 22:25:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WiXjdmmmEFe6RsDixsNalJSd5GUAaHn3hX368ken2no=;
+        b=IPzKxf3Iu6lADA0meJk8AOpCmnQj5yQwUpwLn2HgT+OMYqoAC3ACFGDQ3kRz+f4Rai
+         1WQM3WqCFQBDNxDfo2JfuQrdRry8MJUDxbURpIQ2tKtwffFUOu/cZHlWMRohkGFbed69
+         aE8t9i1vbzlCFOlIsQ6X8jQMzJ/Gyx6J34bYNIKpsu40nyHwndlyKV5tPG6Vnz5RF1PZ
+         VF6le3ltDbMFyAijbsgY4nMrc0jc1Dcub6sqfo1IOvQZTpb98xnd58IJjmVqCwwFdpW2
+         3dZY2tYTEjoNUuEZTp9yu/7C5kgIpIUlMnQnB/r8amb1Pqd1k7hRe+9h0gdtd4ievR9b
+         4reg==
+Received: by 10.60.24.7 with SMTP id q7mr2957340oef.108.1353047134732; Thu, 15
+ Nov 2012 22:25:34 -0800 (PST)
+Received: by 10.182.40.163 with HTTP; Thu, 15 Nov 2012 22:25:04 -0800 (PST)
+In-Reply-To: <CA+AoP-n07k0r11O6ShOT8jHiX+TL+=p8sZoei+Gi+9gG_YyJqA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209864>
 
---e89a8f6467174e04ed04ce96442f
-Content-Type: text/plain; charset=UTF-8
+On Fri, Nov 16, 2012 at 12:44 PM, Thomas Gay <tgay@tokyois.com> wrote:
+> Using Git 1.8 on Mac OS X 10.7.5. I just added a large binary file to
 
-Using Git 1.8 on Mac OS X 10.7.5. I just added a large binary file to
-my repo, and each time I try to push it, Git crashes. I've attached
-the crash log to this email and pasted the console output below.
+How large exactly?
 
-Counting objects: 27, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (16/16), done.
-error: unpack-objects died of signal 11 | 76.91 MiB/s
-error: pack-objects died of signal 13
-error: failed to push some refs to 'ssh://...'
+> my repo, and each time I try to push it, Git crashes. I've attached
+> the crash log to this email and pasted the console output below.
+>
+> Counting objects: 27, done.
+> Delta compression using up to 4 threads.
+> Compressing objects: 100% (16/16), done.
+> error: unpack-objects died of signal 11 | 76.91 MiB/s
+> error: pack-objects died of signal 13
+> error: failed to push some refs to 'ssh://...'
 
--Tom
-
---e89a8f6467174e04ed04ce96442f
-Content-Type: application/octet-stream; 
-	name="git_2012-11-16-143138_localhost.crash"
-Content-Disposition: attachment; 
-	filename="git_2012-11-16-143138_localhost.crash"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_h9kvtc9y0
-
-UHJvY2VzczogICAgICAgICBnaXQgWzU1ODRdClBhdGg6ICAgICAgICAgICAgL3Vzci9saWJleGVj
-L2dpdC1jb3JlL2dpdApJZGVudGlmaWVyOiAgICAgIGdpdApWZXJzaW9uOiAgICAgICAgID8/PyAo
-Pz8/KQpDb2RlIFR5cGU6ICAgICAgIFg4Ni02NCAoTmF0aXZlKQpQYXJlbnQgUHJvY2VzczogIGdp
-dCBbNTU4M10KCkRhdGUvVGltZTogICAgICAgMjAxMi0xMS0xNiAxNDozMTozOC4zNTcgKzA5MDAK
-T1MgVmVyc2lvbjogICAgICBNYWMgT1MgWCBTZXJ2ZXIgMTAuNy41ICgxMUc2MykKUmVwb3J0IFZl
-cnNpb246ICA5CgpDcmFzaGVkIFRocmVhZDogIDAgIERpc3BhdGNoIHF1ZXVlOiBjb20uYXBwbGUu
-bWFpbi10aHJlYWQKCkV4Y2VwdGlvbiBUeXBlOiAgRVhDX0JBRF9BQ0NFU1MgKFNJR1NFR1YpCkV4
-Y2VwdGlvbiBDb2RlczogS0VSTl9JTlZBTElEX0FERFJFU1MgYXQgMHgwMDAwMDAwMDlmYzFjZmYw
-CgpWTSBSZWdpb25zIE5lYXIgMHg5ZmMxY2ZmMDoKLS0+IAogICAgX19URVhUICAgICAgICAgICAg
-ICAgICAwMDAwMDAwMTBjZWRhMDAwLTAwMDAwMDAxMGNmZWYwMDAgWyAxMTA4S10gci14L3J3eCBT
-TT1DT1cgIC91c3IvYmluL2dpdCBbL3Vzci9saWJleGVjL2dpdC1jb3JlL2dpdF0KClRocmVhZCAw
-IENyYXNoZWQ6OiBEaXNwYXRjaCBxdWV1ZTogY29tLmFwcGxlLm1haW4tdGhyZWFkCjAgICBsaWJj
-b21tb25DcnlwdG8uZHlsaWIgICAgICAgICAJMHgwMDAwN2ZmZjg2N2RiNzQxIENDX1NIQTFfVXBk
-YXRlICsgODkzCjEgICBnaXQgICAgICAgICAgICAgICAgICAgICAgICAgICAJMHgwMDAwMDAwMTBj
-ZjhmYTc0IHdyaXRlX3NoYTFfZmlsZV9wcmVwYXJlICsgMTE3CjIgICBnaXQgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAJMHgwMDAwMDAwMTBjZjhmYWNkIHdyaXRlX3NoYTFfZmlsZSArIDU5CjMg
-ICBnaXQgICAgICAgICAgICAgICAgICAgICAgICAgICAJMHgwMDAwMDAwMTBjZjM0NTE1IHdyaXRl
-X29iamVjdCArIDc3CjQgICBnaXQgICAgICAgICAgICAgICAgICAgICAgICAgICAJMHgwMDAwMDAw
-MTBjZjMzYjU3IGNtZF91bnBhY2tfb2JqZWN0cyArIDc4NAo1ICAgZ2l0ICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgCTB4MDAwMDAwMDEwY2VkYjU5ZSBoYW5kbGVfaW50ZXJuYWxfY29tbWFuZCAr
-IDMzMAo2ICAgZ2l0ICAgICAgICAgICAgICAgICAgICAgICAgICAgCTB4MDAwMDAwMDEwY2VkYjFk
-ZiBtYWluICsgNjMyCjcgICBnaXQgICAgICAgICAgICAgICAgICAgICAgICAgICAJMHgwMDAwMDAw
-MTBjZWRhZWFjIHN0YXJ0ICsgNTIKClRocmVhZCAwIGNyYXNoZWQgd2l0aCBYODYgVGhyZWFkIFN0
-YXRlICg2NC1iaXQpOgogIHJheDogMHgwMDAwMDAwMDAwMDAwMDAwICByYng6IDB4MDAwMDAwMDAw
-MDAwMDAwNCAgcmN4OiAweDAwMDAwMDAwMDAwMDAwMTAgIHJkeDogMHgwMDAwN2ZmZjZjYWQ5OTU0
-CiAgcmRpOiAweDAwMDAwMDAwZGUzNDJhZWYgIHJzaTogMHgwMDAwMDAwMDlmYzFjZmYzICByYnA6
-IDB4MDAwMDdmZmY2Y2FkOTkxMCAgcnNwOiAweDAwMDA3ZmZmNmNhZDk4ZjAKICAgcjg6IDB4MDAw
-MDdmZmY4NjgwMDM4MCAgIHI5OiAweDAwMDA3ZmZmNmNhZDk5MjggIHIxMDogMHgwMDAwMDAwMTlm
-YzFjZmYwICByMTE6IDB4MDAwMDAwMDAwMDAwMDAwMAogIHIxMjogMHgwMDAwMDAwMDkyYTFkMDAw
-ICByMTM6IDB4MDAwMDdmZmY2Y2FkOTlkMCAgcjE0OiAweDAwMDA3ZmZmNmNhZDk5NDQgIHIxNTog
-MHgwMDAwMDAwMDlmYzFjZmYwCiAgcmlwOiAweDAwMDA3ZmZmODY3ZGI3NDEgIHJmbDogMHgwMDAw
-MDAwMDAwMDEwMjE2ICBjcjI6IDB4MDAwMDAwMDA5ZmMxY2ZmMApMb2dpY2FsIENQVTogMgoKQmlu
-YXJ5IEltYWdlczoKICAgICAgIDB4MTBjZWRhMDAwIC0gICAgICAgIDB4MTBjZmVlZmY3ICBnaXQg
-KD8/PyAtID8/PykgPEVGMEIwRjFBLUQ5MjMtM0E2Ny1BQ0I4LTRGRTFDRDlBQjE3MT4gL3Vzci9s
-aWJleGVjL2dpdC1jb3JlL2dpdAogICAgMHg3ZmZmNmNhZGEwMDAgLSAgICAgMHg3ZmZmNmNiMGVi
-YWYgIGR5bGQgKDE5NS42IC0gPz8/KSA8QzU4REFEOEEtNEIwMC0zNjc2LTg2MzctOTNENkZERTcz
-MTQ3PiAvdXNyL2xpYi9keWxkCiAgICAweDdmZmY4NjdiMjAwMCAtICAgICAweDdmZmY4NjdkMmZm
-ZiAgbGlic3lzdGVtX2tlcm5lbC5keWxpYiAoMTY5OS4zMi43IC0gY29tcGF0aWJpbGl0eSAxLjAu
-MCkgPDY2QzlGOUJELUM3QjMtMzBENC1CMUEwLTAzQzhBNjM5MjM1MT4gL3Vzci9saWIvc3lzdGVt
-L2xpYnN5c3RlbV9rZXJuZWwuZHlsaWIKICAgIDB4N2ZmZjg2N2QzMDAwIC0gICAgIDB4N2ZmZjg2
-N2QzZmZmICBsaWJrZXltZ3IuZHlsaWIgKDIzLjAuMCAtIGNvbXBhdGliaWxpdHkgMS4wLjApIDw2
-MUVGRUQ2QS1BNDA3LTMwMUUtQjQ1NC1DRDE4MzE0RjAwNzU+IC91c3IvbGliL3N5c3RlbS9saWJr
-ZXltZ3IuZHlsaWIKICAgIDB4N2ZmZjg2N2Q0MDAwIC0gICAgIDB4N2ZmZjg2ODE2ZmY3ICBsaWJj
-b21tb25DcnlwdG8uZHlsaWIgKDU1MDEwLjAuMCAtIGNvbXBhdGliaWxpdHkgMS4wLjApIDxCQjc3
-MEMyMi04QzU3LTM2NUEtODcxNi00QTNDMzZBRTdCRkI+IC91c3IvbGliL3N5c3RlbS9saWJjb21t
-b25DcnlwdG8uZHlsaWIKICAgIDB4N2ZmZjg2OGY0MDAwIC0gICAgIDB4N2ZmZjg2OTAyZmZmICBs
-aWJkaXNwYXRjaC5keWxpYiAoMTg3LjEwLjAgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8OEUwM0M2
-NTItOTIyQS0zMzk5LTkzREUtOUVBMENCRkEwMDM5PiAvdXNyL2xpYi9zeXN0ZW0vbGliZGlzcGF0
-Y2guZHlsaWIKICAgIDB4N2ZmZjg2OTZlMDAwIC0gICAgIDB4N2ZmZjg2OTc3ZmY3ICBsaWJzeXN0
-ZW1fbm90aWZ5LmR5bGliICg4MC4xLjAgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8QTRENjUxRTMt
-RDFDNi0zOTM0LUFENDktN0ExMDRGRDE0NTk2PiAvdXNyL2xpYi9zeXN0ZW0vbGlic3lzdGVtX25v
-dGlmeS5keWxpYgogICAgMHg3ZmZmODY5OGIwMDAgLSAgICAgMHg3ZmZmODY5OGZmZmYgIGxpYm1h
-dGhDb21tb24uQS5keWxpYiAoMjAyNi4wLjAgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8RkY4M0FG
-RjctNDJCMi0zMDZFLTkwQUYtRDUzOUM1MUE0NTQyPiAvdXNyL2xpYi9zeXN0ZW0vbGlibWF0aENv
-bW1vbi5BLmR5bGliCiAgICAweDdmZmY4NzMxNzAwMCAtICAgICAweDdmZmY4NzMxY2ZmNyAgbGli
-c3lzdGVtX25ldHdvcmsuZHlsaWIgKD8/PyAtID8/PykgPDVERTcwMjRFLTFEMkQtMzRBMi04MEY0
-LTA4MzI2MzMxQTc1Qj4gL3Vzci9saWIvc3lzdGVtL2xpYnN5c3RlbV9uZXR3b3JrLmR5bGliCiAg
-ICAweDdmZmY4ODM0NjAwMCAtICAgICAweDdmZmY4ODM2M2ZmZiAgbGlieHBjLmR5bGliICg3Ny4x
-OS4wIC0gY29tcGF0aWJpbGl0eSAxLjAuMCkgPDlGNTc4OTFCLUQ3RUYtMzA1MC1CRURELTIxRTdD
-NjY2ODI0OD4gL3Vzci9saWIvc3lzdGVtL2xpYnhwYy5keWxpYgogICAgMHg3ZmZmODhhYjAwMDAg
-LSAgICAgMHg3ZmZmODhhYjZmZjcgIGxpYnVud2luZC5keWxpYiAoMzAuMC4wIC0gY29tcGF0aWJp
-bGl0eSAxLjAuMCkgPDFFOUM2QzhDLUNCRTgtM0Y0Qi1BNUI1LUUwM0UzQUI1MzIzMT4gL3Vzci9s
-aWIvc3lzdGVtL2xpYnVud2luZC5keWxpYgogICAgMHg3ZmZmODkzN2YwMDAgLSAgICAgMHg3ZmZm
-ODkzODlmZjcgIGxpYmxhdW5jaC5keWxpYiAoMzkyLjM5LjAgLSBjb21wYXRpYmlsaXR5IDEuMC4w
-KSA8OEMyMzVEMTMtMjkyOC0zMEU1LTlFMTItMkNDM0Q2MzI0QUUyPiAvdXNyL2xpYi9zeXN0ZW0v
-bGlibGF1bmNoLmR5bGliCiAgICAweDdmZmY4OTQ5NTAwMCAtICAgICAweDdmZmY4OTRkMGZmZiAg
-bGlic3lzdGVtX2luZm8uZHlsaWIgKD8/PyAtID8/PykgPDM1RjkwMjUyLTJBRTEtMzJDNS04RDM0
-LTc4MkM2MTREOTYzOT4gL3Vzci9saWIvc3lzdGVtL2xpYnN5c3RlbV9pbmZvLmR5bGliCiAgICAw
-eDdmZmY4OTVjMDAwMCAtICAgICAweDdmZmY4OTVjMWZmZiAgbGlidW5jLmR5bGliICgyNC4wLjAg
-LSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8MzM3OTYwRUUtMEE4NS0zREQwLUE3NjAtNzEzNENGNEMw
-QUZGPiAvdXNyL2xpYi9zeXN0ZW0vbGlidW5jLmR5bGliCiAgICAweDdmZmY4OThmZTAwMCAtICAg
-ICAweDdmZmY4OTkwM2ZmZiAgbGliY2FjaGUuZHlsaWIgKDQ3LjAuMCAtIGNvbXBhdGliaWxpdHkg
-MS4wLjApIDwxNTcxQzNBQi1CQ0IyLTM4Q0QtQjNCMi1DNUZDM0Y5MjdDNkE+IC91c3IvbGliL3N5
-c3RlbS9saWJjYWNoZS5keWxpYgogICAgMHg3ZmZmODljYjMwMDAgLSAgICAgMHg3ZmZmODlkOTBm
-ZWYgIGxpYnN5c3RlbV9jLmR5bGliICg3NjMuMTMuMCAtIGNvbXBhdGliaWxpdHkgMS4wLjApIDw0
-MUI0MzUxNS0yODA2LTNGQkMtQUNGMS1BMTZGMzVCN0UyOTA+IC91c3IvbGliL3N5c3RlbS9saWJz
-eXN0ZW1fYy5keWxpYgogICAgMHg3ZmZmOGEwNjkwMDAgLSAgICAgMHg3ZmZmOGEwNmRmZmYgIGxp
-YmR5bGQuZHlsaWIgKDE5NS42LjAgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8RkZDNTk1NjUtNjRC
-RC0zQjM3LTkwQTQtRTJDM0E0MjJDRkMxPiAvdXNyL2xpYi9zeXN0ZW0vbGliZHlsZC5keWxpYgog
-ICAgMHg3ZmZmOGExNGUwMDAgLSAgICAgMHg3ZmZmOGExNTVmZmYgIGxpYmNvcHlmaWxlLmR5bGli
-ICg4NS4xLjAgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8MEFCNTFFRTItRTkxNC0zNThDLUFDMTkt
-NDdCQzAyNEJEQUU3PiAvdXNyL2xpYi9zeXN0ZW0vbGliY29weWZpbGUuZHlsaWIKICAgIDB4N2Zm
-ZjhhMjBjMDAwIC0gICAgIDB4N2ZmZjhhMjE0ZmZmICBsaWJzeXN0ZW1fZG5zc2QuZHlsaWIgKD8/
-PyAtID8/PykgPDU4NEIzMjFFLTUxNTktMzdDRC1CMkU3LTgyRTA2OUM3MEFGQj4gL3Vzci9saWIv
-c3lzdGVtL2xpYnN5c3RlbV9kbnNzZC5keWxpYgogICAgMHg3ZmZmOGFhNjQwMDAgLSAgICAgMHg3
-ZmZmOGFhNjVmZjcgIGxpYnN5c3RlbV9ibG9ja3MuZHlsaWIgKDUzLjAuMCAtIGNvbXBhdGliaWxp
-dHkgMS4wLjApIDw4QkNBMjE0QS04OTkyLTM0QjItQThCOS1CNzRERUFDQTE4Njk+IC91c3IvbGli
-L3N5c3RlbS9saWJzeXN0ZW1fYmxvY2tzLmR5bGliCiAgICAweDdmZmY4YWVlODAwMCAtICAgICAw
-eDdmZmY4YWYxNWZlNyAgbGliU3lzdGVtLkIuZHlsaWIgKDE1OS4xLjAgLSBjb21wYXRpYmlsaXR5
-IDEuMC4wKSA8REE3OUU1QkEtQkJBMy0zNzY4LUFBRDgtQjM0QkE4NzdFRjAzPiAvdXNyL2xpYi9s
-aWJTeXN0ZW0uQi5keWxpYgogICAgMHg3ZmZmOGFmM2QwMDAgLSAgICAgMHg3ZmZmOGFmM2VmZjcg
-IGxpYnN5c3RlbV9zYW5kYm94LmR5bGliICg/Pz8gLSA/Pz8pIDwyQTA5RTREQS1GNDdDLTM1Q0It
-QjcwQy1FMDQ5MkJBOUYyMEU+IC91c3IvbGliL3N5c3RlbS9saWJzeXN0ZW1fc2FuZGJveC5keWxp
-YgogICAgMHg3ZmZmOGQwMTgwMDAgLSAgICAgMHg3ZmZmOGQwMTlmZmYgIGxpYmRuc2luZm8uZHls
-aWIgKDM5NS4xMS4wIC0gY29tcGF0aWJpbGl0eSAxLjAuMCkgPDg1M0JBQUE1LTI3MEYtM0ZEQy1C
-MDI1LUQ0NDhEQjcyRTFDMz4gL3Vzci9saWIvc3lzdGVtL2xpYmRuc2luZm8uZHlsaWIKICAgIDB4
-N2ZmZjhmNzUzMDAwIC0gICAgIDB4N2ZmZjhmODQ4ZmZmICBsaWJpY29udi4yLmR5bGliICg3LjAu
-MCAtIGNvbXBhdGliaWxpdHkgNy4wLjApIDw1QzQwRTg4MC0wNzA2LTM3OEYtQjg2NC0zQzJCRDky
-MkQ5MjY+IC91c3IvbGliL2xpYmljb252LjIuZHlsaWIKICAgIDB4N2ZmZjhmODg3MDAwIC0gICAg
-IDB4N2ZmZjhmODg4ZmY3ICBsaWJyZW1vdmVmaWxlLmR5bGliICgyMS4xLjAgLSBjb21wYXRpYmls
-aXR5IDEuMC4wKSA8NzM5RTZDODMtQUE1Mi0zQzZDLUE2ODAtQjM3RkUyODg4QTA0PiAvdXNyL2xp
-Yi9zeXN0ZW0vbGlicmVtb3ZlZmlsZS5keWxpYgogICAgMHg3ZmZmOGZjYTgwMDAgLSAgICAgMHg3
-ZmZmOGZjYmFmZjcgIGxpYnouMS5keWxpYiAoMS4yLjUgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8
-MzBDQkVGMTUtNDk3OC0zREVELTg2MjktNzEwOTg4MEExOUQ0PiAvdXNyL2xpYi9saWJ6LjEuZHls
-aWIKICAgIDB4N2ZmZjhmZGY0MDAwIC0gICAgIDB4N2ZmZjhmZGY5ZmZmICBsaWJjb21waWxlcl9y
-dC5keWxpYiAoNi4wLjAgLSBjb21wYXRpYmlsaXR5IDEuMC4wKSA8OThFQ0Q1RjYtRTg1Qy0zMkE1
-LTk4Q0QtODkxMTIzMENCNjZBPiAvdXNyL2xpYi9zeXN0ZW0vbGliY29tcGlsZXJfcnQuZHlsaWIK
-ICAgIDB4N2ZmZjkwOTYyMDAwIC0gICAgIDB4N2ZmZjkwOTY4ZmZmICBsaWJtYWNoby5keWxpYiAo
-ODAwLjAuMCAtIGNvbXBhdGliaWxpdHkgMS4wLjApIDwxNjU1MTRENy0xQkZBLTM4RUYtQTE1MS02
-NzZEQ0QyMUZCNjQ+IC91c3IvbGliL3N5c3RlbS9saWJtYWNoby5keWxpYgogICAgMHg3ZmZmOTBk
-ZjUwMDAgLSAgICAgMHg3ZmZmOTBkZjdmZmYgIGxpYnF1YXJhbnRpbmUuZHlsaWIgKDM2LjcuMCAt
-IGNvbXBhdGliaWxpdHkgMS4wLjApIDw4RDk4MzJGOS1FNEE5LTM4QzMtQjg4MC1FNTIxMEIyMzUz
-Qzc+IC91c3IvbGliL3N5c3RlbS9saWJxdWFyYW50aW5lLmR5bGliCgpFeHRlcm5hbCBNb2RpZmlj
-YXRpb24gU3VtbWFyeToKICBDYWxscyBtYWRlIGJ5IG90aGVyIHByb2Nlc3NlcyB0YXJnZXRpbmcg
-dGhpcyBwcm9jZXNzOgogICAgdGFza19mb3JfcGlkOiAwCiAgICB0aHJlYWRfY3JlYXRlOiAwCiAg
-ICB0aHJlYWRfc2V0X3N0YXRlOiAwCiAgQ2FsbHMgbWFkZSBieSB0aGlzIHByb2Nlc3M6CiAgICB0
-YXNrX2Zvcl9waWQ6IDAKICAgIHRocmVhZF9jcmVhdGU6IDAKICAgIHRocmVhZF9zZXRfc3RhdGU6
-IDAKICBDYWxscyBtYWRlIGJ5IGFsbCBwcm9jZXNzZXMgb24gdGhpcyBtYWNoaW5lOgogICAgdGFz
-a19mb3JfcGlkOiA3ODQzNgogICAgdGhyZWFkX2NyZWF0ZTogMAogICAgdGhyZWFkX3NldF9zdGF0
-ZTogMAoKVk0gUmVnaW9uIFN1bW1hcnk6ClJlYWRPbmx5IHBvcnRpb24gb2YgTGlicmFyaWVzOiBU
-b3RhbD01My44TSByZXNpZGVudD0xNC44TSgyNyUpIHN3YXBwZWRfb3V0X29yX3VuYWxsb2NhdGVk
-PTM5LjBNKDczJSkKV3JpdGFibGUgcmVnaW9uczogVG90YWw9Mi4zRyB3cml0dGVuPTIuM0coOTkl
-KSByZXNpZGVudD0yLjNHKDk5JSkgc3dhcHBlZF9vdXQ9MEsoMCUpIHVuYWxsb2NhdGVkPTE4LjRN
-KDElKQogClJFR0lPTiBUWVBFICAgICAgICAgICAgICAgICAgICAgIFZJUlRVQUwKPT09PT09PT09
-PT0gICAgICAgICAgICAgICAgICAgICAgPT09PT09PQpNQUxMT0MgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAyLjNHCk1BTExPQyBndWFyZCBwYWdlICAgICAgICAgICAgICAgICAgICAzMksK
-U1RBQ0sgR1VBUkQgICAgICAgICAgICAgICAgICAgICAgICA1Ni4wTQpTdGFjayAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIDgxOTJLCl9fREFUQSAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIDY3MksKX19MSU5LRURJVCAgICAgICAgICAgICAgICAgICAgICAgICA0OS4yTQpfX1RFWFQg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDQ2NDhLCm1hcHBlZCBmaWxlICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgNEsKc2hhcmVkIG1lbW9yeSAgICAgICAgICAgICAgICAgICAgICAgIDEy
-Swo9PT09PT09PT09PSAgICAgICAgICAgICAgICAgICAgICA9PT09PT09ClRPVEFMICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIDIuNEcKCg==
---e89a8f6467174e04ed04ce96442f--
+If you set receive.unpacklimit to 1 on the receiving end, does it still crash?
+-- 
+Duy
