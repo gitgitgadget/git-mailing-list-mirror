@@ -1,127 +1,302 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/6] completion: refactor __gitcomp related tests
-Date: Fri, 16 Nov 2012 11:13:52 -0800
-Message-ID: <7v8va1mkcv.fsf@alter.siamese.dyndns.org>
-References: <1352644558-9410-1-git-send-email-felipe.contreras@gmail.com>
- <1352644558-9410-6-git-send-email-felipe.contreras@gmail.com>
+From: Aske Olsson <askeolsson@gmail.com>
+Subject: [PATCH] Add support for a 'pre-push' hook
+Date: Fri, 16 Nov 2012 20:42:59 +0100
+Message-ID: <CAJwKrPYwCE4ExmK09PURMfjYezn6vdCH_BBXU4WCwrnotyV9CA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 20:14:13 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 16 20:43:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZRMf-0003v6-K0
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 20:14:09 +0100
+	id 1TZRoq-0003vd-Ds
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 20:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154Ab2KPTN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 14:13:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35723 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752501Ab2KPTNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 14:13:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E09E9516;
-	Fri, 16 Nov 2012 14:13:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/sHpAuV27XLXyOKHho/EdZwymlo=; b=TTiGH9
-	1zU55vJzoMGnOINMfzJEefO1hqCWo4IxoI2PW83f1i6/RjItAG0bZXB5NS/BozOo
-	YO8ryLB9t4u+pr9MCefpkLWz0sHOxdPZ1F+nqDRD2IYlZBABSiollhtzIZopTO1K
-	zk+ABCsT/UxxZ9zk4s0Ybdr/uJIeMOpInnE4o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gn5IN22WnqK63Ev5k8r5XDMujyXIZXEM
-	PFalnCaL1g/fxNaS8yA/AUL0sgFNn++TMCi0IQX1qplDKi534PzF7bKpOT24uDUH
-	aZgYXmPmbymAVdzHQo2sKMJxhw/nXpw578eql3d5XTvzCsISJGLAjhcneuPFflfG
-	nlNgt63+gLA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B4109513;
-	Fri, 16 Nov 2012 14:13:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3FAF950A; Fri, 16 Nov 2012
- 14:13:53 -0500 (EST)
-In-Reply-To: <1352644558-9410-6-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sun, 11 Nov 2012 15:35:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C3138794-3021-11E2-9AB7-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753354Ab2KPTnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 14:43:01 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:60231 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752983Ab2KPTnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 14:43:00 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so1968027qcr.19
+        for <git@vger.kernel.org>; Fri, 16 Nov 2012 11:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=tF5mlErnIV9+u5Uo9gjyVyYIuWzs3PWRqdsGAT9gPaw=;
+        b=fXrW8X4g9aFfnAoNDl1oPEJ8sQq8eW3dc75WIzKmkadYihwtbpX1EXQkImdQq7qvbI
+         8wcDrYGoJXW7vNIYEGasQZLde+KbahXZ4l1/WppUmWLWIIGr1niQ4i2lzltiJGPNnMuR
+         0n4siEqAflhIPRovtV9/XCqp2pigHy0Zlm+6yTW3yAYOCmIuJz+DTBeJ2e+sserAk1f0
+         hHXY1eZrhtv93tftmMfwpMO00AmAxtMeWhpycVazbVVWeedR7D1Jw0OVqa86fPYNR64U
+         h42+L9ojMBrnOR6aeZyI8PZsAtHKfb8dwS4FdzNkPGi9hEjhdszcn/Lsh4WFz5krFRXD
+         8Oqg==
+Received: by 10.49.4.168 with SMTP id l8mr5935711qel.57.1353094979751; Fri, 16
+ Nov 2012 11:42:59 -0800 (PST)
+Received: by 10.49.108.170 with HTTP; Fri, 16 Nov 2012 11:42:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209897>
 
-Not asking for a re-roll but am asking for clarification so that I
-can locally update before queuing.
+If the script .git/hooks/pre-push exists and is executable it will be
+called before a `git push` command, and when the script exits with a
+non-zero status the push will be aborted.
+The hook can be overridden by passing the '--no-verify' option to
+`git push`.
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+The pre-push hook is usefull to run tests etc. before push. Or to make
+sure that if a binary solution like git-media, git-annex or git-bin is
+used the binaries are uploaded before the push, so when others do a
+fetch the binaries will be available already. This also reduces the
+need for introducing extra (git) commands to e.g. sync binaries.
 
-> Lots of duplicated code!
+Signed-off-by: Aske Olsson <askeolsson@gmail.com>
+---
+ Documentation/git-push.txt |  11 +++-
+ Documentation/githooks.txt |  12 +++++
+ builtin/push.c             |   6 +++
+ t/t5542-pre-push-hook.sh   | 132 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 160 insertions(+), 1 deletion(-)
+ create mode 100644 t/t5542-pre-push-hook.sh
 
-... removed, you mean?
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index fe46c42..5807b6a 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git push' [--all | --mirror | --tags] [-n | --dry-run]
+[--receive-pack=<git-receive-pack>]
+    [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose]
+[-u | --set-upstream]
+-   [<repository> [<refspec>...]]
++   [ --no-verify] [<repository> [<refspec>...]]
 
-> No functional changes.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  t/t9902-completion.sh | 76 ++++++++++++++++++---------------------------------
->  1 file changed, 27 insertions(+), 49 deletions(-)
->
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 59cdbfd..66c7af6 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -71,87 +71,65 @@ test_completion ()
->  
->  newline=$'\n'
->  
-> -test_expect_success '__gitcomp - trailing space - options' '
-> -	sed -e "s/Z$//" >expected <<-\EOF &&
-> -	--reuse-message=Z
-> -	--reedit-message=Z
-> -	--reset-author Z
-> -	EOF
-> +# Test __gitcomp.
-> +# Arguments are:
-> +# 1: typed text so far (cur)
-> +# *: arguments to pass to __gitcomp
+ DESCRIPTION
+ -----------
+@@ -157,6 +157,10 @@ useful if you write an alias or script around 'git push'.
+  receiver share many of the same objects in common. The default is
+  \--thin.
 
-s/\*/remainder/, perhaps?  I think you shift $1 out and do not pass
-it to __gitcomp.
++--no-verify::
++ This option bypasses the pre-push hook.
++ See also linkgit:githooks[5].
++
+ -q::
+ --quiet::
+  Suppress all output, including the listing of updated refs,
+@@ -430,6 +434,11 @@ Commits A and B would no longer belong to a
+branch with a symbolic name,
+ and so would be unreachable.  As such, these commits would be removed by
+ a `git gc` command on the origin repository.
 
-And expected output is from the standard input just like
-test_completion?
++HOOKS
++-----
++This command can run the `pre-push` hook.  See linkgit:githooks[5] for
++more information.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index b9003fe..847e0f8 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -176,6 +176,18 @@ save and restore any form of metadata associated
+with the working tree
+ (eg: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
+ for an example of how to do this.
 
-> +test_gitcomp ()
-> +{
-> +	sed -e 's/Z$//' > expected &&
->  	(
->  		local -a COMPREPLY &&
-> -		cur="--re" &&
-> -		__gitcomp "--dry-run --reuse-message= --reedit-message=
-> -				--reset-author" &&
-> +		cur="$1" &&
-> +		shift &&
-> +		__gitcomp "$@" &&
->  		IFS="$newline" &&
->  		echo "${COMPREPLY[*]}" > out
->  	) &&
->  	test_cmp expected out
-> +}
-> +
-> +test_expect_success '__gitcomp - trailing space - options' '
-> +	test_gitcomp "--re" "--dry-run --reuse-message= --reedit-message=
-> +		--reset-author" <<-EOF
-> +	--reuse-message=Z
-> +	--reedit-message=Z
-> +	--reset-author Z
-> +	EOF
->  '
++[[pre-push]]
++pre-push
++~~~~~~~~
++
++This hook is invoked by 'git push' and can be bypassed with the
++`--no-verify` option. It takes no parameter, and is invoked before
++the push happens.
++Exiting with a non-zero status from this script causes 'git push'
++to abort.
++
++
++
+ [[pre-receive]]
+ pre-receive
+ ~~~~~~~~~~~
+diff --git a/builtin/push.c b/builtin/push.c
+index db9ba30..9c4d2ec 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -16,6 +16,7 @@ static const char * const push_usage[] = {
+ };
 
-Nice shrinkage.
+ static int thin;
++static int no_verify;
+ static int deleterefs;
+ static const char *receivepack;
+ static int verbosity;
+@@ -392,6 +393,7 @@ int cmd_push(int argc, const char **argv, const
+char *prefix)
+  N_("control recursive pushing of submodules"),
+  PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+  OPT_BOOLEAN( 0 , "thin", &thin, N_("use thin pack")),
++ OPT_BOOLEAN('0', "no-verify", &no_verify, "bypass pre-push hook"),
+  OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack",
+N_("receive pack program")),
+  OPT_STRING( 0 , "exec", &receivepack, "receive-pack", N_("receive
+pack program")),
+  OPT_BIT('u', "set-upstream", &flags, N_("set upstream for git pull/status"),
+@@ -419,6 +421,10 @@ int cmd_push(int argc, const char **argv, const
+char *prefix)
+  set_refspecs(argv + 1, argc - 1);
+  }
+
++ if (!no_verify && run_hook(NULL, "pre-push")) {
++ die(_("pre-push hook failed: exiting\n"));
++ }
++
+  rc = do_push(repo, flags);
+  if (rc == -1)
+  usage_with_options(push_usage, options);
+diff --git a/t/t5542-pre-push-hook.sh b/t/t5542-pre-push-hook.sh
+new file mode 100644
+index 0000000..842aa23
+--- /dev/null
++++ b/t/t5542-pre-push-hook.sh
+@@ -0,0 +1,132 @@
++#!/bin/sh
++
++test_description='pre-push hook'
++
++. ./test-lib.sh
++
++D=`pwd`
++HOOK="master/.git/hooks/pre-push"
++
++# Repo pair
++mk_repo_pair () {
++ rm -rf master mirror &&
++ mkdir mirror &&
++ (
++ cd mirror &&
++ git init &&
++ git config receive.denyCurrentBranch warn
++ )
++ mkdir master &&
++ (
++ cd master &&
++ git init &&
++ git remote add $1 up ../mirror
++ )
++}
++
++# hook that always succeeds
++mk_hook_exec () {
++cat > "$HOOK" <<EOF
++#!/bin/sh
++exit 0
++EOF
++chmod +x "$HOOK"
++}
++
++# hook that fails
++mk_hook_fail () {
++cat > "$HOOK" <<EOF
++#!/bin/sh
++exit 1
++EOF
++chmod +x "$HOOK"
++}
++
++# nonexecutable hook
++mk_hook_no_exec () {
++rm -f "$HOOK"
++cat > "$HOOK" <<EOF
++#!/bin/sh
++echo 'test run'
++exit 0
++EOF
++}
++
++test_expect_success 'push with no pre-push hook' '
++ mk_repo_pair &&
++ (
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --mirror up
++ )
++'
++
++test_expect_success 'push --no-verify with no pre-push hook' '
++ mk_repo_pair &&
++ (
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --no-verify --mirror up
++ )
++'
++
++test_expect_success 'push with succeeding pre-push hook' '
++ mk_repo_pair &&
++ (
++ mk_hook_exec &&
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --mirror up
++ )
++'
++
++test_expect_success 'push --no-verify with succeeding pre-push hook' '
++ mk_repo_pair &&
++ (
++ mk_hook_exec &&
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --no-verify --mirror up
++ )
++'
++
++test_expect_success 'push with failing pre-push hook' '
++ mk_repo_pair &&
++ (
++ mk_hook_fail &&
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ test_must_fail git push --mirror up
++ )
++'
++
++test_expect_success 'push --no-verify with failing hook' '
++ mk_repo_pair &&
++ (
++ mk_hook_fail &&
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --no-verify --mirror up
++ )
++'
++
++test_expect_success 'push with non-executable pre-push hook' '
++ mk_repo_pair &&
++ (
++ mk_hook_no_exec &&
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --mirror up
++ )
++'
++
++test_expect_success 'push --no-verify with non-executable pre-push hook' '
++ mk_repo_pair &&
++ (
++ mk_hook_no_exec &&
++ cd master &&
++ echo one >foo && git add foo && git commit -m one &&
++ git push --no-verify --mirror up
++ )
++'
++test_done
+--
+1.8.0
