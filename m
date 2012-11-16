@@ -1,108 +1,90 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] tcsh-completion re-using git-completion.bash
-Date: Fri, 16 Nov 2012 22:03:41 +0100
-Message-ID: <CAMP44s2UVGKa7XkqPxdxQ2ueSMn=Xn4qihy5JWbDovH85n8BwQ@mail.gmail.com>
-References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
-	<1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
-	<CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
-	<CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
-	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
-	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
-	<CAMP44s1RvMSBu2RJqKw9ne4cJyMO4dbFc-gW2HgsN2-uviv=fA@mail.gmail.com>
-	<CAFj1UpHMc-bHJgSZKY13YH_69TXkz-50g5xpLA6C+Eh0aqcN9A@mail.gmail.com>
-	<CAMP44s3S4c7ciJNurxGdS2o_TDJJDkGK73dtCGji+C1NoV+Jvw@mail.gmail.com>
-	<20121116204017.GX12052@goldbirke>
+Subject: Re: [PATCH v2 1/6] completion: add comment for test_completion()
+Date: Fri, 16 Nov 2012 22:06:53 +0100
+Message-ID: <CAMP44s333124DkyG5VX+n=p_eHRmPYCu27rsLgLQG8mOVcRBPg@mail.gmail.com>
+References: <1352644558-9410-1-git-send-email-felipe.contreras@gmail.com>
+	<1352644558-9410-2-git-send-email-felipe.contreras@gmail.com>
+	<20121116205457.GY12052@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Khouzam <marc.khouzam@gmail.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
 To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Nov 16 22:03:59 2012
+X-From: git-owner@vger.kernel.org Fri Nov 16 22:07:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZT4u-0000fl-6R
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 22:03:56 +0100
+	id 1TZT81-0002y0-Kb
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 22:07:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404Ab2KPVDm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2012 16:03:42 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:49002 "EHLO
+	id S1753425Ab2KPVGz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2012 16:06:55 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:59989 "EHLO
 	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752867Ab2KPVDm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Nov 2012 16:03:42 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so3218163oag.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 13:03:41 -0800 (PST)
+	with ESMTP id S1752867Ab2KPVGy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Nov 2012 16:06:54 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so3220600oag.19
+        for <git@vger.kernel.org>; Fri, 16 Nov 2012 13:06:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=ubPVwUg0iMp+x7T5TIkFN2eHwXg4NhzWe7fKOhkdU0o=;
-        b=lJoBDn6l6TM8wqh1iVu05A20pcS5z7Aq87agVcivIoRBRX3KsJSZ0L0/cJbS8r8Yy5
-         yYtdmhU98pyv7JfNGG2uB9l4z6UZgYKUA2cZ6qMnYD+ycCWNC/WtrZWo032fmqORE5fT
-         rlcJHYQmYv+teOemKnNgLs88G6u1bTmSrPQsii8kQQXtby4paE1irCmW8vZ3IFPf+zIv
-         9GHpHlVRyQPbDPRqfEpIpov3Do7r6YlW8i9yjBjFo/GXM6fLXso7VgG6kvcwurJucWIT
-         F+O1GaSKRe0o4UxNzZlCFWjKbbb6HgqtXbNMIXwba3XJTDy9mjrYrIwjKKc6dQozshc5
-         keZw==
-Received: by 10.60.12.233 with SMTP id b9mr5053667oec.95.1353099821617; Fri,
- 16 Nov 2012 13:03:41 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 13:03:41 -0800 (PST)
-In-Reply-To: <20121116204017.GX12052@goldbirke>
+        bh=gU5XxMHkgyWKsVGSCVBbRBdbVg/2vLfX9VTkugaFwvU=;
+        b=hYWTmRnVzyc7gDKOFbQ9yXWc/hvUFL6AjOcSipNi8DOVjPScxK8qZQ5YkncVvHrBOc
+         9SLFSmQ/BlsZoCLXLrJWP2hPvvtnUY9EvbJ5mVIKSEK8x/rGQkp5ZEIHb67UzWkgGnuo
+         U4NnVygZLSd51+HLR5/ajO6X86Dmw0eDoN1QUpns8p7XGw9haV73OOoEj36dH9E7QNjp
+         HrOWjbLYnWhVsijg6rGOKFdxsjLTFXp/08thIrG6vyDMqzRxEne727Wro6okbe/cGqpi
+         6deVqTneouNSLmI8OeDhnlTpvIh+95piKPoME8u2EhBn8QjCe/TLGv0M+pKj0/BxV9xg
+         xtfQ==
+Received: by 10.60.1.163 with SMTP id 3mr4916447oen.30.1353100014048; Fri, 16
+ Nov 2012 13:06:54 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Fri, 16 Nov 2012 13:06:53 -0800 (PST)
+In-Reply-To: <20121116205457.GY12052@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209911>
 
-On Fri, Nov 16, 2012 at 9:40 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
+On Fri, Nov 16, 2012 at 9:54 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
 wrote:
-> On Fri, Nov 16, 2012 at 09:04:06PM +0100, Felipe Contreras wrote:
->> > I agree, and this is why I made the proposed
->> > __git_complete_with_output () generic.  That way it could be
->> > used by other shells or programs.  But at this time, only tcsh
->> > would make use of it.
->> >
->> > If you think having __git_complete_with_output () could
->> > be useful for others, I think we should go with solution (A).
->> > If you don't think so, or if it is better to wait until a need
->> > arises first, then solution (C) will work fine.
+> On Sun, Nov 11, 2012 at 03:35:53PM +0100, Felipe Contreras wrote:
+>> So that it's easier to understand what it does.
+>>
+>> Also, make sure we pass only the first argument for completion.
+>> Shouldn't cause any functional changes because run_completion only
+>> checks $1.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  t/t9902-completion.sh | 6 +++++-
+>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+>> index cbd0fb6..5c06709 100755
+>> --- a/t/t9902-completion.sh
+>> +++ b/t/t9902-completion.sh
+>> @@ -54,10 +54,14 @@ run_completion ()
+>>       __git_wrap__git_main && print_comp
+>>  }
+>>
+>> +# Test high-level completion
+>> +# Arguments are:
+>> +# 1: typed text so far (cur)
 >
-> I think it would be useful.
+> Bash manuals calls this the current command line or words in the
+> current command line.  I'm not sure what you mean with '(cur)' here.
 
-=46or what?
+The current _word_ text typed so far.
 
->> I don't see how it could be useful to others, and if we find out tha=
-t
->> it could, we can always move the code.
->
-> For zsh, perhaps?
+> The variable $cur in the completion script (or in bash-completion in
+> general) is something completely different.
 
-Nope.
-
-> As I understand the main issues with using the completion script with
-> zsh are the various little incompatibilities between the two shells
-> and bugs in zsh's emulation of Bash's completion-related builtins.
-> Running the completion script under Bash and using its results in zsh
-> would solve these issues at the root.  And would allow as to remove
-> some if [[ -n ${ZSH_VERSION-} ]] code.
-
-We can remove that code already, because we now have code that is
-superior than zsh's bash completion emulation:
-
-http://article.gmane.org/gmane.comp.version-control.git/208173
-
-This is the equivalent of what Marc is doing, except that zsh has no
-problems running bash's code. Note there's a difference with zsh's
-emulation bash (or rather bourne shell, or k shell), and zsh's
-emulation of bash's _completion_. The former is fine, the later is
-not.
-
-Of course, people might not be aware of this new script, and would
-expect sourcing the bash one to work right away. Maybe at some point
-we might throw a warning to suggest them to use my new script. But I
-think we should wait a few releases just to make sure that people test
-it and nothing is broken.
+I believe bash's completion, this test, and the whole git completion
+stuff uses the same definition of 'cur'.
 
 Cheers.
 
