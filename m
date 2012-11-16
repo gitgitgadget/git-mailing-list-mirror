@@ -1,169 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add support for a 'pre-push' hook
-Date: Fri, 16 Nov 2012 21:25:41 +0100
-Message-ID: <vpq625547ne.fsf@grenoble-inp.fr>
+Date: Fri, 16 Nov 2012 12:30:19 -0800
+Message-ID: <7vvcd5l290.fsf@alter.siamese.dyndns.org>
 References: <CAJwKrPYwCE4ExmK09PURMfjYezn6vdCH_BBXU4WCwrnotyV9CA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Aske Olsson <askeolsson@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 21:26:08 2012
+X-From: git-owner@vger.kernel.org Fri Nov 16 21:30:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZSUJ-0000bR-CZ
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 21:26:07 +0100
+	id 1TZSYf-0004bG-2N
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Nov 2012 21:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab2KPUZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 15:25:48 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:34707 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753478Ab2KPUZr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 15:25:47 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qAGKI0e2023032
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 16 Nov 2012 21:18:00 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TZSTt-0004mQ-MC; Fri, 16 Nov 2012 21:25:41 +0100
-In-Reply-To: <CAJwKrPYwCE4ExmK09PURMfjYezn6vdCH_BBXU4WCwrnotyV9CA@mail.gmail.com>
-	(Aske Olsson's message of "Fri, 16 Nov 2012 20:42:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Nov 2012 21:18:00 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qAGKI0e2023032
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1353701884.1535@qB4pqEjyVeDj0R65PwGDhQ
+	id S1753552Ab2KPUaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 15:30:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49065 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753525Ab2KPUaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 15:30:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ABCFADFA;
+	Fri, 16 Nov 2012 15:30:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZcE0M1Ue2PNvWmWg0TUje7rFxoM=; b=g5UT6i
+	ScgCsH4E5ObhAWriQEHl4JmOOE5Rpd/8iCJaeuwzdLwGWltacJMmF/efvKgucolQ
+	smMFLNUyNV6sG3oPTn9Mn1kmD5+kfo9HH9ZCRPZGIzy0sjvIhbTLpvhw2f7tY/+q
+	GQrnmU1DBYpsv5VuO18fZ43b8RhTnE+FfEmhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yy91GPOmlr+KEQDysh/KwvGoDnOYRHH0
+	9IsHpOrqR4vk1U0caHVCCefRfj1P3pI8mpelvW8Colp5GSeUDn7sp/pN45EHKCQB
+	ld5IcH12fTBi2RCRyTmEzLQTEmeRMzACLCsIZgXlylAdZhHrw5A0WhW6b6q8GGBB
+	eRMEWfBho7A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6873AADF9;
+	Fri, 16 Nov 2012 15:30:21 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA411ADF8; Fri, 16 Nov 2012
+ 15:30:20 -0500 (EST)
+In-Reply-To: <CAJwKrPYwCE4ExmK09PURMfjYezn6vdCH_BBXU4WCwrnotyV9CA@mail.gmail.com> (Aske
+ Olsson's message of "Fri, 16 Nov 2012 20:42:59 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7113ED98-302C-11E2-907C-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209906>
 
 Aske Olsson <askeolsson@gmail.com> writes:
 
 > If the script .git/hooks/pre-push exists and is executable it will be
 > called before a `git push` command, and when the script exits with a
 > non-zero status the push will be aborted.
-
-That sounds like a sane thing to do.
-
->  Documentation/git-push.txt |  11 +++-
->  Documentation/githooks.txt |  12 +++++
->  builtin/push.c             |   6 +++
->  t/t5542-pre-push-hook.sh   | 132 +++++++++++++++++++++++++++++++++++++++++++++
-
-It would be nice to provide a sample hook in the default template. See
-the template/ directory in Git's source code.
-
-> +--no-verify::
-> + This option bypasses the pre-push hook.
-> + See also linkgit:githooks[5].
+> The hook can be overridden by passing the '--no-verify' option to
+> `git push`.
+>
+> The pre-push hook is usefull to run tests etc. before push. Or to make
+> sure that if a binary solution like git-media, git-annex or git-bin is
+> used the binaries are uploaded before the push, so when others do a
+> fetch the binaries will be available already. This also reduces the
+> need for introducing extra (git) commands to e.g. sync binaries.
+>
+> Signed-off-by: Aske Olsson <askeolsson@gmail.com>
+> ---
+> ...
+> +[[pre-push]]
+> +pre-push
+> +~~~~~~~~
 > +
->  -q::
->  --quiet::
->   Suppress all output, including the listing of updated refs,
+> +This hook is invoked by 'git push' and can be bypassed with the
+> +`--no-verify` option. It takes no parameter, and is invoked before
+> +the push happens.
+> +Exiting with a non-zero status from this script causes 'git push'
+> +to abort.
+> ...
+> + if (!no_verify && run_hook(NULL, "pre-push")) {
+> + die(_("pre-push hook failed: exiting\n"));
+> + }
 
-Here, and below: you seem to have whitespace damage. Somebody replaced
-tabs with spaces I guess. Using git send-email helps avoiding this.
+NAK, at least in the current form.  At least the system should tell
+the hook where it is pushing and what is being pushed.
 
-> +D=`pwd`
+After working on my notebook, I may want to push to my desktop
+machine first to test it, without having to test locally on an
+underpowered CPU, but when I am publishing the end result to the
+wider world, I do want to test the result beforehand.  Without
+"where am I pushing", the hook would not help me to enforce testing
+only for the latter.
 
-Unused variable, left from previous hacking I guess.
+A lazy "git push" without any other argument may be configured in my
+repository to push its "maint", "master", "next" and "pu" branches
+to the public repository.  I may say "git push origin +pu", while on
+one of the topic branches, to push only the "pu" branches out before
+I am confident that the other branches I'll eventually publish are
+ready (it is more likely that I may even *know* they are broken and
+do not pass the test in such a case, and that is why I am pushing
+only "pu" out).  I'd want to run tests only on 'pu' in such a case.
+Without "what am I pushing", the hook would not be able to help me
+doing that, either.
 
-> +# hook that always succeeds
-> +mk_hook_exec () {
-> +cat > "$HOOK" <<EOF
-> +#!/bin/sh
-> +exit 0
-> +EOF
-> +chmod +x "$HOOK"
-> +}
-> +
-> +# hook that fails
-> +mk_hook_fail () {
-> +cat > "$HOOK" <<EOF
-> +#!/bin/sh
-> +exit 1
-> +EOF
-> +chmod +x "$HOOK"
-> +}
+Besides, there are five valid reasons to add a new hook to the
+system, but your version of pre-push does not satisfy any of them:
 
-I'd add a "touch hook-ran" in the script, a "rm -f hook-ran" before
-launching git-push, and test the file existance after the hook to make
-sure it was ran.
+     http://thread.gmane.org/gmane.comp.version-control.git/94111/focus=71069
 
-> +test_expect_success 'push with no pre-push hook' '
-> + mk_repo_pair &&
-> + (
-> + cd master &&
-> + echo one >foo && git add foo && git commit -m one &&
-> + git push --mirror up
-> + )
-> +'
-> +
-> +test_expect_success 'push --no-verify with no pre-push hook' '
-> + mk_repo_pair &&
+It is more like "to always cause an action before running a git
+operation locally," so you can even write
 
-I don't think you need to re-create the repos for each tests. Tests are
-good, but they're better when they're fast so avoiding useless
-operations is good.
+    cat >$HOME/bin/git-mypush <<\EOF
+    #!/bin/sh
+    run test || exit
+    exec git push "$@"
+    EOF
+    chmod +x $HOME/bin/git-mypush
 
-We try to write tests so that one test failure does not imply failures
-of the next tests (i.e. stopping in the middle should not not leave
-garbage that would prevent the next test from running), but do not
-necessarily write 100% self-contained tests.
-
-> + echo one >foo && git add foo && git commit -m one &&
-
-test_commit ?
-
-> +test_expect_success 'push with failing pre-push hook' '
-> + mk_repo_pair &&
-> + (
-> + mk_hook_fail &&
-> + cd master &&
-> + echo one >foo && git add foo && git commit -m one &&
-> + test_must_fail git push --mirror up
-> + )
-> +'
-
-It would be cool to actually check that the push was not performed
-(verify that the target repo is still pointing to the old revision).
-Otherwise, an implementation that would call run_hook after pushing
-would pass the tests.
-
-> +test_expect_success 'push with non-executable pre-push hook' '
-> + mk_repo_pair &&
-> + (
-> + mk_hook_no_exec &&
-> + cd master &&
-> + echo one >foo && git add foo && git commit -m one &&
-> + git push --mirror up
-> + )
-> +'
-> +
-> +test_expect_success 'push --no-verify with non-executable pre-push hook' '
-> + mk_repo_pair &&
-> + (
-> + mk_hook_no_exec &&
-> + cd master &&
-> + echo one >foo && git add foo && git commit -m one &&
-> + git push --no-verify --mirror up
-> + )
-> +'
-
-These two tests are not testing much. The hook is not executable, so it
-shouldn't be ran, but you do not check whether the hook is ran or not.
-At least make the "exit 0" an "exit 1" in the hook.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+and then can run "git mypush" instead of adding this hook.
