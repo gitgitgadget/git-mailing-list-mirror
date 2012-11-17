@@ -1,92 +1,141 @@
-From: Peter Alfredsen <peter.alfredsen@gmail.com>
-Subject: git-credential-gnome-keyring fails at multilib
-Date: Sat, 17 Nov 2012 15:05:27 +0100
-Message-ID: <CADNdRzH+Fw+LsHF4LHWm9GsKJnbHjm2SgtKvSePmpwZyT7ptMQ@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 6/7] completion: fix expansion issue in __gitcomp()
+Date: Sat, 17 Nov 2012 15:09:25 +0100
+Message-ID: <20121117140925.GF12052@goldbirke>
+References: <1353150353-29874-1-git-send-email-szeder@ira.uka.de>
+ <1353150353-29874-7-git-send-email-szeder@ira.uka.de>
+ <CAMP44s3J3e_bcyoQmcdQno59dPJuJ4=7ej=-eseE5j2tteD=dA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=14dae934102d5c02bd04ceb1609f
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 17 15:05:47 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 17 15:09:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZj1n-0000e6-CZ
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 15:05:47 +0100
+	id 1TZj5d-0004UQ-Ug
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 15:09:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823Ab2KQOFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2012 09:05:35 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:46834 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751741Ab2KQOF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2012 09:05:28 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k13so4921825iea.19
-        for <git@vger.kernel.org>; Sat, 17 Nov 2012 06:05:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=yqdYYUAKKSvXzY8kVZ2rmmpIEm5Zk+PPROKpvf3i7wc=;
-        b=tfEpEeVMkbWJRsch7GbDrvpB+XzqpLBVhlm+Gg2yg+cVX+H8ZUlcj9v7XUdCJAwBdX
-         MB0l5l1Zzb0nqAvQfUukoAnvEfkltMYwGGjZFyLe0dzDzsUfC8WcweTbqCd23SxKCodg
-         b9Rwy+weaUIZDvreWPA946RAbVlYIxFB12rrYVcnORpja05KfYFe6UiHptnBoD432lqZ
-         3WTsg7ti1vJlXyM+L8S87MWC0W4KlkNX+poUglFcGCAdZSsH73xbfgBxazgl58whKMa3
-         cjEQAxxSeloPfyO0r/VLepRi/0yA6mM+GKL6FiHStilXKOIc2ZrxRSY21SwbTfu7Lfkr
-         MkVQ==
-Received: by 10.50.195.168 with SMTP id if8mr1657975igc.71.1353161128018; Sat,
- 17 Nov 2012 06:05:28 -0800 (PST)
-Received: by 10.64.59.9 with HTTP; Sat, 17 Nov 2012 06:05:27 -0800 (PST)
+	id S1751749Ab2KQOJc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 09:09:32 -0500
+Received: from moutng.kundenserver.de ([212.227.17.10]:49281 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751675Ab2KQOJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2012 09:09:31 -0500
+Received: from localhost6.localdomain6 (p5B1303A3.dip0.t-ipconnect.de [91.19.3.163])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LroEc-1T9pwv20GU-013UJG; Sat, 17 Nov 2012 15:09:28 +0100
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3J3e_bcyoQmcdQno59dPJuJ4=7ej=-eseE5j2tteD=dA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:81z+3aA0Ozmv924R/Qmw0SfKOJoaNza3qUjrn1g+L5h
+ BJplz3rLhCq/lcBS/4JkaNs1rW4N5HYqnvBduq8K7+uMFzSfCL
+ Y/ViUusLT/NNX9ccpclPJqeLr2pGfXaJeOrcGDwav3pMCwd8XP
+ I5YHmIIBEAm+SIlVDVC7IP22SMThXPlLvP2udbkus8Kq2VKcly
+ KmyIbR/Zxy/Gd82Svgp0SNnxY33dvUMHuefTmBwurOM5zPo2HW
+ c7nYVO4/j4XMPHSoNu6P2WIWjXrQ2jYFWjM7pUe5KX0Ean/Xfw
+ gX3KY2pgT/fFiSf17mfwV97lH8CzGNCCdmrraEFwtAfF/vNPwV
+ XSA6hj7TO9z8+NluORwQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209954>
 
---14dae934102d5c02bd04ceb1609f
-Content-Type: text/plain; charset=UTF-8
+On Sat, Nov 17, 2012 at 12:39:24PM +0100, Felipe Contreras wrote:
+> On Sat, Nov 17, 2012 at 12:05 PM, SZEDER G=E1bor <szeder@ira.uka.de> =
+wrote:
+>=20
+> > -# Generates completion reply with compgen, appending a space to po=
+ssible
+> > -# completion words, if necessary.
+> > +# Generates completion reply for the word in $cur, appending a spa=
+ce to
+> > +# possible completion words, if necessary.
+> >  # It accepts 1 to 4 arguments:
+> >  # 1: List of possible completion words.
+> >  # 2: A prefix to be added to each possible completion word (option=
+al).
+> > -# 3: Generate possible completion matches for this word (optional)=
+=2E
+> > +# 3: Generate possible completion matches for this word instead of=
+ $cur
+> > +#    (optional).
+> >  # 4: A suffix to be appended to each possible completion word (opt=
+ional).
+> >  __gitcomp ()
+> >  {
+> > @@ -241,10 +242,22 @@ __gitcomp ()
+> >                 COMPREPLY=3D()
+> >                 ;;
+> >         *)
+> > -               local IFS=3D$'\n'
+> > -               COMPREPLY=3D($(compgen -P "${2-}" \
+> > -                       -W "$(__gitcomp_1 "${1-}" "${4-}")" \
+> > -                       -- "$cur_"))
+> > +               local i=3D0 c IFS=3D$' \t\n'
+> > +               for c in $1; do
+> > +                       case $c in
+> > +                       "$cur_"*)
+> > +                               c=3D"$c${4-}"
+> > +                               case $c in
+> > +                               --*=3D*|*.) ;;
+> > +                               *) c=3D"$c " ;;
+> > +                               esac
+> > +                               COMPREPLY[$i]=3D"${2-}$c"
+> > +                               i=3D$((++i))
+> > +                               ;;
+> > +                       *)
+> > +                               ;;
+> > +                       esac
+> > +               done
+>=20
+> This is not quite the same as before, is it? Before the suffix would
+> be taken into consideration for the comparison with $cur_, but not an=
+y
+> more.
 
-Downstream bug report: https://bugs.gentoo.org/443634
+That's a good catch, thanks.
 
-The git-credential-gnome-keyring Makefile doesn't allow overriding its
-variables, making for spectacular link failure if you use CFLAGS for
-aught but decoration.
+I remember it puzzled me that the suffix is considered in the
+comparison (and that a trailing space would be appended even after a
+given suffix, too, so there seems to be no way to disable the trailing
+space).  However, currently it doesn't make a difference for us,
+because afaics we never specify a suffix for __gitcomp().  There were
+two instances in _git_config() where we specified "." as suffix, but
+those two were converted to __gitcomp_nl().  I changed those callsites
+back to __gitcomp() and tried to provoke wrong behavior with the above
+patch, but couldn't.
 
-gcc -g -O2 -Wall   -I/usr/include/gnome-keyring-1
--I/usr/include/glib-2.0 -I/usr/lib32/glib-2.0/include   -o
-git-credential-gnome-keyring.o -c git-credential-gnome-keyring.c
-gcc -o git-credential-gnome-keyring -Wl,--as-needed
--Wl,--hash-style=gnu -m32 git-credential-gnome-keyring.o
--lgnome-keyring -lglib-2.0
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.7.2/../../../../x86_64-pc-linux-gnu/bin/ld:
-i386:x86-64 architecture of input file
-`git-credential-gnome-keyring.o' is incompatible with i386 output
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.7.2/../../../../x86_64-pc-linux-gnu/bin/ld:
-git-credential-gnome-keyring.o: file class ELFCLASS64 incompatible
-with ELFCLASS32
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.7.2/../../../../x86_64-pc-linux-gnu/bin/ld:
-final link failed: File in wrong format
-collect2: error: ld returned 1 exit status
+Anyway, it's better to err on the safe side, so here's the fixup.
 
-Attached patch fixes it.
+-- >8 --
+Subject: [PATCH] fixup! completion: fix expansion issue in __gitcomp()
 
-/Peter
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---14dae934102d5c02bd04ceb1609f
-Content-Type: application/octet-stream; 
-	name="git-1.8.0-gnome-keyring-multilib.patch"
-Content-Disposition: attachment; 
-	filename="git-1.8.0-gnome-keyring-multilib.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_h9mt2kru0
-
-ZGlmZiAtTnJVNSBnaXQtMS44LjAub3JpZy9jb250cmliL2NyZWRlbnRpYWwvZ25vbWUta2V5cmlu
-Zy9NYWtlZmlsZSBnaXQtMS44LjAvY29udHJpYi9jcmVkZW50aWFsL2dub21lLWtleXJpbmcvTWFr
-ZWZpbGUKLS0tIGdpdC0xLjguMC5vcmlnL2NvbnRyaWIvY3JlZGVudGlhbC9nbm9tZS1rZXlyaW5n
-L01ha2VmaWxlCTIwMTItMTEtMTcgMTQ6NDU6MDYuNTM2NjQxMzgxICswMTAwCisrKyBnaXQtMS44
-LjAvY29udHJpYi9jcmVkZW50aWFsL2dub21lLWtleXJpbmcvTWFrZWZpbGUJMjAxMi0xMS0xNyAx
-NDo0NTo0MC44ODM0NDI5MzkgKzAxMDAKQEAgLTEsMTEgKzEsMTEgQEAKIE1BSU46PWdpdC1jcmVk
-ZW50aWFsLWdub21lLWtleXJpbmcKIGFsbDo6ICQoTUFJTikKIAotQ0MgPSBnY2MKLVJNID0gcm0g
-LWYKLUNGTEFHUyA9IC1nIC1PMiAtV2FsbAorQ0MgPz0gZ2NjCitSTSA/PSBybSAtZgorQ0ZMQUdT
-ID89IC1nIC1PMiAtV2FsbAogCiAtaW5jbHVkZSAuLi8uLi8uLi9jb25maWcubWFrLmF1dG9nZW4K
-IC1pbmNsdWRlIC4uLy4uLy4uL2NvbmZpZy5tYWsKIAogSU5DUzo9JChzaGVsbCBwa2ctY29uZmln
-IC0tY2ZsYWdzIGdub21lLWtleXJpbmctMSkK
---14dae934102d5c02bd04ceb1609f--
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index a1bf732f..29818fb5 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -231,9 +231,9 @@ __gitcomp ()
+ 	*)
+ 		local i=3D0 c IFS=3D$' \t\n'
+ 		for c in $1; do
++			c=3D"$c${4-}"
+ 			case $c in
+ 			"$cur_"*)
+-				c=3D"$c${4-}"
+ 				case $c in
+ 				--*=3D*|*.) ;;
+ 				*) c=3D"$c " ;;
+--=20
+1.8.0.220.g4d14ece
