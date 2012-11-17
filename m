@@ -1,162 +1,128 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 5/7] completion: fix expansion issues in __gitcomp_nl()
-Date: Sat, 17 Nov 2012 12:05:51 +0100
-Message-ID: <1353150353-29874-6-git-send-email-szeder@ira.uka.de>
-References: <1353150353-29874-1-git-send-email-szeder@ira.uka.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC/PATCH 5/5] completion: refactor __gitcomp_1
+Date: Sat, 17 Nov 2012 12:27:40 +0100
+Message-ID: <CAMP44s3OG+dzxZNpR+qELvcS37KDWh+Bnf0K1zGze4f3P4OWNg@mail.gmail.com>
+References: <1353116298-11798-1-git-send-email-felipe.contreras@gmail.com>
+	<1353116298-11798-6-git-send-email-felipe.contreras@gmail.com>
+	<20121117105837.GC12052@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 17 12:07:17 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robert Zeh <robert.a.zeh@gmail.com>,
+	Peter van der Does <peter@avirtualhome.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Nov 17 12:29:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZgF3-0007g5-AM
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 12:07:17 +0100
+	id 1TZgaO-0003RY-U0
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 12:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751537Ab2KQLG6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 06:06:58 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:58113 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751503Ab2KQLG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2012 06:06:56 -0500
-Received: from localhost6.localdomain6 (p5B1303A3.dip0.t-ipconnect.de [91.19.3.163])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0LmRp1-1Szn7F0QXT-00aDKi; Sat, 17 Nov 2012 12:06:38 +0100
-X-Mailer: git-send-email 1.8.0.220.g4d14ece
-In-Reply-To: <1353150353-29874-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:+DSI/d/E3QYvjUrgOUk3yQWH/xhrmNM6eVZe0qaUuBb
- H9B8UVye+vfcdWEI6QLorV0sbbK9pxjsMMfJm0SWt2U+DqzADT
- CVNbqXNeaUkCPiSLFClXgW1fTS0CfS7I7porci/f+5uyRAVonV
- R/kV78ebQ7jOycQSb5v6THLGpFd/kZ1HiJycY78Wb1aR8BXpoZ
- Uuf6QLFPdQ9Oo/9VWVZlV0d+xRrtoWL3JNW2jo6Q0njkAD6RkZ
- QJBQstCyljoOLu1hDuHAoj2RTPmlEQh8B6x3tTc7HO2Lg54Hfa
- oqRW8Bvw7IJQsvQBDUKGvXZUAJDrDIKdbe8rlZxEn3cYOmIHUM
- dqrfPQM8H5X0hNwqYrGISki3//yGp6UWFLMS1oTh/X/0Ujttk0
- S/vvi3NWEYiHg==
+	id S1751480Ab2KQL1m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 06:27:42 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:49827 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751268Ab2KQL1l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 06:27:41 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so3596947obb.19
+        for <git@vger.kernel.org>; Sat, 17 Nov 2012 03:27:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hrUu2RBEwW9h5kZ9aOL2rmaQXMTJ1O9MsAVgMI7E/bc=;
+        b=jN/E0c+YLtKgrlFAgvPHAnO3/1dtw5+LztnYQJWvhXO15OKBhRt1sSe2YHKZvLmzeK
+         VAF5OdR6/8JM3ro3ocz5odZ8Smf4gWgPHrWvwjww+IhN/wYYBRGPD0KcSZ3kZLwrcT9T
+         FXYs5preXrK3gT9fXsvtcrNEQp2whDZZyHypWf5e09sd8MALw5CLENrquHMDTUIrsOz+
+         dsIt+s7NEgi2heyTh3TZ12OO0IUKeHCFcSmF1ft4WmV3FqHTKMEWavxOrp16TRVCNKpF
+         NSLnBF7zXK6e098H3gsGgTYEmQbL54ESQBas/rma22A8iY57gDGQZ8+7bDrr819NmIOS
+         NB8w==
+Received: by 10.60.14.101 with SMTP id o5mr3682533oec.85.1353151660980; Sat,
+ 17 Nov 2012 03:27:40 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Sat, 17 Nov 2012 03:27:40 -0800 (PST)
+In-Reply-To: <20121117105837.GC12052@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209948>
 
-The compgen Bash-builtin performs expansion on all words in the
-wordlist given to its -W option, breaking Git's completion script when
-refs or filenames passed to __gitcomp_nl() contain expandable
-substrings.  At least one user can't use ref completion at all in a
-repository, which contains tags with metacharacters like
+On Sat, Nov 17, 2012 at 11:58 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
+ wrote:
 
-  Build%20V%20${bamboo.custom.jiraversion.name}%20Build%20721
+>>  # The following function is based on code from:
+>> @@ -249,10 +246,16 @@ __gitcomp ()
+>>       --*=3D)
+>>               ;;
+>>       *)
+>> -             local IFS=3D$'\n'
+>> -             __gitcompadd "$(__gitcomp_1 "${1-}" "${4-}")" "${2-}" =
+"$cur_" ""
+>> +             local c IFS=3D$' \t\n'
+>> +             for c in ${1-}; do
+>> +                     c=3D`__gitcomp_1 "$c${4-}"`
+>
+> 1. Backticks.
+> 2. A subshell for every word in the wordlist?
 
-Such a ref causes a failure in compgen as it tries to expand the
-variable with invalid name.
+=46ine, lets make it hard for zsh then:
 
-Unfortunately, compgen has no option to turn off this expansion.
-However, in __gitcomp_nl() we use only a small subset of compgen's
-functionality, namely the filtering of matching possible completion
-words and adding a prefix and/or suffix to each of those words.  So,
-to avoid compgen's problematic expansion we get rid of compgen, and
-implement the equivalent functionality in a small awk script.  The
-reason for using awk instead of sed is that awk allows plain (i.e.
-non-regexp) string comparison, making quoting of regexp characters in
-the current word unnecessary.
-
-Note, that such expandable words need quoting to be of any use on the
-command line.  This patch doesn't perform that quoting, but it could
-be implemented later on top by extending the awk script to unquote
-$cur and to quote matching words.  Nonetheless, this patch still a
-step forward, because at least refs can be completed even in the
-presence of one with metacharacters.
-
-Also update the function's description a bit.
-
-Reported-by: Jeroen Meijer <jjgmeijer@hotmail.com>
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
-
-awk doesn't have a prefixcmp().  I'm no awk wizard, so I'm not sure thi=
-s
-is the right way to do it.
-
- contrib/completion/git-completion.bash | 17 +++++++++++++----
- t/t9902-completion.sh                  |  4 ++--
- 2 files changed, 15 insertions(+), 6 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index bc0657a2..65196ddd 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -249,19 +249,28 @@ __gitcomp ()
- 	esac
+@@ -56,19 +56,6 @@ __gitdir ()
+        fi
  }
-=20
--# Generates completion reply with compgen from newline-separated possi=
+
+-__gitcomp_1 ()
+-{
+-       local c IFS=3D$' \t\n'
+-       for c in $1; do
+-               c=3D"$c$2"
+-               case $c in
+-               --*=3D*|*.) ;;
+-               *) c=3D"$c " ;;
+-               esac
+-               printf '%s\n' "$c"
+-       done
+-}
+-
+ # The following function is based on code from:
+ #
+ #   bash_completion - programmable completion functions for bash 3.2+
+@@ -241,12 +228,22 @@ __gitcomp ()
+                COMPREPLY=3D()
+                ;;
+        *)
+-               local IFS=3D$'\n'
+-               COMPREPLY=3D($(compgen -P "${2-}" \
+-                       -W "$(__gitcomp_1 "${1-}" "${4-}")" \
+-                       -- "$cur_"))
++               local c i IFS=3D$' \t\n'
++               i=3D0
++               for c in ${1-}; do
++                       c=3D"$c${4-}"
++                       case $c in
++                       --*=3D*|*.) ;;
++                       *) c=3D"$c " ;;
++                       esac
++                       if [[ "$c" =3D "$cur_"* ]]; then
++                               (( i++ ))
++                               COMPREPLY[$i]=3D"${2-}$c"
++                       fi
++               done
+                ;;
+        esac
++
+ }
+
+ # Generates completion reply with compgen from newline-separated possi=
 ble
--# completion words by appending a space to all of them.
-+# Generates completion reply for the word in $cur from newline-separat=
-ed
-+# possible completion words, appending a space to all of them.
- # It accepts 1 to 4 arguments:
- # 1: List of possible completion words, separated by a single newline.
- # 2: A prefix to be added to each possible completion word (optional).
--# 3: Generate possible completion matches for this word (optional).
-+# 3: Generate possible completion matches for this word instead of $cu=
-r
-+#    (optional).
- # 4: A suffix to be appended to each possible completion word instead =
-of
- #    the default space (optional).  If specified but empty, nothing is
- #    appended.
- __gitcomp_nl ()
- {
- 	local IFS=3D$'\n'
--	COMPREPLY=3D($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}")=
-)
-+	COMPREPLY=3D($(awk -v pfx=3D"${2-}" -v sfx=3D"${4- }" -v cur=3D"${3-$=
-cur}" '
-+		BEGIN {
-+			FS=3D"\n";
-+			len=3Dlength(cur);
-+		}
-+		{
-+			if (cur =3D=3D substr($1, 1, len))
-+				print pfx$1sfx;
-+		}' <<< "$1" ))
- }
-=20
- __git_heads ()
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index a108ec1c..fa289324 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -246,7 +246,7 @@ test_expect_success '__gitcomp_nl - no suffix' '
- 	test_cmp expected out
- '
-=20
--test_expect_failure '__gitcomp_nl - doesnt fail because of invalid var=
-iable name' '
-+test_expect_success '__gitcomp_nl - doesnt fail because of invalid var=
-iable name' '
- 	(
- 		__gitcomp_nl "$invalid_variable_name"
- 	)
-@@ -383,7 +383,7 @@ test_expect_success 'complete tree filename with sp=
-aces' '
- 	EOF
- '
-=20
--test_expect_failure 'complete tree filename with metacharacters' '
-+test_expect_success 'complete tree filename with metacharacters' '
- 	echo content >"name with \${meta}" &&
- 	git add . &&
- 	git commit -m meta &&
+
 --=20
-1.8.0.220.g4d14ece
+=46elipe Contreras
