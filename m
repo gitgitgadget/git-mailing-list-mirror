@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH 5/5] completion: refactor __gitcomp_1
-Date: Sat, 17 Nov 2012 02:38:18 +0100
-Message-ID: <1353116298-11798-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [RFC/PATCH 4/5] completion: get rid of compgen
+Date: Sat, 17 Nov 2012 02:38:17 +0100
+Message-ID: <1353116298-11798-5-git-send-email-felipe.contreras@gmail.com>
 References: <1353116298-11798-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
@@ -19,96 +19,65 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZXND-0004aQ-3B
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 02:39:07 +0100
+	id 1TZXNC-0004aQ-KT
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 02:39:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979Ab2KQBiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2012 20:38:54 -0500
+	id S1753959Ab2KQBiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2012 20:38:50 -0500
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:39206 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753814Ab2KQBix (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2012 20:38:53 -0500
+	with ESMTP id S1753814Ab2KQBit (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2012 20:38:49 -0500
 Received: by mail-bk0-f46.google.com with SMTP id q16so1411525bkw.19
-        for <git@vger.kernel.org>; Fri, 16 Nov 2012 17:38:53 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 16 Nov 2012 17:38:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=9zEOTTFAjBTxn568qiMEj33Toz4R/Z0b6OiggJJCpBk=;
-        b=x232IWAkNRHCnxCfDwwcjKBCCDc/LbYNkmcetYtgMKFlkZb4kyTEAsHM+YsEJ631Tk
-         a35cfeX0OBPk/s5H1L4UFtUhB7sb7kZCeXJkBADEpNs1G+MklOaA59hM0q6WhFZlwEeY
-         Yqft2c2LdQz9mYYNGQ2MCv8Nw5OpWyhlKZIjVFftUr7APL131EEamHsle/myrSybhV5K
-         ZmM1uOvwRp7qDPwalgmoj3Oa6G94E0SuQXAdANxWJpyZolCU4SNKYlVpxFV/7RmK75BO
-         01n1hniIZ+4Y6lY8V4JkdBmBeMnfO9tqYmpWRdcPwCnOILL3NOzbgdnvNNbGfjLNfXk4
-         ueLQ==
-Received: by 10.205.125.137 with SMTP id gs9mr2700082bkc.22.1353116333222;
-        Fri, 16 Nov 2012 17:38:53 -0800 (PST)
+        bh=OA/yNYvvO4nqUYe1kw218tQawbr/AewHFncRdzXonBU=;
+        b=ol4faFwyv0XtWWUIyHGtu1khk5E/EsxTetbf2p3W4RUKUGZMgAm31wtHG75wvb4AJ+
+         pSSwBv9AHvED569WwT1OhBdh71zyq6A+1N29egZy/f87Ica+LYQkfKXp2sF6tvhc73K2
+         Z2CylUlrznMWPiTKveuh0ZJYRa3zyT7oyORjSbml8WVgoMQcozr9Hu6apedKVlh+VC0h
+         QVyjJgD/q3X+870rjlabZ+4tpxYYy+yOFDi+nzXOIX4o0LP/hX/uVDwMdgFeNdOSOZa7
+         9y4O+EOx5OMeeqidN92JMZ7/oAcdYl+is1Rowfe1n0NSiGGcneU3aRgjajGokpdaM8gg
+         +NhQ==
+Received: by 10.204.8.215 with SMTP id i23mr2654746bki.44.1353116328999;
+        Fri, 16 Nov 2012 17:38:48 -0800 (PST)
 Received: from localhost (ip-109-43-0-81.web.vodafone.de. [109.43.0.81])
-        by mx.google.com with ESMTPS id k21sm2003619bkv.1.2012.11.16.17.38.50
+        by mx.google.com with ESMTPS id fm5sm2003021bkc.5.2012.11.16.17.38.46
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 16 Nov 2012 17:38:52 -0800 (PST)
+        Fri, 16 Nov 2012 17:38:48 -0800 (PST)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1353116298-11798-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209929>
 
-It's only used by __gitcomp, so move some code there and avoid going
-through the loop again.
-
-We could get rid of it altogether, but it's useful for zsh's completion
-wrapper.
+The functionality we use is very simple, plus, this fixes a known
+breakage 'complete tree filename with metacharacters'.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ contrib/completion/git-completion.bash | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ad3e1fe..d92d11e 100644
+index 975ae13..ad3e1fe 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -58,15 +58,12 @@ __gitdir ()
+@@ -227,7 +227,11 @@ fi
  
- __gitcomp_1 ()
+ __gitcompadd ()
  {
--	local c IFS=$' \t\n'
--	for c in $1; do
--		c="$c$2"
--		case $c in
--		--*=*|*.) ;;
--		*) c="$c " ;;
--		esac
--		printf '%s\n' "$c"
--	done
-+	local c=$1
-+	case $c in
-+	--*=*|*.) ;;
-+	*) c="$c " ;;
-+	esac
-+	printf '%s\n' "$c"
+-	COMPREPLY=($(compgen -W "$1" -P "$2" -S "$4" -- "$3"))
++	for x in $1; do
++		if [[ "$x" = "$3"* ]]; then
++			COMPREPLY+=("$2$x$4")
++		fi
++	done
  }
  
- # The following function is based on code from:
-@@ -249,10 +246,16 @@ __gitcomp ()
- 	--*=)
- 		;;
- 	*)
--		local IFS=$'\n'
--		__gitcompadd "$(__gitcomp_1 "${1-}" "${4-}")" "${2-}" "$cur_" ""
-+		local c IFS=$' \t\n'
-+		for c in ${1-}; do
-+			c=`__gitcomp_1 "$c${4-}"`
-+			if [[ "$c" = "$cur_"* ]]; then
-+				COMPREPLY+=("${2-}$c")
-+			fi
-+		done
- 		;;
- 	esac
-+
- }
- 
- # Generates completion reply with compgen from newline-separated possible
+ # Generates completion reply with compgen, appending a space to possible
 -- 
 1.8.0
