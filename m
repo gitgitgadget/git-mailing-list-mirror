@@ -1,68 +1,84 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/7] completion: fix args of run_completion() test helper
-Date: Sat, 17 Nov 2012 15:02:49 -0800
-Message-ID: <20121117230249.GB3815@elie.Belkin>
+Subject: Re: [PATCH 3/7] completion: add tests for the __gitcomp_nl()
+ completion helper function
+Date: Sat, 17 Nov 2012 15:31:54 -0800
+Message-ID: <20121117233154.GC3815@elie.Belkin>
 References: <1353150353-29874-1-git-send-email-szeder@ira.uka.de>
- <1353150353-29874-3-git-send-email-szeder@ira.uka.de>
+ <1353150353-29874-4-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Nov 18 00:03:11 2012
+X-From: git-owner@vger.kernel.org Sun Nov 18 00:32:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZrPo-0002FS-78
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 00:03:08 +0100
+	id 1TZrry-00081c-KN
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 00:32:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412Ab2KQXCy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 18:02:54 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:48606 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752360Ab2KQXCx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 18:02:53 -0500
-Received: by mail-da0-f46.google.com with SMTP id p5so199703dak.19
-        for <git@vger.kernel.org>; Sat, 17 Nov 2012 15:02:53 -0800 (PST)
+	id S1752325Ab2KQXb7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 18:31:59 -0500
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:41641 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752255Ab2KQXb7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 18:31:59 -0500
+Received: by mail-pb0-f46.google.com with SMTP id wy7so2686184pbc.19
+        for <git@vger.kernel.org>; Sat, 17 Nov 2012 15:31:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=3K6DGThjcGWymApCpcuNpAyC47MMIXQZPatv5Z0j/6I=;
-        b=BYM2I+9PTe52M0r97+bKownLbZudNUphTm32qwfRkvCpxQoA1Kg2c4jyIZ5yojypNn
-         eEXOMFnBZfnkB/cas54xh3PIue6xt7D/wT1mglpD1kgOtE6fskDrkf/XBE8GzRSr0BPi
-         Rs/XKtpcZmAI0Yz8K0hIsXS6/KmSrT1xBk3Cez/iS8raoOPR3qyC4oW3JMse02cruaNo
-         HBi4V3++nprrx6JUIM0vgvj7V/neHnvd588lnxcJD7GWHal4HcaaWvIPVoy9wyjuL7Mx
-         sFA7DOzFYmhyf/jArgH1WeqkoLtKefYeuH0vYw4fjALoJaeYLJ/u72m3fNxJQuKXm+ed
-         SuUA==
-Received: by 10.68.138.137 with SMTP id qq9mr27953028pbb.74.1353193373490;
-        Sat, 17 Nov 2012 15:02:53 -0800 (PST)
+        bh=jNmRw9wh8TAv7VuiBNGCS7wMURKPTxuQjpok4IN/Wag=;
+        b=bA6X52xC4gQ2LMVv2ZrwigXtQ21O3ieSr9ENVtIg3S2CkVPt8kwYccXQWGtlJDS3x7
+         if0BVo8pARSLd1V6ymZFXf/8+txmxP9aDaxcM6wtcT6NpiAWDzQxDznEXer+KzjIn9jr
+         TiX8SuaheCGLvdtLLBB8mb4VacqFNijz6+/86rm0VBuM4yKrH++5kTulb4xiU0uyx3TY
+         8Ly+/2s1zhLrkhxsHoCg9G/52nCkURciZsfJatGOYO8N5LT8N9PBdevep/CflPbs0ZfX
+         rmVREIKMppxXr1s+IJGFFEIPr5odoXp1GX8FG3xnDQgAY5YyrwXu6MCKPF6yeUYCULQG
+         cdUg==
+Received: by 10.66.78.136 with SMTP id b8mr24823387pax.26.1353195118722;
+        Sat, 17 Nov 2012 15:31:58 -0800 (PST)
 Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id qj6sm3518942pbb.69.2012.11.17.15.02.52
+        by mx.google.com with ESMTPS id ve6sm3550749pbc.58.2012.11.17.15.31.57
         (version=SSLv3 cipher=OTHER);
-        Sat, 17 Nov 2012 15:02:52 -0800 (PST)
+        Sat, 17 Nov 2012 15:31:57 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1353150353-29874-3-git-send-email-szeder@ira.uka.de>
+In-Reply-To: <1353150353-29874-4-git-send-email-szeder@ira.uka.de>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209985>
 
 SZEDER G=C3=A1bor wrote:
 
-> Fix this by passing the command line to run_completion() as separate
-> words.
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -155,6 +155,90 @@ test_expect_success '__gitcomp - suffix' '
+>  	test_cmp expected out
+>  '
+> =20
+> +test_expect_success '__gitcomp_nl - trailing space' '
+> +	sed -e "s/Z$//" >expected <<-\EOF &&
 
-Good catch.  The change makes sense, the code looks saner after the
-fix, and since this is test code any breakage should be caught
-quickly, so
+'$' is usually a shell metacharacter, so it would be more comfortable
+to read a version that escapes it:
+
+	sed -e "s/Z\$//" >expected <<-\EOF
+
+Since '$/' is not a valid parameter expansion, if I understand
+correctly then POSIX leaves the meaning of the quoted string "s/Z$//"
+undefined (XCU =C2=A72.2.3).  Luckily every shell I've tried, including
+bash, keeps the $ unmolested.
+
+Other parts of the file already use the same style, so I wouldn't
+suggest changing it in this patch.
+
+Thanks for some nice tests.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
