@@ -1,144 +1,71 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 4/5] completion: get rid of compgen
-Date: Sat, 17 Nov 2012 20:33:22 +0100
-Message-ID: <CAMP44s0YnoGwJEgUbXZ831_OrgO=dDf5_QHxT5JYnGUHYPuiTw@mail.gmail.com>
-References: <1353116298-11798-1-git-send-email-felipe.contreras@gmail.com>
-	<1353116298-11798-5-git-send-email-felipe.contreras@gmail.com>
-	<20121117110031.GE12052@goldbirke>
-	<CAMP44s21CUb3_KhHBfJXW+Eqd45kz1hcbx3GCbs+f0HNRDEAzw@mail.gmail.com>
-	<20121117141215.GG12052@goldbirke>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: `git mv` has ambiguous error message for non-existing target
+Date: Sat, 17 Nov 2012 11:35:09 -0800
+Message-ID: <7vpq3cja4y.fsf@alter.siamese.dyndns.org>
+References: <50A53A80.4080203@gmx.de>
+ <7vehju8h5j.fsf@alter.siamese.dyndns.org> <50A5E6D2.5060609@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robert Zeh <robert.a.zeh@gmail.com>,
-	Peter van der Does <peter@avirtualhome.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Nov 17 20:33:38 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Patrick Lehner <lehner.patrick@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 17 20:35:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZo94-0003T1-0d
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 20:33:38 +0100
+	id 1TZoAs-0005EC-M2
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 20:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081Ab2KQTdX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 14:33:23 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:44601 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030Ab2KQTdW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 14:33:22 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so3793928obb.19
-        for <git@vger.kernel.org>; Sat, 17 Nov 2012 11:33:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+1WfrFV+dRDWrTha5Ar6dmkBcj9jjlwYRpdSFo3+hLw=;
-        b=rYvGOgIcaiOyecCA6hbZqYBQ9zvz9/l+tHQ49pnvRqbNbJo+aCSulUGRIEkkT0AKQa
-         /tTmmz/C0j2MMcHxPW4WrPXw2WKbImcYWQcVtRxSnxAG3L1VHInsOFZAb6BvuMneMY0L
-         vKXJpqqU6e4gAWCsI3aQ6mqhXcWJwpMl1auMJQzduMn2NCENgPMyThXx6XZwk8Y8Ao3I
-         A/aDQMAz6NYHcUk0kNaQN1G6S7UgR8cvr3d58f+ngv+zWslZi98pEZ6fPmI+MQKNEE9H
-         jRgictLGkBZHOpySc9KgYDhJoytN0EhqwRJkq1NIdIbsHtOpEtbOJajpy6Vzr8kHLi2/
-         F9SA==
-Received: by 10.60.32.19 with SMTP id e19mr7171116oei.9.1353180802329; Sat, 17
- Nov 2012 11:33:22 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sat, 17 Nov 2012 11:33:22 -0800 (PST)
-In-Reply-To: <20121117141215.GG12052@goldbirke>
+	id S1752092Ab2KQTfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2012 14:35:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50343 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752030Ab2KQTfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2012 14:35:12 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 138F0A2E5;
+	Sat, 17 Nov 2012 14:35:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YSviXdl6G1sFgvdaxzWhkY6+XHo=; b=DkVRrN
+	a6reFHGJipNTrnFAAGJdv9ypInze0iqODlh6Xrb/m3NzmzlYIY0K6qUXiHdLcyyG
+	QzqgQiC3MJXj+vy8P43Y6huwpEEXpoUSAFWjEDwKEy/Omi3bxenfVvaFT6/OZQEh
+	KgGbKKntlCtNhlkcvRHXCvTCy/K75E0OJ1flI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tyyzr0699yZDR1w/6lwPUmtxIq1c7NzT
+	av+nPx9pfcsPGe9sR1ILoZ4B6NZpaXwARO8SYV9zCAHeJVDlx70YVE5bbgUdC7if
+	ufSMrZ7C3NNuVcAsBSVmbxAY0cMYYJPaPyl7IXlh27MXLYGz4OdKS+deZxSbXBJg
+	dGERozWZCSw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00F26A2E4;
+	Sat, 17 Nov 2012 14:35:12 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71836A2E3; Sat, 17 Nov 2012
+ 14:35:11 -0500 (EST)
+In-Reply-To: <50A5E6D2.5060609@gmx.de> (Patrick Lehner's message of "Fri, 16
+ Nov 2012 08:10:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E6F4E06E-30ED-11E2-8A4E-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209972>
 
-On Sat, Nov 17, 2012 at 3:12 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
-> On Sat, Nov 17, 2012 at 12:42:38PM +0100, Felipe Contreras wrote:
->> On Sat, Nov 17, 2012 at 12:00 PM, SZEDER G=C3=A1bor <szeder@ira.uka.=
-de> wrote:
->> > On Sat, Nov 17, 2012 at 02:38:17AM +0100, Felipe Contreras wrote:
->> >> The functionality we use is very simple, plus, this fixes a known
->> >> breakage 'complete tree filename with metacharacters'.
->> >>
->> >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> >> ---
->> >>  contrib/completion/git-completion.bash | 6 +++++-
->> >>  1 file changed, 5 insertions(+), 1 deletion(-)
->> >>
->> >> diff --git a/contrib/completion/git-completion.bash b/contrib/com=
-pletion/git-completion.bash
->> >> index 975ae13..ad3e1fe 100644
->> >> --- a/contrib/completion/git-completion.bash
->> >> +++ b/contrib/completion/git-completion.bash
->> >> @@ -227,7 +227,11 @@ fi
->> >>
->> >>  __gitcompadd ()
->> >>  {
->> >> -     COMPREPLY=3D($(compgen -W "$1" -P "$2" -S "$4" -- "$3"))
->> >> +     for x in $1; do
->> >> +             if [[ "$x" =3D "$3"* ]]; then
->> >> +                     COMPREPLY+=3D("$2$x$4")
->> >> +             fi
->> >> +     done
->> >
->> > The whole point of creating __gitcomp_nl() back then was to fill
->> > COMPREPLY without iterating through all words in the wordlist, mak=
-ing
->> > completion faster for large number of words, e.g. a lot of refs, o=
-r
->> > later a lot of symbols for 'git grep' in a larger project.
->> >
->> > The loop here kills that optimization.
->>
->> So your solution is to move the loop to awk? I fail to see how that
->> could bring more optimization, specially since it includes an extra
->> fork now.
->
-> This patch didn't aim for more optimization, but it was definitely a
-> goal not to waste what we gained by creating __gitcomp_nl() in
-> a31e6262 (completion: optimize refs completion, 2011-10-15).  However=
-,
-> as it turns out the new version with awk is actually faster than
-> current master with compgen:
->
->   Before:
->
->     $ refs=3D"$(for i in {0..9999} ; do echo branch$i ; done)"
->     $ time __gitcomp_nl "$refs"
->
->     real    0m0.242s
->     user    0m0.220s
->     sys     0m0.028s
->
->   After:
->
->     $ time __gitcomp_nl "$refs"
->
->     real    0m0.109s
->     user    0m0.096s
->     sys     0m0.012s
+Patrick Lehner <lehner.patrick@gmx.de> writes:
 
-This one is even faster:
+> But just because mv's error essage isnt very good, does that mean git
+> mv's error message mustn't be better?
 
-while read -r x; do
-	if [[ "$x" =3D=3D "$3"* ]]; then
-		COMPREPLY+=3D("$2$x$4")
-	fi
-done <<< $1
+Did I say the error message from 'mv' was not very good in the
+message you are responding to (by the way, this is why you should
+never top-post when you are responding to a message on this list)?
 
-=3D=3D 10000 =3D=3D
-one:
-real	0m0.148s
-user	0m0.134s
-sys	0m0.025s
-two:
-real	0m0.055s
-user	0m0.054s
-sys	0m0.000s
+I meant to say that the message from 'mv' is good enough, so is the
+one given by 'git mv'.
 
---=20
-=46elipe Contreras
+I wouldn't reject a patch that updates our message to something more
+informative without looking at it, though.
