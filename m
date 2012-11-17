@@ -1,171 +1,158 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/7] completion: fix expansion issues in __gitcomp_nl()
-Date: Sat, 17 Nov 2012 20:08:07 +0100
-Message-ID: <CAMP44s2YOshWkM9n2XxxLw79=-VF8U3Q4ta1D1zgHqWH30zOmw@mail.gmail.com>
-References: <1353150353-29874-1-git-send-email-szeder@ira.uka.de>
-	<1353150353-29874-6-git-send-email-szeder@ira.uka.de>
-	<CAMP44s1ZgNM1WXPu_-q9aFkz8Ui3czwcUqHWvs7Yspi_p9kuNQ@mail.gmail.com>
-	<20121117141422.GI12052@goldbirke>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Sat, 17 Nov 2012 14:20:27 -0500
+Message-ID: <20121117192026.GI22234@odin.tremily.us>
+References: <20121117153007.GB7695@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Nov 17 20:08:29 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=+PbGPm1eXpwOoWkI
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sat Nov 17 20:21:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZnkj-0006RT-1X
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 20:08:29 +0100
+	id 1TZnx4-00017b-3c
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 20:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056Ab2KQTIJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 14:08:09 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:63458 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752043Ab2KQTII convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 14:08:08 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so3783948obb.19
-        for <git@vger.kernel.org>; Sat, 17 Nov 2012 11:08:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=s93LotZJGQxPHMocqS1BbdBpZBNmKKFFfLcrzSGEsos=;
-        b=zSYr7QydpWCUbo+UysskV1EHqRAEnxhPdFeYl5O0apA3qdGQ/DIDGs0BiKu5HVOI0Y
-         7o9rkvGZfGQn/2RXG3LjUzBhRF6hXsppztaDF+uysTRj6kWY47e9X4IHMy5sdfGwKWB8
-         ZCI48sG3/xTthJwmaDwih0jxrtDS1r+PjRQ55+0y0ndxVrdcd3I1nTr/+vk2ehu5Rute
-         nyR2djwnkegTkmiOHbpIpKiSVeK030yd6v+RDT7W8pzB/3X/6mnBMcbVN8g87xekP4l/
-         jefsL2m4ObVMKb0Z6LnHn8VNAron7+tdIJWFQGUhXKLnpNDYVJU7YFDbl8wpVidWoJHQ
-         VKuw==
-Received: by 10.60.20.1 with SMTP id j1mr6896827oee.46.1353179287779; Sat, 17
- Nov 2012 11:08:07 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sat, 17 Nov 2012 11:08:07 -0800 (PST)
-In-Reply-To: <20121117141422.GI12052@goldbirke>
+	id S1752062Ab2KQTUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2012 14:20:49 -0500
+Received: from vms173001pub.verizon.net ([206.46.173.1]:54553 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752030Ab2KQTUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2012 14:20:48 -0500
+Received: from odin.tremily.us ([unknown] [72.68.87.214])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MDN009ROCE3LBA0@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 17 Nov 2012 13:20:30 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 25595695939; Sat,
+ 17 Nov 2012 14:20:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1353180027; bh=nctJa4av/zk9UaYDh+ZWylcuO85S5dBU2ZC33Q77j1g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=T59GUHXGlvc80rdKmwqLG2SCgyxdtFVL4R6vRlQiDh7Mv7jf2OmJ6s0FhDdH5DRyH
+ p4PwpFBUPAv8iKShq6T3WFuLhPTE4B/mjhAoc7fg9a/O1aHxWEqU7HjVndTW6yoDf/
+ s0W7QQGxlrXihIiaux6Vh1PM+TpLOxjlfY4sJLEU=
+Content-disposition: inline
+In-reply-to: <20121117153007.GB7695@book.hvoigt.net>
+ <20121117150441.GA7695@book.hvoigt.net>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209969>
 
-On Sat, Nov 17, 2012 at 3:14 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
-> On Sat, Nov 17, 2012 at 12:50:39PM +0100, Felipe Contreras wrote:
->> On Sat, Nov 17, 2012 at 12:05 PM, SZEDER G=C3=A1bor <szeder@ira.uka.=
-de> wrote:
->>
->> >  __gitcomp_nl ()
->> >  {
->> >         local IFS=3D$'\n'
->> > -       COMPREPLY=3D($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "=
-${3-$cur}"))
->> > +       COMPREPLY=3D($(awk -v pfx=3D"${2-}" -v sfx=3D"${4- }" -v c=
-ur=3D"${3-$cur}" '
->> > +               BEGIN {
->> > +                       FS=3D"\n";
->> > +                       len=3Dlength(cur);
->> > +               }
->> > +               {
->> > +                       if (cur =3D=3D substr($1, 1, len))
->> > +                               print pfx$1sfx;
->> > +               }' <<< "$1" ))
->> >  }
->>
->> Does this really perform better than my alternative?
->>
->> +       for x in $1; do
->> +               if [[ "$x" =3D "$3"* ]]; then
->> +                       COMPREPLY+=3D("$2$x$4")
->> +               fi
->> +       done
->
-> It does:
->
->   My version:
->
->     $ refs=3D"$(for i in {0..9999} ; do echo branch$i ; done)"
->     $ time __gitcomp_nl "$refs"
->
->     real    0m0.109s
->     user    0m0.096s
->     sys     0m0.012s
->
->   Yours:
->
->     $ time __gitcomp_nl "$refs"
->
->     real    0m0.321s
->     user    0m0.312s
->     sys     0m0.008s
 
-Yeah, for 10000 refs, which is not the common case:
+--+PbGPm1eXpwOoWkI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-=3D=3D 1 =3D=3D
-SZEDER:
-real	0m0.007s
-user	0m0.003s
-sys	0m0.000s
-felipec:
-real	0m0.000s
-user	0m0.000s
-sys	0m0.000s
-=3D=3D 10 =3D=3D
-SZEDER:
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
-felipec:
-real	0m0.000s
-user	0m0.000s
-sys	0m0.000s
-=3D=3D 100 =3D=3D
-SZEDER:
-real	0m0.005s
-user	0m0.002s
-sys	0m0.002s
-felipec:
-real	0m0.002s
-user	0m0.002s
-sys	0m0.000s
-=3D=3D 1000 =3D=3D
-SZEDER:
-real	0m0.010s
-user	0m0.008s
-sys	0m0.001s
-felipec:
-real	0m0.018s
-user	0m0.017s
-sys	0m0.001s
-=3D=3D 10000 =3D=3D
-SZEDER:
-real	0m0.062s
-user	0m0.060s
-sys	0m0.003s
-felipec:
-real	0m0.175s
-user	0m0.174s
-sys	0m0.000s
-=3D=3D 100000 =3D=3D
-SZEDER:
-real	0m0.595s
-user	0m0.593s
-sys	0m0.021s
-felipec:
-real	0m1.848s
-user	0m1.843s
-sys	0m0.003s
-=3D=3D 1000000 =3D=3D
-SZEDER:
-real	0m6.258s
-user	0m6.241s
-sys	0m0.215s
-felipec:
-real	0m18.191s
-user	0m18.115s
-sys	0m0.045s
+On Sat, Nov 17, 2012 at 04:04:42PM +0100, Heiko Voigt wrote:
+> > On Sat, Nov 10, 2012 at 01:44:37PM -0500, W. Trevor King wrote:
+> > >   $ git submodule pull-branch
+> >=20
+> > I think "floating submodules" is a misleading name for this feature
+> > though, since the checkout SHA is explicitly specified.  We're just
+> > making it more convenient to explicitly update the SHA.  How about
+> > "tracking submodules"?
+>=20
+> Until now we have always called this workflow floating submodules. I
+> imaging since the submodule floats to the newest revision (whatever the
+> user chooses that to be) instead of staying at the recorded sha1.
+>=20
+> "tracking submodules" sounds strange to me since the term tracked in git
+> is mainly used in combination with exact recorded history (e.g. tracking
+> branch). Since it is about *not* checking out the recorded sha1 but
+> something that can change I think that could cause confusion.
+>=20
+> I think floating is a more unambiguous term and already known on the
+> list.
+
+I had been getting the impression that floating submodules would
+automatically update without explicit user intervention.  After
+re-reading your initial floating submodules post, it looks like we do
+match up after the mapping:
+
+  Git        Heiko               Trevor
+  ---------  -----------------   -------------
+  update     update --checkout   update
+             update              update --pull
+
+So I'll go back to "floating" ;).
+
+On Sat, Nov 17, 2012 at 04:30:07PM +0100, Heiko Voigt wrote:
+> > >  (2) "git diff [$path]" and friends in the superproject compares the
+> > >      HEAD of the checkout of the submodule at $path with the tip of
+> > >      the branch named by submodule.$name.branch in .gitmodules of
+> > >      the superproject, instead of the commit that is recorded in the
+> > >      index of the superproject.
+> > >=20
+> >=20
+> > Hmm.  ???git diff??? compares the working tree with the local HEAD (jus=
+t a
+> > SHA for submodules), so I don't think it should care about the status
+> > of a remote branch.  This sounds like you want something like:
+> >=20
+> >   $ git submodule foreach 'git diff origin/$submodule_branch'
+> >=20
+> > Perhaps this is enough motivation for keeping $submodule_* exports?
+> >=20
+> > > and the option were called something like "--follow-branch=3D$branch",
+> > > ???
+>=20
+> I am not sure if hiding changes to the recorded SHA1 from the user is
+> such a useful thing. In the first step I would like it if it was kept
+> simple and only the submodule update machinery learned to follow a
+> branch. If that results in local changes that should be shown. The user
+> is still in charge of recording the updated SHA1 in his commit.
+
+I understand what you're warning against here, or what it has to do
+with "git diff".
+
+> From what I have heard of projects using this: They usually still have
+> something that records the SHA1s on a regular basis. Thinking further,
+> why not record them in git? We could add an option to update which
+> creates such a commit.
+
+I think it's best to have users craft their own commit messages
+explaining why the branch was updated.  That said, an auto-generated
+hint (a la "git merge") would probably be a useful extra feature.
 
 --=20
-=46elipe Contreras
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--+PbGPm1eXpwOoWkI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQp+N4AAoJEEUbTsx0l5OMspQP/1v7zYdht6OUUsZIJfxcoiUO
+CUNQ42hYVZjafJni+Bu4iHXOGKSd+QyLtgJmBfBxIz94qLGldEchyNfyiwmTp28y
+XY2smWmqKEUkCE35FVsic9gbBMvB2+FUYQU6s4lt1KDRtWoWldaC/dhUmAXEqNEP
+2jA9ez5hQEQh8Bg3mJ+pIt9KV3P7SBAug5/EQzzwPmYsq0smeTa9p7O8DsvR3MMD
+wNAaRXqzO0yoj3y/7V2NQM1vwrFvdDmBErFWnGW5EpenpNgQ7fMm0awDmR+sW8Ma
+q0xNHe8ICOTjeNE2zuSDVU9Q7U8fIqqgB/FPgXU1Qr62KrQhK6usttRSH+dbQx+N
+UTQXMBfOJzgsN/a1T6w//2c0SMdg8mGcx26Ra6T51jZFpttsO34QRtqCJdvbdZet
+od81o5Vn0muqwS23VmTdCaCdwrKLTHS59hpIRXRmkbR1mKqyenqullJJzvl4GnB8
+AX5Uff8lg/HSkWcuidV4t0mpNhfY0eKo5hWQj8fKm9iiNAs07/1hG0sJvf619kt0
+k5+SmBlintPVUTQSLD5hmWZLX5quVRMP9CpEFVy3sPR8MKrfuATPRxgv+KmSNZpy
+7All6zOcbEMcQCw+KjzsuPScejc2YIBjMdvpf91JV5Sk1lLd350A7IHPN0J4wDja
+N8fCS2ta2kl9PLKSQFC0
+=VyQ6
+-----END PGP SIGNATURE-----
+
+--+PbGPm1eXpwOoWkI--
