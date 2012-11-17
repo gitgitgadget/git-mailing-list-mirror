@@ -1,57 +1,100 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Re: using multiple version of git simultaneously
-Date: Sat, 17 Nov 2012 14:50:31 +0000
-Message-ID: <1353163831-ner-9354@calvin>
-References: <k886on$nn5$1@ger.gmane.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Sat, 17 Nov 2012 16:04:42 +0100
+Message-ID: <20121117150441.GA7695@book.hvoigt.net>
+References: <20121110184437.GC2739@mjolnir> <20121109162919.GA922@book.hvoigt.net> <20121110190232.GD2739@mjolnir>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: arif <aftnix@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 17 15:55:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sat Nov 17 16:05:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZjnO-0005Bl-8M
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 15:54:58 +0100
+	id 1TZjxC-0006GG-PY
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 16:05:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871Ab2KQOym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2012 09:54:42 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:64116 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751850Ab2KQOym (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2012 09:54:42 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so1437965eaa.19
-        for <git@vger.kernel.org>; Sat, 17 Nov 2012 06:54:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:references:in-reply-to:mime-version:date:message-id
-         :content-type;
-        bh=i/D4TonBNcJtRLxZJYyeob+nunCZ1wYg40CbBmupwDE=;
-        b=mm69+BB0UJGdiEydSjPEohtt7ok2bhrGD4c7WTGQaK02NG50yNJLuMHce3qiuyvCV9
-         NuQmC7ECdt2jTVgZ84WzrNiHfQEedZ9gpD39CLwyAkjyFgpokVw4MjjyvO5PChAueBjk
-         xwg+ae3vFq5lgQr6tLz5N6hULZ5U4J+7hLHh4M5vUnQ82CcK5iqaIE9NXHtMyf4u0Bwt
-         D+IaNS2wh0ysTvgZ4Q8f9Hr1YMH72MfNLoQfLFzV27V5ZXT5tdyUbYWmJ+TiuAYtUgKI
-         Gr5rczFLl8As3RxhCUKiE0bDbGi0UiJmHhxkun3xb/7fCK4xBRZ6UX6nl0nkIihV4liy
-         193A==
-Received: by 10.14.203.69 with SMTP id e45mr7380838eeo.38.1353164081017;
-        Sat, 17 Nov 2012 06:54:41 -0800 (PST)
-Received: from calvin.caurea.org (pub082136067238.dh-hfc.datazug.ch. [82.136.67.238])
-        by mx.google.com with ESMTPS id k2sm10944423eep.15.2012.11.17.06.54.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 17 Nov 2012 06:54:40 -0800 (PST)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id B399A1874EA; Sat, 17 Nov 2012 14:50:32 +0000 (UTC)
-In-Reply-To: <k886on$nn5$1@ger.gmane.org>
+	id S1751983Ab2KQPEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2012 10:04:52 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.31.36]:35914 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850Ab2KQPEv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2012 10:04:51 -0500
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1TZjwo-0001Mi-Ki; Sat, 17 Nov 2012 16:04:43 +0100
+Content-Disposition: inline
+In-Reply-To: <20121110190232.GD2739@mjolnir>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209962>
 
-On Sat, 17 Nov 2012 20:25:21 +0600, arif <aftnix@gmail.com> wrote:
-> I'm trying to use different version of git simultaneously. So how can i
-> append some suffix (like "--program-suffix=git1.8) so that i can
-> distinguish between different versions.
+Hi,
 
-Install each version into its own prefix (~/git/1.8.0/, ~/git/1.7.0/ etc).
+sorry for the late reply but my git time is limited.
+
+On Sat, Nov 10, 2012 at 02:02:32PM -0500, W. Trevor King wrote:
+> On Fri, Nov 09, 2012 at 05:29:27PM +0100, Heiko Voigt wrote:
+> > I think we should agree on a behavior for this option and implement it
+> > the same time when add learns about it. When we were discussing floating
+> > submodules as an important option for the gerrit people I already started
+> > to implement a proof of concept. Please have a look here:
+> > 
+> > https://github.com/hvoigt/git/commits/hv/floating_submodules
+> 
+> After skimming through this, something like
+> 
+>   $ git submodule update --pull
+> 
+> would probably be better than introducing a new command:
+
+Yeah along the lines of that, but one thing to keep in mind:
+
+We already have --rebase and --merge which do slightly different things
+(I think). Adding --pull here should behave similar to them. Like fetch
+and merge is the same to pull without submodules.
+
+If I am understanding your goal correctly your --pull would be
+different. On the other hand: A --pull makes no sense if we apply it to
+the existing --merge option since it merges the recorded sha1 into the
+current HEAD. Just a fetch would not really make a difference.
+
+Thinking along the existing options I would probably still expect --pull
+to merge something into the current HEAD. So maybe we have to iron out
+where this command/option should go. But changing that once we have a
+patch to discuss should not be that much work. So please proceed with
+--pull and once we know exactly what it does we can polish that.
+
+> On Sat, Nov 10, 2012 at 01:44:37PM -0500, W. Trevor King wrote:
+> >   $ git submodule pull-branch
+> 
+> I think "floating submodules" is a misleading name for this feature
+> though, since the checkout SHA is explicitly specified.  We're just
+> making it more convenient to explicitly update the SHA.  How about
+> "tracking submodules"?
+
+Until now we have always called this workflow floating submodules. I
+imaging since the submodule floats to the newest revision (whatever the
+user chooses that to be) instead of staying at the recorded sha1.
+
+"tracking submodules" sounds strange to me since the term tracked in git
+is mainly used in combination with exact recorded history (e.g. tracking
+branch). Since it is about *not* checking out the recorded sha1 but
+something that can change I think that could cause confusion.
+
+I think floating is a more unambiguous term and already known on the
+list.
+
+Cheers Heiko
