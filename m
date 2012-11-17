@@ -1,110 +1,342 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record
-	option
-Date: Sat, 17 Nov 2012 22:31:30 +0100
-Message-ID: <20121117213130.GC7695@book.hvoigt.net>
-References: <20121117153007.GB7695@book.hvoigt.net> <20121117150441.GA7695@book.hvoigt.net> <20121117192026.GI22234@odin.tremily.us>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Sat Nov 17 22:31:54 2012
+From: Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH v4.1 5/5] push: update remote tags only with force
+Date: Sat, 17 Nov 2012 15:53:57 -0600
+Message-ID: <1353189237-19491-1-git-send-email-chris@rorvick.com>
+References: <1353183397-17719-6-git-send-email-chris@rorvick.com>
+Cc: Chris Rorvick <chris@rorvick.com>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 17 22:55:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZpzV-0000ZP-M9
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 22:31:54 +0100
+	id 1TZqLu-0001iW-KS
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 22:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355Ab2KQVbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2012 16:31:38 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.31.36]:42109 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752137Ab2KQVbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2012 16:31:37 -0500
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1TZpz9-0006KM-3F; Sat, 17 Nov 2012 22:31:31 +0100
-Content-Disposition: inline
-In-Reply-To: <20121117192026.GI22234@odin.tremily.us>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1752464Ab2KQVyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2012 16:54:47 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:48340 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752248Ab2KQVyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2012 16:54:08 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k13so5227168iea.19
+        for <git@vger.kernel.org>; Sat, 17 Nov 2012 13:54:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=V2IiOQTqlPQGFF63Z/EesiqobS6lah2mjdoQiBDJEV0=;
+        b=uAbeGgWYA+41UoT5xbU5VJzVXmP7WPg66r6SvpKGbiRUPC6xjTcxZnfhZEZumqyNFy
+         GG2gRDGs0zkmrWp94woPHC+HT+QJ+0LAdOZmgkb3v5SDekqzNs15mvkBIveEKQnMd1PE
+         V4hCV0kKH40e3By+/Y9Ptif/v80a7gVB4yd3pUl1rH/GeALxcMEY59oQrt1mex0MfCNT
+         e4UkZQF15nmHDpxrH7kTCtShVQ3u8FsAi4GCfLtfjqyUnwcPIfOOURSk3YNPZ5W5NjBa
+         GCF0tecMQkkoTgBA14PoP/Tt2xKyhb5myvPJoop1OkVcFjjTkduqxiarN/VLZwriysw/
+         cM1g==
+Received: by 10.50.214.66 with SMTP id ny2mr2890496igc.21.1353189248653;
+        Sat, 17 Nov 2012 13:54:08 -0800 (PST)
+Received: from marlin.localdomain (207-179-211-84.mtco.com. [207.179.211.84])
+        by mx.google.com with ESMTPS id hg2sm3437172igc.3.2012.11.17.13.54.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 17 Nov 2012 13:54:07 -0800 (PST)
+X-Mailer: git-send-email 1.7.11.7
+In-Reply-To: <1353183397-17719-6-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209981>
 
-On Sat, Nov 17, 2012 at 02:20:27PM -0500, W. Trevor King wrote:
-> On Sat, Nov 17, 2012 at 04:30:07PM +0100, Heiko Voigt wrote:
-> > > >  (2) "git diff [$path]" and friends in the superproject compares the
-> > > >      HEAD of thecheckout of the submodule at $path with the tip of
-> > > >      the branch named by submodule.$name.branch in .gitmodules of
-> > > >      the superproject, instead of the commit that is recorded in the
-> > > >      index of the superproject.
-> > > > 
-> > > 
-> > > Hmm.  ???git diff??? compares the working tree with the local HEAD (just a
-> > > SHA for submodules), so I don't think it should care about the status
-> > > of a remote branch.  This sounds like you want something like:
-> > > 
-> > >   $ git submodule foreach 'git diff origin/$submodule_branch'
-> > > 
-> > > Perhaps this is enough motivation for keeping $submodule_* exports?
-> > > 
-> > > > and the option were called something like "--follow-branch=$branch",
-> > > > ???
-> > 
-> > I am not sure if hiding changes to the recorded SHA1 from the user is
-> > such a useful thing. In the first step I would like it if it was kept
-> > simple and only the submodule update machinery learned to follow a
-> > branch. If that results in local changes that should be shown. The user
-> > is still in charge of recording the updated SHA1 in his commit.
-> 
-> I understand what you're warning against here, or what it has to do
-> with "git diff".
+References are allowed to update from one commit-ish to another if the
+former is a ancestor of the latter.  This behavior is oriented to
+branches which are expected to move with commits.  Tag references are
+expected to be static in a repository, though, thus an update to a
+tag (lightweight and annotated) should be rejected unless the update is
+forced.
 
-Is there a not missing here? Reads somehow like that. What I am talking
-about is the suggestion of Junio.  Instead of showing a diff if the
-SHA1 is different we show a diff if the checkout in the worktree is
-different from the tip of the configured branch. That would hide the
-fact that a submodule has changed during a submodule update operation.
+To enable this functionality, the following checks have been added to
+set_ref_status_for_push() for updating refs (i.e, not new or deletion)
+to restrict fast-forwarding in pushes:
 
-> > From what I have heard of projects using this: They usually still have
-> > something that records the SHA1s on a regular basis. Thinking further,
-> > why not record them in git? We could add an option to update which
-> > creates such a commit.
-> 
-> I think it's best to have users craft their own commit messages
-> explaining why the branch was updated.  That said, an auto-generated
-> hint (a la "git merge") would probably be a useful extra feature.
+  1) The old and new references must be commits.  If this fails,
+     it is not a valid update for a branch.
 
-I have the same opinion. Commits should always be created by humans so
-you have someone to blame/ask why. But I guess there are people that
-expect this to be automatic.
+  2) The reference name cannot start with "refs/tags/".  This
+     catches lightweight tags which (usually) point to commits
+     and therefore would not be caught by (1).
 
-One argument somehow goes along the lines:
-"I already created a commit in the submodule why do I need to create
-another one in the superproject? Just follow the HEAD revision!" They
-think in subversions "submodules" which are merely pointers to other svn
-repositories without any revision information. I am unsure if its good
-to support this the same way.
+If either of these checks fails, then it is flagged (by default) with a
+status indicating the update is being rejected due to the reference
+already existing in the remote.  This can be overridden by passing
+--force to git push.
 
-Another use case is big projects that have so many submodules that
-creating superproject commits would create to much maintenance work.
-They want to have their integration server make those commits. That
-would already be supported with update checking out the branch tips and
-the commit is just one extra thing to do by the integration server.
+Signed-off-by: Chris Rorvick <chris@rorvick.com>
+---
 
-So I think it should be fine just to teach update to checkout the
-configured branch tips (or forward them to their tracking branch tips)
-and leave the rest to the user.
+Fix C99 comment.
 
-Cheers Heiko
+ Documentation/git-push.txt | 10 +++++-----
+ builtin/push.c             |  2 +-
+ builtin/send-pack.c        |  5 +++++
+ cache.h                    |  3 ++-
+ remote.c                   | 24 ++++++++++++++++++++----
+ send-pack.c                |  1 +
+ t/t5516-fetch-push.sh      | 42 +++++++++++++++++++++++++++++++++++++++++-
+ transport-helper.c         |  6 ++++++
+ transport.c                |  8 ++++++--
+ 9 files changed, 87 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index fe46c42..479e25f 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -51,11 +51,11 @@ be named. If `:`<dst> is omitted, the same ref as <src> will be
+ updated.
+ +
+ The object referenced by <src> is used to update the <dst> reference
+-on the remote side, but by default this is only allowed if the
+-update can fast-forward <dst>.  By having the optional leading `+`,
+-you can tell git to update the <dst> ref even when the update is not a
+-fast-forward.  This does *not* attempt to merge <src> into <dst>.  See
+-EXAMPLES below for details.
++on the remote side.  By default this is only allowed if the update is
++a branch, and then only if it can fast-forward <dst>.  By having the
++optional leading `+`, you can tell git to update the <dst> ref even when
++the update is not a branch or it is not a fast-forward.  This does *not*
++attempt to merge <src> into <dst>.  See EXAMPLES below for details.
+ +
+ `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
+ +
+diff --git a/builtin/push.c b/builtin/push.c
+index 0e13e11..cd7aa3f 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -222,7 +222,7 @@ static const char message_advice_checkout_pull_push[] =
+ 
+ static const char message_advice_ref_already_exists[] =
+ 	N_("Updates were rejected because a matching reference already exists in\n"
+-	   "the remote and the update is not a fast-forward.");
++	   "the remote.");
+ 
+ static void advise_pull_before_push(void)
+ {
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index fda28bc..1eabf42 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -44,6 +44,11 @@ static void print_helper_status(struct ref *ref)
+ 			msg = "non-fast forward";
+ 			break;
+ 
++		case REF_STATUS_REJECT_ALREADY_EXISTS:
++			res = "error";
++			msg = "already exists";
++			break;
++
+ 		case REF_STATUS_REJECT_NODELETE:
+ 		case REF_STATUS_REMOTE_REJECT:
+ 			res = "error";
+diff --git a/cache.h b/cache.h
+index f410d94..127e504 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1004,13 +1004,14 @@ struct ref {
+ 		requires_force:1,
+ 		merge:1,
+ 		nonfastforward:1,
+-		is_a_tag:1,
++		forwardable:1,
+ 		update:1,
+ 		deletion:1;
+ 	enum {
+ 		REF_STATUS_NONE = 0,
+ 		REF_STATUS_OK,
+ 		REF_STATUS_REJECT_NONFASTFORWARD,
++		REF_STATUS_REJECT_ALREADY_EXISTS,
+ 		REF_STATUS_REJECT_NODELETE,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+diff --git a/remote.c b/remote.c
+index 44e72d6..a723f7a 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1311,14 +1311,24 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *     to overwrite it; you would not know what you are losing
+ 		 *     otherwise.
+ 		 *
+-		 * (3) if both new and old are commit-ish, and new is a
+-		 *     descendant of old, it is OK.
++		 * (3) if new is commit-ish and old is a commit, new is a
++		 *     descendant of old, and the reference is not of the
++		 *     refs/tags/ hierarchy it is OK.
+ 		 *
+ 		 * (4) regardless of all of the above, removing :B is
+ 		 *     always allowed.
+ 		 */
+ 
+-		ref->is_a_tag = !prefixcmp(ref->name, "refs/tags/");
++		if (prefixcmp(ref->name, "refs/tags/")) {
++			/* Additionally, disallow fast-forwarding if
++			 * the old object is not a commit.  This kicks
++			 * out annotated tags that might pass the
++			 * is_newer() test but dangle if the reference
++			 * is updated.
++			 */
++			struct object *obj = parse_object(ref->old_sha1);
++			ref->forwardable = !obj || obj->type == OBJ_COMMIT;
++		}
+ 
+ 		ref->update =
+ 			!ref->deletion &&
+@@ -1329,7 +1339,13 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 				!has_sha1_file(ref->old_sha1)
+ 				  || !ref_newer(ref->new_sha1, ref->old_sha1);
+ 
+-			if (ref->nonfastforward) {
++			if (!ref->forwardable) {
++				ref->requires_force = 1;
++				if (!force_ref_update) {
++					ref->status = REF_STATUS_REJECT_ALREADY_EXISTS;
++					continue;
++				}
++			} else if (ref->nonfastforward) {
+ 				ref->requires_force = 1;
+ 				if (!force_ref_update) {
+ 					ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
+diff --git a/send-pack.c b/send-pack.c
+index f50dfd9..1c375f0 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -229,6 +229,7 @@ int send_pack(struct send_pack_args *args,
+ 		/* Check for statuses set by set_ref_status_for_push() */
+ 		switch (ref->status) {
+ 		case REF_STATUS_REJECT_NONFASTFORWARD:
++		case REF_STATUS_REJECT_ALREADY_EXISTS:
+ 		case REF_STATUS_UPTODATE:
+ 			continue;
+ 		default:
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index b5417cc..ca800b2 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -368,7 +368,7 @@ test_expect_success 'push with colon-less refspec (2)' '
+ 		git branch -D frotz
+ 	fi &&
+ 	git tag -f frotz &&
+-	git push testrepo frotz &&
++	git push -f testrepo frotz &&
+ 	check_push_result $the_commit tags/frotz &&
+ 	check_push_result $the_first_commit heads/frotz
+ 
+@@ -929,6 +929,46 @@ test_expect_success 'push into aliased refs (inconsistent)' '
+ 	)
+ '
+ 
++test_expect_success 'push requires --force to update lightweight tag' '
++	mk_test heads/master &&
++	mk_child child1 &&
++	mk_child child2 &&
++	(
++		cd child1 &&
++		git tag Tag &&
++		git push ../child2 Tag &&
++		>file1 &&
++		git add file1 &&
++		git commit -m "file1" &&
++		git tag -f Tag &&
++		test_must_fail git push ../child2 Tag &&
++		git push --force ../child2 Tag &&
++		git tag -f Tag &&
++		test_must_fail git push ../child2 Tag HEAD~ &&
++		git push --force ../child2 Tag
++	)
++'
++
++test_expect_success 'push requires --force to update annotated tag' '
++	mk_test heads/master &&
++	mk_child child1 &&
++	mk_child child2 &&
++	(
++		cd child1 &&
++		git tag -a -m "message 1" Tag &&
++		git push ../child2 Tag:refs/tmp/Tag &&
++		>file1 &&
++		git add file1 &&
++		git commit -m "file1" &&
++		git tag -f -a -m "message 2" Tag &&
++		test_must_fail git push ../child2 Tag:refs/tmp/Tag &&
++		git push --force ../child2 Tag:refs/tmp/Tag &&
++		git tag -f -a -m "message 3" Tag HEAD~ &&
++		test_must_fail git push ../child2 Tag:refs/tmp/Tag &&
++		git push --force ../child2 Tag:refs/tmp/Tag
++	)
++'
++
+ test_expect_success 'push --porcelain' '
+ 	mk_empty &&
+ 	echo >.git/foo  "To testrepo" &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 4713b69..965b778 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -661,6 +661,11 @@ static void push_update_ref_status(struct strbuf *buf,
+ 			free(msg);
+ 			msg = NULL;
+ 		}
++		else if (!strcmp(msg, "already exists")) {
++			status = REF_STATUS_REJECT_ALREADY_EXISTS;
++			free(msg);
++			msg = NULL;
++		}
+ 	}
+ 
+ 	if (*ref)
+@@ -720,6 +725,7 @@ static int push_refs_with_push(struct transport *transport,
+ 		/* Check for statuses set by set_ref_status_for_push() */
+ 		switch (ref->status) {
+ 		case REF_STATUS_REJECT_NONFASTFORWARD:
++		case REF_STATUS_REJECT_ALREADY_EXISTS:
+ 		case REF_STATUS_UPTODATE:
+ 			continue;
+ 		default:
+diff --git a/transport.c b/transport.c
+index 60a7421..a380ad7 100644
+--- a/transport.c
++++ b/transport.c
+@@ -695,6 +695,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+ 						 "non-fast-forward", porcelain);
+ 		break;
++	case REF_STATUS_REJECT_ALREADY_EXISTS:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++						 "already exists", porcelain);
++		break;
+ 	case REF_STATUS_REMOTE_REJECT:
+ 		print_ref_status('!', "[remote rejected]", ref,
+ 						 ref->deletion ? NULL : ref->peer_ref,
+@@ -740,12 +744,12 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+ 		    ref->status != REF_STATUS_OK)
+ 			n += print_one_push_status(ref, dest, n, porcelain);
+ 		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
+-			if (!ref->is_a_tag)
+-				*reject_mask |= REJECT_ALREADY_EXISTS;
+ 			if (!strcmp(head, ref->name))
+ 				*reject_mask |= REJECT_NON_FF_HEAD;
+ 			else
+ 				*reject_mask |= REJECT_NON_FF_OTHER;
++		} else if (ref->status == REF_STATUS_REJECT_ALREADY_EXISTS) {
++			*reject_mask |= REJECT_ALREADY_EXISTS;
+ 		}
+ 	}
+ }
+-- 
+1.7.11.7
