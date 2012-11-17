@@ -1,71 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: `git mv` has ambiguous error message for non-existing target
-Date: Sat, 17 Nov 2012 11:35:09 -0800
-Message-ID: <7vpq3cja4y.fsf@alter.siamese.dyndns.org>
-References: <50A53A80.4080203@gmx.de>
- <7vehju8h5j.fsf@alter.siamese.dyndns.org> <50A5E6D2.5060609@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Patrick Lehner <lehner.patrick@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Nov 17 20:35:35 2012
+From: Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH v4 0/5] push: update remote tags only with force
+Date: Sat, 17 Nov 2012 14:16:32 -0600
+Message-ID: <1353183397-17719-1-git-send-email-chris@rorvick.com>
+Cc: Chris Rorvick <chris@rorvick.com>,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 17 21:17:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZoAs-0005EC-M2
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 20:35:31 +0100
+	id 1TZop6-0007U8-P7
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 21:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092Ab2KQTfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2012 14:35:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752030Ab2KQTfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2012 14:35:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 138F0A2E5;
-	Sat, 17 Nov 2012 14:35:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YSviXdl6G1sFgvdaxzWhkY6+XHo=; b=DkVRrN
-	a6reFHGJipNTrnFAAGJdv9ypInze0iqODlh6Xrb/m3NzmzlYIY0K6qUXiHdLcyyG
-	QzqgQiC3MJXj+vy8P43Y6huwpEEXpoUSAFWjEDwKEy/Omi3bxenfVvaFT6/OZQEh
-	KgGbKKntlCtNhlkcvRHXCvTCy/K75E0OJ1flI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tyyzr0699yZDR1w/6lwPUmtxIq1c7NzT
-	av+nPx9pfcsPGe9sR1ILoZ4B6NZpaXwARO8SYV9zCAHeJVDlx70YVE5bbgUdC7if
-	ufSMrZ7C3NNuVcAsBSVmbxAY0cMYYJPaPyl7IXlh27MXLYGz4OdKS+deZxSbXBJg
-	dGERozWZCSw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00F26A2E4;
-	Sat, 17 Nov 2012 14:35:12 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71836A2E3; Sat, 17 Nov 2012
- 14:35:11 -0500 (EST)
-In-Reply-To: <50A5E6D2.5060609@gmx.de> (Patrick Lehner's message of "Fri, 16
- Nov 2012 08:10:10 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E6F4E06E-30ED-11E2-8A4E-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752184Ab2KQUQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2012 15:16:50 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:41760 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179Ab2KQUQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2012 15:16:49 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k13so5173856iea.19
+        for <git@vger.kernel.org>; Sat, 17 Nov 2012 12:16:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=cGIU58jNzF7RXGMyoQ37kbmVEnNKbh0QlKNwSdp9G0s=;
+        b=gmlbiVbphY/BEbNR6LvnDrB3dIDRNYNYhvwDCN/TtXK/L1rXa5DAmYNcanLo/LM6/S
+         bWHWygIzK9lc+pDR7P6ygdNOZ6A6EQMOYxNPUKbw4VVDwvkVGeNRnbZfBFsY1buYbC03
+         k77LTSHU4SeWXc3QAyQYtnbQq8FQghf/ozPK248xj8/Wb6dt3pxTBs5cuuCRkb9kfbVP
+         ukohR6w3WSMyZCbz3h3DCepkUPEts/B/ve6z4JiY5IuC7SV6rPJVRPkhSzK3F2XRp8q9
+         cKToqWyJyxPjObER8blfNXK1VO39iLNzX7wjuMT0LiV6LvRb9pUM0J9QYC5KjjSOhqRh
+         4dCw==
+Received: by 10.50.33.169 with SMTP id s9mr2755254igi.19.1353183408690;
+        Sat, 17 Nov 2012 12:16:48 -0800 (PST)
+Received: from marlin.localdomain (207-179-211-84.mtco.com. [207.179.211.84])
+        by mx.google.com with ESMTPS id wm10sm3269004igc.2.2012.11.17.12.16.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 17 Nov 2012 12:16:47 -0800 (PST)
+X-Mailer: git-send-email 1.7.11.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209973>
 
-Patrick Lehner <lehner.patrick@gmx.de> writes:
+This patch set can be divided into two sets:
 
-> But just because mv's error essage isnt very good, does that mean git
-> mv's error message mustn't be better?
+  1. Provide useful advice for rejected tag references.
 
-Did I say the error message from 'mv' was not very good in the
-message you are responding to (by the way, this is why you should
-never top-post when you are responding to a message on this list)?
+     push: return reject reasons via a mask
+     push: add advice for rejected tag reference
 
-I meant to say that the message from 'mv' is good enough, so is the
-one given by 'git mv'.
+     Recommending a merge to resolve a rejected tag update seems
+     nonsensical since the tag does not come along for the ride.  These
+     patches change the advice for rejected tags to suggest using
+     "push -f".
 
-I wouldn't reject a patch that updates our message to something more
-informative without looking at it, though.
+  2. Require force when updating tag references, even on a fast-forward.
+
+     push: flag updates
+     push: flag updates that require force
+     push: update remote tags only with force
+
+     This is in response to the following thread:
+
+       http://thread.gmane.org/gmane.comp.version-control.git/208354
+
+     This solution prevents fast-forwards if the reference is of the
+     refs/tags/* hierarchy or if the old object is not a commit.
+
+These patches contain the following updates since the v3 set:
+
+  * builtin/push.c: Remove "push --force" suggestion from advice.
+  * remote.c: Only require old object to be a commit to be forwardable.
+      I added the check for object types based comments from Peff in
+      original thread, and I think this implementation is actually what
+      he intended.  If the new object is a tag, the operation is not
+      destructive so there is no reason to block it (at least within
+      the scope of these changes) as was done in the previous iteration.
+  * t/t5516-fetch-push.sh: Create separate tests for the lightweight and
+      annotated cases.  Do the annotated tests outside of refs/tags/
+      so that it actually tests different functionality.
+
+Chris Rorvick (5):
+  push: return reject reasons via a mask
+  push: add advice for rejected tag reference
+  push: flag updates
+  push: flag updates that require force
+  push: update remote tags only with force
+
+ Documentation/git-push.txt | 10 +++++-----
+ builtin/push.c             | 24 +++++++++++++++---------
+ builtin/send-pack.c        |  9 +++++++--
+ cache.h                    |  7 ++++++-
+ remote.c                   | 46 ++++++++++++++++++++++++++++++++++++----------
+ send-pack.c                |  1 +
+ t/t5516-fetch-push.sh      | 30 +++++++++++++++++++++++++++++-
+ transport-helper.c         |  6 ++++++
+ transport.c                | 25 +++++++++++++++----------
+ transport.h                | 10 ++++++----
+ 10 files changed, 126 insertions(+), 42 deletions(-)
+
+-- 
+1.8.0.155.g3a063ad.dirty
