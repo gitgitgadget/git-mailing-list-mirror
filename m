@@ -1,95 +1,109 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 4/5] completion: get rid of compgen
-Date: Sat, 17 Nov 2012 12:42:38 +0100
-Message-ID: <CAMP44s21CUb3_KhHBfJXW+Eqd45kz1hcbx3GCbs+f0HNRDEAzw@mail.gmail.com>
-References: <1353116298-11798-1-git-send-email-felipe.contreras@gmail.com>
-	<1353116298-11798-5-git-send-email-felipe.contreras@gmail.com>
-	<20121117110031.GE12052@goldbirke>
+Subject: Re: [PATCH] tcsh-completion re-using git-completion.bash
+Date: Sat, 17 Nov 2012 12:46:27 +0100
+Message-ID: <CAMP44s3FFEGJDa6cnwVY0aJkoU_-OdvDPD0gPQtrUqdY2JCpWw@mail.gmail.com>
+References: <CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
+	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
+	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
+	<CAMP44s1RvMSBu2RJqKw9ne4cJyMO4dbFc-gW2HgsN2-uviv=fA@mail.gmail.com>
+	<CAFj1UpHMc-bHJgSZKY13YH_69TXkz-50g5xpLA6C+Eh0aqcN9A@mail.gmail.com>
+	<CAMP44s3S4c7ciJNurxGdS2o_TDJJDkGK73dtCGji+C1NoV+Jvw@mail.gmail.com>
+	<20121116204017.GX12052@goldbirke>
+	<CAMP44s2UVGKa7XkqPxdxQ2ueSMn=Xn4qihy5JWbDovH85n8BwQ@mail.gmail.com>
+	<20121116212224.GA12052@goldbirke>
+	<CAMP44s3pi0iDOho_qYZEutebDNDveWWv6wEAs-C1bs1A_yL+Sg@mail.gmail.com>
+	<20121117105605.GB12052@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robert Zeh <robert.a.zeh@gmail.com>,
-	Peter van der Does <peter@avirtualhome.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Cc: Marc Khouzam <marc.khouzam@gmail.com>, git@vger.kernel.org
 To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Nov 17 12:42:54 2012
+X-From: git-owner@vger.kernel.org Sat Nov 17 12:46:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZgnV-000833-FV
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 12:42:53 +0100
+	id 1TZgrB-0003H1-NH
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 12:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751603Ab2KQLmk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 06:42:40 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:61321 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751490Ab2KQLmj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 06:42:39 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so3588803oag.19
-        for <git@vger.kernel.org>; Sat, 17 Nov 2012 03:42:38 -0800 (PST)
+	id S1751570Ab2KQLq2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 06:46:28 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:60584 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484Ab2KQLq1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 06:46:27 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so3602266obb.19
+        for <git@vger.kernel.org>; Sat, 17 Nov 2012 03:46:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=1vlZeT1sllNq+m/ivmWpBclJ8LbRsJCTDoxKLh5WUS8=;
-        b=r/FTOHGwZxaBK0SnVqUDAlAD4MIW8b1CuLp65QLDhr24mr4Nb9cvamMa2P0c/cECpM
-         Vf0cg1JH2JtWOT2l4aXEgFtqPvO34t9XCcWzH8xG+tBXtD4vC66SxRxYRJ9Qud/w2zD2
-         lnXaZGGnm6MhTvf3UGb2B3uXzNFEcoPk5OjAlffm9BZDUp3rhzPWSRrIH2nep189z6Wy
-         +A0K/E5aMGccoWmR9AgUWSbyJ9UePIw2+6p3wQhDqmL/BNuZkBINebWZR7yAUXGoeQ99
-         yhx58Dc5Q0tMuycXCo9W8hzU6xnsPOGVHuHUgOM4g62CUXKrlU0Z6rxb1b01tHQEAFX+
-         LhWA==
-Received: by 10.60.14.101 with SMTP id o5mr3701349oec.85.1353152558910; Sat,
- 17 Nov 2012 03:42:38 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Sat, 17 Nov 2012 03:42:38 -0800 (PST)
-In-Reply-To: <20121117110031.GE12052@goldbirke>
+        bh=VLboHlw77cXoCOKDOw3WvWEzx/0Mez2z/CegvuElvD4=;
+        b=yNbx3ZtcEVvCPxhrU1/ezUtK3GkgPtiLzBf+k2nVjrwAIE9EjXycEG6ewcHpJRDqpg
+         Ula0jCxeJjHw4FC+5Q8JedNqhw+43V9smsc64ve9FpbfvSac2KKnd7kWtw1vkaUobXCB
+         B8obt/BHGHrPcu/4pnQCDa8cV2vpWB+R18lhsM8J6C19o2SjcOFj7x8TeUpnXycqLkWx
+         jL17bUuEQm9nPgx08vetfIVB3Dh4nvXgxMx2gZ8TlTqloeouB4jiYrpG4LVe01YCRgp6
+         OxOmEMpi7clkRJzZxwQLW2MV+kbVwWRSv6+LsFtNNs8O0Z5gE3Dqb3uo2LmtI6E3Z3fW
+         Mo/A==
+Received: by 10.60.14.101 with SMTP id o5mr3705682oec.85.1353152787189; Sat,
+ 17 Nov 2012 03:46:27 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Sat, 17 Nov 2012 03:46:27 -0800 (PST)
+In-Reply-To: <20121117105605.GB12052@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209951>
 
-On Sat, Nov 17, 2012 at 12:00 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
+On Sat, Nov 17, 2012 at 11:56 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
  wrote:
-> On Sat, Nov 17, 2012 at 02:38:17AM +0100, Felipe Contreras wrote:
->> The functionality we use is very simple, plus, this fixes a known
->> breakage 'complete tree filename with metacharacters'.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  contrib/completion/git-completion.bash | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
-tion/git-completion.bash
->> index 975ae13..ad3e1fe 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -227,7 +227,11 @@ fi
->>
->>  __gitcompadd ()
->>  {
->> -     COMPREPLY=3D($(compgen -W "$1" -P "$2" -S "$4" -- "$3"))
->> +     for x in $1; do
->> +             if [[ "$x" =3D "$3"* ]]; then
->> +                     COMPREPLY+=3D("$2$x$4")
->> +             fi
->> +     done
->
-> The whole point of creating __gitcomp_nl() back then was to fill
-> COMPREPLY without iterating through all words in the wordlist, making
-> completion faster for large number of words, e.g. a lot of refs, or
-> later a lot of symbols for 'git grep' in a larger project.
->
-> The loop here kills that optimization.
+> On Fri, Nov 16, 2012 at 10:46:16PM +0100, Felipe Contreras wrote:
 
-So your solution is to move the loop to awk? I fail to see how that
-could bring more optimization, specially since it includes an extra
-fork now.
+>> But even in that case, if push comes to shoves, this zsh wrapper can
+>> ultimately read COMPREPLY and figure things backwards, as even more
+>> previous versions did:
+>>
+>> http://article.gmane.org/gmane.comp.version-control.git/189310
+>
+> Even better.  I was just going to propose that zsh's completion could
+> just read the contents of COMPREPLY at the end of _git() and _gitk(),
+> because this way no zsh-induced helper functions and changes would be
+> needed to the completion script at all.
+
+I would rather modify the __gitcomp function. Parsing COMPREPLY is too
+cumbersome.
+
+> However, running the completion script with Bash would also prevent
+> possible issues caused by incompatibilities between the two shells
+> mentioned below.
+
+It could, but it doesn't now.
+
+>> >> This is the equivalent of what Marc is doing, except that zsh has=
+ no
+>> >> problems running bash's code. Note there's a difference with zsh'=
+s
+>> >> emulation bash (or rather bourne shell, or k shell), and zsh's
+>> >> emulation of bash's _completion_. The former is fine, the later i=
+s
+>> >> not.
+>> >
+>> > There are a couple of constructs supported by Bash but not by zsh,
+>> > which we usually try to avoid.
+>>
+>> Yes, and is that a big deal?
+>
+> Not that big, but I wanted to point out that it's not "fine" either.
+> Just a slight maintenance burden, because we have to pay attention no=
+t
+> to use such constructs.
+
+Do we have to pay attention?
+
+I say when we encounter one of such maintenance burden issues _then_
+we think about it. In the meantime for all we know sourcing bash's
+script from zsh is fine.
 
 --=20
 =46elipe Contreras
