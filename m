@@ -1,138 +1,82 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
-Date: Sat, 17 Nov 2012 17:00:07 -0500
-Message-ID: <20121117220007.GJ22234@odin.tremily.us>
-References: <20121117153007.GB7695@book.hvoigt.net>
- <20121117150441.GA7695@book.hvoigt.net>
- <20121117192026.GI22234@odin.tremily.us>
- <20121117213130.GC7695@book.hvoigt.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/7] completion: make the 'basic' test more
+ tester-friendly
+Date: Sat, 17 Nov 2012 15:00:22 -0800
+Message-ID: <20121117230022.GA3815@elie.Belkin>
+References: <1353150353-29874-1-git-send-email-szeder@ira.uka.de>
+ <1353150353-29874-2-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=5me2qT3T17SWzdxI
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sat Nov 17 23:00:34 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Nov 18 00:00:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZqRA-0005nu-Ak
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Nov 2012 23:00:28 +0100
+	id 1TZrNV-0000U5-EI
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 00:00:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752339Ab2KQWAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2012 17:00:12 -0500
-Received: from vms173021pub.verizon.net ([206.46.173.21]:57815 "EHLO
-	vms173021pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752275Ab2KQWAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2012 17:00:11 -0500
-Received: from odin.tremily.us ([unknown] [72.68.87.214])
- by vms173021.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MDN006LZJS7KT30@vms173021.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 17 Nov 2012 16:00:08 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 4AD40695A09; Sat,
- 17 Nov 2012 17:00:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1353189607; bh=GsbKxR/AKNaHM6IfoBQX98v2Y5B4GmZCK+BAOEBGIRk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dh5Dt0me6qShbbik94/BGBeJc9d4iymq8KZ+oY+++TrPtA3I7DjSYvkGQ/kO80K0M
- E7PAbRptcyCTypBFs7FxChTL1vtZtYjH7X94z8JPWoyPpSJNgN6TTIimTXGbgkkHUz
- 31jWNT6Tl5F6lF/krCQ3dIevgwnhC/3/vnTVOGgQ=
-Content-disposition: inline
-In-reply-to: <20121117213130.GC7695@book.hvoigt.net>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752384Ab2KQXAb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2012 18:00:31 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:45443 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752303Ab2KQXAa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2012 18:00:30 -0500
+Received: by mail-pa0-f46.google.com with SMTP id hz1so2602765pad.19
+        for <git@vger.kernel.org>; Sat, 17 Nov 2012 15:00:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=4OdXFgD3DU5K7Nv4QssyHQb94VxLe4U42kag2LhMCm8=;
+        b=Ako47a9U3QmGPFiFbH78ct6+7sfAyCLOBA9w2iBEiGbZKXVJjFJxSg3g3s+cKNF9pn
+         h6wHyt3U25hZUC0nNd6IK6+Ppzo3rBy6SI9oJx5uE2Iv6W67NTDs5rEMmbGfHnRip1xl
+         /s8HAqF6NS//5oRi29/pQrQJxBztBIIJoHTS6p0jCVkMiXYpVkhWbuoJ94CICOJeUCq4
+         8nqfA7LrsBeAj0JGetEJ6aCxHjl+8BFOGmRd/I3YCM+jAm21VOXT1eJi2k9XM2fsUnuE
+         hKBCXSRcZmmUCKBHkP1MbU/EuN7+A+QGBIdvwCSqbfuFIr64P6H21YcaOOGgTBJzbVu1
+         rdHA==
+Received: by 10.66.75.165 with SMTP id d5mr24621493paw.39.1353193230402;
+        Sat, 17 Nov 2012 15:00:30 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id bc8sm3436609pab.5.2012.11.17.15.00.28
+        (version=SSLv3 cipher=OTHER);
+        Sat, 17 Nov 2012 15:00:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1353150353-29874-2-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209983>
 
+SZEDER G=C3=A1bor wrote:
 
---5me2qT3T17SWzdxI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The 'basic' test uses 'grep -q' to filter the resulting possible
+> completion words while looking for the presence or absence of certain
+> git commands, and relies on grep's exit status to indicate a failure.
+[...]
+> To make testers' life easier provide some output about the failed
+> condition: store the results of the filtering in a file and compare
+> its contents to the expected results by the good old test_cmp helper.
 
-On Sat, Nov 17, 2012 at 10:31:30PM +0100, Heiko Voigt wrote:
-> On Sat, Nov 17, 2012 at 02:20:27PM -0500, W. Trevor King wrote:
-> > On Sat, Nov 17, 2012 at 04:30:07PM +0100, Heiko Voigt wrote:
-> > > > >  (2) "git diff [$path]" and friends in the superproject compares =
-the
-> > > > >      HEAD of thecheckout of the submodule at $path with the tip of
-> > > > >      the branch named by submodule.$name.branch in .gitmodules of
-> > > > >      the superproject, instead of the commit that is recorded in =
-the
-> > > > >      index of the superproject.
-> > > > >=20
-> > > >=20
-> > > > Hmm.  ???git diff??? compares the working tree with the local HEAD =
-(just a
-> > > > SHA for submodules), so I don't think it should care about the stat=
-us
-> > > > of a remote branch.  This sounds like you want something like:
-> > > >=20
-> > > >   $ git submodule foreach 'git diff origin/$submodule_branch'
-> > > >=20
-> > > > Perhaps this is enough motivation for keeping $submodule_* exports?
-> > > >=20
-> > > > > and the option were called something like "--follow-branch=3D$bra=
-nch",
-> > > > > ???
-> > >=20
-> > > I am not sure if hiding changes to the recorded SHA1 from the user is
-> > > such a useful thing. In the first step I would like it if it was kept
-> > > simple and only the submodule update machinery learned to follow a
-> > > branch. If that results in local changes that should be shown. The us=
-er
-> > > is still in charge of recording the updated SHA1 in his commit.
-> >=20
-> > I understand what you're warning against here, or what it has to do
-> > with "git diff".
->=20
-> Is there a not missing here?
+Looks good.  I wonder if this points to the need for a test_grep
+helper more generally.
 
-Thanks.  I'd meant to say "I don't understand=E2=80=A6".
+[...]
+>  	run_completion "git f" &&
+> -	! grep -q -v "^f" out
+> +	>expected &&
+> +	sed -n "/^[^f]/p" out >out2 &&
+> +	test_cmp expected out2
 
-> What I am talking about is the suggestion of Junio.  Instead of
-> showing a diff if the SHA1 is different we show a diff if the
-> checkout in the worktree is different from the tip of the configured
-> branch. That would hide the fact that a submodule has changed during
-> a submodule update operation.
+=46unctional change: before, this would fail if "out" contained a blank
+line, while afterward it does not.  I doubt that matters, though.
 
-Ahh, now I understand.  I agree that comparing to the remote tip is a
-bad idea.
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---5me2qT3T17SWzdxI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQqAjkAAoJEEUbTsx0l5OMeroP/itIgcpQuowsJ+TGfOt08mYa
-+dW0RWZm2SeXTrd28rn8OKnEUBMFtEIz1dGGdpHVHKp88pn9Uh8q1uof+Ug3kjOx
-KvW+QGSBR7IagnZg8d1ufDNHJLiGxpBlEi3rBEq1qNwzPf9vGA/OV/L7ir+tIlcd
-pmT6qZ9n5K1mq+oJVRnvdl94fhO8KbI8dBD0MFX8Hzsr9qkZHDNP/UBbSYcDunKz
-clpc9zWmB9P2bQQHwJ7Np0Fq6Mda4+es9uY//QwJSnt8jKC1XM+gZ8OKa3KF45fA
-EeiaiYs4aCrsoc7zKFuEbb1Vg4RKxNODuabhGnHwC6LxW3hDRmD+XdfEw0O6amlj
-RVpfree67W9DLanwZWvnHH7OgW8/uoKGkAbSKsTmbj43541eZVVEeyAsuDayw9U8
-VVdbpxZQ4hOvx1Lut9YpT5tiQz5KyDrt9jSwiECTuPmMZV1BBfpejmfe6s/yJpMj
-4vn/HSgJQ4hSeXyB2uMHKZz0UK6qa+wTbG/91GhqhuzmYEs3AdqNWnC5swwWt7bI
-vCvO0WrlCH/krr7Oio1MKDAd2qMajQuwmb+v/QGXPo9gSHivbsSIu2X5a1WPE3tb
-/o3+nS8LoWAeV905LNdFeoO+BC4nNJlOnYG7AP4BOJPj5aH/idC/lJw8Y+RNwOyI
-XfwFjMKAoyvgtYWrdodJ
-=Z1TR
------END PGP SIGNATURE-----
-
---5me2qT3T17SWzdxI--
+Thanks and hope that helps,
+Jonathan
