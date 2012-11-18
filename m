@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/4] pathspec: save the non-wildcard length part
-Date: Sun, 18 Nov 2012 16:13:06 +0700
-Message-ID: <1353229989-13075-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/4] tree_entry_interesting: do basedir compare on wildcard patterns when possible
+Date: Sun, 18 Nov 2012 16:13:09 +0700
+Message-ID: <1353229989-13075-5-git-send-email-pclouds@gmail.com>
 References: <1353229989-13075-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,154 +10,173 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 18 10:13:33 2012
+X-From: git-owner@vger.kernel.org Sun Nov 18 10:13:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ta0wQ-0005sk-Mh
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 10:13:27 +0100
+	id 1Ta0wh-00064d-ND
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 10:13:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab2KRJNK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Nov 2012 04:13:10 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:47775 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466Ab2KRJNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2012 04:13:08 -0500
-Received: by mail-pa0-f46.google.com with SMTP id hz1so2748716pad.19
-        for <git@vger.kernel.org>; Sun, 18 Nov 2012 01:13:08 -0800 (PST)
+	id S1751698Ab2KRJN1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Nov 2012 04:13:27 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:32812 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751490Ab2KRJNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2012 04:13:25 -0500
+Received: by mail-da0-f46.google.com with SMTP id p5so313271dak.19
+        for <git@vger.kernel.org>; Sun, 18 Nov 2012 01:13:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=CaeQbTCAwPamL+xYcx72bPY0tBCctXBZTEzCZw2azHI=;
-        b=oDhwo46x3Q3arwctUYfUPNVPP9/GBZnShMW2xHt9bQFd3YKm8Sqai29XF2KAW6lONy
-         l/P0NFb/Z9/AjtRkTWEaK0Bmme75+ze/c8EwCBp23CGKbJZzIrWHL3Z9J1Bo3ewUXpkE
-         WD0k8mBcgoYko7YWY/qjM+BZ34go9Zbxlzf9FlGCJuagKfkRiG2WTYcOuc/ZTV4GjYIb
-         /hqbVtlbLSddnFzTpDVOD6r21HbMUQeXn2fl9X3/BIbhjYANhEiOojR+QSMd86ucJhE6
-         M/MQaFyR1T120UVYcUtLnRtO9Q9QEKH2w+fyRBLjon3tivZlmu6Zt2Z+fD7WO/t51bTo
-         2amw==
-Received: by 10.68.239.232 with SMTP id vv8mr24217571pbc.53.1353229988065;
-        Sun, 18 Nov 2012 01:13:08 -0800 (PST)
+        bh=DaZqoVchNiQtcW2S9GLITcPi0PF7GiOETtV4mLrK/Pw=;
+        b=vKuAhTXDVYKVSupsO1BgCIrAk10NRAOyveBLBcXDwed4NYj5vuUkKOHtBUcByJZZjb
+         eh64+VRiBCLkAtD8PnYvJKjy2QzdLIXdwrtxXNhG6oCCQcpMllYY58RiJhBzNFge6Bxd
+         QhRpxsq2Y9G1yIRvS/HC13o9UAjjDuRWaX6fPmWPxQ6XyrkVeTI4IMSaQTmUixTZXwic
+         xY8A9r75ak3ljacV4KxK3+dkAdZhnRtqmbvIc70OArDDgdO8FcBr7XqDHTRvN0StvkM8
+         HOlEbuihkyfvDNt9pA1hYwLj8wkMC4DJiddtcKk8rTH30i7T/NdDNEou+W1obxKIRoiz
+         ZU/w==
+Received: by 10.68.247.39 with SMTP id yb7mr24639751pbc.15.1353230005264;
+        Sun, 18 Nov 2012 01:13:25 -0800 (PST)
 Received: from lanh ([115.74.37.170])
-        by mx.google.com with ESMTPS id bc8sm4165713pab.5.2012.11.18.01.13.05
+        by mx.google.com with ESMTPS id os5sm4240568pbc.15.2012.11.18.01.13.22
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 18 Nov 2012 01:13:07 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 18 Nov 2012 16:13:15 +0700
+        Sun, 18 Nov 2012 01:13:24 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 18 Nov 2012 16:13:32 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1353229989-13075-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210001>
 
-We marks pathspec with wildcards with the field use_wildcard. We could
-do better by saving the length of the non-wildcard part, which can be
-for optimizations such as f9f6e2c (exclude: do strcmp as much as
-possible before fnmatch - 2012-06-07)
+Currently we treat "*.c" and "path/to/*.c" the same way. Which means
+we check all possible paths in repo against "path/to/*.c". One could
+see that "path/elsewhere/foo.c" obviously cannot match "path/to/*.c"
+and we only need to check all paths _inside_ "path/to/" against that
+pattern.
+
+This patch checks the leading fixed part of a pathspec against base
+directory and exit early if possible. We could even optimize further
+in "path/to/something*.c" case (i.e. check the fixed part against
+name_entry as well) but that's more complicated and probably does not
+gain us much.
+
+-O2 build on linux-2.6, without and with this patch respectively:
+
+$ time git rev-list --quiet HEAD -- 'drivers/*.c'
+
+real    1m9.484s
+user    1m9.128s
+sys     0m0.181s
+
+$ time ~/w/git/git rev-list --quiet HEAD -- 'drivers/*.c'
+
+real    0m15.710s
+user    0m15.564s
+sys     0m0.107s
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/ls-files.c | 2 +-
- builtin/ls-tree.c  | 2 +-
- cache.h            | 2 +-
- dir.c              | 6 +++---
- tree-walk.c        | 4 ++--
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ tree-walk.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index b5434af..4a9ee69 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -337,7 +337,7 @@ void overlay_tree_on_cache(const char *tree_name, c=
-onst char *prefix)
- 		matchbuf[0] =3D prefix;
- 		matchbuf[1] =3D NULL;
- 		init_pathspec(&pathspec, matchbuf);
--		pathspec.items[0].use_wildcard =3D 0;
-+		pathspec.items[0].nowildcard_len =3D pathspec.items[0].len;
- 	} else
- 		init_pathspec(&pathspec, NULL);
- 	if (read_tree(tree, 1, &pathspec))
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 235c17c..fb76e38 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -168,7 +168,7 @@ int cmd_ls_tree(int argc, const char **argv, const =
-char *prefix)
-=20
- 	init_pathspec(&pathspec, get_pathspec(prefix, argv + 1));
- 	for (i =3D 0; i < pathspec.nr; i++)
--		pathspec.items[i].use_wildcard =3D 0;
-+		pathspec.items[i].nowildcard_len =3D pathspec.items[i].len;
- 	pathspec.has_wildcard =3D 0;
- 	tree =3D parse_tree_indirect(sha1);
- 	if (!tree)
-diff --git a/cache.h b/cache.h
-index dbd8018..bf031f1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -482,7 +482,7 @@ struct pathspec {
- 	struct pathspec_item {
- 		const char *match;
- 		int len;
--		unsigned int use_wildcard:1;
-+		int nowildcard_len;
- 	} *items;
- };
-=20
-diff --git a/dir.c b/dir.c
-index 5a83aa7..c391d46 100644
---- a/dir.c
-+++ b/dir.c
-@@ -230,7 +230,7 @@ static int match_pathspec_item(const struct pathspe=
-c_item *item, int prefix,
- 			return MATCHED_RECURSIVELY;
- 	}
-=20
--	if (item->use_wildcard && !fnmatch(match, name, 0))
-+	if (item->nowildcard_len < item->len && !fnmatch(match, name, 0))
- 		return MATCHED_FNMATCH;
-=20
- 	return 0;
-@@ -1429,8 +1429,8 @@ int init_pathspec(struct pathspec *pathspec, cons=
-t char **paths)
-=20
- 		item->match =3D path;
- 		item->len =3D strlen(path);
--		item->use_wildcard =3D !no_wildcard(path);
--		if (item->use_wildcard)
-+		item->nowildcard_len =3D simple_length(path);
-+		if (item->nowildcard_len < item->len)
- 			pathspec->has_wildcard =3D 1;
- 	}
-=20
 diff --git a/tree-walk.c b/tree-walk.c
-index 3f54c02..af871c5 100644
+index 42fe610..dcc1015 100644
 --- a/tree-walk.c
 +++ b/tree-walk.c
-@@ -626,7 +626,7 @@ enum interesting tree_entry_interesting(const struc=
+@@ -573,6 +573,52 @@ static int match_dir_prefix(const char *base,
+ }
+=20
+ /*
++ * Perform matching on the leading non-wildcard part of
++ * pathspec. item->nowildcard_len must be greater than zero. Return
++ * non-zero if base is matched.
++ */
++static int match_wildcard_base(const struct pathspec_item *item,
++			       const char *base, int baselen,
++			       int *matched)
++{
++	const char *match =3D item->match;
++	/* the wildcard part is not considered in this function */
++	int matchlen =3D item->nowildcard_len;
++
++	if (baselen) {
++		int dirlen;
++		/*
++		 * Return early if base is longer than the
++		 * non-wildcard part but it does not match.
++		 */
++		if (baselen >=3D matchlen) {
++			*matched =3D matchlen;
++			return !strncmp(base, match, matchlen);
++		}
++
++		dirlen =3D matchlen;
++		while (dirlen && match[dirlen - 1] !=3D '/')
++			dirlen--;
++
++		/* Return early if base is shorter than the
++		   non-wildcard part but it does not match. Note that
++		   base ends with '/' so we are sure it really matches
++		   directory */
++		if (strncmp(base, match, baselen))
++			return 0;
++		*matched =3D baselen;
++	} else
++		*matched =3D 0;
++	/*
++	 * we could have checked entry against the non-wildcard part
++	 * that is not in base and does similar never_interesting
++	 * optimization as in match_entry. For now just be happy with
++	 * base comparison.
++	 */
++	return entry_interesting;
++}
++
++/*
+  * Is a tree entry interesting given the pathspec we have?
+  *
+  * Pre-condition: either baselen =3D=3D base_offset (i.e. empty path)
+@@ -602,7 +648,7 @@ enum interesting tree_entry_interesting(const struc=
 t name_entry *entry,
- 					&never_interesting))
- 				return entry_interesting;
+ 		const struct pathspec_item *item =3D ps->items+i;
+ 		const char *match =3D item->match;
+ 		const char *base_str =3D base->buf + base_offset;
+-		int matchlen =3D item->len;
++		int matchlen =3D item->len, matched =3D 0;
 =20
--			if (item->use_wildcard) {
-+			if (item->nowildcard_len < item->len) {
- 				if (!fnmatch(match + baselen, entry->path, 0))
- 					return entry_interesting;
-=20
-@@ -642,7 +642,7 @@ enum interesting tree_entry_interesting(const struc=
-t name_entry *entry,
- 		}
-=20
- match_wildcards:
--		if (!item->use_wildcard)
-+		if (item->nowildcard_len =3D=3D item->len)
+ 		if (baselen >=3D matchlen) {
+ 			/* If it doesn't match, move along... */
+@@ -647,9 +693,24 @@ match_wildcards:
+ 		if (item->nowildcard_len =3D=3D item->len)
  			continue;
 =20
++		if (item->nowildcard_len &&
++		    !match_wildcard_base(item, base_str, baselen, &matched))
++			return entry_not_interesting;
++
  		/*
+ 		 * Concatenate base and entry->path into one and do
+ 		 * fnmatch() on it.
++		 *
++		 * While we could avoid concatenation in certain cases
++		 * [1], which saves a memcpy and potentially a
++		 * realloc, it turns out not worth it. Measurement on
++		 * linux-2.6 does not show any clear improvements,
++		 * partly because of the nowildcard_len optimization
++		 * in git_fnmatch(). Avoid micro-optimizations here.
++		 *
++		 * [1] if match_wildcard_base() says the base
++		 * directory is already matched, we only need to match
++		 * the rest, which is shorter so _in theory_ faster.
+ 		 */
+=20
+ 		strbuf_add(base, entry->path, pathlen);
 --=20
 1.8.0.rc2.23.g1fb49df
