@@ -1,97 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH v2 8/8] completion: small optimization
-Date: Sun, 18 Nov 2012 11:56:53 +0100
-Message-ID: <1353236213-13471-9-git-send-email-felipe.contreras@gmail.com>
-References: <1353236213-13471-1-git-send-email-felipe.contreras@gmail.com>
+From: arif <aftnix@gmail.com>
+Subject: Re: using multiple version of git simultaneously
+Date: Sun, 18 Nov 2012 17:04:50 +0600
+Message-ID: <50A8C0D2.3000001@gmail.com>
+References: <k886on$nn5$1@ger.gmane.org> <1353163831-ner-9354@calvin> <20121117161631.GA18844@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20Gustavsson?= <bgustavsson@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robert Zeh <robert.a.zeh@gmail.com>,
-	Peter van der Does <peter@avirtualhome.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 18 11:58:00 2012
+Content-Transfer-Encoding: 7bit
+Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 18 12:05:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ta2Zb-00087z-9q
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 11:57:59 +0100
+	id 1Ta2gl-00047c-H3
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 12:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786Ab2KRK5p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Nov 2012 05:57:45 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:38308 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459Ab2KRK5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2012 05:57:44 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so1599953bkw.19
-        for <git@vger.kernel.org>; Sun, 18 Nov 2012 02:57:43 -0800 (PST)
+	id S1751569Ab2KRLFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2012 06:05:06 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:33901 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751353Ab2KRLFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2012 06:05:03 -0500
+Received: by mail-pa0-f46.google.com with SMTP id hz1so2775104pad.19
+        for <git@vger.kernel.org>; Sun, 18 Nov 2012 03:05:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=1KuOvHo4Klsmfcmor0EaqV/Q7mWfrY90wHohK7Lr/Zw=;
-        b=BICXO7VI8zLiZFpWcjLoNqcfCD0OZ103PqsftSeiLlEh+mJaKXKGhCNFwNVOCbOP8T
-         NwiQ18UPaJT2sLGV/irWHwYNWtaQY13XI60byeUnerjR9Wr6oL6x890VDtuQ6yNnEml8
-         hcqCqldLvS5iTZVVdg+7K6/VOruetLqHe8fySfqYwAn61zWfs9hocuJLcmwYuMoey146
-         sW8YN0hQLTLBmtR2/0E2haOwOP/pRiPhrk8d57oK1FT9JNF96Vhz5FEp26SeR9zVsNUU
-         31yA6TUS43HOmSzX1Rk+zR02Z80F4Un5ay6mh1E/Ot2kpew9WLoLyTJgNXzrx8IGK3B6
-         GzLw==
-Received: by 10.204.3.214 with SMTP id 22mr3732439bko.108.1353236263864;
-        Sun, 18 Nov 2012 02:57:43 -0800 (PST)
-Received: from localhost (ip-109-43-0-81.web.vodafone.de. [109.43.0.81])
-        by mx.google.com with ESMTPS id f24sm207534bkv.7.2012.11.18.02.57.41
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Q7tXYw10HfM9n0cykxoJDehqhp3tkhaFwQ+TFGghKLA=;
+        b=IQIhPkYfGvXlzx7e9wfxRctGleOjmS6vOhUzOtvMDjnedrsd2JxvRlNvSEnvAFa8Zm
+         wlEmpFytTmu0gaCqjkgNPZhm/Xrdtlk5pb4oMsRvjSAuDcU4/pQMGkmW+7JTvx8NnVcg
+         WZrSG4No9hPa2BioYRkyKy7ifRqOwuIX7Yy1qRjn5kJzPJmakcbG52MXL2gIuCFYAEat
+         +OoxNaMxWSVFImQCU12wK/W8LXcqh8tUsa01NNQY1jSnLyZ8OZ61L9gEpyhDKxzG+jej
+         ElcEyr7u6FhbU0E1e59yiH+J+CrBVcRx+rcUXulDt9D7qlbYiUlBCpy0yNPBxpjTGrTP
+         gQCg==
+Received: by 10.68.197.9 with SMTP id iq9mr30139185pbc.130.1353236702717;
+        Sun, 18 Nov 2012 03:05:02 -0800 (PST)
+Received: from [192.168.12.23] ([103.23.169.3])
+        by mx.google.com with ESMTPS id hc4sm4355293pbc.30.2012.11.18.03.04.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 18 Nov 2012 02:57:43 -0800 (PST)
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1353236213-13471-1-git-send-email-felipe.contreras@gmail.com>
+        Sun, 18 Nov 2012 03:05:02 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20121117161631.GA18844@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210021>
 
-No need to calculate a new $c with a space if we are not going to do
-anything it with it.
+On 11/17/2012 10:16 PM, Jeff King wrote:
+> On Sat, Nov 17, 2012 at 02:50:31PM +0000, Tomas Carnecky wrote:
+> 
+>> On Sat, 17 Nov 2012 20:25:21 +0600, arif <aftnix@gmail.com> wrote:
+<snip>
+>
+>> Install each version into its own prefix (~/git/1.8.0/, ~/git/1.7.0/ etc).
+> 
+> Once you have done that, you can also symlink the binary from each into
+> your regular PATH (e.g., ln -s ~/git/1.8.0/bin/git ~/bin/git.v1.8) to
+> make it easy to switch between them. The installed exec-path is baked in
+> at compile-time, so it finds the correct git sub-programs properly.
+> 
+> I keep a couple dozen built versions of git around like this for quick
+> regression testing of bugs we see on the list.
+> 
+> -Peff
+> 
 
-There should be no functional changes, except that a word "foo " with n=
-o
-suffixes can't be matched. But $cur cannot have a space at the end
-anyway. So it's safe.
+So what you are saying that, making a symlink for "git" is sufficient. I
+don't need to make symlinks for ever git subbinaries.
 
-Based on the code from SZEDER G=C3=A1bor.
+Is that correct?
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 82ea7b1..e5f862c 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -240,11 +240,11 @@ __gitcomp ()
- 		local c i=3D0 IFS=3D$' \t\n'
- 		for c in $1; do
- 			c=3D"$c${4-}"
--			case $c in
--			--*=3D*|*.) ;;
--			*) c=3D"$c " ;;
--			esac
- 			if [[ $c =3D=3D "$cur_"* ]]; then
-+				case $c in
-+				--*=3D*|*.) ;;
-+				*) c=3D"$c " ;;
-+				esac
- 				COMPREPLY[i++]=3D"${2-}$c"
- 			fi
- 		done
---=20
-1.8.0
+-- 
+Cheers
+arif
