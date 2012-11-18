@@ -1,85 +1,74 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: t5801-remote-helpers.sh fails
-Date: Sun, 18 Nov 2012 16:52:27 +0100
-Message-ID: <50A9043B.6070904@web.de>
-References: <509E5B27.5080808@web.de> <CAMP44s0HtMRaQ91z95cZS73W7tnqYwyKV_2guWJ6u6UP4p5JNw@mail.gmail.com> <509EA8EE.1030908@web.de> <CAMP44s2yenQKSgdUXfZP+yDJJ+bdveyms=SQ+3ptPvpT6D0hsg@mail.gmail.com> <50A87718.4030806@web.de> <CAMP44s22kuXqUjY2Oy2YtBfj1+kF2rHnRKcovV8sPkhu1oR+2A@mail.gmail.com>
+From: Adam Stankiewicz <sheerun@sher.pl>
+Subject: Motd message on git cloning
+Date: Sun, 18 Nov 2012 17:04:37 +0100
+Message-ID: <CANCidP-d0tXfo6ZsC80LmaS1CJ475rew2D7ztrx9TkNa94a-uw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 16:52:56 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 18 17:05:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ta7B0-0003A9-9O
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 16:52:54 +0100
+	id 1Ta7ND-0002Hh-Pr
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 17:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab2KRPwb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Nov 2012 10:52:31 -0500
-Received: from mout.web.de ([212.227.15.3]:60380 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752091Ab2KRPwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2012 10:52:30 -0500
-Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0LmLK6-1T1bhJ476I-00ZloF; Sun, 18 Nov 2012 16:52:28 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <CAMP44s22kuXqUjY2Oy2YtBfj1+kF2rHnRKcovV8sPkhu1oR+2A@mail.gmail.com>
-X-Provags-ID: V02:K0:ALzGctkypM/e9nCmHTtyA49Ih0Y84ra5UTFlRTAj2Dv
- bOHEd8+JluRlea12DTmgmMEq4eVIJOnytAUwX8TuF375Q9OwJY
- F5VJvDrxVHjfE9pTU+ualolQXLw6exXzfxELdrkdNvKLbTGeO5
- K766vEq4FwyVSGuXXL0clx3ixV6SGb/k2/fxRViXT3FYbnufAc
- gJ21hm25loGVJNGoPBDwA==
+	id S1752323Ab2KRQE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2012 11:04:59 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:64525 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752091Ab2KRQE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2012 11:04:58 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so2662737qcr.19
+        for <git@vger.kernel.org>; Sun, 18 Nov 2012 08:04:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-originating-ip:from:date:message-id:subject:to
+         :content-type:x-gm-message-state;
+        bh=MrEgKdJjGEongj/XJnE7sZaquqWKDiQIz8ssDni3eXA=;
+        b=cLI/+Vm+O2bMxvmNkY91E8V/MUp1rLzX9KGtAI4gnDB4wa38i9nNisIEeYKHYqoJMl
+         vqHoyUklyPxB3wS+4ilCkvVURzY4nfodNEGmxFCNzcyE4MkdEjnlSD+9S4y6t+tL0Ob2
+         W6eGccsplDjf2kTl9pYX/gagzYsBd0vO2SplHDKL4pjb3kk+ylU4vxY23DYZDvFSLTda
+         GaFOCxgq/iY2O265WtOCk2v18nzIpx4ec13ZnsIiMuHhhtaV3R9VdDc07Awhb0niqVEd
+         9vSNn1FcaRbzyZ9ZoH9/bte84D/Bphs5VQoRLG626bMISlr8Ulle758moCEqsuP9JqYW
+         dM4Q==
+Received: by 10.224.183.194 with SMTP id ch2mr9479373qab.24.1353254697535;
+ Sun, 18 Nov 2012 08:04:57 -0800 (PST)
+Received: by 10.49.74.106 with HTTP; Sun, 18 Nov 2012 08:04:37 -0800 (PST)
+X-Originating-IP: [62.87.248.204]
+X-Gm-Message-State: ALoCoQkbV9SBMspHsKFzE1C88Nd/lP0yX6TwKxciJnWA+e53adj03JZ/9o7vVS7YII2pBFVOQJmJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210027>
 
-On 18.11.12 09:23, Felipe Contreras wrote:
-> Hi,
->=20
-> On Sun, Nov 18, 2012 at 6:50 AM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->=20
->> I managed to have a working solution for
->> "d) add a check for the bash version to the top of the test in t/"
->> Please see diff below.
->>
->> This unbreaks the test suite here.
->> Is this a good way forward?
->>
->> Filipe, does the code line you mention above work for you?
->>
->> If yes: I can test it here, if you send it as a patch.
->=20
-> It's already sent:
-> http://article.gmane.org/gmane.comp.version-control.git/209364
->=20
-Thanks for working on it, and sorry that you need to remind me:
-I had the V5 series already on my harddisk, but forgot to test it.
-It applied on v.1.8.0 with the following results:
+I'm dreaming about git feature that shows custom message on git clone.
+It would be extremely helpful for informing the person cloning about
+init scripts he/she need to execute (for example submodule inits or
+hooks set up). For now there is no way to make sure cloning person
+will receive such message (unless he/she will read the README).
 
-ok 1 - setup repository
-ok 2 - cloning from local repo
-ok 3 - create new commit on remote
-ok 4 - pulling from local repo
-ok 5 - pushing to local repo
-ok 6 - fetch new branch
-ok 7 - fetch multiple branches
-ok 8 - push when remote has extra refs
-ok 9 - push new branch by name
-not ok 10 - push new branch with old:new refspec # TODO known breakage
-ok 11 - cloning without refspec
-ok 12 - pulling without refspecs
-not ok 13 - pushing without refspecs # TODO known breakage
-not ok 14 - pulling with straight refspec # TODO known breakage
-not ok 15 - pushing with straight refspec # TODO known breakage
-not ok 16 - pulling without marks # TODO known breakage
-not ok 17 - pushing without marks # TODO known breakage
-ok 18 - push ref with existing object
-# still have 6 known breakage(s)
-/Torsten
+The server does not need to know if it's fetch or clone, if programmer
+executes git clone on client side, then the MOTD message would be
+shown.
+
+I think good candidate for MOTD message is .git/description (because
+for now no one seems to care about setting repository description).
+Another option is to introduce .git/motd file that would consist of
+some maximum number of non-control ASCII characters.
+
+I don't really see any security concerns. Git could filter any control
+characters from MOTD out, and automation script could add --no-motd
+flag. The could also be limit on MOTD file size so no one could
+"flood" the terminal window with MOTD messages.
+
+Also it's important to me that such message would be shown
+automatically by default and could be turned off, not the other way
+(for example --motd flag).
+
+Some other tools like brew package manager have this feature from the
+beginning and I find it extremely helpful.
+
+What do you think?
