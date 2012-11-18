@@ -1,68 +1,95 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: git-reset man page
-Date: Sun, 18 Nov 2012 18:48:59 +0100
-Message-ID: <20121118174859.GA29052@shrek.podlesie.net>
-References: <CAB9Jk9AdTBJotrB0fndZawMWH6hS4PW_5bHwecwY5Vz7=TnYAA@mail.gmail.com>
- <20121110155718.GA29321@shrek.podlesie.net>
- <7v8va9p6pn.fsf@alter.siamese.dyndns.org>
- <20121110204633.GA29363@shrek.podlesie.net>
- <CAM9Z-nkon5ZtPuqxL0HZPr1es9DSpLA+70++hYpTR4D7WTxbUA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, peff@peff.net
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 18:49:25 2012
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] USE CGYWIN_V15_WIN32API as macro to select api for cygwin
+Date: Sun, 18 Nov 2012 16:16:52 -0500
+Message-ID: <1353273412-4164-1-git-send-email-mlevedahl@gmail.com>
+References: <7va9ufjqu1.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Nov 18 22:17:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ta8zj-0007CD-1m
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 18:49:23 +0100
+	id 1TaCFL-0008Q9-TR
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 22:17:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063Ab2KRRtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2012 12:49:04 -0500
-Received: from [93.179.225.50] ([93.179.225.50]:44912 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752003Ab2KRRtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2012 12:49:03 -0500
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id C63D8F75; Sun, 18 Nov 2012 18:48:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CAM9Z-nkon5ZtPuqxL0HZPr1es9DSpLA+70++hYpTR4D7WTxbUA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752558Ab2KRVR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2012 16:17:26 -0500
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:55738 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415Ab2KRVRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2012 16:17:25 -0500
+Received: by mail-vb0-f46.google.com with SMTP id ff1so4463956vbb.19
+        for <git@vger.kernel.org>; Sun, 18 Nov 2012 13:17:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=23cJ7wSYqGYR5KOrybGYPiM+bojhrmVkZY+nYSySROs=;
+        b=W4X8EnVrvEA3qDDpwcKvs2AGgtj2FMTnjU7thxkYioaDJs6cK5SNJlAAXh3KNZa0Rx
+         THfAXl0gAFSEy4++QR5WFjynvflS1Yg0A7esQpRSsJnWY+T61HIzC8Pb1xrQq+bc6AjL
+         9FtLZNPVn0MKFZRkJP+pU/W/4+vksJR6nMNb8TsT/D0ItlneFogCmVR4HRFtvSG6iD1H
+         7w3M6dpQtVWvzGdRHLm3GCR3/esiikj+od6n2TK/wXw4WdXFxM1WcM/KQ3Y/VdfpPJP+
+         An+U4qIT+5bZIacr0w28Dqcy4i0z113stYufrJEGS+O/H2H+SMeY45xD3TpOlZvfWxZr
+         ly9Q==
+Received: by 10.52.19.20 with SMTP id a20mr4431044vde.26.1353273444741;
+        Sun, 18 Nov 2012 13:17:24 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-107-139.washdc.fios.verizon.net. [173.79.107.139])
+        by mx.google.com with ESMTPS id dp6sm4235304vec.11.2012.11.18.13.17.22
+        (version=SSLv3 cipher=OTHER);
+        Sun, 18 Nov 2012 13:17:23 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.0.0.14
+In-Reply-To: <7va9ufjqu1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210037>
 
-On Sun, Nov 18, 2012 at 11:55:09AM -0500, Drew Northup wrote:
-> 
-> > So we should always use "<path>" for exact path, and "<pathspec>" for
-> > pathspecs patterns as defined in gitglossary. I think it's better
-> > to avoid "<paths>" and always use "<path>..." or "<pathspec>..."
-> 
-> I suspect that the only reason why the differentiation between
-> "<path>" and "<paths>" happened is because there may be some places
-> where it was seen that a _list of paths_ was acceptable (which isn't a
-> pathspec, as it isn't a search expression) and other places where
+The previous macro was confusing to some, and did not include "cygwin" in
+its name. The updated name more clearly expresses a choice of the
+win32api implementation that shipped with version 1.5 of cygwin.
 
-<paths> is usually used for a list of <pathspec>, not just a list of <path>.
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ Makefile        | 6 +++---
+ compat/cygwin.c | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-> _only_ a single path was acceptable. Should that fail to be the case
-> then there would be a good argument for changing the affected
-> instances of "<paths>" to "<path>" in the documentation. (I know of no
-> other good way to pluralize "<path>" myself.)
-> 
-
-I think it's best to just add "...":
-
-<path> for single exact path,
-<path>... for a list of exact paths,
-<pathspec> for single pathspec,
-<pathspec>... for a list of pathspecs.
-
-Krzysiek
+diff --git a/Makefile b/Makefile
+index cf0ecde..9731c85 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1091,7 +1091,7 @@ ifeq ($(uname_O),Cygwin)
+ 		NO_SYMLINK_HEAD = YesPlease
+ 		NO_IPV6 = YesPlease
+ 		OLD_ICONV = UnfortunatelyYes
+-		V15_MINGW_HEADERS = YesPlease
++		CYGWIN_V15_WIN32API = YesPlease
+ 	endif
+ 	NO_THREAD_SAFE_PREAD = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+@@ -1906,8 +1906,8 @@ ifdef NO_REGEX
+ 	COMPAT_CFLAGS += -Icompat/regex
+ 	COMPAT_OBJS += compat/regex/regex.o
+ endif
+-ifdef V15_MINGW_HEADERS
+-	COMPAT_CFLAGS += -DV15_MINGW_HEADERS
++ifdef CYGWIN_V15_WIN32API
++	COMPAT_CFLAGS += -DCYGWIN_V15_WIN32API
+ endif
+ 
+ ifdef USE_NED_ALLOCATOR
+diff --git a/compat/cygwin.c b/compat/cygwin.c
+index 59d86e4..5428858 100644
+--- a/compat/cygwin.c
++++ b/compat/cygwin.c
+@@ -1,5 +1,5 @@
+ #define WIN32_LEAN_AND_MEAN
+-#ifdef V15_MINGW_HEADERS
++#ifdef CYGWIN_V15_WIN32API
+ #include "../git-compat-util.h"
+ #include "win32.h"
+ #else
+-- 
+1.8.0.0.0.14
