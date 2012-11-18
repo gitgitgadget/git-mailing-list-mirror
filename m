@@ -1,74 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rename V15_MINGW_HEADERS into CYGWIN_OLD_WINSOCK_HEADERS
-Date: Sat, 17 Nov 2012 23:46:46 -0800
-Message-ID: <7va9ufjqu1.fsf@alter.siamese.dyndns.org>
-References: <201211170809.50395.tboegi@web.de> <50A7A161.9020805@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: t5801-remote-helpers.sh fails
+Date: Sun, 18 Nov 2012 09:23:40 +0100
+Message-ID: <CAMP44s22kuXqUjY2Oy2YtBfj1+kF2rHnRKcovV8sPkhu1oR+2A@mail.gmail.com>
+References: <509E5B27.5080808@web.de>
+	<CAMP44s0HtMRaQ91z95cZS73W7tnqYwyKV_2guWJ6u6UP4p5JNw@mail.gmail.com>
+	<509EA8EE.1030908@web.de>
+	<CAMP44s2yenQKSgdUXfZP+yDJJ+bdveyms=SQ+3ptPvpT6D0hsg@mail.gmail.com>
+	<50A87718.4030806@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 08:55:32 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Nov 18 09:31:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TZzj0-0001bk-By
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 08:55:30 +0100
+	id 1Ta0Hd-0000jw-ER
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Nov 2012 09:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361Ab2KRHqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2012 02:46:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61914 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751068Ab2KRHqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2012 02:46:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA61A86AA;
-	Sun, 18 Nov 2012 02:46:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9EUDjy86P3h0m4hOpupP4BrY35A=; b=U/7LIU
-	nZIptgFcBkRkcZrZTFkfcfx4pp03d8eeczBkWx+gVom+wPVJV+AKwsnecSCKpVal
-	NtLeZ1//p5Xf5JJ07d7o7B40aoKwTPtE6lEpEfVreqyOTbZv0ExT2n2ZL8gHIpM5
-	RyhBNe7R60HbXQZPMhaWQmEu350eBzHdlCJ+Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D1EzCd+jHqK5je5vPTbSKBIIOgpnP3Yf
-	d1f43BmODEehjFw5GIGnVMcUCXEpaIvK0+oXVJ0no/nfq7hAs9ynZ3PrO3WK+uhu
-	XV5UMOZFwApvwT1fq37N8YcN5UXd55ICkXqQ1Tu0AGpOsuZG2vV5ARiiqmynBVQm
-	S5yPwy30MO4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1BD286A9;
-	Sun, 18 Nov 2012 02:46:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3548686A8; Sun, 18 Nov 2012
- 02:46:48 -0500 (EST)
-In-Reply-To: <50A7A161.9020805@gmail.com> (Mark Levedahl's message of "Sat,
- 17 Nov 2012 09:38:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B7604C4-3154-11E2-AF2C-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751252Ab2KRIXm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Nov 2012 03:23:42 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:59254 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751200Ab2KRIXl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Nov 2012 03:23:41 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so4005440oag.19
+        for <git@vger.kernel.org>; Sun, 18 Nov 2012 00:23:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7VcqAJX1h+036aqFRQXID2Kin9BycwQjR7Qg3XuvNaw=;
+        b=RDBKzlJ1rStqMebOHPZt2rOiuxlp7gfaKCQstOqffLRIPdJ8gTrAwjOVw4dO6F1E4w
+         AdhNx2QnCHQHunXUm7RYw18YEnMUyyhhHPUVlnEs/kOXLgdf8Wvo6cSm9mX63/VP705p
+         OERf/MnWdRMiQXI2raliSAa86i4my+6VUfk/QSPMLx2fyoldbjEspEjFvCBbRfzkfMNP
+         4TCoE4YuFBGKM8O6B4IU3g/5ZPte1KQfCeLpZ+LC86AOIuPL/4Ag4XcG3f4KMOxrwTXV
+         Inp3OnkdOVFKppkvQ7+oHgsje2oeLxMIngV983/AWIDTzd7iQ0RqiI+kz5f9xVcji4k9
+         zyDA==
+Received: by 10.60.31.241 with SMTP id d17mr7795130oei.107.1353227021053; Sun,
+ 18 Nov 2012 00:23:41 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Sun, 18 Nov 2012 00:23:40 -0800 (PST)
+In-Reply-To: <50A87718.4030806@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/209992>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+Hi,
 
->> ...
->> -		V15_MINGW_HEADERS = YesPlease
->> +		CYGWIN_OLD_WINSOCK_HEADERS = YesPlease
->>   
-> WINSOCK is certainly a part of the win32 api implementation, but it is
-> is the entire win32api that changed, not just the tiny bit dealing
-> with sockets.
-> Basically, WINDOWS.h, and everything it includes, and all of the dlls
-> it touches, and the .o files, changed.
-> ... So my suggestion in the bike shedding
-> category is to
+On Sun, Nov 18, 2012 at 6:50 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+
+> I managed to have a working solution for
+> "d) add a check for the bash version to the top of the test in t/"
+> Please see diff below.
 >
-> s/V15_MINGW_HEADERS/CYGWIN_V15_WIN32API/
+> This unbreaks the test suite here.
+> Is this a good way forward?
+>
+> Filipe, does the code line you mention above work for you?
+>
+> If yes: I can test it here, if you send it as a patch.
 
-Sounds sensible.
+It's already sent:
+http://article.gmane.org/gmane.comp.version-control.git/209364
+
+--=20
+=46elipe Contreras
