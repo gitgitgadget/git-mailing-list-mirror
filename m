@@ -1,63 +1,75 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: Auto-repo-repair
-Date: Sun, 18 Nov 2012 22:30:26 -0500
-Message-ID: <CAM9Z-nmu2MiE9vF9T6Aw8vFTR8mTkuR3akHgZX6+=n3uA4fmpA@mail.gmail.com>
-References: <CAM9Z-nn1S9JvfcymotOvSis4CoYco0Htn4uoETZn2kCto0z9zw@mail.gmail.com>
-	<66719060-db68-45b4-8453-2fd996f27657@zcs>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: verifying git file contents without checking out history?
+Date: Sun, 18 Nov 2012 20:55:18 -0800
+Message-ID: <7vtxsmxkcp.fsf@alter.siamese.dyndns.org>
+References: <1353287836-sup-270@nixos>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Enrico Weigelt <enrico.weigelt@vnc.biz>
-X-From: git-owner@vger.kernel.org Mon Nov 19 04:30:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marc Weber <marco-oweber@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 19 05:55:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaI4I-0004BE-SQ
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 04:30:43 +0100
+	id 1TaJOS-0004hS-UW
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 05:55:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752690Ab2KSDa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2012 22:30:28 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:61743 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752074Ab2KSDa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2012 22:30:27 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so1711199bkw.19
-        for <git@vger.kernel.org>; Sun, 18 Nov 2012 19:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=3P6UDCkZ28qiEmlnWLGdN+r8KISqnPa1inyh3lUULgU=;
-        b=J805xiOF4J/xRuw8vxnFxnC0d+x2KYrPiJLp9ThtgVtFKQkNLa8USuh7pQL6QxxsF/
-         CqZ1RxsAqXVE7iKPs93JP8QZTpoFJfyyj7lDef2L72ufsazFkNXYxraGAjQ2QyVsqB7E
-         mNcGydCAjwskVRQPbkMIiJpzmIVjLAqkDdy2hIMAcKYhKsVGABz0I9StDYE6VRmRYpi7
-         ++9Ua9T7qvopFrxC3EzMI9DSuJUwvT9V5wa4Dexgxvki3kd0H9ZpliRGJT5wcfjsZdnR
-         /rTSpcYz0kgNBslU65G40n8h9I0LRR0e7aVd2xiZoy3ucOgPeE9gPA77rFdG7N6rEWeh
-         12iQ==
-Received: by 10.204.4.80 with SMTP id 16mr4222555bkq.73.1353295826354; Sun, 18
- Nov 2012 19:30:26 -0800 (PST)
-Received: by 10.205.122.144 with HTTP; Sun, 18 Nov 2012 19:30:26 -0800 (PST)
-In-Reply-To: <66719060-db68-45b4-8453-2fd996f27657@zcs>
+	id S1752831Ab2KSEzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2012 23:55:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63869 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752762Ab2KSEzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2012 23:55:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB9F6A923;
+	Sun, 18 Nov 2012 23:55:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eCB4N00r7G7e95+lkvZ2+z38M9g=; b=Qkr2Oq
+	5t3nQZ9R6I6315ztFVqF6J+5p8YeNvTxGahTIoD1Qnq6fFlX6QuoRLl1LQ+7w7XW
+	2g7zD6D82RLZAD6UiSdY9SxVvoTQkBxlHWT2ADx3/e0F/AiFUT8LAwKzytXiJRNN
+	I8xbMGSIHleM6g0NihG04GgSmzpXKXLxeHeXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Exeyli7Yfq2JGqPxyBQmERVPUmPSL3sy
+	HDe85mlj6ldVHb+efs1RvESaJD/uS5wcNTjorBgXss3ix27uJPR/bbd1H+pqwECV
+	6M+MfV8n0lyXbX1MmS+xMMM0kMUaQquPlPz+egt2pglRIeta5zxCmoI/4ED0KJQs
+	LSjUW/Misno=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7C60A922;
+	Sun, 18 Nov 2012 23:55:20 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36841A920; Sun, 18 Nov 2012
+ 23:55:20 -0500 (EST)
+In-Reply-To: <1353287836-sup-270@nixos> (Marc Weber's message of "Mon, 19 Nov
+ 2012 02:50:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 51C02A62-3205-11E2-8904-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210040>
 
-On Sun, Nov 18, 2012 at 11:55 AM, Enrico Weigelt <enrico.weigelt@vnc.biz> wrote:
+Marc Weber <marco-oweber@gmx.de> writes:
+
+> git clone --depth=20 $url; git checkout $hash
 >
->> How would the broken repository be sure of what it is missing to
->> request it from the other side?
->
-> fsck will find missing objects.
+> How to verify that I have the contents I think I have - given that I
+> trust my local git executable?
 
-And what about the objects referred to by objects that are missing?
-Jeff's solution doesn't suffer from this recursivity problem.
+Define what you mean by "contents".  Do you care only about the tree
+state recorded in that $hash, and you also trust that $hash is the
+correct one?
 
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+  $ git cat-object commit $hash | git hash-object --stdin -t commit
+
+would be a way to verify that you do have the commit object
+everybody else calls $hash, and you can verify the objects contained
+within the commit whose name is $hash (i.e. its tree and its
+parents) in a similar way.  Use "git ls-tree $tree" to find out the
+objects your top-level tree recorded in the commit $hash, and you
+can verify the contents recorded in the tree object recursively.
