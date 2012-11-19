@@ -1,82 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/6] completion: test consolidations
-Date: Mon, 19 Nov 2012 12:34:48 -0800
-Message-ID: <7v6251xrfb.fsf@alter.siamese.dyndns.org>
-References: <1353235917-13059-1-git-send-email-felipe.contreras@gmail.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: git-describe fails with "--dirty is incompatible with
+ committishes" if passing HEAD as argument
+Date: Mon, 19 Nov 2012 21:39:23 +0100
+Message-ID: <CAC9WiBjcUMOpa_KvS-8k0bWR=XTqVRT_qFLx1keVmG1nee8GOw@mail.gmail.com>
+References: <CAC9WiBjw0W4kLCKMj6HhdjAXOJYpDW2Rgncb+06ahjiYOWtZ8Q@mail.gmail.com>
+	<7vfw45xu4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Nov 19 21:35:07 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 21:39:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaY3e-0008In-A7
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 21:35:06 +0100
+	id 1TaY82-0004Bx-Nn
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 21:39:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754541Ab2KSUev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2012 15:34:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34635 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753042Ab2KSUeu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2012 15:34:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 722A1A6CA;
-	Mon, 19 Nov 2012 15:34:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/HZ406tHe4pamZ2VGEl7+bTd9pI=; b=X55Gex
-	XrR8Dharqamk1SgoJ/3bH+w575GK/Vzk+FR4ARrxKK+KV16zcyoUjfwGMyqYlJSC
-	KHw1oJ9XkGNwr94DUqma01Fs/9yaIrfxVM4INOJm/48HltoS4YGLQIFcUPudgdxo
-	aYKIw7NB9YEtV7yT6Cws/vFfYih1P03mie6Sw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tb+79q5xCKK3oG8Es5z3xgRevEW3x/hG
-	Eh2hSEVP4o2G0IC8z/akM/TZ4BLoWMi9+vZ2/XaScotjI5eiTRgnpT/wb6rlTkE+
-	9bX34omCqRmnZbORNtp1Lo1COEcbU386Zby67yfcMS11cJL943yyw9Pg/GJFPfr/
-	q+UtZcIeTCw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F452A6C9;
-	Mon, 19 Nov 2012 15:34:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0BDBA6C6; Mon, 19 Nov 2012
- 15:34:49 -0500 (EST)
-In-Reply-To: <1353235917-13059-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sun, 18 Nov 2012 11:51:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 90AB63BC-3288-11E2-9D4B-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751429Ab2KSUjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 15:39:24 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:61865 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750808Ab2KSUjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2012 15:39:24 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so5247417oag.19
+        for <git@vger.kernel.org>; Mon, 19 Nov 2012 12:39:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=O8iXgf/U2Y/rcCC4Damf6btUoq/OLIHXa+g4WT4NZsU=;
+        b=h9iMK2zHvDA5/T8mEWMZVX2O/a3RZqpe5gR6gQ2vw47PkPJzChWWYXWGF6c+xof30k
+         FNWbqqGn2XrOcHkLDAGiWEUkNUecRyF7+gQTjWSdW+L1+ZpGXbuUOhkp/lGSO3iwEg0P
+         msw4aGOKymqBicxa8JS66/xMGs5rzokaVnF6uwl28Jy4iYfeKxQ/o6VBm7lAddRgIV5A
+         brHDus1tqTe2T4MdRy8v7sBTY9LG682Kpbh7sYHLZ2JiCwec2joqLNj1o6AN3Qnylt6t
+         OWIJRw26glCSttGZ8kH0vxu0WolkuJEAqh04ERA1Ef/k5lvqYhpjzU9/9wQFUiQWbYQg
+         gLgA==
+Received: by 10.60.169.48 with SMTP id ab16mr11789575oec.15.1353357563505;
+ Mon, 19 Nov 2012 12:39:23 -0800 (PST)
+Received: by 10.60.93.163 with HTTP; Mon, 19 Nov 2012 12:39:23 -0800 (PST)
+In-Reply-To: <7vfw45xu4e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210053>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, Nov 19, 2012 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Francis Moreau <francis.moro@gmail.com> writes:
+>
+>> Inside the kernel repository, I tried this:
+>>
+>> $ git describe --dirty --match 'v[0-9]*' --abbrev=4 HEAD
+>> fatal: --dirty is incompatible with committishes
+>>
+>> If 'HEAD' is removed then git-describe works as expected.
+>>
+>> Is that expected ?
+>
+> I would say so, at least in modern codebase.
+>
+> "git describe" without any commit object name used to mean "describe
+> the HEAD commit using the better known points" before the --dirty
+> option was introduced.
+>
+> But "--dirty" makes it describe the current checkout.  For example,
+> output from "git describe --dirty" v1.8.0-211-gd8b4531-dirty means
+> "your working tree contains work-in-progress based on d8b4531, which
+> is 211 commits ahead of the v1.8.0 tag".  So conceptually, it should
+> not take any commit, even if it were spelled HEAD.
+>
+> "git describe --dirty HEAD^^" would be an utter nonsense for the
+> same reason.
 
-> These started from a discussion with SZEDER, but then I realized there were
-> many improvements possible.
+Thanks for explaining, that makes sense.
 
-Thanks; I'd loop him in and wait for his acks/reviews.
-
->
-> Changes since v2:
->
->  * Updated comments and commit messages
->
-> Changes since v1:
->
->  * A lot more cleanups
->
-> Felipe Contreras (6):
->   completion: add comment for test_completion()
->   completion: standardize final space marker in tests
->   completion: simplify tests using test_completion_long()
->   completion: consolidate test_completion*() tests
->   completion: refactor __gitcomp related tests
->   completion: simplify __gitcomp() test helper
->
->  t/t9902-completion.sh | 133 +++++++++++++++++++-------------------------------
->  1 file changed, 51 insertions(+), 82 deletions(-)
+--
+Francis
