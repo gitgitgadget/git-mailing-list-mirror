@@ -1,104 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Failure to extra stable@vger.kernel.org addresses
-Date: Mon, 19 Nov 2012 11:27:45 -0800
-Message-ID: <7vk3thxuj2.fsf@alter.siamese.dyndns.org>
-References: <20121119095747.GA13552@arwen.pp.htv.fi>
- <20121119151845.GA29678@shrek.podlesie.net>
+Subject: Re: git-describe fails with "--dirty is incompatible with
+ committishes" if passing HEAD as argument
+Date: Mon, 19 Nov 2012 11:36:33 -0800
+Message-ID: <7vfw45xu4e.fsf@alter.siamese.dyndns.org>
+References: <CAC9WiBjw0W4kLCKMj6HhdjAXOJYpDW2Rgncb+06ahjiYOWtZ8Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Balbi <balbi@ti.com>, git@vger.kernel.org,
-	Tomi Valkeinen <tomi.valkeinen@ti.com>
-To: Krzysztof Mazur <krzysiek@podlesie.net>
-X-From: git-owner@vger.kernel.org Mon Nov 19 20:28:05 2012
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 20:36:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaX0l-00046s-Mo
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 20:28:04 +0100
+	id 1TaX9G-0003io-Qv
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 20:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754320Ab2KST1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2012 14:27:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44676 "EHLO
+	id S1754728Ab2KSTgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 14:36:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53733 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754206Ab2KST1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2012 14:27:48 -0500
+	id S1754311Ab2KSTgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2012 14:36:35 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E95339FF8;
-	Mon, 19 Nov 2012 14:27:47 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75087A710;
+	Mon, 19 Nov 2012 14:36:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4QKGRhSDLQfhrW9zNeas65R5xaE=; b=fu7xft
-	Bno5ei1J6VOM/TETNTb+unpzWPlNw2UwqAzGOO73a8DE83TgK6wgskYa4daPvrNx
-	vfYX5bLB0fq7Ndtgg+I+W0daBw+Hn96/LE3NZdlbdQB9JLtSptA3qPlWr1V5A5fe
-	PNurFCMki72JINHw9QlDojJZ3nCYSiAcI9yHo=
+	:content-type; s=sasl; bh=yb+E/UTa+Y9Iib3WrmG6My0UybI=; b=tLpdOw
+	TIVVDmUUyOZA/LFmPuzDrHrCE7f5CemPiQ2qa3wJCZUxumPMQq7XTyi8P50nDhLe
+	VlhlmugqG+1ycZtDYLiaPW42e2ZH57GNA15rM7A1A3Ld+rM6Ki7JYc5O+ekb1kvo
+	KxIYlPKSJ7AY3ROjEBdqjymPSM9iP7xVQI2v0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bqqydPW+0l0uP+VJ/GzndigBAjZWaGk4
-	CgL9nqoEu1FqklAt7aHqvULWYHLapRhyHytmLkbYduHqMCE9v1VHfNoL8hgC1gRE
-	rdaBn8Z6ipeQGloOPpg+b4VegCeEcdD5WMh5hELO/zrqEiVX+z6MsmKKJ5W6aRG/
-	A29aPQHNyBU=
+	:content-type; q=dns; s=sasl; b=uCnIyRNkC6+yYheXLkaT2Y8UaO4eQPW2
+	viyYpvelQe3OLlyeFdJftgt5gZ7eHbzcOcXDz3ZoCbKgBUTWEvRIhs9mWN4ZeKm4
+	RJsC+ySGhyBWo5C+MvMJdtUyN1EhxPbY2B6lR/jw+78H1vK9ADXyzLx6WmtXOUFI
+	RcoNeJV9elM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D67C99FF7;
-	Mon, 19 Nov 2012 14:27:47 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61DE1A70D;
+	Mon, 19 Nov 2012 14:36:35 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BA3B9FF3; Mon, 19 Nov 2012
- 14:27:47 -0500 (EST)
-In-Reply-To: <20121119151845.GA29678@shrek.podlesie.net> (Krzysztof Mazur's
- message of "Mon, 19 Nov 2012 16:18:45 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C60D2A70B; Mon, 19 Nov 2012
+ 14:36:34 -0500 (EST)
+In-Reply-To: <CAC9WiBjw0W4kLCKMj6HhdjAXOJYpDW2Rgncb+06ahjiYOWtZ8Q@mail.gmail.com> (Francis
+ Moreau's message of "Mon, 19 Nov 2012 16:47:56 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3301DD6C-327F-11E2-B7A9-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6D75FEF0-3280-11E2-BE11-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210050>
 
-Krzysztof Mazur <krzysiek@podlesie.net> writes:
+Francis Moreau <francis.moro@gmail.com> writes:
 
-> On Mon, Nov 19, 2012 at 11:57:47AM +0200, Felipe Balbi wrote:
->> Hi guys,
->> 
->> for whatever reason my git has started acting up with
->> stable@vger.kernel.org addresses. It doesn't manage to extract a valid
->> adress from the string:
->> 
->>  Cc: <stable@vger.kernel.org> # v3.4 v3.5 v3.6
->> 
->> Removing the comment at the end of the line makes things work again. I
->> do remember, however, seeing this working since few weeks back I sent a
->> mail to stable (in fact the same one I'm using to test), so this could
->> be related to some perl updates, who knows ?!?
+> Inside the kernel repository, I tried this:
 >
-> You probably just installed Email::Valid package.
+> $ git describe --dirty --match 'v[0-9]*' --abbrev=4 HEAD
+> fatal: --dirty is incompatible with committishes
 >
-> The current git-send-email works a little better and just prints an error:
+> If 'HEAD' is removed then git-describe works as expected.
 >
-> W: unable to extract a valid address from: <stable@vger.kernel.org> #v3.4 v3.5 v3.6
->
->
-> This patch should fix the problem, now after <email> any garbage is
-> removed while extracting address.
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 5a7c29d..bb659da 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -828,7 +828,7 @@ sub extract_valid_address {
->  	# check for a local address:
->  	return $address if ($address =~ /^($local_part_regexp)$/);
->  
-> -	$address =~ s/^\s*<(.*)>\s*$/$1/;
-> +	$address =~ s/^\s*<(.*)>.*$/$1/;
->  	if ($have_email_valid) {
->  		return scalar Email::Valid->address($address);
->  	} else {
+> Is that expected ?
 
-Given that the problematic line
+I would say so, at least in modern codebase.
 
-	Stable Kernel Maintainance Track <stable@vger.kernel.org> # vX.Y
+"git describe" without any commit object name used to mean "describe
+the HEAD commit using the better known points" before the --dirty
+option was introduced.
 
-is not even a valid e-mail address, doesn't this new logic belong to
-sanitize_address() conceptually?
+But "--dirty" makes it describe the current checkout.  For example,
+output from "git describe --dirty" v1.8.0-211-gd8b4531-dirty means
+"your working tree contains work-in-progress based on d8b4531, which
+is 211 commits ahead of the v1.8.0 tag".  So conceptually, it should
+not take any commit, even if it were spelled HEAD.
+
+"git describe --dirty HEAD^^" would be an utter nonsense for the
+same reason.
