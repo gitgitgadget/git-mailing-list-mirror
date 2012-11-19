@@ -1,89 +1,90 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: Failure to extra stable@vger.kernel.org addresses
-Date: Mon, 19 Nov 2012 23:58:38 +0100
-Message-ID: <20121119225838.GA23412@shrek.podlesie.net>
-References: <20121119095747.GA13552@arwen.pp.htv.fi>
- <20121119151845.GA29678@shrek.podlesie.net>
- <7vk3thxuj2.fsf@alter.siamese.dyndns.org>
+From: Timur Tabi <timur@freescale.com>
+Subject: git config --git-all can return non-zero error code
+Date: Mon, 19 Nov 2012 17:02:51 -0600
+Organization: Freescale
+Message-ID: <50AABA9B.6090007@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Balbi <balbi@ti.com>, git@vger.kernel.org,
-	Tomi Valkeinen <tomi.valkeinen@ti.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 23:59:01 2012
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 20 00:03:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaaIr-0004Ci-30
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 23:58:57 +0100
+	id 1TaaNL-0000JP-Ru
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 00:03:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753249Ab2KSW6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2012 17:58:41 -0500
-Received: from [93.179.225.50] ([93.179.225.50]:54114 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752834Ab2KSW6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2012 17:58:41 -0500
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id A4941810; Mon, 19 Nov 2012 23:58:38 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vk3thxuj2.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753313Ab2KSXDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 18:03:22 -0500
+Received: from [213.199.154.204] ([213.199.154.204]:20083 "EHLO
+	am1outboundpool.messaging.microsoft.com" rhost-flags-FAIL-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753307Ab2KSXDV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2012 18:03:21 -0500
+Received: from mail74-am1-R.bigfish.com (10.3.201.231) by
+ AM1EHSOBE002.bigfish.com (10.3.204.22) with Microsoft SMTP Server id
+ 14.1.225.23; Mon, 19 Nov 2012 23:03:04 +0000
+Received: from mail74-am1 (localhost [127.0.0.1])	by mail74-am1-R.bigfish.com
+ (Postfix) with ESMTP id C805C3E02BC	for <git@vger.kernel.org>; Mon, 19 Nov
+ 2012 23:03:04 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:70.37.183.190;KIP:(null);UIP:(null);IPV:NLI;H:mail.freescale.net;RD:none;EFVD:NLI
+X-SpamScore: 0
+X-BigFish: VS0(zzzz1de0h1202h1d1ah1d2ahzzz2dh2a8h668h839hd25he5bhf0ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh162dh1631h1155h)
+Received: from mail74-am1 (localhost.localdomain [127.0.0.1]) by mail74-am1
+ (MessageSwitch) id 1353366183122505_4651; Mon, 19 Nov 2012 23:03:03 +0000
+ (UTC)
+Received: from AM1EHSMHS002.bigfish.com (unknown [10.3.201.251])	by
+ mail74-am1.bigfish.com (Postfix) with ESMTP id 188042E009B	for
+ <git@vger.kernel.org>; Mon, 19 Nov 2012 23:03:03 +0000 (UTC)
+Received: from mail.freescale.net (70.37.183.190) by AM1EHSMHS002.bigfish.com
+ (10.3.207.102) with Microsoft SMTP Server (TLS) id 14.1.225.23; Mon, 19 Nov
+ 2012 23:02:59 +0000
+Received: from tx30smr01.am.freescale.net (10.81.153.31) by
+ 039-SN1MMR1-003.039d.mgd.msft.net (10.84.1.16) with Microsoft SMTP Server
+ (TLS) id 14.2.318.3; Mon, 19 Nov 2012 23:02:59 +0000
+Received: from [10.82.123.3] (efes.am.freescale.net [10.82.123.3])	by
+ tx30smr01.am.freescale.net (8.14.3/8.14.0) with ESMTP id qAJN2pO7016668	for
+ <git@vger.kernel.org>; Mon, 19 Nov 2012 16:02:57 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Firefox/16.0 SeaMonkey/2.13.1
+X-OriginatorOrg: freescale.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210063>
 
-On Mon, Nov 19, 2012 at 11:27:45AM -0800, Junio C Hamano wrote:
-> Given that the problematic line
-> 
-> 	Stable Kernel Maintainance Track <stable@vger.kernel.org> # vX.Y
-> 
-> is not even a valid e-mail address, doesn't this new logic belong to
-> sanitize_address() conceptually?
+According to the man page for git-config, the --git-all option is not
+supposed to return an error code:
 
-Yes, it's much better to do it in the sanitize_address().
+--get-all
+	Like get, but does not fail if the number of values for the key is
+	not exactly one.
 
-Felipe, may you check it?
+IMHO, zero is also "not exactly one", but I still get a 1 exit code if the
+key does not exist.
 
-Krzysiek
--- >8 --
-Subject: [PATCH] git-send-email: remove garbage after email address
+My .git/config says this:
 
-In some cases it's very useful to add some additional information
-after email in Cc-list, for instance:
+[user "cq.branch"]
+	mastr = upstream/master
 
-"Cc: Stable kernel <stable@vger.kernel.org> #v3.4 v3.5 v3.6"
+git-config --get-all does this:
 
-Currently the git refuses to add such invalid email to Cc-list,
-when the Email::Valid perl module is available or just uses whole line
-as the email address.
+$ git config --get-all user.cq.branch.master
+$ echo $?
+1
+$ git config --get-all user.cq.branch.mastr
+upstream/master
+$ echo $?
+0
 
-Now in sanitize_address() everything after the email address is
-removed, so the resulting line is correct email address and Email::Valid
-validates it correctly.
+I just want git to return nothing if the key doesn't exist.  I don't want
+it to return an exit code.  Is there a way to do this?  I think either the
+code is broken or the documentation needs to be changed.
 
-Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
----
- git-send-email.perl | 4 ++++
- 1 file changed, 4 insertions(+)
+I'm running git version 1.7.3.4
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5a7c29d..9840d0a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -924,6 +924,10 @@ sub quote_subject {
- # use the simplest quoting being able to handle the recipient
- sub sanitize_address {
- 	my ($recipient) = @_;
-+
-+	# remove garbage after email address
-+	$recipient =~ s/(.*>).*$/$1/;
-+
- 	my ($recipient_name, $recipient_addr) = ($recipient =~ /^(.*?)\s*(<.*)/);
- 
- 	if (not $recipient_name) {
 -- 
-1.8.0.283.gc57d856
+Timur Tabi
+Linux kernel developer at Freescale
