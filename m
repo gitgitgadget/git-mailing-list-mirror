@@ -1,137 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] pathspec: apply "*.c" optimization from exclude
-Date: Mon, 19 Nov 2012 13:20:09 -0800
-Message-ID: <7vtxsluw3k.fsf@alter.siamese.dyndns.org>
-References: <1353229989-13075-1-git-send-email-pclouds@gmail.com>
- <1353229989-13075-4-git-send-email-pclouds@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6 0/2] New zsh wrapper
+Date: Mon, 19 Nov 2012 22:56:31 +0100
+Message-ID: <CAMP44s0K2bzDDJQcC-KRnY50sZ4zNPSaujH5Gj7v5y6=ZYM90Q@mail.gmail.com>
+References: <1353236889-15052-1-git-send-email-felipe.contreras@gmail.com>
+	<7vpq39xw01.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 22:22:34 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Marc Khouzam <marc.khouzam@gmail.com>,
+	Marius Storm-Olsen <marius@storm-olsen.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Peter van der Does <peter@avirtualhome.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Mark Lodato <lodatom@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 22:56:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaYnX-0001xO-V1
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 22:22:32 +0100
+	id 1TaZKe-0002Db-Ud
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 22:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab2KSVWM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Nov 2012 16:22:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36767 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752017Ab2KSVWJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2012 16:22:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F9619F0E;
-	Mon, 19 Nov 2012 16:22:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=UHnqYAFOyef6AS4eEXuJjQObY
-	0M=; b=K5yK3fThADqegTgEXdVoiW/OqaBT4XepMF4/ea8fdAnnJeIVpXIw3tp11
-	zqFeKsqwyvCPabDPVdqB0DvQ7dNUE1aGfS8XQ++dLkPAdyCwv0SRfwDUpIgv07TZ
-	rKbIhgx/BxLueSbVyJW1CVv0yPaVuGfL0Z0mmvA4KVOcBLkD/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=DAMC9GsV/AyJK/m+mY8
-	iYchwNfuZrWHmJDaV/O9qWfynUrHIglXuePAlOT20u38zbDv+KQGWCoecMmrVwE/
-	N6DYF9XSLynhfuTtuAKXl/sFEKZRnplMvYe8tx+tirgbhwaWzBQck2DwN6Q2B8Rf
-	/URnzDW4D73sldQ78mlNT7I0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E13B9F0D;
-	Mon, 19 Nov 2012 16:22:09 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 990A09F0C; Mon, 19 Nov 2012
- 16:22:08 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2CB57A3A-328F-11E2-A425-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752737Ab2KSV4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 16:56:32 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:63201 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752181Ab2KSV4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2012 16:56:31 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so5328060obb.19
+        for <git@vger.kernel.org>; Mon, 19 Nov 2012 13:56:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vGmMErdxluFU03jw8VmIU5TnsijS6hSbEJEh0wnCtqY=;
+        b=oj+cgJKPEPVAC6wqpqwmiCWA3RsP0RSUdD2px5vgTXW1xo5qx4L94fpmY5Ehq/2iQF
+         3KtPzzbYH/iWV5i3SKHmBXiZkjYuE3vDqZcP1vtuhxm8xuu4SHza6hO1Y1EOPXjoud0w
+         yjgmY0UiO0A/TR2TwMaw5ypRrb1VlCpMsaxoluJepimrM4O+Ps2EEqgirNSiM4U29mA4
+         HeseyYSHOfq+Sv13yGXChkRuUKteVpSeFwgeTGIVOXh1rS20zs5mr0PL+XobtuwuGUBJ
+         VHiX7kn4Cz/N93Qqao3NhSim8ZPhzR01c5ZVNppjCCsO04o+ToOByTN5QBioIS7Iv423
+         P3Zw==
+Received: by 10.182.194.70 with SMTP id hu6mr11782959obc.4.1353362191140; Mon,
+ 19 Nov 2012 13:56:31 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Mon, 19 Nov 2012 13:56:31 -0800 (PST)
+In-Reply-To: <7vpq39xw01.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210058>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> -O2 build on linux-2.6, without the patch:
-
-Before the result, can you briefly explain what '"*.c" optimization
-from exclude' the title talks about is?
-
-    When a pattern contains only a single asterisk, e.g. "foo*bar",
-    after literally comparing the leading part "foo" with the
-    string, we can compare the tail of the string and make sure it
-    matches "bar", instead of running fnmatch() on "*bar" against
-    the remainder of the string.
-
-The funny thing was that trying to explain what the logic should do
-makes one realize potential issues in the implementation of that
-logic ;-)  See below.
-
-> $ time git rev-list --quiet HEAD -- '*.c'
+On Mon, Nov 19, 2012 at 7:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> real    0m40.770s
-> user    0m40.290s
-> sys     0m0.256s
+>> The second patch is new, in order for users to get the same features when
+>> sourcing the bash script (they don't need to change anything). They'll get a
+>> warning suggesting to check the new script git-completion.zsh. Eventually, that
+>> support would be dropped from the bash script.
+>>
+>> Some people were suggesting something like this, so here it is.
+>>
+>> Can we merge the zsh wrapper now?
+>>
+>> Felipe Contreras (2):
+>>   completion: add new zsh completion
+>>   completion: start moving to the new zsh completion
+>>
+>>  contrib/completion/git-completion.bash | 104 +++++++++++++++++++--------------
+>>  contrib/completion/git-completion.zsh  |  78 +++++++++++++++++++++++++
+>>  2 files changed, 139 insertions(+), 43 deletions(-)
+>>  create mode 100644 contrib/completion/git-completion.zsh
 >
-> With the patch
+> Thanks; I am a bit puzzled as to the progression of this series, as
+> it spanned many months.  I *think* the following are the previous
+> ones, but I may be mixing up v$n patches for other series, so just
+> to make sure (please correct if I am mistaken):
 >
-> $ time ~/w/git/git rev-list --quiet HEAD -- '*.c'
->
-> real    0m34.288s
-> user    0m33.997s
-> sys     0m0.205s
->
-> The above command is not supposed to be widely popular.
+>  * (v1) http://thread.gmane.org/gmane.comp.version-control.git/189310
+>    with only git-completion.zsh without any changes to the bash
+>    side;
 
-Hrm, perhaps.  I use "git grep <pattern> -- \*.c" quite a lot, but
-haven't seen use case for \*.c in the context of the "log" family.
+Yes, and with a lot of code that is not strictly needed.
 
-> diff --git a/cache.h b/cache.h
-> index bf031f1..d18f584 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -473,6 +473,8 @@ extern int index_name_is_other(const struct index=
-_state *, const char *, int);
->  extern int ie_match_stat(const struct index_state *, struct cache_en=
-try *, struct stat *, unsigned int);
->  extern int ie_modified(const struct index_state *, struct cache_entr=
-y *, struct stat *, unsigned int);
-> =20
-> +#define PSF_ONESTAR 1
+>  * (v2) http://thread.gmane.org/gmane.comp.version-control.git/189381
+>    without bash side changes;
 
-Together with the GF_ prefix in the previous, PSF_ prefix needs a
-bit of in-code explanation.  Is it just an RC3L (random combination
-of 3 letters?)
+Yes, also with more code.
 
-> @@ -46,6 +46,12 @@ inline int git_fnmatch(const char *pattern, const =
-char *string,
->  		pattern +=3D prefix;
->  		string +=3D prefix;
->  	}
-> +	if (flags & GF_ONESTAR) {
-> +		int pattern_len =3D strlen(++pattern);
-> +		int string_len =3D strlen(string);
-> +		return strcmp(pattern,
-> +			      string + string_len - pattern_len);
-> +	}
+>  * (v3) http://thread.gmane.org/gmane.comp.version-control.git/196720
+>    without bash side changes;
 
-What happens when pattern=3D"foo*oob" and string=3D"foob"?
+Yes, now it's simpler due to changes in bash side already in.
 
-The prefix match before this code determines that the literal prefix
-in the pattern matches with the early part of the string, and makes
-pattern=3D"*oob" and string=3D"b".
+>  * (v6) http://thread.gmane.org/gmane.comp.version-control.git/208170
+>    with COMPREPLY changes;
 
-When you come to strcmp(), you see that string_len is 1, pattern_len
-is 3, and pattern is "oob".  string+string_len-pattern_len =3D "oob",
-one past the beginning of the original string "foob".  They match.
+Yeap.
 
-Oops?
+>  * This one, with removal of zsh specific workarounds from bash
+>    completion script.
 
-	return (string_len < pattern_len) ||
-        	strcmp(pattern, string + string_len - pattern_len);
+Yes, although that is a separate patch.
 
-perhaps?
+> I do not care too much about how v4 and v5 looked like; I primarily
+> am interested in knowing if I can discard 208170 from my inbox
+> safely ;-).
+
+Yes you can. The rest of the patches I sent in a different series.
+
+Cheers.
+
+-- 
+Felipe Contreras
