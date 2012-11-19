@@ -1,64 +1,108 @@
-From: Pat Notz <patnotz@gmail.com>
-Subject: Re: Should --pretty=format:%b respect i18n.logoutputencoding just
- like normal "git log"?
-Date: Mon, 19 Nov 2012 10:42:48 -0700
-Message-ID: <CADvGaErNPyHEP029-M-UWtDUaH0xJstXUc+9FGuy-7YEUM0zpA@mail.gmail.com>
-References: <CACsJy8Ag7wZCKeTM-fW7MUjWs=7xq7ciwhfx4kroJupwvs0dXg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/2] New zsh wrapper
+Date: Mon, 19 Nov 2012 10:55:58 -0800
+Message-ID: <7vpq39xw01.fsf@alter.siamese.dyndns.org>
+References: <1353236889-15052-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 18:43:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Marc Khouzam <marc.khouzam@gmail.com>,
+	Marius Storm-Olsen <marius@storm-olsen.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Peter van der Does <peter@avirtualhome.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Mark Lodato <lodatom@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 19:56:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaVNV-00081o-J2
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 18:43:25 +0100
+	id 1TaWWG-0008NK-1a
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Nov 2012 19:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676Ab2KSRnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2012 12:43:10 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:35156 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753639Ab2KSRnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2012 12:43:09 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so5075340obb.19
-        for <git@vger.kernel.org>; Mon, 19 Nov 2012 09:43:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lN18TNJY4JbARsAa55qo1PYrYFlnpWIBk4ix/a17JhE=;
-        b=C7UW+PKDQEOtekK8hrfrbBcBJcEBTrS/ktwuAuaYKdCQLEH2KgTK8ok2mbLdjLUx0W
-         bW4K5m4sHeIIYosQNkUfdAKraJS+NwfgXIhlgqXF0C8zAm0db2T6XhHM4hFYfunIXw+7
-         eDoc3lEu03d7OCmCbvA3k9KPODubijzeVv6JZTYszvKkqHiLR9Yl+MOSZKojvLDoO+N5
-         xY2b4zjeNuVVXgp8CS+6x2tBSkjuaJ0iR4rCUgCOHHAo7UGoHC/wouM2Zud3P5bmk39a
-         qqhe/mYLFHdRfvPIrHcxYZTbegBdBLSH2fKDgGjQBHrfOOznirw06JTWvTOX2F4C3Fuj
-         +CFw==
-Received: by 10.60.171.146 with SMTP id au18mr10826913oec.25.1353346988937;
- Mon, 19 Nov 2012 09:43:08 -0800 (PST)
-Received: by 10.182.80.229 with HTTP; Mon, 19 Nov 2012 09:42:48 -0800 (PST)
-In-Reply-To: <CACsJy8Ag7wZCKeTM-fW7MUjWs=7xq7ciwhfx4kroJupwvs0dXg@mail.gmail.com>
+	id S1754089Ab2KSS4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 13:56:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55360 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754204Ab2KSS4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2012 13:56:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F25290C2;
+	Mon, 19 Nov 2012 13:56:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WETQFaYXE+U2CLcNjGFEDKRGL2c=; b=CnaMGc
+	5Dx53t61uPmSXgAqqwhx1V99WXLmW1gRu2bcUK3S73yDaP7Q8hRhBJr1qe3gwysm
+	gNHXZYTwq8K4ZhQnDwmNdrlQD0+kEfAsa5T33DQ2o4XwPQKSGaOePaj/ANgVbj8r
+	SYlDEfCpPLikCSkhoMYDv9Z4nzY+zUaTulf5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mbXTxmpJDzaNJW9cAaE6shgdKM9Ep1rS
+	kRDrAIEXKLbM5IUGedC8pmgFsQ+K2TVhTB/XDBNXdNfpolpTZiCDmdkPkpPdjwCH
+	gaAWwcMjvO/O6D/KVRUWwKsQR1ZG9AOLHyUA8iv9QpxY6jxkM0zuRIc5O6LJPfYV
+	0NDflwwqByc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08EB590C1;
+	Mon, 19 Nov 2012 13:56:01 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45A4290BE; Mon, 19 Nov 2012
+ 13:56:00 -0500 (EST)
+In-Reply-To: <1353236889-15052-1-git-send-email-felipe.contreras@gmail.com>
+ (Felipe Contreras's message of "Sun, 18 Nov 2012 12:08:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C264A9B2-327A-11E2-A274-54832E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210048>
 
-On Mon, Nov 19, 2012 at 6:08 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> Changes around this code in history is a bit unclear. User format
-> learns to get log encoding from a field in 177b29d (pretty.c: teach
-> format_commit_message() to reencode the output - 2010-11-02), but this
-> field is only set for --fixup and --squash (in a few commits later).
-> This makes "git log --pretty=format:%b" always ignore the output
-> encoding config key. I don't think %b output should be different from
-> normal log output, which does respect output encoding. Pat, any
-> reasons not to do it?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Nope, that looks like it was an oversight on my part. Nice find.
+> The second patch is new, in order for users to get the same features when
+> sourcing the bash script (they don't need to change anything). They'll get a
+> warning suggesting to check the new script git-completion.zsh. Eventually, that
+> support would be dropped from the bash script.
+>
+> Some people were suggesting something like this, so here it is.
+>
+> Can we merge the zsh wrapper now?
+>
+> Felipe Contreras (2):
+>   completion: add new zsh completion
+>   completion: start moving to the new zsh completion
+>
+>  contrib/completion/git-completion.bash | 104 +++++++++++++++++++--------------
+>  contrib/completion/git-completion.zsh  |  78 +++++++++++++++++++++++++
+>  2 files changed, 139 insertions(+), 43 deletions(-)
+>  create mode 100644 contrib/completion/git-completion.zsh
 
-~ Pat
+Thanks; I am a bit puzzled as to the progression of this series, as
+it spanned many months.  I *think* the following are the previous
+ones, but I may be mixing up v$n patches for other series, so just
+to make sure (please correct if I am mistaken):
 
-> --
-> Duy
+ * (v1) http://thread.gmane.org/gmane.comp.version-control.git/189310
+   with only git-completion.zsh without any changes to the bash
+   side;
+
+ * (v2) http://thread.gmane.org/gmane.comp.version-control.git/189381
+   without bash side changes;
+
+ * (v3) http://thread.gmane.org/gmane.comp.version-control.git/196720
+   without bash side changes;
+
+ * (v6) http://thread.gmane.org/gmane.comp.version-control.git/208170
+   with COMPREPLY changes;
+
+ * This one, with removal of zsh specific workarounds from bash
+   completion script.
+
+I do not care too much about how v4 and v5 looked like; I primarily
+am interested in knowing if I can discard 208170 from my inbox
+safely ;-).
+
+Thanks.
