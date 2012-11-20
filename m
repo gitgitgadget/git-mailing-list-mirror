@@ -1,82 +1,69 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: Auto-repo-repair
-Date: Tue, 20 Nov 2012 06:56:17 -0500
-Message-ID: <CAM9Z-n=tAcpQHTU7WHhzZkoVL_ar9vcH8G1tKd-026+djAiJ4A@mail.gmail.com>
-References: <CAM9Z-nmu2MiE9vF9T6Aw8vFTR8mTkuR3akHgZX6+=n3uA4fmpA@mail.gmail.com>
-	<fd162e10-46a8-433c-80b2-c1c4185c2032@zcs>
+From: Paul Fox <pgf@foxharp.boston.ma.us>
+Subject: Re: What's cooking in git.git (Nov 2012, #06; Mon, 19)
+Date: Tue, 20 Nov 2012 06:59:22 -0500
+Message-ID: <20121120115923.746252E9301@grass.foxharp.boston.ma.us>
+References: <7vpq39up0m.fsf@alter.siamese.dyndns.org> (sfid-20121119_185521_871211_B8238659)
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Enrico Weigelt <enrico.weigelt@vnc.biz>
-X-From: git-owner@vger.kernel.org Tue Nov 20 12:56:36 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 12:59:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TamRN-00008E-OF
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 12:56:34 +0100
+	id 1TamUN-0002iH-R8
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 12:59:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753129Ab2KTL4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 06:56:19 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:42414 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753111Ab2KTL4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 06:56:19 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so2360000bkw.19
-        for <git@vger.kernel.org>; Tue, 20 Nov 2012 03:56:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2OqLElKxQgTKRS1MBl9JTvrtAynEzm6+W3Yk2qxSg9Y=;
-        b=AHXzwvaVJSTnn0HZhruw0rS6gSdBJUJXjHCFildqUWdQriZwaER2pEKqZxkCAIStB/
-         J+saIV2aoVMSPc1D20f/xApShJBejOMIR8+PSGhZY0wj41gcuANzDNwLpsToZ0jc3ByE
-         Vr1lBeFyYUv2ENqVcL5nseMBLKNpUGkUsVaOqsTgt9oK1Dp/OMjNE7GEa0gxAfK8QrTc
-         /jG1QakS53z2jChBHSEQECVpUkx4V3s+l+nIwpWGPX2dLowvzZPJp49WJZeM88/wGf4J
-         sEGEBwTaJx+tqvPlSd/LKlTERGwglbxgJsCobL0J+Vp8scgKheOMDpUCCHftZz+Y1fcI
-         9fqQ==
-Received: by 10.204.9.147 with SMTP id l19mr6178329bkl.15.1353412577920; Tue,
- 20 Nov 2012 03:56:17 -0800 (PST)
-Received: by 10.205.122.144 with HTTP; Tue, 20 Nov 2012 03:56:17 -0800 (PST)
-In-Reply-To: <fd162e10-46a8-433c-80b2-c1c4185c2032@zcs>
+	id S1753193Ab2KTL7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 06:59:25 -0500
+Received: from colo.foxharp.net ([166.84.7.52]:54619 "EHLO colo.foxharp.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752616Ab2KTL7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 06:59:24 -0500
+Received: from grass.foxharp.boston.ma.us (localhost [127.0.0.1])
+	by colo.foxharp.net (Postfix) with ESMTP id B135A540E4;
+	Tue, 20 Nov 2012 06:56:20 -0500 (EST)
+Received: by grass.foxharp.boston.ma.us (Postfix, from userid 1000)
+	id 746252E9301; Tue, 20 Nov 2012 06:59:23 -0500 (EST)
+Received: from grass (localhost [127.0.0.1])
+	by grass.foxharp.boston.ma.us (Postfix) with ESMTP id 2B74B2E9300;
+	Tue, 20 Nov 2012 06:59:23 -0500 (EST)
+In-reply-to: <7vpq39up0m.fsf@alter.siamese.dyndns.org> (sfid-20121119_185521_871211_B8238659)
+Content-ID: <22310.1353412762.1@grass>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210094>
 
-On Mon, Nov 19, 2012 at 5:35 PM, Enrico Weigelt <enrico.weigelt@vnc.biz> wrote:
->
->> >> How would the broken repository be sure of what it is missing to
->> >> request it from the other side?
->> >
->> > fsck will find missing objects.
->>
->> And what about the objects referred to by objects that are missing?
->
-> Will be fetched after multiple iterations.
-> We could even introduce some 'fsck --autorepair' mode, which triggers
-> it to fetch any missing object from its remotes.
->
-> Maybe even introduce a concept of peer object stores, which (a bit like
-> alternates) are asked for objects that arent locally availabe - that
-> could be even a plain venti store.
+junio c hamano wrote:
+ > [Stalled]
+ > 
+ > * pf/editor-ignore-sigint (2012-11-11) 5 commits
+ >  - launch_editor: propagate SIGINT from editor to git
+ >  - run-command: do not warn about child death by SIGINT
+ >  - run-command: drop silent_exec_failure arg from wait_or_whine
+ >  - launch_editor: ignore SIGINT while the editor has control
+ >  - launch_editor: refactor to use start/finish_command
+ > 
+ >  Avoid confusing cases where the user hits Ctrl-C while in the editor
+ >  session, not realizing git will receive the signal. Since most editors
+ >  will take over the terminal and will block SIGINT, this is not likely
+ >  to confuse anyone.
+ > 
+ >  Some people raised issues with emacsclient, which are addressed by this
+ >  re-roll. It should probably also handle SIGQUIT, and there were a
+ >  handful of other review comments.
+ > 
+ >  Expecting a re-roll.
 
-I still think that it would make the most sense to do the following
-(if you insist on some sort of automated repair):
-(1) Fetch a "good" clone (or clones) into a temporary directory;
-(2) Cannibalize the objects from it (them);
-(3) Re-run git fsck and check for still-missing / unreachable items;
-(4) IF THE RESULT OF (3) IS ACCEPTABLE, run git gc to clean up the
-mess, discard / "merge" duplicate objects, and fix up the packfiles.
+i don't have strong feelings on any of the later review comments
+(though i guess the check on finish_command()'s return code needed
+attention), and wasn't the last submitter, but would certainly like to
+see this move forward.
 
-It is step (4) that requires the most user interaction. I could see
-building up a shell script that does all but (4) nearly automatically.
-None of this requires modifying Git itself.
-
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+paul
+=---------------------
+ paul fox, pgf@foxharp.boston.ma.us (arlington, ma, where it's 26.1 degrees)
