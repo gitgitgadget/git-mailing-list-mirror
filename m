@@ -1,113 +1,112 @@
-From: Lisandro =?iso-8859-1?q?Dami=E1n_Nicanor_P=E9rez_Meyer?= 
-	<perezmeyer@gmail.com>
-Subject: [wishlist] support git flow-like view
-Date: Tue, 20 Nov 2012 20:42:52 -0300
-Message-ID: <201211202043.00293.perezmeyer@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2012, #06; Mon, 19)
+Date: Tue, 20 Nov 2012 15:50:45 -0800
+Message-ID: <7vy5hvq1ey.fsf@alter.siamese.dyndns.org>
+References: <7vpq39up0m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart12778149.ch6qrsplu2";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 00:49:32 2012
+X-From: git-owner@vger.kernel.org Wed Nov 21 00:51:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaxZJ-0006T4-EV
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 00:49:29 +0100
+	id 1Taxao-0007dy-P7
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 00:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753379Ab2KTXtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 18:49:15 -0500
-Received: from mail-gh0-f179.google.com ([209.85.160.179]:40906 "EHLO
-	mail-gh0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752089Ab2KTXtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 18:49:14 -0500
-X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Nov 2012 18:49:14 EST
-Received: by mail-gh0-f179.google.com with SMTP id r14so1286743ghr.10
-        for <git@vger.kernel.org>; Tue, 20 Nov 2012 15:49:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=LgZ4mpOBYtwd3bhHJNCO2E73rb+3+oq26gT2vYABlXc=;
-        b=FGAPfQT47pdUuK1+0KWliKuXTuI9vmg1ozqnde+keAL/OB7Vx32+vSKDFnwSZVjSJO
-         UVOEy12wUDMMaJHsZI7oSaFY921Kejn0/MNGUwIz8Mq8aWAdi6qaawJqcA4VZN9oMLuG
-         P0Dag3iHMjeMXzzH6vfPAk9bin94KbnmO1lPVD6G2r2bMGW8ykcoYQq/kexkL3MV+ue1
-         r0qHFrUhouQRSYl/PwFiDFomJ/XDFN2JQcmC2dAdkzDGdqV5x4+HRXOhhsdEb8RHX6oF
-         LXsehv4iIa1Cu9jGxo27FmgBl+7UF0WQEmy0dQgiwmUpa9zRofKa3Auw5ePkmPkQFHUG
-         4ShA==
-Received: by 10.236.134.49 with SMTP id r37mr17097297yhi.11.1353454985448;
-        Tue, 20 Nov 2012 15:43:05 -0800 (PST)
-Received: from luna.localnet ([190.97.25.23])
-        by mx.google.com with ESMTPS id q22sm12901308anh.18.2012.11.20.15.43.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 20 Nov 2012 15:43:04 -0800 (PST)
-User-Agent: KMail/1.13.7 (Linux/3.2.21+edid; KDE/4.8.5; x86_64; ; )
+	id S1753368Ab2KTXus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 18:50:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37835 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752089Ab2KTXus (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 18:50:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A30E0A1EF;
+	Tue, 20 Nov 2012 18:50:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6siNgyAR2qhT31PdX5T2JOV6GUA=; b=AS/XA8
+	Eb5tHfLgUMqUZFFeq58An7Ywy61Fpdn9KIabvrwJxCfRSGutWvGNsnPiZ3oNOJMD
+	ysWufqNyzQCqpVXt2OxCqLPCrZp0X52DVjdInNk1olWpoIQYe3FjUJagP43WOjp3
+	pRUlKD0n3psLtDlSLMras1wA/tJGGrLUoIBDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oY9fIVUS4b42L9ez8nB00tbij+1+U29e
+	Sk9GMpO0wSYcVgpIeqojrz1DgZFwf+GzOYzPDQ7eilC+WEBFIwADaZNwrtH2tIUT
+	QmhyXkumbRTQ5WybKpvc25a8ipmcXMhPt3TQA1nPV2xDwGxU/67mB8QJA7GceA4T
+	F4uEoaiAW9s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90D51A1EE;
+	Tue, 20 Nov 2012 18:50:47 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA7E2A1E9; Tue, 20 Nov 2012
+ 18:50:46 -0500 (EST)
+In-Reply-To: <7vpq39up0m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 19 Nov 2012 15:55:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1ADCF994-336D-11E2-861A-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210124>
 
---nextPart12778149.ch6qrsplu2
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hi! I am not suscribed to the list, so please CC-me.
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.
+>
+> Bunch of topics have been merged to 'next'.
+>
+> We are at the beginning of the 5th week of this release cycle
+> (cf. http://tinyurl.com/gitcal), and I've moved many topics to the
+> Stalled category, which will be discarded without prejudice soonish
+> unless there are some updates.  I am still a bit behind on some
+> topics and already posted rerolls may have to be pulled in.
 
-I think this may have been proposed before, but I could not find anything i=
-n=20
-the web, so I better try myself :)
+It feels a bit too busy/loud to issue two "What's cooking" in a row,
+so here is an informal update.
 
-The idea would be to gitk to show a "git flow-like"[0] view when it detects=
-=20
-git flow (or the user ask for it or...)
+ - The following have graduated to 'master'.
 
-Basiccaly, you can show the main two branches: master and develop. Of cours=
-e,=20
-having the possibility to show feature/release/hotfixes branches would be=20
-ideal.
+     cn/config-missing-path
+     jk/checkout-out-of-unborn
+     jk/maint-gitweb-xss
+     jk/maint-http-half-auth-fetch
+     jl/submodule-rm
+     kb/preload-index-more
+     mg/replace-resolve-delete
+     mh/alt-odb-string-list-cleanup
+     ml/cygwin-mingw-headers
+     pw/maint-p4-rcs-expansion-newline
+     rh/maint-gitweb-highlight-ext
+     ta/doc-cleanup
 
-Kinds regards, Lisandro.
+ - Many topics have been merged to 'maint' in preparation for 1.8.0.1.
 
-[0] <http://nvie.com/posts/a-successful-git-branching-model/>
+     mg/maint-pull-suggest-upstream-to
+     mm/maint-doc-commit-edit
+     as/maint-doc-fix-no-post-rewrite
+     rs/lock-correct-ref-during-delete
+     rf/maint-mailmap-off-by-one
+     jk/maint-diff-grep-textconv
+     js/format-2047
+     sz/maint-curl-multi-timeout
+     po/maint-refs-replace-docs
+     ph/pull-rebase-detached
+     mm/maint-doc-remote-tracking
+     rs/branch-del-symref
+     nd/grep-true-path
+     jc/grep-pcre-loose-ends (early part)
+     da/mergetools-p4
+     jc/test-say-color-avoid-echo-escape
+     bw/config-lift-variable-name-length-limit
 
+ - A few topics have been resurrected from the stalled category to
+   cooking:
 
-=2D-=20
-Esperando confirmaci=F3n de ingredientes necesarios
-que ser=E1n expuestos a la radiaci=F3n...
-  Manera geek de expresar que se espera la compra
-  de carne para un t=EDpico asado argentino.
-  Silvio Rikemberg.
-
-Lisandro Dami=E1n Nicanor P=E9rez Meyer
-http://perezmeyer.com.ar/
-http://perezmeyer.blogspot.com/
-
---nextPart12778149.ch6qrsplu2
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAABCAAGBQJQrBV9AAoJEKtkX0BihqfQd1IP/A9IZaSj8ol7K338xUcZUkNc
-/F+sSFIkR065aTaQ0nEOLTVFRZOBr6yodp5gXyblXxahnZ5oD8mPm0B1FBMiig2U
-0qx/OfQeaLWQyakoPDwFGEHlk+EqBZGMhfwpGrcyrhQ7G0QKxREXSKsIVNw+5+D6
-4CTusuBX+62i1OHGTcmH4znK0RA4ZuzjUnTENaNC56cDrxr5iext8Ocx8QGc64/y
-EtBzPfdnODoUj5NfcH6cmMzV+fFCpT3R0KOqCq/6D2vHihUbmwoMd/9RdyA/12sd
-FR7D0GinPFtN1CrpMjrhuqDZEbGnQFx7JfuCAa/8pPb4gF/iln0d7aXmeXejEM1T
-fFDwQCHRxfqs72w462Fw72AzcOfOQ/JlldmrOukQAx4DhH5EmFMM/ojZnoXOKGK/
-VUVQJ2X12Skpz80EnAOSUPbP0Av895XyKY8LqYqK9rGAYqOFoCOxWDi0KsKvVz5t
-znzOsJ6ORi/ABgyheIZA9FyGxgCFjy183Hz/iIOGJwDodwq1mpSuW6W/fsf/CVKN
-DrKK4O1NJnh76XIlhepRA1aj4fRzQe56DYsHDhZKxqpLoGM+/SSn7+piL8l75Sfc
-QWxMkhYmU7/HplR2Z42FeGb1ZBonno5i3i6NiN1LmO/prfDuM+ZyYCp19m+mayGb
-ifs3Z2E3VgfZCMgXHZ0i
-=LGTM
------END PGP SIGNATURE-----
-
---nextPart12778149.ch6qrsplu2--
+     pp/gitweb-config-underscore
+     jc/apply-trailing-blank-removal
