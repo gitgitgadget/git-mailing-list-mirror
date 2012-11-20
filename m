@@ -1,61 +1,77 @@
-From: Alexey Molchanov <alexey.molchanov@portaone.com>
-Subject: [PATCH] Fix typo in 1.8.1 release notes
-Date: Tue, 20 Nov 2012 12:03:18 +0200
-Organization: PortaOne, Inc.
-Message-ID: <50AB5566.6040109@portaone.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Failure to extra stable@vger.kernel.org addresses
+Date: Tue, 20 Nov 2012 11:28:39 +0100
+Message-ID: <CAMP44s38gTB_3Ao1rFZgMo2EAuiNb+h88-qRFcQPRMJNxo3CAQ@mail.gmail.com>
+References: <20121119095747.GA13552@arwen.pp.htv.fi>
+	<20121119151845.GA29678@shrek.podlesie.net>
+	<7vk3thxuj2.fsf@alter.siamese.dyndns.org>
+	<20121119225838.GA23412@shrek.podlesie.net>
+	<CAMP44s0f0zYa1FVf9RhNuwYJbkQ7zPwgJ6=ty3c5knjo5a2TNw@mail.gmail.com>
+	<7vlidxuowf.fsf@alter.siamese.dyndns.org>
+	<20121120073100.GB7206@shrek.podlesie.net>
+	<20121120075628.GA7159@shrek.podlesie.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 20 11:23:15 2012
+Cc: Junio C Hamano <gitster@pobox.com>, Felipe Balbi <balbi@ti.com>,
+	git@vger.kernel.org, Tomi Valkeinen <tomi.valkeinen@ti.com>
+To: Krzysztof Mazur <krzysiek@podlesie.net>
+X-From: git-owner@vger.kernel.org Tue Nov 20 11:28:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Takz0-000779-9h
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 11:23:10 +0100
+	id 1Tal4Y-0006Aw-UT
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 11:28:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814Ab2KTKW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 05:22:56 -0500
-Received: from cn.portaone.com ([193.28.87.245]:50305 "EHLO cn.portaone.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751937Ab2KTKWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 05:22:55 -0500
-X-Greylist: delayed 1173 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Nov 2012 05:22:55 EST
-Received: from [192.168.192.184]
-	by cn.portaone.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
-	(Exim 4.76 (FreeBSD))
-	(envelope-from <alexey.molchanov@portaone.com>)
-	id 1Takfm-000CDV-Qk
-	for git@vger.kernel.org; Tue, 20 Nov 2012 12:03:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120310 Thunderbird/11.0
-X-Enigmail-Version: 1.4.1
+	id S1752689Ab2KTK2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 05:28:41 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:56452 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752189Ab2KTK2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 05:28:40 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so5742277oag.19
+        for <git@vger.kernel.org>; Tue, 20 Nov 2012 02:28:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=IjwdzgeDTrhjcVFSXRg/uG8xSJPi1eHrz/uaVJbYPvM=;
+        b=KIRup+t3UuqE/VDT7yuVdGHFEhrtpha1ACRDd4jg1UcfQ+rkvGyfJiZfqIx+4zInQu
+         MZkElu1YEj8yE1b+Ns2BHUEKsKNPF4mR630yOn3W9BRvfCdYUd8OQjttq6/pUQ67Wr+H
+         n/Gz5GLKAyP/UhWYROy3IY+6HNSlZBmLpi2Ofd8fhbAFA81bFZjFTFRzdzmwPP7u9uce
+         oUeuFkKI7Jb/J0102Ef/l2MMeNKUbYmIPi0r3mVTK6zTdDpDrPaZD+69b79lCOekr1H1
+         qNTdSU4bMLUjzWN1sQnbpLK76vEQOuWhLxiRJw2TTuhLfnUAfjDkC1ILUFAp/DHaxF7a
+         ojDg==
+Received: by 10.60.6.38 with SMTP id x6mr3178254oex.9.1353407319655; Tue, 20
+ Nov 2012 02:28:39 -0800 (PST)
+Received: by 10.60.4.74 with HTTP; Tue, 20 Nov 2012 02:28:39 -0800 (PST)
+In-Reply-To: <20121120075628.GA7159@shrek.podlesie.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210089>
 
-Fix typo in documentation
+On Tue, Nov 20, 2012 at 8:56 AM, Krzysztof Mazur <krzysiek@podlesie.net> wrote:
 
-Signed-off-by: Alexey Molchanov <alexey.molchanov@portaone.com>
----
- Documentation/RelNotes/1.8.1.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -925,8 +925,11 @@ sub quote_subject {
+>  sub sanitize_address {
+>         my ($recipient) = @_;
+>
+> +       my $local_part_regexp = qr/[^<>"\s@]+/;
+> +       my $domain_regexp = qr/[^.<>"\s@]+(?:\.[^.<>"\s@]+)+/;
+> +
+>         # remove garbage after email address
+> -       $recipient =~ s/(.*>).*$/$1/;
+> +       $recipient =~ s/^(.*?<$local_part_regexp\@$domain_regexp>).*/$1/;
 
-diff --git a/Documentation/RelNotes/1.8.1.txt b/Documentation/RelNotes/1.8.1.txt
-index 107e5f3..559cd05 100644
---- a/Documentation/RelNotes/1.8.1.txt
-+++ b/Documentation/RelNotes/1.8.1.txt
-@@ -36,7 +36,7 @@ UI, Workflows & Features
-    give the default number of context lines in the patch output, to
-    override the hardcoded default of 3 lines.
+I don't think all that extra complexity is warranted, to me
+s/(.*?>)(.*)$/$1/ is just fine.
 
-- * "git format-patch" leraned the "--notes=<ref>" option to give
-+ * "git format-patch" learned the "--notes=<ref>" option to give
-    notes for the commit after the three-dash lines in its output.
+Cheers.
 
-  * "git log --grep=<pcre>" learned to honor the "grep.patterntype"
 -- 
-1.7.11.2
+Felipe Contreras
