@@ -1,78 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Failure to extra stable@vger.kernel.org addresses
-Date: Mon, 19 Nov 2012 16:00:09 -0800
-Message-ID: <7vhaoluos6.fsf@alter.siamese.dyndns.org>
-References: <20121119095747.GA13552@arwen.pp.htv.fi>
- <20121119151845.GA29678@shrek.podlesie.net>
- <7vk3thxuj2.fsf@alter.siamese.dyndns.org>
- <20121119225838.GA23412@shrek.podlesie.net>
+Subject: Re: git config --git-all can return non-zero error code
+Date: Mon, 19 Nov 2012 16:10:04 -0800
+Message-ID: <7vd2z9uobn.fsf@alter.siamese.dyndns.org>
+References: <50AABA9B.6090007@freescale.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Balbi <balbi@ti.com>, git@vger.kernel.org,
-	Tomi Valkeinen <tomi.valkeinen@ti.com>
-To: Krzysztof Mazur <krzysiek@podlesie.net>
-X-From: git-owner@vger.kernel.org Tue Nov 20 01:00:33 2012
+Cc: <git@vger.kernel.org>
+To: Timur Tabi <timur@freescale.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 01:10:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TabGQ-0004Rv-Ou
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 01:00:31 +0100
+	id 1TabQ2-0005Rn-T4
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 01:10:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753666Ab2KTAAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2012 19:00:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61785 "EHLO
+	id S1753607Ab2KTAKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 19:10:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35395 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753268Ab2KTAAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2012 19:00:12 -0500
+	id S1753236Ab2KTAKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2012 19:10:07 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BA356E60;
-	Mon, 19 Nov 2012 19:00:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FB3D7343;
+	Mon, 19 Nov 2012 19:10:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vz/fGdQOmv8lqMnRSEOesJ4hdcI=; b=PODAlo
-	wiTGyvQdRImpllr8C7rvVj6rC95s0d5dlH6AUSuZb2Yh+dOKNVyrb5P5zwK7bCyU
-	P1UZd1Bzi4NrqSlncpknDASyI+Lw6SumwHdsOMEEaI3KNudo4s4jav9dEQPrISRw
-	7OKnp3Bhb+wvOBXQwTV/fqzyfPTNUKQbdyTsc=
+	:content-type; s=sasl; bh=UU8PsVUv6SpGDYslrv+kesADcEM=; b=Y33NOJ
+	t0Brf2u5tQrXe+08OYBl3eY0vl/GrXrhry9By1DhwDpqfnJH+NHA3L+YvcaiBIhm
+	IbN3eeUlaM8oaKomhwd5SjK494Hjpw2Nr2yMRIXBZ961oh7ZYTl8t+xIqGWgXD7H
+	i4bXSVD4MFwV9JBFP2Ua+xjMEA86BmCfKyWmg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XVIgV9k6glgOpxpiqguncpLdSooJNwFa
-	aplLMN4eEDsTRz22WEsFS62zsS4Tvkj2NTO5NSa0sBcnjjj2wggg+7qQUf3TtLte
-	ee6Ul68qG7rpoi1yu3sPxH4RDmem5Br85Lluu/PJ/qpCYke4G0nVTQCbvi/2MCZS
-	qhJh3+c8HxU=
+	:content-type; q=dns; s=sasl; b=C+fYMvQIGyVtilGfgcWEvhrJUFDBu6Hk
+	V/aZWn3dQtZ6j5AOjgIktKgMMo1Y5GPZORMFTBBk/n2FfufdrVeq8UM/To8rlrAs
+	QLpzjiuVuvoYOsA8JFATFr40P0b/rYE4jrXW3pmeN5Bq3JCxmdiKnawTximVezGD
+	nYISUQicVBI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED0CA6E5F;
-	Mon, 19 Nov 2012 19:00:11 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81A6A7341;
+	Mon, 19 Nov 2012 19:10:06 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5967F6E5D; Mon, 19 Nov 2012
- 19:00:11 -0500 (EST)
-In-Reply-To: <20121119225838.GA23412@shrek.podlesie.net> (Krzysztof Mazur's
- message of "Mon, 19 Nov 2012 23:58:38 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EACD7733E; Mon, 19 Nov 2012
+ 19:10:05 -0500 (EST)
+In-Reply-To: <50AABA9B.6090007@freescale.com> (Timur Tabi's message of "Mon,
+ 19 Nov 2012 17:02:51 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 40DCF22A-32A5-11E2-A199-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A345074E-32A6-11E2-821A-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210068>
 
-Krzysztof Mazur <krzysiek@podlesie.net> writes:
+Timur Tabi <timur@freescale.com> writes:
 
-> On Mon, Nov 19, 2012 at 11:27:45AM -0800, Junio C Hamano wrote:
->> Given that the problematic line
->> 
->> 	Stable Kernel Maintainance Track <stable@vger.kernel.org> # vX.Y
->> 
->> is not even a valid e-mail address, doesn't this new logic belong to
->> sanitize_address() conceptually?
+> According to the man page for git-config, the --git-all option is not
+> supposed to return an error code:
 >
-> Yes, it's much better to do it in the sanitize_address().
+> --get-all
+> 	Like get, but does not fail if the number of values for the key is
+> 	not exactly one.
+>
+> IMHO, zero is also "not exactly one",...
 
-Note that I did not check that all the addresses that are handled by
-extract-valid-address came through sanitize-address function, so
-unlike your original patch, this change alone may still pass some
-garbage to Email::Valid->address().  I tend to think that is a
-progress; we should make sure all the addresses are sanitized before
-using them for sending messages out.
+It should have stated "like get, but unlike get, it does not fail
+when there are multiple values for the key", but the documentation
+was written with that specific knowledge that "--get" has a logic to
+make it fail when there are ambiguities, and wanted to stress that
+difference.  It forgot to mention their similarity explicitly and
+relied on "Like get" part to mean (1) shows the value(s) given to
+the key, and (2) it is an error if there is no such key defined.
