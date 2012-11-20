@@ -1,95 +1,91 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: Failure to extra stable@vger.kernel.org addresses
-Date: Tue, 20 Nov 2012 08:31:00 +0100
-Message-ID: <20121120073100.GB7206@shrek.podlesie.net>
-References: <20121119095747.GA13552@arwen.pp.htv.fi>
- <20121119151845.GA29678@shrek.podlesie.net>
- <7vk3thxuj2.fsf@alter.siamese.dyndns.org>
- <20121119225838.GA23412@shrek.podlesie.net>
- <CAMP44s0f0zYa1FVf9RhNuwYJbkQ7zPwgJ6=ty3c5knjo5a2TNw@mail.gmail.com>
- <7vlidxuowf.fsf@alter.siamese.dyndns.org>
+From: Sebastian Leske <Sebastian.Leske@sleske.name>
+Subject: git-svn: What is --follow-parent / --no-follow-parent for?
+Date: Tue, 20 Nov 2012 08:31:53 +0100
+Message-ID: <20121120073153.GA340@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Felipe Balbi <balbi@ti.com>, git@vger.kernel.org,
-	Tomi Valkeinen <tomi.valkeinen@ti.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 08:31:41 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 20 08:44:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TaiJ2-000231-M8
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 08:31:40 +0100
+	id 1TaiVg-0002Ee-Bj
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 08:44:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367Ab2KTHbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 02:31:24 -0500
-Received: from [93.179.225.50] ([93.179.225.50]:48729 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752737Ab2KTHbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 02:31:03 -0500
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id D99CD64B; Tue, 20 Nov 2012 08:31:00 +0100 (CET)
+	id S1751635Ab2KTHoa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Nov 2012 02:44:30 -0500
+Received: from serv28.loswebos.de ([213.187.93.221]:45227 "EHLO
+	serv28.loswebos.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750928Ab2KTHo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 02:44:29 -0500
+X-Greylist: delayed 618 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Nov 2012 02:44:29 EST
+Received: from iota.localnet (unknown [46.115.53.181])
+	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by serv28.loswebos.de (Postfix) with ESMTPSA id DEF791F54976
+	for <git@vger.kernel.org>; Tue, 20 Nov 2012 08:33:41 +0100 (CET)
+Received: from sleske by iota.localnet with local (Exim 4.69)
+	(envelope-from <Sebastian.Leske@sleske.name>)
+	id 1TaiJG-0000X2-JB
+	for git@vger.kernel.org; Tue, 20 Nov 2012 08:31:54 +0100
 Content-Disposition: inline
-In-Reply-To: <7vlidxuowf.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210084>
 
-On Mon, Nov 19, 2012 at 03:57:36PM -0800, Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > On Mon, Nov 19, 2012 at 11:58 PM, Krzysztof Mazur <krzysiek@podlesie.net> wrote:
-> >
-> >> --- a/git-send-email.perl
-> >> +++ b/git-send-email.perl
-> >> @@ -924,6 +924,10 @@ sub quote_subject {
-> >>  # use the simplest quoting being able to handle the recipient
-> >>  sub sanitize_address {
-> >>         my ($recipient) = @_;
-> >> +
-> >> +       # remove garbage after email address
-> >> +       $recipient =~ s/(.*>).*$/$1/;
-> >> +
-> >
-> > Looks fine, but I would do s/(.*?>)(.*)$/$1/, so that 'test
-> > <foo@bar.com> <#comment>' gets the second comment removed.
-> 
-> Yeah, but do you need to capture the second group?  IOW, like
-> "s/(.*?>).*$/$1/" perhaps?
+Hi,
 
-I also thought about removing everything after first ">", but I will
-not work for addresses like:
+on reading the docs of "git-svn", I stumbled across this paragraph:
 
-Cc: "foo >" <stable@vger.kernel.org> #v3.4 v3.5 v3.6
+> --follow-parent
+> This is especially helpful when we=E2=80=99re tracking a directory th=
+at has been
+> moved around within the repository, or if we started tracking a branc=
+h
+> and never tracked the trunk it was descended from.  This feature is
+> enabled by default, use --no-follow-parent to disable it.
 
-What about:
+However, this does not make sense to me: This sounds like there is no
+good reason *not* to enable this option.  So why is it there? And in
+what situation might I want to use "--no-follow-parent"?
 
-	$recipient =~ s/(.*<[^@]*@[^]]*>).*$/$1/;
+As a matter of fact, I'm not even sure what "--no-follow-parent" does
+(and the docs don't really say).=20
 
-or even
+I tried it out with a small test repo with a single branch (produced by
+copying the trunk, then later deleted). With --follow-parent git-svn
+correctly detected the branch point, and modeled the branch deletion as
+a merge. With --no-follow-parent it just acted as if branch and trunk
+were completely unrelated.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9840d0a..b988c57 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -925,8 +925,11 @@ sub quote_subject {
- sub sanitize_address {
- 	my ($recipient) = @_;
- 
-+	my $local_part_regexp = qr/[^<>"\s@]+/;
-+	my $domain_regexp = qr/[^.<>"\s@]+(?:\.[^.<>"\s@]+)+/;
-+
- 	# remove garbage after email address
--	$recipient =~ s/(.*>).*$/$1/;
-+	$recipient =~ s/(.*<$local_part_regexp\@$domain_regexp>).*$/$1/;
- 
- 	my ($recipient_name, $recipient_addr) = ($recipient =~ /^(.*?)\s*(<.*)/);
+Commit graph of git-svn result:
 
-which uses regex used by 99% accurate version of extract_valid_address().
+--follow-parent:               --no-follow-parent:
 
-Krzysiek
+
+       |                               |
+      /|                             | |
+     / |                             | |
+     | |                             | |
+     | |                             | |
+     | |                             | |
+     \ |                             | |
+      \|                             | |
+       |                               |=20
+
+
+(please excuse cheap ASCII art)
+
+Is that the only effect of --no-follow-parent? And again, why would I
+want that?
+
+I'd be grateful for any clarifications. If I manage to understand the
+explanation, I'll volunteer to summarize it into doc patch (if there ar=
+e
+no objections).
