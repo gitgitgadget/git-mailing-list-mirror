@@ -1,80 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
-Date: Tue, 20 Nov 2012 11:52:46 -0800
-Message-ID: <7vhaokrr01.fsf@alter.siamese.dyndns.org>
-References: <20121117153007.GB7695@book.hvoigt.net>
- <20121117192026.GI22234@odin.tremily.us>
- <7vd2z9t7y2.fsf@alter.siamese.dyndns.org>
- <20121120011628.GD321@odin.tremily.us>
- <7v1ufou92h.fsf@alter.siamese.dyndns.org>
- <20121120121912.GC7096@odin.tremily.us>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Failure to extra stable@vger.kernel.org addresses
+Date: Tue, 20 Nov 2012 20:58:20 +0100
+Message-ID: <m2lidw11yb.fsf@igel.home>
+References: <20121119095747.GA13552@arwen.pp.htv.fi>
+	<20121119151845.GA29678@shrek.podlesie.net>
+	<7vk3thxuj2.fsf@alter.siamese.dyndns.org>
+	<20121119225838.GA23412@shrek.podlesie.net>
+	<CAMP44s0f0zYa1FVf9RhNuwYJbkQ7zPwgJ6=ty3c5knjo5a2TNw@mail.gmail.com>
+	<7vlidxuowf.fsf@alter.siamese.dyndns.org>
+	<20121120073100.GB7206@shrek.podlesie.net>
+	<20121120075628.GA7159@shrek.podlesie.net>
+	<CAMP44s38gTB_3Ao1rFZgMo2EAuiNb+h88-qRFcQPRMJNxo3CAQ@mail.gmail.com>
+	<20121120115942.GA6132@shrek.podlesie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Nov 20 20:53:06 2012
+Content-Type: text/plain
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Felipe Balbi <balbi@ti.com>, git@vger.kernel.org,
+	Tomi Valkeinen <tomi.valkeinen@ti.com>
+To: Krzysztof Mazur <krzysiek@podlesie.net>
+X-From: git-owner@vger.kernel.org Tue Nov 20 20:58:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TatsV-0003v9-Sf
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 20:53:04 +0100
+	id 1Tatxy-0000Yb-Nv
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 20:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752464Ab2KTTwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 14:52:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58468 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752434Ab2KTTws (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 14:52:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 586149745;
-	Tue, 20 Nov 2012 14:52:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=C509Kw3TXHVlXEWz/f6rchppnq0=; b=rHaTz5
-	7ru6SAF2ZnDB4wLCgy6S8uQERMm2zbrA2IcVI6oB94WgnvLwLThZqI96PNS3z2Gp
-	5eZ9b7GXhnslOKs+IdUfSfaahzL/WVryzW/9RS2ccaMRQQtu5O9ISW5NUnsMYcZK
-	nrU3RN/e0Kf9QtZ10dGrultYnzZrBT28EfEJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q8G+8GAxlbFEfMlIXlHJLlNr3hJswn2/
-	e4cl4c8aO5aD7im+bWHc6s8v1K5AGpgBVCOkyYuHUnbbW1YJYS+63r7C0dgVmbgb
-	uFIGBADcwMo+qtB08qlD8YpQIu3JnOuIEEbB/tb0JTXN+RfI9vszMvYtdNFalil8
-	1bPbPfSDN6g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 439509744;
-	Tue, 20 Nov 2012 14:52:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A64559743; Tue, 20 Nov 2012
- 14:52:47 -0500 (EST)
-In-Reply-To: <20121120121912.GC7096@odin.tremily.us> (W. Trevor King's
- message of "Tue, 20 Nov 2012 07:19:12 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DBC5F7EA-334B-11E2-942C-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752473Ab2KTT62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 14:58:28 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:48350 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410Ab2KTT61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 14:58:27 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3Y5d5924pHz3hhVc;
+	Tue, 20 Nov 2012 20:58:21 +0100 (CET)
+X-Auth-Info: lqRZiJyS+tqiTr7B8vu3Ui/iJOQqBidhq2mARZnyrA0=
+Received: from igel.home (ppp-88-217-118-87.dynamic.mnet-online.de [88.217.118.87])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3Y5d591R7XzbbjB;
+	Tue, 20 Nov 2012 20:58:21 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 934A5CA2A4; Tue, 20 Nov 2012 20:58:20 +0100 (CET)
+X-Yow: I'm having a RELIGIOUS EXPERIENCE..  and I don't take any DRUGS
+In-Reply-To: <20121120115942.GA6132@shrek.podlesie.net> (Krzysztof Mazur's
+	message of "Tue, 20 Nov 2012 12:59:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210108>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Krzysztof Mazur <krzysiek@podlesie.net> writes:
 
-> The superproject gitlink should only be updated after
+> On Tue, Nov 20, 2012 at 11:28:39AM +0100, Felipe Contreras wrote:
+>> On Tue, Nov 20, 2012 at 8:56 AM, Krzysztof Mazur <krzysiek@podlesie.net> wrote:
+>> 
+>> > --- a/git-send-email.perl
+>> > +++ b/git-send-email.perl
+>> > @@ -925,8 +925,11 @@ sub quote_subject {
+>> >  sub sanitize_address {
+>> >         my ($recipient) = @_;
+>> >
+>> > +       my $local_part_regexp = qr/[^<>"\s@]+/;
+>> > +       my $domain_regexp = qr/[^.<>"\s@]+(?:\.[^.<>"\s@]+)+/;
+>> > +
+>> >         # remove garbage after email address
+>> > -       $recipient =~ s/(.*>).*$/$1/;
+>> > +       $recipient =~ s/^(.*?<$local_part_regexp\@$domain_regexp>).*/$1/;
+>> 
+>> I don't think all that extra complexity is warranted, to me
+>> s/(.*?>)(.*)$/$1/ is just fine.
+>> 
 >
->   $ git submodule update --pull
->
-> A plain
->
->   $ git submodule update
->
-> would still checkout the previously-recorded SHA, not the new upstream
-> tip.
+> Yeah, it's a little bit too complex, but "s/(.*?>)(.*)$/$1/"
 
-Hrm, doesn't it make the "float at the tip of a branch" mode
-useless, though?
+How about "s/(.*?<[^>]*>).*$/$1/"?  That will still fail on "<foo@bar>"
+<foo@bar>, but you'll need a full rfc822 parser to handle the general
+case anyway.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
