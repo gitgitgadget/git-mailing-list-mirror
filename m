@@ -1,131 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/4] diff: introduce diff.submodule configuration
- variable
-Date: Mon, 19 Nov 2012 16:48:36 -0800
-Message-ID: <7vk3tht7yz.fsf@alter.siamese.dyndns.org>
-References: <http://mid.gmane.org/1352653146-3932-1-git-send-email-artagnon@gmail.com>
- <1352821367-3611-1-git-send-email-artagnon@gmail.com>
- <1352821367-3611-3-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Mon, 19 Nov 2012 16:49:09 -0800
+Message-ID: <7vd2z9t7y2.fsf@alter.siamese.dyndns.org>
+References: <20121117153007.GB7695@book.hvoigt.net>
+ <20121117192026.GI22234@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 01:49:08 2012
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Tue Nov 20 01:49:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tac1U-0007Wr-0m
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 01:49:08 +0100
+	id 1Tac1u-00082R-5f
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 01:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753304Ab2KTAsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2012 19:48:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55438 "EHLO
+	id S1753189Ab2KTAtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2012 19:49:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55734 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753332Ab2KTAsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2012 19:48:39 -0500
+	id S1753049Ab2KTAtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2012 19:49:14 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF466609F;
-	Mon, 19 Nov 2012 19:48:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1118660C6;
+	Mon, 19 Nov 2012 19:49:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=izhF2i6d6xtoddF3VK51aGm5uPM=; b=LWCIsevmnHPFWcDTzxz5
-	0OyNz5WF8LpooarwNSP+3j8BDSDg3JuUIMHWM+/O08iKQBZ9iVX493yxMF20NmDw
-	8DKbMdP96XUmCbMoaBfGmMtu6aEo1if/vT5kzHfo8daJ1rccs183RR9kMfM9XxU0
-	N1NW3JNN60JENP0zSscvT6o=
+	 s=sasl; bh=PeM3BgaezGhnCmt2z1h023yHtWI=; b=Ai4eoIJIWCVjcdU8Ghfo
+	SkkT16hGLZ4Sl7aQQEQiC9GimciUaEMyUHWz8BoJjh6Dnz8/4kgI8QDLkU811YQe
+	60D6ex9XBLH/zk2vW41RaLif12KrSTDMcZGGoS9N6JeZTvbUwKrLh3ufGlXXamF8
+	VKRG5iQUOoi+Gfifv+768SM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=aiYUqk0kdxdN444GdC4a+mwa4tniNDNKJrn/7/gK5V/BlA
-	/eKfTReRjajPgw+1uQkO/vLY42r5J7su7JejV85cWoI/wU8+KFsmKPQmxBNsJi5p
-	oM37fLdjg/tdYIQrlNKmu+hkumHAg2stw+r/dsnlsizcPS0mOGL2+3PK3r2N4=
+	 q=dns; s=sasl; b=pSL38xRM+Vua6/J7bGy10UgM8nuq6rXD25sSALNd8+p+YY
+	jmLXZy0vLlY/TLl2jG+McMq1p+YgwEQJ33FBcXoP8zldFCmNwS4noLRCeFtPahT6
+	Bz8gFsBgTknzFrI1RhFaR4BmgaqG8W1YqO60+zUZbLJi1Zsa55nStIgoyEdFA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD1A0609E;
-	Mon, 19 Nov 2012 19:48:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF32260C5;
+	Mon, 19 Nov 2012 19:49:13 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C477609D; Mon, 19 Nov 2012
- 19:48:38 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A132F60BD; Mon, 19 Nov 2012
+ 19:49:10 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 056B921C-32AC-11E2-AC67-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 18D746B6-32AC-11E2-B02F-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210073>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+"W. Trevor King" <wking@tremily.us> writes:
 
-> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-> index 6c01d0c..e401814 100755
-> --- a/t/t4041-diff-submodule-option.sh
-> +++ b/t/t4041-diff-submodule-option.sh
-> @@ -33,6 +33,7 @@ test_create_repo sm1 &&
->  add_file . foo >/dev/null
->  
->  head1=$(add_file sm1 foo1 foo2)
-> +fullhead1=$(cd sm1; git rev-list --max-count=1 $head1)
+>> From what I have heard of projects using this: They usually still have
+>> something that records the SHA1s on a regular basis. Thinking further,
+>> why not record them in git? We could add an option to update which
+>> creates such a commit.
+>
+> I think it's best to have users craft their own commit messages
+> explaining why the branch was updated.  That said, an auto-generated
+> hint (a la "git merge") would probably be a useful extra feature.
 
-That looks like quite a roundabout way to say
+I am not quite sure I agree.  When the project says "Use the tip of
+'bar' branch for the submodule 'foo'" at the top-level, does an
+individual user who is not working on the submodule 'foo' but merely
+is using it have any clue as to why the submodule's 'foo' branch
+'foo' moved, or does he necessarily even care?
 
-	$(cd sm1; git rev-parse --verify HEAD)
+For such a user working at the top-level superproject, or working on
+one part of the project, possibly on a submodule other than 'foo',
+wouldn't the natural thing to do would be to run "git pull" at the
+top-level, maybe with "--recursive" to update the top-level and all
+the submodules to start the day.
 
-doesn't it?  I know this is just moved code from the original, so I
-am not saying this should be fixed in this commit.
+Now, since somebody created the top-level commit you have just
+pulled and checked out, other people may have worked on submodule
+'foo' [*1*].  What should happen on "git submodule update foo"?  It
+would notice that the submodule 'foo' is set to float, and would
+check out the tip of the branch 'bar', not the commit recorded in
+the top-level superproject, in the working tree for 'foo', no?
 
-Existing code in t7401 may want to be cleaned up, perhaps after this
-topic settles.  The add_file() function, for example, has at least
-these points:
+What should appear in "git diff"?  The working tree taken as a whole
+is different from what the superproject's commit describes (which is
+the state the person who created the superproject wanted to record)
+even though this user does not have anything to do with the change
+at 'foo' from the recorded commit to the current tip of 'bar'.  What
+would his description for the reason why the branch was updated?
 
- - do we know 7 hexdigits is always the right precision?
- - what happens when it fails to create a commit in one of the steps
-   while looping over "$@" in its loop?
- - the function uses the "cd there and then come back", not
-   "go there in a subshell and do whatever it needs to" pattern.
+I think I would agree that "git diff" should not hide such changes
+(after all, when this user records his change to the overall project
+in the top-level supermodule, he will be recording the state with
+the commit at the tip of 'bar' checked out in the working tree of
+the submodule 'foo'), but I am not sure if the user can say anything
+sensible, other than "tip of 'bar' branch in submodule 'foo' was
+changed by others", in the resulting commit.
 
-> +test_expect_success 'added submodule, set diff.submodule' "
 
-s/added/add/;
+[Footnote]
 
-Shouldn't it test the base case where no diff.submodule is set?  For
-those people, the patch should not change the output when they do or
-do not pass --submodule option, right?
-
-> +	git config diff.submodule log &&
-> +	git add sm1 &&
-> +	git diff --cached >actual &&
-> +	cat >expected <<-EOF &&
-> +Submodule sm1 0000000...$head1 (new submodule)
-> +EOF
-> +	git config --unset diff.submodule &&
-> +	test_cmp expected actual
-> +"
-> +
-> +test_expect_success '--submodule=short overrides diff.submodule' "
-> +	git config diff.submodule log &&
-> +	git add sm1 &&
-> +	git diff --submodule=short --cached >actual &&
-> +	cat >expected <<-EOF &&
-> +diff --git a/sm1 b/sm1
-> +new file mode 160000
-> +index 0000000..a2c4dab
-> +--- /dev/null
-> ++++ b/sm1
-> +@@ -0,0 +1 @@
-> ++Subproject commit $fullhead1
-> +EOF
-> +	git config --unset diff.submodule &&
-> +	test_cmp expected actual
-> +"
-> +
->  commit_file sm1 &&
->  head2=$(add_file sm1 foo3)
->  
-> @@ -73,7 +102,6 @@ EOF
->  	test_cmp expected actual
->  "
->  
-> -fullhead1=$(cd sm1; git rev-list --max-count=1 $head1)
->  fullhead2=$(cd sm1; git rev-list --max-count=1 $head2)
->  test_expect_success 'modified submodule(forward) --submodule=short' "
->  	git diff --submodule=short >actual &&
+*1* This may look like a non-issue if you assume that the person who
+updates the 'bar' branch of submodule 'foo' always updates the
+gitlink in the superproject's commit to point at that updated
+commit, but that assumption is flawed; the submodule project is a
+project on its own and can be worked on without what other projects
+bind it as their submodules.
