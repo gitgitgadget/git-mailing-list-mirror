@@ -1,82 +1,141 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] tcsh-completion re-using git-completion.bash
-Date: Tue, 20 Nov 2012 16:15:17 +0100
-Message-ID: <CAMP44s1i59VtX9xMmM-j3Gzcufg6jtKy34MMuwrfenmSw3oLAg@mail.gmail.com>
-References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
-	<1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
-	<CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
-	<CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
-	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
-	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
-	<CAMP44s1RvMSBu2RJqKw9ne4cJyMO4dbFc-gW2HgsN2-uviv=fA@mail.gmail.com>
-	<CAFj1UpHMc-bHJgSZKY13YH_69TXkz-50g5xpLA6C+Eh0aqcN9A@mail.gmail.com>
-	<CAMP44s3S4c7ciJNurxGdS2o_TDJJDkGK73dtCGji+C1NoV+Jvw@mail.gmail.com>
-	<20121116204017.GX12052@goldbirke>
-	<7vr4ntkzy4.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0y3UPVT+ndELaKNsWXAPG3kv-Xq_Wf6ONDF3Z99A5zMQ@mail.gmail.com>
-	<CAFj1UpFbuHVhPOQVB9-sPjW2aBN=H+OUyYnz00qASZ5ssbwmGw@mail.gmail.com>
-	<CAMP44s30wYnkQdq8yup3z-t=FEf1R+k8OC-o7-uY=19z9VHDPg@mail.gmail.com>
-	<CAFj1UpHs08seVH8Kb3CuoNTaF+x6vA+ybVTEu0TyLX8NYuuidQ@mail.gmail.com>
+From: Ulrich =?utf-8?B?U3DDtnJsZWlu?= <uqs@spoerlein.net>
+Subject: Re: git merge commits are non-deterministic? what changed?
+Date: Tue, 20 Nov 2012 17:22:26 +0100
+Message-ID: <20121120162226.GK69724@acme.spoerlein.net>
+References: <20121109133132.GK69724@acme.spoerlein.net>
+ <m2y5iarf5s.fsf@igel.home>
+ <20121109154245.GP69724@acme.spoerlein.net>
+ <vpq390idb8v.fsf@grenoble-inp.fr>
+ <20121109161647.GB19725@sigill.intra.peff.net>
+ <20121109182753.GQ69724@acme.spoerlein.net>
+ <50A0DD23.4040800@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Marc Khouzam <marc.khouzam@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 16:15:40 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Nov 20 17:23:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TapY4-0007YC-84
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 16:15:40 +0100
+	id 1Taqba-0005bt-9q
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 17:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236Ab2KTPPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 10:15:22 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:35885 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752847Ab2KTPPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 10:15:18 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so6007329obb.19
-        for <git@vger.kernel.org>; Tue, 20 Nov 2012 07:15:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Dp115x6H4A5Mc222IEoydpLdHOoPK7Ggbhj8u043b4g=;
-        b=Sg6Ap8eZXZGLyWDMd7OkTqS69SDLmNW2ONjhNSubrJknFO+imbE8jXNYQ4uNYiMD0W
-         xUwNppTY+Pd6gWXudgUwR+0vMn+CbBu5qO+WNVmIV89+6ORAbrnF+px/mzMTEKBCpznq
-         VmEOSOnm4vCi32Sr52MZxjeHvTpEEm6On5MUteV+/i6L/eL4CZE2wr4zv9OlZl/iSGo6
-         7Ixon3V7EKJVL756AR0NkW455RJSxYKUHgB8c6Hw01DvCWUmRgWQSwTEfM3nJBy0T9iq
-         SdOxP5GrhdVp62/9yZzL/aUXewAmcVzl2lMeaKN9m+PWQkO6BTw2w4B7p3KpIWpMu3z2
-         1kKg==
-Received: by 10.182.245.20 with SMTP id xk20mr13560307obc.89.1353424517450;
- Tue, 20 Nov 2012 07:15:17 -0800 (PST)
-Received: by 10.60.4.74 with HTTP; Tue, 20 Nov 2012 07:15:17 -0800 (PST)
-In-Reply-To: <CAFj1UpHs08seVH8Kb3CuoNTaF+x6vA+ybVTEu0TyLX8NYuuidQ@mail.gmail.com>
+	id S1753269Ab2KTQXG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Nov 2012 11:23:06 -0500
+Received: from acme.spoerlein.net ([88.198.49.12]:15061 "EHLO
+	acme.spoerlein.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751600Ab2KTQXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 11:23:04 -0500
+Received: from localhost (acme.spoerlein.net [IPv6:2a01:4f8:131:23c2::1])
+	by acme.spoerlein.net (8.14.5/8.14.5) with ESMTP id qAKGMQUk079959
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 20 Nov 2012 17:22:27 +0100 (CET)
+	(envelope-from uqs@spoerlein.net)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spoerlein.net;
+	s=dkim200908; t=1353428548;
+	bh=DAnpTiWU39d9JUiWKLdFpB1lblnz0bljJewt9qFTV5s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ppIP74iUiIVpEXob5IYfZdK67uoueDP0RL163pmVmDHm1ZIULQXsdLmGay+b0fEPY
+	 XGjgMMD04AQgjnUQRiyB+3ISSgWj3eng6fnDl6eIfvF4tAFbFJPIeNICogFLkwXqrc
+	 1wqB7gpq9+qvrt54d+BBvL5jzjLANr3F8AN6lFiA=
+Content-Disposition: inline
+In-Reply-To: <50A0DD23.4040800@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210103>
 
-On Tue, Nov 20, 2012 at 3:58 PM, Marc Khouzam <marc.khouzam@gmail.com> wrote:
+On Mon, 2012-11-12 at 12:27:31 +0100, Michael J Gruber wrote:
+> Ulrich Sp=C3=B6rlein venit, vidit, dixit 09.11.2012 19:27:
+> > On Fri, 2012-11-09 at 11:16:47 -0500, Jeff King wrote:
+> >> On Fri, Nov 09, 2012 at 04:52:48PM +0100, Matthieu Moy wrote:
+> >>
+> >>> Ulrich Sp=C3=B6rlein <uqs@spoerlein.net> writes:
+> >>>
+> >>>>>> 2. Why the hell is the commit hash dependent on the ordering o=
+f the
+> >>>>>> parent commits? IMHO it should sort the set of parents before
+> >>>>>> calculating the hash ...
+> >>>>>
+> >>>>> What would be the sort key?
+> >>>>
+> >>>> Trivially, the hash of the parents itself. So you'd always get
+> >>>>
+> >>>> ...
+> >>>> parent 0000
+> >>>> parent 1111
+> >>>> parent aaaa
+> >>>> parent ffff
+> >>>
+> >>> That would change the behavior of --first-parent. Or you'd need t=
+o
+> >>> compute the sha1 of the sorted list, but keep the unsorted one in=
+ the
+> >>> commit. Possible, but weird ;-).
+> >>
+> >> Right. The reason that merge parents are stored in the order given=
+ on
+> >> the command line is not random or because it was not considered. I=
+t
+> >> encodes a valuable piece of information: did the user merge "foo" =
+into
+> >> "bar", or did they merge "bar" into "foo"?
+> >>
+> >> So I think this discussion is going in the wrong direction; git sh=
+ould
+> >> never sort the parents, because the order is meaningful. The origi=
+nal
+> >> complaint was that a run of svn2git produced different results on =
+two
+> >> different git versions. The important question to me is: did svn2g=
+it
+> >> feed the parents to git in the same order?
+> >>
+> >> If it did, and git produced different results, then that is a seri=
+ous
+> >> bug.
+> >>
+> >> If it did not, then the issue needs to be resolved in svn2git (whi=
+ch
+> >> _may_ want to sort the parents that it feeds to git, but it would =
+depend
+> >> on whether the order it is currently presenting is meaningful).
+> >=20
+> > Yeah, thanks, looks like I have some more work to do. I don't quite=
+ get
+> > how it could come up with a different order, seeing that it is usin=
+g svn
+> > as the base.
+> >=20
+> > Will run some more experiments, thanks for the info so far.
+>=20
+> There was a change in the order in which "git cherry-pick A B C" appl=
+ies
+> the commits. It's the only odering affecting change in 1.8.0 that I c=
+an
+> think of right now.
 
-> Hi,
->
-> since there doesn't seem to be an agreement that the approach to achieve tcsh
-> git-completion would be useful for zsh (the other possible shell that could use
-> it is ksh, but I haven't looked into that), maybe the simplest thing
-> is to keep the
-> tcsh solution contained in a tcsh-only script.  This is the latest solution as
-> proposed here:
->
-> [1] http://www.mail-archive.com/git@vger.kernel.org/msg12192.html
+Just to wrap this up, it was of course a "feature" of the converter,
+that resulted in this unrepeatable behavior. The SVN API makes use of
+apr_hashes, which were traversed in arbitrary order, hence SVN commits
+spanning multiple git-branches would be handled in a non-deterministic
+order, leading to randomly ordered parent objects for later git merge
+commits.
 
-This one is already merged to 'next'.
+It it still debatable, whether a merge commit should have a
+list-of-parents or a set-of-parents. Changing it to a set-of-parents
+(with a well-defined hash function), would have made this problem go
+away.
 
-Cheers.
+But this will never be changed, it would break the fundamental git
+storage model as it is in place now.
 
--- 
-Felipe Contreras
+Cheers,
+Uli
