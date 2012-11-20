@@ -1,73 +1,69 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: [PATCH] git-send-email: don't return undefined value in extract_valid_address()
-Date: Tue, 20 Nov 2012 13:20:53 +0100
-Message-ID: <1353414053-25261-1-git-send-email-krzysiek@podlesie.net>
-Cc: Krzysztof Mazur <krzysiek@podlesie.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 20 13:22:08 2012
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] pathspec: do exact comparison on the leading
+ non-wildcard part
+Date: Tue, 20 Nov 2012 20:09:50 +0700
+Message-ID: <CACsJy8DqTR12sckwMm_Zzv2UbdX6jvvyFm3Fx9-b8a-NVXWL9g@mail.gmail.com>
+References: <1353229989-13075-1-git-send-email-pclouds@gmail.com>
+ <1353229989-13075-3-git-send-email-pclouds@gmail.com> <7vzk2duw3m.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 14:10:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tamq3-00066p-Vk
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 13:22:04 +0100
+	id 1Tanb3-0007y6-ST
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 14:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753299Ab2KTMVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 07:21:49 -0500
-Received: from [93.179.225.50] ([93.179.225.50]:50046 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751868Ab2KTMVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 07:21:48 -0500
-Received: from geronimo.kss.ia.polsl.pl (localhost [127.0.0.1])
-	by shrek.podlesie.net (Postfix) with ESMTP id 4E2C0632;
-	Tue, 20 Nov 2012 13:21:46 +0100 (CET)
-X-Mailer: git-send-email 1.8.0.283.gc57d856
+	id S1753130Ab2KTNKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 08:10:22 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:57775 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752710Ab2KTNKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 08:10:22 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so5880079obb.19
+        for <git@vger.kernel.org>; Tue, 20 Nov 2012 05:10:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WUsAyGNqPoYwywgyqLtTH2rAWzdGsZMGkkoEDOBGmX4=;
+        b=z1cWJiilTx1StRrYg44JM/sCXXqqq9jdQD1S920SNgKqJ7sxyi0IX1//UJbULGE1ZT
+         zet6N/2jTvdWwFtqd98yaUiYcISCdxDXBgpE1pJ2zKsz3NVJ32tzEjBa7FABmvLa8ous
+         AI1F3BCzb2PRLlbzJ8LETumhpfuqXvWixj/oelwU47jmW542OTK7Izmv73MHfFbrDKCz
+         opA7z9bhzFp6UFtO/tlFwxoLBsB/vhJNp+uoRwhVUXoaYyCJjdkYInmUgg9MbJVvT9pa
+         uJW3Hn1MmfL5eT/N4X+NoUFI+LVueZaEbQL7umy31jEsg+n0zKvTHeFcEA6pOfbHbn0+
+         qQVg==
+Received: by 10.182.38.101 with SMTP id f5mr13382521obk.80.1353417021351; Tue,
+ 20 Nov 2012 05:10:21 -0800 (PST)
+Received: by 10.182.14.201 with HTTP; Tue, 20 Nov 2012 05:09:50 -0800 (PST)
+In-Reply-To: <7vzk2duw3m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210099>
 
-In the fallback check, when Email::Valid is not available, the
-extract_valid_address() does not check for success of matching regex,
-and $1, which can be undefined, is always returned. Now if match
-fails an empty string is returned.
+On Tue, Nov 20, 2012 at 3:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> How would we protect this optimization from future breakages?
+>
+> Once we start using FNM_PERIOD, this becomes unsafe, as the simple
+> part in "foo/bar*baz" would be "foo/bar" with remainder "*baz".
+>
+> The pattern "foo/bar*baz" should match "foo/bar.baz" with FNM_PERIOD
+> set.  But with this optimization, fnmatch is fed pattern="*baz",
+> string=".baz" and they would not match.
 
-Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
----
-This fixes following warnings:
-Use of uninitialized value in string eq at ./git-send-email.perl line 1017.
-Use of uninitialized value in quotemeta at ./git-send-email.perl line 1017.
-W: unable to extract a valid address from: x a.patch
+The first question is how FNM_PERIOD comes in the first place without
+breaking the current syntax. I guess we just turn off the optimization
+if FNM_PERIOD is used.
 
-when invalid email address was added by --cc-cmd,
-./git-send-email.perl --dry-run --to a@podlesie.net --cc-cmd=echo x a.patch
-
- git-send-email.perl | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5a7c29d..045f25f 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -831,12 +831,12 @@ sub extract_valid_address {
- 	$address =~ s/^\s*<(.*)>\s*$/$1/;
- 	if ($have_email_valid) {
- 		return scalar Email::Valid->address($address);
--	} else {
--		# less robust/correct than the monster regexp in Email::Valid,
--		# but still does a 99% job, and one less dependency
--		$address =~ /($local_part_regexp\@$domain_regexp)/;
--		return $1;
- 	}
-+
-+	# less robust/correct than the monster regexp in Email::Valid,
-+	# but still does a 99% job, and one less dependency
-+	return $1 if $address =~ /($local_part_regexp\@$domain_regexp)/;
-+	return "";
- }
- 
- # Usually don't need to change anything below here.
+My secret "plan" is to convert all fnmatch() calls to git_fnmatch()
+then replace fnmatch() with wildmatch() and move these optimization
+down to wildmatch(). I think we can handle FNM_PERIOD case better down
+there because string is still "foo/bar.baz".
 -- 
-1.8.0.283.gc57d856
+Duy
