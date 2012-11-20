@@ -1,69 +1,71 @@
-From: Paul Fox <pgf@foxharp.boston.ma.us>
-Subject: Re: What's cooking in git.git (Nov 2012, #06; Mon, 19)
-Date: Tue, 20 Nov 2012 06:59:22 -0500
-Message-ID: <20121120115923.746252E9301@grass.foxharp.boston.ma.us>
-References: <7vpq39up0m.fsf@alter.siamese.dyndns.org> (sfid-20121119_185521_871211_B8238659)
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: Failure to extra stable@vger.kernel.org addresses
+Date: Tue, 20 Nov 2012 12:59:42 +0100
+Message-ID: <20121120115942.GA6132@shrek.podlesie.net>
+References: <20121119095747.GA13552@arwen.pp.htv.fi>
+ <20121119151845.GA29678@shrek.podlesie.net>
+ <7vk3thxuj2.fsf@alter.siamese.dyndns.org>
+ <20121119225838.GA23412@shrek.podlesie.net>
+ <CAMP44s0f0zYa1FVf9RhNuwYJbkQ7zPwgJ6=ty3c5knjo5a2TNw@mail.gmail.com>
+ <7vlidxuowf.fsf@alter.siamese.dyndns.org>
+ <20121120073100.GB7206@shrek.podlesie.net>
+ <20121120075628.GA7159@shrek.podlesie.net>
+ <CAMP44s38gTB_3Ao1rFZgMo2EAuiNb+h88-qRFcQPRMJNxo3CAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 12:59:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Felipe Balbi <balbi@ti.com>,
+	git@vger.kernel.org, Tomi Valkeinen <tomi.valkeinen@ti.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 13:00:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TamUN-0002iH-R8
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 12:59:40 +0100
+	id 1TamUi-00032W-FA
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 13:00:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193Ab2KTL7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 06:59:25 -0500
-Received: from colo.foxharp.net ([166.84.7.52]:54619 "EHLO colo.foxharp.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752616Ab2KTL7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 06:59:24 -0500
-Received: from grass.foxharp.boston.ma.us (localhost [127.0.0.1])
-	by colo.foxharp.net (Postfix) with ESMTP id B135A540E4;
-	Tue, 20 Nov 2012 06:56:20 -0500 (EST)
-Received: by grass.foxharp.boston.ma.us (Postfix, from userid 1000)
-	id 746252E9301; Tue, 20 Nov 2012 06:59:23 -0500 (EST)
-Received: from grass (localhost [127.0.0.1])
-	by grass.foxharp.boston.ma.us (Postfix) with ESMTP id 2B74B2E9300;
-	Tue, 20 Nov 2012 06:59:23 -0500 (EST)
-In-reply-to: <7vpq39up0m.fsf@alter.siamese.dyndns.org> (sfid-20121119_185521_871211_B8238659)
-Content-ID: <22310.1353412762.1@grass>
+	id S1753181Ab2KTL7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 06:59:46 -0500
+Received: from [93.179.225.50] ([93.179.225.50]:43561 "EHLO shrek.podlesie.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752616Ab2KTL7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 06:59:46 -0500
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 2528763D; Tue, 20 Nov 2012 12:59:42 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <CAMP44s38gTB_3Ao1rFZgMo2EAuiNb+h88-qRFcQPRMJNxo3CAQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210095>
 
-junio c hamano wrote:
- > [Stalled]
- > 
- > * pf/editor-ignore-sigint (2012-11-11) 5 commits
- >  - launch_editor: propagate SIGINT from editor to git
- >  - run-command: do not warn about child death by SIGINT
- >  - run-command: drop silent_exec_failure arg from wait_or_whine
- >  - launch_editor: ignore SIGINT while the editor has control
- >  - launch_editor: refactor to use start/finish_command
- > 
- >  Avoid confusing cases where the user hits Ctrl-C while in the editor
- >  session, not realizing git will receive the signal. Since most editors
- >  will take over the terminal and will block SIGINT, this is not likely
- >  to confuse anyone.
- > 
- >  Some people raised issues with emacsclient, which are addressed by this
- >  re-roll. It should probably also handle SIGQUIT, and there were a
- >  handful of other review comments.
- > 
- >  Expecting a re-roll.
+On Tue, Nov 20, 2012 at 11:28:39AM +0100, Felipe Contreras wrote:
+> On Tue, Nov 20, 2012 at 8:56 AM, Krzysztof Mazur <krzysiek@podlesie.net> wrote:
+> 
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -925,8 +925,11 @@ sub quote_subject {
+> >  sub sanitize_address {
+> >         my ($recipient) = @_;
+> >
+> > +       my $local_part_regexp = qr/[^<>"\s@]+/;
+> > +       my $domain_regexp = qr/[^.<>"\s@]+(?:\.[^.<>"\s@]+)+/;
+> > +
+> >         # remove garbage after email address
+> > -       $recipient =~ s/(.*>).*$/$1/;
+> > +       $recipient =~ s/^(.*?<$local_part_regexp\@$domain_regexp>).*/$1/;
+> 
+> I don't think all that extra complexity is warranted, to me
+> s/(.*?>)(.*)$/$1/ is just fine.
+> 
 
-i don't have strong feelings on any of the later review comments
-(though i guess the check on finish_command()'s return code needed
-attention), and wasn't the last submitter, but would certainly like to
-see this move forward.
+Yeah, it's a little bit too complex, but "s/(.*?>)(.*)$/$1/"
+causes small regression - '>' character is no longer allowed
+in "phrase" before "<email address>". Maybe the initial version,
+that removes everything after last '>' is better? In this case '>'
+is not allowed in garbage after email.
 
-paul
-=---------------------
- paul fox, pgf@foxharp.boston.ma.us (arlington, ma, where it's 26.1 degrees)
+Krzysiek
