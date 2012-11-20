@@ -1,90 +1,109 @@
-From: Marc Khouzam <marc.khouzam@gmail.com>
-Subject: Re: [PATCH] tcsh-completion re-using git-completion.bash
-Date: Tue, 20 Nov 2012 13:20:15 -0500
-Message-ID: <CAFj1UpFTu7GnpKSvs6qGH6XjAT16RAk4rmdX0sPFOo9ABg8BKg@mail.gmail.com>
-References: <CAFj1UpHgPvdDeKZ-Ap7-aVx6p_pxT4a2F01ajmNa00txPyS=Qw@mail.gmail.com>
-	<1352980269-15569-1-git-send-email-marc.khouzam@gmail.com>
-	<CAMP44s0Guq0nYJEfbvNDyt8Oqaux-cXbTsyro6pxUnEpA4+XOw@mail.gmail.com>
-	<CAFj1UpEdft+L5KW+tMy6Lqm1eUkHQgwWuXaC0UTUdqwW=ohk-Q@mail.gmail.com>
-	<CAMP44s1RtOj6LKCNJ8SX8KSA8eNCMZ+4D-VfQ+WtXju-KhG8ng@mail.gmail.com>
-	<CAFj1UpHLf2je_+b1e5B_5thZ03UYVmW=CWhAh63kNRCbke0kQw@mail.gmail.com>
-	<CAMP44s1RvMSBu2RJqKw9ne4cJyMO4dbFc-gW2HgsN2-uviv=fA@mail.gmail.com>
-	<CAFj1UpHMc-bHJgSZKY13YH_69TXkz-50g5xpLA6C+Eh0aqcN9A@mail.gmail.com>
-	<CAMP44s3S4c7ciJNurxGdS2o_TDJJDkGK73dtCGji+C1NoV+Jvw@mail.gmail.com>
-	<20121116204017.GX12052@goldbirke>
-	<7vr4ntkzy4.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0y3UPVT+ndELaKNsWXAPG3kv-Xq_Wf6ONDF3Z99A5zMQ@mail.gmail.com>
-	<CAFj1UpFbuHVhPOQVB9-sPjW2aBN=H+OUyYnz00qASZ5ssbwmGw@mail.gmail.com>
-	<CAMP44s30wYnkQdq8yup3z-t=FEf1R+k8OC-o7-uY=19z9VHDPg@mail.gmail.com>
-	<CAFj1UpHs08seVH8Kb3CuoNTaF+x6vA+ybVTEu0TyLX8NYuuidQ@mail.gmail.com>
-	<CAMP44s1i59VtX9xMmM-j3Gzcufg6jtKy34MMuwrfenmSw3oLAg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/8] fix git-config with duplicate variable entries
+Date: Tue, 20 Nov 2012 11:08:43 -0800
+Message-ID: <7vsj84rt1g.fsf@alter.siamese.dyndns.org>
+References: <CACBZZX4cu9XuS5AtduWrNeXNUeZ4rqDUzRdmyz2b3cXtmo1nqQ@mail.gmail.com>
+ <20121022211505.GA3301@sigill.intra.peff.net>
+ <CACBZZX5mOb7_i9r8AqNK5V3r-gVnzN+rkeY9xrhecGv1rS-anA@mail.gmail.com>
+ <20121023223502.GA23194@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 19:20:39 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 20 20:09:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TasR3-0004GS-29
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 19:20:37 +0100
+	id 1TatBt-0007F7-Lf
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 20:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753697Ab2KTSUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 13:20:22 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:65268 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753670Ab2KTSUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 13:20:19 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k13so9040601iea.19
-        for <git@vger.kernel.org>; Tue, 20 Nov 2012 10:20:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Ungx6qLkZG/MYkylC9RIneWRfLBl1J69hCDpOM5YuS4=;
-        b=cqMO33iV5nStetnBGTvsE8upJB9qxO5LovQJyvmVJWR12WBecQ0xHXkm1/nB9JHCuo
-         K8nDvHETBgO3FVmxjv/NjOeRK05W9vxQ8x0B2+2JGrp3JMo24FKLZbUmkVJaEFe8613a
-         /+oVQczHXfw1yLn5VAHfn43VNL++l6Wln/cU5ksByZvdOTGRaiMT0v0hBtGrAMJcEdms
-         V/eXCmZq9hZ5CxAm+2+3EY9RCPS5Zl4MVYmvZnjg2JawkrqvmfH/FufaJ4f6IKyIuDtl
-         SzV84ob8RRlptFf+yeQGStMYkHJKMRiUJRD0KubDtQHLihoe7ofF8iVLI1xCtnNc82py
-         NkAw==
-Received: by 10.50.140.104 with SMTP id rf8mr11143555igb.40.1353435616713;
- Tue, 20 Nov 2012 10:20:16 -0800 (PST)
-Received: by 10.64.132.39 with HTTP; Tue, 20 Nov 2012 10:20:15 -0800 (PST)
-In-Reply-To: <CAMP44s1i59VtX9xMmM-j3Gzcufg6jtKy34MMuwrfenmSw3oLAg@mail.gmail.com>
+	id S1751925Ab2KTTIr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Nov 2012 14:08:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58675 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751868Ab2KTTIq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Nov 2012 14:08:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B2A7A469;
+	Tue, 20 Nov 2012 14:08:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ZA4/rPbJCCNe
+	vwmjz2v07Id8nMs=; b=Pr1oAIkkU6zfFVqAWFqmMj30kGpn6c08vjfXYRtmIuh9
+	cDPJAwGbg80y+2HvawQbNNDxGAg3cEAKQGE9QTWxYts8duMAliJCcxDyNdKWgUN5
+	Z89T8NU4dVajcnBVrh/UJV8OJAKaj0WS0svMyqwhZw9VAny3Gvul7ni1MTgyJnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cYLe37
+	v1m1VTO06SVtgi3K0PTXR3VhxJV5V8KmAMS/nTxQyajD30Pc6P7rta2TsiE5QdxK
+	bwzUKl9Csou3brZVnIOEFifKBXWSwqRAjWmq3oetP1Bo7hzs9AAFRGz7IlX5vlQg
+	rZaEXGTgC4rSXpUxmQmmfHb6RWXCVC87+9bHU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DF1A468;
+	Tue, 20 Nov 2012 14:08:45 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA6F3A467; Tue, 20 Nov 2012
+ 14:08:44 -0500 (EST)
+In-Reply-To: <20121023223502.GA23194@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 23 Oct 2012 18:35:02 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B486B6FC-3345-11E2-8D3D-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210105>
 
-On Tue, Nov 20, 2012 at 10:15 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Tue, Nov 20, 2012 at 3:58 PM, Marc Khouzam <marc.khouzam@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Oct 23, 2012 at 04:13:44PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
 >
->> Hi,
->>
->> since there doesn't seem to be an agreement that the approach to achieve tcsh
->> git-completion would be useful for zsh (the other possible shell that could use
->> it is ksh, but I haven't looked into that), maybe the simplest thing
->> is to keep the
->> tcsh solution contained in a tcsh-only script.  This is the latest solution as
->> proposed here:
->>
->> [1] http://www.mail-archive.com/git@vger.kernel.org/msg12192.html
+>> > It fails a few tests in t1300, but it looks like those tests are t=
+esting
+>> > for the behavior we have identified as wrong, and should be fixed.
+>>=20
+>> I think this patch looks good.
 >
-> This one is already merged to 'next'.
+> Thanks. It had a few minor flaws (like a memory leak). I fixed those,
+> updated the tests, and split it out into a few more readable commits.=
+ In
+> the process, I managed to uncover and fix a few other memory leaks in
+> the area. I think this version is much more readable, and writing the
+> rationale for patch 7 convinced me that it's the right thing to do.
+> Another round of review would be appreciated.
+>
+>   [1/8]: t1300: style updates
+>   [2/8]: t1300: remove redundant test
+>   [3/8]: t1300: test "git config --get-all" more thoroughly
+>   [4/8]: git-config: remove memory leak of key regexp
+>   [5/8]: git-config: fix regexp memory leaks on error conditions
+>   [6/8]: git-config: collect values instead of immediately printing
+>   [7/8]: git-config: do not complain about duplicate entries
+>   [8/8]: git-config: use git_config_with_options
+>
+> For those just joining us, the interesting bit is patch 7, which fixe=
+s
+> some inconsistencies between the "git-config" tool and how the intern=
+al
+> config callbacks work.
 
-Awesome!  I didn't notice.
 
-If I want to suggest an improvement (like checking if the bash script
-is available),
-do I just post a patch here?
+The way for the Porcelain scripts to mimick the internal "last one
+wins" has been to grab values out of --get-all and do the "last one
+wins" themselves, and I agree that a mode that frees them from
+having to worry about it is a good *addition*.  I would even say
+that if we were designing "git config" plumbing without existing
+users, it would be the only sensible behaviour for "--get".
 
-Thanks a lot for moving forward with this so quickly!
+But "git config --get" users have been promised to get errors on
+duplicate values so far, so I have to say this needs to come with a
+big red sign about API breakage.
 
-Marc
+I would feel safer to introduce --get-one or something now, and
+worry about migration as a separate step.
