@@ -1,116 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
-Date: Mon, 19 Nov 2012 21:39:34 -0800
-Message-ID: <7v1ufou92h.fsf@alter.siamese.dyndns.org>
-References: <20121117153007.GB7695@book.hvoigt.net>
- <20121117192026.GI22234@odin.tremily.us>
- <7vd2z9t7y2.fsf@alter.siamese.dyndns.org>
- <20121120011628.GD321@odin.tremily.us>
+Subject: Re: [PATCH v4.1 5/5] push: update remote tags only with force
+Date: Mon, 19 Nov 2012 21:44:51 -0800
+Message-ID: <7vwqxgsu98.fsf@alter.siamese.dyndns.org>
+References: <1353183397-17719-6-git-send-email-chris@rorvick.com>
+ <1353189237-19491-1-git-send-email-chris@rorvick.com>
+ <7va9udxryf.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPa9fiF9cuMqRHNsQSz_CsbbvdO-eGDS9HWW3MrAYZPA8w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Nov 20 06:39:57 2012
+Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 06:45:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TagYr-00018v-Tw
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 06:39:54 +0100
+	id 1Tagdx-0007A8-Q7
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Nov 2012 06:45:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993Ab2KTFji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 00:39:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47609 "EHLO
+	id S1751428Ab2KTFoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 00:44:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50082 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750818Ab2KTFjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 00:39:37 -0500
+	id S1751379Ab2KTFoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 00:44:54 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 113D66559;
-	Tue, 20 Nov 2012 00:39:37 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16D5966F4;
+	Tue, 20 Nov 2012 00:44:54 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5Aisa+C4UVvP73bAGM5Qo/wOze8=; b=ErMHKj
-	ID9Cm3g9hc+ZfAI2lpqyksbAcBahUH6mDLdLg5yUnB6bvaTYtPcjLJO+ghbQ7pwf
-	+ER83Wb3XiDZWVc3PLQjimmH1xwnVvC4hNnROp13b9/O1p2mrwn+5syV5Cjh588B
-	1OWSRymP44C3S5hrJ1BgrasQ60ZO1qypZcYlU=
+	:content-type; s=sasl; bh=nKm4CdKFVeSDc2LpgwJeZZRcqr8=; b=whKUFN
+	n5WXvOTr913HFufBmWgSps0rDr/ZUfCXCvlA9UdgBRxo4aJEy3xfjEcsjYy1h3HA
+	r69pmaMkKDWYm9PR24pDnb40g8mNfdsKdHh29q2eC/97/JAo8fvL0xJSJzdcblf6
+	Ch/oc4JVNCNhS5GZNNd96wEcIKvImDBbo/p7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ON4uu8YYmyFcymhW8zoePPioLesMHUdn
-	7uThNIFdDGT2pB3ulwImbjnzO9yi6YjF8gon3x9jRKxuk67oRxaY1WC5b98s/Uto
-	+Qs/PFLYelmJIqHzn65xSqHp4Xgj02IuzvWjjBpqgN/licOoLSJpflTvqhRsAUuA
-	Pq4qVcUIlhs=
+	:content-type; q=dns; s=sasl; b=hugVB29t1oghhR4I6993dZb19Er+9dpM
+	HYwxYniZyWMdKDYDhG1qBecSHRFjMcxAEVBt5da5JqNrHW2z8lXX5hB8Jw642fl2
+	Vso8I38wfpyROPdVAwUBUTszWRw15dGU5diuzO2bmH8LxMD0o2uimKjAEKttWj/k
+	CEaYDbO3jLY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F053D6558;
-	Tue, 20 Nov 2012 00:39:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 036CA66F2;
+	Tue, 20 Nov 2012 00:44:54 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 393156557; Tue, 20 Nov 2012
- 00:39:36 -0500 (EST)
-In-Reply-To: <20121120011628.GD321@odin.tremily.us> (W. Trevor King's message
- of "Mon, 19 Nov 2012 20:16:28 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 70E2366EA; Tue, 20 Nov 2012
+ 00:44:53 -0500 (EST)
+In-Reply-To: <CAEUsAPa9fiF9cuMqRHNsQSz_CsbbvdO-eGDS9HWW3MrAYZPA8w@mail.gmail.com> (Chris
+ Rorvick's message of "Mon, 19 Nov 2012 22:43:40 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AB4999FE-32D4-11E2-BE3A-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 685D63AE-32D5-11E2-978C-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210079>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Chris Rorvick <chris@rorvick.com> writes:
 
-> On Mon, Nov 19, 2012 at 04:49:09PM -0800, Junio C Hamano wrote:
->> "W. Trevor King" <wking@tremily.us> writes:
->> ...
->> > I think it's best to have users craft their own commit messages
->> > explaining why the branch was updated.  That said, an auto-generated
->> > hint (a la "git merge") would probably be a useful extra feature.
->> 
->> I am not quite sure I agree.  When the project says "Use the tip of
->> 'bar' branch for the submodule 'foo'" at the top-level, does an
->> individual user who is not working on the submodule 'foo' but merely
->> is using it have any clue as to why the submodule's 'foo' branch
->> 'foo' moved, or does he necessarily even care?
+> On Mon, Nov 19, 2012 at 2:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> If he doesn't care, why is he updating the submodule gitlink?
+> Yeah, this was one of a few stupid mistakes.  Previously I used
+> 'forwardable' throughout, but that is awkward except in the last
+> commit since until then everything is allowed to fast-forward and the
+> flag is only used to output tag-specific advice.  But inverting the
+> meaning of the flag is dumb, and I didn't even do it right.
+>
+> But, as I think you're suggesting, it probably makes more sense to use
+> a flag that prevents fast-forwarding when set.  So maybe
+> "not_forwardable", or "is_a_tag" => "not_forwardable" if you think the
+> renaming is a good idea.
 
-He may not be updating the gitlink with "git add foo" at the
-top-level superproject level.  He is just using that submodule as
-part of the larger whole as he is working on either the top-level or
-some other submodule.  And checkout of 'foo' is necessary in the
-working tree for him to work in the larger context of the project,
-and 'foo' is set to float at the tip of its 'bar' branch.  And that
-checkout results in a commit that is different from the commit the
-gitlink suggests, perhaps because somebody worked in 'foo' submodule
-and advanced the tip of branch 'bar'.
+Yeah, calling it not-forwardable from the beginning would be a
+sensible approach, I would think.
 
-So:
-
- - at the top-level superproject level, entry 'foo' in the HEAD tree
-   points at an older commit;
-
- - 'foo/.git/HEAD' points at refs/heads/bar, which matches the
-   working tree of 'foo' and the index foo/.git/index..
-
-I am not sure what should happen to the entry 'foo' in the index of
-the top-level superproject after such a 'submodule floats at the
-tip' checkout, but I imagine that it must match the contents of
-foo/.git/HEAD's tree.  Otherwise, "git diff" at the top-level would
-report local changes.
-
-When committing his work at the top-level, he will see that 'foo'
-gitlink is updated in that commit; after all that combination is the
-context in which his work was done.
-
-Or are you envisioning that such a check-out will and should show a
-local difference at the submodule 'foo' by leaving the index of the
-top-level superproject unchanged, and the user should refrain from
-using "git commit -a" to avoid having to describe the changes made
-on the 'bar' branch in the meantime in his top-level commit?  That
-is certainly fine by me (I am no a heavy submodule user to begin
-with), but I am not sure if that is useful and helpful to the
-submodule users.
+Thanks.
