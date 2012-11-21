@@ -1,9 +1,10 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 00/15] fast-export and remote-testgit improvements
-Date: Wed, 21 Nov 2012 11:05:58 -0800
-Message-ID: <7vtxsi22g6.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v5 06/15] remote-testgit: get rid of non-local
+ functionality
+Date: Wed, 21 Nov 2012 10:26:42 -0800
+Message-ID: <7v624y3h0q.fsf@alter.siamese.dyndns.org>
 References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
- <CAMP44s3h5+KS3ixoLkJeiS+n_neBV-Dyj=Cww0ZrU6UKsNxphQ@mail.gmail.com>
+ <1352642392-28387-7-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
@@ -18,71 +19,76 @@ Cc: git@vger.kernel.org,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Julian Phillips <julian@quantumfyre.co.uk>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 20:15:08 2012
+X-From: git-owner@vger.kernel.org Wed Nov 21 20:15:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbFlH-0004bT-4n
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 20:15:03 +0100
+	id 1TbFlG-0004bT-4b
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 20:15:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755789Ab2KUTOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2012 14:14:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49106 "EHLO
+	id S1755778Ab2KUTOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2012 14:14:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49026 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755784Ab2KUTOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2012 14:14:36 -0500
+	id S1755764Ab2KUTOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2012 14:14:31 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43F839661;
-	Wed, 21 Nov 2012 14:14:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF3669653;
+	Wed, 21 Nov 2012 14:14:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=hnPemHJXevnZ8skta5wAVyjF2PU=; b=PwOlYWFl/YuH9PdwdI0L
-	vgKgU5abAHzMsLtbD1weUO5FLOSrNFyMJOuCYgXK4kRC2O4P6x/n7gsBlxKc5D5K
-	pEtbFH5THbzAVeSa3MDsViReKwt3DOAmIZ+foT5aVwhakZ0/NjHLlamfjGSK6bAo
-	RV9z3TLJ+R1ZocS/Jn2O6yA=
+	 s=sasl; bh=cKbhFNvR0vtfGFz62utl8PbfiBU=; b=kWtjX7fQLr+fI0vD9URi
+	Ash5++mrnC4duqIMeeyvRcOaJIwLq412Szs73op4+duuAYpa8aCBceTr+7AZRCOQ
+	CRxX89PaGqfTTGfptrH0g9YkNq2acwzSaL8C3RIP+db1qTpySBGdEV1fkEyfRyGJ
+	b7FMe7aAKmaVyzCOm9w05cU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=aZiT6RBi4UxPNEjW7ocosxEUPy9E8lFySaYtn3WMZ7c7ej
-	AiIMljcXoDPC4pKavaV1PAbp+DnMeh+ofEdfgWa7R0h5KkkKTJjbK5Wqo7yzFsBO
-	1/CDKIkQ2Cqme1UXrR9MD9I7X4JNVMBv4SW0PqYXLKudUG1DOq21x8TelJ5x0=
+	 q=dns; s=sasl; b=au1tR9PmVf+9PasVSYAIMAZXYzTWNTy3EDPyDcUUV+hZur
+	t8/9h3V+zmoT3HH4IM2ow1rH523dRzFX7O9j0CuQ+OkXBghNaAsEU4NndmOZ2FyF
+	mxWMLhjZ/4bjjTTdFFfWqMLzDgQdIenNgz3NAC5gH4HDtGFLtlUjoG21zEze4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3027D965F;
-	Wed, 21 Nov 2012 14:14:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB1509652;
+	Wed, 21 Nov 2012 14:14:30 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80449965D; Wed, 21 Nov 2012
- 14:14:34 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52FA3964F; Wed, 21 Nov 2012
+ 14:14:30 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AF5BFE7E-340F-11E2-98AC-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ACDBF942-340F-11E2-BD09-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210158>
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Sun, Nov 11, 2012 at 2:59 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->
-> Since these are having some problems getting in, let me point out
-> which I think are important, and which not.
+> This only makes sense for the python remote helpers framework.
 
-I finished reading the series, and found them mostly sensible.
+A better explanation is sorely needed for this.  If the test were
+feeding python snippet to be sourced by python remote helper to be
+tested, the new remote-testgit.bash would not have any hope (nor
+need) to grok it, and "this only makes sense for python" makes
+perfect sense and clear enough, but that is not the case.
 
-I'll send out comments on individual patches, and will push them
-out, interspersed with "fixup!" commits, later on 'pu' when I am
-done for the day, perhaps in 7 hours or so.
+If the justification were like this:
 
-There is one thing I am not sure about with this series, though.
+    remote-testgit: remove non-local tests
+    
+    The simplified remote-testgit does not talk with any remote
+    repository and incapable of running non-local tests.  Remove
+    them.
 
-I can agree that the updates to fast-export will make remote-testgit
-script work better, but I cannot tell how big an impact the changes
-will have to people's existing use of fast-export.  Some of them may
-be relying on the current behaviour (in other words, they may be
-relying on "existing bugs"), which may mean that this series will
-bring regression to them.  I am still open to reasonable objections
-along the lines of "This script X uses fast-export and is broken
-when used with the updated behaviour." if there is any.
+I would understand it, and I wouldn't say it is a regression in the
+test not to test "non-local", as that is not essential aspect of
+these tests (we are only interested in testing the object/ref
+transfer over remote-helper interface and do not care what the
+"other side" really is).
+
+But I am not quite sure what you really mean by "non-local"
+functionality in the first place.  The original test weren't opening
+network port to emulate multi-host remote transfer, were it?
+
+Thanks.
