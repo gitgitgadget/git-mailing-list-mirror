@@ -1,66 +1,58 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Duplicate test numbers in pu.
-Date: Wed, 21 Nov 2012 19:14:02 +0000
-Message-ID: <50AD27FA.3010006@ramsay1.demon.co.uk>
+From: Douglas Mencken <dougmencken@gmail.com>
+Subject: Re: [regression] Newer gits cannot clone any remote repos
+Date: Wed, 21 Nov 2012 14:20:40 -0500
+Message-ID: <CACYvZ7hDu=r1=x_ofsVud6+0krZD5wPoE0Q9yjLg_e6y7MzPuQ@mail.gmail.com>
+References: <CACYvZ7jPd0_XD6YVdfJ2AnKRnKewmzX4uu7w3zt+_gK+qU49gQ@mail.gmail.com>
+	<50A2978D.6080805@ramsay1.demon.co.uk>
+	<50A2B2DF.1080704@web.de>
+	<50A53FAC.8020401@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@adamspiers.org,
-	GIT Mailing-list <git@vger.kernel.org>,
-	felipe.contreras@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 20:15:22 2012
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 21 20:21:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbFlZ-0004oD-HG
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 20:15:21 +0100
+	id 1TbFr6-0008VP-DB
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 20:21:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755805Ab2KUTPC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2012 14:15:02 -0500
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:51289 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755800Ab2KUTPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2012 14:15:01 -0500
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 481E86F88CD;
-	Wed, 21 Nov 2012 19:15:00 +0000 (GMT)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id C165B6F88CF;	Wed, 21 Nov 2012 19:14:59 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;	Wed, 21 Nov 2012 19:14:58 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-X-MDF-HostID: 3
+	id S1755832Ab2KUTUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2012 14:20:43 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:47356 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755818Ab2KUTUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2012 14:20:41 -0500
+Received: by mail-lb0-f174.google.com with SMTP id gi11so2988009lbb.19
+        for <git@vger.kernel.org>; Wed, 21 Nov 2012 11:20:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=njRmgrtBEuwVJ+VGzhG2XLdgAWqtXmKHXM3wK7iLf8c=;
+        b=zijsf1UhDrqji/haxk/x1kd3TdxKe5Lz4OyPYgiS3DBUolaeD28MoJFmLP7dkR3aka
+         8ckShAl+xPTg1SvD5bLkNwh3cdPAT+A0JH8bwHDtr1Mxnm+ZFwKR6+vJhZAsctMG/1Uo
+         XqlpjcsctZuvZFrQTThzrQdOQor2hjXFax8bwOio7zT5iEFomZyJNnhz8DNXe5yib9Pk
+         9wCb/9FIWTKcY8rhwkOs7weYLHk87/ttvOZMtOfQ1vvdr3mqil+0qD6v36WAf72HRdDc
+         j2zh450umbExfpAtz6qEuIYvV1J/zpjxp9JHKCibtmaB0NMmgnqWOtICYCYTDJKJCkFV
+         G66A==
+Received: by 10.152.106.212 with SMTP id gw20mr18832543lab.8.1353525640360;
+ Wed, 21 Nov 2012 11:20:40 -0800 (PST)
+Received: by 10.112.22.6 with HTTP; Wed, 21 Nov 2012 11:20:40 -0800 (PST)
+In-Reply-To: <50A53FAC.8020401@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210163>
 
+> The threaded index-pack code did not fail for
+> me on cygwin at all during development, including tests, but failed
+> immediately I installed v1.7.11. On real repositories, it failed
+> intermittently. On some repos it always failed, on some it never
+> failed and on some others it would sometimes fail, sometimes not.
 
-Hi Junio,
-
-I noticed that the pu branch has two tests with number t0007, viz:
-
-    $ cd t
-    $ make test-lint-duplicates
-    duplicate test numbers: t0007
-    make: *** [test-lint-duplicates] Error 1
-    $ 
-
-In particular, t/t0007-git-var.sh is added by branch 'jk/send-email-\
-sender-prompt', while t/t0007-ignores.sh is added by branch 'as/check-ignore'.
-
-Also:
-
-    $ make test-lint-executable
-    non-executable tests: t5801-remote-helpers.sh
-    make: *** [test-lint-executable] Error 1
-    $
-
-(added in branch 'fc/fast-export-fixes').
-
-HTH
-
-ATB,
-Ramsay Jones
+Then why did you commit it? If it has so high random failure rate.
