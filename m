@@ -1,101 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
-Date: Tue, 20 Nov 2012 21:08:36 -0800
-Message-ID: <7vfw43pmp7.fsf@alter.siamese.dyndns.org>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
- <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
- <CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com>
- <7vd2z7rj3y.fsf@alter.siamese.dyndns.org> <20121121041735.GE4634@elie.Belkin>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH 14/13] test-wildmatch: avoid Windows path mangling
+Date: Wed, 21 Nov 2012 07:41:45 +0100
+Message-ID: <50AC77A9.90601@viscovery.net>
+References: <7vvcdco1pf.fsf@alter.siamese.dyndns.org> <50AB2B0F.8090808@viscovery.net> <7vd2z8rq4y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 06:08:56 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4g?= =?UTF-8?B?VGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 07:42:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tb2YS-00072m-7F
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 06:08:56 +0100
+	id 1Tb40g-0002qe-UC
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 07:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870Ab2KUFIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2012 00:08:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47799 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750774Ab2KUFIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2012 00:08:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BCCA4D3;
-	Wed, 21 Nov 2012 00:08:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/kn20QidqvwY+gwUpICKDdDAeRM=; b=ykcO40
-	OIilIINmEJK2IiAXANtdR3uMkyjBQoIpAZEhO3xGyrCgA+mFEymZmRAbnsinPddB
-	p5JVFCDejVrLXwjbDIyv8MAWKQzK55Ujn0SKqBpP86flmEkv7oJOUPWCWz56mEu6
-	PR4pDCKbP5dHdbDKPDSYro88eo11z+wUfak0g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UIuS/OQWjFEGU6e9FhugTn2zoiPhRkTt
-	0mP6va77ufuC6Kb9gVD2ivz1FdrlhWMeFaRJmsz+V7anazqnUFBvjrJ9n6lPdXSx
-	f/zwKKr+scR4vHZFo4+C0tLKhxSdfKRvnGu3YAAYHLfx2cnIt3tuQZaHQT6xQx00
-	9hBUPvQh3Vw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E11E2A4D2;
-	Wed, 21 Nov 2012 00:08:38 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 486A9A4CF; Wed, 21 Nov 2012
- 00:08:38 -0500 (EST)
-In-Reply-To: <20121121041735.GE4634@elie.Belkin> (Jonathan Nieder's message
- of "Tue, 20 Nov 2012 20:17:35 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8249632A-3399-11E2-92C8-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751129Ab2KUGly convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2012 01:41:54 -0500
+Received: from so.liwest.at ([212.33.55.13]:54113 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750824Ab2KUGlx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2012 01:41:53 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Tb40I-0004pQ-5U; Wed, 21 Nov 2012 07:41:46 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C12291660F;
+	Wed, 21 Nov 2012 07:41:45 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
+In-Reply-To: <7vd2z8rq4y.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210139>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-> Never mind that others have said that that's not the current interface
-> (I don't yet see why it would be a good interface after a transition,
-> but maybe it would be).  Still, hopefully that clarifies the intended
-> meaning.
+The MSYS bash mangles arguments that begin with a forward slash
+when they are passed to test-wildmatch. This causes tests to fail.
+Avoid mangling by prepending "XXX", which is removed by
+test-wildmatch before further processing.
 
-Care to explain how the current interface is supposed to work, how
-fast-export and transport-helper should interact with remote helpers
-that adhere to the current interface, and how well/correctly the
-current implementation of these pieces work?
+[J6t: reworded commit message]
 
-What I am trying to get at is to see where the problem lies.  Felipe
-sees bugs in the aggregated whole.  Is the root cause of the problems
-he sees some breakages in the current interface?  Is the interface
-designed right but the problem is that the implementation of the
-transport-helper is buggy and driving fast-export incorrectly?  Or is
-the implementation of the fast-export buggy and emitting wrong results,
-even though the transport-helper is driving fast-export correctly?
-Something else?
+Reported-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 11/20/2012 21:11, schrieb Junio C Hamano:
+> Thanks, but you need to fix your format-patch somehow.
 
-I see Felipe keeps repeating that there are bugs, and keeps posting
-patches to change fast-export, but I haven't seen a concrete "No,
-the reason why you see these problems is because you are not using
-the interface correctly; the currrent interface is fine.  Here is
-how you can fix your program" from "others".
+No, it was Thunderbird. It ate the blank lines when I said "Edit as new=
+"
+to forward the patch directly from the mailbox.
 
-With such a one-sided discussion, I've been having a hard time
-convincing myself if Felipe's effort is making the interface better,
-or just breaking it even more for existing remote helpers, only to
-fit his world model better.
+Sorry for the inconvenience.
 
-Help?
+ t/t3070-wildmatch.sh | 10 +++++-----
+ test-wildmatch.c     |  8 ++++++++
+ 2 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index e6ad6f4..3155eab 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -74,7 +74,7 @@ match 0 0 'foo/bar' 'foo[/]bar'
+ match 0 0 'foo/bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
+ match 1 1 'foo-bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
+ match 1 0 'foo' '**/foo'
+-match 1 x '/foo' '**/foo'
++match 1 x 'XXX/foo' '**/foo'
+ match 1 0 'bar/baz/foo' '**/foo'
+ match 0 0 'bar/baz/foo' '*/foo'
+ match 0 0 'foo/bar/baz' '**/bar*'
+@@ -95,8 +95,8 @@ match 0 0 ']' '[!]-]'
+ match 1 x 'a' '[!]-]'
+ match 0 0 '' '\'
+ match 0 x '\' '\'
+-match 0 x '/\' '*/\'
+-match 1 x '/\' '*/\\'
++match 0 x 'XXX/\' '*/\'
++match 1 x 'XXX/\' '*/\\'
+ match 1 1 'foo' 'foo'
+ match 1 1 '@foo' '@foo'
+ match 0 0 'foo' '@foo'
+@@ -187,8 +187,8 @@ match 0 0 '-' '[[-\]]'
+ match 1 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' =
+'-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+ match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' =
+'-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+ match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' =
+'-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 1 1 '/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' =
+'/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+-match 0 0 '/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' =
+'/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 1 1 'XXX/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/=
+1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 0 0 'XXX/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/=
+1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+ match 1 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n=
+*t'
+ match 0 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*=
+n*t'
+=20
+diff --git a/test-wildmatch.c b/test-wildmatch.c
+index 74c0864..e384c8e 100644
+--- a/test-wildmatch.c
++++ b/test-wildmatch.c
+@@ -3,6 +3,14 @@
+=20
+ int main(int argc, char **argv)
+ {
++	int i;
++	for (i =3D 2; i < argc; i++) {
++		if (argv[i][0] =3D=3D '/')
++			die("Forward slash is not allowed at the beginning of the\n"
++			    "pattern because Windows does not like it. Use `XXX/' instead."=
+);
++		else if (!strncmp(argv[i], "XXX/", 4))
++			argv[i] +=3D 3;
++	}
+ 	if (!strcmp(argv[1], "wildmatch"))
+ 		return !!wildmatch(argv[3], argv[2], 0);
+ 	else if (!strcmp(argv[1], "iwildmatch"))
+--=20
+1.8.0.1417.gf6038d8
