@@ -1,83 +1,68 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: [wishlist] support git flow-like view
-Date: Wed, 21 Nov 2012 12:54:09 +1100
-Message-ID: <CAH5451nsOE+VkrC7YaSEWYcUd5q2vMze5QPoVGWY8Q+T=nSvww@mail.gmail.com>
-References: <201211202043.00293.perezmeyer@gmail.com> <CAH5451nrcEo3Uxm0x6b39Hq1k-J4=OZPi-Cao7osaiS-w_Z1+Q@mail.gmail.com>
- <201211202113.44459.perezmeyer@gmail.com>
+From: Paul Fox <pgf@foxharp.boston.ma.us>
+Subject: Re: Topics currently in the Stalled category
+Date: Tue, 20 Nov 2012 21:46:47 -0500
+Message-ID: <20121121024647.BBCC82E9301@grass.foxharp.boston.ma.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?Q?Lisandro_Dami=C3=A1n_Nicanor_P=C3=A9rez_Meyer?= 
-	<perezmeyer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 02:54:51 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 03:47:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TazWc-0006zG-Ct
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 02:54:50 +0100
+	id 1Tb0L9-0004Nq-F6
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 03:47:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab2KUByb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Nov 2012 20:54:31 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:55354 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753912Ab2KUBya convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Nov 2012 20:54:30 -0500
-Received: by mail-wi0-f178.google.com with SMTP id hm6so1434982wib.1
-        for <git@vger.kernel.org>; Tue, 20 Nov 2012 17:54:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=aLadOPd0Og5lq46UAKaCcs41GIiYEpXXYOkpLasarU4=;
-        b=D4J1V0s0xwczSpZjpNAUE80Am6ASXMYCDxqQohW7HYFGBu79UKaroh+eXcWDP1tyaR
-         aHqcV0V5+O/MKQerzCbnkhPkGDaHD5K6pu7u3bucq3JAr7VS3+ufNNCQNtL8BKwDWUF7
-         YTl+NJYlxTsKPJ4OYgQS+U6H65V3FBrgfFk91uBjpZc0a0bNq2lkv72yg78gj0kVV5Lu
-         F53E+w22zLicws4Lz0PWmmJ2eMqG+HsGCXgvF05fjGcrRXZST+nxLmsGwptQH7y/UlDg
-         PMSNVFSx1wES8HKgphPsdBGev5M5cYIRlLlOpfXefueegcMK0mhg/53+ZCqEi1g/3O3P
-         Yy2Q==
-Received: by 10.216.93.80 with SMTP id k58mr88806wef.98.1353462869369; Tue, 20
- Nov 2012 17:54:29 -0800 (PST)
-Received: by 10.217.79.5 with HTTP; Tue, 20 Nov 2012 17:54:09 -0800 (PST)
-In-Reply-To: <201211202113.44459.perezmeyer@gmail.com>
+	id S1753368Ab2KUCqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 21:46:49 -0500
+Received: from colo.foxharp.net ([166.84.7.52]:58313 "EHLO colo.foxharp.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752098Ab2KUCqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 21:46:48 -0500
+Received: from grass.foxharp.boston.ma.us (localhost [127.0.0.1])
+	by colo.foxharp.net (Postfix) with ESMTP id B94F2540E4;
+	Tue, 20 Nov 2012 21:43:43 -0500 (EST)
+Received: by grass.foxharp.boston.ma.us (Postfix, from userid 1000)
+	id BBCC82E9301; Tue, 20 Nov 2012 21:46:47 -0500 (EST)
+Received: from grass (localhost [127.0.0.1])
+	by grass.foxharp.boston.ma.us (Postfix) with ESMTP id A921C2E9300;
+	Tue, 20 Nov 2012 21:46:47 -0500 (EST)
+Content-ID: <29365.1353466007.1@grass>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210130>
 
-On 21 November 2012 11:13, Lisandro Dami=C3=A1n Nicanor P=C3=A9rez Meye=
-r
-<perezmeyer@gmail.com> wrote:
-> ...
-> Well, two ideas come to my mind:
->
-> - detect when using git flow (.git/config contains [gitflow "some_bra=
-nch"]
-> entries).
+In-reply-to: <7vobirq0q2.fsf_-_@alter.siamese.dyndns.org> (sfid-20121120_190548_379327_D3EE7D14)
+References: <7vpq39up0m.fsf@alter.siamese.dyndns.org> <7vy5hvq1ey.fsf@alter.siamese.dyndns.org> <7vobirq0q2.fsf_-_@alter.siamese.dyndns.org> (sfid-20121120_190548_379327_D3EE7D14)
+Fcc: outbox
+--------
 
-I guess this part is just so the next part can be done automatically?
+junio c hamano wrote:
+ > Here is a list of stalled topics I am having trouble deciding what
+ > to do (the default is to dismiss them around feature freeze).
+...
+ > * pf/editor-ignore-sigint (2012-11-11) 5 commits
+ > 
+ >  Avoid confusing cases where the user hits Ctrl-C while in the editor
+ >  session, not realizing git will receive the signal. Since most editors
+ >  will take over the terminal and will block SIGINT, this is not likely
+ >  to confuse anyone.
+ > 
+ >  Some people raised issues with emacsclient, which are addressed by this
+ >  re-roll. It should probably also handle SIGQUIT, and there were a
+ >  handful of other review comments.
+ > 
+ >  Anybody interested in moving this forward?
 
-> - Show "swim-lane"-like graphs, including branches that may not be pr=
-esent,
-> but where there (release branches often are created and merged back, =
-for
-> example)
+i started this, but then jeff took it and ran with it and made it
+right.  i think the remaining changes are small -- if jeff would
+prefer, i can probably finish it.  (but i won't guarantee not to
+mess up the "From:" lines.  :-)
 
-I think this could be useful in general, however it might struggle
-with already merged branches. I may be mistaken here, however I think
-in general there is no way to specify which commits belonged to a
-certain branch after they have been merged, as branch information is
-not kept in the commit object. There may be some exceptions that make
-it feasible at times, but a general solution would be to show any
-merged branches as part of the same swim-lane, as per current
-behaviour, but to have separate branch heads in different swim-lanes.
-This would be a nice feature, and is similar to the behaviour in, for
-example, Atlassian's Fisheye repository viewer and the GitHub network
-view.
-
-Regards,
-
-Andrew Ardill
+paul
+=---------------------
+ paul fox, pgf@foxharp.boston.ma.us (arlington, ma, where it's 36.0 degrees)
