@@ -1,102 +1,69 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
-Date: Thu, 22 Nov 2012 01:15:45 +0100
-Message-ID: <CAMP44s0Sd9V+GCqxid_rCwNH49-+dzmreg9zwPgxoZb1hQkb1A@mail.gmail.com>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
-	<1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
-	<7vmwya3h0x.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: gitk: Portuguese "Ignore space change" translation
+Date: Wed, 21 Nov 2012 21:18:35 -0200
+Message-ID: <CACnwZYf6E8OvAToyRQ7HkxRa3=pYjQU5x5BqNqFt0nioxtny5w@mail.gmail.com>
+References: <CADJyvEdgeC1fHWz9sU6RDUcrfXbkk5qZ6RVBp5iYUcvbnh2BdA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 21:34:30 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Joao Vitor P. Moraes" <jvlppm@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 21:36:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbdTh-0003nF-MY
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 21:34:30 +0100
+	id 1TbdVw-0005xJ-BZ
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 21:36:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754796Ab2KVUeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 15:34:12 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:57955 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756741Ab2KVTZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 14:25:57 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so8315918oag.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:25:56 -0800 (PST)
+	id S1756655Ab2KVUgb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2012 15:36:31 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:44531 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756576Ab2KVUg3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2012 15:36:29 -0500
+Received: by mail-lb0-f174.google.com with SMTP id gi11so3785881lbb.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 12:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fT6CJlt8wyHWt/+JNEwHgd3I6zjtuQdh6/X68vsDG7U=;
-        b=uJT9D1j3MmiFvXyac1MzenRyFnwTT79q+KsCVAHv9SS9wThHlnmIC8fQ1JiGBYNjM2
-         PW4DF8aLSMAE0dh3gGFh97QaYNk33fjR1AggRZ7o35lEeJ+GDw8YNzFuIxySL+qxLQVp
-         iQH0qoKK5+ZBE90FDj9BzGwOttMZZtgbk3ztSqkaZV86H9r10OtnRL84yTE4+aU5h19U
-         u1yanqus9lDzsLu/cF5l7S594ThJFeSHl2O/ofKzMRA1SvpO1JTM6Mpd+Vwtrcv2Thk8
-         YEsZqEdLkyNx3/d6yvUY+/pSSBaBp+pbRzB1o2Yd/M3gF/UmfVy2lgHY0luGfjZK2woQ
-         m/Tg==
-Received: by 10.60.31.6 with SMTP id w6mr1921930oeh.65.1353543345888; Wed, 21
- Nov 2012 16:15:45 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Wed, 21 Nov 2012 16:15:45 -0800 (PST)
-In-Reply-To: <7vmwya3h0x.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=NcIcCgFVPsMb5DM1V/pHdelva0zhcoOymSBxR+17DIc=;
+        b=cPwmiFVHAMMrFPAAiLdYs4Q0WVnWqmB1X+/rxLlCYKCU5wrYLhtrOqmhfJQ3CWP7wc
+         5R9HDwqJfJ5bIP8nDYWSYX5ogVk6KQJGU2oobQ/j18BPrhgYLEOP0SGA/jsuNufn0m0B
+         J3o5M6eEqopNSOB0xc5jup7KdHRickSfP+HZsEfydpe54C8geUQqSGi7X/cuJcoQIl+A
+         APdpQkN2y6oy8Qrf39qjwgcPatR+HFypaU5C6lhP+/XTJdXMaY+2RqxZMWeGn0j9McLy
+         ONGss7NdOHL01F/gNzIAmt3Gg5nPxYXVd/HJdb3xa7JDFpIK36yF1QKZDTz5n/rGNf4e
+         vdAg==
+Received: by 10.152.131.200 with SMTP id oo8mr19156734lab.34.1353539915373;
+ Wed, 21 Nov 2012 15:18:35 -0800 (PST)
+Received: by 10.112.132.162 with HTTP; Wed, 21 Nov 2012 15:18:35 -0800 (PST)
+In-Reply-To: <CADJyvEdgeC1fHWz9sU6RDUcrfXbkk5qZ6RVBp5iYUcvbnh2BdA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210211>
 
-On Wed, Nov 21, 2012 at 7:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi Joao,
+
+On Tue, Nov 20, 2012 at 8:03 AM, Joao Vitor P. Moraes <jvlppm@gmail.com=
+> wrote:
+> Inside gitk there's a checkbox which says:
+> Ignore space change
 >
->> They have been marked as UNINTERESTING for a reason, lets respect that.
->> ...
->> The current behavior is most certainly not what we want. After this
->> patch, nothing gets exported, because nothing was selected (everything
->> is UNINTERESTING).
+> It was translated to portuguese (pt-br) as:
+> Ignorar mudan=C3=A7as de caixa
 >
-> The old behaviour was an incorrect "workaround" that has been
-> superseded by your 14/15 "make sure updated refs get updated", no?
-> Mentioning that would help people realize that this patch would not
-> cause regression on them, I would think.
-
-This particular patch is not getting rid of that "workaround", if you
-can call it that, it's just making it work correctly.
-
-There's absolutely no possibility of regression (that is known or
-anybody has mentioned).
-
-The only argument that was put forward was that 'git fast-export
-^master master' should throw:
-from :0
-
-As it does now, because in the future, with another patch (that nobody
-is pursuing), it might do:
-from 8c7a786
-
-Which as I have tried to explain; is equally useless.
-
-There's no regression, nobody would be affected negatively by this
-because when there are no marks, nobody expects a 'from :0'; it's
-totally useless, and when there are marks, nobody expects an update
-when the user does '^uninteresting master' for the 'uninteresting'
-ref. And not even potential future users would be affected, because
-'from 8c7a786' is not helpful either, even if the user wanted
-'^uninsteresting' to be updated (which they won't), the git SHA-1 is
-useless to a remote helper without marks.
-
-Cheers.
-
--- 
-Felipe Contreras
+> But that message in portuguese means:
+> Ignore case changes
+>
+> that checkbox does not ignore case changes, but instead it ignores sp=
+ace
+> changes, a better translation would be
+>
+> Ignorar mudan=C3=A7as de espa=C3=A7o
+> or
+As a native speaker I'd say go with that one. Although 'Ignorar
+espa=C3=A7amentos' sounds more succinct.
