@@ -1,94 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Topics currently in the Stalled category
-Date: Wed, 21 Nov 2012 04:31:11 +0100
-Message-ID: <CAMP44s30cbH5+HUxRBByk5sZGq=j_MdqLSnNzREozEk40_zbOw@mail.gmail.com>
-References: <7vpq39up0m.fsf@alter.siamese.dyndns.org>
-	<7vy5hvq1ey.fsf@alter.siamese.dyndns.org>
-	<7vobirq0q2.fsf_-_@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
+Date: Tue, 20 Nov 2012 20:17:35 -0800
+Message-ID: <20121121041735.GE4634@elie.Belkin>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
+ <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
+ <CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com>
+ <7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 04:31:28 2012
+X-From: git-owner@vger.kernel.org Wed Nov 21 05:17:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tb127-0002tY-BA
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 04:31:27 +0100
+	id 1Tb1l5-0003L2-QT
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 05:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753640Ab2KUDbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2012 22:31:12 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:59034 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753344Ab2KUDbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2012 22:31:12 -0500
-Received: by mail-ob0-f174.google.com with SMTP id wc20so6637183obb.19
-        for <git@vger.kernel.org>; Tue, 20 Nov 2012 19:31:11 -0800 (PST)
+	id S1753021Ab2KUERl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2012 23:17:41 -0500
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:38896 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752748Ab2KUERk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2012 23:17:40 -0500
+Received: by mail-pb0-f46.google.com with SMTP id wy7so4777593pbc.19
+        for <git@vger.kernel.org>; Tue, 20 Nov 2012 20:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=FUn0lqTSP4829MbwSGXObEQpaxZQNLb1tNTjDW1PbZI=;
-        b=KwmkmiwBkaigp1/n013t/sEIoKbalWhaWQUpk1/uMdKkfObpc8eM2dmK3St1UGN7c2
-         2W5YLaVhFW3Bgkvi9oEp+kW5e7+9cL224iggEdv6RTKZ57aoscEFhaeAAB+gLK9lh/cB
-         nRykkWug7vAQPEikh2vzJLGVyPD4TQyr4SCvRUftHBkafUGoF1wXmnrzciwefztFYg53
-         4VZ3xyJiIVAqJv3WWYMKGqL/ILAQrE0XaWecjwpphVrPDBPzIxFiEkXx1+FA3bx3cASo
-         pp2IiJ0usjtqsctjdzsbYB00OgDLYeFOgzXde23gRyWTVjurl0PLT/J4CF6hazCKd8yI
-         Az+g==
-Received: by 10.60.13.138 with SMTP id h10mr3096899oec.65.1353468671444; Tue,
- 20 Nov 2012 19:31:11 -0800 (PST)
-Received: by 10.60.28.232 with HTTP; Tue, 20 Nov 2012 19:31:11 -0800 (PST)
-In-Reply-To: <7vobirq0q2.fsf_-_@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Kqo52xWJgeNuQsc3G8Q+XFrznGUHHs+XTobuY0kJu+A=;
+        b=YNwjfndt3nsysSp70gy7dh5sVeSk4jPJsl+ukhx7bQh3u8IjKG0SaHDoPmm4zsaVv1
+         dqCzOZg1BeBER3dD9poc7Hr3n9MMviMEuw42iJqE2r0wSluZzp6gDsHzNBxP0tpId/EZ
+         A9/00ElbhLk+cnP4RiLwbwlR32TFgxqMAPtNCNElmnz1ppjHaj2hS9iAIFBgZnipbKE2
+         5veEkmVTAoBCtqPyJU5xGYx4H3PSJMgDR8oRJoPjVtKDziZ29Fmmm/pW7G3W12uisMCS
+         hQZz38yjy3YaVsjvJXVJ/a3eK/A504aqto3L/etSWjhYcNGoHjwqHaSuydrcBYZFBL86
+         6sPQ==
+Received: by 10.66.76.73 with SMTP id i9mr14284689paw.17.1353471460526;
+        Tue, 20 Nov 2012 20:17:40 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id xk2sm9180607pbc.45.2012.11.20.20.17.38
+        (version=SSLv3 cipher=OTHER);
+        Tue, 20 Nov 2012 20:17:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210133>
 
-On Wed, Nov 21, 2012 at 1:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Here is a list of stalled topics I am having trouble deciding what
-> to do (the default is to dismiss them around feature freeze).
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+>> Of course, transport-helper shouldn't even be specifying the negative
+>> (^) refs, but that's another story.
 >
-> * fc/fast-export-fixes (2012-11-08) 14 commits
+> Hrm, I am not sure I understand what you mean by this.
 >
->  Renaming of remote-testgit feels to be a mistake.  It probably
->  should keep its source in remote-testgit.bash and generate it,
+> How should it be telling the fast-export up to what commit the
+> receiving end should already have the history for (hence they do not
+> need to be sent)?  Or are you advocating to re-send the entire
+> history down to the root commit every time?
 
-Why generate it? There's nothing to generate. python's source code
-needs regeneration, bash's code doesn't.
+I think Felipe has mentioned before that he considers it the remote
+helper's responsibility to keep track of what commits have already
+been imported, for example using a marks file.
 
-> and
->  moreover, if it wants to rename remote-testgit.py to remote-testpy,
->  the new one should be called remote-testbash.
+Never mind that others have said that that's not the current interface
+(I don't yet see why it would be a good interface after a transition,
+but maybe it would be).  Still, hopefully that clarifies the intended
+meaning.
 
-No, remote-testbash is not testing anything that is specific to bash,
-it's testing the remote helper framework itself. It could be written
-in Ruby, or Python, or C, or anything.
-
-remote-testgit.py is *not* testing the remote helper framework, it's
-testing the Python-specific remote helper framework.
-
-IOW. remote-testgit tests this:
-
-  transport-helper.c
-
-remote-testpy tests this:
-
-  git_remote_helpers/Makefile
-  git_remote_helpers/__init__.py
-  git_remote_helpers/git/__init__.py
-  git_remote_helpers/git/exporter.py
-  git_remote_helpers/git/git.py
-  git_remote_helpers/git/importer.py
-  git_remote_helpers/git/non_local.py
-  git_remote_helpers/git/repo.py
-  git_remote_helpers/setup.cfg
-  git_remote_helpers/setup.py
-  git_remote_helpers/util.py
-
-Cheers.
-
--- 
-Felipe Contreras
+Hope that helps,
+Jonathan
