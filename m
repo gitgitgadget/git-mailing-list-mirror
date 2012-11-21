@@ -1,100 +1,67 @@
-From: Paul Fox <pgf@foxharp.boston.ma.us>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Topics currently in the Stalled category
-Date: Wed, 21 Nov 2012 14:50:58 -0500
-Message-ID: <20121121195058.32DAF2E9303@grass.foxharp.boston.ma.us>
-References: <20121121024647.BBCC82E9301@grass.foxharp.boston.ma.us> <20121121092750.GA8262@shrek.podlesie.net> <20121121193401.GC16280@sigill.intra.peff.net> (sfid-20121121_143409_470299_FB6B658B)
+Date: Wed, 21 Nov 2012 11:53:04 -0800
+Message-ID: <7va9ua20nz.fsf@alter.siamese.dyndns.org>
+References: <20121121024647.BBCC82E9301@grass.foxharp.boston.ma.us>
+ <20121121092750.GA8262@shrek.podlesie.net>
+ <20121121193401.GC16280@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Krzysztof Mazur <krzysiek@podlesie.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Krzysztof Mazur <krzysiek@podlesie.net>,
+	Paul Fox <pgf@foxharp.boston.ma.us>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 21 20:51:18 2012
+X-From: git-owner@vger.kernel.org Wed Nov 21 20:53:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbGKJ-0003Wz-5l
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 20:51:15 +0100
+	id 1TbGMP-00051k-Tq
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Nov 2012 20:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab2KUTu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2012 14:50:59 -0500
-Received: from colo.foxharp.net ([166.84.7.52]:55832 "EHLO colo.foxharp.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755883Ab2KUTu6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2012 14:50:58 -0500
-Received: from grass.foxharp.boston.ma.us (localhost [127.0.0.1])
-	by colo.foxharp.net (Postfix) with ESMTP id 4E8B1540E4;
-	Wed, 21 Nov 2012 14:47:53 -0500 (EST)
-Received: by grass.foxharp.boston.ma.us (Postfix, from userid 1000)
-	id 32DAF2E9303; Wed, 21 Nov 2012 14:50:58 -0500 (EST)
-Received: from grass (localhost [127.0.0.1])
-	by grass.foxharp.boston.ma.us (Postfix) with ESMTP id 269622E9302;
-	Wed, 21 Nov 2012 14:50:58 -0500 (EST)
-In-reply-to: <20121121193401.GC16280@sigill.intra.peff.net> (sfid-20121121_143409_470299_FB6B658B)
-Content-ID: <3609.1353527458.1@grass>
+	id S1755961Ab2KUTxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2012 14:53:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39716 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755883Ab2KUTxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2012 14:53:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2684964A;
+	Wed, 21 Nov 2012 14:53:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=o4l58cTA5G2GYrkBxa+JX8A/KXc=; b=l84maq
+	AsSao2tkShVKB2t0bEU5uErdoUhaxXSX/4CNUYeUSXVPeh3M5kch2LhkKTb6jVl/
+	GRfRAHF3Xd9ct2Q6L8lpRrpBis/3fWMfmPDB51X5bk9pO0PIKeHxEEK3ADx2r6oR
+	6PABJlsQ8nifV3gafH5UmKngX15V/P3MYvSig=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MlTO4A3YmkaXOms9w4ak+yPx6+WRzYlp
+	blVi4g+8XoCgEmf6iewTif8kIcxGtWW+TjgVEnGP8sl2ye5gG44JtSDYQWnqjDdA
+	CuGbKzMEqSYYmVl4zNr2C+8rFBTdCqBF3HnBk8t9egu5ynTkjFebkWWKLpP5vJU0
+	p0pPof7x7BI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFFE69649;
+	Wed, 21 Nov 2012 14:53:06 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CD689648; Wed, 21 Nov 2012
+ 14:53:06 -0500 (EST)
+In-Reply-To: <20121121193401.GC16280@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 21 Nov 2012 14:34:02 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 113B08D8-3415-11E2-96B1-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210172>
 
-jeff wrote:
- > On Wed, Nov 21, 2012 at 10:27:50AM +0100, Krzysztof Mazur wrote:
- > 
- > > >  > * pf/editor-ignore-sigint (2012-11-11) 5 commits
- > > >  > 
- > > >  >  Avoid confusing cases where the user hits Ctrl-C while in the editor
- > > >  >  session, not realizing git will receive the signal. Since most editors
- > > >  >  will take over the terminal and will block SIGINT, this is not likely
- > > >  >  to confuse anyone.
- > > >  > 
- > > >  >  Some people raised issues with emacsclient, which are addressed by this
- > > >  >  re-roll. It should probably also handle SIGQUIT, and there were a
- > > >  >  handful of other review comments.
- > > >  > 
- > > >  >  Anybody interested in moving this forward?
- > > > 
- > > > i started this, but then jeff took it and ran with it and made it
- > > > right.  i think the remaining changes are small -- if jeff would
- > > > prefer, i can probably finish it.  (but i won't guarantee not to
- > > > mess up the "From:" lines.  :-)
- > > > 
- > > 
- > > I'm also interested. I sometimes use ":r !command" in vim, so far I never
- > > needed to use Ctrl-C, but maybe in future.
- > > 
- > > The SIGINT part seems to be finished, we need to decide what about SIGQUIT.
- > 
- > My plan was to just add in SIGQUIT[1] alongside SIGINT (and I think
- > there may have been one or two other minor comments in response to the
- > series). I am on vacation this week, but can revisit it next week. If
- > somebody wants to re-roll it in the meantime, that would be fine with
- > me.
- > 
- > -Peff
- > 
- > [1] Given the core-dumping behavior of SIGQUIT, I suspect it is not
- >     nearly as widely used as SIGINT, but it sounds more like the
- >     principle of least surprise to treat them the same.
+Jeff King <peff@peff.net> writes:
 
-i see no real point in treating them the same -- as you suggest, one
-would only use SIGQUIT if SIGINT didn't work, and then you'd want them
-to be treated differently.  so i'd be happy with the current code in
-that regard.
+> [1] Given the core-dumping behavior of SIGQUIT, I suspect it is not
+>     nearly as widely used as SIGINT, but it sounds more like the
+>     principle of least surprise to treat them the same.
 
-i think krzysiek said that since editors usually catch SIGQUIT, git
-should kill the editor when receiving SIGQUIT, essentially translating
-the SIGQUIT to SIGTERM for the editor.  (please correct me if i
-misunderstood.)  since well-behaved editors will die quickly anyway
-(they get EIO on their next read from stdin), i'm not sure there's a
-compelling reason for that extra step.
-
-but i have no real objection to that behavior if others think it's
-right -- there's certainly logic in saying that if git dies it should
-ensure the editor does too.
-
-(i'm away for the rest of the week also.)
-
-paul
-=---------------------
- paul fox, pgf@foxharp.boston.ma.us (arlington, ma, where it's 44.6 degrees)
+Sounds sensible.  I wonder what happens when the editor is suspended
+;-)
