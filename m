@@ -1,110 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
-Date: Thu, 22 Nov 2012 01:38:57 +0100
-Message-ID: <CAMP44s1tkAZPza7skVza-qm5aQMur7CEbXZdE=RYYN2ZV2gwGw@mail.gmail.com>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
-	<1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com>
-	<7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
-	<20121121041735.GE4634@elie.Belkin>
-	<7vfw43pmp7.fsf@alter.siamese.dyndns.org>
-	<0F47AA24-F5B6-4197-8D74-6DD32E253856@quendi.de>
+From: Patrik Gornicz <patrik-git@mail.pgornicz.com>
+Subject: Re: git-fetch does not work from .git subdirectory
+Date: Wed, 21 Nov 2012 19:55:15 -0500
+Message-ID: <50AD77F3.3080702@mail.pgornicz.com>
+References: <50AC0316.7090002@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:40:33 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Timur Tabi <timur@freescale.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:42:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbcdP-0000CR-UR
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:40:28 +0100
+	id 1Tbcfk-0002gl-7b
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:42:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756549Ab2KVTkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 14:40:10 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:43646 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753236Ab2KVTkI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2012 14:40:08 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so8325126oag.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:40:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=DB0NT5PkDZZtOG+0B+hidkXpUK4SKNTq2zuqHu2OsvI=;
-        b=sIJutymvseLa4xq/c7nk9NJ3S1fo3DGwOUPAqoiUUUx6Rxp/aTN8Xc69nsXugR678F
-         iN55w8IbbAJGSU/4e9O+WdKv9spARSxFCNoWexoFnl4ks/LBEpuoe6wV4nA07yYly4vj
-         NNy7vIxF2I4/57XFzvgXLrs0ij2eaogFYbM/c9cYYB5RCPib2x5nEYB5VklIAzQf7CQC
-         QShnwNsGGLiamk0sBY4Oqw1Xu04lzUWFocP3SbIoHoUPER2V6h6BIYpQ/lHtsEldyi+0
-         p0G0kezj0K7Lj+phGYPtaa65kwkS/QdeQs6P9FIAPJKFvpkhBzKl+o/Tr+WrRkzM0YZl
-         RcZg==
-Received: by 10.182.64.101 with SMTP id n5mr17592673obs.11.1353544737307; Wed,
- 21 Nov 2012 16:38:57 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Wed, 21 Nov 2012 16:38:57 -0800 (PST)
-In-Reply-To: <0F47AA24-F5B6-4197-8D74-6DD32E253856@quendi.de>
+	id S1756199Ab2KVTmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 14:42:37 -0500
+Received: from li287-246.members.linode.com ([66.228.37.246]:58930 "EHLO
+	mail.pgornicz.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755492Ab2KVTmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 14:42:32 -0500
+X-Greylist: delayed 4200 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2012 14:42:32 EST
+Received: from [192.168.1.110] (CPEc0c1c09f18e2-CM0026f321196d.cpe.net.cable.rogers.com [99.236.108.68])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.pgornicz.com (Postfix) with ESMTPSA id 01C3149D8D;
+	Wed, 21 Nov 2012 19:55:20 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:16.0) Gecko/20121030 Thunderbird/16.0.1
+In-Reply-To: <50AC0316.7090002@freescale.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210200>
 
-On Wed, Nov 21, 2012 at 11:30 PM, Max Horn <max@quendi.de> wrote:
+Just a hunch but your remote's location uses a relative path 
+'../linux-2.6.git', perhaps git is messing up what the path is relative 
+to.
 
-> 2) Some are interfaces to foreign systems (bzr, hg, mediawiki, ...). They cannot use sha1s and must use marks (at least that is how I understand felipe's explanation). These tools use import combined with either export, or push. Examples:
+I assume this repo is beside the linux.cq-test repo? ie. perhaps 
+they're located at /home/user/git/linux.cq-test and 
+/home/user/git/linux-2.6.git.
+
+Then, for example, from linux.cq-test it looks for 
+/home/user/git/linux-2.6.git but from linux.cq-test/.git it looks for 
+/home/user/git/linux.cq-test/linux-2.6.git, which is wrong.
+
+Note sure what the fix will be though as it'll likely break existing 
+repositories that use relative paths either way. Can you try an 
+absolute path to see if that fixes thing?
+
+Patrik
+
+On Tue Nov 20 17:24:22 2012, Timur Tabi wrote:
+> I was under the impression that git commands which affect repository (as
+> opposed to the local file system) work from any subdirectory inside the
+> repository.  For example:
 >
-> - git-remote-mediawiki: import, push, refspec
->     (its capabilities command also prints "list", but that seems to be a bug?)
-
-I don't think remote mediawiki uses marks. They are strictly not
-needed by 'import' because the remote helper has full control over
-this operation. For example, in my remote helpers, I store the
-previous tip of the branches, so when git ask for 'import
-refs/heads/master', I only import the new commits. I named this file
-'marks' anyway, but they are not marks for fast-import.
-
-> - git-remote-hg: import, export, refspec, import-marks, export-marks
->     (both the msysgit one and felipe's
-> - git-remote-bzr: import, push
->     (the one from https://github.com/lelutin/git-remote-bzr)
-> - git-remote-bzr (felipe's): import, export, refspec, *import-marks, *export-marks
->     (but why the * ?)
-
-AFAIK both of my remote helpers have * in them, they are to denote
-they are required.
-
-> Does that sound about right? If so, can somebody give me a hint when a type 2 helper would use "export" and when "push"?
-
-I don't know when would be appropriate to use push, there's another
-git-remote-bzr that uses the bzr-git infrastructure, and uses push.
-
-I picked export/import because I think they are the easiest to
-implement to get all the features, and should be efficient.
-
-> And while I am at it: git-remote-helpers.txt does not mention the "export", "import-marks" and "export-marks" capabilities. Could somebody who knows what they do look into fixing that? Overall, that doc helped me a bit, but it is more a reference to somebody who already understands in detail how remote helpers work, and who just wants to look up some specific detail :-(. Some hints on when to implement which capabilities might be useful (similar to the "Tips and Tricks" section in git-fast-import.txt).
-
-I've had problems finding out the right information, but I hope the
-git-remote-testgit I wrote in bash in less than 90 lines of code
-should give a pretty good idea of how the whole thing works.
-
-> As it is, felipe's recent explanation on why he thinks marks are essential for remote-helpers (I assume he was only referring to type 2 helpers, though) was one of the most enlightening texts I read on the whole subject so far (then again, I am fairly new to this list, so I may have missed lots of past goodness). Anyway, it would be nice if this could be augmented by "somebody from the other camp" ;).
-
-Wouldn't that be nice?
-
-Cheers.
-
--- 
-Felipe Contreras
+> [b04825@efes linux.cq-test]$ git log -1
+> commit f35d179fde24be5e1675b1df9f7a49b8d95561b2
+> Author: Timur Tabi <timur@freescale.com>
+> Date:   Wed Oct 31 15:56:20 2012 +0200
+> ...
+> [b04825@efes linux.cq-test]$ cd .git
+> [b04825@efes .git]$ git log -1
+> commit f35d179fde24be5e1675b1df9f7a49b8d95561b2
+> Author: Timur Tabi <timur@freescale.com>
+> Date:   Wed Oct 31 15:56:20 2012 +0200
+> ...
+>
+> It appears, however, that git-fetch does not work this way:
+>
+> [b04825@efes linux.cq-test]$ git fetch upstream master
+>  From ../linux-2.6
+>   * branch            master     -> FETCH_HEAD
+> [b04825@efes linux.cq-test]$ cd .git
+> [b04825@efes .git]$ git fetch upstream master
+> fatal: '../linux-2.6.git' does not appear to be a git repository
+> fatal: The remote end hung up unexpectedly
+>
+> This makes it complicated because git hooks run from the .git directory on
+> normal repositories, but they run from the top-level directory on bare
+> repositories.  Apparently, you need to be in the top-level directory for
+> git-fetch to run in any kind of repository.
+>
