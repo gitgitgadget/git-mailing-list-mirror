@@ -1,82 +1,64 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 0/4] nd/unify-appending-of-s-o-b
-Date: Thu, 22 Nov 2012 23:38:05 +0700
-Message-ID: <1353602289-9418-1-git-send-email-pclouds@gmail.com>
-References: <CACsJy8BiJRK7N3_HZ2WXpMd1YkDSW00AxuYqiCWJgij+Kq6AiQ@mail.gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: Duplicate test numbers in pu.
+Date: Thu, 22 Nov 2012 10:35:51 +0000
+Message-ID: <CAOkDyE8txOzmZ7JFwzjhQ17Xv5pQ1mmoXSYei7MJdXKBsM19nA@mail.gmail.com>
+References: <50AD27FA.3010006@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:33:11 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	felipe.contreras@gmail.com
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:39:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbcWM-00019y-II
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:33:10 +0100
+	id 1Tbcc1-0007Em-RH
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:39:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068Ab2KVTcw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2012 14:32:52 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:64313 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757012Ab2KVTcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 14:32:50 -0500
-Received: by mail-da0-f46.google.com with SMTP id p5so2315006dak.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:32:48 -0800 (PST)
+	id S1757211Ab2KVTit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 14:38:49 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:61984 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757156Ab2KVTin (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 14:38:43 -0500
+Received: by mail-qa0-f53.google.com with SMTP id k31so1148685qat.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:38:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=hY6E6YP9q97tC3p1QwB8Pvpz1EZpbgRsJt/grRwfNZI=;
-        b=0LAeLcm26xX2sK5TxrFpar03yMttfLEMFU94zNJwABMN8zwPPt3zNhwly8JWS982sN
-         0Cdmzv1Pf0mh3Zsa3XNOsILOFjIIA58oBN/Mc14IQiJh0Fr0nOPzetqegSbO/I82pq3H
-         nMnjdFcSvjbOyiNVs3qdwpCPyBFWP1kyr7WuQ6IXwguRHHYi/Fz5gvDu9Hq7M385/uS+
-         dYjThJmWn57JkG7v89AypY0aaPtXqA7SB5o4LBpdXz+LXeJXmwQ1RcjTiObRywG/YNkc
-         Lsc3hJHaQ89cHuEG9kZ05HKyUQX12bQYOZl6+JJUcyfP0FSXVYvBwkP7iZGsHNfuV6X7
-         brBQ==
-Received: by 10.68.241.232 with SMTP id wl8mr6088813pbc.144.1353602282455;
-        Thu, 22 Nov 2012 08:38:02 -0800 (PST)
-Received: from lanh ([115.74.40.93])
-        by mx.google.com with ESMTPS id ku7sm2304372pbc.0.2012.11.22.08.37.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Nov 2012 08:38:01 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 22 Nov 2012 23:38:13 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <CACsJy8BiJRK7N3_HZ2WXpMd1YkDSW00AxuYqiCWJgij+Kq6AiQ@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=fGEgF/nEsDUU9LmG6Iu4LaLGQRSLXWUOqQ2vFNGuQ3c=;
+        b=ajfyA95SaLgumrRIxIeA5MH7KVvASJlvuwxDGYBfm9MWFfmDWKcprb4AXKESDOeb8m
+         9hShtZqKQGljUF9tI2/dS9PqVCoG/9ovfZy0xEZ+3YyjA3mRVXqpUo7XS6g8sk/Vz1Dx
+         0jq1UC5Vda8O3Ea9hoygrqw8ilqan4DtoZ5B2F1PneYgWqiBP1nMFOV8LHckFTJAkiT/
+         /Ib92XDT/DPhRe0Q51l0pi4qfNTd2sGB2pr/3gMDmsUqdQjGEysGeoGE43We1zWA19fX
+         7lPDpNUKKoh7LSgAdtDmwFymNqPqd9TAMMHyGu6FPl6tzQQGKXYO3zC7ZxX/nDu+tBOr
+         owGw==
+Received: by 10.229.234.151 with SMTP id kc23mr21562qcb.41.1353580551590; Thu,
+ 22 Nov 2012 02:35:51 -0800 (PST)
+Received: by 10.49.118.135 with HTTP; Thu, 22 Nov 2012 02:35:51 -0800 (PST)
+In-Reply-To: <50AD27FA.3010006@ramsay1.demon.co.uk>
+X-Google-Sender-Auth: s3haxnvQ91j5EMtyQSi3GyGRzAw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210197>
 
-This round cherry-pick and commit only skip S-o-b if the last one is
-the same while format-patch skips it if the same one appears
-anywhere in S-o-b list. I don't have strong opinion about which way is
-more correct. Though if we decide to change format-patch behavior, the
-series may become a bit different.
+On Wed, Nov 21, 2012 at 7:14 PM, Ramsay Jones
+<ramsay@ramsay1.demon.co.uk> wrote:
+> I noticed that the pu branch has two tests with number t0007, viz:
+>
+>     $ cd t
+>     $ make test-lint-duplicates
+>     duplicate test numbers: t0007
+>     make: *** [test-lint-duplicates] Error 1
+>     $
+>
+> In particular, t/t0007-git-var.sh is added by branch 'jk/send-email-\
+> sender-prompt', while t/t0007-ignores.sh is added by branch 'as/check-ignore'.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
-  t4014: more tests about appending s-o-b lines
-  format-patch: stricter S-o-b detection
-  format-patch: update append_signoff prototype
-  Unify appending signoff in format-patch, commit and sequencer
-
- builtin/commit.c        |  10 ++-
- builtin/log.c           |  13 +---
- log-tree.c              |  66 +++++++++++++---
- log-tree.h              |   4 +
- revision.h              |   2 +-
- sequencer.c             |  65 +---------------
- sequencer.h             |   4 -
- t/t4014-format-patch.sh | 199 ++++++++++++++++++++++++++++++++++++++++=
-++++++++
- t/t7501-commit.sh       |   2 +-
- 9 files changed, 272 insertions(+), 93 deletions(-)
-
---=20
-1.8.0.4.g5d0415a
+Thanks; I can renumber t0007-ignores.sh in the next re-roll.
