@@ -1,103 +1,101 @@
-From: Yichao Yu <yyc1992@gmail.com>
-Subject: Remote hung up during `git fetch`
-Date: Wed, 21 Nov 2012 23:18:34 -0500
-Message-ID: <CAMvDr+R__wWRwm2xNC3-v0T1RVu_rKdjKUJhb8cHwEXvuX9OMQ@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC] Add a new email notification script to "contrib"
+Date: Thu, 22 Nov 2012 08:32:49 +0100
+Message-ID: <50ADD521.8020909@alum.mit.edu>
+References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu> <50092C8C.3000305@alum.mit.edu> <CACBZZX6=e6_qO=wMcxLdUAc6XxYpdiP-9RPRsCXrVC_iuJ11Jg@mail.gmail.com> <509B7E6B.1030407@alum.mit.edu> <CACBZZX5FihEMSyrws-D7GyWvxtpMCPwvaiM18ZqOBaoBcvEjDA@mail.gmail.com> <509BA2E7.4080102@alum.mit.edu> <CACBZZX4gzgTZCk78PYpYHnKdwQ0vScoLz02tuAuUQRXVVXSLVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 00:00:34 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	=?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 00:04:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbfl3-0005wu-Ka
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 00:00:33 +0100
+	id 1Tbfor-0001AU-Hk
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 00:04:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758214Ab2KVXAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 18:00:07 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:60502 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753193Ab2KVXAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 18:00:05 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k11so2625936iea.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 15:00:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=BlxFH5X571txGGMK1IZ9yJYIvZof1WtLslLMw5mYWhE=;
-        b=jG9G37ABWtemHl5FMk7Cqj2hSqEO5MEod1RNI7SiSW+gakzOy8cab8I4n0cXD1xfal
-         zokvsGnqXTeLeJXYINNSQYgfF+KylqBU8795P6cHZoF398VFDnfiToCiSKHdWi34DqOD
-         Fhk/PwR9exQHFQYhG4blvbxLenYoISEDRNWiAevfUOonrJ4j9zBngllliMcCaS057f9B
-         UaroSZSUd71ZSHryQUR4Y9QP13vh9PfJJeLDZgMupZK9BtlAyXXS86vDZAQY7cbUAGgs
-         /U3MdBSEBW1Ml/reeXx+yjvuJczRYX2timadDwZDvXMn7BsEr6ETfwFdKLEf7KZIEXuD
-         bRHg==
-Received: by 10.50.12.165 with SMTP id z5mr1895031igb.17.1353557934382; Wed,
- 21 Nov 2012 20:18:54 -0800 (PST)
-Received: by 10.64.15.165 with HTTP; Wed, 21 Nov 2012 20:18:34 -0800 (PST)
+	id S1752480Ab2KVXEB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2012 18:04:01 -0500
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:63679 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752475Ab2KVXD7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2012 18:03:59 -0500
+X-AuditID: 1207440f-b7fde6d00000095c-0e-50add52580f6
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 33.3F.02396.525DDA05; Thu, 22 Nov 2012 02:32:53 -0500 (EST)
+Received: from [192.168.69.140] (p57A25F2E.dip.t-dialin.net [87.162.95.46])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qAM7Wn2v026772
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 22 Nov 2012 02:32:50 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121028 Thunderbird/16.0.2
+In-Reply-To: <CACBZZX4gzgTZCk78PYpYHnKdwQ0vScoLz02tuAuUQRXVVXSLVg@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFKsWRmVeSWpSXmKPExsUixO6iqKt6dW2AwbMbAhbHn15nsVj77A6T
+	RdeVbiaLht4rzBaXPq9ntWh8UmSx+vEddov3Z/8zO3B47Jx1l91j4pfjrB4XLyl7fN4k53Hg
+	8mO2ANYobpukxJKy4Mz0PH27BO6Mq3d2sRRM46548/UtawPjL44uRg4OCQETiddTJbsYOYFM
+	MYkL99azdTFycQgJXGaUmDzjETuEc5pJ4s+CH2wgVbwC2hLzZy5hArFZBFQlXnxexQJiswno
+	SizqaQaLiwqESazZc4gJol5Q4uTMJ2A1IgLuEl//rmYCGcoscIhJ4tjGFWBFwgLOEivn7GCC
+	2PaJSeL72x/sIAlOgUCJVe1TmEFOZRZQl1g/TwgkzCwgL9G8dTbzBEaBWUh2zEKomoWkagEj
+	8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXRO93MwSvdSU0k2MkPDn38HYtV7mEKMAB6MSDy+z
+	wtoAIdbEsuLK3EOMkhxMSqK81leAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4FxUA5XhTEiur
+	UovyYVLSHCxK4rzqS9T9hATSE0tSs1NTC1KLYLIyHBxKErxVIEMFi1LTUyvSMnNKENJMHJwg
+	w7mkRIpT81JSixJLSzLiQZEaXwyMVZAUD9BeL5B23uKCxFygKETrKUZLjg3r258wctz50QUk
+	2/d1P2EUYsnLz0uVEuf1BGkQAGnIKM2DWwdLgq8YxYG+F+b1BqniASZQuKmvgBYyAS2Md1kN
+	srAkESEl1cC4KunX3nSbtemFQtyX7948orTuZWLI7zU1n4OPsJteL/6yKFGXpcxt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210222>
 
-Hi everyone,
+On 11/08/2012 04:38 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Thu, Nov 8, 2012 at 1:17 PM, Michael Haggerty <mhagger@alum.mit.ed=
+u> wrote:
+>> On 11/08/2012 12:39 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote=
+:
+>>> But in addition to that we have our own custom E-Mail notification
+>>> scripts for:
+>>>
+>>>  * People can subscribe to changes to certain files. I.e. if you
+>>>    modify very_important.c we'll send an E-Mail to a more widely se=
+en
+>>>    review list.
+>>>
+>>>  * Invididuals can also edit a config file to watch individual file=
+s /
+>>>    glob patterns of files, e.g. src/main.c or src/crypto*
+>>
+[...]
+>=20
+> I think just sending the individual patch e-mails to all people who
+> subscribe to paths that got changed in that patch that match their
+> watchlist makes sense.
 
-I want to build packages for snap shoot of different branches from
-different remote git repositories in the same local directory (so that
-I don't need to recompile everything everytime.) and I am using a
-combination of `git clone/checkout/reset/fetch` to do that. However,
-during git-fetch, the remote sometimes stop responding or simply reset
-the connection. This happens occasionally at least for both ssh and
-git protocol (not sure about http/https) on github, bitbucket and also
-kernel.org so I think it is probably not due to a weird behavior of a
-certain host. Does anyone know the reason or is there anything I have
-done wrong? And is there a better way to set the local tree to a
-certain branch at a certain url? THX
+I forgot to mention, but Environment.get_revision_recipients() has all
+the information needed to implement such a policy.  You could override
+this method in your own Environment class to get the behavior that you =
+want.
 
-My git version is ArchLinux package 1.8.0-1. (timezone
-America/New_York in case the time stamp somehow matters)
+> That script *also* supports sending the whole batch of patches pushed
+> in that push to someone watching any file that got modified in one of
+> the patches, in case you also want to get other stuff pushed in pushe=
+s
+> for files you're interested in.
 
-Here is a script that always triggers the issue (at least now) and
-it's output. (No I am not trying to merge git and the kernel... These
-are just random public repos on kernel.org that can trigger the issue.
-Although I am pulling from two repos from different project here, the
-same thing can also happen on other hosts when the two repos are
-actually the same project)
+This is not yet possible without more intrusive code changes.
 
-Yichao Yu
+Michael
 
-------------------------------------------------------------------
-
-#!/bin/bash
-
-repo_name=git
-# remote1='git://github.com/torvalds/linux.git'
-remote1='git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git'
-branch1='master'
-# remote2='git://github.com/git/git.git'
-remote2='git://git.kernel.org/pub/scm/git/git.git'
-branch2='next'
-
-git clone --depth 1 --single-branch --branch "$branch1" "$remote1" "$repo_name"
-cd "$repo_name"
-git fetch -vvv "$remote2" # "$branch2:$branch2"
-
------------------------------------------------
-
-Cloning into 'git'...
-remote: Counting objects: 43215, done.
-remote: Compressing objects: 100% (41422/41422), done.
-remote: Total 43215 (delta 3079), reused 22032 (delta 1247)
-Receiving objects: 100% (43215/43215), 119.06 MiB | 1.60 MiB/s, done.
-Resolving deltas: 100% (3079/3079), done.
-Checking out files: 100% (40905/40905), done.
-fatal: destination path 'git' already exists and is not an empty directory.
-Server supports multi_ack_detailed
-Server supports side-band-64k
-Server supports ofs-delta
-want 2d242fb3fc19fc9ba046accdd9210be8b9913f64 (HEAD)
-have ef6c5be658f6a70c1256fbd18e18ee0dc24c3386
-have db9d8c60266a5010e905829e10cd722519e14777
-done
-fatal: The remote end hung up unexpectedly
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
