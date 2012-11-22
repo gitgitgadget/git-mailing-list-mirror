@@ -1,77 +1,96 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] diff: Fixes shortstat number of files
-Date: Wed, 21 Nov 2012 22:26:49 +0100
-Message-ID: <1353533210-29684-1-git-send-email-apelisse@gmail.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:03:22 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 08/15] remote-testgit: cleanup tests
+Date: Thu, 22 Nov 2012 01:55:14 +0100
+Message-ID: <CAMP44s2T_qYeEMD=yTzTD07kL6km+W0XFOiHRAh5KtKi4CqTMw@mail.gmail.com>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
+	<1352642392-28387-9-git-send-email-felipe.contreras@gmail.com>
+	<7vzk2a22g8.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:05:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbc3Q-0004A7-QP
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:03:17 +0100
+	id 1Tbc5C-00067K-H2
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:05:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756227Ab2KVTCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 14:02:48 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:47130 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753908Ab2KVTCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 14:02:47 -0500
-Received: by mail-wi0-f178.google.com with SMTP id hm6so1021168wib.1
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:02:46 -0800 (PST)
+	id S1754349Ab2KVTEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 14:04:37 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:56119 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754223Ab2KVTEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 14:04:36 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so8300400oag.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:04:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=ljh82yfLj11aZUnx421yusNej7QOndBWrYtwMpyC3JA=;
-        b=o09pu+RxZb6FFgz6xuXRQvfOJb5EeE9XDz5FBP0NSt8Eq5MJB5r8U244uRdKNe/StL
-         pvQ4iK75HIX3zPLbwyYJE0HEwtvJZhiOUjAWou4vYH/vduGtF34l8vf3g9/luo1Yr+8X
-         OQmot+6+SbLRK7lUoMMZwbi/H/nXc76vD2rnqoUNHfSz3zcjFKzs2gdb/7CxMTag2egh
-         tUPaYl5SO1VJPGasaftSGwWBI4S8YdKBWeMiyiNZkyypWYdRzyPnMYFTvPg0QMT8M5Fo
-         WnA9nVJynfSlkPikOKtuNE8RMjlIQb21iGH0hv8Zn0nFLMwXcLYV0Tzmh3nbL8LJPeQV
-         XVlQ==
-Received: by 10.180.87.40 with SMTP id u8mr1379029wiz.3.1353533224510;
-        Wed, 21 Nov 2012 13:27:04 -0800 (PST)
-Received: from localhost.localdomain (vau06-3-82-247-80-218.fbx.proxad.net. [82.247.80.218])
-        by mx.google.com with ESMTPS id d9sm1474296wiw.0.2012.11.21.13.27.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 21 Nov 2012 13:27:03 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.5
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kLoD9FoUekILokxJZmzd4E+b4A1lYC8wugwaSqh/QVc=;
+        b=iMxXXrH7IZkNsPhy6DzcpLwy9zef4zXiEuiLm+tTknUsQBnV3WZ5ofrU/YNLL+fEnV
+         KsnDw5VfB9x7luiw0MIYDEtK0hu4vkvOHsnE3MBAmYE9yAyzsfli1aMbHms8d5m0OTrb
+         cj/1v9dFIsnCKXSo4wJRHBTj2s6ReNvaRchZMcVGR3Wplh78VStZNgGlOKwcOeBpFCOR
+         Oxbd+Oo7pipcM1eOdjY2KYkjrQNZ94zQNTD2tNtPf9rf+95JlXh6mwewqJFPQYqC9nIC
+         ohikcfWDWgIAOzex5lHNDPc5+EWZ6ZBUax7uN8io8Qi8GDHQEPmaQTu20e5ONiPDW4KG
+         PNQw==
+Received: by 10.60.9.5 with SMTP id v5mr17569367oea.81.1353545714929; Wed, 21
+ Nov 2012 16:55:14 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Wed, 21 Nov 2012 16:55:14 -0800 (PST)
+In-Reply-To: <7vzk2a22g8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210189>
 
-There is a discrepancy between the last line of `git diff --stat`
-and `git diff --shortstat` in case of a merge.
-The unmerged files are actually counted twice, thus doubling the
-value of "file changed".
+On Wed, Nov 21, 2012 at 7:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> We don't need a bare 'server' and an intermediary 'public'. The repos
+>> can talk to each other directly; that's what we want to exercise.
+>
+> The previous patch to remove the test (the one that covered a case
+> where a bug was fixed in an older git-remote-testpy and tried to
+> catch the bug when it resurfaced) made sense even with its
+> ultra-short justification "irrelevant".
+>
+> But I am not sure if this one is so cut-and-dried.  The repos can
+> talk to each other directly, but at the same time the tests were
+> exercising interactions between bare and non-bare repositories,
+> weren't they?  Talking to each other may be one of the things we
+> want to exercise, but that does not necessarily be the only thing.
+>
+> If it were explained like this (note that I am *guessing* what you
+> meant to achieve by this patch, which may be wrong, in which case
+> the log message needs further clarification):
+>
+>         Going through an intermediary 'public' may have exercised
+>         interactions among combinations of bare and non-bare
+>         repositories a bit more, but that is not an issue specific
+>         to the remote-helper transfer that we want to be testing in
+>         this script.  Simplify the tests to let two repositories
+>         talk directly with each other.
 
-In fact, while stat decrements number of files when seeing an unmerged
-file, shortstat doesn't.
+Right. I don't think bare vs. non-bare has anything to do with it; the
+intermediary repository was there to have 3 types of repos interacting
+with each other local testpy, remote testpy, local git. But this
+doesn't exercise anything from transport helper.
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- diff.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Cheers.
 
-diff --git a/diff.c b/diff.c
-index e89a201..5c6bcbd 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1704,9 +1704,8 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
- 		int added = data->files[i]->added;
- 		int deleted= data->files[i]->deleted;
- 
--		if (data->files[i]->is_unmerged)
--			continue;
--		if (!data->files[i]->is_renamed && (added + deleted == 0)) {
-+		if (data->files[i]->is_unmerged ||
-+		  (!data->files[i]->is_renamed && (added + deleted == 0))) {
- 			total_files--;
- 		} else if (!data->files[i]->is_binary) { /* don't count bytes */
- 			adds += added;
 -- 
-1.7.9.5
+Felipe Contreras
