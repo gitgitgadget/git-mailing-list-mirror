@@ -1,165 +1,103 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: [PATCH 3/5] git-send-email: remove invalid addresses earlier
-Date: Thu, 22 Nov 2012 19:12:10 +0100
-Message-ID: <1353607932-10436-3-git-send-email-krzysiek@podlesie.net>
-References: <7v8v9vrgc9.fsf@alter.siamese.dyndns.org>
- <1353607932-10436-1-git-send-email-krzysiek@podlesie.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Felipe Balbi <balbi@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ti.com>,
-	Krzysztof Mazur <krzysiek@podlesie.net>
+From: Yichao Yu <yyc1992@gmail.com>
+Subject: Remote hung up during `git fetch`
+Date: Wed, 21 Nov 2012 23:18:34 -0500
+Message-ID: <CAMvDr+R__wWRwm2xNC3-v0T1RVu_rKdjKUJhb8cHwEXvuX9OMQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 00:00:10 2012
+X-From: git-owner@vger.kernel.org Fri Nov 23 00:00:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbfkf-0005aO-Iy
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 00:00:09 +0100
+	id 1Tbfl3-0005wu-Ka
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 00:00:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248Ab2KVWu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 17:50:27 -0500
-Received: from [93.179.225.50] ([93.179.225.50]:46328 "EHLO shrek.podlesie.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752537Ab2KVScP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 13:32:15 -0500
-Received: from geronimo.kostuchna.emnet (localhost [127.0.0.1])
-	by shrek.podlesie.net (Postfix) with ESMTP id 262705EF;
-	Thu, 22 Nov 2012 19:12:55 +0100 (CET)
-X-Mailer: git-send-email 1.8.0.411.g71a7da8
-In-Reply-To: <1353607932-10436-1-git-send-email-krzysiek@podlesie.net>
+	id S1758214Ab2KVXAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 18:00:07 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:60502 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753193Ab2KVXAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 18:00:05 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k11so2625936iea.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 15:00:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=BlxFH5X571txGGMK1IZ9yJYIvZof1WtLslLMw5mYWhE=;
+        b=jG9G37ABWtemHl5FMk7Cqj2hSqEO5MEod1RNI7SiSW+gakzOy8cab8I4n0cXD1xfal
+         zokvsGnqXTeLeJXYINNSQYgfF+KylqBU8795P6cHZoF398VFDnfiToCiSKHdWi34DqOD
+         Fhk/PwR9exQHFQYhG4blvbxLenYoISEDRNWiAevfUOonrJ4j9zBngllliMcCaS057f9B
+         UaroSZSUd71ZSHryQUR4Y9QP13vh9PfJJeLDZgMupZK9BtlAyXXS86vDZAQY7cbUAGgs
+         /U3MdBSEBW1Ml/reeXx+yjvuJczRYX2timadDwZDvXMn7BsEr6ETfwFdKLEf7KZIEXuD
+         bRHg==
+Received: by 10.50.12.165 with SMTP id z5mr1895031igb.17.1353557934382; Wed,
+ 21 Nov 2012 20:18:54 -0800 (PST)
+Received: by 10.64.15.165 with HTTP; Wed, 21 Nov 2012 20:18:34 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210221>
 
-Some addresses are passed twice to unique_email_list() and invalid addresses
-may be reported twice per send_message. Now we warn about them earlier
-and we also remove invalid addresses.
+Hi everyone,
 
-This also removes using of undefined values for string comparison
-for invalid addresses in cc list processing.
+I want to build packages for snap shoot of different branches from
+different remote git repositories in the same local directory (so that
+I don't need to recompile everything everytime.) and I am using a
+combination of `git clone/checkout/reset/fetch` to do that. However,
+during git-fetch, the remote sometimes stop responding or simply reset
+the connection. This happens occasionally at least for both ssh and
+git protocol (not sure about http/https) on github, bitbucket and also
+kernel.org so I think it is probably not due to a weird behavior of a
+certain host. Does anyone know the reason or is there anything I have
+done wrong? And is there a better way to set the local tree to a
+certain branch at a certain url? THX
 
-Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
----
- git-send-email.perl | 52 +++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 39 insertions(+), 13 deletions(-)
+My git version is ArchLinux package 1.8.0-1. (timezone
+America/New_York in case the time stamp somehow matters)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 356f99d..5056fdc 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -786,9 +786,11 @@ sub expand_one_alias {
- }
- 
- @initial_to = expand_aliases(@initial_to);
--@initial_to = (map { sanitize_address($_) } @initial_to);
-+@initial_to = validate_address_list(sanitize_address_list(@initial_to));
- @initial_cc = expand_aliases(@initial_cc);
-+@initial_cc = validate_address_list(sanitize_address_list(@initial_cc));
- @bcclist = expand_aliases(@bcclist);
-+@bcclist = validate_address_list(sanitize_address_list(@bcclist));
- 
- if ($thread && !defined $initial_reply_to && $prompting) {
- 	$initial_reply_to = ask(
-@@ -839,6 +841,28 @@ sub extract_valid_address {
- 	return undef;
- }
- 
-+sub extract_valid_address_or_die {
-+	my $address = shift;
-+	$address = extract_valid_address($address);
-+	die "error: unable to extract a valid address from: $address\n"
-+		if !$address;
-+	return $address;
-+}
-+
-+sub validate_address {
-+	my $address = shift;
-+	if (!extract_valid_address($address)) {
-+		print STDERR "W: unable to extract a valid address from: $address\n";
-+		return undef;
-+	}
-+	return $address;
-+}
-+
-+sub validate_address_list {
-+	return (grep { defined $_ }
-+		map { validate_address($_) } @_);
-+}
-+
- # Usually don't need to change anything below here.
- 
- # we make a "fake" message id by taking the current number
-@@ -955,6 +979,10 @@ sub sanitize_address {
- 
- }
- 
-+sub sanitize_address_list {
-+	return (map { sanitize_address($_) } @_);
-+}
-+
- # Returns the local Fully Qualified Domain Name (FQDN) if available.
- #
- # Tightly configured MTAa require that a caller sends a real DNS
-@@ -1017,14 +1045,13 @@ sub maildomain {
- 
- sub send_message {
- 	my @recipients = unique_email_list(@to);
--	@cc = (grep { my $cc = extract_valid_address($_);
-+	@cc = (grep { my $cc = extract_valid_address_or_die($_);
- 		      not grep { $cc eq $_ || $_ =~ /<\Q${cc}\E>$/ } @recipients
- 		    }
--	       map { sanitize_address($_) }
- 	       @cc);
- 	my $to = join (",\n\t", @recipients);
- 	@recipients = unique_email_list(@recipients,@cc,@bcclist);
--	@recipients = (map { extract_valid_address($_) } @recipients);
-+	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
- 	my $date = format_2822_time($time++);
- 	my $gitversion = '@@GIT_VERSION@@';
- 	if ($gitversion =~ m/..GIT_VERSION../) {
-@@ -1267,7 +1294,7 @@ foreach my $t (@files) {
- 				foreach my $addr (parse_address_line($1)) {
- 					printf("(mbox) Adding to: %s from line '%s'\n",
- 						$addr, $_) unless $quiet;
--					push @to, sanitize_address($addr);
-+					push @to, $addr;
- 				}
- 			}
- 			elsif (/^Cc:\s+(.*)$/) {
-@@ -1376,6 +1403,9 @@ foreach my $t (@files) {
- 		($confirm =~ /^(?:auto|compose)$/ && $compose && $message_num == 1));
- 	$needs_confirm = "inform" if ($needs_confirm && $confirm_unconfigured && @cc);
- 
-+	@to = validate_address_list(sanitize_address_list(@to));
-+	@cc = validate_address_list(sanitize_address_list(@cc));
-+
- 	@to = (@initial_to, @to);
- 	@cc = (@initial_cc, @cc);
- 
-@@ -1431,14 +1461,10 @@ sub unique_email_list {
- 	my @emails;
- 
- 	foreach my $entry (@_) {
--		if (my $clean = extract_valid_address($entry)) {
--			$seen{$clean} ||= 0;
--			next if $seen{$clean}++;
--			push @emails, $entry;
--		} else {
--			print STDERR "W: unable to extract a valid address",
--					" from: $entry\n";
--		}
-+		my $clean = extract_valid_address_or_die($entry))
-+		$seen{$clean} ||= 0;
-+		next if $seen{$clean}++;
-+		push @emails, $entry;
- 	}
- 	return @emails;
- }
--- 
-1.8.0.393.gcc9701d
+Here is a script that always triggers the issue (at least now) and
+it's output. (No I am not trying to merge git and the kernel... These
+are just random public repos on kernel.org that can trigger the issue.
+Although I am pulling from two repos from different project here, the
+same thing can also happen on other hosts when the two repos are
+actually the same project)
+
+Yichao Yu
+
+------------------------------------------------------------------
+
+#!/bin/bash
+
+repo_name=git
+# remote1='git://github.com/torvalds/linux.git'
+remote1='git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git'
+branch1='master'
+# remote2='git://github.com/git/git.git'
+remote2='git://git.kernel.org/pub/scm/git/git.git'
+branch2='next'
+
+git clone --depth 1 --single-branch --branch "$branch1" "$remote1" "$repo_name"
+cd "$repo_name"
+git fetch -vvv "$remote2" # "$branch2:$branch2"
+
+-----------------------------------------------
+
+Cloning into 'git'...
+remote: Counting objects: 43215, done.
+remote: Compressing objects: 100% (41422/41422), done.
+remote: Total 43215 (delta 3079), reused 22032 (delta 1247)
+Receiving objects: 100% (43215/43215), 119.06 MiB | 1.60 MiB/s, done.
+Resolving deltas: 100% (3079/3079), done.
+Checking out files: 100% (40905/40905), done.
+fatal: destination path 'git' already exists and is not an empty directory.
+Server supports multi_ack_detailed
+Server supports side-band-64k
+Server supports ofs-delta
+want 2d242fb3fc19fc9ba046accdd9210be8b9913f64 (HEAD)
+have ef6c5be658f6a70c1256fbd18e18ee0dc24c3386
+have db9d8c60266a5010e905829e10cd722519e14777
+done
+fatal: The remote end hung up unexpectedly
