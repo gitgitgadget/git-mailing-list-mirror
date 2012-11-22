@@ -1,192 +1,110 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 2/4] format-patch: stricter S-o-b detection
-Date: Thu, 22 Nov 2012 23:38:07 +0700
-Message-ID: <1353602289-9418-3-git-send-email-pclouds@gmail.com>
-References: <CACsJy8BiJRK7N3_HZ2WXpMd1YkDSW00AxuYqiCWJgij+Kq6AiQ@mail.gmail.com>
- <1353602289-9418-1-git-send-email-pclouds@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
+Date: Thu, 22 Nov 2012 01:38:57 +0100
+Message-ID: <CAMP44s1tkAZPza7skVza-qm5aQMur7CEbXZdE=RYYN2ZV2gwGw@mail.gmail.com>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
+	<1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com>
+	<7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
+	<20121121041735.GE4634@elie.Belkin>
+	<7vfw43pmp7.fsf@alter.siamese.dyndns.org>
+	<0F47AA24-F5B6-4197-8D74-6DD32E253856@quendi.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 8BIT
 Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:40:03 2012
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:40:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbcd0-0008Ej-W6
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:40:03 +0100
+	id 1TbcdP-0000CR-UR
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:40:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756978Ab2KVTbr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2012 14:31:47 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33774 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755534Ab2KVTbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 14:31:45 -0500
-Received: by mail-pa0-f46.google.com with SMTP id bh2so3059016pad.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:31:44 -0800 (PST)
+	id S1756549Ab2KVTkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 14:40:10 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:43646 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753236Ab2KVTkI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2012 14:40:08 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so8325126oag.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:40:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=l3OSg3nbOTX1htkIYWC6LFi9+gPAIsTkaKbj0Hx0AVI=;
-        b=F1yEKM81NTdMr6/J+Bzw9uzCu1va41UVX/5YnVpP+QUsycnW0Pee9kkrIxGZfsqn4u
-         1Ec/B3IChQHUFyVepqvkSb3JfY0l5JysaZiZVjN4PaAWDg/nLbB038T2zvVqEnkG9w3V
-         C57rCYkPUkLgR50/UxIKuul0/IrISpGw7l59vyFQIS0gxuoU3pyGtkfLfynwQY1sAF/d
-         Ojh/P+vf4w05O1ILNWrYMaBpGZ4lQATfM+Rt8wDa+VknBFZWO3PFpMwSMMWYiSndyUmX
-         1/HsJx2xm05zh4gGBTEzcLaQhnyI2CWYRm7dGi7bNYjOFnCToTbx1I/vbKy1LgVxMCOE
-         R0nw==
-Received: by 10.69.1.9 with SMTP id bc9mr6302985pbd.61.1353602294304;
-        Thu, 22 Nov 2012 08:38:14 -0800 (PST)
-Received: from lanh ([115.74.40.93])
-        by mx.google.com with ESMTPS id o5sm2142183paz.32.2012.11.22.08.38.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Nov 2012 08:38:13 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 22 Nov 2012 23:38:26 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1353602289-9418-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=DB0NT5PkDZZtOG+0B+hidkXpUK4SKNTq2zuqHu2OsvI=;
+        b=sIJutymvseLa4xq/c7nk9NJ3S1fo3DGwOUPAqoiUUUx6Rxp/aTN8Xc69nsXugR678F
+         iN55w8IbbAJGSU/4e9O+WdKv9spARSxFCNoWexoFnl4ks/LBEpuoe6wV4nA07yYly4vj
+         NNy7vIxF2I4/57XFzvgXLrs0ij2eaogFYbM/c9cYYB5RCPib2x5nEYB5VklIAzQf7CQC
+         QShnwNsGGLiamk0sBY4Oqw1Xu04lzUWFocP3SbIoHoUPER2V6h6BIYpQ/lHtsEldyi+0
+         p0G0kezj0K7Lj+phGYPtaa65kwkS/QdeQs6P9FIAPJKFvpkhBzKl+o/Tr+WrRkzM0YZl
+         RcZg==
+Received: by 10.182.64.101 with SMTP id n5mr17592673obs.11.1353544737307; Wed,
+ 21 Nov 2012 16:38:57 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Wed, 21 Nov 2012 16:38:57 -0800 (PST)
+In-Reply-To: <0F47AA24-F5B6-4197-8D74-6DD32E253856@quendi.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210199>
 
-S-o-b in the middle of a sentence, at the beginning of the sentence
-but it is just because of text wrapping, or a full paragraph of valid
-S-o-b in the middle of the message. All these are not S-o-b, but
-detected as is. Fix them.
+On Wed, Nov 21, 2012 at 11:30 PM, Max Horn <max@quendi.de> wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- log-tree.c              | 37 +++++++++++++++++++++++++++++++--
- t/t4014-format-patch.sh | 54 +++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 89 insertions(+), 2 deletions(-)
+> 2) Some are interfaces to foreign systems (bzr, hg, mediawiki, ...). They cannot use sha1s and must use marks (at least that is how I understand felipe's explanation). These tools use import combined with either export, or push. Examples:
+>
+> - git-remote-mediawiki: import, push, refspec
+>     (its capabilities command also prints "list", but that seems to be a bug?)
 
-diff --git a/log-tree.c b/log-tree.c
-index c894930..aff7c0a 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -260,14 +260,47 @@ static void append_signoff(struct strbuf *sb, con=
-st char *signoff)
- 	int has_signoff =3D 0;
- 	char *cp;
-=20
--	cp =3D sb->buf;
-+	/*
-+	 * Only search in the last paragrah, don't be fooled by a
-+	 * paragraph full of valid S-o-b in the middle.
-+	 */
-+	cp =3D sb->buf + sb->len - 1;
-+	while (cp > sb->buf) {
-+		if (cp[0] =3D=3D '\n' && cp[1] =3D=3D '\n') {
-+			cp +=3D 2;
-+			break;
-+		}
-+		cp--;
-+	}
-=20
- 	/* First see if we already have the sign-off by the signer */
- 	while ((cp =3D strstr(cp, signed_off_by))) {
-+		const char *s =3D cp;
-+		cp +=3D strlen(signed_off_by);
-+
-+		if (!has_signoff && s > sb->buf) {
-+			/*
-+			 * S-o-b in the middle of a sentence is not
-+			 * really S-o-b
-+			 */
-+			if (s[-1] !=3D '\n')
-+				continue;
-+
-+			if (s - 1 > sb->buf && s[-2] =3D=3D '\n')
-+				; /* the first S-o-b */
-+			else if (!detect_any_signoff(sb->buf, s - sb->buf))
-+				/*
-+				 * The previous line looks like an
-+				 * S-o-b. There's still no guarantee
-+				 * that it's an actual S-o-b. For that
-+				 * we need to look back until we find
-+				 * a blank line, which is too costly.
-+				 */
-+				continue;
-+		}
-=20
- 		has_signoff =3D 1;
-=20
--		cp +=3D strlen(signed_off_by);
- 		if (cp + signoff_len >=3D sb->buf + sb->len)
- 			break;
- 		if (strncmp(cp, signoff, signoff_len))
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index c8d5d29..d0b3c85 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -989,6 +989,60 @@ EOF
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'signoff: not really a signoff' '
-+	append_signoff <<\EOF >actual &&
-+subject
-+
-+I want to mention about Signed-off-by: here.
-+EOF
-+	cat >expected <<\EOF &&
-+4:Subject: [PATCH] subject
-+8:
-+9:I want to mention about Signed-off-by: here.
-+10:
-+11:Signed-off-by: C O Mitter <committer@example.com>
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'signoff: not really a signoff (2)' '
-+	append_signoff <<\EOF >actual &&
-+subject
-+
-+My unfortunate
-+Signed-off-by: example happens to be wrapped here.
-+EOF
-+	cat >expected <<\EOF &&
-+4:Subject: [PATCH] subject
-+8:
-+10:Signed-off-by: example happens to be wrapped here.
-+11:
-+12:Signed-off-by: C O Mitter <committer@example.com>
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'signoff: valid S-o-b paragraph in the middle' '
-+	append_signoff <<\EOF >actual &&
-+subject
-+
-+Signed-off-by: my@house
-+Signed-off-by: your@house
-+
-+A lot of houses.
-+EOF
-+	cat >expected <<\EOF &&
-+4:Subject: [PATCH] subject
-+8:
-+9:Signed-off-by: my@house
-+10:Signed-off-by: your@house
-+11:
-+13:
-+14:Signed-off-by: C O Mitter <committer@example.com>
-+EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'signoff: the same signoff at the end' '
- 	append_signoff <<\EOF >actual &&
- subject
---=20
-1.8.0.4.g5d0415a
+I don't think remote mediawiki uses marks. They are strictly not
+needed by 'import' because the remote helper has full control over
+this operation. For example, in my remote helpers, I store the
+previous tip of the branches, so when git ask for 'import
+refs/heads/master', I only import the new commits. I named this file
+'marks' anyway, but they are not marks for fast-import.
+
+> - git-remote-hg: import, export, refspec, import-marks, export-marks
+>     (both the msysgit one and felipe's
+> - git-remote-bzr: import, push
+>     (the one from https://github.com/lelutin/git-remote-bzr)
+> - git-remote-bzr (felipe's): import, export, refspec, *import-marks, *export-marks
+>     (but why the * ?)
+
+AFAIK both of my remote helpers have * in them, they are to denote
+they are required.
+
+> Does that sound about right? If so, can somebody give me a hint when a type 2 helper would use "export" and when "push"?
+
+I don't know when would be appropriate to use push, there's another
+git-remote-bzr that uses the bzr-git infrastructure, and uses push.
+
+I picked export/import because I think they are the easiest to
+implement to get all the features, and should be efficient.
+
+> And while I am at it: git-remote-helpers.txt does not mention the "export", "import-marks" and "export-marks" capabilities. Could somebody who knows what they do look into fixing that? Overall, that doc helped me a bit, but it is more a reference to somebody who already understands in detail how remote helpers work, and who just wants to look up some specific detail :-(. Some hints on when to implement which capabilities might be useful (similar to the "Tips and Tricks" section in git-fast-import.txt).
+
+I've had problems finding out the right information, but I hope the
+git-remote-testgit I wrote in bash in less than 90 lines of code
+should give a pretty good idea of how the whole thing works.
+
+> As it is, felipe's recent explanation on why he thinks marks are essential for remote-helpers (I assume he was only referring to type 2 helpers, though) was one of the most enlightening texts I read on the whole subject so far (then again, I am fairly new to this list, so I may have missed lots of past goodness). Anyway, it would be nice if this could be augmented by "somebody from the other camp" ;).
+
+Wouldn't that be nice?
+
+Cheers.
+
+-- 
+Felipe Contreras
