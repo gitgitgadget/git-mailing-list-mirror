@@ -1,69 +1,111 @@
 From: Marc Khouzam <marc.khouzam@gmail.com>
-Subject: Re: [PATCH] Fix bash completion when `egrep` is aliased to `egrep --color=always`
-Date: Thu, 22 Nov 2012 14:55:21 -0500
-Message-ID: <CAFj1UpG6H3bpoa7xbqpH6Hyb6pwqE_CCgP6iT36D-ELvtVi4wA@mail.gmail.com>
-References: <20121122154120.GA16835@redhat.com>
+Subject: [PATCH] Completion script must sort before using uniq
+Date: Thu, 22 Nov 2012 15:02:20 -0500
+Message-ID: <CAFj1UpEU+JVpN_BSUwCA91e8xu5JMtqcCEH5S6s80Kzx3qbXfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Adam Tkac <atkac@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:55:50 2012
+To: git@vger.kernel.org,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 21:02:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbcsD-0007aK-P3
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:55:46 +0100
+	id 1Tbcyw-0006Fx-1I
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 21:02:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965275Ab2KVTz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 14:55:27 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:38063 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965124Ab2KVTzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 14:55:22 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so6023824iay.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:55:21 -0800 (PST)
+	id S965192Ab2KVUCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 15:02:24 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:58299 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756710Ab2KVUCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 15:02:21 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k11so2460559iea.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 12:02:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9Vz093r+U/H03bIQXEIRdPHH5/6kFmnDk+q9DpGZNjg=;
-        b=V/3ttJzclFd9zWdXYWC2W7jdD2edpWEsYGythXSNxuLemZ+W4rui1mI82FteBN3Ask
-         1FoFllwnNtqgTjxLzutglYvY7jcib2KrLk51WctIHuEGlDoKgFr4ZXl9jXotY//uH9iq
-         n44TvL95S0GJ7FDjJ/BKbE9NnIcAnt/YXtTyhZ5xCfJmsgxhURCsIhPV9TOKqI0cWK7Z
-         UE4wChsOhRSVvnqEy7F9TjjXPRoPZRvIe25Indk70KvEL3TAnpilVh02QycPEpzqw+Ws
-         W1BCmd43Pt1m7ydsZRL67mv5JCtGg/PSrY9tJKzungqPPsOYET358auTyHZ7WNbQ17lS
-         QpdQ==
-Received: by 10.50.36.200 with SMTP id s8mr1580687igj.23.1353614121771; Thu,
- 22 Nov 2012 11:55:21 -0800 (PST)
-Received: by 10.64.132.39 with HTTP; Thu, 22 Nov 2012 11:55:21 -0800 (PST)
-In-Reply-To: <20121122154120.GA16835@redhat.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=9L9jPW+SmoBDW6JvmCFiijccjbzcxYqAGE6PDVoxiAA=;
+        b=mbSn5aUgDBJz6JeG/mVie904mMCDV47mdbEWHzWdDUFCWgsjikPaindjfAQvnHZ+uR
+         ERAs+jEnLY0iu+LHCp4d0quaufJNnJxAn7Q0jOQBFguzCM1yYotAy+1b3zxoGGRv1ENJ
+         jQC9YaoOB//SJK2akCFgnhcTsl9Ka5rMirXTPLFntTQAxQmJcAV5tVJ7zCCFJaNwgo/z
+         d+o2RIZLF9eDCLleE+ygJGk3lK8vH2Iqr2LpSzW2HdwA0YSnPf04IaXoEC7k3itfMeat
+         MbaxkGFbO+YxBHPZQn0Air5vXE+A0G9/ymu62mTONV6Wxj8otTYcVbpZZ9WG/88LJf8Y
+         cNsw==
+Received: by 10.50.182.230 with SMTP id eh6mr1535853igc.39.1353614540961; Thu,
+ 22 Nov 2012 12:02:20 -0800 (PST)
+Received: by 10.64.132.39 with HTTP; Thu, 22 Nov 2012 12:02:20 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210206>
 
-On Thu, Nov 22, 2012 at 10:41 AM, Adam Tkac <atkac@redhat.com> wrote:
-> Hello all,
->
-> attached patch fixes bash completion when `egrep` is aliased to `egrep --color=always`.
+The uniq program only works with sorted input.  The man page states
+"uniq prints the unique lines in a sorted file".
 
-To avoid any aliases, it may be better to use
-\egrep
+When __git_refs use the guess heuristic employed by checkout for
+tracking branches it wants to consider remote branches but only if
+the branch name is unique.  To do that, it calls 'uniq -u'.  However
+the input given to 'uniq -u' is not sorted.
 
-This could be worthwhile for all utilities used by the script.
+For example if all available branches are:
+  master
+  remotes/GitHub/maint
+  remotes/GitHub/master
+  remotes/origin/maint
+  remotes/origin/master
 
-Just a thought.
+When performing completion on 'git checkout ma' the choices given are
+  maint
+  master
+but when performing completion on 'git checkout mai', no choices
+appear, which is obviously contradictory.
+
+The reason is that, when dealing with 'git checkout ma',
+"__git_refs '' 1" will find the following list:
+  master
+  maint
+  master
+  maint
+  master
+which, when passed to 'uniq -u' will remain the same.
+But when dealing with 'git checkout mai', the list will be:
+  maint
+  maint
+which happens to be sorted and will be emptied by 'uniq -u'.
+
+The solution is to first call 'sort' and then 'uniq -u'.
+
+Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
+---
+
+Sorry if you get this twice, my first try never showed up on the list.
+
+I ran into this by fluke when testing the tcsh completion.
+
+Thanks for considering the fix.
 
 Marc
 
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
-> Comments are welcomed.
->
-> Regards, Adam
->
-> --
-> Adam Tkac, Red Hat, Inc.
+diff --git a/contrib/completion/git-completion.bash
+b/contrib/completion/git-completion.bash
+index bc0657a..85ae419 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -321,7 +321,7 @@ __git_refs ()
+                                if [[ "$ref" == "$cur"* ]]; then
+                                        echo "$ref"
+                                fi
+-                       done | uniq -u
++                       done | sort | uniq -u
+                fi
+                return
+        fi
+--
+1.8.0.1.g9fe2839
