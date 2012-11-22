@@ -1,86 +1,82 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Re: Auto-repo-repair
-Date: Fri, 23 Nov 2012 00:16:34 +0100 (CET)
-Message-ID: <cd8ee2cf-2d4a-4d0c-931f-61de4c7f6348@zcs>
-References: <CAM9Z-n=tAcpQHTU7WHhzZkoVL_ar9vcH8G1tKd-026+djAiJ4A@mail.gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Remote hung up during `git fetch`
+Date: Fri, 23 Nov 2012 10:21:35 +1100
+Message-ID: <CAH5451mDb_rxT21sfQt3z15vQ7nKrp5NxwwbtpZHF-2WCOo1-w@mail.gmail.com>
+References: <CAMvDr+R__wWRwm2xNC3-v0T1RVu_rKdjKUJhb8cHwEXvuX9OMQ@mail.gmail.com>
+ <CAMvDr+QuMpfdTdkOMOiYyEnHvQjia2cDCt3sx2rQwwLcJiCVmw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 00:16:55 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Yichao Yu <yyc1992@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 00:22:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbg0p-0004g6-71
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 00:16:51 +0100
+	id 1Tbg61-0001YW-0J
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 00:22:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317Ab2KVXQg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2012 18:16:36 -0500
-Received: from zcs.vnc.biz ([83.144.240.118]:45080 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790Ab2KVXQf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2012 18:16:35 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 94F176228CE;
-	Fri, 23 Nov 2012 00:16:34 +0100 (CET)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rCQLEno2KSlE; Fri, 23 Nov 2012 00:16:34 +0100 (CET)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 2603A62225E;
-	Fri, 23 Nov 2012 00:16:34 +0100 (CET)
-In-Reply-To: <CAM9Z-n=tAcpQHTU7WHhzZkoVL_ar9vcH8G1tKd-026+djAiJ4A@mail.gmail.com>
-X-Originating-IP: [91.43.169.28]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC20 (Linux)/7.1.3_GA_3346)
+	id S1754011Ab2KVXV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 18:21:58 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:56318 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993Ab2KVXV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 18:21:57 -0500
+Received: by mail-qa0-f53.google.com with SMTP id k31so1230330qat.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 15:21:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=KuoOemY8o6SJtXaJeGq+rgPwWwStptwsX5eX9XJBHxQ=;
+        b=YIzD9A2YM9FnXZMAtNHSsuq/biy51cJh2DNOGyO7ezq0WDpCjxmXH5VBAXjNOWP4/u
+         SdDafu8BL1fAuchcI/J5EG+hi1dyxH+6tT4VckH98AyvxssvYXdZz+JgEQCHigfAC+rs
+         NgFHKFpqVBwBnKJN1BPBdqyBvlSJ+GnvjhDOTRsQqk2X7oN6XS+TrLxCM9yLNhA+nn0P
+         EcG36zUYcqlPFK+2M9bKLoJO2A1s4OxwdDJCAPV87FbBnmP0Z5AVA2F18QB1sBJV1vwc
+         iBPVhgjj8hXbNDDubC4owISwBDGnhzYG0Os2aEKIgBdPrZlk2LzzPIzxzZOmxZ5I+Alq
+         QW0Q==
+Received: by 10.229.111.159 with SMTP id s31mr450641qcp.67.1353626516282; Thu,
+ 22 Nov 2012 15:21:56 -0800 (PST)
+Received: by 10.49.119.65 with HTTP; Thu, 22 Nov 2012 15:21:35 -0800 (PST)
+In-Reply-To: <CAMvDr+QuMpfdTdkOMOiYyEnHvQjia2cDCt3sx2rQwwLcJiCVmw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210225>
 
-Hi,
+On 23 November 2012 05:39, Yichao Yu <yyc1992@gmail.com> wrote:
+> Hi everyone,
+>
+> I sent this email yesterday to the git mailing list but I cannot find
+> it in any archive so I decide to send it again.
+> Does anyone know what has happened to the mailing list? I haven't
+> receive any email from several kernel related busy mailing lists for
+> several hours....
+>
+> Yichao Yu
 
-> I still think that it would make the most sense to do the following
-> (if you insist on some sort of automated repair):
-> (1) Fetch a "good" clone (or clones) into a temporary directory;
-> (2) Cannibalize the objects from it (them);
-> (3) Re-run git fsck and check for still-missing / unreachable items;
-> (4) IF THE RESULT OF (3) IS ACCEPTABLE, run git gc to clean up the
-> mess, discard / "merge" duplicate objects, and fix up the packfiles.
->=20
-> It is step (4) that requires the most user interaction. I could see
-> building up a shell script that does all but (4) nearly
-> automatically.
-> None of this requires modifying Git itself.
+Your original message just came through to me (I'm on GMail) so
+obviously there was a delay somewhere in routing your message/s. Looks
+like it was delayed by around 18 hours somewhere...
+Looking at your delayed message more closely I can see that there was
+a big delay just before vger.kernel.org got it.
 
-Well, I'd like to have some really automatic mode, which does
-everything ondemand.
+From: Yichao Yu <yyc1992@gmail.com>
+Date: Wed, 21 Nov 2012 23:18:34 -0500
+Received: by 10.64.15.165 with HTTP; Wed, 21 Nov 2012 20:18:34 -0800 (PST)
+Received: by 10.50.12.165 with SMTP id
+z5mr1895031igb.17.1353557934382; Wed,  21 Nov 2012 20:18:54 -0800
+(PST)
+Received: by mail-ie0-f174.google.com with SMTP id k11so2625936iea.19
+for <git@vger.kernel.org>; Thu, 22 Nov 2012 15:00:04 -0800 (PST)
 
-Once we've got this not just for repair, but also to support
-quick partial clones that fetch more objects when required.
+Not sure if anyone else saw issues, but it is likely an issue with
+your service provider (either gmail or gmail's SMTP routers). My other
+gmail traffic has been fine over the period. Maybe somebody else knows
+what happened :)
 
-In fact, finally, I'd like to have some storage cloud where
-data automatically gets replicated to nodes which need the data,
-not just for VCS, but other purposes (backup, filestore, etc) too.
-But before inventing someting completely new (reinventing much
-of the wheel), I'd like to investigate whether git can be
-extended into this direction step by step.
+Regards,
 
-
-cu
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
-
-Enrico Weigelt=20
-VNC - Virtual Network Consult GmbH=20
-Head Of Development=20
-
-Pariser Platz 4a, D-10117 Berlin
-Tel.: +49 (30) 3464615-20
-=46ax: +49 (30) 3464615-59
-
-enrico.weigelt@vnc.biz; www.vnc.de=20
+Andrew Ardill
