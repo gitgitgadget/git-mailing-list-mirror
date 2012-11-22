@@ -1,121 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
-Date: Thu, 22 Nov 2012 01:28:30 +0100
-Message-ID: <CAMP44s2B2_htR8LFbHk99WaNUcaYJCxVJPdRdj5VQ0k+fB9NOg@mail.gmail.com>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
-	<1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com>
-	<7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
-	<20121121041735.GE4634@elie.Belkin>
-	<7vfw43pmp7.fsf@alter.siamese.dyndns.org>
-	<20121121194810.GE16280@sigill.intra.peff.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Remote hung up during `git fetch`
+Date: Thu, 22 Nov 2012 11:52:30 -0800
+Message-ID: <CAJo=hJs5PwLxwtBoYb+ZLmY=ts9U=UhDPmKXW7KY2BFNpBJfDQ@mail.gmail.com>
+References: <CAMvDr+R__wWRwm2xNC3-v0T1RVu_rKdjKUJhb8cHwEXvuX9OMQ@mail.gmail.com>
+ <CAMvDr+QuMpfdTdkOMOiYyEnHvQjia2cDCt3sx2rQwwLcJiCVmw@mail.gmail.com>
+ <CAJo=hJveYb09uhZWsKWKYor5Jcuz+wZ40F3wnsR3Hy8bcxeb6g@mail.gmail.com> <CAMvDr+Rv6Krmjto6nQL18GnEj-+qCFPYgp7jDQnLs-ybamM0FA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Max Horn <max@quendi.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:50:49 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Yichao Yu <yyc1992@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:54:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbcnN-0002HC-4y
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:50:45 +0100
+	id 1TbcqV-0005go-5o
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Nov 2012 20:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030208Ab2KVTuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 14:50:24 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:44603 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030200Ab2KVTuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 14:50:22 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so8331820oag.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:50:21 -0800 (PST)
+	id S1030283Ab2KVTxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 14:53:44 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:56822 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964837Ab2KVTwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 14:52:51 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so5953997qcr.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 11:52:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=OQ5YQsKkcZ6ptA/kxDJZyfQ5j5Mhyw4XQwW1aLoHrJg=;
-        b=ko2lNNBwrLlpOYYYS+/Uno/8qIG/f1c//NTYv2cfiB+e+HAGrOpncK7WnZmCf2uREs
-         DM7D4pmt5lrAX3aQ9bLMn7g6FWEeOAmlx7lKz/tOk6r6QjE3p8RDHg+nJuAmAx8+q7Aw
-         /bTwSC9LlxgiQcjJkVcsfHuQ7yQjYN/RVck4e3kp1JYU6hTPo8ysU0JtqXcR7W7znY/0
-         dayWxFr96W2E+brt8h7wy3m3t7Tmv0G5YenuOjB2dMBUci8bHjqUBr+vprpaji7E/1w4
-         HIhRqC7+iBMrbKmh/E203mJlK9xOJsRBVYod78cr7YSpM3hkDYiGt1DDg59WUy28tLh3
-         O3bg==
-Received: by 10.60.30.70 with SMTP id q6mr17394556oeh.103.1353544111131; Wed,
- 21 Nov 2012 16:28:31 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Wed, 21 Nov 2012 16:28:30 -0800 (PST)
-In-Reply-To: <20121121194810.GE16280@sigill.intra.peff.net>
+        bh=mT1PP4cmS/OlFy5rx9jRc6wdYJt9LJkn8F9VPr0/Dik=;
+        b=JqEYbHm+Yjtjf16AIQVbI1nA5/+7pFRwQYhy3V8mQk32BUHI8zSsaPfyhNcJSYke+4
+         Wyjt0PaFU8luG4YvMlctRD4FR9Phb7baFFjKNhKAYC6wHBYKCK+qJgTtw325wEIuMyuv
+         nSWVs8ETSMSkUgJTsImmH2o1qeZnHAoBv2jlM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=mT1PP4cmS/OlFy5rx9jRc6wdYJt9LJkn8F9VPr0/Dik=;
+        b=Fi+ceQE+BBUUWj6aV8bY6dTEB54gvz3N+inqdmgoY6eFkA0aGZN1xMqpmSB9B8TJzb
+         T9w6oovaUhCeiY1QKMq54K6S8Kehg8mdBKc9sQnYu8jm00JmpVGCNxuAZ7Tket0WyMrC
+         xOqaubym/TdzK07fLS33G6aLKbDSMQlrTQq0dEToJ+oYc33rXWIAtWKlz5ZpidbJVoVu
+         V4kkml5/OD01YsDNdoZn8tZxauy9Ose0T6xu6c6xm7FH8z1AZd7FfRXF+yCVc0sesUUk
+         giynQC3yFOdO9+EDm0ApE9T1wNRyXtVu06w6YrRnV8vKhOZo02m92ot4OOsWx6qO7jcW
+         olyQ==
+Received: by 10.49.63.104 with SMTP id f8mr1761648qes.29.1353613971024; Thu,
+ 22 Nov 2012 11:52:51 -0800 (PST)
+Received: by 10.49.60.198 with HTTP; Thu, 22 Nov 2012 11:52:30 -0800 (PST)
+In-Reply-To: <CAMvDr+Rv6Krmjto6nQL18GnEj-+qCFPYgp7jDQnLs-ybamM0FA@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmpD2Fuu3pafT0Sv+aAffYODxrce/Y9XAlEaf6wu52DXGqIKFIvg4Q5LvKwfBnt/idpaoO0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210204>
 
-On Wed, Nov 21, 2012 at 8:48 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 20, 2012 at 09:08:36PM -0800, Junio C Hamano wrote:
->
->> With such a one-sided discussion, I've been having a hard time
->> convincing myself if Felipe's effort is making the interface better,
->> or just breaking it even more for existing remote helpers, only to
->> fit his world model better.
->
-> Felipe responded in more detail, but I will just add the consensus we
-> came to earlier in the discussion: the series does make things better
-> for users of fast-export that use marks, but does not make things any
-> better for users of negative refs on the command line. However, I do not
-> think that it makes things worse for them, either (neither by changing
-> the behavior negatively, nor by making the code harder for a more
-> complete fix later).
+On Thu, Nov 22, 2012 at 11:44 AM, Yichao Yu <yyc1992@gmail.com> wrote:
+>> US holiday today? The list traffic tends to be down during holidays.
+> This silent?.... 0 email from the kernel mailing list for 10+ hours?..
+> anyway.... nvm...
 
-Patch 14 changes the behavior depending on the marks, patch 15 doesn't.
+Check your spam filters? I am having no trouble getting email for the
+Git list. Traffic is down, but there have been several messages within
+the past 4 hours. E.g. this thread among them.
 
-This patch is mostly orthogonal to marks.
+> packet:        fetch> want 2d242fb3fc19fc9ba046accdd9210be8b9913f64
+> multi_ack_detailed side-band-64k thin-pack ofs-delta
+> packet:        fetch> shallow 65546ab097b023886a60df4cbc931d4cc362b98e
+> packet:        fetch> shallow b80d60e1c3854460a1f01d4110da5ae98f30f9b2
+> packet:        fetch> 0000
 
-Before without marks:
-% git branch unintresting master
-% git fast-export master ^uninteresting
-reset refs/heads/uninteresting
-from :0
+I think this is the problem. Your client told the sever it has the
+Linux kernel shallow cloned, but its talking to a repository that
+hosts git.git. The remote server doesn't know these two SHA-1s
+mentioned on the shallow line, as they are from the Linux kernel
+repository, so the server just hung up on you.
 
-Before with marks:
-% git fast-export --import-marks=marks master ^uninteresting
-reset refs/heads/uninteresting
-from :100
-
-See? In both cases git is doing something the user doesn't want, nor
-specified. After my patch nothing gets updated, because nothing was
-specified to be updated.
-
-I'm not going to bother explaining why other people objected to this
-patch (again), which is indeed related to marks, they should do it for
-themselves. Let me reaffirm that no valid reason has put forward to
-object to this patch.
-
-> So while fixing everybody might be nice
-
-I would like to understand that that even means. What behavior is
-currently broken? And for who? And how is this patch related to that?
-
-> [1] There are other possible use cases for fast-export which might
->     benefit from negative refs working more sanely, but since they are
->     in the minority and are not being made worse, I think the partial
->     fix is OK.
-
-Which ones? I don't think this is a partial fix.
-
-Nobody has put forward such a use-case.
-
-Cheers.
-
--- 
-Felipe Contreras
+Basically this is an unsupported use case. A shallow repository can
+only fetch from the place it cloned from. Anything else working is
+pure luck. It _may_ be able to fetch from a clone of that same
+repository at another server, if the clone has at least all of the
+commits the client already has. If the remote clone is missing commits
+(as in this case where it has none!) then it doesn't work.
