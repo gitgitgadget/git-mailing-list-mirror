@@ -1,110 +1,259 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
-Date: Fri, 23 Nov 2012 11:30:24 -0500
-Message-ID: <20121123163024.GG2806@odin.tremily.us>
-References: <20121123160301.GC14509@book.hvoigt.net>
- <20121123155521.GB14509@book.hvoigt.net>
- <20121123162329.GF2806@odin.tremily.us>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=iAL9S67WQOXgEPD9
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Fri Nov 23 17:30:48 2012
+From: Leon KUKOVEC <leon.kukovec@gmail.com>
+Subject: [PATCH] gitk tag delete/rename support
+Date: Fri, 23 Nov 2012 17:41:34 +0100
+Message-ID: <1353688894-2526-1-git-send-email-leon.kukovec@gmail.com>
+References: <1353649899-15641-1-git-send-email-leon.kukovec@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Leon KUKOVEC <leon.kukovec@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 23 17:42:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbw9P-0000LJ-GY
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 17:30:47 +0100
+	id 1TbwKW-0000lJ-3a
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 17:42:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755702Ab2KWQaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 11:30:30 -0500
-Received: from vms173007pub.verizon.net ([206.46.173.7]:26628 "EHLO
-	vms173007pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755505Ab2KWQa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 11:30:28 -0500
-Received: from odin.tremily.us ([unknown] [72.68.108.36])
- by vms173007.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MDY00E8S8IOLT40@vms173007.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 23 Nov 2012 10:30:25 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 7D05F6DAF20; Fri,
- 23 Nov 2012 11:30:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1353688224; bh=aHwdqbSKZiaN2VO5bF/zyRPGEdUcU6+NsJigC/js4RE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=imALOv/mnrDGPQ2POE7fOVOYXUFuc5GXe0+VG3VF2m2G60dqVecjWEG6OXriFPhVy
- QbX5ux0BnWmxjFs8vyhyJ1XC7erqRbptPBm02P+wOQ8Uam7pCIW9+y7S006RajXrYW
- jXGT05edOJAa/6jJk5KwKfxCrpD60/xBPRIfrerE=
-Content-disposition: inline
-In-reply-to: <20121123162329.GF2806@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755894Ab2KWQmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 11:42:00 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:42413 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755728Ab2KWQl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 11:41:59 -0500
+Received: by mail-pa0-f46.google.com with SMTP id bh2so3640198pad.19
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 08:41:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=jfH8PGV7j3YOgTTGOqjIGwgYitydoL0X348Y/XvS+GU=;
+        b=nVdoEyIDkgthOQztc1pmZOVNdoG1YAltQ7TukMQhJl3OFkHNgUXzpJPZcBFhSG7x5q
+         zIgrsFiKkFcX+blFCNOQ/md/iZTBhQSwxghTWzCoeeTv/BqtB5wXNejL+2Mj0X8lRFW4
+         EFHuVyuXi9BV4t0qlCPuHOj7BYKmOlbtwEDiqXyY+vojWDvyral962nNLyIf1Gic8FAB
+         ymM6GPfH3NqE2L1rpm2fHsdd11eXJHv9R0Mps0hvlqfbJGalslhRJK7gtnr1EegbbpZK
+         z9FpQmbzmJjiMBVygx5UVmWK3gi2noCjE3aC06RQO56YRIieP3zO2Bgk+gdgbMf30qPT
+         m+zQ==
+Received: by 10.66.82.73 with SMTP id g9mr11881344pay.5.1353688918886;
+        Fri, 23 Nov 2012 08:41:58 -0800 (PST)
+Received: from hurricane.sc.acceleramb.com ([12.3.154.2])
+        by mx.google.com with ESMTPS id vs3sm4045464pbc.61.2012.11.23.08.41.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 23 Nov 2012 08:41:58 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <1353649899-15641-1-git-send-email-leon.kukovec@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210267>
 
+Right clicking on a tag pops up a menu, which allows
+tag to be renamed or deleted.
 
---iAL9S67WQOXgEPD9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Leon KUKOVEC <leon.kukovec@gmail.com>
+---
+ gitk-git/gitk |  154 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 154 insertions(+)
 
-On Fri, Nov 23, 2012 at 11:23:29AM -0500, W. Trevor King wrote:
-> On Fri, Nov 23, 2012 at 05:03:01PM +0100, Heiko Voigt wrote:
-> > There is an important question still unanswered here for me: How does
-> > the submodule get the configuration what the local branch tracks on the
-> > remote side?
->=20
-> A good point ;).  I'm actaully using submodule.<name>.branch to store
-> the submodule's local branch name.  The remote branch name for the
-> pull is implicit, and defaults to something setup according to
-> branch.autosetupmerge (I think).  If you want to get more complicated
-> than this, we'll probably have to add submodule.<name>.branch and
-> submodule.<name>.remote sections to augment the
-> submodule.<name>.branch setting.  I'm not sure this is worth it.
-
-These settings are currently stored in
-
-  .git/modules/<name>/config
-
-What we're missing is a place to store them in the .gitmodules file.
-I'll poke around in the module-config initialization and wait for
-inspiration ;).
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---iAL9S67WQOXgEPD9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQr6SfAAoJEEUbTsx0l5OM3oAQAKa6qn6on7ELH9/b9lBzzypj
-qHWCpJ9z/Obo3oQ//fDBBltgaG6AHsJEuwLLgd3CrN19vdmF5CBCS5cq35FNhBnw
-65oKGNZN3g+8ZbtmBYmBh452WbdW0N87xJ1crdEmWmjfwIjp/deabjUeYp4/c8rJ
-x+8pBGwojUvYdi2OSLCMRpiPWqIWUy5gGnvoLP5I7fxpRAunttnzFic6OA4GNTzx
-/InTJxptQUs1yerOgSfCRMg4CtfLTTi01q0pmMSMav0iVr6TfdyEkNoCFPS+Jcse
-AeHlf2l1h6pESjYwDChIWZ/l3PHsCgkrbQ9OfV2vxBruw82fczh1TL5EUNFkWWeT
-9pAYkI7EI0j56NqLXh4+BxY6qqqiBW796dhDaYGWxo0bnfxyBJAyjD1znS5J9Rqr
-w+w+Wc2ddK19m4L9mNktS/Csch8YtT+IAEs6vm6Eh3Evsqxnz9Jqghhr/YM6GDo2
-IociWcN0pAap5/bHuU7zNo3+SHtVcMfpq9uIlXj6wfduNuJKURX2cjnjb0BPUeTc
-eFB8IDh+eIJMzSWx/1q+eDKIpB3PTXLdxmrqM1RIu/BLJApE5Q6oCT2jeUVzJckH
-FSKhST/1tcVgk2jcVle9m/8jDXClM1I295p7MGrZG0vWlSksThwzGV8Ix5A8VR4I
-dO6lH4lJ40WCrb1c/lx+
-=Av3V
------END PGP SIGNATURE-----
-
---iAL9S67WQOXgEPD9--
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index d93bd99..38cc233 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -2032,6 +2032,7 @@ proc makewindow {} {
+     global have_tk85 use_ttk NS
+     global git_version
+     global worddiff
++    global tagctxmenu
+ 
+     # The "mc" arguments here are purely so that xgettext
+     # sees the following string as needing to be translated
+@@ -2581,6 +2582,13 @@ proc makewindow {} {
+ 	{mc "Run git gui blame on this line" command {external_blame_diff}}
+     }
+     $diff_menu configure -tearoff 0
++
++    set tagctxmenu .tagctxmenu
++    makemenu $tagctxmenu {
++	{mc "Rename this tag" command mvtag}
++	{mc "Delete this tag" command rmtag}
++    }
++    $tagctxmenu configure -tearoff 0
+ }
+ 
+ # Windows sends all mouse wheel events to the current focused window, not
+@@ -6400,6 +6408,7 @@ proc drawtags {id x xt y1} {
+ 		   -font $font -tags [list tag.$id text]]
+ 	if {$ntags >= 0} {
+ 	    $canv bind $t <1> [list showtag $tag_quoted 1]
++	    $canv bind $t $ctxbut [list showtagmenu %X %Y $id $tag_quoted]
+ 	} elseif {$nheads >= 0} {
+ 	    $canv bind $t $ctxbut [list headmenu %X %Y $id $tag_quoted]
+ 	}
+@@ -8931,6 +8940,113 @@ proc domktag {} {
+     return 1
+ }
+ 
++proc mvtag {} {
++    global mvtagtop
++    global tagmenuid tagmenutag tagctxmenu maintag NS
++    global mvtagtag
++
++    set mvtagtag $tagmenutag
++    set top .movetag
++    set mvtagtop $top
++    catch {destroy $top}
++    ttk_toplevel $top
++    make_transient $top .
++
++    ${NS}::label $top.msg -text [mc "Enter a new tag name:"]
++    ${NS}::entry $top.tag -width 60 -textvariable mvtagtag
++
++    grid $top.msg -sticky w -row 0 -column 0
++    grid $top.tag -sticky w -row 0 -column 1
++
++    ${NS}::frame $top.buts
++    ${NS}::button $top.buts.gen -text [mc "Rename"] -command mvtaggo
++    ${NS}::button $top.buts.can -text [mc "Cancel"] -command mvtagcan
++    bind $top <Key-Return> mvtaggo
++    bind $top <Key-Escape> mvtagcan
++    grid $top.buts.gen $top.buts.can
++    grid columnconfigure $top.buts 0 -weight 1 -uniform a
++    grid columnconfigure $top.buts 1 -weight 1 -uniform a
++    grid $top.buts - -pady 10 -sticky ew
++}
++
++proc domvtag {} {
++    global mvtagtop env tagids idtags tagmenutag tagmenuid mvtagtag
++
++    set tag $mvtagtag
++    set id $tagmenuid
++
++    # add tag
++    # XXX: reuse domktag including keeping comment from the original tag.
++    if {[catch {
++        exec git tag $tag $id
++    } err]} {
++        error_popup "[mc "Error renaming tag:"] $err" $mvtagtop
++        return 0
++    }
++
++    # delete old tag, content stored in $tagmenutag and $tagmenuid
++    dormtag
++
++    set tagids($tag) $id
++    lappend idtags($id) $tag
++    redrawtags $id
++    addedtag $id
++    dispneartags 0
++    run refill_reflist
++    return 1
++}
++
++proc rmtag {} {
++    global rmtagtop
++    global tagmenuid tagmenutag tagctxmenu maintag NS
++
++    set top .maketag
++    set rmtagtop $top
++    catch {destroy $top}
++    ttk_toplevel $top
++    make_transient $top .
++    ${NS}::label $top.title -text [mc "Delete tag"]
++    grid $top.title - -pady 10
++
++    ${NS}::label $top.msg -text [mc "You are about to delete a tag"]
++    ${NS}::label $top.tagname -foreground Red -text [mc "$tagmenutag"]
++    grid $top.msg -sticky w -row 0 -column 0
++    grid $top.tagname -sticky w -row 0 -column 1
++
++    ${NS}::frame $top.buts
++    ${NS}::button $top.buts.gen -text [mc "Delete"] -command rmtaggo
++    ${NS}::button $top.buts.can -text [mc "Cancel"] -command rmtagcan
++    bind $top <Key-Return> rmtaggo
++    bind $top <Key-Escape> rmtagcan
++    grid $top.buts.gen $top.buts.can
++    grid columnconfigure $top.buts 0 -weight 1 -uniform a
++    grid columnconfigure $top.buts 1 -weight 1 -uniform a
++    grid $top.buts - -pady 10 -sticky ew
++}
++
++proc dormtag {} {
++    global rmtagtop env tagids idtags tagmenutag tagmenuid
++
++    set tag $tagmenutag
++    set id $tagmenuid
++
++    if {[catch {
++        exec git tag -d $tag
++    } err]} {
++        error_popup "[mc "Error deleting tag:"] $err" $rmtagtop
++        return 0
++    }
++
++    unset tagids($tag)
++    set idx [lsearch $idtags($id) $tag]
++    set idtags($id) [lreplace $idtags($id) $idx $idx]
++
++    redrawtags $id
++    dispneartags 0
++    run refill_reflist
++    return 1
++}
++
+ proc redrawtags {id} {
+     global canv linehtag idpos currentid curview cmitlisted markedid
+     global canvxmax iddrawn circleitem mainheadid circlecolors
+@@ -8974,6 +9090,30 @@ proc mktaggo {} {
+     mktagcan
+ }
+ 
++proc rmtagcan {} {
++    global rmtagtop
++
++    catch {destroy $rmtagtop}
++    unset rmtagtop
++}
++
++proc rmtaggo {} {
++    if {![dormtag]} return
++    rmtagcan
++}
++
++proc mvtagcan {} {
++    global mvtagtop
++
++    catch {destroy $mvtagtop}
++    unset mvtagtop
++}
++
++proc mvtaggo {} {
++    if {![domvtag]} return
++    mvtagcan
++}
++
+ proc writecommit {} {
+     global rowmenuid wrcomtop commitinfo wrcomcmd NS
+ 
+@@ -9288,6 +9428,20 @@ proc headmenu {x y id head} {
+     tk_popup $headctxmenu $x $y
+ }
+ 
++# context menu for a tag
++proc showtagmenu {x y id tag} {
++    global tagmenuid tagmenutag tagctxmenu maintag
++
++    stopfinding
++    set tagmenuid $id
++    set tagmenutag $tag
++    set state normal
++
++    $tagctxmenu entryconfigure 0 -state normal
++    $tagctxmenu entryconfigure 1 -state normal
++    tk_popup $tagctxmenu $x $y
++}
++
+ proc cobranch {} {
+     global headmenuid headmenuhead headids
+     global showlocalchanges
+-- 
+1.7.9.5
