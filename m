@@ -1,72 +1,54 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH] Completion must sort before using uniq
-Date: Fri, 23 Nov 2012 13:36:03 +0100
-Message-ID: <003c01cdc977$1a8a60e0$4f9f22a0$@schmitz-digital.de>
-References: <002201cdc952$00159c90$0040d5b0$@schmitz-digital.de> <CAFj1UpEMKq9zH3nbLwYrNZRmd52_KEcN5BBrzGg2jxCzd+fsbA@mail.gmail.com> <003b01cdc974$4cdd1900$e6974b00$@schmitz-digital.de> <2630847.8aaR79v5Od@blacky>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] gitk tag delete/rename support
+Date: Fri, 23 Nov 2012 18:08:12 +0530
+Message-ID: <CALkWK0mZrqQAg=dKGeFA_Lg9fnApBW84=KQ-XPDCLZV7ev_S=A@mail.gmail.com>
+References: <1353649899-15641-1-git-send-email-leon.kukovec@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Marc Khouzam'" <marc.khouzam@gmail.com>, <git@vger.kernel.org>,
-	<szeder@ira.uka.de>, <felipe.contreras@gmail.com>
-To: "'Sascha Cunz'" <sascha-ml@babbelbox.org>
-X-From: git-owner@vger.kernel.org Fri Nov 23 13:36:35 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Leon KUKOVEC <leon.kukovec@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 13:38:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbsUi-000767-2x
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 13:36:32 +0100
+	id 1TbsWu-0000Ol-Gq
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 13:38:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924Ab2KWMgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 07:36:17 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:58910 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896Ab2KWMgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 07:36:17 -0500
-Received: from DualCore (dsdf-4db513fd.pool.mediaWays.net [77.181.19.253])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MFn1t-1TW53D41Dh-00FML5; Fri, 23 Nov 2012 13:36:15 +0100
-In-Reply-To: <2630847.8aaR79v5Od@blacky>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQHi9d0raPjCmP36XPHeqpAlu3F69wHEVUd4AV4PrmsBtr/hdZemORSg
-Content-Language: de
-X-Provags-ID: V02:K0:nLev4Orz8UuGx98TbZBhh0otc/IhT8ZK5POl4ZBPpMK
- 4KnQl69xtSMimZ0meJH4M96SHrzbwgi+Ke45InFuLFrKuB81Eq
- O8DJBfiI9/JmzUmVEU5sZwtMrXIOYMSHi5JXLpCOpWSWN865hM
- o7KXSvdLjsDB3GaVBiqKZvEM4DyXJk3lNjQbcfwLNLD9eYPpJy
- tVIkFYOcdZf14kq+BFI4X0/wYOGGutCidoyvBu8XWamBeypQG3
- gXI0vM4GzHTW5GZneDwZLGPszTwcSS+k6AjP5tloP5vvhh+TEk
- i+AQJeEUZRsZv9+0mABE03lOxIrWH53wRe/ME1dIgIgUYNKcPE
- YGy7G5MBoHn6f5v6X65JOnSynHMwSYlPj0AWku6eyc6pU5QeB/
- 4P/yMaWhrLozQ==
+	id S1753989Ab2KWMie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 07:38:34 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41168 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896Ab2KWMid (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 07:38:33 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so8891747obb.19
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 04:38:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xdzOCwQ+JswLBsxPOtdDzc+VGvAJYYLYmYFUY7Bhisk=;
+        b=oWB7z2Cscs1Xrfpwo8xLgSXdYbu5ttDStPz5SoUgtZ9945qo8JKhFb/Hue4mR7JewO
+         imVMJA9CI8esk5mDV8oyGaOMG3i5vgJPg4sh4ifdS2YPW6UoyA2ABoJnqDDQ8HtL049j
+         4B/RYw1VSr6xga7DOalsGKh/gY8vjsDeeCY8xXRN1ayzSeF0S4CSWVumEjJvPs4Qfqbo
+         50ceJEPe27PTSArtpWNyDsPN1QNr2i/q8r8svjkSnU2RsT3vhjgUrs4vqXryaRvnTaxt
+         EjbgR8wmWGcLu73uVn3NPSIVnuf8Wekozvc3qFqfuy3jn9I2bC0JueN333xaW3pU5h1Q
+         rZZA==
+Received: by 10.182.124.102 with SMTP id mh6mr2735350obb.48.1353674312873;
+ Fri, 23 Nov 2012 04:38:32 -0800 (PST)
+Received: by 10.76.168.40 with HTTP; Fri, 23 Nov 2012 04:38:12 -0800 (PST)
+In-Reply-To: <1353649899-15641-1-git-send-email-leon.kukovec@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210256>
 
-> From: Sascha Cunz [mailto:sascha-ml@babbelbox.org]
-> Sent: Friday, November 23, 2012 1:26 PM
-> To: Joachim Schmitz
-> Cc: 'Marc Khouzam'; git@vger.kernel.org; szeder@ira.uka.de; felipe.contreras@gmail.com
-> Subject: Re: [PATCH] Completion must sort before using uniq
-> 
-> > I can't see the difference and in fact don't understand uniq's -u option al
-> > all Linux man pages say: "only print unique lines", but that is what uniq
-> > does by default anyway?!?
-> 
-> From the german translation of uniq's man-page, you can deduct that "only
-> print unique lines" actually means: "print lines that are _not repeated_ in
-> the input".
-> 
-> A short test confirms that. i.e.:
-> 
-> 	printf "a\nb\nb\nc\n" | uniq -u
-> 
-> gives:
-> 	a
-> 	c
+Leon KUKOVEC wrote:
+> ---
+> [...]
 
-Ah, OK, then I rest my case. Sorry for the noise.
+Commit message and signoff?
+
+Ram
