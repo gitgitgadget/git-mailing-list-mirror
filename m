@@ -1,7 +1,7 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH 2/7] push: add advice for rejected tag reference
-Date: Thu, 22 Nov 2012 22:21:50 -0600
-Message-ID: <1353644515-17349-3-git-send-email-chris@rorvick.com>
+Subject: [PATCH 1/7] push: return reject reasons via a mask
+Date: Thu, 22 Nov 2012 22:21:49 -0600
+Message-ID: <1353644515-17349-2-git-send-email-chris@rorvick.com>
 References: <1353644515-17349-1-git-send-email-chris@rorvick.com>
 Cc: Chris Rorvick <chris@rorvick.com>,
 	Angelo Borsotti <angelo.borsotti@gmail.com>,
@@ -20,155 +20,203 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbknd-0001OK-Kw
+	id 1Tbknd-0001OK-4g
 	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 05:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756080Ab2KWEXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 23:23:16 -0500
+	id S1756025Ab2KWEXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 23:23:14 -0500
 Received: from mail-ie0-f174.google.com ([209.85.223.174]:35469 "EHLO
 	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756033Ab2KWEXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 23:23:15 -0500
+	with ESMTP id S1754058Ab2KWEXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 23:23:13 -0500
 Received: by mail-ie0-f174.google.com with SMTP id k11so2857476iea.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 20:23:15 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 20:23:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=5OZubYEnhUovJeq4qcV5rEMk0YiLVy1qone84RH3p70=;
-        b=cZU5Aw7mhpky7LcfFxqQkPlHeZjr0IByZsbJClNBSEYlPpmD6GGJzMbG//CEQVrLSC
-         PZ+rkgi9KSYDkMj/Vk89XQLII9i2azrgR2ff9nVJ6pIuvlP1sdiSqBQEYd9qyXemLv06
-         +GMsu+rCpBVP07vzH9SAJJYRKIQh0Od9Oz7aOLmOLMhahYX/Ld1My5D8p+WATymAWSri
-         mvfjibY78FwrceGc4OqGeXKe8J+wtl0RMsvlSvGQay9VDwqweT0oxD6wpiJAEHn84vi6
-         F1LFjeElerFlf04IABwpqS3sXVT2Kypqm52B+xyPdLDRonOtBdQxOsJvcYGl8xADS2Md
-         SGDg==
-Received: by 10.50.150.174 with SMTP id uj14mr2505518igb.19.1353644595040;
-        Thu, 22 Nov 2012 20:23:15 -0800 (PST)
+        bh=yiSLwUAvxCLBz4YB4vFgZo0GQGdXJZk5qCsku6N7yeY=;
+        b=A5AOUvdDBAYOWP12TTOMXN8kw7yV5hO9r9ipmGJbimhCoyzIYmGjwqe2ObmQZR+rIg
+         rLZUBNftUM2NFgffsTXYR6ckXHUYm5kT/K4wcWiMq/S+EcLO8xomPAKBDf1xmma7wX2M
+         KHwkIfFUD13QsyvdlIypZsjFhBywpnzacc2GGHHLWBP0VLbFHRL/PknFEhtBvY9zbL3u
+         TgwRyh+vXrDUg7bEF3DS/+0I8gEh1a6Di+qQzt72tJp2a4ZMvWZjCKrMdb8+BF/YhODd
+         cBEGoz/GljQMptOId+n628LJoDXPdo8FQkcH+S5sd8L7IV/Dn++EItk0LBwo/Y/cIO43
+         n+ug==
+Received: by 10.50.157.162 with SMTP id wn2mr2498149igb.27.1353644593061;
+        Thu, 22 Nov 2012 20:23:13 -0800 (PST)
 Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
-        by mx.google.com with ESMTPS id l8sm3909944igo.13.2012.11.22.20.23.13
+        by mx.google.com with ESMTPS id l8sm3909944igo.13.2012.11.22.20.23.11
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Nov 2012 20:23:14 -0800 (PST)
+        Thu, 22 Nov 2012 20:23:12 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.209.gf3828dc
 In-Reply-To: <1353644515-17349-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210229>
 
-Advising the user to fetch and merge only makes sense if the rejected
-reference is a branch.  If none of the rejections are for branches, just
-tell the user the reference already exists.
+Pass all rejection reasons back from transport_push().  The logic is
+simpler and more flexible with regard to providing useful feedback.
 
 Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- builtin/push.c | 11 +++++++++++
- cache.h        |  1 +
- remote.c       | 10 ++++++++++
- transport.c    |  2 ++
- transport.h    |  1 +
- 5 files changed, 25 insertions(+)
+ builtin/push.c      | 13 ++++---------
+ builtin/send-pack.c |  4 ++--
+ transport.c         | 17 ++++++++---------
+ transport.h         |  9 +++++----
+ 4 files changed, 19 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/push.c b/builtin/push.c
-index 4a0e7ef..1391983 100644
+index db9ba30..4a0e7ef 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -220,6 +220,10 @@ static const char message_advice_checkout_pull_push[] =
- 	   "(e.g. 'git pull') before pushing again.\n"
- 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
- 
-+static const char message_advice_ref_already_exists[] =
-+	N_("Updates were rejected because the destination reference already exists\n"
-+	   "in the remote and the update is not a fast-forward.");
-+
- static void advise_pull_before_push(void)
- {
- 	if (!advice_push_non_ff_current || !advice_push_nonfastforward)
-@@ -241,6 +245,11 @@ static void advise_checkout_pull_push(void)
- 	advise(_(message_advice_checkout_pull_push));
- }
- 
-+static void advise_ref_already_exists(void)
-+{
-+	advise(_(message_advice_ref_already_exists));
-+}
-+
+@@ -244,7 +244,7 @@ static void advise_checkout_pull_push(void)
  static int push_with_options(struct transport *transport, int flags)
  {
  	int err;
-@@ -272,6 +281,8 @@ static int push_with_options(struct transport *transport, int flags)
+-	int nonfastforward;
++	unsigned int reject_mask;
+ 
+ 	transport_set_verbosity(transport, verbosity, progress);
+ 
+@@ -257,7 +257,7 @@ static int push_with_options(struct transport *transport, int flags)
+ 	if (verbosity > 0)
+ 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
+ 	err = transport_push(transport, refspec_nr, refspec, flags,
+-			     &nonfastforward);
++			     &reject_mask);
+ 	if (err != 0)
+ 		error(_("failed to push some refs to '%s'"), transport->url);
+ 
+@@ -265,18 +265,13 @@ static int push_with_options(struct transport *transport, int flags)
+ 	if (!err)
+ 		return 0;
+ 
+-	switch (nonfastforward) {
+-	default:
+-		break;
+-	case NON_FF_HEAD:
++	if (reject_mask & REJECT_NON_FF_HEAD) {
+ 		advise_pull_before_push();
+-		break;
+-	case NON_FF_OTHER:
++	} else if (reject_mask & REJECT_NON_FF_OTHER) {
+ 		if (default_matching_used)
  			advise_use_upstream();
  		else
  			advise_checkout_pull_push();
-+	} else if (reject_mask & REJECT_ALREADY_EXISTS) {
-+		advise_ref_already_exists();
+-		break;
  	}
  
  	return 1;
-diff --git a/cache.h b/cache.h
-index dbd8018..d72b64d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1002,6 +1002,7 @@ struct ref {
- 	unsigned int force:1,
- 		merge:1,
- 		nonfastforward:1,
-+		not_forwardable:1,
- 		deletion:1;
- 	enum {
- 		REF_STATUS_NONE = 0,
-diff --git a/remote.c b/remote.c
-index 04fd9ea..5101683 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1279,6 +1279,14 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 	return 0;
- }
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index d342013..fda28bc 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -85,7 +85,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	int send_all = 0;
+ 	const char *receivepack = "git-receive-pack";
+ 	int flags;
+-	int nonfastforward = 0;
++	unsigned int reject_mask;
+ 	int progress = -1;
  
-+static inline int is_forwardable(struct ref* ref)
-+{
-+	if (!prefixcmp(ref->name, "refs/tags/"))
-+		return 0;
-+
-+	return 1;
-+}
-+
- void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 	int force_update)
- {
-@@ -1316,6 +1324,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 *     always allowed.
- 		 */
+ 	argv++;
+@@ -223,7 +223,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	ret |= finish_connect(conn);
  
-+		ref->not_forwardable = !is_forwardable(ref);
-+
- 		ref->nonfastforward =
- 			!ref->deletion &&
- 			!is_null_sha1(ref->old_sha1) &&
+ 	if (!helper_status)
+-		transport_print_push_status(dest, remote_refs, args.verbose, 0, &nonfastforward);
++		transport_print_push_status(dest, remote_refs, args.verbose, 0, &reject_mask);
+ 
+ 	if (!args.dry_run && remote) {
+ 		struct ref *ref;
 diff --git a/transport.c b/transport.c
-index b0c9f1b..271965e 100644
+index 9932f40..b0c9f1b 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -740,6 +740,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+@@ -714,7 +714,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ }
+ 
+ void transport_print_push_status(const char *dest, struct ref *refs,
+-				  int verbose, int porcelain, int *nonfastforward)
++				  int verbose, int porcelain, unsigned int *reject_mask)
+ {
+ 	struct ref *ref;
+ 	int n = 0;
+@@ -733,18 +733,17 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+ 		if (ref->status == REF_STATUS_OK)
+ 			n += print_one_push_status(ref, dest, n, porcelain);
+ 
+-	*nonfastforward = 0;
++	*reject_mask = 0;
+ 	for (ref = refs; ref; ref = ref->next) {
+ 		if (ref->status != REF_STATUS_NONE &&
+ 		    ref->status != REF_STATUS_UPTODATE &&
  		    ref->status != REF_STATUS_OK)
  			n += print_one_push_status(ref, dest, n, porcelain);
- 		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
-+			if (ref->not_forwardable)
-+				*reject_mask |= REJECT_ALREADY_EXISTS;
+-		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD &&
+-		    *nonfastforward != NON_FF_HEAD) {
++		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
  			if (!strcmp(head, ref->name))
- 				*reject_mask |= REJECT_NON_FF_HEAD;
+-				*nonfastforward = NON_FF_HEAD;
++				*reject_mask |= REJECT_NON_FF_HEAD;
  			else
+-				*nonfastforward = NON_FF_OTHER;
++				*reject_mask |= REJECT_NON_FF_OTHER;
+ 		}
+ 	}
+ }
+@@ -1031,9 +1030,9 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ 
+ int transport_push(struct transport *transport,
+ 		   int refspec_nr, const char **refspec, int flags,
+-		   int *nonfastforward)
++		   unsigned int *reject_mask)
+ {
+-	*nonfastforward = 0;
++	*reject_mask = 0;
+ 	transport_verify_remote_names(refspec_nr, refspec);
+ 
+ 	if (transport->push) {
+@@ -1099,7 +1098,7 @@ int transport_push(struct transport *transport,
+ 		if (!quiet || err)
+ 			transport_print_push_status(transport->url, remote_refs,
+ 					verbose | porcelain, porcelain,
+-					nonfastforward);
++					reject_mask);
+ 
+ 		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
+ 			set_upstreams(transport, remote_refs, pretend);
 diff --git a/transport.h b/transport.h
-index 5f76ca2..7e86352 100644
+index 4a61c0c..5f76ca2 100644
 --- a/transport.h
 +++ b/transport.h
-@@ -142,6 +142,7 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
+@@ -140,11 +140,12 @@ int transport_set_option(struct transport *transport, const char *name,
+ void transport_set_verbosity(struct transport *transport, int verbosity,
+ 	int force_progress);
  
- #define REJECT_NON_FF_HEAD     0x01
- #define REJECT_NON_FF_OTHER    0x02
-+#define REJECT_ALREADY_EXISTS  0x04
- 
+-#define NON_FF_HEAD 1
+-#define NON_FF_OTHER 2
++#define REJECT_NON_FF_HEAD     0x01
++#define REJECT_NON_FF_OTHER    0x02
++
  int transport_push(struct transport *connection,
  		   int refspec_nr, const char **refspec, int flags,
+-		   int * nonfastforward);
++		   unsigned int * reject_mask);
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport);
+ 
+@@ -170,7 +171,7 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
+ int transport_refs_pushed(struct ref *ref);
+ 
+ void transport_print_push_status(const char *dest, struct ref *refs,
+-		  int verbose, int porcelain, int *nonfastforward);
++		  int verbose, int porcelain, unsigned int *reject_mask);
+ 
+ typedef void alternate_ref_fn(const struct ref *, void *);
+ extern void for_each_alternate_ref(alternate_ref_fn, void *);
 -- 
 1.8.0.209.gf3828dc
