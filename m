@@ -1,112 +1,137 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 1/6] git p4: catch p4 describe errors
-Date: Fri, 23 Nov 2012 17:35:34 -0500
-Message-ID: <1353710139-16207-2-git-send-email-pw@padd.com>
+Subject: [PATCH 2/6] git p4: handle servers without move support
+Date: Fri, 23 Nov 2012 17:35:35 -0500
+Message-ID: <1353710139-16207-3-git-send-email-pw@padd.com>
 References: <1353710139-16207-1-git-send-email-pw@padd.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 23:36:21 2012
+X-From: git-owner@vger.kernel.org Fri Nov 23 23:36:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tc1rA-0005EY-K0
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 23:36:20 +0100
+	id 1Tc1rV-0005SD-Ax
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 23:36:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756715Ab2KWWgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 17:36:04 -0500
-Received: from honk.padd.com ([74.3.171.149]:35226 "EHLO honk.padd.com"
+	id S1756716Ab2KWWg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 17:36:27 -0500
+Received: from honk.padd.com ([74.3.171.149]:35228 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756322Ab2KWWgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 17:36:03 -0500
+	id S1756322Ab2KWWg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 17:36:26 -0500
 Received: from arf.padd.com (unknown [50.55.150.96])
-	by honk.padd.com (Postfix) with ESMTPSA id 2E321E9A;
-	Fri, 23 Nov 2012 14:36:02 -0800 (PST)
+	by honk.padd.com (Postfix) with ESMTPSA id 986CCE9A;
+	Fri, 23 Nov 2012 14:36:25 -0800 (PST)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id D672027578; Fri, 23 Nov 2012 17:35:59 -0500 (EST)
+	id E03BE27578; Fri, 23 Nov 2012 17:36:19 -0500 (EST)
 X-Mailer: git-send-email 1.8.0.360.gc68af86
 In-Reply-To: <1353710139-16207-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210276>
 
-Group the two calls to "p4 describe" into a new helper function,
-and try to validate the p4 results.  The current behavior when p4
-describe fails is to die with a python backtrace.  The new behavior
-will print the full response.
+Support for the "p4 move" command was added in 8e9497c (git p4:
+add support for 'p4 move' in P4Submit, 2012-07-12), which checks
+to make sure that the client and server support the command.
 
-This does not solve any particular problem, but adds more
-checking in hopes of narrowing down odd behavior seen on
-at least two occasions.
+But older versions of p4d may not handle the "-k" argument, and
+newer p4d allow disabling "p4 move" with a configuration setting.
+Check for both these cases by testing a p4 move command on bogus
+filenames and looking for strings in the error messages.
 
-Based-on-patch-by: Matt Arsenault <arsenm2@gmail.com>
-Reported-by: Arthur <a.foulon@amesys.fr>
+Reported-by: Vitor Antunes <vitor.hda@gmail.com>
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- git-p4.py | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ git-p4.py                | 21 ++++++++++++++++++++-
+ t/t9814-git-p4-rename.sh | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 7d6c928..cd68e04 100755
+index cd68e04..9644c9f 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -169,6 +169,29 @@ def p4_reopen(type, f):
- def p4_move(src, dest):
-     p4_system(["move", "-k", wildcard_encode(src), wildcard_encode(dest)])
+@@ -129,6 +129,25 @@ def p4_has_command(cmd):
+     p.communicate()
+     return p.returncode == 0
  
-+def p4_describe(change):
-+    """Make sure it returns a valid result by checking for
-+       the presence of field "time".  Return a dict of the
-+       results."""
++def p4_has_move_command():
++    """See if the move command exists, that it supports -k, and that
++       it has not been administratively disabled.  The arguments
++       must be correct, but the filenames do not have to exist.  Use
++       ones with wildcards so even if they exist, it will fail."""
 +
-+    ds = p4CmdList(["describe", "-s", str(change)])
-+    if len(ds) != 1:
-+        die("p4 describe -s %d did not return 1 result: %s" % (change, str(ds)))
++    if not p4_has_command("move"):
++        return False
++    cmd = p4_build_cmd(["move", "-k", "@from", "@to"])
++    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
++    (out, err) = p.communicate()
++    # return code will be 1 in either case
++    if err.find("Invalid option") >= 0:
++        return False
++    if err.find("disabled") >= 0:
++        return False
++    # assume it failed because @... was invalid changelist
++    return True
 +
-+    d = ds[0]
-+
-+    if "p4ExitCode" in d:
-+        die("p4 describe -s %d exited with %d: %s" % (change, d["p4ExitCode"],
-+                                                      str(d)))
-+    if "code" in d:
-+        if d["code"] == "error":
-+            die("p4 describe -s %d returned error code: %s" % (change, str(d)))
-+
-+    if "time" not in d:
-+        die("p4 describe -s %d returned no \"time\": %s" % (change, str(d)))
-+
-+    return d
-+
- #
- # Canonicalize the p4 type and return a tuple of the
- # base type, plus any modifiers.  See "p4 help filetypes"
-@@ -2543,7 +2566,7 @@ class P4Sync(Command, P4UserMap):
-     def importChanges(self, changes):
-         cnt = 1
-         for change in changes:
--            description = p4Cmd(["describe", str(change)])
-+            description = p4_describe(change)
-             self.updateOptionDict(description)
+ def system(cmd):
+     expand = isinstance(cmd,basestring)
+     if verbose:
+@@ -894,7 +913,7 @@ class P4Submit(Command, P4UserMap):
+         self.conflict_behavior = None
+         self.isWindows = (platform.system() == "Windows")
+         self.exportLabels = False
+-        self.p4HasMoveCommand = p4_has_command("move")
++        self.p4HasMoveCommand = p4_has_move_command()
  
-             if not self.silent:
-@@ -2667,14 +2690,8 @@ class P4Sync(Command, P4UserMap):
+     def check(self):
+         if len(p4CmdList("opened ...")) > 0:
+diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+index 3bf1224..be802e0 100755
+--- a/t/t9814-git-p4-rename.sh
++++ b/t/t9814-git-p4-rename.sh
+@@ -199,6 +199,41 @@ test_expect_success 'detect copies' '
+ 	)
+ '
  
-         # Use time from top-most change so that all git p4 clones of
-         # the same p4 repo have the same commit SHA1s.
--        res = p4CmdList("describe -s %d" % newestRevision)
--        newestTime = None
--        for r in res:
--            if r.has_key('time'):
--                newestTime = int(r['time'])
--        if newestTime is None:
--            die("\"describe -s\" on newest change %d did not give a time")
--        details["time"] = newestTime
-+        res = p4_describe(newestRevision)
-+        details["time"] = res["time"]
- 
-         self.updateOptionDict(details)
-         try:
++# See if configurables can be set, and in particular if the run.move.allow
++# variable exists, which allows admins to disable the "p4 move" command.
++test_expect_success 'p4 configure command and run.move.allow are available' '
++	p4 configure show run.move.allow >out ; retval=$? &&
++	test $retval = 0 &&
++	{
++		egrep ^run.move.allow: out &&
++		test_set_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW ||
++		true
++	} || true
++'
++
++# If move can be disabled, turn it off and test p4 move handling
++test_expect_success P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW \
++		    'do not use p4 move when administratively disabled' '
++	test_when_finished "p4 configure set run.move.allow=1" &&
++	p4 configure set run.move.allow=0 &&
++	(
++		cd "$cli" &&
++		echo move-disallow-file >move-disallow-file &&
++		p4 add move-disallow-file &&
++		p4 submit -d "add move-disallow-file"
++	) &&
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		git config git-p4.skipSubmitEdit true &&
++		git config git-p4.detectRenames true &&
++		git mv move-disallow-file move-disallow-file-moved &&
++		git commit -m "move move-disallow-file" &&
++		git p4 submit
++	)
++'
++
+ test_expect_success 'kill p4d' '
+ 	kill_p4d
+ '
 -- 
 1.8.0.276.gd9397fc
