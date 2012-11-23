@@ -1,236 +1,96 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: [RFC/PATCH] Option to revert order of parents in merge commit
-Date: Fri, 23 Nov 2012 09:35:53 +0100
-Message-ID: <20121123083550.GA702@camk.edu.pl>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Requirements for integrating a new git subcommand
+Date: Fri, 23 Nov 2012 10:13:26 +0100
+Message-ID: <50AF3E36.4080800@drmicha.warpmail.net>
+References: <20121122053012.GA17265@thyrsus.com> <CAJo=hJsQjXEhmfRUEgBc=RkF3Lk8QVqUqmeAJiOZ0dtvcMYVFw@mail.gmail.com> <20121122221107.GA16069@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 09:36:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Fri Nov 23 10:13:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbokN-0003aM-90
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 09:36:27 +0100
+	id 1TbpKe-0006dz-Q1
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 10:13:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757937Ab2KWIgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 03:36:12 -0500
-Received: from moat.camk.edu.pl ([148.81.175.50]:53644 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753816Ab2KWIgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 03:36:10 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 2AFDC5F004A
-	for <git@vger.kernel.org>; Fri, 23 Nov 2012 09:34:54 +0100 (CET)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Mb-O-Ag3askd for <git@vger.kernel.org>;
-	Fri, 23 Nov 2012 09:34:39 +0100 (CET)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 01D7E5F004E
-	for <git@vger.kernel.org>; Fri, 23 Nov 2012 09:34:39 +0100 (CET)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id 3CB9D43CFD; Fri, 23 Nov 2012 09:35:53 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759012Ab2KWJNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 04:13:36 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:49397 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758723Ab2KWJN3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Nov 2012 04:13:29 -0500
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5DE46202D9;
+	Fri, 23 Nov 2012 04:13:28 -0500 (EST)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute4.internal (MEProxy); Fri, 23 Nov 2012 04:13:28 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=I7cFU+JEyzTuFh67UeP5Zw
+	ucLP4=; b=EJ6DlxEwZwYkTvurviZn+DDRMgv88wr64ho3hGLAlX5p1qtvXnsJ5T
+	u5T2PMcw6JHeK+LGNxkv6CtOzJSZ4COjqqCGdDnEnPqV3lrYcqQ0MLqVWZCepT9c
+	igNd5c5lseZTiq4RY2WMd0R730Gm+C8hmrGm6gV8O3UeQMWtw1U54=
+X-Sasl-enc: 77FHEKQnFGZEKKeNTANcQlg+gKvQRw9o9d73N016k3eI 1353662008
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C38B24824F5;
+	Fri, 23 Nov 2012 04:13:27 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20121122221107.GA16069@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210247>
 
-When the changes are pushed upstream, and in the meantime someone else
-updated upstream branch git advises to use git pull. This results in
-history:
+Eric S. Raymond venit, vidit, dixit 22.11.2012 23:11:
+> Shawn Pearce <spearce@spearce.org>:
+>> [Lots of helpful stuff ended by]
+>>> 4. How does "git help" work?  That is, how is a subcommand expected
+>>> to know when it is being called to export its help text?
+>>
+>> IIRC "git help foo" runs "man git-foo".
+> 
+> OK, that makes sense.
+> 
+>>> 5. I don't see any extensions written in Python.  Are there any special
+>>> requirements or exclusions for Python scripts?
+>>
+>> Nope, it just has to be executable. We don't have any current Python
+>> code. IIRC the last Python code was the implementation of
+>> git-merge-recursive, which was ported to C many years ago. We avoid
+>> Python because it is not on every platform where Git is installed. Yes
+>> Python is very portable and can be installed in many places, but we
+>> prefer not to make it a requirement.
+> 
+> I find that odd.  You avoid Python but use shellscripts?  *blink*
+> 
+> One would think shellscripts were a much more serious portability problem.
 
-     ---A---B---C--
-         \     /
-          D---E
+Different versions of python can be a mess to deal with, also, at least
+with respect to standard modules being "standard" or not for a specific
+version.
 
-where B is my commit. D, E are commits pushed by someone else when I was
-working on B. However sometimes the following history is preferable:
+In any case, the point is that we try to avoid *additional*
+dependencies. Shell and perl are given with the status quo.
 
-    ---A---D---C'--
-        \     /
-          -B-
+That being said, we also have remote helpers in python. The testsuite
+can run tests depending on the availability of python.
 
-The difference between C and C' is the order of parents. Presently to
-obtain it, instead of git pull, one needs to do (assuming that I am on
-the master branch):
+Regarding git-weave, I'm wondering (without having looked at the code)
+how this relates to git-archiv and git-fast-import/export, i.e. how much
+this leverages existing infrastructure rather than reinventing the
+wheel. Do your "trees" correspond to a "git tree"?
 
-git fetch origin
-git branch tmp_branch
-git reset --hard origin/master
-git merge tmp_branch
+Again, without having looked at the code, it seems to me that exploding
+blob and tree objects might give you a structure not much unlike
+weave's, and your instruction sheet resembles that of fast-import quite
+a bit (plus date fill-in etc.).
 
-Reverting from wrong pull is more cumbersome. It would be simpler if git
-merge learn an option to reverse order of parents in the produced
-commits, so one could do:
+One could even dream about implementing this as a remote helper instead...
 
-git fetch origin
-git merge --revert-order origin/master
-
-The following patch is an attempt to implement this idea.
-
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
-
-I'm not 100% percent sure that it is a good idea. But it would make life
-of our developers easier and produced nicer history then using git pull.
-Git pull seems to written for a case of single maintainer who gathers
-contributions from other developers and incorporates them in master
-branch. However in my opinion it doesn't produce best history when many
-developers modify the canonical repository. 
-
- builtin/commit.c | 22 ++++++++++++++--------
- builtin/merge.c  | 16 ++++++++++++----
- commit.c         | 11 +++++++++++
- commit.h         |  2 ++
- 4 files changed, 39 insertions(+), 12 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1dd2ec5..ab2b844 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1427,7 +1427,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	unsigned char sha1[20];
- 	struct ref_lock *ref_lock;
- 	struct commit_list *parents = NULL, **pptr = &parents;
--	struct stat statbuf;
- 	int allow_fast_forward = 1;
- 	struct commit *current_head = NULL;
- 	struct commit_extra_header *extra = NULL;
-@@ -1478,10 +1477,21 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	} else if (whence == FROM_MERGE) {
- 		struct strbuf m = STRBUF_INIT;
- 		FILE *fp;
-+		int reversed_order=0;
- 
- 		if (!reflog_msg)
- 			reflog_msg = "commit (merge)";
--		pptr = &commit_list_insert(current_head, pptr)->next;
-+		if((fp = fopen(git_path("MERGE_MODE"), "r"))) {
-+			while (strbuf_getline(&m, fp, '\n') != EOF) {
-+				if (!strcmp(m.buf, "no-ff"))
-+					allow_fast_forward = 0;
-+				if (!strcmp(m.buf, "reversed-order"))
-+					reversed_order = 1;
-+			}
-+			fclose(fp);
-+		}
-+		if (!reversed_order)
-+			pptr = &commit_list_insert(current_head, pptr)->next;
- 		fp = fopen(git_path("MERGE_HEAD"), "r");
- 		if (fp == NULL)
- 			die_errno(_("could not open '%s' for reading"),
-@@ -1496,12 +1506,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		}
- 		fclose(fp);
- 		strbuf_release(&m);
--		if (!stat(git_path("MERGE_MODE"), &statbuf)) {
--			if (strbuf_read_file(&sb, git_path("MERGE_MODE"), 0) < 0)
--				die_errno(_("could not read MERGE_MODE"));
--			if (!strcmp(sb.buf, "no-ff"))
--				allow_fast_forward = 0;
--		}
-+		if (reversed_order)
-+			pptr = &commit_list_insert(current_head, pptr)->next;
- 		if (allow_fast_forward)
- 			parents = reduce_heads(parents);
- 	} else {
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a96e8ea..8d0ed18 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -65,6 +65,7 @@ static int abort_current_merge;
- static int show_progress = -1;
- static int default_to_upstream;
- static const char *sign_commit;
-+static int reversed_order=0;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -213,6 +214,7 @@ static struct option builtin_merge_options[] = {
- 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key id"),
- 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
- 	OPT_BOOLEAN(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
-+	OPT_BOOLEAN(0, "revert-order", &reversed_order, N_("reverse order of parents")),
- 	OPT_END()
- };
- 
-@@ -822,9 +824,9 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
- 
- 	write_tree_trivial(result_tree);
- 	printf(_("Wonderful.\n"));
--	parent->item = head;
-+	parent->item = reversed_order ? remoteheads->item : head;
- 	parent->next = xmalloc(sizeof(*parent->next));
--	parent->next->item = remoteheads->item;
-+	parent->next->item = reversed_order ? head : remoteheads->item;
- 	parent->next->next = NULL;
- 	prepare_to_commit(remoteheads);
- 	if (commit_tree(&merge_msg, result_tree, parent, result_commit, NULL,
-@@ -848,8 +850,12 @@ static int finish_automerge(struct commit *head,
- 
- 	free_commit_list(common);
- 	parents = remoteheads;
--	if (!head_subsumed || !allow_fast_forward)
-+	if (!head_subsumed || !allow_fast_forward) {
-+	    if (reversed_order )
-+		commit_list_insert_end(head, &parents);
-+	    else
- 		commit_list_insert(head, &parents);
-+	}
- 	strbuf_addch(&merge_msg, '\n');
- 	prepare_to_commit(remoteheads);
- 	if (commit_tree(&merge_msg, result_tree, parents, result_commit,
-@@ -994,7 +1000,9 @@ static void write_merge_state(struct commit_list *remoteheads)
- 		die_errno(_("Could not open '%s' for writing"), filename);
- 	strbuf_reset(&buf);
- 	if (!allow_fast_forward)
--		strbuf_addf(&buf, "no-ff");
-+		strbuf_addf(&buf, "no-ff\n");
-+	if (reversed_order)
-+		strbuf_addf(&buf, "reversed-order\n");
- 	if (write_in_full(fd, buf.buf, buf.len) != buf.len)
- 		die_errno(_("Could not write to '%s'"), filename);
- 	close(fd);
-diff --git a/commit.c b/commit.c
-index e8eb0ae..6e58994 100644
---- a/commit.c
-+++ b/commit.c
-@@ -363,6 +363,17 @@ struct commit_list *commit_list_insert(struct commit *item, struct commit_list *
- 	return new_list;
- }
- 
-+struct commit_list *commit_list_insert_end(struct commit *item, struct commit_list **list_p)
-+{
-+	struct commit_list *list_iter = *list_p;
-+	while(list_iter->next)
-+		list_iter = list_iter->next;
-+	list_iter->next = xmalloc(sizeof(*list_iter->next));
-+	list_iter->next->item = item;
-+	list_iter->next->next = NULL;
-+	return *list_p;
-+}
-+
- unsigned commit_list_count(const struct commit_list *l)
- {
- 	unsigned c = 0;
-diff --git a/commit.h b/commit.h
-index b6ad8f3..17ae5e5 100644
---- a/commit.h
-+++ b/commit.h
-@@ -53,6 +53,8 @@ int find_commit_subject(const char *commit_buffer, const char **subject);
- 
- struct commit_list *commit_list_insert(struct commit *item,
- 					struct commit_list **list);
-+struct commit_list *commit_list_insert_end(struct commit *item,
-+					struct commit_list **list);
- struct commit_list **commit_list_append(struct commit *commit,
- 					struct commit_list **next);
- unsigned commit_list_count(const struct commit_list *l);
--- 
-1.8.0
+Michael
