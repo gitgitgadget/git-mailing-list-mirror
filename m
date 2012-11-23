@@ -1,291 +1,253 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH 5/7] push: require force for refs under refs/tags/
-Date: Thu, 22 Nov 2012 22:21:53 -0600
-Message-ID: <1353644515-17349-6-git-send-email-chris@rorvick.com>
-References: <1353644515-17349-1-git-send-email-chris@rorvick.com>
-Cc: Chris Rorvick <chris@rorvick.com>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+From: Leon KUKOVEC <leon.kukovec@gmail.com>
+Subject: [PATCH] gitk tag delete/rename support
+Date: Fri, 23 Nov 2012 06:51:39 +0100
+Message-ID: <1353649899-15641-1-git-send-email-leon.kukovec@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Leon KUKOVEC <leon.kukovec@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 05:23:57 2012
+X-From: git-owner@vger.kernel.org Fri Nov 23 06:52:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbknw-0001ea-Pf
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 05:23:53 +0100
+	id 1TbmBl-0003uw-Ka
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 06:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757592Ab2KWEXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 23:23:23 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:50257 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756229Ab2KWEXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 23:23:21 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so6232281iay.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 20:23:21 -0800 (PST)
+	id S932110Ab2KWFwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 00:52:18 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:36199 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751697Ab2KWFwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 00:52:17 -0500
+Received: by mail-pa0-f46.google.com with SMTP id bh2so3306649pad.19
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 21:52:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=BV/Fa5sP0NYOqEClnYZb4RI2XRJh8EhFTPX6LPGCfjc=;
-        b=b2EJFwZo+fBR6To/6Da3rMq9LiY6yie0c49UEDCCtlXVvD3CzKbKJEwgmfDas88OI+
-         KIWx1jFqfJWFlb8mplRUm1rINOrstkDjAmxbfKvIO7GOvE2eHWBM0pEKEYAp3s1GVXdG
-         o0/Ut+I0NTy2uGOdflcFIAQPm7HnfaKekSlTuOpJhHKE2csavTJrBtSvyz1PqmahqMPu
-         +Jr1jHE5n80r360EfW7UwY9hXKMfdwPW0rv2jKwkBpNV9j3sO8GuUrSnWuSbVN/UHBHt
-         fD3SlQd7NXIXRUvVqQu1tH5BqPw8/37bee01ETqW7bBVMrUgc/pAvcECcj4w5RZXgXA/
-         7i0g==
-Received: by 10.42.138.74 with SMTP id b10mr2177611icu.33.1353644600928;
-        Thu, 22 Nov 2012 20:23:20 -0800 (PST)
-Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
-        by mx.google.com with ESMTPS id l8sm3909944igo.13.2012.11.22.20.23.18
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=/Fig5Iyvlw4Y1jtkOVPMOsodd2ALx9jHwCxnVusJxZI=;
+        b=0/1vWHCjjPgAoVCOnJw8uAlXwlQZm6+xQdTvtRwLBxgWsArWR4ieZSf4OCki2qCKrT
+         Pk8YopG8myAATsacKX0GoRumdAHdcoOkVN77GrAX94li/TIvbkuJF99rkht4xXRS7XTT
+         /ExVPHhmESzAuQBSJfkWH68pBQzzjmDoqpB4jVOJDTVw5S6rsROq82oCDlMJ+1IOg3Qb
+         +uJAl+1/7sW5VDu0mmzVX4aAZdCAbElw8Bl9HilWAZsx0mUxQrLdZ8kd8FWIBjHRWT/a
+         6VuxrtXFHu44nsWs2642hJeloiNNR+cYAbVuI8GVG3nqTU3XMqgtLHQrLTRa4D3vIM1e
+         IekA==
+Received: by 10.68.230.200 with SMTP id ta8mr11362598pbc.13.1353649937343;
+        Thu, 22 Nov 2012 21:52:17 -0800 (PST)
+Received: from hurricane.sc.acceleramb.com ([12.3.154.2])
+        by mx.google.com with ESMTPS id nt5sm3238976pbb.59.2012.11.22.21.52.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Nov 2012 20:23:20 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.209.gf3828dc
-In-Reply-To: <1353644515-17349-1-git-send-email-chris@rorvick.com>
+        Thu, 22 Nov 2012 21:52:16 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210236>
 
-References are allowed to update from one commit-ish to another if the
-former is an ancestor of the latter.  This behavior is oriented to
-branches which are expected to move with commits.  Tag references are
-expected to be static in a repository, though, thus an update to
-something under refs/tags/ should be rejected unless the update is
-forced.
-
-Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- Documentation/git-push.txt | 11 ++++++-----
- builtin/push.c             |  2 +-
- builtin/send-pack.c        |  5 +++++
- cache.h                    |  1 +
- remote.c                   | 18 ++++++++++++++----
- send-pack.c                |  1 +
- t/t5516-fetch-push.sh      | 23 ++++++++++++++++++++++-
- transport-helper.c         |  6 ++++++
- transport.c                |  8 ++++++--
- 9 files changed, 62 insertions(+), 13 deletions(-)
+ gitk-git/gitk |  154 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 154 insertions(+)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index fe46c42..09bdec7 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -51,11 +51,12 @@ be named. If `:`<dst> is omitted, the same ref as <src> will be
- updated.
- +
- The object referenced by <src> is used to update the <dst> reference
--on the remote side, but by default this is only allowed if the
--update can fast-forward <dst>.  By having the optional leading `+`,
--you can tell git to update the <dst> ref even when the update is not a
--fast-forward.  This does *not* attempt to merge <src> into <dst>.  See
--EXAMPLES below for details.
-+on the remote side.  By default this is only allowed if <dst> is not
-+under refs/tags/, and then only if it can fast-forward <dst>.  By having
-+the optional leading `+`, you can tell git to update the <dst> ref even
-+if it is not allowed by default (e.g., it is not a fast-forward.)  This
-+does *not* attempt to merge <src> into <dst>.  See EXAMPLES below for
-+details.
- +
- `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
- +
-diff --git a/builtin/push.c b/builtin/push.c
-index 1391983..2143833 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -222,7 +222,7 @@ static const char message_advice_checkout_pull_push[] =
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 17ba10a..12a7139 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -1981,6 +1981,7 @@ proc makewindow {} {
+     global have_tk85 use_ttk NS
+     global git_version
+     global worddiff
++    global tagctxmenu
  
- static const char message_advice_ref_already_exists[] =
- 	N_("Updates were rejected because the destination reference already exists\n"
--	   "in the remote and the update is not a fast-forward.");
-+	   "in the remote.");
- 
- static void advise_pull_before_push(void)
- {
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index fda28bc..1eabf42 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -44,6 +44,11 @@ static void print_helper_status(struct ref *ref)
- 			msg = "non-fast forward";
- 			break;
- 
-+		case REF_STATUS_REJECT_ALREADY_EXISTS:
-+			res = "error";
-+			msg = "already exists";
-+			break;
+     # The "mc" arguments here are purely so that xgettext
+     # sees the following string as needing to be translated
+@@ -2526,6 +2527,13 @@ proc makewindow {} {
+ 	{mc "Run git gui blame on this line" command {external_blame_diff}}
+     }
+     $diff_menu configure -tearoff 0
 +
- 		case REF_STATUS_REJECT_NODELETE:
- 		case REF_STATUS_REMOTE_REJECT:
- 			res = "error";
-diff --git a/cache.h b/cache.h
-index b7ab4ac..a32a0ea 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1011,6 +1011,7 @@ struct ref {
- 		REF_STATUS_NONE = 0,
- 		REF_STATUS_OK,
- 		REF_STATUS_REJECT_NONFASTFORWARD,
-+		REF_STATUS_REJECT_ALREADY_EXISTS,
- 		REF_STATUS_REJECT_NODELETE,
- 		REF_STATUS_UPTODATE,
- 		REF_STATUS_REMOTE_REJECT,
-diff --git a/remote.c b/remote.c
-index 4a6f822..012b52f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1315,14 +1315,18 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 *
- 		 * (1) if the old thing does not exist, it is OK.
- 		 *
--		 * (2) if you do not have the old thing, you are not allowed
-+		 * (2) if the destination is under refs/tags/ you are
-+		 *     not allowed to overwrite it; tags are expected
-+		 *     to be static once created
-+		 *
-+		 * (3) if you do not have the old thing, you are not allowed
- 		 *     to overwrite it; you would not know what you are losing
- 		 *     otherwise.
- 		 *
--		 * (3) if both new and old are commit-ish, and new is a
-+		 * (4) if both new and old are commit-ish, and new is a
- 		 *     descendant of old, it is OK.
- 		 *
--		 * (4) regardless of all of the above, removing :B is
-+		 * (5) regardless of all of the above, removing :B is
- 		 *     always allowed.
- 		 */
- 
-@@ -1337,7 +1341,13 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 				!has_sha1_file(ref->old_sha1)
- 				  || !ref_newer(ref->new_sha1, ref->old_sha1);
- 
--			if (ref->nonfastforward) {
-+			if (ref->not_forwardable) {
-+				ref->requires_force = 1;
-+				if (!force_ref_update) {
-+					ref->status = REF_STATUS_REJECT_ALREADY_EXISTS;
-+					continue;
-+				}
-+			} else if (ref->nonfastforward) {
- 				ref->requires_force = 1;
- 				if (!force_ref_update) {
- 					ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
-diff --git a/send-pack.c b/send-pack.c
-index f50dfd9..1c375f0 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -229,6 +229,7 @@ int send_pack(struct send_pack_args *args,
- 		/* Check for statuses set by set_ref_status_for_push() */
- 		switch (ref->status) {
- 		case REF_STATUS_REJECT_NONFASTFORWARD:
-+		case REF_STATUS_REJECT_ALREADY_EXISTS:
- 		case REF_STATUS_UPTODATE:
- 			continue;
- 		default:
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index b5417cc..8f024a0 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -368,7 +368,7 @@ test_expect_success 'push with colon-less refspec (2)' '
- 		git branch -D frotz
- 	fi &&
- 	git tag -f frotz &&
--	git push testrepo frotz &&
-+	git push -f testrepo frotz &&
- 	check_push_result $the_commit tags/frotz &&
- 	check_push_result $the_first_commit heads/frotz
- 
-@@ -929,6 +929,27 @@ test_expect_success 'push into aliased refs (inconsistent)' '
- 	)
- '
- 
-+test_expect_success 'push requires --force to update lightweight tag' '
-+	mk_test heads/master &&
-+	mk_child child1 &&
-+	mk_child child2 &&
-+	(
-+		cd child1 &&
-+		git tag Tag &&
-+		git push ../child2 Tag &&
-+		git push ../child2 Tag &&
-+		>file1 &&
-+		git add file1 &&
-+		git commit -m "file1" &&
-+		git tag -f Tag &&
-+		test_must_fail git push ../child2 Tag &&
-+		git push --force ../child2 Tag &&
-+		git tag -f Tag &&
-+		test_must_fail git push ../child2 Tag HEAD~ &&
-+		git push --force ../child2 Tag
-+	)
-+'
-+
- test_expect_success 'push --porcelain' '
- 	mk_empty &&
- 	echo >.git/foo  "To testrepo" &&
-diff --git a/transport-helper.c b/transport-helper.c
-index 4713b69..965b778 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -661,6 +661,11 @@ static void push_update_ref_status(struct strbuf *buf,
- 			free(msg);
- 			msg = NULL;
- 		}
-+		else if (!strcmp(msg, "already exists")) {
-+			status = REF_STATUS_REJECT_ALREADY_EXISTS;
-+			free(msg);
-+			msg = NULL;
-+		}
- 	}
- 
- 	if (*ref)
-@@ -720,6 +725,7 @@ static int push_refs_with_push(struct transport *transport,
- 		/* Check for statuses set by set_ref_status_for_push() */
- 		switch (ref->status) {
- 		case REF_STATUS_REJECT_NONFASTFORWARD:
-+		case REF_STATUS_REJECT_ALREADY_EXISTS:
- 		case REF_STATUS_UPTODATE:
- 			continue;
- 		default:
-diff --git a/transport.c b/transport.c
-index ea8bbbd..a380ad7 100644
---- a/transport.c
-+++ b/transport.c
-@@ -695,6 +695,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
- 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
- 						 "non-fast-forward", porcelain);
- 		break;
-+	case REF_STATUS_REJECT_ALREADY_EXISTS:
-+		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+						 "already exists", porcelain);
-+		break;
- 	case REF_STATUS_REMOTE_REJECT:
- 		print_ref_status('!', "[remote rejected]", ref,
- 						 ref->deletion ? NULL : ref->peer_ref,
-@@ -740,12 +744,12 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 		    ref->status != REF_STATUS_OK)
- 			n += print_one_push_status(ref, dest, n, porcelain);
- 		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
--			if (ref->not_forwardable)
--				*reject_mask |= REJECT_ALREADY_EXISTS;
- 			if (!strcmp(head, ref->name))
- 				*reject_mask |= REJECT_NON_FF_HEAD;
- 			else
- 				*reject_mask |= REJECT_NON_FF_OTHER;
-+		} else if (ref->status == REF_STATUS_REJECT_ALREADY_EXISTS) {
-+			*reject_mask |= REJECT_ALREADY_EXISTS;
- 		}
- 	}
++    set tagctxmenu .tagctxmenu
++    makemenu $tagctxmenu {
++	{mc "Rename this tag" command mvtag}
++	{mc "Delete this tag" command rmtag}
++    }
++    $tagctxmenu configure -tearoff 0
  }
+ 
+ # Windows sends all mouse wheel events to the current focused window, not
+@@ -6345,6 +6353,7 @@ proc drawtags {id x xt y1} {
+ 		   -font $font -tags [list tag.$id text]]
+ 	if {$ntags >= 0} {
+ 	    $canv bind $t <1> [list showtag $tag_quoted 1]
++	    $canv bind $t $ctxbut [list showtagmenu %X %Y $id $tag_quoted]
+ 	} elseif {$nheads >= 0} {
+ 	    $canv bind $t $ctxbut [list headmenu %X %Y $id $tag_quoted]
+ 	}
+@@ -8857,6 +8866,113 @@ proc domktag {} {
+     return 1
+ }
+ 
++proc mvtag {} {
++    global mvtagtop
++    global tagmenuid tagmenutag tagctxmenu maintag NS
++    global mvtagtag
++
++    set mvtagtag $tagmenutag
++    set top .movetag
++    set mvtagtop $top
++    catch {destroy $top}
++    ttk_toplevel $top
++    make_transient $top .
++
++    ${NS}::label $top.msg -text [mc "Enter a new tag name:"]
++    ${NS}::entry $top.tag -width 60 -textvariable mvtagtag
++
++    grid $top.msg -sticky w -row 0 -column 0
++    grid $top.tag -sticky w -row 0 -column 1
++
++    ${NS}::frame $top.buts
++    ${NS}::button $top.buts.gen -text [mc "Rename"] -command mvtaggo
++    ${NS}::button $top.buts.can -text [mc "Cancel"] -command mvtagcan
++    bind $top <Key-Return> mvtaggo
++    bind $top <Key-Escape> mvtagcan
++    grid $top.buts.gen $top.buts.can
++    grid columnconfigure $top.buts 0 -weight 1 -uniform a
++    grid columnconfigure $top.buts 1 -weight 1 -uniform a
++    grid $top.buts - -pady 10 -sticky ew
++}
++
++proc domvtag {} {
++    global mvtagtop env tagids idtags tagmenutag tagmenuid mvtagtag
++
++    set tag $mvtagtag
++    set id $tagmenuid
++
++    # add tag
++    # XXX: reuse domktag including keeping comment from the original tag.
++    if {[catch {
++        exec git tag $tag $id
++    } err]} {
++        error_popup "[mc "Error renaming tag:"] $err" $mvtagtop
++        return 0
++    }
++
++    # delete old tag, content stored in $tagmenutag and $tagmenuid
++    dormtag
++
++    set tagids($tag) $id
++    lappend idtags($id) $tag
++    redrawtags $id
++    addedtag $id
++    dispneartags 0
++    run refill_reflist
++    return 1
++}
++
++proc rmtag {} {
++    global rmtagtop
++    global tagmenuid tagmenutag tagctxmenu maintag NS
++
++    set top .maketag
++    set rmtagtop $top
++    catch {destroy $top}
++    ttk_toplevel $top
++    make_transient $top .
++    ${NS}::label $top.title -text [mc "Delete tag"]
++    grid $top.title - -pady 10
++
++    ${NS}::label $top.msg -text [mc "You are about to delete a tag"]
++    ${NS}::label $top.tagname -foreground Red -text [mc "$tagmenutag"]
++    grid $top.msg -sticky w -row 0 -column 0
++    grid $top.tagname -sticky w -row 0 -column 1
++
++    ${NS}::frame $top.buts
++    ${NS}::button $top.buts.gen -text [mc "Delete"] -command rmtaggo
++    ${NS}::button $top.buts.can -text [mc "Cancel"] -command rmtagcan
++    bind $top <Key-Return> rmtaggo
++    bind $top <Key-Escape> rmtagcan
++    grid $top.buts.gen $top.buts.can
++    grid columnconfigure $top.buts 0 -weight 1 -uniform a
++    grid columnconfigure $top.buts 1 -weight 1 -uniform a
++    grid $top.buts - -pady 10 -sticky ew
++}
++
++proc dormtag {} {
++    global rmtagtop env tagids idtags tagmenutag tagmenuid
++
++    set tag $tagmenutag
++    set id $tagmenuid
++
++    if {[catch {
++        exec git tag -d $tag
++    } err]} {
++        error_popup "[mc "Error deleting tag:"] $err" $rmtagtop
++        return 0
++    }
++
++    unset tagids($tag)
++    set idx [lsearch $idtags($id) $tag]
++    set idtags($id) [lreplace $idtags($id) $idx $idx]
++
++    redrawtags $id
++    dispneartags 0
++    run refill_reflist
++    return 1
++}
++
+ proc redrawtags {id} {
+     global canv linehtag idpos currentid curview cmitlisted markedid
+     global canvxmax iddrawn circleitem mainheadid circlecolors
+@@ -8900,6 +9016,30 @@ proc mktaggo {} {
+     mktagcan
+ }
+ 
++proc rmtagcan {} {
++    global rmtagtop
++
++    catch {destroy $rmtagtop}
++    unset rmtagtop
++}
++
++proc rmtaggo {} {
++    if {![dormtag]} return
++    rmtagcan
++}
++
++proc mvtagcan {} {
++    global mvtagtop
++
++    catch {destroy $mvtagtop}
++    unset mvtagtop
++}
++
++proc mvtaggo {} {
++    if {![domvtag]} return
++    mvtagcan
++}
++
+ proc writecommit {} {
+     global rowmenuid wrcomtop commitinfo wrcomcmd NS
+ 
+@@ -9214,6 +9354,20 @@ proc headmenu {x y id head} {
+     tk_popup $headctxmenu $x $y
+ }
+ 
++# context menu for a tag
++proc showtagmenu {x y id tag} {
++    global tagmenuid tagmenutag tagctxmenu maintag
++
++    stopfinding
++    set tagmenuid $id
++    set tagmenutag $tag
++    set state normal
++
++    $tagctxmenu entryconfigure 0 -state normal
++    $tagctxmenu entryconfigure 1 -state normal
++    tk_popup $tagctxmenu $x $y
++}
++
+ proc cobranch {} {
+     global headmenuid headmenuhead headids
+     global showlocalchanges
 -- 
-1.8.0.209.gf3828dc
+1.7.9.5
