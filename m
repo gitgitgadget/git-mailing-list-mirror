@@ -1,7 +1,7 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH 4/7] push: flag updates that require force
-Date: Thu, 22 Nov 2012 22:21:52 -0600
-Message-ID: <1353644515-17349-5-git-send-email-chris@rorvick.com>
+Subject: [PATCH 2/7] push: add advice for rejected tag reference
+Date: Thu, 22 Nov 2012 22:21:50 -0600
+Message-ID: <1353644515-17349-3-git-send-email-chris@rorvick.com>
 References: <1353644515-17349-1-git-send-email-chris@rorvick.com>
 Cc: Chris Rorvick <chris@rorvick.com>,
 	Angelo Borsotti <angelo.borsotti@gmail.com>,
@@ -20,110 +20,155 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbkne-0001OK-Jp
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 05:23:34 +0100
+	id 1Tbknd-0001OK-Kw
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 05:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148Ab2KWEXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2012 23:23:20 -0500
+	id S1756080Ab2KWEXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2012 23:23:16 -0500
 Received: from mail-ie0-f174.google.com ([209.85.223.174]:35469 "EHLO
 	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756229Ab2KWEXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2012 23:23:19 -0500
+	with ESMTP id S1756033Ab2KWEXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2012 23:23:15 -0500
 Received: by mail-ie0-f174.google.com with SMTP id k11so2857476iea.19
-        for <git@vger.kernel.org>; Thu, 22 Nov 2012 20:23:18 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 22 Nov 2012 20:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=dhart3/2fA7dHEfe0mJXvk4nBzIB1VhAXgOa+MgMMVU=;
-        b=DL9C/VytWxaSbK+OL4Sot3UwKqs6qkhr+tjuFfWbBeYM9eWXobA5/flKAZrPUqTl7D
-         FnwRHmQBjow1+92eS9Ezksrf4o3LWARlz+lP0Nn1zgv/ZOf7GUwr3uIEMB+23S3sHobl
-         1kXOGnBqnaB8ovXKaHoSzHfcxWLxrzvjkpWW9/BbyGokMauEXSoCOX7BXMs5KfEzVKRX
-         5KYd5qGhT/oq85Tg6ezOqNAqMttHboGNQwz2Zx/IAsDwPYaeINouVRlYnfwAmS123X6F
-         6vMQXIOR+0c9zk3q2eocGex7MmhRjCFtmVYIs+DJPm3djHRbDmNCJA/3CwNWcGyuzsB0
-         mQ5A==
-Received: by 10.50.46.198 with SMTP id x6mr2477740igm.28.1353644598842;
-        Thu, 22 Nov 2012 20:23:18 -0800 (PST)
+        bh=5OZubYEnhUovJeq4qcV5rEMk0YiLVy1qone84RH3p70=;
+        b=cZU5Aw7mhpky7LcfFxqQkPlHeZjr0IByZsbJClNBSEYlPpmD6GGJzMbG//CEQVrLSC
+         PZ+rkgi9KSYDkMj/Vk89XQLII9i2azrgR2ff9nVJ6pIuvlP1sdiSqBQEYd9qyXemLv06
+         +GMsu+rCpBVP07vzH9SAJJYRKIQh0Od9Oz7aOLmOLMhahYX/Ld1My5D8p+WATymAWSri
+         mvfjibY78FwrceGc4OqGeXKe8J+wtl0RMsvlSvGQay9VDwqweT0oxD6wpiJAEHn84vi6
+         F1LFjeElerFlf04IABwpqS3sXVT2Kypqm52B+xyPdLDRonOtBdQxOsJvcYGl8xADS2Md
+         SGDg==
+Received: by 10.50.150.174 with SMTP id uj14mr2505518igb.19.1353644595040;
+        Thu, 22 Nov 2012 20:23:15 -0800 (PST)
 Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
-        by mx.google.com with ESMTPS id l8sm3909944igo.13.2012.11.22.20.23.16
+        by mx.google.com with ESMTPS id l8sm3909944igo.13.2012.11.22.20.23.13
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Nov 2012 20:23:18 -0800 (PST)
+        Thu, 22 Nov 2012 20:23:14 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.209.gf3828dc
 In-Reply-To: <1353644515-17349-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210228>
 
-Add a flag for indicating an update to a reference requires force.
-Currently the nonfastforward flag of a ref is used for this when
-generating status the status message.  A separate flag insulates the
-status logic from the details of set_ref_status_for_push().
+Advising the user to fetch and merge only makes sense if the rejected
+reference is a branch.  If none of the rejections are for branches, just
+tell the user the reference already exists.
 
 Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- cache.h     |  4 +++-
- remote.c    | 11 ++++++++---
- transport.c |  2 +-
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ builtin/push.c | 11 +++++++++++
+ cache.h        |  1 +
+ remote.c       | 10 ++++++++++
+ transport.c    |  2 ++
+ transport.h    |  1 +
+ 5 files changed, 25 insertions(+)
 
+diff --git a/builtin/push.c b/builtin/push.c
+index 4a0e7ef..1391983 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -220,6 +220,10 @@ static const char message_advice_checkout_pull_push[] =
+ 	   "(e.g. 'git pull') before pushing again.\n"
+ 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
+ 
++static const char message_advice_ref_already_exists[] =
++	N_("Updates were rejected because the destination reference already exists\n"
++	   "in the remote and the update is not a fast-forward.");
++
+ static void advise_pull_before_push(void)
+ {
+ 	if (!advice_push_non_ff_current || !advice_push_nonfastforward)
+@@ -241,6 +245,11 @@ static void advise_checkout_pull_push(void)
+ 	advise(_(message_advice_checkout_pull_push));
+ }
+ 
++static void advise_ref_already_exists(void)
++{
++	advise(_(message_advice_ref_already_exists));
++}
++
+ static int push_with_options(struct transport *transport, int flags)
+ {
+ 	int err;
+@@ -272,6 +281,8 @@ static int push_with_options(struct transport *transport, int flags)
+ 			advise_use_upstream();
+ 		else
+ 			advise_checkout_pull_push();
++	} else if (reject_mask & REJECT_ALREADY_EXISTS) {
++		advise_ref_already_exists();
+ 	}
+ 
+ 	return 1;
 diff --git a/cache.h b/cache.h
-index 722321c..b7ab4ac 100644
+index dbd8018..d72b64d 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -999,7 +999,9 @@ struct ref {
- 	unsigned char old_sha1[20];
- 	unsigned char new_sha1[20];
- 	char *symref;
--	unsigned int force:1,
-+	unsigned int
-+		force:1,
-+		requires_force:1,
+@@ -1002,6 +1002,7 @@ struct ref {
+ 	unsigned int force:1,
  		merge:1,
  		nonfastforward:1,
- 		not_forwardable:1,
++		not_forwardable:1,
+ 		deletion:1;
+ 	enum {
+ 		REF_STATUS_NONE = 0,
 diff --git a/remote.c b/remote.c
-index 07040b8..4a6f822 100644
+index 04fd9ea..5101683 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1293,6 +1293,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 	struct ref *ref;
+@@ -1279,6 +1279,14 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 	return 0;
+ }
  
- 	for (ref = remote_refs; ref; ref = ref->next) {
-+		int force_ref_update = ref->force || force_update;
++static inline int is_forwardable(struct ref* ref)
++{
++	if (!prefixcmp(ref->name, "refs/tags/"))
++		return 0;
 +
- 		if (ref->peer_ref)
- 			hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
- 		else if (!send_mirror)
-@@ -1335,9 +1337,12 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 				!has_sha1_file(ref->old_sha1)
- 				  || !ref_newer(ref->new_sha1, ref->old_sha1);
++	return 1;
++}
++
+ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 	int force_update)
+ {
+@@ -1316,6 +1324,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *     always allowed.
+ 		 */
  
--			if (ref->nonfastforward && !ref->force && !force_update) {
--				ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
--				continue;
-+			if (ref->nonfastforward) {
-+				ref->requires_force = 1;
-+				if (!force_ref_update) {
-+					ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
-+					continue;
-+				}
- 			}
- 		}
- 	}
++		ref->not_forwardable = !is_forwardable(ref);
++
+ 		ref->nonfastforward =
+ 			!ref->deletion &&
+ 			!is_null_sha1(ref->old_sha1) &&
 diff --git a/transport.c b/transport.c
-index 271965e..ea8bbbd 100644
+index b0c9f1b..271965e 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -659,7 +659,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
- 		const char *msg;
+@@ -740,6 +740,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+ 		    ref->status != REF_STATUS_OK)
+ 			n += print_one_push_status(ref, dest, n, porcelain);
+ 		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
++			if (ref->not_forwardable)
++				*reject_mask |= REJECT_ALREADY_EXISTS;
+ 			if (!strcmp(head, ref->name))
+ 				*reject_mask |= REJECT_NON_FF_HEAD;
+ 			else
+diff --git a/transport.h b/transport.h
+index 5f76ca2..7e86352 100644
+--- a/transport.h
++++ b/transport.h
+@@ -142,6 +142,7 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
  
- 		strcpy(quickref, status_abbrev(ref->old_sha1));
--		if (ref->nonfastforward) {
-+		if (ref->requires_force) {
- 			strcat(quickref, "...");
- 			type = '+';
- 			msg = "forced update";
+ #define REJECT_NON_FF_HEAD     0x01
+ #define REJECT_NON_FF_OTHER    0x02
++#define REJECT_ALREADY_EXISTS  0x04
+ 
+ int transport_push(struct transport *connection,
+ 		   int refspec_nr, const char **refspec, int flags,
 -- 
 1.8.0.209.gf3828dc
