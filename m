@@ -1,73 +1,82 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Requirements for integrating a new git subcommand
-Date: Fri, 23 Nov 2012 10:27:23 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1211231022440.1431@ds9.cixit.se>
-References: <20121122053012.GA17265@thyrsus.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH 0/8] fix git-config with duplicate variable entries
+Date: Fri, 23 Nov 2012 11:37:51 +0100
+Message-ID: <k8njm8$b1l$1@ger.gmane.org>
+References: <CACBZZX4cu9XuS5AtduWrNeXNUeZ4rqDUzRdmyz2b3cXtmo1nqQ@mail.gmail.com> <20121022211505.GA3301@sigill.intra.peff.net> <CACBZZX5mOb7_i9r8AqNK5V3r-gVnzN+rkeY9xrhecGv1rS-anA@mail.gmail.com> <20121023223502.GA23194@sigill.intra.peff.net> <7vsj84rt1g.fsf@alter.siamese.dyndns.org> <20121121192738.GA16280@sigill.intra.peff.net> <7vehjm20yu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 10:27:46 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 23 11:38:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TbpY0-0007II-Tv
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 10:27:45 +0100
+	id 1Tbqee-0003V3-HD
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 11:38:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758666Ab2KWJ1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 04:27:31 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:54034 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758644Ab2KWJ13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 04:27:29 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id qAN9RNM9006374
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 23 Nov 2012 10:27:23 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id qAN9RN5Z006371;
-	Fri, 23 Nov 2012 10:27:23 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20121122053012.GA17265@thyrsus.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 23 Nov 2012 10:27:23 +0100 (CET)
+	id S1752489Ab2KWKi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 05:38:26 -0500
+Received: from plane.gmane.org ([80.91.229.3]:47476 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751640Ab2KWKiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 05:38:24 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TbqeT-0003KU-M1
+	for git@vger.kernel.org; Fri, 23 Nov 2012 11:38:29 +0100
+Received: from dsdf-4db513fd.pool.mediaways.net ([77.181.19.253])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 11:38:29 +0100
+Received: from jojo by dsdf-4db513fd.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 11:38:29 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4db513fd.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210249>
 
-Eric S. Raymond:
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 
-> git-weave(1)
+...
 
-> Yes, there are scripts in contrib that do similar things.
+> Not exactly.  There are three classes of people:
+>
+> - wrote scripts using --get; found out that --get barfs if you feed
+>   two or more of the same, and have long learned to accept it as a
+>   limitation and adjusted their configuration files to avoid it.
+>   They have been doing just fine and wouldn't benefit from this
+>   series at all.
+>
+> - wrote scripts using --get, relying on it barfing if fed zero
+>   (i.e. missing) or two or more (i.e. ambiguous), perhaps a way to
+>   keep their configuration files (arguably unnecessarily) clean.
+>   They are directly harmed by this series.
+>
+> - wrote scripts using --get-all and did the last-one-wins
+>   themselves.  They wouldn't benefit directly from this series,
+>   unless they are willing to spend a bit of time to remove their
+>   own last-one-wins logic and replace --get-all with --get (but the
+>   same effort is needed to migrate to --get-one).
+>
+> - wanted to write scripts using --get, but after finding out that
+>   it barfs if you feed two, gave up emulating the internal, without
+>   realizing that they could do so with --get-all.  They can now
+>   write their scripts without using --get-all.
 
-I was just about to say that the import direction of this seems to 
-fill the same need as contrib/fast-import/import-directories.perl that 
-I submitted a few years back.
+There are three classes ofpeople: those that can count and those that can't
 
-Your version seems only to be able to import a linear history, 
-however, my tool does support creating merge commits (basically, the 
-history I had to import was very messy and contained a lot of snapshot 
-directories having been worked on in parallel).
-
-> (b) I am shipping it with a functional test,
-
-Hmm, indeed. I have been thinking of trying to wrap up the test suite 
-I have locally into something that could work within the Git testing 
-framework, but haven't found the time to or energy for so far.
-
-
-Anyway, my sentiment is that if you can add support for merges in you 
-weave tool, then I am very much for removing my old script from the 
-repository.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Sorry could not resist ;-) 
