@@ -1,137 +1,139 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 2/6] git p4: handle servers without move support
-Date: Fri, 23 Nov 2012 17:35:35 -0500
-Message-ID: <1353710139-16207-3-git-send-email-pw@padd.com>
+Subject: [PATCH 3/6] git p4: catch p4 errors when streaming file contents
+Date: Fri, 23 Nov 2012 17:35:36 -0500
+Message-ID: <1353710139-16207-4-git-send-email-pw@padd.com>
 References: <1353710139-16207-1-git-send-email-pw@padd.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 23:36:44 2012
+X-From: git-owner@vger.kernel.org Fri Nov 23 23:37:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tc1rV-0005SD-Ax
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 23:36:41 +0100
+	id 1Tc1rm-0005eo-3R
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 23:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab2KWWg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 17:36:27 -0500
-Received: from honk.padd.com ([74.3.171.149]:35228 "EHLO honk.padd.com"
+	id S1756730Ab2KWWgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 17:36:43 -0500
+Received: from honk.padd.com ([74.3.171.149]:35230 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756322Ab2KWWg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 17:36:26 -0500
+	id S1756397Ab2KWWgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 17:36:42 -0500
 Received: from arf.padd.com (unknown [50.55.150.96])
-	by honk.padd.com (Postfix) with ESMTPSA id 986CCE9A;
-	Fri, 23 Nov 2012 14:36:25 -0800 (PST)
+	by honk.padd.com (Postfix) with ESMTPSA id 4A1B4E9A;
+	Fri, 23 Nov 2012 14:36:42 -0800 (PST)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id E03BE27578; Fri, 23 Nov 2012 17:36:19 -0500 (EST)
+	id EA4C927578; Fri, 23 Nov 2012 17:36:39 -0500 (EST)
 X-Mailer: git-send-email 1.8.0.360.gc68af86
 In-Reply-To: <1353710139-16207-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210277>
 
-Support for the "p4 move" command was added in 8e9497c (git p4:
-add support for 'p4 move' in P4Submit, 2012-07-12), which checks
-to make sure that the client and server support the command.
+Error messages that arise during the "p4 print" phase of
+generating commits were silently ignored.  Catch them,
+abort the fast-import, and exit.
 
-But older versions of p4d may not handle the "-k" argument, and
-newer p4d allow disabling "p4 move" with a configuration setting.
-Check for both these cases by testing a p4 move command on bogus
-filenames and looking for strings in the error messages.
+Without this fix, the sync/clone appears to work, but files that
+are inaccessible by the p4d server will still be imported to git,
+although without the proper contents.  Instead the errant files
+will contain a p4 error message, such as "Librarian checkout
+//depot/path failed".
 
-Reported-by: Vitor Antunes <vitor.hda@gmail.com>
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- git-p4.py                | 21 ++++++++++++++++++++-
- t/t9814-git-p4-rename.sh | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+), 1 deletion(-)
+ git-p4.py               | 38 +++++++++++++++++++++++++++++++-------
+ t/t9800-git-p4-basic.sh | 13 ++++++++++++-
+ 2 files changed, 43 insertions(+), 8 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index cd68e04..9644c9f 100755
+index 9644c9f..cb1ec8d 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -129,6 +129,25 @@ def p4_has_command(cmd):
-     p.communicate()
-     return p.returncode == 0
+@@ -2139,6 +2139,29 @@ class P4Sync(Command, P4UserMap):
+     # handle another chunk of streaming data
+     def streamP4FilesCb(self, marshalled):
  
-+def p4_has_move_command():
-+    """See if the move command exists, that it supports -k, and that
-+       it has not been administratively disabled.  The arguments
-+       must be correct, but the filenames do not have to exist.  Use
-+       ones with wildcards so even if they exist, it will fail."""
++        # catch p4 errors and complain
++        err = None
++        if "code" in marshalled:
++            if marshalled["code"] == "error":
++                if "data" in marshalled:
++                    err = marshalled["data"].rstrip()
++        if err:
++            f = None
++            if self.stream_have_file_info:
++                if "depotFile" in self.stream_file:
++                    f = self.stream_file["depotFile"]
++            # force a failure in fast-import, else an empty
++            # commit will be made
++            self.gitStream.write("\n")
++            self.gitStream.write("die-now\n")
++            self.gitStream.close()
++            # ignore errors, but make sure it exits first
++            self.importProcess.wait()
++            if f:
++                die("Error from p4 print for %s: %s" % (f, err))
++            else:
++                die("Error from p4 print: %s" % err)
 +
-+    if not p4_has_command("move"):
-+        return False
-+    cmd = p4_build_cmd(["move", "-k", "@from", "@to"])
-+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-+    (out, err) = p.communicate()
-+    # return code will be 1 in either case
-+    if err.find("Invalid option") >= 0:
-+        return False
-+    if err.find("disabled") >= 0:
-+        return False
-+    # assume it failed because @... was invalid changelist
-+    return True
-+
- def system(cmd):
-     expand = isinstance(cmd,basestring)
-     if verbose:
-@@ -894,7 +913,7 @@ class P4Submit(Command, P4UserMap):
-         self.conflict_behavior = None
-         self.isWindows = (platform.system() == "Windows")
-         self.exportLabels = False
--        self.p4HasMoveCommand = p4_has_command("move")
-+        self.p4HasMoveCommand = p4_has_move_command()
+         if marshalled.has_key('depotFile') and self.stream_have_file_info:
+             # start of a new file - output the old one first
+             self.streamOneP4File(self.stream_file, self.stream_contents)
+@@ -2900,12 +2923,13 @@ class P4Sync(Command, P4UserMap):
  
-     def check(self):
-         if len(p4CmdList("opened ...")) > 0:
-diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-index 3bf1224..be802e0 100755
---- a/t/t9814-git-p4-rename.sh
-+++ b/t/t9814-git-p4-rename.sh
-@@ -199,6 +199,41 @@ test_expect_success 'detect copies' '
- 	)
+         self.tz = "%+03d%02d" % (- time.timezone / 3600, ((- time.timezone % 3600) / 60))
+ 
+-        importProcess = subprocess.Popen(["git", "fast-import"],
+-                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+-                                         stderr=subprocess.PIPE);
+-        self.gitOutput = importProcess.stdout
+-        self.gitStream = importProcess.stdin
+-        self.gitError = importProcess.stderr
++        self.importProcess = subprocess.Popen(["git", "fast-import"],
++                                              stdin=subprocess.PIPE,
++                                              stdout=subprocess.PIPE,
++                                              stderr=subprocess.PIPE);
++        self.gitOutput = self.importProcess.stdout
++        self.gitStream = self.importProcess.stdin
++        self.gitError = self.importProcess.stderr
+ 
+         if revision:
+             self.importHeadRevision(revision)
+@@ -2965,7 +2989,7 @@ class P4Sync(Command, P4UserMap):
+             self.importP4Labels(self.gitStream, missingP4Labels)
+ 
+         self.gitStream.close()
+-        if importProcess.wait() != 0:
++        if self.importProcess.wait() != 0:
+             die("fast-import failed: %s" % self.gitError.read())
+         self.gitOutput.close()
+         self.gitError.close()
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index b7ad716..05797c3 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -143,7 +143,18 @@ test_expect_success 'exit when p4 fails to produce marshaled output' '
+ 	! test_i18ngrep Traceback errs
  '
  
-+# See if configurables can be set, and in particular if the run.move.allow
-+# variable exists, which allows admins to disable the "p4 move" command.
-+test_expect_success 'p4 configure command and run.move.allow are available' '
-+	p4 configure show run.move.allow >out ; retval=$? &&
-+	test $retval = 0 &&
-+	{
-+		egrep ^run.move.allow: out &&
-+		test_set_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW ||
-+		true
-+	} || true
-+'
-+
-+# If move can be disabled, turn it off and test p4 move handling
-+test_expect_success P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW \
-+		    'do not use p4 move when administratively disabled' '
-+	test_when_finished "p4 configure set run.move.allow=1" &&
-+	p4 configure set run.move.allow=0 &&
-+	(
-+		cd "$cli" &&
-+		echo move-disallow-file >move-disallow-file &&
-+		p4 add move-disallow-file &&
-+		p4 submit -d "add move-disallow-file"
-+	) &&
+-test_expect_success 'clone bare' '
++# Hide a file from p4d, make sure we catch its complaint.  This won't fail in
++# p4 changes, files, or describe; just in p4 print.  If P4CLIENT is unset, the
++# message will include "Librarian checkout".
++test_expect_success 'exit gracefully for p4 server errors' '
++	test_when_finished "mv \"$db\"/depot/file1,v,hidden \"$db\"/depot/file1,v" &&
++	mv "$db"/depot/file1,v "$db"/depot/file1,v,hidden &&
 +	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.detectRenames true &&
-+		git mv move-disallow-file move-disallow-file-moved &&
-+		git commit -m "move move-disallow-file" &&
-+		git p4 submit
-+	)
++	test_expect_code 1 git p4 clone --dest="$git" //depot@1 >out 2>err &&
++	test_i18ngrep "Error from p4 print" err
 +'
 +
- test_expect_success 'kill p4d' '
- 	kill_p4d
- '
++test_expect_success 'clone --bare should make a bare repository' '
+ 	rm -rf "$git" &&
+ 	git p4 clone --dest="$git" --bare //depot &&
+ 	test_when_finished cleanup_git &&
 -- 
 1.8.0.276.gd9397fc
