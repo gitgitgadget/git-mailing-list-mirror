@@ -1,74 +1,136 @@
-From: Max Horn <max@quendi.de>
-Subject: remote helper and relative local paths
-Date: Fri, 23 Nov 2012 12:02:04 +0100
-Message-ID: <605DC086-713B-4986-B1C0-BD2EFF1D636B@quendi.de>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 12:02:26 2012
+From: Marc Khouzam <marc.khouzam@gmail.com>
+Subject: [PATCH v2] Completion must sort before using uniq
+Date: Fri, 23 Nov 2012 06:17:07 -0500
+Message-ID: <CAFj1UpHAqrNvpF+HAxJUPiWAiHbCn=7r1GDw3iMKy8FDW_-D_A@mail.gmail.com>
+References: <1353557598-4820-1-git-send-email-marc.khouzam@gmail.com>
+	<CAFj1UpF2wh0imcqW7Ez_J14R_07a_A1-YWESaGrHRNa7Nsv-xg@mail.gmail.com>
+	<CAMP44s3qpr11JXi-znddAH2BWYbM_kp+nZnTa8CQgCzrBmfzmA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 12:17:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tbr1d-0004am-U2
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 12:02:26 +0100
+	id 1TbrG7-0007Ms-Rz
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Nov 2012 12:17:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754371Ab2KWLCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 06:02:10 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:59216 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754020Ab2KWLCI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 06:02:08 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1Tbr1I-00039X-0R; Fri, 23 Nov 2012 12:02:04 +0100
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1353668528;5c5d52ea;
+	id S1755814Ab2KWLRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 06:17:08 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:44488 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755673Ab2KWLRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 06:17:07 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k11so3187085iea.19
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 03:17:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YK0oomY8zShkTFnnXCTwsN54Rckn434q1Zov9LlF5SQ=;
+        b=KgyA2ResAGU2jfdmlxN0tH6WV+Ho/oz4xjPIlqKsCUDwFtySgGYtTGHpmxJW3Nx02V
+         RiyxNiTmclE2WDBGeWz73SCWH7TVpP3r5e8W1aeHvUYuqci9XZNB+49vOtcUCZhySLR5
+         JO/hS/dZHjx65ICCdafVKJn11uFlWLojp5KSGHiFhI7JCYjNCAuns6HOn/AlTiPLyR1Z
+         j27dqLY6J0Jy7h0O9AzwZ6mqb0PnYtrGEsYHrjFfX0KDyZnGts313Zt5HF0Nzon+awA6
+         kyzdCVxFp3WNCVH2LaJqjf5yV3si7EKNvBKjSllf0t/79+BOEWyQZYiJiUh7PwWjIvSr
+         BcGA==
+Received: by 10.50.153.137 with SMTP id vg9mr5917144igb.40.1353669427221; Fri,
+ 23 Nov 2012 03:17:07 -0800 (PST)
+Received: by 10.64.132.39 with HTTP; Fri, 23 Nov 2012 03:17:07 -0800 (PST)
+In-Reply-To: <CAMP44s3qpr11JXi-znddAH2BWYbM_kp+nZnTa8CQgCzrBmfzmA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210251>
 
-I noticed a problem with remote helpers which is mainly about convenience, but still annoying enough that I wish it could be resolved; but I'd like some input on what the proper way would be...
+The user can be presented with invalid completion results
+when trying to complete a 'git checkout' command.  This can happen
+when using a branch name prefix that matches multiple remote branches.
+For example if available branches are:
+  master
+  remotes/GitHub/maint
+  remotes/GitHub/master
+  remotes/origin/maint
+  remotes/origin/master
 
-Here is the issue: cloning with relative paths is problematic (if not broken) when using remote-helpers, unless one is willing to dive into some (IMHO) gross hacking... To demonstrate what I mean, first consider that cloning a local git repo using relative paths works fine: If the parent dir contains a git repository "git-repo", this works:
+When performing completion on 'git checkout ma' the user will be
+given the choices:
+  maint
+  master
+However, 'git checkout maint' will fail in this case, although
+completion previously said 'maint' was valid.
+Furthermore, when performing completion on 'git checkout mai',
+no choices will be suggested.  So, the user is first told that the
+branch name 'maint' is valid, but when trying to complete 'mai'
+into 'maint', that completion is no longer valid.
 
-  $ git clone ../git-repo git-clone
-  Cloning into 'git-clone'...
-  done.
-  $ cd git-clone && git pull
-  Current branch master is up to date.
-  $
+The completion results should never propose 'maint' as a valid
+branch name, since 'git checkout' will refuse it.
 
-But when doing the same with a remote helper, it doesn't work; or rather, the initial cloning might work, but we end up with a broken remote.origin.url, as that still contains the relative path, but it no longer can be resolved since the PWD changed. E.g. here is an example using felipe's remote-hg:
+The reason for this bug is that the uniq program only
+works with sorted input.  The man page states
+"uniq prints the unique lines in a sorted file".
 
-  $ git clone hg::../hg-repo git-clone
-  Cloning into 'git-clone'...
-  $ cd git-clone && git pull
-  Traceback (most recent call last):
-  [...]
-  mercurial.error.RepoError: repository ../hg-repo not found
-  $
+When __git_refs uses the guess heuristic employed by checkout for
+tracking branches it wants to consider remote branches but only if
+the branch name is unique.  To do that, it calls 'uniq -u'.  However
+the input given to 'uniq -u' is not sorted.
 
+Therefore, in the above example, when dealing with 'git checkout ma',
+"__git_refs '' 1" will find the following list:
+  master
+  maint
+  master
+  maint
+  master
+which, when passed to 'uniq -u' will remain the same.  Therefore
+'maint' will be wrongly suggested as a valid option.
+When dealing with 'git checkout mai', the list will be:
+  maint
+  maint
+which happens to be sorted and will be emptied by 'uniq -u',
+properly ignoring 'maint'.
 
-One problem here is that git cannot resolve the local path in "hg::../hg-repo", because this URL is opaque for git, it's a black-box. Hence the code in "git clone" that would normally take care of this (specifically, get_repo_path() in builtin/clone.c) does not get applied.
+A solution for preventing the completion script from suggesting
+such invalid branch names is to first call 'sort' and then 'uniq -u'.
 
-Now, it is not difficult to resolve a relative path, and so a remote helper can do this -- but we only can do this while cloning (and then have to store the absolute path / the new URL), because later on, crucial information (the PWD at the time of cloning) is not available anymore.
+Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
+---
 
+>> The solution is to first call 'sort' and then 'uniq -u'.
+>
+> The solution to what? This seems to be the right thing indeed, but you
+> don't explain what is the actual problem that is being solved. What
+> does the user experience? What would (s)he experience after the patch?
 
-So I made a hack that does this: In the remote helper, if the URL looks like a local path, and points to a directory containing a .hg subdir (or some variation of that), translate it into an absolute path. Then (and that is the part I feel bad about) invoke
-  git config remote.REPOS_ALIAS.url hg::the_computed_absolute_path
+I have re-worked the commit message to be more clear about the user
+impacts.
 
-This works, but feels like a gross hack to me. In particular, as Felipe pointed out to me: While git is setting the remote.origin.url before invoking the remote helper right now, there is no guarantee for that (at least none that I am aware of). 
+Thanks for the feedback.
 
-So, is there a better way to achieve this that I am overlooking? Or does what I am doing actually seem fine? Or should there be a change to git itself (e.g. a revision to the remote-helper protocol) that helps to take care of that? And how should that look?
+Marc
 
-One simple idea for the last option would be to add a "sanitize" capability to remote-helpers, which takes a repository URL, and returns a sanitized version, where e.g. local paths have been resolved, and then "git clone" would make use of that to set the remote URL right. But perhaps I am overcomplicating things?
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Cheers,
-Max
+diff --git a/contrib/completion/git-completion.bash
+b/contrib/completion/git-completion.bash
+index bc0657a..85ae419 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -321,7 +321,7 @@ __git_refs ()
+                                if [[ "$ref" == "$cur"* ]]; then
+                                        echo "$ref"
+                                fi
+-                       done | uniq -u
++                       done | sort | uniq -u
+                fi
+                return
+        fi
+-- 
+1.8.0.1.g9fe2839
