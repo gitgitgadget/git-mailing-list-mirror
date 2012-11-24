@@ -1,184 +1,98 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 4/4] tree_entry_interesting: do basedir compare on wildcard patterns when possible
-Date: Sat, 24 Nov 2012 11:33:51 +0700
-Message-ID: <1353731631-20593-5-git-send-email-pclouds@gmail.com>
-References: <1353731631-20593-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH] fast-export: Allow pruned-references in mark file
+Date: Sat, 24 Nov 2012 10:47:12 +0100
+Message-ID: <1353750432-17373-1-git-send-email-apelisse@gmail.com>
+Cc: Antoine Pelisse <apelisse@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 24 05:34:47 2012
+X-From: git-owner@vger.kernel.org Sat Nov 24 10:47:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tc7S1-0005r6-RQ
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Nov 2012 05:34:46 +0100
+	id 1TcCL1-0004xI-33
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Nov 2012 10:47:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932754Ab2KXEea convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Nov 2012 23:34:30 -0500
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:44365 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932693Ab2KXEe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 23:34:29 -0500
-Received: by mail-pb0-f46.google.com with SMTP id wy7so6867625pbc.19
-        for <git@vger.kernel.org>; Fri, 23 Nov 2012 20:34:28 -0800 (PST)
+	id S1030206Ab2KXJre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Nov 2012 04:47:34 -0500
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:63799 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030181Ab2KXJrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Nov 2012 04:47:33 -0500
+Received: by mail-wg0-f44.google.com with SMTP id dr13so1059038wgb.1
+        for <git@vger.kernel.org>; Sat, 24 Nov 2012 01:47:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=V56xiYnIqwyMHGhAluCKnx160jSpn18Yh+v3N/u2Jt0=;
-        b=fYtf3pzriUyeXjy8Olc+xIY+a1zRi2z+VjxyHH4OsCCT+WRNvTMFnu/DsIFDr5xTAw
-         3IZGoFSTzYUDDI3WgMtvJVm2VRe0n5azE7F1A17VpyLYfTyw/0F9VREtdlGGkLfqGWiD
-         IbFHwjiXsU6M9PxaVAYn4eGeuS8kDOsGpezftuFBREVyyTWVxsIJgyt5EhuX5I5y5pnc
-         BVV++6G8vrV6i/fK6hY8WMD/5afwhbxXUJtdtL7lrp2LG+QDqGLUvUx8DYARJ8SQmci6
-         a8Cu05cciCae34XXcAwJQLIrjkcq9uETwlTB9ylv+4nEF4KkHiALTFKrARXHDPBhLtBP
-         TS9g==
-Received: by 10.68.252.133 with SMTP id zs5mr19203867pbc.152.1353731668925;
-        Fri, 23 Nov 2012 20:34:28 -0800 (PST)
-Received: from lanh ([115.74.35.242])
-        by mx.google.com with ESMTPS id s1sm4768975paz.0.2012.11.23.20.34.25
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=LwBsHdf/SkMwkZRcIXeYQ5EdXkt5yVQtKtuDk07t9Ys=;
+        b=Bfqf93SzDuHECGWqXquLC8/NVMihWCoZulHaCMLzRojqTOIZ0oBJLYCSl2T0XI92Hf
+         Um0TY7k2i25oV9JjGwrXdICfA+okp1cRUjncomKFROoillW/kUhr5EWsvl7V+gUYhfga
+         Zyaox9v4Cm0fhh2kU4G1PZvooXiKlrODnNhGJY0uhV65mx6O9wglwfg80C6NesLMYUgq
+         7CNQdJ2XA086SNjFwHVrtjKj4PVuNSaCbW/H6Ygy6rZFMUlFySiY9g845xFO9YuntRGb
+         L7wEgrcFqOEhRyomdpiOrmkW8msAvduvmlcL+JEPAbMDF3Qq5AsBjHgxLfRgIcb67ksZ
+         k1ww==
+Received: by 10.180.81.170 with SMTP id b10mr9322952wiy.16.1353750451825;
+        Sat, 24 Nov 2012 01:47:31 -0800 (PST)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPS id gk9sm11939648wib.4.2012.11.24.01.47.30
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 23 Nov 2012 20:34:28 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 24 Nov 2012 11:34:23 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1353731631-20593-1-git-send-email-pclouds@gmail.com>
+        Sat, 24 Nov 2012 01:47:31 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210317>
 
-Currently we treat "*.c" and "path/to/*.c" the same way. Which means
-we check all possible paths in repo against "path/to/*.c". One could
-see that "path/elsewhere/foo.c" obviously cannot match "path/to/*.c"
-and we only need to check all paths _inside_ "path/to/" against that
-pattern.
+fast-export can fail because of some pruned-reference when importing a
+mark file.
 
-This patch checks the leading fixed part of a pathspec against base
-directory and exit early if possible. We could even optimize further
-in "path/to/something*.c" case (i.e. check the fixed part against
-name_entry as well) but that's more complicated and probably does not
-gain us much.
+The problem happens in the following scenario:
 
--O2 build on linux-2.6, without and with this patch respectively:
+    $ git fast-export --export-marks=MARKS master
+    (rewrite master)
+    $ git prune
+    $ git fast-export --import-marks=MARKS master
 
-$ time git rev-list --quiet HEAD -- 'drivers/*.c'
+This might fail if some references have been removed by prune
+because some marks will refer to non-existing commits.
 
-real    1m9.484s
-user    1m9.128s
-sys     0m0.181s
+Let's warn when we have a mark for a commit we don't know.
+Also, increment the last_idnum before, so we don't override
+the mark.
 
-$ time ~/w/git/git rev-list --quiet HEAD -- 'drivers/*.c'
-
-real    0m15.710s
-user    0m15.564s
-sys     0m0.107s
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
 ---
- tree-walk.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++-
- 1 file changed, 62 insertions(+), 1 deletion(-)
+ builtin/fast-export.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 585899e..9d6e59b 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -573,6 +573,52 @@ static int match_dir_prefix(const char *base,
- }
-=20
- /*
-+ * Perform matching on the leading non-wildcard part of
-+ * pathspec. item->nowildcard_len must be greater than zero. Return
-+ * non-zero if base is matched.
-+ */
-+static int match_wildcard_base(const struct pathspec_item *item,
-+			       const char *base, int baselen,
-+			       int *matched)
-+{
-+	const char *match =3D item->match;
-+	/* the wildcard part is not considered in this function */
-+	int matchlen =3D item->nowildcard_len;
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 12220ad..141b245 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -607,16 +607,19 @@ static void import_marks(char *input_file)
+ 			|| *mark_end != ' ' || get_sha1(mark_end + 1, sha1))
+ 			die("corrupt mark line: %s", line);
+ 
++		if (last_idnum < mark)
++			last_idnum = mark;
 +
-+	if (baselen) {
-+		int dirlen;
-+		/*
-+		 * Return early if base is longer than the
-+		 * non-wildcard part but it does not match.
-+		 */
-+		if (baselen >=3D matchlen) {
-+			*matched =3D matchlen;
-+			return !strncmp(base, match, matchlen);
+ 		object = parse_object(sha1);
+-		if (!object)
+-			die ("Could not read blob %s", sha1_to_hex(sha1));
++		if (!object) {
++			warning("Could not read blob %s", sha1_to_hex(sha1));
++			continue;
 +		}
-+
-+		dirlen =3D matchlen;
-+		while (dirlen && match[dirlen - 1] !=3D '/')
-+			dirlen--;
-+
-+		/* Return early if base is shorter than the
-+		   non-wildcard part but it does not match. Note that
-+		   base ends with '/' so we are sure it really matches
-+		   directory */
-+		if (strncmp(base, match, baselen))
-+			return 0;
-+		*matched =3D baselen;
-+	} else
-+		*matched =3D 0;
-+	/*
-+	 * we could have checked entry against the non-wildcard part
-+	 * that is not in base and does similar never_interesting
-+	 * optimization as in match_entry. For now just be happy with
-+	 * base comparison.
-+	 */
-+	return entry_interesting;
-+}
-+
-+/*
-  * Is a tree entry interesting given the pathspec we have?
-  *
-  * Pre-condition: either baselen =3D=3D base_offset (i.e. empty path)
-@@ -602,7 +648,7 @@ enum interesting tree_entry_interesting(const struc=
-t name_entry *entry,
- 		const struct pathspec_item *item =3D ps->items+i;
- 		const char *match =3D item->match;
- 		const char *base_str =3D base->buf + base_offset;
--		int matchlen =3D item->len;
-+		int matchlen =3D item->len, matched =3D 0;
-=20
- 		if (baselen >=3D matchlen) {
- 			/* If it doesn't match, move along... */
-@@ -647,9 +693,24 @@ match_wildcards:
- 		if (item->nowildcard_len =3D=3D item->len)
- 			continue;
-=20
-+		if (item->nowildcard_len &&
-+		    !match_wildcard_base(item, base_str, baselen, &matched))
-+			return entry_not_interesting;
-+
- 		/*
- 		 * Concatenate base and entry->path into one and do
- 		 * fnmatch() on it.
-+		 *
-+		 * While we could avoid concatenation in certain cases
-+		 * [1], which saves a memcpy and potentially a
-+		 * realloc, it turns out not worth it. Measurement on
-+		 * linux-2.6 does not show any clear improvements,
-+		 * partly because of the nowildcard_len optimization
-+		 * in git_fnmatch(). Avoid micro-optimizations here.
-+		 *
-+		 * [1] if match_wildcard_base() says the base
-+		 * directory is already matched, we only need to match
-+		 * the rest, which is shorter so _in theory_ faster.
- 		 */
-=20
- 		strbuf_add(base, entry->path, pathlen);
---=20
-1.8.0.rc2.23.g1fb49df
+ 
+ 		if (object->flags & SHOWN)
+ 			error("Object %s already has a mark", sha1_to_hex(sha1));
+ 
+ 		mark_object(object, mark);
+-		if (last_idnum < mark)
+-			last_idnum = mark;
+ 
+ 		object->flags |= SHOWN;
+ 	}
+-- 
+1.7.9.5
