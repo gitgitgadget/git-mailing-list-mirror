@@ -1,98 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Option to revert order of parents in merge commit
-Date: Fri, 23 Nov 2012 18:58:49 -0800
-Message-ID: <7vfw3zzoye.fsf@alter.siamese.dyndns.org>
-References: <20121123083550.GA702@camk.edu.pl>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
+Date: Sat, 24 Nov 2012 04:12:15 +0100
+Message-ID: <CAMP44s38qTcSk4PLMkjgyyNq3OJn9QhTV7MuzseB8jPM3GnmeA@mail.gmail.com>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
+	<1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kacper Kornet <draenog@pld-linux.org>
-X-From: git-owner@vger.kernel.org Sat Nov 24 04:08:23 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 24 04:12:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tc66L-0004ZE-PG
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Nov 2012 04:08:18 +0100
+	id 1Tc6AT-0007AH-6e
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Nov 2012 04:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430Ab2KXC6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 21:58:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46792 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752881Ab2KXC6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 21:58:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AC1AAB1C;
-	Fri, 23 Nov 2012 21:58:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fpvjy0krAmCaQGvroMe48rESmpQ=; b=uTG4ql
-	apdIIDk3wp3/7OqPfJy3s4SL//K+F6QCyeesluhpp1eXVM2vI7zsgWnTX8RP6CWl
-	CeCePQjmXOIBY18PDJ6Czb16Ryr2ncAyrhTj0YzZZbT982yEQtCt9a5LMZfl9BOG
-	BzjepBTFOONWdG83SIYtPpLKeQcXrvsRU5kc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=grI0dPsxsBzuAffZvJgytUOqUlRlKcdC
-	4ZEiOq8yPYcPZUDhoC5AACFgK8gLaILZE3x4n/+F8VI7wYzQD40XbLCcco6qLNQZ
-	IHMYHiKzDtYTs4m9u1OO1nh6c8wKML7ZGQ3u7XcgA75VDtpqLuZcgYxhKbeuTWNr
-	9kf6kMwayl8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76BB0AB1B;
-	Fri, 23 Nov 2012 21:58:51 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2F70AB17; Fri, 23 Nov 2012
- 21:58:50 -0500 (EST)
-In-Reply-To: <20121123083550.GA702@camk.edu.pl> (Kacper Kornet's message of
- "Fri, 23 Nov 2012 09:35:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DFCB5C06-35E2-11E2-ADE9-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753842Ab2KXDMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 22:12:16 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:36749 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753082Ab2KXDMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 22:12:16 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so9367647oag.19
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 19:12:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5sDlBV3oV2hbWaivtHJR56mG/mJlxmg0aE7ripk7bU4=;
+        b=Ulqir7UkhLqwiTpWmYSPOqnV1/EaENXsmXtaALrOZYQ7Fo1YDpCd7hxnhwfc+E0qBh
+         Q7Pb55H8jb5Mf5QYzDb/k9pfvHmqwyLlv0ynb2vdQd2Q9TiDIB+tRV7fbe+UZ0qCd+ad
+         xinQ21N7k4Wge0qkKQ0eEViQWAEKoFZFQ3ze++SC9gy2jgRLGVcmFcK+/GbZaYuvbO16
+         aK3Gr7Ur1Nq/Ku/UPie0YEPmKc6bzttCtGff9TwutD3oNsIpvHb3eg3pVWJDO/9B1it8
+         3rIgGEubB79dNMsX946V5KrKv/69uPafk7qJJi252YZw35lVxxGX3WpJnhG8cr4JZFxt
+         R52w==
+Received: by 10.60.172.229 with SMTP id bf5mr4273718oec.81.1353726735321; Fri,
+ 23 Nov 2012 19:12:15 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Fri, 23 Nov 2012 19:12:15 -0800 (PST)
+In-Reply-To: <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210283>
 
-Kacper Kornet <draenog@pld-linux.org> writes:
+On Sun, Nov 11, 2012 at 2:59 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 
-> The following patch is an attempt to implement this idea.
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -529,7 +529,9 @@ static void get_tags_and_duplicates(struct object_array *pending,
+>                  * sure it gets properly upddated eventually.
+>                  */
+>                 if (commit->util || commit->object.flags & SHOWN)
+> -                       string_list_append(extra_refs, full_name)->util = commit;
+> +                       if (!(commit->object.flags & UNINTERESTING))
+> +                               string_list_append(extra_refs, full_name)->util = commit;
+> +
+>                 if (!commit->util)
+>                         commit->util = full_name;
+>         }
 
-I think "revert" is a wrong word (implying you have already done
-something and you are trying to defeat the effect of that old
-something), and you meant to say "reverse" (i.e. the opposite of
-normal) or something.
+There is one case where this can cause problems. I'm about to send
+another patch series where I fix transport-helper to behave more
+properly, and in doing so it sends things such as '^old-master master
+new', and if new points to master, there's a problem. This means the
+user would have to do 'git push new', instead of 'git push --all'. The
+transport-helper could do the reset itself, but that would require
+parsing the marks. A simpler solution for this is proposed in the next
+patch series.
 
-I am unsure about the usefulness of this, though.
+Cheers.
 
-After completing a topic on branch A, you would merge it to your own
-copy of the integration branch (e.g. 'master') and try to push,
-which may be rejected due to non-fast-forwardness:
-
-    $ git checkout master
-    $ git merge A
-    $ git push
-
-At that point, if you _care_ about the merge parent order, you could
-do this (still on 'master'):
-
-    $ git fetch origin
-    $ git reset --hard origin/master
-    $ git merge A
-    $ test test test
-    $ git push
-
-With --reverse-parents, it would become:
-
-    $ git pull --reverse-parents
-    $ test test test
-    $ git push
-
-which certainly is shorter and looks simpler.  The workflow however
-would encourage people to work directly on the master branch, which
-is a bit of downside.
-
-Is there any interaction between this "pull --reverse-parents"
-change and possible conflict resolution when the command stops and
-asks the user for help?  For example, whom should "--ours" and "-X
-ours" refer to?  Us, or the upstream?
+-- 
+Felipe Contreras
