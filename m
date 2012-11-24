@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6 p1.1 08/14] remote-testgit: cleanup tests
-Date: Sat, 24 Nov 2012 04:17:08 +0100
-Message-ID: <1353727034-24698-9-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v6 p1.1 09/14] remote-testgit: exercise more features
+Date: Sat, 24 Nov 2012 04:17:09 +0100
+Message-ID: <1353727034-24698-10-git-send-email-felipe.contreras@gmail.com>
 References: <1353727034-24698-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
@@ -17,188 +17,187 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 24 04:18:20 2012
+X-From: git-owner@vger.kernel.org Sat Nov 24 04:18:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tc6Fx-0001zJ-Nb
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Nov 2012 04:18:14 +0100
+	id 1Tc6G9-0002E8-TC
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Nov 2012 04:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622Ab2KXDR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2012 22:17:57 -0500
+	id S932627Ab2KXDSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2012 22:18:00 -0500
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:61989 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932594Ab2KXDR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2012 22:17:56 -0500
+	with ESMTP id S932594Ab2KXDR7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2012 22:17:59 -0500
 Received: by mail-bk0-f46.google.com with SMTP id q16so4063027bkw.19
-        for <git@vger.kernel.org>; Fri, 23 Nov 2012 19:17:55 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 23 Nov 2012 19:17:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Ah2F2+xenwG0yxZXk4tbG0u/+Ii8+pk5ZN6ULMeOOa4=;
-        b=tarfif4CRfVTAqyLtImlMotJtzcnYe7hMYreHV//sq+7PEIYx0qMXu2vUtf7gPLqEf
-         BA0COviHDsLGnTdULO7ZdV9ZVheDjbqQiuAtH+L5YAHFki49VcU1RAGxUG/DeZ+AvItQ
-         CBalb3gxhYvMXBX5ZiJTKRyKMJGnZwMEbbrwrZouLJkZUfaB5vw4L/zu/3VGrzOuFvn7
-         tTZ/foLpgmnM8MMJoSPWHb6Dn1LDJBf14RgBtXLBMD01NaBPGAVZTkzH2FOqsTyeq3xO
-         5aLUtp/DQg+xJTtGEKfoFI0ReWei4o9TWtKNC35lKd0TF51eFlQ03BfVZ1DJgI2LTPoV
-         o+/Q==
-Received: by 10.205.125.137 with SMTP id gs9mr1705900bkc.22.1353727075463;
-        Fri, 23 Nov 2012 19:17:55 -0800 (PST)
+        bh=SW1kPHUng3qJTgbshCaTba0kUKyk0WJBKYvENQdcIqk=;
+        b=1It7vgvqeqW32IQJPNykMiEL2YJBnlu04DJpg3TkM8MRhyLOgQKfq/6YR1E9v0zlPE
+         /n7gcX64smhA9UsLx0SNPAmtNqXSyQov6jV0dzIp+NpyO1b8AYv8q00FbF5qMgXPRqKW
+         9oiB+g8NPSpyxq2NV8yUPUxn/fXzplq/EYq0LQnAru87FB3CJTy4R/3ugn0uSG+fax7X
+         cuLDzR/YZNys3pHlGTyPweQENmQh4IakFfRdVPt2puyBZy0MCo7TQa0peH2CWvyAgU1m
+         CYu9Z4jQYI451X6xHplFxrsgUV/HyZu9T1XN6pzi+qY2/nWLcJgdsbEYY6ftmp7Figdl
+         BjMA==
+Received: by 10.204.136.209 with SMTP id s17mr1681212bkt.13.1353727079111;
+        Fri, 23 Nov 2012 19:17:59 -0800 (PST)
 Received: from localhost (ip-109-43-0-90.web.vodafone.de. [109.43.0.90])
-        by mx.google.com with ESMTPS id j16sm4400715bkv.1.2012.11.23.19.17.53
+        by mx.google.com with ESMTPS id t11sm5463330bkv.11.2012.11.23.19.17.57
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 23 Nov 2012 19:17:54 -0800 (PST)
+        Fri, 23 Nov 2012 19:17:58 -0800 (PST)
 X-Mailer: git-send-email 1.8.0
 In-Reply-To: <1353727034-24698-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210293>
 
-We don't need a bare 'server' and an intermediary 'public'. The repos
-can talk to each other directly; that's what we want to exercise.
+Unfortunately a lot of these tests fail.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t5801-remote-helpers.sh | 63 ++++++++++++++++++++++-------------------------
- 1 file changed, 29 insertions(+), 34 deletions(-)
+ git-remote-testgit        | 38 +++++++++++++++++++++++-----------
+ t/t5801-remote-helpers.sh | 52 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+), 12 deletions(-)
 
+diff --git a/git-remote-testgit b/git-remote-testgit
+index bf4d22c..e140282 100755
+--- a/git-remote-testgit
++++ b/git-remote-testgit
+@@ -6,17 +6,25 @@ url=$2
+ 
+ dir="$GIT_DIR/testgit/$alias"
+ prefix="refs/testgit/$alias"
+-refspec="refs/heads/*:${prefix}/heads/*"
+ 
+-gitmarks="$dir/git.marks"
+-testgitmarks="$dir/testgit.marks"
++default_refspec="refs/heads/*:${prefix}/heads/*"
++
++refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
++
++test -z "$refspec" && prefix="refs"
+ 
+ export GIT_DIR="$url/.git"
+ 
+ mkdir -p "$dir"
+ 
+-test -e "$gitmarks" || > "$gitmarks"
+-test -e "$testgitmarks" || > "$testgitmarks"
++if test -z "$GIT_REMOTE_TESTGIT_NO_MARKS"
++then
++	gitmarks="$dir/git.marks"
++	testgitmarks="$dir/testgit.marks"
++	test -e "$gitmarks" || >"$gitmarks"
++	test -e "$testgitmarks" || >"$testgitmarks"
++	testgitmarks_args=( "--"{import,export}"-marks=$testgitmarks" )
++fi
+ 
+ while read line
+ do
+@@ -24,9 +32,12 @@ do
+ 	capabilities)
+ 		echo 'import'
+ 		echo 'export'
+-		echo "refspec $refspec"
+-		echo "*import-marks $gitmarks"
+-		echo "*export-marks $gitmarks"
++		test -n "$refspec" && echo "refspec $refspec"
++		if test -n "$gitmarks"
++		then
++			echo "*import-marks $gitmarks"
++			echo "*export-marks $gitmarks"
++		fi
+ 		echo
+ 		;;
+ 	list)
+@@ -45,13 +56,16 @@ do
+ 			test "${line%% *}" != "import" && break
+ 		done
+ 
+-		echo "feature import-marks=$gitmarks"
+-		echo "feature export-marks=$gitmarks"
+-		git fast-export --use-done-feature --{import,export}-marks="$testgitmarks" $refs |
++		if test -n "$gitmarks"
++		then
++			echo "feature import-marks=$gitmarks"
++			echo "feature export-marks=$gitmarks"
++		fi
++		git fast-export --use-done-feature "${testgitmarks_args[@]}" $refs |
+ 		sed -e "s#refs/heads/#${prefix}/heads/#g"
+ 		;;
+ 	export)
+-		git fast-import --{import,export}-marks="$testgitmarks" --quiet
++		git fast-import "${testgitmarks_args[@]}" --quiet
+ 		echo
+ 		;;
+ 	'')
 diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 6801529..bc0b5f7 100755
+index bc0b5f7..12ae256 100755
 --- a/t/t5801-remote-helpers.sh
 +++ b/t/t5801-remote-helpers.sh
-@@ -19,100 +19,95 @@ compare_refs() {
- }
- 
- test_expect_success 'setup repository' '
--	git init --bare server/.git &&
--	git clone server public &&
--	(cd public &&
-+	git init server &&
-+	(cd server &&
- 	 echo content >file &&
- 	 git add file &&
--	 git commit -m one &&
--	 git push origin master)
-+	 git commit -m one)
+@@ -110,4 +110,56 @@ test_expect_failure 'push new branch with old:new refspec' '
+ 	compare_refs local HEAD server refs/heads/new-refspec
  '
  
- test_expect_success 'cloning from local repo' '
--	git clone "testgit::${PWD}/server" localclone &&
--	test_cmp public/file localclone/file
-+	git clone "testgit::${PWD}/server" local &&
-+	test_cmp server/file local/file
- '
- 
- test_expect_success 'create new commit on remote' '
--	(cd public &&
-+	(cd server &&
- 	 echo content >>file &&
--	 git commit -a -m two &&
--	 git push)
-+	 git commit -a -m two)
- '
- 
- test_expect_success 'pulling from local repo' '
--	(cd localclone && git pull) &&
--	test_cmp public/file localclone/file
-+	(cd local && git pull) &&
-+	test_cmp server/file local/file
- '
- 
- test_expect_success 'pushing to local repo' '
--	(cd localclone &&
-+	(cd local &&
- 	echo content >>file &&
- 	git commit -a -m three &&
- 	git push) &&
--	compare_refs localclone HEAD server HEAD
-+	compare_refs local HEAD server HEAD
- '
- 
- test_expect_success 'fetch new branch' '
--	(cd public &&
-+	(cd server &&
-+	 git reset --hard &&
- 	 git checkout -b new &&
- 	 echo content >>file &&
--	 git commit -a -m five &&
--	 git push origin new
-+	 git commit -a -m five
- 	) &&
--	(cd localclone &&
-+	(cd local &&
- 	 git fetch origin new
- 	) &&
--	compare_refs public HEAD localclone FETCH_HEAD
-+	compare_refs server HEAD local FETCH_HEAD
- '
- 
- #
- # This is only needed because of a bug not detected by this script. It will be
- # fixed shortly, but for now lets not cause regressions.
- #
--test_expect_success 'bump commit in public' '
--	(cd public &&
-+test_expect_success 'bump commit in server' '
-+	(cd server &&
- 	git checkout master &&
--	git pull &&
- 	echo content >>file &&
--	git commit -a -m four &&
--	git push) &&
--	compare_refs public HEAD server HEAD
-+	git commit -a -m four) &&
-+	compare_refs server HEAD server HEAD
- '
- 
- test_expect_success 'fetch multiple branches' '
--	(cd localclone &&
-+	(cd local &&
- 	 git fetch
- 	) &&
--	compare_refs server master localclone refs/remotes/origin/master &&
--	compare_refs server new localclone refs/remotes/origin/new
-+	compare_refs server master local refs/remotes/origin/master &&
-+	compare_refs server new local refs/remotes/origin/new
- '
- 
- test_expect_success 'push when remote has extra refs' '
--	(cd localclone &&
-+	(cd local &&
- 	 git reset --hard origin/master &&
- 	 echo content >>file &&
- 	 git commit -a -m six &&
- 	 git push
- 	) &&
--	compare_refs localclone master server master
-+	compare_refs local master server master
- '
- 
- test_expect_success 'push new branch by name' '
--	(cd localclone &&
-+	(cd local &&
- 	 git checkout -b new-name  &&
- 	 echo content >>file &&
- 	 git commit -a -m seven &&
- 	 git push origin new-name
- 	) &&
--	compare_refs localclone HEAD server refs/heads/new-name
-+	compare_refs local HEAD server refs/heads/new-name
- '
- 
- test_expect_failure 'push new branch with old:new refspec' '
--	(cd localclone &&
-+	(cd local &&
- 	 git push origin new-name:new-refspec
- 	) &&
--	compare_refs localclone HEAD server refs/heads/new-refspec
-+	compare_refs local HEAD server refs/heads/new-refspec
- '
- 
++test_expect_success 'cloning without refspec' '
++	GIT_REMOTE_TESTGIT_REFSPEC="" \
++	git clone "testgit::${PWD}/server" local2 &&
++	compare_refs local2 HEAD server HEAD
++'
++
++test_expect_success 'pulling without refspecs' '
++	(cd local2 &&
++	git reset --hard &&
++	GIT_REMOTE_TESTGIT_REFSPEC="" git pull) &&
++	compare_refs local2 HEAD server HEAD
++'
++
++test_expect_failure 'pushing without refspecs' '
++	test_when_finished "(cd local2 && git reset --hard origin)" &&
++	(cd local2 &&
++	echo content >>file &&
++	git commit -a -m ten &&
++	GIT_REMOTE_TESTGIT_REFSPEC="" git push) &&
++	compare_refs local2 HEAD server HEAD
++'
++
++test_expect_success 'pulling with straight refspec' '
++	(cd local2 &&
++	GIT_REMOTE_TESTGIT_REFSPEC="*:*" git pull) &&
++	compare_refs local2 HEAD server HEAD
++'
++
++test_expect_failure 'pushing with straight refspec' '
++	test_when_finished "(cd local2 && git reset --hard origin)" &&
++	(cd local2 &&
++	echo content >>file &&
++	git commit -a -m eleven &&
++	GIT_REMOTE_TESTGIT_REFSPEC="*:*" git push) &&
++	compare_refs local2 HEAD server HEAD
++'
++
++test_expect_success 'pulling without marks' '
++	(cd local2 &&
++	GIT_REMOTE_TESTGIT_NO_MARKS=1 git pull) &&
++	compare_refs local2 HEAD server HEAD
++'
++
++test_expect_failure 'pushing without marks' '
++	test_when_finished "(cd local2 && git reset --hard origin)" &&
++	(cd local2 &&
++	echo content >>file &&
++	git commit -a -m twelve &&
++	GIT_REMOTE_TESTGIT_NO_MARKS=1 git push) &&
++	compare_refs local2 HEAD server HEAD
++'
++
  test_done
 -- 
 1.8.0
