@@ -1,74 +1,71 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] emacs: make 'git-status' work with separate git dirs
-Date: Sun, 25 Nov 2012 10:06:25 +0100
-Message-ID: <87ehjit5ke.fsf@wine.dyndns.org>
-References: <1353599934-23222-1-git-send-email-enrico.scholz@sigma-chemnitz.de>
-	<7v4nkeyzfb.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Query for certain branches, but not the rest
+Date: Sun, 25 Nov 2012 10:24:59 +0100
+Message-ID: <CAMP44s02=E3imOv00dwyXR13nQdo1XeZTjJb_y0EVQoyYMEcQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 25 10:23:54 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 25 10:25:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcYRM-0007yQ-TN
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 10:23:53 +0100
+	id 1TcYSm-0000Xz-2J
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 10:25:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269Ab2KYJXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 04:23:38 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:36829 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734Ab2KYJXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 04:23:35 -0500
-X-Greylist: delayed 1020 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Nov 2012 04:23:35 EST
-Received: from adsl-84-227-211-246.adslplus.ch ([84.227.211.246] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <julliard@wine.dyndns.org>)
-	id 1TcYAW-00060W-HD; Sun, 25 Nov 2012 03:06:30 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 487381E71B1; Sun, 25 Nov 2012 10:06:25 +0100 (CET)
-In-Reply-To: <7v4nkeyzfb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 24 Nov 2012 22:22:32 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1.50 (gnu/linux)
-X-Spam-Score: -2.9
+	id S1752310Ab2KYJZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 04:25:04 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:55434 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729Ab2KYJZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 04:25:00 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so9993457obb.19
+        for <git@vger.kernel.org>; Sun, 25 Nov 2012 01:24:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=+ngTJHFnMU8oWQF94Dv3Vby7AJJK+cUHbMHymxgxgCk=;
+        b=oXjJZTz26Z+14Yly2I7xhv1wcH7yuQZwVAg5T6FN5RgTUM1w5vWnUgT9Bu/Y3xGtku
+         ekWpKaz4TbFkAZwd3YXI6wXu3L1OOqoQ+ZLqeqtUjqt24YHUHafZfk8Xj+H/yeQSQwmS
+         Q6fk2se7U2v3R2trcafW2KNMskTScEhxk0hjFZz2u5eicxKvkCfKJ/bAXp/ZvrWb3psS
+         pb8CFIA/5M8pdHt//kP1ztZ7TbMGO6FBGnbY12IC1/S9FXXCmTKOYDiQVIcEkOa2PAES
+         9rgSsPz/w1yqgtlw+7OHimyyXS1uVr1ezLfoXNN6PCH+hW1TAcLLAlkFrpp7HOkB4/5H
+         DN3Q==
+Received: by 10.60.28.166 with SMTP id c6mr6570242oeh.140.1353835499374; Sun,
+ 25 Nov 2012 01:24:59 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Sun, 25 Nov 2012 01:24:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210342>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Enrico Scholz <enrico.scholz@sigma-chemnitz.de> writes:
->
->> when trying 'M-x git-status' in a submodule created with recent (1.7.5+)
->> git, the command fails with
->>
->> | ... is not a git working tree
->>
->> This is caused by creating submodules with '--separate-git-dir' but
->> still checking for a working tree by testing for a '.git' directory.
->>
->> The patch fixes this by relaxing the existing detection a little bit.
->>
->> Signed-off-by: Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
->> ---
->
-> This script already relies on the assumption that nobody sane would
-> create a directory named ".git" that is not a git repository, and
-> this loosens the assumption that nobody would create a file named
-> ".git", either.  So I would think it is a sane thing to do, but just
-> in case if the area expert has better ideas, I am forwarding it.
->
-> Ack?
+Suppose I have these branches:
 
-Sure, that's fine.
+  fc/feature-a
+  fc/feature-b
+  master
+  next
+
+I want to show this: fc/feature-a fc/feature-b ^master ^next. I can do
+'git log --branches=fc' to show the branches that begin with fc/, but
+there's no way to specify the rest. If they were under a prefix, I
+could do '--not --branches=prefix', but they are not.
+
+Anybody knows a way to query branches that don't have any prefix?
+
+It appears this works:
+
+% git for-each-ref refs/heads/*
+
+But I would like something parsable by rev-parse.
+
+Any ideas?
+
+Cheers.
 
 -- 
-Alexandre Julliard
-julliard@winehq.org
+Felipe Contreras
