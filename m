@@ -1,134 +1,64 @@
-From: esr@thyrsus.com (Eric S. Raymond)
-Subject: [PATCH] Document the integration requirements for extension
- commands.
-Date: Sun, 25 Nov 2012 16:35:26 -0500 (EST)
-Message-ID: <20121125213526.A708A4065F@snark.thyrsus.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 25 22:36:38 2012
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: Python extension commands in git - request for policy change
+Date: Sun, 25 Nov 2012 22:41:39 +0100
+Message-ID: <20121125214139.GA29465@shrek.podlesie.net>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Sun Nov 25 22:42:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcjsR-0003Yk-FU
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 22:36:35 +0100
+	id 1Tcjxe-0006MH-8Z
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 22:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753466Ab2KYVgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 16:36:20 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:44418
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753449Ab2KYVgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 16:36:19 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id A708A4065F; Sun, 25 Nov 2012 16:35:26 -0500 (EST)
+	id S1753501Ab2KYVln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 16:41:43 -0500
+Received: from [93.179.225.50] ([93.179.225.50]:43953 "EHLO shrek.podlesie.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753474Ab2KYVln (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 16:41:43 -0500
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 47F133B6; Sun, 25 Nov 2012 22:41:39 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20121125024451.1ADD14065F@snark.thyrsus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210384>
 
-This contains no policy changes or proposals, it simply attempts
-to document the interfaces and conventions already in place.
----
- Documentation/technical/api-command.txt |   81 +++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
- create mode 100644 Documentation/technical/api-command.txt
+On Sat, Nov 24, 2012 at 09:44:51PM -0500, Eric S. Raymond wrote:
+> 
+> We're behind the best-practices curve here.  The major Linux
+> distributions, which have to deal with almost the same set of
+> tradeoffs we do, went to Python for pretty much all glue and
+> administration scripts outside /etc a decade ago, and the decision has
+> served them well.
+> 
+> That, among other things, means up-to-date versions of Python are
+> ubiquitous unless we're looking at Windows - in which case Perl and
+> shell actually become much bigger portability problems.  Mac OS X 
+> has kept up to date, too; Lion shipped 2.7.1 and that was a major
+> release back at this point.
+> 
 
-diff --git a/Documentation/technical/api-command.txt b/Documentation/technical/api-command.txt
-new file mode 100644
-index 0000000..de76614
---- /dev/null
-+++ b/Documentation/technical/api-command.txt
-@@ -0,0 +1,81 @@
-+= Integrating new subcommands =
-+
-+This is how-to documentation for people who want to add extension
-+commands to git.  It should be read alongside api-builtin.txt.
-+
-+== Runtime environment ==
-+
-+git subcommands are standalone executables that live in the git
-+execution directory, normally /usr/lib/git-core.  The git executable itself
-+is a thin wrapper that sets GIT_DIR and passes command-line arguments
-+to the subcommand.
-+
-+(If "git foo" is not found in the git execution directory, the wrapper
-+will look in the rest of your $PATH for it.  Thus, it's possible
-+to write local git extensions that don't live in system space.)
-+
-+== Implementation languages ==
-+
-+Most subcommands are written in C or shell.  A few are written in
-+Perl.  A tiny minority are written in Python.
-+
-+While we strongly encourage coding in portable C for portability, these
-+specific scripting languages are also acceptable. We won't accept more
-+without a very strong technical case, as we don't want to broaden the
-+git suite's required dependencies.
-+
-+C commands are normally written as single modules, named after the
-+command, that link a core library called libgit.  Thus, your command
-+'git-foo' would normally be implemented as a single "git-foo.c"; this
-+organization makes it easy for people reading the code to find things.
-+
-+See the CodingGuidelines document for other guidance on what we consider
-+good practice in C and shell, and api-builtin.txt for the support
-+functions available to built-in commands written in C.
-+
-+== What every extension command needs ==
-+
-+You must have a man page, written in asciidoc (this is what git help
-+followed by your subcommand name will display).  Be aware that there is
-+a local asciidoc configuration and macros which you should use.  It's
-+often helpful to start by cloning an existing page and replacing the
-+text content.
-+
-+You must have a test, written to report in TAP (Test Anything Protocol).
-+Tests are executables (usually shell scripts) that live in the 't' 
-+subdirectory of the tree.  Each test name begins with 't' and a sequence
-+number that controls where in the test sequence it will be executed;
-+conventionally the rest of the name stem is that of the command 
-+being tested.
-+
-+Read the file t/README to learn more about the conventions to be used
-+in writing tests, and the test support library.
-+
-+== Integrating a command ==
-+
-+Here are the things you need to do when you want to merge a new 
-+subcommand into the git tree.
-+
-+1. Append your command name to one of the variables BUILTIN_OBJS,
-+EXTRA_PROGRAMS, SCRIPT_SH, SCRIPT_PERL or SCRIPT_PYTHON.
-+
-+2. Drop its test in the t directory.
-+
-+3. If your command is implemented in an interpreted language with a 
-+p-code intermediate form, make sure .gitignore in the main directory
-+includes a pattern entry that ignores such files.  Python .pyc and
-+.pyo files will already be covered.
-+
-+4. If your command has any dependency on a a particular version of
-+your language, document it in the INSTALL file.
-+
-+5. There is a file command-list.txt in the distribution main directory
-+that categorizes commands by type, so they can be listed in appropriate
-+subsections in the documentation's summary command list.  Add an entry 
-+for yours.  To understand the categories, look at git-cmmands.txt
-+in the main directory.
-+
-+6. When your patch is merged, remind the maintainer to add something
-+about it in the RelNotes file.
-+
-+That's all there is to it.
--- 
-1.7.9.5
+What about embedded systems? git is also useful there. C and shell is
+everywhere, python is not. Adding additional dependency if it's not
+really needed it's not a good idea.
 
+Also not everyone uses up-to-date systems and sometimes you just
+care about some critical parts and do not touch everything else and
+there is probably quote large number of systems with python < 2.6.
+And even when you keep your system up-to-date, there are some GNU/Linux
+distros that are still supported, but does not provide recent python - for
+instance PLD Ac, which I still use on some systems and will use
+until the hardware dies, provides only python 2.4.6 (by the way,
+important packages like git are of course quite recent there - 1.7.11.1).
 
-
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-"Rightful liberty is unobstructed action, according to our will, within limits
-drawn around us by the equal rights of others."
-	-- Thomas Jefferson
+Krzysiek
