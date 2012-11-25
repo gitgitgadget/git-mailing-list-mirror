@@ -1,117 +1,107 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
 Subject: Re: Python extension commands in git - request for policy change
-Date: Sun, 25 Nov 2012 22:43:08 +0100
-Message-ID: <CAMP44s2ft7vvaGqHUa2CytpAsX8vOF3YQo24PLPsD6y1Dk3GZQ@mail.gmail.com>
+Date: Sun, 25 Nov 2012 16:56:35 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20121125215635.GA6937@thyrsus.com>
 References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<20121125095356.GA22279@thyrsus.com>
-	<CAMP44s1oRpm4QkhcbfAuxK8UTZnuSVfNhAQnmUd1xiwhwLEqGw@mail.gmail.com>
-	<20121125173229.GA32394@thyrsus.com>
+ <CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com>
+ <20121125051809.GA3670@thyrsus.com>
+ <CAMP44s0r1J=aOuEpKQ1+ew9FzODwLX-w5z9rG-WN6AjU0o97yw@mail.gmail.com>
+ <20121125095429.GB22279@thyrsus.com>
+ <CAMP44s1cG=5D9DppHmB9CpgkgdEzM72KhQ1Q-kWrrDo8ST+r_g@mail.gmail.com>
+ <20121125175051.GD32394@thyrsus.com>
+ <CAMP44s3QNG-sxcZsWmL3RYjXkzOwerj2774t7Abh04A7QR6TCA@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Sun Nov 25 22:43:26 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: msysgit+bncBCKNNHOUZUERBR5IZKCQKGQEEORE7CI@googlegroups.com Sun Nov 25 22:57:47 2012
+Return-path: <msysgit+bncBCKNNHOUZUERBR5IZKCQKGQEEORE7CI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-oa0-f58.google.com ([209.85.219.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tcjz3-00071t-IL
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 22:43:25 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485Ab2KYVnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 16:43:10 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:33428 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753474Ab2KYVnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 16:43:09 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so10204828oag.19
-        for <git@vger.kernel.org>; Sun, 25 Nov 2012 13:43:09 -0800 (PST)
+	(envelope-from <msysgit+bncBCKNNHOUZUERBR5IZKCQKGQEEORE7CI@googlegroups.com>)
+	id 1TckCq-0005n2-7Z
+	for gcvm-msysgit@m.gmane.org; Sun, 25 Nov 2012 22:57:40 +0100
+Received: by mail-oa0-f58.google.com with SMTP id l10sf7417144oag.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 25 Nov 2012 13:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8aMagqLSXO7cRFnr5FyGGLTG8MsLxUePKdoe3NTNjsI=;
-        b=DMwMdhs56LJ7VwG5obepFSmVBY4ZoRpO0U9W6ANcwh8+JyJEIKe7NUAAbT2gygQre1
-         Qn8sIZBzyFTfU0zQymrV2/USqRMkTx7VKkZ0LBq5FkeGS2nK1O7sQFzaZLzOjIdU2zyo
-         9AIeuF/wkXOqlquO9zvUNY5g5rS6n/iY9ZLvmObYIjJHzQ97X7VsxO0eJCWNV+FZsA8s
-         XYJm61DoC3nCxqbutyWHvKPXMyahpyHwqxmjooVQ23Lj75JFn1z73wCGiL7MTYOr7uK1
-         vBmJrS9CgVI7HlqGOhYUBUAp8Cul+8/DSyUPrYCX8OlX4V8EsZnQrb5jR+TDX8s+QEHy
-         upKA==
-Received: by 10.60.169.173 with SMTP id af13mr7632544oec.97.1353879788887;
- Sun, 25 Nov 2012 13:43:08 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Sun, 25 Nov 2012 13:43:08 -0800 (PST)
-In-Reply-To: <20121125173229.GA32394@thyrsus.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210385>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :reply-to:references:mime-version:in-reply-to:organization
+         :x-eric-conspiracy:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=aoGJ2rKXTRcKDgLB8NY7OBqIzig1o4lPLnPlsv53PIY=;
+        b=VoG8QDNkpXbZjcbmWyYAWkucKORr3C/0H2MrCKtgJ5P2dHx5ZYXWMJTFzi2Wmfq4GB
+         IM9t4+3Gq6oN5tuhSts7+3Zfk/cZTtxGYYGTNPf5bC+zXvPJIGIJDPLlg4KGVvbSp7Ox
+         XRWlEYMp9yXBeXik7JmWDlGH+EfKK8dHpNdRSxBgUzqXlNbNnyiAzYHZO0/WxGQfEQSh
+         u2M9DJ2hFRnnbVabdeWcRyfDYFJnilAEDj9dyO7d75cZDRQRdYhVXzSaFH1ngGHzq0Er
+         jiSnh353fbPhsg 
+Received: by 10.49.26.39 with SMTP id i7mr1916907qeg.18.1353880648538;
+        Sun, 25 Nov 2012 13:57:28 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.2.42 with SMTP id 10ls1418967qer.10.gmail; Sun, 25 Nov 2012
+ 13:57:27 -0800 (PST)
+Received: by 10.58.239.41 with SMTP id vp9mr2937746vec.38.1353880647642;
+        Sun, 25 Nov 2012 13:57:27 -0800 (PST)
+Received: by 10.58.239.41 with SMTP id vp9mr2937745vec.38.1353880647615;
+        Sun, 25 Nov 2012 13:57:27 -0800 (PST)
+Received: from snark.thyrsus.com (static-71-162-243-5.phlapa.fios.verizon.net. [71.162.243.5])
+        by gmr-mx.google.com with ESMTP id bn19si934851vdb.0.2012.11.25.13.57.27;
+        Sun, 25 Nov 2012 13:57:27 -0800 (PST)
+Received-SPF: pass (google.com: domain of esr@thyrsus.com designates 71.162.243.5 as permitted sender) client-ip=71.162.243.5;
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 79B274065F; Sun, 25 Nov 2012 16:56:35 -0500 (EST)
+In-Reply-To: <CAMP44s3QNG-sxcZsWmL3RYjXkzOwerj2774t7Abh04A7QR6TCA@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Original-Sender: esr@thyrsus.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of esr@thyrsus.com designates 71.162.243.5 as permitted sender) smtp.mail=esr@thyrsus.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210386>
 
-On Sun, Nov 25, 2012 at 6:32 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com>:
->> Seems sensible, but I don't know what "rejection" would actually mean.
->
-> Why is this mysterious?  We reject a patch when we don't choose to merge it.
+Felipe Contreras <felipe.contreras@gmail.com>:
+> And gitk is an integral part of git. But if you have different
+> numbers, what are they?
 
-Why would you reject it? If, according to you, it's very simple to fix
-the portability, then presumably it would take you less time to fix
-it, than to reject it (and everything that implies).
+I looked at the Makefile.  I saw that there are shell variables that collect
+C commands, shell command, Perl commands, and Python commands.  There are no
+collections of other commands.  That makes them the top languages in the
+universe we are concerned about
 
->> Too late.
->
-> I'd be happy to help you out by auditing them for version dependencies.
-
-Be my guest:
-http://git.kernel.org/?p=git/git.git;a=tree;f=contrib/remote-helpers;h=adfdcc164e634c74024c8f69bb0cdb9f3b4a9f18;hb=7b4a70c62f3a83fbd8b44bf712141754a5f64205
-
-Some patches might be missing, so:
-https://github.com/felipec/git/tree/fc/remote/hg
-
->> I don't see what this means in practical terms. People are going to
->> write code in whatever language they want to write code in. How
->> exactly are "we" going to "encourage" them not to do that is not
->> entirely clear to me.
->
-> One way is by having clear guidelines for good practice that *include*
-> Python, and tell people exactly what the requirements are.
-
-The key word being guideline, which is different from a strict rule.
-
->> Subcommands are also probably more efficient in c. And lets remember
->> that most people use git through the *official* subcommands.
->
-> See my remarks on the 80-20 rule elsewhere in the thread.  Execessive
-> worship of "efficiency" is a great way to waste effort and pile up
-> hidden costs in maintainance problems.
-
-According to the results of the last survey, our users do care about
-performance, so I don't think there's anything excessive about it. Are
-there any hidden costs in maintenance problems? I don't think so.
-
-The people that like to improve the performance of git, would keep
-doing so, and the people that want to use fancy scripts to do fancy
-stuff, will keep doing so. It just happens that the former have
-actually managed to do it, and go all the way into the mainline.
-
-It would be great if we had a finished libgit2 with all the essential
-stuff, and good bindings for python (and other languages), and it
-would be great if python really was this touted language, that is easy
-to read, and would make things more maintainable. Unfortunately,
-that's not the case.
-
-I could write an endless list of what things in the python language
-don't make any sense, and how in ruby, for example, they do.
-Fortunately, I don't have to.
-
-Git does have problems, but they have nothing to do with maintenance,
-or C; they have to do with the user interface, and the documentation
-(again, according to our users (and me)). So, I don't see why worry
-about moving code from C to python when barely any code in git is
-python, specially if it doesn't fix any real issue.
-
-Cheers.
+Please don't waste further time on quibbling.  We all know that gitk is
+an uncomfortable special case and that the project would be far better
+off, maintainability-wise, if it were successfully ported to one if these
+other languages.  Trying to catch me out by triumphantly pointing at gitk 
+is...juvenile.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
 
 -- 
-Felipe Contreras
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
