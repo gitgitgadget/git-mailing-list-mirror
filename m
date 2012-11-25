@@ -1,60 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Sun, 25 Nov 2012 09:57:28 +0100
-Message-ID: <50B1DD78.5040907@kdbg.org>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] emacs: make 'git-status' work with separate git dirs
+Date: Sun, 25 Nov 2012 10:06:25 +0100
+Message-ID: <87ehjit5ke.fsf@wine.dyndns.org>
+References: <1353599934-23222-1-git-send-email-enrico.scholz@sigma-chemnitz.de>
+	<7v4nkeyzfb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Sun Nov 25 09:57:49 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 25 10:23:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcY28-00072K-MU
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 09:57:49 +0100
+	id 1TcYRM-0007yQ-TN
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 10:23:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269Ab2KYI5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 03:57:33 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:21456 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729Ab2KYI5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 03:57:33 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id DFB9B10011;
-	Sun, 25 Nov 2012 09:57:29 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 0D7C619F434;
-	Sun, 25 Nov 2012 09:57:28 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121025 Thunderbird/16.0.2
-In-Reply-To: <20121125024451.1ADD14065F@snark.thyrsus.com>
+	id S1752269Ab2KYJXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 04:23:38 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:36829 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751734Ab2KYJXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 04:23:35 -0500
+X-Greylist: delayed 1020 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Nov 2012 04:23:35 EST
+Received: from adsl-84-227-211-246.adslplus.ch ([84.227.211.246] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <julliard@wine.dyndns.org>)
+	id 1TcYAW-00060W-HD; Sun, 25 Nov 2012 03:06:30 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 487381E71B1; Sun, 25 Nov 2012 10:06:25 +0100 (CET)
+In-Reply-To: <7v4nkeyzfb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 24 Nov 2012 22:22:32 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1.50 (gnu/linux)
+X-Spam-Score: -2.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210341>
 
-Am 25.11.2012 03:44, schrieb Eric S. Raymond:
-> That, among other things, means up-to-date versions of Python are
-> ubiquitous unless we're looking at Windows - in which case Perl and
-> shell actually become much bigger portability problems.
+Junio C Hamano <gitster@pobox.com> writes:
 
-You seem to ignore that more than a quater of users are on Windows[1].
-This is not negligible.
+> Enrico Scholz <enrico.scholz@sigma-chemnitz.de> writes:
+>
+>> when trying 'M-x git-status' in a submodule created with recent (1.7.5+)
+>> git, the command fails with
+>>
+>> | ... is not a git working tree
+>>
+>> This is caused by creating submodules with '--separate-git-dir' but
+>> still checking for a working tree by testing for a '.git' directory.
+>>
+>> The patch fixes this by relaxing the existing detection a little bit.
+>>
+>> Signed-off-by: Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+>> ---
+>
+> This script already relies on the assumption that nobody sane would
+> create a directory named ".git" that is not a git repository, and
+> this loosens the assumption that nobody would create a file named
+> ".git", either.  So I would think it is a sane thing to do, but just
+> in case if the area expert has better ideas, I am forwarding it.
+>
+> Ack?
 
-Therefore, we *are* looking at Windows. But where is there a portability
-problem? There is a POSIX shell available in all git installations on
-Windows. So is Perl. Python is not.
+Sure, that's fine.
 
-[1]
-https://git.wiki.kernel.org/index.php/GitSurvey2011#10._On_which_operating_system.28s.29_do_you_use_Git.3F
-
-> 4) We should be encouraging C code to move to Python, too.
-
-Absolutely not. To achieve best portability, all code should move to C
-instead.
-
--- Hannes
+-- 
+Alexandre Julliard
+julliard@winehq.org
