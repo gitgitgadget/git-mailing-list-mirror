@@ -1,90 +1,104 @@
 From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Sun, 25 Nov 2012 05:25:36 -0500
+Subject: Re: Re: Python extension commands in git - request for
+ policy change
+Date: Sun, 25 Nov 2012 05:33:17 -0500
 Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121125102536.GC22279@thyrsus.com>
+Message-ID: <20121125103316.GA24514@thyrsus.com>
 References: <20121125024451.1ADD14065F@snark.thyrsus.com>
- <50B1DD78.5040907@kdbg.org>
+ <CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com>
+ <CABNJ2G+CevGU=-DjC073yGv0gupd9QK6eyjhrrQTNNmTkq_fxg@mail.gmail.com>
 Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Nov 25 11:27:06 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>
+To: Pat Thoyts <patthoyts@gmail.com>
+X-From: msysgit+bncBCKNNHOUZUERBQ7IY6CQKGQEUOMIAQI@googlegroups.com Sun Nov 25 11:35:02 2012
+Return-path: <msysgit+bncBCKNNHOUZUERBQ7IY6CQKGQEUOMIAQI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f58.google.com ([209.85.216.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcZQX-0001Ig-AW
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 11:27:05 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753001Ab2KYK0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 05:26:30 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:42206
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752899Ab2KYK02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 05:26:28 -0500
+	(envelope-from <msysgit+bncBCKNNHOUZUERBQ7IY6CQKGQEUOMIAQI@googlegroups.com>)
+	id 1TcZY7-0006aj-UI
+	for gcvm-msysgit@m.gmane.org; Sun, 25 Nov 2012 11:34:56 +0100
+Received: by mail-qa0-f58.google.com with SMTP id a17sf2082608qae.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 25 Nov 2012 02:34:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :reply-to:references:mime-version:in-reply-to:organization
+         :x-eric-conspiracy:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=L5NT9gIHaInXkj85FEjlQJiUI2/UXE2/lqqzGWMOH9c=;
+        b=UDjLbfhXrME1xl2XYr5vVHgJpNgafhqUKYPpguKUpmYeuehyDLPOET4km614RIO3Fq
+         +OkRaZw/BESm7uo1F1zO3KjWVdVm2VifOGSwF3Wzev7yW+aLQ4iiWqNRjyR7oKRFYPUg
+         i3LIXBWMZkgj/b0Wqcq+snh9FDusz5ALtbtjqnbbnE+ykEL6wKMTrKkU1nYS0LooHdBg
+         ErhRfoRQBxV2Bpv7eFFJgiF2dSzYLSnvYcOl4Lmqg5DfNalDghAY6g77KA/eC86rvAK5
+         GqQJe0VDOZf/7K 
+Received: by 10.49.24.13 with SMTP id q13mr1637713qef.33.1353839684300;
+        Sun, 25 Nov 2012 02:34:44 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.94.82 with SMTP id da18ls1292095qeb.26.gmail; Sun, 25 Nov
+ 2012 02:34:43 -0800 (PST)
+Received: by 10.224.173.202 with SMTP id q10mr5844950qaz.3.1353839683630;
+        Sun, 25 Nov 2012 02:34:43 -0800 (PST)
+Received: by 10.224.174.76 with SMTP id s12msqaz;
+        Sun, 25 Nov 2012 02:34:08 -0800 (PST)
+Received: by 10.59.0.194 with SMTP id ba2mr2683905ved.19.1353839648446;
+        Sun, 25 Nov 2012 02:34:08 -0800 (PST)
+Received: by 10.59.0.194 with SMTP id ba2mr2683904ved.19.1353839648436;
+        Sun, 25 Nov 2012 02:34:08 -0800 (PST)
+Received: from snark.thyrsus.com ([2002:47a2:f305:1:2877:c35b:11a0:30fa])
+        by gmr-mx.google.com with ESMTP id bn19si834020vdb.0.2012.11.25.02.34.08;
+        Sun, 25 Nov 2012 02:34:08 -0800 (PST)
+Received-SPF: pass (google.com: domain of esr@thyrsus.com designates 2002:47a2:f305:1:2877:c35b:11a0:30fa as permitted sender) client-ip=2002:47a2:f305:1:2877:c35b:11a0:30fa;
 Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 188674065F; Sun, 25 Nov 2012 05:25:36 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <50B1DD78.5040907@kdbg.org>
+	id 1969740661; Sun, 25 Nov 2012 05:33:17 -0500 (EST)
+In-Reply-To: <CABNJ2G+CevGU=-DjC073yGv0gupd9QK6eyjhrrQTNNmTkq_fxg@mail.gmail.com>
 X-Eric-Conspiracy: There is no conspiracy
 User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210347>
+X-Original-Sender: esr@thyrsus.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of esr@thyrsus.com designates 2002:47a2:f305:1:2877:c35b:11a0:30fa as
+ permitted sender) smtp.mail=esr@thyrsus.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210348>
 
-Johannes Sixt <j6t@kdbg.org>:
-> Am 25.11.2012 03:44, schrieb Eric S. Raymond:
-> > That, among other things, means up-to-date versions of Python are
-> > ubiquitous unless we're looking at Windows - in which case Perl and
-> > shell actually become much bigger portability problems.
-> 
-> You seem to ignore that more than a quater of users are on Windows[1].
-> This is not negligible.
+Pat Thoyts <patthoyts@gmail.com>:
+> Git for Windows simply ships everything we need to run git - so if a
+> desirable module requires a version of python, we will add that
+> version plus any required modules into the installer. We already have
+> a patch to provide python in the msysgit tree - it would just require
+> polishing up a little. I'm certain this is no problem for the other
+> windows port (cygwin) either.
 
-I'm not ignoring that at all.  There are questions of fact here:
-
-Are Perl and a POSIX shell part of the stock installation of Windows?
-I believe the answer is "no".  You are free to correct me, but if that's
-true they don't have any obvious portability advantage over Python.
-That means the 25% percent of Windows users are not actually a reason
-to prefer them.
-
-> Absolutely not. To achieve best portability, all code should move to C
-> instead.
-
-I wrote the (first) book on C portability.  I mean that literally -
-"Portable C and Unix Systems Programming", Prentice-Hall 1987.  Please
-don't feel insulted when I point out that over the last 25 years I
-have probably forgotten more about this topic than you know.  Just
-listen when I tell you that it is not at all obvious that raw C is the
-maximally portable language.
-
-It may very well be the case that some random scripting language (not
-necessarily Python) achieves greater portability simply because its
-maintainers get to pay more concentrated attention to the portability
-of the environment bindings at the bottom of their C implementation than
-we can.
-
-In any case, I don't believe the difference in portability between raw
-C and Python is large enough in either direction to be a reason to
-favor either, and I speak as a domain expert on this issue.  This is
-not Python advocacy talking; the same could be said of Perl or Ruby.
-
-The real advantages of a scripting language are in maintainability and
-expected defect rates, not portability.  The three relevant things we kbnow
-from large-scale studies of software defect patterns are these:
-
-1) Expected defect counts are predictable from LOC.
-
-2) Moving to any given scripting language from C dramatically reduces LOC,
-and thus expected defects over time.
-
-3) Moving to any scripting language from C eliminates a class of
-memory-management problems that dominate C defect statistics.
+Thank you - I think this completely disposes of the "Windows is a blocker
+for scripting language X" argument, with the case X = Python in point. 
 -- 
 		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
