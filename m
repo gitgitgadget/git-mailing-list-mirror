@@ -1,120 +1,128 @@
-From: Thorsten Glaser <tg@debian.org>
-Subject: Multiple threads of compression
-Date: Sun, 25 Nov 2012 16:27:32 +0000 (UTC)
-Message-ID: <loom.20121125T171702-64@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: Python extension commands in git - request for
+ policy change
+Date: Sun, 25 Nov 2012 18:21:08 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1211251806390.7256@s15462909.onlinehome-server.info>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com> <CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com> <20121125051809.GA3670@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 25 17:45:13 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org, 
+    msysGit <msysgit@googlegroups.com>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: msysgit+bncBCZPH74Q5YNRBB5HZGCQKGQEYJOMNOQ@googlegroups.com Sun Nov 25 18:21:26 2012
+Return-path: <msysgit+bncBCZPH74Q5YNRBB5HZGCQKGQEYJOMNOQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ye0-f186.google.com ([209.85.213.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcfKR-0004XG-2X
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 17:45:11 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233Ab2KYQoz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Nov 2012 11:44:55 -0500
-Received: from plane.gmane.org ([80.91.229.3]:54455 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753187Ab2KYQoy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 11:44:54 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TcfKJ-0004VJ-R8
-	for git@vger.kernel.org; Sun, 25 Nov 2012 17:45:03 +0100
-Received: from static-87-79-237-121.netcologne.de ([87.79.237.121])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Nov 2012 17:45:03 +0100
-Received: from tg by static-87-79-237-121.netcologne.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Nov 2012 17:45:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.79.237.121 (Opera/9.27 (X11; MirBSD i386; U; en))
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210374>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBB5HZGCQKGQEYJOMNOQ@googlegroups.com>)
+	id 1TcftT-0004w1-Sv
+	for gcvm-msysgit@m.gmane.org; Sun, 25 Nov 2012 18:21:24 +0100
+Received: by mail-ye0-f186.google.com with SMTP id m9sf2104397yen.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 25 Nov 2012 09:21:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:x-authenticated:x-provags-id:date:from
+         :x-x-sender:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-y-gmx-trusted:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=/x5zUKGQ1txeFN6citmYj0bCh+qI7xdONzna6CbYO0M=;
+        b=Vy7dr51FdPKOOxcilIkOEz/JJ3M6SdPhtSPNDSj5w9f27ykEUJXaIP2RcKg9I281+4
+         I7cBfDu1qQzgWLM2jtLDH+md+Kd9EFoxAScmdvP/ClKalMI8WOLauXje6b1WwCPYLtL0
+         uIz760rctYC/CBZjZFCFRreT9aPBzAm4juaoUVTUQ3KANrINvMP4uNc1/qLPr5xLu4gM
+         N4PoTVjqUZ317mnEsBL1pv8+wY2D4xSmdEBDs764dT9di170adAc9MsYrYZ3t01pmmZH
+         yk9iFr/8YQd+f7HMUv 
+Received: by 10.50.220.231 with SMTP id pz7mr4141648igc.8.1353864071666;
+        Sun, 25 Nov 2012 09:21:11 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.46.230 with SMTP id y6ls2036029igm.43.gmail; Sun, 25 Nov
+ 2012 09:21:11 -0800 (PST)
+Received: by 10.66.86.102 with SMTP id o6mr2670077paz.41.1353864071117;
+        Sun, 25 Nov 2012 09:21:11 -0800 (PST)
+Received: by 10.66.86.102 with SMTP id o6mr2670076paz.41.1353864071108;
+        Sun, 25 Nov 2012 09:21:11 -0800 (PST)
+Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.23])
+        by gmr-mx.google.com with SMTP id js4si2401165pbb.2.2012.11.25.09.21.10;
+        Sun, 25 Nov 2012 09:21:11 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.23 as permitted sender) client-ip=213.165.64.23;
+Received: (qmail invoked by alias); 25 Nov 2012 17:21:09 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp027) with SMTP; 25 Nov 2012 18:21:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19fou1z6OBf8gWLvSEKxco0ErfOOoFoaiLqn/z/A1
+	U0JTI+PZ7nhO4h
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20121125051809.GA3670@thyrsus.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of Johannes.Schindelin@gmx.de designates 213.165.64.23 as permitted
+ sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210375>
 
 Hi,
 
-I=E2=80=99m asking here informally first, because my information relate=
-s
-to a quite old version (the one from lenny-backports). A tl;dr
-is at the end.
+thank you Duy for thinking of Cc:ing the msysGit mailing list. We indeed
+do not have a working Python in Git for Windows yet (mainly because I did
+not review kusma's patch yet thanks to a non-fun-at-all side track).
 
-On a multi-core machine, the garbage collection of git, as well
-as pack compression on the server side when someone clones a
-repository remotely, the compression is normally done automatically
-using multiple threads of execution.
+On Sun, 25 Nov 2012, Eric S. Raymond wrote:
 
-That may be fine for your typical setups, but in my cases, I have
-two scenarios where it isn=E2=80=99t:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> > These may apply to other languages as well. Where do we draw a line?
+> 
+> I'm in favor of the general policy of avoiding scripting languages
+> other than the top three most widely deployed.
 
-=E2=93=90 The machine where I want it to use only, say, 2 of my 4 or 8 =
-cores
-  as I=E2=80=99m also running some VMs on the box which eat up a lot of=
- CPU
-  and which I don=E2=80=99t want to slow down.
+It is one thing to allow users to use the scripting languages of their
+choice to do their work.
 
-=E2=93=91 The server VM which has been given 2 or 3 VCPUs to cope with =
-all
-  the load done by clients, but which is RAM-constrained to only
-  512 or, when lucky, 768 MiB. It previously served only http/https
-  and *yuk* Subversion, but now, git comes into the play, and I=E2=80=99=
-ve
-  seen the one server box I think about go down *HARD* because git
-  ate up all RAM *and* swap when someone wanted to update their clone
-  of a repository after someone else committed=E2=80=A6 well, an ~100 M=
-iB large
-  binary file they shouldn=E2=80=99t. (It required manual intervention =
-on the
-  server to kill that revision and then the objects coupled with it,
-  but even *that* didn=E2=80=99t work, read on for more.)
+It is a different thing completely to allow the core of an important piece
+of software like Git to consist of a hodge podge of languages. There are
+so many problems already, both technical and social ones [*1*], that I would
+really like to caution against letting even more languages creep into the
+core. It is bad enough already.
 
-In both cases, I had to apply a quick hack. One I can reproduce
-by now is, that, on the first box, I added a --threads=3D2 to the
-line calling git pack-objects in /usr/lib/git-core/git-repack,
-like this:
+Ciao,
+Dscho
 
-   83 args=3D"$args $local ${GIT_QUIET:+-q} $no_reuse$extra"
-   84 names=3D$(git pack-objects --threads=3D2 --keep-true-parents --ho=
-nor-pack-
-keep --non-empty --all --reflog $arg
-   85         exit 1
+Footnote [*1*]: Technical problems include serious performance issues on
+Windows when using shell/Perl scripting (see the many, many complaints
+about git-svn just as an example), portability problems (I am thankful
+that Junio seems to insist at least on POSIX compatibility of shell
+scripts still even if there are very vocal forces trying to get lazy on
+that front).
 
-(By the way, wrapping source code at 80c is still way to go IMHO.)
+And do not underestimate the social problems with *requiring* contributors
+to know yet another language well just because you let a core part be
+written in that language. There is even a rule of thumb: increase the
+number of languages used in your program == halve the number of potential
+contributors. And if you think that this is theoretical: look at the mails
+we got about Git GUI being written in Tcl/Tk (hardly a difficult language
+to learn) and losing contributors over it.
 
-On the second box, IIRC I added --threads=3D1, but that box got
-subsequently upgraded from lenny to wheezy so any local modification
-is lost (luckily, the problem didn=E2=80=99t occur again recently, or a=
-t
-least I didn=E2=80=99t notice it, save for the VM load going up to 6-8
-several times a day).
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-tl;dr: I would like to have a *global* option for git to restrict
-the number of threads of execution it uses. Several subcommands,
-like pack-objects, are already equipped with an optioin for this,
-but unfortunately, these are seldom invoked by hand=C2=B9, so this can=E2=
-=80=99t
-work in my situations.
-
-=E2=91=A0 automatic garbage collection, =E2=80=9Cgit gc --aggressive --=
-prune=3Dnow=E2=80=9D,
-  and cloning are the use cases I have at hand right now.
-
-=C3=80 propos, while here: is gc --aggressive safe to run on a live,
-online-shared repository, or does it break other users accessing
-the repository concurrently? (If it=E2=80=99s safe I=E2=80=99d very muc=
-h like to do
-that in a, say weekly, cronjob on FusionForge, our hosting system.)
-
-Thanks in advance!
-//mirabilos
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
