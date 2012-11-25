@@ -1,111 +1,96 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: Python extension commands in git - request for policy change
-Date: Sun, 25 Nov 2012 12:19:19 +0100
-Message-ID: <CAMP44s1oRpm4QkhcbfAuxK8UTZnuSVfNhAQnmUd1xiwhwLEqGw@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<20121125095356.GA22279@thyrsus.com>
+Date: Sun, 25 Nov 2012 18:25:45 +0700
+Message-ID: <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com> <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+ <50B1F684.5020805@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Sun Nov 25 12:19:41 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Nov 25 12:26:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcaFR-0002gi-2u
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 12:19:41 +0100
+	id 1TcaM4-00078s-3Z
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 12:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753091Ab2KYLTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 06:19:20 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:64743 "EHLO
+	id S1753179Ab2KYL0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 06:26:17 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:52988 "EHLO
 	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751838Ab2KYLTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 06:19:19 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so9969217oag.19
-        for <git@vger.kernel.org>; Sun, 25 Nov 2012 03:19:19 -0800 (PST)
+	with ESMTP id S1753069Ab2KYL0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 06:26:17 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so9971202oag.19
+        for <git@vger.kernel.org>; Sun, 25 Nov 2012 03:26:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=FhrsjoLLo+4OK4FJPQFaBjjAb30DPuYWakTD6C1TFK4=;
-        b=GHtealEM3RCI4iS1QE7IOjwyIpXLGRiXgH411dSVYqhCqMScvl5Gmwkq5SaGjV9Bs2
-         K0J7tjFyniht6/w/MMuubgzA2hdUFLgIFyap8klIjZemzluZOymuEpRcv5D5AfK2BEDM
-         D2lfS7NKtaZi2RUHe0GV1zzVTxitMJNwUgO4dC/S1i+n5tptmMYlkIFn5XY2WVQMqZrg
-         CsrZ0jf5ffGoTxgOmmN3FW7o/TppZYlIPgwmjiGz/0ZDXzBh3ZTsQayYyLqtddMD2tIY
-         uJfj8mCWQjRr/rpGB+s/8fjoU5+HKYcNtP5CzVqlSMME44huRd4QOCWJQtG5BFhsjz9n
-         MJGA==
-Received: by 10.60.30.70 with SMTP id q6mr6664035oeh.103.1353842359313; Sun,
- 25 Nov 2012 03:19:19 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Sun, 25 Nov 2012 03:19:19 -0800 (PST)
-In-Reply-To: <20121125095356.GA22279@thyrsus.com>
+        bh=uGRlQFkayF3au5NF5dpLhsfL+sWeYLr4RVH6gCFnB0E=;
+        b=W/+x9KgfSTNgoqA0uitmfhJY+extxq/+rclUxB+3+HPXdzBC1ofyMfJmNdSZ1QCpE6
+         kpCbAj+d3uhWXgTalwAkuJop6YmdIRd73HelhaefayiIUqVq+gKzW0+0+Gmhjdo99MCl
+         VoozJ6851LMtNxA9B/pfKbAis7/M0WPyjctwW60YpGgpbX1DX39ppIoG8D7svKd7Eyug
+         g2uhsITG7FyDZNaYs7hCnG1QyZUBXi4VYt5b95ANK0OMifvAyN51pT5P4QySqssbfFWH
+         tfSUD4Ypg3RYtCx7k5kRCr8icZO6yXAwYJPdUn5Oiit0pSSqIwZK+TCYdr0EPx4p0bxj
+         Asvg==
+Received: by 10.60.8.103 with SMTP id q7mr6731181oea.70.1353842776444; Sun, 25
+ Nov 2012 03:26:16 -0800 (PST)
+Received: by 10.182.87.197 with HTTP; Sun, 25 Nov 2012 03:25:45 -0800 (PST)
+In-Reply-To: <50B1F684.5020805@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210364>
 
-On Sun, Nov 25, 2012 at 10:53 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com>:
->> If your friends jump off a bridge, would you? Yes, using python has
->> served them well, but as opposed to what? Other scripting languages? I
->> don't think so.
+On Sun, Nov 25, 2012 at 5:44 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On the contrary, there is *constant* traffic on the mailing list about
+> incompatibilities between different shell implementations (sh, dash,
+> bash, etc), not to mention those in other utilities (sed, grep, etc)
+> that one is forced to work with in shell scripts.  Compatibility is a
+> *huge* pain when developing shell code for git.  The fact that users
+> typically don't encounter such problems is due to the hard work of POSIX
+> lawyers on the mailing list correcting the compatibility errors of
+> mortal programmers.
+
+I think we still are in the process of moving away from shell-based
+commands (not the shell interface), just not enough man power to do it
+fast. The only shell-based command with active development is
+git-submodule. So most shell PITA is in the test suite.
+
+> The most important issues to consider when imagining a future with a
+> hybrid of code in C and some scripting language "X" are:
 >
-> The competition that Python won was *precisely* against other scripting
-> languages, notably shell and Perl.  Both used to be much more heavily
-> used in system scripting than they are now.
-
-Against shell and perl yes, not against the rest.
-
->> What if my extension only supports python 2.7? Or what if my extension
->> wants to support 2.0?
+> * Portability: is "X" available on all platforms targeted by git, in
+>   usable and mutually-compatible versions?
 >
-> I propose that if 2.6 can't support it, then that should be considered
-> grounds to reject it.
-
-Seems sensible, but I don't know what "rejection" would actually mean.
-My "extensions" are on the way to the contrib area. Is the contrib
-area supposed to have different rules? I don't know.
-
-Either way, making a script work on python 2.6 is probably easier than
-trying to "reject" it.
-
->> Yes, they should _if_ they know what version they need. In my
->> extensions I really have no idea.
+> * Startup time: Is the time to start the "X" interpreter prohibitive?
+>   (On my computer, "python -c pass", which starts the Python
+>   interpreter and does nothing, takes about 24ms.)  This overhead would
+>   be incurred by every command that is not pure C.
 >
-> Then you shouldn't submit those extensions to be folded into core git.
-
-Too late.
-
->> > 3) We should be unconditionally be encouraging extensions to move
->> > from shell and Perl to Python.  This would be a clear net gain is
->> > portability and maintainability.
->>
->> NO! It's up to the developer to choose what language to use,
+> * Should the scripting language access the C functionality only by
+>   calling pure-C executables or by dynamically or statically linking to
+>   a binary module interface?  If the former, then the granularity of
+>   interactions between "X" and C is necessarily coarse, and "X" cannot
+>   be used to implement anything but the outermost layer of
+>   functionality.  If the latter, then the way would be clear to
+>   implement much more of git in "X" (and lua would also be worth
+>   considering).
 >
-> I agree.  You seem to be raising a lot of straw men.  'Encouragement'
-> does not equate to beating anyone who makes an unpopular choice over
-> the head.
+> * Learning curve for developers: how difficult is it for a typical git
+>   developer to become conversant with "X", considering both (1) how
+>   likely is it that the typical git developer already knows "X" and
+>   (2) how straightforward and predictable is the language "X"?
+>   In this category I think that Python has a huge advantage over
+>   Perl, though certainly opinions will differ and Ruby would also be
+>   a contender.
 
-I don't see what this means in practical terms. People are going to
-write code in whatever language they want to write code in. How
-exactly are "we" going to "encourage" them not to do that is not
-entirely clear to me.
-
-I don't think there's such a thing as "git leadership" that would be
-able to take these policy decisions, and if there was one, I don't
-think the evidence presented would be enough to weigh in either way.
-
-> I am also not suggesting that the whole git core ought to be hoicked
-> over to Python.  I was thinking mainly about extension subcommands,
-> not what's in libgit now.
-
-Subcommands are also probably more efficient in c. And lets remember
-that most people use git through the *official* subcommands.
-
-Cheers.
-
+* We might also need an embedded language variant, like Jeff's lua
+experiment. I'd be nice if "X" can also take this role.
 -- 
-Felipe Contreras
+Duy
