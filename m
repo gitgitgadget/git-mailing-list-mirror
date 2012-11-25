@@ -1,72 +1,134 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Sun, 25 Nov 2012 22:25:51 +0100
-Message-ID: <CAMP44s2fSpL13kDAm9W2ti-MERpKukNzNZ_Yt0oOOWMYOQPr2Q@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<50B1F684.5020805@alum.mit.edu>
-	<CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
-	<20121125173607.GB32394@thyrsus.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Sun Nov 25 22:26:10 2012
+From: esr@thyrsus.com (Eric S. Raymond)
+Subject: [PATCH] Document the integration requirements for extension
+ commands.
+Date: Sun, 25 Nov 2012 16:35:26 -0500 (EST)
+Message-ID: <20121125213526.A708A4065F@snark.thyrsus.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 25 22:36:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcjiI-0006kc-Uo
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 22:26:07 +0100
+	id 1TcjsR-0003Yk-FU
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 22:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437Ab2KYVZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2012 16:25:52 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:36749 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753401Ab2KYVZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2012 16:25:51 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so10198086oag.19
-        for <git@vger.kernel.org>; Sun, 25 Nov 2012 13:25:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Bg9ddZhs7thm4RvAvcf9whxGP4BdLvSnI8bLPOwXJyk=;
-        b=chbbJWLA0ghTvKotuI2Syoer26MXsqxZhB7LAOScrIOpDep+A4Db47LcLJFdGXVzyd
-         Sr/FOUTAXsKW6fwCZRRAudoqU4H9Czj4iua+HUCmpMkRuLtziKe0TSQG90GgVdGZygok
-         yfjOK/RMhjMVq10H1NXZfDULM3z+xXF9rrq9emnrnU4dZFOq2md+7uUGuNkJaiRXbEBk
-         F6G6gUGZtm/msATa8b63RukvBn9KNUmzpnfNaf8Aqo6arC3xGJs6o3m5uer/0raC8Nom
-         GTRSaI3jeFFafV47jOwNhBdQXNNRrMU3+WFX/1e03baCVgm6XxRzxlTpVU66OtequVRd
-         zghw==
-Received: by 10.60.1.169 with SMTP id 9mr2286565oen.93.1353878751344; Sun, 25
- Nov 2012 13:25:51 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Sun, 25 Nov 2012 13:25:51 -0800 (PST)
-In-Reply-To: <20121125173607.GB32394@thyrsus.com>
+	id S1753466Ab2KYVgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 16:36:20 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:44418
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753449Ab2KYVgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 16:36:19 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id A708A4065F; Sun, 25 Nov 2012 16:35:26 -0500 (EST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210383>
 
-On Sun, Nov 25, 2012 at 6:36 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com>:
->> Of course, but there are experts in C and shell around, not so many
->> python experts. So if somebody sneaks in a python program that makes
->> use of features specific to python 2.7, I doubt anybody would notice.
->
-> I would.
+This contains no policy changes or proposals, it simply attempts
+to document the interfaces and conventions already in place.
+---
+ Documentation/technical/api-command.txt |   81 +++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+ create mode 100644 Documentation/technical/api-command.txt
 
-And are you going to be around to spot them? It seems my patches for
-git-remote-hg slipped by your watch, because it seems they use stuff
-specific to python 2.7.
+diff --git a/Documentation/technical/api-command.txt b/Documentation/technical/api-command.txt
+new file mode 100644
+index 0000000..de76614
+--- /dev/null
++++ b/Documentation/technical/api-command.txt
+@@ -0,0 +1,81 @@
++= Integrating new subcommands =
++
++This is how-to documentation for people who want to add extension
++commands to git.  It should be read alongside api-builtin.txt.
++
++== Runtime environment ==
++
++git subcommands are standalone executables that live in the git
++execution directory, normally /usr/lib/git-core.  The git executable itself
++is a thin wrapper that sets GIT_DIR and passes command-line arguments
++to the subcommand.
++
++(If "git foo" is not found in the git execution directory, the wrapper
++will look in the rest of your $PATH for it.  Thus, it's possible
++to write local git extensions that don't live in system space.)
++
++== Implementation languages ==
++
++Most subcommands are written in C or shell.  A few are written in
++Perl.  A tiny minority are written in Python.
++
++While we strongly encourage coding in portable C for portability, these
++specific scripting languages are also acceptable. We won't accept more
++without a very strong technical case, as we don't want to broaden the
++git suite's required dependencies.
++
++C commands are normally written as single modules, named after the
++command, that link a core library called libgit.  Thus, your command
++'git-foo' would normally be implemented as a single "git-foo.c"; this
++organization makes it easy for people reading the code to find things.
++
++See the CodingGuidelines document for other guidance on what we consider
++good practice in C and shell, and api-builtin.txt for the support
++functions available to built-in commands written in C.
++
++== What every extension command needs ==
++
++You must have a man page, written in asciidoc (this is what git help
++followed by your subcommand name will display).  Be aware that there is
++a local asciidoc configuration and macros which you should use.  It's
++often helpful to start by cloning an existing page and replacing the
++text content.
++
++You must have a test, written to report in TAP (Test Anything Protocol).
++Tests are executables (usually shell scripts) that live in the 't' 
++subdirectory of the tree.  Each test name begins with 't' and a sequence
++number that controls where in the test sequence it will be executed;
++conventionally the rest of the name stem is that of the command 
++being tested.
++
++Read the file t/README to learn more about the conventions to be used
++in writing tests, and the test support library.
++
++== Integrating a command ==
++
++Here are the things you need to do when you want to merge a new 
++subcommand into the git tree.
++
++1. Append your command name to one of the variables BUILTIN_OBJS,
++EXTRA_PROGRAMS, SCRIPT_SH, SCRIPT_PERL or SCRIPT_PYTHON.
++
++2. Drop its test in the t directory.
++
++3. If your command is implemented in an interpreted language with a 
++p-code intermediate form, make sure .gitignore in the main directory
++includes a pattern entry that ignores such files.  Python .pyc and
++.pyo files will already be covered.
++
++4. If your command has any dependency on a a particular version of
++your language, document it in the INSTALL file.
++
++5. There is a file command-list.txt in the distribution main directory
++that categorizes commands by type, so they can be listed in appropriate
++subsections in the documentation's summary command list.  Add an entry 
++for yours.  To understand the categories, look at git-cmmands.txt
++in the main directory.
++
++6. When your patch is merged, remind the maintainer to add something
++about it in the RelNotes file.
++
++That's all there is to it.
+-- 
+1.7.9.5
 
->> And if they did, I doubt that would be reason enough for rejection,
->> supposing that porting to 2.6 would be difficult enough.
->
-> In cases like that, backporting is usually pretty easy.  Been there, done that.
 
-Exactly. Why would you reject something you can fix easily?
 
 -- 
-Felipe Contreras
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+"Rightful liberty is unobstructed action, according to our will, within limits
+drawn around us by the equal rights of others."
+	-- Thomas Jefferson
