@@ -1,102 +1,66 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Re: Python extension commands in git - request for
- policy change
-Date: Sun, 25 Nov 2012 16:51:39 +0100
-Message-ID: <CABPQNSY+Tnij4+_uZq3zwmgVjtUGsYpB7miJgf8meUWMCArNMg@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com> <CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com>
- <CABNJ2G+CevGU=-DjC073yGv0gupd9QK6eyjhrrQTNNmTkq_fxg@mail.gmail.com> <20121125103316.GA24514@thyrsus.com>
-Reply-To: kusmabite@gmail.com
+From: Leon KUKOVEC <leon.kukovec@gmail.com>
+Subject: Re: [PATCH] gitk tag delete/rename support
+Date: Sun, 25 Nov 2012 17:02:40 +0100
+Message-ID: <CAOrOd9woDs16as+t-EReQ8NtXfYm9mpd0XaFFs-XL=pg+JK1Lw@mail.gmail.com>
+References: <1353649899-15641-1-git-send-email-leon.kukovec@gmail.com>
+	<1353688894-2526-1-git-send-email-leon.kukovec@gmail.com>
+	<7vzk26xkou.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Pat Thoyts <patthoyts@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org, 
-	msysGit <msysgit@googlegroups.com>
-To: esr@thyrsus.com
-X-From: msysgit+bncBDR53PPJ7YHRBNP5ZCCQKGQET5SO6FI@googlegroups.com Sun Nov 25 16:52:36 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRBNP5ZCCQKGQET5SO6FI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ia0-f186.google.com ([209.85.210.186])
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 25 17:04:34 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBNP5ZCCQKGQET5SO6FI@googlegroups.com>)
-	id 1TceVW-0000Ch-9G
-	for gcvm-msysgit@m.gmane.org; Sun, 25 Nov 2012 16:52:34 +0100
-Received: by mail-ia0-f186.google.com with SMTP id y25sf7305507iay.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 25 Nov 2012 07:52:22 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Tceh6-0000fG-5F
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Nov 2012 17:04:32 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753196Ab2KYQCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 11:02:42 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:41547 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753098Ab2KYQCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 11:02:41 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k11so5208490iea.19
+        for <git@vger.kernel.org>; Sun, 25 Nov 2012 08:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=GoGGiM+d1of+7FZyeCiVgBbE+gLtceUSs7e5DYV8ndM=;
-        b=r07RDv2SaAXKCejtrpQswyHofL2RNht2Gr9npB4phHLbmXZcvKihUD+l1Jj6zs2isB
-         Iv8r+UVURNOZdoYnseF9Zl64KEehsTBzy1Pzi/+zLyPQS5uou8IppzLMSePpFvD8Sdf2
-         M1WfM5nFwMbY7PVUyb77OR80Nqw8MXN7x7pUsysFg4tdthbphZOfOyFZaJJD37uGAirc
-         Pa6z/xrHvc2qE2l91S0a3UMGihU20FVywoBGncUPC+8aCiI37Bowt60T+uehs7D5LcRU
-         DUlyFtgVIIkDZeDLSEDzVK1IE43qJ/tiAS7w3c8LMXEXWmRIWZX28Q7f5W563zSsauHg
-         Gpdw==
-Received: by 10.49.37.105 with SMTP id x9mr1729742qej.26.1353858742590;
-        Sun, 25 Nov 2012 07:52:22 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.94.201 with SMTP id de9ls1343106qeb.5.gmail; Sun, 25 Nov
- 2012 07:52:21 -0800 (PST)
-Received: by 10.58.170.6 with SMTP id ai6mr2760927vec.35.1353858741335;
-        Sun, 25 Nov 2012 07:52:21 -0800 (PST)
-Received: by 10.58.170.6 with SMTP id ai6mr2760925vec.35.1353858741323;
-        Sun, 25 Nov 2012 07:52:21 -0800 (PST)
-Received: from mail-vc0-f172.google.com (mail-vc0-f172.google.com [209.85.220.172])
-        by gmr-mx.google.com with ESMTPS id dj17si876224vdb.1.2012.11.25.07.52.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 25 Nov 2012 07:52:21 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.172 as permitted sender) client-ip=209.85.220.172;
-Received: by mail-vc0-f172.google.com with SMTP id fw7so9204203vcb.31
-        for <msysgit@googlegroups.com>; Sun, 25 Nov 2012 07:52:21 -0800 (PST)
-Received: by 10.52.38.34 with SMTP id d2mr13512397vdk.63.1353858741231; Sun,
- 25 Nov 2012 07:52:21 -0800 (PST)
-Received: by 10.58.169.106 with HTTP; Sun, 25 Nov 2012 07:51:39 -0800 (PST)
-In-Reply-To: <20121125103316.GA24514@thyrsus.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.220.172 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210371>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hb5gn/pja3XUvpUWI+dkO66Toeo5nM09PT+RuwS5Aeo=;
+        b=dHwAzyq/zRI/sCUJATeVdadMr+orl645/JiIBqDskwr5g44e1athKdL8zuYw4fmmaa
+         qApRnUIskLJUYrgeTJ6BuXaIAA1TWYylhYbIcu7iSNoLJk1PQ0gqL04421GZgw40leii
+         oetfBrvc9tQ3fD0SjXO6GmOSBUJBIqk7ps3MBGTGW2MBt3JOy536buLpc6y9S2lDKqWY
+         yeCkpeVDX2otn6Y7Zrsp5edz9CeRaQrGhta0WB0Z8kR8x++vXKpRkROzG7L71CJJqXr3
+         4XWEuWYf8Gemy4dJ3rTFa1fXMQbVEodeYAIluMtSibPyymaLl560+t7ru6leXC+OoXzH
+         qc1g==
+Received: by 10.50.140.38 with SMTP id rd6mr8531277igb.35.1353859360946; Sun,
+ 25 Nov 2012 08:02:40 -0800 (PST)
+Received: by 10.64.27.2 with HTTP; Sun, 25 Nov 2012 08:02:40 -0800 (PST)
+In-Reply-To: <7vzk26xkou.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210372>
 
-On Sun, Nov 25, 2012 at 11:33 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Pat Thoyts <patthoyts@gmail.com>:
->> Git for Windows simply ships everything we need to run git - so if a
->> desirable module requires a version of python, we will add that
->> version plus any required modules into the installer. We already have
->> a patch to provide python in the msysgit tree - it would just require
->> polishing up a little. I'm certain this is no problem for the other
->> windows port (cygwin) either.
+Hi,
+
+On Sun, Nov 25, 2012 at 7:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Thank you - I think this completely disposes of the "Windows is a blocker
-> for scripting language X" argument, with the case X = Python in point.
+> Thanks, but I prefer not to take patches to gitk-git/ directly;
+> could you prepare a patch against Paul's tree at
+>
+>
+>     git://ozlabs.org/~paulus/gitk
+>
+> and send it in that direction (paulus@) instead?
 
-As the one who wrote that patch; not at all. That patch is a horrible
-mess, and it is not yet proven that the resulting python executable
-works any more than a basic hello world.
+No problem. Will do that.
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+--
+Best Regards,
+        Leon
