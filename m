@@ -1,58 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix typo in remote set-head usage
-Date: Mon, 26 Nov 2012 13:28:10 -0800
-Message-ID: <7vfw3wqck5.fsf@alter.siamese.dyndns.org>
-References: <7vwqx8rzzf.fsf@alter.siamese.dyndns.org>
- <1353957714-7330-1-git-send-email-apelisse@gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: git bundle format [OT]
+Date: Mon, 26 Nov 2012 16:31:09 -0500 (EST)
+Message-ID: <484658581.104406.1353965469300.JavaMail.root@genarts.com>
+References: <871B6C10EBEFE342A772D1159D13208537ABF6D3@umechphj.easf.csd.disa.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:28:34 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jason J CTR Pyeron (US)" <jason.j.pyeron.ctr@mail.mil>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:31:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td6ED-0007nA-Au
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:28:33 +0100
+	id 1Td6H5-000155-Lw
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:31:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256Ab2KZV2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 16:28:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59261 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755263Ab2KZV2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 16:28:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E32E194B0;
-	Mon, 26 Nov 2012 16:28:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=d77/PU
-	KMKc5FGMa5vyh/UcQvzqmaJQFejKeLfrwFzfQ24kp7zQQGGKaREuNVZomMjbwJML
-	71Tv7zP+5k3YiqvJcJCW7qvqOfGT+/5/2Q0u2kPghMVR/W4qNp7+e1WVsXewQ/5w
-	etRGD0HCEvKOHR3VyNvmDn8U1zCnNdKfe2qdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XrSvlnIQLhEBmXxjU3geAZGVCjfcGfJM
-	OMV1F8FhItdOmgpwrc7L+HzxRWphh0FpkH2BOPwAfL5YveqUTRdnVq9zgnT/rtAI
-	GWVh/BcAm+TTROgCo3OZXW9BK2A/wnVS+ZhBINXMhwtvq2drKubwampYfqDofq4w
-	8YKXGexaK+U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7246D94AC;
-	Mon, 26 Nov 2012 16:28:13 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76B03949C; Mon, 26 Nov 2012
- 16:28:12 -0500 (EST)
-In-Reply-To: <1353957714-7330-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Mon, 26 Nov 2012 20:21:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E84E28E-3810-11E2-AE25-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756112Ab2KZVbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 16:31:16 -0500
+Received: from hq.genarts.com ([173.9.65.1]:33426 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754589Ab2KZVbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 16:31:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 0CC38BE21C9;
+	Mon, 26 Nov 2012 16:31:15 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lPPYVnrUqes5; Mon, 26 Nov 2012 16:31:09 -0500 (EST)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 560E8BE1BED;
+	Mon, 26 Nov 2012 16:31:09 -0500 (EST)
+In-Reply-To: <871B6C10EBEFE342A772D1159D13208537ABF6D3@umechphj.easf.csd.disa.mil>
+X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC23 (Mac)/7.2.0_GA_2669)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210498>
 
-Thanks.
+----- Original Message -----
+> From: "Jason J CTR Pyeron (US)" <jason.j.pyeron.ctr@mail.mil>
+> Sent: Monday, November 26, 2012 4:06:59 PM
+> Subject: RE: git bundle format [OT]
+> 
+> > First, a shot out of left field: how about a patch based workflow?
+> > (similar to the mailing list, just replace email with sneakernet)
+> > Patches are plain text and simple to review (preferable to an
+> > "opaque" binary format?).
+> 
+> This is to only address the accidental development on a high side.
+> Using this or any process should come with shame or punishment for
+> wasting resources/time by not developing on a low side to start
+> with.
+
+Ah, if only more of those I (previously) worked with thought as you do :)
+
+> But accepting reality there will be times where code and its
+> metadata (commit logs, etc) will be created on a high side and
+> should be brought back to the low side.
+
+Using git format-patch and git am it's possible to retain the commit messages (and other associated metadata).  But again, I'm not the expert on this :)  I've made it work a few times to test patches from this list, but so far I've avoided serious integration into the mailing list workflow.
+
+> >   2) Do the diffs applied to public repo contain any sensitive
+> >   data?
+> 
+> That is a great question. Can the change of code while neither the
+> original or the resultant be secret while the change imply or
+> demonstrate the secret. I think the answer is yes.
+
+In actual fact I was thinking about the simple case where the result included an "Eek! 3.1415926 cannot show up in this code!" (sometimes that's easier to see in a diff than a full text blob).  Obviously the first line of defense should catch such mistakes.  But yes, your point is also a good one.  I'd be hard pressed to argue that a particular series of commits leaks information on their own, but they can certainly corroborate other available information.
+
+> > Question 2 is relatively straight forward and lead me to the patch
+> > idea.  I would:
+> >   - Bundle the public repository
+> >   - Init a new repo in the secure space from the public bundle
+> >   - Fetch from the to-be-sanitized bundle into the new repo
+> >   - Examine commits (diffs) introduced by branches in the to-be-
+> >   sanitized bundle
+> >   - Perhaps get a list of all the objects in the to-be-sanitized
+> >   bundle and do a git-cat-file on each of them (if the bundle is
+> >   assembled correctly it shouldn't have any unreachable objects...).
+> >   This step may be extraneous after the previous.
+> 
+> Here we would be missing the metadata that goes along with the
+> commit. Especially the SHA sums.
+
+Ah sorry, I guess I wasn't complete.  Once that process has been done on the high side one has to go back to question 1 and see if it's safe to move the bundle out to repeat the process on the low side. 
+ 
+Stephen
