@@ -1,80 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Mon, 26 Nov 2012 14:17:15 +0100
-Message-ID: <CAMP44s3KqCs2N0iiExyN8PGGXe72SROAuJX7xWxW1GnnpVivtQ@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<50B1F684.5020805@alum.mit.edu>
-	<CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
-	<20121125173607.GB32394@thyrsus.com>
-	<CAMP44s2fSpL13kDAm9W2ti-MERpKukNzNZ_Yt0oOOWMYOQPr2Q@mail.gmail.com>
-	<20121125221126.GB6937@thyrsus.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] fast-export: Allow pruned-references in mark file
+Date: Mon, 26 Nov 2012 14:23:58 +0100
+Message-ID: <CALWbr2yZpAT=eSahGcGKw5weoz1MjTzbb16pdQndKDFcn_3VJg@mail.gmail.com>
+References: <1353750432-17373-1-git-send-email-apelisse@gmail.com>
+	<7vd2z1xb6c.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0iSkqcOW0YsD=Jm_=x1tuoRbFQ+EbVvkROa_yY2-WFcA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Mon Nov 26 14:17:42 2012
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 14:24:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcyZC-00053S-7s
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 14:17:42 +0100
+	id 1TcyfY-0000Cs-2f
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 14:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754509Ab2KZNRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 08:17:19 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:53119 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754520Ab2KZNRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 08:17:16 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so10707263oag.19
-        for <git@vger.kernel.org>; Mon, 26 Nov 2012 05:17:15 -0800 (PST)
+	id S1754031Ab2KZNYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 08:24:00 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:37914 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752942Ab2KZNX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 08:23:59 -0500
+Received: by mail-ee0-f46.google.com with SMTP id e53so4461772eek.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 05:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=B62ZghEu9N1h2o8WmQymVG9YaVqaWTAyhMJoJG8oZls=;
-        b=bKuENxoRjkO9f93IGaFG4YQnlQ7cAyksD4VPYIqjl4fGKSazd4ITq6hUClmX9UzJGe
-         /JwWv/7X+IaMRq6Q0OlgAmUALG1Frx6fUWB0xk7irYoAZ/5UYg9vhCWJFFvDghSDosaC
-         1Sym83rx/2uZBhaXBEEj1V72JsPHBWBbLyJzyy1KrGHPrPB6mb62kSn6ziXimcpAqHQT
-         wq7y3L8O23bfrYPaKEchnq/+xcAuMNQsQu89baAxHSrxKm/tJqbC9J/VtmEp+K+glw1Y
-         4PZOV1Szajyk8UAv2ZS2IhpGGOtVerxGWR/PY0DQHN/2oXYIFdMfSh+WBHHDC/6XXuK+
-         ScMA==
-Received: by 10.60.28.166 with SMTP id c6mr9022737oeh.140.1353935835767; Mon,
- 26 Nov 2012 05:17:15 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Mon, 26 Nov 2012 05:17:15 -0800 (PST)
-In-Reply-To: <20121125221126.GB6937@thyrsus.com>
+        bh=urw3SNAR0JgphBsIaLkke5YHUjwPwMAhAlF9NP6P6JE=;
+        b=x+OiyrnB4g1xknmJFe8n+gjvEVucYmFkJBrA2zLD+Hph5Li3Ue3yxGNfp0W/xajnGb
+         gGGzpJN6laOcrmy+6hITX7Iy5aiaDFf896zOUKyC2CBh7pMsj7SC5nTy7sF7HY2KRDhr
+         eTXvV5QLcHzqZiYa/y8ijT1GGB2poB/8DCR1ayA9JVWC4DNKVAoUv7dUV8Ye/7tLF/Cm
+         e76mCfg/T8SuR7aP8WAoCpVBGtJeG4kD6KSnacn9/TMJ6oUkoTTHj3zpRs0fEAkLOUsS
+         NIzhoriUHVHJZ28i1J5czr39swjpr7oViaWpqmrtF1Hza8hlmB/uVAkpMjPgWy7b34QP
+         AvUg==
+Received: by 10.14.179.69 with SMTP id g45mr45569850eem.42.1353936238589; Mon,
+ 26 Nov 2012 05:23:58 -0800 (PST)
+Received: by 10.14.187.6 with HTTP; Mon, 26 Nov 2012 05:23:58 -0800 (PST)
+In-Reply-To: <CAMP44s0iSkqcOW0YsD=Jm_=x1tuoRbFQ+EbVvkROa_yY2-WFcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210442>
 
-On Sun, Nov 25, 2012 at 11:11 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com>:
->> And are you going to be around to spot them? It seems my patches for
->> git-remote-hg slipped by your watch, because it seems they use stuff
->> specific to python 2.7.
->
-> The dev group hasn't decided (in whatever way it decides these
-> things) to require 2.6 yet.  When and if it does, I will volunteer my
-> services as a Python expert to audit the in-tree Python code for 2.6
-> conformance and assist the developers in backporting if required.
-> I will also make myself available to audit future submissions.
+On Mon, Nov 26, 2012 at 12:37 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Mon, Nov 26, 2012 at 5:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Is this a safe and sane thing to do, and if so why?  Could you
+>> describe that in the log message here?
+> Why would fast-export try to export something that was pruned? Doesn't
+> that mean it wasn't reachable?
 
-What dev group?
+Hello Junio,
+Hello Felipe,
 
-> I think you know who I am. Junio and the other senior devs certainly
-> know where to find me. I've been making promises like this, and
-> *keeping* them, for decades.  Please stop wasting our time with
-> petulant display.
+Actually the issue happened while using Felipe's branch with his
+git-remote-hg.  Everything was going fine until I (or did it run
+automatically, I dont remember) ran git gc that pruned unreachable
+objects. Of course some of the branch I had pushed to the hg remote
+had been changed (most likely rebased).  References no longer exists
+in the repository (cleaned by gc), but the reference still exists in
+mark file, as it was exported earlier.  Thus the failure when git
+fast-export reads the mark file.
 
-All right, you don't wand feedback, fine.
+Then, is it safe ?
+Updating the last_idnum as I do in the patch doesn't work because
+if the reference is the last, the number is going to be overwriten
+in the next run.
+From git point of view, I guess it is fine. The file is fully read at
+the beginning of fast-export and fully written at the end.
+The issue is more for git-remote-hg that keeps track of
+matches between git marks and hg commits. The marks are going to
+change and be overriden. It will most likely need to read the mark
+file to see if a ref has changed, and update it's dictionary.
 
-If you need me I'll be rewriting python code to ruby.
+One of the solution I'm thinking of, is to update the mark file
+with marks of newly exported objects instead of recreating it,
+and let obsolete references in the file. But of course that is
+not acceptable.
 
-Cheers.
-
--- 
-Felipe Contreras
+Cheers,
+Antoine
