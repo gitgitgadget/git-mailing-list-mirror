@@ -1,110 +1,109 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: gitpacker progress report and a question
-Date: Mon, 26 Nov 2012 18:43:59 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121126234359.GA8042@thyrsus.com>
-References: <20121115212818.GA21558@thyrsus.com>
- <CAMP44s30px2FgieC9VcGji7T+yWFo7gMSwQhtuztHrqto8B7Aw@mail.gmail.com>
- <20121126220108.GB1713@thyrsus.com>
- <CAMP44s2+NDyL2Vf=iKR09f-YUnp=G2BCiYj-+qKuP7JA-+YkmQ@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] git-send-email: allow edit invalid email address
+Date: Mon, 26 Nov 2012 15:50:30 -0800
+Message-ID: <7v7gp7q5yx.fsf@alter.siamese.dyndns.org>
+References: <7v8v9vrgc9.fsf@alter.siamese.dyndns.org>
+ <1353607932-10436-1-git-send-email-krzysiek@podlesie.net>
+ <1353607932-10436-5-git-send-email-krzysiek@podlesie.net>
+ <7vobikthpp.fsf@alter.siamese.dyndns.org>
+ <20121126173318.GA12101@shrek.podlesie.net>
+ <7vhaocotsd.fsf@alter.siamese.dyndns.org>
+ <20121126233337.GA31100@shrek.podlesie.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 00:44:21 2012
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Felipe Balbi <balbi@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ti.com>
+To: Krzysztof Mazur <krzysiek@podlesie.net>
+X-From: git-owner@vger.kernel.org Tue Nov 27 00:50:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td8Lc-0002De-34
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 00:44:20 +0100
+	id 1Td8Rs-0006hv-VE
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 00:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757320Ab2KZXoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 18:44:04 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:52584
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755309Ab2KZXoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 18:44:03 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id C4F9140661; Mon, 26 Nov 2012 18:43:59 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s2+NDyL2Vf=iKR09f-YUnp=G2BCiYj-+qKuP7JA-+YkmQ@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932325Ab2KZXue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 18:50:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34985 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932076Ab2KZXud (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 18:50:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E574F9D6F;
+	Mon, 26 Nov 2012 18:50:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oRQy9OuL6IXJvXqTOMUyDozST0Y=; b=MlSP2b
+	qaG4ypORAZ/1cY7n1mgrT/g5Xes7uXE+bYo5X4W5bAP7Wkbp3qjcBowdqQUBuBam
+	OcBIqddCCmayfumGi7t29/n8dl4K74db70g0NuW3Qqh5o2T8c6/emEjVIhWxlXiX
+	VCzgFOmF1YkChr+cHu5Hi4LlGQvoqDjdFw/iQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EzYTSALREPiV85VOspDAVUO8D7e5v/cu
+	92SYM3sSBIBD9rp48fEsCNfGW0CF4DtWq/uAr5pynJKIHjJX18lJeWYEKUEtdOmz
+	csY1CILYNnJ/OrcnHWyfcCcKSZR17qQcEIEaMYBUPVRSWE/zg/zMqeicepu4jLxS
+	cGQ2sJgVvO0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D14D99D6E;
+	Mon, 26 Nov 2012 18:50:32 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AF369D6D; Mon, 26 Nov 2012
+ 18:50:32 -0500 (EST)
+In-Reply-To: <20121126233337.GA31100@shrek.podlesie.net> (Krzysztof Mazur's
+ message of "Tue, 27 Nov 2012 00:33:37 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1091C2F6-3824-11E2-95A5-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210518>
 
-Felipe Contreras <felipe.contreras@gmail.com>:
-> Might be easier to just call 'git ls-files --with-three foo', but I
-> don't see the point of those calls:
+Krzysztof Mazur <krzysiek@podlesie.net> writes:
 
-Ah, much is now explained.  You were looking at an old version.  I had
-in fact already fixed the subdirectories bug (I've updated my
-regression test to check) and have full support for branchy repos,
-preserving tags and branch heads.
+> On Mon, Nov 26, 2012 at 02:58:58PM -0800, Junio C Hamano wrote:
+>> Krzysztof Mazur <krzysiek@podlesie.net> writes:
+>> 
+>> >> Not having this new code inside "elsif (/^e/) { }" feels somewhat
+>> >> sloppy, even though it is not *too* bad.  Also do we know this
+>> >
+>> > ok, I will fix that.
+>> >
+>> >> function will never be used for addresses other than recipients' (I
+>> >> gave a cursory look to see what is done to the $sender and it does
+>> >> not seem to go through this function, tho)?
+>> >
+>> > Yes, this function is called only from validate_address_just()
+>> > to filter @initial_to, @initial_cc, @bcc_list as early as possible,
+>> > and filter @to and @cc added in each email.
+>> 
+>> Thanks; when merged to 'pu', this series seems to break t9001.  I'll
+>> push the result out with breakages but could you take a look?
+>> 
+>
+> Sorry, I tested final version only on an ancient perl 5.8.8 and it really
+> worked there. The third patch is broken:
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 9996735..f3bbc16 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1472,7 +1472,7 @@ sub unique_email_list {
+>  	my @emails;
+>  
+>  	foreach my $entry (@_) {
+> -		my $clean = extract_valid_address_or_die($entry))
+> +		my $clean = extract_valid_address_or_die($entry);
 
-> > It doesn't issue delete ops.
-> 
-> What do you mean?
-> 
->     out.puts 'deleteall' <- All current files are removed
+Ah, ok, I wasn't looking closely enough.  Thanks for a quick
+turnaround.  Will requeue and push out.
 
-Yours emits no D ops for files removed after a particular snapshot.
-
-> > Be aware, however, that I consider easy editability by human beings
-> > much more important than squeezing the last microsecond out of the
-> > processing time.  So, for example, I won't use data byte counts rather
-> > than end delimiters, the way import streams do.
-> 
-> Well, if there's a line with a single dot in the commit message ('.'),
-> things would go very bad.
-
-Apparently you missed the part where I byte-stuffed the message content.
-It's a technique used in a lot of old-school Internet protocols, notably
-in SMTP.
- 
-> Personally I would prefer something like this:
-
-There's a certain elegance to that, but it would be hard to generate by hand.
-
-Remember that a major use case for this tool is making repositories 
-from projects whose back history exists only as tarballs.  So, let's
-say you have the following:
-
-foo-1.1.tar.gz
-foo-1.2.tar.gz
-foo-1.3.tar.gz
-
-What you're going to do before weaving is drop the untarred file trees
-in a 'foo' scratch directory, then hand-craft a log file that might
-look a bit like this:
-
------------------------------------
-commit 1
-directory foo-1.1
-
-Release 1.1 of project foo
-.
-commit 2
-directory foo-1.2
-
-..This is an example of a byte-stuffed line.
-
-Release 1.2 of project foo
-.
-commit 3
-directory foo-1.3
-
-Release 1.3 of project foo
-.
------------------------------------
-
-The main objective of the logfile design is to make hand-crafting 
-these easy.  
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+>  		$seen{$clean} ||= 0;
+>  		next if $seen{$clean}++;
+>  		push @emails, $entry;
+>
+> Krzysiek
