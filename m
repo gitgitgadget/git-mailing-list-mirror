@@ -1,102 +1,90 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: Multiple threads of compression
-Date: Sun, 25 Nov 2012 18:37:02 -0800
-Message-ID: <CA+sFfMerMWnJwiBz0=MxO0gn8B2M8g12mt5VzZaRj591oMPVow@mail.gmail.com>
-References: <loom.20121125T171702-64@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Requirements for integrating a new git subcommand
+Date: Sun, 25 Nov 2012 18:57:08 -0800
+Message-ID: <7vmwy5xe9n.fsf@alter.siamese.dyndns.org>
+References: <20121122053012.GA17265@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thorsten Glaser <tg@debian.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 03:37:29 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Mon Nov 26 03:57:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TcoZY-0005yG-Q3
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 03:37:25 +0100
+	id 1Tcot2-0007Qp-25
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 03:57:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753767Ab2KZChF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Nov 2012 21:37:05 -0500
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:34219 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753344Ab2KZChE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Nov 2012 21:37:04 -0500
-Received: by mail-vb0-f46.google.com with SMTP id ff1so5177973vbb.19
-        for <git@vger.kernel.org>; Sun, 25 Nov 2012 18:37:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=uRmdfIbcPIMgj53kGnEdgnvSJFYU8A1gb89fwDEmmq0=;
-        b=n96KlnTJYogvrqH7ddMBAcOZzKRRnnY5NMi+qXh1ySuVywcio+TGiPjbzsmZja3ZHb
-         tJ8uvBk4+vpm4PWhqPV+//5xwx99MkiBi6KP9a6hs8TqbBkg/J7tBIcyQ6RGGj+WgaR+
-         32Gu2L8dIEnq8DUui2xdYBDmiUInubo1+A00Wcdwfo+jWOSkRo9VkDRe6CGFMEneSV6e
-         6kkKJTfnyl/VnJ6w64/KM4aWpPM9/5/+W83PbHQTcBoDAueqkwHRfyGDTOOc/NdrBJLY
-         oyuZOiv14XIETEjyYh3abGgFRqL7RINqepWVD97ZZosAvkPRcNqbac1vsuipMT9NUvdF
-         08KA==
-Received: by 10.58.200.39 with SMTP id jp7mr17674111vec.26.1353897422870; Sun,
- 25 Nov 2012 18:37:02 -0800 (PST)
-Received: by 10.58.143.5 with HTTP; Sun, 25 Nov 2012 18:37:02 -0800 (PST)
-In-Reply-To: <loom.20121125T171702-64@post.gmane.org>
+	id S1753861Ab2KZC5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2012 21:57:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59281 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753776Ab2KZC5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2012 21:57:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3BAF8710;
+	Sun, 25 Nov 2012 21:57:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=mo2mpQxqeYw3UelqBo6lg0xxNR4=; b=YhMzY8rzLYzbo+nv2ZPI
+	K7YE9TB8xgolPSatUFqAWgtwcMaYK3CJEMGUC6fusYaJ1zOfK+blR7ct77/8SfnT
+	D6/xiZ8VjnBqQwEtS302uDUGZccUOBSG2q+OQAkr77uumbEFjQRsVQPjMYFUTaiS
+	X+rHfrHFTHBCYJM3AaB3eP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=robtIzEOh2X3FwmgDwmZIwpKwfWiHXqj6jOo8Uw+3T+QUA
+	rNNLJ0SHfQCAvLOapqgJUdn6xdcyog7NpexgU3kOD86j+ittlM2br8fsBzZm+cK4
+	T6taGx05wwgetJ+w+JWgR2SDKHi8HstI7hWH0tizLDod306Uqxoswg/XCgYfA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C287F870F;
+	Sun, 25 Nov 2012 21:57:10 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29678870D; Sun, 25 Nov 2012
+ 21:57:10 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F8A40D52-3774-11E2-9236-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210403>
 
-On Sun, Nov 25, 2012 at 8:27 AM, Thorsten Glaser <tg@debian.org> wrote:
+"Eric S. Raymond" <esr@thyrsus.com> writes:
 
-> tl;dr: I would like to have a *global* option for git to restrict
-> the number of threads of execution it uses. Several subcommands,
-> like pack-objects, are already equipped with an optioin for this,
-> but unfortunately, these are seldom invoked by hand=C2=B9, so this ca=
-n=E2=80=99t
-> work in my situations.
+> While the weave operation can build a commit graph with any structure
+> desired, an important restriction of the inverse (unraveling)
+> operation is that it operates on *master branches only*. The unravel
+> operation discards non-master-branch content, emitting a warning 
+> to standard error when it has to do so.
 
-See the git-config man page.
+Imagine that I have a simple four-commit diamond:
 
-The number of threads that pack uses can be configured in the global
-or system gitconfig file by setting pack.threads.
+    I---A
+     \   \
+      B---M
 
-e.g.
+where Amy and Bob forked the initial commit made by Ian and created
+one commit each, and their branches were merged into one 'master'
+branch by a merge commit made by Mac.  How many state snapshots will
+I see when I ask you to unravel this?  Three, or four?
 
-   $ git config --system pack.threads 1
+If you are going to give me all four states, then I do not
+understand why this needs to be limited to the master branch only.
+Even if you start from a single commit at the tip of 'master', once
+you hit a merge, you will need to follow all of two (or more) paths
+to dig down to the root(s), so supporting to start digging from more
+than one commit is not all that different.
 
-Also, modern git accepts a '-c' option which allows you to set
-configuration options on the command line, e.g. 'git -c pack.threads=3D=
-1
-gc'.
+If you are going to give me only three states, following the first
+parent ancestry chain, then the description needs to state it more
+clearly.  I am not saying first-parent-only history is useless, but
+the user needs to know that merges are flattened in the unraveled
+result and the resulting history becomes linear, following the first
+parent ancestry chain of the original history (if that is what the
+tool does) before deciding if this tool matches what she needs.
 
-The other setting you should probably look at is pack.windowMemory
-which should help you control the amount of memory git uses while
-packing.  Also look at core.packedGitWindowSize and
-core.packedGitLimit if your repository is really large.
-
->
-> =E2=91=A0 automatic garbage collection, =E2=80=9Cgit gc --aggressive =
---prune=3Dnow=E2=80=9D,
->   and cloning are the use cases I have at hand right now.
->
-> =C3=80 propos, while here: is gc --aggressive safe to run on a live,
-> online-shared repository, or does it break other users accessing
-> the repository concurrently? (If it=E2=80=99s safe I=E2=80=99d very m=
-uch like to do
-> that in a, say weekly, cronjob on FusionForge, our hosting system.)
-
-Running 'git gc' with --aggressive should be as safe as running it
-without --aggressive.
-
-But, you should think about whether you really need to run it more
-than once, or at all.  When you use --aggressive, git will perform the
-entire delta search again for _every_ object in the repository.  The
-general usecase for --aggressive is when you suspect that the original
-delta search produced sub-optimal deltas or if you modify the size of
-the delta search window or depth and want to regenerate your packed
-objects to improve compression or access speed.  Even then, you will
-not likely get much benefit from running with --aggressive a second
-time.
-
-hth,
--Brandon
+As to the procedural stuff, I think others have sufficiently
+answered already.  If I may add something, a new stuff typically
+start its life in contrib/ before it proves to be useful.
