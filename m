@@ -1,75 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Third try at documenting command integration
- requirements.
-Date: Mon, 26 Nov 2012 13:41:39 -0800
-Message-ID: <7v624sqbxo.fsf@alter.siamese.dyndns.org>
-References: <20121126053557.E56434065F@snark.thyrsus.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
+Date: Mon, 26 Nov 2012 13:46:55 -0800
+Message-ID: <CAGdFq_iLYHs_tUDRsT9X1J12vSp3TUoMJQVbjw4ZgxONL6tMCA@mail.gmail.com>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com>
+ <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com>
+ <CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com>
+ <7vd2z7rj3y.fsf@alter.siamese.dyndns.org> <20121121041735.GE4634@elie.Belkin>
+ <7vfw43pmp7.fsf@alter.siamese.dyndns.org> <20121121194810.GE16280@sigill.intra.peff.net>
+ <CAMP44s2B2_htR8LFbHk99WaNUcaYJCxVJPdRdj5VQ0k+fB9NOg@mail.gmail.com>
+ <7v7gp9udsl.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1211261726260.7256@s15462909.onlinehome-server.info>
+ <7vd2z0tfhz.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1211262024520.7256@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com (Eric S. Raymond)
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:42:04 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Max Horn <max@quendi.de>, Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:48:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td6RE-0006oo-4Q
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:42:00 +0100
+	id 1Td6Wv-0001ta-Mf
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841Ab2KZVlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 16:41:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39003 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755385Ab2KZVlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 16:41:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8648A9F4D;
-	Mon, 26 Nov 2012 16:41:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nCQ5IEfPwIrrUx2Vy+xg+YC7Jdg=; b=VpRYzW
-	wJupS5+ufFSAy4hh7jaQXAc6tBQG2OOFbfWAT3PsneiaIpx9f5LqX2oqIla7q+Qu
-	FSWNu4sxq5ykAtXswJ2LxtEJDp5dtC2ETQ0MwmeJ7NP5+qIHmmZm5iWjwa3OAW+w
-	onlIQ7NqdbKhWf5YTVOv7bhA+DiQ8ehw8nXdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ldjaIT9NXPIXKrclapqdE9i53iKtVXEt
-	7HdwM4nOn+z6tx3dOrClLbs4Lzzaku3GJAmInXUKBNcwwRRIVAwsng8T8h+Al9Lp
-	nBEtXc7iYzVe8cJ+88S1kh2qZAJ/V205YxQU77KNLS7D8W6zdu3H/Mu7E+5vGDrL
-	EabeP85Dspc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 737419F4C;
-	Mon, 26 Nov 2012 16:41:41 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E78489F4A; Mon, 26 Nov 2012
- 16:41:40 -0500 (EST)
-In-Reply-To: <20121126053557.E56434065F@snark.thyrsus.com> (Eric S. Raymond's
- message of "Mon, 26 Nov 2012 00:35:57 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 105BED28-3812-11E2-A988-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757114Ab2KZVri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 16:47:38 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:50584 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755596Ab2KZVrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 16:47:37 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so8342822qcr.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 13:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xdOoygW8vFj3NR56MlE7E4g0dIRG1Wt19A1xJPc0LpE=;
+        b=JWw8Om4HIrUNfEuKGCZ3xxiXqf1JzXS+vD6kgoU96eK8Y1DxEZIsndFkeKEUaFjeJR
+         Go7kzi7axP5tyWXgSjuwO35jMwqoBe6re0GdV6eM6bgvORrZ4apxcmQTGJvVNH28D56/
+         E5fTElSQaPBx/C1KGJNf/m+isxTdh5a7vCzi+U1mmJiJxiFvPW0I/2srsCRj5OcMolZh
+         YjyEumJFwxun0EPXPHzowzzYApuzaBKZjP27LKxKdPYfFUkLfUcM86Mh2A3lCC29h/ki
+         5XKmdesF5JTNna4+tXevT/hvW7+o8DdfYH6NPsIyx8eEu1bsu4KAIbF2PhLFbqwfNyrr
+         VKcg==
+Received: by 10.49.29.103 with SMTP id j7mr15427932qeh.47.1353966455940; Mon,
+ 26 Nov 2012 13:47:35 -0800 (PST)
+Received: by 10.49.34.234 with HTTP; Mon, 26 Nov 2012 13:46:55 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1211262024520.7256@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210502>
 
-esr@thyrsus.com (Eric S. Raymond) writes:
+On Mon, Nov 26, 2012 at 11:26 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> We added rev_cmdline_info since then so that we can tell what refs
+>> were given from the command line in what way, and I thought that we
+>> applied a patch from Sverre that uses it instead of the object
+>> flags.  Am I misremembering things?
+>
+> It does sound so familiar that I am intended to claim that you remember
+> things correctly.
 
-> @@ -0,0 +1,91 @@
-> += Integrating new subcommands =
-> +
-> +This is how-to documentation for people who want to add extension
-> +commands to git.  It should be read alongside api-builtin.txt.
-> +
-> +== Runtime environment ==
-> +
-> +git subcommands are standalone executables that live in the git
+FWIW, I implemented that in
+http://thread.gmane.org/gmane.comp.version-control.git/184874 but
+didn't do the work to get it merged.
 
-Even though "={n} title ={n}" is a valid AsciiDoc heading, all other
-files use (older) underscored titles; please refrain from being
-original.
+-- 
+Cheers,
 
-Especially, this interferes with the way the api-index.txt file in
-the same directory is autogenerated.
+Sverre Rabbelier
