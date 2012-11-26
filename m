@@ -1,87 +1,51 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v6 p1.1 00/14] fast-export and remote-testgit improvements
-Date: Tue, 27 Nov 2012 00:23:44 +0100
-Message-ID: <CAMP44s3LR6T6H8z0LPJr7DHXde-JUoN9X4mWhju-5ECvG7wDpg@mail.gmail.com>
-References: <1353727034-24698-1-git-send-email-felipe.contreras@gmail.com>
-	<7vd2z0otie.fsf@alter.siamese.dyndns.org>
+From: Aaron Schrab <aaron@schrab.com>
+Subject: Re: [RFC/PATCH] Option to revert order of parents in merge commit
+Date: Mon, 26 Nov 2012 18:24:11 -0500
+Message-ID: <20121126232411.GB3937@pug.qqx.org>
+References: <20121123083550.GA702@camk.edu.pl>
+ <7vfw3zzoye.fsf@alter.siamese.dyndns.org>
+ <20121126124200.GA29859@camk.edu.pl>
+ <7v8v9otfdy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Max Horn <max@quendi.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Kacper Kornet <draenog@pld-linux.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 00:24:07 2012
+X-From: git-owner@vger.kernel.org Tue Nov 27 00:24:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td81x-0007yr-Ue
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 00:24:02 +0100
+	id 1Td82R-0008Fs-RA
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 00:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757364Ab2KZXXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 18:23:47 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:44962 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757238Ab2KZXXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 18:23:46 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so11751480oag.19
-        for <git@vger.kernel.org>; Mon, 26 Nov 2012 15:23:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oSz8vIqKaA/MEZBwxty4NAFPF3C6allBVAhKZoMfnCs=;
-        b=OtbrvzUlQDxUYKRG0USPBRKt+Ea1UA2kRbKyRKKOFRPAuQR6xukscWc2RyBZHCvD7T
-         7bC8bM7ICWDjn9dA84rVhVCrzIR3ZhIy57MHpAXWx6G9cc3oYvOOZF3aESPji2VGN14l
-         SvBQxU1RHKLxGEBi+NPp9p+h5eREylzWZklmXgN30otZlkSOG1gTdDqQZnt1qE2VaWKv
-         mSaG0h6rZ84WBVu64jMlU6dDiyJyggGr+2jGDwmipEzt/4d0yTYoNw0YZFwzyOUxlS7Z
-         QJaG14FEfhEyg498seBZHiQN5bJS/Hcf+2v0R49iIoX7ce4yeG08bPhkYQnAYIHFatnT
-         w4VA==
-Received: by 10.60.30.70 with SMTP id q6mr10379497oeh.103.1353972224684; Mon,
- 26 Nov 2012 15:23:44 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Mon, 26 Nov 2012 15:23:44 -0800 (PST)
-In-Reply-To: <7vd2z0otie.fsf@alter.siamese.dyndns.org>
+	id S1757468Ab2KZXYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 18:24:14 -0500
+Received: from pug.qqx.org ([50.116.43.67]:35219 "EHLO pug.qqx.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757238Ab2KZXYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 18:24:12 -0500
+Received: by pug.qqx.org (Postfix, from userid 1000)
+	id CD1FB1D326; Mon, 26 Nov 2012 18:24:11 -0500 (EST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+	Kacper Kornet <draenog@pld-linux.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v8v9otfdy.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210514>
 
-On Tue, Nov 27, 2012 at 12:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+At 09:58 -0800 26 Nov 2012, Junio C Hamano <gitster@pobox.com> wrote:
+>Kacper Kornet <draenog@pld-linux.org> writes:
+>> The change of order of parents happens at the very last moment, so
+>> "ours" in merge options is local version and "theirs" upstream.
 >
->> I'm rerolling this series with the changes fron Junio, plus a bit more cleanups.
->>
->> I dropped the last patch, because I found an issue and a separate patch series
->> would take care of that. Other than that the main changes remain the same.
->>
->> The old remote-testgit is now remote-testpy (as it's testing the python
->> framework, not really remote helpers). The tests are simplified, and exercise
->> more features of transport-helper, and unsuprisingly, find more bugs.
->
-> Thanks.
->
-> I've queued [v6 p1.1] but not later parts (yet).  The result merged
-> to 'pu' however seems to break t5800.  It could be a stupid and
-> trivial merge error or something, but I didn't look into the
-> details.
+>That may be something that wants to go to the proposed commit log
+>message.  I am neutral on the "feature" (i.e. not against it but not
+>extremely enthusiastic about it either).
 
-Yeah, the last patch triggers that. It should be moved to part2. The
-patch "fast-export: don't handle uninteresting refs" should fix that,
-which is why I believe it should be applied first. Didn't I already
-say that?
-
-Cheers.
-
--- 
-Felipe Contreras
+That should also be included in the (currently nonexistent) 
+documentation of the proposed option.
