@@ -1,37 +1,37 @@
 From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
 Subject: RE: git bundle format
-Date: Mon, 26 Nov 2012 20:50:11 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D13208537ABF676@umechphj.easf.csd.disa.mil>
+Date: Mon, 26 Nov 2012 20:53:43 +0000
+Message-ID: <871B6C10EBEFE342A772D1159D13208537ABF68B@umechphj.easf.csd.disa.mil>
 References: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
- <CAMP44s03QiO15jODBD4JO_JF8tCOT9OJG1tb4+r+L4dgPUOLFg@mail.gmail.com>
+ <7vvccsqeva.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_014C_01CDCBED.6A6BA6A0"
+	micalg=SHA1; boundary="----=_NextPart_000_0155_01CDCBED.EB2683F0"
 To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:51:14 2012
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:54:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td5e2-0007ZD-AZ
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 21:51:10 +0100
+	id 1Td5hW-00014Z-Pn
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 21:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582Ab2KZUuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 15:50:54 -0500
-Received: from edge-mech.mail.mil ([214.21.82.10]:28303 "EHLO
+	id S1756445Ab2KZUyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 15:54:12 -0500
+Received: from edge-mech.mail.mil ([214.21.82.11]:35934 "EHLO
 	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755563Ab2KZUux (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 15:50:53 -0500
-Received: from umechpjb.easf.csd.disa.mil (214.21.83.155) by
- umechpik.easf.csd.disa.mil (214.21.82.10) with Microsoft SMTP Server (TLS) id
- 14.2.309.2; Mon, 26 Nov 2012 20:50:12 +0000
+	with ESMTP id S1756373Ab2KZUyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 15:54:08 -0500
+Received: from UMECHPHV.easf.csd.disa.mil (214.21.83.147) by
+ umechpjj.easf.csd.disa.mil (214.21.82.11) with Microsoft SMTP Server (TLS) id
+ 14.2.309.2; Mon, 26 Nov 2012 20:53:44 +0000
 Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.5.252]) by
- umechpjb.easf.csd.disa.mil ([214.21.83.155]) with mapi id 14.02.0309.003;
- Mon, 26 Nov 2012 20:50:12 +0000
+ UMECHPHV.easf.csd.disa.mil ([214.21.83.147]) with mapi id 14.02.0309.003;
+ Mon, 26 Nov 2012 20:53:44 +0000
 Thread-Topic: git bundle format
-Thread-Index: Ac3MC2nDG5IUvl+lTGGFopK+o2ENNwACAgWAAACihOA=
-In-Reply-To: <CAMP44s03QiO15jODBD4JO_JF8tCOT9OJG1tb4+r+L4dgPUOLFg@mail.gmail.com>
+Thread-Index: Ac3MC2nDG5IUvl+lTGGFopK+o2ENNwACovsrAABjRjA=
+In-Reply-To: <7vvccsqeva.fsf@alter.siamese.dyndns.org>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
@@ -41,42 +41,48 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210486>
 
-------=_NextPart_000_014C_01CDCBED.6A6BA6A0
+------=_NextPart_000_0155_01CDCBED.EB2683F0
 Content-Type: text/plain;
-	charset="utf-8"
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 > -----Original Message-----
-> From: Felipe Contreras
-> Sent: Monday, November 26, 2012 3:20 PM
+> From: Junio C Hamano
+> Sent: Monday, November 26, 2012 3:38 PM
 > 
-> On Mon, Nov 26, 2012 at 8:24 PM, Pyeron, Jason J CTR (US)
-> <jason.j.pyeron.ctr@mail.mil> wrote:
-> > I may need to be nudged in a better direction, but please try to
-> understand my intentions.
-> >
-> > I am facing a situation where I would like to use git bundle but at
-> the same time inspect the contents to prevent a spillage[1].
-> >
-<snip/>
-> >
-> > Am I barking up the right tree?
+> "Pyeron, Jason J CTR (US)" writes:
 > 
-> Have you tried 'git fast-export'? The output is definitely not human
-> inspectable, but should be relatively easy to parse to generate such a
-> format. And instead of 'git bundle unbundle' you could use 'git
-> fast-import'. or simply do the conversion in your script.
+> > In this situation we should assume that the bundle does not have
+> > any content which is already in the public repository, that is it
+> > has the minimum data to make it pass a git bundle verify from the
+> > public repositories point of view. We would then take the bundle
+> > and pipe it though the "git-bundle2text" program which would
+> > result in a "human" inspectable format as opposed to the packed
+> > format[2]. The security reviewer would then see all the
+> > information being released and with the 
 
-No. But I am going to read up on it today. It clearly says "You can use it as a human-readable bundle replacement"[4]. My initial question is does it ever use deltas? The repositories I just tested it on only seem to output full blobs (which is really nice from this use case point of view).
+*** Assumed that the inspector had a copy of the original public repo
+
+> > help of the public
+> > repository see how the data changes the repository.
+
+
+
+> 
+> The bundle file is a thinly wrapped packfile, with extra information
+> that tells what objects in the bundle are the tips of histories and
+> what objects the repository the bundle gets unbundled has to have.
+> So your "git-bundle2text" would likely to involve fetching from the
+> bundle and inspecting the resulting history and the working tree
+> files.
+
+Yea, I knew the inspection tool was going to get messy.
 
 -Jason
 
-
-4: http://www.kernel.org/pub/software/scm/git/docs/git-fast-export.html
-
-------=_NextPart_000_014C_01CDCBED.6A6BA6A0
+------=_NextPart_000_0155_01CDCBED.EB2683F0
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -168,17 +174,17 @@ he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
 ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
 BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
 BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MjExMjYyMDQ4MDFaMCMGCSqGSIb3DQEJBDEWBBScXuDa1COC+LsFrI023ylepmYSOjBYBgkqhkiG
+MjExMjYyMDUxMzdaMCMGCSqGSIb3DQEJBDEWBBS22nCMEJQ8jK8enUZEoQ2izzPN9TBYBgkqhkiG
 9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
 AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
 MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
 FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
 BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBAKR1Al65
-egUQJVauThZW/dU0R7/NpwnQTwZLus9TP1j+vXASme4NRC/PP0eCHab2QUW/zGZ1W/Ydf5JOqFcV
-LVu/ffJRLdxd4ULtprCMT0Y0FfA+0rgNu9fA5vA0dMvFFAtAchyahE3gikRQmjJDf1P/EikWNkna
-aZMvoN5bh/ab+JaNtiExekhkxHFfP/f82jUREdPcjDDVqxdoFIopm42B9GWVs9j5L14LTWyPzmE/
-o263SiEH6rrltzCe5Qa7zWNwQKu31i339JoKz2dYDjbkbn16rrI8zmHldkIm9BMgCykQ7DgvIYly
-hPrRhD7qFcleCKw4eyytsdUBoEVZXWcAAAAAAAA=
+S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBAIMzY/LN
+IwyXLtaLeJU4eRlEdyHPuZdi79L1szgdATjJU4leY0dZjN6UbWmLoLj97j8RnHecx1yIckrPkuZf
+WnPiQOfawInxTtIAz/J9ipvIw+sn1QbssC2mE7sUScD+gFxPivx/RU1+CcAxT7xz9m1cySts/OZP
+CDQhvm6sXENt+JNBVqG1/BYkV2pEMUnqNqJ8Os8RQwNLN3D7kZhg7IKWdfcaFJhfiLs7uVrZheLD
+EGnMg9GVT2/ObNiP0m8+K7j1pJZGHeYmY02hX9K2xStjiKUyj7bgMjkkovPJswdznxcPhDqRWAZJ
+m+GjXbzTrK3GrYoka7GpHva7nOG1NccAAAAAAAA=
 
-------=_NextPart_000_014C_01CDCBED.6A6BA6A0--
+------=_NextPart_000_0155_01CDCBED.EB2683F0--
