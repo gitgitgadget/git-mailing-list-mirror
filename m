@@ -1,99 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix typo in remote set-head usage
-Date: Mon, 26 Nov 2012 10:16:52 -0800
-Message-ID: <7vwqx8rzzf.fsf@alter.siamese.dyndns.org>
-References: <1353851019-27254-1-git-send-email-apelisse@gmail.com>
+From: Igor Lautar <igor.lautar@gmail.com>
+Subject: Re: commit gone after merge - how to debug?
+Date: Mon, 26 Nov 2012 18:01:25 +0100
+Message-ID: <CAO1Khk9oNoCpAmWaEfew1K976B+8bn+R6XMi3vGtH-Vj3TJMqg@mail.gmail.com>
+References: <CAO1Khk_eugH--wp3s-gr4HTvuRyL=SaWHWtEXCRZ_Ak7+s5U=w@mail.gmail.com>
+	<1353935441-ner-9639@calvin>
+	<vpqr4ngsdjl.fsf@grenoble-inp.fr>
+	<CAO1Khk9mzJjnysnc1iDFeMgqnRq0z35t0kgC-8nrsjJ-oOvdOg@mail.gmail.com>
+	<vpqehjgscv3.fsf@grenoble-inp.fr>
+	<CAO1Khk8=nrKknfqY-k6XaGPDbLrHyrK-8fxfB7XXUWeB7L4EUA@mail.gmail.com>
+	<vpqa9u4pgew.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, tim.henigan@gmail.com,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 19:17:18 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 26 19:18:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td3F5-0006yo-PO
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 19:17:16 +0100
+	id 1Td3Fr-0007Rg-9U
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 19:18:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756288Ab2KZSQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 13:16:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34880 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755123Ab2KZSQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 13:16:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D845B9C69;
-	Mon, 26 Nov 2012 13:16:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xoCQXd9bN9Us++6cTtR+xRYmZio=; b=JfaR5E
-	BtJ7COu4xTjDKwRSqeslZ2U9xIUcmnOsNpJlKM4AeiQNFIu9FxmGaXz6hndXwyXi
-	m1aPqeyL6LPFmfbaCAVRjqtT3T4AZhl4LxAs44nBilbFJ/ZzZSzemwhGc3JdT91A
-	73QyfGEQJzMs18DYUUv4yehZ6nJPKG14SiWg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hWcPT1ERA5fYQdR5/dghhqSpHzUSi9PM
-	UNBS5fgKKGsjlvKHH0HApCuPhrAydw4K/04QU/4XNFNey9hK1z+6T7WY++UgZKo8
-	IEmgX7pDLs9h/IZeUm2suHC5uFo35SzrQlHufLuz/+FKYbsWN2PbYTOp+8LWLbBa
-	ZNkiQirHPOU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C57489C68;
-	Mon, 26 Nov 2012 13:16:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36FFA9C66; Mon, 26 Nov 2012
- 13:16:54 -0500 (EST)
-In-Reply-To: <1353851019-27254-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Sun, 25 Nov 2012 14:43:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 74E6D34C-37F5-11E2-B5AA-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756212Ab2KZSRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 13:17:45 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:59013 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756144Ab2KZRB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 12:01:27 -0500
+Received: by mail-vc0-f174.google.com with SMTP id m18so7885172vcm.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 09:01:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=pOP2cXe1LmjPG1UkDi1yUfVwKKEbiRVNrK2gfqntADU=;
+        b=EA5yJK/HE0RmIaDmllE8Cf8fEdzJDHHTqQtNwPE3TJhLS8nq1MJybdmG4N1Zr8Gfjy
+         JE6l8CPXqLAvP45TsmrasJ0vPVyeH4N2+5AoQuPRun45aX/DuSxI0HK3JEtpovgLE3Ww
+         Ld4siKmAdVLopZ1nau7SsCYHuEN2BmL/iMchydmUC1BlFhFfxOhUnAafVWrPES5rRLeJ
+         yMnntaswXr4Z7UFh9TiTKbWMpt7q+QURMGY2gWA0GBdLvWAEYf/PEAXRnnAEOxvtqTtO
+         hUHYkvuTNW4BtmWU35fj4rrz0xXHcsm+LMMBgEoQ3oR3JSgkMEvHlN7GFiu1gHV7HhXA
+         SPHQ==
+Received: by 10.58.116.212 with SMTP id jy20mr20503230veb.5.1353949285614;
+ Mon, 26 Nov 2012 09:01:25 -0800 (PST)
+Received: by 10.58.69.112 with HTTP; Mon, 26 Nov 2012 09:01:25 -0800 (PST)
+In-Reply-To: <vpqa9u4pgew.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210465>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+On Mon, Nov 26, 2012 at 3:50 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> What's possible is that someone had already merged the branch containing
+> "new", got conflicts, and resolved it in favor of "old" somewhere in the
+> history of your master branch.
 
-> parenthesis are not matching in `builtin_remote_sethead_usage`
-> as a square bracket is closing something never opened.
-> ---
-> This will also break all translation files, should I also send a patch
-> to update them ?
+This is exactly what happened. I've actually found a merge of origin
+to mirror which reversed the change some time back and was
+subsequently merged back to origin later on. Most probably human error
+during merge.
 
-"git grep -A2 -e 'remote set-head <name>' po/" tells me that we
-already have both the correct variant and the broken one, and they
-are both translated ;-) so I do not think we have much to worry
-about the i18n fallout in this case, but thanks anyway for thinking
-about it.
+Interestingly, this was my first thought as well, but I've must have
+overlooked that particular merge the first time.
 
-You would need to sign off your patch, but otherwise looks good to
-me.
-
-Thanks.
-
-
->
-> Cheers,
-> Antoine Pelisse
->
->  builtin/remote.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index a5a4b23..937484d 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -39,7 +39,7 @@ static const char * const builtin_remote_rm_usage[] = {
->  };
->
->  static const char * const builtin_remote_sethead_usage[] = {
-> -	N_("git remote set-head <name> (-a | -d | <branch>])"),
-> +	N_("git remote set-head <name> (-a | -d | <branch>)"),
->  	NULL
->  };
->
-> --
-> 1.7.9.5
+Anyhow, it sorted now, many thanks for your help,
+Igor
