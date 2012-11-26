@@ -1,93 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
-Date: Mon, 26 Nov 2012 20:26:16 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1211262024520.7256@s15462909.onlinehome-server.info>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com> <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com> <CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com> <7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
- <20121121041735.GE4634@elie.Belkin> <7vfw43pmp7.fsf@alter.siamese.dyndns.org> <20121121194810.GE16280@sigill.intra.peff.net> <CAMP44s2B2_htR8LFbHk99WaNUcaYJCxVJPdRdj5VQ0k+fB9NOg@mail.gmail.com> <7v7gp9udsl.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1211261726260.7256@s15462909.onlinehome-server.info> <7vd2z0tfhz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix typo in remote set-head usage
+Date: Mon, 26 Nov 2012 13:28:10 -0800
+Message-ID: <7vfw3wqck5.fsf@alter.siamese.dyndns.org>
+References: <7vwqx8rzzf.fsf@alter.siamese.dyndns.org>
+ <1353957714-7330-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Max Horn <max@quendi.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:16:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:28:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td62E-0001f1-SR
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:16:11 +0100
+	id 1Td6ED-0007nA-Au
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755816Ab2KZVPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 16:15:55 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:60593 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753576Ab2KZVPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 16:15:55 -0500
-Received: (qmail invoked by alias); 26 Nov 2012 19:26:22 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp039) with SMTP; 26 Nov 2012 20:26:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+//G9HVZy/oFkCJtY3ry6uWroMa5xk9yQS1fiQ4/
-	Ve2Wv6PYJVfikH
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <7vd2z0tfhz.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753256Ab2KZV2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 16:28:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59261 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755263Ab2KZV2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 16:28:17 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E32E194B0;
+	Mon, 26 Nov 2012 16:28:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=d77/PU
+	KMKc5FGMa5vyh/UcQvzqmaJQFejKeLfrwFzfQ24kp7zQQGGKaREuNVZomMjbwJML
+	71Tv7zP+5k3YiqvJcJCW7qvqOfGT+/5/2Q0u2kPghMVR/W4qNp7+e1WVsXewQ/5w
+	etRGD0HCEvKOHR3VyNvmDn8U1zCnNdKfe2qdM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XrSvlnIQLhEBmXxjU3geAZGVCjfcGfJM
+	OMV1F8FhItdOmgpwrc7L+HzxRWphh0FpkH2BOPwAfL5YveqUTRdnVq9zgnT/rtAI
+	GWVh/BcAm+TTROgCo3OZXW9BK2A/wnVS+ZhBINXMhwtvq2drKubwampYfqDofq4w
+	8YKXGexaK+U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7246D94AC;
+	Mon, 26 Nov 2012 16:28:13 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76B03949C; Mon, 26 Nov 2012
+ 16:28:12 -0500 (EST)
+In-Reply-To: <1353957714-7330-1-git-send-email-apelisse@gmail.com> (Antoine
+ Pelisse's message of "Mon, 26 Nov 2012 20:21:54 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2E84E28E-3810-11E2-AE25-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210497>
 
-Hi Junio,
-
-On Mon, 26 Nov 2012, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > If you changed your stance on the patch Sverre and I sent to fix this,
-> > we could get a non-partial fix for this.
-> 
-> This is long time ago so I may be misremembering the details, but I
-> thought the original patch was (ab)using object flags to mark "this was
-> explicitly asked for, even though some other range operation may have
-> marked it uninteresting".  Because it predated the introduction of the
-> rev_cmdline_info mechanism to record what was mentioned on the command
-> line separately from what objects are uninteresting (i.e. object flags),
-> it may have been one convenient way to record this information, but it
-> still looked unnecessarily ugly hack to me, in that it allocated scarce
-> object flag bits to represent a narrow special case (iirc, only a
-> freestanding "A" on the command line but not "A" spelled in "B..A", or
-> something), making it more expensive to record other kinds of command
-> line information in a way consistent with the approach chosen (we do not
-> want to waste object flag bits in order to record "this was right hand
-> side tip of the symmetric difference range" and such).
-
-Good to know. I will find some time to look at rev_cmdline_info and patch
-my patch.
-
-> If you are calling "do not waste object flags to represent one
-> special case among endless number of possibilities, as it will make
-> it impossible to extend it" my stance, that hasn't changed.
-> 
-> We added rev_cmdline_info since then so that we can tell what refs
-> were given from the command line in what way, and I thought that we
-> applied a patch from Sverre that uses it instead of the object
-> flags.  Am I misremembering things?
-
-It does sound so familiar that I am intended to claim that you remember
-things correctly.
-
-Ciao,
-Johannes
+Thanks.
