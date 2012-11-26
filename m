@@ -1,67 +1,75 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Third try at documenting command integration
  requirements.
-Date: Mon, 26 Nov 2012 16:41:34 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121126214134.GA1713@thyrsus.com>
+Date: Mon, 26 Nov 2012 13:41:39 -0800
+Message-ID: <7v624sqbxo.fsf@alter.siamese.dyndns.org>
 References: <20121126053557.E56434065F@snark.thyrsus.com>
- <7vzk24qgjx.fsf@alter.siamese.dyndns.org>
-Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:41:54 2012
+To: esr@thyrsus.com (Eric S. Raymond)
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:42:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td6R6-0006jW-Vm
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:41:53 +0100
+	id 1Td6RE-0006oo-4Q
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221Ab2KZVli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 16:41:38 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:51809
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813Ab2KZVlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 16:41:37 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 25FC34065F; Mon, 26 Nov 2012 16:41:35 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vzk24qgjx.fsf@alter.siamese.dyndns.org>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755841Ab2KZVlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 16:41:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39003 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755385Ab2KZVlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 16:41:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8648A9F4D;
+	Mon, 26 Nov 2012 16:41:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nCQ5IEfPwIrrUx2Vy+xg+YC7Jdg=; b=VpRYzW
+	wJupS5+ufFSAy4hh7jaQXAc6tBQG2OOFbfWAT3PsneiaIpx9f5LqX2oqIla7q+Qu
+	FSWNu4sxq5ykAtXswJ2LxtEJDp5dtC2ETQ0MwmeJ7NP5+qIHmmZm5iWjwa3OAW+w
+	onlIQ7NqdbKhWf5YTVOv7bhA+DiQ8ehw8nXdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ldjaIT9NXPIXKrclapqdE9i53iKtVXEt
+	7HdwM4nOn+z6tx3dOrClLbs4Lzzaku3GJAmInXUKBNcwwRRIVAwsng8T8h+Al9Lp
+	nBEtXc7iYzVe8cJ+88S1kh2qZAJ/V205YxQU77KNLS7D8W6zdu3H/Mu7E+5vGDrL
+	EabeP85Dspc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 737419F4C;
+	Mon, 26 Nov 2012 16:41:41 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E78489F4A; Mon, 26 Nov 2012
+ 16:41:40 -0500 (EST)
+In-Reply-To: <20121126053557.E56434065F@snark.thyrsus.com> (Eric S. Raymond's
+ message of "Mon, 26 Nov 2012 00:35:57 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 105BED28-3812-11E2-A988-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210501>
 
-Junio C Hamano <gitster@pobox.com>:
-> I'll reword the title (readers of "git log" output 6 months down the
-> road will not care if this is the third try or the first one) and
-> tweak things here and there before queuing.
+esr@thyrsus.com (Eric S. Raymond) writes:
 
-Result looks good from here.
- 
-The next things on my git to-do list are 
+> @@ -0,0 +1,91 @@
+> += Integrating new subcommands =
+> +
+> +This is how-to documentation for people who want to add extension
+> +commands to git.  It should be read alongside api-builtin.txt.
+> +
+> +== Runtime environment ==
+> +
+> +git subcommands are standalone executables that live in the git
 
-1. Audit the in-tree Python for version dependencies.  Add floor-version checks.
+Even though "={n} title ={n}" is a valid AsciiDoc heading, all other
+files use (older) underscored titles; please refrain from being
+original.
 
-2. Submit a doc patch containing guidelines that (a) Python scripts should
-   check for their floor version and error out gracefully if they won't
-   run with the host's interpreter, and (b) Python scripts sbould be
-   2.6-compatible.
-
-3. Submit the git-weave integration patch.  I could do that now, but while my
-   regression test speaks TAP it doesn't presently use the test library. I plan
-   to re-work it to do that.
-
-Do you have any other pending tasks for which you think my expertise would
-be useful?  I refer specifically to the facts that (a) I find writing and 
-editing documentation easy and can do it rapidly, (b) I'm a Python expert, 
-and (c) I am very interested in, and know a lot about, tools for repository
-surgery and import/export.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Especially, this interferes with the way the api-index.txt file in
+the same directory is autogenerated.
