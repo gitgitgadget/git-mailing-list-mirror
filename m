@@ -1,93 +1,267 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: git bundle format
-Date: Mon, 26 Nov 2012 15:56:24 -0500 (EST)
-Message-ID: <1745253724.103630.1353963384110.JavaMail.root@genarts.com>
-References: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v4 1/4] git-submodule add: Add --local-branch option
+Date: Mon, 26 Nov 2012 16:00:16 -0500
+Message-ID: <15e0581e0cb0bb42bf84e8e195597e46d3457a93.1353962698.git.wking@tremily.us>
+References: <20121123175402.GH2806@odin.tremily.us>
+ <cover.1353962698.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jason J CTR Pyeron (US)" <jason.j.pyeron.ctr@mail.mil>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:57:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:01:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td5jg-0002Ra-1X
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 21:57:00 +0100
+	id 1Td5o2-0004rT-RJ
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:01:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432Ab2KZU4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 15:56:33 -0500
-Received: from hq.genarts.com ([173.9.65.1]:19866 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753576Ab2KZU4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 15:56:31 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id E0EA5BE21D3;
-	Mon, 26 Nov 2012 15:56:29 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dwtve3r3VnKY; Mon, 26 Nov 2012 15:56:24 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 276F4BE1F27;
-	Mon, 26 Nov 2012 15:56:24 -0500 (EST)
-In-Reply-To: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
-X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC23 (Mac)/7.2.0_GA_2669)
+	id S1753542Ab2KZVBO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Nov 2012 16:01:14 -0500
+Received: from vms173013pub.verizon.net ([206.46.173.13]:24487 "EHLO
+	vms173013pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752561Ab2KZVBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 16:01:13 -0500
+Received: from odin.tremily.us ([unknown] [72.68.108.240])
+ by vms173013.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0ME400ABG51QBXD0@vms173013.mailsrvcs.net> for
+ git@vger.kernel.org; Mon, 26 Nov 2012 15:01:03 -0600 (CST)
+Received: from localhost (tyr.tremily.us [192.168.0.5])
+	by odin.tremily.us (Postfix) with ESMTP id 076096DEFC8; Mon,
+ 26 Nov 2012 16:01:02 -0500 (EST)
+X-Mailer: git-send-email 1.8.0.3.g95edff1.dirty
+In-reply-to: <cover.1353962698.git.wking@tremily.us>
+In-reply-to: <cover.1353962698.git.wking@tremily.us>
+References: <cover.1353962698.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210490>
 
------ Original Message -----
-> From: "Jason J CTR Pyeron (US)" <jason.j.pyeron.ctr@mail.mil>
-> Sent: Monday, November 26, 2012 2:24:54 PM
-> Subject: git bundle format
-> 
-> I am facing a situation where I would like to use git bundle but at
-> the same time inspect the contents to prevent a spillage[1].
+=46rom: "W. Trevor King" <wking@tremily.us>
 
-As someone who faced a similar situation in a previous life, I'll offer my $0.02, but I'm certainly not the technical expert here.
+This option allows you to record a submodule.<name>.branch option in
+=2Egitmodules.  Git does not currently use this configuration option fo=
+r
+anything, but users have used it for several things, so it makes sense
+to add some syntactic sugar for initializing the value.
 
-> Given we have a public repository which was cloned on to a secret
-> development repository. Now the developers do some work which should
-> not be sensitive in any way and commit and push it to the secret
-> repository.
-> 
-> Now they want to release it out to the public. The current process is
-> to review the text files to ensure that there is no "secret" sauce
-> in there and then approve its release. This current process ignores
-> the change tracking and all non-content is lost.
-> 
-> In this situation we should assume that the bundle does not have any
-> content which is already in the public repository, that is it has
-> the minimum data to make it pass a git bundle verify from the public
-> repositories point of view. We would then take the bundle and pipe
-> it though the "git-bundle2text" program which would result in a
-> "human" inspectable format as opposed to the packed format[2]. The
-> security reviewer would then see all the information being released
-> and with the help of the public repository see how the data changes
-> the repository.
-> 
-> Am I barking up the right tree?
+Current consumers:
 
-First, a shot out of left field: how about a patch based workflow? (similar to the mailing list, just replace email with sneakernet)  Patches are plain text and simple to review (preferable to an "opaque" binary format?).
+=C3=86var uses this setting to designate the local branch to checkout w=
+hen
+pulling submodule updates:
 
-Second, thinking about your proposed bundle-based workflow I have two questions I'd have to answer to be comfortable with the solution:
+  $ git submodule foreach 'git checkout $(git config --file $toplevel/.=
+gitmodules submodule.$name.branch) && git pull'
 
-  1) Does the binary bundle contain any sensitive information?
-  2) Do the diffs applied to public repo contain any sensitive data?
+as he describes in
 
-Question 1 seems tricky to someone who knows *nothing* about the bundle format (e.g. me).  Maybe some form of bundle2text can be vetted enough that everyone involved believes that there is no other information traveling with the bundle (if so, you're golden).  Here I have to trust other experts.  On the flip side, even if the bundle itself is polluted (or considered to be lacking proof to the contrary), if (2) is considered safe, the patching of the public repo could potentially be done on a sacrificial hard drive before pushing.
+  commit f030c96d8643fa0a1a9b2bd9c2f36a77721fb61f
+  Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+  Date:   Fri May 21 16:10:10 2010 +0000
 
-Question 2 is relatively straight forward and lead me to the patch idea.  I would:
-  - Bundle the public repository
-  - Init a new repo in the secure space from the public bundle
-  - Fetch from the to-be-sanitized bundle into the new repo
-  - Examine commits (diffs) introduced by branches in the to-be-sanitized bundle
-  - Perhaps get a list of all the objects in the to-be-sanitized bundle and do a git-cat-file on each of them (if the bundle is assembled correctly it shouldn't have any unreachable objects...).  This step may be extraneous after the previous.
+    git-submodule foreach: Add $toplevel variable
 
-HTH,
-Stephen
+Gerrit uses the same interpretation for the setting, but because
+Gerrit has direct access to the subproject repositories, it updates
+the superproject repositories automatically when a subproject changes.
+Gerrit also accepts the special value '.', which it expands into the
+superproject's branch name.
+
+Earlier version of this patch remained agnostic on the variable usage,
+but this was deemed potentially confusing.  Future patches in this
+series will extend the submodule command to use the stored value
+internally.
+
+[1] https://gerrit.googlesource.com/gerrit/+/master/Documentation/user-=
+submodules.txt
+
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/git-submodule.txt | 12 ++++++++++--
+ Documentation/gitmodules.txt    |  5 +++++
+ git-submodule.sh                | 19 ++++++++++++++++++-
+ t/t7400-submodule-basic.sh      | 25 +++++++++++++++++++++++++
+ 4 files changed, 58 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
+ule.txt
+index b4683bb..d0b4436 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,8 +9,8 @@ git-submodule - Initialize, update or inspect submodule=
+s
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch] [-f|--force]
+-	      [--reference <repository>] [--] <repository> [<path>]
++'git submodule' [--quiet] add [-b branch] [--local-branch[=3D<branch>]=
+]
++	      [-f|--force] [--reference <repository>] [--] <repository> [<pat=
+h>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>=
+=2E..]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
+@@ -209,6 +209,14 @@ OPTIONS
+ --branch::
+ 	Branch of repository to add as submodule.
+=20
++--local-branch::
++	Record a branch name used as `submodule.<path>.branch` in
++	`.gitmodules` for future reference.  If you do not list an explicit
++	name here, the name given with `--branch` will be recorded.  If that
++	is not set either, `HEAD` will be recorded.  Because the branch name
++	is optional, you must use the equal-sign form
++	(`--local-branch=3D<branch>`), not `--local-branch <branch>`.
++
+ -f::
+ --force::
+ 	This option is only valid for add and update commands.
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.tx=
+t
+index 4effd78..840ccfe 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -47,6 +47,11 @@ submodule.<name>.update::
+ 	This config option is overridden if 'git submodule update' is given
+ 	the '--merge', '--rebase' or '--checkout' options.
+=20
++submodule.<name>.branch::
++	A local branch name for the submodule (to avoid headless operation).
++	Set with the "--local-branch" option to "git submodule add", or
++	directly using "git config".
++
+ submodule.<name>.fetchRecurseSubmodules::
+ 	This option can be used to control recursive fetching of this
+ 	submodule. If this option is also present in the submodules entry in
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b110..6eed008 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
+=20
+ dashless=3D$(basename "$0" | sed -e 's/-/ /')
+-USAGE=3D"[--quiet] add [-b branch] [-f|--force] [--reference <reposito=
+ry>] [--] <repository> [<path>]
++USAGE=3D"[--quiet] add [-b branch] [--local-branch[=3D<branch>]] [-f|-=
+-force] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path=
+>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force=
+] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<=
+path>...]
+@@ -20,6 +20,8 @@ require_work_tree
+=20
+ command=3D
+ branch=3D
++local_branch=3D
++local_branch_empty=3D
+ force=3D
+ reference=3D
+ cached=3D
+@@ -257,6 +259,12 @@ cmd_add()
+ 			branch=3D$2
+ 			shift
+ 			;;
++		--local-branch)
++			local_branch_empty=3Dtrue
++			;;
++		--local-branch=3D*)
++			local_branch=3D"${1#*=3D}"
++			;;
+ 		-f | --force)
+ 			force=3D$1
+ 			;;
+@@ -328,6 +336,11 @@ cmd_add()
+ 	git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
+ 	die "$(eval_gettext "'\$sm_path' already exists in the index")"
+=20
++	if test -z "$local_branch" && test "$local_branch_empty" =3D "true"
++	then
++		local_branch=3D"${branch:=3DHEAD}"
++	fi
++
+ 	if test -z "$force" && ! git add --dry-run --ignore-missing "$sm_path=
+" > /dev/null 2>&1
+ 	then
+ 		eval_gettextln "The following path is ignored by one of your .gitign=
+ore files:
+@@ -366,6 +379,10 @@ Use -f if you really want to add it." >&2
+=20
+ 	git config -f .gitmodules submodule."$sm_path".path "$sm_path" &&
+ 	git config -f .gitmodules submodule."$sm_path".url "$repo" &&
++	if test -n "$local_branch"
++	then
++		git config -f .gitmodules submodule."$sm_path".branch "$local_branch=
+"
++	fi &&
+ 	git add --force .gitmodules ||
+ 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+ }
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 5397037..fc08647 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -133,6 +133,7 @@ test_expect_success 'submodule add --branch' '
+ 	(
+ 		cd addtest &&
+ 		git submodule add -b initial "$submodurl" submod-branch &&
++		test -z "$(git config -f .gitmodules submodule.submod-branch.branch)=
+" &&
+ 		git submodule init
+ 	) &&
+=20
+@@ -211,6 +212,30 @@ test_expect_success 'submodule add with ./, /.. an=
+d // in path' '
+ 	test_cmp empty untracked
+ '
+=20
++test_expect_success 'submodule add --local-branch' '
++	(
++		cd addtest &&
++		git submodule add --local-branch "$submodurl" submod-follow-head &&
++		test "$(git config -f .gitmodules submodule.submod-follow-head.branc=
+h)" =3D "HEAD"
++	)
++'
++
++test_expect_success 'submodule add --local-branch --branch' '
++	(
++		cd addtest &&
++		git submodule add --local-branch -b initial "$submodurl" submod-auto=
+-follow &&
++		test "$(git config -f .gitmodules submodule.submod-auto-follow.branc=
+h)" =3D "initial"
++	)
++'
++
++test_expect_success 'submodule add --local-branch=3D<name> --branch' '
++	(
++		cd addtest &&
++		git submodule add --local-branch=3Dfinal -b initial "$submodurl" sub=
+mod-follow &&
++		test "$(git config -f .gitmodules submodule.submod-follow.branch)" =3D=
+ "final"
++	)
++'
++
+ test_expect_success 'setup - add an example entry to .gitmodules' '
+ 	GIT_CONFIG=3D.gitmodules \
+ 	git config submodule.example.url git://example.com/init.git
+--=20
+1.8.0.3.g95edff1.dirty
