@@ -1,34 +1,37 @@
 From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: git bundle format
-Date: Mon, 26 Nov 2012 19:24:54 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
+Subject: RE: git bundle format
+Date: Mon, 26 Nov 2012 19:31:02 +0000
+Message-ID: <871B6C10EBEFE342A772D1159D13208537ABF5CB@umechphj.easf.csd.disa.mil>
+References: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
 Mime-Version: 1.0
 Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_0127_01CDCBE1.81034E10"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:26:00 2012
+	micalg=SHA1; boundary="----=_NextPart_000_0130_01CDCBE2.5E236DC0"
+To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:32:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td4JX-0001Ej-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 20:25:55 +0100
+	id 1Td4PK-0004XR-7e
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 20:31:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755559Ab2KZTZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 14:25:24 -0500
-Received: from edge-mech.mail.mil ([214.21.82.12]:15722 "EHLO
+	id S1755569Ab2KZTbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 14:31:37 -0500
+Received: from edge-mech.mail.mil ([214.21.82.11]:40529 "EHLO
 	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753713Ab2KZTZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 14:25:22 -0500
-Received: from UMECHPJF.easf.csd.disa.mil (214.21.83.156) by
- umechpjr.easf.csd.disa.mil (214.21.82.12) with Microsoft SMTP Server (TLS) id
- 14.2.309.2; Mon, 26 Nov 2012 19:24:54 +0000
+	with ESMTP id S1755532Ab2KZTbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 14:31:36 -0500
+Received: from UMECHPJG.easf.csd.disa.mil (214.21.83.157) by
+ umechpjj.easf.csd.disa.mil (214.21.82.11) with Microsoft SMTP Server (TLS) id
+ 14.2.309.2; Mon, 26 Nov 2012 19:31:04 +0000
 Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.5.252]) by
- UMECHPJF.easf.csd.disa.mil ([214.21.83.156]) with mapi id 14.02.0309.003;
- Mon, 26 Nov 2012 19:24:54 +0000
+ UMECHPJG.easf.csd.disa.mil ([214.21.83.157]) with mapi id 14.02.0309.003;
+ Mon, 26 Nov 2012 19:31:04 +0000
 Thread-Topic: git bundle format
-Thread-Index: Ac3MC2nDG5IUvl+lTGGFopK+o2ENNw==
+Thread-Index: Ac3MC2nDG5IUvl+lTGGFopK+o2ENNwAAK1KQ
+In-Reply-To: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
@@ -38,32 +41,55 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210473>
 
-------=_NextPart_000_0127_01CDCBE1.81034E10
+------=_NextPart_000_0130_01CDCBE2.5E236DC0
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-I may need to be nudged in a better direction, but please try to understand my intentions.
+Left off a citation to an old thread.
 
-I am facing a situation where I would like to use git bundle but at the same time inspect the contents to prevent a spillage[1].
+> -----Original Message-----
+> From: Pyeron, Jason J CTR (US)
+> Sent: Monday, November 26, 2012 2:25 PM
+> 
+> I may need to be nudged in a better direction, but please try to
+> understand my intentions.
+> 
+> I am facing a situation where I would like to use git bundle but at the
+> same time inspect the contents to prevent a spillage[1].
+> 
+> Given we have a public repository which was cloned on to a secret
+> development repository. Now the developers do some work which should
+> not be sensitive in any way and commit and push it to the secret
+> repository.
+> 
+> Now they want to release it out to the public. The current process is
+> to review the text files to ensure that there is no "secret" sauce in
+> there and then approve its release. This current process ignores the
+> change tracking and all non-content is lost.
+> 
+> 
+> In this situation we should assume that the bundle does not have any
+> content which is already in the public repository, that is it has the
+> minimum data to make it pass a git bundle verify from the public
+> repositories point of view. We would then take the bundle and pipe it
+> though the "git-bundle2text" program which would result in a "human"
+> inspectable format
+[3]
+> as opposed to the packed format[2]. The security
+> reviewer would then see all the information being released and with the
+> help of the public repository see how the data changes the repository.
+> 
+> Am I barking up the right tree?
+> 
+> 
+> 1: http://en.wikipedia.org/wiki/Spillage_of_Classified_Information
+> 2: http://git-scm.com/book/ch9-4.html
+3: http://git.661346.n2.nabble.com/How-to-extract-files-out-of-a-quot-git-bundle-quot-no-matter-what-td1679188.html
 
-Given we have a public repository which was cloned on to a secret development repository. Now the developers do some work which should not be sensitive in any way and commit and push it to the secret repository.
-
-Now they want to release it out to the public. The current process is to review the text files to ensure that there is no "secret" sauce in there and then approve its release. This current process ignores the change tracking and all non-content is lost.
-
-
-In this situation we should assume that the bundle does not have any content which is already in the public repository, that is it has the minimum data to make it pass a git bundle verify from the public repositories point of view. We would then take the bundle and pipe it though the "git-bundle2text" program which would result in a "human" inspectable format as opposed to the packed format[2]. The security reviewer would then see all the information being released and with the help of the public repository see how the data changes the repository.
-
-Am I barking up the right tree?
-
-
-1: http://en.wikipedia.org/wiki/Spillage_of_Classified_Information
-2: http://git-scm.com/book/ch9-4.html
-
-
-------=_NextPart_000_0127_01CDCBE1.81034E10
+------=_NextPart_000_0130_01CDCBE2.5E236DC0
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -155,17 +181,17 @@ he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
 ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
 BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
 BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MjExMjYxOTIyNDVaMCMGCSqGSIb3DQEJBDEWBBRHGNJLMNoCUn8yv9vilMA7mq8kITBYBgkqhkiG
+MjExMjYxOTI4NTZaMCMGCSqGSIb3DQEJBDEWBBRrofuco+avim8OhUKrv+EY4MkYLDBYBgkqhkiG
 9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
 AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
 MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
 FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
 BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBACXyVBFx
-dggFGvQ9uGV9ZH6fTDUjbGwds1g8+4EVMZ1cGS4QoCYDbAsYBuBoYbaWjHeO6uUWZRUW4uTu/X8Z
-NjvoGP/JphQJXp4UR1b8EEosyB9bJ/tP6F7IoRgUnvfQpnZEbSROTVUMv8KVsh9iXpnFIIHlQ1Ad
-S12JW4uDTIan01B0e1FxeRqTUgDr3p7+xD4aBnMZH0uiDnkcPlPLQt7Ti67M8pEoNmtOz/D0Hfk9
-f+8scxCb+4z//iG+BnUz/M3iF5Va5UuJiT9oiGvC8ySKs5CXrEV/OA1TOEvLE8cpbjrhtEMsBCcy
-7uPVySkAhjIRT5YnziTUGNmacO79XEoAAAAAAAA=
+S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBAF2LYUPX
+CTRrMp63ydegAo0620o2Shd1HkKCg2ikWj/s0CwXrsYSzLhTpKfLDJttd4DY8NSlli2ormgry0op
+37B2zWbHthl1DqAPrc/WXEVPBBe/HkJpDNzxJFqCcEXF12WGCpJGm9FWIWMsiqlwVil4Xtk8G+KB
+Y2kjqgdwF4AVOX+IMQGz0OTlgxgPxBHH8/GNPlt1poxBk8oEngXPKisy6BDYnyuT1pJMZdZFE37R
+Ooex30bv0fp42+xLoBrEF6jruCXONV/Pwkz55OVXVAjUNPhAwJTJB9nk4XUltI6j5T+xQqykRvoo
+n1sYygdh2GxUa5mKbOe8CHt6sWU1fP0AAAAAAAA=
 
-------=_NextPart_000_0127_01CDCBE1.81034E10--
+------=_NextPart_000_0130_01CDCBE2.5E236DC0--
