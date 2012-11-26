@@ -1,69 +1,117 @@
-From: Igor Lautar <igor.lautar@gmail.com>
-Subject: Re: commit gone after merge - how to debug?
-Date: Mon, 26 Nov 2012 18:01:25 +0100
-Message-ID: <CAO1Khk9oNoCpAmWaEfew1K976B+8bn+R6XMi3vGtH-Vj3TJMqg@mail.gmail.com>
-References: <CAO1Khk_eugH--wp3s-gr4HTvuRyL=SaWHWtEXCRZ_Ak7+s5U=w@mail.gmail.com>
-	<1353935441-ner-9639@calvin>
-	<vpqr4ngsdjl.fsf@grenoble-inp.fr>
-	<CAO1Khk9mzJjnysnc1iDFeMgqnRq0z35t0kgC-8nrsjJ-oOvdOg@mail.gmail.com>
-	<vpqehjgscv3.fsf@grenoble-inp.fr>
-	<CAO1Khk8=nrKknfqY-k6XaGPDbLrHyrK-8fxfB7XXUWeB7L4EUA@mail.gmail.com>
-	<vpqa9u4pgew.fsf@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] makefile: hide stderr of curl-config test
+Date: Mon, 26 Nov 2012 10:30:17 -0800
+Message-ID: <7vsj7wrzd2.fsf@alter.siamese.dyndns.org>
+References: <1353554397-27162-1-git-send-email-paul.gortmaker@windriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 26 19:18:07 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 19:30:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td3Fr-0007Rg-9U
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 19:18:03 +0100
+	id 1Td3S2-0006Fs-2i
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 19:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212Ab2KZSRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 13:17:45 -0500
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:59013 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756144Ab2KZRB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 12:01:27 -0500
-Received: by mail-vc0-f174.google.com with SMTP id m18so7885172vcm.19
-        for <git@vger.kernel.org>; Mon, 26 Nov 2012 09:01:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pOP2cXe1LmjPG1UkDi1yUfVwKKEbiRVNrK2gfqntADU=;
-        b=EA5yJK/HE0RmIaDmllE8Cf8fEdzJDHHTqQtNwPE3TJhLS8nq1MJybdmG4N1Zr8Gfjy
-         JE6l8CPXqLAvP45TsmrasJ0vPVyeH4N2+5AoQuPRun45aX/DuSxI0HK3JEtpovgLE3Ww
-         Ld4siKmAdVLopZ1nau7SsCYHuEN2BmL/iMchydmUC1BlFhFfxOhUnAafVWrPES5rRLeJ
-         yMnntaswXr4Z7UFh9TiTKbWMpt7q+QURMGY2gWA0GBdLvWAEYf/PEAXRnnAEOxvtqTtO
-         hUHYkvuTNW4BtmWU35fj4rrz0xXHcsm+LMMBgEoQ3oR3JSgkMEvHlN7GFiu1gHV7HhXA
-         SPHQ==
-Received: by 10.58.116.212 with SMTP id jy20mr20503230veb.5.1353949285614;
- Mon, 26 Nov 2012 09:01:25 -0800 (PST)
-Received: by 10.58.69.112 with HTTP; Mon, 26 Nov 2012 09:01:25 -0800 (PST)
-In-Reply-To: <vpqa9u4pgew.fsf@grenoble-inp.fr>
+	id S1755526Ab2KZSaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 13:30:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44807 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755323Ab2KZSaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 13:30:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F7DE93CE;
+	Mon, 26 Nov 2012 13:30:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9zX0BcUIyuoeddeI4kZVqkr5ba8=; b=CDhuht
+	KTPX/jPRZrPXYZcwQaI3jz6lAv/yGWm5FHUfL1UNWYOtdGfxd5UWHJ1Z5qOcyy71
+	/MegnvRhwzVB+j1LTSr9dSgKWMEQwfJpMkVGd8bL/YK11Nx1uw6ck5+t7VGITjmI
+	oorLc8q5I0qKovjV97HgH7jELKIXODYnMTCJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iZJ9HpSSvSHjBBWyneuf2QxySUtH5c+6
+	KtksTC3/J8Dhr/QSeKINFupF5iELLJlw8uIwu6b7joDdHMWDKM++/FWJCIK1PgrY
+	bJAZ/lVLBxihBYKop/yHC73PKKprRzudrmTMpcItyxgoO5KInTct0WB969HKIanO
+	QW9ODsvaXrA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED65F93CD;
+	Mon, 26 Nov 2012 13:30:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51AC493CC; Mon, 26 Nov 2012
+ 13:30:19 -0500 (EST)
+In-Reply-To: <1353554397-27162-1-git-send-email-paul.gortmaker@windriver.com>
+ (Paul Gortmaker's message of "Wed, 21 Nov 2012 22:19:57 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 54C89B66-37F7-11E2-BBD3-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210466>
 
-On Mon, Nov 26, 2012 at 3:50 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> What's possible is that someone had already merged the branch containing
-> "new", got conflicts, and resolved it in favor of "old" somewhere in the
-> history of your master branch.
+Paul Gortmaker <paul.gortmaker@windriver.com> writes:
 
-This is exactly what happened. I've actually found a merge of origin
-to mirror which reversed the change some time back and was
-subsequently merged back to origin later on. Most probably human error
-during merge.
+> Currently, if you don't have curl installed, you will get
+>
+>     $ make distclean 2>&1 | grep curl
+>     /bin/sh: curl-config: not found
+>     /bin/sh: curl-config: not found
+>     /bin/sh: curl-config: not found
+>     /bin/sh: curl-config: not found
+>     /bin/sh: curl-config: not found
+>     $
+>
+> The intent is not to alarm the user, but just to test if there is
+> a new enough curl installed.  However, if you look at search engine
+> suggested completions, the above "error" messages are confusing
+> people into thinking curl is a hard requirement.
 
-Interestingly, this was my first thought as well, but I've must have
-overlooked that particular merge the first time.
+Good observation and identification of an issue to tackle.  But why
+isn't the patch like this?
 
-Anyhow, it sorted now, many thanks for your help,
-Igor
+ 	PROGRAMS += $(REMOTE_CURL_NAMES)
+-	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
++	curl_check := $(shell (echo 070908; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "070908"
+
+Removal of the "reject old libcURL" is logically a separate thing
+regardless of the "alarming output from make", and it probably is
+better done as a separate step in a two-patch series.  Doing things
+that way, when somebody objects to this:
+
+> It wants to ensure curl is newer than 070908.  The oldest
+> machine I could find (RHEL 4.6) is 2007 vintage according
+> to /proc/version data, and it has curl 070C01.
+
+saying that their installation still cares about older libcURL, we
+can still keep the "remove alarming output from make" bit.
+
+>
+> The failure here is to mask stderr in the test.  However, since
+> the chance of curl being installed, but too old is essentially
+> nil, lets just check for existence and drop the ancient version
+> threshold check, if for no other reason, than to simplifly the
+> parsing of what the makefile is trying to do by humans.
+>
+> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+>
+> diff --git a/Makefile b/Makefile
+> index 9bc5e40..56f55f6 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1573,8 +1573,8 @@ else
+>  	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
+>  	PROGRAM_OBJS += http-fetch.o
+>  	PROGRAMS += $(REMOTE_CURL_NAMES)
+> -	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
+> -	ifeq "$(curl_check)" "070908"
+> +	curl_check := $(shell curl-config --vernum 2>/dev/null)
+> +	ifneq "$(curl_check)" ""
+>  		ifndef NO_EXPAT
+>  			PROGRAM_OBJS += http-push.o
+>  		endif
