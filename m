@@ -1,334 +1,246 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v4 3/4] git-submodule update: Add --branch option
-Date: Mon, 26 Nov 2012 16:00:18 -0500
-Message-ID: <95edff1c97c513c555652014f9c2bbf61c8e7560.1353962698.git.wking@tremily.us>
-References: <20121123175402.GH2806@odin.tremily.us>
- <cover.1353962698.git.wking@tremily.us>
+From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+Subject: RE: git bundle format [OT]
+Date: Mon, 26 Nov 2012 21:06:59 +0000
+Message-ID: <871B6C10EBEFE342A772D1159D13208537ABF6D3@umechphj.easf.csd.disa.mil>
+References: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
+ <1745253724.103630.1353963384110.JavaMail.root@genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:02:15 2012
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg=SHA1; boundary="----=_NextPart_000_0159_01CDCBEF.C57BA750"
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:07:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td5og-0005Fr-PP
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:02:11 +0100
+	id 1Td5uB-0000ct-KM
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 22:07:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537Ab2KZVBu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Nov 2012 16:01:50 -0500
-Received: from vms173007pub.verizon.net ([206.46.173.7]:19610 "EHLO
-	vms173007pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292Ab2KZVBt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 16:01:49 -0500
-Received: from odin.tremily.us ([unknown] [72.68.108.240])
- by vms173007.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0ME400F9S51QNV40@vms173007.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 26 Nov 2012 15:01:31 -0600 (CST)
-Received: from localhost (tyr.tremily.us [192.168.0.5])
-	by odin.tremily.us (Postfix) with ESMTP id 48AB16DEFCD; Mon,
- 26 Nov 2012 16:01:02 -0500 (EST)
-X-Mailer: git-send-email 1.8.0.3.g95edff1.dirty
-In-reply-to: <cover.1353962698.git.wking@tremily.us>
-In-reply-to: <cover.1353962698.git.wking@tremily.us>
-References: <cover.1353962698.git.wking@tremily.us>
+	id S932086Ab2KZVH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 16:07:29 -0500
+Received: from edge-mech.mail.mil ([214.21.82.11]:37052 "EHLO
+	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754907Ab2KZVH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 16:07:26 -0500
+Received: from umechpja.easf.csd.disa.mil (214.21.83.154) by
+ umechpjj.easf.csd.disa.mil (214.21.82.11) with Microsoft SMTP Server (TLS) id
+ 14.2.309.2; Mon, 26 Nov 2012 21:07:00 +0000
+Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.5.252]) by
+ UMECHPJA.easf.csd.disa.mil ([214.21.83.154]) with mapi id 14.02.0309.003;
+ Mon, 26 Nov 2012 21:07:00 +0000
+Thread-Topic: git bundle format [OT]
+Thread-Index: Ac3MC2nDG5IUvl+lTGGFopK+o2ENNwADRTkAAAACOyA=
+In-Reply-To: <1745253724.103630.1353963384110.JavaMail.root@genarts.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [214.21.83.188]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210495>
 
-=46rom: "W. Trevor King" <wking@tremily.us>
+------=_NextPart_000_0159_01CDCBEF.C57BA750
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
-This allows users to checkout the current
-superproject-recorded-submodule-sha as a branch, avoiding the detached
-head state that the standard submodule update creates.  This may be
-useful for the existing --rebase/--merge workflows which already avoid
-detached heads.
+> -----Original Message-----
+> From: Stephen Bash
+> Sent: Monday, November 26, 2012 3:56 PM
+> 
+> ----- Original Message -----
+> > From: "Jason J CTR Pyeron (US)" 
+> > Sent: Monday, November 26, 2012 2:24:54 PM
+> > Subject: git bundle format
+> >
+> > I am facing a situation where I would like to use git bundle but at
+> > the same time inspect the contents to prevent a spillage[1].
+> 
+> As someone who faced a similar situation in a previous life, I'll offer
+> my $0.02, but I'm certainly not the technical expert here.
 
-It is also useful if you want easy tracking of upstream branches.  The
-particular upstream branch to be tracked is configured locally with
-=2Egit/modules/<name>/config.  With the new option =C3=86var's suggeste=
-d
+Kind of what I am looking for as a side effect.
 
-  $ git submodule foreach 'git checkout $(git config --file $toplevel/.=
-gitm
-odules submodule.$name.branch) && git pull'
+> 
+> > Given we have a public repository which was cloned on to a secret
+> > development repository. Now the developers do some work which should
+> > not be sensitive in any way and commit and push it to the secret
+> > repository.
+> >
+> > Now they want to release it out to the public. The current process is
+> > to review the text files to ensure that there is no "secret" sauce
+> > in there and then approve its release. This current process ignores
+> > the change tracking and all non-content is lost.
+> >
+> > In this situation we should assume that the bundle does not have any
+> > content which is already in the public repository, that is it has
+> > the minimum data to make it pass a git bundle verify from the public
+> > repositories point of view. We would then take the bundle and pipe
+> > it though the "git-bundle2text" program which would result in a
+> > "human" inspectable format as opposed to the packed format[2]. The
+> > security reviewer would then see all the information being released
+> > and with the help of the public repository see how the data changes
+> > the repository.
+> >
+> > Am I barking up the right tree?
+> 
+> First, a shot out of left field: how about a patch based workflow?
+> (similar to the mailing list, just replace email with sneakernet)
+> Patches are plain text and simple to review (preferable to an "opaque"
+> binary format?).
 
-reduces to a
+This is to only address the accidental development on a high side. Using this or any process should come with shame or punishment for wasting resources/time by not developing on a low side to start with. But accepting reality there will be times where code and its metadata (commit logs, etc) will be created on a high side and should be brought back to the low side.
 
-  $ git submodule update --branch
 
-after each supermodule .gitmodules edit, and a
+> Second, thinking about your proposed bundle-based workflow I have two
+> questions I'd have to answer to be comfortable with the solution:
+> 
+>   1) Does the binary bundle contain any sensitive information?
 
-  $ git submodule foreach 'git pull'
+Potentially, hence the review. If the reviewer cannot prove the data he is looking at then the presumption is yes.
 
-whenever you feel like updating the submodules.  Your still on you're
-own to commit (or not) the updated submodule hashes in the
-superproject's .gitmodules.
+>   2) Do the diffs applied to public repo contain any sensitive data?
 
-Signed-off-by: W. Trevor King <wking@tremily.us>
----
- Documentation/git-submodule.txt | 20 +++++++++++------
- git-submodule.sh                | 48 +++++++++++++++++++++++++++++----=
-------
- t/t7406-submodule-update.sh     | 50 +++++++++++++++++++++++++++++++++=
-+++++++-
- 3 files changed, 98 insertions(+), 20 deletions(-)
+That is a great question. Can the change of code while neither the original or the resultant be secret while the change imply or demonstrate the secret. I think the answer is yes.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
-ule.txt
-index d0b4436..34392a1 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	      [-f|--force] [--reference <repository>] [--] <repository> [<pat=
-h>]
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>=
-=2E..]
- 'git submodule' [--quiet] init [--] [<path>...]
--'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
-+'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--branch] [=
---rebase]
- 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>=
-=2E..]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-li=
-mit) <n>]
- 	      [commit] [--] [<path>...]
-@@ -136,11 +136,11 @@ init::
-=20
- update::
- 	Update the registered submodules, i.e. clone missing submodules and
--	checkout the commit specified in the index of the containing reposito=
-ry.
--	This will make the submodules HEAD be detached unless `--rebase` or
--	`--merge` is specified or the key `submodule.$name.update` is set to
--	`rebase`, `merge` or `none`. `none` can be overridden by specifying
--	`--checkout`.
-+	checkout the commit specified in the index of the containing
-+	repository.  This will make the submodules HEAD be detached unless
-+	`--branch`, `--rebase`, `--merge` is specified or the key
-+	`submodule.$name.update` is set to `branch`, `rebase`, `merge` or
-+	`none`. `none` can be overridden by specifying `--checkout`.
- +
- If the submodule is not yet initialized, and you just want to use the
- setting as stored in .gitmodules, you can automatically initialize the
-@@ -207,7 +207,13 @@ OPTIONS
-=20
- -b::
- --branch::
--	Branch of repository to add as submodule.
-+	When used with the add command, gives the branch of repository to
-+	add as submodule.
-++
-+When used with the update command, checks out a branch named
-+`submodule.<name>.branch` (as set by `--local-branch`) pointing at the
-+current HEAD SHA-1.  This is useful for commands like `update
-+--rebase` that do not work on detached heads.
-=20
- --local-branch::
- 	Record a branch name used as `submodule.<path>.branch` in
-diff --git a/git-submodule.sh b/git-submodule.sh
-index c51b6ae..28eb4b1 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -8,7 +8,7 @@ dashless=3D$(basename "$0" | sed -e 's/-/ /')
- USAGE=3D"[--quiet] add [-b branch] [--local-branch[=3D<branch>]] [-f|-=
--force] [--reference <repository>] [--] <repository> [<path>]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path=
->...]
-    or: $dashless [--quiet] init [--] [<path>...]
--   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force=
-] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<=
-path>...]
-+   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force=
-] [--branch] [--rebase] [--reference <repository>] [--merge] [--recursi=
-ve] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit=
- <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--] [<path>...]"
-@@ -539,6 +539,9 @@ cmd_update()
- 		-f|--force)
- 			force=3D$1
- 			;;
-+		-b|--branch)
-+			update=3D"branch"
-+			;;
- 		-r|--rebase)
- 			update=3D"rebase"
- 			;;
-@@ -593,6 +596,7 @@ cmd_update()
- 		fi
- 		name=3D$(module_name "$sm_path") || exit
- 		url=3D$(git config submodule."$name".url)
-+		branch=3D$(git config submodule."$name".branch)
- 		if ! test -z "$update"
- 		then
- 			update_module=3D$update
-@@ -627,7 +631,7 @@ Maybe you want to use 'update --init'?")"
- 			die "$(eval_gettext "Unable to find current revision in submodule p=
-ath '\$sm_path'")"
- 		fi
-=20
--		if test "$subsha1" !=3D "$sha1" -o -n "$force"
-+		if test "$subsha1" !=3D "$sha1" -o -n "$force" -o "$update_module" =3D=
- "branch"
- 		then
- 			subforce=3D$force
- 			# If we don't already have a -f flag and the submodule has never be=
-en checked out
-@@ -650,16 +654,21 @@ Maybe you want to use 'update --init'?")"
- 			case ";$cloned_modules;" in
- 			*";$name;"*)
- 				# then there is no local change to integrate
--				update_module=3D ;;
-+				case "$update_module" in
-+					rebase|merge)
-+						update_module=3D
-+						;;
-+				esac
-+				;;
- 			esac
-=20
- 			must_die_on_failure=3D
- 			case "$update_module" in
- 			rebase)
- 				command=3D"git rebase"
--				die_msg=3D"$(eval_gettext "Unable to rebase '\$sha1' in submodule =
-path '\$sm_path'")"
-+				die_msg=3D"$(eval_gettext "Unable to rebase '\$sha1' in submodule =
-path '\$sm_path'")"=09
- 				say_msg=3D"$(eval_gettext "Submodule path '\$sm_path': rebased int=
-o '\$sha1'")"
--				must_die_on_failure=3Dyes
-+			must_die_on_failure=3Dyes
- 				;;
- 			merge)
- 				command=3D"git merge"
-@@ -674,15 +683,30 @@ Maybe you want to use 'update --init'?")"
- 				;;
- 			esac
-=20
--			if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
-+			if test "$subsha1" !=3D "$sha1" -o -n "$force"
- 			then
--				say "$say_msg"
--			elif test -n "$must_die_on_failure"
-+				if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
-+				then
-+					say "$say_msg"
-+				elif test -n "$must_die_on_failure"
-+				then
-+					die_with_status 2 "$die_msg"
-+				else
-+					err=3D"${err};$die_msg"
-+					continue
-+				fi
-+			fi
-+
-+			if test "$update_module" =3D "branch" -a -n "$branch"
- 			then
--				die_with_status 2 "$die_msg"
--			else
--				err=3D"${err};$die_msg"
--				continue
-+				if (clear_local_git_env; cd "$sm_path" &&
-+					git branch -f "$branch" "$sha1" &&
-+					git checkout "$branch")
-+				then
-+					say "$(eval_gettext "Submodule path '\$sm_path': checked out bran=
-ch '\$branch'")"
-+				else
-+					err=3D"${err};$(eval_gettext "Unable to checkout branch '\$branch=
-' in submodule path '\$sm_path'")"
-+				fi
- 			fi
- 		fi
-=20
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 1542653..c876a8b 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -6,7 +6,8 @@
- test_description=3D'Test updating submodules
-=20
- This test verifies that "git submodule update" detaches the HEAD of th=
-e
--submodule and "git submodule update --rebase/--merge" does not detach =
-the HEAD.
-+submodule and "git submodule update --branch/--rebase/--merge" does no=
-t
-+detach the HEAD.
- '
-=20
- . ./test-lib.sh
-@@ -135,6 +136,53 @@ test_expect_success 'submodule update --force forc=
-ibly checks out submodules' '
- 	)
- '
-=20
-+test_expect_success 'submodule update --branch detaches without submod=
-ule.<name>.branch' '
-+	(cd super/submodule &&
-+	  git checkout master
-+	) &&
-+	(cd super &&
-+	 (cd submodule &&
-+	  compare_head
-+	 ) &&
-+	 git submodule update --branch submodule &&
-+	 (cd submodule &&
-+	  test "$(git status -s file)" =3D ""
-+	 )
-+	)
-+'
-+
-+test_expect_success 'submodule update --branch staying on master' '
-+	(cd super/submodule &&
-+	  git checkout master
-+	) &&
-+	(cd super &&
-+	 (cd submodule &&
-+	  compare_head
-+	 ) &&
-+	 git config submodule.submodule.branch master
-+	 git submodule update --branch submodule &&
-+	 cd submodule &&
-+	 test "refs/heads/master" =3D "$(git symbolic-ref -q HEAD)" &&
-+	 compare_head
-+	)
-+'
-+
-+test_expect_success 'submodule update --branch creating a new branch' =
-'
-+	(cd super/submodule &&
-+	  git checkout master
-+	) &&
-+	(cd super &&
-+	 (cd submodule &&
-+	  compare_head
-+	 ) &&
-+	 git config submodule.submodule.branch new-branch
-+	 git submodule update --branch submodule &&
-+	 cd submodule &&
-+	 test "refs/heads/new-branch" =3D "$(git symbolic-ref -q HEAD)" &&
-+	 compare_head
-+	)
-+'
-+
- test_expect_success 'submodule update --rebase staying on master' '
- 	(cd super/submodule &&
- 	  git checkout master
---=20
-1.8.0.3.g95edff1.dirty
+> 
+> Question 1 seems tricky to someone who knows *nothing* about the bundle
+> format (e.g. me).  Maybe some form of bundle2text can be vetted enough
+> that everyone involved believes that there is no other information
+> traveling with the bundle (if so, you're golden).  Here I have to trust
+> other experts.  On the flip side, even if the bundle itself is polluted
+> (or considered to be lacking proof to the contrary), if (2) is
+> considered safe, the patching of the public repo could potentially be
+> done on a sacrificial hard drive before pushing.
+
+The logistics are well established and here and now is not a place to go in to that. But the above is the crux of what I am trying to get at.
+ 
+> 
+> Question 2 is relatively straight forward and lead me to the patch
+> idea.  I would:
+>   - Bundle the public repository
+>   - Init a new repo in the secure space from the public bundle
+>   - Fetch from the to-be-sanitized bundle into the new repo
+>   - Examine commits (diffs) introduced by branches in the to-be-
+> sanitized bundle
+>   - Perhaps get a list of all the objects in the to-be-sanitized bundle
+> and do a git-cat-file on each of them (if the bundle is assembled
+> correctly it shouldn't have any unreachable objects...).  This step may
+> be extraneous after the previous.
+
+Here we would be missing the metadata that goes along with the commit. Especially the SHA sums.
+
+Thanks.
+
+-Jason
+
+------=_NextPart_000_0159_01CDCBEF.C57BA750
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+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
+GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
+uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
+TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
+TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
+WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
+hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
+gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
+YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
+AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
+L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
+BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
+BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
+bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
+ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
+cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
+YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
+BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
+xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
+he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
+ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
+BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
+BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
+MjExMjYyMTA0NTNaMCMGCSqGSIb3DQEJBDEWBBQzhF3j753IDtEt6ONj4VCbnWuvXjBYBgkqhkiG
+9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
+AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
+MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
+FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
+BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
+S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBABAk24s1
+hNS1qPM1tqppFdxXmgGNr6/xF03KKaGvItVOx+uxMpOH9YVSi7I9lYJpWSsH6OeFdLT52fPsSjWO
+EHpcvDPIISfXS7LqSpIWuZ8nVeBcLEQ3hzssZIzDtgGMsB1dayibOE6wYpZQM/ZgJLI5wGAwRRQN
+MFKrwz7Id1MUxlct1epzbIKjqoYPJKI2xWGKq8D95kDqSzmX2FE6EuDs4gr/9df26I4AUZyUohA4
+bg1FxBzqpoXH8RezRQtqGa6xVNbyWEG1611TAV8g011xzUDQS/rFJurrWmMY+6xYOKXKzN+Gmk5q
+5QHR2wxriEcV5W65opppna7fH3oeleAAAAAAAAA=
+
+------=_NextPart_000_0159_01CDCBEF.C57BA750--
