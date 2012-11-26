@@ -1,68 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: commit gone after merge - how to debug?
-Date: Mon, 26 Nov 2012 15:03:55 +0100
-Message-ID: <vpqhaocqx4k.fsf@grenoble-inp.fr>
-References: <CAO1Khk_eugH--wp3s-gr4HTvuRyL=SaWHWtEXCRZ_Ak7+s5U=w@mail.gmail.com>
-	<1353935441-ner-9639@calvin> <vpqr4ngsdjl.fsf@grenoble-inp.fr>
-	<CAO1Khk9mzJjnysnc1iDFeMgqnRq0z35t0kgC-8nrsjJ-oOvdOg@mail.gmail.com>
-	<vpqehjgscv3.fsf@grenoble-inp.fr>
-	<CAO1Khk8=nrKknfqY-k6XaGPDbLrHyrK-8fxfB7XXUWeB7L4EUA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] fast-export: Allow pruned-references in mark file
+Date: Mon, 26 Nov 2012 15:04:21 +0100
+Message-ID: <CAMP44s3Xo2ko6X1-SO3hLiTYHA3+i912jTGOQCUihixxcbEuRQ@mail.gmail.com>
+References: <1353750432-17373-1-git-send-email-apelisse@gmail.com>
+	<7vd2z1xb6c.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0iSkqcOW0YsD=Jm_=x1tuoRbFQ+EbVvkROa_yY2-WFcA@mail.gmail.com>
+	<CALWbr2yZpAT=eSahGcGKw5weoz1MjTzbb16pdQndKDFcn_3VJg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
-To: Igor Lautar <igor.lautar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 15:04:17 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 15:04:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TczIH-0001xe-07
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 15:04:17 +0100
+	id 1TczIb-00025e-FC
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 15:04:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896Ab2KZOEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 09:04:00 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:59789 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752745Ab2KZOEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 09:04:00 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qAQDsW0X001671
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 26 Nov 2012 14:54:32 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TczHv-0006Jc-UR; Mon, 26 Nov 2012 15:03:55 +0100
-In-Reply-To: <CAO1Khk8=nrKknfqY-k6XaGPDbLrHyrK-8fxfB7XXUWeB7L4EUA@mail.gmail.com>
-	(Igor Lautar's message of "Mon, 26 Nov 2012 14:58:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Nov 2012 14:54:32 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qAQDsW0X001671
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1354542874.80907@0LfNrOJdcSjiAYk/TF/DZw
+	id S1753213Ab2KZOEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 09:04:22 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:65245 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752946Ab2KZOEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 09:04:21 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so10780727oag.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 06:04:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=F9WzDJQxKX0I8vs1wls7jRwBAPB7zlJd+3LvWUH82Xw=;
+        b=c4IEQqtA8Y1Y4h/iXb/AC6nMrr0Al73RSHWKXEAcrYjw9cYbNNo/mVeHrz6yvI9PHh
+         krAteiqWzaF9phpopnNzFTZeRtYtahLjsQ4+kAknGNte33grScnugaNk66c7pEXddvv4
+         IdgVUnpvHehLkq673VjAHRaugFzSOoa8nf7iv82yPATV/N2UAhwuyBcXSvrGYtStB/LH
+         ziJqDjYs/xhhihMR7xmrNDDPutRzsi7MfU3uk/wJz0z4uR3D5VCF+xDjgYmLhWyuS3Nl
+         foHKba082tmURuGPpSZMxi5v5utQNvhNS8T/ddcYySrpmoJfb6N+O6MYA0CLN93R6OZN
+         e0jQ==
+Received: by 10.60.28.166 with SMTP id c6mr9147207oeh.140.1353938661165; Mon,
+ 26 Nov 2012 06:04:21 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Mon, 26 Nov 2012 06:04:21 -0800 (PST)
+In-Reply-To: <CALWbr2yZpAT=eSahGcGKw5weoz1MjTzbb16pdQndKDFcn_3VJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210449>
 
-Igor Lautar <igor.lautar@gmail.com> writes:
+On Mon, Nov 26, 2012 at 2:23 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> On Mon, Nov 26, 2012 at 12:37 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Mon, Nov 26, 2012 at 5:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Is this a safe and sane thing to do, and if so why?  Could you
+>>> describe that in the log message here?
+>> Why would fast-export try to export something that was pruned? Doesn't
+>> that mean it wasn't reachable?
+>
+> Hello Junio,
+> Hello Felipe,
+>
+> Actually the issue happened while using Felipe's branch with his
+> git-remote-hg.  Everything was going fine until I (or did it run
+> automatically, I dont remember) ran git gc that pruned unreachable
+> objects. Of course some of the branch I had pushed to the hg remote
+> had been changed (most likely rebased).  References no longer exists
+> in the repository (cleaned by gc), but the reference still exists in
+> mark file, as it was exported earlier.  Thus the failure when git
+> fast-export reads the mark file.
 
-> Yes, change is shown in commit^2, but actual file after merge does not have it.
+Ah, I see, so these objects are _before_ fast-export tries to do
+anything, it's just importing the marks without any knowledge if these
+objects are going to be used in the export or not.
 
-Your initial message was about the output of "git log". Do you mean that
-the file, on the filesystem, does not have the line introduced by the
-commit?
+If that's the case, I don't think it should throw a warning even just skip them.
 
-If so, check the content registered in the repository too:
+Then, in the actual export if some of these objects are referenced the
+export would fail anyway (but they won't).
 
-git show <merge-commit>:<file-name>
+Cheers.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
