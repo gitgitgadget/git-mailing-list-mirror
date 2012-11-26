@@ -1,87 +1,77 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: Re: git-fetch does not work from .git subdirectory
-Date: Mon, 26 Nov 2012 10:09:18 -0600
-Organization: Freescale
-Message-ID: <50B3942E.2020001@freescale.com>
-References: <50AC0316.7090002@freescale.com> <50AD77F3.3080702@mail.pgornicz.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
+Date: Mon, 26 Nov 2012 17:28:20 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1211261726260.7256@s15462909.onlinehome-server.info>
+References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com> <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com> <CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com> <7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
+ <20121121041735.GE4634@elie.Belkin> <7vfw43pmp7.fsf@alter.siamese.dyndns.org> <20121121194810.GE16280@sigill.intra.peff.net> <CAMP44s2B2_htR8LFbHk99WaNUcaYJCxVJPdRdj5VQ0k+fB9NOg@mail.gmail.com> <7v7gp9udsl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Patrik Gornicz <patrik-git@mail.pgornicz.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 17:09:52 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Max Horn <max@quendi.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 17:28:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td1Fn-00017F-MC
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 17:09:52 +0100
+	id 1Td1Y0-0003Lp-J5
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 17:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996Ab2KZQJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 11:09:36 -0500
-Received: from am1ehsobe005.messaging.microsoft.com ([213.199.154.208]:37504
-	"EHLO am1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753450Ab2KZQJf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2012 11:09:35 -0500
-Received: from mail37-am1-R.bigfish.com (10.3.201.239) by
- AM1EHSOBE004.bigfish.com (10.3.204.24) with Microsoft SMTP Server id
- 14.1.225.23; Mon, 26 Nov 2012 16:09:34 +0000
-Received: from mail37-am1 (localhost [127.0.0.1])	by mail37-am1-R.bigfish.com
- (Postfix) with ESMTP id 2BD193E0068;	Mon, 26 Nov 2012 16:09:34 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:70.37.183.190;KIP:(null);UIP:(null);IPV:NLI;H:mail.freescale.net;RD:none;EFVD:NLI
-X-SpamScore: 3
-X-BigFish: VS3(z37d4lz98dIzz1de0h1202h1d1ah1d2ahzzz2dh2a8h668h839hd25he5bhf0ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh162dh1631h1155h)
-Received: from mail37-am1 (localhost.localdomain [127.0.0.1]) by mail37-am1
- (MessageSwitch) id 1353946172392044_23405; Mon, 26 Nov 2012 16:09:32 +0000
- (UTC)
-Received: from AM1EHSMHS019.bigfish.com (unknown [10.3.201.240])	by
- mail37-am1.bigfish.com (Postfix) with ESMTP id 5DD5960045;	Mon, 26 Nov 2012
- 16:09:32 +0000 (UTC)
-Received: from mail.freescale.net (70.37.183.190) by AM1EHSMHS019.bigfish.com
- (10.3.207.157) with Microsoft SMTP Server (TLS) id 14.1.225.23; Mon, 26 Nov
- 2012 16:09:23 +0000
-Received: from tx30smr01.am.freescale.net (10.81.153.31) by
- 039-SN1MMR1-003.039d.mgd.msft.net (10.84.1.16) with Microsoft SMTP Server
- (TLS) id 14.2.318.3; Mon, 26 Nov 2012 16:09:21 +0000
-Received: from [10.82.123.3] (efes.am.freescale.net [10.82.123.3])	by
- tx30smr01.am.freescale.net (8.14.3/8.14.0) with ESMTP id qAQG9Ihg009518;	Mon,
- 26 Nov 2012 09:09:20 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:16.0) Gecko/20121011 Firefox/16.0 SeaMonkey/2.13.1
-In-Reply-To: <50AD77F3.3080702@mail.pgornicz.com>
-X-OriginatorOrg: freescale.com
+	id S1754827Ab2KZQ2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 11:28:24 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:60531 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754697Ab2KZQ2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 11:28:24 -0500
+Received: (qmail invoked by alias); 26 Nov 2012 16:28:22 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp034) with SMTP; 26 Nov 2012 17:28:22 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ml+E1Pf0mI+Tc/OMCZ4ymFGVDx1AffhD5vMHGiF
+	WuVYfNVeWpdH3x
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <7v7gp9udsl.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210456>
 
-Patrik Gornicz wrote:
-> Just a hunch but your remote's location uses a relative path 
-> '../linux-2.6.git', perhaps git is messing up what the path is relative 
-> to.
+Hi Junio,
 
-That makes sense.  Git is looking at the URL and not realizing that it's
-relative to the home directory.
+On Sun, 25 Nov 2012, Junio C Hamano wrote:
 
-[remote "upstream"]
-	url = ../linux-2.6.git/
-	fetch = +refs/heads/*:refs/remotes/upstream/*
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
+> Date: Fri, 2 Nov 2012 16:17:14 +0100 (CET)
+> Message-ID: <alpine.DEB.1.00.1211021612320.7256@s15462909.onlinehome-server.info>
+> 
+> (which is $gmane/208946) that says:
+> 
+> 	Note that
+> 
+> 		$ git branch foo master~1
+> 		$ git fast-export foo master~1..master
+> 
+> 	still does not update the "foo" ref, but a partial fix is better
+> 	than no fix.
 
-> Note sure what the fix will be though as it'll likely break existing 
-> repositories that use relative paths either way. Can you try an 
-> absolute path to see if that fixes thing?
+If you changed your stance on the patch Sverre and I sent to fix this, we
+could get a non-partial fix for this. You wanted a fix for a bigger
+problem, though, which I am unwilling to fix because it is not my itch to
+scratch and I have to balance my time.
 
-If I change that to
-
-[remote "upstream"]
-	url = /home/b04825/git/linux-2.6.git/
-	fetch = +refs/heads/*:refs/remotes/upstream/*
-
-then everything works.
-
-IMHO, this is a bug in git.
-
--- 
-Timur Tabi
-Linux kernel developer at Freescale
+Ciao,
+Johannes
