@@ -1,77 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 15/15] fast-export: don't handle uninteresting refs
-Date: Mon, 26 Nov 2012 17:28:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1211261726260.7256@s15462909.onlinehome-server.info>
-References: <1352642392-28387-1-git-send-email-felipe.contreras@gmail.com> <1352642392-28387-16-git-send-email-felipe.contreras@gmail.com> <CAMP44s0WH-P7WY4UqhMX3WdrrSCYXUR9yCgsUV+mzLOCK5LkHQ@mail.gmail.com> <7vd2z7rj3y.fsf@alter.siamese.dyndns.org>
- <20121121041735.GE4634@elie.Belkin> <7vfw43pmp7.fsf@alter.siamese.dyndns.org> <20121121194810.GE16280@sigill.intra.peff.net> <CAMP44s2B2_htR8LFbHk99WaNUcaYJCxVJPdRdj5VQ0k+fB9NOg@mail.gmail.com> <7v7gp9udsl.fsf@alter.siamese.dyndns.org>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: [PATCH 5/5] git-send-email: allow edit invalid email address
+Date: Mon, 26 Nov 2012 18:33:18 +0100
+Message-ID: <20121126173318.GA12101@shrek.podlesie.net>
+References: <7v8v9vrgc9.fsf@alter.siamese.dyndns.org>
+ <1353607932-10436-1-git-send-email-krzysiek@podlesie.net>
+ <1353607932-10436-5-git-send-email-krzysiek@podlesie.net>
+ <7vobikthpp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Max Horn <max@quendi.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Felipe Balbi <balbi@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ti.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 17:28:41 2012
+X-From: git-owner@vger.kernel.org Mon Nov 26 18:33:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td1Y0-0003Lp-J5
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 17:28:40 +0100
+	id 1Td2Z1-00060Q-9x
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 18:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827Ab2KZQ2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 11:28:24 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:60531 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754697Ab2KZQ2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 11:28:24 -0500
-Received: (qmail invoked by alias); 26 Nov 2012 16:28:22 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp034) with SMTP; 26 Nov 2012 17:28:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ml+E1Pf0mI+Tc/OMCZ4ymFGVDx1AffhD5vMHGiF
-	WuVYfNVeWpdH3x
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <7v7gp9udsl.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756737Ab2KZRdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 12:33:25 -0500
+Received: from [93.179.225.50] ([93.179.225.50]:34967 "EHLO shrek.podlesie.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1756731Ab2KZRdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 12:33:22 -0500
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 0098C61C; Mon, 26 Nov 2012 18:33:18 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vobikthpp.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210457>
 
-Hi Junio,
-
-On Sun, 25 Nov 2012, Junio C Hamano wrote:
-
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Subject: Re: [PATCH v3 4/4] fast-export: make sure refs are updated properly
-> Date: Fri, 2 Nov 2012 16:17:14 +0100 (CET)
-> Message-ID: <alpine.DEB.1.00.1211021612320.7256@s15462909.onlinehome-server.info>
+On Mon, Nov 26, 2012 at 09:08:34AM -0800, Junio C Hamano wrote:
+> Krzysztof Mazur <krzysiek@podlesie.net> writes:
 > 
-> (which is $gmane/208946) that says:
+> > In some cases the user may want to send email with "Cc:" line with
+> > email address we cannot extract. Now we allow user to extract
+> > such email address for us.
+> >
+> > Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
+> > ---
+> >  git-send-email.perl | 9 ++++++---
+> >  1 file changed, 6 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index d42dca2..9996735 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -851,10 +851,10 @@ sub extract_valid_address_or_die {
+> >  
+> >  sub validate_address {
+> >  	my $address = shift;
+> > -	if (!extract_valid_address($address)) {
+> > +	while (!extract_valid_address($address)) {
+> >  		print STDERR "error: unable to extract a valid address from: $address\n";
+> > -		$_ = ask("What to do with this address? ([q]uit|[d]rop): ",
+> > -			valid_re => qr/^(?:quit|q|drop|d)/i,
+> > +		$_ = ask("What to do with this address? ([q]uit|[d]rop|[e]dit): ",
+> > +			valid_re => qr/^(?:quit|q|drop|d|edit|e)/i,
+> >  			default => 'q');
+> >  		if (/^d/i) {
+> >  			return undef;
+> > @@ -862,6 +862,9 @@ sub validate_address {
+> >  			cleanup_compose_files();
+> >  			exit(0);
+> >  		}
+> > +		$address = ask("Who should the email be sent to (if any)? ",
+> > +			default => "",
+> > +			valid_re => qr/\@.*\./, confirm_only => 1);
 > 
-> 	Note that
-> 
-> 		$ git branch foo master~1
-> 		$ git fast-export foo master~1..master
-> 
-> 	still does not update the "foo" ref, but a partial fix is better
-> 	than no fix.
+> Not having this new code inside "elsif (/^e/) { }" feels somewhat
+> sloppy, even though it is not *too* bad.  Also do we know this
 
-If you changed your stance on the patch Sverre and I sent to fix this, we
-could get a non-partial fix for this. You wanted a fix for a bigger
-problem, though, which I am unwilling to fix because it is not my itch to
-scratch and I have to balance my time.
+ok, I will fix that.
 
-Ciao,
-Johannes
+> function will never be used for addresses other than recipients' (I
+> gave a cursory look to see what is done to the $sender and it does
+> not seem to go through this function, tho)?
+
+Yes, this function is called only from validate_address_just()
+to filter @initial_to, @initial_cc, @bcc_list as early as possible,
+and filter @to and @cc added in each email.
+
+Krzysiek
