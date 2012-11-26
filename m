@@ -1,135 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 p1.1 00/14] fast-export and remote-testgit
- improvements
-Date: Mon, 26 Nov 2012 15:04:57 -0800
-Message-ID: <7vd2z0otie.fsf@alter.siamese.dyndns.org>
-References: <1353727034-24698-1-git-send-email-felipe.contreras@gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: git bundle format
+Date: Tue, 27 Nov 2012 10:08:21 +1100
+Message-ID: <CAH5451mB0_5r6pK43OBxoo8HVAteRgv3fKrE0iCu3c=tcZt_nA@mail.gmail.com>
+References: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
+ <1745253724.103630.1353963384110.JavaMail.root@genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Max Horn <max@quendi.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pete Wyckoff <pw@padd.com>, Ben Walton <bdwalton@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 00:05:24 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: "Jason J CTR Pyeron (US)" <jason.j.pyeron.ctr@mail.mil>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 00:09:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td7jr-0005j8-0Z
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 00:05:19 +0100
+	id 1Td7nO-0007wR-In
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 00:08:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932192Ab2KZXFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 18:05:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41221 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755876Ab2KZXFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 18:05:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9B91A768;
-	Mon, 26 Nov 2012 18:04:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rqS89gqYEB7KSHZIwiPRabsHKlQ=; b=J1SWrv
-	YmKOEmNCBgMp+djudpo9mJhyWwryGIeZ9U7vDS/PB76Jwlya5pJNVCP8kBQRJLrP
-	4PrqVM1aTPNvZf5T1TkX3vzH6klO+PTHbmiP8+UAPfWIMVfkOOICwpxNdf2t3Lye
-	ovd+eaoaZ+UT20M9Xrd7g51tW1ZJZIKwbtqds=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OrgtXl7QdBZNiuez0JOykXzUgFa146w3
-	ilnDT8zm/xqsmh4zScpIgQ/w6hrtSjPxxeOzzo8ZS8oWPgFOsv7qPNXXxhrIu83g
-	E74gFciBGBiqNBMO/CHQd3shhOfIsEuXLmyBntGlO1ai/q3UC0lxjG8b9RXvsffp
-	27hiBob1ATk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5662A767;
-	Mon, 26 Nov 2012 18:04:59 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A2EEA765; Mon, 26 Nov 2012
- 18:04:58 -0500 (EST)
-In-Reply-To: <1353727034-24698-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sat, 24 Nov 2012 04:17:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B379BA48-381D-11E2-B55B-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932409Ab2KZXIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 18:08:43 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:41884 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932337Ab2KZXIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 18:08:43 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so8395304qcr.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 15:08:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4dS7XPBltwU6CByITEHmK6K3QojjqkCwjhGko8PRmA0=;
+        b=V2uS+8/myW0yTfUczsNCP0vTSYaM7OWjR/4F4sHm8dX/h0pm6KyVSgxms4G0Gb35Uv
+         pRGiq5jqJ/mVVQ5fuuu+A1NSADfdvbYLJN3+mtt1T9xEg1oRXz5/aIl+AwVWtS+C5fXd
+         jU82EKAd1OBG5TWvNAdg5upJ7ZI+jbdjyEIAZkjDa+kQPTwO0g8XXf8qGTgoYYMxBpFB
+         DffqHb6jNYGNNqoTkBft1B13zJPjSckIqgOHsnL/4m3TDDzK2J0SUIas5h1XrH5mrpuW
+         Ggq47emkqNlRG59n5eCPCtV5PsFRpOf0WbM9mUZ5D0i/kwfwxjr0meTxqkV9+Bqlrw/+
+         qsyg==
+Received: by 10.229.69.85 with SMTP id y21mr3196296qci.75.1353971322022; Mon,
+ 26 Nov 2012 15:08:42 -0800 (PST)
+Received: by 10.49.119.65 with HTTP; Mon, 26 Nov 2012 15:08:21 -0800 (PST)
+In-Reply-To: <1745253724.103630.1353963384110.JavaMail.root@genarts.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210511>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> I'm rerolling this series with the changes fron Junio, plus a bit more cleanups.
+On 27 November 2012 07:56, Stephen Bash <bash@genarts.com> wrote:
+> ----- Original Message -----
+>> From: "Jason J CTR Pyeron (US)" <jason.j.pyeron.ctr@mail.mil>
+>> Sent: Monday, November 26, 2012 2:24:54 PM
+>> Subject: git bundle format
+>>
+>> I am facing a situation where I would like to use git bundle but at
+>> the same time inspect the contents to prevent a spillage[1].
 >
-> I dropped the last patch, because I found an issue and a separate patch series
-> would take care of that. Other than that the main changes remain the same.
+> As someone who faced a similar situation in a previous life, I'll offer my $0.02, but I'm certainly not the technical expert here.
 >
-> The old remote-testgit is now remote-testpy (as it's testing the python
-> framework, not really remote helpers). The tests are simplified, and exercise
-> more features of transport-helper, and unsuprisingly, find more bugs.
+>> Given we have a public repository which was cloned on to a secret
+>> development repository. Now the developers do some work which should
+>> not be sensitive in any way and commit and push it to the secret
+>> repository.
+>>
+>> Now they want to release it out to the public. The current process is
+>> to review the text files to ensure that there is no "secret" sauce
+>> in there and then approve its release. This current process ignores
+>> the change tracking and all non-content is lost.
+>>
+>> In this situation we should assume that the bundle does not have any
+>> content which is already in the public repository, that is it has
+>> the minimum data to make it pass a git bundle verify from the public
+>> repositories point of view. We would then take the bundle and pipe
+>> it though the "git-bundle2text" program which would result in a
+>> "human" inspectable format as opposed to the packed format[2]. The
+>> security reviewer would then see all the information being released
+>> and with the help of the public repository see how the data changes
+>> the repository.
+>>
+>> Am I barking up the right tree?
+>
+> First, a shot out of left field: how about a patch based workflow? (similar to the mailing list, just replace email with sneakernet)  Patches are plain text and simple to review (preferable to an "opaque" binary format?).
 
-Thanks.
 
-I've queued [v6 p1.1] but not later parts (yet).  The result merged
-to 'pu' however seems to break t5800.  It could be a stupid and
-trivial merge error or something, but I didn't look into the
-details.
+I would propose a slightly different workflow as well, which might
+make this process lightly easier. Maybe you are already doing
+something like this, but I'll lay it out just in case.
 
-Could interested parties take a look? 
+The first step would be to create a 'to-be-publicly-released' branch
+within the secret repository, starting from the head of the original
+public repository. Rebase all non-secret work to this branch, and
+organise it in whatever fashion necessary. This could be, for example,
+one single commit representing the sum of all non-secret changes, or
+it could be an approximation of the actual history of these changes.
 
-$ cd t && sh ./t5800-remote-testpy.sh
+Once this branch has been prepared, you can verify that it branched
+from the public repository and that it contains no secret information
+using standard git tools or even a patch view of the entire branch.
+You can even add a signed tag to the branch once verified to record
+who is verifying these changes, and ensuring nothing else gets added
+by someone else.
 
-ok 1 - setup repository
-ok 2 - cloning from local repo
-ok 3 - cloning from remote repo
-ok 4 - create new commit on remote
-ok 5 - pulling from local repo
-ok 6 - pulling from remote remote
-ok 7 - pushing to local repo
-not ok 8 - synch with changes from localclone
-#
-#               (cd clone &&
-#                git pull)
-#
-not ok 9 - pushing remote local repo
-#
-#               (cd clone &&
-#               echo content >>file &&
-#               git commit -a -m four &&
-#               git push) &&
-#               compare_refs clone HEAD server HEAD
-#
-ok 10 - fetch new branch
-not ok 11 - fetch multiple branches
-#
-#               (cd localclone &&
-#                git fetch
-#               ) &&
-#               compare_refs server master localclone refs/remotes/origin/master &&
-#               compare_refs server new localclone refs/remotes/origin/new
-#
-not ok 12 - push when remote has extra refs
-#
-#               (cd clone &&
-#                echo content >>file &&
-#                git commit -a -m six &&
-#                git push
-#               ) &&
-#               compare_refs clone master server master
-#
-ok 13 - push new branch by name
-not ok 14 - push new branch with old:new refspec # TODO known breakage
-ok 15 - proper failure checks for fetching
-not ok 16 - proper failure checks for pushing # TODO known breakage
-# still have 2 known breakage(s)
-# failed 4 among remaining 14 test(s)
-1..16
+Then you can use 'git bundle fromVerifiedTag.bundle
+verifiedTag..public/master' to create a bundle containing just those
+commits on the release branch and their associated objects. You can
+verify what was included using 'git bundle list-heads
+fromVerifiedTag.bundle' to verify what was included.
+
+Perhaps there is a further need to look into the packed objects to
+verify nothing else is included, but this workflow should provide more
+confidence in the bundled objects in the first place. As for actually
+verifying the bundled data after the bundle, I don't know so you would
+have to look to the other answers.
+
+Regards,
+
+Andrew Ardill
