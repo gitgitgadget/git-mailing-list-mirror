@@ -1,281 +1,72 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: gitpacker progress report and a question
-Date: Mon, 26 Nov 2012 21:07:07 +0100
-Message-ID: <CAMP44s30px2FgieC9VcGji7T+yWFo7gMSwQhtuztHrqto8B7Aw@mail.gmail.com>
-References: <20121115212818.GA21558@thyrsus.com>
+Subject: Re: git bundle format
+Date: Mon, 26 Nov 2012 21:20:15 +0100
+Message-ID: <CAMP44s03QiO15jODBD4JO_JF8tCOT9OJG1tb4+r+L4dgPUOLFg@mail.gmail.com>
+References: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:07:28 2012
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:20:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Td4xj-00010H-5V
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 21:07:27 +0100
+	id 1Td5AR-0007xE-IZ
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 21:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755791Ab2KZUHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 15:07:10 -0500
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:44842 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755547Ab2KZUHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 15:07:08 -0500
-Received: by mail-gg0-f174.google.com with SMTP id k2so2067236ggd.19
-        for <git@vger.kernel.org>; Mon, 26 Nov 2012 12:07:08 -0800 (PST)
+	id S1756072Ab2KZUUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 15:20:17 -0500
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:32785 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755970Ab2KZUUQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2012 15:20:16 -0500
+Received: by mail-vb0-f46.google.com with SMTP id ff1so6066404vbb.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 12:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=y6RJ3PcIybdpu6HUf2jec6xs+U1IeLorZwcBh1TQM94=;
-        b=Xas32czrILyt+Qfet3RCB+az+0YUQ8Z2oCnF9bF0STj6XNttLeemGVnHbxWuwGn4Rg
-         oyU3zopzuaJTqBmYq2EI+OW8t/IpTvSG9NqSsxMAfzyIXx73lHXGkUjATfY68mDLHiIe
-         k6d8MnW2nQuLg60kfs8H2BxwU5YsjevE1/Ofib9errz8FDhW1wa9yVPP8QT9D9mMBpyC
-         BDsikVc4AXTzFtDEj+TGkv4iCoppju6JH6r7yAI7gkufCON3QwK78zkYgjAG9tIXV3jm
-         DPIv0p5ziCXlDc7e8wEZeAAeF1LW+F2YwbsMTeTz2/AWu1ES+P+XZHE9cErEN9SJnVe3
-         5XCg==
-Received: by 10.58.180.7 with SMTP id dk7mr21672517vec.30.1353960428172; Mon,
- 26 Nov 2012 12:07:08 -0800 (PST)
-Received: by 10.58.34.51 with HTTP; Mon, 26 Nov 2012 12:07:07 -0800 (PST)
-In-Reply-To: <20121115212818.GA21558@thyrsus.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=yI4mWQOAp9eqrdWxlS0cQTcHZivKhzOTF5xKLRrnU5g=;
+        b=Wf0yGJyqEi2uSy/laTUYjVIYW3ZmGRwMWpjagX2VFH7ok6MCcrs+ScE89GwjY5R0Qy
+         JGB0lvEBsunTa8avtQgT3JSAti/wnPVg7uE0uxuXGG8ie3yz7Zczd8Jj6fu84rMWaYex
+         dY/2eG2dOmcEy6dahdrzjRUTgerm3tMY/R9WQ2X+iCTtmHbfVFv5SznOLhK0r5SOypVw
+         c7XLSE0D/yYZZHdqUxZBB7NnJFgBxBOHCdZn6zBK5zpOejRzksiuX0RYye/E6H9uYYHK
+         p9flT5DSGMAq2V21vt4MzW2nk0y0QQzodgTzlN8mDrGH3oQds70jwyBrcJfkx/bf3Obe
+         N6xg==
+Received: by 10.58.145.161 with SMTP id sv1mr21386024veb.52.1353961215628;
+ Mon, 26 Nov 2012 12:20:15 -0800 (PST)
+Received: by 10.58.34.51 with HTTP; Mon, 26 Nov 2012 12:20:15 -0800 (PST)
+In-Reply-To: <871B6C10EBEFE342A772D1159D13208537ABF5AB@umechphj.easf.csd.disa.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210478>
 
-On Thu, Nov 15, 2012 at 10:28 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Some days ago I reported that I was attempting to write a tool that could
-> (a) take a git repo and unpack it into a tarball sequence plus a metadata log,
-> (b) reverse that operation, packing a tarball and log sequence into a repo.
+On Mon, Nov 26, 2012 at 8:24 PM, Pyeron, Jason J CTR (US)
+<jason.j.pyeron.ctr@mail.mil> wrote:
+> I may need to be nudged in a better direction, but please try to understand my intentions.
 >
-> Thanks in part to advice by Andreas Schwab and in part to looking at the
-> text of the p4 import script, this effort has succeeded.  A proof of
-> concept is enclosed.  It isn't documented yet, and has not been tested
-> on a repository with branches or merges in the history, but I am confident
-> that the distance from here to a finished and tested tool is short.
+> I am facing a situation where I would like to use git bundle but at the same time inspect the contents to prevent a spillage[1].
 >
-> The immediate intended use is for importing older projects that are
-> available only as sequences of release tarballs, but there are other
-> sorts of repository surgery that would become easier using it.
+> Given we have a public repository which was cloned on to a secret development repository. Now the developers do some work which should not be sensitive in any way and commit and push it to the secret repository.
 >
-> I'm still looking for a better name for it and would welcome suggestions.
+> Now they want to release it out to the public. The current process is to review the text files to ensure that there is no "secret" sauce in there and then approve its release. This current process ignores the change tracking and all non-content is lost.
 >
-> Before I do much further work, I need to determine how this will be shipped.
-> I see two possibilities: either I ship it as a small standalone project,
-> or it becomes a git subcommand shipped with the git suite. How I document
-> it and set up its tests would differ between these two cases.
+>
+> In this situation we should assume that the bundle does not have any content which is already in the public repository, that is it has the minimum data to make it pass a git bundle verify from the public repositories point of view. We would then take the bundle and pipe it though the "git-bundle2text" program which would result in a "human" inspectable format as opposed to the packed format[2]. The security reviewer would then see all the information being released and with the help of the public repository see how the data changes the repository.
+>
+> Am I barking up the right tree?
 
-Please look at Documentation/SubmittingPatches, you should send
-patches in inline format, preferably with 'git format-patch -M', and
-preferably with 'git send-email' (in which case you don't need
-format-patch), otherwise people will have trouble reviewing, or miss
-it completely (as it was the case for me).
-
-I have many comments, but I'll wait until you send the patch inlined,
-I'll just address these:
-
-1) I tried it, and it doesn't seem to import (pack?) are repository
-with sub-directories in it
-
-2) Using 'git fast-import' is probably simpler, and more efficient
-
-Here is a proof of concept I wrote in ruby that is half the size, and
-seems to implement the same functionality. The format is exactly the
-same, but I think it should be modified to be more efficient.
+Have you tried 'git fast-export'? The output is definitely not human
+inspectable, but should be relatively easy to parse to generate such a
+format. And instead of 'git bundle unbundle' you could use 'git
+fast-import'. or simply do the conversion in your script.
 
 Cheers.
-
->From eb3c34699d7f5d4eec4f088344659b8d9b6a07ea Mon Sep 17 00:00:00 2001
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Date: Mon, 26 Nov 2012 20:48:38 +0100
-Subject: [PATCH] Add new git-weave tool
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/weave/git-weave | 166 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 166 insertions(+)
- create mode 100755 contrib/weave/git-weave
-
-diff --git a/contrib/weave/git-weave b/contrib/weave/git-weave
-new file mode 100755
-index 0000000..3106121
---- /dev/null
-+++ b/contrib/weave/git-weave
-@@ -0,0 +1,166 @@
-+#!/usr/bin/env ruby
-+
-+require 'optparse'
-+require 'find'
-+require 'fileutils'
-+
-+def export(indir = '.', out = STDOUT)
-+  open(File.join(indir, 'log')).each("\n.\n") do |data|
-+
-+    @msg = nil
-+    @parents = []
-+
-+    data.chomp(".\n").each_line do |l|
-+      if not @msg
-+        case l
-+        when /^commit (.+)$/
-+          @id = $1
-+        when /^author (.+)$/
-+          @author = $1
-+        when /^committer (.+)$/
-+          @committer = $1
-+        when /^parent (.+)$/
-+          @parents << $1
-+        when /^$/
-+          @msg = ""
-+        end
-+      else
-+        @msg << l
-+      end
-+    end
-+
-+    out.puts "commit refs/heads/master"
-+    out.puts "mark :#{@id}"
-+    out.puts "author #{@author}"
-+    out.puts "committer #{@committer}"
-+    out.puts "data #{@msg.bytesize}"
-+    out.puts @msg
-+
-+    @parents.each_with_index do |p, i|
-+      if i == 0
-+        out.puts "from :%u" % p
-+      else
-+        out.puts "merge :%u" % p
-+      end
-+    end
-+
-+    # files
-+    out.puts 'deleteall'
-+    FileUtils.cd(File.join(indir, @id)) do
-+      Find.find('.') do |e|
-+        next unless File.file?(e)
-+        content = File.read(e)
-+        filename = e.split(File::SEPARATOR).slice(1..-1).join(File::SEPARATOR)
-+        mode = File.executable?(e) ? '100755' : '100644'
-+        if File.symlink?(e)
-+          mode = '120000'
-+          content = File.readlink(e)
-+        end
-+        out.puts 'M %s inline %s' % [mode, filename]
-+        out.puts "data #{content.bytesize}"
-+        out.puts content
-+      end
-+    end
-+
-+  end
-+end
-+
-+def import(outdir, out)
-+  format = 'format:commit %H%nauthor %an <%ae> %ad%ncommitter %cn
-<%ce> %cd%nparents %P%n%n%B'
-+  cmd = ['git', 'log', '-z', '-s', '--date=raw', '--format=%s' %
-format, '--all', '--reverse']
-+  commits = {}
-+
-+  IO.popen(cmd).each_with_index("\0") do |data, i|
-+    @msg = nil
-+    @parents = []
-+    data.chomp("\0").each_line do |l|
-+      if not @msg
-+        case l
-+        when /^commit (.+)$/
-+          @id = $1
-+        when /^author (.+)$/
-+          @author = $1
-+        when /^committer (.+)$/
-+          @committer = $1
-+        when /^parents (.+)$/
-+          @parents = $1.split(" ")
-+        when /^$/
-+          @msg = ""
-+        end
-+      else
-+        @msg << l
-+      end
-+    end
-+
-+    num = i + 1
-+    commits[@id] = num
-+
-+    out.puts "commit #{num}"
-+    @parents.each do |p|
-+      out.puts "parent #{commits[p]}"
-+    end
-+    out.puts "author #{@author}"
-+    out.puts "committer #{@committer}"
-+    out.puts
-+    out.puts @msg.gsub(/\n\n+/, "\n") # why?
-+    out.puts "."
-+
-+    wd = File.join(outdir, num.to_s)
-+    FileUtils.mkdir_p(wd)
-+    system('git', '--work-tree', wd, 'checkout', '-f', '-q', @id)
-+  end
-+end
-+
-+def git_pack(indir, outdir)
-+  indir = File.absolute_path(indir)
-+  system('git', 'init', outdir)
-+  FileUtils.cd(outdir) do
-+    IO.popen(['git', 'fast-import'], 'w') do |io|
-+      export(indir, io)
-+    end
-+    system('git', 'reset', '--hard')
-+  end
-+end
-+
-+def git_unpack(indir, outdir)
-+  begin
-+    FileUtils.mkdir_p(outdir)
-+    log = File.open(File.join(outdir, 'log'), 'w')
-+    ENV['GIT_DIR'] = File.join(indir, '.git')
-+    import(outdir, log)
-+  ensure
-+    system('git', 'symbolic-ref', 'HEAD', 'refs/heads/master')
-+    ENV.delete('GIT_DIR')
-+    log.close if log
-+  end
-+end
-+
-+$indir = '.'
-+
-+begin
-+  OptionParser.new do |opts|
-+    opts.on('-x') do
-+      $mode = 'unpack'
-+    end
-+    opts.on('-c') do
-+      $mode = 'pack'
-+    end
-+    opts.on('-o', '--outdir DIR') do |v|
-+      $outdir = v
-+    end
-+    opts.on('-i', '--indir DIR') do |v|
-+      $indir = v
-+    end
-+  end.parse!
-+rescue OptionParser::InvalidOption
-+end
-+
-+$mode = File.exists?(File.join($indir, '.git')) ? 'unpack' : 'pack'
-unless $mode
-+$outdir = File.join($indir, $mode == 'pack' ? 'packed' : 'unpacked2')
-unless $outdir
-+
-+case $mode
-+when 'pack'
-+  git_pack($indir, $outdir)
-+when 'unpack'
-+  git_unpack($indir, $outdir)
-+end
--- 
-1.8.0
 
 -- 
 Felipe Contreras
