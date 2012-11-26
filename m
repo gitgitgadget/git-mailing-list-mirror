@@ -1,84 +1,106 @@
-From: David Michael Barr <b@rr-dav.id.au>
-Subject: Re: [RFC] pack-objects: compression level for non-blobs
-Date: Mon, 26 Nov 2012 23:35:48 +1100
-Message-ID: <575D346F7B9B41D4848315209DF07302@rr-dav.id.au>
-References: <1353911154-23495-1-git-send-email-b@rr-dav.id.au>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: Re: [RFC/PATCH] Option to revert order of parents in merge commit
+Date: Mon, 26 Nov 2012 13:42:01 +0100
+Message-ID: <20121126124200.GA29859@camk.edu.pl>
+References: <20121123083550.GA702@camk.edu.pl>
+ <7vfw3zzoye.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: David Michael Barr <b@rr-dav.id.au>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 13:36:14 2012
+Content-Type: text/plain; charset=utf-8
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 26 13:42:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tcxv0-0001oC-Aa
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 13:36:10 +0100
+	id 1Tcy1B-0004iI-Jl
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 13:42:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424Ab2KZMfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 07:35:55 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:37393 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755357Ab2KZMfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 07:35:54 -0500
-Received: by mail-pa0-f46.google.com with SMTP id bh2so5019240pad.19
-        for <git@vger.kernel.org>; Mon, 26 Nov 2012 04:35:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-gm-message-state;
-        bh=kkvNk0KXbgDCDmHG2yZG0bQHf6ElyfyDgP+sZ0mEXM8=;
-        b=gBncvhJxUZ7O+PqNKLYNAaHNKa3dOox8+w6FLqu0GgZb2E1lTyGIgnHni3/ls1w6p7
-         RTJuKZ4c8+fH7/nXxlxN1/pwFjFuZNJu+hdYmEXdDKn/C7GkiEVhUXpiay01nndjJPEn
-         bPjj+31oivwqMrWLAybqvewS4ApNVIsgLukVcSh6fPEIPn0PLf4j318uJSmJxzwseu7V
-         cN/g/73+ured1bnUpWfZVhwQYC1zS5O4D9ZvS6E5GwjVecUXTFE1QTPUIwWSgiI4ga35
-         fAS7XkeobIG8ipfTkE0uYwbnEcYGjjYAnbK+EBr40jgozvSNyhjnpIaFWflWRqrEdvWf
-         e8lw==
-Received: by 10.66.89.9 with SMTP id bk9mr32233348pab.67.1353933353469;
-        Mon, 26 Nov 2012 04:35:53 -0800 (PST)
-Received: from [192.168.0.12] (c122-107-58-35.blktn5.nsw.optusnet.com.au. [122.107.58.35])
-        by mx.google.com with ESMTPS id z10sm7449178pax.38.2012.11.26.04.35.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 26 Nov 2012 04:35:52 -0800 (PST)
-In-Reply-To: <1353911154-23495-1-git-send-email-b@rr-dav.id.au>
-X-Mailer: sparrow 1.6.4 (build 1176)
+	id S1752714Ab2KZMmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 07:42:19 -0500
+Received: from moat.camk.edu.pl ([148.81.175.50]:39402 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751876Ab2KZMmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 07:42:18 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 7AD195F0053;
+	Mon, 26 Nov 2012 13:40:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id j51Ytla8m2qj; Mon, 26 Nov 2012 13:40:36 +0100 (CET)
+Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id B2E0C5F0050;
+	Mon, 26 Nov 2012 13:40:36 +0100 (CET)
+Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
+	id AB94043CFD; Mon, 26 Nov 2012 13:42:01 +0100 (CET)
 Content-Disposition: inline
-X-Gm-Message-State: ALoCoQnh9C8m9HTILzmk41rJlDPAFVabUGGXw3vf876qg/18dmJPORM9bs98YaUM9nCkynY62V6n
+In-Reply-To: <7vfw3zzoye.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210436>
 
-> Add config pack.graphcompression similar to pack.compression.
-> Applies to non-blob objects and if unspecified falls back to pack.compression.
-> 
-> We may identify objects compressed with level 0 by their leading bytes.
-> Use this to force recompression when the source and target levels mismatch.
-> Limit its application to when the config pack.graphcompression is set.
-> 
-> Signed-off-by: David Michael Barr <b@rr-dav.id.au (mailto:b@rr-dav.id.au)>
-> ---
-> builtin/pack-objects.c | 49 +++++++++++++++++++++++++++++++++++++++++++++----
-> 1 file changed, 45 insertions(+), 4 deletions(-)
-> 
-> I started working on this just before taking a vacation,
-> so it's been a little while coming.
-> 
-> The intent is to allow selective recompression of pack data.
-> For small objects/deltas the overhead of deflate is significant.
-> This may improve read performance for the object graph.
-> 
-> I ran some unscientific experiments with the chromium repository.
-> With pack.graphcompression = 0, there was a 2.7% increase in pack size.
-> I saw a 35% improvement with cold caches and 43% otherwise on git log --raw.
+On Fri, Nov 23, 2012 at 06:58:49PM -0800, Junio C Hamano wrote:
+> Kacper Kornet <draenog@pld-linux.org> writes:
 
-I neglected to mention that this is a WIP. I get failures with certain repositories: 
+> > The following patch is an attempt to implement this idea.
 
-    fatal: delta size changed
+> I think "revert" is a wrong word (implying you have already done
+> something and you are trying to defeat the effect of that old
+> something), and you meant to say "reverse" (i.e. the opposite of
+> normal) or something.
 
---
-David Michael Barr
+You are right. Probably transpose is the best description what the patch
+really does.
+
+> I am unsure about the usefulness of this, though.
+
+> After completing a topic on branch A, you would merge it to your own
+> copy of the integration branch (e.g. 'master') and try to push,
+> which may be rejected due to non-fast-forwardness:
+
+>     $ git checkout master
+>     $ git merge A
+>     $ git push
+
+> At that point, if you _care_ about the merge parent order, you could
+> do this (still on 'master'):
+
+>     $ git fetch origin
+>     $ git reset --hard origin/master
+>     $ git merge A
+>     $ test test test
+>     $ git push
+
+> With --reverse-parents, it would become:
+
+>     $ git pull --reverse-parents
+>     $ test test test
+>     $ git push
+
+> which certainly is shorter and looks simpler.  The workflow however
+> would encourage people to work directly on the master branch, which
+> is a bit of downside.
+
+Our developers work mainly on master branches. The project consists of
+many thousands independent git repositories, and at the given time a
+developer usually wants to make only one commit in the given repository
+and push his changes upstream. So he usually doesn't care to make a
+branch.  Then after failed pushed, one needs to add creation and removal
+of temporary branch (see the commit message of the suggested patch).
+The possibility to do git pull --reverse-parent would make the life
+easier in this case.
+
+> Is there any interaction between this "pull --reverse-parents"
+> change and possible conflict resolution when the command stops and
+> asks the user for help?  For example, whom should "--ours" and "-X
+> ours" refer to?  Us, or the upstream?
+
+The change of order of parents happens at the very last moment, so
+"ours" in merge options is local version and "theirs" upstream.
+
+-- 
+  Kacper Kornet
