@@ -1,116 +1,59 @@
-From: Adam Tkac <atkac@redhat.com>
-Subject: Re: [PATCH] Fix bash completion when `egrep` is aliased to `egrep
- --color=always`
-Date: Mon, 26 Nov 2012 12:23:53 +0100
-Message-ID: <20121126112352.GA4481@redhat.com>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: [PATCH] Fix bash completion when `egrep` is aliased to `egrep --color=always`
+Date: Mon, 26 Nov 2012 12:30:48 +0100
+Message-ID: <CAH6sp9PwsxLDDXfA5oZk-3X+d7h5OdR3TRX7aMMyTA+8WDuSmA@mail.gmail.com>
 References: <20121122154120.GA16835@redhat.com>
- <CAFj1UpG6H3bpoa7xbqpH6Hyb6pwqE_CCgP6iT36D-ELvtVi4wA@mail.gmail.com>
+	<CAFj1UpG6H3bpoa7xbqpH6Hyb6pwqE_CCgP6iT36D-ELvtVi4wA@mail.gmail.com>
+	<20121126112352.GA4481@redhat.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Dxnq1zWXvFF0Q93v"
-Cc: git@vger.kernel.org
-To: Marc Khouzam <marc.khouzam@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 12:24:30 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Marc Khouzam <marc.khouzam@gmail.com>, git@vger.kernel.org
+To: Adam Tkac <atkac@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 12:31:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tcwna-0001SE-Nw
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 12:24:27 +0100
+	id 1Tcwu0-0004on-Da
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Nov 2012 12:31:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab2KZLYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 06:24:09 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:44916 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755121Ab2KZLXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 06:23:55 -0500
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id qAQBNsg7004134
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 26 Nov 2012 06:23:54 -0500
-Received: from localhost (evileye.atkac.brq.redhat.com [10.34.4.30])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id qAQBNrYh016789;
-	Mon, 26 Nov 2012 06:23:54 -0500
-Content-Disposition: inline
-In-Reply-To: <CAFj1UpG6H3bpoa7xbqpH6Hyb6pwqE_CCgP6iT36D-ELvtVi4wA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1754370Ab2KZLau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 06:30:50 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:35863 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754043Ab2KZLat (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 06:30:49 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so7760453qcr.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 03:30:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xmm+r9B118x91PZxI0XLWOo7HT5Hpklc2ruZxOLUVM8=;
+        b=H91WXaz4vNr7yHdNkwrlc37OGNfb6E1AVYcpUpapQ/0hlxsVHkXqFpcn248dwIF2hN
+         hHgZbhSQAUZCCmcU9qsi/i60OIlwP9SsXTrmy5o8B5vQmEj7O8pvUtc3zycZHoIwpoFQ
+         /cOYtgd5C8zpbPY+hRmJD6lJ20f3LYKAw9lqqFtrT1ZEniD3/V0mX2RsUGdYQoHBsQ6r
+         Ryai/smDyhc01BHhXtsFvE4NULF/dv5Zl4/zMs76/hibEhIW/h5JbLQlmET/UcBWIh/k
+         tCDOkY9HMPM05VR0uI6I+DHpXk/yEPQjyv4PW98qodwf5iNh4h4tKE8oXSkoPhRqZgca
+         oLoQ==
+Received: by 10.229.111.220 with SMTP id t28mr2705057qcp.146.1353929448716;
+ Mon, 26 Nov 2012 03:30:48 -0800 (PST)
+Received: by 10.224.188.212 with HTTP; Mon, 26 Nov 2012 03:30:48 -0800 (PST)
+In-Reply-To: <20121126112352.GA4481@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210431>
 
+On Mon, Nov 26, 2012 at 12:23 PM, Adam Tkac <atkac@redhat.com> wrote:
 
---Dxnq1zWXvFF0Q93v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Good idea, thanks. Improved patch is attached.
 
-On Thu, Nov 22, 2012 at 02:55:21PM -0500, Marc Khouzam wrote:
-> On Thu, Nov 22, 2012 at 10:41 AM, Adam Tkac <atkac@redhat.com> wrote:
-> > Hello all,
-> >
-> > attached patch fixes bash completion when `egrep` is aliased to `egrep --color=always`.
-> 
-> To avoid any aliases, it may be better to use
-> \egrep
+It is custom on this list to mail the patches, rather than attaching
+them, so people can review your changes in-line. You can read more
+about it in in git/Documentation/SubmittingPatches.
 
-Good idea, thanks. Improved patch is attached.
-
-Regards, Adam
-
-> 
-> This could be worthwhile for all utilities used by the script.
-> 
-> Just a thought.
-> 
-> Marc
-> 
-> 
-> >
-> > Comments are welcomed.
-> >
-> > Regards, Adam
-> >
-> > --
-> > Adam Tkac, Red Hat, Inc.
-
--- 
-Adam Tkac, Red Hat, Inc.
-
---Dxnq1zWXvFF0Q93v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="0001-If-egrep-is-aliased-temporary-disable-it-in-bash.com.patch"
-
->From 255192296cd175fddcac2647447a66a0ca55b855 Mon Sep 17 00:00:00 2001
-From: Adam Tkac <atkac@redhat.com>
-Date: Thu, 22 Nov 2012 16:34:58 +0100
-Subject: [PATCH] If `egrep` is aliased, temporary disable it in
- bash.completion
-
-Originally reported as https://bugzilla.redhat.com/show_bug.cgi?id=863780
-
-Signed-off-by: Adam Tkac <atkac@redhat.com>
-Signed-off-by: Holger Arnold <holgerar@gmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0960acc..79073c2 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -565,7 +565,7 @@ __git_complete_strategy ()
- __git_list_all_commands ()
- {
- 	local i IFS=" "$'\n'
--	for i in $(git help -a|egrep '^  [a-zA-Z0-9]')
-+	for i in $(git help -a| \egrep '^  [a-zA-Z0-9]')
- 	do
- 		case $i in
- 		*--*)             : helper pattern;;
--- 
-1.8.0
-
-
---Dxnq1zWXvFF0Q93v--
+Cheers,
+Frans
