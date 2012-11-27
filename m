@@ -1,76 +1,59 @@
 From: Kacper Kornet <draenog@pld-linux.org>
-Subject: [PATCH v2 1/3] Process MERGE_MODE before MERGE_HEAD
-Date: Wed, 28 Nov 2012 00:00:15 +0100
-Message-ID: <1354057217-65886-2-git-send-email-draenog@pld-linux.org>
-References: <1354057217-65886-1-git-send-email-draenog@pld-linux.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Aaron Schrab <aaron@schrab.com>,
-	Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH v2 0/3] Add option to change order of parents in merge commit
+Date: Wed, 28 Nov 2012 00:00:14 +0100
+Message-ID: <1354057217-65886-1-git-send-email-draenog@pld-linux.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:18:14 2012
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:18:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdUPq-00006C-Ud
+	id 1TdUPr-00006C-EZ
 	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 00:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756376Ab2K0XRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 18:17:41 -0500
-Received: from carme.pld-linux.org ([193.239.45.140]:13592 "EHLO
+	id S1756504Ab2K0XRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 18:17:45 -0500
+Received: from carme.pld-linux.org ([193.239.45.140]:13594 "EHLO
 	carme.pld-linux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141Ab2K0XRi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 18:17:38 -0500
+	with ESMTP id S1756359Ab2K0XRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 18:17:40 -0500
 Received: from draenog by carme.pld-linux.org with local (Exim 4.80.1)
 	(envelope-from <draenog@carme.pld-linux.org>)
-	id 1TdU8X-000H9P-9T; Wed, 28 Nov 2012 00:00:17 +0100
+	id 1TdU8X-000H9M-5E; Wed, 28 Nov 2012 00:00:17 +0100
 X-Mailer: git-send-email 1.8.0.1
-In-Reply-To: <1354057217-65886-1-git-send-email-draenog@pld-linux.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210625>
 
-It is in preparation to introduce --transpose-parents option to
-git-merge, when the content of MERGE_MODE will dictate how the
-MERGE_HEAD is interpreted.
+The second version of patches introducing option to change order
+of parents in merge commits. The changes in respect to the previous
+version:
 
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
- builtin/commit.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+- I have divided the changes to the preparatory ones, which
+  only refactore the code without introducing new functionality, and
+  the commit which introduces the new option
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1dd2ec5..273332f 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1481,6 +1481,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 		if (!reflog_msg)
- 			reflog_msg = "commit (merge)";
-+		if (!stat(git_path("MERGE_MODE"), &statbuf)) {
-+			if (strbuf_read_file(&sb, git_path("MERGE_MODE"), 0) < 0)
-+				die_errno(_("could not read MERGE_MODE"));
-+			if (!strcmp(sb.buf, "no-ff"))
-+				allow_fast_forward = 0;
-+		}
- 		pptr = &commit_list_insert(current_head, pptr)->next;
- 		fp = fopen(git_path("MERGE_HEAD"), "r");
- 		if (fp == NULL)
-@@ -1496,12 +1502,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		}
- 		fclose(fp);
- 		strbuf_release(&m);
--		if (!stat(git_path("MERGE_MODE"), &statbuf)) {
--			if (strbuf_read_file(&sb, git_path("MERGE_MODE"), 0) < 0)
--				die_errno(_("could not read MERGE_MODE"));
--			if (!strcmp(sb.buf, "no-ff"))
--				allow_fast_forward = 0;
--		}
- 		if (allow_fast_forward)
- 			parents = reduce_heads(parents);
- 	} else {
+- The documentation for the new options has been added
+
+This is not yet a final version, as the tests are missing. But maybe while I'm working
+on them there will be some comments.
+
+Kacper Kornet (3):
+  Process MERGE_MODE before MERGE_HEAD
+  Allow for MERGE_MODE to specify more then one mode
+  Add option to transpose parents of merge commit
+
+ Documentation/merge-options.txt |  7 +++++++
+ builtin/commit.c                | 22 ++++++++++++++--------
+ builtin/merge.c                 | 16 ++++++++++++----
+ commit.c                        | 11 +++++++++++
+ commit.h                        |  2 ++
+ git-pull.sh                     |  4 +++-
+ 6 files changed, 49 insertions(+), 13 deletions(-)
+
 -- 
 1.8.0.1
