@@ -1,311 +1,109 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [RFC/PATCH] l10n: de.po: translate 825 new messages
-Date: Tue, 27 Nov 2012 12:44:04 +0100
-Message-ID: <87wqx7s22j.fsf@pctrast.inf.ethz.ch>
-References: <1349200849-7436-1-git-send-email-ralf.thielow@gmail.com>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
+Subject: Re: Python extension commands in git - request for policy change
+Date: Tue, 27 Nov 2012 09:35:11 -0500
+Message-ID: <20121127143510.GA15831@google.com>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+ <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+ <50B1F684.5020805@alum.mit.edu>
+ <CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, <jk@jk.gs>, <stimming@tuhh.de>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 12:50:39 2012
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 15:35:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdJgT-0004ft-Ml
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 12:50:38 +0100
+	id 1TdMG3-0003je-CU
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 15:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689Ab2K0LuU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2012 06:50:20 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:33894 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751322Ab2K0LuT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Nov 2012 06:50:19 -0500
-X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Nov 2012 06:50:18 EST
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 27 Nov
- 2012 12:44:00 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
- cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 27 Nov 2012 12:44:04 +0100
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753382Ab2K0OfO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2012 09:35:14 -0500
+Received: from mail-gh0-f202.google.com ([209.85.160.202]:63361 "EHLO
+	mail-gh0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752712Ab2K0OfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 09:35:12 -0500
+Received: by mail-gh0-f202.google.com with SMTP id z10so1203055ghb.1
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 06:35:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=PZZYgK7wlJ5SxYfR5wllf+rHr/TRO1tTR/4ohwjFFqI=;
+        b=GcCreTtzKvHWBYB1iRsTUpI2kCAzcPRn2Gf/TZAtDbkCOaEX7UZ6ZdqrPqJBZ6OFNH
+         YctmMZuQcb+tU6KV3ZEttTlCqycHryg62VL+SpFQ0fjE2yMyiftDJXeBN+qyZX6EsotR
+         q93XNSJxZ7u9jWmqxGDL3gJiZTye5zrn4KvBd5DhqVqCp4G6tbCX8Dic1MKleQAYDnI0
+         vBjfEOX1ENYes6XHdAw1WCnkHxFlSNg9zVywXb5/vGOFwtj98h3CJecbUDplvxWGDFRc
+         Ga33yotPTPSN4GXj0cpkV4tnIo4rckGGVw80XK710LJsdKGMrAUoVztEqmluO9iXIvPo
+         ysbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent:x-gm-message-state;
+        bh=PZZYgK7wlJ5SxYfR5wllf+rHr/TRO1tTR/4ohwjFFqI=;
+        b=cSNn7c4u4Yc280DIqT6vDFWPxdo9VhZ/QmQ3hzi6h2ZixXhYLsCrGCB8nTLxGB2DQ/
+         Mq0HSEoWM6xfoN25lrIT2/8vPQcyuBY1Ixq3GvN9uf93Op11sw9rrGQUkDcBzX6KLkCi
+         3eJO4rzVAjZhfdo1XdWqbXPqllAkjWyVJH1CgLagDE5icPy6vlvFEQNOma9HLX1O4IEV
+         zuESIO0biU2pCB1xgY5BR6aLoIwDBLfKnvVzFYCW0xPIt7arH1/+Mb5V7Ofhb+kfJcKE
+         8nGnI6YF9ZVfApV6XgEcLb3Xj8fKCoOImXyo7WFH07Yde4MWZ2CdOQA1VGxZORPmPsLR
+         nieg==
+Received: by 10.236.48.99 with SMTP id u63mr9968785yhb.46.1354026911754;
+        Tue, 27 Nov 2012 06:35:11 -0800 (PST)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id r10si711125ann.1.2012.11.27.06.35.11
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Tue, 27 Nov 2012 06:35:11 -0800 (PST)
+Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id AD32C82004A;
+	Tue, 27 Nov 2012 06:35:11 -0800 (PST)
+Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
+	id 51E7060FFE; Tue, 27 Nov 2012 09:35:11 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Gm-Message-State: ALoCoQlVGdpOOKw0w1sDGTl9t+R0thKOfAW8nnE7srv4OuqXEg6jYhHBHVuchVoja03v0ebbP+tGFB88C8HdynC5SByqN3/R7sh9cclotwHti/3Xzs34uZtRJjnN4Jx7A4aSISAASOY5qExq1mPOPMbYXo3UdlZsS+2cA4kK9TDktuH8aaNBk7DbE2pazhRftuecXMFA575C
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210560>
 
-Hi Ralf,
+On Sunday, November 25, 2012 at 06:40 EST,
+     Felipe Contreras <felipe.contreras@gmail.com> wrote:
 
-This is the middle third of my review.  Sorry for the long wait!  I hop=
-e
-it can still be useful.
+> On Sun, Nov 25, 2012 at 11:44 AM, Michael Haggerty
+> <mhagger@alum.mit.edu> wrote:
 
-Also, sorry for the other mail that I just sent out seconds ago.  That
-was what I wanted to save as "to be done in the last third", but
-I accidentally hit the wrong key and sent it out.
-
-- Thomas
-
-
-> @@ -4459,6 +4423,8 @@ msgstr ""
->  #: builtin/fmt-merge-msg.c:13
->  msgid "git fmt-merge-msg [-m <message>] [--log[=3D<n>]|--no-log] [--=
-file <file>]"
->  msgstr ""
-> +"git fmt-merge-msg [-m <Beschreibung>] [--log[=3D<Anzahl>]|--no-log]=
- [--file "
-> +"<Datei>]"
-> =20
->  #: builtin/fmt-merge-msg.c:653 builtin/fmt-merge-msg.c:656 builtin/g=
-rep.c:786
->  #: builtin/merge.c:188 builtin/show-branch.c:656 builtin/show-ref.c:=
-192
-> @@ -4468,115 +4434,111 @@ msgstr "Anzahl"
-> =20
->  #: builtin/fmt-merge-msg.c:654
->  msgid "populate log with at most <n> entries from shortlog"
-> -msgstr ""
-> +msgstr "f=C3=BCgt Historie mit h=C3=B6chstens <Nummer> Eintr=C3=A4ge=
-n von \"shortlog\" hinzu"
-
-I don't really share your apparent aversion to just using "<n>" :-)
-
->  #: builtin/for-each-ref.c:994
->  msgid "quote placeholders suitably for shells"
-> -msgstr ""
-> +msgstr "quotiert Platzhalter geeignet f=C3=BCr Shells"
 [...]
->  #: builtin/for-each-ref.c:996
->  msgid "quote placeholders suitably for perl"
-> +msgstr "quotiert Platzhalter geeignet f=C3=BCr Perl"
-[etc]
 
-"quote" is a hard one, and "quotiert" sounds very wrong to me.  How
-about weaseling out along the lines of
-
-  Formatiert Platzhalter als {Shell|Perl|Python|TCL} Zeichenfolge
-
-or even "Shell-String".
-
->  #: builtin/for-each-ref.c:1003
->  msgid "show only <n> matched refs"
-> -msgstr ""
-> +msgstr "zeigt nur <Nummer> passende Referenzen"
-
-This should be <Anzahl> if you insist on translating the 'n'.
-
->  #: builtin/for-each-ref.c:1006
->  msgid "field name to sort on"
-> -msgstr ""
-> +msgstr "Name des Felder zum Sortieren"
-
-=46eld_s_?
-
-Or just "sortiere nach diesem Feld".
-
->  #: builtin/fsck.c:618
->  msgid "make index objects head nodes"
-> -msgstr ""
-> +msgstr "erzeugt Kopfknoten der Bereitstellungsobjekte"
-
-The English version is equally obscure, but this refers to (also)
-walking the objects listed in the index.  Furthermore, --cache is
-actually the default if you don't list any objects to walk.
-
->  #: builtin/fsck.c:620
->  msgid "also consider packs and alternate objects"
-> -msgstr ""
-> +msgstr "betrachtet auch Pakete und wechselnde Objekte"
-
-The glossary tells me pack -> Archiv.
-
-An alternate object [store] is essentially a pointer to the object stor=
+> > On the contrary, there is *constant* traffic on the mailing list
+> > about incompatibilities between different shell implementations (sh=
+,
+> > dash, bash, etc), not to mention those in other utilities (sed,
+> > grep, etc) that one is forced to work with in shell scripts.
+> > Compatibility is a *huge* pain when developing shell code for git.
+> > The fact that users typically don't encounter such problems is due
+> > to the hard work of POSIX lawyers on the mailing list correcting th=
 e
-of another repository.  It may best be left untranslated, as it's a
-pretty advanced feature.
+> > compatibility errors of mortal programmers.
+>
+> *Theoretical* incompatibilities on probably obscure systems. *I* have
+> never seen such compatibility issues *in practice*.
 
->  #: builtin/grep.c:741
->  msgid "match patterns only at word boundaries"
-> -msgstr ""
-> +msgstr "findet Muster nur innerhalb von W=C3=B6rtern"
+While "constant traffic" probably overstates the issue, these are not
+theoretical problems. I recall at least three cases in the last year
+or so where Git has seen breakage with Solaris or Mac OS X because
+of sed or tr incompatibilities, and I don't even read this list that
+thoroughly.
 
-The translation gets the purpose wrong: the option forces a
-word-boundary match on either side of the pattern, so that you will fin=
-d
-only one or more words matching the pattern.  The manpage has a precise
-definition:
-
-	Match the pattern only at word boundary (either begin at the
-	beginning of a line, or preceded by a non-word character; end at
-	the end of a line or followed by a non-word character).
-
-Maybe "suche nur ganze W=C3=B6rter" would suffice as a concise descript=
-ion.
-
->  #: builtin/grep.c:817
->  msgid "indicate hit with exit status without output"
-> -msgstr ""
-> +msgstr "kennzeichnet =C3=9Cbereinstimmungen mit Beendigungsstatus, o=
-hne Ausgabe"
-
-The "indicate" should be "zeigen" or some such, since it only tells
-whether there were any matches at all.
-
-I spent some time looking for a better translation of "exit status", bu=
-t
-couldn't find anything helpful (such as a German translation of diff(1)
-or a Wikipedia page on "exit status").
-
->  #: builtin/hash-object.c:77
->  msgid "process file as it were from this path"
-> -msgstr ""
-> +msgstr "verarbeitet Datei, wie es von diesem Pfad w=C3=A4re"
-
-als ob sie von diesem Pfad w=C3=A4re?
-
->  #: builtin/help.c:47
->  msgid "show info page"
-> -msgstr ""
-> +msgstr "zeigt Informationsseite"
-
-info here refers to GNU info, presumably it should be left as
-"info-Seite" or some such.
-
->  #: builtin/index-pack.c:1106
->  msgid "confusion beyond insanity"
-> @@ -5150,12 +5111,12 @@ msgstr "Fehler beim Aufl=C3=B6sen der Untersc=
-hiede"
->  #: builtin/index-pack.c:1112
->  #, c-format
->  msgid "completed with %d local objects"
-> -msgstr ""
-> +msgstr "fertiggestellt mit %d lokalen Objekten"
-
-*vervollst=C3=A4ndigt* mit %d lokalen Objekten
-
->  #: builtin/log.c:102
->  msgid "decorate options"
-> -msgstr ""
-> +msgstr "Ausgabeoptionen"
-
-'decorate' is the option to mark commits by the refs pointing at them,
-and should probably not be translated.
-
-The English version is quite tautological though, since it just turns
-into
-
-    --decorate[=3D...]      decorate options
-
->  #: builtin/log.c:1091
->  msgid "don't include a patch matching a commit upstream"
->  msgstr ""
-> +"schlie=C3=9Ft keine Patches ein, die einer Version im externen Proj=
-ektarchiv "
-> +"entsprechen"
-
-Upstream refers to the notional upstream state, which does not even hav=
-e
-to be a branch here.  I.e., if you say
-
-  git format-patch --ignore-if-in-upstream <commit>
-
-then it will format the range 'commit..HEAD', ignoring patches that are
-already in 'HEAD..commit'.
-
-So it's not an upstream repo, and in fact doesn't even have to be a
-branch.  I don't really have a good suggestion though.  Perhaps you can
-still call it "im =C3=9Cbernahmezweig", since the original makes the sa=
-me
-mistake.
-
->  #: builtin/log.c:1095
-> -#, fuzzy
->  msgid "Messaging"
-> -msgstr "Zusammenf=C3=BChrung:"
-> +msgstr "Datentransfer"
-
-"Email-Einstellungen"?
-
->  #: builtin/log.c:1096
-> -#, fuzzy
->  msgid "header"
-> -msgstr "voraus "
-> +msgstr "Kopfteil"
-> =20
->  #: builtin/log.c:1097
->  msgid "add email header"
-> -msgstr ""
-> +msgstr "f=C3=BCgt Kopfteil f=C3=BCr eMail hinzu"
-
-Does anyone call them anything except "headers" in german?
-
-I can even quote a (non)reference:
-
-  http://de.wikipedia.org/wiki/E-Mail#Header_.E2.80.93_der_Kopf_der_E-M=
-ail
-
->  #: builtin/log.c:1108
-> -#, fuzzy
->  msgid "inline the patch"
-> -msgstr "ignoriert hinzugef=C3=BCgte Zeilen des Patches"
-> +msgstr "f=C3=BCgt einen Patch ein"
-
-f=C3=BCgt den Patch direkt in die Nachricht ein
-
->  #: builtin/ls-files.c:463
->  msgid "identify the file status with tags"
-> -msgstr ""
-> +msgstr "bestimmt den Dateistatus mit Markierungen"
-
-*zeigt* den Dateistatus mit Markierungen
-
->  #: builtin/merge.c:189
->  msgid "add (at most <n>) entries from shortlog to merge commit messa=
-ge"
->  msgstr ""
-> +"f=C3=BCgt (h=C3=B6chstens <Nummber>) Eintr=C3=A4ge von \"short\" zu=
-r Beschreibung der "
-                        ^^^
-typo  -------------------=C2=B4
-
-> +"Zusammenf=C3=BChrung hinzu"
-
-=46urthermore, you changed 'shortlog' to '"short"'.  Presumably you mea=
-nt
-to keep the 'log' too?
-
->  #: builtin/notes.c:617
->  msgid "load rewriting config for <command> (implies --stdin)"
->  msgstr ""
-> +"l=C3=A4dt Konfiguration f=C3=BCr <Kommando> beim =C3=9Cberschreiben=
- von Versionen "
-> +"(impliziert --stdin)"
-
-This would be a good time to settle on a good translation for
-"rewriting".  Perhaps "neu schreiben".  "=C3=9Cberschreiben" to me impl=
-ies
-that it's done in-place, but the whole point of calling it "rewriting"
-instead of "changing" is that it is *not* done (or indeed possible to
-do) in-place.
-
->  #: builtin/pack-objects.c:2502
->  msgid "create thin packs"
-> -msgstr ""
-> +msgstr "erzeugt kleinere Pakete"
-
-Smaller is not really the point: they are packs that do not have the
-delta bases.  It can only be used in the context of a repository that
-has them.  A thin pack is used only(?) in network transfer, and then
-"completed" by adding the delta bases to it, which lets it stand on its
-own.
-
-You could call them "abgespeckt" ;-)
-
+[...]
 
 --=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Magnus B=E4ck
+baeck@google.com
