@@ -1,743 +1,208 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/4] t4041 (diff-submodule-option): modernize style
-Date: Tue, 27 Nov 2012 14:11:31 +0530
-Message-ID: <1354005692-2809-4-git-send-email-artagnon@gmail.com>
-References: <1354005692-2809-1-git-send-email-artagnon@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 09:42:32 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Python extension commands in git - request for policy change
+Date: Tue, 27 Nov 2012 09:43:29 +0100
+Message-ID: <CAMP44s1gpAPpK2yHmLOroj+7Y7OZaXTj9SGqC0cxgFgO-3Ap8w@mail.gmail.com>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+	<CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com>
+	<20121125051809.GA3670@thyrsus.com>
+	<CAMP44s0r1J=aOuEpKQ1+ew9FzODwLX-w5z9rG-WN6AjU0o97yw@mail.gmail.com>
+	<20121125095429.GB22279@thyrsus.com>
+	<CAMP44s1cG=5D9DppHmB9CpgkgdEzM72KhQ1Q-kWrrDo8ST+r_g@mail.gmail.com>
+	<20121125175051.GD32394@thyrsus.com>
+	<CAMP44s3QNG-sxcZsWmL3RYjXkzOwerj2774t7Abh04A7QR6TCA@mail.gmail.com>
+	<20121125215635.GA6937@thyrsus.com>
+	<CAMP44s2FcrjDhNzond=Rzmn5QOBnZbQC1d73ZmKNeyCRvJNvyA@mail.gmail.com>
+	<CAJDDKr4cr3VXqx=CXgXSQrVTSjE=f=55HZns-xfNziJOXb3Vsw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: esr@thyrsus.com, Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org, 
+	msysGit <msysgit@googlegroups.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: msysgit+bncBDBJVMGGZYNBBMX22GCQKGQEDGBMVAY@googlegroups.com Tue Nov 27 09:43:43 2012
+Return-path: <msysgit+bncBDBJVMGGZYNBBMX22GCQKGQEDGBMVAY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gh0-f186.google.com ([209.85.160.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdGkR-0008CY-SD
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 09:42:32 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098Ab2K0Ilw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 03:41:52 -0500
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:35808 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758390Ab2K0Ils (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 03:41:48 -0500
-Received: by mail-pb0-f46.google.com with SMTP id wy7so8717032pbc.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 00:41:48 -0800 (PST)
+	(envelope-from <msysgit+bncBDBJVMGGZYNBBMX22GCQKGQEDGBMVAY@googlegroups.com>)
+	id 1TdGla-0000aD-EN
+	for gcvm-msysgit@m.gmane.org; Tue, 27 Nov 2012 09:43:42 +0100
+Received: by mail-gh0-f186.google.com with SMTP id f11sf4385592ghb.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 27 Nov 2012 00:43:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5X5jtg510LoRQc5O+qVOX/lZjF622hx4bmNtBzx32Hg=;
-        b=MrdZV7nBrwY5OIXRWCn8cVpNZRYB74LqDi6pCflQydh9eGxUl3s3auySdaLrF/Eng/
-         0sHRUvviPCTitnVsumipFJxYiHUkzOBRRha0BJwXaOXHvp2+DqLpavqezmWGcdkLi59P
-         rhrNcseGSE20wQGikpPJ8UcM0gz8eKIwqLLKDCIvSakRzdnc03TXxFGR3LdO4Wgn1s2r
-         HBKxNtf5DdooMRgewKn4jJH2/otla0UhBNu54wNt7F+odFQ6wSopbLa78YxYLKLURrOZ
-         muwGVyx/z6QXFJEEj/TUJNIspeMgwL49v5yAYSWRdj/jw2pve1GcXHPEC5ukkMwepgn6
-         Paew==
-Received: by 10.66.72.71 with SMTP id b7mr40540073pav.28.1354005707985;
-        Tue, 27 Nov 2012 00:41:47 -0800 (PST)
-Received: from localhost.localdomain ([49.206.179.73])
-        by mx.google.com with ESMTPS id vi9sm10284793pbc.41.2012.11.27.00.41.45
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=FqbxN9ayUiHWUxI1U4MZGPzjF2Jiwkq0n1ViOuRA//Y=;
+        b=oKYWJf49/3mWR2P/tdPCTBwEvWkNf3WSO6Zt53RqaxfF3xHLxnHUz0aVG8tQHdkRUj
+         Ci1DGt4pqMwnOuxwMxHlGbqdIIq3x34sgxFTuqasSB65LNQ+RnjKzmFNelARO7YFU1Nt
+         gl+zw995IjK+OBeppwG1HX4tyH5/fsjfff9jp/zhBBJHT1ohoi1OjznTeODVI78awxNl
+         iKsTZThX9WOSbKqImp95US1HQ/zNHNGzByX1f8NaXbCHudDwycwFCzmALEo6ILYd1Suh
+         ZOuARxwt0em71aRaF9UNuaIhUpU13warwIDVDSGph9zTNPcp8SUAZ7p1Jw3wqdIm8FZF
+         /Vrg==
+Received: by 10.50.5.174 with SMTP id t14mr6323653igt.11.1354005810754;
+        Tue, 27 Nov 2012 00:43:30 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.190.233 with SMTP id gt9ls3174968igc.36.gmail; Tue, 27 Nov
+ 2012 00:43:29 -0800 (PST)
+Received: by 10.42.211.71 with SMTP id gn7mr10272559icb.11.1354005809776;
+        Tue, 27 Nov 2012 00:43:29 -0800 (PST)
+Received: by 10.42.211.71 with SMTP id gn7mr10272558icb.11.1354005809704;
+        Tue, 27 Nov 2012 00:43:29 -0800 (PST)
+Received: from mail-ob0-f172.google.com (mail-ob0-f172.google.com [209.85.214.172])
+        by gmr-mx.google.com with ESMTPS id dx8si102703igc.1.2012.11.27.00.43.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Nov 2012 00:41:47 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
-In-Reply-To: <1354005692-2809-1-git-send-email-artagnon@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210548>
+        Tue, 27 Nov 2012 00:43:29 -0800 (PST)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 209.85.214.172 as permitted sender) client-ip=209.85.214.172;
+Received: by mail-ob0-f172.google.com with SMTP id v19so86399obq.31
+        for <msysgit@googlegroups.com>; Tue, 27 Nov 2012 00:43:29 -0800 (PST)
+Received: by 10.60.4.227 with SMTP id n3mr11484932oen.136.1354005809422; Tue,
+ 27 Nov 2012 00:43:29 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 00:43:29 -0800 (PST)
+In-Reply-To: <CAJDDKr4cr3VXqx=CXgXSQrVTSjE=f=55HZns-xfNziJOXb3Vsw@mail.gmail.com>
+X-Original-Sender: felipe.contreras@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of felipe.contreras@gmail.com designates 209.85.214.172 as permitted
+ sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210549>
 
-- Enclose tests in single quotes as opposed to double quotes.  This is
-  the prevalent style in other tests.
-- Remove the unused variable $head4_full.
-- Indent the expected output so that it lines up with the rest of the
-  test text.
+On Tue, Nov 27, 2012 at 8:54 AM, David Aguilar <davvid@gmail.com> wrote:
+> On Mon, Nov 26, 2012 at 5:11 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- t/t4041-diff-submodule-option.sh |  459 +++++++++++++++++++-------------------
- 1 files changed, 229 insertions(+), 230 deletions(-)
+>> http://www.mediawiki.org/wiki/Git/Graphical_User_Interfaces
+>
+> *cough* git-cola *cough*
+>
+> it runs everywhere.  Yes, windows too. It's written in python.
+> It's been actively maintained since 2007.
 
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 103c690..f61c664 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -32,41 +32,41 @@ add_file . foo >/dev/null
- head1=$(add_file sm1 foo1 foo2)
- fullhead1=$(cd sm1; git rev-parse --verify $head1)
- 
--test_expect_success 'added submodule' "
-+test_expect_success 'added submodule' '
- 	git add sm1 &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 0000000...$head1 (new submodule)
--EOF
-+	Submodule sm1 0000000...$head1 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'added submodule, set diff.submodule' "
-+test_expect_success 'added submodule, set diff.submodule' '
- 	git config diff.submodule log &&
- 	git add sm1 &&
- 	git diff --cached >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 0000000...$head1 (new submodule)
--EOF
-+	Submodule sm1 0000000...$head1 (new submodule)
-+	EOF
- 	git config --unset diff.submodule &&
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success '--submodule=short overrides diff.submodule' "
-+test_expect_success '--submodule=short overrides diff.submodule' '
- 	test_config diff.submodule log &&
- 	git add sm1 &&
- 	git diff --submodule=short --cached >actual &&
- 	cat >expected <<-EOF &&
--diff --git a/sm1 b/sm1
--new file mode 160000
--index 0000000..$head1
----- /dev/null
--+++ b/sm1
--@@ -0,0 +1 @@
--+Subproject commit $fullhead1
--EOF
-+	diff --git a/sm1 b/sm1
-+	new file mode 160000
-+	index 0000000..$head1
-+	--- /dev/null
-+	+++ b/sm1
-+	@@ -0,0 +1 @@
-+	+Subproject commit $fullhead1
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- test_expect_success 'diff.submodule does not affect plumbing' '
- 	test_config diff.submodule log &&
-@@ -86,47 +86,47 @@ test_expect_success 'diff.submodule does not affect plumbing' '
- commit_file sm1 &&
- head2=$(add_file sm1 foo3)
- 
--test_expect_success 'modified submodule(forward)' "
-+test_expect_success 'modified submodule(forward)' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head1..$head2:
--  > Add foo3
--EOF
-+	Submodule sm1 $head1..$head2:
-+	  > Add foo3
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule(forward)' "
-+test_expect_success 'modified submodule(forward)' '
- 	git diff --submodule=log >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head1..$head2:
--  > Add foo3
--EOF
-+	Submodule sm1 $head1..$head2:
-+	  > Add foo3
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule(forward) --submodule' "
-+test_expect_success 'modified submodule(forward) --submodule' '
- 	git diff --submodule >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head1..$head2:
--  > Add foo3
--EOF
-+	Submodule sm1 $head1..$head2:
-+	  > Add foo3
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule(forward) --submodule=short' "
- fullhead2=$(cd sm1; git rev-parse --verify $head2)
-+test_expect_success 'modified submodule(forward) --submodule=short' '
- 	git diff --submodule=short >actual &&
- 	cat >expected <<-EOF &&
--diff --git a/sm1 b/sm1
--index $head1..$head2 160000
----- a/sm1
--+++ b/sm1
--@@ -1 +1 @@
---Subproject commit $fullhead1
--+Subproject commit $fullhead2
--EOF
-+	diff --git a/sm1 b/sm1
-+	index $head1..$head2 160000
-+	--- a/sm1
-+	+++ b/sm1
-+	@@ -1 +1 @@
-+	-Subproject commit $fullhead1
-+	+Subproject commit $fullhead2
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- commit_file sm1 &&
- head3=$(
-@@ -135,29 +135,28 @@ head3=$(
- 	git rev-parse --short --verify HEAD
- )
- 
--test_expect_success 'modified submodule(backward)' "
-+test_expect_success 'modified submodule(backward)' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head2..$head3 (rewind):
--  < Add foo3
--  < Add foo2
--EOF
-+	Submodule sm1 $head2..$head3 (rewind):
-+	  < Add foo3
-+	  < Add foo2
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--head4=$(add_file sm1 foo4 foo5) &&
--head4_full=$(GIT_DIR=sm1/.git git rev-parse --verify HEAD)
--test_expect_success 'modified submodule(backward and forward)' "
-+head4=$(add_file sm1 foo4 foo5)
-+test_expect_success 'modified submodule(backward and forward)' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head2...$head4:
--  > Add foo5
--  > Add foo4
--  < Add foo3
--  < Add foo2
--EOF
-+	Submodule sm1 $head2...$head4:
-+	  > Add foo5
-+	  > Add foo4
-+	  < Add foo3
-+	  < Add foo2
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- commit_file sm1 &&
- mv sm1 sm1-bak &&
-@@ -167,319 +166,319 @@ git add sm1 &&
- rm -f sm1 &&
- mv sm1-bak sm1
- 
--test_expect_success 'typechanged submodule(submodule->blob), --cached' "
-+test_expect_success 'typechanged submodule(submodule->blob), --cached' '
- 	git diff --submodule=log --cached >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head4...0000000 (submodule deleted)
--diff --git a/sm1 b/sm1
--new file mode 100644
--index 0000000..$head5
----- /dev/null
--+++ b/sm1
--@@ -0,0 +1 @@
--+sm1
--EOF
-+	Submodule sm1 $head4...0000000 (submodule deleted)
-+	diff --git a/sm1 b/sm1
-+	new file mode 100644
-+	index 0000000..$head5
-+	--- /dev/null
-+	+++ b/sm1
-+	@@ -0,0 +1 @@
-+	+sm1
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'typechanged submodule(submodule->blob)' "
-+test_expect_success 'typechanged submodule(submodule->blob)' '
- 	git diff --submodule=log >actual &&
- 	cat >expected <<-EOF &&
--diff --git a/sm1 b/sm1
--deleted file mode 100644
--index $head5..0000000
----- a/sm1
--+++ /dev/null
--@@ -1 +0,0 @@
---sm1
--Submodule sm1 0000000...$head4 (new submodule)
--EOF
-+	diff --git a/sm1 b/sm1
-+	deleted file mode 100644
-+	index $head5..0000000
-+	--- a/sm1
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-sm1
-+	Submodule sm1 0000000...$head4 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- rm -rf sm1 &&
- git checkout-index sm1
--test_expect_success 'typechanged submodule(submodule->blob)' "
-+test_expect_success 'typechanged submodule(submodule->blob)' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head4...0000000 (submodule deleted)
--diff --git a/sm1 b/sm1
--new file mode 100644
--index 0000000..$head5
----- /dev/null
--+++ b/sm1
--@@ -0,0 +1 @@
--+sm1
--EOF
-+	Submodule sm1 $head4...0000000 (submodule deleted)
-+	diff --git a/sm1 b/sm1
-+	new file mode 100644
-+	index 0000000..$head5
-+	--- /dev/null
-+	+++ b/sm1
-+	@@ -0,0 +1 @@
-+	+sm1
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- rm -f sm1 &&
- test_create_repo sm1 &&
- head6=$(add_file sm1 foo6 foo7)
--test_expect_success 'nonexistent commit' "
- fullhead6=$(cd sm1; git rev-parse --verify $head6)
-+test_expect_success 'nonexistent commit' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head4...$head6 (commits not present)
--EOF
-+	Submodule sm1 $head4...$head6 (commits not present)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- commit_file
--test_expect_success 'typechanged submodule(blob->submodule)' "
-+test_expect_success 'typechanged submodule(blob->submodule)' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--diff --git a/sm1 b/sm1
--deleted file mode 100644
--index $head5..0000000
----- a/sm1
--+++ /dev/null
--@@ -1 +0,0 @@
---sm1
--Submodule sm1 0000000...$head6 (new submodule)
--EOF
-+	diff --git a/sm1 b/sm1
-+	deleted file mode 100644
-+	index $head5..0000000
-+	--- a/sm1
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-sm1
-+	Submodule sm1 0000000...$head6 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- commit_file sm1 &&
--test_expect_success 'submodule is up to date' "
-+test_expect_success 'submodule is up to date' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--EOF
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked content' "
-+test_expect_success 'submodule contains untracked content' '
- 	echo new > sm1/new-file &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains untracked content
--EOF
-+	Submodule sm1 contains untracked content
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked content (untracked ignored)' "
-+test_expect_success 'submodule contains untracked content (untracked ignored)' '
- 	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked content (dirty ignored)' "
-+test_expect_success 'submodule contains untracked content (dirty ignored)' '
- 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked content (all ignored)' "
-+test_expect_success 'submodule contains untracked content (all ignored)' '
- 	git diff-index -p --ignore-submodules=all --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked and modifed content' "
-+test_expect_success 'submodule contains untracked and modifed content' '
- 	echo new > sm1/foo6 &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains untracked content
--Submodule sm1 contains modified content
--EOF
-+	Submodule sm1 contains untracked content
-+	Submodule sm1 contains modified content
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked and modifed content (untracked ignored)' "
-+test_expect_success 'submodule contains untracked and modifed content (untracked ignored)' '
- 	echo new > sm1/foo6 &&
- 	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains modified content
--EOF
-+	Submodule sm1 contains modified content
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked and modifed content (dirty ignored)' "
-+test_expect_success 'submodule contains untracked and modifed content (dirty ignored)' '
- 	echo new > sm1/foo6 &&
- 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'submodule contains untracked and modifed content (all ignored)' "
-+test_expect_success 'submodule contains untracked and modifed content (all ignored)' '
- 	echo new > sm1/foo6 &&
- 	git diff-index -p --ignore-submodules --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'submodule contains modifed content' "
-+test_expect_success 'submodule contains modifed content' '
- 	rm -f sm1/new-file &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains modified content
--EOF
-+	Submodule sm1 contains modified content
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- (cd sm1; git commit -mchange foo6 >/dev/null) &&
--test_expect_success 'submodule is modified' "
- head8=$(cd sm1; git rev-parse --short --verify HEAD) &&
-+test_expect_success 'submodule is modified' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked content' "
-+test_expect_success 'modified submodule contains untracked content' '
- 	echo new > sm1/new-file &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains untracked content
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 contains untracked content
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked content (untracked ignored)' "
-+test_expect_success 'modified submodule contains untracked content (untracked ignored)' '
- 	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked content (dirty ignored)' "
-+test_expect_success 'modified submodule contains untracked content (dirty ignored)' '
- 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked content (all ignored)' "
-+test_expect_success 'modified submodule contains untracked content (all ignored)' '
- 	git diff-index -p --ignore-submodules=all --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked and modifed content' "
-+test_expect_success 'modified submodule contains untracked and modifed content' '
- 	echo modification >> sm1/foo6 &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains untracked content
--Submodule sm1 contains modified content
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 contains untracked content
-+	Submodule sm1 contains modified content
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked and modifed content (untracked ignored)' "
-+test_expect_success 'modified submodule contains untracked and modifed content (untracked ignored)' '
- 	echo modification >> sm1/foo6 &&
- 	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains modified content
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 contains modified content
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked and modifed content (dirty ignored)' "
-+test_expect_success 'modified submodule contains untracked and modifed content (dirty ignored)' '
- 	echo modification >> sm1/foo6 &&
- 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'modified submodule contains untracked and modifed content (all ignored)' "
-+test_expect_success 'modified submodule contains untracked and modifed content (all ignored)' '
- 	echo modification >> sm1/foo6 &&
- 	git diff-index -p --ignore-submodules --submodule=log HEAD >actual &&
- 	! test -s actual
--"
-+'
- 
--test_expect_success 'modified submodule contains modifed content' "
-+test_expect_success 'modified submodule contains modifed content' '
- 	rm -f sm1/new-file &&
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 contains modified content
--Submodule sm1 $head6..$head8:
--  > change
--EOF
-+	Submodule sm1 contains modified content
-+	Submodule sm1 $head6..$head8:
-+	  > change
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- rm -rf sm1
--test_expect_success 'deleted submodule' "
-+test_expect_success 'deleted submodule' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6...0000000 (submodule deleted)
--EOF
-+	Submodule sm1 $head6...0000000 (submodule deleted)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- test_create_repo sm2 &&
- head7=$(add_file sm2 foo8 foo9) &&
- git add sm2
- 
--test_expect_success 'multiple submodules' "
-+test_expect_success 'multiple submodules' '
- 	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6...0000000 (submodule deleted)
--Submodule sm2 0000000...$head7 (new submodule)
--EOF
-+	Submodule sm1 $head6...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head7 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'path filter' "
-+test_expect_success 'path filter' '
- 	git diff-index -p --submodule=log HEAD sm2 >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm2 0000000...$head7 (new submodule)
--EOF
-+	Submodule sm2 0000000...$head7 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- commit_file sm2
--test_expect_success 'given commit' "
-+test_expect_success 'given commit' '
- 	git diff-index -p --submodule=log HEAD^ >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6...0000000 (submodule deleted)
--Submodule sm2 0000000...$head7 (new submodule)
--EOF
-+	Submodule sm1 $head6...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head7 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
--test_expect_success 'given commit --submodule' "
-+test_expect_success 'given commit --submodule' '
- 	git diff-index -p --submodule HEAD^ >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6...0000000 (submodule deleted)
--Submodule sm2 0000000...$head7 (new submodule)
--EOF
-+	Submodule sm1 $head6...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head7 (new submodule)
-+	EOF
- 	test_cmp expected actual
--"
-+'
- 
- fullhead7=$(cd sm2; git rev-parse --verify $head7)
- 
--test_expect_success 'given commit --submodule=short' "
-+test_expect_success 'given commit --submodule=short' '
- 	git diff-index -p --submodule=short HEAD^ >actual &&
- 	cat >expected <<-EOF &&
--diff --git a/sm1 b/sm1
--deleted file mode 160000
--index $head6..0000000
----- a/sm1
--+++ /dev/null
--@@ -1 +0,0 @@
---Subproject commit $fullhead6
--diff --git a/sm2 b/sm2
--new file mode 160000
--index 0000000..$head7
----- /dev/null
--+++ b/sm2
--@@ -0,0 +1 @@
--+Subproject commit $fullhead7
--EOF
--	test_cmp expected actual
--"
-+	diff --git a/sm1 b/sm1
-+	deleted file mode 160000
-+	index $head6..0000000
-+	--- a/sm1
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-Subproject commit $fullhead6
-+	diff --git a/sm2 b/sm2
-+	new file mode 160000
-+	index 0000000..$head7
-+	--- /dev/null
-+	+++ b/sm2
-+	@@ -0,0 +1 @@
-+	+Subproject commit $fullhead7
-+	EOF
-+	test_cmp expected actual
-+'
- 
- test_expect_success 'setup .git file for sm2' '
- 	(cd sm2 &&
-@@ -491,9 +490,9 @@ test_expect_success 'setup .git file for sm2' '
- test_expect_success 'diff --submodule with .git file' '
- 	git diff --submodule HEAD^ >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 $head6...0000000 (submodule deleted)
--Submodule sm2 0000000...$head7 (new submodule)
--EOF
-+	Submodule sm1 $head6...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head7 (new submodule)
-+	EOF
- 	test_cmp expected actual
- '
- 
+% sudo pacman -S git-cola
+error: target not found: git-cola
+
+http://aur.archlinux.org/packages/gi/git-cola/git-cola.tar.gz
+% makepkg
+
+==> Missing Dependencies:
+  -> python2-pyqt>=4.3
+==> Checking buildtime dependencies...
+==> Missing Dependencies:
+  -> asciidoc
+  -> docbook-xsl
+  -> rsync
+  -> xmlto
+  -> python2-sphinx>=1.1.3
+
+Sorry, no.
+
+I'm not sure if you have been following, but msysgit doesn't seem to
+have good support for python, let alone Qt. In my view the fact that
+it uses python is not a good thing.
+
+> It's "modern" and has features that don't exist anywhere else.
+>
+> It even has tests.  It even comes with a building full of willing
+> guinea-pigs^Wtesters that let me know right away when
+> anything goes wrong.
+>
+> It uses Qt but that's really the whole point of Qt -> cross-platform.
+> (not sure how that wiki page ended up saying Gnome/GTK?)
+
+Yes, Qt is cross-platform *in theory*, but have you used any Qt
+application in Windows? I haven't.
+
+> The DAG aka git-dag (in its master branch, about to be released)
+> is nicer looking then gitk IMO.  gitk still has some features
+> that are better too--there's no silver bullet, but the delta
+> is pretty small.
+
+If you mean this one:
+http://1.1.1.5/bmi/git-cola.github.com/images/dag.png
+
+Then I wholeheartedly disagree.
+
+> The only point this doesn't fulfill is dependency-free-ness.
+> With that requirement the answer can *only* be tcl/tk.
+> So saying, "go look for one you won't find it" is really
+> a tautology.  It's not even an entertaining one.
+
+That's the whole point; there is nothing else. If there was something
+else, there would be something else. But there isn't.
+
+> When the requirement is, "what is the best user experience
+> possible", then you use a mature GUI library.  These are different
+> requirements and probably different use cases.
+
+But those are not the requirements.
+
+> Anyways, just sayin', you make it sound like this stuff doesn't
+> exist, but it does.  I've never proposed it for mainline
+> git because I'm very aware of the dependency requirements.
+
+A lot of stuff exists. And people use a lot of those. But they don't
+fulfill the requirements that I think gitk does perfectly.
+
+> But, if git "recommended" it I would very much appreciate the
+> extra eyes and contributions.  Being in mainline git could
+> possibly help with that.  A submodule under contrib/
+> would be an interesting experiment.
+
+It might be, if somebody actually tried to submit the code. But I
+honestly doubt so.
+
+> In any case, I think documenting the python standards
+> (even if within contrib/ only) is a good thing.
+>
+> We'd be increasing the overall portability by documenting
+> what we support and sticking to it, just
+> like what is done for shell scripts and perl versions.
+> Eric is helping make that happen, let's not  throw
+> out the baby with the bathwater.  FWIW, I would also make
+> my python expertise available.
+
+Nobody has argued that there shouldn't be guidelines for python code.
+What I have objected is to 'strict rules'.
+
+> This thread has gotten into meta-meta territory --
+> it's discussing code that has not yet even been written,
+> and going off on all sorts of tangents.
+
+That is the point; why should we change the policy for code that
+hasn't been written yet? That's not how things evolve in git as far as
+I have seen.
+
+> BTW, Felipe, if you're going to be rewriting python code to ruby,
+> please, pretty please rewrite that darn GUI ;-)
+
+I would need to write a widget toolkit first =/ I think I'll pass. gitk is fine.
+
+Cheers.
+
 -- 
-1.7.8.1.362.g5d6df.dirty
+Felipe Contreras
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
