@@ -1,120 +1,100 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH 6/6] git-remote-helpers.txt: clarify ref list attributes, link to subsections
-Date: Wed, 28 Nov 2012 00:06:34 +0100
-Message-ID: <67C20CB2-BFCC-483A-A564-D9978C792CD6@quendi.de>
-References: <1354057407-83151-1-git-send-email-max@quendi.de> <1354057407-83151-8-git-send-email-max@quendi.de>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:06:52 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: Possible vulnerability to SHA-1 collisions
+Date: Tue, 27 Nov 2012 18:07:53 -0500
+Message-ID: <20121127230753.GA22730@sigill.intra.peff.net>
+References: <50B0AB9C.2040802@caltech.edu>
+ <CAJo=hJsZdduMdSbN+3Ei-7vx3_Q7tO88LywWj5Vw3Ngs0QgsZg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Hirshleifer <111mth@caltech.edu>, git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:08:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdUEt-0007B9-GC
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 00:06:51 +0100
+	id 1TdUGK-0008Qo-UW
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 00:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355Ab2K0XGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 18:06:36 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:54156 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753035Ab2K0XGg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 18:06:36 -0500
-Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=[192.168.178.27]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TdUEd-0002uj-3V; Wed, 28 Nov 2012 00:06:35 +0100
-In-Reply-To: <1354057407-83151-8-git-send-email-max@quendi.de>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1354057596;2824790d;
+	id S1755641Ab2K0XH5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2012 18:07:57 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58707 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753217Ab2K0XHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 18:07:55 -0500
+Received: (qmail 29543 invoked by uid 107); 27 Nov 2012 23:08:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Nov 2012 18:08:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Nov 2012 18:07:53 -0500
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJsZdduMdSbN+3Ei-7vx3_Q7tO88LywWj5Vw3Ngs0QgsZg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210622>
 
-Ouch. This one should *not* have been sent (the "[PATCH v2 6/6]" one is the correct one). Very sorry :(. I'll triple check next time.
-Max
+On Sat, Nov 24, 2012 at 10:09:31AM -0800, Shawn O. Pearce wrote:
 
-On 28.11.2012, at 00:03, Max Horn wrote:
+> On Sat, Nov 24, 2012 at 3:12 AM, Michael Hirshleifer <111mth@caltech.=
+edu> wrote:
+> > Evil Guy creates 2 files, 1 evil and 1 innocuous, with the same SHA=
+-1
+> > checksum (including Git header). Mr. Evil creates a local branch wi=
+th an
+> > innocuous name like =E2=80=9Ctest-bugfix=E2=80=9D, and adds a commi=
+t containing a reference
+> > to the evil file. Separately, using a sockpuppet, Evil Guy creates =
+an
+> > innocuous bugfix (very likely to be accepted) containing the innocu=
+ous file,
+> > and submits it to Good Guy. Before Good Guy can commit the bugfix, =
+Evil Guy
+> > pushes the evil branch to Github, and then immediately deletes it; =
+or
+> > equivalently --force pushes any innocuous commit on top of it. (Thi=
+s is
+> > unlikely to arouse suspicion, and he can always say he deleted it b=
+ecause it
+> > didn=E2=80=99t work.)
+>=20
+> Here you assume Evil Guy has write access to the same repository as
+> Good Guy. Lets assume this is possible, e.g. Evil Guy is actually
+> impersonating White Hat because he managed to steal White Hat's
+> credentials through a compromised host. Typically Evil Guy doesn't
+> have write access to Good Guy's repository, and thus can't introduce
+> objects into it without Good Guy being the one that creates the
+> objects.
+>=20
+> But lets just keep he assumption that Evil Guy can write to the same
+> repository as Good Guy, and that he managed to create the bad branch
+> and delete it, leaving the bad object in an unreachable state for 2
+> weeks.
 
-> The documentation was misleading in that it gave the impression that
-> 'for-push' could be used as a ref attribute in the output of the
-> 'list' command. That is wrong.
-> 
-> Also, explicitly point out the connection between the commands
-> 'list' and 'options' on the one hand, and the sections
-> 'REF LIST ATTRIBUTES' and 'OPTIONS' on the other hand.
-> 
-> Signed-off-by: Max Horn <max@quendi.de>
-> ---
-> Documentation/git-remote-helpers.txt | 17 ++++++++++++-----
-> 1 file changed, 12 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-> index 023dcca..e1df01d 100644
-> --- a/Documentation/git-remote-helpers.txt
-> +++ b/Documentation/git-remote-helpers.txt
-> @@ -227,6 +227,8 @@ Support for this command is mandatory.
-> 	the name; unrecognized attributes are ignored. The list ends
-> 	with a blank line.
-> +
-> +See REF LIST ATTRIBUTES for a list of currently defined options.
-> ++
-> Supported if the helper has the "fetch" or "import" capability.
-> 
-> 'list for-push'::
-> @@ -248,6 +250,8 @@ Supported if the helper has the "push" or "export" capability.
-> 	for it).  Options should be set before other commands,
-> 	and may influence the behavior of those commands.
-> +
-> +See OPTIONS for a list of currently defined options.
-> ++
-> Supported if the helper has the "option" capability.
-> 
-> 'fetch' <sha1> <name>::
-> @@ -256,7 +260,7 @@ Supported if the helper has the "option" capability.
-> 	per line, terminated with a blank line.
-> 	Outputs a single blank line when all fetch commands in the
-> 	same batch are complete. Only objects which were reported
-> -	in the ref list with a sha1 may be fetched this way.
-> +	in the output of 'list' with a sha1 may be fetched this way.
-> +
-> Optionally may output a 'lock <file>' line indicating a file under
-> GIT_DIR/objects/pack which is keeping a pack until refs can be
-> @@ -360,10 +364,9 @@ capabilities reported by the helper.
-> REF LIST ATTRIBUTES
-> -------------------
-> 
-> -'for-push'::
-> -	The caller wants to use the ref list to prepare push
-> -	commands.  A helper might chose to acquire the ref list by
-> -	opening a different type of connection to the destination.
-> +The 'list' command produces a list of refs in which each ref
-> +may be followed by a list of attributes. The following ref list
-> +attributes are defined.
-> 
-> 'unchanged'::
-> 	This ref is unchanged since the last import or fetch, although
-> @@ -371,6 +374,10 @@ REF LIST ATTRIBUTES
-> 
-> OPTIONS
-> -------
-> +
-> +The following options are defined and (under suitable circumstances)
-> +set by git if the remote helper has the 'option' capability.
-> +
-> 'option verbosity' <n>::
-> 	Changes the verbosity of messages displayed by the helper.
-> 	A value of 0 for <n> means that processes operate
-> -- 
-> 1.8.0.393.gcc9701d
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Actually, it is somewhat easier on GitHub, because we share objects
+between forks of a repository via the alternates mechanism. So if you
+can publicly fork the project and push a branch to your fork, you can
+write to the shared object database. This applies not just to GitHub,
+but to any hosting service which shares object databases between
+projects (I do not know offhand if other hosting providers like Google
+Code do this).
+
+But as you noted later in your email, the byte-for-byte comparison on
+object collision will let us detect this case when the good guy tries t=
+o
+push and abort.
+
+-Peff
+
+PS I also think the OP's "sockpuppet creates innocuous bugfix" above is
+   easier said than done. We do not have SHA-1 collisions yet, but if
+   the md5 attacks are any indication, the innocuous file will not be
+   completely clean; it will need to have some embedded binary goo that
+   is mutated randomly during the collision process (which is why the
+   md5 attacks were demonstrated with postscript files which _rendered_
+   to look good, but contained a chunk of random bytes in a spot ignore=
+d
+   by the postscript interpreter).
