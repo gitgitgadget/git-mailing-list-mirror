@@ -1,113 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-push.txt: fix typo in remote tracking
- branch path
-Date: Mon, 26 Nov 2012 17:30:02 -0800
-Message-ID: <7vy5hnomsl.fsf@alter.siamese.dyndns.org>
-References: <1353977748-17110-1-git-send-email-bcasey@nvidia.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: gitpacker progress report and a question
+Date: Tue, 27 Nov 2012 02:38:24 +0100
+Message-ID: <CAMP44s29Ns2ea9f8ozr+W-eKAv=Q8f8d30t9zrfXfV7Jf5ZpFw@mail.gmail.com>
+References: <20121115212818.GA21558@thyrsus.com>
+	<CAMP44s30px2FgieC9VcGji7T+yWFo7gMSwQhtuztHrqto8B7Aw@mail.gmail.com>
+	<20121126220108.GB1713@thyrsus.com>
+	<CAMP44s2+NDyL2Vf=iKR09f-YUnp=G2BCiYj-+qKuP7JA-+YkmQ@mail.gmail.com>
+	<20121126234359.GA8042@thyrsus.com>
+	<CAMP44s3HAzSPsrGwcpQpx_3n2aHK5wm++_7_Cbk3qRWMkxDh6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <bcasey@nvidia.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 02:30:29 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Tue Nov 27 02:38:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdA0J-0004kM-6l
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 02:30:27 +0100
+	id 1TdA8F-0000hr-V1
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 02:38:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757746Ab2K0BaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 20:30:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63370 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755935Ab2K0BaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 20:30:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76AC1A2A6;
-	Mon, 26 Nov 2012 20:30:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ax5/aW/y44Xafi5sw7ZDyzdW8Uo=; b=C8wgQe
-	0ujxZCsB1N6ghkx/Hhnta4yxgXAwnhbUnWHYlnYYABVzdL/ROzakNjyYVb0cyhyh
-	eG3Dus8CrEj/FvEnfgMsDD2uB3gXT64EkgDnUB2BKEuTJX5iI3G+qRAdQ88P3XKp
-	bkadZXhOHtJh6Do5cT+JObwuIU/y8ySESBLuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=th9Uum8LkkfEY9kmZNOSnTVc9ZJQs927
-	Q5l85uR6Azk5qFPR1H1lhGrpWZbDRQQUjq2TaDwwBzRFXcvw6iwiWFHsjykqgYGi
-	obQGPVcfW69MWB3dS8kj2yGz9E+PEoufmnpSY7XimhZL47imnSOXHO6+aoPuafJJ
-	9nIxgHLvKeI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4ECD0A2A5;
-	Mon, 26 Nov 2012 20:30:05 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 83B54A2A3; Mon, 26 Nov 2012
- 20:30:04 -0500 (EST)
-In-Reply-To: <1353977748-17110-1-git-send-email-bcasey@nvidia.com> (Brandon
- Casey's message of "Mon, 26 Nov 2012 16:55:48 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F856AC52-3831-11E2-A6B3-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757804Ab2K0BiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 20:38:25 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:65362 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757724Ab2K0BiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 20:38:24 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so11899875oag.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 17:38:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gaQTl7FJm/UqQbM+0Qwa4w3K8FGlX4NA0igf92UAv1A=;
+        b=QlVunXCHZunBJ9brM+Fa8Qn+MMrYoswOCuMNlRvIzv9/Wl41N1LC6Ky/nRysVvPUgr
+         FuZAlVewsFgXRTpN4umIKOj4MQcQOt/b1IbYZLIa7eSIneCDYe9E/54VkvNFq3GQGHns
+         IIM9GCO1YaqzeQzzdL1/8reaCM+UDAn95m1o0EPRzKXYc7n+0tZT9tEm+M+n40ufg2me
+         CVmQE58S5oW51Ytd/Fs+N5Gf8pZr1zcD+Cp2XBNXJWeX0klCTP6ld+Vf+lyvYIEceKWl
+         u9wG/vAq5RMyBnZj+jXOqA4z/BW4SPFZumZafpmBxTBchxvVV7xtpMHyP6SdFKsmCAb3
+         ApKw==
+Received: by 10.60.28.132 with SMTP id b4mr5389761oeh.41.1353980304181; Mon,
+ 26 Nov 2012 17:38:24 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Mon, 26 Nov 2012 17:38:24 -0800 (PST)
+In-Reply-To: <CAMP44s3HAzSPsrGwcpQpx_3n2aHK5wm++_7_Cbk3qRWMkxDh6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210524>
 
-Brandon Casey <bcasey@nvidia.com> writes:
+On Tue, Nov 27, 2012 at 2:29 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 
-> From: Brandon Casey <drafnel@gmail.com>
->
-> This example in the documentation seems to be trying to describe the likely
-> remote tracking branch that will be updated by a push to the "origin" remote
-> with the destination branch 'satellite/master', but it forgot to specify
-> the remote name in the path specification.
->
-> So,
->
->    refs/remotes/satellite/master
->
-> should be spelled like
->
->    refs/remotes/origin/satellite/master
+Actually no, they are not exactly the same, your version has a bug
+when dealing with spaces in a commit message (which pretty much all
+proper multi-line commit messages have).
 
-I might make sense to rename 'origin' to 'mothership' in that
-example and explain that this is emulating 'git fetch' run on the
-mothership to integrate the work done on 'satellite' using 'git
-push' in the opposite direction, which is often necessary when you
-can only make connection in one way (i.e. satellite can ssh into
-mothership but mothership cannot initiate connection to satellite
-because the latter is behind a firewall or does not run sshd).
-
-If you were to run 'git fetch' on the mothership to intgrate the
-work on the 'satellite', it would have a remote called 'satellite',
-and would keep remote-tracking branches for the branches local to
-'satellite' in the 'refs/remotes/satellite/' hierarchy.  You would
-push your local 'master' to their 'refs/remotes/satellite/master',
-to emulate 'git fetch' done on the mothership in the reverse
-direction.
-
-So refs are correct. The context is not sufficiently explained.
-
+> == spaces ==
+> with
+> spaces
 >
-> Signed-off-by: Brandon Casey <bcasey@nvidia.com>
-> ---
->  Documentation/git-push.txt |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
+
+Mine doesn't:
+
+> == spaces ==
+> with
 >
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index fe46c42..a18f929 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -387,8 +387,8 @@ the ones in the examples below) can be configured as the default for
->  `git push origin master:satellite/master dev:satellite/dev`::
->  	Use the source ref that matches `master` (e.g. `refs/heads/master`)
->  	to update the ref that matches `satellite/master` (most probably
-> -	`refs/remotes/satellite/master`) in the `origin` repository, then
-> -	do the same for `dev` and `satellite/dev`.
-> +	`refs/remotes/origin/satellite/master`) in the `origin` repository,
-> +	then do the same for `dev` and `satellite/dev`.
->  
->  `git push origin HEAD:master`::
->  	Push the current branch to the remote ref matching `master` in the
+> spaces
+>
+
+-- 
+Felipe Contreras
