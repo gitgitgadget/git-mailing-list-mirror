@@ -1,104 +1,97 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 0.5/4] t4041 (diff-submodule-option): don't hardcode SHA-1 in
- expected outputs
-Date: Tue, 27 Nov 2012 14:36:25 +0530
-Message-ID: <CALkWK0=0SfOuKRZvgt=BOBsKTXtaO5Y7-wAWK4XftE_aY9idyA@mail.gmail.com>
+Subject: Re: [PATCH 0.5/4] t4041 (diff-submodule-option): don't hardcode SHA-1
+ in expected outputs
+Date: Tue, 27 Nov 2012 14:42:03 +0530
+Message-ID: <CALkWK0=-zCJnsmoOSJWKnK7fGVwq+yFi47VKotH37GurgxzvCw@mail.gmail.com>
+References: <CALkWK0=0SfOuKRZvgt=BOBsKTXtaO5Y7-wAWK4XftE_aY9idyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; boundary=bcaec550a988aef7b004cf76725b
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 10:07:05 2012
+X-From: git-owner@vger.kernel.org Tue Nov 27 10:12:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdH8C-0004vX-GH
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 10:07:04 +0100
+	id 1TdHDe-0000V4-PF
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 10:12:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758468Ab2K0JGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 04:06:48 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:32965 "EHLO
+	id S1758527Ab2K0JM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 04:12:26 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:38208 "EHLO
 	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758339Ab2K0JGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 04:06:46 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so12227600oag.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 01:06:45 -0800 (PST)
+	with ESMTP id S1758478Ab2K0JMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 04:12:24 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so12230170oag.19
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 01:12:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=2XND7B/ci5gzRgQ0km5MlbqLpLohT0nQomK+LfIQrCw=;
-        b=u3ysnyiYLpvetJWEqf6HgSa9SYp6/qNSt5hH7Mf8m0qcoGmqZKEYkBjMWMSVsV6B3u
-         Y04XrSIeCrJKr9mYd/tsDRIiPghmSGkVymIdvkWXKTYGeLDtC90nSUPhiVFduqjerpay
-         VLKJXzWv6Fx15J9UJfQx9ocCiMPNp28CdAU04e2OfUdhhL1kxlXfurIgv8WVTtme3BKL
-         JBTwyw94pXtXQ/5YBK8GzehI2wOHLlwHw3Ub2Qznj4CDoaJnpt0mcU3/Do3UlyK23dbz
-         kVqxzVn2raqUGZlB7CPUhK7ITCnGRGwk9iVzh6d1fsEXSzwwMAK6eVa7NX1d+HDnQnPL
-         fZ/Q==
-Received: by 10.60.169.243 with SMTP id ah19mr11847017oec.127.1354007205651;
- Tue, 27 Nov 2012 01:06:45 -0800 (PST)
-Received: by 10.76.168.40 with HTTP; Tue, 27 Nov 2012 01:06:25 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=a8szG2geiiQqrp5BLqWUq2PXP3GUbUzuDxWL8vQgjxI=;
+        b=LwY1CdOrcVkylA32sS00CYqv7wwC6R5JJR+1qa3x2uLGGvEKgEn1i9wUqcCCJKg8F8
+         w0fK/fzaSa8qKN0mySbif2R7kc7KQwVtdpSBSa8mSgeM6KYJxGHrEmEEWmQzE7JcWxRA
+         zSu7i0DPGijh6tet1R71VYbBCr4EECqBpTfD3Q/Cfrkf/smgk+n4PlNaRdD4yf7Cc8Wz
+         NBKdgJrzOLxFoUrEtiRRMwcBkLrc56YiO8tDPU6Z7O3p32WNIFbgR05aWUGDfAOurWU7
+         7fvW1vFW4LsB4qNsS1XUIsQHPONfBqcX+wvRBP8gllO8gwlTrPbXzzBowwFuCE0i7WLF
+         b//g==
+Received: by 10.60.171.201 with SMTP id aw9mr11718988oec.126.1354007544002;
+ Tue, 27 Nov 2012 01:12:24 -0800 (PST)
+Received: by 10.76.168.40 with HTTP; Tue, 27 Nov 2012 01:12:03 -0800 (PST)
+In-Reply-To: <CALkWK0=0SfOuKRZvgt=BOBsKTXtaO5Y7-wAWK4XftE_aY9idyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210552>
 
-The expected SHA-1 digests are always available in variables.  Use
-them instead of hardcoding.
+--bcaec550a988aef7b004cf76725b
+Content-Type: text/plain; charset=UTF-8
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Oops, I forgot to send this part.  It comes before part 1, and it's
-essential to make tests pass.
+Ugh, line wrapping breaks my patch.  I've attached a copy.
 
- t/t4041-diff-submodule-option.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Ram
 
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 57e8a9d..5377639 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -62,7 +62,7 @@ test_expect_success '--submodule=short overrides
-diff.submodule' "
- 	cat >expected <<-EOF &&
- diff --git a/sm1 b/sm1
- new file mode 160000
--index 0000000..a2c4dab
-+index 0000000..$head1
- --- /dev/null
- +++ b/sm1
- @@ -0,0 +1 @@
-@@ -77,7 +77,7 @@ test_expect_success 'diff.submodule does not affect
-plumbing' '
- 	cat >expected <<-EOF &&
- 	diff --git a/sm1 b/sm1
- 	new file mode 160000
--	index 0000000..a2c4dab
-+	index 0000000..$head1
- 	--- /dev/null
- 	+++ b/sm1
- 	@@ -0,0 +1 @@
-@@ -173,10 +173,10 @@ mv sm1-bak sm1
- test_expect_success 'typechanged submodule(submodule->blob), --cached' "
- 	git diff --submodule=log --cached >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 41fbea9...0000000 (submodule deleted)
-+Submodule sm1 $head4...0000000 (submodule deleted)
- diff --git a/sm1 b/sm1
- new file mode 100644
--index 0000000..9da5fb8
-+index 0000000..$head5
- --- /dev/null
- +++ b/sm1
- @@ -0,0 +1 @@
-@@ -190,7 +190,7 @@ test_expect_success 'typechanged
-submodule(submodule->blob)' "
- 	cat >expected <<-EOF &&
- diff --git a/sm1 b/sm1
- deleted file mode 100644
--index 9da5fb8..0000000
-+index $head5..0000000
- --- a/sm1
- +++ /dev/null
- @@ -1 +0,0 @@
--- 
-1.7.12.1.428.g652398a.dirty
+--bcaec550a988aef7b004cf76725b
+Content-Type: application/octet-stream; 
+	name="0001-t4041-diff-submodule-option-don-t-hardcode-SHA-1-in-.patch"
+Content-Disposition: attachment; 
+	filename="0001-t4041-diff-submodule-option-don-t-hardcode-SHA-1-in-.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ha0t3a3v0
+
+RnJvbSA5MGJjNzViNzhhNmRkNWU1OWQyMDU1YjA1YzA2NTQ0N2JmMDUxYmI2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwu
+Y29tPgpEYXRlOiBNb24sIDI2IE5vdiAyMDEyIDE5OjI0OjI4ICswNTMwClN1YmplY3Q6IFtQQVRD
+SF0gdDQwNDEgKGRpZmYtc3VibW9kdWxlLW9wdGlvbik6IGRvbid0IGhhcmRjb2RlIFNIQS0xIGlu
+CiBleHBlY3RlZCBvdXRwdXRzCgpUaGUgZXhwZWN0ZWQgU0hBLTEgZGlnZXN0cyBhcmUgYWx3YXlz
+IGF2YWlsYWJsZSBpbiB2YXJpYWJsZXMuICBVc2UKdGhlbSBpbnN0ZWFkIG9mIGhhcmRjb2Rpbmcu
+CgpTaWduZWQtb2ZmLWJ5OiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwuY29t
+PgotLS0KIHQvdDQwNDEtZGlmZi1zdWJtb2R1bGUtb3B0aW9uLnNoIHwgMTAgKysrKystLS0tLQog
+MSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
+aXQgYS90L3Q0MDQxLWRpZmYtc3VibW9kdWxlLW9wdGlvbi5zaCBiL3QvdDQwNDEtZGlmZi1zdWJt
+b2R1bGUtb3B0aW9uLnNoCmluZGV4IDU3ZThhOWQuLjUzNzc2MzkgMTAwNzU1Ci0tLSBhL3QvdDQw
+NDEtZGlmZi1zdWJtb2R1bGUtb3B0aW9uLnNoCisrKyBiL3QvdDQwNDEtZGlmZi1zdWJtb2R1bGUt
+b3B0aW9uLnNoCkBAIC02Miw3ICs2Miw3IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJy0tc3VibW9k
+dWxlPXNob3J0IG92ZXJyaWRlcyBkaWZmLnN1Ym1vZHVsZScgIgogCWNhdCA+ZXhwZWN0ZWQgPDwt
+RU9GICYmCiBkaWZmIC0tZ2l0IGEvc20xIGIvc20xCiBuZXcgZmlsZSBtb2RlIDE2MDAwMAotaW5k
+ZXggMDAwMDAwMC4uYTJjNGRhYgoraW5kZXggMDAwMDAwMC4uJGhlYWQxCiAtLS0gL2Rldi9udWxs
+CiArKysgYi9zbTEKIEBAIC0wLDAgKzEgQEAKQEAgLTc3LDcgKzc3LDcgQEAgdGVzdF9leHBlY3Rf
+c3VjY2VzcyAnZGlmZi5zdWJtb2R1bGUgZG9lcyBub3QgYWZmZWN0IHBsdW1iaW5nJyAnCiAJY2F0
+ID5leHBlY3RlZCA8PC1FT0YgJiYKIAlkaWZmIC0tZ2l0IGEvc20xIGIvc20xCiAJbmV3IGZpbGUg
+bW9kZSAxNjAwMDAKLQlpbmRleCAwMDAwMDAwLi5hMmM0ZGFiCisJaW5kZXggMDAwMDAwMC4uJGhl
+YWQxCiAJLS0tIC9kZXYvbnVsbAogCSsrKyBiL3NtMQogCUBAIC0wLDAgKzEgQEAKQEAgLTE3Mywx
+MCArMTczLDEwIEBAIG12IHNtMS1iYWsgc20xCiB0ZXN0X2V4cGVjdF9zdWNjZXNzICd0eXBlY2hh
+bmdlZCBzdWJtb2R1bGUoc3VibW9kdWxlLT5ibG9iKSwgLS1jYWNoZWQnICIKIAlnaXQgZGlmZiAt
+LXN1Ym1vZHVsZT1sb2cgLS1jYWNoZWQgPmFjdHVhbCAmJgogCWNhdCA+ZXhwZWN0ZWQgPDwtRU9G
+ICYmCi1TdWJtb2R1bGUgc20xIDQxZmJlYTkuLi4wMDAwMDAwIChzdWJtb2R1bGUgZGVsZXRlZCkK
+K1N1Ym1vZHVsZSBzbTEgJGhlYWQ0Li4uMDAwMDAwMCAoc3VibW9kdWxlIGRlbGV0ZWQpCiBkaWZm
+IC0tZ2l0IGEvc20xIGIvc20xCiBuZXcgZmlsZSBtb2RlIDEwMDY0NAotaW5kZXggMDAwMDAwMC4u
+OWRhNWZiOAoraW5kZXggMDAwMDAwMC4uJGhlYWQ1CiAtLS0gL2Rldi9udWxsCiArKysgYi9zbTEK
+IEBAIC0wLDAgKzEgQEAKQEAgLTE5MCw3ICsxOTAsNyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICd0
+eXBlY2hhbmdlZCBzdWJtb2R1bGUoc3VibW9kdWxlLT5ibG9iKScgIgogCWNhdCA+ZXhwZWN0ZWQg
+PDwtRU9GICYmCiBkaWZmIC0tZ2l0IGEvc20xIGIvc20xCiBkZWxldGVkIGZpbGUgbW9kZSAxMDA2
+NDQKLWluZGV4IDlkYTVmYjguLjAwMDAwMDAKK2luZGV4ICRoZWFkNS4uMDAwMDAwMAogLS0tIGEv
+c20xCiArKysgL2Rldi9udWxsCiBAQCAtMSArMCwwIEBACi0tIAoxLjcuMTIuMS40MjguZzY1MjM5
+OGEuZGlydHkKCg==
+--bcaec550a988aef7b004cf76725b--
