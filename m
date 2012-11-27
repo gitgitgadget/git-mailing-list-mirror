@@ -1,109 +1,103 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Tue, 27 Nov 2012 09:35:11 -0500
-Message-ID: <20121127143510.GA15831@google.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
- <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
- <50B1F684.5020805@alum.mit.edu>
- <CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: Python extension commands in git - request for
+ policy change
+Date: Tue, 27 Nov 2012 16:33:35 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1211271632030.7256@s15462909.onlinehome-server.info>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com> <CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com> <20121125051809.GA3670@thyrsus.com> <CAMP44s0r1J=aOuEpKQ1+ew9FzODwLX-w5z9rG-WN6AjU0o97yw@mail.gmail.com> <20121125095429.GB22279@thyrsus.com>
+ <CAMP44s1cG=5D9DppHmB9CpgkgdEzM72KhQ1Q-kWrrDo8ST+r_g@mail.gmail.com> <20121125175051.GD32394@thyrsus.com> <CAMP44s3QNG-sxcZsWmL3RYjXkzOwerj2774t7Abh04A7QR6TCA@mail.gmail.com> <20121125215635.GA6937@thyrsus.com> <CAMP44s2FcrjDhNzond=Rzmn5QOBnZbQC1d73ZmKNeyCRvJNvyA@mail.gmail.com>
+ <CAJDDKr4cr3VXqx=CXgXSQrVTSjE=f=55HZns-xfNziJOXb3Vsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 15:35:32 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, esr@thyrsus.com, 
+    Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org, 
+    msysGit <msysgit@googlegroups.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBUV22OCQKGQEFFRZPFQ@googlegroups.com Tue Nov 27 16:33:53 2012
+Return-path: <msysgit+bncBCZPH74Q5YNRBUV22OCQKGQEFFRZPFQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ye0-f186.google.com ([209.85.213.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdMG3-0003je-CU
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 15:35:31 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382Ab2K0OfO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2012 09:35:14 -0500
-Received: from mail-gh0-f202.google.com ([209.85.160.202]:63361 "EHLO
-	mail-gh0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752712Ab2K0OfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 09:35:12 -0500
-Received: by mail-gh0-f202.google.com with SMTP id z10so1203055ghb.1
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 06:35:11 -0800 (PST)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBUV22OCQKGQEFFRZPFQ@googlegroups.com>)
+	id 1TdNAU-0000Cs-9Q
+	for gcvm-msysgit@m.gmane.org; Tue, 27 Nov 2012 16:33:50 +0100
+Received: by mail-ye0-f186.google.com with SMTP id m9sf3390569yen.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 27 Nov 2012 07:33:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=PZZYgK7wlJ5SxYfR5wllf+rHr/TRO1tTR/4ohwjFFqI=;
-        b=GcCreTtzKvHWBYB1iRsTUpI2kCAzcPRn2Gf/TZAtDbkCOaEX7UZ6ZdqrPqJBZ6OFNH
-         YctmMZuQcb+tU6KV3ZEttTlCqycHryg62VL+SpFQ0fjE2yMyiftDJXeBN+qyZX6EsotR
-         q93XNSJxZ7u9jWmqxGDL3gJiZTye5zrn4KvBd5DhqVqCp4G6tbCX8Dic1MKleQAYDnI0
-         vBjfEOX1ENYes6XHdAw1WCnkHxFlSNg9zVywXb5/vGOFwtj98h3CJecbUDplvxWGDFRc
-         Ga33yotPTPSN4GXj0cpkV4tnIo4rckGGVw80XK710LJsdKGMrAUoVztEqmluO9iXIvPo
-         ysbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent:x-gm-message-state;
-        bh=PZZYgK7wlJ5SxYfR5wllf+rHr/TRO1tTR/4ohwjFFqI=;
-        b=cSNn7c4u4Yc280DIqT6vDFWPxdo9VhZ/QmQ3hzi6h2ZixXhYLsCrGCB8nTLxGB2DQ/
-         Mq0HSEoWM6xfoN25lrIT2/8vPQcyuBY1Ixq3GvN9uf93Op11sw9rrGQUkDcBzX6KLkCi
-         3eJO4rzVAjZhfdo1XdWqbXPqllAkjWyVJH1CgLagDE5icPy6vlvFEQNOma9HLX1O4IEV
-         zuESIO0biU2pCB1xgY5BR6aLoIwDBLfKnvVzFYCW0xPIt7arH1/+Mb5V7Ofhb+kfJcKE
-         8nGnI6YF9ZVfApV6XgEcLb3Xj8fKCoOImXyo7WFH07Yde4MWZ2CdOQA1VGxZORPmPsLR
-         nieg==
-Received: by 10.236.48.99 with SMTP id u63mr9968785yhb.46.1354026911754;
-        Tue, 27 Nov 2012 06:35:11 -0800 (PST)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id r10si711125ann.1.2012.11.27.06.35.11
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Tue, 27 Nov 2012 06:35:11 -0800 (PST)
-Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id AD32C82004A;
-	Tue, 27 Nov 2012 06:35:11 -0800 (PST)
-Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
-	id 51E7060FFE; Tue, 27 Nov 2012 09:35:11 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Gm-Message-State: ALoCoQlVGdpOOKw0w1sDGTl9t+R0thKOfAW8nnE7srv4OuqXEg6jYhHBHVuchVoja03v0ebbP+tGFB88C8HdynC5SByqN3/R7sh9cclotwHti/3Xzs34uZtRJjnN4Jx7A4aSISAASOY5qExq1mPOPMbYXo3UdlZsS+2cA4kK9TDktuH8aaNBk7DbE2pazhRftuecXMFA575C
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210560>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:x-authenticated:x-provags-id:date:from
+         :x-x-sender:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-y-gmx-trusted:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=BGs4SU8kwELT01J3+HR3yxSxwqb2Njpn5sBr5QCpGuk=;
+        b=SQSzm+JQoX9WxhAfpYi5S8O2YW1dLikSZZ0lGcVYp/U7QuBoNTxoJbWc4pipYAN8xE
+         40PtyNUoWfPEyTzy5ubTM+j7zjxP+NH94Z2KnbpRLChsBh11cs877+99TFK+At2qJc1T
+         y/JDgIjr1gQxyMMrj801Ld/ZamAeKj+bi6xu2Z7UxcMRUzOoynI+enrv4a05qxyIUR9f
+         9virxI3rwHKJyIBKAMBXM/SzFIicqgZUmSn+wXPE5wObu3JPQ1ldw593Miedt2ViCPJC
+         ytHn4wveIhc64CnOoG 
+Received: by 10.49.116.1 with SMTP id js1mr3334763qeb.19.1354030419180;
+        Tue, 27 Nov 2012 07:33:39 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.50.201 with SMTP id e9ls938860qeo.39.gmail; Tue, 27 Nov
+ 2012 07:33:38 -0800 (PST)
+Received: by 10.100.83.14 with SMTP id g14mr2705672anb.22.1354030418434;
+        Tue, 27 Nov 2012 07:33:38 -0800 (PST)
+Received: by 10.100.83.14 with SMTP id g14mr2705671anb.22.1354030418418;
+        Tue, 27 Nov 2012 07:33:38 -0800 (PST)
+Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.22])
+        by gmr-mx.google.com with SMTP id i27si1316332yhb.0.2012.11.27.07.33.37;
+        Tue, 27 Nov 2012 07:33:38 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted sender) client-ip=213.165.64.22;
+Received: (qmail invoked by alias); 27 Nov 2012 15:33:37 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp004) with SMTP; 27 Nov 2012 16:33:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/5vXlhJB75GbY3islyEh9FE8Kxk1Kb1K+KOTd7lc
+	M+StQRbd3824+U
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAJDDKr4cr3VXqx=CXgXSQrVTSjE=f=55HZns-xfNziJOXb3Vsw@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted
+ sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210561>
 
-On Sunday, November 25, 2012 at 06:40 EST,
-     Felipe Contreras <felipe.contreras@gmail.com> wrote:
+Hi David,
 
-> On Sun, Nov 25, 2012 at 11:44 AM, Michael Haggerty
-> <mhagger@alum.mit.edu> wrote:
+On Mon, 26 Nov 2012, David Aguilar wrote:
 
-[...]
+> *cough* git-cola *cough*
 
-> > On the contrary, there is *constant* traffic on the mailing list
-> > about incompatibilities between different shell implementations (sh=
-,
-> > dash, bash, etc), not to mention those in other utilities (sed,
-> > grep, etc) that one is forced to work with in shell scripts.
-> > Compatibility is a *huge* pain when developing shell code for git.
-> > The fact that users typically don't encounter such problems is due
-> > to the hard work of POSIX lawyers on the mailing list correcting th=
-e
-> > compatibility errors of mortal programmers.
->
-> *Theoretical* incompatibilities on probably obscure systems. *I* have
-> never seen such compatibility issues *in practice*.
+If you had a couple of free cycles to help us get Python/Qt compiled in
+msysGit, I will be happy to make a Git for Windows package including
+git-cola.
 
-While "constant traffic" probably overstates the issue, these are not
-theoretical problems. I recall at least three cases in the last year
-or so where Git has seen breakage with Solaris or Mac OS X because
-of sed or tr incompatibilities, and I don't even read this list that
-thoroughly.
+Ciao,
+Dscho
 
-[...]
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
---=20
-Magnus B=E4ck
-baeck@google.com
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
