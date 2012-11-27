@@ -1,93 +1,77 @@
-From: Brandon Casey <bcasey@nvidia.com>
-Subject: Re: [PATCH] Documentation/git-push.txt: fix typo in remote tracking
- branch path
-Date: Mon, 26 Nov 2012 17:57:11 -0800
-Message-ID: <50B41DF7.2000705@nvidia.com>
-References: <1353977748-17110-1-git-send-email-bcasey@nvidia.com> <7vy5hnomsl.fsf@alter.siamese.dyndns.org>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH 1/7] push: return reject reasons via a mask
+Date: Mon, 26 Nov 2012 21:00:14 -0600
+Message-ID: <CAEUsAPaPPZPR3VM1w=nFhdRG_enKwRpiW2X29z0731VdEMezMg@mail.gmail.com>
+References: <1353644515-17349-1-git-send-email-chris@rorvick.com>
+	<1353644515-17349-2-git-send-email-chris@rorvick.com>
+	<7vobikryrc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Brandon Casey <drafnel@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 02:57:29 2012
+X-From: git-owner@vger.kernel.org Tue Nov 27 04:00:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdAQS-0002XV-A7
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 02:57:28 +0100
+	id 1TdBPW-00059m-OM
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 04:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932976Ab2K0B5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 20:57:13 -0500
-Received: from hqemgate03.nvidia.com ([216.228.121.140]:14309 "EHLO
-	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932462Ab2K0B5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 20:57:12 -0500
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate03.nvidia.com
-	id <B50b41eb20000>; Mon, 26 Nov 2012 18:00:18 -0800
-Received: from hqemhub01.nvidia.com ([172.17.108.22])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Mon, 26 Nov 2012 17:57:10 -0800
-X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Mon, 26 Nov 2012 17:57:10 -0800
-Received: from [172.17.129.244] (172.20.144.16) by hqemhub01.nvidia.com
- (172.20.150.30) with Microsoft SMTP Server id 8.3.279.1; Mon, 26 Nov 2012
- 17:57:11 -0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7vy5hnomsl.fsf@alter.siamese.dyndns.org>
+	id S933053Ab2K0DAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 22:00:17 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:52617 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932732Ab2K0DAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 22:00:16 -0500
+Received: by mail-lb0-f174.google.com with SMTP id gi11so6276651lbb.19
+        for <git@vger.kernel.org>; Mon, 26 Nov 2012 19:00:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=xMXcvVrWINw0d/JbRNqobrVoFqJ9Q9Pzd6WPz/rQEUc=;
+        b=tg4nSNACxyKboh7aWSjWjK4BiQiMH2x9ujHeWF5yGzNa/tDwhPj+R8RU0E4fv08iZz
+         G8xdpG5LvGnRQQ0SaGlRiwvIaLux4WkDI2oMHpyejvzX45zj5voBcyzaDUuY8ZzmjZ1H
+         89+Px/KJuIBgtydMwJDjy0vTytONO8vBpaCoyMfqrpuWMjZvO6WbfZrIchAddZl8yAVS
+         onrZqx7ryw7PQjjvIx2QaEZ7s5nBSUg5/eh5TBa1/aJfgU6OguJf8yVUr5i+07Q/kAGx
+         WDYsNqKWDZ4OtgIuEPAR711YzYoqvfgXJhe9z32nEOWuxEsHYS2BUDt1kwb/crehA65B
+         +P2Q==
+Received: by 10.152.109.145 with SMTP id hs17mr13298225lab.5.1353985214166;
+ Mon, 26 Nov 2012 19:00:14 -0800 (PST)
+Received: by 10.114.13.2 with HTTP; Mon, 26 Nov 2012 19:00:14 -0800 (PST)
+In-Reply-To: <7vobikryrc.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: lGpfC-UKhGybNp0tWPBrpIuMUCw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210527>
 
-On 11/26/2012 5:30 PM, Junio C Hamano wrote:
-> Brandon Casey <bcasey@nvidia.com> writes:
+On Mon, Nov 26, 2012 at 12:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Rorvick <chris@rorvick.com> writes:
 >
->> From: Brandon Casey <drafnel@gmail.com>
+>> Pass all rejection reasons back from transport_push().  The logic is
+>> simpler and more flexible with regard to providing useful feedback.
 >>
->> This example in the documentation seems to be trying to describe the likely
->> remote tracking branch that will be updated by a push to the "origin" remote
->> with the destination branch 'satellite/master', but it forgot to specify
->> the remote name in the path specification.
->>
->> So,
->>
->>     refs/remotes/satellite/master
->>
->> should be spelled like
->>
->>     refs/remotes/origin/satellite/master
+>> Signed-off-by: Chris Rorvick <chris@rorvick.com>
+>> ---
 >
-> I might make sense to rename 'origin' to 'mothership' in that
-> example and explain that this is emulating 'git fetch' run on the
-> mothership to integrate the work done on 'satellite' using 'git
-> push' in the opposite direction, which is often necessary when you
-> can only make connection in one way (i.e. satellite can ssh into
-> mothership but mothership cannot initiate connection to satellite
-> because the latter is behind a firewall or does not run sshd).
->
-> If you were to run 'git fetch' on the mothership to intgrate the
-> work on the 'satellite', it would have a remote called 'satellite',
-> and would keep remote-tracking branches for the branches local to
-> 'satellite' in the 'refs/remotes/satellite/' hierarchy.  You would
-> push your local 'master' to their 'refs/remotes/satellite/master',
-> to emulate 'git fetch' done on the mothership in the reverse
-> direction.
->
-> So refs are correct. The context is not sufficiently explained.
+> In any case, naming it as "reject_mask" is like calling a counter as
+> "counter_int".  It is more important to name it after its purpose
+> than after its type
 
-Ah, I see.  Yeah, I think that is complex enough to merit an
-extended explanation.
+Agreed.
 
--Brandon
+> and because this is to record the reasons why
+> the push was rejected, "rejection_reason" might be a better name for
+> it.
 
-
------------------------------------------------------------------------------------
-This email message is for the sole use of the intended recipient(s) and may contain
-confidential information.  Any unauthorized review, use, disclosure or distribution
-is prohibited.  If you are not the intended recipient, please contact the sender by
-reply email and destroy all copies of the original message.
------------------------------------------------------------------------------------
+Yes, that is better for all the reasons you mention.  I will fix this up.
