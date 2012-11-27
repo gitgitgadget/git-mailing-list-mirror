@@ -1,91 +1,84 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH 3/6] Fix grammar
-Date: Tue, 27 Nov 2012 22:23:33 +0100
-Message-ID: <5F2BC41E-6F77-44B8-B05E-8FB07E82EFA3@quendi.de>
-References: <1354038279-76475-1-git-send-email-max@quendi.de> <1354038279-76475-4-git-send-email-max@quendi.de> <7v8v9mn5k6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 22:23:57 2012
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Millisecond precision in timestamps?
+Date: Tue, 27 Nov 2012 13:41:32 -0800
+Message-ID: <CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com>
+References: <20121127204828.577264065F@snark.thyrsus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 22:42:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdSdG-0003Nq-0i
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 22:23:54 +0100
+	id 1TdSux-0001SM-Ut
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 22:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755347Ab2K0VXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 16:23:38 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:34545 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754652Ab2K0VXh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 16:23:37 -0500
-Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=[192.168.178.27]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TdScv-0007oa-Su; Tue, 27 Nov 2012 22:23:33 +0100
-In-Reply-To: <7v8v9mn5k6.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1354051417;851de0c6;
+	id S1756875Ab2K0Vl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 16:41:56 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:58831 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756865Ab2K0Vly (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 16:41:54 -0500
+Received: by mail-qa0-f53.google.com with SMTP id k31so4405062qat.19
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 13:41:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=NPPA0yxjMGuY4Bqe9jKVFHaRTsxIz4d31FzCOmryysM=;
+        b=MDdpQK53krfcm6o1EI27LH6+79fSJj2MCK68bHhCuVF4U0EsHIuNyx8vDvnSnybGr5
+         uniJhN4Jq2HDjlk3jyRhAYlzrC7Zk2O9urtVuML1fZBYGHY6N7fd3D9BwPaTDx0fb+Fl
+         YeSf+P2uQhGXUsJ0LkQaCGZicRfijC142bAUc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=NPPA0yxjMGuY4Bqe9jKVFHaRTsxIz4d31FzCOmryysM=;
+        b=cz0bPHf7ijg50Hj2GK6o53d9KswMQ6tRP6ioKtxaaSd9GM+uYtDrmvcUC2pgxUINhx
+         aMMoOtF0KrMEzC2Mlat6GvQmXdYapQRiWXqtuaDBFioaJpaV1SczPkZjHAAzc04VADLf
+         tsitjjBn8feWxn74OKSuAFtO3pJccaGXwGPoA57ed/CnGTaUezGheIeaHJmUywazzJ1L
+         /pGGMriwq+Rydz18XYt+9C+nnuU7RYwA74ODEvoungj/uyP7GqrutJ9YEVqTgIuJ/9cC
+         5icUCo+JngAhoDaw6ZCqwkotCsCY53sXhR9V/9hParIEdvkCRn+eYXVPv59W27rFXyoZ
+         fASg==
+Received: by 10.224.185.79 with SMTP id cn15mr17679478qab.14.1354052513959;
+ Tue, 27 Nov 2012 13:41:53 -0800 (PST)
+Received: by 10.49.60.198 with HTTP; Tue, 27 Nov 2012 13:41:32 -0800 (PST)
+In-Reply-To: <20121127204828.577264065F@snark.thyrsus.com>
+X-Gm-Message-State: ALoCoQk1BTN+pTWNn1sKN585A5X8afSvyVEMFKnJqZtQCGCI7hYW7M48GmZRHlA/BCPpaoo3iHJZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210606>
 
+On Tue, Nov 27, 2012 at 12:48 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> Because I do a lot of work on repository conversion tools, I've had
+> to learn a lot of detail about ontological mismatches between
+> version-control systems - especially places where you lose metadata
+> moving between them.
+>
+> In general, git metadata can carry forward almost all the metadata in
+> a Subversion repository.  Among the handful of minor exceptions (empty
+> directories, flow structure, certain kinds of mergeinfos) there is one
+> that stands out because it seems to be an implementation detail rather
+> than a consequence of fundamentally different design decisions.
+>
+> I refer to the one-second precision of git timestamps.  Subversion
+> stores its commit and property-change timestamps to microsecond
+> precision; conversion tools have to throw the subsecond part of
+> this information away.
+>
+> Has going to timestamps with the full precision of the system clock
+> been considered and rejected, or am I the first to bring this up?
+>
+> If I were to write refactoring patches that treated "timestamp" as
+> an ADT, with a view towards hiding the difference between int and
+> float timestamps and eventually experimenting with float ones,
+> would they be accepted?
 
-On 27.11.2012, at 21:39, Junio C Hamano wrote:
-
-> Max Horn <max@quendi.de> writes:
-> 
->> Subject: Re: [PATCH 3/6] Fix grammar
-> 
-> Please run "git shortlog -200 --no-merges" from the tip of your
-> topic branch before sending a series out, and see if you can
-> immediately identify what area each of your patches affects.
-
-First off: I apologize for the inconvenience my stumbling causes :-(, and I'll try to learn and do better next time I send this or another series.
-
-In this particular case, I am not 100% sure if I understood you correctly, i.e. what exactly you are trying to tell me. Is it (in a nutshell) that the subject lines of my commits suck, as they don't identify which area of code they touch? At least that's the thing I notice when looking at that shortlog... Bad, of course...
-
-If this is indeed it, would a commit message like
-
-   git-remote-helper.txt: minor grammar fix
-
-be OK? If this is indeed it, I'll be happy to reroll and resubmit the series accordingly. If I am mistaken and something else / more is wrong, please be so kind and let me know, too.
-
-
-Sorry once more and thank you very much for your feedback,
-Max
-
-> 
->> Signed-off-by: Max Horn <max@quendi.de>
->> ---
->> Documentation/git-remote-helpers.txt | 6 +++---
->> 1 file changed, 3 insertions(+), 3 deletions(-)
->> 
->> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
->> index db63541..7eb43d7 100644
->> --- a/Documentation/git-remote-helpers.txt
->> +++ b/Documentation/git-remote-helpers.txt
->> @@ -235,9 +235,9 @@ Commands are given by the caller on the helper's standard input, one per line.
->> 'capabilities'::
->> 	Lists the capabilities of the helper, one per line, ending
->> 	with a blank line. Each capability may be preceded with '*',
->> -	which marks them mandatory for git version using the remote
->> -	helper to understand (unknown mandatory capability is fatal
->> -	error).
->> +	which marks them mandatory for git versions using the remote
->> +	helper to understand. Any unknown mandatory capability is a
->> +	fatal error.
->> 
->> 'list'::
->> 	Lists the refs, one per line, in the format "<value> <name>
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+JGit would fortunately ignore a floating point timestamp specification
+if given in a commit, but I don't know about other Git
+implementations... like say git. :-)
