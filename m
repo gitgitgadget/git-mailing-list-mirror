@@ -1,106 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] t4041 (diff-submodule-option): rewrite add_file()
- routine
-Date: Tue, 27 Nov 2012 09:56:54 -0800
-Message-ID: <7vlidnlyjd.fsf@alter.siamese.dyndns.org>
-References: <1354005692-2809-1-git-send-email-artagnon@gmail.com>
- <1354005692-2809-3-git-send-email-artagnon@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v4 0/4] git-submodule add: Add --local-branch option
+Date: Tue, 27 Nov 2012 19:31:25 +0100
+Message-ID: <20121127183125.GA4185@book.hvoigt.net>
+References: <20121123175402.GH2806@odin.tremily.us> <cover.1353962698.git.wking@tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 18:57:13 2012
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Tue Nov 27 19:31:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdPPE-0004ws-SN
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 18:57:13 +0100
+	id 1TdPwj-0001yG-Vs
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 19:31:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212Ab2K0R46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 12:56:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42213 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755514Ab2K0R45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 12:56:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1E6DA996;
-	Tue, 27 Nov 2012 12:56:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ir2J7w7Lg6dSnF2Cw4r1xboUQPc=; b=kWJo6b
-	tShyP+v1uIzG9YK2l0dUVarnQDebgcQuvHj84IAHCrQMKBbH6+Cl0IHNf6s6WJQX
-	Io2U3H9b3lyrhZYGRN5EtR7Vx3/Tm40Mjx0uCeVs7IMlVgyRsiS9CfQn+TANyHjw
-	mqS1YAaaaeFEKycut4JucDeWb9+lgBz7qjTCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v+u8w9j4K0lSt3/kFMugP3tsuMrz3U1n
-	E5aer319fPEYOs5mJ7jfN/rm6pgNNlgxVDmpfi8DDPrwlZqXuVvVq4F++1VhSeD/
-	Cj8tAZi03sIqEghrR7H4N3lMs4DDAKi4Wq+jo9SXGhNj/WObyr1RSgra6UI58zyL
-	qOmeriR8LXk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF8ACA995;
-	Tue, 27 Nov 2012 12:56:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4723EA993; Tue, 27 Nov 2012
- 12:56:56 -0500 (EST)
-In-Reply-To: <1354005692-2809-3-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Tue, 27 Nov 2012 14:11:30 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D54A2DA8-38BB-11E2-B60E-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756439Ab2K0Sbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 13:31:34 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.97]:48566 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751086Ab2K0Sbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 13:31:34 -0500
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1TdPwM-0002eW-7K; Tue, 27 Nov 2012 19:31:26 +0100
+Content-Disposition: inline
+In-Reply-To: <cover.1353962698.git.wking@tremily.us>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210582>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Hi,
 
-> Instead of "cd there and then come back", use the "cd there in a
-> subshell" pattern.  Also fix '&&' chaining in one place.
->
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  t/t4041-diff-submodule-option.sh |   13 +++++--------
->  1 files changed, 5 insertions(+), 8 deletions(-)
->
-> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-> index cfb71e5..103c690 100755
-> --- a/t/t4041-diff-submodule-option.sh
-> +++ b/t/t4041-diff-submodule-option.sh
-> @@ -11,18 +11,15 @@ This test tries to verify the sanity of the --submodule option of git diff.
->  . ./test-lib.sh
->  
->  add_file () {
-> +	(cd "$1" &&
-> +	    shift &&
-> +	    for name; do
->  		echo "$name" > "$name" &&
->  		git add "$name" &&
->  		test_tick &&
->  		git commit -m "Add $name"
-> +	    done >/dev/null &&
-> +	    git rev-parse --short --verify HEAD)
+On Mon, Nov 26, 2012 at 04:00:15PM -0500, W. Trevor King wrote:
+> From: "W. Trevor King" <wking@tremily.us>
+> 
+> On Fri, Nov 23, 2012 at 12:54:02PM -0500, W. Trevor King wrote:
+> > We could add
+> >
+> >   $ git submodule update --branch
+> >
+> > to checkout the gitlinked SHA1 as submodule.<name>.branch in each of
+> > the submodules, leaving the submodules on the .gitmodules-configured
+> > branch.  Effectively (for each submodule):
+> >
+> >   $ git branch -f $branch $sha1
+> >   $ git checkout $branch
+> 
+> I haven't gotten any feedback on this as an idea, but perhaps someone
+> will comment on it as a patch series ;).
 
-While at it, why not do the "indent with a single tab", and other
-style fixes?  e.g.
+I am not sure I understand you correctly. You are suggesting that the
+branch option as an alias for the registered SHA1 in the superproject?
 
-	(
-		cd "$1" &&
-                shift &&
-                for name
-                do
-			echo "$name" >"$name" &&
-                        git add $name" &&
-                        test_tick &&
-                        git commit -m "Add $name" || exit
-		done >/dev/null &&
-		git rev-parse --short --verify HEAD
-	)
+I though the goal of your series was that you want to track submodules
+branch which come from the remote side?
 
-The "|| exit" is needed to catch failures inside the loop (not that
-"git commit" there is likely to fail, so it is just for
-completeness).
+Doing the above does not assist you much in that does it?
+
+I would think more of some convention like:
+
+	$ git checkout -t origin/$branch
+
+when first initialising the submodule with e.g.
+
+	$ git submodule update --init --branch
+
+Then later calls of
+
+	$ git submodule update --branch
+
+would have a branch configured to pull from. I imagine that results in
+a similar behavior gerrit is doing on the server side?
+
+> Changes since v3:
+> 
+> * --record=??? is now --local-branch=???
+> * Dropped patches 2 ($submodule_ export) and 3 (motivating documentation)
+> * Added local git-config overrides of .gitmodules' submodule.<name>.branch
+> * Added `submodule update --branch`
+
+I would prefer if we could squash all these commits together into one
+since it seems to me one logical step, using the new variable for update
+belongs together with its configuration on initialization.
+
+How about reusing the -b|--branch option for add? Since we only change
+the behavior when submodule.$name.update is set to branch it seems
+reasonable to me. Opinions?
+
+> Because you need to recurse through submodules for `update --branch`
+> even if "$subsha1" == "$sha1", I had to amend the conditional
+> controlling that block.  This broke one of the existing tests, which I
+> "fixed" in patch 4.  I think a proper fix would involve rewriting
+> 
+>   (clear_local_git_env; cd "$sm_path" &&
+>    ( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
+>     test -z "$rev") || git-fetch)) ||
+>   die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
+> 
+> but I'm not familiar enough with rev-list to want to dig into that
+> yet.  If feedback for the earlier three patches is positive, I'll work
+> up a clean fix and resubmit.
+
+You probably need to separate your handling here. The comparison of the
+currently checked out sha1 and the recorded sha1 is an optimization
+which skips unnecessary fetching in case the submodules commits are
+already correct. This code snippet checks whether the to be checked out
+sha1 is already local and also skips the fetch if it is. We should not
+break that.
+
+Maybe we need an else block here and possibly extract the current code
+inside the if statement into a function. E.g. that the final code looks
+something like this:
+
+	if test "$subsha1" != "$sha1"
+	then
+		handle_on_demand_fetch_update ...
+	else
+		handle_tracked_branch_update ...
+	fi
+
+Not sure about the function names though. If we decide to go that route:
+The extraction into a function should go in an extra preparation patch
+which does not change any functionality.
+
+I will reply to the patches for further comments.
+
+Cheers Heiko
