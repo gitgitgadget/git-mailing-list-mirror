@@ -1,79 +1,93 @@
-From: Mark Szepieniec <mszepien@gmail.com>
-Subject: [PATCH] Documentation: improve phrasing in git-push.txt
-Date: Tue, 27 Nov 2012 01:37:34 +0000
-Message-ID: <1353980254-8033-1-git-send-email-mszepien@gmail.com>
-Cc: Mark Szepieniec <mszepien@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 27 02:38:51 2012
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: Re: [PATCH] Documentation/git-push.txt: fix typo in remote tracking
+ branch path
+Date: Mon, 26 Nov 2012 17:57:11 -0800
+Message-ID: <50B41DF7.2000705@nvidia.com>
+References: <1353977748-17110-1-git-send-email-bcasey@nvidia.com> <7vy5hnomsl.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 02:57:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdA8L-0000os-62
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 02:38:45 +0100
+	id 1TdAQS-0002XV-A7
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 02:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757821Ab2K0Bi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2012 20:38:29 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:45652 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757808Ab2K0Bi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2012 20:38:28 -0500
-Received: by mail-wi0-f178.google.com with SMTP id hm6so3911929wib.1
-        for <git@vger.kernel.org>; Mon, 26 Nov 2012 17:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=qhZlwerQwGkcd2AV65D1kjdEnjLoxB2E267EwZf7YSo=;
-        b=zMoeHyiJ5GlTkX29CkN7nOm6teReRmg9ArcBa0cu9GBEswL6AREGq6TesPoTPnO6e2
-         SaOWYl/ygDdfHc7q5W8LA5iJ9MZOFnEJpWtnsb/YmzY/WayHp22CSohUAOCUlBYitnza
-         OE6708s7LN8vi2Bi319MbaBOOFvwSuUac7pR12ur3lWmThbInGrrkTcbokmS2GMbLFPE
-         0VeSFC2icxWTasSKqbYgJYeX/QXUEUAereoWFtJdfaLEuPnPBATntTjUPibJlMZA/2gi
-         VfnEvrp359CXvE+pl6tKM1IecLk6z966B5a6VCmwu/5LK+jMzafr5gSWY1SSLN6axB8H
-         wIhg==
-Received: by 10.180.93.40 with SMTP id cr8mr24096691wib.15.1353980307291;
-        Mon, 26 Nov 2012 17:38:27 -0800 (PST)
-Received: from localhost.localdomain ([109.125.10.66])
-        by mx.google.com with ESMTPS id y3sm482795wix.6.2012.11.26.17.38.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 26 Nov 2012 17:38:26 -0800 (PST)
-X-Mailer: git-send-email 1.7.5.4
+	id S932976Ab2K0B5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2012 20:57:13 -0500
+Received: from hqemgate03.nvidia.com ([216.228.121.140]:14309 "EHLO
+	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932462Ab2K0B5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2012 20:57:12 -0500
+Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate03.nvidia.com
+	id <B50b41eb20000>; Mon, 26 Nov 2012 18:00:18 -0800
+Received: from hqemhub01.nvidia.com ([172.17.108.22])
+  by hqnvupgp08.nvidia.com (PGP Universal service);
+  Mon, 26 Nov 2012 17:57:10 -0800
+X-PGP-Universal: processed;
+	by hqnvupgp08.nvidia.com on Mon, 26 Nov 2012 17:57:10 -0800
+Received: from [172.17.129.244] (172.20.144.16) by hqemhub01.nvidia.com
+ (172.20.150.30) with Microsoft SMTP Server id 8.3.279.1; Mon, 26 Nov 2012
+ 17:57:11 -0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <7vy5hnomsl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210526>
 
-The current version contains the sentence:
+On 11/26/2012 5:30 PM, Junio C Hamano wrote:
+> Brandon Casey <bcasey@nvidia.com> writes:
+>
+>> From: Brandon Casey <drafnel@gmail.com>
+>>
+>> This example in the documentation seems to be trying to describe the likely
+>> remote tracking branch that will be updated by a push to the "origin" remote
+>> with the destination branch 'satellite/master', but it forgot to specify
+>> the remote name in the path specification.
+>>
+>> So,
+>>
+>>     refs/remotes/satellite/master
+>>
+>> should be spelled like
+>>
+>>     refs/remotes/origin/satellite/master
+>
+> I might make sense to rename 'origin' to 'mothership' in that
+> example and explain that this is emulating 'git fetch' run on the
+> mothership to integrate the work done on 'satellite' using 'git
+> push' in the opposite direction, which is often necessary when you
+> can only make connection in one way (i.e. satellite can ssh into
+> mothership but mothership cannot initiate connection to satellite
+> because the latter is behind a firewall or does not run sshd).
+>
+> If you were to run 'git fetch' on the mothership to intgrate the
+> work on the 'satellite', it would have a remote called 'satellite',
+> and would keep remote-tracking branches for the branches local to
+> 'satellite' in the 'refs/remotes/satellite/' hierarchy.  You would
+> push your local 'master' to their 'refs/remotes/satellite/master',
+> to emulate 'git fetch' done on the mothership in the reverse
+> direction.
+>
+> So refs are correct. The context is not sufficiently explained.
 
-Further suppose that the other person already pushed changes leading to
-A back to the original repository you two obtained the original commit
-X.
+Ah, I see.  Yeah, I think that is complex enough to merit an
+extended explanation.
 
-which doesn't parse for me; I've changed it to
+-Brandon
 
-Further suppose that the other person already pushed changes leading to
-A back to the original repository from which you two obtained the
-original commit X.
 
-Signed-off-by: Mark Szepieniec <mszepien@gmail.com>
----
- Documentation/git-push.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index fe46c42..6d19d59 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -286,7 +286,8 @@ leading to commit A.  The history looks like this:
- ----------------
- 
- Further suppose that the other person already pushed changes leading to A
--back to the original repository you two obtained the original commit X.
-+back to the original repository from which you two obtained the original
-+commit X.
- 
- The push done by the other person updated the branch that used to point at
- commit X to point at commit A.  It is a fast-forward.
--- 
-1.7.5.4
+-----------------------------------------------------------------------------------
+This email message is for the sole use of the intended recipient(s) and may contain
+confidential information.  Any unauthorized review, use, disclosure or distribution
+is prohibited.  If you are not the intended recipient, please contact the sender by
+reply email and destroy all copies of the original message.
+-----------------------------------------------------------------------------------
