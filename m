@@ -1,50 +1,120 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: Millisecond precision in timestamps?
-Date: Tue, 27 Nov 2012 18:04:19 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121127230419.GA26080@thyrsus.com>
-References: <20121127204828.577264065F@snark.thyrsus.com>
- <CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com>
- <7vzk22lmz9.fsf@alter.siamese.dyndns.org>
-Reply-To: esr@thyrsus.com
-Mime-Version: 1.0
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH 6/6] git-remote-helpers.txt: clarify ref list attributes, link to subsections
+Date: Wed, 28 Nov 2012 00:06:34 +0100
+Message-ID: <67C20CB2-BFCC-483A-A564-D9978C792CD6@quendi.de>
+References: <1354057407-83151-1-git-send-email-max@quendi.de> <1354057407-83151-8-git-send-email-max@quendi.de>
+Mime-Version: 1.0 (Apple Message framework v1283)
 Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:04:41 2012
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:06:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdUCm-0005Pr-DX
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 00:04:40 +0100
+	id 1TdUEt-0007B9-GC
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 00:06:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755899Ab2K0XEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 18:04:25 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:58150
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755886Ab2K0XEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 18:04:24 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 73E844065F; Tue, 27 Nov 2012 18:04:20 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vzk22lmz9.fsf@alter.siamese.dyndns.org>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754355Ab2K0XGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 18:06:36 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:54156 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753035Ab2K0XGg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 18:06:36 -0500
+Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=[192.168.178.27]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1TdUEd-0002uj-3V; Wed, 28 Nov 2012 00:06:35 +0100
+In-Reply-To: <1354057407-83151-8-git-send-email-max@quendi.de>
+X-Mailer: Apple Mail (2.1283)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1354057596;2824790d;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210621>
 
-Junio C Hamano <gitster@pobox.com>:
-> fsck_ident() in fsck.c rejects anything but " [1-9][0-9]* " after
-> the author and committer ident (i.e. the timestamp has to be
-> integral number of seconds since the epoch, not before it, nor
-> with fractional seconds).
+Ouch. This one should *not* have been sent (the "[PATCH v2 6/6]" one is the correct one). Very sorry :(. I'll triple check next time.
+Max
 
-Is this architecturally significant?  It sounds like another
-implementation detail.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+On 28.11.2012, at 00:03, Max Horn wrote:
+
+> The documentation was misleading in that it gave the impression that
+> 'for-push' could be used as a ref attribute in the output of the
+> 'list' command. That is wrong.
+> 
+> Also, explicitly point out the connection between the commands
+> 'list' and 'options' on the one hand, and the sections
+> 'REF LIST ATTRIBUTES' and 'OPTIONS' on the other hand.
+> 
+> Signed-off-by: Max Horn <max@quendi.de>
+> ---
+> Documentation/git-remote-helpers.txt | 17 ++++++++++++-----
+> 1 file changed, 12 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+> index 023dcca..e1df01d 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -227,6 +227,8 @@ Support for this command is mandatory.
+> 	the name; unrecognized attributes are ignored. The list ends
+> 	with a blank line.
+> +
+> +See REF LIST ATTRIBUTES for a list of currently defined options.
+> ++
+> Supported if the helper has the "fetch" or "import" capability.
+> 
+> 'list for-push'::
+> @@ -248,6 +250,8 @@ Supported if the helper has the "push" or "export" capability.
+> 	for it).  Options should be set before other commands,
+> 	and may influence the behavior of those commands.
+> +
+> +See OPTIONS for a list of currently defined options.
+> ++
+> Supported if the helper has the "option" capability.
+> 
+> 'fetch' <sha1> <name>::
+> @@ -256,7 +260,7 @@ Supported if the helper has the "option" capability.
+> 	per line, terminated with a blank line.
+> 	Outputs a single blank line when all fetch commands in the
+> 	same batch are complete. Only objects which were reported
+> -	in the ref list with a sha1 may be fetched this way.
+> +	in the output of 'list' with a sha1 may be fetched this way.
+> +
+> Optionally may output a 'lock <file>' line indicating a file under
+> GIT_DIR/objects/pack which is keeping a pack until refs can be
+> @@ -360,10 +364,9 @@ capabilities reported by the helper.
+> REF LIST ATTRIBUTES
+> -------------------
+> 
+> -'for-push'::
+> -	The caller wants to use the ref list to prepare push
+> -	commands.  A helper might chose to acquire the ref list by
+> -	opening a different type of connection to the destination.
+> +The 'list' command produces a list of refs in which each ref
+> +may be followed by a list of attributes. The following ref list
+> +attributes are defined.
+> 
+> 'unchanged'::
+> 	This ref is unchanged since the last import or fetch, although
+> @@ -371,6 +374,10 @@ REF LIST ATTRIBUTES
+> 
+> OPTIONS
+> -------
+> +
+> +The following options are defined and (under suitable circumstances)
+> +set by git if the remote helper has the 'option' capability.
+> +
+> 'option verbosity' <n>::
+> 	Changes the verbosity of messages displayed by the helper.
+> 	A value of 0 for <n> means that processes operate
+> -- 
+> 1.8.0.393.gcc9701d
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
