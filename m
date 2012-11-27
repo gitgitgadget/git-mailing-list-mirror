@@ -1,177 +1,108 @@
-From: Michael Weiser <M.Weiser@science-computing.de>
-Subject: [PATCH] Extend runtime prefix computation
-Date: Tue, 27 Nov 2012 17:30:05 +0100
-Message-ID: <20121127163004.GC7499@science-computing.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 p2 3/9] transport-helper: trivial code shuffle
+Date: Tue, 27 Nov 2012 09:00:02 -0800
+Message-ID: <7vk3t7nfql.fsf@alter.siamese.dyndns.org>
+References: <1353727520-26039-1-git-send-email-felipe.contreras@gmail.com>
+ <1353727520-26039-4-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 27 17:40:33 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Thiago Farina <tfransosi@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 18:00:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdOCt-0000nW-FM
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 17:40:23 +0100
+	id 1TdOWK-0000bS-Tk
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Nov 2012 18:00:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756365Ab2K0QkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 11:40:04 -0500
-Received: from mx3.science-computing.de ([193.197.16.20]:26224 "EHLO
-	mx3.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755935Ab2K0QkD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Nov 2012 11:40:03 -0500
-X-Greylist: delayed 595 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Nov 2012 11:40:03 EST
-Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id 21D8D414006;
-	Tue, 27 Nov 2012 17:30:06 +0100 (CET)
-X-Virus-Scanned: amavisd-new
-Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (obitest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zjjR8ABWLKSg; Tue, 27 Nov 2012 17:30:05 +0100 (CET)
-Received: from verus.science-computing.de (verus.science-computing.de [10.160.1.22])
-	by scmail.science-computing.de (Postfix) with ESMTP id 75354414001;
-	Tue, 27 Nov 2012 17:30:05 +0100 (CET)
-Received: by verus.science-computing.de (Postfix, from userid 1176)
-	id 4FFBD104498; Tue, 27 Nov 2012 17:30:05 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756377Ab2K0RAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 12:00:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65021 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755296Ab2K0RAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 12:00:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 549249D93;
+	Tue, 27 Nov 2012 12:00:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=A6mxeysqUGtkU84D8XxcLg6JV/g=; b=Kg4dsy
+	s52z5S/DyGDDpwBn0ZxHYipG0u3xTXf58XwvxZALlMNVic9EfMq8l32M0N+z8dIq
+	KxCnT5giWd1NMyRMeCrAKlcARmMA7PFiMO2kyX96iZBZT1JFwyxqVdI99zj5eTHk
+	TqGPfrP0l5Lj/5u4At5vUBpP/5EjhSEPkhJ+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=epJlXPyV81dbuaUWO07VwbPZ4n6M8qPO
+	taeVD4I9qn9YbVujDOC/2Z39ub3xBqsKKkQSH33/BT24yezfj8oESsHuwX8zr0uc
+	fhJwrrVc763uur9DQT/67sU+Bgf4GDox1UkWw1LbIHkw1JXyYX3aNZF1NjyidB0n
+	OA1gjNOGep0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E84579D92;
+	Tue, 27 Nov 2012 12:00:06 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB63E9D8F; Tue, 27 Nov 2012
+ 12:00:04 -0500 (EST)
+In-Reply-To: <1353727520-26039-4-git-send-email-felipe.contreras@gmail.com>
+ (Felipe Contreras's message of "Sat, 24 Nov 2012 04:25:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E454D936-38B3-11E2-B9F1-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210563>
 
-Support determining the binaries' installation path at runtime even if
-called without any path components (i.e. via search path). Implement
-fallback to compiled-in prefix if determination fails or is impossible.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Signed-off-by: Michael Weiser <weiser@science-computing.de>
----
-- Has two very minor memory leaks - function is called only once per
-  program execution. Do we care? Alternative: Use static buffer instead.
+> Just shuffle the die() part to make it more explicit, and cleanup the
+> code-style.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  transport-helper.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 32ad877..0c95101 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -775,6 +775,9 @@ static int push_refs_with_export(struct transport *transport,
+>  		char *private;
+>  		unsigned char sha1[20];
+>  
+> +		if (ref->deletion)
+> +			die("remote-helpers do not support ref deletion");
+> +
+>  		if (!data->refspecs)
+>  			continue;
 
- exec_cmd.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 53 insertions(+), 15 deletions(-)
+This is not just "just shuffle the die to make it explicit" but it
+does change the semantics; earlier ref->deletion was perfectly fine
+as long as data->refspecs is not given, but the new code always
+dies.
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 125fa6f..d50d7f8 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -4,28 +4,22 @@
- #define MAX_ARGS	32
- 
- static const char *argv_exec_path;
--static const char *argv0_path;
-+static const char *argv0_path = NULL;
- 
- const char *system_path(const char *path)
- {
--#ifdef RUNTIME_PREFIX
--	static const char *prefix;
--#else
- 	static const char *prefix = PREFIX;
--#endif
- 	struct strbuf d = STRBUF_INIT;
- 
- 	if (is_absolute_path(path))
- 		return path;
- 
- #ifdef RUNTIME_PREFIX
--	assert(argv0_path);
--	assert(is_absolute_path(argv0_path));
--
--	if (!prefix &&
--	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
--	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
--	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
-+	if (!argv0_path ||
-+	    !is_absolute_path(argv0_path) ||
-+	    (!(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
-+	     !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
-+	     !(prefix = strip_path_suffix(argv0_path, "git")))) {
- 		prefix = PREFIX;
- 		trace_printf("RUNTIME_PREFIX requested, "
- 				"but prefix computation failed.  "
-@@ -41,20 +35,64 @@ const char *system_path(const char *path)
- const char *git_extract_argv0_path(const char *argv0)
- {
- 	const char *slash;
-+	char *abs_argv0 = NULL;
- 
- 	if (!argv0 || !*argv0)
- 		return NULL;
- 	slash = argv0 + strlen(argv0);
- 
-+	/* walk to the first slash from the end */
- 	while (argv0 <= slash && !is_dir_sep(*slash))
- 		slash--;
- 
-+	/* if there was a slash ... */
- 	if (slash >= argv0) {
--		argv0_path = xstrndup(argv0, slash - argv0);
--		return slash + 1;
-+		/* ... it's either an absolute path */
-+		if (is_absolute_path(argv0)) {
-+			/* FIXME: memory leak here */
-+			argv0_path = xstrndup(argv0, slash - argv0);
-+			return slash + 1;
-+		}
-+
-+		/* ... or a relative path, in which case we have to make it
-+		 * absolute first and do the whole thing again */
-+		abs_argv0 = xstrdup(real_path(argv0));
-+	} else {
-+		/* argv0 is no path at all, just a name. Resolve it into a
-+		 * path. Unfortunately, this gets system specific. */
-+#if defined(__linux__)
-+		struct stat st;
-+		if (!stat("/proc/self/exe", &st)) {
-+			abs_argv0 = xstrdup(real_path("/proc/self/exe"));
-+		}
-+#elif defined(__APPLE__)
-+		/* Mac OS X has realpath, which incidentally allocates its own
-+		 * memory, which in turn is why we do all the xstrdup's in the
-+		 * other cases. */
-+		abs_argv0 = realpath(argv0, NULL);
-+#endif
-+
-+		/* if abs_argv0 is still NULL here, something failed above or
-+		 * we are on an unsupported system. system_path() will warn
-+		 * and fall back to the static prefix */
-+		if (!abs_argv0) {
-+			argv0_path = NULL;
-+			return argv0;
-+		}
- 	}
- 
--	return argv0;
-+	/* abs_argv0 is an absolute path now for which memory was allocated
-+	 * with malloc */
-+
-+	slash = abs_argv0 + strlen(abs_argv0);
-+	while (abs_argv0 <= slash && !is_dir_sep(*slash))
-+		slash--;
-+
-+	/* FIXME: memory leaks here */
-+	argv0_path = xstrndup(abs_argv0, slash - abs_argv0);
-+	slash = xstrdup(slash + 1);
-+	free(abs_argv0);
-+	return slash;
- }
- 
- void git_set_argv_exec_path(const char *exec_path)
--- 
-1.7.3.4
--- 
-Vorstandsvorsitzender/Chairman of the board of management:
-Gerd-Lothar Leonhart
-Vorstand/Board of Management:
-Dr. Bernd Finkbeiner, Michael Heinrichs, 
-Dr. Arno Steitz, Dr. Ingrid Zech
-Vorsitzender des Aufsichtsrats/
-Chairman of the Supervisory Board:
-Philippe Miltin
-Sitz/Registered Office: Tuebingen
-Registergericht/Registration Court: Stuttgart
-Registernummer/Commercial Register No.: HRB 382196
+If this semantic change is a good thing, please explain why it is so
+in the log message.  If the change is "it does not matter because
+when data->refspecs is not given and ref->deletion is set, we die
+later elsewhere in the code anyway", then it needs to be described.
+
+
+Thanks.
+
+> @@ -784,10 +787,6 @@ static int push_refs_with_export(struct transport *transport,
+>  		}
+>  		free(private);
+>  
+> -		if (ref->deletion) {
+> -			die("remote-helpers do not support ref deletion");
+> -		}
+> -
+>  		if (ref->peer_ref)
+>  			string_list_append(&revlist_args, ref->peer_ref->name);
