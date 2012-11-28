@@ -1,65 +1,81 @@
-From: Peter van der Does <peter@avirtualhome.com>
-Subject: git config key bug or by design?
-Date: Tue, 27 Nov 2012 21:57:25 -0500
-Message-ID: <20121127215725.14682a0d@Indy>
+From: Jeff King <peff@peff.net>
+Subject: Re: Millisecond precision in timestamps?
+Date: Tue, 27 Nov 2012 23:07:39 -0500
+Message-ID: <20121128040739.GA4115@sigill.intra.peff.net>
+References: <7vzk22lmz9.fsf@alter.siamese.dyndns.org>
+ <20121127230419.GA26080@thyrsus.com>
+ <CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
+ <20121128001231.GA27971@thyrsus.com>
+ <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
+ <CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com>
+ <20121128011750.GA23498@sigill.intra.peff.net>
+ <20121128032337.GB1669@thyrsus.com>
+ <20121128033009.GA3931@sigill.intra.peff.net>
+ <20121128034700.GD1669@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 28 04:50:06 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 05:08:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdYeu-0003A1-Ju
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 04:50:00 +0100
+	id 1TdYwJ-0002mt-MF
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 05:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758Ab2K1Dtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 22:49:45 -0500
-Received: from biast.lunarmania.com ([67.210.100.118]:37271 "EHLO
-	biast.lunarmania.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751497Ab2K1Dtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 22:49:45 -0500
-Received: from c-69-248-87-3.hsd1.nj.comcast.net ([69.248.87.3]:10576 helo=mail.grandprix.int)
-	by biast.lunarmania.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.77)
-	(envelope-from <peter@avirtualhome.com>)
-	id 1TdXpy-0005UT-Q2
-	for git@vger.kernel.org; Tue, 27 Nov 2012 18:57:22 -0800
-Received: from Indy (indy.grandprix.int [192.168.1.106])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: pdoes)
-	by mail.grandprix.int (Postfix) with ESMTPSA id B470B2E499
-	for <git@vger.kernel.org>; Tue, 27 Nov 2012 21:57:25 -0500 (EST)
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.13; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - biast.lunarmania.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - avirtualhome.com
-X-Get-Message-Sender-Via: biast.lunarmania.com: authenticated_id: avirtu2/from_h
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751031Ab2K1EHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 23:07:43 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58983 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750763Ab2K1EHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 23:07:42 -0500
+Received: (qmail 2658 invoked by uid 107); 28 Nov 2012 04:08:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Nov 2012 23:08:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Nov 2012 23:07:39 -0500
+Content-Disposition: inline
+In-Reply-To: <20121128034700.GD1669@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210696>
 
-I noticed today I can't create a key starting with a number.
+On Tue, Nov 27, 2012 at 10:47:00PM -0500, Eric S. Raymond wrote:
 
-The source code[1] confirms this, but is this a bug or is it by design?
+> Jeff King <peff@peff.net>:
+> > A much more compelling argument to me would be that you are doing some
+> > bidirectional magic between git and svn, and you want to make make sure
+> > that an svn->git->svn translation will result in the exact same bytes.
+> > Then the argument is still "because SVN has it", but at least it is "and
+> > we interoperate with it" and not simply chasing a cool but useless
+> > feature.
+> 
+> Er, well, that *is* in fact the exact reason I want it.
+> 
+> I didn't put it exactly that way because I didn't expect anyone here
+> to particularly care about round-tripping like that.  But remember 
+> that I do a lot of stuff with repo surgery and conversion tools.
 
+If that's what we really care about, then that opens up the
+possibilities for how we store the data. An extension header in the
+object might be convenient, but it opens up a lot of questions about
+what git will do with such a header (e.g., would it be part of git-log
+output?).
 
-[1]: https://github.com/git/git/blob/master/config.c#L1265
+Felipe suggested using git-notes to add the metadata, which I think is a
+reasonable first step. The git side of the code is already written, and
+the concept is nicely modularized away from the core of git. Nobody has
+to care about it but your importer, and anybody who wants to query it[1]
+can do so by requesting the note.
 
--- 
-Peter van der Does
+-Peff
 
-GPG key: CB317D6E
-
-IRC: Ganseki on irc.freenode.net
-Twitter: @petervanderdoes
+[1] And you do not have to limit yourself to timestamps, if there is
+    other metadata about each commit you end up wanting to store for a
+    clean bi-directional conversion.
