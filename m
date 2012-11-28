@@ -1,523 +1,76 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: =?UTF-8?q?Re=3A=20=5BRFC/PATCH=5D=20l10n=3A=20de=2Epo=3A=20translate=20825=20new=20messages?=
-Date: Wed, 28 Nov 2012 19:22:50 +0100
-Message-ID: <1354126970-5356-1-git-send-email-ralf.thielow@gmail.com>
-References: <87wqx7s22j.fsf@pctrast.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/5] jk/send-email-sender-prompt loose ends
+Date: Wed, 28 Nov 2012 13:25:35 -0500
+Message-ID: <20121128182534.GA21020@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jk@jk.gs, stimming@tuhh.de,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: trast@inf.ethz.ch
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:23:19 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:26:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdmI2-0007Wq-75
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 19:23:19 +0100
+	id 1TdmKX-0001sK-Fl
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 19:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206Ab2K1SXB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2012 13:23:01 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:54499 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754957Ab2K1SXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 13:23:00 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so5880746bkw.19
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 10:22:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=lil4eYUvfSoSG3MSvoxSkX1h4Opt9x54tx212SJlx3E=;
-        b=Cb+mXYY/etA5CGl3lfJiV+1wn+C8osPtJ3S6jvfD0RA2+TB6w/iHPLzGm+1Eb5u9z4
-         pPvu1aSx/UZ3uAiQ9kYGgsz/wl42nS9KHpF3+x98+HLe6WzVgnpsnOvOG8K2Zpf29QsX
-         xjIci1gZoGTS/vZzbNFwiio4Vb15jy3b2qGGO9Q787Bvr3FwZUygR8Sayicij4i+zk0f
-         U1Xf//v6KZkVggIT+vjBSSB66mGBahifz8ZSI26E95ptm4FmCIjBNgHQRLQoyh74CyTP
-         HjjeEWFNL/TKHvuObWl2R44mJ2n5L0lPh/pbhMih3Jv6V2WApE85GgmOE3XteMfWdauV
-         p5OA==
-Received: by 10.204.147.78 with SMTP id k14mr5955845bkv.7.1354126978676;
-        Wed, 28 Nov 2012 10:22:58 -0800 (PST)
-Received: from localhost.localdomain (dslb-094-222-147-091.pools.arcor-ip.net. [94.222.147.91])
-        by mx.google.com with ESMTPS id d16sm13432198bkw.2.2012.11.28.10.22.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Nov 2012 10:22:57 -0800 (PST)
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <87wqx7s22j.fsf@pctrast.inf.ethz.ch>
+	id S1755476Ab2K1SZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 13:25:37 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33878 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754957Ab2K1SZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 13:25:37 -0500
+Received: (qmail 9724 invoked by uid 107); 28 Nov 2012 18:26:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Nov 2012 13:26:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2012 13:25:35 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210749>
 
-> Hi Ralf,
->
-> This is the middle third of my review.  Sorry for the long wait!  I h=
-ope
-> it can still be useful.
->
+Here are the cleanups and refactorings split out from my
+jk/send-email-sender-prompt series. They can go right on master and are
+independent of Felipe's fc/send-email-no-sender-prompt topic.
 
-Hi Thomas,
+  [1/5]: test-lib: allow negation of prerequisites
 
-no problem. Thanks for your review. Of course it's very useful.
-Some of the mistakes I made are so obvious that I can't say what
-I've had in mind when translation these messages :/ But some aren't,
-so thanks for the further explanations within your review.
+Same as before. I think this is a useful feature for the test suite (and
+2/5 depends on it).
 
-> I don't really share your apparent aversion to just using "<n>" :-)
-I don't really have one :) so I'm fine with using <n>.
+  [2/5]: t7502: factor out autoident prerequisite
 
-> This would be a good time to settle on a good translation for
-> "rewriting".  Perhaps "neu schreiben".  "=C3=9Cberschreiben" to me im=
-plies
-On some other places we actually use "neu schreiben".
+Same as before. Patch 5/5 depends on it.
 
->> -msgstr ""
->> +msgstr "erzeugt kleinere Pakete"
->
-> Smaller is not really the point: they are packs that do not have the
-[...]
-> You could call them "abgespeckt" ;-)
-I used "d=C3=BCnner"!?
+  [3/5]: ident: make user_ident_explicitly_given static
 
-=46urthermore I've unified the translation of "email" to "Email",
-not "eMail". You'll see the result below. I hope I haven't missed
-something.
+Same as before. Cleanup.
 
-Thanks,
-Ralf
+  [4/5]: ident: keep separate "explicit" flags for author and committer
 
----
- po/de.po | 95 ++++++++++++++++++++++++++++++++------------------------=
---------
- 1 file changed, 47 insertions(+), 48 deletions(-)
+Same as before. Cleanup. I do not know if anybody will ever care about
+the corner cases it fixes, so it is really just being defensive for
+future code.
 
-diff --git a/po/de.po b/po/de.po
-index fe6e8cf..1a75ea2 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -1978,7 +1978,7 @@ msgstr "Pfade sind getrennt durch NUL Zeichen"
- #: builtin/apply.c:4336
- msgid "ensure at least <n> lines of context match"
- msgstr ""
--"stellt sicher, dass mindestens <Anzahl> Zeilen des Kontextes =C3=BCbe=
-reinstimmen"
-+"stellt sicher, dass mindestens <n> Zeilen des Kontextes =C3=BCbereins=
-timmen"
-=20
- #: builtin/apply.c:4337
- msgid "action"
-@@ -2167,7 +2167,7 @@ msgstr "Unterdr=C3=BCckt den Namen des Autors und=
- den Zeitstempel (Standard: aus)"
-=20
- #: builtin/blame.c:2329
- msgid "Show author email instead of name (Default: off)"
--msgstr "Zeigt anstatt des Namens die eMail-Adresse des Autors (Standar=
-d: aus)"
-+msgstr "Zeigt anstatt des Namens die Email-Adresse des Autors (Standar=
-d: aus)"
-=20
- #: builtin/blame.c:2330
- msgid "Ignore whitespace differences"
-@@ -4072,7 +4072,7 @@ msgstr "gibt nur exakte =C3=9Cbereinstimmungen au=
-s"
-=20
- #: builtin/describe.c:412
- msgid "consider <n> most recent tags (default: 10)"
--msgstr "betrachtet die j=C3=BCngsten <Anzahl> Markierungen (Standard: =
-10)"
-+msgstr "betrachtet die j=C3=BCngsten <n> Markierungen (Standard: 10)"
-=20
- #: builtin/describe.c:414
- msgid "only consider tags matching <pattern>"
-@@ -4143,7 +4143,7 @@ msgstr "git fast-export [rev-list-opts]"
-=20
- #: builtin/fast-export.c:635
- msgid "show progress after <n> objects"
--msgstr "zeigt Fortschritt nach <Anzahl> Objekten an"
-+msgstr "zeigt Fortschritt nach <n> Objekten an"
-=20
- #: builtin/fast-export.c:637
- msgid "select handling of signed tags"
-@@ -4422,7 +4422,7 @@ msgstr ""
- #: builtin/fmt-merge-msg.c:13
- msgid "git fmt-merge-msg [-m <message>] [--log[=3D<n>]|--no-log] [--fi=
-le <file>]"
- msgstr ""
--"git fmt-merge-msg [-m <Beschreibung>] [--log[=3D<Anzahl>]|--no-log] [=
---file "
-+"git fmt-merge-msg [-m <Beschreibung>] [--log[=3D<n>]|--no-log] [--fil=
-e "
- "<Datei>]"
-=20
- #: builtin/fmt-merge-msg.c:653 builtin/fmt-merge-msg.c:656 builtin/gre=
-p.c:786
-@@ -4433,7 +4433,7 @@ msgstr "Anzahl"
-=20
- #: builtin/fmt-merge-msg.c:654
- msgid "populate log with at most <n> entries from shortlog"
--msgstr "f=C3=BCgt Historie mit h=C3=B6chstens <Nummer> Eintr=C3=A4gen =
-von \"shortlog\" hinzu"
-+msgstr "f=C3=BCgt Historie mit h=C3=B6chstens <n> Eintr=C3=A4gen von \=
-"shortlog\" hinzu"
-=20
- #: builtin/fmt-merge-msg.c:657
- msgid "alias for --log (deprecated)"
-@@ -4457,23 +4457,23 @@ msgstr "git for-each-ref [Optionen] [<Muster>]"
-=20
- #: builtin/for-each-ref.c:994
- msgid "quote placeholders suitably for shells"
--msgstr "quotiert Platzhalter geeignet f=C3=BCr Shells"
-+msgstr "formatiert Platzhalter als Shell-String"
-=20
- #: builtin/for-each-ref.c:996
- msgid "quote placeholders suitably for perl"
--msgstr "quotiert Platzhalter geeignet f=C3=BCr Perl"
-+msgstr "formatiert Platzhalter als Perl-String"
-=20
- #: builtin/for-each-ref.c:998
- msgid "quote placeholders suitably for python"
--msgstr "quotiert Platzhalter geeignet f=C3=BCr Python"
-+msgstr "formatiert Platzhalter als Python-String"
-=20
- #: builtin/for-each-ref.c:1000
- msgid "quote placeholders suitably for tcl"
--msgstr "quotiert Platzhalter geeignet f=C3=BCr TCL"
-+msgstr "formatiert Platzhalter als TCL-String"
-=20
- #: builtin/for-each-ref.c:1003
- msgid "show only <n> matched refs"
--msgstr "zeigt nur <Nummer> passende Referenzen"
-+msgstr "zeigt nur <n> passende Referenzen"
-=20
- #: builtin/for-each-ref.c:1004
- msgid "format"
-@@ -4489,7 +4489,7 @@ msgstr "Sch=C3=BCssel"
-=20
- #: builtin/for-each-ref.c:1006
- msgid "field name to sort on"
--msgstr "Name des Felder zum Sortieren"
-+msgstr "sortiere nach diesem Feld"
-=20
- #: builtin/fsck.c:608
- msgid "git fsck [options] [<object>...]"
-@@ -4521,7 +4521,7 @@ msgstr "erzeugt Kopfknoten des Referenzprotokolls=
- (Standard)"
-=20
- #: builtin/fsck.c:620
- msgid "also consider packs and alternate objects"
--msgstr "betrachtet auch Pakete und wechselnde Objekte"
-+msgstr ""
-=20
- #: builtin/fsck.c:621
- msgid "enable more strict checking"
-@@ -4645,7 +4645,7 @@ msgstr "findet =C3=9Cbereinstimmungen unabh=C3=A4=
-ngig von Gro=C3=9F- und Kleinschreibung"
-=20
- #: builtin/grep.c:741
- msgid "match patterns only at word boundaries"
--msgstr "findet Muster nur innerhalb von W=C3=B6rtern"
-+msgstr "sucht nur ganze W=C3=B6rter"
-=20
- #: builtin/grep.c:743
- msgid "process binary files as text"
-@@ -4728,15 +4728,15 @@ msgstr ""
-=20
- #: builtin/grep.c:787
- msgid "show <n> context lines before and after matches"
--msgstr "zeigt <Anzahl> Zeilen vor und nach den =C3=9Cbereinstimmungen =
-an"
-+msgstr "zeigt <n> Zeilen vor und nach den =C3=9Cbereinstimmungen an"
-=20
- #: builtin/grep.c:790
- msgid "show <n> context lines before matches"
--msgstr "zeigt <Anzahl> Zeilen vor den =C3=9Cbereinstimmungen an"
-+msgstr "zeigt <n> Zeilen vor den =C3=9Cbereinstimmungen an"
-=20
- #: builtin/grep.c:792
- msgid "show <n> context lines after matches"
--msgstr "zeigt <Anzahl> Zeilen nach den =C3=9Cbereinstimmungen an"
-+msgstr "zeigt <n> Zeilen nach den =C3=9Cbereinstimmungen an"
-=20
- #: builtin/grep.c:793
- msgid "shortcut for -C NUM"
-@@ -4764,7 +4764,7 @@ msgstr "kombiniert Muster, die mit -e angegeben w=
-urden"
-=20
- #: builtin/grep.c:817
- msgid "indicate hit with exit status without output"
--msgstr "kennzeichnet =C3=9Cbereinstimmungen mit Beendigungsstatus, ohn=
-e Ausgabe"
-+msgstr "zeigt =C3=9Cbereinstimmungen mit Beendigungsstatus, ohne Ausga=
-be"
-=20
- #: builtin/grep.c:819
- msgid "show only matches from files that match all patterns"
-@@ -4850,7 +4850,7 @@ msgstr "speichert Datei wie sie ist, ohne Filter"
-=20
- #: builtin/hash-object.c:77
- msgid "process file as it were from this path"
--msgstr "verarbeitet Datei, wie es von diesem Pfad w=C3=A4re"
-+msgstr "verarbeitet Datei, als ob sie von diesem Pfad w=C3=A4re"
-=20
- #: builtin/help.c:43
- msgid "print all available commands"
-@@ -4866,7 +4866,7 @@ msgstr "zeigt Handbuch in einem Webbrowser"
-=20
- #: builtin/help.c:47
- msgid "show info page"
--msgstr "zeigt Informationsseite"
-+msgstr "zeigt Info-Seite"
-=20
- #: builtin/help.c:53
- msgid "git help [--all] [--man|--web|--info] [command]"
-@@ -5110,7 +5110,7 @@ msgstr "Fehler beim Aufl=C3=B6sen der Unterschied=
-e"
- #: builtin/index-pack.c:1112
- #, c-format
- msgid "completed with %d local objects"
--msgstr "fertiggestellt mit %d lokalen Objekten"
-+msgstr "vervollst=C3=A4ndigt mit %d lokalen Objekten"
-=20
- #: builtin/index-pack.c:1121
- #, c-format
-@@ -5401,7 +5401,7 @@ msgstr "zeigt Quelle"
-=20
- #: builtin/log.c:102
- msgid "decorate options"
--msgstr "Ausgabeoptionen"
-+msgstr "decorate Optionen"
-=20
- #: builtin/log.c:189
- #, c-format
-@@ -5486,7 +5486,7 @@ msgstr "verwendet <Dateiendung> anstatt '.patch'"
-=20
- #: builtin/log.c:1078
- msgid "start numbering patches at <n> instead of 1"
--msgstr "beginnt die Nummerierung der Patches bei <Nummer> anstatt bei =
-1"
-+msgstr "beginnt die Nummerierung der Patches bei <n> anstatt bei 1"
-=20
- #: builtin/log.c:1080
- msgid "Use [<prefix>] instead of [PATCH]"
-@@ -5507,8 +5507,7 @@ msgstr "gibt keine bin=C3=A4ren Unterschiede aus"
- #: builtin/log.c:1091
- msgid "don't include a patch matching a commit upstream"
- msgstr ""
--"schlie=C3=9Ft keine Patches ein, die einer Version im externen Projek=
-tarchiv "
--"entsprechen"
-+"schlie=C3=9Ft keine Patches ein, die einer Version im =C3=9Cbernahmez=
-weig entsprechen"
-=20
- #: builtin/log.c:1093
- msgid "show patch format instead of default (patch + stat)"
-@@ -5516,27 +5515,27 @@ msgstr "zeigt Patchformat anstatt des Standards=
- (Patch + Zusammenfassung)"
-=20
- #: builtin/log.c:1095
- msgid "Messaging"
--msgstr "Datentransfer"
-+msgstr "Email-Einstellungen"
-=20
- #: builtin/log.c:1096
- msgid "header"
--msgstr "Kopfteil"
-+msgstr "Header"
-=20
- #: builtin/log.c:1097
- msgid "add email header"
--msgstr "f=C3=BCgt Kopfteil f=C3=BCr eMail hinzu"
-+msgstr "f=C3=BCgt Email-Header hinzu"
-=20
- #: builtin/log.c:1098 builtin/log.c:1100
- msgid "email"
--msgstr "eMail"
-+msgstr "Email"
-=20
- #: builtin/log.c:1098
- msgid "add To: header"
--msgstr "f=C3=BCgt Kopfteil \"To:\" hinzu"
-+msgstr "f=C3=BCgt  \"To:\" Header hinzu"
-=20
- #: builtin/log.c:1100
- msgid "add Cc: header"
--msgstr "f=C3=BCgt Kopteil \"Cc:\" hinzu"
-+msgstr "f=C3=BCgt \"Cc:\" Header hinzu"
-=20
- #: builtin/log.c:1102
- msgid "message-id"
-@@ -5544,7 +5543,7 @@ msgstr "message-id"
-=20
- #: builtin/log.c:1103
- msgid "make first mail a reply to <message-id>"
--msgstr "macht aus erster eMail eine Antwort zu <message-id>"
-+msgstr "macht aus erster Email eine Antwort zu <message-id>"
-=20
- #: builtin/log.c:1104 builtin/log.c:1107
- msgid "boundary"
-@@ -5556,7 +5555,7 @@ msgstr "h=C3=A4ngt einen Patch an"
-=20
- #: builtin/log.c:1108
- msgid "inline the patch"
--msgstr "f=C3=BCgt einen Patch ein"
-+msgstr "f=C3=BCgt den Patch direkt in die Nachricht ein"
-=20
- #: builtin/log.c:1112
- msgid "enable message threading, styles: shallow, deep"
-@@ -5635,7 +5634,7 @@ msgstr "git ls-files [Optionen] [<Datei>...]"
-=20
- #: builtin/ls-files.c:463
- msgid "identify the file status with tags"
--msgstr "bestimmt den Dateistatus mit Markierungen"
-+msgstr "zeigt den Dateistatus mit Markierungen"
-=20
- #: builtin/ls-files.c:465
- msgid "use lowercase letters for 'assume unchanged' files"
-@@ -5812,7 +5811,7 @@ msgstr "(Synonym f=C3=BCr --stat)"
- #: builtin/merge.c:189
- msgid "add (at most <n>) entries from shortlog to merge commit message=
-"
- msgstr ""
--"f=C3=BCgt (h=C3=B6chstens <Nummber>) Eintr=C3=A4ge von \"short\" zur =
-Beschreibung der "
-+"f=C3=BCgt (h=C3=B6chstens <n>) Eintr=C3=A4ge von \"shortlog\" zur Bes=
-chreibung der "
- "Zusammenf=C3=BChrung hinzu"
-=20
- #: builtin/merge.c:192
-@@ -6578,7 +6577,7 @@ msgstr "liest Objekte von der Standard-Eingabe"
- #: builtin/notes.c:617
- msgid "load rewriting config for <command> (implies --stdin)"
- msgstr ""
--"l=C3=A4dt Konfiguration f=C3=BCr <Kommando> beim =C3=9Cberschreiben v=
-on Versionen "
-+"l=C3=A4dt Konfiguration f=C3=BCr <Kommando> beim Neuschreiben von Ver=
-sionen "
- "(impliziert --stdin)"
-=20
- #: builtin/notes.c:635
-@@ -6817,7 +6816,7 @@ msgstr "entpackt nicht erreichbare Objekte, die n=
-euer als <Zeit> sind"
-=20
- #: builtin/pack-objects.c:2502
- msgid "create thin packs"
--msgstr "erzeugt kleinere Pakete"
-+msgstr "erzeugt d=C3=BCnnere Pakete"
-=20
- #: builtin/pack-objects.c:2504
- msgid "ignore packs that have companion .keep file"
-@@ -8092,7 +8091,7 @@ msgstr "Unterdr=C3=BCckt Versionsbeschreibungen, =
-liefert nur Anzahl der Versionen"
-=20
- #: builtin/shortlog.c:257
- msgid "Show the email address of each author"
--msgstr "Zeigt die eMail-Adresse von jedem Autor"
-+msgstr "Zeigt die Email-Adresse von jedem Autor"
-=20
- #: builtin/shortlog.c:258
- msgid "w[,i1[,i2]]"
-@@ -8110,14 +8109,14 @@ msgid ""
- "<glob>)...]"
- msgstr ""
- "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
-r] [--"
--"current] [--color[=3D<Wann>] | --no-color] [--sparse] [--more=3D<Numm=
-er> | --"
-+"current] [--color[=3D<Wann>] | --no-color] [--sparse] [--more=3D<n> |=
- --"
- "list | --independent | --merge-base] [--no-name | --sha1-name] [--top=
-ics] "
- "[(<Revision> | <glob>)...]"
-=20
- #: builtin/show-branch.c:10
- msgid "git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>]=
-"
- msgstr ""
--"git show-branch (-g|--reflog)[=3D<Nummer>[,<Basis>]] [--list] [<Refer=
-enz>]"
-+"git show-branch (-g|--reflog)[=3D<n>[,<Basis>]] [--list] [<Referenz>]=
-"
-=20
- #: builtin/show-branch.c:651
- msgid "show remote-tracking and local branches"
-@@ -8133,7 +8132,7 @@ msgstr "f=C3=A4rbt '*!+-' entsprechend des Zweige=
-s ein"
-=20
- #: builtin/show-branch.c:657
- msgid "show <n> more commits after the common ancestor"
--msgstr "zeigt <Nummer> weitere Versionen nach dem gemeinsamen Vorfahre=
-n"
-+msgstr "zeigt <n> weitere Versionen nach dem gemeinsamen Vorfahren"
-=20
- #: builtin/show-branch.c:659
- msgid "synonym to more=3D-1"
-@@ -8178,12 +8177,12 @@ msgstr "zeigt Versionen, wo kein Elternteil vor=
- seinem Kind kommt"
-=20
- #: builtin/show-branch.c:678
- msgid "<n>[,<base>]"
--msgstr "<Nummer>[,<Basis>]"
-+msgstr "<n>[,<Basis>]"
-=20
- #: builtin/show-branch.c:679
- msgid "show <n> most recent ref-log entries starting at base"
- msgstr ""
--"zeigt die <Nummer> j=C3=BCngsten Eintr=C3=A4ge im Referenzprotokoll b=
-eginnend an der "
-+"zeigt die <n> j=C3=BCngsten Eintr=C3=A4ge im Referenzprotokoll beginn=
-end an der "
- "Basis"
-=20
- #: builtin/show-ref.c:10
-@@ -8192,7 +8191,7 @@ msgid ""
- "[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [pattern*] "
- msgstr ""
- "git show-ref [-q|--quiet] [--verify] [--head] [-d|--dereference] [-s|=
---hash"
--"[=3D<Nummer>]] [--abbrev[=3D<Nummer>]] [--tags] [--heads] [--] [patte=
-rn*] "
-+"[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [pattern*] "
-=20
- #: builtin/show-ref.c:11
- msgid "git show-ref --exclude-existing[=3Dpattern] < ref-list"
-@@ -8220,7 +8219,7 @@ msgstr "dereferenziert Markierungen in Objekt-Ide=
-ntifikationen"
-=20
- #: builtin/show-ref.c:193
- msgid "only show SHA1 hash using <n> digits"
--msgstr "zeigt nur SHA1 Hash mit <Nummer> Ziffern"
-+msgstr "zeigt nur SHA1 Hash mit <n> Ziffern"
-=20
- #: builtin/show-ref.c:197
- msgid "do not print results to stdout (useful with --verify)"
-@@ -8372,7 +8371,7 @@ msgstr "listet Markierungsnamen auf"
-=20
- #: builtin/tag.c:449
- msgid "print <n> lines of each tag message"
--msgstr "zeigt <Anzahl> Zeilen jeder Markierungsbeschreibung"
-+msgstr "zeigt <n> Zeilen jeder Markierungsbeschreibung"
-=20
- #: builtin/tag.c:451
- msgid "delete tags"
-@@ -8671,7 +8670,7 @@ msgstr "weniger Ausgaben"
-=20
- #: parse-options.h:236
- msgid "use <n> digits to display SHA-1s"
--msgstr "benutze <Anzahl> Ziffern zur Anzeige von SHA-1s"
-+msgstr "benutze <n> Ziffern zur Anzeige von SHA-1s"
-=20
- #: common-cmds.h:8
- msgid "Add file contents to the index"
-@@ -8883,7 +8882,7 @@ msgstr ""
-=20
- #: git-am.sh:706
- msgid "Patch does not have a valid e-mail address."
--msgstr "Patch enth=C3=A4lt keine g=C3=BCltige eMail-Adresse."
-+msgstr "Patch enth=C3=A4lt keine g=C3=BCltige Email-Adresse."
-=20
- #: git-am.sh:753
- msgid "cannot be interactive without stdin connected to a terminal."
---=20
-1.8.0
+  [5/5]: t: add tests for "git var"
+
+Tests split out from he "git var can take multiple values" patch.
+
+Dropped were:
+
+  - "git var" can take multiple values. Nobody really cares about doing
+    so, and it's an external interface, so we'd have to support it
+    forever.
+
+  - exporting "explicit ident" flag via "git var"; same reasoning as
+    above
+
+  - Git.pm supporting explicit ident; ditto
+
+  - send-email prompting change; obsoleted by Felipe's patch
+
+-Peff
