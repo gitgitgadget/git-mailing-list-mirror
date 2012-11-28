@@ -1,110 +1,108 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Python extension commands in git - request for policy change
-Date: Wed, 28 Nov 2012 03:06:09 +0100
-Message-ID: <CAMP44s1jzUWm8BKxJR29RNWTWnxReExTeDTAKhk3mF3WJYNE0w@mail.gmail.com>
+Date: Wed, 28 Nov 2012 03:09:12 +0100
+Message-ID: <CAMP44s0UZ2yTKLkp51p9zqO4Quv9_WGO07P20eYeQesgXHxn3Q@mail.gmail.com>
 References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<50B1F684.5020805@alum.mit.edu>
-	<CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
-	<20121127143510.GA15831@google.com>
-	<CAMP44s10krOPD73dL0Ancie=kussk89jK7V5adR3hw=a73CVWw@mail.gmail.com>
-	<20121128005128.GB23224@sigill.intra.peff.net>
-	<CAMP44s0FiNRbFHbTtZJiWLDRQmy0VZ_FNGxE40eZrXwCFJ5P7A@mail.gmail.com>
-	<20121128013943.GA23776@sigill.intra.peff.net>
+	<CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com>
+	<20121125051809.GA3670@thyrsus.com>
+	<CAMP44s0r1J=aOuEpKQ1+ew9FzODwLX-w5z9rG-WN6AjU0o97yw@mail.gmail.com>
+	<20121125095429.GB22279@thyrsus.com>
+	<CAMP44s1cG=5D9DppHmB9CpgkgdEzM72KhQ1Q-kWrrDo8ST+r_g@mail.gmail.com>
+	<20121125175051.GD32394@thyrsus.com>
+	<CAMP44s3QNG-sxcZsWmL3RYjXkzOwerj2774t7Abh04A7QR6TCA@mail.gmail.com>
+	<20121125215635.GA6937@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?TWFnbnVzIELDpGNr?= <baeck@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 28 03:06:32 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org, 
+	msysGit <msysgit@googlegroups.com>
+To: esr@thyrsus.com
+X-From: msysgit+bncBDBJVMGGZYNBBSHE2WCQKGQEPLNDUCA@googlegroups.com Wed Nov 28 03:09:27 2012
+Return-path: <msysgit+bncBDBJVMGGZYNBBSHE2WCQKGQEPLNDUCA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vc0-f186.google.com ([209.85.220.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdX2l-0000uf-88
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 03:06:31 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308Ab2K1CGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 21:06:11 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:47705 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961Ab2K1CGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 21:06:10 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so13090314oag.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 18:06:09 -0800 (PST)
+	(envelope-from <msysgit+bncBDBJVMGGZYNBBSHE2WCQKGQEPLNDUCA@googlegroups.com>)
+	id 1TdX5a-0003cq-38
+	for gcvm-msysgit@m.gmane.org; Wed, 28 Nov 2012 03:09:26 +0100
+Received: by mail-vc0-f186.google.com with SMTP id fl17sf3575499vcb.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 27 Nov 2012 18:09:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fvDKlkcLnHqv3HXvzDAjQEi5xMWvFDvCzv608XGcUvU=;
-        b=VaLFjtKCBYjkK+volMvBpAiaXkNwWimhltpl9M8nikJzmoolSVkMMV9Z/kyqOA2yQI
-         e+8KCZN/LtXyJC9qhWIEt1ZddmNGev66RfQLG+tvrXx73bpEfCFU2dyGnkkp1rlBhXd5
-         Us7llVzZgZjrjVt/BN2DcPkoTqA3Pb42GozX7MG3PkdvGTzcXeHJ1AycKQr6Aqrut8Gj
-         UWQ2mLk1ZStsq8qYn0rKkooTby1eW3LUBn1K2IW+Mjt/PgC497nWcanWUgMBzbi2hdwb
-         SRKBABKEb2Ap+a7H8rrsPUkTtiUE/kW92yROq0qEVEQBjFcnsKqFAx2GGD8U+09itbyq
-         udrg==
-Received: by 10.182.17.72 with SMTP id m8mr1541267obd.55.1354068369527; Tue,
- 27 Nov 2012 18:06:09 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 18:06:09 -0800 (PST)
-In-Reply-To: <20121128013943.GA23776@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210668>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=aaTsJ/umMik+//tmE3c7APSQiGswXV87hmf3bztgB6o=;
+        b=thNPVHimI3WZlib+pcCxy1zWs6s+5efNiCdiD0wgQezucmlRNGWc3uKfkgP4k+KSZC
+         tLIKwMdRAJNyCR7fz4oLg2MM8jmNfAhamlXEHjsYzubdDyMAzEWlaI3GjNYyXBFMrB48
+         RhZH61FVpwAZUTjptT+TQwjbKdZZOwVctJCknv0LOGZBrzlhJJXw5ZVUx9m8QA3PWyLh
+         VHax4ws6Yui6CHvduUqg7+ZYPA0Uf6CThCwkIUfB4R9uimPrcwfv+/tnWETSKYesbHMK
+         I6h6/yBeJiRX/lc37IJzwwg/sXM417QsIVcDFY0NYe9+yqwo+HimupTA/2dcQ8fzcbfT
+         HRJA==
+Received: by 10.50.37.232 with SMTP id b8mr6585605igk.4.1354068554274;
+        Tue, 27 Nov 2012 18:09:14 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.53.173 with SMTP id c13ls3885593igp.38.gmail; Tue, 27 Nov
+ 2012 18:09:12 -0800 (PST)
+Received: by 10.42.55.66 with SMTP id u2mr12486794icg.33.1354068552772;
+        Tue, 27 Nov 2012 18:09:12 -0800 (PST)
+Received: by 10.42.55.66 with SMTP id u2mr12486793icg.33.1354068552761;
+        Tue, 27 Nov 2012 18:09:12 -0800 (PST)
+Received: from mail-oa0-f46.google.com (mail-oa0-f46.google.com [209.85.219.46])
+        by gmr-mx.google.com with ESMTPS id ul6si346442igb.2.2012.11.27.18.09.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Nov 2012 18:09:12 -0800 (PST)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 209.85.219.46 as permitted sender) client-ip=209.85.219.46;
+Received: by mail-oa0-f46.google.com with SMTP id h16so15408669oag.33
+        for <msysgit@googlegroups.com>; Tue, 27 Nov 2012 18:09:12 -0800 (PST)
+Received: by 10.182.21.175 with SMTP id w15mr1579744obe.28.1354068552502; Tue,
+ 27 Nov 2012 18:09:12 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 18:09:12 -0800 (PST)
+In-Reply-To: <20121125215635.GA6937@thyrsus.com>
+X-Original-Sender: felipe.contreras@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of felipe.contreras@gmail.com designates 209.85.219.46 as permitted
+ sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210669>
 
-On Wed, Nov 28, 2012 at 2:39 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 28, 2012 at 02:22:09AM +0100, Felipe Contreras wrote:
->
->> Sure, you will argue that we don't see the *real* issues, because they
->> were fixed preemptively, but the fact of the matter is that we will
->> never know. All we know is the reality we can observe, and the reality
->> is that we hit very few *real* issues outside the test system (feel
->> free to provide evidence to the contrary).
->
-> I think reports of breakage in the test scripts are relevant, because
-> they are indicative that people _do_ run platforms that care about these
-> issues, and if we were to write a lot of shell scripts, we would run
-> across them more frequently. But the fact of the matter is that we don't
-> write a lot of non-test shell scripts these days, which is part of the
-> reason limiting your search to the last 2 years did not turn up many
-> fixes outside the tests.
+On Sun, Nov 25, 2012 at 10:56 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com>:
+>> And gitk is an integral part of git. But if you have different
+>> numbers, what are they?
 
-If we were to write a lot of shell scripts, and we were to apply the
-same standards as we do with the tests, which most likely wouldn't be
-the case; end-user scripts are way more important, specially
-porcelain.
+> Please don't waste further time on quibbling.  We all know that gitk is
+> an uncomfortable special case and that the project would be far better
+> off, maintainability-wise, if it were successfully ported to one if these
+> other languages.  Trying to catch me out by triumphantly pointing at gitk
+> is...juvenile.
 
-> There was a big push in 2006 and 2007 to port some of the hairier
-> scripts to C. Try:
->
->   git log --no-renames --diff-filter=D \
->           --diff-filter=D --format='%ad %s' --date=short \
->           -- 'git-*.sh'
->
-> A lot of it was motivated by portability and decent performance for
-> common commands under Windows.
-
-Good stuff indeed. I look forward to the day all main git porcelain
-commands are written in C (git-rebase I'm looking at you), there are
-not many left:
-
-git-am
-git-bisect
-git-citool
-git-gui
-git-pull
-git-rebase
-git-stash
-git-submodule
-
-> Anyway, there is not much point in debating the exact level of pain that
-> shell portability causes us. Even if you accept that there is some, it
-> is clearly not a major problem for the project.
-
-Indeed.
+Another bit of information I just realized, 'man git' lists gitk as a
+'Main porcelain command' as high level as any git command can get.
 
 -- 
 Felipe Contreras
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
