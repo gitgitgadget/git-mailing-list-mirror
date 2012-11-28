@@ -1,670 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Nov 2012, #09; Wed, 28)
-Date: Wed, 28 Nov 2012 11:54:27 -0800
-Message-ID: <7v38ztv6z0.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/5] t9001: check send-email behavior with implicit sender
+Date: Wed, 28 Nov 2012 15:06:26 -0500
+Message-ID: <20121128200626.GA4292@sigill.intra.peff.net>
+References: <20121128182534.GA21020@sigill.intra.peff.net>
+ <20121128184229.GA3993@sigill.intra.peff.net>
+ <7vk3t5v9q1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 28 20:54:50 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 21:06:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tdnib-0001YO-2C
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 20:54:49 +0100
+	id 1Tdnu8-0006c8-Bw
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 21:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755652Ab2K1Tyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 14:54:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58471 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754448Ab2K1Tyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 14:54:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E8B5A2C4;
-	Wed, 28 Nov 2012 14:54:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=7
-	tE5Mci9KEOT8Cn3j0TXYF04LRk=; b=nloYhzJFeu0xh74qMwfCalMACR7ZfwAwL
-	bC/GFgxV2p3y0sSORsUB+sfuEtnF/edroR2SwkiA1nNMjPhRVoiF4xR0tIo/OObu
-	iGFh1EHTKfYhlK7eBPG1dhC+X8BX3YWZzvB/jcfpgFAZRBXCDiT0RfdgpbWMJDBU
-	Zx4N8u1fEs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Z4K
-	ajSUMcNk4ilfy9LriBAC5lwOPRl8iOAw43yeEnoAq5yk7n55tEfTAVigX235EF2s
-	3gh0vPEvV5fu8RQDgpxV4PhDR8RzF6spVLMW2J4+9ox0WeXdhX5B/TGBHTKdvKBq
-	PnmkMqDmfzi0cjAg+XNxqbrzzyegi9ygb2qgvkXg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8882DA2C3;
-	Wed, 28 Nov 2012 14:54:30 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 26960A2BD; Wed, 28 Nov 2012
- 14:54:29 -0500 (EST)
-X-master-at: b7973fbbc3f8f72df352f4ef1a2ff325db92c36f
-X-next-at: 0e4115f14e74f5bdd623ce876941a254499f6c9d
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B8A0FA2-3995-11E2-B591-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755458Ab2K1UG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 15:06:29 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33999 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754985Ab2K1UG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 15:06:28 -0500
+Received: (qmail 11420 invoked by uid 107); 28 Nov 2012 20:07:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Nov 2012 15:07:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2012 15:06:26 -0500
+Content-Disposition: inline
+In-Reply-To: <7vk3t5v9q1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210768>
-
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.
-
-Hopefully 1.8.1-rc0 preview will be tagged this weekend.  Many
-topics are marked to be cooked in 'next' during the feature freeze,
-but some topics in flight should be in 'master' before -rc1 happens.
-
-You can find the changes described here in the integration branches of the
-repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[New Topics]
-
-* bc/append-signed-off-by (2012-11-26) 11 commits
- - Unify appending signoff in format-patch, commit and sequencer
- - format-patch: update append_signoff prototype
- - format-patch: stricter S-o-b detection
- - t4014: more tests about appending s-o-b lines
- - sequencer.c: teach append_signoff to avoid adding a duplicate newline
- - sequencer.c: teach append_signoff how to detect duplicate s-o-b
- - sequencer.c: always separate "(cherry picked from" from commit body
- - sequencer.c: recognize "(cherry picked from ..." as part of s-o-b footer
- - t/t3511: add some tests of 'cherry-pick -s' functionality
- - t/test-lib-functions.sh: allow to specify the tag name to test_commit
- - sequencer.c: remove broken support for rfc2822 continuation in footer
-
- Will merge to 'next'.
-
-
-* er/doc-add-new-commands (2012-11-26) 1 commit
- - Documentation: how to add a new command
-
- Will merge to 'next'.
-
-
-* fc/send-email-no-sender-prompt (2012-11-26) 1 commit
- - send-email: avoid questions when user has an ident
- (this branch is used by jk/send-email-sender-prompt.)
-
- Will merge to 'next'.
-
-
-* jl/submodule-rm (2012-11-23) 1 commit
-  (merged to 'next' on 2012-11-28 at 0e4115f)
- + Teach rm to remove submodules when given with a trailing '/'
-
- Finishing touches to the topic already in 'master'.
- Will merge to 'master'.
-
-
-* km/send-email-remove-cruft-in-address (2012-11-26) 5 commits
- - git-send-email: allow edit invalid email address
- - git-send-email: ask what to do with an invalid email address
- - git-send-email: remove invalid addresses earlier
- - git-send-email: fix fallback code in extract_valid_address()
- - git-send-email: remove garbage after email address
-
- Will merge to 'next'.
-
-
-* mh/unify-xml-in-imap-send-and-http-push (2012-11-26) 8 commits
- - wrap_in_html(): process message in bulk rather than line-by-line
- - wrap_in_html(): use strbuf_addstr_xml_quoted()
- - imap-send: change msg_data from storing (char *, len) to storing strbuf
- - imap-send: correctly report errors reading from stdin
- - imap-send: store all_msgs as a strbuf
- - lf_to_crlf(): NUL-terminate msg_data::data
- - xml_entities(): use function strbuf_addstr_xml_quoted()
- - Add new function strbuf_add_xml_quoted()
-
-
-* pw/p4-various-fixes (2012-11-26) 6 commits
- - git p4: remove unneeded cmd initialization
- - git p4: fix labelDetails typo in exception
- - git p4 test: display unresolvable host error
- - git p4: catch p4 errors when streaming file contents
- - git p4: handle servers without move support
- - git p4: catch p4 describe errors
-
- Will merge to 'next'.
-
-
-* rr/t4041-cleanup (2012-11-27) 4 commits
- - t4041 (diff-submodule-option): modernize style
- - t4041 (diff-submodule-option): rewrite add_file() routine
- - t4041 (diff-submodule-option): parse digests sensibly
- - t4041 (diff-submodule-option): don't hardcode SHA-1 in expected outputs
-
- As a clean-up, it still misses some.
-
-
-* jc/doc-maintainer (2012-11-27) 1 commit
- - update "howto maintain git"
-
- An early draft that is still incomplete.
-
-
-* jc/doc-push-satellite (2012-11-27) 1 commit
- - Documentation/git-push.txt: clarify the "push from satellite" workflow
-
- Will merge to 'next'.
-
-
-* jk/fsck-dot-in-trees (2012-11-28) 1 commit
- - fsck: warn about '.' and '..' in trees
-
- Will merge to 'next'.
-
-
-* lt/diff-stat-show-0-lines (2012-11-27) 6 commits
- - diff --shortstat: do not count "unmerged" entries
- - diff --stat: do not count "unmerged" entries
- - diff --stat: move the "total count" logic to the last loop
- - diff --stat: use "file" temporary variable to refer to data->files[i]
- - diff --stat: status of unmodified pair in diff-q is not zero
- - test: add failing tests for "diff --stat" to t4049
-
- Will merge to 'next'.
-
-
-* mh/doc-remote-helpers (2012-11-27) 6 commits
- - git-remote-helpers.txt: clarify options & ref list attributes
- - git-remote-helpers.txt: clarify command <-> capability correspondences
- - git-remote-helpers.txt: rearrange description of capabilities
- - git-remote-helpers.txt: minor grammar fix
- - git-remote-helpers.txt: document missing capabilities
- - git-remote-helpers.txt: document invocation before input format
-
- Need comment and Ack from people who have worked on remote-helpers
- before this goes forward.
-
-
-* mh/pthreads-autoconf (2012-11-27) 1 commit
- - configure.ac: fix pthreads detection on Mac OS X
-
- Will merge to 'next'.
-
-
-* mk/complete-tcsh (2012-11-27) 1 commit
- - Support for git aliasing for tcsh completion
-
- Will merge to 'next'.
-
---------------------------------------------------
-[Stalled]
-
-* pf/editor-ignore-sigint (2012-11-11) 5 commits
- - launch_editor: propagate SIGINT from editor to git
- - run-command: do not warn about child death by SIGINT
- - run-command: drop silent_exec_failure arg from wait_or_whine
- - launch_editor: ignore SIGINT while the editor has control
- - launch_editor: refactor to use start/finish_command
-
- Avoid confusing cases where the user hits Ctrl-C while in the editor
- session, not realizing git will receive the signal. Since most editors
- will take over the terminal and will block SIGINT, this is not likely
- to confuse anyone.
-
- Some people raised issues with emacsclient, which are addressed by this
- re-roll. It should probably also handle SIGQUIT, and there were a
- handful of other review comments.
-
- Expecting a re-roll.
-
-
-* mo/cvs-server-updates (2012-10-16) 10 commits
- - cvsserver Documentation: new cvs ... -r support
- - cvsserver: add t9402 to test branch and tag refs
- - cvsserver: support -r and sticky tags for most operations
- - cvsserver: Add version awareness to argsfromdir
- - cvsserver: generalize getmeta() to recognize commit refs
- - cvsserver: implement req_Sticky and related utilities
- - cvsserver: add misc commit lookup, file meta data, and file listing functions
- - cvsserver: define a tag name character escape mechanism
- - cvsserver: cleanup extra slashes in filename arguments
- - cvsserver: factor out git-log parsing logic
-
- Needs review by folks interested in cvsserver.
-
-
-* jn/warn-on-inaccessible-loosen (2012-10-14) 4 commits
- - config: exit on error accessing any config file
- - doc: advertise GIT_CONFIG_NOSYSTEM
- - config: treat user and xdg config permission problems as errors
- - config, gitignore: failure to access with ENOTDIR is ok
-
- An RFC to deal with a situation where .config/git is a file and we
- notice .config/git/config is not readable due to ENOTDIR, not
- ENOENT; I think a bit more refactored approach to consistently
- address permission errors across config, exclude and attrs is
- desirable.  Don't we also need a check for an opposite situation
- where we open .config/git/config or .gitattributes for reading but
- they turn out to be directories?
-
-
-* as/check-ignore (2012-11-08) 14 commits
- - t0007: fix tests on Windows
- - Documentation/check-ignore: we show the deciding match, not the first
- - Add git-check-ignore sub-command
- - dir.c: provide free_directory() for reclaiming dir_struct memory
- - pathspec.c: move reusable code from builtin/add.c
- - dir.c: refactor treat_gitlinks()
- - dir.c: keep track of where patterns came from
- - dir.c: refactor is_path_excluded()
- - dir.c: refactor is_excluded()
- - dir.c: refactor is_excluded_from_list()
- - dir.c: rename excluded() to is_excluded()
- - dir.c: rename excluded_from_list() to is_excluded_from_list()
- - dir.c: rename path_excluded() to is_path_excluded()
- - dir.c: rename cryptic 'which' variable to more consistent name
-
- Duy helped to reroll this.
-
- Expecting a re-roll.
-
-
-* aw/rebase-am-failure-detection (2012-10-11) 1 commit
- - rebase: Handle cases where format-patch fails
-
- I am unhappy a bit about the possible performance implications of
- having to store the output in a temporary file only for a rare case
- of format-patch aborting.
-
-
-* jk/lua-hackery (2012-10-07) 6 commits
- - pretty: fix up one-off format_commit_message calls
- - Minimum compilation fixup
- - Makefile: make "lua" a bit more configurable
- - add a "lua" pretty format
- - add basic lua infrastructure
- - pretty: make some commit-parsing helpers more public
-
- Interesting exercise. When we do this for real, we probably would want
- to wrap a commit to make it more like an "object" with methods like
- "parents", etc.
-
-
-* fc/remote-testgit-feature-done (2012-10-29) 1 commit
- - remote-testgit: properly check for errors
-
- Is this still in "Needs review" state?  Are people involved in the
- remote interface happy with this change?
-
-
-* rc/maint-complete-git-p4 (2012-09-24) 1 commit
-  (merged to 'next' on 2012-10-29 at af52cef)
- + Teach git-completion about git p4
-
- Comment from Pete will need to be addressed in a follow-up patch.
-
-
-* as/test-tweaks (2012-09-20) 7 commits
- - tests: paint unexpectedly fixed known breakages in bold red
- - tests: test the test framework more thoroughly
- - [SQUASH] t/t0000-basic.sh: quoting of TEST_DIRECTORY is screwed up
- - tests: refactor mechanics of testing in a sub test-lib
- - tests: paint skipped tests in bold blue
- - tests: test number comes first in 'not ok $count - $message'
- - tests: paint known breakages in bold yellow
-
- Various minor tweaks to the test framework to paint its output
- lines in colors that match what they mean better.
-
- Has the "is this really blue?" issue Peff raised resolved???
-
-
-* jc/maint-name-rev (2012-09-17) 7 commits
- - describe --contains: use "name-rev --algorithm=weight"
- - name-rev --algorithm=weight: tests and documentation
- - name-rev --algorithm=weight: cache the computed weight in notes
- - name-rev --algorithm=weight: trivial optimization
- - name-rev: --algorithm option
- - name_rev: clarify the logic to assign a new tip-name to a commit
- - name-rev: lose unnecessary typedef
-
- "git name-rev" names the given revision based on a ref that can be
- reached in the smallest number of steps from the rev, but that is
- not useful when the caller wants to know which tag is the oldest one
- that contains the rev.  This teaches a new mode to the command that
- uses the oldest ref among those which contain the rev.
-
- I am not sure if this is worth it; for one thing, even with the help
- from notes-cache, it seems to make the "describe --contains" even
- slower. Also the command will be unusably slow for a user who does
- not have a write access (hence unable to create or update the
- notes-cache).
-
- Stalled mostly due to lack of responses.
-
-
-* jc/xprm-generation (2012-09-14) 1 commit
- - test-generation: compute generation numbers and clock skews
-
- A toy to analyze how bad the clock skews are in histories of real
- world projects.
-
- Stalled mostly due to lack of responses.
-
-
-* jc/blame-no-follow (2012-09-21) 2 commits
- - blame: pay attention to --no-follow
- - diff: accept --no-follow option
-
- Teaches "--no-follow" option to "git blame" to disable its
- whole-file rename detection.
-
- Stalled mostly due to lack of responses.
-
-
-* jc/doc-default-format (2012-11-26) 2 commits
- - [SQAUSH] allow "cd Doc* && make DEFAULT_DOC_TARGET=..."
- - Allow generating a non-default set of documentation
-
- Need to address the installation half if this is to be any useful.
-
-
-* mk/maint-graph-infinity-loop (2012-09-25) 1 commit
- - graph.c: infinite loop in git whatchanged --graph -m
-
- The --graph code fell into infinite loop when asked to do what the
- code did not expect ;-)
-
- Anybody who worked on "--graph" wants to comment?
- Stalled mostly due to lack of responses.
-
-
-* jc/add-delete-default (2012-08-13) 1 commit
- - git add: notice removal of tracked paths by default
-
- "git add dir/" updated modified files and added new files, but does
- not notice removed files, which may be "Huh?" to some users.  They
- can of course use "git add -A dir/", but why should they?
-
- Resurrected from graveyard, as I thought it was a worthwhile thing
- to do in the longer term.
-
- Waiting for comments.
-
-
-* mb/remote-default-nn-origin (2012-07-11) 6 commits
- - Teach get_default_remote to respect remote.default.
- - Test that plain "git fetch" uses remote.default when on a detached HEAD.
- - Teach clone to set remote.default.
- - Teach "git remote" about remote.default.
- - Teach remote.c about the remote.default configuration setting.
- - Rename remote.c's default_remote_name static variables.
-
- When the user does not specify what remote to interact with, we
- often attempt to use 'origin'.  This can now be customized via a
- configuration variable.
-
- Expecting a re-roll.
-
- "The first remote becomes the default" bit is better done as a
- separate step.
-
---------------------------------------------------
-[Cooking]
-
-* mh/ceiling (2012-10-29) 8 commits
-  (merged to 'next' on 2012-11-26 at d1ce76a)
- + string_list_longest_prefix(): remove function
- + setup_git_directory_gently_1(): resolve symlinks in ceiling paths
- + longest_ancestor_length(): require prefix list entries to be normalized
- + longest_ancestor_length(): take a string_list argument for prefixes
- + longest_ancestor_length(): use string_list_split()
- + Introduce new function real_path_if_valid()
- + real_path_internal(): add comment explaining use of cwd
- + Introduce new static function real_path_internal()
-
- Elements of GIT_CEILING_DIRECTORIES list may not match the real
- pathname we obtain from getcwd(), leading the GIT_DIR discovery
- logic to escape the ceilings the user thought to have specified.
-
- Resurrected from Stalled; the earlier performance fear was
- unwarranted.
-
- Will cook in 'next'.
-
-
-* jk/send-email-sender-prompt (2012-11-28) 7 commits
- - t9001: check send-email behavior with implicit sender
- - Merge branch 'fc/send-email-no-sender-prompt' into jk/send-email-sender-prompt
- - t: add tests for "git var"
- - ident: keep separate "explicit" flags for author and committer
- - ident: make user_ident_explicitly_given static
- - t7502: factor out autoident prerequisite
- - test-lib: allow negation of prerequisites
- (this branch uses fc/send-email-no-sender-prompt.)
-
- Resurrected only the internal clean-up part.
-
- Will merge to 'next'.
-
-
-* fc/fast-export-fixes (2012-11-27) 25 commits
- - fast-export: trivial cleanups
- - fast-export: refactor get_tags_and_duplicates()
- - fast-export: make extra_refs global
- - transport-helper: fix push without marks
- - transport-helper: fix pushing with straight refspec
- - transport-helper: fix push without refspec
- - transport-helper: trivial code shuffle
- - [squash] earlier breakages in t5800 fixed by the previous
- - fast-export: don't handle uninteresting refs
- - transport-helper: update remote helper namespace
- - [squash] previous breaks t5800
- - fast-export: make sure updated refs get updated
- - fast-export: fix comparison in tests
- - fast-export: trivial cleanup
- - remote-testgit: implement the "done" feature manually
- - remote-testgit: report success after an import
- - remote-testgit: exercise more features
- - remote-testgit: cleanup tests
- - remote-testgit: remove irrelevant test
- - remote-testgit: remove non-local functionality
- - Add new simplified git-remote-testgit
- - Rename git-remote-testgit to git-remote-testpy
- - remote-helpers: fix failure message
- - remote-testgit: fix direction of marks
- - fast-export: avoid importing blob marks
-
- It needs a bit of re-roll or reorder to keep things bisectable, at
- least, and with log message here and there to justify non-trivial
- bits with something better than unsubstantiated "this is trivial"
- claim.  Overall, the series looked OK.
-
-
-* pp/gitweb-config-underscore (2012-11-21) 1 commit
- - gitweb: make remote_heads config setting work
-
- The key "gitweb.remote_heads" is not legal git config; this maps it to
- "gitweb.remoteheads".
-
- Will merge to 'next'.
-
-
-* jc/apply-trailing-blank-removal (2012-10-12) 1 commit
-  (merged to 'next' on 2012-11-26 at 3af69e7)
- + apply.c:update_pre_post_images(): the preimage can be truncated
-
- Fix to update_pre_post_images() that did not take into account the
- possibility that whitespace fix could shrink the preimage and
- change the number of lines in it.
-
- Will cook in 'next'.
-
-
-* nd/pathspec-wildcard (2012-11-26) 4 commits
- - tree_entry_interesting: do basedir compare on wildcard patterns when possible
- - pathspec: apply "*.c" optimization from exclude
- - pathspec: do exact comparison on the leading non-wildcard part
- - pathspec: save the non-wildcard length part
-
- Will merge to 'next'.
-
-
-* mm/status-push-pull-advise (2012-11-16) 1 commit
-  (merged to 'next' on 2012-11-26 at ed40d5e)
- + status: add advice on how to push/pull to tracking branch
-
- Will merge to 'master' in the seventh batch.
-
-
-* fc/zsh-completion (2012-11-19) 2 commits
-  (merged to 'next' on 2012-11-26 at 48ebdc9)
- + completion: start moving to the new zsh completion
- + completion: add new zsh completion
-
- Will merge to 'master' in the seventh batch.
-
-
-* nd/wildmatch (2012-11-20) 14 commits
-  (merged to 'next' on 2012-11-21 at 151288f)
- + test-wildmatch: avoid Windows path mangling
-  (merged to 'next' on 2012-10-25 at 510e8df)
- + Support "**" wildcard in .gitignore and .gitattributes
- + wildmatch: make /**/ match zero or more directories
- + wildmatch: adjust "**" behavior
- + wildmatch: fix case-insensitive matching
- + wildmatch: remove static variable force_lower_case
- + wildmatch: make wildmatch's return value compatible with fnmatch
- + t3070: disable unreliable fnmatch tests
- + Integrate wildmatch to git
- + wildmatch: follow Git's coding convention
- + wildmatch: remove unnecessary functions
- + Import wildmatch from rsync
- + ctype: support iscntrl, ispunct, isxdigit and isprint
- + ctype: make sane_ctype[] const array
-
- Allows pathname patterns in .gitignore and .gitattributes files
- with double-asterisks "foo/**/bar" to match any number of directory
- hierarchies.
-
- I suspect that this needs to be plugged to pathspec matching code;
- otherwise "git log -- 'Docum*/**/*.txt'" would not show the log for
- commits that touch Documentation/git.txt, which would be confusing
- to the users.
-
- Will cook in 'next'.
-
-
-* fc/completion-test-simplification (2012-11-16) 6 commits
- - completion: simplify __gitcomp() test helper
- - completion: refactor __gitcomp related tests
- - completion: consolidate test_completion*() tests
- - completion: simplify tests using test_completion_long()
- - completion: standardize final space marker in tests
- - completion: add comment for test_completion()
-
- Clean up completion tests.  Use of conslidated helper may make
- instrumenting one particular test during debugging of the test
- itself, but I think that issue should be addressed in some other
- way (e.g. making sure individual tests in 9902 can be skipped).
-
- Will merge to 'next'.
-
-
-* jk/pickaxe-textconv (2012-10-28) 2 commits
-  (merged to 'next' on 2012-11-26 at 2c5b5c9)
- + pickaxe: use textconv for -S counting
- + pickaxe: hoist empty needle check
-
- Use textconv filters when searching with "log -S".
-
- Will merge to 'master' in the seventh batch.
-
-
-* fc/remote-bzr (2012-11-28) 10 commits
- - (fixup) test-bzr.sh: fix multi-line string assignment
- - remote-bzr: detect local repositories
- - remote-bzr: add support for older versions of bzr
- - remote-bzr: add support to push special modes
- - remote-bzr: add support for fecthing special modes
- - remote-bzr: add simple tests
- - remote-bzr: update working tree
- - remote-bzr: add support for remote repositories
- - remote-bzr: add support for pushing
- - Add new remote-bzr transport helper
-
- New remote helper for bzr (v3).  With minor fixes this may be ready
- for 'next'.
-
-
-* fc/remote-hg (2012-11-27) 22 commits
-  (merged to 'next' on 2012-11-28 at f805784)
- + remote-hg: fix for older versions of python
- + remote-hg: fix for files with spaces
-  (merged to 'next' on 2012-11-18 at 4a4f2e4)
- + remote-hg: avoid bad refs
- + remote-hg: try the 'tip' if no checkout present
- + remote-hg: fix compatibility with older versions of hg
- + remote-hg: add missing config for basic tests
- + remote-hg: the author email can be null
- + remote-hg: add option to not track branches
- + remote-hg: add extra author test
- + remote-hg: add tests to compare with hg-git
- + remote-hg: add bidirectional tests
- + test-lib: avoid full path to store test results
- + remote-hg: add basic tests
- + remote-hg: fake bookmark when there's none
- + remote-hg: add compat for hg-git author fixes
- + remote-hg: add support for hg-git compat mode
- + remote-hg: match hg merge behavior
- + remote-hg: make sure the encoding is correct
- + remote-hg: add support to push URLs
- + remote-hg: add support for remote pushing
- + remote-hg: add support for pushing
- + Add new remote-hg transport helper
-
- New remote helper for hg.
-
- Will merge to 'master'.
-
-
-* cr/push-force-tag-update (2012-11-26) 7 commits
- - push: clarify rejection of update to non-commit-ish
- - push: require force for annotated tags
- - push: require force for refs under refs/tags/
- - push: flag updates that require force
- - push: keep track of "update" state separately
- - push: add advice for rejected tag reference
- - push: return reject reasons via a mask
-
- Require "-f" for push to update a tag, even if it is a fast-forward.
-
- With a minor tweak, I think this is getting ready for 'next'.
-
---------------------------------------------------
-[Discarded]
-
-* nd/unify-appending-of-s-o-b (2012-11-15) 1 commit
- . Unify appending signoff in format-patch, commit and sequencer
-
- I am not sure if the logic to refrain from adding a sign-off based
- on the existing run of sign-offs is done correctly in this change.
-
- Brandon's series attempts the same thing and seemed to be more
- cleanly done.
-
-
-* nd/pretty-placeholder-with-color-option (2012-09-30) 9 commits
- . pretty: support %>> that steal trailing spaces
- . pretty: support truncating in %>, %< and %><
- . pretty: support padding placeholders, %< %> and %><
- . pretty: two phase conversion for non utf-8 commits
- . utf8.c: add utf8_strnwidth() with the ability to skip ansi sequences
- . utf8.c: move display_mode_esc_sequence_len() for use by other functions
- . pretty: support %C(auto[,N]) to turn on coloring on next placeholder(s)
- . pretty: split parsing %C into a separate function
- . pretty: share code between format_decoration and show_decorations
-
- This causes warnings with -Wuninitialized, so I've ejected it from pu
- for the time being.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210769>
+
+On Wed, Nov 28, 2012 at 10:55:02AM -0800, Junio C Hamano wrote:
+
+> > +test_expect_success $PREREQ,AUTOIDENT 'implicit ident is allowed' '
+> > +       clean_fake_sendmail &&
+> > +       (sane_unset GIT_AUTHOR_NAME &&
+> > +	sane_unset GIT_AUTHOR_EMAIL &&
+> > +	sane_unset GIT_COMMITTER_NAME &&
+> > +	sane_unset GIT_COMMITTER_EMAIL &&
+> > +	GIT_SEND_EMAIL_NOTTY=1 git send-email \
+> > +		--smtp-server="$(pwd)/fake.sendmail" \
+> > +		--to=to@example.com \
+> > +		$patches \
+> > +		</dev/null 2>errors
+> > +       )
+> > +'
+> > +
+> > +test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email' '
+> > +       clean_fake_sendmail &&
+> > +       (sane_unset GIT_AUTHOR_NAME &&
+> > +	sane_unset GIT_AUTHOR_EMAIL &&
+> > +	sane_unset GIT_COMMITTER_NAME &&
+> > +	sane_unset GIT_COMMITTER_EMAIL &&
+> > +	GIT_SEND_EMAIL_NOTTY=1 && export GIT_SEND_EMAIL_NOTTY &&
+> > +	test_must_fail git send-email \
+> > +		--smtp-server="$(pwd)/fake.sendmail" \
+> > +		$patches </dev/null 2>errors &&
+> > +	test_i18ngrep "tell me who you are" errors
+> > +       )
+> > +'
+> 
+> The difference between these two tests should solely come from
+> AUTOIDENT and nothing else, so it would be better to see their
+> command line arguments to match; the former is with --to and the
+> latter is without in this patch but I do not think you meant them to
+> differ that way.
+
+Yeah, that makes sense. The top one originally was testing that we
+still prompted in the autoident case, and so had some echos piped into
+send-email. I simplified it to use --to, but I agree it is even better
+to show that the commands are identical.
+
+Here's a cleaned up version that makes it more obvious the commands are
+the same (it also fixes a few minor whitespace problems on the
+indentation, which you can see from the quoting above).
+
+-- >8 --
+Subject: [PATCH] t9001: check send-email behavior with implicit sender
+
+We allow send-email to use an implicitly-defined identity
+for the sender (because there is still a confirmation step),
+but we abort when we cannot generate such an identity. Let's
+make sure that we test this.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t9001-send-email.sh | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index c5d66cf..97d6f4c 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -201,6 +201,34 @@ test_expect_success $PREREQ 'Prompting works' '
+ 		grep "^To: to@example.com\$" msgtxt1
+ '
+ 
++test_expect_success $PREREQ,AUTOIDENT 'implicit ident is allowed' '
++	clean_fake_sendmail &&
++	(sane_unset GIT_AUTHOR_NAME &&
++	sane_unset GIT_AUTHOR_EMAIL &&
++	sane_unset GIT_COMMITTER_NAME &&
++	sane_unset GIT_COMMITTER_EMAIL &&
++	GIT_SEND_EMAIL_NOTTY=1 git send-email \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--to=to@example.com \
++		$patches </dev/null 2>errors
++	)
++'
++
++test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email' '
++	clean_fake_sendmail &&
++	(sane_unset GIT_AUTHOR_NAME &&
++	sane_unset GIT_AUTHOR_EMAIL &&
++	sane_unset GIT_COMMITTER_NAME &&
++	sane_unset GIT_COMMITTER_EMAIL &&
++	GIT_SEND_EMAIL_NOTTY=1 && export GIT_SEND_EMAIL_NOTTY &&
++	test_must_fail git send-email \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--to=to@example.com \
++		$patches </dev/null 2>errors &&
++	test_i18ngrep "tell me who you are" errors
++	)
++'
++
+ test_expect_success $PREREQ 'tocmd works' '
+ 	clean_fake_sendmail &&
+ 	cp $patches tocmd.patch &&
+-- 
+1.8.0.207.gdf2154c
