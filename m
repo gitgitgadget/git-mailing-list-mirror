@@ -1,107 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Documentation/git-push.txt: clarify the "push from
- satellite" workflow
-Date: Tue, 27 Nov 2012 15:52:27 -0800
-Message-ID: <7v1ufeli2s.fsf_-_@alter.siamese.dyndns.org>
-References: <1353977748-17110-1-git-send-email-bcasey@nvidia.com>
- <7vy5hnomsl.fsf@alter.siamese.dyndns.org> <50B41DF7.2000705@nvidia.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6 p2 3/9] transport-helper: trivial code shuffle
+Date: Wed, 28 Nov 2012 01:05:34 +0100
+Message-ID: <CAMP44s0fmt+bHN-ycza8b+y8Ep-Cyqmg1U1PVas267fTY5iPPQ@mail.gmail.com>
+References: <1353727520-26039-1-git-send-email-felipe.contreras@gmail.com>
+	<1353727520-26039-4-git-send-email-felipe.contreras@gmail.com>
+	<7vk3t7nfql.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <bcasey@nvidia.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:52:47 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Thiago Farina <tfransosi@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 01:05:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdUxK-0003o6-NH
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 00:52:47 +0100
+	id 1TdV9z-0006Fh-Dj
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756899Ab2K0Xwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 18:52:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34771 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756768Ab2K0Xwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 18:52:30 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3664A582;
-	Tue, 27 Nov 2012 18:52:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YGJ+bkpSU0tG6j+T/QVGu+Vxd4M=; b=cEHOJ+
-	445TfEBe/9Nh6W/R0xw/ZjTq4CvaSOB/B6Fs1GmC32JuYvIQDaDy65b6y/YKdDEz
-	k+eUGNoLksq+CHO7Ui559PZBcRdTvAxI8uykMbUownvBeq9t5QXNPdgiOENwIiAM
-	AdEDgxxoidAKK6IpxBWr6rBehmSq2ayLWtLWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ozfg7dhQu+bk5i10h693yGK5Owz7fBpU
-	qNHfjym2u3xIU6XjlYUMqhd//xWA7zh06XSyHhMdHZ+WBuMdapFyuKDFo24+j4mX
-	CyH6tbErAe4pMCmQBVSItMeBNoKt+BIyn7GPxDOJLhJdyC7t7WHuUTUCa3i3k63D
-	2NLy7gtuR/c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AED62A581;
-	Tue, 27 Nov 2012 18:52:29 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DEFCA580; Tue, 27 Nov 2012
- 18:52:28 -0500 (EST)
-In-Reply-To: <50B41DF7.2000705@nvidia.com> (Brandon Casey's message of "Mon,
- 26 Nov 2012 17:57:11 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 809C191A-38ED-11E2-9054-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753148Ab2K1AFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 19:05:36 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:54099 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752428Ab2K1AFf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 19:05:35 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so11515647obb.19
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 16:05:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ELjzXdqr/XBrdvXFy1c5juCiWNYcg6Y9jwDukiKPmYI=;
+        b=qe9ZPq8BBgo2gH2vT8P+23ZvTUmA/2zEte/0DGMKquQfh4BVl6C6WBkweex054Y6Da
+         uJLR2TpIKqnInXVansOv454iDbKL3YVMNm7C3KswDngRTnPXHt20WZxeNidMy2PUSGRj
+         zdLqZfTdylsPd3AWOysy4LQcMDyl4PExleAMBKbXMsfXkdmvdMH2Y1wJmKXVVHxqy4N9
+         zic2nxCrTaVHA38h8K6xE6J8/0TYVcOFaiDBZH6KSqx/IMc8HZsxS2hR8ypNCuBHK246
+         nVjQiS6tBmqyJXJxcNklVsHnW20moUjs0UImm3Eak3RjIrm13igbdtnWbjg1Q8Lep6K1
+         XRsQ==
+Received: by 10.60.30.70 with SMTP id q6mr14127416oeh.103.1354061134725; Tue,
+ 27 Nov 2012 16:05:34 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 16:05:34 -0800 (PST)
+In-Reply-To: <7vk3t7nfql.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210635>
 
-The context of the example to push into refs/remotes/satellite/
-hierarchy of the other repository needs to be spelled out explicitly
-for the value of this example to be fully appreciated.  Make it so.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-Brandon Casey <bcasey@nvidia.com> writes:
-
->> So refs are correct. The context is not sufficiently explained.
+On Tue, Nov 27, 2012 at 6:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Ah, I see.  Yeah, I think that is complex enough to merit an
-> extended explanation.
+>> Just shuffle the die() part to make it more explicit, and cleanup the
+>> code-style.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  transport-helper.c | 7 +++----
+>>  1 file changed, 3 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/transport-helper.c b/transport-helper.c
+>> index 32ad877..0c95101 100644
+>> --- a/transport-helper.c
+>> +++ b/transport-helper.c
+>> @@ -775,6 +775,9 @@ static int push_refs_with_export(struct transport *transport,
+>>               char *private;
+>>               unsigned char sha1[20];
+>>
+>> +             if (ref->deletion)
+>> +                     die("remote-helpers do not support ref deletion");
+>> +
+>>               if (!data->refspecs)
+>>                       continue;
+>
+> This is not just "just shuffle the die to make it explicit" but it
+> does change the semantics; earlier ref->deletion was perfectly fine
+> as long as data->refspecs is not given, but the new code always
+> dies.
+>
+> If this semantic change is a good thing, please explain why it is so
+> in the log message.  If the change is "it does not matter because
+> when data->refspecs is not given and ref->deletion is set, we die
+> later elsewhere in the code anyway", then it needs to be described.
 
-Something like this?
+refspecs are optional, but when they are not present the code doesn't
+work at all. This patch changes the behavior that was totally broken
+anyway.
 
- Documentation/git-push.txt | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
-
-diff --git c/Documentation/git-push.txt w/Documentation/git-push.txt
-index 6d19d59..8b637d3 100644
---- c/Documentation/git-push.txt
-+++ w/Documentation/git-push.txt
-@@ -385,11 +385,23 @@ the ones in the examples below) can be configured as the default for
- 	A handy way to push the current branch to the same name on the
- 	remote.
- 
--`git push origin master:satellite/master dev:satellite/dev`::
-+`git push mothership master:satellite/master dev:satellite/dev`::
- 	Use the source ref that matches `master` (e.g. `refs/heads/master`)
- 	to update the ref that matches `satellite/master` (most probably
--	`refs/remotes/satellite/master`) in the `origin` repository, then
-+	`refs/remotes/satellite/master`) in the `mothership` repository;
- 	do the same for `dev` and `satellite/dev`.
-++
-+This is to emulate `git fetch` run on the `mothership` using `git
-+push` that is run in the opposite direction in order to integrate
-+the work done on `satellite`, and is often necessary when you can
-+only make connection in one way (i.e. satellite can ssh into
-+mothership but mothership cannot initiate connection to satellite
-+because the latter is behind a firewall or does not run sshd).
-++
-+After running this `git push` on the `satellite` machine, you would
-+ssh into the `mothership` and run `git merge` there to complete the
-+emulation of `git pull` that were run on `mothership` to pull changes
-+made on `satellite`.
- 
- `git push origin HEAD:master`::
- 	Push the current branch to the remote ref matching `master` in the
+-- 
+Felipe Contreras
