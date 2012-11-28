@@ -1,84 +1,64 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 0/7] New remote-bzr remote helper
-Date: Wed, 28 Nov 2012 01:23:29 +0100
-Message-ID: <CAMP44s0swzsg1MkQHkPUtwZi71xaad3y4uY542jYvXAf8Ha5nQ@mail.gmail.com>
-References: <1352643598-8500-1-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s2F9C4cr6v===M3AWHieaiUk1adigcU8txpZPL0wN81Ow@mail.gmail.com>
-	<7v4nkdxawx.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1G3b3XQX+=5Ag2exdy83hULbz1m0Z6UFDrhZU2TGwBMg@mail.gmail.com>
-	<7vehjelizc.fsf@alter.siamese.dyndns.org>
+From: David Lang <david@lang.hm>
+Subject: Re: Millisecond precision in timestamps?
+Date: Tue, 27 Nov 2012 16:22:57 -0800 (PST)
+Message-ID: <alpine.DEB.2.02.1211271620220.16794@nftneq.ynat.uz>
+References: <20121127204828.577264065F@snark.thyrsus.com> <CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com> <7vzk22lmz9.fsf@alter.siamese.dyndns.org> <20121127230419.GA26080@thyrsus.com> <CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
+ <20121128001231.GA27971@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 01:23:46 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 01:24:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdVRJ-0005Av-Hq
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:23:45 +0100
+	id 1TdVRd-0005QH-Cn
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:24:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752851Ab2K1AXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 19:23:30 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:54529 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418Ab2K1AX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 19:23:29 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so13027881oag.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 16:23:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=dwmEsd3V+yGPR+skfymYgFy3bnXxt3Naz0UXycn2KzI=;
-        b=VAtlOpUjd9JXh8TVoesA6kBUKSSyDxJHpNiv+1wSbl4cfsBvW8y/SCmMELtjYPIpUu
-         398f0co0mWaJS51m/xI+WRA034G8QNu2SsjSAcWGAnfS8ZkL9prU8A1LOIsdKfXvjdmE
-         ZWzplag8WHJTg3Gc2uTGa+Xe7mJdM4iQK4T4rCri2XQrOruaBc860Fzx6dESp6d7vil6
-         d2UBXzBFLmCGhcXl1z3nKVv8cCQl/QRD1G6fvO/A45Ek4MdRkfVc4N+JnAkW00sRgb5J
-         nr5Yv3MkTUZRnIa8hSVDKN36x8GVLJ07UdUitKqoWEjegAfJmAd5lulxhfI+edmgCmEn
-         /ung==
-Received: by 10.60.4.227 with SMTP id n3mr14133744oen.136.1354062209120; Tue,
- 27 Nov 2012 16:23:29 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 16:23:29 -0800 (PST)
-In-Reply-To: <7vehjelizc.fsf@alter.siamese.dyndns.org>
+	id S1752908Ab2K1AXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 19:23:50 -0500
+Received: from mail.lang.hm ([64.81.33.126]:51467 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752359Ab2K1AXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 19:23:49 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id qAS0NZkx017919;
+	Tue, 27 Nov 2012 16:23:35 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20121128001231.GA27971@thyrsus.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210641>
 
-On Wed, Nov 28, 2012 at 12:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, 27 Nov 2012, Eric S. Raymond wrote:
+
+> Shawn Pearce <spearce@spearce.org>:
+>> Well... if we added a fractional seconds to a commit, older versions
+>> of Git will scream loudly and refuse to work with the new commit. That
+>> would create a fork of Git.
 >
->> On Mon, Nov 26, 2012 at 5:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> On Sun, Nov 11, 2012 at 3:19 PM, Felipe Contreras
->>>> <felipe.contreras@gmail.com> wrote:
->>>>> This is a re-roll of the previous series to add support to fetch and push
->>>>> special modes, and refactor some related code.
->>>>
->>>> It seems this one got forgotten, I only see v2 in pu.
->>>
->>> Oops; I think that was fell through the cracks during the maintainer
->>> hand-off.  As the previous one has already been cooking in 'next'
->>> for a week or so, I would appreciate if you send incremental updates
->>> to fix or enhance what is in there.
->>
->> Yes, that's what I have planned for the next patches, as I already did
->> for remote-hg, but the changes in remote-bzr were a bit bigger.
+> So much for that idea, I guess.
 >
-> OK.  Both fc/remote-hg and fc/remote-bzr are slated for 'master'
-> soonish, but I take the above to mean that fc/remote-hg is ready
-> while it is better to wait for updates to fc/remote-bzr before
-> merging it.
+> Unless..I don't know how git's database representations work.  Are they
+> version-stamped in any way?  If so, some slightly painful hackery would
+> get around that problem.
+>
+> I'm being exploratory, here. No proposal to code anything is in the
+> offing.
 
-I was waiting on both to be merged, let me see what I have pending and
-would be nice to have before the merge.
+Apologies if this was covered earlier in the thread (I missed the beginning)
 
+remember that git is dealing with timestamps generated across different 
+machines, and since the times are not assumed to be in sync, let alone to the 
+millisecond level, there's not much value to git in that level of presision.
 
--- 
-Felipe Contreras
+git routinely deals with timestamps that are off by days. If the timestamps are 
+within a minute or so, you are in pretty good shape.
+
+David Lang
