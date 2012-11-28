@@ -1,106 +1,83 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v4 2/4] git-submodule init: Record submodule.<name>.branch
- in repository config.
-Date: Tue, 27 Nov 2012 19:40:25 -0500
-Message-ID: <20121128004025.GF15213@odin.tremily.us>
-References: <20121123175402.GH2806@odin.tremily.us>
- <cover.1353962698.git.wking@tremily.us>
- <6734714e90064b3932126565e3027d7edcf45d51.1353962698.git.wking@tremily.us>
- <50B54A68.60309@web.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 0/7] New remote-bzr remote helper
+Date: Wed, 28 Nov 2012 01:42:14 +0100
+Message-ID: <CAMP44s1NrmhVaTgAs_Y_C3BXpX205L=yBigxp+k9qxz4tOEKag@mail.gmail.com>
+References: <1352643598-8500-1-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s2F9C4cr6v===M3AWHieaiUk1adigcU8txpZPL0wN81Ow@mail.gmail.com>
+	<7v4nkdxawx.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1G3b3XQX+=5Ag2exdy83hULbz1m0Z6UFDrhZU2TGwBMg@mail.gmail.com>
+	<7vehjelizc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=AH+kv8CCoFf6qPuz
-Cc: Git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 28 01:41:03 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 01:42:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdVi0-0001gg-Qu
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:41:01 +0100
+	id 1TdVjS-0002pM-RJ
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:42:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002Ab2K1Akp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 19:40:45 -0500
-Received: from vms173009pub.verizon.net ([206.46.173.9]:9789 "EHLO
-	vms173009pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753625Ab2K1Akp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 19:40:45 -0500
-Received: from odin.tremily.us ([unknown] [72.76.144.216])
- by vms173009.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0ME600N349VD5120@vms173009.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 27 Nov 2012 18:40:26 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 71AE86E0F81; Tue,
- 27 Nov 2012 19:40:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1354063225; bh=d9byPmwt8vvAROEtEeJBl42EIaI3XRo5r6+evKyDDVQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=arvxKrwuaRk56vuJSQa6ieAuTbxUHgex2Ub1zAaHISEGMMp670PgkmBfEalLpXfyd
- utfHjNLs4mQk2V96OeqcKLI6qMaCJ9r1vam8Ceo1a4LiuV+DXDsU47acZtdxanOFqM
- nJiaxnI8zS0eeYwLHNCAFP6OlvDrg8Jeu5eQ8d90=
-Content-disposition: inline
-In-reply-to: <50B54A68.60309@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753251Ab2K1AmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 19:42:16 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:42129 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753163Ab2K1AmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 19:42:15 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so13039915oag.19
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 16:42:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=N27Z+FAIgRZFYefSoWfloMbJ95l3gr0lpSU6rE7lKQA=;
+        b=rFYEkCecRE45VK7I/J0NcgYqPuWa95fAj9Tndk2U6bt4GhhRMRty3DmcxKpOsRgUzP
+         U8hTIj7v03KCA97runIw6eDMy4p/ErG9xakC/GP/WxXzk4tP9sy6JZojyA0q3gB3z+4F
+         39Av5PmJPALBQQcgzZgLV91JbApSgND1LFTOT9mXsxkeHFM0r9hmNMBh5to5n9UWfK1i
+         UXhsfERHyCy0N0SpSDB9+kNRmrfHHrBoFdirurTGJ/V5cpoZFg/BLzqn6hl0nugkCpTX
+         iauFm+yJggPirX98CrFx4coejpEay9ZsksttbW6L+lkehQtNvDDvGweOOzmqByzhWmb6
+         2tAw==
+Received: by 10.182.98.19 with SMTP id ee19mr1406630obb.90.1354063334934; Tue,
+ 27 Nov 2012 16:42:14 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 16:42:14 -0800 (PST)
+In-Reply-To: <7vehjelizc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210645>
 
+On Wed, Nov 28, 2012 at 12:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Mon, Nov 26, 2012 at 5:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> On Sun, Nov 11, 2012 at 3:19 PM, Felipe Contreras
+>>>> <felipe.contreras@gmail.com> wrote:
+>>>>> This is a re-roll of the previous series to add support to fetch and push
+>>>>> special modes, and refactor some related code.
+>>>>
+>>>> It seems this one got forgotten, I only see v2 in pu.
+>>>
+>>> Oops; I think that was fell through the cracks during the maintainer
+>>> hand-off.  As the previous one has already been cooking in 'next'
+>>> for a week or so, I would appreciate if you send incremental updates
+>>> to fix or enhance what is in there.
+>>
+>> Yes, that's what I have planned for the next patches, as I already did
+>> for remote-hg, but the changes in remote-bzr were a bit bigger.
+>
+> OK.  Both fc/remote-hg and fc/remote-bzr are slated for 'master'
+> soonish, but I take the above to mean that fc/remote-hg is ready
+> while it is better to wait for updates to fc/remote-bzr before
+> merging it.
 
---AH+kv8CCoFf6qPuz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please update remote-bzr to series version 3. The rest of the patches
+will be on top of that version.
 
-On Wed, Nov 28, 2012 at 12:19:04AM +0100, Jens Lehmann wrote:
-> Am 26.11.2012 22:00, schrieb W. Trevor King:
-> > From: "W. Trevor King" <wking@tremily.us>
-> >=20
-> > This allows users to override the .gitmodules value with a
-> > per-repository value.
->=20
-> [snip problems].  You should use the branch setting from .git/config
-> if present and fall back to the branch setting from .gitmodules if
-> not, which would enable the user to have her own setting if she
-> doesn't like what upstream provides but would still enable others to
-> follow different submodule branches in different superproject
-> branches.
-
-Sounds good.  Will fix in v5.
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---AH+kv8CCoFf6qPuz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQtV12AAoJEEUbTsx0l5OMbGQP/2jsf4LHtQ8xUUZ1I5nAvv2S
-XsgXeJzZW0Wr3T1NHlOdKGhCVPCafvjnWDWDZlF5Vb+zxfTsc37TFvOikJ4D56ui
-8H2x8G1Vb9J3c6GNPD7sAH8gVBQ6ozqYdtUfLbA5O5Pz1s9BbfSFxrUVIdSabME6
-cg4/uYbU5DHmGurBBF95W7kjkoBwjK0IJhxcou0CSsxIPXMYgtj6U+W9SXFyP/wo
-jqFdqD/O0fGq+4C45e2fe/cQszOQy/9GB48nKuANTvEDMj+UhiMkvli5/CwdjtFW
-CngTYMBydsirmtcMPzbJFKTBBFWeYaG9bws5mNsnutdtePyqSlGhzLDSBdR+7F35
-gyKowEbDYYOQwvToogtmf5cEwOO9N07OAG3x6PFiknE8hXfCrv8+XyHzDgs5o3Me
-zyREVQcclh6c9DPlggoKBoayUbFZUNwLIvk4WtZaqRmhvrKDDuO17WFKFioo4cpv
-rhEwpfYTDsbTAabl+5etA7gBpOeBBp+RM42ChQmHJkhcanq7Gbt136gTe4VMsLzB
-F33h5xLf9ydqYiyNDNDRMTNomwRgNoFDT9IJ6lIg19kNFvhlIjL4XmrDvFG6pfd1
-2V6G7oYvJ/PG7YjIY2roXIcdUEgrbYVWIE0ASAgmkK66LPtsuo+5yCHOPPDdJ3bR
-OmQ9ummKgy0iyTkrwgbs
-=ryUr
------END PGP SIGNATURE-----
-
---AH+kv8CCoFf6qPuz--
+-- 
+Felipe Contreras
