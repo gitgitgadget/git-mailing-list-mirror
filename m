@@ -1,135 +1,116 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH] push: cleanup push rules comment
-Date: Tue, 27 Nov 2012 23:18:53 -0600
-Message-ID: <1354079933-2488-1-git-send-email-chris@rorvick.com>
-References: <7v7gp7nf5e.fsf@alter.siamese.dyndns.org>
-Cc: Chris Rorvick <chris@rorvick.com>,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 28 06:20:29 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] configure.ac: fix pthreads detection on Mac OS X
+Date: Tue, 27 Nov 2012 22:38:12 -0800
+Message-ID: <7vlidmi65n.fsf@alter.siamese.dyndns.org>
+References: <1354058931-88873-1-git-send-email-max@quendi.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Nov 28 07:38:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tda4R-0000zY-TP
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 06:20:28 +0100
+	id 1TdbHz-0001qB-TT
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 07:38:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133Ab2K1FUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 00:20:10 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:53730 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126Ab2K1FUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 00:20:09 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so9591228iay.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 21:20:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=+npk5v4WHlXaQYd59YDbENbr/bDEjRx73ReEN4XCfo8=;
-        b=JCt+YdyrgGbnObOI87BE/v6ri5vbVLKK0nMe1qu/AvMdT7UCNHVd6jBoqrareyIHWP
-         f0Anki7JxJ093t7kUnMMMlxIa3zV2X5m8Dj9w39kWDQ8N9mYrBCiPjivUyI25Tnys8iB
-         Xp6PksMrEx2XBPF40Dd6oqlJPHLgEt0J3PyYjvgtNs1/eZf2o+8Knpl4y433jEgm9rCu
-         6izFhnz4X+dO+fLyrAFSQab+t3D5bNFA07+yswNDzcQ5XcIyDL064ApJfL+JakoYPDEo
-         RXYSraWErZ3Yg8ZbAIID7+v1vNWIvS0QSBDsOLY0tspQntN6ddt6ogS20VtuCKAKOQjf
-         VKVQ==
-Received: by 10.50.179.103 with SMTP id df7mr18180410igc.4.1354080008553;
-        Tue, 27 Nov 2012 21:20:08 -0800 (PST)
-Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
-        by mx.google.com with ESMTPS id s3sm3757268igb.14.2012.11.27.21.20.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Nov 2012 21:20:07 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.209.gf3828dc
-In-Reply-To: <7v7gp7nf5e.fsf@alter.siamese.dyndns.org>
+	id S1751972Ab2K1GiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 01:38:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45669 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751767Ab2K1GiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 01:38:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB46267FF;
+	Wed, 28 Nov 2012 01:38:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SW7laSP3Bpb2HMEq4gBWDloYH7c=; b=vDmSSO
+	PEQUgUXJjGQpOFZVkrpkiVzyH7bla3v3JyXM098nvrsmaNcPH5xrhae36fMuT0zm
+	ZG4z/dxkTPDDdmJCiC/5A2uW84svQd/GlR7mHPWstx2ITfKjl/fUYxv0q8t26D7v
+	F5Y7PviFYJtCFsM/Jr8Tg35N9fMLviMEEaizk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KkbWe/QaPWNgjlJEDsLDT2bTgHv4UzYY
+	wJnOkA67PmGA9QScTv8p10NZXFgekZslIf10ce0A0YrWE/6vnt2+fKTJavvXeDtk
+	0bFqDx4/+X82MpHe+untWV79GZbRjYmtle0HrnmMZuty9RW9WPmDOS0vsnFyc8Zg
+	XCt9u0IWUD8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7BD367FE;
+	Wed, 28 Nov 2012 01:38:14 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 395B367FC; Wed, 28 Nov 2012
+ 01:38:14 -0500 (EST)
+In-Reply-To: <1354058931-88873-1-git-send-email-max@quendi.de> (Max Horn's
+ message of "Wed, 28 Nov 2012 00:28:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F775796-3926-11E2-9C39-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210706>
 
----
+Max Horn <max@quendi.de> writes:
 
-I ended up rewriting most of the comment.  The new version removes
-inter-rule dependencies (e.g., rule 5 overrides rule 3) which I think
-makes it more readable.
+> The configure script checks whether certain flags are required to use
+> pthreads. But it did not consider that *none* might be needed (as is the
+> case on Mac OS X). This lead to configure adding "-mt" to the list of
+> flags (which does nothing on OS X except producing a warning). This in
+> turn triggered a compiler warning on every single file.
+>
+> To solve this, we now first check if pthreads work without extra flags.
+> This means the check is now order dependant, hence a comment is added
+> explaining this, and the reasons for it.
+>
+> Note that it might be possible to write an order independent test, but
+> it does not seem worth the extra effort required for implementing and
+> testing such a solution, when this simple solution exists and works.
+>
+> Signed-off-by: Max Horn <max@quendi.de>
+> ---
+>
+> This is actually a revised version from my patch
+>  "Change configure to check if pthreads are usable without any extra flags"
+> from July. I simply had forgotten all about it :-(.
 
-This patch applies on top of the latest patch series regarding
-pushing tags.  If will include this in a re-roll of that series if
-these changes are deemed a good idea.
+Will queue, but we would need wider testing to avoid "compiles well
+without an option but fails to link" issues similar to cea13a8
+(Improve test for pthreads flag, 2011-03-28) on other people's
+platforms (I know you tested on Mac OS X and over there it compiles
+and links well---I am worried about others).
 
-Also, I hand-edited the patch so that the changes were not interleaved
-to make it much easier to read.  Can this be done automatically?
-Something like a minimum # of matching lines required between
-differences?
+Thanks.
 
-Chris
-
- remote.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index ee0c1e5..3fb1068 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1319,27 +1319,29 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 			continue;
- 		}
- 
--		/* This part determines what can overwrite what.
--		 * The rules are:
--		 *
--		 * (0) you can always use --force or +A:B notation to
--		 *     selectively force individual ref pairs.
--		 *
--		 * (1) if the old thing does not exist, it is OK.
--		 *
--		 * (2) if the destination is under refs/tags/ you are
--		 *     not allowed to overwrite it; tags are expected
--		 *     to be static once created
--		 *
--		 * (3) if you do not have the old thing, you are not allowed
--		 *     to overwrite it; you would not know what you are losing
--		 *     otherwise.
--		 *
--		 * (4) if old is a commit and new is a descendant of old
--		 *     (implying new is commit-ish), it is OK.
--		 *
--		 * (5) regardless of all of the above, removing :B is
--		 *     always allowed.
-+		/*
-+		 * The below logic determines whether an individual
-+		 * refspec A:B can be pushed.  The push will succeed
-+		 * if any of the following are true:
-+		 *
-+		 * (1) the remote reference B does not exist
-+		 *
-+		 * (2) the remote reference B is being removed (i.e.
-+		 *     pushing :B where no source is specified)
-+		 *
-+		 * (3) the update meets all fast-forwarding criteria:
-+		 *
-+		 *     (a) the destination is not under refs/tags/
-+		 *     (b) the old is a commit
-+		 *     (c) the new is a descendant of the old
-+		 *
-+		 *     NOTE: We must actually have the old object in
-+		 *     order to overwrite it in the remote reference,
-+		 *     and that the new object must be commit-ish.
-+		 *     These are implied by (b) and (c) respectively.
-+		 *
-+		 * (4) it is forced using the +A:B notation, or by
-+		 *     passing the --force argument
- 		 */
- 
- 		ref->not_forwardable = !is_forwardable(ref);
--- 
-1.8.0.209.gf3828dc
+> Chers,
+> Max
+>
+>  configure.ac | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/configure.ac b/configure.ac
+> index ad215cc..41ac9a5 100644
+> --- a/configure.ac
+> +++ b/configure.ac
+> @@ -1021,7 +1021,17 @@ if test -n "$USER_NOPTHREAD"; then
+>  # -D_REENTRANT' or some such.
+>  elif test -z "$PTHREAD_CFLAGS"; then
+>    threads_found=no
+> -  for opt in -mt -pthread -lpthread; do
+> +  # Attempt to compile and link some code using pthreads to determine
+> +  # required linker flags. The order is somewhat important here: We
+> +  # first try it without any extra flags, to catch systems where
+> +  # pthreads are part of the C library, then go on testing various other
+> +  # flags. We do so to avoid false positives. For example, on Mac OS X
+> +  # pthreads are part of the C library; moreover, the compiler allows us
+> +  # to add "-mt" to the CFLAGS (although it will do nothing except
+> +  # trigger a warning about an unused flag). Hence if we checked for
+> +  # "-mt" before "" we would end up picking it. But unfortunately this
+> +  # would then trigger compiler warnings on every single file we compile.
+> +  for opt in "" -mt -pthread -lpthread; do
+>       old_CFLAGS="$CFLAGS"
+>       CFLAGS="$opt $CFLAGS"
+>       AC_MSG_CHECKING([for POSIX Threads with '$opt'])
