@@ -1,138 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 0/7] New remote-bzr remote helper
-Date: Wed, 28 Nov 2012 08:42:47 +0100
-Message-ID: <CAMP44s07c55zAtNXvPwtQFeQwEQKFfq9YOhFynqguc-HpA3EMg@mail.gmail.com>
-References: <1352643598-8500-1-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s2F9C4cr6v===M3AWHieaiUk1adigcU8txpZPL0wN81Ow@mail.gmail.com>
-	<7v4nkdxawx.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1G3b3XQX+=5Ag2exdy83hULbz1m0Z6UFDrhZU2TGwBMg@mail.gmail.com>
-	<7vehjelizc.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0swzsg1MkQHkPUtwZi71xaad3y4uY542jYvXAf8Ha5nQ@mail.gmail.com>
-	<7vsj7ujxr2.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3t54zYFha_qsDrg0JDZ52q8=WTs7q0rJ9qZL8kVCVWKA@mail.gmail.com>
-	<7vpq2yihaq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s23FfxQG6v+dfRGWHzxpWZ5BSGpAm=8Q8Bmj04tDwmwKw@mail.gmail.com>
-	<7vhaoai533.fsf@alter.siamese.dyndns.org>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: Millisecond precision in timestamps?
+Date: Wed, 28 Nov 2012 02:58:08 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20121128075807.GA9912@thyrsus.com>
+References: <20121127204828.577264065F@snark.thyrsus.com>
+ <CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com>
+ <7vzk22lmz9.fsf@alter.siamese.dyndns.org>
+ <20121127230419.GA26080@thyrsus.com>
+ <CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
+ <20121128001231.GA27971@thyrsus.com>
+ <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
+ <CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com>
+ <20121128011750.GA23498@sigill.intra.peff.net>
+ <7v7gp6i3rx.fsf@alter.siamese.dyndns.org>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 08:43:09 2012
+X-From: git-owner@vger.kernel.org Wed Nov 28 08:58:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdcIV-0008SS-TJ
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 08:43:08 +0100
+	id 1TdcXQ-0005fY-1t
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 08:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972Ab2K1Hmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 02:42:49 -0500
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:33673 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126Ab2K1Hms (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 02:42:48 -0500
-Received: by mail-vc0-f174.google.com with SMTP id m18so9865230vcm.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 23:42:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/ss9XlzFpSt9EJu0AIWgaGC5tD6oNmmTrOLJ8lfnZWE=;
-        b=vM6O0LoHe1O2X+zl8gCWdJUJyvgYJZBYxpJIMyk/XWTMEwTSrDKHwADf+Kpm2EXG/0
-         MLjrkkasi5I/g9llrPD1AEth/CO1ZkDfM2jBWuAh3tiFABpUe1QyAWQAwKYvWjOHG7J5
-         HXClo2qwznUV77y4j/lIQEXMhph9OA8ZSGCnjY3mAbmC++5tWFUfNqx0gc4fADdCuDza
-         9gjpJlzbQUE5sgseOf6QlFUn29qnRLkiQ59HMH87DpoGGVGNOyLZTqZKhGIO7qI9r06o
-         lhxNMwy8CNmoyzZ5ofw8n33Sck++o/7j3XInXbPV0LlL49xb6j/rb1c1fV3/44E3m7W8
-         MUgg==
-Received: by 10.58.67.199 with SMTP id p7mr28772608vet.40.1354088567792; Tue,
- 27 Nov 2012 23:42:47 -0800 (PST)
-Received: by 10.58.34.51 with HTTP; Tue, 27 Nov 2012 23:42:47 -0800 (PST)
-In-Reply-To: <7vhaoai533.fsf@alter.siamese.dyndns.org>
+	id S1752280Ab2K1H6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 02:58:14 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:33165
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368Ab2K1H6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 02:58:14 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 884924065F; Wed, 28 Nov 2012 02:58:08 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v7gp6i3rx.fsf@alter.siamese.dyndns.org>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210717>
 
-On Wed, Nov 28, 2012 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->>> People who have been bitten by bugs from *your* tree or versions in
->>> 'next' do not count.  When I said "no existing users", I was talking
->>> about the end users who need rock solid stable "releases" because
->>> tagged versions are the only ones they use.
->>
->> If users you call "fringe" have noticed these compatibility issues,
->> chances are your "existing users" are going to catch them as well.
->
-> There seems to be some misunderstanding.
->
-> I have never called them "fringe"; they are "early adopters" who are
-> expected to be capable of "git pull" to pick up fixes from
-> between-releases trees (or "git am" patches from the list) and
-> rebuild their Git.
->
-> We cannot expect that from the real end users (who do not exist yet,
-> luckily) who only follow tagged releases.  Hitting them with bugs we
-> need to fix after the release is not "letting them notice and
-> report", but just "irresponsibly hurting the end users".  "Letting
-> them notice and report" is what "early adopter" population who run
-> 'next' are for.  Quality expectations between these two populations
-> are quite different.
+Junio C Hamano <gitster@pobox.com>:
+> Roundtrip conversions may benefit from sub-second timestamps, but
+> personally I think negative timestamps are more interesting and of
+> practical use. 
 
-Perhaps, but I still don't agree with the statement that the people
-bitten by those bugs don't count. If those bugs are not fixed, they
-will bite the "normal" population.
+You mean, as in times before the Unix epoch 1970-01-01T00:00:00Z?  
 
->> ... That being said,
->> I don't use remote-bzr really, and I don't know how many people have
->> been using it, so I have no idea how ready it really is. ...
->> ... Either way it's doubtful there will be a v4
->
-> OK; thanks for clarification.  If you are not using it actively, it
-> probably is a better idea to proceed with more caution, as low rate
-> of update necessity does not directly relate to maturity of the
-> tool.  I'd feel better to cook it longer in 'next' to recruit early
-> adopters so that we can hear positive feedbacks (or negative ones
-> that can result in fixes to whatever is still uncovered, if any).
+Interesting.  I hadn't thought of that.  I've never seen a software
+project under version control with bits that old, which is significant
+because I've probably done more digging into ancient software than
+anybody other than a specialist historian or two.
 
-Perhaps, on the other hand it's not like any of their existing
-functionality will break. Chances are they will be happy to have
-anything that somehow works, even if it has bugs. In fact, the current
-remote-bzr, even if it hasn't received so much testing, is probably
-already more stable than other tools:
+They would have to have been restrospective dates from the get-go.
+SCCS wasn't built until 1972.
 
-As an example there is this bug:
-http://bugs.launchpad.net/bzr/+bug/541626
+> And if we were to add "committer-timestamp" and friends to support
+> negative timestamps anyway (because older tools will not support
+> them), supporting sub-second part might be something we want to
+> think about at the same time.
 
-Which has been affecting users of 'bzr fast-export' for years (most of
-bzr<->git bridges use this tool), and nobody does anything about it,
-even though the developers thought the problem was in bzr itself (and
-that it was actually fixed, despite the reports to the contrary). I
-fixed the problem and added a reliable test case to reproduce the
-issue in bzr's test suite itself, only to receive no feedback.
+That seems eminently reasonable.
 
-I think there are very few users of bazaar, and if you read the source
-code you would be happy that's the case, so I'm not sure letting it
-cook in 'next' is going to achieve much, most of them are going to see
-it only when it hits master. Most likely the few bazaar users are
-accustomed to different quality standards, and this tool doesn't even
-have known bugs.
+> We would however need to be extra careful.  How should we express
+> half-second past Tue Nov 27 23:24:16 2012 (US/Pacific)?  Would we
+> spell it 1354087456.5?  1354087456.500?  Would we require decimal
+> representation of floating point numbers to be normalized in some
+> way (e.g. minimum number of digits without losing precision)?  The
+> same timestamp needs to be expressed the same way, or we will end up
+> with different commit objects, which defeats the whole purpose of
+> introducing subsecond timestamps to support round-trip conversions.
+> 
+> If we were to use a separate "subsecond" fields, another thing we
+> need to be careful about is the order of these extra fields, exactly
+> for the same reason.
 
->> I'm confident about remote-hg though.
->
-> Meaning unlike remote-bzr, at least you are using it more actively
-> (or you know people who are), right?  I've queued the two patches
-> (out of four) from you today, so we can merge it to 'master' before
-> 1.8.1-rc0.
-
-I'm not using it actively, it seems some people are, but that's not
-why I'm confident; it's because of the extensive automatic testing
-that compares the output with hg-git (which is widely used).
-
-Cheers.
-
+I think minimum number of digits without losing precision is about the
+only alternative that is future-proof - I was going to suggest it for
+that reason.
 -- 
-Felipe Contreras
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
