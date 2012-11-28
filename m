@@ -1,65 +1,126 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/4] remote-helpers: general fixes
-Date: Wed, 28 Nov 2012 03:26:43 +0100
-Message-ID: <CAMP44s0JK8b4bfTyXBeL9Q+cebuMC0qfdz673jkvTc7+Uoy-mw@mail.gmail.com>
-References: <1354064495-23171-1-git-send-email-felipe.contreras@gmail.com>
-	<7vfw3ujxh8.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fsck: warn about '.' and '..' in trees
+Date: Tue, 27 Nov 2012 21:27:37 -0500
+Message-ID: <20121128022736.GA3739@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 03:27:00 2012
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 28 03:27:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdXMZ-0002hz-Q2
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 03:27:00 +0100
+	id 1TdXNS-0003UZ-AX
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 03:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272Ab2K1C0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 21:26:44 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:36076 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053Ab2K1C0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 21:26:44 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so13102407oag.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 18:26:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gFAKVfLnHPx5DSSSBp+2Elq4XBnEVG+QsImsZj9UeRg=;
-        b=0+tWyI/7sDsLCoYkx8Rq1sYQlf6Oe+hMe6XMjhHrg9t6/gLmmCGrM9vCyoZ0oENjVW
-         haEB0p/AYZsZX5+X6SzpAbHSF6SILv5/Mxn6vS/GRtX6RuZnw6AZEYc2xGyFw20JvRwl
-         u6CkYcy65s6BYl1a91csNFi15e7muNg+CTDCeZlp6vvFrswQOSyLBw6LIPpxpZzv8s0H
-         OUBIjPJUjHY8XKqSVhS32xq/2n+sL8bwY3cJGx1oMrR514QTyJAlsXotnPKj9erk1D6e
-         wUHbqme1xxe0qzYTDYahqC3/Ch+qPDiPnXk/P9/gZkBcvvgS+OnBF56rBliodoxUWUWc
-         iPIw==
-Received: by 10.60.172.229 with SMTP id bf5mr14471068oec.81.1354069603562;
- Tue, 27 Nov 2012 18:26:43 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 18:26:43 -0800 (PST)
-In-Reply-To: <7vfw3ujxh8.fsf@alter.siamese.dyndns.org>
+	id S1751053Ab2K1C1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 21:27:39 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58875 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750776Ab2K1C1j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 21:27:39 -0500
+Received: (qmail 691 invoked by uid 107); 28 Nov 2012 02:28:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Nov 2012 21:28:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Nov 2012 21:27:37 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210675>
 
-On Wed, Nov 28, 2012 at 3:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> These are general fixes, some for old versions of bazaar, mercurial, and
->> python. Some of these have already been sent, but here they go alone so they
->> are not missed.
->>
->> The bazaar fixes are on top of the series v3 which is still not in 'pu'.
->
-> Please stop then.  Its v2 has been cooking in 'next' and it won't be
-> replaced.
+A tree with meta-paths like '.' or '..' does not work well
+with git; the index will refuse to load it or check it out
+to the filesystem (and even if we did not have that safety,
+it would look like we were overwriting an untracked
+directory). For the same reason, it is difficult to create
+such a tree with regular git.
 
-Cooking since when? 9 days ago? I sent the series 17 days ago. But
-suit yourself. I re-rolled for a reason.
+Let's warn about these dubious entries during fsck, just in
+case somebody has created a bogus tree (and this also lets
+us prevent them from propagating when transfer.fsckObjects
+is set).
 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I don't think this is happening in the wild, but I did see somebody
+playing around with libgit2 make such a tree (and it is easy to do with
+git-mktree, of course).
+
+Technically one could use git with such a tree as long as you never ever
+checked out the result, but I think it is sufficiently crazy that we
+should probably detect it, just in case.
+
+Should we also detect ".git" in the same way? It is similarly treated
+specially by verify_path(), and its presence is likely to cause weird
+errors.
+
+ fsck.c          | 10 ++++++++++
+ t/t1450-fsck.sh | 16 ++++++++++++++++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/fsck.c b/fsck.c
+index 7395ef6..31c9a51 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -142,6 +142,8 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 	int has_null_sha1 = 0;
+ 	int has_full_path = 0;
+ 	int has_empty_name = 0;
++	int has_dot = 0;
++	int has_dotdot = 0;
+ 	int has_zero_pad = 0;
+ 	int has_bad_modes = 0;
+ 	int has_dup_entries = 0;
+@@ -168,6 +170,10 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 			has_full_path = 1;
+ 		if (!*name)
+ 			has_empty_name = 1;
++		if (!strcmp(name, "."))
++			has_dot = 1;
++		if (!strcmp(name, ".."))
++			has_dotdot = 1;
+ 		has_zero_pad |= *(char *)desc.buffer == '0';
+ 		update_tree_entry(&desc);
+ 
+@@ -217,6 +223,10 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 		retval += error_func(&item->object, FSCK_WARN, "contains full pathnames");
+ 	if (has_empty_name)
+ 		retval += error_func(&item->object, FSCK_WARN, "contains empty pathname");
++	if (has_dot)
++		retval += error_func(&item->object, FSCK_WARN, "contains '.'");
++	if (has_dotdot)
++		retval += error_func(&item->object, FSCK_WARN, "contains '..'");
+ 	if (has_zero_pad)
+ 		retval += error_func(&item->object, FSCK_WARN, "contains zero-padded file modes");
+ 	if (has_bad_modes)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 08aa24c..0b5c30b 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -237,4 +237,20 @@ test_expect_success 'fsck notices submodule entry pointing to null sha1' '
+ 	)
+ '
+ 
++test_expect_success 'fsck notices "." and ".." in trees' '
++	(
++		git init dots &&
++		cd dots &&
++		blob=$(echo foo | git hash-object -w --stdin) &&
++		tab=$(printf "\\t") &&
++		git mktree <<-EOF &&
++		100644 blob $blob$tab.
++		100644 blob $blob$tab..
++		EOF
++		git fsck 2>out &&
++		cat out &&
++		grep "warning.*\\." out
++	)
++'
++
+ test_done
 -- 
-Felipe Contreras
+1.8.0.207.gdf2154c
