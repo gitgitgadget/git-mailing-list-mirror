@@ -1,87 +1,130 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] svnrdump_sim: start the script with /usr/bin/env python
-Date: Wed, 28 Nov 2012 22:32:47 +0100
-Message-ID: <CAMP44s3dfY=UODdH+Q+YQiP5pwaoHpuDNwbOYh5GUF7AmoJigw@mail.gmail.com>
-References: <20121128025734.21231.47468.chriscool@tuxfamily.org>
-	<7vy5hmgovt.fsf@alter.siamese.dyndns.org>
-	<CAMP44s17Gycr2tWOLYAxMG7-CGP3SpFf7XTWf94qGg3WfVpT-A@mail.gmail.com>
-	<CAP8UFD08LhywQ9KaNoeG1nORZwtK8MNWqwjfRJPyT2vLkNgs9A@mail.gmail.com>
-	<7vmwy1hdgx.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3YfLrL+74j5DOVVATK8GWEo1qHnmJDW5dLWJRxK_CVLQ@mail.gmail.com>
-	<7v7gp5v7y1.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fsck: warn about ".git" in trees
+Date: Wed, 28 Nov 2012 16:35:29 -0500
+Message-ID: <20121128213529.GA16518@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 22:33:04 2012
+X-From: git-owner@vger.kernel.org Wed Nov 28 22:36:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdpFf-0004qR-Fm
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 22:33:03 +0100
+	id 1TdpIc-00087l-Ee
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 22:36:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995Ab2K1Vcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 16:32:48 -0500
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:50016 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754414Ab2K1Vcs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 16:32:48 -0500
-Received: by mail-vc0-f174.google.com with SMTP id m18so10662147vcm.19
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 13:32:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=riG7A7keCqjuID47zhBAnRJNuAnWlAFo+o8hA2PKbVc=;
-        b=gDHWVuM4a0nrtsCDgVgVpKadmwcHu2a0o4IFziFiM+5jEfWLj9jtJLI/M8Wa7FOpmN
-         am98JfIm+f+JzGR2o/AeeL4HSQwbTgODScT9sCHEBWWV47YZBYAxm6YjJ3UBc5Ucimse
-         p4Phl6P38k6EzZPASiQrthzYEgmIU2TVNMDGXX0bomCzASPBkF66wy9NERNHB5ABO1mz
-         3M16WW3xpVkLo6fKzMNnXuvm8zt81Iwn7hsHeq9jDpbsCFRHnDfwIBvjh5NiSY+u7YP+
-         lbba73Bq2Dl+JxjGo+BGAHxT0QA4cL+IBohC/PMvEws2SvcAWMcjf/Zkwo8tykx3TG8k
-         ZZSg==
-Received: by 10.52.75.105 with SMTP id b9mr26010017vdw.28.1354138367505; Wed,
- 28 Nov 2012 13:32:47 -0800 (PST)
-Received: by 10.58.34.51 with HTTP; Wed, 28 Nov 2012 13:32:47 -0800 (PST)
-In-Reply-To: <7v7gp5v7y1.fsf@alter.siamese.dyndns.org>
+	id S932691Ab2K1Vff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 16:35:35 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34099 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932565Ab2K1Vfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 16:35:32 -0500
+Received: (qmail 12624 invoked by uid 107); 28 Nov 2012 21:36:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Nov 2012 16:36:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2012 16:35:29 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210782>
 
-On Wed, Nov 28, 2012 at 8:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Wed, Nov 28, 2012 at 5:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->>> You need a fix for that; didn't I already say "you need a bit more
->>> than that"?
->>
->> I disagree. Most of the contrib scripts are expected to be used as
->> they are.
->
-> You are only looking at one of the uses for this script, when there
-> are two.
->
-> You are correct that distros may install with whatever tweaks of
-> their own, and to help their tweak process (like the one that
-> specifically notices "/usr/bin/env python" as you wrote), changing
-> the "#!/usr/bin/python" to match others would be a good change.
->
-> But that change alone is not sufficient for this one, which is used
-> from t/ script.  You cannot treat this one like import-zips and
-> hg-to-git that we do not use in-tree.  Somewhere before t9020 uses
-> it, it needs the treatment similar to the rewriting that is done for
-> git-p4.py to git-p4.
+On Wed, Nov 28, 2012 at 01:25:05PM -0800, Junio C Hamano wrote:
 
-Unless the tests are moved to contrib, which I think is a good
-practice: should anything in contrib break 'make test'? I don't think
-so.
+> >> * jk/fsck-dot-in-trees (2012-11-28) 1 commit
+> >>  - fsck: warn about '.' and '..' in trees
+> >> 
+> >>  Will merge to 'next'.
+> >
+> > Do you have an opinion on warning about '.git', as well? It probably
+> > would make more sense as a patch on top, but I thought I'd ask before
+> > this got merged to next.
+> 
+> Yeah, it would make sense to reject what we would not record
+> ourselves when the tools are used in a sane manner.
 
-Cheers.
+Here's the patch on top of jk/fsck-dot-in-trees.
 
+-- >8 --
+Subject: [PATCH] fsck: warn about ".git" in trees
+
+Having a ".git" entry inside a tree can cause confusing
+results on checkout. At the top-level, you could not
+checkout such a tree, as it would complain about overwriting
+the real ".git" directory. In a subdirectory, you might
+check it out, but performing operations in the subdirectory
+would confusingly consider the in-tree ".git" directory as
+the repository.
+
+The regular git tools already make it hard to accidentally
+add such an entry to a tree, and do not allow such entries
+to enter the index at all. Teaching fsck about it provides
+an additional safety check, and let's us avoid propagating
+any such bogosity when transfer.fsckObjects is on.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ fsck.c          |  5 +++++
+ t/t1450-fsck.sh | 15 +++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/fsck.c b/fsck.c
+index 31c9a51..99c0497 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -144,6 +144,7 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 	int has_empty_name = 0;
+ 	int has_dot = 0;
+ 	int has_dotdot = 0;
++	int has_dotgit = 0;
+ 	int has_zero_pad = 0;
+ 	int has_bad_modes = 0;
+ 	int has_dup_entries = 0;
+@@ -174,6 +175,8 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 			has_dot = 1;
+ 		if (!strcmp(name, ".."))
+ 			has_dotdot = 1;
++		if (!strcmp(name, ".git"))
++			has_dotgit = 1;
+ 		has_zero_pad |= *(char *)desc.buffer == '0';
+ 		update_tree_entry(&desc);
+ 
+@@ -227,6 +230,8 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 		retval += error_func(&item->object, FSCK_WARN, "contains '.'");
+ 	if (has_dotdot)
+ 		retval += error_func(&item->object, FSCK_WARN, "contains '..'");
++	if (has_dotgit)
++		retval += error_func(&item->object, FSCK_WARN, "contains '.git'");
+ 	if (has_zero_pad)
+ 		retval += error_func(&item->object, FSCK_WARN, "contains zero-padded file modes");
+ 	if (has_bad_modes)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 0b5c30b..d730734 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -253,4 +253,19 @@ test_expect_success 'fsck notices "." and ".." in trees' '
+ 	)
+ '
+ 
++test_expect_success 'fsck notices ".git" in trees' '
++	(
++		git init dotgit &&
++		cd dotgit &&
++		blob=$(echo foo | git hash-object -w --stdin) &&
++		tab=$(printf "\\t") &&
++		git mktree <<-EOF &&
++		100644 blob $blob$tab.git
++		EOF
++		git fsck 2>out &&
++		cat out &&
++		grep "warning.*\\.git" out
++	)
++'
++
+ test_done
 -- 
-Felipe Contreras
+1.8.0.207.gdf2154c
