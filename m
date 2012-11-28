@@ -1,72 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Millisecond precision in timestamps?
-Date: Wed, 28 Nov 2012 01:26:22 +0100
-Message-ID: <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
-References: <20121127204828.577264065F@snark.thyrsus.com>
-	<CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com>
-	<7vzk22lmz9.fsf@alter.siamese.dyndns.org>
-	<20121127230419.GA26080@thyrsus.com>
-	<CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
-	<20121128001231.GA27971@thyrsus.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Possible vulnerability to SHA-1 collisions
+Date: Tue, 27 Nov 2012 19:27:14 -0500
+Message-ID: <20121128002714.GA23224@sigill.intra.peff.net>
+References: <50B0AB9C.2040802@caltech.edu>
+ <CAJo=hJsZdduMdSbN+3Ei-7vx3_Q7tO88LywWj5Vw3Ngs0QgsZg@mail.gmail.com>
+ <20121127230753.GA22730@sigill.intra.peff.net>
+ <20121127233016.GC3937@pug.qqx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Wed Nov 28 01:26:38 2012
+	Michael Hirshleifer <111mth@caltech.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 28 01:27:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdVU6-0007a5-9B
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:26:38 +0100
+	id 1TdVUx-0008GI-CW
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 01:27:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745Ab2K1A0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 19:26:23 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:63144 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752263Ab2K1A0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 19:26:22 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so13029960oag.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 16:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NGb0mcejJMDm4I7T4mp5zoQt6vhRTst3VpYD8qeO89U=;
-        b=Vy6QiWQPBQMX8eU27W4n3AIbZ29hnagmxtf/CsHAPITsPtfht5gnsFXVLXVg1fwYvM
-         cKADUiIaCINNhzFkFR5OGs7vEsPFMQ3QjX7CqiStM66VqR6P9mZku8TAh/gQtkvgDlMk
-         VJDnYgnpgxg+ziEObVDd5zbCF6d6vLs/df/TB9PtayPePBBbx5zEFGV3lhOhKriAAaJY
-         +VIveGn82Iby+ga8g+IN00UtdAKq+sTNGOTdw9TXwisYTPyZBrr29s9ymdT2/A8xFDlm
-         JnlHQNV161Fo7qFNp3V3tC6BQ6OMDcD8IAz7JcyuD+BcG09li5fHfe0iT4UmTDy8rcQT
-         5GSw==
-Received: by 10.182.111.104 with SMTP id ih8mr1403202obb.13.1354062382222;
- Tue, 27 Nov 2012 16:26:22 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 16:26:22 -0800 (PST)
-In-Reply-To: <20121128001231.GA27971@thyrsus.com>
+	id S1752851Ab2K1A1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 19:27:17 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58767 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752359Ab2K1A1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 19:27:16 -0500
+Received: (qmail 30799 invoked by uid 107); 28 Nov 2012 00:28:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Nov 2012 19:28:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Nov 2012 19:27:14 -0500
+Content-Disposition: inline
+In-Reply-To: <20121127233016.GC3937@pug.qqx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210643>
 
-On Wed, Nov 28, 2012 at 1:12 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Shawn Pearce <spearce@spearce.org>:
->> Well... if we added a fractional seconds to a commit, older versions
->> of Git will scream loudly and refuse to work with the new commit. That
->> would create a fork of Git.
->
-> So much for that idea, I guess.
->
-> Unless..I don't know how git's database representations work.  Are they
-> version-stamped in any way?  If so, some slightly painful hackery would
-> get around that problem.
+On Tue, Nov 27, 2012 at 06:30:17PM -0500, Aaron Schrab wrote:
 
-% git cat-file -p HEAD
+> At 18:07 -0500 27 Nov 2012, Jeff King <peff@peff.net> wrote:
+> >PS I also think the OP's "sockpuppet creates innocuous bugfix" above is
+> >  easier said than done. We do not have SHA-1 collisions yet, but if
+> >  the md5 attacks are any indication, the innocuous file will not be
+> >  completely clean; it will need to have some embedded binary goo that
+> >  is mutated randomly during the collision process (which is why the
+> >  md5 attacks were demonstrated with postscript files which _rendered_
+> >  to look good, but contained a chunk of random bytes in a spot ignored
+> >  by the postscript interpreter).
+> 
+> I don't think that really saves us though.  Many formats have parts
+> of the file which will be ignored, such as comments in source code.
 
-You'll see exactly how git stores commits. Changing anything in there
-must be done carefully.
+Agreed, it does not save us unconditionally. It just makes it harder to
+execute the attack. Would you take a patch from a stranger that had a
+kilobyte of binary garbage in a comment?
 
--- 
-Felipe Contreras
+A more likely avenue would be a true binary file where nobody is
+expected to read the diff.
+
+> With the suggested type of attack, there isn't a requirement about
+> which version of the file is modified.  So the attacker should be
+> able to generate a version of a file with an innocuous change, get
+> the SHA-1 for that, then add garbage comments to their malicious
+> version of the file to try to get the same SHA-1.
+
+That's not how birthday collision attacks usually work, though. You do
+not get to just mutate the malicious side and leave the innocuous side
+untouched. You are mutating both sides over and over and hoping to find
+a matching sha1 from the "good" and "evil" sides.
+
+Of course, I have not been keeping up too closely with the efforts to
+break sha-1. Maybe there is something more nefarious about the current
+attacks. I am just going off my recollection of the md5 collision
+attacks.
+
+-Peff
