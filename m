@@ -1,118 +1,87 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: Millisecond precision in timestamps?
-Date: Tue, 27 Nov 2012 20:29:45 -0500
-Organization: PD Inc
-Message-ID: <EE15DF282E7C4196A32EE0818A64E35D@black>
-References: <20121127204828.577264065F@snark.thyrsus.com> <CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com> <7vzk22lmz9.fsf@alter.siamese.dyndns.org> <20121127230419.GA26080@thyrsus.com> <CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com> <20121128001231.GA27971@thyrsus.com> <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com> <CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com> <20121128011750.GA23498@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Millisecond precision in timestamps?
+Date: Wed, 28 Nov 2012 02:36:05 +0100
+Message-ID: <CAMP44s3yq-C7nYciONf=O61F9mceNV36A3XRPtXCrH=6m-ZpMg@mail.gmail.com>
+References: <20121127204828.577264065F@snark.thyrsus.com>
+	<CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com>
+	<7vzk22lmz9.fsf@alter.siamese.dyndns.org>
+	<20121127230419.GA26080@thyrsus.com>
+	<CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
+	<20121128001231.GA27971@thyrsus.com>
+	<CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
+	<20121128011136.GA29674@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "'git'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 02:30:31 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Wed Nov 28 02:36:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdWTs-0001eH-VL
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 02:30:29 +0100
+	id 1TdWZc-00070O-01
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 02:36:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471Ab2K1BaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 20:30:11 -0500
-Received: from projects.pdinc.us ([67.90.184.26]:49883 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754323Ab2K1BaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 20:30:10 -0500
-Received: from black ([192.168.4.12])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id qAS1TvAd021828
-	for <git@vger.kernel.org>; Tue, 27 Nov 2012 20:29:57 -0500
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <20121128011750.GA23498@sigill.intra.peff.net>
-Thread-Index: Ac3NBjZp7tkuw1ITQii555y2BJHQPQAAL/Xg
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S1755364Ab2K1BgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 20:36:08 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:38358 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755333Ab2K1BgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 20:36:07 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so13072821oag.19
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 17:36:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8cFab0ZdDTdSG79U6wlwUkFYFM3+wZihyaPCgk0Q3iY=;
+        b=0+axMYQwGYRQ0By8hfJdRnlUSO3vg/PcCXSb+KvsEb3iWcgdLC9CrpLZURtoblF0yo
+         O7pQg0JmAVySHXJnHFXTaMGaCG7xdXUoAbIYAb8u15+1u4eGg+Lg2fWfHa+NtOBzQYc1
+         Vn3T/TmlmAgtQf1pQpbmohk+zEgnkYCd4ZT/b/umrSoESHq5IW7Wfelxkuq1DUM5Kc7Z
+         5bP9m0Y4z/FjUwoYLMzHUZOJmvWGUx2xRLl92YbqazfKyi7pSJ/qvEyNKiWdGfPRKWyO
+         nxj8otQP1tZC4aJDlP9Cpq5pROTt4QRaNG11VTz9vOY4CijnUi38Ff4+Unp0WbOuR9gj
+         enfA==
+Received: by 10.60.169.173 with SMTP id af13mr14511720oec.97.1354066565513;
+ Tue, 27 Nov 2012 17:36:05 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 17:36:05 -0800 (PST)
+In-Reply-To: <20121128011136.GA29674@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210657>
 
-> -----Original Message-----
-> From: Jeff King
-> Sent: Tuesday, November 27, 2012 20:18
-> 
-> On Tue, Nov 27, 2012 at 05:07:34PM -0800, Shawn O. Pearce wrote:
-> 
-> > On Tue, Nov 27, 2012 at 4:26 PM, Felipe Contreras 
-> > <felipe.contreras@gmail.com> wrote:
-> > > On Wed, Nov 28, 2012 at 1:12 AM, Eric S. Raymond 
-> <esr@thyrsus.com> wrote:
-> > >> Shawn Pearce <spearce@spearce.org>:
-> > >>> Well... if we added a fractional seconds to a commit, older 
-> > >>> versions of Git will scream loudly and refuse to work 
-> with the new 
-> > >>> commit. That would create a fork of Git.
-> > >>
-> > >> So much for that idea, I guess.
-> > >>
-> > >> Unless..I don't know how git's database representations 
-> work.  Are 
-> > >> they version-stamped in any way?  If so, some slightly painful 
-> > >> hackery would get around that problem.
-> > >
-> > > % git cat-file -p HEAD
-> > >
-> > > You'll see exactly how git stores commits. Changing anything in 
-> > > there must be done carefully.
-> > 
-> > Apparently there is no room to change in these fields 
-> without breaking 
-> > compatibility with all current versions of Git. So its not 
-> just done 
-> > carefully... its deciding to make Git 2.0 that is not 
-> compatible with 
-> > any Git 1.x release.
-> 
-> There is room for new headers, and older versions of git will 
-> ignore them. You could add a new "committer-timestamp" field 
-> that elaborates on the timestamp included on the committer 
-> line. Newer versions of git would respect it, and older 
-> versions would fall back to using the committer timestamp.
+On Wed, Nov 28, 2012 at 2:11 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com>:
+>> % git cat-file -p HEAD
+>>
+>> You'll see exactly how git stores commits. Changing anything in there
+>> must be done carefully.
+>
+> Oh, I've seen *that* before.  Are you telling me the database
+> representation is actually textual?
 
-Suggestion add a ms offset field. Ex:
+http://git-scm.com/book/ch9-2.html
 
-jpyeron@black /projects/git/git
-$ git cat-file -p HEAD
-tree 1e24acfbfcc05aa57e8cb2cfe3ffe01cb100961d
-parent e98fa647aa5673cc95b6e9be1fdc13c0afa2cb37
-author Junio C Hamano <gitster@pobox.com> 1350495361 -0700
-committer Junio C Hamano <gitster@pobox.com> 1350495402 -0700
-mstimestamps author 0 committer 1234
+---
+% ruby -e "require 'zlib'; puts
+Zlib::Inflate.inflate(File.read('.git/objects/55/47f28602c9b07f69dfa4685945f71f660e8b25'))"
 
-Git 1.7.12.4
+commit 382tree a14fe16bb9cb7d949d9eb7570bf56968b209f4a2
+parent c3640f09011d969ac85753c8f0114ce9b9c86603
+author Felipe Contreras <felipe.contreras@gmail.com> 1352767480 +0100
+committer Felipe Contreras <felipe.contreras@gmail.com> 1354064281 +0100
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+remote-bzr: detect local repositories
 
+So we don't create a clone  unnecessarily.
 
-> 
-> But I really wonder if anybody actually cares about adding 
-> sub-second timestamp support, or if it is merely "because SVN has it".
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-Not because subversion has it but because date != git(precisedate) and some
-automation using git in a larger enterprise workflow may assume that date
-1354065991.1234 going in should be the same when queried.
+Yes, that's what I'm telling you.
 
--Jason
-
-
-
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00.
+-- 
+Felipe Contreras
