@@ -1,71 +1,77 @@
-From: Marc Khouzam <marc.khouzam@gmail.com>
-Subject: Re: [PATCH] Support for git aliasing for tcsh completion
+From: Jeff King <peff@peff.net>
+Subject: Re: Python extension commands in git - request for policy change
 Date: Tue, 27 Nov 2012 20:39:43 -0500
-Message-ID: <CAFj1UpGipsewPRiumtuit5FKU2-CGMp3zgh48E3wdj=g4FWAOQ@mail.gmail.com>
-References: <1353989472-4142-1-git-send-email-marc.khouzam@gmail.com>
-	<CAFj1UpE5V5fKtt0fFOXLPrsQdOL8xpvzT=66Qi3=cMHit092Rg@mail.gmail.com>
-	<7v38zvnez8.fsf@alter.siamese.dyndns.org>
+Message-ID: <20121128013943.GA23776@sigill.intra.peff.net>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+ <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+ <50B1F684.5020805@alum.mit.edu>
+ <CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
+ <20121127143510.GA15831@google.com>
+ <CAMP44s10krOPD73dL0Ancie=kussk89jK7V5adR3hw=a73CVWw@mail.gmail.com>
+ <20121128005128.GB23224@sigill.intra.peff.net>
+ <CAMP44s0FiNRbFHbTtZJiWLDRQmy0VZ_FNGxE40eZrXwCFJ5P7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Tuncer Ayaz <tuncer.ayaz@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Magnus =?utf-8?B?QsOkY2s=?= <baeck@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
 X-From: git-owner@vger.kernel.org Wed Nov 28 02:40:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdWd6-0001vs-04
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 02:40:00 +0100
+	id 1TdWd7-0001vs-Be
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 02:40:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377Ab2K1Bjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 20:39:44 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:50332 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754552Ab2K1Bjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 20:39:44 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k11so9328038iea.19
-        for <git@vger.kernel.org>; Tue, 27 Nov 2012 17:39:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IGU/+czaJXs/ztV1yUDlZrMBcEeuhrkSxvEGDodVGz4=;
-        b=kxz+61knBJ8No6pO/7hclLsOv1pXzEt2TcPKIndYFEhGWyh/KTTF+anVSGAltZ5/rt
-         430jeyRNWveRL6td3s9RVwbN3tuymHLNlT3ogkRLerdwkYy3eCAo2FfudlEZneQxcHAK
-         5SmLl1M1020k0/zzGJhE8eYdQyZZGOD0Qndaesax/GRNMEPg143bPPdsmYdIsBr4JKf9
-         V2CkVBxU8LVPFB7bftRpu73O3Ga7nULD8ckz/eSQ7S93RMvzIvDwa04T1OWGOktGdWdj
-         agtvjG1CAqjPTGrSqoRoSUf8qTjkPiz2E4/ra4xaocNJ8/1R6zg97UWpfBXpJiJh7oxj
-         RJ6Q==
-Received: by 10.50.153.137 with SMTP id vg9mr20406192igb.40.1354066783865;
- Tue, 27 Nov 2012 17:39:43 -0800 (PST)
-Received: by 10.64.132.39 with HTTP; Tue, 27 Nov 2012 17:39:43 -0800 (PST)
-In-Reply-To: <7v38zvnez8.fsf@alter.siamese.dyndns.org>
+	id S1755445Ab2K1Bjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 20:39:46 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58829 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754552Ab2K1Bjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 20:39:46 -0500
+Received: (qmail 32129 invoked by uid 107); 28 Nov 2012 01:40:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Nov 2012 20:40:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Nov 2012 20:39:43 -0500
+Content-Disposition: inline
+In-Reply-To: <CAMP44s0FiNRbFHbTtZJiWLDRQmy0VZ_FNGxE40eZrXwCFJ5P7A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210659>
 
-On Tue, Nov 27, 2012 at 12:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The patch was linewrapped so I had to fix it up;
+On Wed, Nov 28, 2012 at 02:22:09AM +0100, Felipe Contreras wrote:
 
-Sorry about that.  I don't know if it is gmail, or the fact that I use
-its web interface
-that causes these problems.
+> Sure, you will argue that we don't see the *real* issues, because they
+> were fixed preemptively, but the fact of the matter is that we will
+> never know. All we know is the reality we can observe, and the reality
+> is that we hit very few *real* issues outside the test system (feel
+> free to provide evidence to the contrary).
 
-> please double check
-> what will be queued on 'pu' to make sure that I did not miss
-> necessary whitespaces or added unnecessary ones when I rejoined long
-> lines.
+I think reports of breakage in the test scripts are relevant, because
+they are indicative that people _do_ run platforms that care about these
+issues, and if we were to write a lot of shell scripts, we would run
+across them more frequently. But the fact of the matter is that we don't
+write a lot of non-test shell scripts these days, which is part of the
+reason limiting your search to the last 2 years did not turn up many
+fixes outside the tests.
 
-I just checked it and it looks great.
+There was a big push in 2006 and 2007 to port some of the hairier
+scripts to C. Try:
 
-I'm working on another improvement to the script but I don't have it working
-yet.  But I should not bother you much after that.
+  git log --no-renames --diff-filter=D \
+          --diff-filter=D --format='%ad %s' --date=short \
+          -- 'git-*.sh'
 
-Thanks again!
+A lot of it was motivated by portability and decent performance for
+common commands under Windows.
 
-Marc
+Anyway, there is not much point in debating the exact level of pain that
+shell portability causes us. Even if you accept that there is some, it
+is clearly not a major problem for the project.
+
+-Peff
