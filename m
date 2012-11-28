@@ -1,110 +1,107 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Wed, 28 Nov 2012 10:39:56 -0500
-Message-ID: <20121128153955.GA26588@google.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
- <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
- <50B1F684.5020805@alum.mit.edu>
- <CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
- <20121127143510.GA15831@google.com>
- <CAMP44s10krOPD73dL0Ancie=kussk89jK7V5adR3hw=a73CVWw@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git fetch pack freezes
+Date: Wed, 28 Nov 2012 08:41:30 -0800
+Message-ID: <CAJo=hJvGNUtT+z_E7rSaOr77=7dSo1N+7QiEoHNdEQDV3n7JWw@mail.gmail.com>
+References: <87624pizoe.fsf@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 16:40:23 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Ivan Kanis <ivan.kanis@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:42:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdjkL-0002gV-HS
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 16:40:21 +0100
+	id 1Tdki8-0007Lc-48
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 17:42:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754037Ab2K1PkA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2012 10:40:00 -0500
-Received: from mail-lb0-f202.google.com ([209.85.217.202]:52928 "EHLO
-	mail-lb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753224Ab2K1Pj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 10:39:59 -0500
-Received: by mail-lb0-f202.google.com with SMTP id i15so955160lbo.1
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 07:39:57 -0800 (PST)
+	id S1754006Ab2K1Qlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 11:41:53 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:39322 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753930Ab2K1Qlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 11:41:52 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so9800110qcr.19
+        for <git@vger.kernel.org>; Wed, 28 Nov 2012 08:41:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=xt8NtjPZuje6hYuwhsm0zdbrlq0T4xDUPQ+Lk8brVMA=;
-        b=HtHW/OyLaQyfPJA7YMWeyoDQjKcB5yKC+F1/mvqEA/CtXVjWTJyuuZJXTXN2+0fOxE
-         +FGESXOQZF8Ei03jPyR10Zb788wtw8kZDdYjtukcNKvdIV2E0SCdoFGLxiOjMURNOpXS
-         Cp7gJoh1MKQiBxNtnt0jgqUnCDfj7PEElQgh7bNYMppirZHXZq/oHciUjtpSFdduie7Y
-         eTYfvVz7ODIFl8R0FZ6ESp5ygYnMJf8fDr9pEJQVBEeDXHILGgt7NQS2BEJFsKkBY2sQ
-         BC/lliQHDd9U9P2pP5+SmdUmdsBfTxfKLGPm48TGiVBsbNtWGHjIL0rzQPob1fjWjv6+
-         xRkQ==
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=VMPVc66xG9LF/P6+RVHg32ihbfdYnT3GpqO6tXRLvJM=;
+        b=dDVpk0F8hzjLmX0kMnOCNvs6at8NbBvjiubkiMzASk/V+PElwnPcyF2zMe8Nfg1pYi
+         AgjVA6vcBUQOBY/FInClZFBraEH0Ldd40hceHfMghph1PnCKorCE7BB/mxI2tSuM43vB
+         g7Z+1Jm34WZAx+TDjOZOfhIwQjQV9zCCW5VBI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent:x-gm-message-state;
-        bh=xt8NtjPZuje6hYuwhsm0zdbrlq0T4xDUPQ+Lk8brVMA=;
-        b=o6Qszbxv9v+qhogjgNM5+Jg6MbJtDIEUQj6qWAxs7cJCmrfQDl5KYD+w/SaI5L4J+R
-         SkGvqKmmr9TeVD5HXJjD+21X1RWe7P2VycPpy607wfTr6EkA9OBw6s5E2QaIw65/ht3o
-         2NRv4/ayfaFBQUseDHlHssQaNyC2EVQ6jNXVVh6n2PQ5xi4sBPkDreAS1DAolzreZMVN
-         HEpQFTO8Gey2u+FVylqyhAH+r1y8q142tWCqY9Nyjrb3tceHA+BYaJEhB42UKCRfwreq
-         /p/HmPNzOoqU+wmsw6sP8Hlyx4b2oUe8/fRlNahcyF89wxIm7VVppvrIW3RbtCv7RuAE
-         RDNQ==
-Received: by 10.14.0.196 with SMTP id 44mr215279eeb.6.1354117197457;
-        Wed, 28 Nov 2012 07:39:57 -0800 (PST)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id u8si5272480een.1.2012.11.28.07.39.57
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Wed, 28 Nov 2012 07:39:57 -0800 (PST)
-Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 2CD92200057;
-	Wed, 28 Nov 2012 07:39:57 -0800 (PST)
-Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
-	id 728AE60FFE; Wed, 28 Nov 2012 10:39:56 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s10krOPD73dL0Ancie=kussk89jK7V5adR3hw=a73CVWw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Gm-Message-State: ALoCoQm2eedoUjTvUb+eHcsDRsKnC3ffLyjZp1j+AW4x/dyqWvYQrNk6PGRhIv/JsaqyDhVXvoQ5UYQ3fcibaP8QwJC1nT9fOt7rFYYUj1V4ol4ZgQiNspTfV5H+pAzM991tzbDBPmcrVncRNgEiIRPe1jgFKTQHoh9Cv3wQJGdua0w/i1bah6T/aaqxOR1kRdmwyLpKpP9b
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=VMPVc66xG9LF/P6+RVHg32ihbfdYnT3GpqO6tXRLvJM=;
+        b=JmADAHaDdgieTYn9lm8DVCfJBrbav/fTeT25pC84d0oVC7H8zmY7m54ovOQHALlUjj
+         pq4qyWi3s4oKP2lA2hX7BRc+1rhhujIs8TJVEXlih8b9u0WwZa54cNPR8aHOp7X5be05
+         tTFda0+Am4QF4QwxbvhO+jM1hnjFaeV+2YE78FrzMd9Ys47nSsXziky2Evk2CxyJuErJ
+         9y4Epxf/iwwdJuUl+ao6yvROu76/wRhD1Im8WbygUzq5uBTp6v2frVTl60dq8U2cGt+W
+         4Shntfv13Px6h+Izk+sWUQo0dTydic+i5sMLtTkUB3CZ2/oJitOxF8LpxcBeaeKnap/O
+         B+tQ==
+Received: by 10.49.38.98 with SMTP id f2mr4080008qek.32.1354120910777; Wed, 28
+ Nov 2012 08:41:50 -0800 (PST)
+Received: by 10.49.60.198 with HTTP; Wed, 28 Nov 2012 08:41:30 -0800 (PST)
+In-Reply-To: <87624pizoe.fsf@googlemail.com>
+X-Gm-Message-State: ALoCoQmAyB2zKoLJ945dTPMvF1ydZhsNuXZ2HS1SWTOMmNWkAaXS9QJGb1QZbepSEP/AwR82AV7L
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210738>
 
-On Tuesday, November 27, 2012 at 19:10 EST,
-     Felipe Contreras <felipe.contreras@gmail.com> wrote:
-
-> On Tue, Nov 27, 2012 at 3:35 PM, Magnus B=E4ck <baeck@google.com> wro=
-te:
+On Wed, Nov 28, 2012 at 6:12 AM, Ivan Kanis <ivan.kanis@googlemail.com> wrote:
+> We are using git with the smart HTTP protocol. We are seeing the client
+> freeze with Jenkins poll. It stops the continuous build which is a bit
+> of a pain. It happens with the latest release 1.8.0 on the client side.
+> The server is using 1.7.0.4.
 >
-> > While "constant traffic" probably overstates the issue, these are
-> > not theoretical problems. I recall at least three cases in the last
-> > year or so where Git has seen breakage with Solaris or Mac OS X
-> > because of sed or tr incompatibilities, and I don't even read this
-> > list that thoroughly.
+> On the server we are seeing the following error message:
 >
-> Most of the *constant* traffic is about *theoretical*
-> incompatibilities, how much of that are real incompatibilities, it's
-> not known. _Some_ of the traffic is about real incompatibilities,
-> sure, but you could count only three cases *in a year*. It's not a
-> huge amount. And then, how man this year?
+> var/log/apache2/error.log.1:[Mon Nov 19 15:17:12 2012] [error] [client 192.168.50.15] fatal: git upload-pack: not our ref aa92ca2076c2421433f89ee0b0ae89cd36d27481 multi_ack_detailed side-band-64k thin-pack no-progress ofs-delta
+
+Upgrade your server. What happened here is a race condition that is
+only possible in the smart HTTP protocol. The client makes an initial
+request to ask where the branches are. Then it makes a second (and
+possibly more) subsequent request to negotiate a common ancestor and
+actually obtain the necessary objects. If a branch is updated between
+that initial request and any subsequent request, the server fails with
+this error message.
+
+More recent servers handle this more gracefully by looking to see if
+the object the client wants is reachable within some reasonable
+distance from a current branch. If so, the request is still allowed to
+continue, rather than die() with a failure.
+
+> On the client side I compiled git with debugging symbols. I then
+> attached the debugger to the process that gets hosed. I get the
+> following backtrace:
 >
-> Also, I would like references to those incompatibilities.
+> #5  0x000000010f8a1246 in packet_read_line (fd=0, buffer=0x10f981eb0 "", size=1000) at pkt-line.c:211
+> #6  0x000000010f7b5196 in get_ack (fd=0, result_sha1=0x7fff6f377450 "") at builtin/fetch-pack.c:227
+> #7  0x000000010f7b4074 in find_common (fd=0x7fff6f377668, result_sha1=0x7fff6f377450 "", refs=0x0) at builtin/fetch-pack.c:416
+>
+> The file descriptor being 0 in #6 seems a bit suspicious. I am not
+> familiar with the git protocol. Could I get some guidance on how to
+> troubleshoot some more so that I come up with a patch?
 
-I don't remember the details of the Mac OS X problem, but just searchin=
-g
-the archives for "xpg4" revealed the following Solaris problems since
-April:
+There is actually a parent process in front of this one called
+git-remote-http (or git-remote-https depending on protocol). That
+parent is doing the HTTP transport and is sending whatever the server
+provides into this child's stdin. I'm not surprised there is yet
+another deadlock condition in here, its a rather heinous process setup
+and way to handle the protocol.
 
-http://article.gmane.org/gmane.comp.version-control.git/195010
-http://article.gmane.org/gmane.comp.version-control.git/195966
-http://article.gmane.org/gmane.comp.version-control.git/207944
+fd in frame #7 is an address of an int array. fd in frame #6 is an
+actual fd, the one to read from, which in this case should be 0 to
+read from stdin, because its trying to get data from the HTTP server
+by way of reading it from the pipe the parent supplied to it on stdin.
 
---=20
-Magnus B=E4ck
-baeck@google.com
+So the stack frames are correct. Its just a problem that the parent
+didn't identify the server crashing and closing its side of the pipe
+on stdin to force it to EOF to prevent the child from getting hung
+here in a read.
