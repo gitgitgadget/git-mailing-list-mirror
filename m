@@ -1,85 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] svnrdump_sim: start the script with /usr/bin/env python
-Date: Wed, 28 Nov 2012 11:33:26 -0800
-Message-ID: <7v7gp5v7y1.fsf@alter.siamese.dyndns.org>
-References: <20121128025734.21231.47468.chriscool@tuxfamily.org>
- <7vy5hmgovt.fsf@alter.siamese.dyndns.org>
- <CAMP44s17Gycr2tWOLYAxMG7-CGP3SpFf7XTWf94qGg3WfVpT-A@mail.gmail.com>
- <CAP8UFD08LhywQ9KaNoeG1nORZwtK8MNWqwjfRJPyT2vLkNgs9A@mail.gmail.com>
- <7vmwy1hdgx.fsf@alter.siamese.dyndns.org>
- <CAMP44s3YfLrL+74j5DOVVATK8GWEo1qHnmJDW5dLWJRxK_CVLQ@mail.gmail.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v3 1/3] git-submodule add: Add -r/--record option
+Date: Wed, 28 Nov 2012 14:42:16 -0500
+Message-ID: <20121128194216.GA22202@odin.tremily.us>
+References: <7vboehv9d6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 20:33:53 2012
+Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 20:42:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdnOD-0000gU-AN
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 20:33:45 +0100
+	id 1TdnWk-0003wd-DR
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 20:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755966Ab2K1Tdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 14:33:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46083 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754501Ab2K1Td3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 14:33:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 684469B9B;
-	Wed, 28 Nov 2012 14:33:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y8iz+CcrFolXhr7zg5Lsm7egoyI=; b=XnT6Xt
-	qI3SSEJ87x41+EYVcyIEYsiHeMuIWjILa+uCvdBOyON+BZqnTiokoYTMRM8uH/ds
-	iFu4+VARZeaR/Z/Sdg+NLmoU8xDGPG2elQ8s01nRteYbT/3jeDsLub8TLM/tsPMz
-	sfxtFzyMiB57/iuDY3eSUFTmv+FO9AjlbzSkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OZ1wx/Jgusmtjx6iUE/C+2VkLsZcEu6B
-	KwH4i24zPgU9f2ZphzdQ2rCnnWDl74F2NkqwmDzIVH08WKQgHLkpidX0vDVMFlyk
-	+goI86btUQhSbrAG+imiqLZxc6vn3BTLuSfSkYCMAeESTeXlyHbEdOQ49f+mrKDM
-	7PzX62KBhuo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 570939B9A;
-	Wed, 28 Nov 2012 14:33:28 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB5749B98; Wed, 28 Nov 2012
- 14:33:27 -0500 (EST)
-In-Reply-To: <CAMP44s3YfLrL+74j5DOVVATK8GWEo1qHnmJDW5dLWJRxK_CVLQ@mail.gmail.com> (Felipe
- Contreras's message of "Wed, 28 Nov 2012 20:19:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7BBB2DAA-3992-11E2-A7AD-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755458Ab2K1TmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 14:42:19 -0500
+Received: from vms173015pub.verizon.net ([206.46.173.15]:59471 "EHLO
+	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754211Ab2K1TmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 14:42:18 -0500
+Received: from odin.tremily.us ([unknown] [72.68.95.13])
+ by vms173015.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0ME700L6AQQG8C60@vms173015.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 28 Nov 2012 13:42:17 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 395E76E1B38; Wed,
+ 28 Nov 2012 14:42:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1354131736; bh=IZUFef/d97hXhwQ84HTtSseuMfh7nTdRzL1ygf2+PfU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=pIkZR9LPZS3BoUT+SjLrGChcTYaw8PUSWA8pHrhnonpEY04FtWuq9Vp9HqJP2TUXF
+ K0GrrMKQIR5nrKxpNucGymS1QrmcTtwVHwDZ98ViKo7bv5KxicYkHh9ldqq3eB8ICd
+ e59MBwjv+xe201wngwZ7mhPlf7CyadYv3+OPtn18=
+Content-disposition: inline
+In-reply-to: <7vboehv9d6.fsf@alter.siamese.dyndns.org>
+ <7vzk2oo2d2.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210767>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, Nov 28, 2012 at 11:02:45AM -0800, Junio C Hamano wrote:
+> "W. Trevor King" <wking@tremily.us> writes:
+> 
+> > From: "W. Trevor King" <wking@tremily.us>
+> >
+> > Signed-off-by: W. Trevor King <wking@tremily.us>
+> > ---
+> >  Documentation/git-submodule.txt | 3 ++-
+> >  git-submodule.sh                | 2 +-
+> >  2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> Hmm, I wonder why I have this funny feeling that this was proposed
+> and rejected already...
+> 
+> As the command takes other options whose names begin with 'r', I
+> thought the longer term plan was to stop letting "--rebase" squat on
+> short and sweet "-r" and leaving it undocumented (even though the
+> short one was added by mistake) was meant to be the first step in
+> that process.
+> 
+> But maybe I am confusing an undocumented single-letter option from
+> some other subcommand.  Anybody remembers?
 
-> On Wed, Nov 28, 2012 at 5:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> You need a fix for that; didn't I already say "you need a bit more
->> than that"?
->
-> I disagree. Most of the contrib scripts are expected to be used as
-> they are.
+Perhaps you are remembering:
 
-You are only looking at one of the uses for this script, when there
-are two.
+On Sun, Nov 11, 2012 at 02:33:45AM -0800, Junio C Hamano wrote:
+> Ah, this reminds me of another thing I noticed when I saw that
+> patch.  The change seems to think "branch" is the _only_ thing the
+> user might want to record per submodule upon "git submodule add".
+> As an interface to muck with an uninterpreted random configuration,
+> it squats on a good option name for setting one single and arbitrary
+> variable---quite a selfish change that is not acceptable.
+> 
+> Calling the option "--record-branch-for-submodule" or something more
+> specific might alleviate the problem, but then it would become even
+> less useful as a short-hand for "config submodule.$name.branch", I
+> would suspect.
 
-You are correct that distros may install with whatever tweaks of
-their own, and to help their tweak process (like the one that
-specifically notices "/usr/bin/env python" as you wrote), changing
-the "#!/usr/bin/python" to match others would be a good change.
+With this recent patch, I'm just documenting someone else's squatting
+;).  But yes, the reason I noticed was because I was tempted to make
+the same mistake again :p.  In my defense, I think `update --remote`
+is a good deal more general than my earlier `add --record`.
 
-But that change alone is not sufficient for this one, which is used
-from t/ script.  You cannot treat this one like import-zips and
-hg-to-git that we do not use in-tree.  Somewhere before t9020 uses
-it, it needs the treatment similar to the rewriting that is done for
-git-p4.py to git-p4.
+Cheers,
+Trevor
+
+-- 
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
