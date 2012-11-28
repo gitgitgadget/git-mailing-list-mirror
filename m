@@ -1,108 +1,89 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Wed, 28 Nov 2012 03:09:12 +0100
-Message-ID: <CAMP44s0UZ2yTKLkp51p9zqO4Quv9_WGO07P20eYeQesgXHxn3Q@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CACsJy8BbUjrJtfpEvbcK==Y2gFNsFhFBN93CL36J5uVe=Ca4wQ@mail.gmail.com>
-	<20121125051809.GA3670@thyrsus.com>
-	<CAMP44s0r1J=aOuEpKQ1+ew9FzODwLX-w5z9rG-WN6AjU0o97yw@mail.gmail.com>
-	<20121125095429.GB22279@thyrsus.com>
-	<CAMP44s1cG=5D9DppHmB9CpgkgdEzM72KhQ1Q-kWrrDo8ST+r_g@mail.gmail.com>
-	<20121125175051.GD32394@thyrsus.com>
-	<CAMP44s3QNG-sxcZsWmL3RYjXkzOwerj2774t7Abh04A7QR6TCA@mail.gmail.com>
-	<20121125215635.GA6937@thyrsus.com>
+Subject: Re: [PATCH v6 p2 3/9] transport-helper: trivial code shuffle
+Date: Wed, 28 Nov 2012 03:15:16 +0100
+Message-ID: <CAMP44s2MtEie+tF4MDyzNV3A27zu+UhinS+EkaLE8DMZ71UNOQ@mail.gmail.com>
+References: <1353727520-26039-1-git-send-email-felipe.contreras@gmail.com>
+	<1353727520-26039-4-git-send-email-felipe.contreras@gmail.com>
+	<7vk3t7nfql.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0fmt+bHN-ycza8b+y8Ep-Cyqmg1U1PVas267fTY5iPPQ@mail.gmail.com>
+	<7vwqx6jxv2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org, 
-	msysGit <msysgit@googlegroups.com>
-To: esr@thyrsus.com
-X-From: msysgit+bncBDBJVMGGZYNBBSHE2WCQKGQEPLNDUCA@googlegroups.com Wed Nov 28 03:09:27 2012
-Return-path: <msysgit+bncBDBJVMGGZYNBBSHE2WCQKGQEPLNDUCA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f186.google.com ([209.85.220.186])
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Thiago Farina <tfransosi@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 03:15:35 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDBJVMGGZYNBBSHE2WCQKGQEPLNDUCA@googlegroups.com>)
-	id 1TdX5a-0003cq-38
-	for gcvm-msysgit@m.gmane.org; Wed, 28 Nov 2012 03:09:26 +0100
-Received: by mail-vc0-f186.google.com with SMTP id fl17sf3575499vcb.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 27 Nov 2012 18:09:14 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TdXBW-0000vS-ED
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 03:15:34 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751135Ab2K1CPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 21:15:18 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:57404 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750961Ab2K1CPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 21:15:17 -0500
+Received: by mail-ob0-f174.google.com with SMTP id wc20so11598106obb.19
+        for <git@vger.kernel.org>; Tue, 27 Nov 2012 18:15:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=aaTsJ/umMik+//tmE3c7APSQiGswXV87hmf3bztgB6o=;
-        b=thNPVHimI3WZlib+pcCxy1zWs6s+5efNiCdiD0wgQezucmlRNGWc3uKfkgP4k+KSZC
-         tLIKwMdRAJNyCR7fz4oLg2MM8jmNfAhamlXEHjsYzubdDyMAzEWlaI3GjNYyXBFMrB48
-         RhZH61FVpwAZUTjptT+TQwjbKdZZOwVctJCknv0LOGZBrzlhJJXw5ZVUx9m8QA3PWyLh
-         VHax4ws6Yui6CHvduUqg7+ZYPA0Uf6CThCwkIUfB4R9uimPrcwfv+/tnWETSKYesbHMK
-         I6h6/yBeJiRX/lc37IJzwwg/sXM417QsIVcDFY0NYe9+yqwo+HimupTA/2dcQ8fzcbfT
-         HRJA==
-Received: by 10.50.37.232 with SMTP id b8mr6585605igk.4.1354068554274;
-        Tue, 27 Nov 2012 18:09:14 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.53.173 with SMTP id c13ls3885593igp.38.gmail; Tue, 27 Nov
- 2012 18:09:12 -0800 (PST)
-Received: by 10.42.55.66 with SMTP id u2mr12486794icg.33.1354068552772;
-        Tue, 27 Nov 2012 18:09:12 -0800 (PST)
-Received: by 10.42.55.66 with SMTP id u2mr12486793icg.33.1354068552761;
-        Tue, 27 Nov 2012 18:09:12 -0800 (PST)
-Received: from mail-oa0-f46.google.com (mail-oa0-f46.google.com [209.85.219.46])
-        by gmr-mx.google.com with ESMTPS id ul6si346442igb.2.2012.11.27.18.09.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Nov 2012 18:09:12 -0800 (PST)
-Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 209.85.219.46 as permitted sender) client-ip=209.85.219.46;
-Received: by mail-oa0-f46.google.com with SMTP id h16so15408669oag.33
-        for <msysgit@googlegroups.com>; Tue, 27 Nov 2012 18:09:12 -0800 (PST)
-Received: by 10.182.21.175 with SMTP id w15mr1579744obe.28.1354068552502; Tue,
- 27 Nov 2012 18:09:12 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 18:09:12 -0800 (PST)
-In-Reply-To: <20121125215635.GA6937@thyrsus.com>
-X-Original-Sender: felipe.contreras@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of felipe.contreras@gmail.com designates 209.85.219.46 as permitted
- sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210669>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=yPYhswUR7uZ125nOhLUbNYyL9N7S1F4PuvNVzRdo9GQ=;
+        b=PdBf0tXR2GZPj2OgiaKTLFZhI8ho2RR5Dav2x1y3ZBmMfwMPB7QaxgkqCNqvBeCfdP
+         np4iJggXOGutcMUNtIoC+sQhHH+c28YB1VlhV+3BAYFA4Ho1MLu1lVvyLGdcy9QhRcRc
+         gNENOBotrmyGzQ3K/dXcJxt/zhzr8/yaWxf1N+B8DlrEDC1qBQCas6WgcuxktUoUnO+m
+         EFs2d9HA0eOnqRAeuusHO9b9Qo0qYnf4MUddh/Gd2R3A4lX9dJdirCh3Svzp9pNWMsM/
+         Uh4idOIUHr3E2UV1Km4a4BKtV3FgwRjkbJOecY1LOiYFb9R0jhfMPMqh9kQjtH0E1R85
+         ostg==
+Received: by 10.60.4.227 with SMTP id n3mr14318639oen.136.1354068916966; Tue,
+ 27 Nov 2012 18:15:16 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Tue, 27 Nov 2012 18:15:16 -0800 (PST)
+In-Reply-To: <7vwqx6jxv2.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210670>
 
-On Sun, Nov 25, 2012 at 10:56 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com>:
->> And gitk is an integral part of git. But if you have different
->> numbers, what are they?
+On Wed, Nov 28, 2012 at 2:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> This is not just "just shuffle the die to make it explicit" but it
+>>> does change the semantics; earlier ref->deletion was perfectly fine
+>>> as long as data->refspecs is not given, but the new code always
+>>> dies.
+>>>
+>>> If this semantic change is a good thing, please explain why it is so
+>>> in the log message.  If the change is "it does not matter because
+>>> when data->refspecs is not given and ref->deletion is set, we die
+>>> later elsewhere in the code anyway", then it needs to be described.
+>>
+>> refspecs are optional, but when they are not present the code doesn't
+>> work at all. This patch changes the behavior that was totally broken
+>> anyway.
+>
+> In case it was not clear, I did not request/expect responses in the
+> discussion thread, but a rerolled series with updated description.
 
-> Please don't waste further time on quibbling.  We all know that gitk is
-> an uncomfortable special case and that the project would be far better
-> off, maintainability-wise, if it were successfully ported to one if these
-> other languages.  Trying to catch me out by triumphantly pointing at gitk
-> is...juvenile.
+An updated description that is irrelevant; the stuff is totally
+broken, that's my point. But I'm tired of explaining it, and showing
+it with test cases, and patches that fix those test cases, it's not my
+itch, and "the other camp" doesn't even bother to acknowledge that
+indeed remote helpers without marks just don't work, or even utter a
+single word replying to one of these patches, nothing.
 
-Another bit of information I just realized, 'man git' lists gitk as a
-'Main porcelain command' as high level as any git command can get.
+Not blaming you, just saying that I don't think anybody cares, clearly
+nobody is exercising this code.
+
+Cheers.
 
 -- 
 Felipe Contreras
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
