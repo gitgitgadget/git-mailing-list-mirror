@@ -1,161 +1,96 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/5] test-lib: allow negation of prerequisites
-Date: Wed, 28 Nov 2012 13:25:59 -0500
-Message-ID: <20121128182559.GA17122@sigill.intra.peff.net>
+Subject: [PATCH 2/5] t7502: factor out autoident prerequisite
+Date: Wed, 28 Nov 2012 13:26:06 -0500
+Message-ID: <20121128182606.GB17122@sigill.intra.peff.net>
 References: <20121128182534.GA21020@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:26:22 2012
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:26:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdmKv-0002FL-Of
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 19:26:18 +0100
+	id 1TdmL4-0002Pe-6U
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 19:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755824Ab2K1S0C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 13:26:02 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33884 "EHLO
+	id S1755850Ab2K1S0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 13:26:09 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33888 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755779Ab2K1S0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 13:26:01 -0500
-Received: (qmail 9794 invoked by uid 107); 28 Nov 2012 18:26:57 -0000
+	id S1755838Ab2K1S0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 13:26:08 -0500
+Received: (qmail 9800 invoked by uid 107); 28 Nov 2012 18:27:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Nov 2012 13:26:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2012 13:25:59 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Nov 2012 13:27:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2012 13:26:06 -0500
 Content-Disposition: inline
 In-Reply-To: <20121128182534.GA21020@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210751>
 
-You can set and test a prerequisite like this:
-
-  test_set_prereq FOO
-  test_have_prereq FOO && echo yes
-
-You can negate the test in the shell like this:
-
-  ! test_have_prereq && echo no
-
-However, when you are using the automatic prerequisite
-checking in test_expect_*, there is no opportunity to use
-the shell negation.  This patch introduces the syntax "!FOO"
-to indicate that the test should only run if a prerequisite
-is not meant.
-
-One alternative is to set an explicit negative prerequisite,
-like:
-
-  if system_has_foo; then
-	  test_set_prereq FOO
-  else
-	  test_set_prereq NO_FOO
-  fi
-
-However, this doesn't work for lazy prerequisites, which
-associate a single test with a single name. We could teach
-the lazy prereq evaluator to set both forms, but the code
-change ends up quite similar to this one (because we still
-need to convert NO_FOO into FOO to find the correct lazy
-script).
+t7502 checks the behavior of commit when we can and cannot
+determine a valid committer ident. Let's move that into
+test-lib as a lazy prerequisite so other scripts can use it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t0000-basic.sh        | 32 ++++++++++++++++++++++++++++++++
- t/test-lib-functions.sh | 21 ++++++++++++++++++++-
- 2 files changed, 52 insertions(+), 1 deletion(-)
+ t/t7502-commit.sh | 12 +-----------
+ t/test-lib.sh     |  6 ++++++
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 08677df..562cf41 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -115,6 +115,38 @@ then
- 	exit 1
- fi
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index deb187e..1a5cb69 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -243,16 +243,6 @@ test_expect_success 'message shows author when it is not equal to committer' '
+ 	  .git/COMMIT_EDITMSG
+ '
  
-+test_lazy_prereq LAZY_TRUE true
-+havetrue=no
-+test_expect_success LAZY_TRUE 'test runs if lazy prereq is satisfied' '
-+	havetrue=yes
-+'
-+donthavetrue=yes
-+test_expect_success !LAZY_TRUE 'missing lazy prereqs skip tests' '
-+	donthavetrue=no
-+'
-+
-+if test "$havetrue$donthavetrue" != yesyes
-+then
-+	say 'bug in test framework: lazy prerequisites do not work'
-+	exit 1
-+fi
-+
-+test_lazy_prereq LAZY_FALSE false
-+nothavefalse=no
-+test_expect_success !LAZY_FALSE 'negative lazy prereqs checked' '
-+	nothavefalse=yes
-+'
-+havefalse=yes
-+test_expect_success LAZY_FALSE 'missing negative lazy prereqs will skip' '
-+	havefalse=no
-+'
-+
-+if test "$nothavefalse$havefalse" != yesyes
-+then
-+	say 'bug in test framework: negative lazy prerequisites do not work'
-+	exit 1
-+fi
-+
- clean=no
- test_expect_success 'tests clean up after themselves' '
- 	test_when_finished clean=yes
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 8889ba5..22a4f8f 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -275,6 +275,15 @@ test_have_prereq () {
+-test_expect_success 'setup auto-ident prerequisite' '
+-	if (sane_unset GIT_COMMITTER_EMAIL &&
+-	    sane_unset GIT_COMMITTER_NAME &&
+-	    git var GIT_COMMITTER_IDENT); then
+-		test_set_prereq AUTOIDENT
+-	else
+-		test_set_prereq NOAUTOIDENT
+-	fi
+-'
+-
+ test_expect_success AUTOIDENT 'message shows committer when it is automatic' '
  
- 	for prerequisite
- 	do
-+		case "$prerequisite" in
-+		!*)
-+			negative_prereq=t
-+			prerequisite=${prerequisite#!}
-+			;;
-+		*)
-+			negative_prereq=
-+		esac
+ 	echo >>negative &&
+@@ -271,7 +261,7 @@ echo editor started > "$(pwd)/.git/result"
+ exit 0
+ EOF
+ 
+-test_expect_success NOAUTOIDENT 'do not fire editor when committer is bogus' '
++test_expect_success !AUTOIDENT 'do not fire editor when committer is bogus' '
+ 	>.git/result
+ 	>expect &&
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 489bc80..0334a9e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -738,6 +738,12 @@ test_lazy_prereq UTF8_NFD_TO_NFC '
+ 	esac
+ '
+ 
++test_lazy_prereq AUTOIDENT '
++	sane_unset GIT_AUTHOR_NAME &&
++	sane_unset GIT_AUTHOR_EMAIL &&
++	git var GIT_AUTHOR_IDENT
++'
 +
- 		case " $lazily_tested_prereq " in
- 		*" $prerequisite "*)
- 			;;
-@@ -294,10 +303,20 @@ test_have_prereq () {
- 		total_prereq=$(($total_prereq + 1))
- 		case "$satisfied_prereq" in
- 		*" $prerequisite "*)
-+			satisfied_this_prereq=t
-+			;;
-+		*)
-+			satisfied_this_prereq=
-+		esac
-+
-+		case "$satisfied_this_prereq,$negative_prereq" in
-+		t,|,t)
- 			ok_prereq=$(($ok_prereq + 1))
- 			;;
- 		*)
--			# Keep a list of missing prerequisites
-+			# Keep a list of missing prerequisites; restore
-+			# the negative marker if necessary.
-+			prerequisite=${negative_prereq:+!}$prerequisite
- 			if test -z "$missing_prereq"
- 			then
- 				missing_prereq=$prerequisite
+ # When the tests are run as root, permission tests will report that
+ # things are writable when they shouldn't be.
+ test -w / || test_set_prereq SANITY
 -- 
 1.8.0.207.gdf2154c
