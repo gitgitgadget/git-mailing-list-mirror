@@ -1,112 +1,91 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/4] git-svn: Document branches with at-sign(@).
-Date: Wed, 28 Nov 2012 15:43:22 +0100
-Message-ID: <50B6230A.2040503@drmicha.warpmail.net>
-References: <b115a546fa783b4121d118bb8fdb9270443f90fa.1353691892.git.Sebastian.Leske@sleske.name>
+Subject: Re: [PATCH 2/4] Recommend use of structure options for git svn.
+Date: Wed, 28 Nov 2012 15:46:45 +0100
+Message-ID: <50B623D5.9090606@drmicha.warpmail.net>
+References: <b115a546fa783b4121d118bb8fdb9270443f90fa.1353691892.git.Sebastian.Leske@sleske.name> <a4de87e8d09c26221eff116c3209b0a3606dfc21.1353691892.git.Sebastian.Leske@sleske.name>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Eric Wong <normalperson@yhbt.net>
 To: Sebastian Leske <Sebastian.Leske@sleske.name>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 15:43:46 2012
+X-From: git-owner@vger.kernel.org Wed Nov 28 15:47:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdirU-0004cw-EQ
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 15:43:40 +0100
+	id 1Tdiuk-0007xz-5I
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 15:47:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755338Ab2K1OnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 09:43:25 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:49854 "EHLO
+	id S1754339Ab2K1Oqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 09:46:47 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54727 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753964Ab2K1OnY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2012 09:43:24 -0500
+	by vger.kernel.org with ESMTP id S1753233Ab2K1Oqq (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2012 09:46:46 -0500
 Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id A519420E20;
-	Wed, 28 Nov 2012 09:43:23 -0500 (EST)
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4B05F20D28;
+	Wed, 28 Nov 2012 09:46:46 -0500 (EST)
 Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute6.internal (MEProxy); Wed, 28 Nov 2012 09:43:23 -0500
+  by compute6.internal (MEProxy); Wed, 28 Nov 2012 09:46:46 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=t+XdHA0iByYBzTjw4ZhEe6
-	0ubKg=; b=ZSZhdvnaqg+THNL2+2KgjCc1gmZUkcqEF2mSBW/CDiQswtflUSTIi9
-	U92+5J6/G66bZBi6pqwGDe2xsssO9/J2OM4ZSCF8skUVV5mypOIOQb78RjJG4xnB
-	6RFu4OivxokLcygCNpSiKQIb95y5yREjRcOCm42+QuFkuEDLEUZKY=
-X-Sasl-enc: WKaDnq0HgcrWt1lAKl6azVVP2p/iYy0kNCJjN22mI3Ab 1354113803
+	:content-transfer-encoding; s=smtpout; bh=fXzbcUOhuHZWh+2ojguqwA
+	IFeNw=; b=F5o6OZxMjtKNg75CXRrKLRfzHmNc0LdJoBnnFJGcPp5vRNAPzSO3FA
+	aB7NJOemtrlcZKpnaECbWrYHSbJ/EkCIF6u0KMvKAJ/ngqzRomdjHCiTOBNffIk4
+	fHwv8AtPPNKUmvCmpwHQBJ5esZniVrKGbfD2Sf7WLM9VK6I33Qstk=
+X-Sasl-enc: 5r2Qo9XjV23iN+Z+IwzC3LgzxitU6ALWWIsZrXKUj8Dc 1354114006
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id ED3A48E05AE;
-	Wed, 28 Nov 2012 09:43:22 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id B14028E0550;
+	Wed, 28 Nov 2012 09:46:45 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <b115a546fa783b4121d118bb8fdb9270443f90fa.1353691892.git.Sebastian.Leske@sleske.name>
+In-Reply-To: <a4de87e8d09c26221eff116c3209b0a3606dfc21.1353691892.git.Sebastian.Leske@sleske.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210734>
 
-Sebastian Leske venit, vidit, dixit 18.11.2012 18:08:
-> git svn will sometimes create branches with an at-sign in the name
-> (branchname@revision). These branches confuse many users and it is a FAQ
-> why they are created. Document when git svn will create them.
-> 
+Sebastian Leske venit, vidit, dixit 21.11.2012 08:13:
+> Document that when using git svn, one should usually either use the
+> directory structure options to import branches as branches, or only
+> import one subdirectory. The default behaviour of cloning all branches
+> and tags as subdirectories in the working copy is usually not what the
+> user wants.
+
+"Usually" assumes that usually svn repos follow a branch/tag structure.
+That may be quite true nowadays (but wasn't in the beginning).
+
+In fact I would suggest to emphasize "--stdlayout" as the most standard
+choice nowadays, followed by specifying a specific branch (usually
+trunk) as the repo uri.
+
 > Signed-off-by: Sebastian Leske <sebastian.leske@sleske.name>
 > ---
-> 
-> I found various important features of git-svn that are not documented.
-> Thus I created a series of patches to add and update documentation for
-> git-svn. I am sending this as four patches (of which this mail is the
-> first). I have tried my best to make the patches ready for inclusion
-> into git, but if there's any feedback, I'll gladly incorporate it.
-> 
-> 
->  Documentation/git-svn.txt |   26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
+>  Documentation/git-svn.txt |   10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
 > diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 8b0d3ad..482d60d 100644
+> index 482d60d..928a961 100644
 > --- a/Documentation/git-svn.txt
 > +++ b/Documentation/git-svn.txt
-> @@ -881,6 +881,32 @@ different name spaces.  For example:
->  	branches = stable/*:refs/remotes/svn/stable/*
->  	branches = debug/*:refs/remotes/svn/debug/*
+> @@ -871,6 +871,16 @@ already dcommitted.  It is considered bad practice to --amend commits
+>  you've already pushed to a remote repository for other users, and
+>  dcommit with SVN is analogous to that.
 >  
-> +If 'git svn' is configured to fetch branches (and --follow-branches
-> +is in effect), it will sometimes create multiple branches for one SVN
-> +branch, where the addtional branches have names of the form
-> +'branchname@nnn' (with nnn an SVN revision number).  These additional
-> +branches are created if 'git svn' cannot find a parent commit for the
-> +first commit in the branch, to connect the branch to the history of the
-> +other branches. Normally, 'git svn' will find the git commit that
-> +corresponds to the SVN revision a branch was created (copied) from and
-> +use that as the parent. However, it is possible that there is no
-> +suitable git commit to serve as parent.  This will happen, among other
-> +reasons, if the SVN branch is a copy of a revision that was not fetched
-> +by 'git svn' (e.g. because it is an old revision that was skipped with
-> +'--revision'), or if in SVN a directory was copied that is not tracked
-> +by 'git svn' (a branch that is not tracked at all, or a subdirectory of
-> +a tracked branch). In these cases, 'git svn' will still create a git
-> +branch, but the branch will not be connected to the history of the other
-> +branches.  'git svn' will also create a commit from the SVN revision the
-> +branch was copied from, and use that as the parent commit of the branch
-> +(this is indicated by the message "Initializing parent: <branchname>").
-> +Additionally, it will create a special branch named
-> +'<branchname>@<SVN-Revision>', where <SVN-Revision> is the SVN revision
-> +number the branch was copied from.  This branch will point to the
-> +specially created parent commit.
-> +If in SVN the branch was deleted and later recreated from a different
-> +version, there will be multiple such branches with an '@'.
+> +When cloning an SVN repository, if none of the options for describing
+> +the repository layout is used (--trunk, --tags, --branches,
+> +--stdlayout), 'git svn clone' will create a git repository with
+> +completely linear history, where branches and tags appear as separate
+> +folders in the working copy.  For projects with many branches this will
+> +lead to a working copy many times larger than just the trunk.  It is
+> +recommended to either use the the options for trunk / tag / branch
+> +directory, or to only clone the trunk (or a subdirectory of the
+> +trunk).
 > +
->  BUGS
->  ----
->  
+>  When using multiple --branches or --tags, 'git svn' does not automatically
+>  handle name collisions (for example, if two branches from different paths have
+>  the same name, or if a branch and a tag have the same name).  In these cases,
 > 
-
-In fact, the most typical reason for at-branches is a botched branching
-or tagging operation on the svn side: since they are simply "copy"
-operations it's too easy to copy a tree into the wrong directory.
-
-Michael
