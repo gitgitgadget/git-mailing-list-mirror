@@ -1,107 +1,118 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git fetch pack freezes
-Date: Wed, 28 Nov 2012 08:41:30 -0800
-Message-ID: <CAJo=hJvGNUtT+z_E7rSaOr77=7dSo1N+7QiEoHNdEQDV3n7JWw@mail.gmail.com>
-References: <87624pizoe.fsf@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] Add option to transpose parents of merge commit
+Date: Wed, 28 Nov 2012 08:52:52 -0800
+Message-ID: <7vr4ndhdp7.fsf@alter.siamese.dyndns.org>
+References: <1354057217-65886-1-git-send-email-draenog@pld-linux.org>
+ <1354057217-65886-4-git-send-email-draenog@pld-linux.org>
+ <50B5B599.3020105@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Ivan Kanis <ivan.kanis@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 17:42:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Kacper Kornet <draenog@pld-linux.org>, git@vger.kernel.org,
+	Aaron Schrab <aaron@schrab.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:53:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tdki8-0007Lc-48
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 17:42:08 +0100
+	id 1Tdkt3-0001gs-RY
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 17:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006Ab2K1Qlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 11:41:53 -0500
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:39322 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753930Ab2K1Qlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 11:41:52 -0500
-Received: by mail-qc0-f174.google.com with SMTP id o22so9800110qcr.19
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 08:41:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=VMPVc66xG9LF/P6+RVHg32ihbfdYnT3GpqO6tXRLvJM=;
-        b=dDVpk0F8hzjLmX0kMnOCNvs6at8NbBvjiubkiMzASk/V+PElwnPcyF2zMe8Nfg1pYi
-         AgjVA6vcBUQOBY/FInClZFBraEH0Ldd40hceHfMghph1PnCKorCE7BB/mxI2tSuM43vB
-         g7Z+1Jm34WZAx+TDjOZOfhIwQjQV9zCCW5VBI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=VMPVc66xG9LF/P6+RVHg32ihbfdYnT3GpqO6tXRLvJM=;
-        b=JmADAHaDdgieTYn9lm8DVCfJBrbav/fTeT25pC84d0oVC7H8zmY7m54ovOQHALlUjj
-         pq4qyWi3s4oKP2lA2hX7BRc+1rhhujIs8TJVEXlih8b9u0WwZa54cNPR8aHOp7X5be05
-         tTFda0+Am4QF4QwxbvhO+jM1hnjFaeV+2YE78FrzMd9Ys47nSsXziky2Evk2CxyJuErJ
-         9y4Epxf/iwwdJuUl+ao6yvROu76/wRhD1Im8WbygUzq5uBTp6v2frVTl60dq8U2cGt+W
-         4Shntfv13Px6h+Izk+sWUQo0dTydic+i5sMLtTkUB3CZ2/oJitOxF8LpxcBeaeKnap/O
-         B+tQ==
-Received: by 10.49.38.98 with SMTP id f2mr4080008qek.32.1354120910777; Wed, 28
- Nov 2012 08:41:50 -0800 (PST)
-Received: by 10.49.60.198 with HTTP; Wed, 28 Nov 2012 08:41:30 -0800 (PST)
-In-Reply-To: <87624pizoe.fsf@googlemail.com>
-X-Gm-Message-State: ALoCoQmAyB2zKoLJ945dTPMvF1ydZhsNuXZ2HS1SWTOMmNWkAaXS9QJGb1QZbepSEP/AwR82AV7L
+	id S1755527Ab2K1QxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 11:53:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46700 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754198Ab2K1Qwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 11:52:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7A049C69;
+	Wed, 28 Nov 2012 11:52:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZOtHVDWN19ok8bIJ0Pz6ufp3+ms=; b=iNuGyT
+	gQ1qqtv+sLcCLgXUauIkgPUp+NUC+TgGXUt0yRn1r7reZeW5cmCpWlL8L1wNR6/F
+	vWh/mS31h0l3N1Tg0LqpY1Fz1CWWoor2gGKeGL2oUTF12db8p7rYDir3T3c9ORX9
+	N9wesR7dW4gPmm1c4E+5Ts/+pYDaAEou5gXhI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i1D6cwNqJLrvc2CUhfKyOWVvkSA0GlRD
+	35k8gmRS9xh52DGhozuZrhsfUK04OCdiQxtR477CkvoI+zXPt+e9JVK7+gCrXUDF
+	R0yIqVsDkPpfGhhVxYg/smyN9zNVm50BMbEBdwxViCafyb8LiTXOyUBibEOF/vNx
+	ven9tz0tmOQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 944219C68;
+	Wed, 28 Nov 2012 11:52:54 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECFF49C66; Wed, 28 Nov 2012
+ 11:52:53 -0500 (EST)
+In-Reply-To: <50B5B599.3020105@viscovery.net> (Johannes Sixt's message of
+ "Wed, 28 Nov 2012 07:56:25 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D80835A-397C-11E2-AA6A-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210739>
 
-On Wed, Nov 28, 2012 at 6:12 AM, Ivan Kanis <ivan.kanis@googlemail.com> wrote:
-> We are using git with the smart HTTP protocol. We are seeing the client
-> freeze with Jenkins poll. It stops the continuous build which is a bit
-> of a pain. It happens with the latest release 1.8.0 on the client side.
-> The server is using 1.7.0.4.
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
+> Am 11/28/2012 0:00, schrieb Kacper Kornet:
+>> When the changes are pushed upstream, and in the meantime someone else
+>> updated upstream branch git advises to use git pull. This results in
+>> history:
+>> 
+>>      ---A---B---C--
+>>          \     /
+>>           D---E
 >
-> On the server we are seeing the following error message:
+> The commit message will say:
 >
-> var/log/apache2/error.log.1:[Mon Nov 19 15:17:12 2012] [error] [client 192.168.50.15] fatal: git upload-pack: not our ref aa92ca2076c2421433f89ee0b0ae89cd36d27481 multi_ack_detailed side-band-64k thin-pack no-progress ofs-delta
-
-Upgrade your server. What happened here is a race condition that is
-only possible in the smart HTTP protocol. The client makes an initial
-request to ask where the branches are. Then it makes a second (and
-possibly more) subsequent request to negotiate a common ancestor and
-actually obtain the necessary objects. If a branch is updated between
-that initial request and any subsequent request, the server fails with
-this error message.
-
-More recent servers handle this more gracefully by looking to see if
-the object the client wants is reachable within some reasonable
-distance from a current branch. If so, the request is still allowed to
-continue, rather than die() with a failure.
-
-> On the client side I compiled git with debugging symbols. I then
-> attached the debugger to the process that gets hosed. I get the
-> following backtrace:
+>   Merge branch 'master' of /that/remote
 >
-> #5  0x000000010f8a1246 in packet_read_line (fd=0, buffer=0x10f981eb0 "", size=1000) at pkt-line.c:211
-> #6  0x000000010f7b5196 in get_ack (fd=0, result_sha1=0x7fff6f377450 "") at builtin/fetch-pack.c:227
-> #7  0x000000010f7b4074 in find_common (fd=0x7fff6f377668, result_sha1=0x7fff6f377450 "", refs=0x0) at builtin/fetch-pack.c:416
+>   * 'master' of /that/remote:
+>     E
+>     D
 >
-> The file descriptor being 0 in #6 seems a bit suspicious. I am not
-> familiar with the git protocol. Could I get some guidance on how to
-> troubleshoot some more so that I come up with a patch?
+>> where B is the local commit. D, E are commits pushed by someone else
+>> when the developer was working on B. However sometimes the following
+>> history is preferable:
+>> 
+>>     ---A---D---C'--
+>>         \     /
+>>          '-B-'
+>
+> Better:
+>
+>      ---A--D--E--C'
+>          \      /
+>           `----B
 
-There is actually a parent process in front of this one called
-git-remote-http (or git-remote-https depending on protocol). That
-parent is doing the HTTP transport and is sending whatever the server
-provides into this child's stdin. I'm not surprised there is yet
-another deadlock condition in here, its a rather heinous process setup
-and way to handle the protocol.
+Yup, that topology is what Kacper's workflow wants.
 
-fd in frame #7 is an address of an int array. fd in frame #6 is an
-actual fd, the one to read from, which in this case should be 0 to
-read from stdin, because its trying to get data from the HTTP server
-by way of reading it from the pipe the parent supplied to it on stdin.
+Stepping back a bit, however, I am not sure if that is really true.
+The goal of this topic seems to be to keep one integration branch
+and always merge *into* that integration branch, never *from* it,
+but for what purpose?  Making the "log --first-parent" express the
+integration branch as a linear series of progress?  If so, I suspect
+a project with such a policy would dictate that D and E also be on a
+side branch, i.e. the history would look more like this:
 
-So the stack frames are correct. Its just a problem that the parent
-didn't identify the server crashing and closing its side of the pipe
-on stdin to force it to EOF to prevent the child from getting hung
-here in a read.
+      D---E
+     /     \
+  --A-------X---C---
+     \         /
+      `-------B
+
+with X being a --no-ff merge of the topic that consists of these two
+commits.
+
+> In this case, the commit message should say... what? Certainly not the
+> same thing. But I do not see that you changed anything in this regard.
+
+True.  If the goal is to emulate a merge of B from a side branch
+into _the_ integration branch, the summary should also emulate the
+message that would be given when the remote pulled from your current
+branch.
