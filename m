@@ -1,93 +1,124 @@
-From: Ivan Kanis <ivan.kanis@googlemail.com>
-Subject: Re: git fetch pack freezes
-Date: Wed, 28 Nov 2012 18:25:33 +0100
-Message-ID: <87obihhc6q.fsf@visionobjects.com>
-References: <87624pizoe.fsf@googlemail.com>
-	<CAJo=hJvGNUtT+z_E7rSaOr77=7dSo1N+7QiEoHNdEQDV3n7JWw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/7] remote-bzr: add simple tests
+Date: Wed, 28 Nov 2012 09:36:16 -0800
+Message-ID: <7vy5hlvddb.fsf@alter.siamese.dyndns.org>
+References: <1352643598-8500-1-git-send-email-felipe.contreras@gmail.com>
+ <1352643598-8500-6-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 18:26:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 18:36:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdlPP-000206-NK
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 18:26:52 +0100
+	id 1TdlYp-0003B1-Ld
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 18:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753106Ab2K1RZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 12:25:39 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:41580 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044Ab2K1RZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 12:25:38 -0500
-Received: by mail-we0-f174.google.com with SMTP id d7so4587815wer.19
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 09:25:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:references:face:x-hashcash:x-hashcash:date
-         :in-reply-to:message-id:user-agent:mime-version:content-type;
-        bh=qBffVz7nOOcvXy/jB978Av5yCTd/x0++bvUATALnXKk=;
-        b=h0F+9ziQwmE+L9pAkOxun7pUJIDGbZa6UDAuwXyQS/pvFSUkxgJME68dbzfdcCS8n4
-         UBqCJLe9XPWuFceOTH6b/1qfrfA1RXEQufOxd59C+j90prFGbetFehTQur9iwhF5dBJQ
-         jocsDKs7ZQ445JyrwRUMFBmIANnnp58FC/ZZy3auIkyTDi3u9vrciA1EeBuWoPjDnWnt
-         ZWnfiB5ZKbGz3yjStibRaF8ENZEJ2P/w2DniUiVZZx9RW8Kgi9rQggEk4KyjLvgMd371
-         viTBdN1oY4Neq1SUcTm3BrIRLuclS9yRPvSWITZt/v1vHTrKxcDpAtvmIBjdpJaMGAW2
-         8i+g==
-Received: by 10.216.28.8 with SMTP id f8mr5513422wea.162.1354123536811;
-        Wed, 28 Nov 2012 09:25:36 -0800 (PST)
-Received: from yan ([46.218.71.241])
-        by mx.google.com with ESMTPS id g2sm8287303wiy.0.2012.11.28.09.25.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Nov 2012 09:25:35 -0800 (PST)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAAB5QTFRF
- IBkXUxMTOCwoTC4qcUY8iFxQmmper31txpaJ/v/8aKZ1oAAAAcVJREFUOMt100tu2zAQAFDCXnUZ
- oAcIqG68LZULVLQBbwuSiffm6AIRRyeotAySJoVu2+FPpJWWC3/4NKOZocSW/yxWfnJ2+Bdwzhj7
- 8gleWVy7DXC2rkMNr2V/zRbghXIwthf3VbIA9Ffc71vZCSFyCEsBggtNS8ludwvfmhYA0Vn9o4DP
- zMWxR7+cPWzAYFzwM0ModtdmcDbDS6i/hT7L+RZof5yCXGrYe5jn2YO6BYMjgY+51tCIAqHgBLwR
- pwLnGuRjAKyBJkuN4yd4U92uCY1vUr2D/c5b8DuxyQwfOHUeaLqDJhnkkuGXbB56h2C1IVBdgncc
- bBi6feroa9B6jUDojnQPQKupbyXyeeCE1oT7Oqrt+SnfY3mkiyGA/3AmD3H5g32CcBx6hY8pRkwJ
- 9PpcjRGobUfprFnhAa1vepwcgMOhwG+pdSgKHFU9HAvoAH6XUl7lDUCCq5Qb6GMbVm3Aj++qDYCt
- wdBc/YHgOFCmS3mjDMRcSE2qY4E3Q3PVIQRQmeodNH4QEbRUFZzW+VotzwX4yTcRTySOML1qjcE5
- hTirVqDHkMAP0PjAywp3d18JZtqzvr9zDYD+GaSKtE6Zlr/DLPNFmOcvBAAAAABJRU5ErkJggg==
-X-Hashcash: 1:20:121128:git@vger.kernel.org::clH1G8EBuXrlt1Xm:0000000000000000000000000000000000000000000X/q
-X-Hashcash: 1:20:121128:spearce@spearce.org::XtXN2FePlSD+2N3X:000000000000000000000000000000000000000000EqPQ
-In-Reply-To: <CAJo=hJvGNUtT+z_E7rSaOr77=7dSo1N+7QiEoHNdEQDV3n7JWw@mail.gmail.com>
-	(Shawn Pearce's message of "Wed, 28 Nov 2012 08:41:30 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1753939Ab2K1RgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 12:36:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40413 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752324Ab2K1RgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 12:36:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C5638D1E;
+	Wed, 28 Nov 2012 12:36:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8lLE5+Oz/av35Q5K3AXY81wal7A=; b=huA/PF
+	IOnoSSAym7LmUsI9Gof2FTUfA2xxAzNL+qOEVfsFni4ZR15ER91ri7MT5WaYLlaD
+	xzk7ETijKuVB41F046OD9/MpOvDgWldjzZ353TdUkjYLhYS+FaE0ggX+A19XZWPT
+	bh/G5qKhzJnR5PaGE7/VBFRJ3O7UUWEC0lYeU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hsgxcwMAefW277l7XHhZsitQEwidAtbF
+	1k15p8/C+LGQJU/IYy6h4bd/TxxhyxBzyRs3fRr11oFAESqdk5nbZQ+R89ZsV2LK
+	A/L+Vq9UcM6zyQ/JMUgA1sR6p4/3817CPT+ftF656FmAZ0xnQWaNmZAWCDW+y/BA
+	8YqJZuiNqmA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDFDD8D1D;
+	Wed, 28 Nov 2012 12:36:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 511638D18; Wed, 28 Nov 2012
+ 12:36:18 -0500 (EST)
+In-Reply-To: <1352643598-8500-6-git-send-email-felipe.contreras@gmail.com>
+ (Felipe Contreras's message of "Sun, 11 Nov 2012 15:19:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DD2A0D4-3982-11E2-8A97-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210744>
 
-Hi Shawn,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Thanks for the quick reply.
-
-Shawn Pearce <spearce@spearce.org> wrote:
-
-> On Wed, Nov 28, 2012 at 6:12 AM, Ivan Kanis <ivan.kanis@googlemail.com> wrote:
->>
->> On the server we are seeing the following error message:
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/remote-helpers/test-bzr.sh | 111 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 111 insertions(+)
+>  create mode 100755 contrib/remote-helpers/test-bzr.sh
 >
-> Upgrade your server.
+> diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
+> new file mode 100755
+> index 0000000..8594ffc
+> --- /dev/null
+> +++ b/contrib/remote-helpers/test-bzr.sh
+> @@ -0,0 +1,111 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2012 Felipe Contreras
+> +#
+> +
+> +test_description='Test remote-bzr'
+> +
+> +. ./test-lib.sh
+> +
+> +if ! test_have_prereq PYTHON; then
+> +	skip_all='skipping remote-bzr tests; python not available'
+> +	test_done
+> +fi
+> +
+> +if ! "$PYTHON_PATH" -c 'import bzrlib'; then
+> +	skip_all='skipping remote-bzr tests; bzr not available'
+> +	test_done
+> +fi
 
-OK we'll look into it. I have a question: will a 1.8 server still serve
-1.7 git client?
+> +cmd=<<EOF
+> +import bzrlib
+> +bzrlib.initialize()
+> +import bzrlib.plugin
+> +bzrlib.plugin.load_plugins()
+> +import bzrlib.plugins.fastimport
+> +EOF
+> +if ! "$PYTHON_PATH" -c "$cmd"; then
 
-> So the stack frames are correct. Its just a problem that the parent
-> didn't identify the server crashing and closing its side of the pipe
-> on stdin to force it to EOF to prevent the child from getting hung
-> here in a read.
+I cannot see how this could have ever worked.  It could be that you
+wrote it for zsh and tested only with the version of zsh you have;
+zsh I have here does not grok it (and of course dash and bash won't).
 
-It sounds like a bug on the client, doesn't it?
--- 
-Ivan Kanis, Release Manager, Vision Objects,
-Tel +33 2 28 01 49 50,  Fax +33 2 40 25 89 20
-http://www.visionobjects.com
+In any case, I do not think this is a POSIX shell.  Just replace
+"=<<EOF" and "EOF" with single quote and everybody's shell should be
+able to read it.
 
-Let a fool hold his tongue and he will pass for a sage.
-    -- Publilius Syrus
+> +	echo "consider setting BZR_PLUGIN_PATH=$HOME/.bazaar/plugins" 1>&2
+> +	skip_all='skipping remote-bzr tests; bzr-fastimport not available'
+> +	test_done
+> +fi
+> +
+> +check () {
+> +	(cd $1 &&
+> +	git log --format='%s' -1 &&
+> +	git symbolic-ref HEAD) > actual &&
+> +	(echo $2 &&
+> +	echo "refs/heads/$3") > expected &&
+
+Style: s/> expected/>expected/;
+I won't repeat this but there are many others in this file.
+
+Thanks.
