@@ -1,77 +1,80 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: Millisecond precision in timestamps?
-Date: Tue, 27 Nov 2012 23:25:30 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121128042529.GA3864@thyrsus.com>
-References: <20121127230419.GA26080@thyrsus.com>
- <CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
- <20121128001231.GA27971@thyrsus.com>
- <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
- <CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com>
- <20121128011750.GA23498@sigill.intra.peff.net>
- <20121128032337.GB1669@thyrsus.com>
- <20121128033009.GA3931@sigill.intra.peff.net>
- <20121128034700.GD1669@thyrsus.com>
- <20121128040739.GA4115@sigill.intra.peff.net>
-Reply-To: esr@thyrsus.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] fsck: warn about '.' and '..' in trees
+Date: Tue, 27 Nov 2012 23:32:16 -0500
+Message-ID: <20121128043215.GA5362@sigill.intra.peff.net>
+References: <20121128022736.GA3739@sigill.intra.peff.net>
+ <CACsJy8DQCo9UzDadHJ2dF-eK20tFDTVn_ScwV+T7z-qLDJMytw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 28 05:25:58 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 05:32:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdZDf-0002CH-VZ
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 05:25:56 +0100
+	id 1TdZK6-00089h-BT
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 05:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572Ab2K1EZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2012 23:25:40 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:59174
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751117Ab2K1EZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2012 23:25:40 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 4A59340661; Tue, 27 Nov 2012 23:25:30 -0500 (EST)
+	id S1752047Ab2K1EcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2012 23:32:18 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58998 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751429Ab2K1EcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2012 23:32:18 -0500
+Received: (qmail 3018 invoked by uid 107); 28 Nov 2012 04:33:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Nov 2012 23:33:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Nov 2012 23:32:16 -0500
 Content-Disposition: inline
-In-Reply-To: <20121128040739.GA4115@sigill.intra.peff.net>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CACsJy8DQCo9UzDadHJ2dF-eK20tFDTVn_ScwV+T7z-qLDJMytw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210699>
 
-Jeff King <peff@peff.net>:
-> Felipe suggested using git-notes to add the metadata, which I think is a
-> reasonable first step. The git side of the code is already written, and
-> the concept is nicely modularized away from the core of git. Nobody has
-> to care about it but your importer, and anybody who wants to query it[1]
-> can do so by requesting the note.
+On Wed, Nov 28, 2012 at 11:22:20AM +0700, Nguyen Thai Ngoc Duy wrote:
+
+> > I don't think this is happening in the wild, but I did see somebody
+> > playing around with libgit2 make such a tree (and it is easy to do with
+> > git-mktree, of course).
+> >
+> > Technically one could use git with such a tree as long as you never ever
+> > checked out the result, but I think it is sufficiently crazy that we
+> > should probably detect it, just in case.
 > 
-> -Peff
-> 
-> [1] And you do not have to limit yourself to timestamps, if there is
->     other metadata about each commit you end up wanting to store for a
->     clean bi-directional conversion.
+> Can we declare "." and ".." illegal? There's no room for extension in
+> tree objects and I'm thinking of using maybe "." entry as an extension
+> indicator. Not sure if it works, old gits may attempt to checkout "."
+> entries and fail...
 
-I have actually wanted something like this quite badly.  Not so much
-for timestamps (though that would be nice), but it would be useful if
-each commit could carry a fossil-ID attribute that points at the
-Subversion commit it was derived from.
+Yeah, current git fails pretty hard. Try this:
 
-I've tried to make notes work for this, but couldn't beat it into
-doing what I was after.  Shawn, is there a way that the import stream
-syntax can declare a note with in-line data attached to the commit where
-it's declared?  
+  check() {
+    git init -q "$1" &&
+    (cd "$1" &&
+     blob=$(echo foo | git hash-object -w --stdin) &&
+     tree=$(printf '100644 blob %s\t%s' $blob "$2" | git mktree) &&
+     commit=$(echo foo | git commit-tree $tree) &&
+     git update-ref HEAD $commit &&
+     git clone -q . clone
+    )
+  }
 
-I tried just using the mark of the current commit, but git throws an error
-because it thinks that mark is not yet declared when the note fileop
-is parsed.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+  $ check dot .
+  error: Invalid path '.'
+
+  $ check dotdot ..
+  error: Updating '..' would lose untracked files in it
+
+  $ check dotgit .git
+  error: Updating '.git' would lose untracked files in it
+
+Interesting that we detect the first one while reading into the cache,
+but apparently try much harder to checkout on the latter two. Not sure I
+want to try "git checkout -f". :)
+
+-Peff
