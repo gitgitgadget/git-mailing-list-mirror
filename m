@@ -1,66 +1,85 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] completion: add options --single-branch and --branch to "git clone"
-Date: Wed, 28 Nov 2012 19:27:02 +0100
-Message-ID: <1354127222-5569-1-git-send-email-ralf.thielow@gmail.com>
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:27:34 2012
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH] submodule update: document exisiting -r form for --rebase
+Date: Wed, 28 Nov 2012 13:28:22 -0500
+Message-ID: <0450c75cbab3119ea830e8e8e3484649062377d8.1354127227.git.wking@tremily.us>
+Cc: "W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:29:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdmM8-0003Sf-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 19:27:32 +0100
+	id 1TdmNQ-0004mU-23
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 19:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755866Ab2K1S1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 13:27:17 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:62073 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755779Ab2K1S1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 13:27:16 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so5882920bkw.19
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 10:27:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=90I3bZNZY4g585n4oYZLW6RArk85tUhMLXpvXZha1fk=;
-        b=Om1IBxcRP2eNcbJVRMZB9UQcci33mijaPKhVLh2EiXvroBCoFW7tdLo8eOmXszNPdv
-         /RUL08N8Ix8W7L0aFyC8/HkpWyKZ2CcKpGZB+kHGiYT2JBe4RkTPaKOvc/ImXLaI70Rc
-         SjhG7BldXHDUmT5Dvfg+OeoV3H0N+IkY4gq7W9CXi/ZGA8ZpQb+QJh/IjoIqyZ+pXWPe
-         7jG+hB135Ng9g1kRdI90uIBO51PQN9NjjEwL9cwIqfaB/zhSi2ne1UXv8UPAIYAGI3fW
-         2kz7Gba4vEJnAixQKMXbsPDDg1KQ1ClRPcZF+Xo46UC2r25kRhcmEaOmlzwjy4beu9HN
-         Xr7Q==
-Received: by 10.204.5.205 with SMTP id 13mr6193722bkw.111.1354127235041;
-        Wed, 28 Nov 2012 10:27:15 -0800 (PST)
-Received: from localhost.localdomain (dslb-094-222-147-091.pools.arcor-ip.net. [94.222.147.91])
-        by mx.google.com with ESMTPS id hm8sm10481182bkc.10.2012.11.28.10.27.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Nov 2012 10:27:14 -0800 (PST)
-X-Mailer: git-send-email 1.8.0
+	id S1755863Ab2K1S2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 13:28:37 -0500
+Received: from vms173001pub.verizon.net ([206.46.173.1]:45523 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754957Ab2K1S2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 13:28:36 -0500
+Received: from odin.tremily.us ([unknown] [72.68.95.13])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0ME700B69NBGYB40@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 28 Nov 2012 12:28:29 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id AC70C6E193F; Wed,
+ 28 Nov 2012 13:28:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1354127308; bh=huYtg/1QAhtHPEi0+supbQ8vXqNWOcMkck226rzJwWI=;
+	h=From:To:Cc:Subject:Date;
+	b=i9C3inzohi/d9cT5h+q2+eW7drzx7wNr9byGweNs6onAp1LjYg1gaZHS7tffZ+1kJ
+ /22FX/WcPWAMwAAnWIIDJfFJNT3WjMyq6S9yI9fU9ItXrxIxJp/lHHHCWjfkZ2pd1K
+ i4J2kZ38T/mCzgswvcoNh0tqTYh03dUEr0LycAM0=
+X-Mailer: git-send-email 1.7.8.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210756>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+From: "W. Trevor King" <wking@tremily.us>
+
+Signed-off-by: W. Trevor King <wking@tremily.us>
 ---
- contrib/completion/git-completion.bash | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/git-submodule.txt | 3 ++-
+ git-submodule.sh                | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 48c3abd..cda095d 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -989,6 +989,8 @@ _git_clone ()
- 			--upload-pack
- 			--template=
- 			--depth
-+			--single-branch
-+			--branch
- 			"
- 		return
- 		;;
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index b4683bb..ec78fa7 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	      [--reference <repository>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
++'git submodule' [--quiet] update [--init] [-N|--no-fetch] [-r|--rebase]
+ 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+@@ -251,6 +251,7 @@ OPTIONS
+ 	If the key `submodule.$name.update` is set to `merge`, this option is
+ 	implicit.
+ 
++-r::
+ --rebase::
+ 	This option is only valid for the update command.
+ 	Rebase the current branch onto the commit recorded in the
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ab6b110..f2e8026 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -8,7 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
+ USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+-   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [-r|--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+    or: $dashless [--quiet] sync [--] [<path>...]"
 -- 
-1.8.0
+1.8.0.2.gcc766b6
