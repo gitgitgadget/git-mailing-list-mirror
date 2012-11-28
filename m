@@ -1,82 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-prompt.sh vs leading white space in
- __git_ps1()::printf_format
-Date: Wed, 28 Nov 2012 12:47:16 -0800
-Message-ID: <7vlidltpyj.fsf@alter.siamese.dyndns.org>
-References: <CAA01Cso1E4EC4W667FEU_af2=uGOfPuaWEB3y+zPCpB+bPzoaA@mail.gmail.com>
- <20121128132033.GA10082@xs4all.nl>
- <CAA01CspHAHN7se2oJ2WgcmpuRfoa+9Sx9sUvaPEmQ-Y+kDwHhA@mail.gmail.com>
- <50B66F41.1030305@xs4all.nl>
+From: Simon Oosthoek <s.oosthoek@xs4all.nl>
+Subject: Re: git-prompt.sh vs leading white space in __git_ps1()::printf_format
+Date: Wed, 28 Nov 2012 21:58:19 +0100
+Message-ID: <50B67AEB.1000603@xs4all.nl>
+References: <CAA01Cso1E4EC4W667FEU_af2=uGOfPuaWEB3y+zPCpB+bPzoaA@mail.gmail.com> <20121128132033.GA10082@xs4all.nl> <CAA01CspHAHN7se2oJ2WgcmpuRfoa+9Sx9sUvaPEmQ-Y+kDwHhA@mail.gmail.com> <50B66F41.1030305@xs4all.nl> <7vlidltpyj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
 	git@vger.kernel.org
-To: Simon Oosthoek <s.oosthoek@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Nov 28 21:47:42 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 22:12:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdoXj-0004QP-3L
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 21:47:39 +0100
+	id 1Tdovj-0003S1-O5
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 22:12:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756091Ab2K1UrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 15:47:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63555 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756077Ab2K1UrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 15:47:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FBC08B68;
-	Wed, 28 Nov 2012 15:47:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x31fjfUN6sj2HFF8QQGiKiyOf7Y=; b=vcbQ8A
-	azzXCVVXSCABfX3ulf5m3XzFcVPGD5FfH6aLOi2Vq+yZTdhq7nmhaESBaKwXnWqz
-	vq7AePDYNZQXeeJPC6RgWD6QMpoF8QgANNiCmOWYAv6r9VY+Ip8mxEAnOY+r3y3l
-	825fDSaYf8TAUC6OrB05wc/j2OR6z8WuUrw1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wxEzzpffAVfx0P0K9SSsitnpjvNUxfbS
-	ecZh7/FyZX8+Fn1l8ZAK+Oj53b9QM2w2oExY1muo/gA6Mok4lEDTpqBVmtwa3hgu
-	5SRTvLjxk5C9dSVlH+z2/jTtGOZQZc/zY8GQjp0Vk7ad00C1VxmTM3SpnfnWgNGy
-	uEX3BacQpqI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CC678B67;
-	Wed, 28 Nov 2012 15:47:18 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D59548B66; Wed, 28 Nov 2012
- 15:47:17 -0500 (EST)
-In-Reply-To: <50B66F41.1030305@xs4all.nl> (Simon Oosthoek's message of "Wed,
- 28 Nov 2012 21:08:33 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC3E144A-399C-11E2-BCB1-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932270Ab2K1VMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 16:12:12 -0500
+Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:2656 "EHLO
+	smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932209Ab2K1VML (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 16:12:11 -0500
+X-Greylist: delayed 783 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Nov 2012 16:12:11 EST
+Received: from [192.168.178.21] (simaj.xs4all.nl [83.160.71.26])
+	(authenticated bits=0)
+	by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id qASKwKJn002842
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 28 Nov 2012 21:58:21 +0100 (CET)
+	(envelope-from s.oosthoek@xs4all.nl)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vlidltpyj.fsf@alter.siamese.dyndns.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210778>
 
-Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
+On 28/11/12 21:47, Junio C Hamano wrote:
+> Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
+> 
+>> perhaps the point should read like this:
+>> #    3a) In ~/.bashrc set PROMPT_COMMAND
+>> #        To customize the prompt, provide start/end arguments
+>> #        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+>>
+>> Which would not be confusing at all, I think...
+> 
+> It says "to customize", so a user who just wants the default (which
+> does not exist but the comment does not say so) would be left
+> without instruction, no?
+> 
+>     In $HOME/.bashrc, PROMPT_COMMAND can be set to
+>     '__git_ps1 <pre> <post>', where <pre> and <post>
+>     are strings you would put in $PS1 before and after
+>     the status string generated by git-prompt machinery.
+>     e.g.
+>         PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+> 
+> or something?
+> 
 
-> perhaps the point should read like this:
-> #    3a) In ~/.bashrc set PROMPT_COMMAND
-> #        To customize the prompt, provide start/end arguments
-> #        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
->
-> Which would not be confusing at all, I think...
+Looks better than my suggestion :-)
 
-It says "to customize", so a user who just wants the default (which
-does not exist but the comment does not say so) would be left
-without instruction, no?
+thanks
 
-    In $HOME/.bashrc, PROMPT_COMMAND can be set to
-    '__git_ps1 <pre> <post>', where <pre> and <post>
-    are strings you would put in $PS1 before and after
-    the status string generated by git-prompt machinery.
-    e.g.
-        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-
-or something?
+/Simon
