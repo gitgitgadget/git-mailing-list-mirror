@@ -1,130 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] fsck: warn about ".git" in trees
-Date: Wed, 28 Nov 2012 16:35:29 -0500
-Message-ID: <20121128213529.GA16518@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/5] jk/send-email-sender-prompt loose ends
+Date: Wed, 28 Nov 2012 22:37:19 +0100
+Message-ID: <CAMP44s1uVK-m_jczhVui0Z_Tcv-vtSVU8E1uVKY7QdQvQhMQFg@mail.gmail.com>
+References: <20121128182534.GA21020@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 22:36:06 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 28 22:37:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdpIc-00087l-Ee
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 22:36:06 +0100
+	id 1TdpKE-0001Gt-0d
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Nov 2012 22:37:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932691Ab2K1Vff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2012 16:35:35 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34099 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932565Ab2K1Vfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2012 16:35:32 -0500
-Received: (qmail 12624 invoked by uid 107); 28 Nov 2012 21:36:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Nov 2012 16:36:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2012 16:35:29 -0500
-Content-Disposition: inline
+	id S932388Ab2K1VhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2012 16:37:24 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:38937 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756153Ab2K1VhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2012 16:37:20 -0500
+Received: by mail-vc0-f174.google.com with SMTP id m18so10666647vcm.19
+        for <git@vger.kernel.org>; Wed, 28 Nov 2012 13:37:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jrsa9vIzJB8CrQq0tzM7JnMHR0ruaNneYqorAUH3cn8=;
+        b=f/7qTgBwE+2EYIqQfnYQyx2rsIDCa/03fcWKzCQ2fjmurwhy7VSnA78F7Abt7wHUd0
+         8Lle06r0konUUAqNOdlS0b5AEHfDLnGw3XSWmA0al5VUwSC2qkulSd3uwbuqpjJq89TI
+         5s0Ke5p9N6cSluQH5y9D8MZZT+j+KJfuJmDI+yWcElPlMOaFKLSefCgxjLUyVEGTvjbr
+         aXfP7GE9fkGGphQ8AFsS4ahXqjVCBqCe/uatmf0EyNbTaeikH8w2Js+fwhzWdsEfQa8R
+         SxiVH8r8cDoN9CuZWj/vwmWhTZcIOmNuAkIHFKB325zlUhV+sWF4SCaQkGhisXyZXzxl
+         3Ssw==
+Received: by 10.220.152.204 with SMTP id h12mr29294173vcw.66.1354138639486;
+ Wed, 28 Nov 2012 13:37:19 -0800 (PST)
+Received: by 10.58.34.51 with HTTP; Wed, 28 Nov 2012 13:37:19 -0800 (PST)
+In-Reply-To: <20121128182534.GA21020@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210783>
 
-On Wed, Nov 28, 2012 at 01:25:05PM -0800, Junio C Hamano wrote:
+On Wed, Nov 28, 2012 at 7:25 PM, Jeff King <peff@peff.net> wrote:
+> Here are the cleanups and refactorings split out from my
+> jk/send-email-sender-prompt series. They can go right on master and are
+> independent of Felipe's fc/send-email-no-sender-prompt topic.
+>
+>   [1/5]: test-lib: allow negation of prerequisites
+>
+> Same as before. I think this is a useful feature for the test suite (and
+> 2/5 depends on it).
+>
+>   [2/5]: t7502: factor out autoident prerequisite
+>
+> Same as before. Patch 5/5 depends on it.
+>
+>   [3/5]: ident: make user_ident_explicitly_given static
+>
+> Same as before. Cleanup.
+>
+>   [4/5]: ident: keep separate "explicit" flags for author and committer
+>
+> Same as before. Cleanup. I do not know if anybody will ever care about
+> the corner cases it fixes, so it is really just being defensive for
+> future code.
+>
+>   [5/5]: t: add tests for "git var"
+>
+> Tests split out from he "git var can take multiple values" patch.
+>
+> Dropped were:
+>
+>   - "git var" can take multiple values. Nobody really cares about doing
+>     so, and it's an external interface, so we'd have to support it
+>     forever.
+>
+>   - exporting "explicit ident" flag via "git var"; same reasoning as
+>     above
+>
+>   - Git.pm supporting explicit ident; ditto
+>
+>   - send-email prompting change; obsoleted by Felipe's patch
 
-> >> * jk/fsck-dot-in-trees (2012-11-28) 1 commit
-> >>  - fsck: warn about '.' and '..' in trees
-> >> 
-> >>  Will merge to 'next'.
-> >
-> > Do you have an opinion on warning about '.git', as well? It probably
-> > would make more sense as a patch on top, but I thought I'd ask before
-> > this got merged to next.
-> 
-> Yeah, it would make sense to reject what we would not record
-> ourselves when the tools are used in a sane manner.
+For what it's worth; they look good to me. However, I think it's worth
+mentioning that there are no functional changes.
 
-Here's the patch on top of jk/fsck-dot-in-trees.
-
--- >8 --
-Subject: [PATCH] fsck: warn about ".git" in trees
-
-Having a ".git" entry inside a tree can cause confusing
-results on checkout. At the top-level, you could not
-checkout such a tree, as it would complain about overwriting
-the real ".git" directory. In a subdirectory, you might
-check it out, but performing operations in the subdirectory
-would confusingly consider the in-tree ".git" directory as
-the repository.
-
-The regular git tools already make it hard to accidentally
-add such an entry to a tree, and do not allow such entries
-to enter the index at all. Teaching fsck about it provides
-an additional safety check, and let's us avoid propagating
-any such bogosity when transfer.fsckObjects is on.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- fsck.c          |  5 +++++
- t/t1450-fsck.sh | 15 +++++++++++++++
- 2 files changed, 20 insertions(+)
-
-diff --git a/fsck.c b/fsck.c
-index 31c9a51..99c0497 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -144,6 +144,7 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 	int has_empty_name = 0;
- 	int has_dot = 0;
- 	int has_dotdot = 0;
-+	int has_dotgit = 0;
- 	int has_zero_pad = 0;
- 	int has_bad_modes = 0;
- 	int has_dup_entries = 0;
-@@ -174,6 +175,8 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 			has_dot = 1;
- 		if (!strcmp(name, ".."))
- 			has_dotdot = 1;
-+		if (!strcmp(name, ".git"))
-+			has_dotgit = 1;
- 		has_zero_pad |= *(char *)desc.buffer == '0';
- 		update_tree_entry(&desc);
- 
-@@ -227,6 +230,8 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 		retval += error_func(&item->object, FSCK_WARN, "contains '.'");
- 	if (has_dotdot)
- 		retval += error_func(&item->object, FSCK_WARN, "contains '..'");
-+	if (has_dotgit)
-+		retval += error_func(&item->object, FSCK_WARN, "contains '.git'");
- 	if (has_zero_pad)
- 		retval += error_func(&item->object, FSCK_WARN, "contains zero-padded file modes");
- 	if (has_bad_modes)
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 0b5c30b..d730734 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -253,4 +253,19 @@ test_expect_success 'fsck notices "." and ".." in trees' '
- 	)
- '
- 
-+test_expect_success 'fsck notices ".git" in trees' '
-+	(
-+		git init dotgit &&
-+		cd dotgit &&
-+		blob=$(echo foo | git hash-object -w --stdin) &&
-+		tab=$(printf "\\t") &&
-+		git mktree <<-EOF &&
-+		100644 blob $blob$tab.git
-+		EOF
-+		git fsck 2>out &&
-+		cat out &&
-+		grep "warning.*\\.git" out
-+	)
-+'
-+
- test_done
 -- 
-1.8.0.207.gdf2154c
+Felipe Contreras
