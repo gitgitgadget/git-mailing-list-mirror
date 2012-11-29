@@ -1,74 +1,121 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] completion: fix warning for zsh
-Date: Thu, 29 Nov 2012 09:20:57 +0100
-Message-ID: <1354177257-5416-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 29 09:21:38 2012
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] t4049: avoid test failures on filemode challenged file systems
+ (Windows)
+Date: Thu, 29 Nov 2012 09:22:11 +0100
+Message-ID: <50B71B33.1090000@viscovery.net>
+References: <1354051310-29093-1-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 09:22:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdzNJ-0001OB-Q0
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 09:21:38 +0100
+	id 1TdzOF-0002VT-7f
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 09:22:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141Ab2K2IVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 03:21:18 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:44659 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922Ab2K2IVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 03:21:17 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so6090148bkw.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 00:21:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=K52g9J7JIAqH/yKWPzWBf445OVtmNnErj0tRU3lDt1A=;
-        b=RwH6Jw7g11OWTwkePQU1M5K6ylwOtN96PVtl1r1lzdzqXzDUBKck1OvnLBKbdUrr+N
-         Y8A0oxQLYUd3xLNXUXsGrieeojZjzhMCE/14CAzfjGWSK4luGQuoV9EG3K4/IT4HVM6X
-         xmoUYhd2EHNYcEU4KhuGEreCo/bADyOONc1XoF8BtOBVe1w31TIFGmYkygMiC+TCxNXN
-         N6c7u7VUZ81q+GC8fY9ZMVr6hEMuiSo27lhFbTXaiM1+mW4LSBdkSfq62vqKHy+8HrTy
-         F439LptJ7txcamuwbKmlIR7lzZG7KHS18Q/v14ogm7Dj0Ulkfn9d2Rvt6I1YkU8g7/Yq
-         JIrA==
-Received: by 10.204.127.11 with SMTP id e11mr6629961bks.0.1354177276083;
-        Thu, 29 Nov 2012 00:21:16 -0800 (PST)
-Received: from localhost (ip-109-43-0-123.web.vodafone.de. [109.43.0.123])
-        by mx.google.com with ESMTPS id o7sm279636bkv.13.2012.11.29.00.21.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Nov 2012 00:21:15 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.1
+	id S1751167Ab2K2IWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 03:22:20 -0500
+Received: from so.liwest.at ([212.33.55.13]:11808 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750922Ab2K2IWT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 03:22:19 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TdzNs-00086F-CF; Thu, 29 Nov 2012 09:22:12 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 239181660F;
+	Thu, 29 Nov 2012 09:22:12 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <1354051310-29093-1-git-send-email-gitster@pobox.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210822>
 
-Otherwise the user might get something like:
+From: Johannes Sixt <j6t@kdbg.org>
 
-  git-completion.sh:2466: command not found: compdef
+The earlier change 74faaa16 (Fix "git diff --stat" for interesting - but
+empty - file changes) needed to change the count of differing files
+because the executable-bit changes of two empty files are now counted.
 
-If this script is loaded before compinit. The script would work either
-way, but let's not be more annoying to the user.
+On file systems that do not record the executable bit, however, the old
+file count was actually correct (and the updated tests fail) because the
+mode change cannot be diagnosed by looking at the file system alone.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Change the mode not only on the file system, but also in the index;
+compare the new state against the commit, so that the tests do not depend
+on the file system's ability to record the executable bit, when possible.
+
+The exception is the test for unmerged entries, which does depend on the
+file system; we have to skip it.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- contrib/completion/git-completion.bash | 2 ++
- 1 file changed, 2 insertions(+)
+Am 11/27/2012 22:21, schrieb Junio C Hamano:
+> It turns out that there are at least two bugs in the diffstat
+> counting code.  This series comes on top of the earlier 74faaa1 (Fix
+> "git diff --stat" for interesting - but empty - file changes,
+> 2012-10-17) to fix them.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index af13fcc..0b77eb1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2404,6 +2404,8 @@ __gitk_main ()
- if [[ -n ${ZSH_VERSION-} ]]; then
- 	echo "WARNING: this script is deprecated, please see git-completion.zsh" 1>&2
+The tests still fail on Windows. I am not sure whether there is a
+difference in comparing the file system against the index or a commit.
+If there is, then the updated tests might not test the same thing.
+
+-- Hannes
+
+ t/t4049-diff-stat-count.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/t/t4049-diff-stat-count.sh b/t/t4049-diff-stat-count.sh
+index 37f50cd..9e29e71 100755
+--- a/t/t4049-diff-stat-count.sh
++++ b/t/t4049-diff-stat-count.sh
+@@ -15,7 +15,7 @@ test_expect_success 'setup' '
  
-+	autoload -U +X compinit && compinit
-+
- 	__gitcomp ()
- 	{
- 		emulate -L zsh
+ test_expect_success 'limit output to 2 (simple)' '
+ 	git reset --hard &&
+-	chmod +x c d &&
++	test_chmod +x c d &&
+ 	echo a >a &&
+ 	echo b >b &&
+ 	cat >expect <<-\EOF
+@@ -24,13 +24,13 @@ test_expect_success 'limit output to 2 (simple)' '
+ 	 ...
+ 	 4 files changed, 2 insertions(+)
+ 	EOF
+-	git diff --stat --stat-count=2 >actual &&
++	git diff --stat --stat-count=2 HEAD >actual &&
+ 	test_i18ncmp expect actual
+ '
+ 
+ test_expect_success 'binary changes do not count in lines' '
+ 	git reset --hard &&
+-	chmod +x c d &&
++	test_chmod +x c d &&
+ 	echo a >a &&
+ 	echo b >b &&
+ 	cat "$TEST_DIRECTORY"/test-binary-1.png >d &&
+@@ -40,11 +40,11 @@ test_expect_success 'binary changes do not count in lines' '
+ 	 ...
+ 	 4 files changed, 2 insertions(+)
+ 	EOF
+-	git diff --stat --stat-count=2 >actual &&
++	git diff --stat --stat-count=2 HEAD >actual &&
+ 	test_i18ncmp expect actual
+ '
+ 
+-test_expect_success 'exclude unmerged entries from total file count' '
++test_expect_success FILEMODE 'exclude unmerged entries from total file count' '
+ 	git reset --hard &&
+ 	echo a >a &&
+ 	echo b >b &&
 -- 
-1.8.0.1
+1.8.0.1.1524.gaf6675c
