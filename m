@@ -1,130 +1,119 @@
-From: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Subject: RE: Please pull l10n updates for 1.8.1 round 1
-Date: Thu, 29 Nov 2012 14:28:45 +0700
-Message-ID: <50b70eb8.46c5440a.38b1.3f66@mx.google.com>
-References: <CANYiYbHfhBXbLEEKdpJkhp+wY9-AJ1JkjfO62W3c+dm8qpk7_g@mail.gmail.com>
+From: Daniel Shahaf <danielsh@elego.de>
+Subject: Re: reposurgeon now writes Subversion repositories
+Date: Thu, 29 Nov 2012 09:58:29 +0200
+Message-ID: <20121129075829.GE3424@lp-shahaf.local>
+References: <20121129055946.2D7B84065F@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "'Git List'" <git@vger.kernel.org>,
-	"'Peter Krefting'" <peter@softwolves.pp.se>,
-	=?UTF-8?Q?'Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy'?= 
-	<pclouds@gmail.com>
-To: "'Jiang Xin'" <worldhello.net@gmail.com>,
-	"'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 08:29:16 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TdyYd-0001uB-2R
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 08:29:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751363Ab2K2H27 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 02:28:59 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:58109 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100Ab2K2H27 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2012 02:28:59 -0500
-Received: by mail-da0-f46.google.com with SMTP id p5so5141947dak.19
-        for <git@vger.kernel.org>; Wed, 28 Nov 2012 23:28:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:from:to:cc:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-mailer:in-reply-to:thread-index
-         :x-mimeole;
-        bh=8vuA4p+q2J59lto6/7hDel0BxmtEflcekIiXyh1JC78=;
-        b=Uo+KaEydQTzfCUT7emQDkdbjCQ5wI64/nvr8sWPjPUCmEEQixNkE7gQu4rHJXcTM5X
-         63R/gK6hGX0f8EF8gl0GuyjcJre1NQwhi8y+ujyIcgO2tn7WqNGAmpZMWIEhboije4iq
-         0tpbVK8BUs9FeLRIbJ3YfzKGfRm1dJ8xzVFY0951iUNriNyobZdf/yIfsGYoslAi1E5z
-         EdSH6dpp2HgP6U6k4dIw3+qFj7edBleYXu+sRWAmkebdrjpU6gIubZ6vicAeU1yqcJOn
-         kaznnA2WRyvIT5eZQVH2y8/+O9zWnkKALEUabsgXxjWGQ2SewsEHR2uMW4LLy0sLEt1O
-         BjUQ==
-Received: by 10.68.243.10 with SMTP id wu10mr66041595pbc.85.1354174137718;
-        Wed, 28 Nov 2012 23:28:57 -0800 (PST)
-Received: from tnquan495e2448 ([113.171.162.179])
-        by mx.google.com with ESMTPS id is6sm799262pbc.55.2012.11.28.23.28.53
-        (version=SSLv3 cipher=OTHER);
-        Wed, 28 Nov 2012 23:28:56 -0800 (PST)
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-In-Reply-To: <CANYiYbHfhBXbLEEKdpJkhp+wY9-AJ1JkjfO62W3c+dm8qpk7_g@mail.gmail.com>
-Thread-Index: Ac3Nz4b451zjDdlyTfy3PbBTaPtU+AAMjb0g
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: dev@subversion.apache.org, git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: dev-return-23038-gcvsd-dev=m.gmane.org@subversion.apache.org Thu Nov 29 09:00:51 2012
+Return-path: <dev-return-23038-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@plane.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by plane.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-23038-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1Tdz3B-0003y7-5U
+	for gcvsd-dev@plane.gmane.org; Thu, 29 Nov 2012 09:00:49 +0100
+Received: (qmail 39555 invoked by uid 500); 29 Nov 2012 08:00:36 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210817>
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 39503 invoked by uid 99); 29 Nov 2012 08:00:34 -0000
+Received: from athena.apache.org (HELO athena.apache.org) (140.211.11.136)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 08:00:34 +0000
+X-ASF-Spam-Status: No, hits=-0.0 required=5.0
+	tests=SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (athena.apache.org: local policy)
+Received: from [78.47.87.163] (HELO mx0.elegosoft.com) (78.47.87.163)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 08:00:26 +0000
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 19562DE065;
+	Thu, 29 Nov 2012 08:59:50 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zJIrhou2ESuG; Thu, 29 Nov 2012 08:59:50 +0100 (CET)
+Received: from lp-shahaf.local (unknown [109.65.228.49])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 7AC4DDE063;
+	Thu, 29 Nov 2012 08:59:49 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20121129055946.2D7B84065F@snark.thyrsus.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210819>
 
-Hello JX,
-You missing pull from my repo (2 commits instead of one, v1.7 and v1.8)=
-: dcc52a0449c7ee10690e23152e63b9798f8a332f
+Eric S. Raymond wrote on Thu, Nov 29, 2012 at 00:59:45 -0500:
+>   In summary, Subversion repository histories do not round-trip through
+>   reposurgeon editing. File content changes are preserved but some
+>   metadata is unavoidably lost.  Furthermore, writing out a DVCS history
+>   in Subversion also loses significant portions of its metadata.
+> 
+>   Writing a Subversion repository or dump stream discards author
+>   information, the committer's name, and the hostname part of the commit
+>   address; only the commit timestamp and the local part of the
+>   committer's email address are preserved, the latter becoming the
+>   Subversion author field.  However, reading a Subversion repository and
+>   writing it out again will preserve the author fields.
+> 
+> Subversion's metadata doesn't have separate author and committer
+> properties, and doesn't store anything but a Unix user ID as
+> attribution.  I don't see any way around this.
 
-$ git log -n 2
-commit dcc52a0449c7ee10690e23152e63b9798f8a332f
-Author: Tran Ngoc Quan <vnwildman@gmail.com>
-Date:   Sat Nov 24 07:37:35 2012 +0700
+You're not fully informed, then.
 
-    l10n: vi.po: Update follow git-v1.8.0-273-g2d242
+1) svn:author revprops can contain any UTF-8 string.  They are not
+restricted to Unix user id's.  (For example, they can contain full
+names, if the administrator so chooses.)
 
-    Signed-off-by: Tran Ngoc Quan <vnwildman@gmail.com>
+2) You can define custom revision properties.  In your case, the easiest
+way would be to set an reposurgeon:author property, alongside the
+svn:author property.
 
-commit 131fa518f10521b4a534863331decbfef2875f24
-Author: Tran Ngoc Quan <vnwildman@gmail.com>
-Date:   Wed Oct 31 08:19:59 2012 +0700
+You might also seek community consensus to reserve an svn:foo name for
+the "original author" property --- perhaps svn:original-author --- so
+that reposurgeon and other git->svn tools can interoperate in the way
+they transfer the "original author" information.
 
-    l10n: vi.po: update to git-v1.7.12-437-g1084f
+I note that one can set revision properties at commit time:
 
-     * updated all new messages (1967t0f0u)
-     * make quote become more good-looking
+    svn commit -m logmsg --with-revprop svn:original-author="Patch Submitter <foo@bar.example>"
 
-    Signed-off-by: Tran Ngoc Quan <vnwildman@gmail.com>
+>   Empty directories aren't represented in import streams. Consequently,
+>   reading and writing Subversion repositories preserves file content,
+>   but not empty directories.  It is also not guaranteed that after
+>   editing a Subverson repository that the sequence of directory
+>   creations and deletions relative to other operations will be
+>   identical; the only guarantee is that enclosing directories will be
+>   created before any files in them are.
 
- https://github.com/vnwildman/git.git master
-Thanks,
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n
+How does reposurgeon handle empty directories with (node) properties?
 
------Original Message-----
-=46rom: Jiang Xin [mailto:worldhello.net@gmail.com]=20
-Sent: Thursday, November 29, 2012 8:19 AM
-To: Junio C Hamano
-Cc: Git List; Peter Krefting; Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n; Nguy=
-=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-Subject: Please pull l10n updates for 1.8.1 round 1
+% svnadmin create r
+% svnmucc -mm -U file://$PWD/r mkdir foo propset k v foo
 
-Hi, Junio
+>   Subversion has a concept of "flows"; that is, named segments of
+>   history corresponding to files or directories that are created when
+>   the path is added, cloned when the path is copied, and deleted when
+>   the path is deleted. This information is not preserved in import
+>   streams or the internal representation that reposurgeon uses.  Thus,
+>   after editing, the flow boundaries of a Subversion history may be
+>   arbitrarily changed.
+> 
+> This is me being obsessive about documenting the details.  I think it
+> is doubtful that most Subversion users even know flows exist.
+> 
 
-The following changes since commit 2d242fb3fc19fc9ba046accdd9210be8b991=
-3f64:
+I think you're saying that adds might turn into copies, and vice-versa.
+That is something users would notice --- it is certainly exposed in the
+UI --- even though node-id's are not exposed to clients.
 
-  Update draft release notes for 1.8.1 (2012-11-21 13:32:58 -0800)
+> 
 
-are available in the git repository at:
+Cheers
 
-  git://github.com/git-l10n/git-po.git master
-
-for you to fetch changes up to 647d5183b8dc36b38d19c7a3f388108f245b11d3=
-:
-
-  l10n: Update Swedish translation (1975t0f0u) (2012-11-23 08:59:11 +01=
-00)
-
-----------------------------------------------------------------
-Jiang Xin (1):
-      l10n: Update git.pot (14 new, 3 removed messages)
-
-Peter Krefting (1):
-      l10n: Update Swedish translation (1975t0f0u)
-
-Tran Ngoc Quan (1):
-      l10n: vi.po: update to git-v1.7.12-437-g1084f
-
- po/git.pot | 1224 ++++++++++++++++++++++++----------------------
- po/sv.po   | 1246 +++++++++++++++++++++++++----------------------
- po/vi.po   | 1597 ++++++++++++++++++++++++++++++----------------------=
---------
- 3 files changed, 2097 insertions(+), 1970 deletions(-)
-
---
-Jiang Xin
+Daniel
