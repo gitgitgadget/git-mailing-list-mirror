@@ -1,95 +1,115 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC] git-submodule update: Add --commit option
-Date: Thu, 29 Nov 2012 11:21:54 -0500
-Message-ID: <20121129162154.GA27409@odin.tremily.us>
-References: <20121127185142.GB4185@book.hvoigt.net>
- <cover.1354130656.git.wking@tremily.us>
- <20121129161216.GB23580@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-remote-mediawiki: escape double quotes and LF in
+ file names
+Date: Thu, 29 Nov 2012 08:25:14 -0800
+Message-ID: <7vy5hkqsut.fsf@alter.siamese.dyndns.org>
+References: <1354192413-9959-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=M9NhX3UHpAaciwkO
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 29 17:22:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 29 17:25:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te6ss-0003rc-87
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 17:22:42 +0100
+	id 1Te6vf-0007ax-Aj
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 17:25:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331Ab2K2QW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 11:22:27 -0500
-Received: from vms173013pub.verizon.net ([206.46.173.13]:23751 "EHLO
-	vms173013pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299Ab2K2QWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 11:22:25 -0500
-Received: from odin.tremily.us ([unknown] [72.68.105.242])
- by vms173013.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0ME900HR3C4ISW90@vms173013.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 29 Nov 2012 10:22:06 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 7048D6E23AB; Thu,
- 29 Nov 2012 11:21:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1354206114; bh=ZQEvZOyKgeQOTmTN+0mP3U2ktOIKmFJj1EsrSZCZ7W8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=X8rYS5JP4/+JtQuu5n3Itd6/aaH70a8BiKFmntRHrRRpk8OHgHDLZyuIvP3tYZ/q+
- d4B0vqWrSlpXh7ib9+Hcgcrh7RGCck+eK6gSQCEo+/qzXeMQYLAu+WMLv+nYzJQZlt
- HqFDGgw/6Y1Rq8OBDw6zV1MQda/j2vY9r+/PJnFc=
-Content-disposition: inline
-In-reply-to: <20121129161216.GB23580@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751299Ab2K2QZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 11:25:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56961 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751100Ab2K2QZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 11:25:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5479CAA3B;
+	Thu, 29 Nov 2012 11:25:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XZd6WHPZ4MT0gtLuxD/ltM0tSZ4=; b=hJIXg3
+	etcHr+UZ83eU7guLsQ9DXyE0p4dHoKWYaHWNERadY9FiJVB/TfWlJdk6PX0wPOnT
+	QeoqWSb3ezg94rk+2vzJb6pLBOsK5vCmY7kYKJxFGQhWMY6d/cRlhQioiLRA+ZkJ
+	rbaqSLtcq70WS42VxJOA67tGiyG+sc7A3G5so=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=frqYG9hPMXusXvO92/eNa7uS9OMOZ68W
+	Q6Cl7M+JQH2s7MO0hNyilLzQuRpNNS+hnCM6eYY125fv+Uues045ZWGEDRTTaIOb
+	UVWiert/yojDxStKg/N4qwS7xsI2cWtYHeRaZOpWjktGkqP74ZHLcCBavcswAWYl
+	XZ9Lod94Fjc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C729AA39;
+	Thu, 29 Nov 2012 11:25:16 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9142DAA2C; Thu, 29 Nov 2012
+ 11:25:15 -0500 (EST)
+In-Reply-To: <1354192413-9959-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Thu, 29 Nov 2012 13:33:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5B7234F8-3A41-11E2-B82E-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210842>
 
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
---M9NhX3UHpAaciwkO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> A mediawiki page can contain, and even start with a " character, we have
+> to escape it when generating the fast-export stream. While we're there,
+> also escape newlines, but I don't think we can get them from MediaWiki
+> pages.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>  contrib/mw-to-git/git-remote-mediawiki | 15 ++++++++++++---
+>  1 file changed, 12 insertions(+), 3 deletions(-)
+>
+> diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+> index 68555d4..e7a0e7b 100755
+> --- a/contrib/mw-to-git/git-remote-mediawiki
+> +++ b/contrib/mw-to-git/git-remote-mediawiki
+> @@ -711,6 +711,13 @@ sub fetch_mw_revisions {
+>  	return ($n, @revisions);
+>  }
+>  
+> +sub fe_escape_path {
+> +    my $path = shift;
+> +    $path =~ s/"/\\"/g;
+> +    $path =~ s/\n/\\n/g;
+> +    return $path;
+> +}
 
-On Thu, Nov 29, 2012 at 11:12:16AM -0500, W. Trevor King wrote:
-> +  test "a" =3D "b"
+Is this sufficient?
 
-This kills the test (with --immediate) so you can look at the
-generated commit.  If you actually want the test to pass (e.g. if this
-becomes a PATCH and not an RFC), this line should be removed.
+My reading of the big comment at the beginning of fast-import.c is
+that you would also want to quote each backslash; otherwise a
+character (or an octal) after it will be taken as a C-style quoted
+special letter, no?
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---M9NhX3UHpAaciwkO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQt4uhAAoJEEUbTsx0l5OMHIwP/1bAP0uJvEsNFpEK145f6tAd
-ur8+zal9Mmn4+OGBSSZvJxi5N+Yw8eahMfGvshQcldf9too/m5rboYh7jCHBl+kJ
-AbRn8cbeWUBnCRLwE+2nKWioA8SrhuFZb33DzSyyf+r/B7Tgd1LWuZGrBGVh8Uqi
-BH6+nnlueWNg6lGAgB4vkubvcUPQFZ1NvNS6FhrXSR3cBUHGK1AHkmXOzZKLJgvu
-lF8YQfa3FZfo2VQQuKGUHWoKkXS7Jcg3tjRHDjOahZmg8zjl21tO7FO+X1h0xhC1
-dKuEP0jwBNAzM0HA/mdC9Vyi9/TKR/EwEqmGuXhET9j7vxf0YMgqIdMGxuGSGACm
-qNY+tLM1bxmp41t9JQWEJHf/WEzqVHWvt5vT05W//POcCItv2gSWe695EQcasE6R
-q3S2j2hcj2tXH7skM6EXjEa0AWM1dzRl2H2dtKeA7cg8PXBeTk+5DIhRyyorZgVb
-uJ5lHeM4hox/nQ9vFNcgMucTaaj6vYYP72Eu1Med2PQCl15QOuRWpFwayu/uLoVu
-E0Z3L5ibtLD6+dLYeN1YFh5Cl/GHn5NU5sVgMmnCVu5uCqC6XvevFmNRpV58BoBO
-CAN1rNFQNJKO80D4MWrRpIew0FcBH5JlmDprGDsJuueVMIZ1MOaGRtKLp0oZlP47
-k37CFGGYTLuw3v8RDC1V
-=oo19
------END PGP SIGNATURE-----
-
---M9NhX3UHpAaciwkO--
+>  sub import_file_revision {
+>  	my $commit = shift;
+>  	my %commit = %{$commit};
+> @@ -738,15 +745,17 @@ sub import_file_revision {
+>  		print STDOUT "from refs/mediawiki/$remotename/master^0\n";
+>  	}
+>  	if ($content ne DELETED_CONTENT) {
+> -		print STDOUT "M 644 inline $title.mw\n";
+> +		print STDOUT "M 644 inline " .
+> +		    fe_escape_path($title . ".mw") . "\n";
+>  		literal_data($content);
+>  		if (%mediafile) {
+> -			print STDOUT "M 644 inline $mediafile{title}\n";
+> +			print STDOUT "M 644 inline "
+> +			    . fe_escape_path($mediafile{title}) . "\n";
+>  			literal_data_raw($mediafile{content});
+>  		}
+>  		print STDOUT "\n\n";
+>  	} else {
+> -		print STDOUT "D $title.mw\n";
+> +		print STDOUT "D " . fe_escape_path($title . ".mw") . "\n";
+>  	}
+>  
+>  	# mediawiki revision number in the git note
