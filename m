@@ -1,66 +1,74 @@
-From: =?UTF-8?B?QnJhbmtvIMSMaWJlag==?= <brane@wandisco.com>
-Subject: Re: reposurgeon now writes Subversion repositories
-Date: Thu, 29 Nov 2012 11:31:49 +0100
-Organization: WANdisco
-Message-ID: <50B73995.5050505@wandisco.com>
-References: <20121129055946.2D7B84065F@snark.thyrsus.com> <20121129075829.GE3424@lp-shahaf.local>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: Millisecond precision in timestamps?
+Date: Thu, 29 Nov 2012 05:38:47 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20121129103847.GA9264@thyrsus.com>
+References: <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
+ <CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com>
+ <20121128011750.GA23498@sigill.intra.peff.net>
+ <7v7gp6i3rx.fsf@alter.siamese.dyndns.org>
+ <CABYiQpmEpdf3L56NYSvPWovNOs_ifqj5QctuPSMoygHyMrz8+g@mail.gmail.com>
+ <CAMP44s3MPMySnwjWjzo4aRX05u05xratgiyiYJUYPmnV2WK6kQ@mail.gmail.com>
+ <CABYiQpnEZECU5Vj5JzMimtw-CAJQz2d=3rii4gM6d37wCnO5AA@mail.gmail.com>
+ <E4C993F4-B7A4-4CB6-A9EA-BFE98BE3A381@gmail.com>
+ <7va9u0sx26.fsf@alter.siamese.dyndns.org>
+ <CAMP44s3ShoR7iR5QLYn_u+u_nNGnS1jumpt+iseWYKx0PX9UEA@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
-To: dev@subversion.apache.org
-X-From: git-owner@vger.kernel.org Thu Nov 29 11:32:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steven Michalske <smichalske@gmail.com>,
+	Thomas Berg <merlin66b@gmail.com>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 11:39:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te1Pe-0003qd-Nv
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 11:32:11 +0100
+	id 1Te1WY-0003ll-Mh
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 11:39:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab2K2Kbz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 05:31:55 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:49476 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752760Ab2K2Kby (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 05:31:54 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so5630855eaa.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 02:31:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:organization:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=dASam2XePeOyQqZVbFiB0uVn3hIFZo7lYX3S0C7JLbg=;
-        b=kG2B8yujz0TdwnMyRER9/8EDzG+Rsv7HJJmSumGoJi9XagNAG/25ktCl7PkL3Ek4yK
-         ACmmSuaOamzWhhNuyAH61xpL45e8fIz4rhh5O+7s+eAtw5b3GoFLa5Zw3+C8v0wFyoe5
-         hJ5D7IH2+AlTjenFNPEA0pH8509Y7OMn5Z1ijO9zVH4azk+yqEJEYgmOBQcwZm/K04sG
-         65LxNLIWd7NRqO+Ycrz+SEPD8P0h4HnGaCg+LuK0xwwWn94ARQxg5IrzEXQbc2Vw/ou+
-         /hk/BCanQCuGRVQhOioU5TlhijfZVqIU/1Srpgrk6URFeW43bQQsNQ60LeyzQiqqLrC3
-         06Vw==
-Received: by 10.14.178.7 with SMTP id e7mr64750345eem.44.1354185112981;
-        Thu, 29 Nov 2012 02:31:52 -0800 (PST)
-Received: from zulu.local (cpe-62-84-224-215.dynamic.amis.net. [62.84.224.215])
-        by mx.google.com with ESMTPS id k2sm2688323eep.15.2012.11.29.02.31.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Nov 2012 02:31:51 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:16.0) Gecko/20121026 Thunderbird/16.0.2
-In-Reply-To: <20121129075829.GE3424@lp-shahaf.local>
-X-Gm-Message-State: ALoCoQm7ouDQyE++PEvEahoso8+SurfEZAW9vGtY2X/tiL8PFHauHM3XkSYP8YCkJ/AAdvj4Lz3B
+	id S1753358Ab2K2KjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 05:39:03 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:52039
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077Ab2K2KjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 05:39:01 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 8F4874065F; Thu, 29 Nov 2012 05:38:47 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3ShoR7iR5QLYn_u+u_nNGnS1jumpt+iseWYKx0PX9UEA@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210827>
 
-On 29.11.2012 08:58, Daniel Shahaf wrote:
-> I think you're saying that adds might turn into copies, and
-> vice-versa. That is something users would notice --- it is certainly
-> exposed in the UI --- even though node-id's are not exposed to client=
-s.=20
+Felipe Contreras <felipe.contreras@gmail.com>:
+> On Thu, Nov 29, 2012 at 8:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Steven Michalske <smichalske@gmail.com> writes:
+> >
+> >> Would having arbitrary key value pairs be useful in the git data
+> >> model?
+> >
+> > My answer to the question is that it is harmful to the data model,
+> > but the benefit of going against the data model _may_ outweigh the
+> > downside.  It is all relative.
+> 
+> If git doesn't provide the capability, people will keep using the
+> commit message to store that extra information, which I would think is
+> even more harmful. An standard 'commit-extra' note or something would
+> help deal with that.
 
-=2E.. yet. But there are plans underway to expose them.
+Agreed.  
 
---=20
-Branko =C4=8Cibej
-Director of Subversion | WANdisco | www.wandisco.com
+My use case for a capability like this is one of the more common ones.
+I want to be able to store a fossil commit-ID inherited from another
+VCS outside the commit comment.  The absence of a key/value store forces
+me into some annoying kludges.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
