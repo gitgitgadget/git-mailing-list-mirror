@@ -1,53 +1,58 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: reposurgeon now writes Subversion repositories
-Date: Thu, 29 Nov 2012 08:55:57 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121129135557.GB26607@thyrsus.com>
-References: <20121129055946.2D7B84065F@snark.thyrsus.com>
- <20121129075829.GE3424@lp-shahaf.local>
- <20121129114637.GB9264@thyrsus.com>
- <20121129134203.GJ3424@lp-shahaf.local>
-Reply-To: esr@thyrsus.com
+From: Alfonso =?utf-8?b?TXXDsW96LVBvbWVy?= Fuentes 
+	<alfonso.munozpomer@vti.bund.de>
+Subject: Ubuntu: gitweb always looks for projects in /var/cache/git =?utf-8?b?KOKAnDQwNA==?= - no projects =?utf-8?b?Zm91bmTigJ0p?=
+Date: Thu, 29 Nov 2012 13:55:57 +0000 (UTC)
+Message-ID: <loom.20121129T145320-133@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: dev@subversion.apache.org, git@vger.kernel.org
-To: Daniel Shahaf <danielsh@elego.de>
-X-From: git-owner@vger.kernel.org Thu Nov 29 14:56:17 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 15:00:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te4b9-0001kf-AR
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 14:56:15 +0100
+	id 1Te4ex-0006IW-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 15:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127Ab2K2Nz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 08:55:59 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:53218
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753039Ab2K2Nz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 08:55:59 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 578ED4065F; Thu, 29 Nov 2012 08:55:57 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20121129134203.GJ3424@lp-shahaf.local>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754175Ab2K2N74 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 08:59:56 -0500
+Received: from plane.gmane.org ([80.91.229.3]:48968 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753852Ab2K2N74 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 08:59:56 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Te4er-0006DT-0P
+	for git@vger.kernel.org; Thu, 29 Nov 2012 15:00:05 +0100
+Received: from 134.110.105.105 ([134.110.105.105])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 15:00:05 +0100
+Received: from alfonso.munozpomer by 134.110.105.105 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 15:00:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 134.110.105.105 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:17.0) Gecko/17.0 Firefox/17.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210834>
 
-Daniel Shahaf <danielsh@elego.de>:
-> I don't see the kludge here --- git has a "author" != "committer"
-> distinction, svn doesn't, so if you want to grow that distinction the
-> most natural way is a new property.  Storing additional information in
-> svn:author is a separate issue.
+I=E2=80=99ve discovered this weird behaviour in gitweb and documented a=
+ workaround in
+StackOverflow:
+http://stackoverflow.com/questions/13609475/ubuntu-gitweb-always-looks-=
+for-projects-in-var-cache-git-404-no-projects-f
 
-See my advocacy to Branko of going to Internet-scoped IDs. The kludge
-would be maintaining the local and Internet-scoped identifications 
-as different properties and having to decide which one to key on
-ad-hoc.  Nothing to do with the author/committer distinction. 
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Basically, the variable $projectroot in gitweb.cgi in the beginning is =
+reset to
+the system default value in git_get_projects_list, when it is declared =
+again.
+
+Is this a known bug? Or am I missing something?
