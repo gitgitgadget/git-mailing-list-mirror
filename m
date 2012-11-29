@@ -1,99 +1,114 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC] git-submodule update: Add --commit option
-Date: Thu, 29 Nov 2012 11:27:51 -0500
-Message-ID: <20121129162751.GB27409@odin.tremily.us>
-References: <20121127185142.GB4185@book.hvoigt.net>
- <cover.1354130656.git.wking@tremily.us>
- <20121129161216.GB23580@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Millisecond precision in timestamps?
+Date: Thu, 29 Nov 2012 08:42:40 -0800
+Message-ID: <7vtxs8qs1r.fsf@alter.siamese.dyndns.org>
+References: <CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
+ <CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com>
+ <20121128011750.GA23498@sigill.intra.peff.net>
+ <7v7gp6i3rx.fsf@alter.siamese.dyndns.org>
+ <CABYiQpmEpdf3L56NYSvPWovNOs_ifqj5QctuPSMoygHyMrz8+g@mail.gmail.com>
+ <CAMP44s3MPMySnwjWjzo4aRX05u05xratgiyiYJUYPmnV2WK6kQ@mail.gmail.com>
+ <CABYiQpnEZECU5Vj5JzMimtw-CAJQz2d=3rii4gM6d37wCnO5AA@mail.gmail.com>
+ <E4C993F4-B7A4-4CB6-A9EA-BFE98BE3A381@gmail.com>
+ <7va9u0sx26.fsf@alter.siamese.dyndns.org>
+ <CAMP44s3ShoR7iR5QLYn_u+u_nNGnS1jumpt+iseWYKx0PX9UEA@mail.gmail.com>
+ <20121129103847.GA9264@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=CdrF4e02JqNVZeln
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 29 17:28:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Steven Michalske <smichalske@gmail.com>,
+	Thomas Berg <merlin66b@gmail.com>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Thu Nov 29 17:42:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te6yL-0002ng-Ty
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 17:28:22 +0100
+	id 1Te7CU-0004n9-Mo
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 17:42:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751507Ab2K2Q2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 11:28:05 -0500
-Received: from vms173011pub.verizon.net ([206.46.173.11]:36413 "EHLO
-	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751003Ab2K2Q2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 11:28:04 -0500
-Received: from odin.tremily.us ([unknown] [72.68.105.242])
- by vms173011.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0ME9006PHCEF2U80@vms173011.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 29 Nov 2012 10:27:52 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 92E786E23E6; Thu,
- 29 Nov 2012 11:27:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1354206471; bh=VOeJWOhHxW7J1lbiq8BlKzLZ+2Q7zVN0DsgH5G0CHN0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nvNk8v4Lu1QCJJ8bmvr15/v1vrpTwHL0xC2Bhref73pv8ZJCppULt0Q8ab4uNKxOy
- qvggTxaBSILPKf/w1CJ3dVSrQY6wgsRQdvGfB0jkznfbwKYjpdiceuMwNoCH0SwiA5
- K7YxP3etjmXRnTqci3wJq1TcPCjaLwSSNzdmBkTs=
-Content-disposition: inline
-In-reply-to: <20121129161216.GB23580@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752441Ab2K2Qmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 11:42:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42414 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750846Ab2K2Qmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 11:42:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3731B9986;
+	Thu, 29 Nov 2012 11:42:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VA2JMK/TqIQyvWAeXdp1cg8nXYA=; b=JolZ1/
+	jeXW9dLCC43KJD+igyyXdomXXPBocmXrM3TC4tXd0OGnOitn4DaNyxSZFsOZijIC
+	BiI3VxHO0AWvPp8mHieGB79Gx95m+E5TwvGRijgXemt6J1mK9TTGeJhWbG0Zz/KZ
+	1Vsktnwfo7W4M8GaYJh+HoH2WArWp9zGWYVYg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hyAr+t0P/nfno5f1QkPkJFKlP2RmGV1w
+	opIfzMz2/nOy2eg+HkHVNugvajf/kLrmvKMV53/NlvIPZO81iPKZH7e/AWoClRux
+	KPQkv83liZ/WbPMbld3b89Zz9vfcmZUhbNzguT6s7Aq81lfNxiIS5C8a+1XSVxXt
+	WO7bVGn/QaM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FC869984;
+	Thu, 29 Nov 2012 11:42:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E95997D; Thu, 29 Nov 2012
+ 11:42:41 -0500 (EST)
+In-Reply-To: <20121129103847.GA9264@thyrsus.com> (Eric S. Raymond's message
+ of "Thu, 29 Nov 2012 05:38:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CAE60CC2-3A43-11E2-8B3C-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210844>
 
+"Eric S. Raymond" <esr@thyrsus.com> writes:
 
---CdrF4e02JqNVZeln
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Felipe Contreras <felipe.contreras@gmail.com>:
+>> On Thu, Nov 29, 2012 at 8:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> > Steven Michalske <smichalske@gmail.com> writes:
+>> >
+>> >> Would having arbitrary key value pairs be useful in the git data
+>> >> model?
+>> >
+>> > My answer to the question is that it is harmful to the data model,
+>> > but the benefit of going against the data model _may_ outweigh the
+>> > downside.  It is all relative.
+>
+> My use case for a capability like this is one of the more common ones.
+> I want to be able to store a fossil commit-ID inherited from another
+> VCS outside the commit comment.
 
-On Thu, Nov 29, 2012 at 11:12:16AM -0500, W. Trevor King wrote:
-> +	 test "$(git log -1 --oneline)" =3D "bbdbe2d Updated submodules: submod=
-ule"
+That is exactly why I said it is all relative.  If it helps your
+application, you can weigh the pros-and-cons yourself and choose to
+throw "junk" extended header fields in the commit objects you
+create, using hash-object (or commit-tree).  You can read it out
+using cat-file and do whatever you want to do with it, and modern
+Git (v1.5.0 was from early 2007) and tools that are designed to work
+with Git know to ignore such "junk" field.
 
-s/bbdbe2d/cd69713/
+> The absence of a key/value store forces me into some annoying
+> kludges.
 
-I forgot to update the SHA-1 here after tweaking the commit message
-format.  I'd like to rewrite this test so it won't use the SHA-1, but
-this was the quickest way to check that the commit message and gitlink
-were both changed appropriately.
+Do not do annoying kludge, then.  Come up with a method to encode
+your list of (key,value) tuples into a single string, throw a
+custom extra header after all the standard header fields in, perhaps
+like this:
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+    tree 0664b9c82d87269b335ff78f32d0e4a504f58cfc
+    author A U Thor <author@example.xz> 1355999999 +0900
+    committer C O Mitter <committer@example.xz> 1355999999 +0900
+    encoding iso-2022-jp
+    reposurgeon-metadata your-serialized-list-of-key-value-tuples
+     second-line-of-such-serialization
+     third-line-of-such-serialization
 
---CdrF4e02JqNVZeln
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+    My first commit
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQt40GAAoJEEUbTsx0l5OMZUsQALVXT5WZYpv4PqHlRNabeWxu
-mlEezuLq0wljDXXvS58OXay27oURwniYP7L1HfAQ0Tb7YR+T/9Sw0QEvUI5yzLBE
-Oz4HXAiCdhKUVcIDd11O5NDVJqHjCNgNWETibOrA20Jzvvs5YrRPQFzkzBoBJg70
-dZ+N1UqpBB5FtwNvG/IgsDHd4pMxTer9SY6TOdtT4bT2sz2BC/H/0neWbt2+L8B6
-LajEF91LHTK4aYpySHb9s+mmxlTQlBTuG6yTWE2oWPl40fA505lNkJvxOA3jpQEU
-dHE8KGNrP8i4JlBz0Tj+mlhMe4xVRjR6M5gnpkH+iiQG1z4kqiQARe4uRPV+3rxx
-4TKcijAYVqz8lPm0Eer7ObpHP2+asOgupGJm/HlSmWlNIsVLl/ilZr8LH4TqrfCW
-sCxkLT/VC2IKBAuOKXhs0TgENLnB9h3FtvNsCN6EZ+jeBk51EvAaF40ijJIztgfW
-38QDFxP6YxjJT8scQNnZJilj+2Ljdo0Fix5NvDqho4yAlSRpZ6BroBPEwgw3UF45
-iLSUI4AvuTha+PYucsyUeJCivu7wAksJI3C9Rqe9E12/9YbcIvcgH2oclDhBxUNv
-c7PPbfpXY4HvxhURW4bgZ9K7khTYntD5n0NgGSiOyEPu9ephQQz122fY8FSWHfS3
-rXv/Asqy36lf3CdXmSYz
-=L9pM
------END PGP SIGNATURE-----
-
---CdrF4e02JqNVZeln--
+    Signed-off-by: A U Thor <author@example.xz>
+    Signed-off-by: C O Mitter <committer@example.xz>
