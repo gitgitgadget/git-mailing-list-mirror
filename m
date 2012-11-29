@@ -1,252 +1,175 @@
 From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [RFC/PATCH 1/2] reset: learn to reset to tree
-Date: Thu, 29 Nov 2012 10:32:54 -0800
-Message-ID: <1354213975-17866-2-git-send-email-martinvonz@gmail.com>
+Subject: [RFC/PATCH 2/2] reset: learn to reset on unborn branch
+Date: Thu, 29 Nov 2012 10:32:55 -0800
+Message-ID: <1354213975-17866-3-git-send-email-martinvonz@gmail.com>
 References: <CANiSa6isDKAgxHWqh5XiQ-adT3-ASFtvAshp028DTcotjQxzmQ@mail.gmail.com>
  <1354213975-17866-1-git-send-email-martinvonz@gmail.com>
 Cc: Martin von Zweigbergk <martinvonz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 29 19:33:33 2012
+X-From: git-owner@vger.kernel.org Thu Nov 29 19:33:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te8vO-0008Nm-6a
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 19:33:26 +0100
+	id 1Te8vW-00009Z-In
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 19:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754392Ab2K2SdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 13:33:09 -0500
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:54204 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753902Ab2K2SdI (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754247Ab2K2SdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 29 Nov 2012 13:33:08 -0500
-Received: by mail-vc0-f202.google.com with SMTP id m8so1297214vcd.1
+Received: from mail-gg0-f202.google.com ([209.85.161.202]:57409 "EHLO
+	mail-gg0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752609Ab2K2SdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 13:33:07 -0500
+Received: by mail-gg0-f202.google.com with SMTP id k1so708162ggn.1
         for <git@vger.kernel.org>; Thu, 29 Nov 2012 10:33:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-gm-message-state;
-        bh=fxizVw8GqTEakkG+fEsKvQ3f5Jv+g1TttwUcnvAt1sY=;
-        b=kTy2VaWQgJo8CvRsunjaL4XqvSgmGZzmSvUOY9kKQLVX7SjC4UoWtakVAHejdROXnU
-         UkzpaMveP5zGY1H+/uYoG26qfdYBAEaxF2BjfB6ThQxpvpCLB6ncm0VhRV5Gr7ln+djN
-         P3Xqe5jpMZyqxr8FKsmNHTImT1QugzSfDbWB71uaisVwlKLZjRkZuj3064u4ITpYEwGY
-         21CErnAch0PVXosVBByGIpu1Pc4fBROZ5yahmGK8MfDfsk/77RJxu2lfnlnDKmhwYS0n
-         P5Z34dRzsMflACVj3TetgoX6zkenmOMMjuD/vh/gxo4VUtaCbNKZlStZ0YJQlVmVfVsw
-         W7rQ==
-Received: by 10.236.48.99 with SMTP id u63mr14899819yhb.46.1354213986079;
+        bh=kkNN3XowWc7NHAFdjw9MAdS9sAQcmemF/JJROpsA0nk=;
+        b=h/DgsD/lNHnFogHVuCb9sj1f0001lt9Yq4PVXqlu1UIT0BIKPeni5i6SNVoHQL4no1
+         Do1/zsBsEEbqUwogG/gt90QXpH3yqlH2ibqa9BiHTHu/fOfWtjRmNsGuYkFv8hFMVmH/
+         GIkJAojOlWGjI1hazIAiCm/dhcAsCilX7e79ZCqtJmvmr/ZEKqazOcKToqYCcvx8ooBj
+         d4SjyFni6sr95VxYZBGfmv2O7mlCelsFkzOHL2iDgJRXBLKCgB1N4k65y1Z3wEhSvnX6
+         KZOT/N4hG8uiXEr4gnYqqxrMvZAy0Q3Z4EHKecME7UNr6Jr57353g6sUQFliljqrDbGR
+         dOuw==
+Received: by 10.236.83.235 with SMTP id q71mr15735855yhe.5.1354213986108;
         Thu, 29 Nov 2012 10:33:06 -0800 (PST)
-Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id h50si162522yhi.3.2012.11.29.10.33.06
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id r6si162002yhc.7.2012.11.29.10.33.06
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
         Thu, 29 Nov 2012 10:33:06 -0800 (PST)
 Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id D7B5F100048;
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id E1EC882004A;
 	Thu, 29 Nov 2012 10:33:05 -0800 (PST)
 Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 8C6701028E4; Thu, 29 Nov 2012 10:33:05 -0800 (PST)
+	id 96ABC102B21; Thu, 29 Nov 2012 10:33:05 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.1.240.ge8a1f5a
 In-Reply-To: <1354213975-17866-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQkxntOCc0znF6jHHOmL6nwo6qhLj3apqJ4phHS3mHMeOtMlKq4nxKicdsytadVav7Y9GOLBidhkKiZx2/3TplfDCJBH9IvWkwhY7CZZzll4JWpAEmcJFrNC9FJcW8q7QhfQfVgqMp8CVFT9xl57UfQIzqfIAdbMRHJLGTtPCbnsdbASY9QqEt3qqqf3dZ4Vq/x0DTx0
+X-Gm-Message-State: ALoCoQkbFLZHFSkgkO5i3WExl8QZXkDwKqMgsPFHGp0nWnZfqOKRu7geP88bhpOZbV19XOjout7kq6w1DQhW4RgVMc7N3RFfn1+2oS0vJXDoJZNB+iieU8jqR5JpvmDLIMXGI2YilTU9cwPfsRM4MxwzNE+MxBwijc38tkP1c+7zZtEAf+wwg0ZMkRIwSC8Ff63ZoPXaeL7D
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210857>
 
-In cases where HEAD is not supposed to be updated, there is no reason
-that "git reset" should require a commit, a tree should be enough. So
-make "git reset $rev^{tree}" work just like "git reset $rev", except
-that the former will not update HEAD (since there is no commit to
-point it to).
+When run on an unborn branch, "git reset" currently fails with:
 
-Disallow --soft with trees, since that is about updating only HEAD.
+  fatal: Failed to resolve 'HEAD' as a valid ref.
 
-By not updating HEAD, "git reset $rev^{tree}" behaves quite like "git
-reset $rev .". One might therefore consider requiring a path when
-using reset with a tree to make that similarity more obvious. However,
-a future commit will make "git reset" work on an unborn branch by
-interpreting it as "git reset $empty_tree" and it would seem
-unintuitive to the user to say "git reset ." on an unborn
-branch. Requiring a path would also make "git reset --hard $tree"
-disallowed.
+Fix this by interpreting it as a reset to the empty tree.
 
-This commit effectively undoes some of commit 13243c2 (reset: the
-command takes committish, 2012-07-03). The command line argument is
-now required to be an unambiguous treeish.
+If --patch is given, we currently pass the revision specifier, as
+given on the command line, to interactive_reset(). On an unborn
+branch, HEAD can of course not be resolved, so we need to pass the
+sha1 of the empty tree to interactive_reset() as well. This is fine
+since interactive_reset only needs the parameter to be a treeish and
+doesn't use it for display purposes.
 
 ---
 
-My implementation of lookup_commit_or_tree looks a little clunky. I'm
-not very familiar with the API. Suggestions welcome.
+Is it correct that interactive_reset does not use the revision
+specifier for display purposes? Or, worse, that it requires it to be a
+commit in some cases? I tried it and didn't see any problem.
 
-Why is the "HEAD is now at ..." message printed only for --hard reset?
-After all, HEAD is updated for all types of reset not involving paths.
-
- builtin/reset.c                     | 67 +++++++++++++++++++++----------------
- t/t1512-rev-parse-disambiguation.sh |  4 ---
- t/t7102-reset.sh                    | 26 ++++++++++++++
- 3 files changed, 65 insertions(+), 32 deletions(-)
+ builtin/reset.c                | 10 +++++---
+ t/t7106-reset-unborn-branch.sh | 52 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7106-reset-unborn-branch.sh
 
 diff --git a/builtin/reset.c b/builtin/reset.c
-index 915cc9f..cec9874 100644
+index cec9874..3845225 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -225,6 +225,21 @@ static void die_if_unmerged_cache(int reset_type)
- 
- }
- 
-+static struct object *lookup_commit_or_tree(const char *rev) {
-+	unsigned char sha1[20];
-+	struct commit *commit;
-+	struct tree *tree;
-+	if (get_sha1_treeish(rev, sha1))
-+		die(_("Failed to resolve '%s' as a valid ref."), rev);
-+	commit = lookup_commit_reference_gently(sha1, 1);
-+	if (commit)
-+		return (struct object *) commit;
-+	tree = parse_tree_indirect(sha1);
-+	if (tree)
-+		return (struct object *) tree;
-+	die(_("Could not parse object '%s'."), rev);
-+}
-+
- int cmd_reset(int argc, const char **argv, const char *prefix)
- {
- 	int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
-@@ -232,7 +247,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	const char *rev = "HEAD";
- 	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
- 				*old_orig = NULL, sha1_old_orig[20];
--	struct commit *commit;
-+	struct object *object;
-+	struct commit *commit = NULL;
- 	struct strbuf msg = STRBUF_INIT;
- 	const struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-@@ -276,7 +292,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+@@ -229,7 +229,10 @@ static struct object *lookup_commit_or_tree(const char *rev) {
+ 	unsigned char sha1[20];
+ 	struct commit *commit;
+ 	struct tree *tree;
+-	if (get_sha1_treeish(rev, sha1))
++	if (!strcmp(rev, "HEAD") && get_sha1("HEAD", sha1)) {
++		// unborn branch: reset to empty tree
++		hashcpy(sha1, EMPTY_TREE_SHA1_BIN);
++	} else if (get_sha1_treeish(rev, sha1))
+ 		die(_("Failed to resolve '%s' as a valid ref."), rev);
+ 	commit = lookup_commit_reference_gently(sha1, 1);
+ 	if (commit)
+@@ -292,7 +295,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
  		 * Otherwise, argv[i] could be either <rev> or <paths> and
  		 * has to be unambiguous.
  		 */
--		else if (!get_sha1_committish(argv[i], sha1)) {
-+		else if (!get_sha1_treeish(argv[i], sha1)) {
+-		else if (!get_sha1_treeish(argv[i], sha1)) {
++		else if (!strcmp(argv[i], "HEAD") ||
++			 !get_sha1_treeish(argv[i], sha1)) {
  			/*
  			 * Ok, argv[i] looks like a rev; it should not
  			 * be a filename.
-@@ -289,19 +305,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (get_sha1_committish(rev, sha1))
--		die(_("Failed to resolve '%s' as a valid ref."), rev);
--
--	/*
--	 * NOTE: As "git reset $treeish -- $path" should be usable on
--	 * any tree-ish, this is not strictly correct. We are not
--	 * moving the HEAD to any commit; we are merely resetting the
--	 * entries in the index to that of a treeish.
--	 */
--	commit = lookup_commit_reference(sha1);
--	if (!commit)
--		die(_("Could not parse object '%s'."), rev);
--	hashcpy(sha1, commit->object.sha1);
-+	object = lookup_commit_or_tree(rev);
-+	if (object->type == OBJ_COMMIT)
-+		commit = (struct commit*) object;
-+	else if (reset_type == SOFT)
-+		die(_("--soft requires a commit, which '%s' is not"), rev);
-+	hashcpy(sha1, object->sha1);
- 
+@@ -315,7 +319,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
  	if (patch_mode) {
  		if (reset_type != NONE)
-@@ -347,23 +356,25 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 			die(_("Could not reset index file to revision '%s'."), rev);
+ 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
+-		return interactive_reset(rev, argv + i, prefix);
++		return interactive_reset(sha1_to_hex(sha1), argv + i, prefix);
  	}
  
--	/* Any resets update HEAD to the head being switched to,
--	 * saving the previous head in ORIG_HEAD before. */
--	if (!get_sha1("ORIG_HEAD", sha1_old_orig))
--		old_orig = sha1_old_orig;
--	if (!get_sha1("HEAD", sha1_orig)) {
--		orig = sha1_orig;
--		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
--		update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
-+	if (commit) {
-+		/* Any resets update HEAD to the head being switched to,
-+		 * saving the previous head in ORIG_HEAD before. */
-+		if (!get_sha1("ORIG_HEAD", sha1_old_orig))
-+			old_orig = sha1_old_orig;
-+		if (!get_sha1("HEAD", sha1_orig)) {
-+			orig = sha1_orig;
-+			set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
-+			update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
-+		}
-+		else if (old_orig)
-+			delete_ref("ORIG_HEAD", old_orig, 0);
-+		set_reflog_message(&msg, "updating HEAD", rev);
-+		update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0, MSG_ON_ERR);
- 	}
--	else if (old_orig)
--		delete_ref("ORIG_HEAD", old_orig, 0);
--	set_reflog_message(&msg, "updating HEAD", rev);
--	update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0, MSG_ON_ERR);
- 
- 	switch (reset_type) {
- 	case HARD:
--		if (!update_ref_status && !quiet)
-+		if (commit && !update_ref_status && !quiet)
- 			print_new_head_line(commit);
- 		break;
- 	case SOFT: /* Nothing else to do. */
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 6b3d797..bc1e40c 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -121,10 +121,6 @@ test_expect_success 'git log takes only commit-ish' '
- 	git log 000000000
- '
- 
--test_expect_success 'git reset takes only commit-ish' '
--	git reset 000000000
--'
--
- test_expect_success 'first tag' '
- 	# create one tag 0000000000f8f
- 	git tag -a -m j7cp83um v1.0.0
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index b096dc8..d723ef5 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -491,4 +491,30 @@ test_expect_success 'disambiguation (4)' '
- 	test ! -f secondfile
- '
- 
-+test_expect_success 'reset to tree does not update HEAD' '
-+	git reset --hard HEAD &&
-+	rev_before=$(git rev-parse HEAD) &&
-+	git reset HEAD^^{tree} &&
-+	test $(git rev-parse HEAD) == $rev_before
+ 	/* git reset tree [--] paths... can be used to
+diff --git a/t/t7106-reset-unborn-branch.sh b/t/t7106-reset-unborn-branch.sh
+new file mode 100755
+index 0000000..67d45be
+--- /dev/null
++++ b/t/t7106-reset-unborn-branch.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++test_description='git reset should work on unborn branch'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo a >a &&
++	echo b >b
 +'
 +
-+test_expect_success 'reset to tree' '
-+	# for simpler tests, drop last commit containing added files
-+	git reset --hard HEAD^ &&
-+	git reset HEAD^^{tree} &&
-+	git diff --cached HEAD^ --exit-code &&
-+	git diff HEAD --exit-code
++test_expect_success 'reset' '
++	git add a b &&
++	git reset &&
++	test "$(git ls-files)" == ""
 +'
 +
-+test_expect_success 'reset --hard to tree' '
++test_expect_success 'reset HEAD' '
++	rm .git/index &&
++	git add a b &&
++	git reset HEAD &&
++	test "$(git ls-files)" == ""
++'
++
++test_expect_success 'reset $file' '
++	rm .git/index &&
++	git add a b &&
++	git reset a &&
++	test "$(git ls-files)" == "b"
++'
++
++test_expect_success 'reset -p' '
++	rm .git/index &&
++	git add a &&
++	echo y | git reset -p &&
++	test "$(git ls-files)" == ""
++'
++
++test_expect_success 'reset --soft not allowed' '
++	rm .git/index &&
++	git add a &&
++	test_must_fail git reset --soft
++'
++
++test_expect_success 'reset --hard' '
++	rm .git/index &&
++	git add a &&
 +	git reset --hard &&
-+	git reset --hard HEAD^^{tree} &&
-+	git diff --cached HEAD^ --exit-code &&
-+	git diff HEAD^ --exit-code
++	test "$(git ls-files)" == "" &&
++	test_path_is_missing a
 +'
 +
-+test_expect_success 'reset to tree not allowed with --soft}' '
-+	test_must_fail git reset --soft HEAD^^{tree}
-+'
-+
- test_done
++test_done
 -- 
 1.8.0.1.240.ge8a1f5a
