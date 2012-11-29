@@ -1,73 +1,83 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [RFC/PATCH 1/2] reset: learn to reset to tree
-Date: Thu, 29 Nov 2012 11:04:30 -0800
-Message-ID: <CANiSa6j2sriXaGr0yH9kMrxDEvKHsjNPX_Exbc2_6ecnPYdroQ@mail.gmail.com>
-References: <CANiSa6isDKAgxHWqh5XiQ-adT3-ASFtvAshp028DTcotjQxzmQ@mail.gmail.com>
-	<1354213975-17866-1-git-send-email-martinvonz@gmail.com>
-	<1354213975-17866-2-git-send-email-martinvonz@gmail.com>
-	<7v4nk8qmaj.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 20:04:48 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2 v3] git-fast-import.txt: improve documentation for quoted paths
+Date: Thu, 29 Nov 2012 20:11:32 +0100
+Message-ID: <1354216293-21921-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <20121129185404.GC17309@sigill.intra.peff.net>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 29 20:13:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te9Pj-0007OC-9a
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 20:04:47 +0100
+	id 1Te9Xg-0008Lj-C3
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 20:13:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752977Ab2K2TEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 14:04:31 -0500
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:43032 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497Ab2K2TEb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 14:04:31 -0500
-Received: by mail-qc0-f174.google.com with SMTP id o22so10929146qcr.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 11:04:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=V4zH1XBY6vLdBM8N8AinWjMjKdZGyLA8wRZyG+05fdU=;
-        b=VDsdYLTld++xf1i4ELbN0XdnEb5s9KZ/yyN3WFGOsL1eDKQnMjf5tnzoiVgaaBYdVl
-         jX7hjxN4iDNp25Ts3nuPyvDhjrQrl9TRz1F/1Bc6v3a7WCEwRDZZJ0finOHJdI01fbzW
-         EWoem62445E2jYtG3/drOBuHod8A6fdK1+J+c6025JY+BSHzEpuWclHDtz3tNr48F5Tw
-         0e6PYc8tf+v3TDYUqrjDjKubL8VtYaFyNstYxVPUK2qnQmf/s3itjTnjdbLx9uVk4SaP
-         q5tBX05dwKf9Vy+HgU50E5kNs7E4KKrgSK31E5P8CwO0rlB+n0Dnj3mBTrAr+DcnzSp9
-         aLaw==
-Received: by 10.49.127.199 with SMTP id ni7mr30671427qeb.17.1354215870525;
- Thu, 29 Nov 2012 11:04:30 -0800 (PST)
-Received: by 10.49.2.195 with HTTP; Thu, 29 Nov 2012 11:04:30 -0800 (PST)
-In-Reply-To: <7v4nk8qmaj.fsf@alter.siamese.dyndns.org>
+	id S1753454Ab2K2TMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 14:12:44 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:51210 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751734Ab2K2TMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 14:12:44 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qATJ30FT021628
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 29 Nov 2012 20:03:01 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Te9XH-0001il-9g; Thu, 29 Nov 2012 20:12:35 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Te9XH-0005iJ-4T; Thu, 29 Nov 2012 20:12:35 +0100
+X-Mailer: git-send-email 1.8.0.319.g8abfee4
+In-Reply-To: <20121129185404.GC17309@sigill.intra.peff.net>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Nov 2012 20:03:01 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: qATJ30FT021628
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1354820582.8852@yBftJ8HQGrFZ2z04l+o6NQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210864>
 
-On Thu, Nov 29, 2012 at 10:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martinvonz@gmail.com> writes:
->
->> In cases where HEAD is not supposed to be updated, there is no reason
->> that "git reset" should require a commit, a tree should be enough. So
->> make "git reset $rev^{tree}" work just like "git reset $rev", except
->> that the former will not update HEAD (since there is no commit to
->> point it to).
->
-> That is a horrible design I have to nack, unless you require
-> pathspec.  You cannot tell what "git reset $sha1" would do without
-> checking the type of the object $sha1 refers to.  If you do this
-> only when pathspec is present, then the design is very reasonable.
+The documentation mentionned only newlines and double quotes as
+characters needing escaping, but the backslash also needs it. Also, the
+documentation was not clearly saying that double quotes around the file
+name were required (double quotes in the examples could be interpreted as
+part of the sentence, not part of the actual string).
 
-Very good point. Thanks! I now see that "git checkout" also requires a
-path when given a tree.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+cut-and-paste of Peff's version, adapted from mine.
 
-So then "git reset" on an unborn branch would imply "git reset
-$empty_tree -- ." instead. And "git reset --hard $tree" would not be
-allowed. And the intersection of these -- "git reset --hard" on and
-unborn branch -- would also not work. Would the correct fix be to
-first make "git reset --hard -- $path" work (*sigh*)? I have never
-understood why that doesn't (shouldn't) work.
+ Documentation/git-fast-import.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 959e4d3..d1844ea 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -562,8 +562,12 @@ A `<path>` string must use UNIX-style directory separators (forward
+ slash `/`), may contain any byte other than `LF`, and must not
+ start with double quote (`"`).
+ 
+-If an `LF` or double quote must be encoded into `<path>` shell-style
+-quoting should be used, e.g. `"path/with\n and \" in it"`.
++A path can use C-style string quoting; this is accepted in all cases
++and mandatory if the filename starts with double quote or contains
++`LF`. In C-style quoting, the complete name should be surrounded with
++double quotes, and any `LF`, backslash, or double quote characters
++must be escaped by preceding them with a backslash (e.g.,
++`"path/with\n, \\ and \" in it"`).
+ 
+ The value of `<path>` must be in canonical form. That is it must not:
+ 
+-- 
+1.8.0.319.g8abfee4
