@@ -1,119 +1,74 @@
-From: Daniel Shahaf <danielsh@elego.de>
-Subject: Re: reposurgeon now writes Subversion repositories
-Date: Thu, 29 Nov 2012 09:58:29 +0200
-Message-ID: <20121129075829.GE3424@lp-shahaf.local>
-References: <20121129055946.2D7B84065F@snark.thyrsus.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: dev@subversion.apache.org, git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: dev-return-23038-gcvsd-dev=m.gmane.org@subversion.apache.org Thu Nov 29 09:00:51 2012
-Return-path: <dev-return-23038-gcvsd-dev=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsd-dev@plane.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by plane.gmane.org with smtp (Exim 4.69)
-	(envelope-from <dev-return-23038-gcvsd-dev=m.gmane.org@subversion.apache.org>)
-	id 1Tdz3B-0003y7-5U
-	for gcvsd-dev@plane.gmane.org; Thu, 29 Nov 2012 09:00:49 +0100
-Received: (qmail 39555 invoked by uid 500); 29 Nov 2012 08:00:36 -0000
-Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] completion: fix warning for zsh
+Date: Thu, 29 Nov 2012 09:20:57 +0100
+Message-ID: <1354177257-5416-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 09:21:38 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TdzNJ-0001OB-Q0
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 09:21:38 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751141Ab2K2IVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 03:21:18 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:44659 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750922Ab2K2IVR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 03:21:17 -0500
+Received: by mail-bk0-f46.google.com with SMTP id q16so6090148bkw.19
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 00:21:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=K52g9J7JIAqH/yKWPzWBf445OVtmNnErj0tRU3lDt1A=;
+        b=RwH6Jw7g11OWTwkePQU1M5K6ylwOtN96PVtl1r1lzdzqXzDUBKck1OvnLBKbdUrr+N
+         Y8A0oxQLYUd3xLNXUXsGrieeojZjzhMCE/14CAzfjGWSK4luGQuoV9EG3K4/IT4HVM6X
+         xmoUYhd2EHNYcEU4KhuGEreCo/bADyOONc1XoF8BtOBVe1w31TIFGmYkygMiC+TCxNXN
+         N6c7u7VUZ81q+GC8fY9ZMVr6hEMuiSo27lhFbTXaiM1+mW4LSBdkSfq62vqKHy+8HrTy
+         F439LptJ7txcamuwbKmlIR7lzZG7KHS18Q/v14ogm7Dj0Ulkfn9d2Rvt6I1YkU8g7/Yq
+         JIrA==
+Received: by 10.204.127.11 with SMTP id e11mr6629961bks.0.1354177276083;
+        Thu, 29 Nov 2012 00:21:16 -0800 (PST)
+Received: from localhost (ip-109-43-0-123.web.vodafone.de. [109.43.0.123])
+        by mx.google.com with ESMTPS id o7sm279636bkv.13.2012.11.29.00.21.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 29 Nov 2012 00:21:15 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.1
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Help: <mailto:dev-help@subversion.apache.org>
-List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
-List-Post: <mailto:dev@subversion.apache.org>
-List-Id: <dev.subversion.apache.org>
-Delivered-To: mailing list dev@subversion.apache.org
-Received: (qmail 39503 invoked by uid 99); 29 Nov 2012 08:00:34 -0000
-Received: from athena.apache.org (HELO athena.apache.org) (140.211.11.136)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 08:00:34 +0000
-X-ASF-Spam-Status: No, hits=-0.0 required=5.0
-	tests=SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (athena.apache.org: local policy)
-Received: from [78.47.87.163] (HELO mx0.elegosoft.com) (78.47.87.163)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 08:00:26 +0000
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 19562DE065;
-	Thu, 29 Nov 2012 08:59:50 +0100 (CET)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zJIrhou2ESuG; Thu, 29 Nov 2012 08:59:50 +0100 (CET)
-Received: from lp-shahaf.local (unknown [109.65.228.49])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 7AC4DDE063;
-	Thu, 29 Nov 2012 08:59:49 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20121129055946.2D7B84065F@snark.thyrsus.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210819>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210821>
 
-Eric S. Raymond wrote on Thu, Nov 29, 2012 at 00:59:45 -0500:
->   In summary, Subversion repository histories do not round-trip through
->   reposurgeon editing. File content changes are preserved but some
->   metadata is unavoidably lost.  Furthermore, writing out a DVCS history
->   in Subversion also loses significant portions of its metadata.
-> 
->   Writing a Subversion repository or dump stream discards author
->   information, the committer's name, and the hostname part of the commit
->   address; only the commit timestamp and the local part of the
->   committer's email address are preserved, the latter becoming the
->   Subversion author field.  However, reading a Subversion repository and
->   writing it out again will preserve the author fields.
-> 
-> Subversion's metadata doesn't have separate author and committer
-> properties, and doesn't store anything but a Unix user ID as
-> attribution.  I don't see any way around this.
+Otherwise the user might get something like:
 
-You're not fully informed, then.
+  git-completion.sh:2466: command not found: compdef
 
-1) svn:author revprops can contain any UTF-8 string.  They are not
-restricted to Unix user id's.  (For example, they can contain full
-names, if the administrator so chooses.)
+If this script is loaded before compinit. The script would work either
+way, but let's not be more annoying to the user.
 
-2) You can define custom revision properties.  In your case, the easiest
-way would be to set an reposurgeon:author property, alongside the
-svn:author property.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 ++
+ 1 file changed, 2 insertions(+)
 
-You might also seek community consensus to reserve an svn:foo name for
-the "original author" property --- perhaps svn:original-author --- so
-that reposurgeon and other git->svn tools can interoperate in the way
-they transfer the "original author" information.
-
-I note that one can set revision properties at commit time:
-
-    svn commit -m logmsg --with-revprop svn:original-author="Patch Submitter <foo@bar.example>"
-
->   Empty directories aren't represented in import streams. Consequently,
->   reading and writing Subversion repositories preserves file content,
->   but not empty directories.  It is also not guaranteed that after
->   editing a Subverson repository that the sequence of directory
->   creations and deletions relative to other operations will be
->   identical; the only guarantee is that enclosing directories will be
->   created before any files in them are.
-
-How does reposurgeon handle empty directories with (node) properties?
-
-% svnadmin create r
-% svnmucc -mm -U file://$PWD/r mkdir foo propset k v foo
-
->   Subversion has a concept of "flows"; that is, named segments of
->   history corresponding to files or directories that are created when
->   the path is added, cloned when the path is copied, and deleted when
->   the path is deleted. This information is not preserved in import
->   streams or the internal representation that reposurgeon uses.  Thus,
->   after editing, the flow boundaries of a Subversion history may be
->   arbitrarily changed.
-> 
-> This is me being obsessive about documenting the details.  I think it
-> is doubtful that most Subversion users even know flows exist.
-> 
-
-I think you're saying that adds might turn into copies, and vice-versa.
-That is something users would notice --- it is certainly exposed in the
-UI --- even though node-id's are not exposed to clients.
-
-> 
-
-Cheers
-
-Daniel
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index af13fcc..0b77eb1 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2404,6 +2404,8 @@ __gitk_main ()
+ if [[ -n ${ZSH_VERSION-} ]]; then
+ 	echo "WARNING: this script is deprecated, please see git-completion.zsh" 1>&2
+ 
++	autoload -U +X compinit && compinit
++
+ 	__gitcomp ()
+ 	{
+ 		emulate -L zsh
+-- 
+1.8.0.1
