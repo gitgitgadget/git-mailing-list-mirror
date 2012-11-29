@@ -1,109 +1,89 @@
-From: Xypron <xypron.glpk@gmx.de>
-Subject: Re: [PATCH] gitweb: git_summary - show $project in title
-Date: Thu, 29 Nov 2012 22:07:52 +0100
-Message-ID: <50B7CEA8.8050308@gmx.de>
-References: <1352611258-11450-1-git-send-email-xypron.glpk@gmx.de> <20121112232513.GF10531@sigill.intra.peff.net> <7v625agwiv.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/8] imap-send: change msg_data from storing (char *,
+ len) to storing strbuf
+Date: Thu, 29 Nov 2012 13:30:54 -0800
+Message-ID: <7vboegp04x.fsf@alter.siamese.dyndns.org>
+References: <1353841721-16269-1-git-send-email-mhagger@alum.mit.edu>
+ <1353841721-16269-7-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 22:08:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeremy White <jwhite@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Nov 29 22:31:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeBLe-0000oh-J8
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 22:08:42 +0100
+	id 1TeBhS-0000re-FL
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 22:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755214Ab2K2VIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 16:08:24 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:46323 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755192Ab2K2VIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 16:08:24 -0500
-Received: (qmail invoked by alias); 29 Nov 2012 21:08:22 -0000
-Received: from ip-88-153-184-9.unitymediagroup.de (EHLO [192.168.123.22]) [88.153.184.9]
-  by mail.gmx.net (mp037) with SMTP; 29 Nov 2012 22:08:22 +0100
-X-Authenticated: #41704822
-X-Provags-ID: V01U2FsdGVkX1+Av3sm3cGAqwLPVALGXWJ0PBQP5pFl4tZN4vTE/u
-	Tn+X/3KGEwaWUW
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.10) Gecko/20121027 Icedove/10.0.10
-In-Reply-To: <7v625agwiv.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.1
-X-Y-GMX-Trusted: 0
+	id S1755527Ab2K2Va6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 16:30:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47091 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755329Ab2K2Va5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 16:30:57 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA3ECA7C1;
+	Thu, 29 Nov 2012 16:30:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=im8dSnU0hgu6Jp/jrY9AiXlwV5E=; b=kWhcFV
+	dbe25j7Wz4xKUavQUrGDSB7Zq83wfpV4Q8ClxTfRsUX8QThYmfLj6dK+ds1RHTJB
+	NGQ4KRvzD0qKshizEt03aTquF/GKmclYANjy5huQAlcdpAAkWICJSP3a+EXkLMtk
+	T+zV43tFtFNg7PAH/xqOE+rDkf5avzHQarM28=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GXkdQ1kCrjjM4vQDUfHSgilxEtMBxNpF
+	ZI9oqtu8cUSUsNrwhmbPEBuhgepUq3p161ErWUxVBnBkUsJLgp34a30+eR4Yxh2g
+	SPSYknQf9BxpE/cIqBLGjakIpmCgm8U2hohVJOOqANg4Pa+YZCQvaPf5Rz8Fk2by
+	jgPhM4dEj4Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9783EA7C0;
+	Thu, 29 Nov 2012 16:30:56 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1285A7BF; Thu, 29 Nov 2012
+ 16:30:55 -0500 (EST)
+In-Reply-To: <1353841721-16269-7-git-send-email-mhagger@alum.mit.edu>
+ (Michael Haggerty's message of "Sun, 25 Nov 2012 12:08:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0F2C1728-3A6C-11E2-89C9-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210877>
 
-Thank you for your comments. In the appended version of the patch
-the project title is escaped:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Subject: [PATCH] gitweb: git_summary - show $project in title
+> struct msg_data stored (char *, len) of the data to be included in a
 
-Gitweb pages are structured by divs of class title with grey background.
-The shortlog, and the log page show the project name as the first title.
-Page summary only shows an empty grey box above the project details.
-This provides an inconsistent user experience.
+That (<type>, <varname>) is a bit funny notation, even though it is
+understandable.
 
-Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
----
- gitweb/gitweb.perl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e8812fa..be94b0b 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6450,7 +6450,7 @@ sub git_summary {
- 	git_header_html();
- 	git_print_page_nav('summary','', $head);
- 
--	print "<div class=\"title\">&nbsp;</div>\n";
-+	print "<div class=\"title\">" . esc_html($project) . "</div>\n";
- 	print "<table class=\"projects_list\">\n" .
- 		"<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n";
-         unless ($omit_owner) {
--- 
-1.7.10.4
-
-
-On 13.11.2012 01:46, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+> message, kept the character data NUL-terminated, etc., much like a
+> strbuf would do.  So change it to use a struct strbuf.  This makes the
+> code clearer and reduces copying a little bit.
 >
->> On Sun, Nov 11, 2012 at 06:20:58AM +0100, Henrich Schuchardt wrote:
->>
->>> Gitweb pages are structured by divs of class title with grey background.
->>> The shortlog, and the log page show the project name as the first title.
->>> Page summary only shows an empty grey box above the project details.
->>> This provides an inconstent user experience.
->>>
->>> This patch adds the missing project title.
->>>
->>> Signed-off-by: Henrich Schuchardt <xypron.glpk@gmx.de>
->>> ---
->>>  gitweb/gitweb.perl |    2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>> index 10ed9e5..3e1c452 100755
->>> --- a/gitweb/gitweb.perl
->>> +++ b/gitweb/gitweb.perl
->>> @@ -6451,7 +6451,7 @@ sub git_summary {
->>>  	git_header_html();
->>>  	git_print_page_nav('summary','', $head);
->>>  
->>> -	print "<div class=\"title\">&nbsp;</div>\n";
->>> +	print "<div class=\"title\">$project</div>\n";
->> I do not have any opinion on whether the intent of the change is good or
->> not, but shouldn't $project be run through esc_html() here?
-> I think the answer is yes.  And if $project needs to be escaped, the
-> git_feed function you fixed today has another codepath that needs to
-> be fixed.  When git_get_project_description($project) returns undef,
-> the description is taken from $project without any escaping.
+> A side effect of this change is that the memory for each message is
+> freed after it is used rather than leaked, though that detail is
+> unimportant given that imap-send is a top-level command.
 >
->
->
+> --
+
+?
+
+> For some reason, there is a bunch of infrastructure in this file for
+> dealing with IMAP flags, although there is nothing in the code that
+> actually allows any flags to be set.  If there is no plan to add
+> support for flags in the future, a bunch of code could be ripped out
+> and "struct msg_data" could be completely replaced with strbuf.
+
+Yeah, after all these years we have kept the unused flags field
+there and nobody needed anything out of it.  I am OK with a removal
+if it is done at the very end of the series.
+
+Thanks.
