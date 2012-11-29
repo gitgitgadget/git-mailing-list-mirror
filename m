@@ -1,116 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/2] reset: learn to reset to tree
-Date: Thu, 29 Nov 2012 11:13:07 -0800
-Message-ID: <7vzk20p6ik.fsf@alter.siamese.dyndns.org>
-References: <CANiSa6isDKAgxHWqh5XiQ-adT3-ASFtvAshp028DTcotjQxzmQ@mail.gmail.com>
- <1354213975-17866-1-git-send-email-martinvonz@gmail.com>
- <1354213975-17866-2-git-send-email-martinvonz@gmail.com>
- <7v4nk8qmaj.fsf@alter.siamese.dyndns.org>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v5 0/2] submodule update: add --remote for submodule's
+ upstream changes
+Date: Thu, 29 Nov 2012 14:13:26 -0500
+Message-ID: <20121129191326.GC27409@odin.tremily.us>
+References: <CABURp0oSo9ACFKkBEK1_qNu2mEAu1=nUJxnROaRsXiaWvHih=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 20:13:29 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="adJ1OR3c6QgCpb/j"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Git <git@vger.kernel.org>, Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 20:13:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te9Y6-0000M7-Es
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 20:13:26 +0100
+	id 1Te9YU-0000qK-Hr
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 20:13:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753186Ab2K2TNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 14:13:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63912 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751334Ab2K2TNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 14:13:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F1C3971F;
-	Thu, 29 Nov 2012 14:13:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PwcpIkETkucbeUCCYvPJ1XcJeDQ=; b=g22p8a
-	5sjC/4aODWJgEEXZvyX0T0jBPZK2Gi04ZNE9kLuspeBWc9f4mYhVNlZIWuEvW7u0
-	147f5ePmHNj6y6Cwnc3qgA4CHUhd/2ReneYB7UX7+uh6Y5vwddRy2Cbx2KDE3n3S
-	3fAZ4c282j5y42TWYRCQkXvqU1dIpQVwwYvm0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uzBTHBL5hKXmcLcnJ3B+PBSXvbZOT6PC
-	ESpvQkf5JC/xUvMRncVGCqOs9+Qm6PdsmXObcysKqmMXPU1pkEFjV5t9YSODILkF
-	biKeXmC/bZBxxUmroBLIdv1wFFV3noaQCW0xq2eS4hXJilksDh/5yNZ6XXgzvamX
-	0CAdNa9ZNbI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CAE2971E;
-	Thu, 29 Nov 2012 14:13:09 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6768971A; Thu, 29 Nov 2012
- 14:13:08 -0500 (EST)
-In-Reply-To: <7v4nk8qmaj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 29 Nov 2012 10:47:00 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CF792282-3A58-11E2-B3F2-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752306Ab2K2TNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 14:13:35 -0500
+Received: from vms173011pub.verizon.net ([206.46.173.11]:65230 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752223Ab2K2TNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 14:13:34 -0500
+Received: from odin.tremily.us ([unknown] [72.68.95.230])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0ME900K0VK2FMQ50@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 29 Nov 2012 13:13:28 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id DFE586E24E4; Thu,
+ 29 Nov 2012 14:13:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1354216406; bh=IsfcNNmqMHQLpBS6kegm/MzRWz7I1JMvCSgG9WZM87M=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=fvE3MgOSKfJvXLH+DOgZuOHx00WGSQcORif9EIx9mYSkvCUCfx+lqSf+vwimpL8Ki
+ uVvl5v2A2z7mhwQW6ywSHQtCvjH+/Qr325hT3m79h1L0jsLKA6lIGYQZJkd5Tbyuk7
+ PPgl5rRF6gDeZ0otx1RDdVap4S8WOfcLTDW/8qc0=
+Content-disposition: inline
+In-reply-to: <CABURp0oSo9ACFKkBEK1_qNu2mEAu1=nUJxnROaRsXiaWvHih=w@mail.gmail.com>
+ <cover.1354130656.git.wking@tremily.us>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210867>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Martin von Zweigbergk <martinvonz@gmail.com> writes:
+--adJ1OR3c6QgCpb/j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+
+On Thu, Nov 29, 2012 at 01:29:12PM -0500, Phil Hord wrote:
+> On Fri, Nov 23, 2012 at 12:54 PM, W. Trevor King <wking@tremily.us> wrote:
+> > [snip initial thoughts leading to the update --remote v5]
 >
->> In cases where HEAD is not supposed to be updated, there is no reason
->> that "git reset" should require a commit, a tree should be enough. So
->> make "git reset $rev^{tree}" work just like "git reset $rev", except
->> that the former will not update HEAD (since there is no commit to
->> point it to).
->
-> That is a horrible design I have to nack, unless you require
-> pathspec.  You cannot tell what "git reset $sha1" would do without
-> checking the type of the object $sha1 refers to.  If you do this
-> only when pathspec is present, then the design is very reasonable.
+> I was thinking the same thing, but reading this whole thread a couple of
+> weeks late.  Thanks for noticing.
+>=20
+> Moreover, I think that 'git submodule update --pull' is also the wrong way
+> to spell this action.   Maybe you are misled from the outset by your
+> current workflow:
 
-The above applies to an _arbitrary_ $sha1.
+Did you see my v5 (add --remote) series?
 
-Allowing "reset $tree -- $pathspec" is a very good addition in the
-same sense that "git checkout $tree -- $pathspec" is useful.  These
-two commands, "reset" and "checkout", share that the source we grab
-the blobs out of only need to be a tree and does not have to be a
-commit, and the only difference between them is where the blobs we
-grabbed out of that tree go, either only to the index or to both the
-index and the working tree.
+> For that reason, I don't like the --pull switch since it implies a
+> fetch, but I will not always want to do a fetch.
 
-But I do not think it is connected, at least at the level the end
-users perceive, to the issue of "reset" issued while on an unborn
-branch.
+  $ git submodule update --remote --no-fetch
 
-If you limit the scope of the behaviour change exposed to the end
-users so that you would make
+will not fetch the submodule remotes.
 
-	$ git reset [HEAD]
+> I don't know which remote I should be tracking, though.  I suppose
+> it is 'origin' for now, but maybe it is just whatever
+> $superproject's HEAD's remote-tracking branch indicates.
 
-act as a short-hand for
+With the --remote series, I always use "origin" because that's what
+`submodule add` should be setting up.  If people want to change that
+up by hand, we may need a submodule.<name>.remote configuration
+option.
 
-	$ rm -f $GIT_DIR/index
+> I am not sure I want the gitlinks in superproject to update automatically
+> in the index, but I definitely do not want to automatically create a comm=
+it
+> for them.
 
-when HEAD points at an unborn branch, and similarly make
+Commits are dissabled by default (see my recent --commit RFC for how
+they would be enabled).
 
-	$ git reset --hard [HEAD]
+> But I really don't want to figure out how to handle submodule
+> collisions during a merge (or rebase!) of my superproject with changes th=
+at
+> someone else auto-committed in his local $superproject as he and I
+> arbitrarily floated up the upstream independently.  There is nothing but
+> loathing down that path.
 
-act as a short-hand for
+This is true.  I'm not sure how gitlink collisions are currently
+handled=E2=80=A6
 
-	$ rm -f $GIT_DIR/index
-        $ git clean -f -d
+Trevor
 
-in such a case, I do not think it is unreasonable at all.
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
-In such a case,
+--adJ1OR3c6QgCpb/j
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-	$ git reset --soft [HEAD]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-would become just a no-op.  Earlier you were on an unborn branch,
-and after "reset --soft", nothing changes.
+iQIcBAEBAgAGBQJQt7PUAAoJEEUbTsx0l5OMlkAP/0ZJc/ZA5rychVqeGU598MZ8
+aMnm76NdM6bg+msxE8/8R0y7+dglwmfyGw9PxDSEDK7sEqWbC90eH8PxXbU6rrvF
+lFwFOsruDD5vzBD8lrQWhWPcDG+pvyHO6geCV2qzmJFAAVd/3oRwYZAgNPbzRxu1
+MwoBQf+d1oU9ys9N3PzFov15DqdhQiL08Qh60IGFoCDYGFLahYlvEnuMRWBQ6/Pu
+vkEC1C7fDrFsklFicnrl7CokO7up8HmjayZaAetdpyHTcfosjWwSbK0gyvqWtCKB
+JqnFD3BFKfqs17+Pqj4bTyKQ7n+wOsE6DlLoVlRZjemkvp0+5N1DgUSkHBITPgxW
+QsxbOuysiLJukfKkR4niZtlBfIZ9oMyGDNLBUGVcNykG5f9w834X22YGPPg7TQRG
+l9ylaFuHI/fNXs+5kX4PCaZRI2oyFrf3n9lW2SC6Kji/EIzuD1voMFJgxY5pxBOs
+umBa+4TBAsvpG0jUb1aJLiBsH/W8DZ/y9gaNcnrlDKUvIkMCg0iALJcT2VLlJ3+g
+ywXXiVWueTTTcEP/HuPnjIOGP7gi644ZASM/nCqiE254k0xsKYJHyRvSNEy+o+/c
+6HKA3JHM0HXwxi9y5wQ9ocaOyPBXqW10/JEFCJkRqpuBxN3d5pqcgy03TYIO40BY
+LjFkj/M8ijvU3pLOr4RE
+=Tn2j
+-----END PGP SIGNATURE-----
 
-Hmm?
+--adJ1OR3c6QgCpb/j--
