@@ -1,138 +1,116 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2 v3] git-remote-mediawiki: escape ", \, and LF in file names
-Date: Thu, 29 Nov 2012 20:11:33 +0100
-Message-ID: <1354216293-21921-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <20121129185404.GC17309@sigill.intra.peff.net>
- <1354216293-21921-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 29 20:13:09 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 1/2] reset: learn to reset to tree
+Date: Thu, 29 Nov 2012 11:13:07 -0800
+Message-ID: <7vzk20p6ik.fsf@alter.siamese.dyndns.org>
+References: <CANiSa6isDKAgxHWqh5XiQ-adT3-ASFtvAshp028DTcotjQxzmQ@mail.gmail.com>
+ <1354213975-17866-1-git-send-email-martinvonz@gmail.com>
+ <1354213975-17866-2-git-send-email-martinvonz@gmail.com>
+ <7v4nk8qmaj.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 20:13:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te9Xo-0008U5-98
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 20:13:08 +0100
+	id 1Te9Y6-0000M7-Es
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 20:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244Ab2K2TMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 14:12:48 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:51213 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751734Ab2K2TMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 14:12:47 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qATJ32UM021632
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Nov 2012 20:03:02 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Te9XI-0001io-IG; Thu, 29 Nov 2012 20:12:36 +0100
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Te9XI-0005iM-En; Thu, 29 Nov 2012 20:12:36 +0100
-X-Mailer: git-send-email 1.8.0.319.g8abfee4
-In-Reply-To: <1354216293-21921-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Nov 2012 20:03:02 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qATJ32UM021632
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1354820582.88947@D5WdOMTw6h093SD6k2Dz8w
+	id S1753186Ab2K2TNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 14:13:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63912 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751334Ab2K2TNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 14:13:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F1C3971F;
+	Thu, 29 Nov 2012 14:13:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PwcpIkETkucbeUCCYvPJ1XcJeDQ=; b=g22p8a
+	5sjC/4aODWJgEEXZvyX0T0jBPZK2Gi04ZNE9kLuspeBWc9f4mYhVNlZIWuEvW7u0
+	147f5ePmHNj6y6Cwnc3qgA4CHUhd/2ReneYB7UX7+uh6Y5vwddRy2Cbx2KDE3n3S
+	3fAZ4c282j5y42TWYRCQkXvqU1dIpQVwwYvm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uzBTHBL5hKXmcLcnJ3B+PBSXvbZOT6PC
+	ESpvQkf5JC/xUvMRncVGCqOs9+Qm6PdsmXObcysKqmMXPU1pkEFjV5t9YSODILkF
+	biKeXmC/bZBxxUmroBLIdv1wFFV3noaQCW0xq2eS4hXJilksDh/5yNZ6XXgzvamX
+	0CAdNa9ZNbI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CAE2971E;
+	Thu, 29 Nov 2012 14:13:09 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6768971A; Thu, 29 Nov 2012
+ 14:13:08 -0500 (EST)
+In-Reply-To: <7v4nk8qmaj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 29 Nov 2012 10:47:00 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CF792282-3A58-11E2-B3F2-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210866>
 
-A mediawiki page can contain, and even start with a " character, we have
-to escape it when generating the fast-export stream, as well as \
-character. While we're there, also escape newlines, but I don't think we
-can get them from MediaWiki pages.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki      | 16 +++++++++++++---
- contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+), 3 deletions(-)
+> Martin von Zweigbergk <martinvonz@gmail.com> writes:
+>
+>> In cases where HEAD is not supposed to be updated, there is no reason
+>> that "git reset" should require a commit, a tree should be enough. So
+>> make "git reset $rev^{tree}" work just like "git reset $rev", except
+>> that the former will not update HEAD (since there is no commit to
+>> point it to).
+>
+> That is a horrible design I have to nack, unless you require
+> pathspec.  You cannot tell what "git reset $sha1" would do without
+> checking the type of the object $sha1 refers to.  If you do this
+> only when pathspec is present, then the design is very reasonable.
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index 68555d4..094129d 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -711,6 +711,14 @@ sub fetch_mw_revisions {
- 	return ($n, @revisions);
- }
- 
-+sub fe_escape_path {
-+    my $path = shift;
-+    $path =~ s/\\/\\\\/g;
-+    $path =~ s/"/\\"/g;
-+    $path =~ s/\n/\\n/g;
-+    return '"' . $path . '"';
-+}
-+
- sub import_file_revision {
- 	my $commit = shift;
- 	my %commit = %{$commit};
-@@ -738,15 +746,17 @@ sub import_file_revision {
- 		print STDOUT "from refs/mediawiki/$remotename/master^0\n";
- 	}
- 	if ($content ne DELETED_CONTENT) {
--		print STDOUT "M 644 inline $title.mw\n";
-+		print STDOUT "M 644 inline " .
-+		    fe_escape_path($title . ".mw") . "\n";
- 		literal_data($content);
- 		if (%mediafile) {
--			print STDOUT "M 644 inline $mediafile{title}\n";
-+			print STDOUT "M 644 inline "
-+			    . fe_escape_path($mediafile{title}) . "\n";
- 			literal_data_raw($mediafile{content});
- 		}
- 		print STDOUT "\n\n";
- 	} else {
--		print STDOUT "D $title.mw\n";
-+		print STDOUT "D " . fe_escape_path($title . ".mw") . "\n";
- 	}
- 
- 	# mediawiki revision number in the git note
-diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-index 246d47d..b6405ce 100755
---- a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-+++ b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-@@ -318,4 +318,30 @@ test_expect_success 'git push with \ in format control' '
- '
- 
- 
-+test_expect_success 'fast-import meta-characters in page name (mw -> git)' '
-+	wiki_reset &&
-+	wiki_editpage \"file\"_\\_foo "expect to be called \"file\"_\\_foo" false &&
-+	git clone mediawiki::'"$WIKI_URL"' mw_dir_21 &&
-+	test_path_is_file mw_dir_21/\"file\"_\\_foo.mw &&
-+	wiki_getallpage ref_page_21 &&
-+	test_diff_directories mw_dir_21 ref_page_21
-+'
-+
-+
-+test_expect_success 'fast-import meta-characters in page name (git -> mw) ' '
-+	wiki_reset &&
-+	git clone mediawiki::'"$WIKI_URL"' mw_dir_22 &&
-+	(
-+		cd mw_dir_22 &&
-+		echo "this file is called \"file\"_\\_foo.mw" >\"file\"_\\_foo &&
-+		git add . &&
-+		git commit -am "file \"file\"_\\_foo" &&
-+		git pull &&
-+		git push
-+	) &&
-+	wiki_getallpage ref_page_22 &&
-+	test_diff_directories mw_dir_22 ref_page_22
-+'
-+
-+
- test_done
--- 
-1.8.0.319.g8abfee4
+The above applies to an _arbitrary_ $sha1.
+
+Allowing "reset $tree -- $pathspec" is a very good addition in the
+same sense that "git checkout $tree -- $pathspec" is useful.  These
+two commands, "reset" and "checkout", share that the source we grab
+the blobs out of only need to be a tree and does not have to be a
+commit, and the only difference between them is where the blobs we
+grabbed out of that tree go, either only to the index or to both the
+index and the working tree.
+
+But I do not think it is connected, at least at the level the end
+users perceive, to the issue of "reset" issued while on an unborn
+branch.
+
+If you limit the scope of the behaviour change exposed to the end
+users so that you would make
+
+	$ git reset [HEAD]
+
+act as a short-hand for
+
+	$ rm -f $GIT_DIR/index
+
+when HEAD points at an unborn branch, and similarly make
+
+	$ git reset --hard [HEAD]
+
+act as a short-hand for
+
+	$ rm -f $GIT_DIR/index
+        $ git clean -f -d
+
+in such a case, I do not think it is unreasonable at all.
+
+In such a case,
+
+	$ git reset --soft [HEAD]
+
+would become just a no-op.  Earlier you were on an unborn branch,
+and after "reset --soft", nothing changes.
+
+Hmm?
