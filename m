@@ -1,98 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] git-remote-mediawiki: escape double quotes and LF in file names
-Date: Thu, 29 Nov 2012 13:33:33 +0100
-Message-ID: <1354192413-9959-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 29 13:34:06 2012
+From: Daniel Shahaf <danielsh@elego.de>
+Subject: Re: reposurgeon now writes Subversion repositories
+Date: Thu, 29 Nov 2012 15:42:03 +0200
+Message-ID: <20121129134203.GJ3424@lp-shahaf.local>
+References: <20121129055946.2D7B84065F@snark.thyrsus.com> <20121129075829.GE3424@lp-shahaf.local> <20121129114637.GB9264@thyrsus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: dev@subversion.apache.org, git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 14:43:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te3Jd-0002Zw-JD
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 13:34:05 +0100
+	id 1Te4OS-0006WR-W0
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 14:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753019Ab2K2Mdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 07:33:50 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:35754 "EHLO rominette.imag.fr"
+	id S1752118Ab2K2Nmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 08:42:53 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:51925 "EHLO mx0.elegosoft.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752687Ab2K2Mdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 07:33:49 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qATCO6FU008504
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Nov 2012 13:24:07 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Te3JE-0002lo-Gd; Thu, 29 Nov 2012 13:33:40 +0100
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Te3JE-0002bF-CN; Thu, 29 Nov 2012 13:33:40 +0100
-X-Mailer: git-send-email 1.8.0.319.g8abfee4
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Nov 2012 13:24:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qATCO6FU008504
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1354796650.68517@5l3sW9hCinQ16FMKehcDzQ
+	id S1751155Ab2K2Nmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 08:42:52 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 0774BDE065;
+	Thu, 29 Nov 2012 14:42:36 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7hyZQyuGEjzh; Thu, 29 Nov 2012 14:42:35 +0100 (CET)
+Received: from lp-shahaf.local (bzq-109-65-228-49.red.bezeqint.net [109.65.228.49])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 81CB6DE063;
+	Thu, 29 Nov 2012 14:42:35 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20121129114637.GB9264@thyrsus.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210831>
 
-A mediawiki page can contain, and even start with a " character, we have
-to escape it when generating the fast-export stream. While we're there,
-also escape newlines, but I don't think we can get them from MediaWiki
-pages.
+(note, other half of the thread is on dev@svn only..)
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+Eric S. Raymond wrote on Thu, Nov 29, 2012 at 06:46:37 -0500:
+> Daniel Shahaf <danielsh@elego.de>:
+> > You might also seek community consensus to reserve an svn:foo name for
+> > the "original author" property --- perhaps svn:original-author --- so
+> > that reposurgeon and other git->svn tools can interoperate in the way
+> > they transfer the "original author" information.
+> 
+> OK.  But I like the idea of letting the users set their own author
+> content string better.  Instead of another layer of kluges, why
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index 68555d4..e7a0e7b 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -711,6 +711,13 @@ sub fetch_mw_revisions {
- 	return ($n, @revisions);
- }
- 
-+sub fe_escape_path {
-+    my $path = shift;
-+    $path =~ s/"/\\"/g;
-+    $path =~ s/\n/\\n/g;
-+    return $path;
-+}
-+
- sub import_file_revision {
- 	my $commit = shift;
- 	my %commit = %{$commit};
-@@ -738,15 +745,17 @@ sub import_file_revision {
- 		print STDOUT "from refs/mediawiki/$remotename/master^0\n";
- 	}
- 	if ($content ne DELETED_CONTENT) {
--		print STDOUT "M 644 inline $title.mw\n";
-+		print STDOUT "M 644 inline " .
-+		    fe_escape_path($title . ".mw") . "\n";
- 		literal_data($content);
- 		if (%mediafile) {
--			print STDOUT "M 644 inline $mediafile{title}\n";
-+			print STDOUT "M 644 inline "
-+			    . fe_escape_path($mediafile{title}) . "\n";
- 			literal_data_raw($mediafile{content});
- 		}
- 		print STDOUT "\n\n";
- 	} else {
--		print STDOUT "D $title.mw\n";
-+		print STDOUT "D " . fe_escape_path($title . ".mw") . "\n";
- 	}
- 
- 	# mediawiki revision number in the git note
--- 
-1.8.0.319.g8abfee4
+I don't see the kludge here --- git has a "author" != "committer"
+distinction, svn doesn't, so if you want to grow that distinction the
+most natural way is a new property.  Storing additional information in
+svn:author is a separate issue.
+
+> > >   Subversion has a concept of "flows"; that is, named segments of
+> > >   history corresponding to files or directories that are created when
+> > >   the path is added, cloned when the path is copied, and deleted when
+> > >   the path is deleted. This information is not preserved in import
+> > >   streams or the internal representation that reposurgeon uses.  Thus,
+> > >   after editing, the flow boundaries of a Subversion history may be
+> > >   arbitrarily changed.
+> > > 
+> > > This is me being obsessive about documenting the details.  I think it
+> > > is doubtful that most Subversion users even know flows exist.
+> > 
+> > I think you're saying that adds might turn into copies, and vice-versa.
+> > That is something users would notice --- it is certainly exposed in the
+> > UI --- even though node-id's are not exposed to clients.
+> 
+> I'm saying nobody thinks of flows when they do branch copies.  It's
+> not just that users don't see node IDs, it's that no part of most users'
+> mental model of how Subversion works resembles them.
+
+I'm still not sure what you have in mind.  I note that 'svn log' and
+'svn blame' cross both file copies and branch creation --- that's one
+effect of "'svn cp foo bar; svn ci' causes bar to be related to foo".
+
+> -- 
+> 		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
