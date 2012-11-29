@@ -1,168 +1,134 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] l10n: de.po: translate 825 new messages
-Date: Thu, 29 Nov 2012 12:40:00 +0100
-Message-ID: <50B74990.5000804@drmicha.warpmail.net>
-References: <87wqx7s22j.fsf@pctrast.inf.ethz.ch> <1354126970-5356-1-git-send-email-ralf.thielow@gmail.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: reposurgeon now writes Subversion repositories
+Date: Thu, 29 Nov 2012 06:46:37 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20121129114637.GB9264@thyrsus.com>
+References: <20121129055946.2D7B84065F@snark.thyrsus.com>
+ <20121129075829.GE3424@lp-shahaf.local>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@inf.ethz.ch, git@vger.kernel.org, jk@jk.gs, stimming@tuhh.de
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 12:40:21 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te2Tc-0000Ie-PJ
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 12:40:21 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127Ab2K2LkD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 06:40:03 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:56775 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753626Ab2K2LkC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2012 06:40:02 -0500
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8E52721805;
-	Thu, 29 Nov 2012 06:40:01 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Thu, 29 Nov 2012 06:40:01 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=XrPL2VVHKt99vBzdYVxadi
-	qqkI0=; b=L6kFH+Ny+iyOrFRW7tp1odm8Uj6YVEVS1WWaFjNl1fyy5gm2KzYgAJ
-	uSHF6KaCWJ/BaWXDHLgK4UHOhycWmssohdG3kb5zgxi0jtW78NkwKuXFqH6DgRKw
-	HG0SKCa3XPBWsqwlhbo5jsXiBAaPncKI1c0UAa7/CcYHzfu+58enc=
-X-Sasl-enc: WUhmXDD7UTJPzgCCvEjRRBYwdpIx4AH6kjdTb9CjJCT0 1354189201
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id B23F98E05B2;
-	Thu, 29 Nov 2012 06:40:00 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <1354126970-5356-1-git-send-email-ralf.thielow@gmail.com>
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: dev@subversion.apache.org, git@vger.kernel.org
+To: Daniel Shahaf <danielsh@elego.de>
+X-From: dev-return-23040-gcvsd-dev=m.gmane.org@subversion.apache.org Thu Nov 29 12:47:26 2012
+Return-path: <dev-return-23040-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@plane.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by plane.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-23040-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1Te2aU-0000EY-59
+	for gcvsd-dev@plane.gmane.org; Thu, 29 Nov 2012 12:47:26 +0100
+Received: (qmail 35242 invoked by uid 500); 29 Nov 2012 11:47:07 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210828>
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 35184 invoked by uid 99); 29 Nov 2012 11:47:05 -0000
+Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 11:47:05 +0000
+X-ASF-Spam-Status: No, hits=-0.0 required=5.0
+	tests=SPF_HELO_PASS,SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (nike.apache.org: domain of esr@thyrsus.com designates 71.162.243.5 as permitted sender)
+Received: from [71.162.243.5] (HELO snark.thyrsus.com) (71.162.243.5)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 11:46:59 +0000
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 85A254065F; Thu, 29 Nov 2012 06:46:37 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20121129075829.GE3424@lp-shahaf.local>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210829>
 
-Ralf Thielow venit, vidit, dixit 28.11.2012 19:22:
->> Hi Ralf,
->>
->> This is the middle third of my review.  Sorry for the long wait!  I =
-hope
->> it can still be useful.
->>
->=20
-> Hi Thomas,
->=20
-> no problem. Thanks for your review. Of course it's very useful.
-> Some of the mistakes I made are so obvious that I can't say what
-> I've had in mind when translation these messages :/ But some aren't,
-> so thanks for the further explanations within your review.
->=20
->> I don't really share your apparent aversion to just using "<n>" :-)
-> I don't really have one :) so I'm fine with using <n>.
->=20
->> This would be a good time to settle on a good translation for
->> "rewriting".  Perhaps "neu schreiben".  "=C3=9Cberschreiben" to me i=
-mplies
-> On some other places we actually use "neu schreiben".
+Daniel Shahaf <danielsh@elego.de>:
+> > Subversion's metadata doesn't have separate author and committer
+> > properties, and doesn't store anything but a Unix user ID as
+> > attribution.  I don't see any way around this.
+> 
+> You're not fully informed, then.
+> 
+> 1) svn:author revprops can contain any UTF-8 string.  They are not
+> restricted to Unix user id's.  (For example, they can contain full
+> names, if the administrator so chooses.)
 
-How about "umschreiben"? "neu schreiben" is more like "write from
-scratch", whereas "rewrite" is more often about taking a given base and
-modifying it.
+Right.  At one point during the development of this feature I was
+accidentally storing the full email field in this property.  So I
+already knew that this is allowed at some level.  
 
->>> -msgstr ""
->>> +msgstr "erzeugt kleinere Pakete"
->>
->> Smaller is not really the point: they are packs that do not have the
-> [...]
->> You could call them "abgespeckt" ;-)
-> I used "d=C3=BCnner"!?
->=20
-> Furthermore I've unified the translation of "email" to "Email",
-> not "eMail". You'll see the result below. I hope I haven't missed
-> something.
->=20
-> Thanks,
-> Ralf
->=20
-> ---
->  po/de.po | 95 ++++++++++++++++++++++++++++++++----------------------=
-----------
->  1 file changed, 47 insertions(+), 48 deletions(-)
->=20
-> diff --git a/po/de.po b/po/de.po
-> index fe6e8cf..1a75ea2 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-=2E..
->  #: builtin/fsck.c:608
->  msgid "git fsck [options] [<object>...]"
-> @@ -4521,7 +4521,7 @@ msgstr "erzeugt Kopfknoten des Referenzprotokol=
-ls (Standard)"
-> =20
->  #: builtin/fsck.c:620
->  msgid "also consider packs and alternate objects"
-> -msgstr "betrachtet auch Pakete und wechselnde Objekte"
-> +msgstr ""
+And, I have no trouble believing that svn log will cheerfully echo
+anything that I choose to stuff in that field.  
 
-"alternate objects" (hopefully) don't change much, so that "wechselnde"
-is misleading.
+But...
 
-Is there a set translation standard for the "alternative object store"
-mechanism in git (alternates)? Otherwise "alternative Objekte" may be
-choice which is close to the original and conveys the aspect that they
-are objects from an alternative store.
+(1) How much work would it be it to set up a Subversion installation 
+so that when I svn commit, the tool does the right thing, e.g. puts
+a DVCS-style fullname/email string in there?  
 
+(2) Have the tools been tested for bugs arising from having whitespace
+in that data?
 
->  #: builtin/grep.c:817
->  msgid "indicate hit with exit status without output"
-> -msgstr "kennzeichnet =C3=9Cbereinstimmungen mit Beendigungsstatus, o=
-hne Ausgabe"
-> +msgstr "zeigt =C3=9Cbereinstimmungen mit Beendigungsstatus, ohne Aus=
-gabe"
+Really, if it's actually easy to set up DVCS-style globally unique IDs you
+Subversion guys ought to be shouting it from the housetops.  The absence
+of this capability is a serious PITA in several situations, including 
+for example migrating projects between forges.
 
-maybe "zeigt =C3=9Cbereinstimmungen nur durch Beendigungsstatus an"
+RFC: If I wrote a patch that let Subversion users set their own
+content string for the author field in ~/.subversion/config, would
+you merge it?  Because I'd totally write that.
 
-"mit" sounds like "including", "additionally". Also, nothing is shown
-("zeigt"), but something is indicated ("zeigt an").
+> 2) You can define custom revision properties.  In your case, the easiest
+> way would be to set an reposurgeon:author property, alongside the
+> svn:author property.
 
+Yeah, sure, I've assumed all along this wouldn't break if I tried it.
+If I actually thought you guys were capable of designing a data model
+with a perfectly general-looking store of key/value pairs and then
+arbitrarily restricting the key set so I couldn't do that, I'd almost
+have to find each and every one of you and kick your asses into next
+Tuesday on account of blatant stupidity. I have no such plans :-).
 
->  #: builtin/log.c:102
->  msgid "decorate options"
-> -msgstr "Ausgabeoptionen"
-> +msgstr "decorate Optionen"
+But...what good does this capability do?  OK, it would assist
+round-tripping back to gitspace, but while that's kind of cool I don't
+see any help for a normal Subversion workflow here.
+ 
+> You might also seek community consensus to reserve an svn:foo name for
+> the "original author" property --- perhaps svn:original-author --- so
+> that reposurgeon and other git->svn tools can interoperate in the way
+> they transfer the "original author" information.
 
-"decorate-Optionen" (unless we want to match the standard set by the ba=
-d
-old K&R translation ;) )
+OK.  But I like the idea of letting the users set their own author
+content string better.  Instead of another layer of kluges, why
+shouldn't Subversion join the DVCSes in the happy land of
+Internet-scoped attributions?
 
+> How does reposurgeon handle empty directories with (node) properties?
 
->  #: builtin/log.c:1098
->  msgid "add To: header"
-> -msgstr "f=C3=BCgt Kopfteil \"To:\" hinzu"
-> +msgstr "f=C3=BCgt  \"To:\" Header hinzu"
+Currently by ignoring all of them except svn:ignore, which it turns 
+into .gitignore content on the gitspace side.  And now vice-versa, too.
 
-Here and in the following I'd a "-", e.g.
+Not clear what else it *could* do.  I'd take suggestions.
 
-msgstr "f=C3=BCgt  \"To:\"-Header hinzu"
+> >   Subversion has a concept of "flows"; that is, named segments of
+> >   history corresponding to files or directories that are created when
+> >   the path is added, cloned when the path is copied, and deleted when
+> >   the path is deleted. This information is not preserved in import
+> >   streams or the internal representation that reposurgeon uses.  Thus,
+> >   after editing, the flow boundaries of a Subversion history may be
+> >   arbitrarily changed.
+> > 
+> > This is me being obsessive about documenting the details.  I think it
+> > is doubtful that most Subversion users even know flows exist.
+> 
+> I think you're saying that adds might turn into copies, and vice-versa.
+> That is something users would notice --- it is certainly exposed in the
+> UI --- even though node-id's are not exposed to clients.
 
->  #: builtin/log.c:1100
->  msgid "add Cc: header"
-> -msgstr "f=C3=BCgt Kopteil \"Cc:\" hinzu"
-> +msgstr "f=C3=BCgt \"Cc:\" Header hinzu"
-=2E..
-> -"l=C3=A4dt Konfiguration f=C3=BCr <Kommando> beim =C3=9Cberschreiben=
- von Versionen "
-> +"l=C3=A4dt Konfiguration f=C3=BCr <Kommando> beim Neuschreiben von V=
-ersionen "
->  "(impliziert --stdin)"
-
-"Umschreiben" (if that becomes the agreed upon term for "rewrite").
-
-Just my two Pfennig ;)
-
-Michael
+I'm saying nobody thinks of flows when they do branch copies.  It's
+not just that users don't see node IDs, it's that no part of most users'
+mental model of how Subversion works resembles them.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
