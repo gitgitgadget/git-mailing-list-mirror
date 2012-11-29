@@ -1,134 +1,98 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: reposurgeon now writes Subversion repositories
-Date: Thu, 29 Nov 2012 06:46:37 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121129114637.GB9264@thyrsus.com>
-References: <20121129055946.2D7B84065F@snark.thyrsus.com>
- <20121129075829.GE3424@lp-shahaf.local>
-Reply-To: esr@thyrsus.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: dev@subversion.apache.org, git@vger.kernel.org
-To: Daniel Shahaf <danielsh@elego.de>
-X-From: dev-return-23040-gcvsd-dev=m.gmane.org@subversion.apache.org Thu Nov 29 12:47:26 2012
-Return-path: <dev-return-23040-gcvsd-dev=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsd-dev@plane.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by plane.gmane.org with smtp (Exim 4.69)
-	(envelope-from <dev-return-23040-gcvsd-dev=m.gmane.org@subversion.apache.org>)
-	id 1Te2aU-0000EY-59
-	for gcvsd-dev@plane.gmane.org; Thu, 29 Nov 2012 12:47:26 +0100
-Received: (qmail 35242 invoked by uid 500); 29 Nov 2012 11:47:07 -0000
-Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-remote-mediawiki: escape double quotes and LF in file names
+Date: Thu, 29 Nov 2012 13:33:33 +0100
+Message-ID: <1354192413-9959-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 29 13:34:06 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Te3Jd-0002Zw-JD
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 13:34:05 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753019Ab2K2Mdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 07:33:50 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:35754 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752687Ab2K2Mdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 07:33:49 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id qATCO6FU008504
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 29 Nov 2012 13:24:07 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Te3JE-0002lo-Gd; Thu, 29 Nov 2012 13:33:40 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Te3JE-0002bF-CN; Thu, 29 Nov 2012 13:33:40 +0100
+X-Mailer: git-send-email 1.8.0.319.g8abfee4
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Nov 2012 13:24:07 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: qATCO6FU008504
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1354796650.68517@5l3sW9hCinQ16FMKehcDzQ
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Help: <mailto:dev-help@subversion.apache.org>
-List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
-List-Post: <mailto:dev@subversion.apache.org>
-List-Id: <dev.subversion.apache.org>
-Delivered-To: mailing list dev@subversion.apache.org
-Received: (qmail 35184 invoked by uid 99); 29 Nov 2012 11:47:05 -0000
-Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 11:47:05 +0000
-X-ASF-Spam-Status: No, hits=-0.0 required=5.0
-	tests=SPF_HELO_PASS,SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (nike.apache.org: domain of esr@thyrsus.com designates 71.162.243.5 as permitted sender)
-Received: from [71.162.243.5] (HELO snark.thyrsus.com) (71.162.243.5)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Thu, 29 Nov 2012 11:46:59 +0000
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 85A254065F; Thu, 29 Nov 2012 06:46:37 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20121129075829.GE3424@lp-shahaf.local>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210829>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210830>
 
-Daniel Shahaf <danielsh@elego.de>:
-> > Subversion's metadata doesn't have separate author and committer
-> > properties, and doesn't store anything but a Unix user ID as
-> > attribution.  I don't see any way around this.
-> 
-> You're not fully informed, then.
-> 
-> 1) svn:author revprops can contain any UTF-8 string.  They are not
-> restricted to Unix user id's.  (For example, they can contain full
-> names, if the administrator so chooses.)
+A mediawiki page can contain, and even start with a " character, we have
+to escape it when generating the fast-export stream. While we're there,
+also escape newlines, but I don't think we can get them from MediaWiki
+pages.
 
-Right.  At one point during the development of this feature I was
-accidentally storing the full email field in this property.  So I
-already knew that this is allowed at some level.  
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-And, I have no trouble believing that svn log will cheerfully echo
-anything that I choose to stuff in that field.  
-
-But...
-
-(1) How much work would it be it to set up a Subversion installation 
-so that when I svn commit, the tool does the right thing, e.g. puts
-a DVCS-style fullname/email string in there?  
-
-(2) Have the tools been tested for bugs arising from having whitespace
-in that data?
-
-Really, if it's actually easy to set up DVCS-style globally unique IDs you
-Subversion guys ought to be shouting it from the housetops.  The absence
-of this capability is a serious PITA in several situations, including 
-for example migrating projects between forges.
-
-RFC: If I wrote a patch that let Subversion users set their own
-content string for the author field in ~/.subversion/config, would
-you merge it?  Because I'd totally write that.
-
-> 2) You can define custom revision properties.  In your case, the easiest
-> way would be to set an reposurgeon:author property, alongside the
-> svn:author property.
-
-Yeah, sure, I've assumed all along this wouldn't break if I tried it.
-If I actually thought you guys were capable of designing a data model
-with a perfectly general-looking store of key/value pairs and then
-arbitrarily restricting the key set so I couldn't do that, I'd almost
-have to find each and every one of you and kick your asses into next
-Tuesday on account of blatant stupidity. I have no such plans :-).
-
-But...what good does this capability do?  OK, it would assist
-round-tripping back to gitspace, but while that's kind of cool I don't
-see any help for a normal Subversion workflow here.
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index 68555d4..e7a0e7b 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -711,6 +711,13 @@ sub fetch_mw_revisions {
+ 	return ($n, @revisions);
+ }
  
-> You might also seek community consensus to reserve an svn:foo name for
-> the "original author" property --- perhaps svn:original-author --- so
-> that reposurgeon and other git->svn tools can interoperate in the way
-> they transfer the "original author" information.
-
-OK.  But I like the idea of letting the users set their own author
-content string better.  Instead of another layer of kluges, why
-shouldn't Subversion join the DVCSes in the happy land of
-Internet-scoped attributions?
-
-> How does reposurgeon handle empty directories with (node) properties?
-
-Currently by ignoring all of them except svn:ignore, which it turns 
-into .gitignore content on the gitspace side.  And now vice-versa, too.
-
-Not clear what else it *could* do.  I'd take suggestions.
-
-> >   Subversion has a concept of "flows"; that is, named segments of
-> >   history corresponding to files or directories that are created when
-> >   the path is added, cloned when the path is copied, and deleted when
-> >   the path is deleted. This information is not preserved in import
-> >   streams or the internal representation that reposurgeon uses.  Thus,
-> >   after editing, the flow boundaries of a Subversion history may be
-> >   arbitrarily changed.
-> > 
-> > This is me being obsessive about documenting the details.  I think it
-> > is doubtful that most Subversion users even know flows exist.
-> 
-> I think you're saying that adds might turn into copies, and vice-versa.
-> That is something users would notice --- it is certainly exposed in the
-> UI --- even though node-id's are not exposed to clients.
-
-I'm saying nobody thinks of flows when they do branch copies.  It's
-not just that users don't see node IDs, it's that no part of most users'
-mental model of how Subversion works resembles them.
++sub fe_escape_path {
++    my $path = shift;
++    $path =~ s/"/\\"/g;
++    $path =~ s/\n/\\n/g;
++    return $path;
++}
++
+ sub import_file_revision {
+ 	my $commit = shift;
+ 	my %commit = %{$commit};
+@@ -738,15 +745,17 @@ sub import_file_revision {
+ 		print STDOUT "from refs/mediawiki/$remotename/master^0\n";
+ 	}
+ 	if ($content ne DELETED_CONTENT) {
+-		print STDOUT "M 644 inline $title.mw\n";
++		print STDOUT "M 644 inline " .
++		    fe_escape_path($title . ".mw") . "\n";
+ 		literal_data($content);
+ 		if (%mediafile) {
+-			print STDOUT "M 644 inline $mediafile{title}\n";
++			print STDOUT "M 644 inline "
++			    . fe_escape_path($mediafile{title}) . "\n";
+ 			literal_data_raw($mediafile{content});
+ 		}
+ 		print STDOUT "\n\n";
+ 	} else {
+-		print STDOUT "D $title.mw\n";
++		print STDOUT "D " . fe_escape_path($title . ".mw") . "\n";
+ 	}
+ 
+ 	# mediawiki revision number in the git note
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.8.0.319.g8abfee4
