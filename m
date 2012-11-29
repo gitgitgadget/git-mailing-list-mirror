@@ -1,98 +1,66 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] git-fast-import.txt: improve documentation for
- quoted paths
-Date: Thu, 29 Nov 2012 13:11:42 -0500
-Message-ID: <20121129181141.GA17309@sigill.intra.peff.net>
-References: <vpq624omjn4.fsf@grenoble-inp.fr>
- <1354208455-21228-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: Ubuntu: gitweb always =?utf-8?Q?looks_?=
+ =?utf-8?Q?for_projects_in_=2Fvar=2Fcache=2Fgit_=28=E2=80=9C404_-_no_proje?=
+ =?utf-8?B?Y3RzIGZvdW5k4oCdKQ==?=
+Date: Thu, 29 Nov 2012 13:28:26 -0500
+Message-ID: <20121129182826.GB17309@sigill.intra.peff.net>
+References: <loom.20121129T145320-133@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Nov 29 19:12:04 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alfonso =?utf-8?Q?Mu=C3=B1oz-Pomer?= Fuentes 
+	<alfonso.munozpomer@vti.bund.de>
+X-From: git-owner@vger.kernel.org Thu Nov 29 19:28:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Te8ad-0000nr-MY
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 19:12:00 +0100
+	id 1Te8qp-0003KI-VR
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Nov 2012 19:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364Ab2K2SLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 13:11:44 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41305 "EHLO
+	id S1754235Ab2K2S23 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 13:28:29 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41318 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751100Ab2K2SLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 13:11:44 -0500
-Received: (qmail 24074 invoked by uid 107); 29 Nov 2012 18:12:40 -0000
+	id S1754146Ab2K2S22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 13:28:28 -0500
+Received: (qmail 24165 invoked by uid 107); 29 Nov 2012 18:29:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 Nov 2012 13:12:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2012 13:11:42 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 Nov 2012 13:29:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2012 13:28:26 -0500
 Content-Disposition: inline
-In-Reply-To: <1354208455-21228-1-git-send-email-Matthieu.Moy@imag.fr>
+In-Reply-To: <loom.20121129T145320-133@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210854>
 
-On Thu, Nov 29, 2012 at 06:00:54PM +0100, Matthieu Moy wrote:
+On Thu, Nov 29, 2012 at 01:55:57PM +0000, Alfonso Mu=C3=B1oz-Pomer Fuen=
+tes wrote:
 
-> The documentation mentionned only newlines and double quotes as
+> I=E2=80=99ve discovered this weird behaviour in gitweb and documented=
+ a workaround in
+> StackOverflow:
+> http://stackoverflow.com/questions/13609475/ubuntu-gitweb-always-look=
+s-for-projects-in-var-cache-git-404-no-projects-f
+>=20
+> Basically, the variable $projectroot in gitweb.cgi in the beginning i=
+s reset to
+> the system default value in git_get_projects_list, when it is declare=
+d again.
+>=20
+> Is this a known bug? Or am I missing something?
 
-s/nn/n/
+I think the analysis in that stack overflow post is wrong. The use of
+"our" in git_get_projects_list is not the culprit.
 
-> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-> index 6603a7a..35b909c 100644
-> --- a/Documentation/git-fast-import.txt
-> +++ b/Documentation/git-fast-import.txt
-> @@ -558,8 +558,9 @@ A `<path>` string must use UNIX-style directory separators (forward
->  slash `/`), may contain any byte other than `LF`, and must not
->  start with double quote (`"`).
->  
-> -If an `LF` or double quote must be encoded into `<path>` shell-style
-> -quoting should be used, e.g. `"path/with\n and \" in it"`.
-> +If an `LF`, backslash or double quote must be encoded into `<path>`
-> +shell-style quoting should be used, and the complete name should be
-> +surrounded with double quotes e.g. `"path/with\n, \\ and \" in it"`.
-
-I think the point of the original is that you do not _need_ to quote
-unless you have those two characters. IOW, you can do:
-
-  M 100644 :1 file \with \backslashes
-
-and it will stay in the "literal to the end of line" code path because
-the path does not begin with a double-quote. It is only when you trigger
-the "shell-style quoting" code path is in effect that you must then
-follow the rules of that quoting (which includes escaping backslashes).
-So technically, your modification to the beginning of the sentence is
-not correct.
-
-That being said, I think what you have written is more helpful to an end
-user. There is no harm in quoting when we do not have to, as fast-import
-implementations must know how to unquote anyway (and we over-quote in
-fast-export in this case). And while the example above does work (and
-was always designed to), it is sort of an unintuitive area that I would
-not be surprised to see other fast-import implementations get wrong. As
-a writer of a stream, it probably pays to be defensive and err on the
-side of quoting more.
-
-As for the text itself, a few minor punctuation suggestions:
-
-> If an `LF`, backslash or double quote must be encoded
-                       ^
-                       missing comma as list delimiter
-
-> into `<path>` shell-style quoting should be used, and the complete
-               ^
-               missing comma in if/then clause
-
-This one was in the original as well, but it makes it harder to read and
-is worth fixing.
-
-> surrounded with double quotes e.g. `"path/with\n, \\ and \" in it"`.
-
-Should the parenthetical be in parentheses (or a separate sentence)?
+The problem is that one should not edit gitweb.cgi directly; its
+built-in defaults (which you are tweaking) are overridden by
+/etc/gitweb.conf, which is shipped by the Ubuntu package. You should
+be making your changes in the config file, not the CGI script.
 
 -Peff
