@@ -1,7 +1,7 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v6 2/8] push: add advice for rejected tag reference
-Date: Thu, 29 Nov 2012 19:41:34 -0600
-Message-ID: <1354239700-3325-3-git-send-email-chris@rorvick.com>
+Subject: [PATCH v6 6/8] push: require force for annotated tags
+Date: Thu, 29 Nov 2012 19:41:38 -0600
+Message-ID: <1354239700-3325-7-git-send-email-chris@rorvick.com>
 References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
 Cc: Chris Rorvick <chris@rorvick.com>,
 	Angelo Borsotti <angelo.borsotti@gmail.com>,
@@ -14,161 +14,144 @@ Cc: Chris Rorvick <chris@rorvick.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 02:44:08 2012
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:44:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeFdg-0006sW-Am
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:43:36 +0100
+	id 1TeFdu-0007Rx-HU
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755420Ab2K3BnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 20:43:16 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:43897 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755202Ab2K3BnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 20:43:14 -0500
-Received: by mail-ie0-f174.google.com with SMTP id k11so13169118iea.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:43:13 -0800 (PST)
+	id S1755513Ab2K3Bnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 20:43:33 -0500
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:41967 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755468Ab2K3BnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 20:43:22 -0500
+Received: by mail-ia0-f174.google.com with SMTP id y25so11433874iay.19
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:43:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=V0jGSOp6DGawebnBjDX4VgG0xhoryi31VtAJxPuN7hI=;
-        b=j70bjhZjbq3WpgLjIHhSEA9PwaVlmL+zpJNT0GFHzFZIkNrTmq34K1ezDfmmG/F7Vq
-         wZVslleaNBGkvwhOuw+7o6+P1e0RmLXAZr+Ptt4X7Aw1ALg4ZTaKtUOF+8o4vT4RPmOY
-         bxtXUhNF0t+YMjN7yJEQ+xVkwYrRi4fqX+cssG36fV4LUbVigRC1QxvyStwZsH53sDCu
-         kJZFlza1w99+uP1OCn11TQaZtLpmWaf8Q9F+rdc2nQjEjRCAZKukCpTJJ3SM401ibIws
-         qantO0dMihSGkNZO8sQGGIpTR+CHKwLovwx9W/nAJHP2iVQaQpNg7ouq9gmvLOqtZiEE
-         EluA==
-Received: by 10.43.1.65 with SMTP id np1mr21831611icb.23.1354239793901;
-        Thu, 29 Nov 2012 17:43:13 -0800 (PST)
+        bh=yUg4PzOntk5aJL0gitL9G0e4BDQl/i860mH33YH9oCA=;
+        b=ZZYsZ9CEV6k3AxtRUAU2enZekIHQ0ZSdpaGWRdSTuTJTFTNuW/4WfhQAQmp+lLk8Oj
+         9KsDnDAn6D4l7KjqXY0eCtmQo71i5hZfNmNvJ0eGZsMPo7C/c+sBU+ivUZNlhk/QNhVL
+         afDp3hRCsErya1zmH26Gr4XqZDel+QcseYqsfPuwAwKi+7YYhpx8+HNnYudJ6ozYmreu
+         7tklN6aWWQztOOutiFtiKoKIlglAlZKeEibe4Fk2D9Cupnh7XXxxGpkiFO1F9XBR+h3X
+         VXhi5x8y0tRC8UBNgZsd7+6PvHSShxdvC9eCjMv+8HSh+9w7sbYidqRbPEq3PJBmKjwB
+         BZJg==
+Received: by 10.50.187.197 with SMTP id fu5mr24585208igc.70.1354239802153;
+        Thu, 29 Nov 2012 17:43:22 -0800 (PST)
 Received: from marlin.localdomain ([70.131.98.170])
-        by mx.google.com with ESMTPS id c3sm8955228igj.1.2012.11.29.17.43.11
+        by mx.google.com with ESMTPS id c3sm8955228igj.1.2012.11.29.17.43.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Nov 2012 17:43:12 -0800 (PST)
+        Thu, 29 Nov 2012 17:43:21 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.158.g0c4328c
 In-Reply-To: <1354239700-3325-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210892>
 
-Advising the user to fetch and merge only makes sense if the rejected
-reference is a branch.  If none of the rejections are for branches, just
-tell the user the reference already exists.
+Do not allow fast-forwarding of references that point to a tag object.
+Updating from a tag is potentially destructive since it would likely
+leave the tag dangling.  Disallowing updates to a tag also makes sense
+semantically and is consistent with the behavior of lightweight tags.
 
 Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- builtin/push.c | 11 +++++++++++
- cache.h        |  1 +
- remote.c       | 10 ++++++++++
- transport.c    |  2 ++
- transport.h    |  1 +
- 5 files changed, 25 insertions(+)
+ Documentation/git-push.txt | 10 +++++-----
+ remote.c                   | 11 +++++++++--
+ t/t5516-fetch-push.sh      | 21 +++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 9d17fc7..e08485d 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -220,6 +220,10 @@ static const char message_advice_checkout_pull_push[] =
- 	   "(e.g. 'git pull') before pushing again.\n"
- 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
- 
-+static const char message_advice_ref_already_exists[] =
-+	N_("Updates were rejected because the destination reference already exists\n"
-+	   "in the remote and the update is not a fast-forward.");
-+
- static void advise_pull_before_push(void)
- {
- 	if (!advice_push_non_ff_current || !advice_push_nonfastforward)
-@@ -241,6 +245,11 @@ static void advise_checkout_pull_push(void)
- 	advise(_(message_advice_checkout_pull_push));
- }
- 
-+static void advise_ref_already_exists(void)
-+{
-+	advise(_(message_advice_ref_already_exists));
-+}
-+
- static int push_with_options(struct transport *transport, int flags)
- {
- 	int err;
-@@ -272,6 +281,8 @@ static int push_with_options(struct transport *transport, int flags)
- 			advise_use_upstream();
- 		else
- 			advise_checkout_pull_push();
-+	} else if (reject_reasons & REJECT_ALREADY_EXISTS) {
-+		advise_ref_already_exists();
- 	}
- 
- 	return 1;
-diff --git a/cache.h b/cache.h
-index dbd8018..d72b64d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1002,6 +1002,7 @@ struct ref {
- 	unsigned int force:1,
- 		merge:1,
- 		nonfastforward:1,
-+		not_forwardable:1,
- 		deletion:1;
- 	enum {
- 		REF_STATUS_NONE = 0,
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 09bdec7..7a04ce5 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -52,11 +52,11 @@ updated.
+ +
+ The object referenced by <src> is used to update the <dst> reference
+ on the remote side.  By default this is only allowed if <dst> is not
+-under refs/tags/, and then only if it can fast-forward <dst>.  By having
+-the optional leading `+`, you can tell git to update the <dst> ref even
+-if it is not allowed by default (e.g., it is not a fast-forward.)  This
+-does *not* attempt to merge <src> into <dst>.  See EXAMPLES below for
+-details.
++a tag (annotated or lightweight), and then only if it can fast-forward
++<dst>.  By having the optional leading `+`, you can tell git to update
++the <dst> ref even if it is not allowed by default (e.g., it is not a
++fast-forward.)  This does *not* attempt to merge <src> into <dst>.  See
++EXAMPLES below for details.
+ +
+ `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
+ +
 diff --git a/remote.c b/remote.c
-index 04fd9ea..5101683 100644
+index 012b52f..f5bc4e7 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1279,6 +1279,14 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 	return 0;
- }
+@@ -1281,9 +1281,16 @@ int match_push_refs(struct ref *src, struct ref **dst,
  
-+static inline int is_forwardable(struct ref* ref)
-+{
-+	if (!prefixcmp(ref->name, "refs/tags/"))
+ static inline int is_forwardable(struct ref* ref)
+ {
++	struct object *o;
++
+ 	if (!prefixcmp(ref->name, "refs/tags/"))
+ 		return 0;
+ 
++	/* old object must be a commit */
++	o = parse_object(ref->old_sha1);
++	if (!o || o->type != OBJ_COMMIT)
 +		return 0;
 +
-+	return 1;
-+}
-+
- void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 	int force_update)
- {
-@@ -1316,6 +1324,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 	return 1;
+ }
+ 
+@@ -1323,8 +1330,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *     to overwrite it; you would not know what you are losing
+ 		 *     otherwise.
+ 		 *
+-		 * (4) if both new and old are commit-ish, and new is a
+-		 *     descendant of old, it is OK.
++		 * (4) if old is a commit and new is a descendant of old
++		 *     (implying new is commit-ish), it is OK.
+ 		 *
+ 		 * (5) regardless of all of the above, removing :B is
  		 *     always allowed.
- 		 */
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8f024a0..6009372 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -950,6 +950,27 @@ test_expect_success 'push requires --force to update lightweight tag' '
+ 	)
+ '
  
-+		ref->not_forwardable = !is_forwardable(ref);
++test_expect_success 'push requires --force to update annotated tag' '
++	mk_test heads/master &&
++	mk_child child1 &&
++	mk_child child2 &&
++	(
++		cd child1 &&
++		git tag -a -m "message 1" Tag &&
++		git push ../child2 Tag:refs/tmp/Tag &&
++		git push ../child2 Tag:refs/tmp/Tag &&
++		>file1 &&
++		git add file1 &&
++		git commit -m "file1" &&
++		git tag -f -a -m "message 2" Tag &&
++		test_must_fail git push ../child2 Tag:refs/tmp/Tag &&
++		git push --force ../child2 Tag:refs/tmp/Tag &&
++		git tag -f -a -m "message 3" Tag HEAD~ &&
++		test_must_fail git push ../child2 Tag:refs/tmp/Tag &&
++		git push --force ../child2 Tag:refs/tmp/Tag
++	)
++'
 +
- 		ref->nonfastforward =
- 			!ref->deletion &&
- 			!is_null_sha1(ref->old_sha1) &&
-diff --git a/transport.c b/transport.c
-index d4568e7..bc31e8e 100644
---- a/transport.c
-+++ b/transport.c
-@@ -740,6 +740,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 		    ref->status != REF_STATUS_OK)
- 			n += print_one_push_status(ref, dest, n, porcelain);
- 		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
-+			if (ref->not_forwardable)
-+				*reject_reasons |= REJECT_ALREADY_EXISTS;
- 			if (!strcmp(head, ref->name))
- 				*reject_reasons |= REJECT_NON_FF_HEAD;
- 			else
-diff --git a/transport.h b/transport.h
-index 404b113..bfd2df5 100644
---- a/transport.h
-+++ b/transport.h
-@@ -142,6 +142,7 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
- 
- #define REJECT_NON_FF_HEAD     0x01
- #define REJECT_NON_FF_OTHER    0x02
-+#define REJECT_ALREADY_EXISTS  0x04
- 
- int transport_push(struct transport *connection,
- 		   int refspec_nr, const char **refspec, int flags,
+ test_expect_success 'push --porcelain' '
+ 	mk_empty &&
+ 	echo >.git/foo  "To testrepo" &&
 -- 
 1.8.0.158.g0c4328c
