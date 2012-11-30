@@ -1,68 +1,51 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: New git.pot is generated for git 1.8.1 l10n round 2
-Date: Fri, 30 Nov 2012 13:01:23 +0800
-Message-ID: <CANYiYbHJ5P3AJcRSEtT_5Awa0cO6ideACtg7vaS6uk9KrV59Qg@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] t4049: avoid test failures on filemode challenged file
+ systems (Windows)
+Date: Fri, 30 Nov 2012 08:46:00 +0100
+Message-ID: <50B86438.3010806@viscovery.net>
+References: <1354051310-29093-1-git-send-email-gitster@pobox.com> <50B71B33.1090000@viscovery.net> <7v38zss7zb.fsf@alter.siamese.dyndns.org> <7vfw3sqoup.fsf@alter.siamese.dyndns.org> <7vfw3sp232.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Byrial Jensen <byrial@vip.cybercity.dk>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	=?UTF-8?B?RGF2aWQgSHJiw6HEjQ==?= <david@hrbac.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 30 06:01:41 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 08:46:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeIjM-0003lN-Rz
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 06:01:41 +0100
+	id 1TeLIn-00023Z-AP
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 08:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806Ab2K3FBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 00:01:25 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:65328 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750703Ab2K3FBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 00:01:24 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so72741iay.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 21:01:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=7OqJbaFAL3xnigvYMaDdqBqIi+8w7htkKsbmLXixQQU=;
-        b=U17RP90IFTuk2JBuMiIuLlzvk9TYkH7asespVFMipIYq+LaUCfC9UT5f/iH5oceSr9
-         JrPYdg1SBwelxYUHe5+XAlDn/gOOJBuB4EKcdPdbI+WSRFC2fyxK6NGmiXRek37AiWmQ
-         TpfdYm3Z1dPXh0364sks/59TkoKDb804M76SHRm6gLehx3DhhqBI1A7jJgbuLUx0XdQS
-         np8WqfgGhs0bfcQsPd3I53KaLQ0Nu3kaUpybU4nOOgCscOdahQr6mg0HaTfJfm35fnvP
-         EaMazT6MehmiliBUWYKt0Cy6Va4GW5XJMGdrKyD5oYsK24b1DDgrgJSPeIKzkWJk65Q7
-         3zKw==
-Received: by 10.50.202.73 with SMTP id kg9mr27949942igc.51.1354251684016; Thu,
- 29 Nov 2012 21:01:24 -0800 (PST)
-Received: by 10.50.186.135 with HTTP; Thu, 29 Nov 2012 21:01:23 -0800 (PST)
+	id S1752752Ab2K3HqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 02:46:08 -0500
+Received: from so.liwest.at ([212.33.55.13]:49408 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751639Ab2K3HqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 02:46:07 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TeLIP-000709-DL; Fri, 30 Nov 2012 08:46:01 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2C4C51660F;
+	Fri, 30 Nov 2012 08:46:01 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vfw3sp232.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 11/29/2012 21:48, schrieb Junio C Hamano:
+> I've tested this with the testpen set on vfat mounted on my Linux
+> box, ...
+> and it seems to work OK,
 
-New "git.pot" is generated from v1.8.0.1-347-gf94c3 in the master branch.
+Works well here on Windows, too.
 
-    l10n: Update git.pot (5 new, 1 removed messages)
-
-    L10n for git 1.8.1 round 2: Generate po/git.pot from v1.8.0.1-347-gf94c3.
-
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-
-This update is for the l10n of upcoming git 1.8.1. You can get it from
-the usual place:
-
-    https://github.com/git-l10n/git-po/
-
---
-Jiang Xin
+Thanks,
+-- Hannes
