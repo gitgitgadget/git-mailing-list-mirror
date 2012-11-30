@@ -1,7 +1,7 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v6 1/8] push: return reject reasons as a bitset
-Date: Thu, 29 Nov 2012 19:41:33 -0600
-Message-ID: <1354239700-3325-2-git-send-email-chris@rorvick.com>
+Subject: [PATCH v6 5/8] push: require force for refs under refs/tags/
+Date: Thu, 29 Nov 2012 19:41:37 -0600
+Message-ID: <1354239700-3325-6-git-send-email-chris@rorvick.com>
 References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
 Cc: Chris Rorvick <chris@rorvick.com>,
 	Angelo Borsotti <angelo.borsotti@gmail.com>,
@@ -14,209 +14,278 @@ Cc: Chris Rorvick <chris@rorvick.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 02:44:17 2012
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:44:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeFdf-0006sW-KR
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:43:36 +0100
+	id 1TeFds-0007Rx-N8
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755415Ab2K3BnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 20:43:14 -0500
+	id S1755479Ab2K3BnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 20:43:22 -0500
 Received: from mail-ia0-f174.google.com ([209.85.210.174]:41967 "EHLO
 	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab2K3BnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 20:43:11 -0500
+	with ESMTP id S1755465Ab2K3BnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 20:43:20 -0500
 Received: by mail-ia0-f174.google.com with SMTP id y25so11433874iay.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:43:11 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:43:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=1H9+m+q1KiOPCFzh4drBV4K9qzx15kT2iaBymstH77Q=;
-        b=GtmwNyRrUOHfvGlugoVMejAMwt+bbsirrKaxBJbHoblaYeLVnbvaw/J/vCnSM0pVa8
-         76jjOjiviCUJpC8fYVF+vLQNfuP7aHwF78MOj6AIqcawacDMiiKHQkxcVQOAA761Lv4D
-         Ei6ljWojBnwzCZ7DE6KwF27DfSGgRsVcYvEsR0BLvGGkKHo8MIXQA5QhOYW+B3WB7/az
-         P/z3G33HCGFJUxME7moaNtd1cZ+T4pxXDVxxRPkaCJoTi2BbjyFq9FpE5g3CZ/9S3eMK
-         LjP1TE6E9bykdFh9uzfY486DnoQ0JoOdtRdIihNL04lQBtUjA+5uGaHzAgYDnTDtI0D0
-         9lNA==
-Received: by 10.42.54.211 with SMTP id s19mr21839282icg.34.1354239791590;
-        Thu, 29 Nov 2012 17:43:11 -0800 (PST)
+        bh=gUzwYf8cwjQQjQY16FxzR2f5NBeejptk6vH2hcxdC/I=;
+        b=E0pnmX1wQj2M8o7DTva+usCNsfLJLWwXVu6l8S3RHLTJBaVCrqz62PHWuJOodmcSCd
+         XRPx20C/ewmyQVWu5rAHOJbLxbDNDVcSuhP2CGGnGtO0smNcnFV6KCRjWsKcMnvdLsRi
+         ULYfOuBJF/hkJLB4d+dai9vixKpFIqP1is41VtUi/HE32qsBc05JzwPOgB3lgNdEh94h
+         TjjKNVJTNvrK/KTCloXBoAKBlZGIY82r6OfCWw/1W4wNdK1xq28qI60pptiCgPm59guL
+         5HxVCp/zquJltyy6K56jCVS9mvhnCIdqosx7wZ677/GeIsNsprFgHZMeQNshO5PNIXIE
+         30EQ==
+Received: by 10.50.7.135 with SMTP id j7mr24620447iga.34.1354239800023;
+        Thu, 29 Nov 2012 17:43:20 -0800 (PST)
 Received: from marlin.localdomain ([70.131.98.170])
-        by mx.google.com with ESMTPS id c3sm8955228igj.1.2012.11.29.17.43.09
+        by mx.google.com with ESMTPS id c3sm8955228igj.1.2012.11.29.17.43.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Nov 2012 17:43:10 -0800 (PST)
+        Thu, 29 Nov 2012 17:43:19 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.158.g0c4328c
 In-Reply-To: <1354239700-3325-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210895>
 
-Pass all rejection reasons back from transport_push().  The logic is
-simpler and more flexible with regard to providing useful feedback.
+References are allowed to update from one commit-ish to another if the
+former is an ancestor of the latter.  This behavior is oriented to
+branches which are expected to move with commits.  Tag references are
+expected to be static in a repository, though, thus an update to
+something under refs/tags/ should be rejected unless the update is
+forced.
 
 Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- builtin/push.c      | 13 ++++---------
- builtin/send-pack.c |  4 ++--
- transport.c         | 17 ++++++++---------
- transport.h         |  9 +++++----
- 4 files changed, 19 insertions(+), 24 deletions(-)
+ Documentation/git-push.txt | 11 ++++++-----
+ builtin/push.c             |  2 +-
+ builtin/send-pack.c        |  5 +++++
+ cache.h                    |  1 +
+ remote.c                   | 18 ++++++++++++++----
+ send-pack.c                |  1 +
+ t/t5516-fetch-push.sh      | 23 ++++++++++++++++++++++-
+ transport-helper.c         |  6 ++++++
+ transport.c                |  8 ++++++--
+ 9 files changed, 62 insertions(+), 13 deletions(-)
 
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index fe46c42..09bdec7 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -51,11 +51,12 @@ be named. If `:`<dst> is omitted, the same ref as <src> will be
+ updated.
+ +
+ The object referenced by <src> is used to update the <dst> reference
+-on the remote side, but by default this is only allowed if the
+-update can fast-forward <dst>.  By having the optional leading `+`,
+-you can tell git to update the <dst> ref even when the update is not a
+-fast-forward.  This does *not* attempt to merge <src> into <dst>.  See
+-EXAMPLES below for details.
++on the remote side.  By default this is only allowed if <dst> is not
++under refs/tags/, and then only if it can fast-forward <dst>.  By having
++the optional leading `+`, you can tell git to update the <dst> ref even
++if it is not allowed by default (e.g., it is not a fast-forward.)  This
++does *not* attempt to merge <src> into <dst>.  See EXAMPLES below for
++details.
+ +
+ `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
+ +
 diff --git a/builtin/push.c b/builtin/push.c
-index db9ba30..9d17fc7 100644
+index e08485d..83a3cc8 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -244,7 +244,7 @@ static void advise_checkout_pull_push(void)
- static int push_with_options(struct transport *transport, int flags)
+@@ -222,7 +222,7 @@ static const char message_advice_checkout_pull_push[] =
+ 
+ static const char message_advice_ref_already_exists[] =
+ 	N_("Updates were rejected because the destination reference already exists\n"
+-	   "in the remote and the update is not a fast-forward.");
++	   "in the remote.");
+ 
+ static void advise_pull_before_push(void)
  {
- 	int err;
--	int nonfastforward;
-+	unsigned int reject_reasons;
- 
- 	transport_set_verbosity(transport, verbosity, progress);
- 
-@@ -257,7 +257,7 @@ static int push_with_options(struct transport *transport, int flags)
- 	if (verbosity > 0)
- 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
- 	err = transport_push(transport, refspec_nr, refspec, flags,
--			     &nonfastforward);
-+			     &reject_reasons);
- 	if (err != 0)
- 		error(_("failed to push some refs to '%s'"), transport->url);
- 
-@@ -265,18 +265,13 @@ static int push_with_options(struct transport *transport, int flags)
- 	if (!err)
- 		return 0;
- 
--	switch (nonfastforward) {
--	default:
--		break;
--	case NON_FF_HEAD:
-+	if (reject_reasons & REJECT_NON_FF_HEAD) {
- 		advise_pull_before_push();
--		break;
--	case NON_FF_OTHER:
-+	} else if (reject_reasons & REJECT_NON_FF_OTHER) {
- 		if (default_matching_used)
- 			advise_use_upstream();
- 		else
- 			advise_checkout_pull_push();
--		break;
- 	}
- 
- 	return 1;
 diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index d342013..9f98607 100644
+index 9f98607..f849e0a 100644
 --- a/builtin/send-pack.c
 +++ b/builtin/send-pack.c
-@@ -85,7 +85,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	int send_all = 0;
- 	const char *receivepack = "git-receive-pack";
- 	int flags;
--	int nonfastforward = 0;
-+	unsigned int reject_reasons;
- 	int progress = -1;
+@@ -44,6 +44,11 @@ static void print_helper_status(struct ref *ref)
+ 			msg = "non-fast forward";
+ 			break;
  
- 	argv++;
-@@ -223,7 +223,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	ret |= finish_connect(conn);
++		case REF_STATUS_REJECT_ALREADY_EXISTS:
++			res = "error";
++			msg = "already exists";
++			break;
++
+ 		case REF_STATUS_REJECT_NODELETE:
+ 		case REF_STATUS_REMOTE_REJECT:
+ 			res = "error";
+diff --git a/cache.h b/cache.h
+index b7ab4ac..a32a0ea 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1011,6 +1011,7 @@ struct ref {
+ 		REF_STATUS_NONE = 0,
+ 		REF_STATUS_OK,
+ 		REF_STATUS_REJECT_NONFASTFORWARD,
++		REF_STATUS_REJECT_ALREADY_EXISTS,
+ 		REF_STATUS_REJECT_NODELETE,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+diff --git a/remote.c b/remote.c
+index 4a6f822..012b52f 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1315,14 +1315,18 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *
+ 		 * (1) if the old thing does not exist, it is OK.
+ 		 *
+-		 * (2) if you do not have the old thing, you are not allowed
++		 * (2) if the destination is under refs/tags/ you are
++		 *     not allowed to overwrite it; tags are expected
++		 *     to be static once created
++		 *
++		 * (3) if you do not have the old thing, you are not allowed
+ 		 *     to overwrite it; you would not know what you are losing
+ 		 *     otherwise.
+ 		 *
+-		 * (3) if both new and old are commit-ish, and new is a
++		 * (4) if both new and old are commit-ish, and new is a
+ 		 *     descendant of old, it is OK.
+ 		 *
+-		 * (4) regardless of all of the above, removing :B is
++		 * (5) regardless of all of the above, removing :B is
+ 		 *     always allowed.
+ 		 */
  
- 	if (!helper_status)
--		transport_print_push_status(dest, remote_refs, args.verbose, 0, &nonfastforward);
-+		transport_print_push_status(dest, remote_refs, args.verbose, 0, &reject_reasons);
+@@ -1337,7 +1341,13 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 				!has_sha1_file(ref->old_sha1)
+ 				  || !ref_newer(ref->new_sha1, ref->old_sha1);
  
- 	if (!args.dry_run && remote) {
- 		struct ref *ref;
+-			if (ref->nonfastforward) {
++			if (ref->not_forwardable) {
++				ref->requires_force = 1;
++				if (!force_ref_update) {
++					ref->status = REF_STATUS_REJECT_ALREADY_EXISTS;
++					continue;
++				}
++			} else if (ref->nonfastforward) {
+ 				ref->requires_force = 1;
+ 				if (!force_ref_update) {
+ 					ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
+diff --git a/send-pack.c b/send-pack.c
+index f50dfd9..1c375f0 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -229,6 +229,7 @@ int send_pack(struct send_pack_args *args,
+ 		/* Check for statuses set by set_ref_status_for_push() */
+ 		switch (ref->status) {
+ 		case REF_STATUS_REJECT_NONFASTFORWARD:
++		case REF_STATUS_REJECT_ALREADY_EXISTS:
+ 		case REF_STATUS_UPTODATE:
+ 			continue;
+ 		default:
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index b5417cc..8f024a0 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -368,7 +368,7 @@ test_expect_success 'push with colon-less refspec (2)' '
+ 		git branch -D frotz
+ 	fi &&
+ 	git tag -f frotz &&
+-	git push testrepo frotz &&
++	git push -f testrepo frotz &&
+ 	check_push_result $the_commit tags/frotz &&
+ 	check_push_result $the_first_commit heads/frotz
+ 
+@@ -929,6 +929,27 @@ test_expect_success 'push into aliased refs (inconsistent)' '
+ 	)
+ '
+ 
++test_expect_success 'push requires --force to update lightweight tag' '
++	mk_test heads/master &&
++	mk_child child1 &&
++	mk_child child2 &&
++	(
++		cd child1 &&
++		git tag Tag &&
++		git push ../child2 Tag &&
++		git push ../child2 Tag &&
++		>file1 &&
++		git add file1 &&
++		git commit -m "file1" &&
++		git tag -f Tag &&
++		test_must_fail git push ../child2 Tag &&
++		git push --force ../child2 Tag &&
++		git tag -f Tag &&
++		test_must_fail git push ../child2 Tag HEAD~ &&
++		git push --force ../child2 Tag
++	)
++'
++
+ test_expect_success 'push --porcelain' '
+ 	mk_empty &&
+ 	echo >.git/foo  "To testrepo" &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 4713b69..965b778 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -661,6 +661,11 @@ static void push_update_ref_status(struct strbuf *buf,
+ 			free(msg);
+ 			msg = NULL;
+ 		}
++		else if (!strcmp(msg, "already exists")) {
++			status = REF_STATUS_REJECT_ALREADY_EXISTS;
++			free(msg);
++			msg = NULL;
++		}
+ 	}
+ 
+ 	if (*ref)
+@@ -720,6 +725,7 @@ static int push_refs_with_push(struct transport *transport,
+ 		/* Check for statuses set by set_ref_status_for_push() */
+ 		switch (ref->status) {
+ 		case REF_STATUS_REJECT_NONFASTFORWARD:
++		case REF_STATUS_REJECT_ALREADY_EXISTS:
+ 		case REF_STATUS_UPTODATE:
+ 			continue;
+ 		default:
 diff --git a/transport.c b/transport.c
-index 9932f40..d4568e7 100644
+index f3160b1..2673d27 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -714,7 +714,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
- }
- 
- void transport_print_push_status(const char *dest, struct ref *refs,
--				  int verbose, int porcelain, int *nonfastforward)
-+				  int verbose, int porcelain, unsigned int *reject_reasons)
- {
- 	struct ref *ref;
- 	int n = 0;
-@@ -733,18 +733,17 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 		if (ref->status == REF_STATUS_OK)
- 			n += print_one_push_status(ref, dest, n, porcelain);
- 
--	*nonfastforward = 0;
-+	*reject_reasons = 0;
- 	for (ref = refs; ref; ref = ref->next) {
- 		if (ref->status != REF_STATUS_NONE &&
- 		    ref->status != REF_STATUS_UPTODATE &&
+@@ -695,6 +695,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+ 						 "non-fast-forward", porcelain);
+ 		break;
++	case REF_STATUS_REJECT_ALREADY_EXISTS:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++						 "already exists", porcelain);
++		break;
+ 	case REF_STATUS_REMOTE_REJECT:
+ 		print_ref_status('!', "[remote rejected]", ref,
+ 						 ref->deletion ? NULL : ref->peer_ref,
+@@ -740,12 +744,12 @@ void transport_print_push_status(const char *dest, struct ref *refs,
  		    ref->status != REF_STATUS_OK)
  			n += print_one_push_status(ref, dest, n, porcelain);
--		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD &&
--		    *nonfastforward != NON_FF_HEAD) {
-+		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
+ 		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD) {
+-			if (ref->not_forwardable)
+-				*reject_reasons |= REJECT_ALREADY_EXISTS;
  			if (!strcmp(head, ref->name))
--				*nonfastforward = NON_FF_HEAD;
-+				*reject_reasons |= REJECT_NON_FF_HEAD;
+ 				*reject_reasons |= REJECT_NON_FF_HEAD;
  			else
--				*nonfastforward = NON_FF_OTHER;
-+				*reject_reasons |= REJECT_NON_FF_OTHER;
+ 				*reject_reasons |= REJECT_NON_FF_OTHER;
++		} else if (ref->status == REF_STATUS_REJECT_ALREADY_EXISTS) {
++			*reject_reasons |= REJECT_ALREADY_EXISTS;
  		}
  	}
  }
-@@ -1031,9 +1030,9 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- 
- int transport_push(struct transport *transport,
- 		   int refspec_nr, const char **refspec, int flags,
--		   int *nonfastforward)
-+		   unsigned int *reject_reasons)
- {
--	*nonfastforward = 0;
-+	*reject_reasons = 0;
- 	transport_verify_remote_names(refspec_nr, refspec);
- 
- 	if (transport->push) {
-@@ -1099,7 +1098,7 @@ int transport_push(struct transport *transport,
- 		if (!quiet || err)
- 			transport_print_push_status(transport->url, remote_refs,
- 					verbose | porcelain, porcelain,
--					nonfastforward);
-+					reject_reasons);
- 
- 		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
- 			set_upstreams(transport, remote_refs, pretend);
-diff --git a/transport.h b/transport.h
-index 4a61c0c..404b113 100644
---- a/transport.h
-+++ b/transport.h
-@@ -140,11 +140,12 @@ int transport_set_option(struct transport *transport, const char *name,
- void transport_set_verbosity(struct transport *transport, int verbosity,
- 	int force_progress);
- 
--#define NON_FF_HEAD 1
--#define NON_FF_OTHER 2
-+#define REJECT_NON_FF_HEAD     0x01
-+#define REJECT_NON_FF_OTHER    0x02
-+
- int transport_push(struct transport *connection,
- 		   int refspec_nr, const char **refspec, int flags,
--		   int * nonfastforward);
-+		   unsigned int * reject_reasons);
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
- 
-@@ -170,7 +171,7 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
- int transport_refs_pushed(struct ref *ref);
- 
- void transport_print_push_status(const char *dest, struct ref *refs,
--		  int verbose, int porcelain, int *nonfastforward);
-+		  int verbose, int porcelain, unsigned int *reject_reasons);
- 
- typedef void alternate_ref_fn(const struct ref *, void *);
- extern void for_each_alternate_ref(alternate_ref_fn, void *);
 -- 
 1.8.0.158.g0c4328c
