@@ -1,86 +1,112 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC] remove/deprecate 'submodule init' and 'sync'
-Date: Fri, 30 Nov 2012 13:17:09 -0500
-Message-ID: <20121130181709.GA967@odin.tremily.us>
-References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de>
- <20121130175309.GA718@odin.tremily.us>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 2/5] compat/terminal: factor out echo-disabling
+Date: Fri, 30 Nov 2012 13:19:32 -0500
+Message-ID: <20121130181932.GB7197@sigill.intra.peff.net>
+References: <1352815447-8824-1-git-send-email-kusmabite@gmail.com>
+ <1352815447-8824-3-git-send-email-kusmabite@gmail.com>
+ <alpine.DEB.1.00.1211301858570.31987@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>, Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 19:17:38 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBDO2DJFKTEFBBNXR4OCQKGQEARLHVTI@googlegroups.com Fri Nov 30 19:19:49 2012
+Return-path: <msysgit+bncBDO2DJFKTEFBBNXR4OCQKGQEARLHVTI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ye0-f186.google.com ([209.85.213.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeV9d-0006wQ-Lh
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 19:17:37 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161021Ab2K3SRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 13:17:22 -0500
-Received: from vms173011pub.verizon.net ([206.46.173.11]:48921 "EHLO
-	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161017Ab2K3SRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 13:17:21 -0500
-Received: from odin.tremily.us ([unknown] [72.68.90.80])
- by vms173011.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MEB007Z7C4LT170@vms173011.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 30 Nov 2012 12:17:11 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 38E1B6E36EC; Fri,
- 30 Nov 2012 13:17:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1354299429; bh=HfysHlc1j8qAELBu4w9BDbNmVRK9wDCKMar0G1l7ZMI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HO7mQDhXwne65Z9yQrQoDKirNrgc4ZKsWSw8NWfj/ex+ABxI3rgUZUorm3IDc5SCg
- kGQDFznQm4PeJOn0Lybcqxm5h/yLsk/7dIfaf8sgPhnf+YVaNGgPIkc9X63FISKTCW
- HAZ7WwzQWOcDT+LNogHsxrl1MkEXiZsBsf/hmQLQ=
-Content-disposition: inline
-In-reply-to: <20121130175309.GA718@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210936>
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBNXR4OCQKGQEARLHVTI@googlegroups.com>)
+	id 1TeVBk-00015m-6g
+	for gcvm-msysgit@m.gmane.org; Fri, 30 Nov 2012 19:19:48 +0100
+Received: by mail-ye0-f186.google.com with SMTP id l10sf757301yen.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 30 Nov 2012 10:19:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=H8V5SLOYBgztkGQa9l4SJKmF/ksY47W6Ap8MPmacGL8=;
+        b=XEhoRfwgc3yWlys/fwXlChxYl3+qDobTI7kDOBb9ufqOi8YNJDAFStr+bSWZlUBc1l
+         Sl/ErbdjgBNHm/5NRqeoT3LIjBQUJWKAI0du2niqYvf9D78wCvWswpIneOcdZQEHawPP
+         Pf5/4LZKoDA96MVhsBPQV+Vo8D2HsLOEOoeRVYgO7XVs4zaoM4LeziYl9ouxZibTQqUY
+         WiaQ/UoDmqsYtQRdhcqmUWaCdSQVBzoCjrBSUyTpKGBf+GSVoaomk8yJBEMYCNF4ykZ4
+         Y/FmYwg930aQcCj0/TdClxsCH5IuyCX3cHDphrPf4zeLk+2lyt5o1OX7ziTS4PmkWMLZ
+       
+Received: by 10.50.212.69 with SMTP id ni5mr2472689igc.5.1354299575956;
+        Fri, 30 Nov 2012 10:19:35 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.1.230 with SMTP id 6ls6415514igp.15.canary; Fri, 30 Nov
+ 2012 10:19:34 -0800 (PST)
+Received: by 10.42.215.203 with SMTP id hf11mr1715894icb.17.1354299574371;
+        Fri, 30 Nov 2012 10:19:34 -0800 (PST)
+Received: by 10.42.215.203 with SMTP id hf11mr1715892icb.17.1354299574336;
+        Fri, 30 Nov 2012 10:19:34 -0800 (PST)
+Received: from peff.net (75-15-5-89.uvs.iplsin.sbcglobal.net. [75.15.5.89])
+        by gmr-mx.google.com with ESMTPS id wu4si1315857igb.3.2012.11.30.10.19.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Nov 2012 10:19:34 -0800 (PST)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted sender) client-ip=75.15.5.89;
+Received: (qmail 5299 invoked by uid 107); 30 Nov 2012 18:20:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Nov 2012 13:20:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2012 13:19:32 -0500
+In-Reply-To: <alpine.DEB.1.00.1211301858570.31987@s15462909.onlinehome-server.info>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff@peff.net designates 75.15.5.89 as permitted sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210937>
 
-On Fri, Nov 30, 2012 at 12:53:09PM -0500, W. Trevor King wrote:
-> Likewise for `submodule sync`, which seems to be
-> quite similar to `init`.
+On Fri, Nov 30, 2012 at 06:59:30PM +0100, Johannes Schindelin wrote:
 
-Ah, I'd remove the part of `sync` that touches the superproject's
-.git/config, but keep the part that stores the superproject-reorded
-URL in the submodule's config:
+> > diff --git a/compat/terminal.c b/compat/terminal.c
+> > index bbb038d..3217838 100644
+> > --- a/compat/terminal.c
+> > +++ b/compat/terminal.c
+> > @@ -14,6 +14,7 @@ static void restore_term(void)
+> >  		return;
+> >  
+> >  	tcsetattr(term_fd, TCSAFLUSH, &old_term);
+> > +	close(term_fd);
+> >  	term_fd = -1;
+> >  }
+> 
+> That looks like an independent resource leak fix... correct?
 
-    url=$(get_submodule_config "$name" url)
-    up_path=$(get_up_path "$sm_path")
-    url=$(resolve_relative_url "$url" "$up_path") &&
-    if test -n "$url"
-    then
-      if test -e "$sm_path"/.git
-      then
-      (
-        clear_local_git_env
-        cd "$sm_path"
-        remote=$(get_default_remote)
-        git config remote."$remote".url "$url"
-      )
-      fi
-    fi
+I don't think so. In the current code, term_fd does not take ownership
+of the fd. It is fundamentally part of the FILE* in git_terminal_prompt,
+and is closed when we fclose() that. But in Erik's refactor, we actually
+open a _second_ descriptor to /dev/tty, which needs to be closed.
 
-I should probably also tweak sync to do similar things with
-submodule.<name>.branch and .remote as part of my `--update remote`
-series.
+I don't think there is any reason that should not work (the terminal
+characteristics should be per-tty, not per-descriptor), though it does
+feel a little hacky to have to open /dev/tty twice.
 
-Cheers,
-Trevor
+-Peff
 
 -- 
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
