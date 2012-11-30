@@ -1,68 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/8] imap-send: change msg_data from storing (char *,
- len) to storing strbuf
-Date: Thu, 29 Nov 2012 18:43:40 -0500
-Message-ID: <20121129234340.GA30107@sigill.intra.peff.net>
-References: <1353841721-16269-1-git-send-email-mhagger@alum.mit.edu>
- <1353841721-16269-7-git-send-email-mhagger@alum.mit.edu>
- <7vboegp04x.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cache-tree: invalidate i-t-a paths after writing trees
+Date: Thu, 29 Nov 2012 16:06:51 -0800
+Message-ID: <7vhao8neck.fsf@alter.siamese.dyndns.org>
+References: <3E62F933-76CD-4578-8684-21444EAA454F@JonathonMah.com>
+ <1352459040-14452-1-git-send-email-pclouds@gmail.com>
+ <7vy5ibouo4.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DEwpg0gY1o6gSB747W5fAYYxz97e-qnkQthSut3B7Eag@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeremy White <jwhite@codeweavers.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Nov 30 00:44:08 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathon Mah <me@jonathonmah.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 01:07:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeDm1-0007IF-8v
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 00:44:05 +0100
+	id 1TeE8M-0004Qn-T2
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 01:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755042Ab2K2Xno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 18:43:44 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41524 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754996Ab2K2Xnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 18:43:43 -0500
-Received: (qmail 27928 invoked by uid 107); 29 Nov 2012 23:44:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 Nov 2012 18:44:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2012 18:43:40 -0500
-Content-Disposition: inline
-In-Reply-To: <7vboegp04x.fsf@alter.siamese.dyndns.org>
+	id S1755248Ab2K3AGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 19:06:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64397 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754947Ab2K3AGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 19:06:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DFAC97B7;
+	Thu, 29 Nov 2012 19:06:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uJbVi++NzF4LSjbV5Dv1IS93xmQ=; b=kdZOvY
+	Zd4lBbrf/Zu5jBRAGBcdPWA6fQT+SxJUZvxkhV9/2ltYU0CpQNDLWfkZI7gt2cdJ
+	PXsruuqUx5MvTz5TO1CUeaSkfDcWi+3rFafDe3vT3rQBKATAcPpMKnGn0OJHaKcf
+	BwOccRHCts+wMasM1IPcQzQYXWP/ZMvD3RHQ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w6IR1CdUDhmPtHrH+OkI9hKdRe3QqFf/
+	W4i6qCPPOtq5n0ApXTEpkr5XhlKj1xYHgKgIrZCsXloA1A9pM3iWGH4xZIxLIaSD
+	g3j9gKVdoxNtVPNOO9szl5BkJXi6LL+HT7XEtssrnSWj3CgJ8wJAFMg7SiPSpCCy
+	g0UKL95UqtQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BF1597B6;
+	Thu, 29 Nov 2012 19:06:53 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFEB697B5; Thu, 29 Nov 2012
+ 19:06:52 -0500 (EST)
+In-Reply-To: <CACsJy8DEwpg0gY1o6gSB747W5fAYYxz97e-qnkQthSut3B7Eag@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Sat, 10 Nov 2012 18:04:32 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D83827AA-3A81-11E2-9DF7-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210884>
 
-On Thu, Nov 29, 2012 at 01:30:54PM -0800, Junio C Hamano wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> > For some reason, there is a bunch of infrastructure in this file for
-> > dealing with IMAP flags, although there is nothing in the code that
-> > actually allows any flags to be set.  If there is no plan to add
-> > support for flags in the future, a bunch of code could be ripped out
-> > and "struct msg_data" could be completely replaced with strbuf.
-> 
-> Yeah, after all these years we have kept the unused flags field
-> there and nobody needed anything out of it.  I am OK with a removal
-> if it is done at the very end of the series.
+>> An alternative might be to add a "phoney" bit next to "used" in the
+>> cache_tree structure, mark the cache tree as phoney when we skip an
+>> entry marked as CE_REMOVE or CE_ITA, and make the postprocessing
+>> loop this patch adds aware of that bit, instead of iterating over
+>> the index entries; instead, it would recurse the resulting cache
+>> tree and invalidate parts of the tree that have subtrees with the
+>> "phoney" bit set, or something.
+>
+> Yeah, that sounds better.
 
-There's a bunch of unused junk in imap-send. The original implementation
-copied a bunch of code from isync, a much more full-featured imap
-client, and the result ended up way more complex than it needed to be. I
-have ripped a few things out over the years when they cause a problem
-(e.g., portability of /dev/urandom, conflict over the name "struct
-string_list"), but have mostly let it be out of a vague sense that we
-might one day want to pull bugfixes from isync upstream.
-
-That has not happened once in the last six years, though, and I would
-doubt that a straightforward merge would work after so many years. So
-ripping out and refactoring the code in the name of maintainability is
-probably a good thing at this point.
-
--Peff
+Did anything happen to this topic after this?
