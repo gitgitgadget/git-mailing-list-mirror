@@ -1,90 +1,98 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH 0/5] "diff --stat" counting fixes
-Date: Sat, 1 Dec 2012 11:29:53 +0100
-Message-ID: <CALWbr2xYrWkfSCUc7gocVGLQP_RHjWrMmFspPe5O_ekjisNqxw@mail.gmail.com>
-References: <1354051310-29093-1-git-send-email-gitster@pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 11:42:31 2012
+From: Sebastian Leske <Sebastian.Leske@sleske.name>
+Subject: [PATCH v2 1/4] git-svn: Document branches with at-sign(@).
+Date: Fri, 30 Nov 2012 08:16:30 +0100
+Message-ID: <67e9db6f948315f3c733dda0ad970e6257c075af.1354324110.git.Sebastian.Leske@sleske.name>
+References: <cover.1354324110.git.Sebastian.Leske@sleske.name>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 01 12:00:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TekWl-0002m1-G3
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 11:42:31 +0100
+	id 1Teko4-0008E1-Ju
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 12:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336Ab2LAK35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2012 05:29:57 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:43498 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214Ab2LAK34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2012 05:29:56 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e53so742910eek.19
-        for <git@vger.kernel.org>; Sat, 01 Dec 2012 02:29:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DFufJoFczQZ2wSOsgSGhPpi1J/FiIvtx+ykSJ1FqAQo=;
-        b=cqpj0kLAqrPKnnpDxnZ9jMf+gkqXlPO2Vik/0VUozh23rPaFbflcMYTWqVNbW/YCEM
-         j/CAm6+oLUn2JrrAPOCH9w4Pa8uTvQFVqhmi5dQOSpDrHfz7fvkfujbmnlXNx988fikG
-         hfseDLZ+bLXVJVvNyP3sPBePQuqo7G4tpI7/+xoOjv0UYOLuTr2Brsh0kPXcfsnhXU22
-         Hxo6YRyJNcI6T/Rc8KfvMCh2r/r4b1lVVeZwIVrIYVBpy2IwI2uxTfEgUdxx4jyJy2J9
-         oxN/XGN6L27g3OWl7rUafw35o7TWbMImyfyDS4R1Kt73SdkznyaFtv2/c7elxyK3p0jC
-         Bt2w==
-Received: by 10.14.208.137 with SMTP id q9mr14625504eeo.28.1354357793757; Sat,
- 01 Dec 2012 02:29:53 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Sat, 1 Dec 2012 02:29:53 -0800 (PST)
-In-Reply-To: <1354051310-29093-1-git-send-email-gitster@pobox.com>
+	id S1751416Ab2LALAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2012 06:00:07 -0500
+Received: from serv28.loswebos.de ([213.187.93.221]:54851 "EHLO
+	serv28.loswebos.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750709Ab2LALAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2012 06:00:06 -0500
+Received: from iota.localnet (p4FD44AFD.dip.t-dialin.net [79.212.74.253])
+	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by serv28.loswebos.de (Postfix) with ESMTPSA id EA6191F54A34;
+	Sat,  1 Dec 2012 11:59:32 +0100 (CET)
+Received: from sleske by iota.localnet with local (Exim 4.69)
+	(envelope-from <sebastian.leske@sleske.name>)
+	id 1Tekn9-00040D-3Z; Sat, 01 Dec 2012 11:59:27 +0100
+In-Reply-To: <cover.1354324110.git.Sebastian.Leske@sleske.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210959>
 
-Hi Junio,
+git svn will sometimes create branches with an at-sign in the name
+(branchname@revision). These branches confuse many users and it is a FAQ
+why they are created. Document when git svn will create them.
 
-That does make a lot of sense and I would have indeed missed a couple
-of things here.
+Signed-off-by: Sebastian Leske <sebastian.leske@sleske.name>
+---
+ Documentation/git-svn.txt |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-I've been thinking about that "Unmerged" line quite a lot, and I can't
-get myself any good reason to keep it.
-Would you mind taking a couple of minutes to make it clear ?
-
-I feel like (but I can obviously be wrong):
-1. The info is redundant. When performing a merge, all diffs (without
---staged flag) are unmerged
-2. While status shows the line once, while diff shows the diff for the file
-once, while diff --shortstat counts the file once, diff --stat shows two
-lines for the file.
-3. diff --numstat shows two lines for the same file. As a script
-writer (I guess that's what it's meant for), I would definitely expect
-uniqueness in third column/filenames.
-
-Cheers,
-Antoine
-
-On Tue, Nov 27, 2012 at 10:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> It turns out that there are at least two bugs in the diffstat
-> counting code.  This series comes on top of the earlier 74faaa1 (Fix
-> "git diff --stat" for interesting - but empty - file changes,
-> 2012-10-17) to fix them.
->
-> Junio C Hamano (5):
->   test: add failing tests for "diff --stat" to t4049
->   diff --stat: status of unmodified pair in diff-q is not zero
->   diff --stat: use "file" temporary variable to refer to data->files[i]
->   diff --stat: move the "total count" logic to the last loop
->   diff --stat: do not count "unmerged" entries
->
->  diff.c                     | 49 +++++++++++++++++++++++++---------------------
->  t/t4049-diff-stat-count.sh | 46 ++++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 72 insertions(+), 23 deletions(-)
->
-> --
-> 1.8.0.1.331.g808d2af
->
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 8b0d3ad..824bf82 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -881,6 +881,44 @@ different name spaces.  For example:
+ 	branches = stable/*:refs/remotes/svn/stable/*
+ 	branches = debug/*:refs/remotes/svn/debug/*
+ 
++If 'git svn' is configured to fetch branches (and --follow-branches
++is in effect), it will sometimes create multiple branches for one SVN
++branch, where the addtional branches have names of the form
++'branchname@nnn' (with nnn an SVN revision number).  These additional
++branches are created if 'git svn' cannot find a parent commit for the
++first commit in an SVN branch, to connect the branch to the history of
++the other branches. Normally, the first commit in an SVN branch consists
++of a copy operation. 'git svn' will read this commit to get the SVN
++revision the branch was created (copied) from. It will then try to find the
++git commit that corresponds to this SVN revision, and use that as the
++parent of the branch. However, it is possible that there is no suitable
++git commit to serve as parent.  This will happen, among other reasons,
++if the SVN branch is a copy of a revision that was not fetched by 'git
++svn' (e.g. because it is an old revision that was skipped with
++'--revision'), or if in SVN a directory was copied that is not tracked
++by 'git svn' (such as a branch that is not tracked at all, or a
++subdirectory of a tracked branch). In these cases, 'git svn' will still
++create a git branch, but instead of using an existing git commit as the
++parent of the branch, it will read the SVN history of the directory the
++branch was copied from and create appropriate git commits (this is
++indicated by the message "Initializing parent: <branchname>").
++Additionally, it will create a special branch named
++'<branchname>@<SVN-Revision>', where <SVN-Revision> is the SVN revision
++number the branch was copied from.  This branch will point to the newly 
++created parent commit of the branch.  If in SVN the branch was deleted
++and later recreated from a different version, there will be multiple
++such branches with an '@'.
++Note that this may mean that multiple git commits are created for a
++single SVN revision. An example: In an SVN repository with a standard 
++trunk/tags/branches layout, a directory trunk/sub is created in r.100.
++In r.200, trunk/sub is branched by copying it to branches/. 'git svn
++clone -s' will then create a branch 'sub'. It will also create new git
++commits for r.100 through r.199 and use these as the history of branch
++'sub'. Thus there will be two git commits for each revision from r.100
++to r.199 (one containing trunk/, one containing trunk/sub/). Finally,
++it will create a branch 'sub@200' pointing to the new parent commit of
++branch 'sub' (i.e. the commit for r.200 and trunk/sub/).
++
+ BUGS
+ ----
+ 
+-- 
+1.7.10.4
