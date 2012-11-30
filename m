@@ -1,133 +1,116 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v5 0/2] submodule update: add --remote for submodule's
- upstream changes
-Date: Thu, 29 Nov 2012 20:11:20 -0500
-Message-ID: <CABURp0piLAG+hEsav-uro+nq9ZRZ9CFFjVG8VKYk3ZtYvRi8=A@mail.gmail.com>
-References: <CABURp0oSo9ACFKkBEK1_qNu2mEAu1=nUJxnROaRsXiaWvHih=w@mail.gmail.com>
- <cover.1354130656.git.wking@tremily.us> <20121129191326.GC27409@odin.tremily.us>
+From: Xypron <xypron.glpk@gmx.de>
+Subject: Re: [PATCH] gitweb: add readme to overview page
+Date: Fri, 30 Nov 2012 02:11:43 +0100
+Message-ID: <50B807CF.1040803@gmx.de>
+References: <1352647962-21910-1-git-send-email-xypron.glpk@gmx.de> <50B7E1FD.8060001@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Fri Nov 30 02:12:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:14:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeF9Z-00080l-4t
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:12:29 +0100
+	id 1TeFAF-0001ED-Fu
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:13:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778Ab2K3BLm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 20:11:42 -0500
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:42232 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab2K3BLm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2012 20:11:42 -0500
-Received: by mail-lb0-f174.google.com with SMTP id gi11so70867lbb.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:11:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MuHojS2O+azOZILOuUgLuIS4GRSF9pVRk6FWpfAx6vE=;
-        b=GutaP8LlqLj67BaWODW+rH0ViPRnuKMfWyv0ruM+4RwH9w6cFdJKilqPCMoJ1Dusuv
-         DyjWXDQ6bTIzX9miKvSly+xqSQpRJDl+xzkWfF9VhfeI3xQb4JezHZTgMBLTuFvZaw2v
-         wMHhi+aTfaFsr6K/5h1zF0Emlymc1YtiKyZccf5NS2WVE8QAnowEYbUmhe1jjmmPokZK
-         EIExIdfrNFbxJJfHG/YgYApUfwTjIirMxK9anndkGAADPsui5PRgwUJJnDLWin/7sgGf
-         DMGMQJ+kI1vPbtn/+j3VEoHR/wPax2Y/QuIDx+HbOjitA2gksRJfyrdnaqTvmOh9suo4
-         c8jQ==
-Received: by 10.152.111.131 with SMTP id ii3mr23102560lab.37.1354237900330;
- Thu, 29 Nov 2012 17:11:40 -0800 (PST)
-Received: by 10.114.38.3 with HTTP; Thu, 29 Nov 2012 17:11:20 -0800 (PST)
-In-Reply-To: <20121129191326.GC27409@odin.tremily.us>
+	id S1755270Ab2K3BMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 20:12:48 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:57918 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755249Ab2K3BMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 20:12:48 -0500
+Received: (qmail invoked by alias); 30 Nov 2012 01:12:46 -0000
+Received: from ip-88-153-184-9.unitymediagroup.de (EHLO [192.168.123.22]) [88.153.184.9]
+  by mail.gmx.net (mp004) with SMTP; 30 Nov 2012 02:12:46 +0100
+X-Authenticated: #41704822
+X-Provags-ID: V01U2FsdGVkX1/iLTQaxSHizetQU8UwQboFip44wXq7ckPKMk5rFo
+	opjrpF/yeBqEZq
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.10) Gecko/20121027 Icedove/10.0.10
+In-Reply-To: <50B7E1FD.8060001@gmx.de>
+X-Enigmail-Version: 1.4.1
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210886>
 
-On Thu, Nov 29, 2012 at 2:13 PM, W. Trevor King <wking@tremily.us> wrot=
-e:
->
-> On Thu, Nov 29, 2012 at 01:29:12PM -0500, Phil Hord wrote:
->> On Fri, Nov 23, 2012 at 12:54 PM, W. Trevor King <wking@tremily.us> =
-wrote:
->> > [snip initial thoughts leading to the update --remote v5]
->>
->> I was thinking the same thing, but reading this whole thread a coupl=
-e of
->> weeks late.  Thanks for noticing.
->>
->> Moreover, I think that 'git submodule update --pull' is also the wro=
-ng way
->> to spell this action.   Maybe you are misled from the outset by your
->> current workflow:
->
-> Did you see my v5 (add --remote) series?
+The following setting provides the same feature
 
-Eventually, I did.  Sorry for the out-of-order replies.
+# html text to include at home page
+$home_text = "indextext.html";
 
+Sorry for the noise.
 
->> For that reason, I don't like the --pull switch since it implies a
->> fetch, but I will not always want to do a fetch.
->
->   $ git submodule update --remote --no-fetch
->
-> will not fetch the submodule remotes.
+Best regards
 
-This seems precisely backwards to me. Why not use
+Heinrich Schuchardt
 
-  $ git submodule update --remote --fetch
-
-to do your "default" behavior instead?   I suppose I am arguing
-against the tide of the dominant workflow, but the fetch-by-default
-idea needlessly conflates two primitive operations:  "float" and
-"fetch".
-
->> I don't know which remote I should be tracking, though.  I suppose
->> it is 'origin' for now, but maybe it is just whatever
->> $superproject's HEAD's remote-tracking branch indicates.
->
-> With the --remote series, I always use "origin" because that's what
-> `submodule add` should be setting up.  If people want to change that
-> up by hand, we may need a submodule.<name>.remote configuration
-> option.
-
-I've always felt that the "origin" defaults are broken and are simply
-being ignored because most users do not trip over them.  But ISTR that
-submodule commands use the remote indicated by the superproject's
-current remote-tracking configuration, with a fallback to 'origin' if
-there is none.  Sort of a "best effort" algorithm, I think.  Am I
-remembering that wrong?
-
-
->> I am not sure I want the gitlinks in superproject to update automati=
-cally
->> in the index, but I definitely do not want to automatically create a=
- commit
->> for them.
->
-> Commits are dissabled by default (see my recent --commit RFC for how
-> they would be enabled).
->
->> But I really don't want to figure out how to handle submodule
->> collisions during a merge (or rebase!) of my superproject with chang=
-es that
->> someone else auto-committed in his local $superproject as he and I
->> arbitrarily floated up the upstream independently.  There is nothing=
- but
->> loathing down that path.
->
-> This is true.  I'm not sure how gitlink collisions are currently
-> handled=85
-
-
-They've always been trouble for me.  But it may be that I am ignorant.
-
-Phil
+On 29.11.2012 23:30, Xypron wrote:
+> Hello Junio,
+> 
+> thank you for your comment in message
+> <7vip9ak971.fsf@alter.siamese.dyndns.org>
+> that message <1352652039-31453-1-git-send-email-xypron.glpk@gmx.de>
+> lost the thread context.
+> 
+> As already described I would be happy if a README.html could be added to
+> the overview page of gitweb.
+> 
+> Please, find below an updated patch. Compared to the first version of my
+> patch it avoids a warning concerning doubled slashes in filenames and adds
+> a subtitle "projects" between the README and the project list.
+> 
+> Best regards
+> 
+> Heinrich Schuchardt
+> 
+> Subject: [PATCH] gitweb: add readme to overview page
+> 
+> For repositories it is possible to maintain a README.html which will
+> be shown on the summary page. This is not possible for the server
+> root.
+> 
+> German law requires to provide contact data on the web server. This
+> data could easily be entered in the overview page using a README.html.
+> 
+> Furthermore it is possible to put the repositories not directly into
+> the root directory but into a subdirectory. Here also a README.html
+> would be helpful to indicate what the subdirectory is about.
+> 
+> The patch introduces README.html functionality for the root directory
+> and all subdirectories.
+> 
+> Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
+> ---
+>  gitweb/gitweb.perl |   13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index e8812fa..618b0d8 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -6368,6 +6368,19 @@ sub git_project_list {
+>  	}
+>  
+>  	git_project_search_form($searchtext, $search_use_regexp);
+> +	# If XSS prevention is on, we don't include README.html.
+> +	# TODO: Allow a readme in some safe format.
+> +	my $path = "";
+> +	if (defined $project_filter) {
+> +		$path = "/$project_filter";
+> +	}
+> +	if (!$prevent_xss && -s "$projectroot$path/README.html") {
+> +		print "<div class=\"title\">readme</div>\n" .
+> +		"<div class=\"readme\">\n";
+> +		insert_file("$projectroot$path/README.html");
+> +		print "\n</div>\n"; # class="readme"
+> +	}
+> +	print "<div class=\"title\">projects</div>\n";
+>  	git_project_list_body(\@list, $order);
+>  	git_footer_html();
+>  }
