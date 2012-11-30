@@ -1,70 +1,176 @@
-From: Tomas Neme <lacrymology@gmail.com>
-Subject: Bug report: probiem with across-branch git-diff
-Date: Fri, 30 Nov 2012 18:13:12 -0300
-Message-ID: <CA+8r0=ziTMRzBqE0EPTohL_7c0-Dv_ZahXS6xWiTmFEgW9J=KA@mail.gmail.com>
+From: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <stlman@poczta.fm>
+Subject: [PATCH] gitk: add a checkbox to control the visibility of tags
+Date: Fri, 30 Nov 2012 22:08:57 +0100
+Message-ID: <1354309737-4280-1-git-send-email-stlman@poczta.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 22:14:32 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <stlman@poczta.fm>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Nov 30 22:29:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeXu9-0002mO-IR
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 22:13:49 +0100
+	id 1TeY8z-0000K2-JQ
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 22:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031797Ab2K3VNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 16:13:33 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:65460 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031669Ab2K3VNc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 16:13:32 -0500
-Received: by mail-pa0-f46.google.com with SMTP id bh2so612199pad.19
-        for <git@vger.kernel.org>; Fri, 30 Nov 2012 13:13:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=ooVXXjZdEKI/x2LMJYCZhM80dTMKZ90MRafXNW1NyU8=;
-        b=ijpInZDS1jxwMgRzu+l+EZ4QLZU9YSlNvUObFWW93e7dk/6Xwj5O783PJJ4qysMP4s
-         nVgcwuTobP6HB+O3w26Bs8V2b5U6zMw4PDuI43wfA63uNHqtb2OssJi2mtMXd+HRpa8P
-         FCy1YCGV1T1H5HlX+Tw73NnKveQ3TiqnCXgExlrzEO2cCSnoS12vM1XjkQ2zY6mVWuO2
-         i/a1pBWMXhGHykjlgoqnVwIPibsHsp+yigeyNF4gI/vjFEmT6XrHDOXNB6/zplk/KDio
-         Evqk8uu6/mWr1rm/zV2TJPK+454DnuskdLmxjdwL7An5K3Engqw+v0EBmFxiuc1QInyO
-         Ngrw==
-Received: by 10.68.254.137 with SMTP id ai9mr8923145pbd.21.1354310012403; Fri,
- 30 Nov 2012 13:13:32 -0800 (PST)
-Received: by 10.68.5.164 with HTTP; Fri, 30 Nov 2012 13:13:12 -0800 (PST)
+	id S1752007Ab2K3V2x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Nov 2012 16:28:53 -0500
+Received: from smtpo.poczta.interia.pl ([217.74.65.205]:51731 "EHLO
+	smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245Ab2K3V2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 16:28:52 -0500
+X-Greylist: delayed 1173 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Nov 2012 16:28:52 EST
+Received: from localhost (87-207-152-6.dynamic.chello.pl [87.207.152.6])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by www.poczta.fm (INTERIA.PL) with ESMTPSA;
+	Fri, 30 Nov 2012 22:09:11 +0100 (CET)
+X-Mailer: git-send-email 1.7.8.6
+X-Interia-Antivirus: OK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
+	s=biztos; t=1354309753;
+	bh=esfLeXHBRpooGuhXdtMKPofPekfqAkw1LTRvGgx+hhc=;
+	h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-Interia-Antivirus;
+	b=icOyVSBRRScyD80a/2oQ02Zs269hTJJwMEiWyr3YhoANzluwtxOuE1+ykMeokEMeX
+	 Dt5C/ZEEeMhgjSk22n7hyDnFo2qyDQSxDrmqgibYfswoUn28M7dXnRHNsdToNSuA3V
+	 tgxaCLwniMZU8pFYcuudUPTn1RcMnSFZk+LajbSI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210946>
 
-(env)lacrymology@Roller:boilerplate$ git rev-parse
-test_project:boilerplate/apps/custom_zinnia/models/blog.py
-9e93aa98ad2aeb8094dd3206b02e7bd835ce6899
+Enable hiding of tags displayed in the tree as yellow labels.
+If a repository is used together with a system like Gerrit
+there may be quite a lot of tags used to control building
+and there may be hardly any place left for commit subjects.
 
-lacrymology@Roller:boilerplate$ git diff
-boilerplate/apps/custom_zinnia/abstract_models.py
-test_project:boilerplate/apps/custom_zinnia/models/blog.py
-fatal: Path 'boilerplate/apps/custom_zinnia/models/blog.py' exists,
-but not 'boilerplate/apps/custom_zinnia/models/blog.py'.
-Did you mean 'test_project:boilerplate/apps/custom_zinnia/models/blog.py'
-aka 'test_project:./boilerplate/apps/custom_zinnia/models/blog.py'?
+Signed-off-by: =C5=81ukasz Stelmach <stlman@poczta.fm>
+---
+ gitk-git/gitk |   23 +++++++++++++++--------
+ 1 files changed, 15 insertions(+), 8 deletions(-)
 
-blog.py doesn't exist in the current branch. Current branch descends
-from test_project, and abstract_models.py it's actually the same file
-`git mv`'ed
-
---
-"The whole of Japan is pure invention. There is no such country, there
-are no such people" --Oscar Wilde
-
-|_|0|_|
-|_|_|0|
-|0|0|0|
-
-(\__/)
-(='.'=)This is Bunny. Copy and paste bunny
-(")_(") to help him gain world domination.
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index d93bd99..274b46b 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -1754,7 +1754,7 @@ proc readrefs {} {
+     global tagids idtags headids idheads tagobjid
+     global otherrefids idotherrefs mainhead mainheadid
+     global selecthead selectheadid
+-    global hideremotes
++    global hideremotes hidetags
+=20
+     foreach v {tagids idtags headids idheads otherrefids idotherrefs} =
+{
+ 	catch {unset $v}
+@@ -1776,6 +1776,7 @@ proc readrefs {} {
+ 	    set headids($name) $id
+ 	    lappend idheads($id) $name
+ 	} elseif {[string match "tags/*" $name]} {
++	    if {$hidetags} continue
+ 	    # this lets refs/tags/foo^{} overwrite refs/tags/foo,
+ 	    # which is what we want since the former is the commit ID
+ 	    set name [string range $name 5 end]
+@@ -2702,7 +2703,7 @@ proc savestuff {w} {
+     global cmitmode wrapcomment datetimeformat limitdiffs
+     global colors uicolor bgcolor fgcolor diffcolors diffcontext selec=
+tbgcolor
+     global autoselect autosellen extdifftool perfile_attrs markbgcolor=
+ use_ttk
+-    global hideremotes want_ttk
++    global hideremotes hidetags want_ttk
+=20
+     if {$stuffsaved} return
+     if {![winfo viewable .]} return
+@@ -2725,6 +2726,7 @@ proc savestuff {w} {
+ 	puts $f [list set autosellen $autosellen]
+ 	puts $f [list set showneartags $showneartags]
+ 	puts $f [list set hideremotes $hideremotes]
++	puts $f [list set hidetags $hidetags]
+ 	puts $f [list set showlocalchanges $showlocalchanges]
+ 	puts $f [list set datetimeformat $datetimeformat]
+ 	puts $f [list set limitdiffs $limitdiffs]
+@@ -10864,7 +10866,7 @@ proc create_prefs_page {w} {
+ proc prefspage_general {notebook} {
+     global NS maxwidth maxgraphpct showneartags showlocalchanges
+     global tabstop limitdiffs autoselect autosellen extdifftool perfil=
+e_attrs
+-    global hideremotes want_ttk have_ttk
++    global hideremotes hidetags want_ttk have_ttk
+=20
+     set page [create_prefs_page $notebook.general]
+=20
+@@ -10887,6 +10889,9 @@ proc prefspage_general {notebook} {
+     ${NS}::checkbutton $page.hideremotes -text [mc "Hide remote refs"]=
+ \
+ 	-variable hideremotes
+     grid x $page.hideremotes -sticky w
++    ${NS}::checkbutton $page.hidetags -text [mc "Hide tag labels"] \
++	-variable hidetags
++    grid x $page.hidetags -sticky w
+=20
+     ${NS}::label $page.ddisp -text [mc "Diff display options"]
+     grid $page.ddisp - -sticky w -pady 10
+@@ -10988,7 +10993,7 @@ proc doprefs {} {
+     global oldprefs prefstop showneartags showlocalchanges
+     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor mark=
+bgcolor
+     global tabstop limitdiffs autoselect autosellen extdifftool perfil=
+e_attrs
+-    global hideremotes want_ttk have_ttk
++    global hideremotes hidetags want_ttk have_ttk
+=20
+     set top .gitkprefs
+     set prefstop $top
+@@ -10997,7 +11002,7 @@ proc doprefs {} {
+ 	return
+     }
+     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+-		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
++		   limitdiffs tabstop perfile_attrs hideremotes hidetags want_ttk} {
+ 	set oldprefs($v) [set $v]
+     }
+     ttk_toplevel $top
+@@ -11117,7 +11122,7 @@ proc prefscan {} {
+     global oldprefs prefstop
+=20
+     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+-		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
++		   limitdiffs tabstop perfile_attrs hideremotes hidetags want_ttk} {
+ 	global $v
+ 	set $v $oldprefs($v)
+     }
+@@ -11131,7 +11136,7 @@ proc prefsok {} {
+     global oldprefs prefstop showneartags showlocalchanges
+     global fontpref mainfont textfont uifont
+     global limitdiffs treediffs perfile_attrs
+-    global hideremotes
++    global hideremotes hidetags
+=20
+     catch {destroy $prefstop}
+     unset prefstop
+@@ -11177,7 +11182,8 @@ proc prefsok {} {
+ 	  $limitdiffs !=3D $oldprefs(limitdiffs)} {
+ 	reselectline
+     }
+-    if {$hideremotes !=3D $oldprefs(hideremotes)} {
++    if {$hideremotes !=3D $oldprefs(hideremotes) ||
++        $hidetags !=3D $oldprefs(hidetags)} {
+ 	rereadrefs
+     }
+ }
+@@ -11601,6 +11607,7 @@ set cmitmode "patch"
+ set wrapcomment "none"
+ set showneartags 1
+ set hideremotes 0
++set hidetags 0
+ set maxrefs 20
+ set maxlinelen 200
+ set showlocalchanges 1
+--=20
+1.7.8.6
