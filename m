@@ -1,7 +1,8 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v6 0/8] push: update remote tags only with force
-Date: Thu, 29 Nov 2012 19:41:32 -0600
-Message-ID: <1354239700-3325-1-git-send-email-chris@rorvick.com>
+Subject: [PATCH v6 3/8] push: flag updates
+Date: Thu, 29 Nov 2012 19:41:35 -0600
+Message-ID: <1354239700-3325-4-git-send-email-chris@rorvick.com>
+References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
 Cc: Chris Rorvick <chris@rorvick.com>,
 	Angelo Borsotti <angelo.borsotti@gmail.com>,
 	Drew Northup <n1xim.email@gmail.com>,
@@ -19,83 +20,94 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeFdW-0006Qy-N6
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:43:27 +0100
+	id 1TeFdg-0006sW-UV
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:43:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028Ab2K3BnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 20:43:11 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:41967 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab2K3BnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 20:43:09 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so11433874iay.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:43:09 -0800 (PST)
+	id S1755453Ab2K3BnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2012 20:43:18 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:43897 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303Ab2K3BnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2012 20:43:16 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k11so13169118iea.19
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:43:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=3NMq9obfzp/ubgILKK2irTH8o186OZEg+aZqJcGBeks=;
-        b=MCaC9HIU9K1VRbCN5omfx0COBaRm7dVMZYKxHKSwwpFiKAiWnKWgd0pjGUVHb4M52E
-         RfK2jZ5hhSdUtQTmZ9/Zhf+wRk4I+MgboSCvwu/708z4Rdy6q9WSsPJoWwBvz0i2oqd9
-         f91yzfGvEgQCmyYXwZNnKt44kh4GUfMnaUz4kmDLDJd45JVcu7KjP60IxGKf7vZ7CHA9
-         SSpLxNjc3CNVuv2lOGNT+bylWCOTZDwACTVX7NUBYvXHrwChHlimgdMv2vh2yIKj8viY
-         k8YfDqi5lvJZIO2sivBbKD5tTgBIaItuJ2sErYvYN/TebvjVNRnPrZp06b4E1jlWkoZM
-         7meg==
-Received: by 10.50.12.228 with SMTP id b4mr27577972igc.74.1354239789388;
-        Thu, 29 Nov 2012 17:43:09 -0800 (PST)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=QAP1G3/LRNk7THkR4a+lo+8+WjT77uHPuGgazxN7TuI=;
+        b=dbxptwyEehPHZ4hEpY8cUEBm1EXlPLeC50Cy1nuHlrIU+Lxwzx24bucYQc/1zrf0Rq
+         ueRzZg1UdjBV0V8pKM/rTTAxemC8StIGPaZxsRIZq+VZ2WgNqyTNlZWE2WiZgY6i5OJk
+         yiWuY2AvUs5OlzsTWo5NIeBT9GotQlJ8PZxJZNPdEuaGf6Y9LA7gwK79CBbuNjnkxGrR
+         GVooh2BSWfLlHUt4jSSUgoKjMBMqsfNexaohbgF8Su8FDJnVbBvAlHEYXORvL1mhrajU
+         4XuEq5i63eGJqgh0RpaiA8f5f+L1tJXLWstFYDpppxoxKENNRVOidQlXRRMq9eiEZ6Vv
+         pWqg==
+Received: by 10.50.85.170 with SMTP id i10mr24916607igz.14.1354239795835;
+        Thu, 29 Nov 2012 17:43:15 -0800 (PST)
 Received: from marlin.localdomain ([70.131.98.170])
-        by mx.google.com with ESMTPS id c3sm8955228igj.1.2012.11.29.17.43.06
+        by mx.google.com with ESMTPS id c3sm8955228igj.1.2012.11.29.17.43.13
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Nov 2012 17:43:08 -0800 (PST)
+        Thu, 29 Nov 2012 17:43:15 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.158.g0c4328c
+In-Reply-To: <1354239700-3325-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210897>
 
-This patch series originated in response to the following thread:
+If the reference exists on the remote and it is not being removed, then
+mark as an update.  This is in preparation for handling tags (lightweight
+and annotated) exceptionally.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/208354
+Signed-off-by: Chris Rorvick <chris@rorvick.com>
+---
+ cache.h  |  1 +
+ remote.c | 18 +++++++++++-------
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-I made some adjustments based on Junio's last round of feedback
-including a new patch reworking the "push rules" comment in remote.c.
-Also refined some of the log messages--nothing major.  Finally, took a
-stab at putting something together for the release notes, see below.
-
-Chris
-
-Release notes:
-
-"git push" no longer updates tags (lightweight or annotated) by default.
-Specifically, if the destination reference already exists and is under
-refs/tags/ or it points to a tag object, it is not allowed to fast-
-forward (unless forced using +A:B notation or by passing --force.)  This
-is consistent with how a tag is normally thought of: a reference that
-does not move once defined.  It also ensures a push will not
-inadvertently clobber an already existing tag--something that can go
-unnoticed if fast-forwarding is allowed.
-
-Chris Rorvick (8):
-  push: return reject reasons as a bitset
-  push: add advice for rejected tag reference
-  push: flag updates
-  push: flag updates that require force
-  push: require force for refs under refs/tags/
-  push: require force for annotated tags
-  push: clarify rejection of update to non-commit-ish
-  push: cleanup push rules comment
-
- Documentation/git-push.txt |  9 ++---
- builtin/push.c             | 24 +++++++++-----
- builtin/send-pack.c        |  9 +++--
- cache.h                    |  7 +++-
- remote.c                   | 83 +++++++++++++++++++++++++++++++++++-----------
- send-pack.c                |  1 +
- t/t5516-fetch-push.sh      | 44 +++++++++++++++++++++++-
- transport-helper.c         |  6 ++++
- transport.c                | 25 ++++++++------
- transport.h                | 10 +++---
- 10 files changed, 167 insertions(+), 51 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index d72b64d..722321c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1003,6 +1003,7 @@ struct ref {
+ 		merge:1,
+ 		nonfastforward:1,
+ 		not_forwardable:1,
++		update:1,
+ 		deletion:1;
+ 	enum {
+ 		REF_STATUS_NONE = 0,
+diff --git a/remote.c b/remote.c
+index 5101683..07040b8 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1326,15 +1326,19 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 
+ 		ref->not_forwardable = !is_forwardable(ref);
+ 
+-		ref->nonfastforward =
++		ref->update =
+ 			!ref->deletion &&
+-			!is_null_sha1(ref->old_sha1) &&
+-			(!has_sha1_file(ref->old_sha1)
+-			  || !ref_newer(ref->new_sha1, ref->old_sha1));
++			!is_null_sha1(ref->old_sha1);
+ 
+-		if (ref->nonfastforward && !ref->force && !force_update) {
+-			ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
+-			continue;
++		if (ref->update) {
++			ref->nonfastforward =
++				!has_sha1_file(ref->old_sha1)
++				  || !ref_newer(ref->new_sha1, ref->old_sha1);
++
++			if (ref->nonfastforward && !ref->force && !force_update) {
++				ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
++				continue;
++			}
+ 		}
+ 	}
+ }
 -- 
 1.8.0.158.g0c4328c
