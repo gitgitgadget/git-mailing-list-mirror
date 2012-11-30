@@ -1,176 +1,86 @@
-From: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <stlman@poczta.fm>
-Subject: [PATCH] gitk: add a checkbox to control the visibility of tags
-Date: Fri, 30 Nov 2012 22:08:57 +0100
-Message-ID: <1354309737-4280-1-git-send-email-stlman@poczta.fm>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/5] ignore SIG{INT,QUIT} when launching editor
+Date: Fri, 30 Nov 2012 17:39:43 -0500
+Message-ID: <20121130223943.GA27120@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <stlman@poczta.fm>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Nov 30 22:29:14 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Fox <pgf@foxharp.boston.ma.us>,
+	Krzysztof Mazur <krzysiek@podlesie.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 30 23:40:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeY8z-0000K2-JQ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 22:29:10 +0100
+	id 1TeZFa-0006Qh-Ov
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 23:40:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab2K3V2x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Nov 2012 16:28:53 -0500
-Received: from smtpo.poczta.interia.pl ([217.74.65.205]:51731 "EHLO
-	smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751245Ab2K3V2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 16:28:52 -0500
-X-Greylist: delayed 1173 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Nov 2012 16:28:52 EST
-Received: from localhost (87-207-152-6.dynamic.chello.pl [87.207.152.6])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by www.poczta.fm (INTERIA.PL) with ESMTPSA;
-	Fri, 30 Nov 2012 22:09:11 +0100 (CET)
-X-Mailer: git-send-email 1.7.8.6
-X-Interia-Antivirus: OK
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
-	s=biztos; t=1354309753;
-	bh=esfLeXHBRpooGuhXdtMKPofPekfqAkw1LTRvGgx+hhc=;
-	h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-Interia-Antivirus;
-	b=icOyVSBRRScyD80a/2oQ02Zs269hTJJwMEiWyr3YhoANzluwtxOuE1+ykMeokEMeX
-	 Dt5C/ZEEeMhgjSk22n7hyDnFo2qyDQSxDrmqgibYfswoUn28M7dXnRHNsdToNSuA3V
-	 tgxaCLwniMZU8pFYcuudUPTn1RcMnSFZk+LajbSI=
+	id S1752671Ab2K3Wjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 17:39:46 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47978 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752441Ab2K3Wjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 17:39:45 -0500
+Received: (qmail 6858 invoked by uid 107); 30 Nov 2012 22:40:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Nov 2012 17:40:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2012 17:39:43 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210947>
 
-Enable hiding of tags displayed in the tree as yellow labels.
-If a repository is used together with a system like Gerrit
-there may be quite a lot of tags used to control building
-and there may be hardly any place left for commit subjects.
+This is a re-roll of the pf/editor-ignore-sigint series.
 
-Signed-off-by: =C5=81ukasz Stelmach <stlman@poczta.fm>
----
- gitk-git/gitk |   23 +++++++++++++++--------
- 1 files changed, 15 insertions(+), 8 deletions(-)
+There are two changes from the original:
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index d93bd99..274b46b 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -1754,7 +1754,7 @@ proc readrefs {} {
-     global tagids idtags headids idheads tagobjid
-     global otherrefids idotherrefs mainhead mainheadid
-     global selecthead selectheadid
--    global hideremotes
-+    global hideremotes hidetags
-=20
-     foreach v {tagids idtags headids idheads otherrefids idotherrefs} =
-{
- 	catch {unset $v}
-@@ -1776,6 +1776,7 @@ proc readrefs {} {
- 	    set headids($name) $id
- 	    lappend idheads($id) $name
- 	} elseif {[string match "tags/*" $name]} {
-+	    if {$hidetags} continue
- 	    # this lets refs/tags/foo^{} overwrite refs/tags/foo,
- 	    # which is what we want since the former is the commit ID
- 	    set name [string range $name 5 end]
-@@ -2702,7 +2703,7 @@ proc savestuff {w} {
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors uicolor bgcolor fgcolor diffcolors diffcontext selec=
-tbgcolor
-     global autoselect autosellen extdifftool perfile_attrs markbgcolor=
- use_ttk
--    global hideremotes want_ttk
-+    global hideremotes hidetags want_ttk
-=20
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-@@ -2725,6 +2726,7 @@ proc savestuff {w} {
- 	puts $f [list set autosellen $autosellen]
- 	puts $f [list set showneartags $showneartags]
- 	puts $f [list set hideremotes $hideremotes]
-+	puts $f [list set hidetags $hidetags]
- 	puts $f [list set showlocalchanges $showlocalchanges]
- 	puts $f [list set datetimeformat $datetimeformat]
- 	puts $f [list set limitdiffs $limitdiffs]
-@@ -10864,7 +10866,7 @@ proc create_prefs_page {w} {
- proc prefspage_general {notebook} {
-     global NS maxwidth maxgraphpct showneartags showlocalchanges
-     global tabstop limitdiffs autoselect autosellen extdifftool perfil=
-e_attrs
--    global hideremotes want_ttk have_ttk
-+    global hideremotes hidetags want_ttk have_ttk
-=20
-     set page [create_prefs_page $notebook.general]
-=20
-@@ -10887,6 +10889,9 @@ proc prefspage_general {notebook} {
-     ${NS}::checkbutton $page.hideremotes -text [mc "Hide remote refs"]=
- \
- 	-variable hideremotes
-     grid x $page.hideremotes -sticky w
-+    ${NS}::checkbutton $page.hidetags -text [mc "Hide tag labels"] \
-+	-variable hidetags
-+    grid x $page.hidetags -sticky w
-=20
-     ${NS}::label $page.ddisp -text [mc "Diff display options"]
-     grid $page.ddisp - -sticky w -pady 10
-@@ -10988,7 +10993,7 @@ proc doprefs {} {
-     global oldprefs prefstop showneartags showlocalchanges
-     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor mark=
-bgcolor
-     global tabstop limitdiffs autoselect autosellen extdifftool perfil=
-e_attrs
--    global hideremotes want_ttk have_ttk
-+    global hideremotes hidetags want_ttk have_ttk
-=20
-     set top .gitkprefs
-     set prefstop $top
-@@ -10997,7 +11002,7 @@ proc doprefs {} {
- 	return
-     }
-     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
--		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
-+		   limitdiffs tabstop perfile_attrs hideremotes hidetags want_ttk} {
- 	set oldprefs($v) [set $v]
-     }
-     ttk_toplevel $top
-@@ -11117,7 +11122,7 @@ proc prefscan {} {
-     global oldprefs prefstop
-=20
-     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
--		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
-+		   limitdiffs tabstop perfile_attrs hideremotes hidetags want_ttk} {
- 	global $v
- 	set $v $oldprefs($v)
-     }
-@@ -11131,7 +11136,7 @@ proc prefsok {} {
-     global oldprefs prefstop showneartags showlocalchanges
-     global fontpref mainfont textfont uifont
-     global limitdiffs treediffs perfile_attrs
--    global hideremotes
-+    global hideremotes hidetags
-=20
-     catch {destroy $prefstop}
-     unset prefstop
-@@ -11177,7 +11182,8 @@ proc prefsok {} {
- 	  $limitdiffs !=3D $oldprefs(limitdiffs)} {
- 	reselectline
-     }
--    if {$hideremotes !=3D $oldprefs(hideremotes)} {
-+    if {$hideremotes !=3D $oldprefs(hideremotes) ||
-+        $hidetags !=3D $oldprefs(hidetags)} {
- 	rereadrefs
-     }
- }
-@@ -11601,6 +11607,7 @@ set cmitmode "patch"
- set wrapcomment "none"
- set showneartags 1
- set hideremotes 0
-+set hidetags 0
- set maxrefs 20
- set maxlinelen 200
- set showlocalchanges 1
---=20
-1.7.8.6
+  1. We ignore both SIGINT and SIGQUIT for "least surprise" compared to
+     system(3).
+
+  2. We now use "code + 128" to look for signal death (instead of
+     WTERMSIG), as per run-command's documentation on how it munges the
+     code.
+
+People mentioned some buggy editors which go into an infinite EIO loop
+when their parent dies due to SIGQUIT. That should be a non-issue now,
+as we will be ignoring SIGQUIT. And even if you could replicate it
+(e.g., with another signal) those programs should be (and reportedly
+have been) fixed. It is not git's job to babysit its child processes.
+
+The patches are:
+
+  [1/5]: run-command: drop silent_exec_failure arg from wait_or_whine
+  [2/5]: launch_editor: refactor to use start/finish_command
+  [3/5]: launch_editor: ignore terminal signals while editor has control
+  [4/5]: run-command: do not warn about child death from terminal
+  [5/5]: launch_editor: propagate signals from editor to git
+
+Since this can be thought of as "act more like system(3)", I wondered
+whether the signal-ignore logic should be moved into run-command, or
+even used by default for blocking calls to run_command (which are
+basically our version of system(3)). But it is detrimental in the common
+case that the child is not taking control of the terminal, and is just
+an implementation detail (e.g., we call "git update-ref" behind the
+scenes, but the user does not know or care). If they hit ^C during such
+a run and we are ignoring SIGINT, then either:
+
+  1. we will notice the child died by signal and report an
+     error in the subprocess rather than just dying; the end result is
+     similar, but the error is unnecessarily confusing
+
+  2. we do not bother to check the child's return code (because we do
+     not care whether the child succeeded or not, like a "gc --auto");
+     we end up totally ignoring the user's request to abort the
+     operation
+
+So I do not think we care about this behavior except for launching the
+editor. And the signal-propagation behavior of 5/5 is really so weirdly
+editor-specific (because it is about behaving well whether the child
+blocks signals or not).
+
+-Peff
