@@ -1,65 +1,68 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [Query] Can we ignore case for commiters name in shortlog?
-Date: Fri, 30 Nov 2012 12:19:00 +0100
-Message-ID: <C9C7BAF7-D552-41CF-B45D-413B9B69C054@quendi.de>
-References: <CAOh2x==NBeeoE2=PhaDC143ZF_xHKD5m=Po+-DS2X43CEeGiEQ@mail.gmail.com> <alpine.LFD.2.02.1211292231520.4576@xanadu.home> <CAKohponGXq=P88Y=cmUPbRCeJ--VkMvJyw5th1T-WdGQnn4xWg@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Nicolas Pitre <nicolas.pitre@linaro.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: viresh kumar <viresh.kumar@linaro.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 12:19:27 2012
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] git-fast-import.txt: improve documentation for quoted paths
+Date: Fri, 30 Nov 2012 10:39:18 +0100
+Message-ID: <vpqvccnctvd.fsf@grenoble-inp.fr>
+References: <vpq624omjn4.fsf@grenoble-inp.fr>
+	<1354208455-21228-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20121129181141.GA17309@sigill.intra.peff.net>
+	<7vvccop6dv.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 10:39:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeOcs-00027k-Pg
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 12:19:23 +0100
+	id 1TeN4c-0000xl-WF
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 10:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757917Ab2K3LTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 06:19:06 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:45343 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757912Ab2K3LTF convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 06:19:05 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TeOcW-0001Z9-Hf; Fri, 30 Nov 2012 12:19:00 +0100
-In-Reply-To: <CAKohponGXq=P88Y=cmUPbRCeJ--VkMvJyw5th1T-WdGQnn4xWg@mail.gmail.com>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1354274345;51ab6268;
+	id S1751182Ab2K3Jji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 04:39:38 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:54116 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750806Ab2K3Jjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 04:39:36 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qAU9Uu5H028941
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 30 Nov 2012 10:30:56 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TeN42-0003WO-B4; Fri, 30 Nov 2012 10:39:18 +0100
+In-Reply-To: <7vvccop6dv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 29 Nov 2012 11:15:56 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 30 Nov 2012 10:30:57 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: qAU9Uu5H028941
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1354872659.25744@5yPCcuPqsMUx5B8fJQskGg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 30.11.2012, at 04:35, viresh kumar wrote:
+> That "shell-style" contradicts with what fast-import.c says, though.
+> It claims to grok \octal and described as C-style.
 
-> On 30 November 2012 09:03, Nicolas Pitre <nicolas.pitre@linaro.org> wrote:
-> 
->> Have a look at the .mailmap file in the top directory of your repo.
-> 
-> Repeating what i said to David in other mail:
-> 
-> I have my name there :)
-> 
-> I thought using names with different case is actually different then misspelling
-> it. And so, everybody must not be required to update their names in mailmap
-> with different case. So, with same email id and same name (that may be in
-> different case), we can show commits together in shortlog.
+As Peff mentionned, my last version is better, although still a bit
+incomplete. My new version documents things that _must_ be escaped, but
+not what _can_.
 
-I don't see how wrong case is different from any other form of misspelling. And mailmap is there precisely to handle such problems. Now, if these case issues were for some reasons very frequent, it might be worth adding dedicated support for it. But this seems dubious to me -- do you have any evidence for this? Indeed, do you have more than just the one example?
+I'm reluctant to try being exhaustive in the .txt documentation if there
+is an exhaustive comment in the code. One option would be to actually
+turn the comment into an official specification by moving it to the .txt
+file, but that goes far beyond the scope of my patch.
 
-In a nutshell, there seem to be two options here, and I know which *I* find more appealing ;)
-
-1) continue this discussion over several emails to design a new feature (an option, config setting, whatever) to handle your special case, then sit down and write code for it, add documentation, add test cases to test it.
-
-2) You just add a single entry to your mailmap to solve your problem at hand. :-)
-
-
-Cheers,
-Max
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
