@@ -1,65 +1,86 @@
-From: Viresh Kumar <viresh.kumar@linaro.org>
-Subject: Re: [Query] Can we ignore case for commiters name in shortlog?
-Date: Fri, 30 Nov 2012 09:02:15 +0530
-Message-ID: <CAKohpom6PBbC+vp9X4o3ioo1PS9kRbHKiWuMxuR1WeGOeA7L5Q@mail.gmail.com>
-References: <CAOh2x==NBeeoE2=PhaDC143ZF_xHKD5m=Po+-DS2X43CEeGiEQ@mail.gmail.com>
-	<CAJDDKr7yr2JSutcEy1mz-SfMq8ZdNzR3+s++ooenn5+wD-LDAw@mail.gmail.com>
+From: Michael Weiser <m.weiser@science-computing.de>
+Subject: Re: [PATCH] Extend runtime prefix computation
+Date: Fri, 30 Nov 2012 11:45:32 +0100
+Message-ID: <20121130104532.GC2640@science-computing.de>
+References: <20121127163004.GC7499@science-computing.de>
+ <CABPQNSYhscHdnTFLye=oif_R84kpdaVsrCK+-174v7Ugrae_yQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 04:32:33 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 11:55:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeHL5-0006FB-FH
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 04:32:31 +0100
+	id 1TeOFt-0000dV-Vs
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 11:55:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156Ab2K3DcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 22:32:16 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:55656 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373Ab2K3DcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 22:32:16 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so27259iay.19
-        for <git@vger.kernel.org>; Thu, 29 Nov 2012 19:32:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=HeOyNmRlNeI0NglbV1m9jtMj28z9mmwm3mpFpj1x3Oc=;
-        b=hToYJhTOm2IzkaD2tuXlp2VWr1BwiE+DvrhOev5WNC9Ms1ufnW7dNPPureCB5v6k5n
-         VVeUhtAoNSvZpRykYY0Nqx42adjliK3x+2pRigjmN52GzueVdGVvXT7KOXaAM9Ro9zgw
-         k3LEEqhA1bXQ2FcuGm2Po/G4lt1hRmkMAbpz2yDxdPcWZ7kO9QmcpqUobSbS43vmOic1
-         tC8aIZIlMdOZqIRQxx2sMSPSSYRqdzaYxlF/GR/nWQviD+5Be7t1ypzfQc9grzyp2N2p
-         MvwxvY01SjKXVWy2pclSiltRK/gPD1kBtnsN2GmhCU/nhVrA0CSG8c8D8ENwGGCRHpOd
-         Ccow==
-Received: by 10.43.4.70 with SMTP id ob6mr6456568icb.56.1354246335582; Thu, 29
- Nov 2012 19:32:15 -0800 (PST)
-Received: by 10.64.51.134 with HTTP; Thu, 29 Nov 2012 19:32:15 -0800 (PST)
-In-Reply-To: <CAJDDKr7yr2JSutcEy1mz-SfMq8ZdNzR3+s++ooenn5+wD-LDAw@mail.gmail.com>
-X-Gm-Message-State: ALoCoQkw0uzzVXFF8TZPuYVWicrpx8v47AJqQnmu/N5cunoqbNXIbdzONUIDFgvNUlDZ2ofSGTeR
+	id S1757467Ab2K3KzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 05:55:19 -0500
+Received: from mx4.science-computing.de ([193.197.16.30]:11259 "EHLO
+	mx4.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755268Ab2K3KzR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2012 05:55:17 -0500
+X-Greylist: delayed 585 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Nov 2012 05:55:17 EST
+Received: from localhost (localhost [127.0.0.1])
+	by scmail.science-computing.de (Postfix) with ESMTP id EF170414008;
+	Fri, 30 Nov 2012 11:45:31 +0100 (CET)
+X-Virus-Scanned: amavisd-new
+Received: from scmail.science-computing.de ([127.0.0.1])
+	by localhost (obitest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7b6nVYVB+hEZ; Fri, 30 Nov 2012 11:45:31 +0100 (CET)
+Received: from science-computing.de (dhcphag71-95.science-computing.de [10.10.11.95])
+	by scmail.science-computing.de (Postfix) with ESMTPS id 435F7414006;
+	Fri, 30 Nov 2012 11:45:31 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <CABPQNSYhscHdnTFLye=oif_R84kpdaVsrCK+-174v7Ugrae_yQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30 November 2012 08:54, David Aguilar <davvid@gmail.com> wrote:
-> There's a feature that does exactly this.
->
-> http://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html
->
-> See the section called "Mapping Authors".
-> It discusses the .mailmap file.
+Hello Erik,
 
-I have my name there :)
+On Fri, Nov 30, 2012 at 11:20:52AM +0100, Erik Faye-Lund wrote:
 
-I thought using names with different case is actually different then misspelling
-it. And so, everybody must not be required to update their names in mailmap
-with different case. So, with same email id and same name (that may be in
-different case), we can show commits together in shortlog.
+> > +#if defined(__linux__)
+> > +               struct stat st;
+> > +               if (!stat("/proc/self/exe", &st)) {
+> > +                       abs_argv0 = xstrdup(real_path("/proc/self/exe"));
+> > +               }
+> > +#elif defined(__APPLE__)
+> > +               /* Mac OS X has realpath, which incidentally allocates its own
+> > +                * memory, which in turn is why we do all the xstrdup's in the
+> > +                * other cases. */
+> > +               abs_argv0 = realpath(argv0, NULL);
+> > +#endif
+> ...perhaps a "GetModuleFileName(NULL, ...)" for Windows is in place here?
 
---
-viresh
+Agreed. However, I do not use git on Windows and don't have a Windows
+devel toolchain in place. So I guess this should be added in a separate
+patch by someone actually in need of it and in a position to develop and
+test it?
+
+Thanks,
+-- 
+Michael Weiser                science + computing ag
+Senior Systems Engineer       Geschaeftsstelle Duesseldorf
+                              Martinstrasse 47-55, Haus A
+phone: +49 211 302 708 32     D-40223 Duesseldorf
+fax:   +49 211 302 708 50     www.science-computing.de
+-- 
+Vorstandsvorsitzender/Chairman of the board of management:
+Gerd-Lothar Leonhart
+Vorstand/Board of Management:
+Dr. Bernd Finkbeiner, Michael Heinrichs, 
+Dr. Arno Steitz, Dr. Ingrid Zech
+Vorsitzender des Aufsichtsrats/
+Chairman of the Supervisory Board:
+Philippe Miltin
+Sitz/Registered Office: Tuebingen
+Registergericht/Registration Court: Stuttgart
+Registernummer/Commercial Register No.: HRB 382196
