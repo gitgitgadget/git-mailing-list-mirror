@@ -1,144 +1,67 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] Extend runtime prefix computation
-Date: Fri, 30 Nov 2012 11:20:52 +0100
-Message-ID: <CABPQNSYhscHdnTFLye=oif_R84kpdaVsrCK+-174v7Ugrae_yQ@mail.gmail.com>
-References: <20121127163004.GC7499@science-computing.de>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael Weiser <M.Weiser@science-computing.de>
-X-From: git-owner@vger.kernel.org Fri Nov 30 11:29:25 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/4] t4041 (diff-submodule-option): minor cleanup
+Date: Fri, 30 Nov 2012 17:07:32 +0530
+Message-ID: <1354275456-11104-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 30 12:38:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeNqW-0001Lv-S4
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 11:29:25 +0100
+	id 1TeOuu-0002aT-5H
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 12:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757356Ab2K3K3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 05:29:08 -0500
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:35970 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757349Ab2K3K3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 05:29:06 -0500
-Received: by mail-vc0-f170.google.com with SMTP id fl11so28242063vcb.1
-        for <git@vger.kernel.org>; Fri, 30 Nov 2012 02:29:05 -0800 (PST)
+	id S1757646Ab2K3Lhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 06:37:43 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:59889 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691Ab2K3Lhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 06:37:42 -0500
+Received: by mail-da0-f46.google.com with SMTP id p5so192334dak.19
+        for <git@vger.kernel.org>; Fri, 30 Nov 2012 03:37:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=mgj7KtzUfYt1DXewZBxBxWhA1vDwCxCH3yEU0V4NOl8=;
-        b=dUiZqVxtH/eDGEv7dbJVGfcPoKsz/OB/dcT+llGxxIlx14HqbsrWNbBars3NhFZOtV
-         tv7+G+vRwZYaPV7rC6l4TFDFwWA5FfsUeEhfVEqdWhGt/1Zg1pDkVUa6/vdGv02FxdHG
-         VUsB/mDPN0tiMtwRHWc9quRTPJ3exggd2v0Bdd69SD/6Q3ScUbOStIA4xhtRToEgnOQe
-         L+KBHCyEw71GArkPPRwCeLXtu7X/ROT38n9t59nY+/pXIz6h/nvJDLic17OgISs2qGhg
-         FKfSRwJM0i7YJiKU5jN9i74I4T8rGzkbjYP1VsAQjtvjMEWqa8P6WxIqXP/xsCDYirxN
-         2yQQ==
-Received: by 10.58.162.130 with SMTP id ya2mr675050veb.2.1354270892419; Fri,
- 30 Nov 2012 02:21:32 -0800 (PST)
-Received: by 10.58.169.106 with HTTP; Fri, 30 Nov 2012 02:20:52 -0800 (PST)
-In-Reply-To: <20121127163004.GC7499@science-computing.de>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=Ykfp3q0C4SHhVp80Oc2kgf6RLAz5LitRPTdqFhmXoUM=;
+        b=LdQaSWZBjFHRA+bw9q8RUdRZ1L3hqD4ezXXOELscPQC53KDJ4H0Qn7jRkH3rAiLcqI
+         WRn3eieow8+9N8Kcs7A9ltX0NJxpTSqr9bMUWrefT/xGptG4HHvobiw2r7NdBZHOVzj1
+         g32odmK9XRifT1tpYQBvBzHH3Btnx8hAxcY9E/NS8G9a153ztozvKTI9hKFYa2UzPxr0
+         wHR0KA4QcMzuvilrJwWCTf2PuayO2oA67/JnBN4EzmzWiDcCA7RcN8auW+TKU4rXlpwo
+         QvGAPR8aq2Wha4/BZj5ArHfQd7y3Hzut7DUd4DZaBsRQMpnMWudl2IGRimY/RW4nfXGi
+         jo3g==
+Received: by 10.68.232.195 with SMTP id tq3mr4838562pbc.70.1354275462433;
+        Fri, 30 Nov 2012 03:37:42 -0800 (PST)
+Received: from fran.foss.conf ([59.90.224.156])
+        by mx.google.com with ESMTPS id ok8sm2923120pbb.42.2012.11.30.03.37.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Nov 2012 03:37:41 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 27, 2012 at 5:30 PM, Michael Weiser
-<M.Weiser@science-computing.de> wrote:
-> Support determining the binaries' installation path at runtime even if
-> called without any path components (i.e. via search path). Implement
-> fallback to compiled-in prefix if determination fails or is impossible.
->
-> Signed-off-by: Michael Weiser <weiser@science-computing.de>
-> ---
-> - Has two very minor memory leaks - function is called only once per
->   program execution. Do we care? Alternative: Use static buffer instead.
->
->  exec_cmd.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++-------------
->  1 files changed, 53 insertions(+), 15 deletions(-)
->
-> diff --git a/exec_cmd.c b/exec_cmd.c
-> index 125fa6f..d50d7f8 100644
-> --- a/exec_cmd.c
-> +++ b/exec_cmd.c
-> @@ -4,28 +4,22 @@
->  #define MAX_ARGS       32
->
->  static const char *argv_exec_path;
-> -static const char *argv0_path;
-> +static const char *argv0_path = NULL;
->
->  const char *system_path(const char *path)
->  {
-> -#ifdef RUNTIME_PREFIX
-> -       static const char *prefix;
-> -#else
->         static const char *prefix = PREFIX;
-> -#endif
->         struct strbuf d = STRBUF_INIT;
->
->         if (is_absolute_path(path))
->                 return path;
->
->  #ifdef RUNTIME_PREFIX
-> -       assert(argv0_path);
-> -       assert(is_absolute_path(argv0_path));
-> -
-> -       if (!prefix &&
-> -           !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
-> -           !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
-> -           !(prefix = strip_path_suffix(argv0_path, "git"))) {
-> +       if (!argv0_path ||
-> +           !is_absolute_path(argv0_path) ||
-> +           (!(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
-> +            !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
-> +            !(prefix = strip_path_suffix(argv0_path, "git")))) {
->                 prefix = PREFIX;
->                 trace_printf("RUNTIME_PREFIX requested, "
->                                 "but prefix computation failed.  "
-> @@ -41,20 +35,64 @@ const char *system_path(const char *path)
->  const char *git_extract_argv0_path(const char *argv0)
->  {
->         const char *slash;
-> +       char *abs_argv0 = NULL;
->
->         if (!argv0 || !*argv0)
->                 return NULL;
->         slash = argv0 + strlen(argv0);
->
-> +       /* walk to the first slash from the end */
->         while (argv0 <= slash && !is_dir_sep(*slash))
->                 slash--;
->
-> +       /* if there was a slash ... */
->         if (slash >= argv0) {
-> -               argv0_path = xstrndup(argv0, slash - argv0);
-> -               return slash + 1;
-> +               /* ... it's either an absolute path */
-> +               if (is_absolute_path(argv0)) {
-> +                       /* FIXME: memory leak here */
-> +                       argv0_path = xstrndup(argv0, slash - argv0);
-> +                       return slash + 1;
-> +               }
-> +
-> +               /* ... or a relative path, in which case we have to make it
-> +                * absolute first and do the whole thing again */
-> +               abs_argv0 = xstrdup(real_path(argv0));
-> +       } else {
-> +               /* argv0 is no path at all, just a name. Resolve it into a
-> +                * path. Unfortunately, this gets system specific. */
-> +#if defined(__linux__)
-> +               struct stat st;
-> +               if (!stat("/proc/self/exe", &st)) {
-> +                       abs_argv0 = xstrdup(real_path("/proc/self/exe"));
-> +               }
-> +#elif defined(__APPLE__)
-> +               /* Mac OS X has realpath, which incidentally allocates its own
-> +                * memory, which in turn is why we do all the xstrdup's in the
-> +                * other cases. */
-> +               abs_argv0 = realpath(argv0, NULL);
-> +#endif
+Hi,
 
-...perhaps a "GetModuleFileName(NULL, ...)" for Windows is in place here?
+v1 is here: 1354005692-2809-1-git-send-email-artagnon@gmail.com
+
+This is in response to Junio's review of v1.
+
+Thanks.
+
+Ram
+
+Ramkumar Ramachandra (4):
+  t4041 (diff-submodule-option): don't hardcode SHA-1 in expected
+    outputs
+  t4041 (diff-submodule-option): parse digests sensibly
+  t4041 (diff-submodule-option): rewrite add_file() routine
+  t4041 (diff-submodule-option): modernize style
+
+ t/t4041-diff-submodule-option.sh |  496 +++++++++++++++++++-------------------
+ 1 files changed, 247 insertions(+), 249 deletions(-)
+
+-- 
+1.7.8.1.362.g5d6df.dirty
