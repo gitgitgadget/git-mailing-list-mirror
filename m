@@ -1,86 +1,71 @@
-From: Michael Weiser <m.weiser@science-computing.de>
-Subject: Re: [PATCH] Extend runtime prefix computation
-Date: Fri, 30 Nov 2012 11:45:32 +0100
-Message-ID: <20121130104532.GC2640@science-computing.de>
-References: <20121127163004.GC7499@science-computing.de>
- <CABPQNSYhscHdnTFLye=oif_R84kpdaVsrCK+-174v7Ugrae_yQ@mail.gmail.com>
+From: Damien Robert <damien.olivier.robert+gmane@gmail.com>
+Subject: Re: [Query] Can we ignore case for commiters name in shortlog?
+Date: Fri, 30 Nov 2012 13:01:55 +0000 (UTC)
+Message-ID: <k9aao3$til$1@ger.gmane.org>
+References: <CAOh2x==NBeeoE2=PhaDC143ZF_xHKD5m=Po+-DS2X43CEeGiEQ@mail.gmail.com> <CAJDDKr7yr2JSutcEy1mz-SfMq8ZdNzR3+s++ooenn5+wD-LDAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 11:55:44 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 30 14:04:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeOFt-0000dV-Vs
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 11:55:38 +0100
+	id 1TeQGL-0000BJ-2Y
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 14:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757467Ab2K3KzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 05:55:19 -0500
-Received: from mx4.science-computing.de ([193.197.16.30]:11259 "EHLO
-	mx4.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755268Ab2K3KzR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2012 05:55:17 -0500
-X-Greylist: delayed 585 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Nov 2012 05:55:17 EST
-Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id EF170414008;
-	Fri, 30 Nov 2012 11:45:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new
-Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (obitest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7b6nVYVB+hEZ; Fri, 30 Nov 2012 11:45:31 +0100 (CET)
-Received: from science-computing.de (dhcphag71-95.science-computing.de [10.10.11.95])
-	by scmail.science-computing.de (Postfix) with ESMTPS id 435F7414006;
-	Fri, 30 Nov 2012 11:45:31 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CABPQNSYhscHdnTFLye=oif_R84kpdaVsrCK+-174v7Ugrae_yQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932928Ab2K3ND5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 08:03:57 -0500
+Received: from plane.gmane.org ([80.91.229.3]:54569 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932233Ab2K3ND4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 08:03:56 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TeQG2-0007jo-EQ
+	for git@vger.kernel.org; Fri, 30 Nov 2012 14:03:54 +0100
+Received: from phare.normalesup.org ([129.199.129.80])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Nov 2012 14:03:54 +0100
+Received: from damien.olivier.robert+gmane by phare.normalesup.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Nov 2012 14:03:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: phare.normalesup.org
+X-Newsreader: Flrn (0.9.20070704)
+X-Start-date: Fri, 30 Nov 2012 13:58:29 +0100 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210921>
 
-Hello Erik,
+David Aguilar  wrote in message
+<CAJDDKr7yr2JSutcEy1mz-SfMq8ZdNzR3+s++ooenn5+wD-LDAw@mail.gmail.com>:
+> There's a feature that does exactly this.
+> http://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html
 
-On Fri, Nov 30, 2012 at 11:20:52AM +0100, Erik Faye-Lund wrote:
+By the way, the mailmap ignore case which is annoying.
+I have commits as Damien.Olivier.Robert+git@gmail.com and a dummy email
+address robert@numenor.night-elves. I thought that putting:
 
-> > +#if defined(__linux__)
-> > +               struct stat st;
-> > +               if (!stat("/proc/self/exe", &st)) {
-> > +                       abs_argv0 = xstrdup(real_path("/proc/self/exe"));
-> > +               }
-> > +#elif defined(__APPLE__)
-> > +               /* Mac OS X has realpath, which incidentally allocates its own
-> > +                * memory, which in turn is why we do all the xstrdup's in the
-> > +                * other cases. */
-> > +               abs_argv0 = realpath(argv0, NULL);
-> > +#endif
-> ...perhaps a "GetModuleFileName(NULL, ...)" for Windows is in place here?
+Damien Robert <Damien.Olivier.Robert+git@gmail.com> <robert@numenor.night-elves>
 
-Agreed. However, I do not use git on Windows and don't have a Windows
-devel toolchain in place. So I guess this should be added in a separate
-patch by someone actually in need of it and in a position to develop and
-test it?
+in the .mailmap would unify the two adresses, but it does not:
 
-Thanks,
--- 
-Michael Weiser                science + computing ag
-Senior Systems Engineer       Geschaeftsstelle Duesseldorf
-                              Martinstrasse 47-55, Haus A
-phone: +49 211 302 708 32     D-40223 Duesseldorf
-fax:   +49 211 302 708 50     www.science-computing.de
--- 
-Vorstandsvorsitzender/Chairman of the board of management:
-Gerd-Lothar Leonhart
-Vorstand/Board of Management:
-Dr. Bernd Finkbeiner, Michael Heinrichs, 
-Dr. Arno Steitz, Dr. Ingrid Zech
-Vorsitzender des Aufsichtsrats/
-Chairman of the Supervisory Board:
-Philippe Miltin
-Sitz/Registered Office: Tuebingen
-Registergericht/Registration Court: Stuttgart
-Registernummer/Commercial Register No.: HRB 382196
+git shortlog -se
+    15  Damien Robert <Damien.Olivier.Robert+git@gmail.com>
+    266  Damien Robert <damien.olivier.robert+git@gmail.com>
+
+as you can see, the Damien.Olivier.Robert+git as been lowercased to
+damien.olivier.robert, so I am forced to write a mailmap like this:
+
+Damien Robert <Damien.Olivier.Robert+git@gmail.com> <robert@numenor.night-elves>
+Damien Robert <Damien.Olivier.Robert+git@gmail.com> <Damien.Olivier.Robert+git@gmail.com>
+
+git shortlog -se
+   281  Damien Robert <damien.olivier.robert+git@gmail.com>
