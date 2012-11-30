@@ -1,101 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 1/4] t4041 (diff-submodule-option): don't hardcode SHA-1 in expected outputs
-Date: Fri, 30 Nov 2012 17:07:33 +0530
-Message-ID: <1354275456-11104-2-git-send-email-artagnon@gmail.com>
-References: <1354275456-11104-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 12:38:17 2012
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC 0/5] win32: support echo for terminal-prompt
+Date: Fri, 30 Nov 2012 11:16:59 +0100
+Message-ID: <CABPQNSZ7YRgvS1=SR=Nx0wcn+NXCVwqjVShk-ug3=yX62RH-oQ@mail.gmail.com>
+References: <1352815447-8824-1-git-send-email-kusmabite@gmail.com>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: peff@peff.net
+To: git@vger.kernel.org, msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Fri Nov 30 11:25:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeOv6-0002nU-E7
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 12:38:12 +0100
+	id 1TeNnA-0005nW-UJ
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 11:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757753Ab2K3Lhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 06:37:46 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:55701 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277Ab2K3Lhp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 06:37:45 -0500
-Received: by mail-pa0-f46.google.com with SMTP id bh2so291681pad.19
-        for <git@vger.kernel.org>; Fri, 30 Nov 2012 03:37:44 -0800 (PST)
+	id S1757361Ab2K3KZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2012 05:25:41 -0500
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:61267 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757356Ab2K3KZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2012 05:25:39 -0500
+X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Nov 2012 05:25:39 EST
+Received: by mail-vc0-f170.google.com with SMTP id fl11so28237652vcb.1
+        for <git@vger.kernel.org>; Fri, 30 Nov 2012 02:25:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=kdqKYky++REoOrxNt67+DKT/Srd4SQhgkNR1It5LGt4=;
-        b=MkW2Updif4WtcDUHXlgegIblQVnKuF6ai2Hd5UPfS5qYRRjiu6Se9Ti9fr7XC9E4ik
-         37UEZTIc8GlccwFgEuIzgibY4zCnTm8q3XlNFbHHkvQimx9tQG2FO66d0v0FSswsiWeT
-         UzrTzIz3x3fuslQ/nubGI1EARhuDXT1Gp8LuP94trLgiwLy3UUP9Hbz8gMozwYFwBEaW
-         /z3XmjRxmcBtD7/fQ1MqONvGitaS2ITKgznmZ/Ju0JBhpFba0N2Lws6HIqgwoFjFMrzx
-         hmvis3PjuGYudrgE51+WTULLxPqmeDL4Mk57tKkpA+POqMbdsE77yXDr8LYBrZVfeaoI
-         3HzA==
-Received: by 10.66.73.225 with SMTP id o1mr2390836pav.70.1354275464797;
-        Fri, 30 Nov 2012 03:37:44 -0800 (PST)
-Received: from fran.foss.conf ([59.90.224.156])
-        by mx.google.com with ESMTPS id ok8sm2923120pbb.42.2012.11.30.03.37.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 30 Nov 2012 03:37:44 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
-In-Reply-To: <1354275456-11104-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=fT7QZCNSZXUK9cUzALjdFXDSfSQmBmZOLQE/ZLE/GtA=;
+        b=cvcxrZ2CBBwVVQ+h/BZ9RVWiUvuc/vx5mfGTvg+SZV8xiDXVy+/hwbncBdnXm8opwf
+         QqIBNFJq11NhXB5d+M85DDSMOKxEUMFJJYQ3UgGdwwah0HfVtilIKWxNPgMW2xbpXEO+
+         MHgX89arrAvYSkBb0EQUzlbrOMX4C4GUh+MRgOOCbfKjKpe2j9qBKiz1fEtbfLk+kALT
+         df+rEX4/U3R8VPvl/17YzhiBNH/1/z88rbHi7PcUZ7wDPq5UGNhu2or65AUO4BMsKmgO
+         abYU9zqa70DXtRs+RRoS/wBzGRv1xo6vAl9iG1me5vEcPynmmS4VrbhK5dUKNPORwZl7
+         oveA==
+Received: by 10.52.16.164 with SMTP id h4mr555508vdd.21.1354270659522; Fri, 30
+ Nov 2012 02:17:39 -0800 (PST)
+Received: by 10.58.169.106 with HTTP; Fri, 30 Nov 2012 02:16:59 -0800 (PST)
+In-Reply-To: <1352815447-8824-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The expected SHA-1 digests are always available in variables.  Use
-them instead of hardcoding.
+Ping?
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- t/t4041-diff-submodule-option.sh |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 57e8a9d..5377639 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -62,7 +62,7 @@ test_expect_success '--submodule=short overrides diff.submodule' "
- 	cat >expected <<-EOF &&
- diff --git a/sm1 b/sm1
- new file mode 160000
--index 0000000..a2c4dab
-+index 0000000..$head1
- --- /dev/null
- +++ b/sm1
- @@ -0,0 +1 @@
-@@ -77,7 +77,7 @@ test_expect_success 'diff.submodule does not affect plumbing' '
- 	cat >expected <<-EOF &&
- 	diff --git a/sm1 b/sm1
- 	new file mode 160000
--	index 0000000..a2c4dab
-+	index 0000000..$head1
- 	--- /dev/null
- 	+++ b/sm1
- 	@@ -0,0 +1 @@
-@@ -173,10 +173,10 @@ mv sm1-bak sm1
- test_expect_success 'typechanged submodule(submodule->blob), --cached' "
- 	git diff --submodule=log --cached >actual &&
- 	cat >expected <<-EOF &&
--Submodule sm1 41fbea9...0000000 (submodule deleted)
-+Submodule sm1 $head4...0000000 (submodule deleted)
- diff --git a/sm1 b/sm1
- new file mode 100644
--index 0000000..9da5fb8
-+index 0000000..$head5
- --- /dev/null
- +++ b/sm1
- @@ -0,0 +1 @@
-@@ -190,7 +190,7 @@ test_expect_success 'typechanged submodule(submodule->blob)' "
- 	cat >expected <<-EOF &&
- diff --git a/sm1 b/sm1
- deleted file mode 100644
--index 9da5fb8..0000000
-+index $head5..0000000
- --- a/sm1
- +++ /dev/null
- @@ -1 +0,0 @@
--- 
-1.7.8.1.362.g5d6df.dirty
+On Tue, Nov 13, 2012 at 3:04 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> We currently only support getpass, which does not echo at all, for
+> git_terminal_prompt on Windows. The Windows console is perfectly
+> capable of doing this, so let's make it so.
+>
+> This implementation tries to reuse the /dev/tty-code as much as
+> possible.
+>
+> The big reason that this becomes a bit hairy is that Ctrl+C needs
+> to be handled correctly, so we don't leak the console state to a
+> non-echoing setting when a user aborts.
+>
+> Windows makes this bit a little bit tricky, in that we need to
+> implement SIGINT for fgetc. However, I suspect that this is a good
+> thing to do in the first place.
+>
+> An earlier iteration was also breifly discussed here:
+> http://mid.gmane.org/CABPQNSaUCEDU4+2N63n0k_XwSXOP_iFZG3GEYSPSBPcSVV8wRQ@mail.gmail.com
+>
+> The series can also be found here, only with an extra patch that
+> makes the (interactive) testing a bit easier:
+>
+> https://github.com/kusma/git/tree/work/terminal-cleanup
+>
+> Erik Faye-Lund (5):
+>   mingw: make fgetc raise SIGINT if apropriate
+>   compat/terminal: factor out echo-disabling
+>   compat/terminal: separate input and output handles
+>   mingw: reuse tty-version of git_terminal_prompt
+>   mingw: get rid of getpass implementation
+>
+>  compat/mingw.c    |  91 +++++++++++++++++++++++++++-----------
+>  compat/mingw.h    |   8 +++-
+>  compat/terminal.c | 129 ++++++++++++++++++++++++++++++++++++++++--------------
+>  3 files changed, 169 insertions(+), 59 deletions(-)
+>
+> --
+> 1.8.0.7.gbeffeda
+>
