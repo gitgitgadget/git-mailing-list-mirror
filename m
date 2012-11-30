@@ -1,73 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cache-tree: invalidate i-t-a paths after writing trees
-Date: Thu, 29 Nov 2012 16:06:51 -0800
-Message-ID: <7vhao8neck.fsf@alter.siamese.dyndns.org>
-References: <3E62F933-76CD-4578-8684-21444EAA454F@JonathonMah.com>
- <1352459040-14452-1-git-send-email-pclouds@gmail.com>
- <7vy5ibouo4.fsf@alter.siamese.dyndns.org>
- <CACsJy8DEwpg0gY1o6gSB747W5fAYYxz97e-qnkQthSut3B7Eag@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH v5 0/2] submodule update: add --remote for submodule's
+ upstream changes
+Date: Thu, 29 Nov 2012 20:11:20 -0500
+Message-ID: <CABURp0piLAG+hEsav-uro+nq9ZRZ9CFFjVG8VKYk3ZtYvRi8=A@mail.gmail.com>
+References: <CABURp0oSo9ACFKkBEK1_qNu2mEAu1=nUJxnROaRsXiaWvHih=w@mail.gmail.com>
+ <cover.1354130656.git.wking@tremily.us> <20121129191326.GC27409@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathon Mah <me@jonathonmah.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 01:07:12 2012
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:12:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeE8M-0004Qn-T2
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 01:07:11 +0100
+	id 1TeF9Z-00080l-4t
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Nov 2012 02:12:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248Ab2K3AGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2012 19:06:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64397 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754947Ab2K3AGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2012 19:06:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DFAC97B7;
-	Thu, 29 Nov 2012 19:06:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uJbVi++NzF4LSjbV5Dv1IS93xmQ=; b=kdZOvY
-	Zd4lBbrf/Zu5jBRAGBcdPWA6fQT+SxJUZvxkhV9/2ltYU0CpQNDLWfkZI7gt2cdJ
-	PXsruuqUx5MvTz5TO1CUeaSkfDcWi+3rFafDe3vT3rQBKATAcPpMKnGn0OJHaKcf
-	BwOccRHCts+wMasM1IPcQzQYXWP/ZMvD3RHQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w6IR1CdUDhmPtHrH+OkI9hKdRe3QqFf/
-	W4i6qCPPOtq5n0ApXTEpkr5XhlKj1xYHgKgIrZCsXloA1A9pM3iWGH4xZIxLIaSD
-	g3j9gKVdoxNtVPNOO9szl5BkJXi6LL+HT7XEtssrnSWj3CgJ8wJAFMg7SiPSpCCy
-	g0UKL95UqtQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BF1597B6;
-	Thu, 29 Nov 2012 19:06:53 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFEB697B5; Thu, 29 Nov 2012
- 19:06:52 -0500 (EST)
-In-Reply-To: <CACsJy8DEwpg0gY1o6gSB747W5fAYYxz97e-qnkQthSut3B7Eag@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Sat, 10 Nov 2012 18:04:32 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D83827AA-3A81-11E2-9DF7-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753778Ab2K3BLm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2012 20:11:42 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:42232 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303Ab2K3BLm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2012 20:11:42 -0500
+Received: by mail-lb0-f174.google.com with SMTP id gi11so70867lbb.19
+        for <git@vger.kernel.org>; Thu, 29 Nov 2012 17:11:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MuHojS2O+azOZILOuUgLuIS4GRSF9pVRk6FWpfAx6vE=;
+        b=GutaP8LlqLj67BaWODW+rH0ViPRnuKMfWyv0ruM+4RwH9w6cFdJKilqPCMoJ1Dusuv
+         DyjWXDQ6bTIzX9miKvSly+xqSQpRJDl+xzkWfF9VhfeI3xQb4JezHZTgMBLTuFvZaw2v
+         wMHhi+aTfaFsr6K/5h1zF0Emlymc1YtiKyZccf5NS2WVE8QAnowEYbUmhe1jjmmPokZK
+         EIExIdfrNFbxJJfHG/YgYApUfwTjIirMxK9anndkGAADPsui5PRgwUJJnDLWin/7sgGf
+         DMGMQJ+kI1vPbtn/+j3VEoHR/wPax2Y/QuIDx+HbOjitA2gksRJfyrdnaqTvmOh9suo4
+         c8jQ==
+Received: by 10.152.111.131 with SMTP id ii3mr23102560lab.37.1354237900330;
+ Thu, 29 Nov 2012 17:11:40 -0800 (PST)
+Received: by 10.114.38.3 with HTTP; Thu, 29 Nov 2012 17:11:20 -0800 (PST)
+In-Reply-To: <20121129191326.GC27409@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210885>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-
->> An alternative might be to add a "phoney" bit next to "used" in the
->> cache_tree structure, mark the cache tree as phoney when we skip an
->> entry marked as CE_REMOVE or CE_ITA, and make the postprocessing
->> loop this patch adds aware of that bit, instead of iterating over
->> the index entries; instead, it would recurse the resulting cache
->> tree and invalidate parts of the tree that have subtrees with the
->> "phoney" bit set, or something.
+On Thu, Nov 29, 2012 at 2:13 PM, W. Trevor King <wking@tremily.us> wrot=
+e:
 >
-> Yeah, that sounds better.
+> On Thu, Nov 29, 2012 at 01:29:12PM -0500, Phil Hord wrote:
+>> On Fri, Nov 23, 2012 at 12:54 PM, W. Trevor King <wking@tremily.us> =
+wrote:
+>> > [snip initial thoughts leading to the update --remote v5]
+>>
+>> I was thinking the same thing, but reading this whole thread a coupl=
+e of
+>> weeks late.  Thanks for noticing.
+>>
+>> Moreover, I think that 'git submodule update --pull' is also the wro=
+ng way
+>> to spell this action.   Maybe you are misled from the outset by your
+>> current workflow:
+>
+> Did you see my v5 (add --remote) series?
 
-Did anything happen to this topic after this?
+Eventually, I did.  Sorry for the out-of-order replies.
+
+
+>> For that reason, I don't like the --pull switch since it implies a
+>> fetch, but I will not always want to do a fetch.
+>
+>   $ git submodule update --remote --no-fetch
+>
+> will not fetch the submodule remotes.
+
+This seems precisely backwards to me. Why not use
+
+  $ git submodule update --remote --fetch
+
+to do your "default" behavior instead?   I suppose I am arguing
+against the tide of the dominant workflow, but the fetch-by-default
+idea needlessly conflates two primitive operations:  "float" and
+"fetch".
+
+>> I don't know which remote I should be tracking, though.  I suppose
+>> it is 'origin' for now, but maybe it is just whatever
+>> $superproject's HEAD's remote-tracking branch indicates.
+>
+> With the --remote series, I always use "origin" because that's what
+> `submodule add` should be setting up.  If people want to change that
+> up by hand, we may need a submodule.<name>.remote configuration
+> option.
+
+I've always felt that the "origin" defaults are broken and are simply
+being ignored because most users do not trip over them.  But ISTR that
+submodule commands use the remote indicated by the superproject's
+current remote-tracking configuration, with a fallback to 'origin' if
+there is none.  Sort of a "best effort" algorithm, I think.  Am I
+remembering that wrong?
+
+
+>> I am not sure I want the gitlinks in superproject to update automati=
+cally
+>> in the index, but I definitely do not want to automatically create a=
+ commit
+>> for them.
+>
+> Commits are dissabled by default (see my recent --commit RFC for how
+> they would be enabled).
+>
+>> But I really don't want to figure out how to handle submodule
+>> collisions during a merge (or rebase!) of my superproject with chang=
+es that
+>> someone else auto-committed in his local $superproject as he and I
+>> arbitrarily floated up the upstream independently.  There is nothing=
+ but
+>> loathing down that path.
+>
+> This is true.  I'm not sure how gitlink collisions are currently
+> handled=85
+
+
+They've always been trouble for me.  But it may be that I am ignorant.
+
+Phil
