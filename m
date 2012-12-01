@@ -1,97 +1,91 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: Topics currently in the Stalled category
-Date: Sat, 1 Dec 2012 00:36:58 +0000
-Message-ID: <CAOkDyE-dq+L0Gd4T=8oUeQ4OHE0hgmK4AfUhYgBo0uzq9TrrYw@mail.gmail.com>
-References: <7vpq39up0m.fsf@alter.siamese.dyndns.org>
-	<7vy5hvq1ey.fsf@alter.siamese.dyndns.org>
-	<7vobirq0q2.fsf_-_@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Stitching histories of several repositories
+Date: Sat, 1 Dec 2012 14:41:29 +0530
+Message-ID: <CALkWK0kCQQioCeuwWAAWfKodvOR+w+hB=11MYs5mGviN6Zy5qA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 01:37:26 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 01 10:12:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Teb5B-0002qs-QR
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 01:37:26 +0100
+	id 1Tej7Y-00076x-HI
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 10:12:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755963Ab2LAAhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2012 19:37:06 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:56858 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755619Ab2LAAg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2012 19:36:59 -0500
-Received: by mail-qa0-f46.google.com with SMTP id r4so49307qaq.19
-        for <git@vger.kernel.org>; Fri, 30 Nov 2012 16:36:59 -0800 (PST)
+	id S1751709Ab2LAJLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2012 04:11:53 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:51823 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751646Ab2LAJLv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2012 04:11:51 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so1273543oag.19
+        for <git@vger.kernel.org>; Sat, 01 Dec 2012 01:11:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=GE4eY0Ozda17z2RmHTDtZwwbNveE+ItiFEWMWpBoTyQ=;
-        b=Oag+cW+fwNHvbkflBhxzPMma7cRqMTCrW0fIVW1bDf4whM9MCDgetKEP0ZmyeQXgrp
-         pbbBol9iy5I+YUkxBdHbjSRbMcBf0Gg3hT4GKTsFvudJV54bKCOESBqm93DsEOi+xzpb
-         xJMaoWVLSPSGaSe7Mx5z8UF0U0cHiJ1dQW+MObJgW2SWCBnNCmw1RiIaohp0+xpZRz59
-         ai7Wsc8og+TN8qr7/CwNTOkAvJVY2ejBDeTu4i7np//LbBY3oj0fLLY8GBk4bXWTr8AE
-         tz+FIW3AW4QGpFrnWcPZtt7NJkXzRz7m5PB7dnRPGbAuzRkOHY0K9bW6C1Fy8/K1vH2g
-         YPqw==
-Received: by 10.224.33.205 with SMTP id i13mr5623048qad.35.1354322218982; Fri,
- 30 Nov 2012 16:36:58 -0800 (PST)
-Received: by 10.49.30.74 with HTTP; Fri, 30 Nov 2012 16:36:58 -0800 (PST)
-In-Reply-To: <7vobirq0q2.fsf_-_@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: X6LZDhtLkp3tSqINNHeO37r2Om4
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=8Cw+6oURWLRXboTttTiXJS3g5BHl/fEUZMZ68fZJ9uA=;
+        b=CPp0LcvwG1Dg8DIZuo118hsBiQTluoFgL6jQdU/ai0I7/XJkWvj8UPRDbIlp485nZD
+         Wh3IWe8EFJLVwQmHzkQQM00UmqOyToF4LFx2AkZWTJio63tCz6XLRF5CilBgc0WDTF3P
+         Ar+PmGh75j0s4AcN8bsQBDqjfS1n0FPVytWyfEbZjNHgnJeRvePF1zn4N1dgTNjEE6gz
+         ONytWkzSMjd9rMr7j4XjAc5mYWNiVoM+YP29D1ZNZvIyufQ2R220yz+t4FlcYFT8808J
+         zqc/Tz0RTllRzy+6Za9iHhwKqHYZ8mdiEEGJich/3WL9QTRUCi/yfsv6A25CFoN7gn4x
+         vRGA==
+Received: by 10.60.31.39 with SMTP id x7mr3442878oeh.45.1354353110620; Sat, 01
+ Dec 2012 01:11:50 -0800 (PST)
+Received: by 10.76.75.198 with HTTP; Sat, 1 Dec 2012 01:11:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210955>
 
-On Wed, Nov 21, 2012 at 12:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Here is a list of stalled topics I am having trouble deciding what
-> to do (the default is to dismiss them around feature freeze).
+Hi,
 
-[snipped]
+I've written a tool to stitch the first-parent histories of several
+git repositories.  To illustrate, consider that we have a toplevel git
+repository inside which the other repositories reside.
 
-> * as/check-ignore (2012-11-08) 14 commits
->  - t0007: fix tests on Windows
->  - Documentation/check-ignore: we show the deciding match, not the first
->  - Add git-check-ignore sub-command
->  - dir.c: provide free_directory() for reclaiming dir_struct memory
->  - pathspec.c: move reusable code from builtin/add.c
->  - dir.c: refactor treat_gitlinks()
->  - dir.c: keep track of where patterns came from
->  - dir.c: refactor is_path_excluded()
->  - dir.c: refactor is_excluded()
->  - dir.c: refactor is_excluded_from_list()
->  - dir.c: rename excluded() to is_excluded()
->  - dir.c: rename excluded_from_list() to is_excluded_from_list()
->  - dir.c: rename path_excluded() to is_path_excluded()
->  - dir.c: rename cryptic 'which' variable to more consistent name
->
->  Duy helped to reroll this, but it seems that there weren't any
->  activity since then during my absense.
+  /.git
+  /a/.git
+  /b/.git
 
-I have been delayed several times, but I finally resumed work on
-another re-roll.  I don't think there is any major reworking required;
-just a number of small tweaks.
+The tool pulls in the objects from /a/.git and /b/.git into /.git by
+using alternates.  Then, it gets the list of commits by rev-list'ing
+and emits a fast-import stream rewriting the paths of the files in a/
+from / to a/ and the paths of files in b/ form / to b/ (using M
+040000), taking care to have one unified first-parent line.  It turns
+out that this is quite non-trivial when the individual git
+repositories contain lots of merges.  To illustrate, this is an
+example of how histories from two repositories with one merge commit
+each would be stitched:
 
-> * as/test-tweaks (2012-09-20) 7 commits
->  - tests: paint unexpectedly fixed known breakages in bold red
->  - tests: test the test framework more thoroughly
->  - [SQUASH] t/t0000-basic.sh: quoting of TEST_DIRECTORY is screwed up
->  - tests: refactor mechanics of testing in a sub test-lib
->  - tests: paint skipped tests in bold blue
->  - tests: test number comes first in 'not ok $count - $message'
->  - tests: paint known breakages in bold yellow
->
->  Various minor tweaks to the test framework to paint its output
->  lines in colors that match what they mean better.
->
->  Has the "is this really blue?" issue Peff raised resolved???
+  *   c1f81f1 (refs/figlets/first/origin/master)
+  |\
+  | * 6eaf22f (refs/figlets/first-2/origin/master)
+  * 15cd841
 
-I have a re-roll of this ready - just need to rebase to latest master,
-do a final sanity check, and then send.
+  *   1f2f408 (refs/figlets/second/origin/master)
+  |\
+  | * 4bd7fe3 (refs/figlets/second-2/origin/master)
+  * bfa9f3c
 
-Sorry again for the delays.
+  *   5e1d337 (refs/replay/stitch2, fig/stitch2)
+  |\
+  | * 23437d5 (refs/replay/1f2f40-2)
+  |/
+  *   4f2d70b
+  |\
+  | * e017fa5 (refs/replay/c1f81f-2)
+  * c0251c7
+  * 4036fea
+
+I'd like to know whether the tool would be useful to a wider audience,
+before I polish it and consider submitting it for inclusion in
+contrib/.  I think the tool is especially useful for running bisect
+and tracking bugs that occur in large projects that consist of many
+git repositories.  Will a unified log showing commits in different
+submodules be useful?
+
+Ram
