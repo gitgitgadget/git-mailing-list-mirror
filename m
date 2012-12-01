@@ -1,75 +1,69 @@
-From: Sebastian Leske <Sebastian.Leske@sleske.name>
-Subject: [PATCH v2 3/4] git-svn: Expand documentation for --follow-parent
-Date: Fri, 30 Nov 2012 08:16:30 +0100
-Message-ID: <cf118fcd52a0cf7bdf7b08a5a52cd0e285bd056b.1354324110.git.Sebastian.Leske@sleske.name>
-References: <cover.1354324110.git.Sebastian.Leske@sleske.name>
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Eric Wong <normalperson@yhbt.net>
+From: "=?iso-8859-1?q?Jean-No=EBl?= AVILA" <avila.jn@gmail.com>
+Subject: Bug report : gitattribute export-ignore behavior does not match documentation
+Date: Sat, 1 Dec 2012 12:24:55 +0100
+Message-ID: <201212011224.55686.avila.jn@gmail.com>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 01 12:00:38 2012
+X-From: git-owner@vger.kernel.org Sat Dec 01 12:25:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TekoE-0008Rq-0M
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 12:00:34 +0100
+	id 1TelCH-0001NX-3k
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 12:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602Ab2LALAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2012 06:00:18 -0500
-Received: from serv28.loswebos.de ([213.187.93.221]:54884 "EHLO
-	serv28.loswebos.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709Ab2LALAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2012 06:00:16 -0500
-Received: from iota.localnet (p4FD44AFD.dip.t-dialin.net [79.212.74.253])
-	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by serv28.loswebos.de (Postfix) with ESMTPSA id 532991F549C3;
-	Sat,  1 Dec 2012 11:59:43 +0100 (CET)
-Received: from sleske by iota.localnet with local (Exim 4.69)
-	(envelope-from <sebastian.leske@sleske.name>)
-	id 1Tekn9-00040H-5Y; Sat, 01 Dec 2012 11:59:27 +0100
-In-Reply-To: <cover.1354324110.git.Sebastian.Leske@sleske.name>
+	id S1751722Ab2LALZG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Dec 2012 06:25:06 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:33499 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592Ab2LALZF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Dec 2012 06:25:05 -0500
+Received: from coriandre.localnet (unknown [IPv6:2a01:e35:2ef1:f910:216:6fff:fe38:e8a3])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 1D940940132
+	for <git@vger.kernel.org>; Sat,  1 Dec 2012 12:24:58 +0100 (CET)
+User-Agent: KMail/1.13.7 (Linux/3.6.0jna; KDE/4.8.4; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210964>
 
-Describe what the option --follow-parent does, and what happens if it is
-set or unset.
+Tested on latest maint and master.
 
-Signed-off-by: Sebastian Leske <sebastian.leske@sleske.name>
----
- Documentation/git-svn.txt |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+The 'export-ignore' gitattribute is documented as behaving on a pattern=
+, just=20
+like in .gitignore.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index bfa8788..6bda014 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -628,10 +628,19 @@ ADVANCED OPTIONS
- 	Default: "svn"
- 
- --follow-parent::
-+	This option is only relevant if we are tracking branches (using
-+	one of the repository layout options --trunk, --tags,
-+	--branches, --stdlayout). For each tracked branch, try to find
-+	out where its revision was copied (i.e. branched) from, and set
-+	a suitable parent in the first git commit for the branch.
- 	This is especially helpful when we're tracking a directory
--	that has been moved around within the repository, or if we
--	started tracking a branch and never tracked the trunk it was
--	descended from. This feature is enabled by default, use
-+	that has been moved around within the repository.  If this
-+	feature is disabled, the branches created by 'git svn' will all
-+	be linear and not share any history, meaning that there will be
-+	no information on where branches where branched off or merged.
-+	However, following long/convoluted histories can take a long
-+	time, so disabling this feature may speed up the cloning
-+	process. This feature is enabled by default, use
- 	--no-follow-parent to disable it.
- +
- [verse]
--- 
-1.7.10.4
+In repo where I have a tree like this:
+
+=2Egitattributes
+figures/
+fr/figures/
+
+I want to remove from archive all the figures directories. So I added=20
+
+figures/ export-ignore=20
+
+to the top level .gitattributes file.
+
+but then:
+
+$  git check-attr -a fr/figures
+$  git check-attr -a figures
+$
+
+If I change the line in .gitattributes to :
+
+figures export-ignore
+
+I get the correct result, but I am not sure to exclude only directories=
+=2E
+
+Am I wrong somewhere?
+
+Thank you.
+
+Jean-No=EBl AVILA
