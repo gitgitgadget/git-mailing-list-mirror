@@ -1,99 +1,60 @@
-From: Paul Fox <pgf@foxharp.boston.ma.us>
-Subject: Re: [PATCH 0/5] ignore SIG{INT,QUIT} when launching editor
-Date: Sat, 01 Dec 2012 10:48:05 -0500
-Message-ID: <20121201154805.55C492E932A@grass.foxharp.boston.ma.us>
-References: <20121130223943.GA27120@sigill.intra.peff.net> (sfid-20121130_173945_972184_BC350032)
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC] remove/deprecate 'submodule init' and 'sync'
+Date: Sat, 01 Dec 2012 16:56:02 +0100
+Message-ID: <50BA2892.7060706@web.de>
+References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de> <20121130175309.GA718@odin.tremily.us> <CABURp0qNBcFnxbvhn7PsKWLUOsTiK4u5vx-=6cG3JQHw9aUeHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Krzysztof Mazur <krzysiek@podlesie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 01 16:48:24 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 01 16:57:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TepIl-0002df-O6
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 16:48:24 +0100
+	id 1TepQW-0004uu-GT
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 16:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295Ab2LAPsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2012 10:48:08 -0500
-Received: from colo.foxharp.net ([166.84.7.52]:56335 "EHLO colo.foxharp.net"
+	id S1752200Ab2LAP4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2012 10:56:08 -0500
+Received: from mout.web.de ([212.227.15.4]:56528 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752133Ab2LAPsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2012 10:48:06 -0500
-Received: from grass.foxharp.boston.ma.us (localhost [127.0.0.1])
-	by colo.foxharp.net (Postfix) with ESMTP id 1078054016;
-	Sat,  1 Dec 2012 10:44:50 -0500 (EST)
-Received: by grass.foxharp.boston.ma.us (Postfix, from userid 1000)
-	id 55C492E932A; Sat,  1 Dec 2012 10:48:05 -0500 (EST)
-Received: from grass (localhost [127.0.0.1])
-	by grass.foxharp.boston.ma.us (Postfix) with ESMTP id 446AB2E9311;
-	Sat,  1 Dec 2012 10:48:05 -0500 (EST)
-In-reply-to: <20121130223943.GA27120@sigill.intra.peff.net> (sfid-20121130_173945_972184_BC350032)
-Content-ID: <30662.1354376885.1@grass>
+	id S1751986Ab2LAP4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2012 10:56:07 -0500
+Received: from [192.168.1.4] ([88.74.133.139]) by smtp.web.de (mrweb003) with
+ ESMTPA (Nemesis) id 0M5OaF-1THg2007yx-00zBVc; Sat, 01 Dec 2012 16:56:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <CABURp0qNBcFnxbvhn7PsKWLUOsTiK4u5vx-=6cG3JQHw9aUeHA@mail.gmail.com>
+X-Enigmail-Version: 1.4.6
+X-Provags-ID: V02:K0:mYn6xa1ekyOteRjy0pJZoZ88DIQzBaFtW6fTe8FetpF
+ P8Et196A942FAiCIKdcsqWrgutJUS6G8ke3g+YHOQRCN6IBhQR
+ jAu7OlRVgK/jk1vmtXIRkEotJ/6ase/4UDyHbfIiyaF45bATQQ
+ yxxirzMIH2jJFNMKS+VzFHw5P+WJNPSUBDijTkmFoJ7/oMUFN1
+ fDNsLJUgIA/ZrqZaQxswg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210975>
 
-jeff wrote:
- > This is a re-roll of the pf/editor-ignore-sigint series.
- > 
- > There are two changes from the original:
- > 
- >   1. We ignore both SIGINT and SIGQUIT for "least surprise" compared to
- >      system(3).
- > 
- >   2. We now use "code + 128" to look for signal death (instead of
- >      WTERMSIG), as per run-command's documentation on how it munges the
- >      code.
+Am 01.12.2012 00:52, schrieb Phil Hord:
+> If I never 'submodule init' a submodule, it does not get visited by
+> 'git submodule foreach', among others.  I think some people use this
+> behavior explicitly.
+> 
+> On the other hand, I've also notice that a submodule which I have
+> removed does not get de-inited later one.  It causes my 'git submodule
+> foreach' to emit errors.  :-(
 
-this series all looks good to me.  thanks for re- and re-re-rolling.
+I'm currently hacking on "git submodule deinit" which removes the 'url'
+setting from git/config. This should do the trick for you, right?
 
-paul
-
- > 
- > People mentioned some buggy editors which go into an infinite EIO loop
- > when their parent dies due to SIGQUIT. That should be a non-issue now,
- > as we will be ignoring SIGQUIT. And even if you could replicate it
- > (e.g., with another signal) those programs should be (and reportedly
- > have been) fixed. It is not git's job to babysit its child processes.
- > 
- > The patches are:
- > 
- >   [1/5]: run-command: drop silent_exec_failure arg from wait_or_whine
- >   [2/5]: launch_editor: refactor to use start/finish_command
- >   [3/5]: launch_editor: ignore terminal signals while editor has control
- >   [4/5]: run-command: do not warn about child death from terminal
- >   [5/5]: launch_editor: propagate signals from editor to git
- > 
- > Since this can be thought of as "act more like system(3)", I wondered
- > whether the signal-ignore logic should be moved into run-command, or
- > even used by default for blocking calls to run_command (which are
- > basically our version of system(3)). But it is detrimental in the common
- > case that the child is not taking control of the terminal, and is just
- > an implementation detail (e.g., we call "git update-ref" behind the
- > scenes, but the user does not know or care). If they hit ^C during such
- > a run and we are ignoring SIGINT, then either:
- > 
- >   1. we will notice the child died by signal and report an
- >      error in the subprocess rather than just dying; the end result is
- >      similar, but the error is unnecessarily confusing
- > 
- >   2. we do not bother to check the child's return code (because we do
- >      not care whether the child succeeded or not, like a "gc --auto");
- >      we end up totally ignoring the user's request to abort the
- >      operation
- > 
- > So I do not think we care about this behavior except for launching the
- > editor. And the signal-propagation behavior of 5/5 is really so weirdly
- > editor-specific (because it is about behaving well whether the child
- > blocks signals or not).
- > 
- > -Peff
-
-=---------------------
- paul fox, pgf@foxharp.boston.ma.us (arlington, ma, where it's 24.8 degrees)
+Just removing that submodule automagically would not work that well, as
+it would deinitialize a submodule when you switch to a branch where it
+isn't present and you'd have to reinitialize it when you come back.
