@@ -1,137 +1,80 @@
-From: "W. Trevor King" <wking@tremily.us>
+From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: [RFC] remove/deprecate 'submodule init' and 'sync'
-Date: Sat, 01 Dec 2012 11:54:04 -0500
-Message-ID: <20121201165404.GD4823@odin.tremily.us>
-References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de>
- <20121130175309.GA718@odin.tremily.us>
+Date: Sat, 01 Dec 2012 18:25:17 +0100
+Message-ID: <50BA3D7D.8040707@web.de>
+References: <20121201163004.GB4823@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=wLAMOaPNJ0fu1fTG
-Cc: Git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
 	Nahor <nahor.j+gmane@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>, Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 17:55:34 2012
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sat Dec 01 18:25:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TeqKx-0005w4-Ue
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 17:54:44 +0100
+	id 1Teqoy-0007T3-DP
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Dec 2012 18:25:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599Ab2LAQyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2012 11:54:21 -0500
-Received: from vms173001pub.verizon.net ([206.46.173.1]:49515 "EHLO
-	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752402Ab2LAQyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2012 11:54:12 -0500
-Received: from odin.tremily.us ([unknown] [72.68.81.98])
- by vms173001.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MED00JL42Y4BJ60@vms173001.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 01 Dec 2012 10:54:05 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 440416E3CB7; Sat,
- 01 Dec 2012 11:54:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1354380844; bh=NGvCedeu6MCvBWZ8bwgG9nrOWwNVoBPYORFNwSAPiNU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hZa+w9nGnrrFCxWSAlJ9N82toVy3kYsgOCBQgZ0LQGBL9JSPEbdjY42H59ET2/0PV
- AaQq94hPn1gU/GNwGN7psLZqOVwYB/8gDOwKGHhEw0VP9WRZY3GJPSHl5X+U9FJEpM
- mmFNA/ATkXjRAOG42uwjfQCiLt0gtMdLfUebIucA=
-Content-disposition: inline
-In-reply-to: <20121130175309.GA718@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752671Ab2LARZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2012 12:25:28 -0500
+Received: from mout.web.de ([212.227.17.11]:60946 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752589Ab2LARZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2012 12:25:28 -0500
+Received: from [192.168.1.4] ([88.74.133.139]) by smtp.web.de (mrweb003) with
+ ESMTPA (Nemesis) id 0LdVty-1SwPRU3dPG-00j5vQ; Sat, 01 Dec 2012 18:25:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20121201163004.GB4823@odin.tremily.us>
+X-Enigmail-Version: 1.4.6
+X-Provags-ID: V02:K0:fjJZxFS2heBZkxEFwntP8nnJDH1nGKpMabWYMI7sYPg
+ 65dIUhZn5pQV1ajEyTHrkQ0CtBbWCMsne71Jky1npNvxM6fDmc
+ Y6rAsFzwA0MovPLJ7b+IfpC2M93B1iww7ks8hq0nRpbi3xdAfJ
+ RjVNGGkSs3ZQnX0eF4CdlthF5osOxR1v3iDAnlzDegTtkOTmX/
+ /8QGZ4UAHqSPiMg6BVPxQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210981>
 
+Am 01.12.2012 17:30, schrieb W. Trevor King:
+> On Sat, Dec 01, 2012 at 04:38:02PM +0100, Jens Lehmann wrote:
+>> You need to handle the 'url' setting differently. While I think the 'update' setting should not be copied into .git/config at all (because it makes it impossible for upstream to change that later without the user copying that himself as 'sync' doesn't do that) the 'url' setting in .git/config has two important implications:
+>> 
+>> 1) It tells the submodule commands that the user wants to have that submodule populated  (which is done in a subsequent "update" after "init" copied the url there).
+> 
+> Good point, but this should depend on submodule.<name>.update; having it as a side effect of a local submodule.<name>.url makes no sense.
 
---wLAMOaPNJ0fu1fTG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry, but that makes tons of sense: url controls if the submodule
+is to be populated and from where, update controls how (and can even
+veto populating it if set to "none"). We /could/ do it differently,
+but I can't see why we should (and risk severe compatibility issues).
 
-I'm currently stuck with adding a commit-less existing repository as a
-submodule (which happens in t7400-submodule-basic.sh, ../bar/a/b/c
-works with relative local path):
+> Perhaps `submodule init` should be reduced to just wrap:
+> 
+> $ git config submodule.<name>.update checkout
+> 
+> where the default update configuration would be 'none'.
+> 
+>> 2) It can be used to follow moving upstreams (think of checking out an earlier commit before the upstream was moved, you won't be able to clone it from there without having the new setting persist). And which repository you follow is a matter of trust, so the extra "git submodule sync" in that case is a good thing to have.
+>> 
+>> So I believe 'url' is the only setting that should be copied into .git/config while all the others shouldn't.
+> 
+> If you want to override the old repository location for an old commit, setting submodule.<name>.url makes sense.  My rewritten `sync` updates the local submodule.<name>.url in the superproject if the configuration option is already set [1].  Perhaps a `sync --local` invocation should forcibly populate the local submodule.<name>.url to make this workflow easier.  Bundling sugar for this special case should not happen under an extra command called `init`.
 
-  $ mkdir -p super/sub
-  $ cd super
-  $ git init
-  $ (cd sub && git init)
-  $ git submodule add ./ sub
-  $ git status
-  # On branch master
-  #
-  # Initial commit
-  #
-  # Changes to be committed:
-  #   (use "git rm --cached <file>..." to unstage)
-  #
-  #       new file:   .gitmodules
-  #
+What real world problems do we have with the current init/sync that
+this approach would solve?
 
-What I'm missing is a gitlink form sub for 'Subproject commit
-00000...' or some such.  When the subproject has an actual commit,
-things work as expected:
+>>> [snip get_submodule_config()]
+>> 
+>> Something like that makes sense. You can use it for the settings you add first and we can then reuse that for 'update' in a separate patch later.
+> 
+> I'm currently working out the details independently against v1.8.0. This will be a fairly major shift, so I think it should stay independent of `update --remote`.  The `update --remote` stuff should be easy to adjust/rebase if the `init` removal/adjustment develops into something acceptable.
 
-  $ mkdir -p super/sub
-  $ cd super
-  $ git init
-  $ (cd sub && git init && echo line-1 > file && git add file && git commit=
- -m file)
-  $ git submodule add ./ sub
-  $ git status
-  # On branch master
-  #
-  # Initial commit
-  #
-  # Changes to be committed:
-  #   (use "git rm --cached <file>..." to unstage)
-  #
-  #       new file:   .gitmodules
-  #       new file:   sub
-  #
-
-This means that module_list isn't aware of the empty submodule, when
-the user has just explicitly added it.  Fixing this would seem to need
-either 'Subproject commit 00000...' as I suggested earlier, or an
-adjustment to module_list that also spits out submodules that are in
-=2Egitmodules but not in the index.
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---wLAMOaPNJ0fu1fTG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQujYqAAoJEEUbTsx0l5OMbWsP+wWLYetn3q4N3GNdqgUqknRI
-Da1/F5ZZxQV3H9JbV/jja7b7g1HRHoj81RqN41JgBf3XWxBSKHw8RjWQR32ZM4fK
-0zI6XOJNAh8AT50o3mpuOcaa5pn/ekQHqX6tZuVs+IHIN2x5p5E8wywg6UOUlsJv
-0cmo5kmqKvQBQTqD+NyWG0mPKX6h30gSgG8Ir2Xr4JnpLn7DBWt+LhBk0Aos0BVc
-U9zkeC7CPB3DI9YyWeVvcXqYcjWcR9oxdnqV6OUClwAKBCmBsH0s3B9w+270ZGR3
-tMFFtoRAjScIo1VmTodp3i/iKtVwlAMI0nAkaoGdUi/GzF49gHN3G2BnH0A+TTvL
-1cOayvob4GJ0NTzWPfKPZivbdV3ttA4wUsaz3rT62GVanYNvnQafs9E3ICPkiCPT
-0l11NUbmCONBw1ooXouvv2XcasCn2ZHdJtO3jF3gHrqJX7Rlo2oZRg797a1PJ+k6
-2v2CZn87MNWkDibRCrbYJJq2f/bLizbwrtaRzgLpuIURRnW2/LcUqKnsUNz3AYW8
-14J3u4lgdkZUKK6602ptxLiRmZq7V/FvSy6RUJIWsIlb7QFoNN06gMb6QpAQHGMF
-Kv50lE6EIyBJ5rK/S7m6+MH+JZvOZLMjUCdJCtDOjvAQUH77J3KccIGN7qi2u9T3
-4WmVr11GoAHHRkV9TrjN
-=pWTV
------END PGP SIGNATURE-----
-
---wLAMOaPNJ0fu1fTG--
+I totally agree. Let's get the `update --remote` stuff ready first.
