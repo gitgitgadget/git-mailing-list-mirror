@@ -1,81 +1,114 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 8/8] wrap_in_html(): process message in bulk rather than
- line-by-line
-Date: Sun, 02 Dec 2012 11:35:29 +0100
-Message-ID: <50BB2EF1.5020003@alum.mit.edu>
-References: <1353841721-16269-1-git-send-email-mhagger@alum.mit.edu> <1353841721-16269-9-git-send-email-mhagger@alum.mit.edu> <7v7gp4p00u.fsf@alter.siamese.dyndns.org> <50B8B73A.4060801@alum.mit.edu> <7vpq2slsb4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 1/5] mingw: make fgetc raise SIGINT if apropriate
+Date: Sun, 02 Dec 2012 02:42:07 -0800
+Message-ID: <7vfw3oka68.fsf@alter.siamese.dyndns.org>
+References: <1352815447-8824-1-git-send-email-kusmabite@gmail.com>
+ <1352815447-8824-2-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeremy White <jwhite@codeweavers.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 11:35:56 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: git@vger.kernel.org,  msysgit@googlegroups.com,  peff@peff.net
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBAXB5SCQKGQEWIFYIEA@googlegroups.com Sun Dec 02 11:42:27 2012
+Return-path: <msysgit+bncBCG77UMM3EJRBAXB5SCQKGQEWIFYIEA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gg0-f186.google.com ([209.85.161.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tf6tv-00028s-Bl
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 11:35:55 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758Ab2LBKfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2012 05:35:34 -0500
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:48039 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752022Ab2LBKfd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2012 05:35:33 -0500
-X-AuditID: 12074414-b7f846d0000008b8-de-50bb2ef47092
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id AC.7E.02232.4FE2BB05; Sun,  2 Dec 2012 05:35:32 -0500 (EST)
-Received: from [192.168.69.140] (p57A25023.dip.t-dialin.net [87.162.80.35])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qB2AZTjV014128
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 2 Dec 2012 05:35:30 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vpq2slsb4.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqPtFb3eAwZxrYhZdV7qZLBp6rzBb
-	9C/vYrO4fHIuo8WPlh5mB1aPL1cbmTw+fIzzeNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M74ffctasJ+t4nF/J1MDYxtrFyMnh4SAicT5FScYIWwxiQv31rN1MXJxCAlcZpS4tnw6
-	E4Rzikmic9ZOdpAqXgFtialXNrGB2CwCqhIPlzxhAbHZBHQlFvU0M4HYogIBEouXnIOqF5Q4
-	OROiRkRATWJi2yEWkKHMAnMZJX7/ncUMkhAWiJbo73/CCrHtI6PEswMfwRKcAmYSt/vegN3K
-	LKAj8a7vATOELS+x/e0c5gmMArOQLJmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JS
-	i3Qt9HIzS/RSU0o3MULCXGQH45GTcocYBTgYlXh4o+bsChBiTSwrrsw9xCjJwaQkyssAjBIh
-	vqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwsJkDlvCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1Kz
-	U1MLUotgsjIcHEoSvCd1gYYKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg+I1vhgY
-	sSApHqC9z0DaeYsLEnOBohCtpxh1OTasb3/CKMSSl5+XKiXOuxCkSACkKKM0D24FLKm9YhQH
-	+liYtwakigeYEOEmvQJawgS05IUQ2JKSRISUVANjili+2VXOE5kptVrydXfE7J2bPbTXz20v
-	PnLh69m/Fv8DQ0zeGk7e/knpS+JsYVk/roi2mUvuLGdP1n3pc8XP0X5Bsym3lN6t 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211008>
+	(envelope-from <msysgit+bncBCG77UMM3EJRBAXB5SCQKGQEWIFYIEA@googlegroups.com>)
+	id 1Tf70C-0008VB-06
+	for gcvm-msysgit@m.gmane.org; Sun, 02 Dec 2012 11:42:24 +0100
+Received: by mail-gg0-f186.google.com with SMTP id y6sf1810484ggc.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 02 Dec 2012 02:42:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=g2IfoQ/gKTEbmZMM7qENivIazryHl1jNxU9d2uyh9z0=;
+        b=p2IF4zOJAwIpLlPYnrpUmi3E7c3qHaOhaUBLmqtywtlqqwUjES6cY+dAP4cEZi29L5
+         yoQFPFnBykhyeJ2nDZ7cQfmESA6uGxLdlcZiV3apkFk07BcE1l1+eP6wtj/Remj4rSzk
+         y6uenlFAxBaHnNZfQKiRDCi1cS51InwdxrhKnBAq0iEdPSQd8hKaQlwohUIxqTBgjwTe
+         evdfy+rCHwIJ6EJ7LMbR7vkQUGRyUINTP7r/pi/sVdmBrBx9GSh5ZQRDdspdcGFJmf7n
+         iTtKiYEn9NjuNVwGYfGB0HNAG0c8z7MkVq1IGKSZIAGXDeve/01XBAFKDZZw7ONF130W
+         9 
+Received: by 10.49.95.68 with SMTP id di4mr1603998qeb.0.1354444931775;
+        Sun, 02 Dec 2012 02:42:11 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.37.105 with SMTP id x9ls1170243qej.56.gmail; Sun, 02 Dec
+ 2012 02:42:10 -0800 (PST)
+Received: by 10.58.132.145 with SMTP id ou17mr2279610veb.41.1354444930297;
+        Sun, 02 Dec 2012 02:42:10 -0800 (PST)
+Received: by 10.58.132.145 with SMTP id ou17mr2279609veb.41.1354444930287;
+        Sun, 02 Dec 2012 02:42:10 -0800 (PST)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id q13si2165529vdh.0.2012.12.02.02.42.10;
+        Sun, 02 Dec 2012 02:42:10 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05D0F6663;
+	Sun,  2 Dec 2012 05:42:10 -0500 (EST)
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5F4E6662;
+	Sun,  2 Dec 2012 05:42:09 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 639B86661; Sun,  2 Dec 2012
+ 05:42:09 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EC5C85C2-3C6C-11E2-82E9-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of junio@b-sasl-quonix.pobox.com designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
+ dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211009>
 
-On 12/02/2012 10:25 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> Nevertheless, the old code was even *more* broken because it added a
->> "</pre>" regardless of whether the separator line had been seen,...
-> 
-> OK. I'll rewrite the tail-end of the original log message to read:
-> 
->     The old code would have created invalid output when there was no
->     body, emitting a closing </pre> without a blank line nor an opening
->     <pre> after the header.  The new code simply returns in this
->     situation without doing harm (even though either would not make much
->     sense in the context of imap-send that is meant to send out patches).
-> 
-> and squash this in.
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-ACK.  Thanks.
+> @@ -1538,13 +1563,7 @@ static sig_handler_t timer_fn = SIG_DFL;
+>  static unsigned __stdcall ticktack(void *dummy)
+>  {
+>  	while (WaitForSingleObject(timer_event, timer_interval) == WAIT_TIMEOUT) {
+> -		if (timer_fn == SIG_DFL) {
+> -			if (isatty(STDERR_FILENO))
+> -				fputs("Alarm clock\n", stderr);
+> -			exit(128 + SIGALRM);
+> -		}
+> -		if (timer_fn != SIG_IGN)
+> -			timer_fn(SIGALRM);
+> +		mingw_raise(SIGALRM);
+>  		if (one_shot)
+>  			break;
+>  	}
 
-Michael
+This hunk seems to have been based on a slightly newer codebase than
+what I have, and I had to wiggle the patch a bit to make the series
+apply.  Please double check the result when I push out the 'pu'
+branch.
+
+Thanks.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
