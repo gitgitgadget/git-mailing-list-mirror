@@ -1,83 +1,71 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 6/8] imap-send: change msg_data from storing (char *,
- len) to storing strbuf
-Date: Sun, 02 Dec 2012 07:03:20 +0100
-Message-ID: <50BAEF28.6000400@alum.mit.edu>
-References: <1353841721-16269-1-git-send-email-mhagger@alum.mit.edu> <1353841721-16269-7-git-send-email-mhagger@alum.mit.edu> <7vboegp04x.fsf@alter.siamese.dyndns.org> <50B8B66F.3090300@alum.mit.edu> <7v624lns00.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/4] t4014: more tests about appending s-o-b lines
+Date: Sun, 02 Dec 2012 08:06:44 +0100
+Message-ID: <50BAFE04.4080100@web.de>
+References: <CACsJy8BiJRK7N3_HZ2WXpMd1YkDSW00AxuYqiCWJgij+Kq6AiQ@mail.gmail.com> <1353602289-9418-1-git-send-email-pclouds@gmail.com> <1353602289-9418-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeremy White <jwhite@codeweavers.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 07:15:44 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 08:07:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tf2q8-0001UP-3K
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 07:15:44 +0100
+	id 1Tf3du-0004xO-OE
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 08:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458Ab2LBGD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2012 01:03:27 -0500
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:64684 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750869Ab2LBGD0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2012 01:03:26 -0500
-X-AuditID: 1207440d-b7f306d0000008b7-23-50baef2df7dd
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F6.95.02231.D2FEAB05; Sun,  2 Dec 2012 01:03:25 -0500 (EST)
-Received: from [192.168.69.140] (p57A25023.dip.t-dialin.net [87.162.80.35])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qB263L14008511
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 2 Dec 2012 01:03:23 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7v624lns00.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqKv7fleAQeNdSYuuK91MFg29V5gt
-	+pd3sVlcPjmX0eJHSw+zA6vHl6uNTB4fPsZ5POvdw+hx8ZKyx+dNcgGsUdw2SYklZcGZ6Xn6
-	dgncGWtu72UpuM1aMWHmPZYGxv0sXYycHBICJhJnP/yHssUkLtxbz9bFyMUhJHCZUeLxpUss
-	EM4pJolL/84yglTxCmhL/PrxFqyDRUBVYtuBqawgNpuArsSinmYmEFtUIEBi8ZJz7BD1ghIn
-	Zz4BqxcRUJOY2HYIbCizwFxGid9/ZzGDJIQFkiQ+LT8KtkBI4COjxLQ3AiA2p4CZRGPvHLAa
-	ZgEdiXd9D6BseYntb+cwT2AUmIVkxywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5da
-	pGukl5tZopeaUrqJERLkvDsY/6+TOcQowMGoxMMbNWdXgBBrYllxZe4hRkkOJiVR3uY3QCG+
-	pPyUyozE4oz4otKc1OJDjBIczEoivCwmQDnelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU
-	1ILUIpisDAeHkgRv4TugRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQtMYXA+MV
-	JMUDtNcVpJ23uCAxFygK0XqK0Zhjzsz2J4wcG9YDSSGWvPy8VClx3laQUgGQ0ozSPLhFsPT2
-	ilEc6G9h3jyQKh5gaoSb9wpoFRPQqjfLtoOsKklESEk1MPpPbPFTmFGrfWxbilEiK3PLpTTn
-	i5NvdWyNPinI+Tt6Vtn+0wqBE3bt0dN8dFbhNE8t985gnX7TjQZvdt1beS/R8rC0 
+	id S1751458Ab2LBHGv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2012 02:06:51 -0500
+Received: from mout.web.de ([212.227.17.12]:61271 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750869Ab2LBHGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2012 02:06:50 -0500
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb103) with
+ ESMTPA (Nemesis) id 0MDgDS-1TQ8sd0a6w-00H9UC; Sun, 02 Dec 2012 08:06:45 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <1353602289-9418-2-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V02:K0:lHSokcHyrI7DDajF0njSeRcnPI6OVTLlPV6WTkkxl+X
+ ZtZ2pFMgk8PtTxt3sLTCL7zOsVU+9QLT0Yv8YvahD28rutwiFw
+ qJ3ZZE9AsfLEASW9igvtYyvvD1priM701TAdOziJjdXn90ZgG5
+ OD3lDT8C1wpGy76y7hFhrn1twjMW2pqonuf2ec2s7jfxN1nGFV
+ mYF75LfVpgH0FhwN0izgA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211002>
 
-On 12/02/2012 02:48 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> On 11/29/2012 10:30 PM, Junio C Hamano wrote:
->>
->>>> A side effect of this change is that the memory for each message is
->>>> freed after it is used rather than leaked, though that detail is
->>>> unimportant given that imap-send is a top-level command.
->>>>
->>>> --
->>>
->>> ?
->>
->> If by "?" you are wondering where the memory leak was, it was:
-> 
-> No, I was wondering if you meant to say "---" to mark te remainder
-> of what you wrote does not exactly belong to the log message.
+On 22.11.12 17:38, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>=20
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  t/t4014-format-patch.sh | 145 ++++++++++++++++++++++++++++++++++++++=
+++++++++++
+>  1 file changed, 145 insertions(+)
+> +	echo -n subject | append_signoff >actual &&
 
-Oh.  Yes, that was my intention.
 
-Michael
+"echo -n" is not portable, and we use printf everywhere.=20
+I found one "echo -n" in line  996.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Can we squeeze that in, before going to next?
+
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 6cfad13..f460930 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -993,7 +993,7 @@ EOF
+ '
+=20
+ test_expect_success 'signoff: commit with only subject that does not e=
+nd with NL' '
+-       echo -n subject | append_signoff >actual &&
++       printf subject | append_signoff >actual &&
+        cat >expected <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
