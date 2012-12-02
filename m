@@ -1,74 +1,86 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v2 1/4] t4014: more tests about appending s-o-b lines
-Date: Sun, 2 Dec 2012 00:03:54 -0800
-Message-ID: <CA+sFfMd-yvQpsfVEWYBk+70_05Ov5aX4xg8nNY0HPwHTVAK60Q@mail.gmail.com>
-References: <CACsJy8BiJRK7N3_HZ2WXpMd1YkDSW00AxuYqiCWJgij+Kq6AiQ@mail.gmail.com>
-	<1353602289-9418-1-git-send-email-pclouds@gmail.com>
-	<1353602289-9418-2-git-send-email-pclouds@gmail.com>
-	<50BAFE04.4080100@web.de>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: does a successful 'git gc' imply 'git fsck'
+Date: Sun, 2 Dec 2012 14:16:33 +0530
+Message-ID: <CAMK1S_gUB6tpNQTLGTPPAvQ87+mX2HGiN1xpA7KoH33MX9tFBw@mail.gmail.com>
+References: <CAMK1S_iBq1ReGkjuy2UBENSQXOWyKj2ZzSCcg7Z89FVtVL2wMw@mail.gmail.com>
+	<CAJo=hJvHeA4g1fJZXm9VxpdvMFoHeEJW_r5YtXTDACEp09Xm_Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 02 09:05:45 2012
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Dec 02 09:47:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tf4YZ-0006pj-MU
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 09:05:44 +0100
+	id 1Tf5CV-0004NX-PY
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 09:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918Ab2LBID4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2012 03:03:56 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:33850 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751560Ab2LBID4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2012 03:03:56 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e53so1033346eek.19
-        for <git@vger.kernel.org>; Sun, 02 Dec 2012 00:03:55 -0800 (PST)
+	id S1752089Ab2LBIqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2012 03:46:35 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:37151 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918Ab2LBIqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2012 03:46:35 -0500
+Received: by mail-la0-f46.google.com with SMTP id p5so1471663lag.19
+        for <git@vger.kernel.org>; Sun, 02 Dec 2012 00:46:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=b/3bHuRVdRY6nG8CuWU5f5HVBw5M/VgBjjk556laUDg=;
-        b=ON08n6GpK/JbZxsBZmT7tx1K+VItdke+nYTh/QaE5RZfbhrtDRljw697iWEERHXbAO
-         2Kr1GDC907Savikw4cdWq27KoxFylM7c9iWmVKghmdKQgxrFlopteLfgbmyl4fjgkNe+
-         59wDUMDNLxMU4W1dE6ybvo8yGEqH8m9Z/EeFKav2gUx+/ZxZCwOKystTidGHS5YhXtdw
-         Qiu23V6F2/We4dFby3jVebav3AeL0LSPTMA0kAuJS7efXe+aq1Cc3AIh6OgFiNxD8FW3
-         1pDjQOy7SxOZ5ZzWH1TyO8v7/QWDAmC/oheOPd98V1wDs4a4+elQlEPfD/Jy5RWrsdAh
-         xuvw==
-Received: by 10.14.198.67 with SMTP id u43mr23880304een.7.1354435434825; Sun,
- 02 Dec 2012 00:03:54 -0800 (PST)
-Received: by 10.223.1.129 with HTTP; Sun, 2 Dec 2012 00:03:54 -0800 (PST)
-In-Reply-To: <50BAFE04.4080100@web.de>
+         :cc:content-type;
+        bh=c//3dqS0dZ3BPeCQcBI6zLcatJwy25KPhf2ZWXHXIo4=;
+        b=Gf+ZDSxHJtba0LMgo3ZFNQqF8C+aSLRtg7/1OY/6BgEqBZB0C8xoRHDmLr/+sQ+tBd
+         9Da6Uyv22DDFBxfk8wBhzN6b2VJXLotKnr3XeuQfg+sebQ1qPczHXkvRHWgtMmihdyoh
+         Xg7CEAvEdMEigIlcmNUOp2VHNEcjkzhqw6QMwSkWan+gkCcsJihXGS/tVbvNU9DrrMMN
+         14dNYcWUmW9t1Ke51+vmbks3PxYkvD4ubF0mGzcKUYSnzrM41R9zTOkxZHPx66WHj9tx
+         AHTyTQTgkhyEvjNs7tfuovUkrxa0en3GKD/I+1W4kK5VHo6pQRk4W/oZKxi3FcpgjgNn
+         GkBA==
+Received: by 10.152.103.100 with SMTP id fv4mr6047519lab.39.1354437993812;
+ Sun, 02 Dec 2012 00:46:33 -0800 (PST)
+Received: by 10.112.113.103 with HTTP; Sun, 2 Dec 2012 00:46:33 -0800 (PST)
+In-Reply-To: <CAJo=hJvHeA4g1fJZXm9VxpdvMFoHeEJW_r5YtXTDACEp09Xm_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211004>
 
-On Sat, Dec 1, 2012 at 11:06 PM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
-> On 22.11.12 17:38, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Sun, Dec 2, 2012 at 9:58 AM, Shawn Pearce <spearce@spearce.org> wrote:
+> On Sat, Dec 1, 2012 at 6:31 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+>> Background: I have a situation where I have to fix up a few hundred
+>> repos in terms of 'git gc' (the auto gc seems to have failed in many
+>> cases; they have far more than 6700 loose objects).  I also found some
+>> corrupted objects in some cases that prevent the gc from completing.
 >>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  t/t4014-format-patch.sh | 145 +++++++++++++++++++++++++++++++++++++=
-+++++++++++
->>  1 file changed, 145 insertions(+)
->> +     echo -n subject | append_signoff >actual &&
+>> I am running "git gc" followed by "git fsck".  The majority of the
+>> repos I have worked through so far appear to be fine, but in the
+>> larger repos (upwards of 2-3 GB) the git fsck is taking almost 5 times
+>> longer than the 'gc'.
+>>
+>> If I could assume that a successful 'git gc' means an fsck is not
+>> needed, I'd save a lot of time.  Hence my question.
 >
->
-> "echo -n" is not portable, and we use printf everywhere.
-> I found one "echo -n" in line  996.
->
-> Can we squeeze that in, before going to next?
+> Not really. For example fsck verifies that every blob when
+> decompressed and fully inflated matches its SHA-1. gc only checks
 
-I got it.  I'll squash it into the next series.
+OK that makes sense.  After I posted I happened to check using strace
+and kinda guessed this from what I saw, but it's nice to have
+confirmation.
 
--Brandon
+> connectivity of the commit and tree graph by making sure every object
+> was accounted for. But when creating the output pack it only verifies
+> a CRC-32 was correct when copying the bits from the source to the
+> destination, it does not verify that the data decompresses and matches
+> the SHA-1 it should match.
+>
+> So it depends on what level of check you need to feel safe.
+
+Yup; thanks.
+
+All the repos my internal client manages are mirrored in multiple
+places, and they set (or were at least told to set, heh!)
+receive.fsckObjects so the lesser check is fine in most cases.
+
+-- 
+Sitaram
