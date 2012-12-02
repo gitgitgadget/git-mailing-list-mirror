@@ -1,124 +1,217 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC] remove/deprecate 'submodule init' and 'sync'
-Date: Sun, 02 Dec 2012 16:11:59 -0500
-Message-ID: <20121202211159.GA12429@odin.tremily.us>
-References: <20121202190929.GG9401@odin.tremily.us> <50BBBA29.2000106@web.de>
+From: Lukasz Stelmach <stlman@poczta.fm>
+Subject: Re: [PATCH] gitk: add a checkbox to control the visibility of tags
+Date: Sun, 02 Dec 2012 22:25:52 +0100
+Message-ID: <50BBC760.7030208@poczta.fm>
+References: <1354309737-4280-1-git-send-email-stlman@poczta.fm> <7vlidhmc5i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 02 22:12:36 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 22:26:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TfGq0-0004rE-Hd
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 22:12:32 +0100
+	id 1TfH3O-0003RZ-3O
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 22:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161Ab2LBVMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2012 16:12:14 -0500
-Received: from vms173021pub.verizon.net ([206.46.173.21]:11808 "EHLO
-	vms173021pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119Ab2LBVMN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2012 16:12:13 -0500
-Received: from odin.tremily.us ([unknown] [72.68.90.212])
- by vms173021.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MEF008CF9K0YO90@vms173021.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 02 Dec 2012 15:12:02 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 04CFC6E4DEE; Sun,
- 02 Dec 2012 16:11:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1354482720; bh=g4zZlisBSPjfsxuOsk6FaMnDJMXVjiSCxhVB3D1b9yo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mrcEf403Y/MKNjxlD+YXQqkeW+PkJbVOba6e8aqwGbFDhV6TQ1a5rgIElmezeWJaz
- rtRslAmSnxyytfzJ24zt2B3e4xLuQhPVXWrliKNr+vTq/XNH8CdKBtv46QGlsYwnle
- b3UZm11R0qAOL/qjACwXreBPux44KrFGun4Krsq0=
-Content-disposition: inline
-In-reply-to: <50BBBA29.2000106@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754276Ab2LBVZ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2012 16:25:59 -0500
+Received: from smtpo.poczta.interia.pl ([217.74.65.205]:39867 "EHLO
+	smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754243Ab2LBVZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2012 16:25:58 -0500
+Received: from [192.168.0.13] (87-207-152-6.dynamic.chello.pl [87.207.152.6])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by www.poczta.fm (INTERIA.PL) with ESMTPSA;
+	Sun,  2 Dec 2012 22:25:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.6esrpre) Gecko/20120825 Thunderbird/10.0.6
+In-Reply-To: <7vlidhmc5i.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.5
+X-Interia-Antivirus: OK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
+	s=biztos; t=1354483554;
+	bh=PkkkhQZJiOMs5okQ6kKcPyjae57UNNJIjuW1E9w3peo=;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:
+	 Subject:References:In-Reply-To:X-Enigmail-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Interia-Antivirus;
+	b=MHBhDdywmz1YtZUgIUsfnwb1/ZMb1N7IfW0NC7vA5Oj7kvBNAI/waW4J13rEqnBd+
+	 VrfsD8FxVFH25a3DVWZ4j5SFoCX3wRqn5ES5L+6NM4KJ3pyMeVpDZ8zMzLZehn4Rvn
+	 vmr3yic33oT0hbP9sQxt0fbinSPhYfuvVe8fThxM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211020>
 
-From: "W. Trevor King" <wking@tremily.us>
-To: Jens Lehmann <Jens.Lehmann@web.de>, Junio C Hamano <gitster@pobox.com>
-Cc: Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>, Nahor <nahor.j+gmane@gmail.com>
-Bcc: 
-Subject: Re: [RFC] remove/deprecate 'submodule init' and 'sync'
-Reply-To: 
-In-Reply-To: <50BBBA29.2000106@web.de>
- <50BBB22A.7050901@web.de>
- <20121202190929.GG9401@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
+W dniu 02.12.2012 03:16, Junio C Hamano pisze:
+> =C5=81ukasz Stelmach <stlman@poczta.fm> writes:
+>=20
+>> Enable hiding of tags displayed in the tree as yellow labels.
+>> If a repository is used together with a system like Gerrit
+>> there may be quite a lot of tags used to control building
+>> and there may be hardly any place left for commit subjects.
+>>
+>> Signed-off-by: =C5=81ukasz Stelmach <stlman@poczta.fm>
+>> ---
+>=20
+> Paul, this patch is not done against your tree (does not have gitk
+> at the top-level),
 
-On Sun, Dec 02, 2012 at 09:29:29PM +0100, Jens Lehmann wrote:
-> Am 02.12.2012 20:09, schrieb W. Trevor King:
-> > Before I get into the details, I'd like to point out that I actually
-> > understand the purpose of `submodule init` now ;).  To avoid further
-> > confusion, my current one-line command summaries would be:
-> > 
-> >   init:   mark a submodule as active for future submodule operation
-> >   deinit: mark a submodule as inactive for future submodule operation
-> >   sync:   update remote.<name>.origin in submodules to reflect changes
-> >           in .gitmodules or the superproject's remote URL.
-> > 
-> > I don't think we disagree on that, we just don't agree on how to
-> > implement it.
-> 
-> Nope, it is already implemented and you are arguing to change the
-> current implementation.
+I did it on the master from github. Should I rebase it onto something e=
+lse?
 
-Agreed.
+> but other than that, the change mimics the way
+> existing hideremoes is implemented and looks reasonable to me.
+>=20
+> We _may_ want to unify these two "hidestuff" into a list of patterns
+> that hides any ref that match one of the patterns in the list, e.g.
+>=20
+> 	set hidestuff {refs/heads/*/* refs/tags/* refs/remotes/*}
+>=20
+> may hide all tags, all remote-tracking branches and local branches
+> that have a slash in their names.
+>=20
+> But that is an independent change that can come later.
 
-> To quote from another mail:
-> 
-> Am 01.12.2012 18:49, schrieb W. Trevor King:
-> > On Sat, Dec 01, 2012 at 06:25:17PM +0100, Jens Lehmann wrote:
-> >> What real world problems do we have with the current init/sync that
-> >> this approach would solve?
-> >
-> > I don't have any, ...
-> 
-> We don't want to change working code and cause compatibility issues
-> just because we /could/ do things differently, no?
+This would make much more sense with gitk being abel to read a
+per-repository configuration file, say from [file join $gitdir k] and
+then save it there (but only if the file exists). I will send a separat=
+e
+patch in a moment.
 
-In principle, yes, but in this case I think changing the
-implementation does not risk much in the way of compatibility issues
-(it only hurts users who rely on `submodule init` setting
-submodule.<name>.url for reasons of their own.  A few of the existing
-tests explictly check the url setting, so perhaps there are a number
-of users who do require this side effect?
+>>  gitk-git/gitk |   23 +++++++++++++++--------
+>>  1 files changed, 15 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/gitk-git/gitk b/gitk-git/gitk
+>> index d93bd99..274b46b 100755
+>> --- a/gitk-git/gitk
+>> +++ b/gitk-git/gitk
+>> @@ -1754,7 +1754,7 @@ proc readrefs {} {
+>>      global tagids idtags headids idheads tagobjid
+>>      global otherrefids idotherrefs mainhead mainheadid
+>>      global selecthead selectheadid
+>> -    global hideremotes
+>> +    global hideremotes hidetags
+>> =20
+>>      foreach v {tagids idtags headids idheads otherrefids idotherref=
+s} {
+>>  	catch {unset $v}
+>> @@ -1776,6 +1776,7 @@ proc readrefs {} {
+>>  	    set headids($name) $id
+>>  	    lappend idheads($id) $name
+>>  	} elseif {[string match "tags/*" $name]} {
+>> +	    if {$hidetags} continue
+>>  	    # this lets refs/tags/foo^{} overwrite refs/tags/foo,
+>>  	    # which is what we want since the former is the commit ID
+>>  	    set name [string range $name 5 end]
+>> @@ -2702,7 +2703,7 @@ proc savestuff {w} {
+>>      global cmitmode wrapcomment datetimeformat limitdiffs
+>>      global colors uicolor bgcolor fgcolor diffcolors diffcontext se=
+lectbgcolor
+>>      global autoselect autosellen extdifftool perfile_attrs markbgco=
+lor use_ttk
+>> -    global hideremotes want_ttk
+>> +    global hideremotes hidetags want_ttk
+>> =20
+>>      if {$stuffsaved} return
+>>      if {![winfo viewable .]} return
+>> @@ -2725,6 +2726,7 @@ proc savestuff {w} {
+>>  	puts $f [list set autosellen $autosellen]
+>>  	puts $f [list set showneartags $showneartags]
+>>  	puts $f [list set hideremotes $hideremotes]
+>> +	puts $f [list set hidetags $hidetags]
+>>  	puts $f [list set showlocalchanges $showlocalchanges]
+>>  	puts $f [list set datetimeformat $datetimeformat]
+>>  	puts $f [list set limitdiffs $limitdiffs]
+>> @@ -10864,7 +10866,7 @@ proc create_prefs_page {w} {
+>>  proc prefspage_general {notebook} {
+>>      global NS maxwidth maxgraphpct showneartags showlocalchanges
+>>      global tabstop limitdiffs autoselect autosellen extdifftool per=
+file_attrs
+>> -    global hideremotes want_ttk have_ttk
+>> +    global hideremotes hidetags want_ttk have_ttk
+>> =20
+>>      set page [create_prefs_page $notebook.general]
+>> =20
+>> @@ -10887,6 +10889,9 @@ proc prefspage_general {notebook} {
+>>      ${NS}::checkbutton $page.hideremotes -text [mc "Hide remote ref=
+s"] \
+>>  	-variable hideremotes
+>>      grid x $page.hideremotes -sticky w
+>> +    ${NS}::checkbutton $page.hidetags -text [mc "Hide tag labels"] =
+\
+>> +	-variable hidetags
+>> +    grid x $page.hidetags -sticky w
+>> =20
+>>      ${NS}::label $page.ddisp -text [mc "Diff display options"]
+>>      grid $page.ddisp - -sticky w -pady 10
+>> @@ -10988,7 +10993,7 @@ proc doprefs {} {
+>>      global oldprefs prefstop showneartags showlocalchanges
+>>      global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor m=
+arkbgcolor
+>>      global tabstop limitdiffs autoselect autosellen extdifftool per=
+file_attrs
+>> -    global hideremotes want_ttk have_ttk
+>> +    global hideremotes hidetags want_ttk have_ttk
+>> =20
+>>      set top .gitkprefs
+>>      set prefstop $top
+>> @@ -10997,7 +11002,7 @@ proc doprefs {} {
+>>  	return
+>>      }
+>>      foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+>> -		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
+>> +		   limitdiffs tabstop perfile_attrs hideremotes hidetags want_ttk=
+} {
+>>  	set oldprefs($v) [set $v]
+>>      }
+>>      ttk_toplevel $top
+>> @@ -11117,7 +11122,7 @@ proc prefscan {} {
+>>      global oldprefs prefstop
+>> =20
+>>      foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+>> -		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
+>> +		   limitdiffs tabstop perfile_attrs hideremotes hidetags want_ttk=
+} {
+>>  	global $v
+>>  	set $v $oldprefs($v)
+>>      }
+>> @@ -11131,7 +11136,7 @@ proc prefsok {} {
+>>      global oldprefs prefstop showneartags showlocalchanges
+>>      global fontpref mainfont textfont uifont
+>>      global limitdiffs treediffs perfile_attrs
+>> -    global hideremotes
+>> +    global hideremotes hidetags
+>> =20
+>>      catch {destroy $prefstop}
+>>      unset prefstop
+>> @@ -11177,7 +11182,8 @@ proc prefsok {} {
+>>  	  $limitdiffs !=3D $oldprefs(limitdiffs)} {
+>>  	reselectline
+>>      }
+>> -    if {$hideremotes !=3D $oldprefs(hideremotes)} {
+>> +    if {$hideremotes !=3D $oldprefs(hideremotes) ||
+>> +        $hidetags !=3D $oldprefs(hidetags)} {
+>>  	rereadrefs
+>>      }
+>>  }
+>> @@ -11601,6 +11607,7 @@ set cmitmode "patch"
+>>  set wrapcomment "none"
+>>  set showneartags 1
+>>  set hideremotes 0
+>> +set hidetags 0
+>>  set maxrefs 20
+>>  set maxlinelen 200
+>>  set showlocalchanges 1
+>=20
 
-I think this risk is outweighed by the benefits of having a clearer
-activation option.  For example:
 
-On Sun, Dec 02, 2012 at 08:55:22PM +0100, Jens Lehmann wrote:
-> Sure. I was worried about throwing away other settings the user
-> might have set in the submodule.$name section and the first reflex
-> was to protect them. But thinking about that again I noticed we are
-> already throwing away a possibly user customized "url" setting, so
-> we already remove a possibly customized setting.
-
-With submodule.<name>.active, there's nothing customized that you'd
-have to nuke on deinit (except 'active' iteself, which the user is
-explicitly asking for).
-
-Cheers,
-Trevor
-
--- 
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+--=20
+By=C5=82o mi bardzo mi=C5=82o.               Czwarta pospolita kl=C4=99=
+ska, [...]
+>=C5=81ukasz<                 Ju=C5=BC nie katolicka lecz z=C5=82odziej=
+ska.  (c)PP
