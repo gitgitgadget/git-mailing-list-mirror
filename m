@@ -1,83 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] ignore SIG{INT,QUIT} when launching editor
-Date: Sun, 02 Dec 2012 02:04:43 -0800
-Message-ID: <7vboeclqh0.fsf@alter.siamese.dyndns.org>
-References: <20121130223943.GA27120@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 8/8] wrap_in_html(): process message in bulk rather than
+ line-by-line
+Date: Sun, 02 Dec 2012 11:35:29 +0100
+Message-ID: <50BB2EF1.5020003@alum.mit.edu>
+References: <1353841721-16269-1-git-send-email-mhagger@alum.mit.edu> <1353841721-16269-9-git-send-email-mhagger@alum.mit.edu> <7v7gp4p00u.fsf@alter.siamese.dyndns.org> <50B8B73A.4060801@alum.mit.edu> <7vpq2slsb4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Fox <pgf@foxharp.boston.ma.us>,
-	Krzysztof Mazur <krzysiek@podlesie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 02 11:05:13 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeremy White <jwhite@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 11:35:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tf6Q5-0008Lx-3C
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 11:05:05 +0100
+	id 1Tf6tv-00028s-Bl
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 11:35:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542Ab2LBKEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2012 05:04:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64310 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751748Ab2LBKEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2012 05:04:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09A759F00;
-	Sun,  2 Dec 2012 05:04:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N8GTqI7vcQJOdvxZQRQLQnmZo78=; b=uqVNqB
-	V7sH1XWl3ICj+Fvokcg5/MA9G9Q5i0dbD4i8+xgRQVXAa319jW3CuIdp6gsGawk7
-	mRYvM92a8pxb/YfeA5zuBF7ielm7zKB0XADvdudXZNNIH1PDNuo4WZCInGp1qHbl
-	M9jiv4vwRJ3cKrBBqkf70u1wEt1CCtc0a4llQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CBVSSL6ajf7axUk4KyF8btdBxU8sEvUb
-	skuLHJDcJP4RyIhAybZywxYPN/rIkecUgUsrmJCD6MGPYIftbgj55IwPQ/pp0XQY
-	g6pe/2k/woEjisT8NW1q94p+kknCcZQg6LAxbnH9Loo4R4IiRgb76L1kXnp1zDP0
-	71loI4LNKKM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6F279EFF;
-	Sun,  2 Dec 2012 05:04:45 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55F289EFD; Sun,  2 Dec 2012
- 05:04:45 -0500 (EST)
-In-Reply-To: <20121130223943.GA27120@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 30 Nov 2012 17:39:43 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B2CCE540-3C67-11E2-B4A8-C2612E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752758Ab2LBKfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2012 05:35:34 -0500
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:48039 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752022Ab2LBKfd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2012 05:35:33 -0500
+X-AuditID: 12074414-b7f846d0000008b8-de-50bb2ef47092
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id AC.7E.02232.4FE2BB05; Sun,  2 Dec 2012 05:35:32 -0500 (EST)
+Received: from [192.168.69.140] (p57A25023.dip.t-dialin.net [87.162.80.35])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qB2AZTjV014128
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 2 Dec 2012 05:35:30 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vpq2slsb4.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqPtFb3eAwZxrYhZdV7qZLBp6rzBb
+	9C/vYrO4fHIuo8WPlh5mB1aPL1cbmTw+fIzzeNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
+	7RK4M74ffctasJ+t4nF/J1MDYxtrFyMnh4SAicT5FScYIWwxiQv31rN1MXJxCAlcZpS4tnw6
+	E4Rzikmic9ZOdpAqXgFtialXNrGB2CwCqhIPlzxhAbHZBHQlFvU0M4HYogIBEouXnIOqF5Q4
+	OROiRkRATWJi2yEWkKHMAnMZJX7/ncUMkhAWiJbo73/CCrHtI6PEswMfwRKcAmYSt/vegN3K
+	LKAj8a7vATOELS+x/e0c5gmMArOQLJmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JS
+	i3Qt9HIzS/RSU0o3MULCXGQH45GTcocYBTgYlXh4o+bsChBiTSwrrsw9xCjJwaQkyssAjBIh
+	vqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwsJkDlvCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1Kz
+	U1MLUotgsjIcHEoSvCd1gYYKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg+I1vhgY
+	sSApHqC9z0DaeYsLEnOBohCtpxh1OTasb3/CKMSSl5+XKiXOuxCkSACkKKM0D24FLKm9YhQH
+	+liYtwakigeYEOEmvQJawgS05IUQ2JKSRISUVANjili+2VXOE5kptVrydXfE7J2bPbTXz20v
+	PnLh69m/Fv8DQ0zeGk7e/knpS+JsYVk/roi2mUvuLGdP1n3pc8XP0X5Bsym3lN6t 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211008>
 
-Jeff King <peff@peff.net> writes:
+On 12/02/2012 10:25 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Nevertheless, the old code was even *more* broken because it added a
+>> "</pre>" regardless of whether the separator line had been seen,...
+> 
+> OK. I'll rewrite the tail-end of the original log message to read:
+> 
+>     The old code would have created invalid output when there was no
+>     body, emitting a closing </pre> without a blank line nor an opening
+>     <pre> after the header.  The new code simply returns in this
+>     situation without doing harm (even though either would not make much
+>     sense in the context of imap-send that is meant to send out patches).
+> 
+> and squash this in.
 
-> Since this can be thought of as "act more like system(3)", I wondered
-> whether the signal-ignore logic should be moved into run-command, or
-> even used by default for blocking calls to run_command (which are
-> basically our version of system(3)). But it is detrimental in the common
-> case that the child is not taking control of the terminal, and is just
-> an implementation detail (e.g., we call "git update-ref" behind the
-> scenes, but the user does not know or care). If they hit ^C during such
-> a run and we are ignoring SIGINT, then either:
->
->   1. we will notice the child died by signal and report an
->      error in the subprocess rather than just dying; the end result is
->      similar, but the error is unnecessarily confusing
->
->   2. we do not bother to check the child's return code (because we do
->      not care whether the child succeeded or not, like a "gc --auto");
->      we end up totally ignoring the user's request to abort the
->      operation
->
-> So I do not think we care about this behavior except for launching the
-> editor. And the signal-propagation behavior of 5/5 is really so weirdly
-> editor-specific (because it is about behaving well whether the child
-> blocks signals or not).
+ACK.  Thanks.
 
-Nicely explained.  Very much appreciated.
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
