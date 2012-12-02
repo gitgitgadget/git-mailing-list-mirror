@@ -1,8 +1,8 @@
 From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v6 3/4] submodule add: If --branch is given,
- record it in .gitmodules
-Date: Sat, 01 Dec 2012 22:17:03 -0500
-Message-ID: <be4777f670198aedae24c3974fddd575fc734c0c.1354417619.git.wking@tremily.us>
+Subject: [PATCH v6 4/4] submodule update: add submodule.<name>.remote config
+ option
+Date: Sat, 01 Dec 2012 22:17:04 -0500
+Message-ID: <b9635b844051e681af1c80447fedac5ee77280f7.1354417619.git.wking@tremily.us>
 References: <20121130032719.GE29257@odin.tremily.us>
  <cover.1354417618.git.wking@tremily.us>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -19,22 +19,22 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tf04k-00067R-D3
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 04:18:38 +0100
+	id 1Tf04l-00067R-KQ
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Dec 2012 04:18:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754000Ab2LBDSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2012 22:18:15 -0500
-Received: from vms173001pub.verizon.net ([206.46.173.1]:44129 "EHLO
-	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996Ab2LBDSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2012 22:18:13 -0500
+	id S1752542Ab2LBDSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2012 22:18:25 -0500
+Received: from vms173019pub.verizon.net ([206.46.173.19]:58984 "EHLO
+	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754017Ab2LBDSU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2012 22:18:20 -0500
 Received: from odin.tremily.us ([unknown] [72.68.87.250])
- by vms173001.mailsrvcs.net
+ by vms173019.mailsrvcs.net
  (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MED00F35VTZSKC0@vms173001.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 01 Dec 2012 21:18:00 -0600 (CST)
+ with ESMTPA id <0MED00KGOVTZOT90@vms173019.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 01 Dec 2012 21:18:04 -0600 (CST)
 Received: from localhost (tyr.tremily.us [192.168.0.5])
-	by odin.tremily.us (Postfix) with ESMTP id 7298E6E403B; Sat,
+	by odin.tremily.us (Postfix) with ESMTP id A394E6E403D; Sat,
  01 Dec 2012 22:17:59 -0500 (EST)
 X-Mailer: git-send-email 1.8.0.4.gf74b0fc.dirty
 In-reply-to: <cover.1354417618.git.wking@tremily.us>
@@ -44,73 +44,163 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/210996>
 
 From: "W. Trevor King" <wking@tremily.us>
 
-This allows you to easily record a submodule.<name>.branch option in
-.gitmodules when you add a new submodule.  With this patch,
+Don't force the user to clone from the tracked repository
+(branch.<name>.remote) or `origin`.  By setting
+submodule.<name>.remote in .gitmodules or the usual git config files,
+you can easily point a submodule at a different remote when using
+`submodule update --remote`.
 
-  $ git submodule add -b <branch> <repository> [<path>]
-  $ git config -f .gitmodules submodule.<path>.branch <branch>
-
-reduces to
-
-  $ git submodule add -b <branch> <repository> [<path>]
-
-This means that future calls to
-
-  $ git submodule update --remote ...
-
-will get updates from the same branch that you used to initialize the
-submodule, which is usually what you want.
+The configured remote name is also used in `submodule sync` to
+determine which remote.<name>.url is updated with the submodule's
+origin URL.
 
 Signed-off-by: W. Trevor King <wking@tremily.us>
 ---
- Documentation/git-submodule.txt | 2 ++
- git-submodule.sh                | 4 ++++
- t/t7400-submodule-basic.sh      | 1 +
- 3 files changed, 7 insertions(+)
+ Documentation/config.txt        |  7 ++++---
+ Documentation/git-submodule.txt | 10 +++++-----
+ git-submodule.sh                | 27 +++++++++++++++++++++------
+ t/t7406-submodule-update.sh     | 18 ++++++++++++++++++
+ 4 files changed, 48 insertions(+), 14 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6f4663c..c54b9b4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1999,10 +1999,11 @@ submodule.<name>.update::
+ 	by 'git submodule init'; edit them to override the
+ 	URL and other values found in the `.gitmodules` file.  See
+ 
++submodule.<name>.remote::
+ submodule.<name>.branch::
+-	The remote branch name for a submodule, used by `git submodule
+-	update --remote`.  Set this option to override the value found in
+-	the `.gitmodules` file.  See linkgit:git-submodule[1] and
++	The remote repository and branch names for a submodule, used by `git
++	submodule update --remote`.  Set these options to override the value
++	found in the `.gitmodules` file.  See linkgit:git-submodule[1] and
+ 	linkgit:gitmodules[5] for details.
+ 
+ submodule.<name>.fetchRecurseSubmodules::
 diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 72dd52f..988bba9 100644
+index 988bba9..1d8d5f1 100644
 --- a/Documentation/git-submodule.txt
 +++ b/Documentation/git-submodule.txt
-@@ -208,6 +208,8 @@ OPTIONS
- -b::
- --branch::
- 	Branch of repository to add as submodule.
-+	The name of the branch is recorded as `submodule.<path>.branch` in
-+	`.gitmodules` for `update --remote`.
- 
- -f::
- --force::
+@@ -242,11 +242,11 @@ OPTIONS
+ 	This option is only valid for the update command.  Instead of using
+ 	the superproject's recorded SHA-1 to update the submodule, use the
+ 	status of the submodule's remote tracking branch.  The remote used
+-	is branch's remote (`branch.<name>.remote`), defaulting to `origin`.
+-	The remote branch used defaults to `master`, but the branch name may
+-	be overridden by setting the `submodule.<name>.branch` option in
+-	either `.gitmodules` or `.git/config` (with `.git/config` taking
+-	precedence).
++	is branch's remote (`branch.<name>.remote`, defaulting to `origin`),
++	and the remote branch used defaults to `master`, but either may be
++	overridden by setting the `submodule.<name>.remote` or
++	`submodule.<name>.branch` option in `.gitmodules` or `.git/config`
++	(with `.git/config` taking precedence).
+ +
+ This works for any of the supported update procedures (`--checkout`,
+ `--rebase`, etc.).  The only change is the source of the target SHA-1.
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 104b5de..27b02fe 100755
+index 27b02fe..3e39e29 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -395,6 +395,10 @@ Use -f if you really want to add it." >&2
- 
- 	git config -f .gitmodules submodule."$sm_path".path "$sm_path" &&
- 	git config -f .gitmodules submodule."$sm_path".url "$repo" &&
-+	if test -n "$branch"
-+	then
-+		git config -f .gitmodules submodule."$sm_path".branch "$branch"
-+	fi &&
- 	git add --force .gitmodules ||
- 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+@@ -179,6 +179,21 @@ get_submodule_config()
+ 	printf '%s' "${value:-$default}"
  }
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 5397037..90e2915 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -133,6 +133,7 @@ test_expect_success 'submodule add --branch' '
- 	(
- 		cd addtest &&
- 		git submodule add -b initial "$submodurl" submod-branch &&
-+		test "initial" = "$(git config -f .gitmodules submodule.submod-branch.branch)" &&
- 		git submodule init
- 	) &&
  
++#
++# Print the name of a submodule's configured remote
++#
++# $1 = submodule name
++#
++get_submodule_remote()
++{
++	name="$1"
++	remote=$(get_submodule_config "$name" remote)
++	if test -z "$remote"
++	then
++		remote=$(get_default_remote)
++	fi
++	printf '%s' "${remote}"
++}
+ 
+ #
+ # Map submodule path to submodule name
+@@ -605,6 +620,7 @@ cmd_update()
+ 		fi
+ 		name=$(module_name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
++		remote_name=$(get_submodule_remote "$name")
+ 		branch=$(get_submodule_config "$name" branch master)
+ 		if ! test -z "$update"
+ 		then
+@@ -645,10 +661,9 @@ Maybe you want to use 'update --init'?")"
+ 			if test -z "$nofetch"
+ 			then
+ 				# Fetch remote before determining tracking $sha1
+-				(clear_local_git_env; cd "$sm_path" && git-fetch) ||
+-				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
++				(clear_local_git_env; cd "$sm_path" && git-fetch "$remote_name") ||
++				die "$(eval_gettext "Unable to fetch '\$remote_name' in submodule path '\$sm_path'")"
+ 			fi
+-			remote_name=$(get_default_remote)
+ 			sha1=$(clear_local_git_env; cd "$sm_path" &&
+ 				git rev-parse --verify "${remote_name}/${branch}") ||
+ 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
+@@ -669,8 +684,8 @@ Maybe you want to use 'update --init'?")"
+ 				# is not reachable from a ref.
+ 				(clear_local_git_env; cd "$sm_path" &&
+ 					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
+-					 test -z "$rev") || git-fetch)) ||
+-				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
++					 test -z "$rev") || git-fetch "$remote_name")) ||
++				die "$(eval_gettext "Unable to fetch '\$remote_name' in submodule path '\$sm_path'")"
+ 			fi
+ 
+ 			# Is this something we just cloned?
+@@ -1110,7 +1125,7 @@ cmd_sync()
+ 			(
+ 				clear_local_git_env
+ 				cd "$sm_path"
+-				remote=$(get_default_remote)
++				remote=$(get_submodule_remote "$name")
+ 				git config remote."$remote".url "$sub_origin_url"
+ 			)
+ 			fi
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index a567834..86c85f8 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -149,6 +149,24 @@ test_expect_success 'submodule update --remote should fetch upstream changes' '
+ 	)
+ '
+ 
++test_expect_success 'local config should override .gitmodules remote' '
++	(cd submodule &&
++	 echo line5-master >> file &&
++	 git add file &&
++	 test_tick &&
++	 git commit -m "upstream line5-master"
++	) &&
++	(cd super/submodule &&
++	 git remote rename origin test-remote
++	) &&
++	(cd super &&
++	 git config submodule.submodule.remote test-remote &&
++	 git submodule update --remote --force submodule &&
++	 cd submodule &&
++	 test "$(git log -1 --oneline)" = "$(GIT_DIR=../../submodule/.git git log -1 --oneline)"
++	)
++'
++
+ test_expect_success 'local config should override .gitmodules branch' '
+ 	(cd submodule &&
+ 	 git checkout -b test-branch &&
 -- 
 1.8.0.4.gf74b0fc.dirty
