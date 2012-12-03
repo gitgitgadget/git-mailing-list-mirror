@@ -1,127 +1,109 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 1/4] submodule: add get_submodule_config helper
- funtion
-Date: Mon, 03 Dec 2012 11:30:12 -0800
-Message-ID: <7vehj7q6gr.fsf@alter.siamese.dyndns.org>
-References: <20121130032719.GE29257@odin.tremily.us>
- <cover.1354417618.git.wking@tremily.us>
- <436a73a8fdc8f0695aa597d53483d4c4bae16ebb.1354417618.git.wking@tremily.us>
+Subject: Re: [PATCH v2 3/4] git-svn: Expand documentation for --follow-parent
+Date: Mon, 03 Dec 2012 11:30:36 -0800
+Message-ID: <7vzk1vorvn.fsf@alter.siamese.dyndns.org>
+References: <cover.1354324110.git.Sebastian.Leske@sleske.name>
+ <cf118fcd52a0cf7bdf7b08a5a52cd0e285bd056b.1354324110.git.Sebastian.Leske@sleske.name>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Dec 03 20:30:47 2012
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Eric Wong <normalperson@yhbt.net>
+To: Sebastian Leske <Sebastian.Leske@sleske.name>
+X-From: git-owner@vger.kernel.org Mon Dec 03 20:30:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tfbiw-0005sq-0p
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 20:30:38 +0100
+	id 1TfbjE-0006Cm-9y
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 20:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752049Ab2LCTaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2012 14:30:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50498 "EHLO
+	id S1752053Ab2LCTak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2012 14:30:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50880 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751008Ab2LCTaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2012 14:30:14 -0500
+	id S1751008Ab2LCTaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2012 14:30:39 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5495EA017;
-	Mon,  3 Dec 2012 14:30:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291E1A051;
+	Mon,  3 Dec 2012 14:30:39 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=o9oTHii8d0dIqCT46IO2KUoM6cU=; b=M0KkqYik3YcCuh8I19y1
-	hPJG2Z048Vhx0pJ+PvbUUMZkY06aKeEhKYNhrv7I4PWMVn2bDrGrHu0WGPIm8MN3
-	CQjrbiwiRHWK+Qh1cffqiJkCdIucsL+CkvOGyvja7ChDau12kFE1ZPmuTfFxHyp8
-	SVfhhH+uMYWoRDmn6wZWWnU=
+	 s=sasl; bh=OK9twjwTc+6DnyXDtMsHQleXecI=; b=H2aXrWFMUpCjAru4L2nS
+	BYQyghKeh0I+ONIphaM8OXdtvGh6YBwuRhnxwJwBSFktDHXnEuXjVsFyIiVx5h5b
+	lZS5Wz9r+stBHMMSHdLszJpcCubeDdakTtlEydI+OIqAdpwyw4mRwCT7UA82UNQY
+	JkBvBwVQKdFYEpvk/7z39+A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=PpaKJs9UuBlcDjaUI60eHh+wSD9AIK9ZKbwJeVOzp0rjs7
-	AbxJNlf+3E6ynM33a7p+wrNN09LHm61dqh26VTtaTzWJGZRPYBtH9wsW9kcXcK0q
-	tFUxezAaPDFhnDe8gLMt96wJhkTuvcs2wXzjypha3mamkK5jWGcDrV0kjLbE0=
+	 q=dns; s=sasl; b=TMY5HeYV08/b6XuDUt4Z7VmllEueFiQWmnuz4F/5Nh7d80
+	1uHsuzpfYA5FP6Y5UiHbk/o4aE6yWDEqiLrv4a8QXG2fELKj1Ao4yqlu52MzX6iS
+	rFt1RXeLK9wlvcsHQFYiwhpljR1cN61ikmvjGZknMucpoaPFKXsSp4J3oTrEM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 403F7A016;
-	Mon,  3 Dec 2012 14:30:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16254A050;
+	Mon,  3 Dec 2012 14:30:39 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B7CFA012; Mon,  3 Dec 2012
- 14:30:13 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6BE23A04F; Mon,  3 Dec 2012
+ 14:30:38 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC10D420-3D7F-11E2-B63C-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EAD4D916-3D7F-11E2-9E8E-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211056>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Sebastian Leske <Sebastian.Leske@sleske.name> writes:
 
-> From: "W. Trevor King" <wking@tremily.us>
+> Describe what the option --follow-parent does, and what happens if it is
+> set or unset.
 >
-> Several submodule configuration variables
-> (e.g. fetchRecurseSubmodules) are read from .gitmodules with local
-> overrides from the usual git config files.  This shell function mimics
-> that logic to help initialize configuration variables in
-> git-submodule.sh.
->
-> Signed-off-by: W. Trevor King <wking@tremily.us>
+> Signed-off-by: Sebastian Leske <sebastian.leske@sleske.name>
 > ---
->  git-submodule.sh | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
+>  Documentation/git-svn.txt |   15 ++++++++++++---
+>  1 file changed, 12 insertions(+), 3 deletions(-)
 >
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ab6b110..97ce5e4 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -152,6 +152,33 @@ die_if_unmatched ()
->  }
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index bfa8788..6bda014 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -628,10 +628,19 @@ ADVANCED OPTIONS
+>  	Default: "svn"
 >  
->  #
-> +# Print a submodule configuration setting
-> +#
-> +# $1 = submodule name
-> +# $2 = option name
-> +# $3 = default value
-> +#
-> +# Checks in the usual git-config places first (for overrides),
-> +# otherwise it falls back on .gitmodules.  This allows you to
-> +# distribute project-wide defaults in .gitmodules, while still
-> +# customizing individual repositories if necessary.  If the option is
-> +# not in .gitmodules either, print a default value.
-> +#
-> +get_submodule_config()
-> +{
+>  --follow-parent::
+> +	This option is only relevant if we are tracking branches (using
+> +	one of the repository layout options --trunk, --tags,
+> +	--branches, --stdlayout). For each tracked branch, try to find
+> +	out where its revision was copied (i.e. branched) from, and set
+> +	a suitable parent in the first git commit for the branch.
 
-style (see CodingGuidelines):
+I also commit this sin myself often, but it is a good habit to get
+into to re-read the sentence after writing "... X (i.e. Y)", "... V
+(meaning W)", "... A (in other words B)".  We often write these
+after realizing that "... X", "... V" or "... A" is hard to
+understand and attempt to paraphrase to make it easier, but while
+doing so we unconsciously hesitate to remove what we originally
+wrote.  The results sometimes (but not always) reads better if you
+do not say X, V or A and only used the rephrased version that is
+meant to be easier-to-read.
 
-	get_submodule_config ()	{
+In this case, I think "was copied" and "was branched" alone are
+equally good but adding "(i.e. branched)" sounds redundant.
 
-> +	name="$1"
-> +	option="$2"
-> +	default="$3"
-> +	value=$(git config submodule."$name"."$option")
+>  	This is especially helpful when we're tracking a directory
+> -	that has been moved around within the repository, or if we
+> -	started tracking a branch and never tracked the trunk it was
+> -	descended from. This feature is enabled by default, use
+> +	that has been moved around within the repository.  If this
+> +	feature is disabled, the branches created by 'git svn' will all
+> +	be linear and not share any history, meaning that there will be
+> +	no information on where branches where branched off or merged.
 
-This will get unwieldy quickly once we have submodule.$name.$var
-that takes a boolean option, as there are different ways to spell
-boolean and "git config --bool" is the way to ask for canonicalized
-"true" or "false".
+I think the second "where" is a typo for "were" here.
 
-If we never query any boolean via this helper function, it is
-obviously not an issue, though.
-
-> +	if test -z "$value"
-> +	then
-> +		value=$(git config -f .gitmodules submodule."$name"."$option")
-> +	fi
-> +	printf '%s' "${value:-$default}"
-> +}
-> +
-> +
-> +#
->  # Map submodule path to submodule name
->  #
->  # $1 = path
+> +	However, following long/convoluted histories can take a long
+> +	time, so disabling this feature may speed up the cloning
+> +	process. This feature is enabled by default, use
+>  	--no-follow-parent to disable it.
+>  +
+>  [verse]
