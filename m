@@ -1,7 +1,7 @@
 From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH 1/2] push: rename config variable for more general use
-Date: Sun,  2 Dec 2012 21:27:50 -0600
-Message-ID: <1354505271-25657-2-git-send-email-chris@rorvick.com>
+Subject: [PATCH 2/2] push: allow already-exists advice to be disabled
+Date: Sun,  2 Dec 2012 21:27:51 -0600
+Message-ID: <1354505271-25657-3-git-send-email-chris@rorvick.com>
 References: <7vmwxwka6f.fsf@alter.siamese.dyndns.org>
  <1354505271-25657-1-git-send-email-chris@rorvick.com>
 Cc: git@vger.kernel.org, Chris Rorvick <chris@rorvick.com>,
@@ -14,146 +14,130 @@ Cc: git@vger.kernel.org, Chris Rorvick <chris@rorvick.com>,
 	Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 04:29:25 2012
+X-From: git-owner@vger.kernel.org Mon Dec 03 04:29:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TfMih-0003Ri-96
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 04:29:23 +0100
+	id 1TfMiq-0003ff-Oc
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 04:29:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755224Ab2LCD3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2012 22:29:06 -0500
+	id S1755198Ab2LCD3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2012 22:29:09 -0500
 Received: from mail-ia0-f174.google.com ([209.85.210.174]:37158 "EHLO
 	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755246Ab2LCD3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2012 22:29:04 -0500
+	with ESMTP id S1755185Ab2LCD3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2012 22:29:07 -0500
 Received: by mail-ia0-f174.google.com with SMTP id y25so1849795iay.19
-        for <git@vger.kernel.org>; Sun, 02 Dec 2012 19:29:04 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 02 Dec 2012 19:29:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=7LlIiDKos0NCDVZDRy0AI80Q2tLcWkp+ip6kCX/PBAc=;
-        b=a0kp1D9IhmeIMKPyPWc18LM4Ooy3MUtkYx7hWGdNcRaqNRiObYVAaMod2XHkqOAh6R
-         OZ1OvfDZ3/nFGp6ehVS5TFENSMpgNGG8cdV6BjK15nZrD8eklSgOr8F/JIejLkQ5ALcX
-         K2QFp0FdcUeNCSkjNRO+XVDowvwLXZa8FTMULdhtn+YpsG/SVFxrq3oDtkte4koJ9xOx
-         iPb7sYNTXs8HAATjPDtBlq5CJADYxm9hKadhhEea9TNdz/3IdFQULUlHgKY30wEzowN3
-         nkv3ONdYEQodzTz02Q1uq3CMP4oWrKgpmOrAdxENQTz2Jde7CHUlbzDxlFKVIhDj2OZL
-         BuWQ==
-Received: by 10.43.125.133 with SMTP id gs5mr6780252icc.54.1354505344477;
-        Sun, 02 Dec 2012 19:29:04 -0800 (PST)
+        bh=dINAH3xC7xt/S5YBd2jIigC5A32L88QIzd7PlPMLfus=;
+        b=qqrzKcVGsEN9eJtbBUrHutWM4bpXkzMGREZuhPzf/z4nvq3AA5JBZp6esv2KMFI9w+
+         DcYn0pU+/5SlQY7AVaV7QogKKj8E2/VosWKWmU5hoyNBrM+ngPygui/cP6ppj731LKEq
+         xuBVpdeCvNFrW7vpcxGk9OS0pdGLxq7sUSk1/DIUTf8s6CavkBborRILYg7CEtmYIM9P
+         TvNSNukJ8qUg0RD62A3OWvHFT9VUmYQNMgh6fGK1L8Y9lxZE7BKS9beLEQkrbV3sr+3e
+         93DY9sfKeI5BhZwWMGz37KOUkG48gWIPtAK/BqL/Y7vJ66gBuZR3XsCRFOGfyfWHR/FQ
+         f3CQ==
+Received: by 10.50.195.168 with SMTP id if8mr4964656igc.71.1354505346747;
+        Sun, 02 Dec 2012 19:29:06 -0800 (PST)
 Received: from marlin.localdomain ([70.131.98.170])
-        by mx.google.com with ESMTPS id fa6sm6610808igb.2.2012.12.02.19.29.02
+        by mx.google.com with ESMTPS id fa6sm6610808igb.2.2012.12.02.19.29.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 02 Dec 2012 19:29:03 -0800 (PST)
+        Sun, 02 Dec 2012 19:29:05 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.1.541.g73be2da
 In-Reply-To: <1354505271-25657-1-git-send-email-chris@rorvick.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211025>
 
-The 'pushNonFastForward' advice config can be used to squelch several
-instances of push-related advice.  Rename it to 'pushUpdateRejected' to
-cover other reject scenarios that are unrelated to fast-forwarding.
-Retain the old name for compatibility.
+Add 'advice.pushAlreadyExists' option to disable the advice shown when
+an update is rejected for a reference that is not allowed to update at
+all (verses those that are allowed to fast-forward.)
 
 Signed-off-by: Chris Rorvick <chris@rorvick.com>
 ---
- Documentation/config.txt | 2 +-
- advice.c                 | 7 +++++--
- advice.h                 | 2 +-
- builtin/push.c           | 6 +++---
- 4 files changed, 10 insertions(+), 7 deletions(-)
+ Documentation/config.txt | 8 ++++++--
+ advice.c                 | 2 ++
+ advice.h                 | 1 +
+ builtin/push.c           | 2 ++
+ 4 files changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9a0544c..92903f2 100644
+index 92903f2..90e7d10 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -140,7 +140,7 @@ advice.*::
- 	can tell Git that you do not need help by setting these to 'false':
- +
+@@ -142,8 +142,9 @@ advice.*::
  --
--	pushNonFastForward::
-+	pushUpdateRejected::
+ 	pushUpdateRejected::
  		Set this variable to 'false' if you want to disable
- 		'pushNonFFCurrent', 'pushNonFFDefault', and
- 		'pushNonFFMatching' simultaneously.
+-		'pushNonFFCurrent', 'pushNonFFDefault', and
+-		'pushNonFFMatching' simultaneously.
++		'pushNonFFCurrent', 'pushNonFFDefault',
++		'pushNonFFMatching', and 'pushAlreadyExists'
++		simultaneously.
+ 	pushNonFFCurrent::
+ 		Advice shown when linkgit:git-push[1] fails due to a
+ 		non-fast-forward update to the current branch.
+@@ -158,6 +159,9 @@ advice.*::
+ 		'matching refs' explicitly (i.e. you used ':', or
+ 		specified a refspec that isn't your current branch) and
+ 		it resulted in a non-fast-forward error.
++	pushAlreadyExists::
++		Shown when linkgit:git-push[1] rejects an update that
++		does not qualify for fast-forwarding (e.g., a tag.)
+ 	statusHints::
+ 		Show directions on how to proceed from the current
+ 		state in the output of linkgit:git-status[1] and in
 diff --git a/advice.c b/advice.c
-index edfbd4a..329e077 100644
+index 329e077..d287927 100644
 --- a/advice.c
 +++ b/advice.c
-@@ -1,6 +1,6 @@
- #include "cache.h"
- 
--int advice_push_nonfastforward = 1;
-+int advice_push_update_rejected = 1;
+@@ -4,6 +4,7 @@ int advice_push_update_rejected = 1;
  int advice_push_non_ff_current = 1;
  int advice_push_non_ff_default = 1;
  int advice_push_non_ff_matching = 1;
-@@ -14,7 +14,7 @@ static struct {
- 	const char *name;
- 	int *preference;
- } advice_config[] = {
--	{ "pushnonfastforward", &advice_push_nonfastforward },
-+	{ "pushupdaterejected", &advice_push_update_rejected },
++int advice_push_already_exists = 1;
+ int advice_status_hints = 1;
+ int advice_commit_before_merge = 1;
+ int advice_resolve_conflict = 1;
+@@ -18,6 +19,7 @@ static struct {
  	{ "pushnonffcurrent", &advice_push_non_ff_current },
  	{ "pushnonffdefault", &advice_push_non_ff_default },
  	{ "pushnonffmatching", &advice_push_non_ff_matching },
-@@ -23,6 +23,9 @@ static struct {
++	{ "pushalreadyexists", &advice_push_already_exists },
+ 	{ "statushints", &advice_status_hints },
+ 	{ "commitbeforemerge", &advice_commit_before_merge },
  	{ "resolveconflict", &advice_resolve_conflict },
- 	{ "implicitidentity", &advice_implicit_identity },
- 	{ "detachedhead", &advice_detached_head },
-+
-+	/* make this an alias for backward compatibility */
-+	{ "pushnonfastforward", &advice_push_update_rejected }
- };
- 
- void advise(const char *advice, ...)
 diff --git a/advice.h b/advice.h
-index f3cdbbf..c28ef8a 100644
+index c28ef8a..8bf6356 100644
 --- a/advice.h
 +++ b/advice.h
-@@ -3,7 +3,7 @@
- 
- #include "git-compat-util.h"
- 
--extern int advice_push_nonfastforward;
-+extern int advice_push_update_rejected;
+@@ -7,6 +7,7 @@ extern int advice_push_update_rejected;
  extern int advice_push_non_ff_current;
  extern int advice_push_non_ff_default;
  extern int advice_push_non_ff_matching;
++extern int advice_push_already_exists;
+ extern int advice_status_hints;
+ extern int advice_commit_before_merge;
+ extern int advice_resolve_conflict;
 diff --git a/builtin/push.c b/builtin/push.c
-index 83a3cc8..cf5ecfa 100644
+index cf5ecfa..8491e43 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -226,21 +226,21 @@ static const char message_advice_ref_already_exists[] =
+@@ -247,6 +247,8 @@ static void advise_checkout_pull_push(void)
  
- static void advise_pull_before_push(void)
+ static void advise_ref_already_exists(void)
  {
--	if (!advice_push_non_ff_current || !advice_push_nonfastforward)
-+	if (!advice_push_non_ff_current || !advice_push_update_rejected)
- 		return;
- 	advise(_(message_advice_pull_before_push));
++	if (!advice_push_already_exists || !advice_push_update_rejected)
++		return;
+ 	advise(_(message_advice_ref_already_exists));
  }
  
- static void advise_use_upstream(void)
- {
--	if (!advice_push_non_ff_default || !advice_push_nonfastforward)
-+	if (!advice_push_non_ff_default || !advice_push_update_rejected)
- 		return;
- 	advise(_(message_advice_use_upstream));
- }
- 
- static void advise_checkout_pull_push(void)
- {
--	if (!advice_push_non_ff_matching || !advice_push_nonfastforward)
-+	if (!advice_push_non_ff_matching || !advice_push_update_rejected)
- 		return;
- 	advise(_(message_advice_checkout_pull_push));
- }
 -- 
 1.8.0.1.541.g73be2da
