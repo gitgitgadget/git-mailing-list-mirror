@@ -1,95 +1,68 @@
-From: Tomi Belan <tomi.belan@gmail.com>
-Subject: Re: [BUG?] git-subtree behavior when the -P tree is removed and recreated
-Date: Mon, 3 Dec 2012 11:39:36 +0100
-Message-ID: <CACUV5ocT56iOS3dZsJ4JLo70o1HJv2TSrvBHE646SyQVmOuYRg@mail.gmail.com>
-References: <CACUV5ofmuUku=byR1_+Cq+g0SdzqZbH1Z1tPfQf4eNABVyYb_Q@mail.gmail.com>
- <CACUV5odffQoCxr=hTuP+S+DU4+6qD7y=YkTCN3iRr7rjar1bLQ@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: does a successful 'git gc' imply 'git fsck'
+Date: Mon, 3 Dec 2012 18:44:11 +0530
+Message-ID: <CAMK1S_gNgQORT8XRSMn0OoKRGqosoEB3_Jv84s0fQ9cpsHqMDQ@mail.gmail.com>
+References: <CAMK1S_iBq1ReGkjuy2UBENSQXOWyKj2ZzSCcg7Z89FVtVL2wMw@mail.gmail.com>
+	<7vlidgls09.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 03 11:41:17 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 14:14:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TfTRz-0005My-9T
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 11:40:35 +0100
+	id 1TfVqz-0006o6-Vn
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 14:14:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131Ab2LCKkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2012 05:40:10 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:65365 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501Ab2LCKkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2012 05:40:07 -0500
-Received: by mail-ob0-f174.google.com with SMTP id ta14so2277510obb.19
-        for <git@vger.kernel.org>; Mon, 03 Dec 2012 02:40:06 -0800 (PST)
+	id S1754619Ab2LCNOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2012 08:14:14 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:63093 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750733Ab2LCNOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2012 08:14:12 -0500
+Received: by mail-la0-f46.google.com with SMTP id p5so2237649lag.19
+        for <git@vger.kernel.org>; Mon, 03 Dec 2012 05:14:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=5xMvuol+EsWBYo0gyfLZM57Rfcoy4bo8FshfMJe91s8=;
-        b=XgfvbZWlXI1wFAwqM1VcSDG5IshXFStLwHeJp+Z9WuuNBoeAzlseDr4wTH+Bp3gCPh
-         nPwtfsY2rXb6dwW4UvH/wQu80ICsuAT4xvrS7qxbWa+NZMZ4pWr1I5jUso+DmSfIRxCg
-         9WJmfIW+nO1drc+OouZUKNy14CmRcasgtKBty8sKpT/G9kcDphBwPlKXqE24pAVwLMfq
-         Aw1oFKIHalin4DLllR/o0E3kn9J+COhKQgURgavEQZZNZR6DeHtOS4ojgqZ25UI5uexZ
-         h1FTkx5lQBNtq4bVyMNS1YAf0R8U+YWuEq0T8equThxStkl0cC7by9tM1hePWAmuHYMT
-         /2gg==
-Received: by 10.182.194.2 with SMTP id hs2mr3935715obc.97.1354531206502; Mon,
- 03 Dec 2012 02:40:06 -0800 (PST)
-Received: by 10.76.173.198 with HTTP; Mon, 3 Dec 2012 02:39:36 -0800 (PST)
-In-Reply-To: <CACUV5odffQoCxr=hTuP+S+DU4+6qD7y=YkTCN3iRr7rjar1bLQ@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=N6LCWXQn6I9z2Qe11DBEGknR4S2cg+WKOuGB6d6POe4=;
+        b=Prj5Op2BbK1p+RgEkKLq/RuJYDbH639udTDoMkuXU+eRmUIhqO+WxYGevnzmWl91Wp
+         lBWXzql5PnoGyJMHkmozdJfCqD/aZqfquGl13dnKD3a/EuoUrEl3LN6Yo4MDeu/c92jR
+         p+7VAQw3lly+oAL0arkeALzw4r15MndOOdFIiWZa4l/7LPpZz+STvhZzv/wFHmdniV4D
+         8b5LdEaVeDJwHzV9qcVFoP6Y9k8nXv7yI7TdxBGve9odx72TWx0/QWp1wAp5xRNC5aDb
+         AI5yHGrcM2lcTkO9MWOSVXTy0HjptKfwYKeYBLqOSSZpVrqmavo5UlwIQkT+DkEcflhf
+         S3lg==
+Received: by 10.112.41.202 with SMTP id h10mr4292648lbl.20.1354540451436; Mon,
+ 03 Dec 2012 05:14:11 -0800 (PST)
+Received: by 10.112.113.103 with HTTP; Mon, 3 Dec 2012 05:14:11 -0800 (PST)
+In-Reply-To: <7vlidgls09.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211036>
 
-Another bump. I reported this back in October, but there hasn't been
-any response yet...
-
-Note that the bug is still present in git 1.8.0.1.
-
-Tomi
-
-On Sun, Oct 21, 2012 at 11:18 PM, Tomi Belan <tomi.belan@gmail.com> wrote:
-> This probably got lost in the mail. Could somebody familiar with
-> git-subtree take a look?
-> Tomi
+On Sun, Dec 2, 2012 at 3:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
 >
-> On Sat, Oct 13, 2012 at 3:47 PM, Tomi Belan <tomi.belan@gmail.com> wrote:
->>
->> Hello folks,
->>
->> I think I might've found a bug in git-subtree: I have a repository
->> containing a directory "foo". I'd like to use its code in other
->> projects, so I want to split it off into its own repository with
->> git-subtree. But it doesn't work as it should. I found out that long
->> ago, my repository contained an unrelated directory also called "foo"
->> which has since been deleted.
->>
->> Steps to reproduce (after installing git-subtree from contrib):
->> git init repo
->> cd repo
->> mkdir foo; touch foo/v1
->> git add -A .; git commit -m v1
->> rm -rf foo; touch v2
->> git add -A .; git commit -m v2
->> mkdir foo; touch foo/v3
->> git add -A .; git commit -m v3
->> git subtree split -P foo -b splitfoo --annotate="split "
->>
->> What should happen: Either (A) splitfoo only contains "split v3", or
->> (B) splitfoo contains "split v1" and "split v3"
->>
->> What happens instead: The parent of "split v3" is "v2", so splitfoo's
->> full history is: "v1" -> "v2" -> "split v3".
->>
->> Git version: 1.7.12.2
->>
->> Bonus questions:
->> - which is the intended behavior, (A) or (B)?
->> - if it's (B), how do I convince git-subtree to do (A) once this bug
->> gets fixed? (I might be getting too far ahead of myself here...)
->>
->> Tomi
+>> If I could assume that a successful 'git gc' means an fsck is not
+>> needed, I'd save a lot of time.  Hence my question.
+>
+> When it does "repack -a", it at least scans the whole history so you
+> would be sure that all the commits and trees are readable for the
+> purpose of enumerating the objects referred by them (and a bit flip
+> in them will likely be noticed by zlib inflation).
+>
+> But a "gc" does not necessarily run "repack -a" when it does not see
+> too many pack files, so it can end up scanning only the surface of
+> the history to collect the recently created loose objects into a
+> pack, and stop its traversal without going into existing packfiles.
+
+Thanks; I'd missed this nuance as well...
+
+-- 
+Sitaram
