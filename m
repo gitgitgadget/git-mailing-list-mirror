@@ -1,136 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] l10n: de.po: translate 825 new messages
-Date: Mon, 03 Dec 2012 15:59:36 +0100
-Message-ID: <50BCBE58.30805@drmicha.warpmail.net>
-References: <87ehjcj9lq.fsf@pctrast.inf.ethz.ch> <1354510131-2881-1-git-send-email-ralf.thielow@gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH 6/8] imap-send: change msg_data from storing (char *, len)
+ to storing strbuf
+Date: Mon, 3 Dec 2012 13:06:32 -0200
+Message-ID: <CACnwZYdUN+8iubjFsLMbQvEdYjvZFj_XM+oAeTsUe0EUoCwm_g@mail.gmail.com>
+References: <1353841721-16269-1-git-send-email-mhagger@alum.mit.edu>
+	<1353841721-16269-7-git-send-email-mhagger@alum.mit.edu>
+	<7vboegp04x.fsf@alter.siamese.dyndns.org>
+	<50B8B66F.3090300@alum.mit.edu>
+	<7v624lns00.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@inf.ethz.ch, git@drmicha.warpmail.net, git@vger.kernel.org,
-	jk@jk.gs, stimming@tuhh.de
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 16:00:05 2012
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Jeremy White <jwhite@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 16:06:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TfXUx-0003wh-Q7
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 15:59:56 +0100
+	id 1TfXbf-0005n8-AI
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Dec 2012 16:06:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992Ab2LCO7m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2012 09:59:42 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55269 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753142Ab2LCO7j (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Dec 2012 09:59:39 -0500
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id D9C1E20D05;
-	Mon,  3 Dec 2012 09:59:37 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute5.internal (MEProxy); Mon, 03 Dec 2012 09:59:37 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=RGP3YQ0woB/MjV7GJ0a5kc
-	+KqOs=; b=DNvs9bMj2gQSPi8GDgiuJLHL59Aw1mBsqiAL5zfPBU7/lM1fBe8v2J
-	VfGDzbJOKRJGfGLiYPLskhpL9yasayPJtsPxwlB8ym9PX5FhIOmGfukh2qwPnCck
-	t7JYJ9omNwu0FmfppScdhHbItdFLCtTOdYvIRY/WA9tRdh8o58XaE=
-X-Sasl-enc: DSPfCmAMcByfTn0CBnHJ3mlDrGQ1fyPG8BMH07w8WLdy 1354546777
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id DF0A24827D0;
-	Mon,  3 Dec 2012 09:59:36 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <1354510131-2881-1-git-send-email-ralf.thielow@gmail.com>
+	id S1753528Ab2LCPGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2012 10:06:35 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:57431 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753490Ab2LCPGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2012 10:06:34 -0500
+Received: by mail-la0-f46.google.com with SMTP id p5so2346331lag.19
+        for <git@vger.kernel.org>; Mon, 03 Dec 2012 07:06:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=G53KjwGFx3Eo+FssvJYAnkhp5HiFapf5W72Q7hq55mo=;
+        b=gMngLp17g3iEDJ1h4KsumFE8pqCgSzmMrIq52gXWo1QM9+v1BDQ2Ma7wAXmPk1hUXp
+         sJ7rUocBKb6VLcbcjWAo4vgFuwsLe1IJAVJKXQTwDKrscyYHxpUdIiYkd4rwEbpI6sZL
+         Map1x2Vjwa/LC7K0KKiWilOYJe+zyuY/cUMzQ4J59LzlzcJlidWQfMwFZmtCn+5ahSCS
+         2bKNLynvmivI+6L0mBOZE5m/xfeNN1gKVHF9j6/bcTSKGZFwFSf/ASLbOCHkwfZZG1tJ
+         kJOfsPMAM0h5FTHO830eaz09Yaif7fZXu9g7EMNBkMNvSZH0OcEAvsuU0I2c6r7fFPp6
+         t56g==
+Received: by 10.112.31.200 with SMTP id c8mr4392510lbi.61.1354547193092; Mon,
+ 03 Dec 2012 07:06:33 -0800 (PST)
+Received: by 10.112.39.137 with HTTP; Mon, 3 Dec 2012 07:06:32 -0800 (PST)
+In-Reply-To: <7v624lns00.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211040>
 
-Ralf Thielow venit, vidit, dixit 03.12.2012 05:48:
-> Thanks Thomas and Michael!
->=20
-> 2012/11/30 Thomas Rast <trast@inf.ethz.ch>:
->=20
->>>  #: builtin/update-index.c:756
->>>  msgid "mark files as \"index-only\""
->>> -msgstr ""
->>> +msgstr "markiert Dateien als \"index-only\""
->>
->> Likewise, but here I don't even understand what the manpage is tryin=
-g to
->> tell me, in particular I don't see how it would be different from
->> assume-unchanged.  Maybe "see manpage" would be the best documentati=
-on.
->=20
-> I'm not really sure what to do with it. In this version (see below) I=
- kept
-> it. Did you mean we should add "(siehe Hilfeseite)" or something in t=
-he
-> translation, or does it belong to the original message and the transl=
-ation
-> would just follow?
+On Sat, Dec 1, 2012 at 11:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I suggest a separate patch series dedicated to deleting *all* the extra
+>> imap infrastructure at once.  That being said, I'm not committing to do
+>> so.  (We could add it to an "straightforward projects for aspiring git
+>> developers" list, if we had such a thing.)
 >
+> A "low-hanging fruit and/or janitorial work" stack may be worth
+> having.
 
-I'd say the translation above is fine, and no matter what language the
-user messages are in, the user would have to consult the man page for
-this very special feature, but I don't think we have to say so explicit=
-ly.
-
->>> +"wiederholte Ausf=C3=BChrung der Phasen #2 und #3 f=C3=BCr die auf=
-gelisteten Pfade"
->>
->> ISTR we settled on something for 'stage', but it's not in the glossa=
-ry.
->> Either way I don't think this is it.  "Ausf=C3=BChrung der Phasen" w=
-ould mean
->> that it's some part of a process, whereas the stages are a state.
->>
-> I've changed it to
-> "wiederholtes Einpflegen der Zust=C3=A4nde #2 und #3 f=C3=BCr die auf=
-gelisteten Pfade"
-> What do you think?
->=20
-> ---
->  po/de.po | 123 +++++++++++++++++++++++++++++++----------------------=
-----------
->  1 file changed, 61 insertions(+), 62 deletions(-)
-=2E..
->  #: builtin/fsck.c:620
->  msgid "also consider packs and alternate objects"
-> -msgstr "betrachtet auch Pakete und wechselnde Objekte"
-> +msgstr ""
-
-Oops ;)
-
->  #: builtin/push.c:391
->  msgid "check"
-> -msgstr "=C3=9Cberpr=C3=BCfung"
-> +msgstr ""
-
-Is this meant to omit the text? (I may have missed the pertaining
-discussion.)
-
-
->  #: builtin/update-index.c:753
->  msgid "clear assumed-unchanged bit"
-> @@ -8568,7 +8567,7 @@ msgstr "f=C3=BCgt Eintr=C3=A4ge von der Standar=
-d-Eingabe der Bereitstellung hinzu"
->  #: builtin/update-index.c:776
->  msgid "repopulate stages #2 and #3 for the listed paths"
->  msgstr ""
-> -"wiederholte Ausf=C3=BChrung der Phasen #2 und #3 f=C3=BCr die aufge=
-listeten Pfade"
-> +"wiederholtes Einpflegen der Zust=C3=A4nde #2 und #3 f=C3=BCr die au=
-fgelisteten Pfade"
-
-I can't seem to find the other occurence in de.po, but state should be
-the same as in
-
-"copy out the files from named stage" (checkout-index).
-
-"Zustand" seems to be appropriate.
-
-Cheers,
-Michael
+That would be good for not so versed developers, I think. Do we have a
+place for listing janitor projects?
