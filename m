@@ -1,218 +1,253 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t9402: sed -i is not portable
-Date: Tue, 04 Dec 2012 12:52:00 -0800
-Message-ID: <7vfw3lmtfz.fsf@alter.siamese.dyndns.org>
-References: <201212042044.49477.tboegi@web.de>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v2] submodule: add 'deinit' command
+Date: Tue, 04 Dec 2012 22:48:41 +0100
+Message-ID: <50BE6FB9.70301@web.de>
+References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de> <20121130175309.GA718@odin.tremily.us> <CABURp0qNBcFnxbvhn7PsKWLUOsTiK4u5vx-=6cG3JQHw9aUeHA@mail.gmail.com> <50BA2892.7060706@web.de> <50BA3412.60309@web.de> <7vy5hhmcwp.fsf@alter.siamese.dyndns.org> <50BBB22A.7050901@web.de> <7vhao31s9e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, mmogilvi_git@miniinfo.net
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 04 21:52:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Phil Hord <phil.hord@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 22:49:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TfzTc-0003Xs-AD
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 21:52:24 +0100
+	id 1Tg0MV-0003wA-PX
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 22:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520Ab2LDUwI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2012 15:52:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56071 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751807Ab2LDUwG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Dec 2012 15:52:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1363D8F1D;
-	Tue,  4 Dec 2012 15:52:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=wuIXHSWNdroi
-	mh9qlT75qBHO0lY=; b=jtoogcvpXBM7UkBnjRzv6Ow9Tx7gPM1/aOFzA9uNYZdx
-	Y1JoxRLPjfx4Q1R3zh3A+6iB4RfFXxSnr5w5nLLBOkeKzpzzFgtv+jA6HPRpFj83
-	whyFove1rqjjWMc3L2Rm0AozvZqSLxT93Ofg007Yn3xZJnau2pZ5CDxSZpLud8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KTFEf6
-	do1p16W32Q/IejQjk8ZoTkGpeZCrzWqiHEh8nWuAdBgjNIecaVPePZoJ1MC6D4vf
-	FvcH/xyfjh30XDVHGPkqh6vyOfgrXHhqAw2850d8hQrFx5Kz42mSzqqoHjTcXrr4
-	oMqZNZox85qTyeqSk/kjGfngWwNqJ0+1LjGK4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B70488F1C;
-	Tue,  4 Dec 2012 15:52:03 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 732C68F17; Tue,  4 Dec 2012
- 15:52:02 -0500 (EST)
-In-Reply-To: <201212042044.49477.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?= message of "Tue, 4 Dec 2012 20:44:48
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 745A8F44-3E54-11E2-9721-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753317Ab2LDVsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2012 16:48:51 -0500
+Received: from mout.web.de ([212.227.15.4]:64828 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752929Ab2LDVsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2012 16:48:50 -0500
+Received: from [192.168.178.41] ([91.3.166.253]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0LyUha-1T9bLu0XQc-0166ee; Tue, 04 Dec 2012 22:48:44
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vhao31s9e.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
+X-Provags-ID: V02:K0:BoFOsaUcYszK5lfNplhOV6FUUE1q3su0M8yYCG9XreW
+ M6XVvNUpvX51pHJCe98nbM5onuD5V2qDDVzqXRwCpGRlf/ALkT
+ sojFEXDeuTIQLqXbC4Btv1yN6Jz7MUKgcAKLgf9NdVqPslwdL+
+ M876LMLCf6gBiwLonS4OqabB9V8CLu4oH0rRrTLi7ZeFQ/2T+B
+ TV/pwGI6erJZIk3bambkA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211098>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+With "git submodule init" the user is able to tell git he cares about one
+or more submodules and wants to have it populated on the next call to "git
+submodule update". But currently there is no easy way he could tell git he
+does not care about a submodule anymore and wants to get rid of his local
+work tree (except he knows a lot about submodule internals and removes the
+"submodule.$name.url" setting from .git/config himself).
 
-> On some systems sed allows the usage of e.g.
-> sed -i -e "s/line1/line2/" afile
-> to edit the file "in place".
-> Other systems don't allow that: one observed behaviour is that
-> sed -i -e "s/line1/line2/" afile
-> creates a backup file called afile-e, which breaks the test.
-> As sed -i is not part of POSIX, avoid it.
+Help those users by providing a 'deinit' command. This removes the whole
+submodule.<name> section from .git/config either for the given
+submodule(s) or for all those which have been initialized if none were
+given. Complain only when for a submodule given on the command line the
+url setting can't be found in .git/config.
 
-Thanks.
+Add tests and link the man pages of "git submodule deinit" and "git rm"
+to assist the user in deciding whether removing or unregistering the
+submodule is the right thing to do for him.
 
-The intention is good, but see comments on this part in the patch
-below.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-> Use test_cmp, makes the test easier to debug.
+Am 03.12.2012 08:58, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Maybe the principle of least surprise is better followed when we
+>> nuke the whole section, as it might surprise the user more to have
+>> a setting resurrected he customized in the last life cycle of the
+>> submodule than seeing that after an deinit followed by an init all
+>> former customizations are consistently gone. So I tend to think now
+>> that removing the whole section would be the better solution here.
+> 
+> I tend to agree; I suspect that a "deinit" would be mostly done
+> either to
+> 
+>  (1) correct mistakes the user made during a recent "init" and
+>      perhaps "sync"; or
+> 
+>  (2) tell Git that the user has finished woing with this particular
+>      submodule and does not intend to use it for quite a while.
+> 
+> For both (1) and (2), I think it would be easier to users if we gave
+> them a clean slate, the same state as the one the user who never had
+> ran "init" on it would be in.  A user in situation (1) is asking for
+> a clean slate, and a user in situation (2) is better served if he
+> does not have to worry about leftover entries in $GIT_DIR/config he
+> has long forgotten from many months ago (during which time the way
+> the project uses the particular submodule may well have changed)
+> giving non-standard experience different from what other project
+> participants would get.
 
-I see a few other remaining issues in the code after this patch is
-applied.  If we are doing other fixes like these, we may want to fix
-them as well:
+Changes in v2:
+- Remove the whole submodule section instead of only removing the
+  "url" setting and explain why we do that in a comment
+- Reworded commit message and git-submodule.txt to reflect that
+- Extend the test to check that a custom settings are removed
 
- - test_must_fail is used to run cvs; it shouldn't (instead of
-   saying "test_must_fail cvs ...", just say "! cvs ...").
 
- - A shell function should begin like this: "shellfunc () {"
+ Documentation/git-rm.txt        |  4 ++++
+ Documentation/git-submodule.txt | 12 ++++++++++
+ git-submodule.sh                | 52 ++++++++++++++++++++++++++++++++++++++++-
+ t/t7400-submodule-basic.sh      | 12 ++++++++++
+ 4 files changed, 79 insertions(+), 1 deletion(-)
 
- - Redirection should not have SP before the filename (i.e. ">out",
-   not "> out").
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 262436b..ec42bf5 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -149,6 +149,10 @@ files that aren't ignored are present in the submodules work tree.
+ Ignored files are deemed expendable and won't stop a submodule's work
+ tree from being removed.
 
- - It is OK to spell single-liner subshell like this:
++If you only want to remove the local checkout of a submodule from your
++work tree without committing that use `git submodule deinit` instead
++(see linkgit:git-submodule[1]).
++
+ EXAMPLES
+ --------
+ `git rm Documentation/\*.txt`::
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index b1de3ba..08b55a7 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 	      [--reference <repository>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
++'git submodule' [--quiet] deinit [--] [<path>...]
+ 'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
+ 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+@@ -134,6 +135,17 @@ init::
+ 	the explicit 'init' step if you do not intend to customize
+ 	any submodule locations.
 
-    ( cd cvswork3 && ! cvs -f diff -N -u ) &&
-    ...
++deinit::
++	Unregister the submodules, i.e. remove the whole `submodule.$name`
++	section from .git/config. Further calls to `git submodule update`,
++	`git submodule foreach` and `git submodule sync` will skip any
++	unregistered submodules until they are initialized again, so use
++	this command if you don't want to have a local checkout of the
++	submodule in your work tree anymore (but note that this command
++	does not remove the submodule work tree). If you really want to
++	remove a submodule from the repository and commit that use
++	linkgit:git-rm[1] instead.
++
+ update::
+ 	Update the registered submodules, i.e. clone missing submodules and
+ 	checkout the commit specified in the index of the containing repository.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2365149..3f558ed 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -8,6 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
+ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
++   or: $dashless [--quiet] deinit [--] [<path>...]
+    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+@@ -516,6 +517,55 @@ cmd_init()
+ }
 
-   but a multi-line subshell should start its first command on a
-   separate line, like this:
+ #
++# Unregister submodules from .git/config
++#
++# $@ = requested paths (default to all)
++#
++cmd_deinit()
++{
++	# parse $args after "submodule ... init".
++	while test $# -ne 0
++	do
++		case "$1" in
++		-q|--quiet)
++			GIT_QUIET=1
++			;;
++		--)
++			shift
++			break
++			;;
++		-*)
++			usage
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++
++	module_list "$@" |
++	while read mode sha1 stage sm_path
++	do
++		die_if_unmatched "$mode"
++		name=$(module_name "$sm_path") || exit
++		url=$(git config submodule."$name".url)
++		if test -z "$url"
++		then
++			# Only mention uninitialized submodules when its
++			# path have been specified
++			test "$#" != "0" &&
++			say "$(eval_gettext "No url found for submodule path '\$sm_path' in .git/config")"
++			continue
++		fi
++		# Remove the whole section so we have a clean state when the user
++		# later decides to init this submodule again
++		git config --remove-section submodule."$name" &&
++		say "$(eval_gettext "Submodule '\$name' (\$url) unregistered")"
++	done
++}
++
++#
+ # Update each submodule path to correct revision, using clone and checkout as needed
+ #
+ # $@ = requested paths (default to all)
+@@ -1108,7 +1158,7 @@ cmd_sync()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | foreach | init | update | status | summary | sync)
++	add | foreach | init | deinit | update | status | summary | sync)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index de7d453..ee4f0ab 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -756,4 +756,16 @@ test_expect_success 'submodule add with an existing name fails unless forced' '
+ 	)
+ '
 
-    (
-        cd cvswork3 &&
-        cvs update foo
-    ) &&
-    ...
-
- - quite a few "[cvswork$n]" comments are truncated to "[cvswork$n"
-   in the test titles.
-
-> Chain all shell commands with && to detect all kinds of failure.
-
-I think you missed the one in 'merge early [cvswork3] b3 with b1'
-where a merge is done in a subshell; a failed merge is not detected.
-
-This is another reason why I asked you not to mix different things
-in a single patch; if this patch is rerolled to cover missing "&&"
-that you missed, it needs to be re-reviewed for the "sed -i" fix we
-review during this round again.
-
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> Changes since v1:
-> No correction of TABs to make it easier to review
->
-> If this is OK:
-> Matthew would you like to send a complete re-roll,
-> because the credit should be on you ?
->
->  t/t9402-git-cvsserver-refs.sh | 44 ++++++++++++++++++++++-----------=
-----------
->  1 file changed, 23 insertions(+), 21 deletions(-)
->
-> diff --git a/t/t9402-git-cvsserver-refs.sh b/t/t9402-git-cvsserver-re=
-fs.sh
-> index 858ef0f..5138f14 100755
-> --- a/t/t9402-git-cvsserver-refs.sh
-> +++ b/t/t9402-git-cvsserver-refs.sh
-> @@ -28,27 +28,26 @@ check_file() {
->  }
-> =20
->  check_end_tree() {
-> -    sandbox=3D"$1"
-> -    expectCount=3D$(wc -l < "$WORKDIR/check.list")
-> -    cvsCount=3D$(find "$sandbox" -name CVS -prune -o -type f -print =
-| wc -l)
-> -    test x"$cvsCount" =3D x"$expectCount"
-> -    stat=3D$?
-> -    echo "check_end $sandbox : $stat cvs=3D$cvsCount expect=3D$expec=
-tCount" \
-> -	>> "$WORKDIR/check.log"
-> -    return $stat
-> +    sandbox=3D"$1" &&
-> +    wc -l < "$WORKDIR/check.list" > expected &&
-> +    find "$sandbox" -type f | grep -v "/CVS" > "$WORKDIR/check.cvsCo=
-unt" &&
-> +    wc -l < "$WORKDIR/check.cvsCount" >actual &&
-
-You replaced the original "find" that was perfectly correct with
-"pipe to grep -v" which is more expensive.  Why?
-
-The file stores the lines to be counted; why is it called a "Count"?
-
-As "check.list" is really the "expected list of files", it may want
-to be renamed to "list.expected" or something like that.  Then the
-output from this "find" would naturally become "list.actual", i.e.
-
-	find "$sandbox" -name CVS -type d -prune \
-            -o -type f -print >"$WORKDIR/list.actual"
-
-Even though you are comparing only the number of lines in the file
-in this function, are they expected to name the same set of paths?
-The other function check_end_full_tree used to compare only the
-count, but you changed it to compare the actul names of paths, which
-may be a more robust and correct test, so it might make more sense
-to redefine $WORKDIR/list.{expect,actual} to be a sorted list of
-paths relative to the top of the working tree and do something like
-this:
-
-	(
-        	cd "$sandbox" &&
-	        find . -name CVS -type d -prune -o -type f -print
-	) | sed -e "s|^./||" | sort >"$WORKDIR/list.actual"
-
-and make sure "$WORKDIR/list.expect" is also sorted.  Then you can
-lose the "wc -l" based check from here and compare the list of
-paths.
-
-> +    test_cmp expected actual &&
-> +		rm expected actual &&
-> +		sort < "$WORKDIR/check.list" > expected &&
-> +		sort < "$WORKDIR/check.cvsCount" | sed -e "s%cvswork/%%" >actual &=
-&
-
-It is probably easier for a later patch to fix the indentation, if
-these new lines followed the existing indentation.
-
-> +    test_cmp expected actual &&
-> +		rm expected actual
->  }
-> =20
->  check_end_full_tree() {
-> -    sandbox=3D"$1"
-> -    ver=3D"$2"
-> -    expectCount=3D$(wc -l < "$WORKDIR/check.list")
-> -    cvsCount=3D$(find "$sandbox" -name CVS -prune -o -type f -print =
-| wc -l)
-> -    gitCount=3D$(git ls-tree -r "$2" | wc -l)
-> -    test x"$cvsCount" =3D x"$expectCount" -a x"$gitCount" =3D x"$exp=
-ectCount"
-> -    stat=3D$?
-> -    echo "check_end $sandbox : $stat cvs=3D$cvsCount git=3D$gitCount=
- expect=3D$expectCount" \
-> -	>> "$WORKDIR/check.log"
-> -    return $stat
-> +    sandbox=3D"$1" &&
-> +    sort < "$WORKDIR/check.list" >expected &&
-> +    find "$sandbox" -name CVS -prune -o -type f -print | sed -e "s%$=
-sandbox/%%" | sort >act1 &&
-> +		test_cmp expected act1 &&
-> +    git ls-tree -r "$2" | sed -e "s/^.*blob [0-9a-fA-F]*[	 ]*//" | s=
-ort > act2 &&
-
-You can say "git ls-tree --name-only -r" and lose the sed.
++test_expect_success 'submodule deinit should remove the whole submodule section from .git/config' '
++	git config submodule.example.foo bar &&
++	git submodule deinit &&
++	test -z "$(git config submodule.example.url)" &&
++	test -z "$(git config submodule.example.foo)"
++'
++
++test_expect_success 'submodule deinit complains only when explicitly used on an uninitialized submodule' '
++	git submodule deinit &&
++	test_must_fail git submodule deinit example
++'
++
+ test_done
+-- 
+1.8.0.1.348.gc64da69
