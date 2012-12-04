@@ -1,94 +1,131 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] fsck: warn about ".git" in trees
-Date: Tue, 04 Dec 2012 11:40:06 +0100
-Message-ID: <50BDD306.30301@op5.se>
-References: <20121128213529.GA16518@sigill.intra.peff.net> <50B90E11.8090501@web.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH] mingw_rmdir: do not prompt for retry when non-empty
+Date: Tue,  4 Dec 2012 11:41:53 +0100
+Message-ID: <1354617713-7436-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 04 11:40:31 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com,
+	johannes.schindelin@gmx.de
+To: git@vger.kernel.org
+X-From: msysgit+bncBDR53PPJ7YHRBAFH66CQKGQES56PTFQ@googlegroups.com Tue Dec 04 11:42:22 2012
+Return-path: <msysgit+bncBDR53PPJ7YHRBAFH66CQKGQES56PTFQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f58.google.com ([209.85.161.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TfpvR-0001b0-7t
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 11:40:29 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751543Ab2LDKkN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2012 05:40:13 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:60398 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751144Ab2LDKkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2012 05:40:11 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so1535775eaa.19
-        for <git@vger.kernel.org>; Tue, 04 Dec 2012 02:40:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=Ak3Zi0y9zbhN8z+o5BNCogpQkgf8J+zSN2Qh5Xe13K4=;
-        b=GhU2uJ9bNlh0peMRMdyW+IMxcJUo6Xpy3yW5Goz6SpBQgzPp5sFE2l4PTgU4ZnQcjc
-         BMi+Gpj9GL0iw0LSpWf5/BXsqhfpGOdRBBe/KHKbHHaTfWJI4/a3oR0J7l1MziGCXWvP
-         kUmcAfdOX8xx0v1sOVs1z6z4BpBKUH+XplT0kDI3bHAdKusjtKBS6DcK9E7xKyAIOaeO
-         mO035zsl0FZ/VLAod/RStOdojOunRjg8sFgHbf+E6z7plxqWiI1EVJPuwe/FNNn3t3YG
-         IraNfu+ahD8OWWrE1JxJXMOBtM9KF/ZQZQXXqyVwoA3Ic+uSvxgvraMFpG3MZBLqDKBM
-         HmzQ==
-Received: by 10.14.175.133 with SMTP id z5mr47233928eel.15.1354617610473;
-        Tue, 04 Dec 2012 02:40:10 -0800 (PST)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id z8sm1825342eeo.11.2012.12.04.02.40.07
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBAFH66CQKGQES56PTFQ@googlegroups.com>)
+	id 1TfpxF-0004IT-97
+	for gcvm-msysgit@m.gmane.org; Tue, 04 Dec 2012 11:42:21 +0100
+Received: by mail-fa0-f58.google.com with SMTP id v9sf1566170fav.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 04 Dec 2012 02:42:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=q0m7+8l+KhYD48OSIw2cqRD49Iq08UYVKJO8XQlEbj0=;
+        b=gV/VcGcwPqfeJIN3vSLWujAKEet1XNGZ5IMlyn9ltAA1byPjhJXEwmD1nYqH8Md467
+         MKrYKdk0jEPqVmrmA3wOhBX39lQxxI+p/6mes5RsMkG2uQObqnv2HVjoQBkawQ2veaXA
+         lscb4hm9D12VLlKJqECFaxNYmY/7txX7ITwqSG32ouej2NYpQEG/BZW2JgOByQ2sucRt
+         ow3p19HbEY58t+Ni129cyEYXsDJhWa4QrP4X3n5vxFiNfT+GlXUzh3G5/8qqIImIWpgw
+         J//JQSiR56RDKS8024N0M7YPo22ACtp8GeNOjHtvuF3oPlR2V/irpNGowZU+lN8aue8L
+         9tCA==
+Received: by 10.180.98.227 with SMTP id el3mr401091wib.10.1354617729489;
+        Tue, 04 Dec 2012 02:42:09 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.87.7 with SMTP id t7ls1380348wiz.43.canary; Tue, 04 Dec
+ 2012 02:42:08 -0800 (PST)
+Received: by 10.204.157.144 with SMTP id b16mr1860585bkx.4.1354617728725;
+        Tue, 04 Dec 2012 02:42:08 -0800 (PST)
+Received: by 10.204.157.144 with SMTP id b16mr1860583bkx.4.1354617728705;
+        Tue, 04 Dec 2012 02:42:08 -0800 (PST)
+Received: from mail-bk0-f54.google.com (mail-bk0-f54.google.com [209.85.214.54])
+        by gmr-mx.google.com with ESMTPS id v18si84532bkw.1.2012.12.04.02.42.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 04 Dec 2012 02:40:09 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <50B90E11.8090501@web.de>
-X-Gm-Message-State: ALoCoQnV70NlkWT1ocBzAUloiFfLxJkb7N/0izvHHV0ajaS4AFylYXjV6ZVoI7SdwJg91I/GncbR
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211078>
+        Tue, 04 Dec 2012 02:42:08 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.214.54 as permitted sender) client-ip=209.85.214.54;
+Received: by mail-bk0-f54.google.com with SMTP id je9so1509519bkc.41
+        for <msysgit@googlegroups.com>; Tue, 04 Dec 2012 02:42:08 -0800 (PST)
+Received: by 10.204.147.141 with SMTP id l13mr3807802bkv.43.1354617728537;
+        Tue, 04 Dec 2012 02:42:08 -0800 (PST)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id y11sm642378bkw.8.2012.12.04.02.42.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 04 Dec 2012 02:42:07 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.msysgit.0.3.g0262b9f.dirty
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.214.54 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211079>
 
-On 11/30/2012 08:50 PM, Torsten B=F6gershausen wrote:
->> Having a ".git" entry inside a tree can cause confusing
->> results on checkout. At the top-level, you could not
->> checkout such a tree, as it would complain about overwriting
->> the real ".git" directory. In a subdirectory, you might
->> check it out, but performing operations in the subdirectory
->> would confusingly consider the in-tree ".git" directory as
->> the repository.
-> [snip]
->> +    int has_dotgit =3D 0;
->=20
-> Name like "." or ".." are handled as directories by the OS.
->=20
+in ab1a11be ("mingw_rmdir: set errno=ENOTEMPTY when appropriate"),
+a check was added to prevent us from retrying to delete a directory
+that is both in use and non-empty.
 
-The patch is for the index, where they're handled as whatever the mode
-claims it is. The patch doesn't touch those parts though.
+However, this logic was slightly flawed; since we didn't return
+immediately, we end up falling out of the retry-loop, but right into
+the prompting loop.
 
-> ".git" could be a file or a directory, at least in theory,
-> and from the OS point of view,
-> but we want to have this as a reserved name.
->=20
-> Looking at bad directory names, which gives trouble when checking out=
-:
->=20
-> Should we check for "/" or "../blabla" as well?
->=20
+Fix this by simply returning from the function instead of breaking
+the loop.
 
-Apart from the checks already in place, checking for git's internal
-directory separator marker (which is '/') is enough to catch both,
-and that check is done.
+While we're at it, change the second break to a return as well; we
+already know that we won't enter the prompting-loop, beacuse
+is_file_in_use_error(GetLastError()) already evaluated to false.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Here's a quick patch for a small issue I recently encountered; when
+deleting a file from inside a directory, we currently end up
+prompting the user if (s)he want us to retry deleting the directory
+they are in.
+
+ compat/mingw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 1eb974f..2c29667 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -260,10 +260,10 @@ int mingw_rmdir(const char *pathname)
+ 
+ 	while ((ret = _wrmdir(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
+ 		if (!is_file_in_use_error(GetLastError()))
+-			break;
++			return ret;
+ 		if (!is_dir_empty(wpathname)) {
+ 			errno = ENOTEMPTY;
+-			break;
++			return ret;
+ 		}
+ 		/*
+ 		 * We assume that some other process had the source or
+-- 
+1.8.0.msysgit.0.3.g0262b9f.dirty
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
