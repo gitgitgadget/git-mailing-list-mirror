@@ -1,7 +1,7 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v2 4/6] compat/terminal: separate input and output handles
-Date: Tue,  4 Dec 2012 09:10:40 +0100
-Message-ID: <1354608642-5316-5-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v2 6/6] mingw: get rid of getpass implementation
+Date: Tue,  4 Dec 2012 09:10:42 +0100
+Message-ID: <1354608642-5316-7-git-send-email-kusmabite@gmail.com>
 References: <1354608642-5316-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,16 +10,16 @@ Cc: msysgit@googlegroups.com,
 	gitster@pobox.com,
 	peff@peff.net
 To: git@vger.kernel.org
-X-From: msysgit+bncBDR53PPJ7YHRBMHA62CQKGQES7M4B4Y@googlegroups.com Tue Dec 04 09:11:41 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRBMHA62CQKGQES7M4B4Y@googlegroups.com>
+X-From: msysgit+bncBDR53PPJ7YHRBNXA62CQKGQENUORECQ@googlegroups.com Tue Dec 04 09:11:51 2012
+Return-path: <msysgit+bncBDR53PPJ7YHRBNXA62CQKGQENUORECQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f58.google.com ([209.85.215.58])
+Received: from mail-ea0-f186.google.com ([209.85.215.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBMHA62CQKGQES7M4B4Y@googlegroups.com>)
-	id 1TfnbQ-0004ur-HM
-	for gcvm-msysgit@m.gmane.org; Tue, 04 Dec 2012 09:11:40 +0100
-Received: by mail-la0-f58.google.com with SMTP id m14sf1486014lag.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 04 Dec 2012 00:11:28 -0800 (PST)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBNXA62CQKGQENUORECQ@googlegroups.com>)
+	id 1TfnbW-0004tJ-Gb
+	for gcvm-msysgit@m.gmane.org; Tue, 04 Dec 2012 09:11:46 +0100
+Received: by mail-ea0-f186.google.com with SMTP id c1sf1487801eaa.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 04 Dec 2012 00:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
@@ -27,40 +27,54 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :x-google-group-id:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe:content-type;
-        bh=984yJwKajjmeEeTXLba46xWATQ1SnSXDSmNog8Lb6qU=;
-        b=SVSNt20WnLuCddWw5GrFF3YTr7czQrCs6DjjdyCZh1k5YgVCPWk6VxoDdHspt0ia7A
-         YXjO3z3ZTGxz2ToiM46eRBEVVMWt/82vJeNTZqw5zfBiN/et6DvTgOjBbLdmV7I6ya89
-         vpgUUzqMTaLCGZiumehYU2Ii+k7Dlad36yBlzsPApnQWIdg3cbCaE2Efkr6AgC0Wl2xK
-         zFSaKRMugdh/lrtnM/7N4s6QDy6sI2ySr9sDsCb0cbRHL+NQ8ClC6jsfGNn/pCRmRC/d
-         Xncbjg2Kxj5QWOn2FbFxgJSKRwiYamFSs52n+ttKG1ESzjrzpOLcp1gcu82JieyJ5Ve3
-         p4CA==
-Received: by 10.180.97.225 with SMTP id ed1mr347756wib.0.1354608688820;
-        Tue, 04 Dec 2012 00:11:28 -0800 (PST)
+        bh=h75d4oL9tnkG3P56ffJ8wS3Lvbfk8LniTDYCkAEPovQ=;
+        b=m9bUw+H0M4JX/muDY5MZhfm+TSvBymR7s7CT/EV3x4rWdZya+eoazhwUZAZMO6CQ3t
+         /AqIeo+bsyWrCcCp9ZC35mRsavRGE3xdWPlX3j1KM8kJqvDdSyvvF0S0Brx5cMgFZVil
+         GceWsG9aRqShVVFQ2ftohlH+amb29uX6ygpXvcZk8p3C5yKcp5/BAYJYCSZfnMQ6e4Zp
+         BRtyiDfLFc8+Iczg+ezoEUV3p6xvj0j9bvVUOy2CAW7mxLeWeH2deDRm9MU9TBZJUgZ2
+         lj/nynJW0SNEGLZ5YviLvOT075TAepdxe82N6pg7hQj7pStD2DnTBwehgszQruhINrxA
+         ERRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=h75d4oL9tnkG3P56ffJ8wS3Lvbfk8LniTDYCkAEPovQ=;
+        b=S+Zg+9nCgnkMyUJuE7OJHqzkx5uySMMoqpR7erHmcW2TfCrENmBYt8wALyDWh0V3le
+         PQTT2iLp4w68oyVE3TeHadQZKE+BenB0LwRX3Yv94Nv9VZ9zOC7YsHSz4YyvfJBWtHGa
+         yJTsbWt1Jp30YcAuo92Z7+fjbF2V4+BwUuR/glkkSOKMoCh4uBaGjamCy+NYR3ks5kgb
+         q0q42ssUGil65BlihtoP/Bn5HxLwY8NdrOR6BRFHN3mFuBWxxk6yJrkiqB5qA//euz6T
+         U61VKEI2qvaJOFbtj8DYRFscelRodVDRdeEp+W7WlU6UasSgfJ8DPN1GxYnyYWdqqZH6
+         aXXA==
+Received: by 10.180.91.230 with SMTP id ch6mr333214wib.11.1354608694960;
+        Tue, 04 Dec 2012 00:11:34 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.87.230 with SMTP id bb6ls120946wib.12.gmail; Tue, 04 Dec
- 2012 00:11:28 -0800 (PST)
-Received: by 10.204.146.25 with SMTP id f25mr1791596bkv.1.1354608688035;
-        Tue, 04 Dec 2012 00:11:28 -0800 (PST)
-Received: by 10.204.146.25 with SMTP id f25mr1791595bkv.1.1354608688021;
-        Tue, 04 Dec 2012 00:11:28 -0800 (PST)
-Received: from mail-la0-f44.google.com (mail-la0-f44.google.com [209.85.215.44])
-        by gmr-mx.google.com with ESMTPS id 7si44288bkr.3.2012.12.04.00.11.27
+Received: by 10.180.19.137 with SMTP id f9ls114155wie.2.gmail; Tue, 04 Dec
+ 2012 00:11:34 -0800 (PST)
+Received: by 10.204.130.141 with SMTP id t13mr1790801bks.3.1354608694156;
+        Tue, 04 Dec 2012 00:11:34 -0800 (PST)
+Received: by 10.204.130.141 with SMTP id t13mr1790800bks.3.1354608694137;
+        Tue, 04 Dec 2012 00:11:34 -0800 (PST)
+Received: from mail-lb0-f174.google.com (mail-lb0-f174.google.com [209.85.217.174])
+        by gmr-mx.google.com with ESMTPS id j28si44814bkv.0.2012.12.04.00.11.34
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 04 Dec 2012 00:11:28 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.44 as permitted sender) client-ip=209.85.215.44;
-Received: by mail-la0-f44.google.com with SMTP id d3so3174158lah.3
-        for <msysgit@googlegroups.com>; Tue, 04 Dec 2012 00:11:27 -0800 (PST)
-Received: by 10.152.124.83 with SMTP id mg19mr12228316lab.6.1354608687668;
-        Tue, 04 Dec 2012 00:11:27 -0800 (PST)
+        Tue, 04 Dec 2012 00:11:34 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.217.174 as permitted sender) client-ip=209.85.217.174;
+Received: by mail-lb0-f174.google.com with SMTP id gi11so3407181lbb.5
+        for <msysgit@googlegroups.com>; Tue, 04 Dec 2012 00:11:33 -0800 (PST)
+Received: by 10.112.10.71 with SMTP id g7mr5492603lbb.70.1354608693680;
+        Tue, 04 Dec 2012 00:11:33 -0800 (PST)
 Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
-        by mx.google.com with ESMTPS id sq2sm201087lab.14.2012.12.04.00.11.25
+        by mx.google.com with ESMTPS id oz12sm199012lab.17.2012.12.04.00.11.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 04 Dec 2012 00:11:26 -0800 (PST)
+        Tue, 04 Dec 2012 00:11:32 -0800 (PST)
 X-Mailer: git-send-email 1.7.11.msysgit.0.5.g0225efe.dirty
 In-Reply-To: <1354608642-5316-1-git-send-email-kusmabite@gmail.com>
 X-Original-Sender: kusmabite@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.44 as permitted sender)
+ domain of kusmabite@gmail.com designates 209.85.217.174 as permitted sender)
  smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -72,69 +86,57 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211075>
 
-On Windows, the terminal cannot be opened in read-write mode, so
-we need distinct pairs for reading and writing. Since this works
-fine on other platforms as well, always open them in pairs.
+There's no remaining call-sites, and as pointed out in the
+previous commit message, it's not quite ideal. So let's just
+lose it.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- compat/terminal.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ compat/mingw.c | 15 ---------------
+ compat/mingw.h |  2 --
+ 2 files changed, 17 deletions(-)
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index a6212ca..9aecad6 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -50,29 +50,36 @@ char *git_terminal_prompt(const char *prompt, int echo)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 33ddfdf..5fc14b7 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1758,21 +1758,6 @@ int link(const char *oldpath, const char *newpath)
+ 	return 0;
+ }
+ 
+-char *getpass(const char *prompt)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-
+-	fputs(prompt, stderr);
+-	for (;;) {
+-		char c = _getch();
+-		if (c == '\r' || c == '\n')
+-			break;
+-		strbuf_addch(&buf, c);
+-	}
+-	fputs("\n", stderr);
+-	return strbuf_detach(&buf, NULL);
+-}
+-
+ pid_t waitpid(pid_t pid, int *status, int options)
  {
- 	static struct strbuf buf = STRBUF_INIT;
- 	int r;
--	FILE *fh;
-+	FILE *input_fh, *output_fh;
+ 	HANDLE h = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION,
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 6b9e69a..f494ecb 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -55,8 +55,6 @@ struct passwd {
+ 	char *pw_dir;
+ };
  
--	fh = fopen("/dev/tty", "w+");
--	if (!fh)
-+	input_fh = fopen("/dev/tty", "r");
-+	if (!input_fh)
- 		return NULL;
- 
-+	output_fh = fopen("/dev/tty", "w");
-+	if (!output_fh) {
-+		fclose(input_fh);
-+		return NULL;
-+	}
-+
- 	if (!echo && disable_echo()) {
--		fclose(fh);
-+		fclose(input_fh);
-+		fclose(output_fh);
- 		return NULL;
- 	}
- 
--	fputs(prompt, fh);
--	fflush(fh);
-+	fputs(prompt, output_fh);
-+	fflush(output_fh);
- 
--	r = strbuf_getline(&buf, fh, '\n');
-+	r = strbuf_getline(&buf, input_fh, '\n');
- 	if (!echo) {
--		fseek(fh, SEEK_CUR, 0);
--		putc('\n', fh);
--		fflush(fh);
-+		putc('\n', output_fh);
-+		fflush(output_fh);
- 	}
- 
- 	restore_term();
--	fclose(fh);
-+	fclose(input_fh);
-+	fclose(output_fh);
- 
- 	if (r == EOF)
- 		return NULL;
+-extern char *getpass(const char *prompt);
+-
+ typedef void (__cdecl *sig_handler_t)(int);
+ struct sigaction {
+ 	sig_handler_t sa_handler;
 -- 
 1.8.0.4.g3c6fb4f.dirty
 
