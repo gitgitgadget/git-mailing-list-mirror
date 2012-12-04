@@ -1,65 +1,65 @@
-From: Stephen Bash <bash@genarts.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Python extension commands in git - request for policy change
-Date: Tue, 4 Dec 2012 09:40:31 -0500 (EST)
-Message-ID: <1285092455.205649.1354632031815.JavaMail.root@genarts.com>
-References: <CAMP44s0rcy6OfMPM+8BhQy0DbxRLBHEsraHw0u4oAZzh5euTzg@mail.gmail.com>
+Date: Tue, 4 Dec 2012 10:51:19 -0500
+Message-ID: <CACPiFCK5rg626iHSdb7qhnvoDHJu+xs2Dp3SXqdHq81SXBMJYA@mail.gmail.com>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: esr@thyrsus.com, Magnus =?utf-8?B?QsOkY2s=?= <baeck@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Philippe Vaucher <philippe.vaucher@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 04 15:40:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 16:51:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tftg7-0006P8-0v
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 15:40:55 +0100
+	id 1Tfumr-00055x-59
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 16:51:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567Ab2LDOkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2012 09:40:39 -0500
-Received: from hq.genarts.com ([173.9.65.1]:33253 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753045Ab2LDOki (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2012 09:40:38 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 70A4CBE124E;
-	Tue,  4 Dec 2012 09:40:37 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EwHNLwLgyZnZ; Tue,  4 Dec 2012 09:40:31 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id D5F91BE13CD;
-	Tue,  4 Dec 2012 09:40:31 -0500 (EST)
-In-Reply-To: <CAMP44s0rcy6OfMPM+8BhQy0DbxRLBHEsraHw0u4oAZzh5euTzg@mail.gmail.com>
-X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC23 (Mac)/7.2.0_GA_2669)
+	id S1752669Ab2LDPvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2012 10:51:40 -0500
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:33431 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752263Ab2LDPvj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2012 10:51:39 -0500
+Received: by mail-pb0-f46.google.com with SMTP id wy7so2921678pbc.19
+        for <git@vger.kernel.org>; Tue, 04 Dec 2012 07:51:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=MAMMAs268LlZDRtlciZfTQLdQB/l7Ldkf9ldAZnH/ow=;
+        b=bKfHYWs7XqA/lWCTof0KQSxkFeDjgGpH3jkLCajCp7x1u1QEsbChpDb0T85vBbUFYQ
+         XJzaRS1NZtFLSZAgdrn39mPNDmJiV6nxZyZK0XG57dd3xthiEGS7LkdzK+afbfw3wU8X
+         xYTqCmU82odI62klePkYLBT2U9rmm2CMayUWwyPSGmv4JzJO4Sdo6E3cuB4BLVfgYdSP
+         0ji2d0gvDLsn3QUrgYNmg3e8Rdl0ADnMFGAKHMelLAbcZ6NA8QYbW7I5zRC74QEz+fBB
+         8CzsbP2niQZiP5Iyw7FTnDbycA05KEVEexGVAV9PJf8+hza8Cq0U0znyI7upbT5aFwiA
+         pY1A==
+Received: by 10.66.74.2 with SMTP id p2mr36167307pav.55.1354636299298; Tue, 04
+ Dec 2012 07:51:39 -0800 (PST)
+Received: by 10.66.21.231 with HTTP; Tue, 4 Dec 2012 07:51:19 -0800 (PST)
+In-Reply-To: <20121125024451.1ADD14065F@snark.thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211086>
 
------ Original Message -----
-> From: "Felipe Contreras" <felipe.contreras@gmail.com>
-> Sent: Tuesday, December 4, 2012 9:19:18 AM
-> Subject: Re: Python extension commands in git - request for policy change
-> 
-> > > Also, you are ignoring all the advantages that shell has and
-> > > python does not.
-> >
-> > Out of curiosity, can you list the advantages? From what I
-> > gathered:
-> >
-> > - no need to install bash
-> 
-> Unless you are in Windows or OS X. OS X has a shell, but not bash.
+On Sat, Nov 24, 2012 at 9:44 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> git presently contains one Python extension command, Pete Wycoff's p4
+> importer.  If my git-weave code is merged it will acquire another.
 
->From http://support.apple.com/kb/TA27005:
+Write a really compelling tool. Don't argue languages. Make it
+wonderful. The git maintainers, tool maintainers (you!) and overall
+development community have shown flexibility and smarts in the past.
 
-"The default shell (or command-line interface) used in Mac OS X 10.0 through 10.2.8 is tcsh (with 10.3 and 10.4 it's bash). With Mac OS X 10.2 or later, other interactive shells are included, such as bash and zsh."
+cheers,
 
-Stephen
+
+m
+--
+ martin.langhoff@gmail.com
+ martin@laptop.org -- Software Architect - OLPC
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
