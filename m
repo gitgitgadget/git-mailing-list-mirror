@@ -1,93 +1,65 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Stephen Bash <bash@genarts.com>
 Subject: Re: Python extension commands in git - request for policy change
-Date: Tue, 4 Dec 2012 08:19:18 -0600
-Message-ID: <CAMP44s0rcy6OfMPM+8BhQy0DbxRLBHEsraHw0u4oAZzh5euTzg@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<50B1F684.5020805@alum.mit.edu>
-	<CAMP44s0WYiV3hTE7u28_Wd59FkGfu3o_psS0gocpnibzN4--Fg@mail.gmail.com>
-	<20121127143510.GA15831@google.com>
-	<20121127183530.GB11845@thyrsus.com>
-	<CAMP44s27gdDJGNx-UTe1rdQZFpn3M60L=nMyd69gAFo15VnMAA@mail.gmail.com>
-	<CAGK7Mr4HkCkbw-SV-d=JAmQieV0ZQOE7YqR-g7rTWzHGPYqzHA@mail.gmail.com>
+Date: Tue, 4 Dec 2012 09:40:31 -0500 (EST)
+Message-ID: <1285092455.205649.1354632031815.JavaMail.root@genarts.com>
+References: <CAMP44s0rcy6OfMPM+8BhQy0DbxRLBHEsraHw0u4oAZzh5euTzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: esr@thyrsus.com, =?UTF-8?B?TWFnbnVzIELDpGNr?= <baeck@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 04 15:19:39 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: esr@thyrsus.com, Magnus =?utf-8?B?QsOkY2s=?= <baeck@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Philippe Vaucher <philippe.vaucher@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 15:40:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TftLT-0001iC-Lx
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 15:19:36 +0100
+	id 1Tftg7-0006P8-0v
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Dec 2012 15:40:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028Ab2LDOTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2012 09:19:19 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:56959 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752982Ab2LDOTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2012 09:19:19 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so3920042oag.19
-        for <git@vger.kernel.org>; Tue, 04 Dec 2012 06:19:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=f8IFNzKNjqa+74qpz+MJLmcyeYPXbnR3cLIU1DWF9Iw=;
-        b=kSCkg/Q1Y9rmIuNff9PwjiBtOU/l4VI42YuH0zHipizVm+iC6jYAaSExyWK1+Oijg/
-         WM2PPMlTTDmJf0DuYZMoTZy4FMCIkKMLPmlDn7XyC3twAi/jhqI8XCqWVeE3CsSGK9G2
-         G3ObR1Uhipw/XPeb4yR9Hy/ond62RIVjhEdEk54U7BysbAloFvV6UUflA7ruqiJ5EOne
-         8YonMHUj7l8hl8HORRvOnYnFQQtGff9NiPq1VtBcNqpLEiqx/UetVV57yO/CHF0IEBku
-         +fzX85XgHsHGto8CayI//LrwPaN/80Ks0L+w+x4mATCVEkxMOtiUq7NeXLJWG1IMGk3R
-         BtoQ==
-Received: by 10.60.172.229 with SMTP id bf5mr11334700oec.81.1354630758590;
- Tue, 04 Dec 2012 06:19:18 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Tue, 4 Dec 2012 06:19:18 -0800 (PST)
-In-Reply-To: <CAGK7Mr4HkCkbw-SV-d=JAmQieV0ZQOE7YqR-g7rTWzHGPYqzHA@mail.gmail.com>
+	id S1753567Ab2LDOkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2012 09:40:39 -0500
+Received: from hq.genarts.com ([173.9.65.1]:33253 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753045Ab2LDOki (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2012 09:40:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 70A4CBE124E;
+	Tue,  4 Dec 2012 09:40:37 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EwHNLwLgyZnZ; Tue,  4 Dec 2012 09:40:31 -0500 (EST)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id D5F91BE13CD;
+	Tue,  4 Dec 2012 09:40:31 -0500 (EST)
+In-Reply-To: <CAMP44s0rcy6OfMPM+8BhQy0DbxRLBHEsraHw0u4oAZzh5euTzg@mail.gmail.com>
+X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC23 (Mac)/7.2.0_GA_2669)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211085>
 
-On Mon, Dec 3, 2012 at 3:45 PM, Philippe Vaucher
-<philippe.vaucher@gmail.com> wrote:
->> Also, you are ignoring all the advantages that shell has and python does not.
->
-> Out of curiosity, can you list the advantages? From what I gathered:
->
-> - no need to install bash
+----- Original Message -----
+> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+> Sent: Tuesday, December 4, 2012 9:19:18 AM
+> Subject: Re: Python extension commands in git - request for policy change
+> 
+> > > Also, you are ignoring all the advantages that shell has and
+> > > python does not.
+> >
+> > Out of curiosity, can you list the advantages? From what I
+> > gathered:
+> >
+> > - no need to install bash
+> 
+> Unless you are in Windows or OS X. OS X has a shell, but not bash.
 
-Unless you are in Windows or OS X. OS X has a shell, but not bash.
+>From http://support.apple.com/kb/TA27005:
 
-> - git contributors are more used to bash
+"The default shell (or command-line interface) used in Mac OS X 10.0 through 10.2.8 is tcsh (with 10.3 and 10.4 it's bash). With Mac OS X 10.2 or later, other interactive shells are included, such as bash and zsh."
 
-I don't see this as a big advantage.
-
-> - there's only one "version" of bash (no real need to handle different
-> versions compared to py26, py27, etc)
-
-This one is.
-
-The language doesn't change much from different versions of bash either way.
-
-- the language is part of POSIX
-
-Which means you don't need bash, you can use dash, or zsh, or many other shells.
-
-- the language is simple
-
-It's so simple it's used in shells.
-
-- no need for extensions
-
-All you need is the shell binary, that's it.
-
-Cheers.
-
--- 
-Felipe Contreras
+Stephen
