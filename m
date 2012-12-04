@@ -1,23 +1,23 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 1/5] mingw: make fgetc raise SIGINT if apropriate
-Date: Tue, 4 Dec 2012 18:12:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1212041809150.31987@s15462909.onlinehome-server.info>
-References: <1352815447-8824-1-git-send-email-kusmabite@gmail.com> <1352815447-8824-2-git-send-email-kusmabite@gmail.com> <alpine.DEB.1.00.1211301857170.31987@s15462909.onlinehome-server.info>
- <CABPQNSaCV820zhJGdW++LMf2U7AeODSbfukix3fMfffmNex4YA@mail.gmail.com>
+Subject: Re: [PATCH/RFC 2/5] compat/terminal: factor out echo-disabling
+Date: Tue, 4 Dec 2012 18:12:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1212041812160.31987@s15462909.onlinehome-server.info>
+References: <1352815447-8824-1-git-send-email-kusmabite@gmail.com> <1352815447-8824-3-git-send-email-kusmabite@gmail.com> <alpine.DEB.1.00.1211301858570.31987@s15462909.onlinehome-server.info>
+ <CABPQNSY_vHdvBvU_ezjyOzoZeBJAYTJ2829o6Vxs-nJjQVcvDQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Cc: git@vger.kernel.org, msysgit@googlegroups.com, peff@peff.net
 To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBZG57CCQKGQEFFSRF4A@googlegroups.com Tue Dec 04 18:12:17 2012
-Return-path: <msysgit+bncBCZPH74Q5YNRBZG57CCQKGQEFFSRF4A@googlegroups.com>
+X-From: msysgit+bncBCZPH74Q5YNRB7O57CCQKGQESRK2VHY@googlegroups.com Tue Dec 04 18:12:42 2012
+Return-path: <msysgit+bncBCZPH74Q5YNRB7O57CCQKGQESRK2VHY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f186.google.com ([209.85.212.186])
+Received: from mail-ee0-f58.google.com ([74.125.83.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBZG57CCQKGQEFFSRF4A@googlegroups.com>)
-	id 1Tfw2b-0008Hi-0o
-	for gcvm-msysgit@m.gmane.org; Tue, 04 Dec 2012 18:12:17 +0100
-Received: by mail-wi0-f186.google.com with SMTP id hm9sf381014wib.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 04 Dec 2012 09:12:05 -0800 (PST)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRB7O57CCQKGQESRK2VHY@googlegroups.com>)
+	id 1Tfw30-0000XZ-0O
+	for gcvm-msysgit@m.gmane.org; Tue, 04 Dec 2012 18:12:42 +0100
+Received: by mail-ee0-f58.google.com with SMTP id e49sf1681660eek.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 04 Dec 2012 09:12:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=x-beenthere:received-spf:x-authenticated:x-provags-id:date:from
@@ -26,38 +26,38 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :x-google-group-id:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe:content-type;
-        bh=cabU1dYVKpEbqBWGu1b9gPHT34Rw0ope3cfyxJt00Xc=;
-        b=rUL3+Dq33o6Xpfvz2yCpkh/H7iAu4IqhdFm5HO5vAQQu1upS0Xm/AIDKiP8oP6ifXA
-         cDQOScAaKXI+6mgG+6n3StreudcbBnQKoPDHuAvq8DoJBIHF3e/X6zwYINypbHiKNWTC
-         +OqOKDZYvOJFB5NU0jlpy47u8K+gmldY8sqKUR7HMZCwHZ+UTSGxsmGSb8k9aZxwjEVz
-         cEet6+7PLpnVEijwI8u+6zkT3/o4NOOoYWrLgyULcXZTbVDBmWI1j17A5zyzcwqHyfcn
-         fwdalXazyZO2kQK4Zz 
-Received: by 10.180.94.1 with SMTP id cy1mr646841wib.5.1354641125306;
-        Tue, 04 Dec 2012 09:12:05 -0800 (PST)
+        bh=z+d4ouYoSisa7+qjiD21NNY4CqhZXFv1rrVpGz6mp94=;
+        b=CynZk8uT5AHCytGz4lauLrf+mDP2R41LJNpF4lgfxt55Mbk0Fo+q/lMyLOyabOjxgG
+         nTPbUfQ1VF4tWpMytYKEIfDlUuHpIZWfxqWdLS/mj9qgjPA0RxYHDgkk1fTTM0ur/11h
+         nRFGImLZ+KLc1h98TQ2H+ZO+O72rqdvpAYz+gterNxa6BVy11TJAN/kWJHTWL6lz4eWt
+         Yu1f+u23KG8sZQzS7cGGVGu7meD5YufFpP18kA2pRSuEAh3XPHY3kcfOIya6mDmE2bTk
+         1fKyszhTtuLnuzA85N 
+Received: by 10.180.99.69 with SMTP id eo5mr651423wib.3.1354641150293;
+        Tue, 04 Dec 2012 09:12:30 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.97.130 with SMTP id ea2ls373047wib.20.gmail; Tue, 04 Dec
- 2012 09:12:04 -0800 (PST)
-Received: by 10.14.224.201 with SMTP id x49mr2107368eep.5.1354641124171;
-        Tue, 04 Dec 2012 09:12:04 -0800 (PST)
-Received: by 10.14.224.201 with SMTP id x49mr2107367eep.5.1354641124160;
-        Tue, 04 Dec 2012 09:12:04 -0800 (PST)
-Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.22])
-        by gmr-mx.google.com with SMTP id u8si577021een.1.2012.12.04.09.12.04;
-        Tue, 04 Dec 2012 09:12:04 -0800 (PST)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted sender) client-ip=213.165.64.22;
-Received: (qmail invoked by alias); 04 Dec 2012 17:12:03 -0000
+Received: by 10.180.76.74 with SMTP id i10ls417061wiw.9.gmail; Tue, 04 Dec
+ 2012 09:12:29 -0800 (PST)
+Received: by 10.14.216.197 with SMTP id g45mr15144897eep.3.1354641149514;
+        Tue, 04 Dec 2012 09:12:29 -0800 (PST)
+Received: by 10.14.216.197 with SMTP id g45mr15144896eep.3.1354641149502;
+        Tue, 04 Dec 2012 09:12:29 -0800 (PST)
+Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.23])
+        by gmr-mx.google.com with SMTP id u8si577471een.1.2012.12.04.09.12.29;
+        Tue, 04 Dec 2012 09:12:29 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.23 as permitted sender) client-ip=213.165.64.23;
+Received: (qmail invoked by alias); 04 Dec 2012 17:12:29 -0000
 Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp036) with SMTP; 04 Dec 2012 18:12:03 +0100
+  by mail.gmx.net (mp033) with SMTP; 04 Dec 2012 18:12:29 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/B3F4dXgLBzH576kYI3Aj0LsT86Qbe0kORMqyOKl
-	axgDy9CKmN8saL
+X-Provags-ID: V01U2FsdGVkX1+G7ZB/wCyG2cNEsSSiwK5kvBZhUlx7GYH9gdOxhb
+	TDZvCN4ZkSajIS
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CABPQNSaCV820zhJGdW++LMf2U7AeODSbfukix3fMfffmNex4YA@mail.gmail.com>
+In-Reply-To: <CABPQNSY_vHdvBvU_ezjyOzoZeBJAYTJ2829o6Vxs-nJjQVcvDQ@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 X-Original-Sender: johannes.schindelin@gmx.de
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted
+ domain of Johannes.Schindelin@gmx.de designates 213.165.64.23 as permitted
  sender) smtp.mail=Johannes.Schindelin@gmx.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -69,47 +69,48 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211089>
 
 Hi kusma,
 
 On Sat, 1 Dec 2012, Erik Faye-Lund wrote:
 
-> On Fri, Nov 30, 2012 at 6:58 PM, Johannes Schindelin
+> On Fri, Nov 30, 2012 at 6:59 PM, Johannes Schindelin
 > <Johannes.Schindelin@gmx.de> wrote:
 > > Hi,
 > >
 > > On Tue, 13 Nov 2012, Erik Faye-Lund wrote:
 > >
-> >> Set a control-handler to prevent the process from terminating, and
-> >> simulate SIGINT so it can be handled by a signal-handler as usual.
+> >> By moving the echo-disabling code to a separate function, we can
+> >> implement OS-specific versions of it for non-POSIX platforms.
+> >>
+> >> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> >> ---
+> >>  compat/terminal.c | 43 +++++++++++++++++++++++++------------------
+> >>  1 file changed, 25 insertions(+), 18 deletions(-)
+> >>
+> >> diff --git a/compat/terminal.c b/compat/terminal.c
+> >> index bbb038d..3217838 100644
+> >> --- a/compat/terminal.c
+> >> +++ b/compat/terminal.c
+> >> @@ -14,6 +14,7 @@ static void restore_term(void)
+> >>               return;
+> >>
+> >>       tcsetattr(term_fd, TCSAFLUSH, &old_term);
+> >> +     close(term_fd);
+> >>       term_fd = -1;
+> >>  }
 > >
-> > One thing you might want to mention is that the fgetc() handling is not
-> > thread-safe, and intentionally so: if two threads read from the same
-> > console, we are in trouble anyway.
+> > That looks like an independent resource leak fix... correct?
 > 
-> I'm not entirely sure if I know what you mean. Do you suggest that two
-> threads can race for setting the console ctrl-handler?
+> It might look like it, but it's not; term_fd used to be returned by
+> "fileno(fh)", and fh did get properly closed.
+> 
+> With my refactoring, disable_echo/restore_term takes opens /dev/tty a
+> second time, like Jeff points out. And that second file descriptor
+> needs to be closed.
 
-That was my idea, yes.
-
-> I don't think that's the case; "SetConsoleCtrlHandler(x, TRUE)" adds a
-> console handler to the handler-chain, and SetConsoleCtrlHandler(x,
-> FALSE) removes it. If two threads add handlers, it is my understanding
-> that one of them will be run, only to report "no, no more ctrl-handling
-> needed". Since both handlers block further ctrl-handling, I don't think
-> there's a problem.
-
-My idea was that the SetConsoleCtrlHandler(x, FALSE) could remove the
-handler prematurely iff another thread wanted to install the very same
-handler (but it was already installed by the first thread).
-
-But as I said: for this to happen, *two* threads need to want to access
-the console for reading. In that case we'd be in bigger trouble than
-thread unsafety... We cannot read two passwords from the same console at
-the same time.
-
-Ciao,
+Thanks for clarifying,
 Dscho
 
 -- 
