@@ -1,104 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Add basic syntax check on shell scripts
-Date: Tue, 04 Dec 2012 22:02:57 -0800
-Message-ID: <7vobi9kpda.fsf@alter.siamese.dyndns.org>
-References: <201212021417.25525.tboegi@web.de>
- <7vzk1vrs63.fsf@alter.siamese.dyndns.org>
- <CACsJy8BxviWRHqGvptsJVmkFM6HQa9HnLWsh5V6Ec6Fqv52sGA@mail.gmail.com>
- <7vobi9mwt4.fsf@alter.siamese.dyndns.org>
- <CACsJy8BtX9fMkGDoVGKzgz7SSinbt0561B1ZKHu6fs+n8ewKGg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: remote-testsvn: Hangs at revision
+Date: Wed, 5 Dec 2012 11:50:07 +0530
+Message-ID: <CALkWK0meveeKQe81hHyojPX0GH_WRrv7ob9-NA1Q7-TuKso+1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 07:03:23 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Barr <b@rr-dav.id.au>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 05 07:20:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tg84j-0008JZ-Me
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 07:03:18 +0100
+	id 1Tg8Lc-00034g-DZ
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 07:20:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510Ab2LEGDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2012 01:03:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62822 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751071Ab2LEGDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2012 01:03:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8541063C3;
-	Wed,  5 Dec 2012 01:02:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OkGzMTjMp2RFbYCnmoorshYXgyU=; b=KoDTvE
-	3Wj0gtucdDyE5t7ca6q88TstBPObm4lidQtLH+rqzz6YJsTdZTvtnKacgCGZGk/R
-	C+XyA4/qdDXUkPTLk/HWV+PGOqoS1A9h0IFtRh+/dR3P2TCFS/epUPMJnIQ7QveT
-	Q9q559fK4wy/L22xQS5fgD2xZByUYhORq6ZKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DGPbRGQY5DgQtqAoWv6O/VXKl0fn+BMo
-	+L0m4F0r0mPRsWFUOorDaK+Zv1AuNrT/ubg5zB6FinJvvHrbRh1OchyISCCkTRh0
-	iuS3714HuCRQfqKhfKStCoVYmJWz/nS/39yKbI6bF83HryB8y7JvegN3g+YuebSA
-	Yv8ZgdKvdn8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 726C163C2;
-	Wed,  5 Dec 2012 01:02:59 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBF1A63C0; Wed,  5 Dec 2012
- 01:02:58 -0500 (EST)
-In-Reply-To: <CACsJy8BtX9fMkGDoVGKzgz7SSinbt0561B1ZKHu6fs+n8ewKGg@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Wed, 5 Dec 2012 12:43:30 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B7B4C04-3EA1-11E2-9471-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751828Ab2LEGU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2012 01:20:28 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:62567 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751672Ab2LEGU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2012 01:20:28 -0500
+Received: by mail-ob0-f174.google.com with SMTP id ta14so4650997obb.19
+        for <git@vger.kernel.org>; Tue, 04 Dec 2012 22:20:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=Kz47FulzQNpk6AoDfY+FiTxD03VE7fuZMgCjvsADyRw=;
+        b=Rh4eyd74WGtYKUx+ll4uatGLAFZ7YrXe6SmozNn6eSf/TRM8mWgawjTrMtAQ8j63sy
+         FIcoIPCofJjc5vNLcpUcIWiMqMTB23mBzGdOEk/jUkm8/ZCiQdydK6E9qpFudrg4fAcY
+         bZdqdkSMiLefeO2boHQRvrxSeWktSh6ZhuEiFLm7anbMjzwppgtVBldzjcSrrV8CuF8i
+         p6cYjPBkGvJhQkSe1u67ozr0kjDP2g7VH9lOibNY/ykrNNRvvc07dYEaoDQ0QLgfCpsN
+         UijxBihK+xcU3z49wBw1FwhkoJgfbkBt314bfQGM4LUr/ZoyMc0Ccy/pPUdTcVYwKlYs
+         Ti0A==
+Received: by 10.182.188.36 with SMTP id fx4mr9574464obc.6.1354688427640; Tue,
+ 04 Dec 2012 22:20:27 -0800 (PST)
+Received: by 10.76.75.198 with HTTP; Tue, 4 Dec 2012 22:20:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211107>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Hi,
 
-> On Wed, Dec 5, 2012 at 2:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Or a project commit hook?
->>
->> Surely.  It is OK to have "cd t && make test-lint" in your
->> pre-commit hook.
->
-> No, what I meant is a shared pre-commit script that all git devs are
-> encouraged (or forced) to install so bugs are found locally rather
-> than after patches are sent to you. The hook content does not really
-> matter.
+I tried out the testsvn remote helper on a simple Subversion
+repository, but it seems to hang at Revision 8 indefinitely without
+any indication of progress.  I'm currently digging in to see what went
+wrong.  The repository I'm cloning is:
 
-Honestly, I do not really care (yet); what you are talkng about is
-merely an addition to Documentation/SubmittingPatches, which is
-trivial.
+  $ git clone testsvn::http://python-lastfm.googlecode.com/svn/trunk/
 
-The content of the hook is much more important.
+Thanks.
 
-If it has too many false positives, it is not worth even encouraging
-its use to less experienced ones, as they will have hard time to
-figure out which errors matter and which erros can be ignored.  It
-will make contributing to the project harder, not easier.
-
-As I do not think (1) we would be able to do a good job reducing
-false positives without writing a full POSIX shell parser, and (2)
-we would want to be in the business of writing POSIX shell parser
-[*1*], I am somewhat skeptical.
-
-And if we cannot come up with a reliable hook in the first place,
-there isn't much point in discussing a policy to encourage such a
-hook, is it?
-
-
-[Footnote]
-
-*1* Is there a free one that is portable, perhaps written in either
-Perl or Python, to which we can easily plug our own logic?  In order
-to catch basic errors, I think it is sufficient to tokenize the
-script into independent series of simple commands, even ignoring
-variable substitutions and evals, and just have a bunch of "we do
-not allow option X to command Y" rules (e.g. "no -i to sed", "the
-first argument must be 'git' for "test_must_fail").
+Ram
