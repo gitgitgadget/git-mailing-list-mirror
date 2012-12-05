@@ -1,35 +1,35 @@
-From: "=?utf-8?q?Jean-No=C3=ABl?= AVILA" <jn.avila@free.fr>
+From: "=?iso-8859-1?q?Jean-No=EBl?= AVILA" <avila.jn@gmail.com>
 Subject: [PATCH] Add directory pattern matching to attributes
-Date: Wed, 5 Dec 2012 23:10:29 +0100
-Message-ID: <201212052310.30690.jn.avila@free.fr>
+Date: Wed, 5 Dec 2012 23:15:34 +0100
+Message-ID: <201212052315.35004.avila.jn@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 05 23:11:00 2012
+X-From: git-owner@vger.kernel.org Wed Dec 05 23:16:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TgNBD-00059H-Km
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 23:11:00 +0100
+	id 1TgNG7-00042L-It
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 23:16:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753611Ab2LEWKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2012 17:10:43 -0500
-Received: from smtp1-g21.free.fr ([212.27.42.1]:45086 "EHLO smtp1-g21.free.fr"
+	id S1754036Ab2LEWPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2012 17:15:44 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:33293 "EHLO smtp1-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753346Ab2LEWKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2012 17:10:42 -0500
+	id S1754017Ab2LEWPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2012 17:15:42 -0500
 Received: from coriandre.localnet (unknown [IPv6:2a01:e35:2ef1:f910:216:6fff:fe38:e8a3])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 201909400C2
-	for <git@vger.kernel.org>; Wed,  5 Dec 2012 23:10:35 +0100 (CET)
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 1C6CB94001B
+	for <git@vger.kernel.org>; Wed,  5 Dec 2012 23:15:36 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211141>
 
 The manpage of gitattributes says: "The rules how the pattern
 matches paths are the same as in .gitignore files" and the gitignore
