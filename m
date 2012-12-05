@@ -1,79 +1,70 @@
-From: Jeff King <peff@peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [RFC] Add basic syntax check on shell scripts
-Date: Wed, 5 Dec 2012 02:54:02 -0500
-Message-ID: <20121205075401.GB5776@sigill.intra.peff.net>
-References: <201212021417.25525.tboegi@web.de>
- <7vzk1vrs63.fsf@alter.siamese.dyndns.org>
- <CACsJy8BxviWRHqGvptsJVmkFM6HQa9HnLWsh5V6Ec6Fqv52sGA@mail.gmail.com>
- <7vobi9mwt4.fsf@alter.siamese.dyndns.org>
- <CACsJy8BtX9fMkGDoVGKzgz7SSinbt0561B1ZKHu6fs+n8ewKGg@mail.gmail.com>
- <20121205073055.GA5776@sigill.intra.peff.net>
+Date: Wed, 05 Dec 2012 10:11:41 +0100
+Message-ID: <50BF0FCD.6080700@gmail.com>
+References: <201212021417.25525.tboegi@web.de> <7vzk1vrs63.fsf@alter.siamese.dyndns.org> <CACsJy8BxviWRHqGvptsJVmkFM6HQa9HnLWsh5V6Ec6Fqv52sGA@mail.gmail.com> <7vobi9mwt4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 08:54:26 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 05 10:11:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tg9oE-000341-0P
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 08:54:22 +0100
+	id 1TgB0V-00034U-Hi
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 10:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534Ab2LEHyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2012 02:54:06 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59112 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752455Ab2LEHyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2012 02:54:04 -0500
-Received: (qmail 16815 invoked by uid 107); 5 Dec 2012 07:55:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Dec 2012 02:55:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2012 02:54:02 -0500
-Content-Disposition: inline
-In-Reply-To: <20121205073055.GA5776@sigill.intra.peff.net>
+	id S1752101Ab2LEJKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2012 04:10:42 -0500
+Received: from plane.gmane.org ([80.91.229.3]:38010 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751710Ab2LEJKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2012 04:10:40 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TgB0C-0002cy-Qb
+	for git@vger.kernel.org; Wed, 05 Dec 2012 10:10:50 +0100
+Received: from 192.100.123.82 ([192.100.123.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Dec 2012 10:10:48 +0100
+Received: from sschuberth by 192.100.123.82 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Dec 2012 10:10:48 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 192.100.123.82
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vobi9mwt4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211115>
 
-On Wed, Dec 05, 2012 at 02:30:56AM -0500, Jeff King wrote:
+On 2012/12/04 20:39 , Junio C Hamano wrote:
 
-> Anyway, I do think a "shell portability lint" would be a great addition
-> to "test-lint", but I am slightly skeptical that it will be easy to
-> write a good one that does not have false positives. Still, there may be
-> some low-hanging fruit. I have not looked carefully at Torsten's patch
-> yet.
+> A few more things in addition to what Torsten's script attempts to
+> catch that we would want to catch are:
 
-Hrm. I had the impression initially that Torsten's patch was about
-testing the test scripts themselves. But it is really about testing the
-installed shell scripts. In that sense, test-lint is not the right
-place.
+[...]
 
-You would want a "check shell script portability" script, and you would
-probably want to run it:
+ >   * Do not write ERE with backslashes and expect "grep" to grok them;
+ >     that's GNUism.  e.g.
+ >
+ > 	grep "^\(author\|committer\) "
+ >
+ >     is bad.  Use egrep (or "grep -E") if you want to use ERE.
 
-  - on the regular built scripts; possibly during build time (I have done
-    this before with "perl -c" for perl scripts and it is reasonably
-    successful). Or in a test script, as added in his patch (though I
-    note it does not seem to pass as posted, getting confused by trying
-    to grep "git-gui").
+Yet more thing that is probably worth catching, although not related to 
+bashism: Avoid the use of "which" in favor of e.g. "type".
 
-  - on the test scripts themselves via test-lint
+In any case, having this check as a local pre-commit hook would be great!
 
-I think as long as such a script erred on the side of false negatives,
-it would be OK (because false positives are a giant headache, and
-ultimately the real test is people exercising the code itself on their
-shells; this is just an early check to help contributors who do not have
-such shells).
-
--Peff
-
-PS Debian developers use a checkbashisms script to find some portability
-   problems. It might be worth looking at, though I notice it generates
-   a lot of bogus "unterminated string" results for our t/t*.sh scripts.
+-- 
+Sebastian Schuberth
