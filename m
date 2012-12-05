@@ -1,61 +1,88 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC] Add basic syntax check on shell scripts
-Date: Wed, 5 Dec 2012 12:43:30 +0700
-Message-ID: <CACsJy8BtX9fMkGDoVGKzgz7SSinbt0561B1ZKHu6fs+n8ewKGg@mail.gmail.com>
-References: <201212021417.25525.tboegi@web.de> <7vzk1vrs63.fsf@alter.siamese.dyndns.org>
- <CACsJy8BxviWRHqGvptsJVmkFM6HQa9HnLWsh5V6Ec6Fqv52sGA@mail.gmail.com> <7vobi9mwt4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 1/2] reset: learn to reset to tree
+Date: Tue, 04 Dec 2012 21:46:20 -0800
+Message-ID: <7vtxs1kq4z.fsf@alter.siamese.dyndns.org>
+References: <CANiSa6isDKAgxHWqh5XiQ-adT3-ASFtvAshp028DTcotjQxzmQ@mail.gmail.com>
+ <1354213975-17866-1-git-send-email-martinvonz@gmail.com>
+ <1354213975-17866-2-git-send-email-martinvonz@gmail.com>
+ <7v4nk8qmaj.fsf@alter.siamese.dyndns.org>
+ <7vzk20p6ik.fsf@alter.siamese.dyndns.org>
+ <CANiSa6hWYsfm0t+s_q7=CcD78yNfpuduxkRc35xW8qDOy97W3g@mail.gmail.com>
+ <CANiSa6i2f-4jXFUpYV6+fYnpG-tSRRA3cRg_v-v=UrgfwfFz_g@mail.gmail.com>
+ <7vd2yunn0e.fsf@alter.siamese.dyndns.org>
+ <CANiSa6iMxzQGM8mZYdfR-drPGgydwVpM5JsQ-8oO09MX5XDH+g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 06:44:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 05 06:46:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tg7mO-00027N-8u
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 06:44:20 +0100
+	id 1Tg7oe-0004s4-8Q
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 06:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643Ab2LEFoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2012 00:44:03 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:39121 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803Ab2LEFoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2012 00:44:01 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so4773180oag.19
-        for <git@vger.kernel.org>; Tue, 04 Dec 2012 21:44:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=l8cTX9TzhXVpkDSKr7XEK0Wep1WXCSzVkmsHZAbwPh8=;
-        b=TWO5wyKLwlzgTHhcy/oC18Swx9GfBSJdK9k2G1Dup7qdLkli0BEOCVjUQuZE5K/h9w
-         nx3V3723Kzx7Y4RGJizbN3Sq+YMhy5b00KapAD5jKPzVimVQ62f+oqCdWmlFSyFjVOwW
-         zlaMJSzDMZa2JF7ivQkrn4eaeVEmToz9samLnvTUYF4NeBTJVBGJWkxaXTkvbfiOssNS
-         zhCqnCQWZ4S2EmFQQJRZ908Hoc+l4MKACRwBs1sVKrO8q76RUCmxKgmnMt6CTFvjjV2+
-         /yPz+pjufcOgYHniFE3N1/1bMpd42sKUSNeMXX4UdnbGjVeBDPMAMsMCG6cvX4D1tKYN
-         B+hA==
-Received: by 10.182.179.100 with SMTP id df4mr9857947obc.59.1354686241194;
- Tue, 04 Dec 2012 21:44:01 -0800 (PST)
-Received: by 10.182.51.138 with HTTP; Tue, 4 Dec 2012 21:43:30 -0800 (PST)
-In-Reply-To: <7vobi9mwt4.fsf@alter.siamese.dyndns.org>
+	id S1752168Ab2LEFqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2012 00:46:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53271 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751666Ab2LEFqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2012 00:46:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC583AE5A;
+	Wed,  5 Dec 2012 00:46:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aA0uaGEVkVkGX463s2Vm+OT7jvQ=; b=ZSvTy7
+	ahJ7w/HmL0qdncfgVVyuE5VYzvuREFhHXP/VG2LrHjCQgpuUvctLOKHTBPbSvj9u
+	tFZf6AoNJ3kUuik/zwXP1BGlPXLBlxqz3YqL1bTEBOXILPRqqVlpf/iZlVBRfUJz
+	ZE+qG8i6iyx8ja0u1K7IMgJCuMPWvhbTRsZOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ks300jiLt41jHT6BO1C4L+QFqUfUmRJq
+	fN/lWycM9eN/GOnguXjztveTYhdf9QiN/9nRV30sDwmYwVhUc9Wrvl+Py9/nMhvN
+	C7wH21mM/4p/d2r5WX6zCNYxmns47a7WWSoQecnb1To0tLnaEYgiswvYQRvj4Sp2
+	RfGB9jwwMeo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A8F6AE59;
+	Wed,  5 Dec 2012 00:46:22 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04EE6AE55; Wed,  5 Dec 2012
+ 00:46:21 -0500 (EST)
+In-Reply-To: <CANiSa6iMxzQGM8mZYdfR-drPGgydwVpM5JsQ-8oO09MX5XDH+g@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Tue, 4 Dec 2012 19:45:47 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1955514C-3E9F-11E2-A3BC-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211105>
 
-On Wed, Dec 5, 2012 at 2:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Or a project commit hook?
->
-> Surely.  It is OK to have "cd t && make test-lint" in your
-> pre-commit hook.
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-No, what I meant is a shared pre-commit script that all git devs are
-encouraged (or forced) to install so bugs are found locally rather
-than after patches are sent to you. The hook content does not really
-matter.
--- 
-Duy
+> More importantly, when is it desirable not to delete deleted entries?
+
+When I am trying to check out contents of Documentation/ directory
+as of an older edition because we made mistakes updating the files
+in recent versions, with "git checkout v1.9.0 Documentation/", for
+example.  Perhaps somebody had this bright idea of reformatting our
+docs with "= Newer Style =" section headers, replacing the underline
+style, and we found our toolchain depend on the underline style, or
+something.  The new files in the same directory added since v1.9.0
+may share the same mistake as the files whose recent such changes I
+am nuking with this operation, but that does not mean I want to
+retype the contents of them from scratch; I'd rather keep them
+around so that I can fix them up by hand.
+
+I would have to say that it is more common; I do not recall a time I
+wanted to replace everything in a directory (and only there without
+touching other parts of the tree) with an old version, removing new
+ones.  "git checkout [$commit] $paths" is still an operation to help
+me build new history forward starting from HEAD, and is not about
+start building on top of the old $commit.  Losing the work I've done
+to the files that did not exist in $commit:$paths is almost always
+*not* what I would expect to happen with the command.
