@@ -1,134 +1,100 @@
-From: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <stlman@poczta.fm>
-Subject: [PATCH v2] gitk: read and write a repository specific configuration file
-Date: Wed,  5 Dec 2012 01:49:43 +0100
-Message-ID: <1354668583-4893-1-git-send-email-stlman@poczta.fm>
-References: <1354483766-13925-1-git-send-email-stlman@poczta.fm>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [RFC/PATCH 1/2] reset: learn to reset to tree
+Date: Tue, 4 Dec 2012 19:45:47 -0800
+Message-ID: <CANiSa6iMxzQGM8mZYdfR-drPGgydwVpM5JsQ-8oO09MX5XDH+g@mail.gmail.com>
+References: <CANiSa6isDKAgxHWqh5XiQ-adT3-ASFtvAshp028DTcotjQxzmQ@mail.gmail.com>
+	<1354213975-17866-1-git-send-email-martinvonz@gmail.com>
+	<1354213975-17866-2-git-send-email-martinvonz@gmail.com>
+	<7v4nk8qmaj.fsf@alter.siamese.dyndns.org>
+	<7vzk20p6ik.fsf@alter.siamese.dyndns.org>
+	<CANiSa6hWYsfm0t+s_q7=CcD78yNfpuduxkRc35xW8qDOy97W3g@mail.gmail.com>
+	<CANiSa6i2f-4jXFUpYV6+fYnpG-tSRRA3cRg_v-v=UrgfwfFz_g@mail.gmail.com>
+	<7vd2yunn0e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: paulus@samba.org, gitster@pobox.com,
-	=?UTF-8?q?=C5=81ukasz=20Stelmach?= <stlman@poczta.fm>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 05 01:50:23 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 05 05:17:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tg3Bo-0006NF-DG
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 01:50:16 +0100
+	id 1Tg6Qc-0003l1-Gn
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Dec 2012 05:17:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152Ab2LEAuA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2012 19:50:00 -0500
-Received: from smtpo.poczta.interia.pl ([217.74.65.205]:46171 "EHLO
-	smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945Ab2LEAt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2012 19:49:59 -0500
-Received: from localhost (87-207-152-6.dynamic.chello.pl [87.207.152.6])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by www.poczta.fm (INTERIA.PL) with ESMTPSA;
-	Wed,  5 Dec 2012 01:49:55 +0100 (CET)
-X-Mailer: git-send-email 1.7.8.6
-In-Reply-To: <1354483766-13925-1-git-send-email-stlman@poczta.fm>
-X-Interia-Antivirus: OK
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
-	s=biztos; t=1354668598;
-	bh=DmGEGuCkBpW8b5ls7wPELYUnCfB2EOIjVdocPw+47Ns=;
-	h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Interia-Antivirus;
-	b=Ttl5oazPTybZT0k9Jh9Iahyz/S8DuOHNExRs+3sdAxAV7ocXZTTBNTxG6RpV8qB32
-	 k++MMDjDLKWA1CtHY+gPYNSu2kH6nMo/9XOQw/hTluYOBGYh7YBwIcL67B7UdTJf1b
-	 cCaJpt08rhM54wVUSAKX9K4bh6V8w39V9bn0Og10=
+	id S1753340Ab2LEER1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2012 23:17:27 -0500
+Received: from mail-ia0-f170.google.com ([209.85.210.170]:54688 "EHLO
+	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752982Ab2LEER0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2012 23:17:26 -0500
+X-Greylist: delayed 1527 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Dec 2012 23:17:26 EST
+Received: by mail-ia0-f170.google.com with SMTP id i1so2597968iaa.29
+        for <git@vger.kernel.org>; Tue, 04 Dec 2012 20:17:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=BujqSqdRpnTZwQQzY/id15IgcH9/SeXDkfOP6WnkDbY=;
+        b=TmWvKR9jI+E04AvwcKEgO+x9ePdW60jsHLUpfH/KGVwKiuX1jqEqN6Cf1NjKBNnRTd
+         VqU6IV4uW23O7rbb9mK26Moxhr85fV3duxETQHb4qsZ9NsarOOGALlIFL9u6tMR/UC50
+         3UJUONch55No8RblNSvyhhvPxUF6qLjSbk2SYNvBo3+Z59GryLR0aERwOZ/T6X4hO25x
+         LtTe6wEt4Bz7rnvScd/LC/U3+PLRN5opieKrswqXGa9h0NFM8EGmtmzE+TxtlHQXpu8u
+         d296vFLZOoVkylWwTWONwAlkGYk5Nusbbcyvq8nj8H2x2boEA+/cvvOLd3xFXV2eZlEe
+         Tfow==
+Received: by 10.50.190.130 with SMTP id gq2mr546502igc.26.1354679148046; Tue,
+ 04 Dec 2012 19:45:48 -0800 (PST)
+Received: by 10.64.91.99 with HTTP; Tue, 4 Dec 2012 19:45:47 -0800 (PST)
+In-Reply-To: <7vd2yunn0e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211103>
 
-Enable gitk read and write repository specific configuration
-file: ".git/k" if the file exists. To make gitk use the local
-file simply create one, e.g. with the touch(1) command.
+On Sat, Dec 1, 2012 at 1:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martinvonz@gmail.com> writes:
+>
+>> On Thu, Nov 29, 2012 at 2:00 PM, Martin von Zweigbergk
+>> <martinvonz@gmail.com> wrote:
+>>> Slightly off topic, but another difference (or somehow another aspect
+>>> of the same difference?) that has tripped me up a few times is that
+>>> "git checkout $rev ." only affects added and modified files...
+>
+> "checkout $commit pathspec" has always been about ...
 
-This is very useful if one uses different views for different
-repositories. Now there is no need to store all of them in
-~/.gitk and make the views list needlesly long.
+I suppose the "has always been" is meant to say that it's hard to
+change at this point, not that it's more intuitive the way it works..?
 
-Signed-off-by: =C5=81ukasz Stelmach <stlman@poczta.fm>
----
+> ...checking out the
+> contents stored in the paths that match the pathspec from the named
+> commit to the index and also o the working tree.
 
-Same as before but rebased onto Paul's repository.
+I think I have always thought that "git checkout $commit $pathspec"
+would replace the section(s) of the tree defined by $pathspec. (I'm
+using "tree" in the more general sense here, as I'm understood the
+index is not stored as a tree.)
 
- gitk |   25 ++++++++++++++-----------
- 1 files changed, 14 insertions(+), 11 deletions(-)
+> When pathspec is "dir/", it does not match the directory whose name
+> is "dir".  The pathspec matches the paths that store blobs under
+> that directory.
 
-diff --git a/gitk b/gitk
-index 379582a..c6b7dc3 100755
---- a/gitk
-+++ b/gitk
-@@ -2703,7 +2703,7 @@ proc doprogupdate {} {
-=20
- proc savestuff {w} {
-     global canv canv2 canv3 mainfont textfont uifont tabstop
--    global stuffsaved findmergefiles maxgraphpct
-+    global stuffsaved findmergefiles maxgraphpct gitdir
-     global maxwidth showneartags showlocalchanges
-     global viewname viewfiles viewargs viewargscmd viewperm nextviewnu=
-m
-     global cmitmode wrapcomment datetimeformat limitdiffs
-@@ -2714,10 +2714,12 @@ proc savestuff {w} {
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-     catch {
--	if {[file exists ~/.gitk-new]} {file delete -force ~/.gitk-new}
--	set f [open "~/.gitk-new" w]
-+	set fn [expr [file exists [file join $gitdir k]] ? \
-+		{[file join $gitdir k-new]} : {"~/.gitk-new"}]
-+	if {[file exists $fn]} {file delete -force $fn}
-+	set f [open $fn  w]
- 	if {$::tcl_platform(platform) eq {windows}} {
--	    file attributes "~/.gitk-new" -hidden true
-+	    catch {file attributes "~/.gitk-new" -hidden true}
- 	}
- 	puts $f [list set mainfont $mainfont]
- 	puts $f [list set textfont $textfont]
-@@ -2769,7 +2771,7 @@ proc savestuff {w} {
- 	}
- 	puts $f "}"
- 	close $f
--	file rename -force "~/.gitk-new" "~/.gitk"
-+	file rename -force $fn [regsub {\-new$} $fn {}]
-     }
-     set stuffsaved 1
- }
-@@ -11723,7 +11725,14 @@ namespace import ::msgcat::mc
- ## And eventually load the actual message catalog
- ::msgcat::mcload $gitk_msgsdir
-=20
-+# check that we can find a .git directory somewhere...
-+if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
-+    show_error {} . [mc "Cannot find a git repository here."]
-+    exit 1
-+}
-+
- catch {source ~/.gitk}
-+catch {source [file join $gitdir k]}
-=20
- parsefont mainfont $mainfont
- eval font create mainfont [fontflags mainfont]
-@@ -11740,12 +11749,6 @@ setui $uicolor
-=20
- setoptions
-=20
--# check that we can find a .git directory somewhere...
--if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
--    show_error {} . [mc "Cannot find a git repository here."]
--    exit 1
--}
--
- set selecthead {}
- set selectheadid {}
-=20
---=20
-1.7.8.6
+Ah, right. Unlike "git reset dir/", IIUC.
+
+More importantly, when is it desirable not to delete deleted entries?
+I find it much easier to imagine uses a "git checkout $commit
+$pathspec" that does delete deleted entries. It seems like this must
+have been discussed in depth before, so feel free to point me to an
+old thread.
+
+If it doesn't seem too strange to you and others if I make "git reset
+--hard [$commit] $pathspec" work just like had expected "git checkout
+$commit $pathspec", I might look into that when I get some time.
+
+> ...The "please
+> remove everything in dir/" part is not the job of "checkout"; of
+> course, you can do it as a separate step (e.g. "rm -fr dir/").
+
+"rm -rf dir/" would of course delete everything in there, including
+e.g. build artifacts....
