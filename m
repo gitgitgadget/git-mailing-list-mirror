@@ -1,94 +1,76 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: git-svn with non-standard repository layout
-Date: Wed, 5 Dec 2012 18:54:44 -0500 (EST)
-Message-ID: <516524996.289805.1354751683987.JavaMail.root@genarts.com>
-References: <CAA01CsoS6xA-tGPw81tYmi1ETU8sQ08+oyHGg5ou1VGYrwd_SQ@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Stitching histories of several repositories
+Date: Thu, 6 Dec 2012 01:00:15 +0100 (CET)
+Message-ID: <1887785531.19321537.1354752015863.JavaMail.root@dewire.com>
+References: <CALkWK0kCQQioCeuwWAAWfKodvOR+w+hB=11MYs5mGviN6Zy5qA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Carsten Fuchs <carsten.fuchs@cafu.de>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 00:55:10 2012
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 01:00:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TgOnz-00085k-VA
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Dec 2012 00:55:08 +0100
+	id 1TgOtH-000648-4s
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Dec 2012 01:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326Ab2LEXyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2012 18:54:51 -0500
-Received: from hq.genarts.com ([173.9.65.1]:42102 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751963Ab2LEXyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2012 18:54:51 -0500
+	id S1752538Ab2LFAAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2012 19:00:17 -0500
+Received: from zimbra.dewire.com ([83.140.172.131]:39185 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751860Ab2LFAAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2012 19:00:17 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id F3CFABE2511;
-	Wed,  5 Dec 2012 18:54:49 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mP059OIyXQkb; Wed,  5 Dec 2012 18:54:44 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 1EE33BE21AE;
-	Wed,  5 Dec 2012 18:54:44 -0500 (EST)
-In-Reply-To: <CAA01CsoS6xA-tGPw81tYmi1ETU8sQ08+oyHGg5ou1VGYrwd_SQ@mail.gmail.com>
-X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC23 (Mac)/7.2.0_GA_2669)
+	by zimbra.dewire.com (Postfix) with ESMTP id 39E12825DB;
+	Thu,  6 Dec 2012 01:00:16 +0100 (CET)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2F84V5+GiKqD; Thu,  6 Dec 2012 01:00:15 +0100 (CET)
+Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
+	by zimbra.dewire.com (Postfix) with ESMTP id DAC80824FA;
+	Thu,  6 Dec 2012 01:00:15 +0100 (CET)
+In-Reply-To: <CALkWK0kCQQioCeuwWAAWfKodvOR+w+hB=11MYs5mGviN6Zy5qA@mail.gmail.com>
+X-Originating-IP: [213.67.12.15]
+X-Mailer: Zimbra 7.2.0_GA_2681 (ZimbraWebClient - FF3.0 (Mac)/7.2.0_GA_2681)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211149>
 
------ Original Message -----
-> From: "Piotr Krukowiecki" <piotr.krukowiecki@gmail.com>
-> Sent: Wednesday, December 5, 2012 5:19:44 PM
-> Subject: Re: git-svn with non-standard repository layout
+
+
+----- Ursprungligt meddelande -----
+> Hi,
 > 
-> Do you mean something like
+> I've written a tool to stitch the first-parent histories of several
+> git repositories.  To illustrate, consider that we have a toplevel
+> git
+> repository inside which the other repositories reside.
 > 
->    branches = branches/work/*/*:refs/remotes/work/*
->    branches = branches/{branch1,branch2}:refs/remotes/branches/*
+[...]
 > 
-> instead of (currently used)
-> 
->    branches = branches/work/*/*:refs/remotes/work/*
->    fetch = branches/branch1:refs/remotes/branches/branch1
->    fetch = branches/branch2:refs/remotes/branches/branch2
+> I'd like to know whether the tool would be useful to a wider
+> audience,
+> before I polish it and consider submitting it for inclusion in
+> contrib/.  I think the tool is especially useful for running bisect
+> and tracking bugs that occur in large projects that consist of many
+> git repositories.  Will a unified log showing commits in different
+> submodules be useful?
 
-Essentially yes.  But I guess since you have branches at the same level as the work directory, you either have to add to the glob for each new branch or add another fetch line...  Doesn't seem like a big win to me.  Jumping on a tangent, I thought there could only be one wildcard on the left side of the ':' (and the '*' on the right).  If your work/*/* is actually working, that's quite interesting.
- 
-> BTW what's the difference between "fetch" and "branches" keys? I could
-> only find one: "fetch" does not support glob arguments and "branches"
-> do.
+I think it is useful. I did something like that creating a super-repo
+for performing a bisect over EGit and JGit over a period over a year.
+I don't think I restricted myself to the first parent, which was probably
+a mistake.
 
-That's the only difference I've discovered, though someone more familiar with the code might be able to say more.
+The solution isn't perfect, but provided that is well-known you can
+live with that. A problem I found was that many stiches versions weren't
+even compilable so one might want to have the option of matching commits
+using a window of some sort to identify compilable combinations and have
+the ability to use only those for bisect. I'm not sure it's practical though.
 
-Here's my config for the Slimdevices repo I mentioned:
-
-[svn-remote "svn"]
-	url = http://svn.slimdevices.com/repos/slim
-
-	fetch = trunk/server:refs/remotes/trunk
-	fetch = 7.5/trunk/server:refs/remotes/7.5/trunk
-	fetch = 7.6/trunk/server:refs/remotes/7.6/trunk
-	fetch = 7.7/trunk/server:refs/remotes/7.7/trunk
-	fetch = 7.8/trunk/server:refs/remotes/7.8/trunk
-
-	branches = branches/*/server:refs/remotes/pre7/*
-	branches = 7.5/branches/*/server:refs/remotes/7.5/*
-	branches = 7.6/branches/*/server:refs/remotes/7.6/*
-	branches = 7.7/branches/*/server:refs/remotes/7.7/*
-	branches = 7.8/branches/*/server:refs/remotes/7.8/*
-
-	tags = 7.5/tags/*/server:refs/remotes/7.5/tags/*
-	tags = 7.6/tags/*/server:refs/remotes/7.6/tags/*
-	tags = 7.7/tags/*/server:refs/remotes/7.7/tags/*
-	tags = 7.8/tags/*/server:refs/remotes/7.8/tags/*
-
-Lots of repetition, but now that I look at it this repo doesn't have the branches/work clash yours does, which simplifies the config.
-
-HTH,
-Stephen
+-- robin
