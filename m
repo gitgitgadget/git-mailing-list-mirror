@@ -1,110 +1,182 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] fetch-pack: avoid repeatedly re-scanning pack directory
-Date: Fri, 7 Dec 2012 09:04:44 -0500
-Message-ID: <20121207140444.GB10964@sigill.intra.peff.net>
-References: <20121207135351.GA10538@sigill.intra.peff.net>
+From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+Subject: RE: any way to re-release git's block sha1 implementation under a
+ different license?
+Date: Fri, 7 Dec 2012 14:39:29 +0000
+Message-ID: <871B6C10EBEFE342A772D1159D13208537AFA06D@umechphj.easf.csd.disa.mil>
+References: <CAFBatg3AcjOjQqKJrRe_fkva8OD=F=5aS7kczF3e1ePw_KcJng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 07 15:05:13 2012
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg=SHA1; boundary="----=_NextPart_000_0000_01CDD45D.F0E26BB0"
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 15:40:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TgyY7-00026z-U5
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 15:05:08 +0100
+	id 1Tgz6N-0005dF-AF
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 15:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030625Ab2LGOEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2012 09:04:48 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37082 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030581Ab2LGOEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2012 09:04:47 -0500
-Received: (qmail 8626 invoked by uid 107); 7 Dec 2012 14:05:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 07 Dec 2012 09:05:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2012 09:04:44 -0500
-Content-Disposition: inline
-In-Reply-To: <20121207135351.GA10538@sigill.intra.peff.net>
+	id S965107Ab2LGOkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2012 09:40:11 -0500
+Received: from edge-mech.mail.mil ([214.21.82.9]:52556 "EHLO
+	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965099Ab2LGOkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2012 09:40:10 -0500
+Received: from umechpjb.easf.csd.disa.mil (214.21.83.155) by
+ umechpid.easf.csd.disa.mil (214.21.82.9) with Microsoft SMTP Server (TLS) id
+ 14.2.309.2; Fri, 7 Dec 2012 14:39:30 +0000
+Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.5.191]) by
+ umechpjb.easf.csd.disa.mil ([214.21.83.155]) with mapi id 14.02.0309.003;
+ Fri, 7 Dec 2012 14:39:30 +0000
+Thread-Topic: any way to re-release git's block sha1 implementation under a
+ different license?
+Thread-Index: AQHN1E+2Qjcg8Khw1Em4NRova/Qq2JgNZhpw
+In-Reply-To: <CAFBatg3AcjOjQqKJrRe_fkva8OD=F=5aS7kczF3e1ePw_KcJng@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [214.21.83.188]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211180>
 
-When we look up a sha1 object for reading, we first check
-packfiles, and then loose objects. If we still haven't found
-it, we re-scan the list of packfiles in `objects/pack`. This
-final step ensures that we can co-exist with a simultaneous
-repack process which creates a new pack and then prunes the
-old object.
+------=_NextPart_000_0000_01CDD45D.F0E26BB0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-This extra re-scan usually does not have a performance
-impact for two reasons:
+> -----Original Message-----
+> From: Liu Liu
+> Sent: Friday, December 07, 2012 2:52 AM
+> 
+> Hi,
+> 
+> I am reaching out because in my personal project (
+> https://github.com/liuliu/ccv
+> ), I used the block sha1 implementation (
+> https://github.com/git/git/blob/master/block-sha1/sha1.c) in git. It is
+> a
+> fast, generalized and standalone implementation, however, since it is a
+> part of git, it is under GPL license. Is there any possibilities for
+> the
+> original author/authors to release this particular piece of code under
+> BSD
+> / MIT or Apache license? Thanks!
 
-  1. If an object is missing, then typically the re-scan
-     will find a new pack, then no more misses will occur.
-     Or if it truly is missing, then our next step is
-     usually to die().
 
-  2. Re-scanning is cheap enough that we do not even notice.
+Worse comes to worse, use the Mozilla code it was based on. Assumption is that the original code was under the http://en.wikipedia.org/wiki/Mozilla_Public_License
 
-However, these do not always hold. The assumption in (1) is
-that the caller is expecting to find the object. This is
-usually the case, but the call to `parse_object` in
-`everything_local` does not follow this pattern. It is
-looking to see whether we have objects that the remote side
-is advertising, not something we expect to have. Therefore
-if we are fetching from a remote which has many refs
-pointing to objects we do not have, we may end up
-re-scanning the pack directory many times.
+-Jason
 
-Even with this extra re-scanning, the impact is often not
-noticeable due to (2); we just readdir() the packs directory
-and skip any packs that are already loaded. However, if
-there are a large number of packs, then even enumerating the
-directory directory can be expensive (especially if we do it
-repeatedly). Having this many packs is a good sign the user
-should run `git gc`, but it would still be nice to avoid
-having to scan the directory at all.
 
-This patch checks has_sha1_file (which does not have the
-re-scan and re-check behavior) in the critical loop, and
-avoids calling parse_object at all if we do not have the
-object.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm lukewarm on this patch.  The re-scan _shouldn't_ be that expensive,
-so maybe patch 1 is enough to be a reasonable fix. The fact that we
-re-scan repeatedly seems ugly and hacky to me, but it really is just
-opendir/readdir/closedir in the case that nothing has changed (and if
-something has changed, then it's a good thing to be checking). And with
-my patch, fetch-pack would not notice new packs from a simultaneous
-repack process (although it's OK, as the result is not incorrect, but
-merely that we may ask for the object from the server).
+------=_NextPart_000_0000_01CDD45D.F0E26BB0
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
-Another option would be to make the reprepare_packed_git re-scan less
-expensive by checking the mtime of the directory before scanning it.
+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
+GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
+uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
+TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
+TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
+WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
+hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
+gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
+YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
+AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
+L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
+BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
+BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
+bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
+ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
+cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
+YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
+BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
+xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
+he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
+ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
+BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
+BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
+MjEyMDcxNDMzNDBaMCMGCSqGSIb3DQEJBDEWBBQkDLwCzNvLSULxpxFLWR/t4a7kmDBYBgkqhkiG
+9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
+AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
+MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
+FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
+BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
+S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBAG5mDpbw
+iZijjdTUll36ZMvha1glSTFp6uHzLpFDYTZwqXD9k22HY0VRTog+HbcsSxc9dnT9VesaZDNQqVQV
+xmCCM2ZI1ZR1uiUKMuLwCfknCX6NtDtyCzCsaKOx7c9rzeekxKmX1I0/oiZD0FI75GzOJn2hT4dL
+vWEL8SIYLIZN8W6gYOBPoOfpxtVP9Fi7fsQ9rzMVP+Vnxb5sULWizDaE2lPGWLpGAnB93r6kYHvb
+X/xeHCCMgfolmP+1b/VkPSEv3xVmg8DHZCBOXaIl/HfdkCHqbLkr6kuiJWS+gFozX0lr66XRWRV5
+cj44MavgKiASjwayUVQW7ohb+7Fy+n8AAAAAAAA=
 
- fetch-pack.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 099ff4d..b4383c6 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -594,6 +594,9 @@ static int everything_local(struct fetch_pack_args *args,
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
- 
-+		if (!has_sha1_file(ref->old_sha1))
-+			continue;
-+
- 		o = parse_object(ref->old_sha1);
- 		if (!o)
- 			continue;
--- 
-1.8.1.rc0.4.g5948dfd.dirty
+------=_NextPart_000_0000_01CDD45D.F0E26BB0--
