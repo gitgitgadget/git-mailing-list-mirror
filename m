@@ -1,71 +1,64 @@
-From: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
-Subject: [PATCH] completion: add option --recurse-submodules to "git push"
-Date: Fri,  7 Dec 2012 13:28:24 +0100
-Message-ID: <1354883304-6860-1-git-send-email-steffen.jaeckel@stzedn.de>
-Cc: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] make repeated fetch faster on "read only" repos
+Date: Fri, 7 Dec 2012 08:53:52 -0500
+Message-ID: <20121207135351.GA10538@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 07 13:29:26 2012
+X-From: git-owner@vger.kernel.org Fri Dec 07 14:54:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tgx3T-0000Mr-40
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 13:29:23 +0100
+	id 1TgyNY-0005GL-3y
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 14:54:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933788Ab2LGM3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2012 07:29:05 -0500
-Received: from mo-p00-ob.rzone.de ([81.169.146.160]:57418 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933740Ab2LGM3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2012 07:29:04 -0500
-X-RZG-AUTH: :P3gBc0atdbHQf4m9P0fPTPM9Kz3UUxAg/dg4cUs5qun4+E7h2uzct8C7qfeaL15YHuoXU+bgZg==
-X-RZG-CLASS-ID: mo00
-Received: from localhost (pd956be74.dip0.t-ipconnect.de [217.86.190.116])
-	by smtp.strato.de (josoe mo1) (RZmta 31.7 AUTH)
-	with ESMTPA id e043cboB7BZ9M0 ; Fri, 7 Dec 2012 13:28:59 +0100 (CET)
-X-Mailer: git-send-email 1.8.0.msysgit.0
+	id S1030512Ab2LGNx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2012 08:53:56 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37066 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030510Ab2LGNxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2012 08:53:55 -0500
+Received: (qmail 8480 invoked by uid 107); 7 Dec 2012 13:54:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 07 Dec 2012 08:54:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2012 08:53:52 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211176>
 
-Signed-off-by: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
----
- contrib/completion/git-completion.bash | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Like many dev shops, we run a CI server that basically does:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0b77eb1..5b4d2e1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1434,6 +1434,10 @@ _git_pull ()
- 	__git_complete_remote_or_refspec
- }
- 
-+__git_push_recurse_submodules_options="
-+	check on-demand
-+"
-+
- _git_push ()
- {
- 	case "$prev" in
-@@ -1446,10 +1450,15 @@ _git_push ()
- 		__gitcomp_nl "$(__git_remotes)" "" "${cur##--repo=}"
- 		return
- 		;;
-+	--recurse-submodules=*)
-+		__gitcomp "$__git_push_recurse_submodules_options" "" "${cur##--recurse-submodules=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "
- 			--all --mirror --tags --dry-run --force --verbose
- 			--receive-pack= --repo= --set-upstream
-+			--recurse-submodules=
- 		"
- 		return
- 		;;
--- 
-1.8.0.msysgit.0
+  git fetch $some_branch &&
+  git checkout $some_branch &&
+  make test
+
+all day long. Sometimes the fetches would get very slow, and the problem
+turned out to be a combination of:
+
+  1. Never running "git gc". This means you can end up with a ton of
+     loose objects, or even a bunch of small packs[1].
+
+  2. One of the loops in fetch caused us to re-scan the entire
+     objects/pack directory repeatedly, proportional to the number of
+     refs on the remote.
+
+I think the fundamental fix is to gc more often, as it makes the re-scans
+less expensive, along with making general object lookup faster. But the
+repeated re-scans strike me as kind of hacky. This series tries to
+address both:
+
+  [1/2]: fetch: run gc --auto after fetching
+  [2/2]: fetch-pack: avoid repeatedly re-scanning pack directory
+
+-Peff
+
+[1] It turns out we had our transfer.unpacklimit set unreasonably low,
+    leading to a large number of tiny packs, but even with the defaults,
+    you will end up with a ton of loose objects if you do repeated small
+    fetches.
