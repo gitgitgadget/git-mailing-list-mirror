@@ -1,71 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Weird problem with git-submodule.sh
-Date: Fri, 07 Dec 2012 13:08:55 -0800
-Message-ID: <7vobi5fu3c.fsf@alter.siamese.dyndns.org>
-References: <50C22B15.1030607@xiplink.com>
- <7vvccdhhod.fsf@alter.siamese.dyndns.org> <50C22F72.6010701@xiplink.com>
- <7vwqwtfzis.fsf@alter.siamese.dyndns.org> <50C24ED7.90000@xiplink.com>
- <7vsj7hfw6q.fsf@alter.siamese.dyndns.org> <50C25539.9010206@xiplink.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] git(1): remove a defunct link to "list of authors"
+Date: Fri, 7 Dec 2012 13:09:51 -0800
+Message-ID: <CAJo=hJsT+ChAr8vLQ99QPyrCXYAtuEUWn5Wdb-k1brBxk6V45A@mail.gmail.com>
+References: <7vobi5hhn9.fsf@alter.siamese.dyndns.org> <7vk3sthhfy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 22:09:16 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 22:10:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Th5AZ-0001Ux-AT
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 22:09:15 +0100
+	id 1Th5Bn-00033a-VU
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 22:10:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1424553Ab2LGVI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2012 16:08:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42407 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1424546Ab2LGVI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2012 16:08:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B075CA2D2;
-	Fri,  7 Dec 2012 16:08:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/V2DYoOfMsjrJJJQBPiP4yPe4zQ=; b=RkEJ+g
-	klNKNqj6LhklFO4rnE7WItxpxBHA8DR/G/ycAENK6WJnEm/eArdNR1Fw0Ylt4kFh
-	eZcPUrkK3RjKvcY++CaP1KjvLPdJsD8Rti+x10Q5U86XYsTWKgUcGaIh+p/ekTls
-	xZ9mDkE6mwVyVx/1v/yWHeX6KqMQI3H2N7CSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZvnKlLHTyMNz63XVL30GbhcW/w1ZMFQ6
-	kveKsTdnm0UymnMhs9EfPAVyJs5uO37t98Wiu08UJdpyO+tKMrJMhOk1I6g8zJpq
-	CDNEUONHulSgOxfne9c0x+5bnoQd8MV8UiseW8woE1oEvGda23ayeo8alwXAXSq9
-	PAsaCFGxTsI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DB08A2D1;
-	Fri,  7 Dec 2012 16:08:57 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14824A2D0; Fri,  7 Dec 2012
- 16:08:56 -0500 (EST)
-In-Reply-To: <50C25539.9010206@xiplink.com> (Marc Branchaud's message of
- "Fri, 07 Dec 2012 15:44:41 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50592F96-40B2-11E2-8D5C-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1424573Ab2LGVKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2012 16:10:14 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:42444 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1424546Ab2LGVKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2012 16:10:13 -0500
+Received: by mail-qc0-f174.google.com with SMTP id o22so462681qcr.19
+        for <git@vger.kernel.org>; Fri, 07 Dec 2012 13:10:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hQWcz2veEBL8a07nnf+xjman9Hf9vjtWdTRoFpe3KJ4=;
+        b=NmSRijUmXFVVoF/U5bE/jpmOEskxCVN3Fqwe7rwDc+Gg3J1XDXEWmtjfY4NPcdldN1
+         +RM+6jHd1m4q+aLXOCFiN0bs/hkgAUYhzy3l1FPCvRx4WpOBfAbpN6xKIdQENPopqgLY
+         bNhsTSSAz6lKymg6DO94UuTErsf594OBazX3k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=hQWcz2veEBL8a07nnf+xjman9Hf9vjtWdTRoFpe3KJ4=;
+        b=kAJDo0IY7hq8muU6FUAdbH5ztiQSmW5rl9CLnII/ERwK7XCkoFoGrqYHvF34+hL1ET
+         R9pwDqPYEPfjOi9hhOHnzwck3Opz70ZSy7uDZiEsolh9MSokit4OUnUF0098krVcKWTU
+         9vfcyZfytE2fP1gwjq1gLh/T4NdMZkfueOJ5t27F/FEAuidNqN56S92bV10CWGx/jr59
+         bg/RJGVjf4KoaxkhM0N5MvaG7bz3tyvKiARF9ZtLZy4b9MSYvEaQdn4wz/8Q0mkEimdB
+         2j+e7Yr0MDlwwZCxV+dFIfalR5iKiXr6CH1dElZ0daL72ce2Rv4+Na75//PqVhSNk+uV
+         RHCA==
+Received: by 10.224.178.16 with SMTP id bk16mr11841484qab.59.1354914611352;
+ Fri, 07 Dec 2012 13:10:11 -0800 (PST)
+Received: by 10.49.60.198 with HTTP; Fri, 7 Dec 2012 13:09:51 -0800 (PST)
+In-Reply-To: <7vk3sthhfy.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQkBBb4sYI+JMmXW1etrd4HoDjd75NZt0rwKRTRizxu5HKw296BsZcOppmfsfzE2p0lsK/EE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211195>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+On Fri, Dec 7, 2012 at 9:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The linked page has not been showing the promised "more complete
+>> list" for more than 6 months by now, and nobody has resurrected
+>> the list there nor elsewhere since then.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  * If somebody has a working replacement URL, we could use that
+>>    instead, of course.  Takers?
+>
+> A possible alternative could be https://www.ohloh.net/p/git/contributors/summary
 
-> It's FreeBSD 7.2, which I know is an obsolete version but I'm not able to
-> upgrade the machine.  I believe FreeBSD's sh is, or is derived from, dash.
-
-Finally.  Yes, as you suspected, I am perfectly fine to explicitly
-set IFS to the default values.
-
-I wanted to have specific names to write in the commit log message,
-in-code comments and possibly release notes.  That way, people can
-decide if the issue affects them and they should upgrade once the
-fix is made.
+Eh, I think just removing the link is sufficient.
