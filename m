@@ -1,107 +1,69 @@
-From: Soren Brinkmann <soren.brinkmann@xilinx.com>
-Subject: Re: [PATCH] git-clean: Display more accurate delete messages
-Date: Thu, 6 Dec 2012 16:15:59 -0800
-Message-ID: <7d290bdc-8654-4526-ba73-89408fa99a16@DB3EHSMHS002.ehs.local>
-References: <1354788938-26804-1-git-send-email-zoltan.klinger@gmail.com>
- <7v8v9bjd44.fsf@alter.siamese.dyndns.org>
+From: Liu Liu <i@liuliu.me>
+Subject: any way to re-release git's block sha1 implementation under a
+ different license?
+Date: Thu, 6 Dec 2012 23:51:49 -0800
+Message-ID: <CAFBatg3AcjOjQqKJrRe_fkva8OD=F=5aS7kczF3e1ePw_KcJng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Cc: Zoltan Klinger <zoltan.klinger@gmail.com>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 01:16:21 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 07 08:52:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tglc4-0008LG-US
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 01:16:21 +0100
+	id 1TgsjV-0000tJ-IS
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Dec 2012 08:52:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363Ab2LGAQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2012 19:16:07 -0500
-Received: from db3ehsobe004.messaging.microsoft.com ([213.199.154.142]:3222
-	"EHLO db3outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932208Ab2LGAQF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2012 19:16:05 -0500
-Received: from mail112-db3-R.bigfish.com (10.3.81.254) by
- DB3EHSOBE008.bigfish.com (10.3.84.28) with Microsoft SMTP Server id
- 14.1.225.23; Fri, 7 Dec 2012 00:16:04 +0000
-Received: from mail112-db3 (localhost [127.0.0.1])	by
- mail112-db3-R.bigfish.com (Postfix) with ESMTP id 07C302025E;	Fri,  7 Dec
- 2012 00:16:04 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:149.199.60.83;KIP:(null);UIP:(null);IPV:NLI;H:xsj-gw1;RD:unknown-60-83.xilinx.com;EFVD:NLI
-X-SpamScore: 0
-X-BigFish: VPS0(zz98dI1432Izz1de0h1202h1e76h1d1ah1d2ahzz8275bhz32i95h668h839h93fhd24hf0ah119dh1288h12a5h12a9h12bdh137ah13b6h1441h14ddh1504h1537h153bh162dh1631h1758h906i1155h)
-Received-SPF: permerror (mail112-db3: error in processing during lookup of domain of xilinx.com: Could not find a valid SPF record) client-ip=149.199.60.83; envelope-from=soren.brinkmann@xilinx.com; helo=xsj-gw1 ;helo=xsj-gw1 ;
-Received: from mail112-db3 (localhost.localdomain [127.0.0.1]) by mail112-db3
- (MessageSwitch) id 1354839362325308_26807; Fri,  7 Dec 2012 00:16:02 +0000
- (UTC)
-Received: from DB3EHSMHS002.bigfish.com (unknown [10.3.81.233])	by
- mail112-db3.bigfish.com (Postfix) with ESMTP id 4C909100060;	Fri,  7 Dec 2012
- 00:16:02 +0000 (UTC)
-Received: from xsj-gw1 (149.199.60.83) by DB3EHSMHS002.bigfish.com
- (10.3.87.102) with Microsoft SMTP Server id 14.1.225.23; Fri, 7 Dec 2012
- 00:16:01 +0000
-Received: from unknown-38-66.xilinx.com ([149.199.38.66]
- helo=xsj-smtp1.xilinx.com)	by xsj-gw1 with esmtp (Exim 4.63)	(envelope-from
- <soren.brinkmann@xilinx.com>)	id 1Tglbk-0004Rp-LG; Thu, 06 Dec 2012 16:16:00
- -0800
-Content-Disposition: inline
-In-Reply-To: <7v8v9bjd44.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-RCIS-Action: ALLOW
-X-OriginatorOrg: xilinx.com
+	id S1755855Ab2LGHwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2012 02:52:12 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:44703 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755480Ab2LGHwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2012 02:52:12 -0500
+Received: by mail-pa0-f46.google.com with SMTP id bh2so287703pad.19
+        for <git@vger.kernel.org>; Thu, 06 Dec 2012 23:52:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :x-gm-message-state;
+        bh=aTLPD+RNB3X71g+UFZAhtsNS7B4LIBkI3UlBldot+5c=;
+        b=CD9DP+f0PkKYZAG/dI8rMTnUtv1YkK48eO7H5vXjJGP5w0+72JYxNlp15zm2georwn
+         7XosfR76+iYjFpKaT859YHM8LS7+TLV4nTvovxxy6U7lj9PUslDUSbovxpnHgZfTQ/a1
+         sGoPkOYIOLfztVh2nGNJwsCKa/6Ol6Dc2WIDSQ37vcYWMpKCn8bGiDeLfmbyLhD2hdOJ
+         VDTw//rpw/IQcsvxCOQPW0GCXcxqRRHej9Zcyy4BGPZFYsLANNuH5k4qcRXSpSpynQwS
+         ouRtF0/+feSE0DDga/N5AeMAtk65G/NX/FFAWrJtvKmTQNoFYY4SNSLpxIxnAxvOBdkG
+         Dm8A==
+Received: by 10.66.83.6 with SMTP id m6mr11242447pay.52.1354866731675;
+        Thu, 06 Dec 2012 23:52:11 -0800 (PST)
+Received: from mail-pa0-f46.google.com (mail-pa0-f46.google.com [209.85.220.46])
+        by mx.google.com with ESMTPS id c2sm6156343pax.28.2012.12.06.23.52.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 06 Dec 2012 23:52:10 -0800 (PST)
+Received: by mail-pa0-f46.google.com with SMTP id bh2so287674pad.19
+        for <git@vger.kernel.org>; Thu, 06 Dec 2012 23:52:09 -0800 (PST)
+Received: by 10.68.217.137 with SMTP id oy9mr13604282pbc.50.1354866729397;
+ Thu, 06 Dec 2012 23:52:09 -0800 (PST)
+Received: by 10.68.10.3 with HTTP; Thu, 6 Dec 2012 23:51:49 -0800 (PST)
+X-Gm-Message-State: ALoCoQmrv/MKY2S28PVrmQ/ltxf9Bw8o5Ix8K09g+GnutQXAy5tzluS2qRrY7zolTVwXJ7X+vHM4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211173>
 
 Hi,
 
-On Thu, Dec 06, 2012 at 09:37:31AM -0800, Junio C Hamano wrote:
-> Zoltan Klinger <zoltan.klinger@gmail.com> writes:
-> 
-> > Only print out the names of the files and directories that got actually
-> > deleted.
-> >
-> > Consider the following repo layout:
-> >   |-- test.git/
-> >         |-- foo/
-> >              |-- bar/
-> >                   |-- bar.txt
-> >              |-- frotz.git/
-> >                   |-- frotz.txt
-> >         |-- tracked_file1
-> >         |-- untracked_file1
-> > ...
-> > Consider the output of the improved version:
-> >
-> >   $ git clean -fd
-> >   Removed foo/bar/bar.txt
-> >   Removed foo/bar
-> >   Removed untracked_file1
-> 
-> Hrm, following your discussion (ellided above), I would have
-> expected that you would show
-> 
->     Removing directory foo/bar
->     Removing untracked_file1
+I am reaching out because in my personal project (
+https://github.com/liuliu/ccv
+), I used the block sha1 implementation (
+https://github.com/git/git/blob/master/block-sha1/sha1.c) in git. It is a
+fast, generalized and standalone implementation, however, since it is a
+part of git, it is under GPL license. Is there any possibilities for the
+original author/authors to release this particular piece of code under BSD
+/ MIT or Apache license? Thanks!
 
-Also it would be nice to have warnings about undeleted directories since this git
-clean behavior (or the work around to pass -f twice) is not documented.
-Without a warning you would probably miss that something was _not_ deleted.
-
-So something like:
-	Removing foo
-	Removing bar
-	...
-
-	Warning: Not all untracked objects have been deleted:
-	<list objects here> (optional)
-	Use git clean --force --force to delete all objects.
-
-
-But clearly going into a good direction. Thanks.
-
-	Soren
+---
+Liu Liu
+http://liuliu.me
+http://facebook.com/liu.ll
