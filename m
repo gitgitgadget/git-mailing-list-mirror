@@ -1,39 +1,39 @@
 From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
 Subject: [PATCH 6/8] t9402: Simplify git ls-tree
-Date: Sat, 8 Dec 2012 22:35:06 +0100
-Message-ID: <201212082235.07652.tboegi@web.de>
+Date: Sat, 8 Dec 2012 22:35:19 +0100
+Message-ID: <201212082235.20257.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de, mmogilvi_git@miniinfo.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 08 22:35:44 2012
+X-From: git-owner@vger.kernel.org Sat Dec 08 22:35:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ThS3i-00020r-8J
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Dec 2012 22:35:42 +0100
+	id 1ThS3o-0002Bf-Jw
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Dec 2012 22:35:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758200Ab2LHVf0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Dec 2012 16:35:26 -0500
-Received: from mout.web.de ([212.227.17.11]:49695 "EHLO mout.web.de"
+	id S1758203Ab2LHVfc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Dec 2012 16:35:32 -0500
+Received: from mout.web.de ([212.227.17.12]:58350 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758189Ab2LHVfZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Dec 2012 16:35:25 -0500
+	id S1758189Ab2LHVfb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Dec 2012 16:35:31 -0500
 Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb101) with
- ESMTPA (Nemesis) id 0MUFGo-1TY8Pm1ha6-00Qarl; Sat, 08 Dec 2012 22:35:24 +0100
-X-Provags-ID: V02:K0:LRC88+UbQUjk/y6SYn+nbfIbpbCpz1Oi/rXZvn2Eurs
- qimWoR0n0DoloHFnX3mH8ScNrlD7e1VZTVTDxAMaBKbb5XegkB
- wBxhQXa4I9titsl/MmwVoFqfywjIRYryn7CLkkEfbh72HCxuh4
- EhZ/tcL+HzEnOq1YiM6Yfm9mP4h10zo/gktrPZdASJmdPKIeS6
- GipEuerUyLweIxLTEavww==
+ ESMTPA (Nemesis) id 0Lmu2K-1TFoLe2Sse-00hWXL; Sat, 08 Dec 2012 22:35:30 +0100
+X-Provags-ID: V02:K0:0SKY3Pufj6aFAzU7X/B+9zqa9Tqw7F+h/micX7KPDrK
+ X7moGWnNpoUuV52aL1c7dQvuUdYU09xnbBTv5jQTLnYgU/vFYs
+ ezMPGimlYtylwC1lfRocQLFCtJCv1k25BSOUlj8JdbiMKAAvhf
+ immB3lOYeQGzRWt5AluE/jK9My+4PBDkw9Ke/zxJMvLwzIySgE
+ 8gTXldKpcLc5GpxXe86uA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211221>
 
 Use "git ls-tree --name-only" which does not need a sed to filter out t=
 he sha
