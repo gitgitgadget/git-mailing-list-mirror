@@ -1,175 +1,85 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2] cache-tree: invalidate i-t-a paths after generating trees
-Date: Sat,  8 Dec 2012 11:10:03 +0700
-Message-ID: <1354939803-8466-1-git-send-email-pclouds@gmail.com>
-References: <1352459040-14452-1-git-send-email-pclouds@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] sh-setup: work around "unset IFS" bug in some shells
+Date: Sat, 08 Dec 2012 10:25:10 +0100
+Message-ID: <m2vcccc2vd.fsf@linux-m68k.org>
+References: <50C22B15.1030607@xiplink.com>
+	<7vvccdhhod.fsf@alter.siamese.dyndns.org>
+	<50C22F72.6010701@xiplink.com>
+	<7vwqwtfzis.fsf@alter.siamese.dyndns.org> <50C24ED7.90000@xiplink.com>
+	<7vsj7hfw6q.fsf@alter.siamese.dyndns.org>
+	<50C25539.9010206@xiplink.com>
+	<7vobi5fu3c.fsf@alter.siamese.dyndns.org>
+	<7va9tpfq46.fsf_-_@alter.siamese.dyndns.org>
+	<m2fw3h8oja.fsf@igel.home> <7v624dfp1e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathon Mah <me@JonathonMah.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 08 05:10:35 2012
+Content-Type: text/plain
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 10:25:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ThBkB-0001yY-Ds
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Dec 2012 05:10:27 +0100
+	id 1ThGfN-00022E-3R
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Dec 2012 10:25:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932999Ab2LHEKI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Dec 2012 23:10:08 -0500
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:38796 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932974Ab2LHEKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2012 23:10:07 -0500
-Received: by mail-pb0-f46.google.com with SMTP id wy7so778445pbc.19
-        for <git@vger.kernel.org>; Fri, 07 Dec 2012 20:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=m9lBWtseAS+q6n4LF4a92ExiRYFI/fCpi669WdxrH/g=;
-        b=zD0OPBd1tJtsQez6MjC8xOaOVlFRMkXyCITcqON4n2HQWGjX1f+18YQGbcbM2HYVhk
-         ADq/GnAmtampOeBKK5mzglHouBHI/JjvOS4cF358644k6SrW8IFjQk0qcmR/j610giHh
-         p83lXB7zS39DynuE3IWIFN5Mpzs9px/fODIuqMFh6ALiY8XCNHohG12OlNnwCLjy0Lh7
-         p3T6fTVIVKQh5kcJF579Oh3SjBwsSLr5LbaH0OzpHIJGNdVTiac7VdxxzKRddmPQ18rX
-         /XxK28xtFIi3XbBcM7pb0cqTNnv/DjsANVcwWskmUc+S6V7+7KyXE5rq0g0yZxTYjGoR
-         8QOw==
-Received: by 10.66.9.2 with SMTP id v2mr18714575paa.18.1354939805801;
-        Fri, 07 Dec 2012 20:10:05 -0800 (PST)
-Received: from lanh ([115.74.41.198])
-        by mx.google.com with ESMTPS id wr4sm7758803pbc.72.2012.12.07.20.10.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 07 Dec 2012 20:10:04 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 08 Dec 2012 11:10:31 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1352459040-14452-1-git-send-email-pclouds@gmail.com>
+	id S1752098Ab2LHJZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2012 04:25:26 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:39748 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751968Ab2LHJZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2012 04:25:24 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3YJQBQ2gbcz4KK3G;
+	Sat,  8 Dec 2012 10:25:15 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3YJQBM1MHRzbbnj;
+	Sat,  8 Dec 2012 10:25:15 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id zGQ-iKvl_xTF; Sat,  8 Dec 2012 10:25:14 +0100 (CET)
+X-Auth-Info: sa8i88aTHPu6OK4gT1NmN4Jcq7vl7nQY7qpvs7pRllQ=
+Received: from linux.local (ppp-88-217-119-49.dynamic.mnet-online.de [88.217.119.49])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sat,  8 Dec 2012 10:25:14 +0100 (CET)
+Received: by linux.local (Postfix, from userid 501)
+	id 5EFB314E11A; Sat,  8 Dec 2012 10:25:11 +0100 (CET)
+X-Yow: I OWN six pink HIPPOS!!
+In-Reply-To: <7v624dfp1e.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 07 Dec 2012 14:58:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211209>
 
-Intent-to-add entries used to forbid writing trees so it was not a
-problem. After commit 3f6d56d (commit: ignore intent-to-add entries
-instead of refusing - 2012-02-07), we can generate trees from an index
-with i-t-a entries.
+Junio C Hamano <gitster@pobox.com> writes:
 
-However, the commit forgets to invalidate all paths leading to i-t-a
-entries. With fully valid cache-tree (e.g. after commit or
-write-tree), diff operations may prefer cache-tree to index and not
-see i-t-a entries in the index, because cache-tree does not have them.
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> +# Similarly for IFS, but some shells (e.g. FreeBSD 7.2) are buggy and
+>>> +# do not equate an unset IFS with IFS with the default, so here is
+>>> +# an explicit SP HT LF.
+>>> +IFS=' 	
+>>> +'
+>>
+>> Trailing whitespace can easily get lost
+>
+> The comment above the assingment spell the character names out for
+> that exact reason.  Honestly, I think
 
-Reported-by: Jonathon Mah <me@JonathonMah.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Sorry for the late update, I have little time for git these days.
- It turns out that we don't need phony bit and another round for
- invalidation. We can do it in update_one.
+That won't help if you don't look for it.  The loss can easily happen
+while you are in a different part of the file.
 
- cache-tree.c          | 30 ++++++++++++++++++++++++++----
- t/t2203-add-intent.sh | 20 ++++++++++++++++++++
- 2 files changed, 46 insertions(+), 4 deletions(-)
+Andreas.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 28ed657..989a7ff 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -248,6 +248,7 @@ static int update_one(struct cache_tree *it,
- 	int missing_ok =3D flags & WRITE_TREE_MISSING_OK;
- 	int dryrun =3D flags & WRITE_TREE_DRY_RUN;
- 	int i;
-+	int to_invalidate =3D 0;
-=20
- 	if (0 <=3D it->entry_count && has_sha1_file(it->sha1))
- 		return it->entry_count;
-@@ -324,7 +325,13 @@ static int update_one(struct cache_tree *it,
- 			if (!sub)
- 				die("cache-tree.c: '%.*s' in '%s' not found",
- 				    entlen, path + baselen, path);
--			i +=3D sub->cache_tree->entry_count - 1;
-+			i--; /* this entry is already counted in "sub" */
-+			if (sub->cache_tree->entry_count < 0) {
-+				i -=3D sub->cache_tree->entry_count;
-+				to_invalidate =3D 1;
-+			}
-+			else
-+				i +=3D sub->cache_tree->entry_count;
- 			sha1 =3D sub->cache_tree->sha1;
- 			mode =3D S_IFDIR;
- 		}
-@@ -339,8 +346,23 @@ static int update_one(struct cache_tree *it,
- 				mode, sha1_to_hex(sha1), entlen+baselen, path);
- 		}
-=20
--		if (ce->ce_flags & (CE_REMOVE | CE_INTENT_TO_ADD))
--			continue; /* entry being removed or placeholder */
-+		/*
-+		 * CE_REMOVE entries are removed before the index is
-+		 * written to disk. Skip them to remain consistent
-+		 * with the future on-disk index.
-+		 */
-+		if (ce->ce_flags & CE_REMOVE)
-+			continue;
-+
-+		/*
-+		 * CE_INTENT_TO_ADD entries exist on on-disk index but
-+		 * they are not part of generated trees. Invalidate up
-+		 * to root to force cache-tree users to read elsewhere.
-+		 */
-+		if (ce->ce_flags & CE_INTENT_TO_ADD) {
-+			to_invalidate =3D 1;
-+			continue;
-+		}
-=20
- 		strbuf_grow(&buffer, entlen + 100);
- 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0'=
-);
-@@ -360,7 +382,7 @@ static int update_one(struct cache_tree *it,
- 	}
-=20
- 	strbuf_release(&buffer);
--	it->entry_count =3D i;
-+	it->entry_count =3D to_invalidate ? -i : i;
- #if DEBUG
- 	fprintf(stderr, "cache-tree update-one (%d ent, %d subtree) %s\n",
- 		it->entry_count, it->subtree_nr,
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index ec35409..2a4a749 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -62,5 +62,25 @@ test_expect_success 'can "commit -a" with an i-t-a e=
-ntry' '
- 	git commit -a -m all
- '
-=20
-+test_expect_success 'cache-tree invalidates i-t-a paths' '
-+	git reset --hard &&
-+	mkdir dir &&
-+	: >dir/foo &&
-+	git add dir/foo &&
-+	git commit -m foo &&
-+
-+	: >dir/bar &&
-+	git add -N dir/bar &&
-+	git diff --cached --name-only >actual &&
-+	echo dir/bar >expect &&
-+	test_cmp expect actual &&
-+
-+	git write-tree >/dev/null &&
-+
-+	git diff --cached --name-only >actual &&
-+	echo dir/bar >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
-=20
---=20
-1.8.0.rc2.23.g1fb49df
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
