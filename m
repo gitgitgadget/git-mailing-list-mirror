@@ -1,100 +1,197 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] shortlog: Fix wrapping lines of wraplen (was broken since recent off-by-one fix)
-Date: Sat,  8 Dec 2012 20:09:27 +0100
-Message-ID: <1354993767-7455-1-git-send-email-prohaska@zib.de>
-Cc: "Jan H. Schoenherr" <schnhrr@cs.tu-berlin.de>,
-	Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 20:42:11 2012
+From: "=?utf-8?q?Jean-No=C3=ABl?= AVILA" <avila.jn@gmail.com>
+Subject: [PATCHv2] Add directory pattern matching to attributes
+Date: Sat, 8 Dec 2012 21:04:39 +0100
+Message-ID: <201212082104.39411.avila.jn@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 08 21:05:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ThQHl-0004WS-La
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Dec 2012 20:42:05 +0100
+	id 1ThQe6-000142-QA
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Dec 2012 21:05:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030208Ab2LHTlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2012 14:41:45 -0500
-Received: from mailer.zib.de ([130.73.108.11]:63719 "EHLO mailer.zib.de"
+	id S1752148Ab2LHUEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2012 15:04:48 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:37158 "EHLO smtp1-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751356Ab2LHTlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2012 14:41:45 -0500
-X-Greylist: delayed 1855 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Dec 2012 14:41:40 EST
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id qB8JA1vX001745;
-	Sat, 8 Dec 2012 20:10:06 +0100 (CET)
-Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id qB8JA16S019964;
-	Sat, 8 Dec 2012 20:10:01 +0100 (MET)
-X-Mailer: git-send-email 1.7.12.1.429.gf87fa45
+	id S1751289Ab2LHUEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2012 15:04:47 -0500
+Received: from coriandre.localnet (unknown [IPv6:2a01:e35:2ef1:f910:216:6fff:fe38:e8a3])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 4918F9400BA
+	for <git@vger.kernel.org>; Sat,  8 Dec 2012 21:04:40 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211214>
 
-A recent commit [1] fixed a off-by-one wrapping error.  As
-a side-effect, add_wrapped_shortlog_msg() needs to be changed to always
-append a newline.
+The manpage of gitattributes says: "The rules how the pattern
+matches paths are the same as in .gitignore files" and the gitignore
+pattern matching has a pattern ending with / for directory matching.
 
-[1] 14e1a4e1ff70aff36db3f5d2a8b806efd0134d50 utf8: fix off-by-one
-    wrapping of text
+This rule is specifically relevant for the 'export-ignore' rule used
+for git archive.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
 ---
- builtin/shortlog.c  |  3 +--
- t/t4201-shortlog.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ archive.c                       |    3 ++-
+ attr.c                          |   32 ++++++++++++++++------
+ t/t5002-archive-attr-pattern.sh |   57 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 83 insertions(+), 9 deletions(-)
+ create mode 100644 t/t5002-archive-attr-pattern.sh
 
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index b316cf3..db5b57d 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -307,8 +307,7 @@ static void add_wrapped_shortlog_msg(struct strbuf *sb, const char *s,
- 				     const struct shortlog *log)
- {
- 	int col = strbuf_add_wrapped_text(sb, s, log->in1, log->in2, log->wrap);
--	if (col != log->wrap)
--		strbuf_addch(sb, '\n');
-+	strbuf_addch(sb, '\n');
+diff --git a/archive.c b/archive.c
+index 4666404..93e00bb 100644
+--- a/archive.c
++++ b/archive.c
+@@ -120,6 +120,8 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+ 	strbuf_add(&path, args->base, args->baselen);
+ 	strbuf_add(&path, base, baselen);
+ 	strbuf_addstr(&path, filename);
++	if (S_ISDIR(mode) || S_ISGITLINK(mode))
++		strbuf_addch(&path, '/');
+ 	path_without_prefix = path.buf + args->baselen;
+ 
+ 	setup_archive_check(check);
+@@ -130,7 +132,6 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+ 	}
+ 
+ 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
+-		strbuf_addch(&path, '/');
+ 		if (args->verbose)
+ 			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
+ 		err = write_entry(args, sha1, path.buf, path.len, mode);
+diff --git a/attr.c b/attr.c
+index 097ae87..cdba88a 100644
+--- a/attr.c
++++ b/attr.c
+@@ -564,17 +564,31 @@ static void bootstrap_attr_stack(void)
+ 	attr_stack = elem;
  }
  
- void shortlog_output(struct shortlog *log)
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 6872ba1..02ac978 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -120,6 +120,30 @@ test_expect_success 'shortlog from non-git directory' '
- 	test_cmp expect out
- '
++static const char *find_basename(const char *path)
++{
++	char pathbuf[PATH_MAX];
++	int pathlen;
++	const char *cp;
++
++	pathlen =strlen(path);
++	if (path[pathlen-1] != '/') {
++		cp =strrchr(path, '/');
++		return cp ? cp + 1: path;
++	} else {
++		strncpy(pathbuf, path, pathlen);
++		pathbuf[pathlen-1] = '\0';
++		cp =strrchr(pathbuf, '/');
++		return cp ? path + (cp - pathbuf) + 1 : path;
++	}
++}
++
+ static void prepare_attr_stack(const char *path)
+ {
+ 	struct attr_stack *elem, *info;
+ 	int dirlen, len;
+ 	const char *cp;
  
-+test_expect_success 'shortlog should add newline when input line matches wraplen' '
-+	cat >expect <<\EOF &&
-+A U Thor (2):
-+      bbbbbbbbbbbbbbbbbb: bbbbbbbb bbb bbbb bbbbbbb bb bbbb bbb bbbbb bbbbbb
-+      aaaaaaaaaaaaaaaaaaaaaa: aaaaaa aaaaaaaaaa aaaa aaaaaaaa aa aaaa aa aaa
+-	cp = strrchr(path, '/');
+-	if (!cp)
+-		dirlen = 0;
+-	else
+-		dirlen = cp - path;
++	dirlen = find_basename(path) - path;
+ 
+ 	/*
+ 	 * At the bottom of the attribute stack is the built-in
+@@ -668,6 +682,10 @@ static int path_matches(const char *pathname, int pathlen,
+ 	const char *pattern = pat->pattern;
+ 	int prefix = pat->nowildcardlen;
+ 
++	if ((pat->flags & EXC_FLAG_MUSTBEDIR) &&
++	    ((!pathlen) || (pathname[pathlen-1] != '/')))
++		return 0;
 +
-+EOF
-+	git shortlog -w >out <<\EOF &&
-+commit 0000000000000000000000000000000000000001
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:14:13 2005 -0700
+ 	if (pat->flags & EXC_FLAG_NODIR) {
+ 		return match_basename(basename,
+ 				      pathlen - (basename - pathname),
+@@ -758,9 +776,7 @@ static void collect_all_attrs(const char *path)
+ 	for (i = 0; i < attr_nr; i++)
+ 		check_all_attr[i].value = ATTR__UNKNOWN;
+ 
+-	basename = strrchr(path, '/');
+-	basename = basename ? basename + 1 : path;
+-
++	basename = find_basename(path);
+ 	pathlen = strlen(path);
+ 	rem = attr_nr;
+ 	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
+diff --git a/t/t5002-archive-attr-pattern.sh b/t/t5002-archive-attr-pattern.sh
+new file mode 100644
+index 0000000..0c847fb
+--- /dev/null
++++ b/t/t5002-archive-attr-pattern.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
 +
-+    aaaaaaaaaaaaaaaaaaaaaa: aaaaaa aaaaaaaaaa aaaa aaaaaaaa aa aaaa aa aaa
-+    
-+commit 0000000000000000000000000000000000000002
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:14:13 2005 -0700
++test_description='git archive attribute pattern tests'
 +
-+    bbbbbbbbbbbbbbbbbb: bbbbbbbb bbb bbbb bbbbbbb bb bbbb bbb bbbbb bbbbbb
-+    
-+EOF
-+	test_cmp expect out
++. ./test-lib.sh
++
++test_expect_exists() {
++	test_expect_success " $1 exists" "test -e $1"
++}
++
++test_expect_missing() {
++	test_expect_success " $1 does not exist" "test ! -e $1"
++}
++
++test_expect_success 'setup' '
++	echo ignored >ignored &&
++	echo ignored export-ignore >>.git/info/attributes &&
++	git add ignored &&
++
++	mkdir not-ignored-dir &&
++	echo ignored-in-tree >not-ignored-dir/ignored &&
++	echo not-ignored-in-tree >not-ignored-dir/ignored-only-if-dir &&
++	git add not-ignored-dir &&
++
++	mkdir ignored-only-if-dir &&
++	echo ignored by ignored dir >ignored-only-if-dir/ignored-by-ignored-dir &&
++	echo ignored-only-if-dir/ export-ignore >>.git/info/attributes &&
++	git add ignored-only-if-dir &&
++
++
++	mkdir -p one-level-lower/two-levels-lower/ignored-only-if-dir &&
++	echo ignored by ignored dir >one-level-lower/two-levels-lower/ignored-only-if-dir/ignored-by-ignored-dir &&
++	git add one-level-lower &&
++
++	git commit -m. &&
++
++	git clone --bare . bare &&
++	cp .git/info/attributes bare/info/attributes
 +'
 +
- iconvfromutf8toiso88591() {
- 	printf "%s" "$*" | iconv -f UTF-8 -t ISO8859-1
- }
++test_expect_success 'git archive' '
++	git archive HEAD >archive.tar &&
++	(mkdir archive && cd archive && "$TAR" xf -) <archive.tar
++'
++
++test_expect_missing	archive/ignored
++test_expect_missing	archive/not-ignored-dir/ignored
++test_expect_exists	archive/not-ignored-dir/ignored-only-if-dir
++test_expect_exists	archive/not-ignored-dir/
++test_expect_missing	archive/ignored-only-if-dir/
++test_expect_missing	archive/ignored-ony-if-dir/ignored-by-ignored-dir
++test_expect_exists	archive/one-level-lower/
++test_expect_missing	archive/one-level-lower/two-levels-lower/ignored-only-if-dir/
++test_expect_missing	archive/one-level-lower/two-levels-lower/ignored-ony-if-dir/ignored-by-ignored-dir
++
++
++test_done
 -- 
-1.8.1.rc1.2.gfb98a3a
+1.7.10.4
