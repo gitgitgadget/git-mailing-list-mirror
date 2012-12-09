@@ -1,110 +1,68 @@
-From: Zoltan Klinger <zoltan.klinger@gmail.com>
-Subject: Re: [PATCH] git-clean: Display more accurate delete messages
-Date: Sun, 9 Dec 2012 22:18:19 +1100
-Message-ID: <CAKJhZwROXsTa4wu-C9rhfGysetL+cZRDECyFUn5VTb833pWzMQ@mail.gmail.com>
-References: <1354788938-26804-1-git-send-email-zoltan.klinger@gmail.com>
-	<7v8v9bjd44.fsf@alter.siamese.dyndns.org>
-	<7d290bdc-8654-4526-ba73-89408fa99a16@DB3EHSMHS002.ehs.local>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: [PATCH 8/8] t9402: Use TABs for indentation
+Date: Sun, 9 Dec 2012 06:19:48 -0500
+Message-ID: <CAEBDL5XqU2gUbhVbu+HeuyPMEh-Tu91ZLJsqLC7am1u-JmYUZQ@mail.gmail.com>
+References: <201212082235.54386.tboegi@web.de>
+	<7v4njvef20.fsf@alter.siamese.dyndns.org>
+	<50C4616D.9010801@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Soren Brinkmann <soren.brinkmann@xilinx.com>
-X-From: git-owner@vger.kernel.org Sun Dec 09 12:18:38 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	mmogilvi_git@miniinfo.net
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Dec 09 12:20:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Theu5-000834-LI
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 12:18:37 +0100
+	id 1ThevW-000103-SE
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 12:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758412Ab2LILSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2012 06:18:21 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:63946 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755115Ab2LILSU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2012 06:18:20 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so2867329iay.19
-        for <git@vger.kernel.org>; Sun, 09 Dec 2012 03:18:20 -0800 (PST)
+	id S1756645Ab2LILTu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Dec 2012 06:19:50 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:41859 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755094Ab2LILTt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Dec 2012 06:19:49 -0500
+Received: by mail-ie0-f176.google.com with SMTP id 13so5859307iea.35
+        for <git@vger.kernel.org>; Sun, 09 Dec 2012 03:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qyPQZ3FL+qMKHkqf1e9fQi9S3ow/vVfGqf2Ysdd4img=;
-        b=hg7WeGi3gIOcTQ0QlB6UTUrO0a7DU8iko+zjDeCzCWgAB24SGdCsL0Ot0TkgpuOd68
-         XmBJEVHIzwAG/4PKtTuFHTCJBYqxEcrMhPVkahqIz13IJEDic0O1aqRDAY2zJFZTdEqe
-         lPStW0CtKZ5H+k9CGd2x5xH3JRCdbL9JGHhMQeyA4JD3zyGzHmBkA2CWW+tMyYCqzFeT
-         aQ3S2Ti9CisTtXShnz+Y9y0CgDCQi0V0po1r1/VlyFoWd+B0efurZd1bzDP7ezyiFfVV
-         G52kkdHHVhgIMs6B3gadmjG+FI63KI9wER9KJM0uiT2jnqE6j74qGHdzPouY7JSMyg7J
-         O7LQ==
-Received: by 10.43.49.199 with SMTP id vb7mr8579802icb.6.1355051899897; Sun,
- 09 Dec 2012 03:18:19 -0800 (PST)
-Received: by 10.64.126.138 with HTTP; Sun, 9 Dec 2012 03:18:19 -0800 (PST)
-In-Reply-To: <7d290bdc-8654-4526-ba73-89408fa99a16@DB3EHSMHS002.ehs.local>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SYnYtlvlxAH3vrNpxnIAKPu3952PVEaoNXAasHTBJnI=;
+        b=KSzajaV4wX2aoKmU+/t972HrUbZKY0CIsnUFCUcmqlwDn0CaK73rJREajJLTgl6/2f
+         PDjge5JBKH//1hxgjSkcAVw0lZY02oh2d1jxL3eEdTasbdR3Cak4Cgzuji3Dl3H+0L1k
+         ajlJ1IfitRiRXGju3vGtlM5J0bmTcigZ1TQ5A/H9IOCSNDusZ8i668qP2cuNRvHCEbe7
+         4V2Ex+k2lmhGhoCQbSuaKlz60s85CoO1JdNSU/YS2lJyNK9yAMQBBpPnTHfLRvD92pkv
+         q6Lh9ALEY4+/i7lw7DSx5oP5Uy2zl/FNNpdKgjrUctUfh2u0HCkEhhs//xnHLEX5nU2G
+         iX6g==
+Received: by 10.50.37.168 with SMTP id z8mr3829888igj.1.1355051988782; Sun, 09
+ Dec 2012 03:19:48 -0800 (PST)
+Received: by 10.50.2.106 with HTTP; Sun, 9 Dec 2012 03:19:48 -0800 (PST)
+In-Reply-To: <50C4616D.9010801@web.de>
+X-Google-Sender-Auth: n_KW7NvMyH-HEgOLEfjvc4j19mw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211236>
 
->> Hrm, following your discussion (ellided above), I would have
->> expected that you would show
->>
->>     Removing directory foo/bar
->>     Removing untracked_file1
->
-> Also it would be nice to have warnings about undeleted directories since this git
-> clean behavior (or the work around to pass -f twice) is not documented.
-> Without a warning you would probably miss that something was _not_ deleted.
+On Sun, Dec 9, 2012 at 5:01 AM, Torsten B=C3=B6gershausen <tboegi@web.d=
+e> wrote:
+[snip]
+> PS: for some reason I don't get any mails to my
+> (google) account any more, which I use to read the list.
+> Am I the only one having this problem?
 
-Thanks for the feedback. I think you're right. Showing 'foo/bar/bar.txt' in
-the list when 'foo/bar/' directory has been successfully deleted is just noise.
+I noticed that the kernel.org lists are pretty unaccommodating.  If
+something hiccups in the delivery, it'll drop (or disable?) sending
+emails to you.  I've got some spam protection on my server that was
+causing some issues occasionally when a lookup took to long.  I
+wouldn't be surprised if a hiccup occurs now and then with gmail, and
+the same thing happens.
 
-Would like to get some more feedback on the proposed output in case of
- (1) an untracked subdirectory with multiple files where at least one of them
-     cannot be removed.
- (2) reporting ignored untracked git subdirectories
-
-Suppose we have a repo like the one below:
-  test.git/
-    |-- tracked_file
-    |-- untracked_file
-    |-- untracked_foo/
-    |     |-- bar/
-    |     |     |-- bar.txt
-    |     |-- emptydir/
-    |     |-- frotz.git/
-    |     |     |-- frotx.txt
-    |     |-- quux/
-    |           |-- failedquux.txt
-    |           |-- quux.txt
-    |-- untracked_unreadable_dir/
-    |     |-- afile
-    |-- untracked_some.git/
-          |-- some.txt
-
-$ git clean -fd
-Removing untracked_file
-Removing untracked_foo/bar
-Removing untracked_foo/emptydir
-Removing untracked_foo/quux/quux.txt
-warning: failed to remove untracked_foo/quux/failedquux.txt
-warning: failed to remove remove untracked_unreadable_dir/
-warning: ignoring untracked git repository untracked_foo/frotz.git/
-warning: ignoring untracked git repository untracked_some.git/
-Use git clean --force --force to delete all untracked git repositories
-
-$ # use forced remove
-$ git clean --force --force -d
-Removing untracked_foo/frotz.git
-Removing untracked_foo/quux/quux.txt
-Removing untracked_some.git/
-warning: failed to remove untracked_foo/quux/failedquux.txt
-warning: failed to remove untracked_unreadable_dir/
-
-Can you see any issues with the proposed output, wording above? If
-everyone is happy,
-I'm going to prepare patch V2 for it.
-
-Thanks,
-Zoltan
+-John
