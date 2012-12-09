@@ -1,87 +1,69 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: Weird problem with git-submodule.sh
-Date: Sun, 09 Dec 2012 22:05:04 +0100
-Message-ID: <50C4FD00.4010003@gmail.com>
-References: <50C22B15.1030607@xiplink.com> <7vvccdhhod.fsf@alter.siamese.dyndns.org> <50C22F72.6010701@xiplink.com> <7vwqwtfzis.fsf@alter.siamese.dyndns.org> <50C24ED7.90000@xiplink.com> <7vsj7hfw6q.fsf@alter.siamese.dyndns.org> <50C25539.9010206@xiplink.com> <7vobi5fu3c.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: exit code from git reset
+Date: Sun, 9 Dec 2012 14:23:41 -0800
+Message-ID: <CANiSa6i0LXE18Pyb5norRTm7PM+TMo3JvxDjoS5JOWt_qjHLHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 09 22:05:32 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 09 23:25:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tho42-0000oa-1b
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 22:05:30 +0100
+	id 1ThpJ9-00064E-82
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 23:25:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759005Ab2LIVFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2012 16:05:10 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:55650 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759001Ab2LIVFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2012 16:05:09 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e53so1205751eek.19
-        for <git@vger.kernel.org>; Sun, 09 Dec 2012 13:05:07 -0800 (PST)
+	id S1759113Ab2LIWXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2012 17:23:42 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:40201 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751931Ab2LIWXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2012 17:23:41 -0500
+Received: by mail-ie0-f174.google.com with SMTP id c11so6300836ieb.19
+        for <git@vger.kernel.org>; Sun, 09 Dec 2012 14:23:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=udsIXAA6ld+vnNsa5Ui2TXkkH6I3c5tUW3GWfNRvJlg=;
-        b=kk3T02ZLQO9rgq7X/euJdVakHSHNZDnwJKrm3h97VrIIZP+LC4rgmnc5vCMkbyaxho
-         w+izsgQGT/ATJP4ohOVXkPE+erETaGhal9tgE+fy7qzIBBeCgGGlPiSqDaadys+q5Uvi
-         6W5VVq73XCtuXCLHDRri08VwDfah8FGloA57JJQDJ4NgeFc2HaYBQsfw1SIA2MXipD/E
-         eh6L8AiK/8P9wLfpsbzNURpFPCHEYEZ40xjz+3FHolBMLQPMTpPop9V8/1q29yQUNb5m
-         ziQLKklWFFnV9KjptsAOV8NvMg+hYsY/3Gm7vlJjaau0xITZ8hekmYhNNuSBvZV4iJVS
-         55QA==
-Received: by 10.14.223.135 with SMTP id v7mr41839717eep.41.1355087107744;
-        Sun, 09 Dec 2012 13:05:07 -0800 (PST)
-Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
-        by mx.google.com with ESMTPS id v46sm39233368eep.1.2012.12.09.13.05.06
-        (version=SSLv3 cipher=OTHER);
-        Sun, 09 Dec 2012 13:05:07 -0800 (PST)
-In-Reply-To: <7vobi5fu3c.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=KZ6TLYOdg1om2YxXQJ+i/mi9f3MR2+o5WkO9PR8bMNw=;
+        b=bvS0pyb6jDH8TMMMGkG1fxu3jaRQ1ufvRYwQz5MozpX/N5sVC7ibsEm2GmvYdqhJgf
+         8D/tiZj+hH1f7Dt4vYAaGNUDGNL3J5xuzvGuiUuxj0eSyBPYnphPmfZSaTPXej/vRRYS
+         b28x+5XXMS7SULMx/2xJI4YC8QMFXsBsBqKqc6s08g1m2Zuw1iFGGkF4wSNgkP2OpFnW
+         3gtnUDgL6J+jjBArT+UaY3itsvNNZrZ2WheT0oSSVOv4fj9asS0Gt4vhKOxqX4C5AuKd
+         Ajt8Ty7NkhRNitPYKl21H1yxcReFGyDbxqbmXuzdH+SihBEzJ6VzogPDxX5/X5PzSp3t
+         vJpg==
+Received: by 10.42.153.70 with SMTP id l6mr9633628icw.50.1355091821289; Sun,
+ 09 Dec 2012 14:23:41 -0800 (PST)
+Received: by 10.64.91.99 with HTTP; Sun, 9 Dec 2012 14:23:41 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211242>
 
-Hi Junio, Marc.
+Hi,
 
-On 12/07/2012 10:08 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> It's FreeBSD 7.2, which I know is an obsolete version but I'm not able to
->> upgrade the machine.  I believe FreeBSD's sh is, or is derived from, dash.
-> 
-> Finally.  Yes, as you suspected, I am perfectly fine to explicitly
-> set IFS to the default values.
-> 
-> I wanted to have specific names to write in the commit log message,
-> in-code comments and possibly release notes.  That way, people can
-> decide if the issue affects them and they should upgrade once the
-> fix is made.
->
-The Autoconf manual suggests against unsetting IFS instead of resetting
-it to the default sequence for yet another reason: if IFS is unset, code
-that tries to save and restore its value will incorrectly reset it to an
-empty value, thus disabling field splitting:
+"git reset" currently returns 0 (if successful) while "git reset
+$pathspec" returns 0 iff the index matches HEAD after resetting (on
+all paths, not just those matching $pathspec). The exit code doesn't
+seem to be documented. Is there a reason they should behave
+differently? If not, what would be the better behavior? I don't see
+when the "git reset $pathspec" behavior" would be useful and it seems
+safer for any existing scripts out there not to change the status code
+for "git reset" (w/o paths). Scripts that run "git reset $pathspec"
+probably already know to ignore (or use?) the exit code. Also, having
+any non-zero exit code signal failure might actually be useful.
 
-    unset IFS
-    # default separators used for field splitting
-    # ...
-    saved_IFS=$IFS
-    IFS=:
-    # code using the new IFS
-    IFS=$saved_IFS
-    # no field splitting performed from now on!
+Changing "git reset $pathspec" to return 0 on success, regardless of
+diff between HEAD and index, breaks 10 test cases (in
+t2013-checkout-submodule.sh and t7102-reset.sh). These seem to do
+"test_must_fail git reset $pathspec", but I have not been able to find
+any motivation for expecting the failure.
 
-Not sure how this is relevant for the Git codebase, but maybe it is
-something worth reporting in the commit message of a proposed patch.
+It seems like this behavior has been there at least since the tests
+were added in 359048d (Add tests for documented features of "git
+reset"., 2007-09-11), just before reset became built-in.
 
-Regards,
-  Stefano
+Would a patch to change the exit code from "git reset $pathspec" be appreciated?
+
+Martin
