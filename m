@@ -1,68 +1,144 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH 8/8] t9402: Use TABs for indentation
-Date: Sun, 9 Dec 2012 06:19:48 -0500
-Message-ID: <CAEBDL5XqU2gUbhVbu+HeuyPMEh-Tu91ZLJsqLC7am1u-JmYUZQ@mail.gmail.com>
-References: <201212082235.54386.tboegi@web.de>
-	<7v4njvef20.fsf@alter.siamese.dyndns.org>
-	<50C4616D.9010801@web.de>
+From: Lukasz Stelmach <stlman@poczta.fm>
+Subject: Re: [PATCH] gitk: read and write a repository specific configuration
+ file
+Date: Sun, 09 Dec 2012 14:13:14 +0100
+Message-ID: <50C48E6A.5020609@poczta.fm>
+References: <50BF6629.8050806@xiplink.com> <1354966067-2865-1-git-send-email-stlman@poczta.fm> <7vd2yjeg8f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	mmogilvi_git@miniinfo.net
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 09 12:20:07 2012
+Cc: git@vger.kernel.org, mbranchaud@xiplink.com, paulus@samba.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 09 14:13:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ThevW-000103-SE
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 12:20:07 +0100
+	id 1ThghT-0004dm-6g
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 14:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756645Ab2LILTu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Dec 2012 06:19:50 -0500
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:41859 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755094Ab2LILTt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Dec 2012 06:19:49 -0500
-Received: by mail-ie0-f176.google.com with SMTP id 13so5859307iea.35
-        for <git@vger.kernel.org>; Sun, 09 Dec 2012 03:19:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SYnYtlvlxAH3vrNpxnIAKPu3952PVEaoNXAasHTBJnI=;
-        b=KSzajaV4wX2aoKmU+/t972HrUbZKY0CIsnUFCUcmqlwDn0CaK73rJREajJLTgl6/2f
-         PDjge5JBKH//1hxgjSkcAVw0lZY02oh2d1jxL3eEdTasbdR3Cak4Cgzuji3Dl3H+0L1k
-         ajlJ1IfitRiRXGju3vGtlM5J0bmTcigZ1TQ5A/H9IOCSNDusZ8i668qP2cuNRvHCEbe7
-         4V2Ex+k2lmhGhoCQbSuaKlz60s85CoO1JdNSU/YS2lJyNK9yAMQBBpPnTHfLRvD92pkv
-         q6Lh9ALEY4+/i7lw7DSx5oP5Uy2zl/FNNpdKgjrUctUfh2u0HCkEhhs//xnHLEX5nU2G
-         iX6g==
-Received: by 10.50.37.168 with SMTP id z8mr3829888igj.1.1355051988782; Sun, 09
- Dec 2012 03:19:48 -0800 (PST)
-Received: by 10.50.2.106 with HTTP; Sun, 9 Dec 2012 03:19:48 -0800 (PST)
-In-Reply-To: <50C4616D.9010801@web.de>
-X-Google-Sender-Auth: n_KW7NvMyH-HEgOLEfjvc4j19mw
+	id S934129Ab2LINNW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Dec 2012 08:13:22 -0500
+Received: from smtpo.poczta.interia.pl ([217.74.65.205]:48138 "EHLO
+	smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934112Ab2LINNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2012 08:13:22 -0500
+Received: from [192.168.0.13] (87-207-152-6.dynamic.chello.pl [87.207.152.6])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by www.poczta.fm (INTERIA.PL) with ESMTPSA;
+	Sun,  9 Dec 2012 14:13:14 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.6esrpre) Gecko/20120825 Thunderbird/10.0.6
+In-Reply-To: <7vd2yjeg8f.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.5
+X-Interia-Antivirus: OK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
+	s=biztos; t=1355058798;
+	bh=gbEWZfkkBAHx89txonKCHeQcP60cBmIbxUkCxtk3ICo=;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:
+	 Subject:References:In-Reply-To:X-Enigmail-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Interia-Antivirus;
+	b=ZRdvkwBizu80M8bH9DrrOORGy4Ie8vbs2tbU6S2+6XHtyrbA8w1+P28xSc1OlfSJp
+	 0L+ra+mPYRqGUerAYGiz64xR5oBvXNMpATWMYM1BwkIjwlKT14JrATFLYPQwsg8syZ
+	 eBTEUJtVsloz58t14yaFXu3jAJ90KE+AYiR5HPg4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211237>
 
-On Sun, Dec 9, 2012 at 5:01 AM, Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-[snip]
-> PS: for some reason I don't get any mails to my
-> (google) account any more, which I use to read the list.
-> Am I the only one having this problem?
+W dniu 09.12.2012 10:18, Junio C Hamano pisze:
+> =C5=81ukasz Stelmach <stlman@poczta.fm> writes:
+>=20
+>> Enable gitk read and write repository specific configuration
+>> file: ".git/k" if the file exists. To make gitk use the local
+>> file simply create one, e.g. with the touch(1) command.
+>>
+>> This is very useful if one uses different views for different
+>> repositories. Now there is no need to store all of them in
+>> ~/.gitk and make the views list needlessly long.
+>=20
+> I do not use gitk heavily myself, but I have a mixed feeling about
+> this patch.
+>=20
+> Forking the configuration from the one true ~/.gitk is easy; it is
+> just the matter of copying it to repository specific location.  Once
+> forked, however, it is very hard to merge these configuration files
+> sprinkled across repositories back, or more importantly, change the
+> settings globally.
 
-I noticed that the kernel.org lists are pretty unaccommodating.  If
-something hiccups in the delivery, it'll drop (or disable?) sending
-emails to you.  I've got some spam protection on my server that was
-causing some issues occasionally when a lookup took to long.  I
-wouldn't be surprised if a hiccup occurs now and then with gmail, and
-the same thing happens.
+=46or the record, I assumed someone using git is capable of doing some
+simple tricks with find, sed and the like.
 
--John
+
+Merging configuration from the global file (~/.gitk) is quite easy as
+the file is sourced just before the local file. If any option is not se=
+t
+in the local file the global value is effective.
+
+To handle the case you describe below...
+
+> Imagine you just got a new monitor that is a lot
+> finer grained than the one you have been usingq, and your choice of
+> font size has been specified in terms of pixels; you would want to
+> show all gitk windows in larger font now, regardless of the
+> repository, but you now have to go to 47 different configuration
+> files and update them.
+
+
+you need to (assume one keeps git repositoris below $HOME)
+
+1. Enter a random repository
+2. mv .git/gitk .git/gitk-local (see below)
+3. Run gitk, configure fonts to your taste, save config (it will be
+saved  globally)
+4. mv .git/gitk-local .git/gitk
+4 Do a trick
+$ find ../ -name gitk -type f -path '*/.git/gitk' -print0 | \
+  xargs -0 sed -i -e '/^set [a-z]\+font /d'
+
+Now the font settings from ~/.gitk will be applied (and saved locally
+when gitk exits) in every repository find(1) found.
+
+> So I suspect that this may introduce more trouble than it is worth
+> for users and should not be sold with a "This is very useful" label.
+> At best, it is "This may be useful";
+
+I work with more than two dozen different repositories and saving the
+list of branches I want to see upon startup is quite important for me.
+
+> otherwise the feature may end
+> up harming our users.  I'd phrase it without judging if it is good
+> or bad for the users, perhaps like this:
+>=20
+>     This allows one to specify different views for different
+>     repositories.
+
+At present the code won't harm anyone not willing to get harmed. To mak=
+e
+gitk save the configuration locally user needs to create the
+configuration file manually, outside of gitk, for example with touch(1)
+(yes it may be empty).
+
+> In any case, the filename .git/k may be _cute_, but I do not think
+> we would want to see:
+>=20
+>     $ ls .git
+>     branches        config       HEAD   index  k     objects
+>     COMMIT_EDITMSG  description  hooks  info   logs  refs
+
+I agree this was just to draw your attention ;-)
+
+> It is too cryptic, unless the user _knows_ 'k' is for gitk.  I'd
+> call it $GIT_DIR/gitkconfig or something, if I were supportive for
+> this feature (which I am not enthusiastic, yet).
+
+I think simply $GIT_DIR/gitk as in ~/.gitk is going to be fine.
+
+
+--=20
+By=C5=82o mi bardzo mi=C5=82o.               Czwarta pospolita kl=C4=99=
+ska, [...]
+>=C5=81ukasz<                 Ju=C5=BC nie katolicka lecz z=C5=82odziej=
+ska.  (c)PP
