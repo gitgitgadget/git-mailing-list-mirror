@@ -1,121 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Feature Request - Hide ignored files before checkout
-Date: Sun, 09 Dec 2012 01:04:05 -0800
-Message-ID: <7vhanvegvu.fsf@alter.siamese.dyndns.org>
-References: <000301cdd4dd$f8554090$e8ffc1b0$@gmail.com>
- <CAEUsAPaHJ+N0EnxGuVkRqcmY0fUy+4myMiWtd1_vu1vRL763JQ@mail.gmail.com>
+Subject: Re: [PATCH] gitk: read and write a repository specific configuration
+ file
+Date: Sun, 09 Dec 2012 01:18:08 -0800
+Message-ID: <7vd2yjeg8f.fsf@alter.siamese.dyndns.org>
+References: <50BF6629.8050806@xiplink.com>
+ <1354966067-2865-1-git-send-email-stlman@poczta.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthew Ciancio <matthew.ciancio16@gmail.com>, git@vger.kernel.org
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Sun Dec 09 10:04:54 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, mbranchaud@xiplink.com, paulus@samba.org
+To: =?utf-8?Q?=C5=81ukasz?= Stelmach <stlman@poczta.fm>
+X-From: git-owner@vger.kernel.org Sun Dec 09 10:18:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Thcoa-0000SS-Hf
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 10:04:48 +0100
+	id 1Thd1y-0004JM-SJ
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 10:18:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756622Ab2LIJEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2012 04:04:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61661 "EHLO
+	id S964910Ab2LIJSN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Dec 2012 04:18:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36416 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756617Ab2LIJEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2012 04:04:09 -0500
+	id S1756617Ab2LIJSK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Dec 2012 04:18:10 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F63D98E4;
-	Sun,  9 Dec 2012 04:04:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A4649D3B;
+	Sun,  9 Dec 2012 04:18:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H3wRqtHxXjgZDcHEerDaWo8O9hs=; b=uUeLQb
-	b4rtaH15st7m3FRUtQZVkaxRcgbNpFn03MaXxeaRjSUSrzpc6+eD342v4ic3d/h9
-	hQCJJyzX9Ke/w1rM7jMdZpqZaoH+JZ7gmR5NJwdRIaQWnGqsa/RlRrFQrZNHIMNJ
-	F0Tk4kv06mQBAdjJaIMUYl6hEbrrAGlFSRLNk=
+	:content-type:content-transfer-encoding; s=sasl; bh=oOAKO2w+8ASR
+	5hbpd2ZA23QdHOA=; b=ZPjrjxDbny1jwiaSMrGfQBGsRGw1IBkI0jkJtuaEKj/v
+	hcy2xBkcGTp+/IjuCSp3ZaFj+V+cd5OiXiFcp698s1v16W+rerwEFghKi+WS/n2l
+	/s0g2Y+p7qHXQ9rrxE7jTE6vX+tuC/J6vh7EI4hXQ2xUxy9/xzeye8QHnflTSiY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wobZKQf+XhgoP2mrJZUa6MVepnkg03lu
-	nYYZVJfr+mmz75fo5N29/b4Z/KUWYXpvWUHZmu4bNhrC3o9y8Kyoc4lCJ5vkq2P2
-	Mk2rw+SgnDTAl/WyZO7myKlxbZw027OoRaf2Hs2DqPhMXasAGBWYw8d5bm0ovP1S
-	x0Q4lTUCH/g=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=K+N0BL
+	T5hsWCKDYO8WJ13tsCTLk4myqdfZBJ2tmKF5v4zyY4YUmoHJMUy1iLp7JIPkP5ED
+	LmHW+MbBeoO4NBlr0HF2gd26X8SipvXA+XIodT4o4W2WJiCHg99IkpY01K5AWFX6
+	l13j4ehP9jfDzTJwn1gsKdbYhTkrNVcK9WQnE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1424298E3;
-	Sun,  9 Dec 2012 04:04:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36AAA9D3A;
+	Sun,  9 Dec 2012 04:18:10 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 512E198E1; Sun,  9 Dec 2012
- 04:04:07 -0500 (EST)
-In-Reply-To: <CAEUsAPaHJ+N0EnxGuVkRqcmY0fUy+4myMiWtd1_vu1vRL763JQ@mail.gmail.com> (Chris
- Rorvick's message of "Sat, 8 Dec 2012 13:21:07 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90D7D9D39; Sun,  9 Dec 2012
+ 04:18:09 -0500 (EST)
+In-Reply-To: <1354966067-2865-1-git-send-email-stlman@poczta.fm>
+ (=?utf-8?Q?=22=C5=81ukasz?= Stelmach"'s message of "Sat, 8 Dec 2012 12:27:47
+ +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 634363D2-41DF-11E2-BBFC-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 594A2FD0-41E1-11E2-AB2C-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211229>
 
-Chris Rorvick <chris@rorvick.com> writes:
+=C5=81ukasz Stelmach <stlman@poczta.fm> writes:
 
-> It's not in branchA, it's just no longer ignored because your changes
-> to .gitignore were effectively reverted by jumping back to the commit
-> that branchA points to.
-> ...
-> "hide/reappear" is the equivalent to saying "deleted/created" in the
-> case of a tracked file in your working tree.  But how would Git cause
-> an untracked file to reappear?  By definition, it doesn't know
-> anything about the file.
+> Enable gitk read and write repository specific configuration
+> file: ".git/k" if the file exists. To make gitk use the local
+> file simply create one, e.g. with the touch(1) command.
+>
+> This is very useful if one uses different views for different
+> repositories. Now there is no need to store all of them in
+> ~/.gitk and make the views list needlessly long.
 
-Nicely explained. To make something simply disappear, you could
-remove it, but that is obviously not enough to make it reappear.  It
-has to be stashed away somewhere before it gets removed, and in the
-context of (any) SCM, that is done by committing.
+I do not use gitk heavily myself, but I have a mixed feeling about
+this patch.
 
-You may have Mac and Windows branches, each of which needs to link
-with vendor supplied object file blackbox.o with the rest of the
-source.  It is understandable if a project does not want to mix such
-platform specific black box binaries in the history of the source.
+=46orking the configuration from the one true ~/.gitk is easy; it is
+just the matter of copying it to repository specific location.  Once
+forked, however, it is very hard to merge these configuration files
+sprinkled across repositories back, or more importantly, change the
+settings globally.  Imagine you just got a new monitor that is a lot
+finer grained than the one you have been usingq, and your choice of
+font size has been specified in terms of pixels; you would want to
+show all gitk windows in larger font now, regardless of the
+repository, but you now have to go to 47 different configuration
+files and update them.
 
-But that does not necessarily mean the project can totally ignore
-what specific black box binary was meant to be used with the rest of
-the source.
+So I suspect that this may introduce more trouble than it is worth
+for users and should not be sold with a "This is very useful" label.
+At best, it is "This may be useful"; otherwise the feature may end
+up harming our users.  I'd phrase it without judging if it is good
+or bad for the users, perhaps like this:
 
-After you released the v1.0 of your product for both Macintosh and
-Windows, the vendor may supply updated versions of the blackbox.o
-binary for these platforms, and you would start working toward v1.1
-of your product using these updated copies of objects.  Then you
-find problems in the released v1.0 software.  Without keeping track
-of which version of the object was used to build the released v1.0,
-you cannot diagnose, build and test a maintenance update v1.0.1.
+    This allows one to specify different views for different
+    repositories.
 
-The project may add new Macintosh (or Windows) developers.  You can
-tell new Macintosh developers to clone and checkout mac branch, and
-in the same e-mail, give them the untracked blackbox.o file for that
-platform, but you have to rely on human not making mistakes (you may
-mistakenly send Windows version of blackbox.o to him, you may send
-stale Macintosh version, the developer may misplace the new one and
-keep using the stale one, etc. etc.).
+In any case, the filename .git/k may be _cute_, but I do not think
+we would want to see:
 
-Some people commit blackbox.o on each platform-specific branch, or
-all branches share blackbox-win.o and blackbox-mac.o, only one of
-which is used at any given branch, for this exact reason.
+    $ ls .git
+    branches        config       HEAD   index  k     objects
+    COMMIT_EDITMSG  description  hooks  info   logs  refs
 
-The project, for licensing reasons, may not have rights to
-distribute such a blackbox object file along with its sources, but
-the vendor of the blackbox object may allow individual developer to
-download and link it from vendor's site.  In such a case, the
-project would not want to (and is not allowed to) commit such object
-file.  One approach I have seen used in such a case is to arrange
-the build procedure so that these individual developers can drop
-such an external object next to the project directory, and refer to
-it as ../blackbox.o when linking.
+It is too cryptic, unless the user _knows_ 'k' is for gitk.  I'd
+call it $GIT_DIR/gitkconfig or something, if I were supportive for
+this feature (which I am not enthusiastic, yet).
 
-So "these files are moved away from the working tree upon checking
-another branch out, and moved back into the working tree upon
-checking out this branch" is pretty much outside the scope of any
-SCM.  It is not very interesting, as it is not necessary to solve
-any real world problem.
-
-Of course, the users can do whatever moving/copying/renaming of
-untracked files in their post-checkout hook to be run when a new
-branch is checked out.
+Thanks.
