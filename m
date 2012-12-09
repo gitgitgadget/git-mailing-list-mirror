@@ -1,130 +1,86 @@
-From: "Matthew Ciancio" <matthew.ciancio16@gmail.com>
-Subject: RE: Feature Request - Hide ignored files before checkout
-Date: Mon, 10 Dec 2012 09:37:39 +1100
-Message-ID: <000301cdd65d$ce311c40$6a9354c0$@gmail.com>
-References: <000301cdd4dd$f8554090$e8ffc1b0$@gmail.com> <CAEUsAPaHJ+N0EnxGuVkRqcmY0fUy+4myMiWtd1_vu1vRL763JQ@mail.gmail.com> <7vhanvegvu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: exit code from git reset
+Date: Sun, 09 Dec 2012 15:04:11 -0800
+Message-ID: <7vzk1mddzo.fsf@alter.siamese.dyndns.org>
+References: <CANiSa6i0LXE18Pyb5norRTm7PM+TMo3JvxDjoS5JOWt_qjHLHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "'Chris Rorvick'" <chris@rorvick.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 09 23:38:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 00:04:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ThpVc-0007xk-Ai
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Dec 2012 23:38:04 +0100
+	id 1ThpvE-0003b9-5m
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 00:04:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934575Ab2LIWhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2012 17:37:48 -0500
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:56131 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753848Ab2LIWhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2012 17:37:47 -0500
-Received: by mail-pb0-f46.google.com with SMTP id wy7so1455853pbc.19
-        for <git@vger.kernel.org>; Sun, 09 Dec 2012 14:37:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-type:content-transfer-encoding:x-mailer
-         :thread-index:content-language;
-        bh=kqP7X8bbo+lXlVvH3Ixa7T+3BbWVLRmci8njahjIjA4=;
-        b=WTgZq7SK7qhrIomP+2Q2mt2O5vNKR3dRQsis6BUTsQDJM6z7sJiPZCKse8f8lMeDIU
-         EO5OP7cO0lSz8xaXiDWZEbFRf6qNacJ6Pil2dcjc6rciplJ3wP8/KdIxafnOhGPBZzCh
-         divCxFZkpqQwnhFtpx8c9ibbGVpz9qrJOn2Hs0D1Aop+HrnpKR8/4jbH5P6NX7rkFJCI
-         0ZBXir5FPT3e+hF3Tueec+y3jXmkFoLNnFFsG7Jcy6eSdh2mUAx9+Utse5ntpZogjMZG
-         uaCa5KBee4ujVq21Flk0wjyyBQ13tLx1XBb1Lmn66F3tD/K9puEaGtxYo8QZcsQg6wtP
-         2+aA==
-Received: by 10.68.143.129 with SMTP id se1mr34404871pbb.67.1355092666813;
-        Sun, 09 Dec 2012 14:37:46 -0800 (PST)
-Received: from MattPC (CPE-60-225-40-254.nsw.bigpond.net.au. [60.225.40.254])
-        by mx.google.com with ESMTPS id p10sm10666557pax.27.2012.12.09.14.37.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 09 Dec 2012 14:37:45 -0800 (PST)
-In-Reply-To: <7vhanvegvu.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQHMNWi7KxtTHnq09qgMXBkE3T5YpgFvr262AhNbdVKX+C9PwA==
-Content-Language: en-au
+	id S1753900Ab2LIXEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2012 18:04:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60298 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753356Ab2LIXEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2012 18:04:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A9B1A4DD;
+	Sun,  9 Dec 2012 18:04:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x859AjTD3zDGZ8PSy2nbb7cEoKc=; b=w1Ax/L
+	l5BExHJF/kNjOy/tfczzGxTPrHtWP6Lg6/pMzW41bxB+4sgcGWm/7FREYCqJVzur
+	Vx7SIZog46RgLnhYJPc7tegOz/bvJwUu327xZH9876zCekHDfLjaZ2sghhkwJr0K
+	Nbw3tsdx1m8sKe6o6wEtwFwK21+vEJzfa2aTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ahO/sAsNPZMVbnUF4jgVVpoXkjPD42O/
+	fFvB1JBWFMbtJX7guI4gg7lWkZrrUnyGAKTFgyT3arzK3woZr5Yh/vkCBw2yOe9q
+	QR27abBYFAPUPuv5C/rFOHPO9xXs6+GDIZiIOZHUKF3wKBoWal5+XtobFAHG3zEJ
+	L7bVJQt8AeM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 867A7A4DC;
+	Sun,  9 Dec 2012 18:04:13 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC40BA4DA; Sun,  9 Dec 2012
+ 18:04:12 -0500 (EST)
+In-Reply-To: <CANiSa6i0LXE18Pyb5norRTm7PM+TMo3JvxDjoS5JOWt_qjHLHw@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Sun, 9 Dec 2012 14:23:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BF5CD6BA-4254-11E2-8B70-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211244>
 
-I appreciate your involvement, Mr Hamano.
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-You have made me realise that my intentions were flawed from the beginning,
-because I had been misusing the branch feature.
+> "git reset" currently returns 0 (if successful) while "git reset
+> $pathspec" returns 0 iff the index matches HEAD after resetting (on
+> all paths, not just those matching $pathspec).
 
-Thank you for your time.
+So in short, you observed that either of them reports with its exit
+code if the resulting index (not just any subpart, but always the
+entire thing) matches the HEAD, e.g. "do we have change that will be
+listed on 'will be committed' section in git status output?"
 
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: Sunday, 9 December 2012 8:04 PM
-To: Chris Rorvick
-Cc: Matthew Ciancio; git@vger.kernel.org
-Subject: Re: Feature Request - Hide ignored files before checkout
+Sounds like one sane and consistent semantics to me.  I am not
+saying that there cannot be other behaviours that are internally
+consistent (e.g. the error code could have matched the number of
+paths that are different between the index and the HED, or the error
+code could have been zero for successful reset, non-zero for some
+failure), but I am saying that the current behaviour gives _one_
+sane and consistent meanings regardless of how you ran the command.
 
-Chris Rorvick <chris@rorvick.com> writes:
+> The exit code doesn't seem to be documented.
 
-> It's not in branchA, it's just no longer ignored because your changes 
-> to .gitignore were effectively reverted by jumping back to the commit 
-> that branchA points to.
-> ...
-> "hide/reappear" is the equivalent to saying "deleted/created" in the 
-> case of a tracked file in your working tree.  But how would Git cause 
-> an untracked file to reappear?  By definition, it doesn't know 
-> anything about the file.
+Please make it so.
 
-Nicely explained. To make something simply disappear, you could remove it,
-but that is obviously not enough to make it reappear.  It has to be stashed
-away somewhere before it gets removed, and in the context of (any) SCM, that
-is done by committing.
+> Changing "git reset $pathspec" to return 0 on success, regardless of
+> diff between HEAD and index, breaks 10 test cases (in
+> t2013-checkout-submodule.sh and t7102-reset.sh). These seem to do
+> "test_must_fail git reset $pathspec", but I have not been able to find
+> any motivation for expecting the failure.
 
-You may have Mac and Windows branches, each of which needs to link with
-vendor supplied object file blackbox.o with the rest of the source.  It is
-understandable if a project does not want to mix such platform specific
-black box binaries in the history of the source.
-
-But that does not necessarily mean the project can totally ignore what
-specific black box binary was meant to be used with the rest of the source.
-
-After you released the v1.0 of your product for both Macintosh and Windows,
-the vendor may supply updated versions of the blackbox.o binary for these
-platforms, and you would start working toward v1.1 of your product using
-these updated copies of objects.  Then you find problems in the released
-v1.0 software.  Without keeping track of which version of the object was
-used to build the released v1.0, you cannot diagnose, build and test a
-maintenance update v1.0.1.
-
-The project may add new Macintosh (or Windows) developers.  You can tell new
-Macintosh developers to clone and checkout mac branch, and in the same
-e-mail, give them the untracked blackbox.o file for that platform, but you
-have to rely on human not making mistakes (you may mistakenly send Windows
-version of blackbox.o to him, you may send stale Macintosh version, the
-developer may misplace the new one and keep using the stale one, etc. etc.).
-
-Some people commit blackbox.o on each platform-specific branch, or all
-branches share blackbox-win.o and blackbox-mac.o, only one of which is used
-at any given branch, for this exact reason.
-
-The project, for licensing reasons, may not have rights to distribute such a
-blackbox object file along with its sources, but the vendor of the blackbox
-object may allow individual developer to download and link it from vendor's
-site.  In such a case, the project would not want to (and is not allowed to)
-commit such object file.  One approach I have seen used in such a case is to
-arrange the build procedure so that these individual developers can drop
-such an external object next to the project directory, and refer to it as
-../blackbox.o when linking.
-
-So "these files are moved away from the working tree upon checking another
-branch out, and moved back into the working tree upon checking out this
-branch" is pretty much outside the scope of any SCM.  It is not very
-interesting, as it is not necessary to solve any real world problem.
-
-Of course, the users can do whatever moving/copying/renaming of untracked
-files in their post-checkout hook to be run when a new branch is checked
-out.
+See above.
