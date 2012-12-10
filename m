@@ -1,78 +1,68 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCHv2] mingw_rmdir: do not prompt for retry when non-empty
-Date: Mon, 10 Dec 2012 15:42:27 +0100
-Message-ID: <1355150547-8212-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] mingw_rmdir: do not prompt for retry when non-empty
+Date: Mon, 10 Dec 2012 08:25:58 -0800
+Message-ID: <7vr4mxc1rd.fsf@alter.siamese.dyndns.org>
+References: <1355150547-8212-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com,
-	johannes.schindelin@gmx.de,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: msysgit+bncBDR53PPJ7YHRB2XJS6DAKGQEISMF5YY@googlegroups.com Mon Dec 10 15:43:08 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRB2XJS6DAKGQEISMF5YY@googlegroups.com>
+Cc: git@vger.kernel.org,  msysgit@googlegroups.com, 
+ johannes.schindelin@gmx.de
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBGM2TCDAKGQECDUEBWY@googlegroups.com Mon Dec 10 17:26:18 2012
+Return-path: <msysgit+bncBCG77UMM3EJRBGM2TCDAKGQECDUEBWY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f58.google.com ([74.125.83.58])
+Received: from mail-vc0-f186.google.com ([209.85.220.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB2XJS6DAKGQEISMF5YY@googlegroups.com>)
-	id 1Ti4ZT-0000bu-UB
-	for gcvm-msysgit@m.gmane.org; Mon, 10 Dec 2012 15:43:04 +0100
-Received: by mail-ee0-f58.google.com with SMTP id e49sf1200224eek.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 10 Dec 2012 06:42:51 -0800 (PST)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBGM2TCDAKGQECDUEBWY@googlegroups.com>)
+	id 1Ti6BL-0003tO-Mf
+	for gcvm-msysgit@m.gmane.org; Mon, 10 Dec 2012 17:26:15 +0100
+Received: by mail-vc0-f186.google.com with SMTP id fl17sf2296365vcb.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 10 Dec 2012 08:26:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
-         :message-id:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=6WlDPfDJlldS8UhyXwkRoZmUa5F3pgbKGDxIKup/9MQ=;
-        b=D/S0jE0vZSCEdci3SnzniAw0XzvKIOk3GU32UbFjvaTvSFwJv15kvhXFcimYeCGmvM
-         pzhNL4xu8OmmOwkHH0yRdWhuDezQVx3BIENmDh9RqJOOf343aEgtXOWb0NNu9vkRheVY
-         4v/Zp5xWyq2O+PSifXpDgt9hZJzbkDQho4ZBfnCaFZkjC+L2RseQ/tJEr4BYiIEUVHJP
-         1YgRr/4cF3Tn0mLK/Oqfqc5ZHnqcU8n89k6RByZsiqwgfBBklQAQ95os7o48XWmfIatM
-         z9njkOSzVyGb4Ju4dTjkJix5Yznglwl0z8UHvZ9tQKOcrRufAb3PIxeUqs0Qgch2mx8m
-         dz+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
-         :message-id:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=6WlDPfDJlldS8UhyXwkRoZmUa5F3pgbKGDxIKup/9MQ=;
-        b=ozUCd2q9WqGSvrSU9e86bVp6/Vy9QLuulE/HjzNjNvz1rmeK4B5AfxB5fQ7odbcGpi
-         +wy7dc7BWvCmDYYZNpL2dizTpkBaBKISw44i7VURGSJTyPpN4POSEe/ykBG8Rg50+IPx
-         y2IFj/NCff/Oen0dEMKsMgqzO5uFlgfw5eAiIYYOJmGSB+mQr5AO2ikwQyOvABojxLML
-         QQFjsw0WhPfgxxMhYXGgdAkM7f3Su9/oCLBnw5bOuA+hudJP1q04fgdGnIer+9ALKyUG
-         Rs3cEteav8C/Y/H5JJJBWEN/rs65iypnICXzbpSW+NfepTETFkfhnukK3ZKIdJMWSCaQ
-         sS4g==
-Received: by 10.180.99.7 with SMTP id em7mr1048581wib.1.1355150571446;
-        Mon, 10 Dec 2012 06:42:51 -0800 (PST)
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=xO3r+AcTlTxITqMlNjUmPVgH2fRnQsD7zH+y9OZ3YFA=;
+        b=KcAi9W/yzUBrxp/C1T+W1JsNtqGDiOf8G/XABdH4qmhd+rozIMRy6qTv/PHxPW569X
+         euz8q3oYikIXosyLUNN+J8ZC68/7T/8xHZbnCY76zPNGHlQF5drkIohXSljSWZ2Z4n7F
+         7D8cmTesi1nlbmcz1U277p/0xk8jAvyWCdrH1YYr1PsONdKwbCWN4rCsHOSCmoos0A3Y
+         tU78Zj4SlPchpkGIOmWsEu/bFRISfayVsZddHHzZZXYhqsWHf7PbXcv5QLlzctRuJN75
+         t64BfdjKe31rLRma1EUksTYSqjwLaC2dKWfl7zntpBVff1YibausjqcU9HJDBd/z0r6 
+Received: by 10.49.87.1 with SMTP id t1mr3209615qez.41.1355156762683;
+        Mon, 10 Dec 2012 08:26:02 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.86.66 with SMTP id n2ls959206wiz.9.canary; Mon, 10 Dec
- 2012 06:42:49 -0800 (PST)
-Received: by 10.204.130.141 with SMTP id t13mr2183178bks.3.1355150569836;
-        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
-Received: by 10.204.130.141 with SMTP id t13mr2183177bks.3.1355150569822;
-        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
-Received: from mail-bk0-f48.google.com (mail-bk0-f48.google.com [209.85.214.48])
-        by gmr-mx.google.com with ESMTPS id v18si2881131bkw.1.2012.12.10.06.42.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.214.48 as permitted sender) client-ip=209.85.214.48;
-Received: by mail-bk0-f48.google.com with SMTP id jc3so1372953bkc.21
-        for <msysgit@googlegroups.com>; Mon, 10 Dec 2012 06:42:49 -0800 (PST)
-Received: by 10.204.0.70 with SMTP id 6mr4434738bka.104.1355150569575;
-        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id u3sm14279967bkw.9.2012.12.10.06.42.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Dec 2012 06:42:48 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.msysgit.0.3.gafa53b0.dirty
-X-Original-Sender: kusmabite@gmail.com
+Received: by 10.49.87.72 with SMTP id v8ls4048348qez.78.gmail; Mon, 10 Dec
+ 2012 08:26:01 -0800 (PST)
+Received: by 10.224.173.202 with SMTP id q10mr12105398qaz.3.1355156761088;
+        Mon, 10 Dec 2012 08:26:01 -0800 (PST)
+Received: by 10.224.173.202 with SMTP id q10mr12105384qaz.3.1355156760746;
+        Mon, 10 Dec 2012 08:26:00 -0800 (PST)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id fg3si5453495qcb.2.2012.12.10.08.26.00;
+        Mon, 10 Dec 2012 08:26:00 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CFB287A4;
+	Mon, 10 Dec 2012 11:26:00 -0500 (EST)
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6854087A2;
+	Mon, 10 Dec 2012 11:26:00 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B889E87A0; Mon, 10 Dec 2012
+ 11:25:59 -0500 (EST)
+In-Reply-To: <1355150547-8212-1-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Mon, 10 Dec 2012 15:42:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 484FDD0A-42E6-11E2-98BB-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.214.48 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+ best guess record for domain of junio@b-sasl-quonix.pobox.com designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
+ dkim=pass header.i=@pobox.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -83,51 +73,58 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211257>
 
-in ab1a11be ("mingw_rmdir: set errno=ENOTEMPTY when appropriate"),
-a check was added to prevent us from retrying to delete a directory
-that is both in use and non-empty.
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-However, this logic was slightly flawed; since we didn't return
-immediately, we end up falling out of the retry-loop, but right into
-the prompting-loop.
+> in ab1a11be ("mingw_rmdir: set errno=ENOTEMPTY when appropriate"),
+> a check was added to prevent us from retrying to delete a directory
+> that is both in use and non-empty.
+>
+> However, this logic was slightly flawed; since we didn't return
+> immediately, we end up falling out of the retry-loop, but right into
+> the prompting-loop.
+>
+> Fix this by setting errno, and guarding the prompting-loop with an
+> errno-check.
+>
+> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> ---
+>
+> Here's the second version of this patch, sorry for the slight delay.
 
-Fix this by setting errno, and guarding the prompting-loop with an
-errno-check.
+Is this meant for me, or is it to be applied to msysgit and later
+somehow fed to me in different form?
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+I can s/_wrmdir/rmdir/;s/wpathname/pathname/ if that is what you
+want me to do, but otherwise this patch does not apply.
 
-Here's the second version of this patch, sorry for the slight delay.
-
- compat/mingw.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 1eb974f..440224c 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -260,6 +260,8 @@ int mingw_rmdir(const char *pathname)
- 
- 	while ((ret = _wrmdir(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
- 		if (!is_file_in_use_error(GetLastError()))
-+			errno = err_win_to_posix(GetLastError());
-+		if (errno != EACCES)
- 			break;
- 		if (!is_dir_empty(wpathname)) {
- 			errno = ENOTEMPTY;
-@@ -275,7 +277,7 @@ int mingw_rmdir(const char *pathname)
- 		Sleep(delay[tries]);
- 		tries++;
- 	}
--	while (ret == -1 && is_file_in_use_error(GetLastError()) &&
-+	while (ret == -1 && errno == EACCES && is_file_in_use_error(GetLastError()) &&
- 	       ask_yes_no_if_possible("Deletion of directory '%s' failed. "
- 			"Should I try again?", pathname))
- 	       ret = _wrmdir(wpathname);
--- 
-1.8.0.msysgit.0.3.gafa53b0.dirty
+>
+>  compat/mingw.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 1eb974f..440224c 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -260,6 +260,8 @@ int mingw_rmdir(const char *pathname)
+>  
+>  	while ((ret = _wrmdir(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
+>  		if (!is_file_in_use_error(GetLastError()))
+> +			errno = err_win_to_posix(GetLastError());
+> +		if (errno != EACCES)
+>  			break;
+>  		if (!is_dir_empty(wpathname)) {
+>  			errno = ENOTEMPTY;
+> @@ -275,7 +277,7 @@ int mingw_rmdir(const char *pathname)
+>  		Sleep(delay[tries]);
+>  		tries++;
+>  	}
+> -	while (ret == -1 && is_file_in_use_error(GetLastError()) &&
+> +	while (ret == -1 && errno == EACCES && is_file_in_use_error(GetLastError()) &&
+>  	       ask_yes_no_if_possible("Deletion of directory '%s' failed. "
+>  			"Should I try again?", pathname))
+>  	       ret = _wrmdir(wpathname);
 
 -- 
 *** Please reply-to-all at all times ***
