@@ -1,62 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Antoine Pelisse <apelisse@gmail.com>
 Subject: Re: Use of a mailmap file with git-log
-Date: Mon, 10 Dec 2012 11:43:13 -0800
-Message-ID: <7vobi1ae26.fsf@alter.siamese.dyndns.org>
+Date: Mon, 10 Dec 2012 20:47:21 +0100
+Message-ID: <CALWbr2ydMkR_O-Gev7k-HjGadRJMv0UH3XdqtM0Jt=vC82GwJw@mail.gmail.com>
 References: <CALKB1SXdNVsQop5VYmShOMx93+j5SPdkGF9yNU5k7nXg87TwMw@mail.gmail.com>
- <7v38zdbv6d.fsf@alter.siamese.dyndns.org>
+	<7v38zdbv6d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rich Midwinter <rich.midwinter@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 10 20:43:51 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Rich Midwinter <rich.midwinter@gmail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 20:48:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ti9GU-0001lP-B2
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 20:43:46 +0100
+	id 1Ti9KX-0001Fn-M1
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 20:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294Ab2LJTnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2012 14:43:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55655 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751735Ab2LJTnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2012 14:43:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33642A13A;
-	Mon, 10 Dec 2012 14:43:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dazF0bQhPqL9izVDmrc3/HXKpe0=; b=WHSyvo
-	lSkpBsBmKTuNsJcXH5Am1jG3xfNDjYvdSqvFR6Ccjyz0NYP6Zreqc6tacrG+YEIx
-	p7pnQXeOCfWhsZL+MxSobu3M2IxjUPpgNs3dDNtncCjtEJN1CiNWeSFDRuY6InGx
-	aNQESRTJ+hSm2tac+P+uyqfrLCNs476tOwbZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QnEDgmI8I3GWdMetN04KoNLKOK9vxq9M
-	GXa82YmkGkXTrQvMeoRm8JIgg70spbdI+bZvlTiuw2Ci4tXtsgvI96Dq11BrGmHS
-	c0n8VISCz0gBJQbiaBMrSSe5vL3ILphJCjSigB+jZz7GHhglkybuRoVmJbzD1DBA
-	o3ITeg68NqU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20142A139;
-	Mon, 10 Dec 2012 14:43:16 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7243BA137; Mon, 10 Dec 2012
- 14:43:15 -0500 (EST)
-In-Reply-To: <7v38zdbv6d.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 10 Dec 2012 10:48:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D6F21F6C-4301-11E2-94AD-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752543Ab2LJTrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2012 14:47:24 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:48658 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752274Ab2LJTrW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2012 14:47:22 -0500
+Received: by mail-qa0-f46.google.com with SMTP id r4so1995023qaq.19
+        for <git@vger.kernel.org>; Mon, 10 Dec 2012 11:47:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UD3LlcQykDntJF13/5wC7+OMO/tHoKUKaePwwQpdKyo=;
+        b=THu+sNmgxyOzKQKmSHDoZfCyr1FBEY/bckPiKA03DwNRsobILYGhcO/DFZ0/qRuHH5
+         1wUavlOsD80OGnyZbiMnpWgXboKuoyAXpiPHKPXplqejoOJvFon9Th0j7zZcrOJpXgtg
+         vBAsV7DMvhdg1e9dQAkQKsSh/KQM9SkHEHGzkoQoA+iGQizFNMgYf/K6BQQphhx9/glt
+         HjaY7wxL8zmZFfIAwx5ustv7YU9jx2eBcS6uOZJGXmMm8Rakvk50IqnAMbuyMcLrFO3p
+         dqVkGB/xcA5v4NjVxL2odbwyyxJAErWCTfumPht3oYtmN5WGXIYmqAJcaUn63rpOyzh3
+         gWGQ==
+Received: by 10.224.201.73 with SMTP id ez9mr28940792qab.92.1355168841841;
+ Mon, 10 Dec 2012 11:47:21 -0800 (PST)
+Received: by 10.49.36.130 with HTTP; Mon, 10 Dec 2012 11:47:21 -0800 (PST)
+In-Reply-To: <7v38zdbv6d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211271>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
+I was thinking about that last week.
+It could indeed be very interesting to have mailmap applied to git-log and
+especially to git-log --author/--committer.
+
+My first look at the code let me think that we would need to change the
+parse_commit_buffer to replace, at reading time, the name of author and
+committer if an option (--use-mailmap seems like a wise choice) and
+probably a config option.
+The choice of parse_commit_buffer to do the modification is due to
+the grepping being done directly on buffer when grepping author/committerer.
+
+Yet I'm afraid it could be:
+1. expensive to rewrite all commit log (reallocating the buffer)
+2. Inappropriate to change the value in function that is supposed to
+read
+
+My 2 cents.
+
+Cheers,
+
+On Mon, Dec 10, 2012 at 7:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Rich Midwinter <rich.midwinter@gmail.com> writes:
 >
 >> I'm working on a project for a large organisation that wants to make
@@ -73,36 +86,8 @@ Junio C Hamano <gitster@pobox.com> writes:
 > then" names in the output.  A fix may have to involve inventing a
 > new option "log --use-mailmap" that is explicitly given from the
 > command line.
-
-If somebody wants to do this, I think the overall design should go
-like this:
-
- * We may want to rewrite blame.c::get_ac_line() and the code in
-   pretty.c::pp_user_info() that parse author/committer lines by
-   using ident.c::split_ident_line() for better code reuse as a
-   preparation step before all of the below.
-
- * We may want to lift the buffer length limit from the implementation
-   of mailmap.c::map_user() by using the strbuf API as a preparation
-   step before all of the below.
-
- * We may also want to rethink its signature (we may want to get a
-   single strbuf and have the function parse out "Name <mail>"; I
-   didn't check the existing callers to see if that would make it
-   easier to use, and if it does not, this obviously shouldn't be done)
-   as a preparation step before all of the below.
-
- * Introduce a new "struct string_list *mailmap" member to "struct
-   pretty_print_context" and "struct rev_info" (default to NULL);
-
- * In log-tree.c::show_log(), copy opt->mailmap to ctx.mailmap;
-
- * Update pretty.c::pp_user_info() to convert the email address on
-   "line" (between the beginning and "namelen") by calling
-   map_user() immediately after it parses time/tz out, and adjust
-   the remainder of the function to use it, when pp->mailmap is
-   present;
-
- * Teach log.c::cmd_log_init_finosh() about "--use-mailmap" option.
-   Allocate one "struct string_list" instance and use read_mailmap()
-   on it when the option is used, and store it in rev->mailmap.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
