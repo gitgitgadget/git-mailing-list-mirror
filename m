@@ -1,135 +1,149 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] cache-tree: invalidate i-t-a paths after generating
- trees
-Date: Mon, 10 Dec 2012 09:22:40 -0800
-Message-ID: <7vip89bz4v.fsf@alter.siamese.dyndns.org>
-References: <1352459040-14452-1-git-send-email-pclouds@gmail.com>
- <1354939803-8466-1-git-send-email-pclouds@gmail.com>
- <7v7goqcsdy.fsf@alter.siamese.dyndns.org>
- <CACsJy8CW1UGgQcgHa11XP71XZGaTxytrGmJmrtdNvy=N7cUyMw@mail.gmail.com>
+Subject: Re: [PATCHv2] mingw_rmdir: do not prompt for retry when non-empty
+Date: Mon, 10 Dec 2012 09:26:26 -0800
+Message-ID: <7vehixbyyl.fsf@alter.siamese.dyndns.org>
+References: <1355150547-8212-1-git-send-email-kusmabite@gmail.com>
+ <7vr4mxc1rd.fsf@alter.siamese.dyndns.org>
+ <CABPQNSZL-edn4izfMuss1-3KbLBSrGm8J08wn0TbETtsn2nn+A@mail.gmail.com>
+ <alpine.DEB.1.00.1212101804290.32206@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathon Mah <me@jonathonmah.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 18:23:04 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,  git@vger.kernel.org, 
+ msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBCG77UMM3EJRBRFWTCDAKGQE6ENW3BA@googlegroups.com Mon Dec 10 18:26:45 2012
+Return-path: <msysgit+bncBCG77UMM3EJRBRFWTCDAKGQE6ENW3BA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vc0-f186.google.com ([209.85.220.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ti74H-0002yR-PP
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 18:23:02 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466Ab2LJRWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2012 12:22:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44838 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750900Ab2LJRWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2012 12:22:44 -0500
+	(envelope-from <msysgit+bncBCG77UMM3EJRBRFWTCDAKGQE6ENW3BA@googlegroups.com>)
+	id 1Ti77r-0005zX-AX
+	for gcvm-msysgit@m.gmane.org; Mon, 10 Dec 2012 18:26:43 +0100
+Received: by mail-vc0-f186.google.com with SMTP id fl17sf2321910vcb.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 10 Dec 2012 09:26:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=IpXvEk+nwkdWBoSOWC2DZwOdp7oOm5niDxaQ7s9dtOI=;
+        b=F1iaD/YLeooObgbFCqTQRIJGvj7SIL/UXB6lOlWalU6+vVaz9xRVVM5698dE8K2ACO
+         NO8DjcD01hOKTn1VS0dzLeCt4xCHGFrJaMX2METQZU+adsd/BPCbrz9SqbUextexSYDB
+         A98zrxkhfk4JtvXOvVpsNMQgq/1V6z92k6SZlzhmSWXiPtRcgCkgca8L+RsfIEuypbRm
+         IOUvF60YAPyze8mE3krCDuo4hfEYOdqa/WwL8NZbf9dIia4nZ/ZYylJYJrx5Xc/L2mTy
+         M1w7nDcXBVXj3y1iU+QIOrAtEeh+03kheYbFdKwzQ7vkYTaWHp4XdFhnUmVlwBvBwpS 
+Received: by 10.49.87.1 with SMTP id t1mr3278053qez.41.1355160390234;
+        Mon, 10 Dec 2012 09:26:30 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.35.74 with SMTP id f10ls3890705qej.48.gmail; Mon, 10 Dec
+ 2012 09:26:28 -0800 (PST)
+Received: by 10.224.105.205 with SMTP id u13mr12281749qao.6.1355160388822;
+        Mon, 10 Dec 2012 09:26:28 -0800 (PST)
+Received: by 10.224.105.205 with SMTP id u13mr12281747qao.6.1355160388813;
+        Mon, 10 Dec 2012 09:26:28 -0800 (PST)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id eb7si5492346qcb.3.2012.12.10.09.26.28;
+        Mon, 10 Dec 2012 09:26:28 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EEC784EC;
-	Mon, 10 Dec 2012 12:22:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tJKj4bdYIT+Xn9P2ij+dQnANPuQ=; b=xnETHn
-	vrcq/qCR2xm2sOI0cnaDUac0gHOZrEFoaHerlIYLRg+Jvp7PJ+6q9imC0mPs7KaV
-	WR/TfjHYECYJ/0sKWuocv+oJkCl/l8DTXH3VBV+Aj19PPTHgD7IavY7uXTbrCE7g
-	y8jyoPvPAED/pplsuCBRfGZCFtnH5n7mbraZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SCpcRGdx4EkfO1VBqv6Svbeys93M0HV/
-	GxEO4Muov9HyQcDMzlTelHM1+cgYW9WP72ahoWEBfVzqgME8HKYlkQV2qiHxKDPx
-	rkdakuGPGXeNRvqHUlgywN2EYOvP02eT5NxMQXCce9ioSC/KI4fjyiPQDNmbzuWN
-	7w3TPSKs1AI=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DDEC86B3;
+	Mon, 10 Dec 2012 12:26:28 -0500 (EST)
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AA7584EA;
-	Mon, 10 Dec 2012 12:22:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BC3D86B2;
+	Mon, 10 Dec 2012 12:26:28 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 430DD84E8; Mon, 10 Dec 2012
- 12:22:42 -0500 (EST)
-In-Reply-To: <CACsJy8CW1UGgQcgHa11XP71XZGaTxytrGmJmrtdNvy=N7cUyMw@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 10 Dec 2012 18:53:02 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3A8086B1; Mon, 10 Dec 2012
+ 12:26:27 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1212101804290.32206@s15462909.onlinehome-server.info>
+ (Johannes Schindelin's message of "Mon, 10 Dec 2012 18:05:30 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 345F0962-42EE-11E2-9E8F-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211262>
+X-Pobox-Relay-ID: BAB7BA9A-42EE-11E2-8BF1-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of junio@b-sasl-quonix.pobox.com designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
+ dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211263>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Yeah I use entry_count for two different things here. In the previous
-> (unsent) version of the patch I had "entry_count = -1" right after "i
-> -= entry_count"
->
->>> +                     if (sub->cache_tree->entry_count < 0) {
->>> +                             i -= sub->cache_tree->entry_count;
->>> +                             sub->cache_tree->entry_count = -1;
->>> +                             to_invalidate = 1;
->>> +                     }
->
->
-> which makes it clearer that the use of negative entry count is only
-> valid within update_one. Then I changed my mind because it says
-> 'negative means "invalid"' in cache-tree.h.
+> My preference would be to fix it in both branches. I will fix the merge
+> conflicts when rebasing onto Junio's master branch next time.
 
-But you make it to mean not just 'negative means invalid' but
-'negate it and you can learn how many index entries to skip to reach
-the entry outside the subtree'.  That is what I was wondering about.
+OK, then I'll queue the following to my tree.
 
-I do not think that new invariant does not hold in general; it may
-hold true while inside this function, but immediately after somebody
-else calls cache_tree_invalidate_path() it won't be true anymore.
-Leaking the information to outside callers that can easily be
-mistaken as if it may mean something without any comment looks like
-we are asking for trouble.
+Thanks for a quick turnaround.
 
-> So, put "entry_count = -1"
-> back or just add another field  to struct cache_tree for this?
+-- >8 --
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Date: Mon, 10 Dec 2012 15:42:27 +0100
+Subject: [PATCH] mingw_rmdir: do not prompt for retry when non-empty
 
-As long as it is made clear with in-code comment that says "negative
-entry count, when negated, will give us how many index entries are
-covered by this invalid cache tree, only inside this function", and
-such a negative entry_count is reset to -1 to avoid leaking out the
-value that will soon go stale to the outside world in the "write
-this tree out" loop, I think the v2 patch is OK, if not ideal.
+in ab1a11be ("mingw_rmdir: set errno=ENOTEMPTY when appropriate"),
+a check was added to prevent us from retrying to delete a directory
+that is both in use and non-empty.
 
-If we were to commit to keep the new invariant true throughout the
-system, on the other hand, I suspect that a boolean flag "valid" may
-help people who keep i-t-a entries around across write-tree calls.
-The first if () statement in the update_one() function can check the
-validity, and you can say the cache tree is valid even if the
-section in the index that is covered by the cache-tree contains
-i-t-a entries _after_ you wrote it out as a tree, no?  That may make
-the semantics a lot cleaner, I suspect.
+However, this logic was slightly flawed; since we didn't return
+immediately, we end up falling out of the retry-loop, but right into
+the prompting-loop.
 
-The new semantics might be:
+Fix this by setting errno, and guarding the prompting-loop with an
+errno-check.
 
- * update_one() returns negative only when the section of the index
-   given to it cannot be written out as a tree (i.e. not merged, or
-   corrupt index);
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ compat/mingw.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- * update_one() returns the number of entries in the index covered
-   by the tree, including i-t-a entries (but not REMOVED, as these
-   entries will not be in the index after the cache-tree has been
-   written out);
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 4e63838..28527ab 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -256,6 +256,8 @@ int mingw_rmdir(const char *pathname)
+ 
+ 	while ((ret = rmdir(pathname)) == -1 && tries < ARRAY_SIZE(delay)) {
+ 		if (!is_file_in_use_error(GetLastError()))
++			errno = err_win_to_posix(GetLastError());
++		if (errno != EACCES)
+ 			break;
+ 		if (!is_dir_empty(pathname)) {
+ 			errno = ENOTEMPTY;
+@@ -271,7 +273,7 @@ int mingw_rmdir(const char *pathname)
+ 		Sleep(delay[tries]);
+ 		tries++;
+ 	}
+-	while (ret == -1 && is_file_in_use_error(GetLastError()) &&
++	while (ret == -1 && errno == EACCES && is_file_in_use_error(GetLastError()) &&
+ 	       ask_yes_no_if_possible("Deletion of directory '%s' failed. "
+ 			"Should I try again?", pathname))
+ 	       ret = rmdir(pathname);
+-- 
+1.8.1.rc1.123.gf61cb86
 
- * cache_tree->valid tells if the cache_tree->sha1 is valid; the
-   section of the index the tree covers may or may not have i-t-a
-   entries in it;
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
- * cache_tree->entry_count holds the number of index entries the
-   tree covers, couting i-t-a entries. This field is only meaningful
-   when cache_tree->valid is true.
-
-or something like that.
-
-I noticed that the recent "ignore i-t-a only while writing trees
-instead of erroring out" broke 331fcb5 (git add --intent-to-add: do
-not let an empty blob be committed by accident, 2008-11-28) in
-another way, by the way.  In verify_cache(), there is an unreachable
-else clause to warn about "not added yet" entries that should have
-been removed but is left behind.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
