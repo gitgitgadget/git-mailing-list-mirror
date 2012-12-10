@@ -1,104 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] format_commit_message(): simplify calls to logmsg_reencode()
-Date: Mon, 10 Dec 2012 12:57:16 -0800
-Message-ID: <7vboe1aamr.fsf@alter.siamese.dyndns.org>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: Millisecond precision in timestamps?
+Date: Mon, 10 Dec 2012 15:56:19 -0500
+Message-ID: <m31uexsk1f.fsf@carbon.jhcloos.org>
+References: <20121127204828.577264065F@snark.thyrsus.com>
+	<CAJo=hJtZ+n+D4pOmeNApDeLNyZYeqnEDDYJWwSj_wLauQ+w4hQ@mail.gmail.com>
+	<7vzk22lmz9.fsf@alter.siamese.dyndns.org>
+	<20121127230419.GA26080@thyrsus.com>
+	<CAJo=hJtOqRHcjWH1F71Qc5zvPkUAe+u1RrcC2pt_xQwLSUY0yg@mail.gmail.com>
+	<20121128001231.GA27971@thyrsus.com>
+	<CAMP44s3hpuxbo7mfKAD2trOkezPrV3nKYpNAzXOs3sQym102LQ@mail.gmail.com>
+	<CAJo=hJuskvYaNTtCcTSqvU8YwEU=HwRpb_sqW-BSxfSr7xE57A@mail.gmail.com>
+	<20121128011750.GA23498@sigill.intra.peff.net>
+	<7v7gp6i3rx.fsf@alter.siamese.dyndns.org>
+	<20121128075807.GA9912@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 10 21:57:43 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 22:20:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiAPy-0001Na-4n
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 21:57:38 +0100
+	id 1TiAm9-0003ib-4R
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 22:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564Ab2LJU5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2012 15:57:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43024 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751068Ab2LJU5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2012 15:57:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3330BA7EE;
-	Mon, 10 Dec 2012 15:57:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=q
-	H8iUOzwNyANBXkpD8sQoHLe9k0=; b=LF3GInBxcX1q9RdRIuQbBP6YtWlArKeT1
-	svL/a3JGS3YXhe1LP5EjEBEgfj7hQ1eqgnk6/9DxVldroKAt1mVOdAAOUTDH+NiX
-	wmJ+kMrQDk2LiEVkPxElGyfTN3+sBLCa61Kn2v88pWEamG3b+QQj3av4cqB+XHB7
-	z9ljj7OXWs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=eMY
-	Z9/uwmKxe0N96qTBS9xs5Ch+5uEHC3EqXat6U4H1YAEPZJBu1wXIlF0fLae+Nxfd
-	gtB9Wiex5MS+JXtvYCxu6AOgAafFlY5+/iyEUbcW9O2m8hRlTWbJ50311qbYAqxR
-	bo81ysr25J7NgUD4nOSnaJsJGlWqqSdsG+vJH5U4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21F7DA7ED;
-	Mon, 10 Dec 2012 15:57:19 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72615A7EB; Mon, 10 Dec 2012
- 15:57:18 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F2E1622-430C-11E2-B3C9-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752082Ab2LJVUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2012 16:20:13 -0500
+Received: from eagle.jhcloos.com ([207.210.242.212]:54822 "EHLO
+	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751976Ab2LJVUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2012 16:20:11 -0500
+X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Dec 2012 16:20:11 EST
+Received: by eagle.jhcloos.com (Postfix, from userid 10)
+	id 9EF4240113; Mon, 10 Dec 2012 21:09:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
+	s=eagle; t=1355173803;
+	bh=LA895oxiJirFJ/dpZyQBbpWkDbWHqsDeypyJLLmlEDc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type;
+	b=xRJ1zzjHgt731wSyr/tcC5MbiNyJAiWFfQleuhzZL57O7+ObFwg4OlNNvdf3vFyjA
+	 Fk+Kklfk12KD+V+vD/gq9jVXQZbTe+8bFYjkLbEQMHsvXoXCw7q+wSm0X2lYwvbHK2
+	 Gd8OLoGP2mIhS5BmEz3QyjS0OB6Q94rpiXQCUZ7w=
+Received: by carbon.jhcloos.org (Postfix, from userid 500)
+	id 454CA60021; Mon, 10 Dec 2012 20:56:19 +0000 (UTC)
+In-Reply-To: <20121128075807.GA9912@thyrsus.com> (Eric S. Raymond's message of
+	"Wed, 28 Nov 2012 02:58:08 -0500")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAACVBMVEX///8ZGXBQKKnCrDQ3
+ AAAAJElEQVQImWNgQAAXzwQg4SKASgAlXIEEiwsSIYBEcLaAtMEAADJnB+kKcKioAAAAAElFTkSu
+ QmCC
+Copyright: Copyright 2012 James Cloos
+OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
+OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
+X-Hashcash: 1:30:121210:esr@thyrsus.com::ThX7pvU/KWERY/ZN:0FzlZG
+X-Hashcash: 1:30:121210:gitster@pobox.com::Xw45oTdfVkEa76A+:00000000000000000000000000000000000000000009a5Zm
+X-Hashcash: 1:30:121210:peff@peff.net::5Pa/fqritsI5Y52n:000ThLhZ
+X-Hashcash: 1:30:121210:spearce@spearce.org::OoEMxfeGYOmVpSYt:00000000000000000000000000000000000000000VM280
+X-Hashcash: 1:30:121210:felipe.contreras@gmail.com::9YM7lrXZRiVrIXwa:0000000000000000000000000000000000P91Hl
+X-Hashcash: 1:30:121210:git@vger.kernel.org::on7jwTwE1CIdw/br:000000000000000000000000000000000000000003ORyv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211275>
 
-All the other callers of logmsg_reencode() pass return value of
-get_commit_output_encoding() or get_log_output_encoding().  Teach
-the function to optionally take NULL as a synonym to "" aka "no
-conversion requested" so that we can simplify the only remaining
-calling site.
+>>>>> "ESR" == Eric S Raymond <esr@thyrsus.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- pretty.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ESR> I've never seen a software project under version control with bits
+ESR> that old,
 
-diff --git a/pretty.c b/pretty.c
-index e87fe9f..732e2a2 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -500,7 +500,7 @@ char *logmsg_reencode(const struct commit *commit,
- 	char *encoding;
- 	char *out;
- 
--	if (!*output_encoding)
-+	if (!output_encoding || !*output_encoding)
- 		return NULL;
- 	encoding = get_header(commit, "encoding");
- 	use_encoding = encoding ? encoding : utf8;
-@@ -1184,23 +1184,15 @@ void format_commit_message(const struct commit *commit,
- 			   const struct pretty_print_context *pretty_ctx)
- {
- 	struct format_commit_context context;
--	static const char utf8[] = "UTF-8";
- 	const char *output_enc = pretty_ctx->output_encoding;
- 
- 	memset(&context, 0, sizeof(context));
- 	context.commit = commit;
- 	context.pretty_ctx = pretty_ctx;
- 	context.wrap_start = sb->len;
--	context.message = commit->buffer;
--	if (output_enc) {
--		char *enc = get_header(commit, "encoding");
--		if (strcmp(enc ? enc : utf8, output_enc)) {
--			context.message = logmsg_reencode(commit, output_enc);
--			if (!context.message)
--				context.message = commit->buffer;
--		}
--		free(enc);
--	}
-+	context.message = logmsg_reencode(commit, output_enc);
-+	if (!context.message)
-+		context.message = commit->buffer;
- 
- 	strbuf_expand(sb, format, format_commit_item, &context);
- 	rewrap_message_tail(sb, &context, 0, 0, 0);
+They do exist, but the vcs timestamps are (at least for those in git :)
+not (always) correlated to when the files were first added to the project.
+
+Maxima, as an example, has code which was written in the '60s.  (A
+couple of years ago a bug was fixed in a contrib module which had
+been added to MACSYMA back in '62 or so.)
+
+I beleive axiom also has some similarly ancient code.
+
+Those two are now managed in git.  (Except for the openaxiom fork.)
+
+And there is a high-energy physics package still under development
+with code going back to the '50s.  I'm pretty sure they moved to a
+vcs sometime in the last decade or two. :)
+
+-JimC
 -- 
-1.8.1.rc1.123.gf61cb86
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
