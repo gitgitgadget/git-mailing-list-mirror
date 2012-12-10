@@ -1,85 +1,144 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] git(1): remove a defunct link to "list of authors"
-Date: Mon, 10 Dec 2012 19:04:40 +0700
-Message-ID: <CACsJy8Dg1a0siDbiHtk4m1RhjLt-XKiS8kOO7qPKjwRczLF9vA@mail.gmail.com>
-References: <7vobi5hhn9.fsf@alter.siamese.dyndns.org> <7vk3sthhfy.fsf@alter.siamese.dyndns.org>
- <CACsJy8A7AYpZs7mTc+B-F7BBLPdACim=gHCg8sK1Aci8YSEB4Q@mail.gmail.com> <7vboe2ct9p.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCHv2] mingw_rmdir: do not prompt for retry when non-empty
+Date: Mon, 10 Dec 2012 15:42:27 +0100
+Message-ID: <1355150547-8212-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 13:05:31 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com,
+	johannes.schindelin@gmx.de,
+	gitster@pobox.com
+To: git@vger.kernel.org
+X-From: msysgit+bncBDR53PPJ7YHRB2XJS6DAKGQEISMF5YY@googlegroups.com Mon Dec 10 15:43:08 2012
+Return-path: <msysgit+bncBDR53PPJ7YHRB2XJS6DAKGQEISMF5YY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ee0-f58.google.com ([74.125.83.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ti270-0005dt-Ky
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 13:05:30 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab2LJMFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2012 07:05:11 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:37051 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064Ab2LJMFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2012 07:05:10 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so2298305oag.19
-        for <git@vger.kernel.org>; Mon, 10 Dec 2012 04:05:10 -0800 (PST)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRB2XJS6DAKGQEISMF5YY@googlegroups.com>)
+	id 1Ti4ZT-0000bu-UB
+	for gcvm-msysgit@m.gmane.org; Mon, 10 Dec 2012 15:43:04 +0100
+Received: by mail-ee0-f58.google.com with SMTP id e49sf1200224eek.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 10 Dec 2012 06:42:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=6WlDPfDJlldS8UhyXwkRoZmUa5F3pgbKGDxIKup/9MQ=;
+        b=D/S0jE0vZSCEdci3SnzniAw0XzvKIOk3GU32UbFjvaTvSFwJv15kvhXFcimYeCGmvM
+         pzhNL4xu8OmmOwkHH0yRdWhuDezQVx3BIENmDh9RqJOOf343aEgtXOWb0NNu9vkRheVY
+         4v/Zp5xWyq2O+PSifXpDgt9hZJzbkDQho4ZBfnCaFZkjC+L2RseQ/tJEr4BYiIEUVHJP
+         1YgRr/4cF3Tn0mLK/Oqfqc5ZHnqcU8n89k6RByZsiqwgfBBklQAQ95os7o48XWmfIatM
+         z9njkOSzVyGb4Ju4dTjkJix5Yznglwl0z8UHvZ9tQKOcrRufAb3PIxeUqs0Qgch2mx8m
+         dz+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1bFhDiuTB7kCD3rFAIadzcdqaQbVVLdf0oyEkUtYkBs=;
-        b=Ic5wGKurd07iu3V5RY0rbT8Q3llIJ9A2BcvzhUfAjURsknyyZnrqWf/+3FBweP7EWi
-         LqWoV8EH1ZDffqDunrZDc5sYkPtZ9GhUnsW/+fum7/oJClOfveAHP2gKCXKpAwT+ohd3
-         F1CAdl//QvB4YwNnJG60QyBtSO0DWDsDjrPa+RzhYLZoQfzep8jZ4NpMNxCQecq9HzGb
-         Ripv8nBJS59dyEzEQAFc6QPophp50ybpd3p1VhbpxBdCaoIQVX0NO5vRWwF3FLTyQoyP
-         U8DHZUG+cQ5mC7zkMPjfyPWyZcYhoEJllVoI1ftsX1luGGMf9ygcFhdFUCImKcOANX6h
-         AB5A==
-Received: by 10.60.170.10 with SMTP id ai10mr7580325oec.72.1355141110213; Mon,
- 10 Dec 2012 04:05:10 -0800 (PST)
-Received: by 10.182.23.11 with HTTP; Mon, 10 Dec 2012 04:04:40 -0800 (PST)
-In-Reply-To: <7vboe2ct9p.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211255>
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=6WlDPfDJlldS8UhyXwkRoZmUa5F3pgbKGDxIKup/9MQ=;
+        b=ozUCd2q9WqGSvrSU9e86bVp6/Vy9QLuulE/HjzNjNvz1rmeK4B5AfxB5fQ7odbcGpi
+         +wy7dc7BWvCmDYYZNpL2dizTpkBaBKISw44i7VURGSJTyPpN4POSEe/ykBG8Rg50+IPx
+         y2IFj/NCff/Oen0dEMKsMgqzO5uFlgfw5eAiIYYOJmGSB+mQr5AO2ikwQyOvABojxLML
+         QQFjsw0WhPfgxxMhYXGgdAkM7f3Su9/oCLBnw5bOuA+hudJP1q04fgdGnIer+9ALKyUG
+         Rs3cEteav8C/Y/H5JJJBWEN/rs65iypnICXzbpSW+NfepTETFkfhnukK3ZKIdJMWSCaQ
+         sS4g==
+Received: by 10.180.99.7 with SMTP id em7mr1048581wib.1.1355150571446;
+        Mon, 10 Dec 2012 06:42:51 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.86.66 with SMTP id n2ls959206wiz.9.canary; Mon, 10 Dec
+ 2012 06:42:49 -0800 (PST)
+Received: by 10.204.130.141 with SMTP id t13mr2183178bks.3.1355150569836;
+        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
+Received: by 10.204.130.141 with SMTP id t13mr2183177bks.3.1355150569822;
+        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
+Received: from mail-bk0-f48.google.com (mail-bk0-f48.google.com [209.85.214.48])
+        by gmr-mx.google.com with ESMTPS id v18si2881131bkw.1.2012.12.10.06.42.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.214.48 as permitted sender) client-ip=209.85.214.48;
+Received: by mail-bk0-f48.google.com with SMTP id jc3so1372953bkc.21
+        for <msysgit@googlegroups.com>; Mon, 10 Dec 2012 06:42:49 -0800 (PST)
+Received: by 10.204.0.70 with SMTP id 6mr4434738bka.104.1355150569575;
+        Mon, 10 Dec 2012 06:42:49 -0800 (PST)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id u3sm14279967bkw.9.2012.12.10.06.42.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 10 Dec 2012 06:42:48 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.msysgit.0.3.gafa53b0.dirty
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.214.48 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211256>
 
-On Mon, Dec 10, 2012 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> On Sat, Dec 8, 2012 at 12:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>>>  * If somebody has a working replacement URL, we could use that
->>>>    instead, of course.  Takers?
->>>
->>> A possible alternative could be https://www.ohloh.net/p/git/contributors/summary
->>
->> Nice charts!
->
-> Yup.
->
-> Their numbers seem to be just 'any commit by the author, with
-> mailmap applied', and I am of two minds with it.  Counting without
-> "shortlog --no-merges", depending on the management style of the
-> project, tends to credit the integrator too much.  Even though
-> vetting the patches and choosing when to merge the topics is a
-> significant contribution, it isn't *that* big compared to the work
-> done by the contributor who took initiative to scratch that itch.
->
-> With or without "--no-merges", the big picture you can get out of
-> "git shortlog -s -n --since=1.year" does not change very much, but
-> the headline numbers give a wrong impression.
+in ab1a11be ("mingw_rmdir: set errno=ENOTEMPTY when appropriate"),
+a check was added to prevent us from retrying to delete a directory
+that is both in use and non-empty.
 
-These numbers are approximate anyway. Commit counts or the number of
-changed lines do not accurately reflect the effort in many cases. And
-about merges, in this particular case of Git where the maintainer imo
-has done an excellent job as a guard, I'd say it's the credit for
-reviewing, not simply merging.
+However, this logic was slightly flawed; since we didn't return
+immediately, we end up falling out of the retry-loop, but right into
+the prompting-loop.
 
-But not using the link is fine too. We can wait for Jeff's patch to be merged.
+Fix this by setting errno, and guarding the prompting-loop with an
+errno-check.
 
-> And of course, application of the mailmap is very important, if you
-> want to get meaningful numbers out of shortlog over a longer period.
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+
+Here's the second version of this patch, sorry for the slight delay.
+
+ compat/mingw.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 1eb974f..440224c 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -260,6 +260,8 @@ int mingw_rmdir(const char *pathname)
+ 
+ 	while ((ret = _wrmdir(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
+ 		if (!is_file_in_use_error(GetLastError()))
++			errno = err_win_to_posix(GetLastError());
++		if (errno != EACCES)
+ 			break;
+ 		if (!is_dir_empty(wpathname)) {
+ 			errno = ENOTEMPTY;
+@@ -275,7 +277,7 @@ int mingw_rmdir(const char *pathname)
+ 		Sleep(delay[tries]);
+ 		tries++;
+ 	}
+-	while (ret == -1 && is_file_in_use_error(GetLastError()) &&
++	while (ret == -1 && errno == EACCES && is_file_in_use_error(GetLastError()) &&
+ 	       ask_yes_no_if_possible("Deletion of directory '%s' failed. "
+ 			"Should I try again?", pathname))
+ 	       ret = _wrmdir(wpathname);
 -- 
-Duy
+1.8.0.msysgit.0.3.gafa53b0.dirty
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
