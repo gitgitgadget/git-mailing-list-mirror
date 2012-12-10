@@ -1,93 +1,75 @@
-From: Antoine Pelisse <apelisse@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Use of a mailmap file with git-log
-Date: Mon, 10 Dec 2012 20:47:21 +0100
-Message-ID: <CALWbr2ydMkR_O-Gev7k-HjGadRJMv0UH3XdqtM0Jt=vC82GwJw@mail.gmail.com>
+Date: Mon, 10 Dec 2012 12:05:47 -0800
+Message-ID: <7vk3spad0k.fsf@alter.siamese.dyndns.org>
 References: <CALKB1SXdNVsQop5VYmShOMx93+j5SPdkGF9yNU5k7nXg87TwMw@mail.gmail.com>
-	<7v38zdbv6d.fsf@alter.siamese.dyndns.org>
+ <7v38zdbv6d.fsf@alter.siamese.dyndns.org>
+ <CALWbr2ydMkR_O-Gev7k-HjGadRJMv0UH3XdqtM0Jt=vC82GwJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Rich Midwinter <rich.midwinter@gmail.com>,
 	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 20:48:40 2012
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 21:06:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ti9KX-0001Fn-M1
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 20:47:58 +0100
+	id 1Ti9c7-0004y5-CY
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 21:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543Ab2LJTrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2012 14:47:24 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:48658 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752274Ab2LJTrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2012 14:47:22 -0500
-Received: by mail-qa0-f46.google.com with SMTP id r4so1995023qaq.19
-        for <git@vger.kernel.org>; Mon, 10 Dec 2012 11:47:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UD3LlcQykDntJF13/5wC7+OMO/tHoKUKaePwwQpdKyo=;
-        b=THu+sNmgxyOzKQKmSHDoZfCyr1FBEY/bckPiKA03DwNRsobILYGhcO/DFZ0/qRuHH5
-         1wUavlOsD80OGnyZbiMnpWgXboKuoyAXpiPHKPXplqejoOJvFon9Th0j7zZcrOJpXgtg
-         vBAsV7DMvhdg1e9dQAkQKsSh/KQM9SkHEHGzkoQoA+iGQizFNMgYf/K6BQQphhx9/glt
-         HjaY7wxL8zmZFfIAwx5ustv7YU9jx2eBcS6uOZJGXmMm8Rakvk50IqnAMbuyMcLrFO3p
-         dqVkGB/xcA5v4NjVxL2odbwyyxJAErWCTfumPht3oYtmN5WGXIYmqAJcaUn63rpOyzh3
-         gWGQ==
-Received: by 10.224.201.73 with SMTP id ez9mr28940792qab.92.1355168841841;
- Mon, 10 Dec 2012 11:47:21 -0800 (PST)
-Received: by 10.49.36.130 with HTTP; Mon, 10 Dec 2012 11:47:21 -0800 (PST)
-In-Reply-To: <7v38zdbv6d.fsf@alter.siamese.dyndns.org>
+	id S1751470Ab2LJUFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2012 15:05:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39217 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751249Ab2LJUFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2012 15:05:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5121CACD4;
+	Mon, 10 Dec 2012 15:05:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O8om9dR2odASPGSMnnNlV9LX4wg=; b=Z+ttkG
+	41qZYQ7a+Xo70wwAjJQOeW6njRInt0X3bKez4Bcqvuj94FueMQ2ihcElu7ncCn+b
+	uyUGEJwnGJ0wxaMJjCaPjuu2J1yPNOiLN6iQGbYLdXKTumfeIUMCL+is3I/YKLv0
+	dl1yiGmK4uovQMlsbDwo/Pg3b7eZK0kFCBkoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bW21eJgm8TJM6IXYDJQuyTdFkGg2XA6m
+	FlCqENRH+9YTDziGnH/RnDamzO77/7WSP07VyTQnPh/CEBeLSR/nxAApNaeepS4F
+	NNvUu2LAobE4r91FsK4V4Jv7bC1+EhfvTMZEpJzQYHDI2D2wutgWOu3wAoRHEZ1i
+	w8jaoFqy7Nk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E008ACD2;
+	Mon, 10 Dec 2012 15:05:49 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1EA1ACD0; Mon, 10 Dec 2012
+ 15:05:48 -0500 (EST)
+In-Reply-To: <CALWbr2ydMkR_O-Gev7k-HjGadRJMv0UH3XdqtM0Jt=vC82GwJw@mail.gmail.com> (Antoine
+ Pelisse's message of "Mon, 10 Dec 2012 20:47:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FD8D76BE-4304-11E2-8FE5-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211272>
 
-Hi,
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-I was thinking about that last week.
-It could indeed be very interesting to have mailmap applied to git-log and
-especially to git-log --author/--committer.
+> Yet I'm afraid it could be:
+> 1. expensive to rewrite all commit log (reallocating the buffer)
+> 2. Inappropriate to change the value in function that is supposed to
+> read
 
-My first look at the code let me think that we would need to change the
-parse_commit_buffer to replace, at reading time, the name of author and
-committer if an option (--use-mailmap seems like a wise choice) and
-probably a config option.
-The choice of parse_commit_buffer to do the modification is due to
-the grepping being done directly on buffer when grepping author/committerer.
+In my suggestion I avoided rewriting the log buffer, primarily
+because of #2 (in addition to "read" cleanliness, such a change may
+break the gpg signature checking for merges).
 
-Yet I'm afraid it could be:
-1. expensive to rewrite all commit log (reallocating the buffer)
-2. Inappropriate to change the value in function that is supposed to
-read
-
-My 2 cents.
-
-Cheers,
-
-On Mon, Dec 10, 2012 at 7:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Rich Midwinter <rich.midwinter@gmail.com> writes:
->
->> I'm working on a project for a large organisation that wants to make
->> widespread use of git and the mailmap feature.
->>
->> This seems to be supported by default in git-shortlog but not git-log
->> (and other variants) without specifying custom formats, which isn't
->> really something I want to try and 'fix' across the organisation. Is
->> there a reason for this feature omission or has it just evolved that
->> way and could it be fixed?
->
-> I think it was pretty much the latter, but people may already be
-> depending on the command to give them the "true as recorded back
-> then" names in the output.  A fix may have to involve inventing a
-> new option "log --use-mailmap" that is explicitly given from the
-> command line.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+We do reencode the contents before we write it out when "encoding"
+is present, so logically such a rewrite of authors and committers
+belongs to where that happens, in pretty_print_commit().  Note that
+this existing rewrite is not done to the commit log buffer but is to
+a separate buffer meant to be used only for output.
