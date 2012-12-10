@@ -1,137 +1,127 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCHv2] mingw_rmdir: do not prompt for retry when non-empty
-Date: Mon, 10 Dec 2012 17:50:21 +0100
-Message-ID: <CABPQNSZL-edn4izfMuss1-3KbLBSrGm8J08wn0TbETtsn2nn+A@mail.gmail.com>
-References: <1355150547-8212-1-git-send-email-kusmabite@gmail.com> <7vr4mxc1rd.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Soren Brinkmann <soren.brinkmann@xilinx.com>
+Subject: Re: [PATCH] git-clean: Display more accurate delete messages
+Date: Mon, 10 Dec 2012 09:04:33 -0800
+Message-ID: <5e54ef3e-b872-4aa5-9b10-ca05323e73b5@CH1EHSMHS042.ehs.local>
+References: <1354788938-26804-1-git-send-email-zoltan.klinger@gmail.com>
+ <7v8v9bjd44.fsf@alter.siamese.dyndns.org>
+ <7d290bdc-8654-4526-ba73-89408fa99a16@DB3EHSMHS002.ehs.local>
+ <CAKJhZwROXsTa4wu-C9rhfGysetL+cZRDECyFUn5VTb833pWzMQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, johannes.schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDR53PPJ7YHRB5NFTCDAKGQETU56JIQ@googlegroups.com Mon Dec 10 17:51:17 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRB5NFTCDAKGQETU56JIQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gh0-f186.google.com ([209.85.160.186])
+Content-Type: text/plain; charset="utf-8"
+Cc: Soren Brinkmann <soren.brinkmann@xilinx.com>,
+	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 18:05:01 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB5NFTCDAKGQETU56JIQ@googlegroups.com>)
-	id 1Ti6ZX-0000M4-VN
-	for gcvm-msysgit@m.gmane.org; Mon, 10 Dec 2012 17:51:16 +0100
-Received: by mail-gh0-f186.google.com with SMTP id f11sf2314545ghb.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 10 Dec 2012 08:51:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=xLQCAvrn64Q4sxRBtAbwkDiysXDvE2qYR6RSGD2FOiQ=;
-        b=GdFYiR8IqtlgoeWi8yNEtRPHnZjiOelhey0RhI/K12NNXXW4RxsMjsO67KHukocJpn
-         RNbSeZWmSWc1/qKPV5idpIIz6BsVxt1ZobodfQb+/hx51LD56jc6z+cTzwtjI6i01Sbb
-         cW2huUVZP8sVzcdv7r7Ys2wtF3weqoc5CRqH3xkmdb7I6qcc0nLYxny8KuUUv3ll3wUL
-         OFusgNULSvZ3JFnLrbTMa9Ux5Wj68VjClbSfe+FwchJJ1knzjLODACPM16mxPuzH/9tY
-         L7Ha9XKym4YygLTZD654/WLOeEdx7amf2EHWq7xf7Y0H6Aii6x9vAfcw+6+BTy7sqPNa
-         kFKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=xLQCAvrn64Q4sxRBtAbwkDiysXDvE2qYR6RSGD2FOiQ=;
-        b=buISmQQasxnDC2fSDY6MzR1AiIstHAlKALBAHjUSY31I6saA/CMqNQKnylAUwhDRQ/
-         EuydlFN+YY39R2zKL2pDvR21eVUFGqwk747AL4HuK3Rc0MYa1dwHxfvjy78SYsFdwYuL
-         1Er51U4DYt5G1bQ92AsfC8zhKH/Opy5tRweckLqEWLFeQB/F6A4GNxtvVfo0c3rwLDa7
-         +kNrKBhVWKIAt9Q78HKjGL9Rn0yBh0iHstbaRpwfTKHJ8af+gUG0V/Eb44f2mM/72mHv
-         w2xFPjfgwotTnISwV1KeQ3R8lmSn2THOBlLtYeWrBhrEn3M+lL5NYse7YwqPJ4xm+edX
-         ubCw==
-Received: by 10.49.58.238 with SMTP id u14mr3353072qeq.13.1355158262993;
-        Mon, 10 Dec 2012 08:51:02 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.106.164 with SMTP id gv4ls4128098qeb.35.gmail; Mon, 10 Dec
- 2012 08:51:01 -0800 (PST)
-Received: by 10.236.130.205 with SMTP id k53mr10560650yhi.38.1355158261483;
-        Mon, 10 Dec 2012 08:51:01 -0800 (PST)
-Received: by 10.236.130.205 with SMTP id k53mr10560649yhi.38.1355158261448;
-        Mon, 10 Dec 2012 08:51:01 -0800 (PST)
-Received: from mail-vb0-f52.google.com (mail-vb0-f52.google.com [209.85.212.52])
-        by gmr-mx.google.com with ESMTPS id j11si947351ank.2.2012.12.10.08.51.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Dec 2012 08:51:01 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.212.52 as permitted sender) client-ip=209.85.212.52;
-Received: by mail-vb0-f52.google.com with SMTP id ez10so3786592vbb.39
-        for <msysgit@googlegroups.com>; Mon, 10 Dec 2012 08:51:01 -0800 (PST)
-Received: by 10.52.97.104 with SMTP id dz8mr8275371vdb.21.1355158261239; Mon,
- 10 Dec 2012 08:51:01 -0800 (PST)
-Received: by 10.58.169.106 with HTTP; Mon, 10 Dec 2012 08:50:21 -0800 (PST)
-In-Reply-To: <7vr4mxc1rd.fsf@alter.siamese.dyndns.org>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.212.52 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211259>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Ti6mo-00041C-Uq
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 18:04:59 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751624Ab2LJREm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2012 12:04:42 -0500
+Received: from ch1ehsobe003.messaging.microsoft.com ([216.32.181.183]:48312
+	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751528Ab2LJREl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Dec 2012 12:04:41 -0500
+Received: from mail168-ch1-R.bigfish.com (10.43.68.227) by
+ CH1EHSOBE009.bigfish.com (10.43.70.59) with Microsoft SMTP Server id
+ 14.1.225.23; Mon, 10 Dec 2012 17:04:40 +0000
+Received: from mail168-ch1 (localhost [127.0.0.1])	by
+ mail168-ch1-R.bigfish.com (Postfix) with ESMTP id 0C84F320286;	Mon, 10 Dec
+ 2012 17:04:40 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:149.199.60.83;KIP:(null);UIP:(null);IPV:NLI;H:xsj-gw1;RD:unknown-60-83.xilinx.com;EFVD:NLI
+X-SpamScore: -3
+X-BigFish: VPS-3(zz98dI1432I4015I1447Izz1de0h1202h1e76h1d1ah1d2ahzzz2fh95h668h839h93fhd24hf0ah119dh1288h12a5h12a9h12bdh137ah13b6h1441h14ddh1504h1537h153bh162dh1631h1758h906i1155h)
+Received-SPF: pass (mail168-ch1: domain of xilinx.com designates 149.199.60.83 as permitted sender) client-ip=149.199.60.83; envelope-from=soren.brinkmann@xilinx.com; helo=xsj-gw1 ;helo=xsj-gw1 ;
+Received: from mail168-ch1 (localhost.localdomain [127.0.0.1]) by mail168-ch1
+ (MessageSwitch) id 135515907976855_14391; Mon, 10 Dec 2012 17:04:39 +0000
+ (UTC)
+Received: from CH1EHSMHS042.bigfish.com (snatpool1.int.messaging.microsoft.com
+ [10.43.68.254])	by mail168-ch1.bigfish.com (Postfix) with ESMTP id
+ 06038140066;	Mon, 10 Dec 2012 17:04:39 +0000 (UTC)
+Received: from xsj-gw1 (149.199.60.83) by CH1EHSMHS042.bigfish.com
+ (10.43.69.251) with Microsoft SMTP Server id 14.1.225.23; Mon, 10 Dec 2012
+ 17:04:38 +0000
+Received: from unknown-38-66.xilinx.com ([149.199.38.66]
+ helo=xsj-smtp1.xilinx.com)	by xsj-gw1 with esmtp (Exim 4.63)	(envelope-from
+ <soren.brinkmann@xilinx.com>)	id 1Ti6mU-0000Ib-DS; Mon, 10 Dec 2012 09:04:38
+ -0800
+Content-Disposition: inline
+In-Reply-To: <CAKJhZwROXsTa4wu-C9rhfGysetL+cZRDECyFUn5VTb833pWzMQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-RCIS-Action: ALLOW
+X-OriginatorOrg: xilinx.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211260>
 
-On Mon, Dec 10, 2012 at 5:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> in ab1a11be ("mingw_rmdir: set errno=ENOTEMPTY when appropriate"),
->> a check was added to prevent us from retrying to delete a directory
->> that is both in use and non-empty.
->>
->> However, this logic was slightly flawed; since we didn't return
->> immediately, we end up falling out of the retry-loop, but right into
->> the prompting-loop.
->>
->> Fix this by setting errno, and guarding the prompting-loop with an
->> errno-check.
->>
->> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
->> ---
->>
->> Here's the second version of this patch, sorry for the slight delay.
->
-> Is this meant for me, or is it to be applied to msysgit and later
-> somehow fed to me in different form?
->
-> I can s/_wrmdir/rmdir/;s/wpathname/pathname/ if that is what you
-> want me to do, but otherwise this patch does not apply.
->
+Hi Zoltan,
 
-Ugh, you are right. I intended for you to apply it, but I didn't
-realize that my patch was based on the msysGit-master, where Karsten's
-UTF-8 patches has been applied.
+On Sun, Dec 09, 2012 at 10:18:19PM +1100, Zoltan Klinger wrote:
+> >> Hrm, following your discussion (ellided above), I would have
+> >> expected that you would show
+> >>
+> >>     Removing directory foo/bar
+> >>     Removing untracked_file1
+> >
+> > Also it would be nice to have warnings about undeleted directories since this git
+> > clean behavior (or the work around to pass -f twice) is not documented.
+> > Without a warning you would probably miss that something was _not_ deleted.
+> 
+> Thanks for the feedback. I think you're right. Showing 'foo/bar/bar.txt' in
+> the list when 'foo/bar/' directory has been successfully deleted is just noise.
+> 
+> Would like to get some more feedback on the proposed output in case of
+>  (1) an untracked subdirectory with multiple files where at least one of them
+>      cannot be removed.
+>  (2) reporting ignored untracked git subdirectories
+> 
+> Suppose we have a repo like the one below:
+>   test.git/
+>     |-- tracked_file
+>     |-- untracked_file
+>     |-- untracked_foo/
+>     |     |-- bar/
+>     |     |     |-- bar.txt
+>     |     |-- emptydir/
+>     |     |-- frotz.git/
+>     |     |     |-- frotx.txt
+>     |     |-- quux/
+>     |           |-- failedquux.txt
+>     |           |-- quux.txt
+>     |-- untracked_unreadable_dir/
+>     |     |-- afile
+>     |-- untracked_some.git/
+>           |-- some.txt
+> 
+> $ git clean -fd
+> Removing untracked_file
+> Removing untracked_foo/bar
+> Removing untracked_foo/emptydir
+> Removing untracked_foo/quux/quux.txt
+> warning: failed to remove untracked_foo/quux/failedquux.txt
+> warning: failed to remove remove untracked_unreadable_dir/
+> warning: ignoring untracked git repository untracked_foo/frotz.git/
+> warning: ignoring untracked git repository untracked_some.git/
+> Use git clean --force --force to delete all untracked git repositories
+> 
+> $ # use forced remove
+> $ git clean --force --force -d
+> Removing untracked_foo/frotz.git
+> Removing untracked_foo/quux/quux.txt
+> Removing untracked_some.git/
+> warning: failed to remove untracked_foo/quux/failedquux.txt
+> warning: failed to remove untracked_unreadable_dir/
+> 
+> Can you see any issues with the proposed output, wording above? If
+> everyone is happy,
+> I'm going to prepare patch V2 for it.
+Looks good to me.
 
-I'm not entirely sure what the best approach would be. The issue is
-present in both branches, but we only build installers from the
-msysGit-branch. But I think there are other people who builds Git from
-the upstream source code, so it would be slightly less annoying for
-them if the patch was fixed up and applied. But on the other hand,
-that causes some annoyance when (if?) Karsten's UTF-8 patches gets
-upstreamed.
-
-Thoughts?
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Thanks,
+Soren
