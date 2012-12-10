@@ -1,115 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-clean: Display more accurate delete messages
-Date: Sun, 09 Dec 2012 23:04:59 -0800
-Message-ID: <7v38zecrqc.fsf@alter.siamese.dyndns.org>
-References: <1354788938-26804-1-git-send-email-zoltan.klinger@gmail.com>
- <7v8v9bjd44.fsf@alter.siamese.dyndns.org>
- <7d290bdc-8654-4526-ba73-89408fa99a16@DB3EHSMHS002.ehs.local>
- <CAKJhZwROXsTa4wu-C9rhfGysetL+cZRDECyFUn5VTb833pWzMQ@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Feature Request - Hide ignored files before checkout
+Date: Mon, 10 Dec 2012 10:47:04 +0100
+Message-ID: <CABPQNSb_ovfJ3oO0rEYd5GXU37Xvk-3mhEtX07BX1OCtoFOExA@mail.gmail.com>
+References: <000301cdd4dd$f8554090$e8ffc1b0$@gmail.com> <CAH5451m-JcgLtvVER1UgvsFzemb=otG3XttR4j2s=eFnPrPyEQ@mail.gmail.com>
+ <000001cdd67a$39be9d40$ad3bd7c0$@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Soren Brinkmann <soren.brinkmann@xilinx.com>, git@vger.kernel.org
-To: Zoltan Klinger <zoltan.klinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 08:05:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Andrew Ardill <andrew.ardill@gmail.com>, git@vger.kernel.org
+To: Matthew Ciancio <matthew.ciancio16@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 10:48:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ThxQa-0000UM-2j
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 08:05:24 +0100
+	id 1Thzxy-0006bV-BT
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Dec 2012 10:48:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189Ab2LJHFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2012 02:05:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38775 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751959Ab2LJHFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2012 02:05:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9E8F77DC;
-	Mon, 10 Dec 2012 02:05:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2KCwji1Uf+ftnGIIZKL37vk2n5s=; b=u+p5Ud
-	vg6ywmIcjd4/V74veGrq0rwZzfV5XXKQrICC8oS6Kg/+jD6o1cBJVx6NVst7Kzyg
-	bkt8lh88ms0pJEqqmzzlbk3o8oqP8IoJsoaIRl5O2iBBUaYNEQqfkOnbr/daT3jD
-	9SS3E3ubV0yT1b+M84MpHiU4k5VeI4a8diYio=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J39z2rAElRFUnw3rphB7WO4xcKYBac5T
-	/60fck0VXaZMv+/z3lLdcNn1DBtczwlTxonz+rvHhsR2dLrVdXcf3H1Jmjiv5DEU
-	hJnSxR4YHoUgVUoOlHuqTSOei6hOsLUe0VVj2iL8dqk/4lsaAeuUPOyKo+HE4D5N
-	lccV2yqczYA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6D2A77DB;
-	Mon, 10 Dec 2012 02:05:01 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3783677D8; Mon, 10 Dec 2012
- 02:05:01 -0500 (EST)
-In-Reply-To: <CAKJhZwROXsTa4wu-C9rhfGysetL+cZRDECyFUn5VTb833pWzMQ@mail.gmail.com> (Zoltan
- Klinger's message of "Sun, 9 Dec 2012 22:18:19 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EA43F0E6-4297-11E2-8E2E-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753958Ab2LJJrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2012 04:47:46 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:62387 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753215Ab2LJJrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2012 04:47:45 -0500
+Received: by mail-vc0-f174.google.com with SMTP id d16so2218270vcd.19
+        for <git@vger.kernel.org>; Mon, 10 Dec 2012 01:47:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=qv43wwYyr9W7zskjDXkER9Uzn5rngnQ4aPHuShqP9XA=;
+        b=Be2pPkogdXW/fDEC5EA+aRCk8hKSCBkX6tgBJ2RqlZmrJ5QccospNOfgiYSrYzuHfB
+         QwyxR/c51OJR6xLBacT7GK2aTvW4wfEayLtfnmLyKZbomWgEtO4twuZ79Se8gVEVX/r8
+         2moQ4C4uIFhLn7mXgixb9bnRoUhw9c+VSDgQXBZavmGs7BADnMkpAsfaiV+RYVgCZaZU
+         +DudFyWUruBs0EXwZmi9D1wFCYO5pd39eLC8UdOvLvF04wiEnoqwdfnkw8UpAnFFoCo+
+         V1r0cVj2NQkRiD8s2/jz7T+Fk9beiSpLP9GtuI6PuIQZIyh4+z9T9aJ9sfREiSzcsZfO
+         ahZA==
+Received: by 10.220.150.14 with SMTP id w14mr8609252vcv.13.1355132864728; Mon,
+ 10 Dec 2012 01:47:44 -0800 (PST)
+Received: by 10.58.169.106 with HTTP; Mon, 10 Dec 2012 01:47:04 -0800 (PST)
+In-Reply-To: <000001cdd67a$39be9d40$ad3bd7c0$@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211253>
 
-Zoltan Klinger <zoltan.klinger@gmail.com> writes:
-
-> Would like to get some more feedback on the proposed output in case of
->  (1) an untracked subdirectory with multiple files where at least one of them
->      cannot be removed.
->  (2) reporting ignored untracked git subdirectories
+On Mon, Dec 10, 2012 at 3:01 AM, Matthew Ciancio
+<matthew.ciancio16@gmail.com> wrote:
+> Thanks for explaining that Andrew. I guess that was my intention: to have an "ignored file snapshot", but I can see now that it goes against Git's definitions and is not really needed.
 >
-> Suppose we have a repo like the one below:
->   test.git/
->     |-- tracked_file
->     |-- untracked_file
->     |-- untracked_foo/
->     |     |-- bar/
->     |     |     |-- bar.txt
->     |     |-- emptydir/
->     |     |-- frotz.git/
->     |     |     |-- frotx.txt
->     |     |-- quux/
->     |           |-- failedquux.txt
->     |           |-- quux.txt
->     |-- untracked_unreadable_dir/
->     |     |-- afile
->     |-- untracked_some.git/
->           |-- some.txt
->
-> $ git clean -fd
-> Removing untracked_file
-> Removing untracked_foo/bar
-> Removing untracked_foo/emptydir
-> Removing untracked_foo/quux/quux.txt
-> warning: failed to remove untracked_foo/quux/failedquux.txt
-> warning: failed to remove remove untracked_unreadable_dir/
 
-"remove remove" is a typo, I presume.
+I have played around with the idea of backing up files deleted by
+git-clean in the object database, maintained by a reflog (similar to
+git-stash). I did this to protect my code against my fat fingers, but
+perhaps this could also have been useful in your case?
 
-> warning: ignoring untracked git repository untracked_foo/frotz.git/
-> warning: ignoring untracked git repository untracked_some.git/
-
-If you mean "we report the topmost directory and nothing about
-(recursive) contents in it if everything is removed successfully"
-(in other words, if we had subdirectories and files inside
-untracked_foo/bar/ and we successfully removed all of them, the
-above output does not change), it seems quite reasonable.
-
-> Use git clean --force --force to delete all untracked git repositories
-
-But I am not sure if this is ever sane.  Especially the one that
-removes an embedded repository is suspicious.  "git clean" should
-not ever touch it with or without --superforce or any other command.
-
-I do not think trying to remove something that cannot be removed due
-to filesystem permissions is sensible, either. We simply should treat
-such a case a grave error and have the user sort things out, instead
-of blindly attempt to "chmod" them ourselves (which may still fail).
-
-Thanks.
+https://github.com/kusma/git/tree/work/clean-backup
