@@ -1,89 +1,130 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git-svn with non-standard repository layout
-Date: Tue, 11 Dec 2012 16:46:43 +0100
-Message-ID: <CAA01CsqJPw9gNfgg5m6YycAsUct1AR=0v=OBj0hAMqLf6ZaKOw@mail.gmail.com>
-References: <CAA01CsoS6xA-tGPw81tYmi1ETU8sQ08+oyHGg5ou1VGYrwd_SQ@mail.gmail.com>
-	<516524996.289805.1354751683987.JavaMail.root@genarts.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: Sort projects with undefined ages last
+Date: Tue, 11 Dec 2012 10:08:29 -0800
+Message-ID: <7vhans8ns2.fsf@alter.siamese.dyndns.org>
+References: <7vip8actz3.fsf@alter.siamese.dyndns.org>
+ <1355223367-5894-1-git-send-email-mattjd@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Carsten Fuchs <carsten.fuchs@cafu.de>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 16:55:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthew Daley <mattjd@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 19:08:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiSAt-0003fS-8y
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 16:55:15 +0100
+	id 1TiUGD-0007aR-GO
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 19:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447Ab2LKPy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 10:54:56 -0500
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:63063 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753211Ab2LKPy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 10:54:56 -0500
-Received: by mail-qa0-f53.google.com with SMTP id a19so3055539qad.19
-        for <git@vger.kernel.org>; Tue, 11 Dec 2012 07:54:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UP81Gp83+SAdxLLmTPEfCQJsJLECCx3OywHV2v5pJtE=;
-        b=KtVDMQVpc6/jNC6GI8IEhRdMa3rtLVWvT2bIgOgsnG1cySWKxAC14ufwlDLPIK0pOU
-         JlKVKdYUSkV02Wa3zOwsXg4ytmn+x8ew2w54uGKE9dSGIXFJicpkbwTmrDYv/fzJE49K
-         5Y5jefx61Y8Uo9DsmEsXJz6QXFv68VWO2/xPGFgxzb5Gyj1M9Xm79r7R8uQ/Gf6+rr65
-         LnnoCGZiW5DyQVsRfVXDqheGaXs3slHqtn7nI5uPojOUG9QLgqCnQA0f1WFwoi9mxQnJ
-         uFpptvgYoZHO07z/bp/fUNq5CD+IdpeCLdoFDlJv0IdDsfqI/JWddg/keXiarGB6dW+k
-         EaUA==
-Received: by 10.224.176.138 with SMTP id be10mr34479011qab.50.1355240803442;
- Tue, 11 Dec 2012 07:46:43 -0800 (PST)
-Received: by 10.49.84.133 with HTTP; Tue, 11 Dec 2012 07:46:43 -0800 (PST)
-In-Reply-To: <516524996.289805.1354751683987.JavaMail.root@genarts.com>
+	id S1754290Ab2LKSIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 13:08:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46149 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754228Ab2LKSId (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 13:08:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D228A68D;
+	Tue, 11 Dec 2012 13:08:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jSWjF8Nz5BcUKHdqhAnYZcoagOU=; b=ZhWQaT
+	L3JXJQJDqvsY3PEkefyC0Iiwgj8JbDrrJ9d3tMxH/eKK3V2bBTV8OhUEzDsZGTt3
+	ZF4QNbjUClxporcZH15sFAVPhogCrgzDmGxrLqjRie74ctfRvwn0aC0oZvox8BvN
+	3G16a9XPOT9tx1jDquZZ2UKAkmUhKWCnfVZqA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=btZcw69BS9MKgmTwa0PrYvuqTyqcNRis
+	XW86/vZC880osXgsyXSqHKH+QSPKDrtfSvLxgvNPpDhgYslde0NQxpcgulmm/koV
+	BxuQrJBj62Su89t2ci4X+ujfn6gzvS0i4fpn1As3cr6plZRyOVDS48fVvYjwIZIa
+	apyOUfemoeM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 719A8A68B;
+	Tue, 11 Dec 2012 13:08:32 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7EE6A68A; Tue, 11 Dec 2012
+ 13:08:31 -0500 (EST)
+In-Reply-To: <1355223367-5894-1-git-send-email-mattjd@gmail.com> (Matthew
+ Daley's message of "Tue, 11 Dec 2012 23:56:07 +1300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C599CF8C-43BD-11E2-B125-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211291>
 
-On Thu, Dec 6, 2012 at 12:54 AM, Stephen Bash <bash@genarts.com> wrote:
-> ----- Original Message -----
->> From: "Piotr Krukowiecki" <piotr.krukowiecki@gmail.com>
->> Sent: Wednesday, December 5, 2012 5:19:44 PM
->> Subject: Re: git-svn with non-standard repository layout
->>
->> Do you mean something like
->>
->>    branches = branches/work/*/*:refs/remotes/work/*
->>    branches = branches/{branch1,branch2}:refs/remotes/branches/*
->>
->> instead of (currently used)
->>
->>    branches = branches/work/*/*:refs/remotes/work/*
->>    fetch = branches/branch1:refs/remotes/branches/branch1
->>    fetch = branches/branch2:refs/remotes/branches/branch2
+Matthew Daley <mattjd@gmail.com> writes:
+
+> I thought about both of those variants as well. What about this:
 >
-> Essentially yes.  But I guess since you have branches at the same level as the work directory,
-> you either have to add to the glob for each new branch or add another fetch line...  Doesn't seem
-> like a big win to me.  Jumping on a tangent, I thought there could only be one wildcard on the
-> left side of the ':' (and the '*' on the right).  If your work/*/* is actually working, that's quite interesting.
+> -- >8 --
+> Subject: [PATCH] gitweb: Sort projects with undefined ages last
+>
+> Sorting gitweb's project list by age ('Last Change') currently shows
+> projects with undefined ages at the head of the list. This gives a less
+> useful result when there are a number of projects that are missing or
+> otherwise faulty and one is trying to see what projects have been
+> updated recently.
+>
+> Fix by sorting these projects with undefined ages at the bottom of the
+> list when sorting by age.
+>
+> Signed-off-by: Matthew Daley <mattjd@gmail.com>
+> ---
 
-At first I though it was working, but it seems it does not. I have
-several branches, including:
-  remotes/trunk
-  remotes/work/user/xxx (based on remotes/trunk)
-  master (based on remotes/trunk)
-  xxx (based on remotes/work/user/xxx)
+Looks sensible to me.  Thanks; will queue.
 
-If I do 'git svn rebase -l' on xxx, it rebases commits on xxx (i.e.
-remotes/trunk..remotes/work/user/xxx)
-on top of master, so now xxx is based on master  :(
-
-I don't know if this is git-svn bug, or the problem with 'work/*/*'
-pattern, or something else...
-I will try explicit branches specification and will see what happens.
-
-
---
-Piotr Krukowiecki
+>  gitweb/gitweb.perl |   35 +++++++++++++++++++++--------------
+>  1 file changed, 21 insertions(+), 14 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 0f207f2..656b324 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -5528,23 +5528,30 @@ sub fill_project_list_info {
+>  
+>  sub sort_projects_list {
+>  	my ($projlist, $order) = @_;
+> -	my @projects;
+>  
+> -	my %order_info = (
+> -		project => { key => 'path', type => 'str' },
+> -		descr => { key => 'descr_long', type => 'str' },
+> -		owner => { key => 'owner', type => 'str' },
+> -		age => { key => 'age', type => 'num' }
+> -	);
+> -	my $oi = $order_info{$order};
+> -	return @$projlist unless defined $oi;
+> -	if ($oi->{'type'} eq 'str') {
+> -		@projects = sort {$a->{$oi->{'key'}} cmp $b->{$oi->{'key'}}} @$projlist;
+> -	} else {
+> -		@projects = sort {$a->{$oi->{'key'}} <=> $b->{$oi->{'key'}}} @$projlist;
+> +	sub order_str {
+> +		my $key = shift;
+> +		return sub { $a->{$key} cmp $b->{$key} };
+>  	}
+>  
+> -	return @projects;
+> +	sub order_num_then_undef {
+> +		my $key = shift;
+> +		return sub {
+> +			defined $a->{$key} ?
+> +				(defined $b->{$key} ? $a->{$key} <=> $b->{$key} : -1) :
+> +				(defined $b->{$key} ? 1 : 0)
+> +		};
+> +	}
+> +
+> +	my %orderings = (
+> +		project => order_str('path'),
+> +		descr => order_str('descr_long'),
+> +		owner => order_str('owner'),
+> +		age => order_num_then_undef('age'),
+> +	);
+> +
+> +	my $ordering = $orderings{$order};
+> +	return defined $ordering ? sort $ordering @$projlist : @$projlist;
+>  }
+>  
+>  # returns a hash of categories, containing the list of project
