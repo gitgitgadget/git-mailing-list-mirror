@@ -1,100 +1,192 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: (bug?) Inconsistent workdir file timestamps after initial clone.
-Date: Tue, 11 Dec 2012 13:27:24 -0800
-Message-ID: <7vy5h47003.fsf@alter.siamese.dyndns.org>
-References: <50C79D1F.1080709@xiplink.com>
+From: Marc Khouzam <marc.khouzam@ericsson.com>
+Subject: [PATCH] Add file completion to tcsh git completion.
+Date: Tue, 11 Dec 2012 21:36:57 +0000
+Message-ID: <E59706EF8DB1D147B15BECA3322E4BDC0384ED@eusaamb103.ericsson.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 22:28:02 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'felipe.contreras@gmail.com'" <felipe.contreras@gmail.com>,
+	"'szeder@ira.uka.de'" <szeder@ira.uka.de>
+To: "'git@vger.kernel.org'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 22:54:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiXMt-0004Nf-Sv
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 22:28:00 +0100
+	id 1TiXmV-0002dG-57
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 22:54:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972Ab2LKV1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 16:27:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64142 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753389Ab2LKV13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 16:27:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D0A7AFCB;
-	Tue, 11 Dec 2012 16:27:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Wj4ckyDCMiMMcGA4oP+lbDcMGrc=; b=WxQWSY
-	dp42qvCsvogQM1Yp3nf3iKBZSm7h97chVeNCiG1W8G6foDnkNe059o38Ydu8YTLL
-	lUKhTkT2H2eX0cAzEKUwUX+Mi1RJaoELJA5mtbhWhyGmJSjQeos8gAs1AVBTOCdi
-	lPgM+Pt49lQ+i2IRwAN8wBglpyJpWlqgD5wFs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sqDRsebJ4IdgrJDbJmNqIALdMgHu8bIK
-	Nm7uHhawBjzHRim8Z8dLm+kAdFY/38HGFJsJA+zUgh7b+7Gj6NAR83bxis2axYlX
-	qmaeJXM2LUDSs9GPQINctvc9hELQeAeShHkAUvafQcW0MCHpxM8uIZbhTeaoe3fN
-	5U1wc89VGvE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B2C3AFCA;
-	Tue, 11 Dec 2012 16:27:28 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9515DAFC9; Tue, 11 Dec 2012
- 16:27:27 -0500 (EST)
-In-Reply-To: <50C79D1F.1080709@xiplink.com> (Marc Branchaud's message of
- "Tue, 11 Dec 2012 15:52:47 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8FEDB4B8-43D9-11E2-8D44-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755032Ab2LKVyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 16:54:04 -0500
+Received: from imr4.ericy.com ([198.24.6.9]:60325 "EHLO imr4.ericy.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755025Ab2LKVyB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2012 16:54:01 -0500
+X-Greylist: delayed 1004 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Dec 2012 16:54:01 EST
+Received: from eusaamw0707.eamcs.ericsson.se ([147.117.20.32])
+	by imr4.ericy.com (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id qBBLlPsR011329;
+	Tue, 11 Dec 2012 15:47:33 -0600
+Received: from EUSAAHC007.ericsson.se (147.117.188.93) by
+ eusaamw0707.eamcs.ericsson.se (147.117.20.32) with Microsoft SMTP Server
+ (TLS) id 8.3.279.1; Tue, 11 Dec 2012 16:36:59 -0500
+Received: from EUSAAMB103.ericsson.se ([147.117.188.120]) by
+ EUSAAHC007.ericsson.se ([147.117.188.93]) with mapi id 14.02.0318.001; Tue,
+ 11 Dec 2012 16:36:59 -0500
+Thread-Topic: [PATCH] Add file completion to tcsh git completion.
+Thread-Index: AQHN1+VtPlvwS4Yr50qYIAX6nXdPtg==
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [147.117.188.134]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211301>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+For bash completion, the option '-o bashdefault' is used to indicate
+that when no other choices are available, file completion should be
+performed.  Since this option is not available in tcsh, no file
+completion is ever performed.  Therefore, commands like 'git add ',
+'git send-email ', etc, require the user to manually type out
+the file name.  This can be quite annoying.
 
-> Occasionally when doing a fresh clone of a repo, if the clock ticks at just
-> the wrong time the checked-out files end up with different timestamps.
->
-> The effect of this can be that, when "make" is run in the workdir it'll
-> decide that some files are out of date and try to rebuild them.
->
-> (In our particular case, our automated build-bot cloned a submodule of some
-> third-party (i.e. not our) code, where a Makefile.in got an earlier timestamp
-> than its dependent Makefile.am, so "configure && make" then tried to rebuild
-> Makefile.in and the build failed because our build environment has the wrong
-> version of automake.)
+To improve the user experience we try to simulate file completion
+directly in this script (although not perfectly).
 
-Even if you somehow arrange Makefile.in and Makefile.am to have the
-same timestamp, wouldn't it be up to your "make" to decide which one
-is newer?  Certainly Makefile.in is not newer than Makefile.am, and
-it is free to try rebuilding it.
+The known issues with the file completion simulation are:
+- Possible completions are shown with their directory prefix.
+- Completions containing shell variables are not handled.
+- Completions with ~ as the first character are not handled.
 
-Also if you do this after any operation:
+Signed-off-by: Marc Khouzam <marc.khouzam@ericsson.com>
+---
 
-    $ rm Makefile.am
-    $ git checkout Makefile.am
+Beyond the described fix, this commit also improves minor aspects
+of the script.  Normally I would submit these things in different
+commits, but I felt it would be wasting the reviewers/maintainer
+time as they are very minor.  If you do prefer different commits, 
+just let me know.  The minor improvements are:
+	- update header to recommend setting a tcsh variable
+	- all missing tabs have been added
+	- use ',' instead of '/' in 'complete' command for users that
+        prefer to hard-code the path which also contains a '/' and
+	  would cause a conflict.
+	- unset a variable to avoid polluting the user's env.
 
-you will have Makefile.am that is newer than your Makefile.in and
-you will end up attempting to rebuild it.
+Thanks
 
-The timestamp of a working tree file records the time at which it
-was created in your working tree.  It does not have any relation to
-the commit or author timestamp of the commit you check it out of.
-If this command:
+Marc
 
-    $ git checkout @{1.dacade.ago} Makefile.am
+ contrib/completion/git-completion.tcsh | 69 ++++++++++++++++++++++++++--------
+ 1 file changed, 54 insertions(+), 15 deletions(-)
 
-gave your Makefile.am an ancient timestamp, it will break your
-build.
-
-While not including files that can be rebuilt from the source may be
-the ideal solution, I've seen projects hide rules to rebuild such a
-"generated but needs special tools to build" and/or a "generated but
-normal developers do not have any business rebuilding" file (in your
-case, Makefile.in) in their Makefiles from the normal targets (like
-"make all") for this exact reason, when they choose to distribute
-such files by including in their commits.
+diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
+index 471f47b..8aafb63 100644
+--- a/contrib/completion/git-completion.tcsh
++++ b/contrib/completion/git-completion.tcsh
+@@ -19,23 +19,26 @@
+ #       (e.g. ~/.git-completion.tcsh and ~/.git-completion.bash).
+ #    2) Add the following line to your .tcshrc/.cshrc:
+ #        source ~/.git-completion.tcsh
++#    3) For completion similar to bash, it is recommended to also
++#       add the following line to your .tcshrc/.cshrc:
++#        set autolist=ambiguous
++#       It will tell tcsh to list the possible completion choices.
+ 
+ set __git_tcsh_completion_original_script = ${HOME}/.git-completion.bash
+ set __git_tcsh_completion_script = ${HOME}/.git-completion.tcsh.bash
+ 
+ # Check that the user put the script in the right place
+ if ( ! -e ${__git_tcsh_completion_original_script} ) then
+-       echo "git-completion.tcsh: Cannot find: ${__git_tcsh_completion_original_script}.  Git completion will not work."
+-       exit
++	echo "git-completion.tcsh: Cannot find: ${__git_tcsh_completion_original_script}.  Git completion will not work."
++	exit
+ endif
+ 
+ cat << EOF > ${__git_tcsh_completion_script}
+ #!bash
+ #
+ # This script is GENERATED and will be overwritten automatically.
+-# Do not modify it directly.  Instead, modify the git-completion.tcsh
+-# script provided by Git core.
+-#
++# Do not modify it directly.  Instead, modify git-completion.tcsh
++# and source it again.
+ 
+ source ${__git_tcsh_completion_original_script}
+ 
+@@ -47,22 +50,58 @@ COMP_WORDS=(\$2)
+ # tell us that the previous word is complete and the cursor
+ # is on the next word.
+ if [ "\${2: -1}" == " " ]; then
+-       # The last character is a space, so our location is at the end
+-       # of the command-line array
+-       COMP_CWORD=\${#COMP_WORDS[@]}
++	# The last character is a space, so our location is at the end
++	# of the command-line array
++	COMP_CWORD=\${#COMP_WORDS[@]}
+ else
+-       # The last character is not a space, so our location is on the
+-       # last word of the command-line array, so we must decrement the
+-       # count by 1
+-       COMP_CWORD=\$((\${#COMP_WORDS[@]}-1))
++	# The last character is not a space, so our location is on the
++	# last word of the command-line array, so we must decrement the
++	# count by 1
++	COMP_CWORD=\$((\${#COMP_WORDS[@]}-1))
+ fi
+ 
+ # Call _git() or _gitk() of the bash script, based on the first argument
+ _\${1}
+ 
+ IFS=\$'\n'
+-echo "\${COMPREPLY[*]}" | sort | uniq
++if [ \${#COMPREPLY[*]} -gt 0 ]; then
++	echo "\${COMPREPLY[*]}" | sort | uniq
++else
++	# No completions suggested.  In this case, we want tcsh to perform
++	# standard file completion.  However, there does not seem to be way
++	# to tell tcsh to do that.  To help the user, we try to simulate
++	# file completion directly in this script.
++	#
++	# Known issues:
++	#     - Possible completions are shown with their directory prefix.
++	#     - Completions containing shell variables are not handled.
++	#     - Completions with ~ as the first character are not handled.
++
++	# No file completion should be done unless we are completing beyond
++	# the git sub-command.  An improvement on the bash completion :)
++	if [ \${COMP_CWORD} -gt 1 ]; then
++		TO_COMPLETE="\${COMP_WORDS[\${COMP_CWORD}]}"
++
++		# We don't support ~ expansion: too tricky.
++		if [ "\${TO_COMPLETE:0:1}" != "~" ]; then
++			# Use ls so as to add the '/' at the end of directories.
++			RESULT=(\`ls -dp \${TO_COMPLETE}* 2> /dev/null\`)
++			echo \${RESULT[*]}
++
++			# If there is a single completion and it is a directory,
++			# we output it a second time to trick tcsh into not adding a space
++			# after it.
++			if [ \${#RESULT[*]} -eq 1 ] && [ "\${RESULT[0]: -1}" == "/" ]; then
++				echo \${RESULT[*]}
++			fi
++		fi
++	fi
++fi
++
+ EOF
+ 
+-complete git  'p/*/`bash ${__git_tcsh_completion_script} git "${COMMAND_LINE}"`/'
+-complete gitk 'p/*/`bash ${__git_tcsh_completion_script} gitk "${COMMAND_LINE}"`/'
++# Don't need this variable anymore, so don't pollute the users environment
++unset __git_tcsh_completion_original_script
++
++complete git  'p,*,`bash ${__git_tcsh_completion_script} git "${COMMAND_LINE}"`,'
++complete gitk 'p,*,`bash ${__git_tcsh_completion_script} gitk "${COMMAND_LINE}"`,'
+-- 
+1.8.0.1.g9fe2839
