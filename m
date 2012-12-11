@@ -1,12 +1,10 @@
 From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v7 0/3] submodule update: add --remote for submodule's upstream
- changes
-Date: Tue, 11 Dec 2012 13:58:14 -0500
-Message-ID: <cover.1355251862.git.wking@tremily.us>
+Subject: [PATCH v7 3/3] submodule add: If --branch is given,
+ record it in .gitmodules
+Date: Tue, 11 Dec 2012 13:58:17 -0500
+Message-ID: <0b2b49bb7337459502d46b814e350ec857cedfaa.1355251862.git.wking@tremily.us>
 References: <20121204001717.GA17375@odin.tremily.us>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <cover.1355251862.git.wking@tremily.us>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
 	Phil Hord <phil.hord@gmail.com>,
@@ -15,64 +13,109 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Nahor <nahor.j+gmane@gmail.com>,
 	"W. Trevor King" <wking@tremily.us>
 To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 19:59:01 2012
+X-From: git-owner@vger.kernel.org Tue Dec 11 19:59:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiV2h-0005tH-NL
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 19:59:00 +0100
+	id 1TiV2s-00061S-UJ
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 19:59:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab2LKS6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 13:58:42 -0500
-Received: from vms173001pub.verizon.net ([206.46.173.1]:56118 "EHLO
-	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753736Ab2LKS6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 13:58:41 -0500
+	id S1754623Ab2LKS6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 13:58:47 -0500
+Received: from vms173015pub.verizon.net ([206.46.173.15]:10822 "EHLO
+	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753754Ab2LKS6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 13:58:45 -0500
 Received: from odin.tremily.us ([unknown] [72.68.110.234])
- by vms173001.mailsrvcs.net
+ by vms173015.mailsrvcs.net
  (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MEV00FTNRDAXW10@vms173001.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 11 Dec 2012 12:58:23 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 1FC3D71B42D; Tue,
+ with ESMTPA id <0MEV00H8XRDAM870@vms173015.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 11 Dec 2012 12:58:36 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 9C7FD71B43B; Tue,
  11 Dec 2012 13:58:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1355252302; bh=SrjVEI2scIbUBhfz9xxqHY4a5xyOeDQD44aumyB2QQg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIedU0Bu+jN+th8ALfzSS9vnxF+qBsUKbTYiaEATzxTVuH4bpKPj/IIJskjzEjhsk
- b9H4S4ka6b8OwTJbZaWjhCu9cx2V/hKki4UPLU4oaHy6CWSnyH31oFHbWeZjM9PrUP
- QpVCdRds4PHNv0DQEYBhF1K/PzhiTfOUJbnWWnKk=
+	t=1355252302; bh=9T37Sk1BCjK08fHGdvxgcWExM2sxBTBk8W4Rw9SgcCU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:	 References;
+	b=jOWDdhIixPb489izTk44wTCuZRXkRWNPpnkzko1pPhLjsMah26E6nXnUjrTV2wxNP
+ wgFkoB4L7UcM+Gu285Qf83Tq2EU4UKJbsDRSeJ0ASNME0y51xAv61jeBwf6TxaW8Jj
+ +yoSS6TCQzMqAHPsI5h+GbBk3VOngA1EehHtm/mQ=
 X-Mailer: git-send-email 1.7.8.6
-In-reply-to: <20121204001717.GA17375@odin.tremily.us>
+In-reply-to: <cover.1355251862.git.wking@tremily.us>
+In-reply-to: <cover.1355251862.git.wking@tremily.us>
+References: <cover.1355251862.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211294>
 
 From: "W. Trevor King" <wking@tremily.us>
 
-I see that this series has dropped out of "what's cooking?".
-Hopefully this reroll gets it back in ;).
+This allows you to easily record a submodule.<name>.branch option in
+.gitmodules when you add a new submodule.  With this patch,
 
-Changes since v6 (both in response to Junio's comments):
+  $ git submodule add -b <branch> <repository> [<path>]
+  $ git config -f .gitmodules submodule.<path>.branch <branch>
 
-* Fix style in get_submodule_config definition.
-* Drop the submodule.<name>.remote config option (v6's patch 4).
+reduces to
 
-W. Trevor King (3):
-  submodule: add get_submodule_config helper funtion
-  submodule update: add --remote for submodule's upstream changes
-  submodule add: If --branch is given, record it in .gitmodules
+  $ git submodule add -b <branch> <repository> [<path>]
 
- Documentation/config.txt        |  7 +++++-
- Documentation/git-submodule.txt | 27 ++++++++++++++++++++-
- Documentation/gitmodules.txt    |  5 ++++
- git-submodule.sh                | 52 ++++++++++++++++++++++++++++++++++++++++-
- t/t7400-submodule-basic.sh      |  1 +
- t/t7406-submodule-update.sh     | 31 ++++++++++++++++++++++++
- 6 files changed, 120 insertions(+), 3 deletions(-)
+This means that future calls to
 
+  $ git submodule update --remote ...
+
+will get updates from the same branch that you used to initialize the
+submodule, which is usually what you want.
+
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/git-submodule.txt | 2 ++
+ git-submodule.sh                | 4 ++++
+ t/t7400-submodule-basic.sh      | 1 +
+ 3 files changed, 7 insertions(+)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 72dd52f..988bba9 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -208,6 +208,8 @@ OPTIONS
+ -b::
+ --branch::
+ 	Branch of repository to add as submodule.
++	The name of the branch is recorded as `submodule.<path>.branch` in
++	`.gitmodules` for `update --remote`.
+ 
+ -f::
+ --force::
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 1395079..9f3f437 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -394,6 +394,10 @@ Use -f if you really want to add it." >&2
+ 
+ 	git config -f .gitmodules submodule."$sm_path".path "$sm_path" &&
+ 	git config -f .gitmodules submodule."$sm_path".url "$repo" &&
++	if test -n "$branch"
++	then
++		git config -f .gitmodules submodule."$sm_path".branch "$branch"
++	fi &&
+ 	git add --force .gitmodules ||
+ 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+ }
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 5397037..90e2915 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -133,6 +133,7 @@ test_expect_success 'submodule add --branch' '
+ 	(
+ 		cd addtest &&
+ 		git submodule add -b initial "$submodurl" submod-branch &&
++		test "initial" = "$(git config -f .gitmodules submodule.submod-branch.branch)" &&
+ 		git submodule init
+ 	) &&
+ 
 -- 
 1.8.0
