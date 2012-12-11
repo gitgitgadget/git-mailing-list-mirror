@@ -1,98 +1,89 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: [BUG] Cannot push some grafted branches
-Date: Tue, 11 Dec 2012 15:39:03 +0100
-Organization: Bertin Technologies
-Message-ID: <20121211153903.7522d6b0@chalon.bertin.fr>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git-svn with non-standard repository layout
+Date: Tue, 11 Dec 2012 16:46:43 +0100
+Message-ID: <CAA01CsqJPw9gNfgg5m6YycAsUct1AR=0v=OBj0hAMqLf6ZaKOw@mail.gmail.com>
+References: <CAA01CsoS6xA-tGPw81tYmi1ETU8sQ08+oyHGg5ou1VGYrwd_SQ@mail.gmail.com>
+	<516524996.289805.1354751683987.JavaMail.root@genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 16:00:51 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Carsten Fuchs <carsten.fuchs@cafu.de>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 16:55:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiRKA-00078R-Hn
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 16:00:46 +0100
+	id 1TiSAt-0003fS-8y
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 16:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391Ab2LKPA3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2012 10:00:29 -0500
-Received: from cabourg.bertin.fr ([195.68.26.10]:49412 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753170Ab2LKPA2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2012 10:00:28 -0500
-X-Greylist: delayed 1283 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Dec 2012 10:00:28 EST
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 256E9A0F7F
-	for <git@vger.kernel.org>; Tue, 11 Dec 2012 15:39:02 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id F3EE3A0F76
-	for <git@vger.kernel.org>; Tue, 11 Dec 2012 15:39:01 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MEV00DE5FD1D2B0@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Tue, 11 Dec 2012 15:39:01 +0100 (CET)
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19438.007
+	id S1753447Ab2LKPy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 10:54:56 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:63063 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211Ab2LKPy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 10:54:56 -0500
+Received: by mail-qa0-f53.google.com with SMTP id a19so3055539qad.19
+        for <git@vger.kernel.org>; Tue, 11 Dec 2012 07:54:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UP81Gp83+SAdxLLmTPEfCQJsJLECCx3OywHV2v5pJtE=;
+        b=KtVDMQVpc6/jNC6GI8IEhRdMa3rtLVWvT2bIgOgsnG1cySWKxAC14ufwlDLPIK0pOU
+         JlKVKdYUSkV02Wa3zOwsXg4ytmn+x8ew2w54uGKE9dSGIXFJicpkbwTmrDYv/fzJE49K
+         5Y5jefx61Y8Uo9DsmEsXJz6QXFv68VWO2/xPGFgxzb5Gyj1M9Xm79r7R8uQ/Gf6+rr65
+         LnnoCGZiW5DyQVsRfVXDqheGaXs3slHqtn7nI5uPojOUG9QLgqCnQA0f1WFwoi9mxQnJ
+         uFpptvgYoZHO07z/bp/fUNq5CD+IdpeCLdoFDlJv0IdDsfqI/JWddg/keXiarGB6dW+k
+         EaUA==
+Received: by 10.224.176.138 with SMTP id be10mr34479011qab.50.1355240803442;
+ Tue, 11 Dec 2012 07:46:43 -0800 (PST)
+Received: by 10.49.84.133 with HTTP; Tue, 11 Dec 2012 07:46:43 -0800 (PST)
+In-Reply-To: <516524996.289805.1354751683987.JavaMail.root@genarts.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211290>
 
-There seems to be some bad interactions between git-push and grafts.
-The problem seems to occur when a commit that exists in the remote
-repo is subject to a graft in the local repo, and we try to push one
-of the fake parents.
+On Thu, Dec 6, 2012 at 12:54 AM, Stephen Bash <bash@genarts.com> wrote:
+> ----- Original Message -----
+>> From: "Piotr Krukowiecki" <piotr.krukowiecki@gmail.com>
+>> Sent: Wednesday, December 5, 2012 5:19:44 PM
+>> Subject: Re: git-svn with non-standard repository layout
+>>
+>> Do you mean something like
+>>
+>>    branches = branches/work/*/*:refs/remotes/work/*
+>>    branches = branches/{branch1,branch2}:refs/remotes/branches/*
+>>
+>> instead of (currently used)
+>>
+>>    branches = branches/work/*/*:refs/remotes/work/*
+>>    fetch = branches/branch1:refs/remotes/branches/branch1
+>>    fetch = branches/branch2:refs/remotes/branches/branch2
+>
+> Essentially yes.  But I guess since you have branches at the same level as the work directory,
+> you either have to add to the glob for each new branch or add another fetch line...  Doesn't seem
+> like a big win to me.  Jumping on a tangent, I thought there could only be one wildcard on the
+> left side of the ':' (and the '*' on the right).  If your work/*/* is actually working, that's quite interesting.
 
-The problem was first seen on 1.7.12.3 in a private repo, and I could
-reproduce it using 1.8.1.rc0, as shown below.  1.7.10.4 seems even
-more affected, with something looking like a memory corruption issue.
+At first I though it was working, but it seems it does not. I have
+several branches, including:
+  remotes/trunk
+  remotes/work/user/xxx (based on remotes/trunk)
+  master (based on remotes/trunk)
+  xxx (based on remotes/work/user/xxx)
 
-Here is the test:
+If I do 'git svn rebase -l' on xxx, it rebases commits on xxx (i.e.
+remotes/trunk..remotes/work/user/xxx)
+on top of master, so now xxx is based on master  :(
 
-$ git clone git.git git-test
-Cloning into 'git-test'...
-done.
-Checking out files: 100% (2518/2518), done.
-$ cd git-test/
-git-test$ git co maint
-Branch maint set up to track remote branch maint from origin.
-Switched to a new branch 'maint'
-git-test$ echo >> README=20
-git-test$ git commit -a -m "test"
-[maint 0708279] test
- 1 file changed, 1 insertion(+)
-git-test$ echo $(git rev-parse origin/master; git rev-parse origin/mast=
-er^; git rev-parse HEAD) > .git/info/grafts
-
-git-test$ git version
-git version 1.8.1.rc0
-git-test$ git push origin maint
-Total 0 (delta 0), reused 0 (delta 0)
-fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
-fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
-To /home/localadm/softs/git.git
- ! [remote rejected] maint -> maint (missing necessary objects)
-error: failed to push some refs to '/home/localadm/softs/git.git'
+I don't know if this is git-svn bug, or the problem with 'work/*/*'
+pattern, or something else...
+I will try explicit branches specification and will see what happens.
 
 
-$ git version
-git version 1.7.10.4
-
-git-test$ git push origin maint
-Total 0 (delta 0), reused 0 (delta 0)
-fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
-fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
-Auto packing the repository for optimum performance.
-fatal: protocol error: bad line length character: Remo
-error: error in sideband demultiplexer
-error: =E0=AB=8F        >S=EF=BF=BD=EF=BF=BD=C5=8BJ=EF=BF=BDjB=EF=BF=BD=
-;=EF=BF=BDx'=EF=BF=BD=EF=BF=BDR died of signal 13
-To /home/localadm/softs/git.git
- ! [remote rejected] maint -> maint (missing necessary objects)
-error: failed to push some refs to '/home/localadm/softs/git.git'
-
---=20
-Yann Dirson - Bertin Technologies
+--
+Piotr Krukowiecki
