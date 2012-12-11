@@ -1,76 +1,66 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] nedmalloc: Fix a compile warning (exposed as error) with
- GCC 4.7.2
-Date: Tue, 11 Dec 2012 21:34:51 +0100
-Message-ID: <50C798EB.5030408@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: (bug?) Inconsistent workdir file timestamps after initial clone.
+Date: Tue, 11 Dec 2012 15:52:47 -0500
+Message-ID: <50C79D1F.1080709@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:35:32 2012
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 21:52:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiWY5-00066y-JJ
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 21:35:29 +0100
+	id 1TiWoj-0002Xs-Gx
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 21:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754074Ab2LKUfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 15:35:10 -0500
-Received: from plane.gmane.org ([80.91.229.3]:33393 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753442Ab2LKUfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 15:35:08 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TiWXt-0005va-HC
-	for git@vger.kernel.org; Tue, 11 Dec 2012 21:35:17 +0100
-Received: from brln-4d0c277f.pool.mediaways.net ([77.12.39.127])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Dec 2012 21:35:17 +0100
-Received: from sschuberth by brln-4d0c277f.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Dec 2012 21:35:17 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: brln-4d0c277f.pool.mediaways.net
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1753978Ab2LKUwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 15:52:25 -0500
+Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:58870 "EHLO
+	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753389Ab2LKUwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 15:52:24 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp18.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id D2A2B30182;
+	Tue, 11 Dec 2012 15:52:23 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp18.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id A49A530187;
+	Tue, 11 Dec 2012 15:52:23 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211299>
 
-On MinGW, GCC 4.7.2 complains about
+Hi all,
 
-    operation on 'p->m[end]' may be undefined
+Occasionally when doing a fresh clone of a repo, if the clock ticks at just
+the wrong time the checked-out files end up with different timestamps.
 
-Fix this by replacing the faulty lines with those of 69825ca from
+The effect of this can be that, when "make" is run in the workdir it'll
+decide that some files are out of date and try to rebuild them.
 
-    https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c
+(In our particular case, our automated build-bot cloned a submodule of some
+third-party (i.e. not our) code, where a Makefile.in got an earlier timestamp
+than its dependent Makefile.am, so "configure && make" then tried to rebuild
+Makefile.in and the build failed because our build environment has the wrong
+version of automake.)
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- compat/nedmalloc/nedmalloc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+I'm completely unfamiliar with the clone-and-checkout parts of git's code, so
+my first question really is if someone more familiar with the code could look
+at it (or at least point me to it) to verify whether or not such inconsistent
+timestamps are possible.
 
-diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
-index d9a17a8..91c4e7f 100644
---- a/compat/nedmalloc/nedmalloc.c
-+++ b/compat/nedmalloc/nedmalloc.c
-@@ -603,7 +603,10 @@ static NOINLINE mstate FindMSpace(nedpool *p, threadcache *tc, int *lastUsed, si
- 		}
- 		/* We really want to make sure this goes into memory now but we
- 		have to be careful of breaking aliasing rules, so write it twice */
--		*((volatile struct malloc_state **) &p->m[end])=p->m[end]=temp;
-+		{
-+			volatile struct malloc_state **_m=(volatile struct malloc_state **) &p->m[end];
-+			*_m=(p->m[end]=temp);
-+		}
- 		ACQUIRE_LOCK(&p->m[end]->mutex);
- 		/*printf("Created mspace idx %d\n", end);*/
- 		RELEASE_LOCK(&p->mutex);
--- 
-1.8.0.msysgit.1
+If someone can please confirm that timestamps will always be consistent on
+the initial checkout of a clone, then I'll have to hunt for a different cause
+of our build failure.
+
+However, if inconsistent timestamps are possible, I'd like to suggest that
+this should be fixed.  (I'd learn the code and write a patch myself, but as
+some of you may know I haven't had very much time for git hacking lately.)
+
+Thanks!
+
+		M.
