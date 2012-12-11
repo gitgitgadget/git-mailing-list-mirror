@@ -1,113 +1,77 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: (bug?) Inconsistent workdir file timestamps after initial clone.
-Date: Tue, 11 Dec 2012 17:07:00 -0500
-Message-ID: <50C7AE84.2060400@xiplink.com>
-References: <50C79D1F.1080709@xiplink.com> <7vy5h47003.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 23:07:01 2012
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH 0/5] Allow git log to use mailmap file
+Date: Tue, 11 Dec 2012 23:21:28 +0100
+Message-ID: <1355264493-8298-1-git-send-email-apelisse@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Rich Midwinter <rich.midwinter@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 11 23:22:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiXya-0005DP-Mg
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 23:06:57 +0100
+	id 1TiYDS-0001Il-5Z
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 23:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127Ab2LKWGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 17:06:40 -0500
-Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:45627 "EHLO
-	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753627Ab2LKWGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 17:06:39 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp18.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 7A673302C5;
-	Tue, 11 Dec 2012 17:06:38 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp18.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D42853029A;
-	Tue, 11 Dec 2012 17:06:37 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vy5h47003.fsf@alter.siamese.dyndns.org>
+	id S1754191Ab2LKWWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 17:22:00 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:44833 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754154Ab2LKWV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 17:21:59 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so1887158wey.19
+        for <git@vger.kernel.org>; Tue, 11 Dec 2012 14:21:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=Um0HSQ4kIupP7HYrLYcyemWVRbKJ5hDgMve/Fuyr2HQ=;
+        b=VwYe5+eYi4ApHyzoC4k79IplglgovniCpI/JLc+awDuoM3uIap6MXfSR4Kuah1A6wG
+         bhWfUA9bXBEre5Umw6z9n+wtBHArhAyehLjHhmISVsY/HuyV8GATaNMR4PGkdPL3fcKL
+         IiantIm8oBhrFjrOtyOjBfbmhSfijoDGhqLB9drwf+Spq6fKoxlxZ7LJ1C7osms2IQbI
+         BjzskJMTB+MEBJckGKUTxLX3RvwD80OYLwxQiNODlzP721RIukgIPsbAjK1PKOMjAOeK
+         3DbouhEm3zT2sfkm4Lp3Z0p1T76sXpkYSQf56a5p71+A70trBrEy8Qx2HDTYJocSPxFH
+         VHhQ==
+Received: by 10.180.33.202 with SMTP id t10mr19339126wii.3.1355264517984;
+        Tue, 11 Dec 2012 14:21:57 -0800 (PST)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPS id ec3sm610033wib.10.2012.12.11.14.21.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 11 Dec 2012 14:21:57 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc1.5.g7e0651a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211303>
 
-On 12-12-11 04:27 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> Occasionally when doing a fresh clone of a repo, if the clock ticks at just
->> the wrong time the checked-out files end up with different timestamps.
->>
->> The effect of this can be that, when "make" is run in the workdir it'll
->> decide that some files are out of date and try to rebuild them.
->>
->> (In our particular case, our automated build-bot cloned a submodule of some
->> third-party (i.e. not our) code, where a Makefile.in got an earlier timestamp
->> than its dependent Makefile.am, so "configure && make" then tried to rebuild
->> Makefile.in and the build failed because our build environment has the wrong
->> version of automake.)
-> 
-> Even if you somehow arrange Makefile.in and Makefile.am to have the
-> same timestamp, wouldn't it be up to your "make" to decide which one
-> is newer?  Certainly Makefile.in is not newer than Makefile.am, and
-> it is free to try rebuilding it.
+Implement the feature suggested here [1] by Rich Mindwinter
+and Junio C Hamano (and following his advices)
 
-Well, the makes I've used don't rebuild anything after a "touch *".  I think
-it would surprise a lot of people if their make did rebuild files when their
-timestamps matched.
+This is a pre-version so there are a bunch of things still missing,
+among them:
+ - There is no tests
+ - Grep search for mailmap author/committer is not available
+ - There is no documentation of the new option
 
-> Also if you do this after any operation:
-> 
->     $ rm Makefile.am
->     $ git checkout Makefile.am
-> 
-> you will have Makefile.am that is newer than your Makefile.in and
-> you will end up attempting to rebuild it.
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/211270
 
-Yes, of course.  I would never expect otherwise.
+Antoine Pelisse (5):
+  Use split_ident_line to parse author and committer
+  mailmap: Remove buffer length limit in map_user
+  mailmap: Add mailmap structure to rev_info and pp
+  pretty: Use mailmap to display username and email
+  log: Add --use-mailmap option
 
-> The timestamp of a working tree file records the time at which it
-> was created in your working tree.  It does not have any relation to
-> the commit or author timestamp of the commit you check it out of.
-> If this command:
-> 
->     $ git checkout @{1.dacade.ago} Makefile.am
-> 
-> gave your Makefile.am an ancient timestamp, it will break your
-> build.
+ builtin/blame.c | 59 +++++++++++++++++-------------------------------
+ builtin/log.c   |  9 +++++++-
+ commit.h        |  1 +
+ log-tree.c      |  1 +
+ mailmap.c       | 16 ++++++-------
+ pretty.c        | 70 ++++++++++++++++++++++++++++++++++++---------------------
+ revision.h      |  1 +
+ 7 files changed, 84 insertions(+), 73 deletions(-)
 
-Yes, I agree.
-
-My point is that the initial checkout into an empty working directory should
-create all files with the same timestamp.
-
-Or, to be a bit more precise, whenever git-checkout *creates* files in the
-work dir, *all* the created files should have the *same* timestamp (i.e. the
-current time measured at the start of the checkout's execution, not some
-bizarro other time specified by some arcane heuristic).
-
-The more I think about it, the more I think it's sloppy for git-checkout to
-just let the filesystem assign the exact current time to created files.  A
-checkout theoretically should be atomic -- you really shouldn't try to play
-with any of the files in your workdir while a checkout is underway.  It's
-impractical to really make checkouts atomic, but I think the end result of a
-checkout should as much as possible look like the checkout happened all at
-one time.
-
-> While not including files that can be rebuilt from the source may be
-> the ideal solution, I've seen projects hide rules to rebuild such a
-> "generated but needs special tools to build" and/or a "generated but
-> normal developers do not have any business rebuilding" file (in your
-> case, Makefile.in) in their Makefiles from the normal targets (like
-> "make all") for this exact reason, when they choose to distribute
-> such files by including in their commits.
-
-I prefer to use the third-party code as-is, without hacking it, to have
-smooth upgrades in the future.
-
-		M.
+--
+1.8.1.rc1.5.g7e0651a
