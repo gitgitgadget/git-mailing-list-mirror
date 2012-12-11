@@ -1,307 +1,169 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Mon, 10 Dec 2012 15:16:38 -0800
-Message-ID: <7vobi18pm1.fsf@alter.siamese.dyndns.org>
+From: Patrick Donnelly <batrick@batbytes.com>
+Subject: Re: Python extension commands in git - request for policy change
+Date: Tue, 11 Dec 2012 00:44:48 -0500
+Message-ID: <CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+	<50B1F684.5020805@alum.mit.edu>
+	<CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 11 00:17:04 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 06:45:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiCao-00042B-Vu
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 00:16:59 +0100
+	id 1TiIeS-0008JH-K0
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 06:45:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595Ab2LJXQm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Dec 2012 18:16:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51158 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751289Ab2LJXQl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Dec 2012 18:16:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F99A97B7;
-	Mon, 10 Dec 2012 18:16:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=3EMgiUSdToZpwhnKgNVQKZCiR
-	qk=; b=w1W5EH+tpl+El4OI4Btxru4RtQckcjgGfvkDuLT6ZyYjxmek47igdgBE2
-	eX/GLVBBqAl5ah22+G7gb11nDZ4+8I6OVUn2b1FIooxLDCnCZBY3TDRWGrGnq6YL
-	PmpAmRtbvbzR3+Lv28K0cx2dOZu2+tIo+Fb/tvbxjPM68FDpc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=qdIZfMO2Ul1Z8HjVGin
-	rZ7cIt0OuHImxirrSvraE9IRHhHthV8iKHBKCC40A9ylrbrPfMzgOJ46YCN2qakm
-	zn59+RgRWvYVRH5nEaFor0gCbDEGPCkUdynAGvUV6Og+jw/GiJL+I7cKLG9JhgDR
-	7xJSZ4tahrIjweGqSRK1tc7Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E0B997B6;
-	Mon, 10 Dec 2012 18:16:41 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 432F897B5; Mon, 10 Dec 2012
- 18:16:40 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7347C70-431F-11E2-8F6E-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751918Ab2LKFou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 00:44:50 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:55711 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055Ab2LKFot (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 00:44:49 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so3244057oag.19
+        for <git@vger.kernel.org>; Mon, 10 Dec 2012 21:44:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-gm-message-state;
+        bh=WyzWRTOeAH385/6/BC2XBYn+0hTvBYJBfQkHS25tIwI=;
+        b=DI+fUkuf8qjeP2sA6Lh7Sfq/zq6AByP0zDpHb0v1NC1axdU/6RzF63WFZ9aVErmJ3U
+         ExDrZ1tjpaTGLHLD9EHe2R45cKxz0CcxxDjkoYHO+N7ZVfWH7onhgSaCqNTSkU0tDAiC
+         070EeShHx3xGKi9uPanU6V1iizwY/w5JbwsTsTkVxcYl4Cj5+N3IA1nFEiWQOrO9kYrC
+         NNwbAMti3M/Fi0dFyNTZcNMJSWvzLNBztMzr1qJwy4lnLdLx3T/YvLwD9XYn58w6jsQU
+         a4RSeH0i5uucSp3qviEZH0i1atjKB7OMxcnJSxPKBTBFM92wTYaq7MW/qxVK45uhIirn
+         u2YQ==
+Received: by 10.182.194.2 with SMTP id hs2mr8634162obc.97.1355204688776; Mon,
+ 10 Dec 2012 21:44:48 -0800 (PST)
+Received: by 10.76.28.101 with HTTP; Mon, 10 Dec 2012 21:44:48 -0800 (PST)
+In-Reply-To: <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
+X-Gm-Message-State: ALoCoQm+wIlfKqq8JYqIxND1qXJgC0PozeVSxAoSUlSgJE/dRWYD3g80gOg8LG2fjxJfdYkIltgm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211278>
-
-Welcome to the Git development community.
-
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
-
-* Mailing list and the community
-
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
-
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
-
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise is a sign that people involved don't have
-enough mental/time bandwidth to process them right at the moment, and
-it often helps to wait until the list traffic becomes calmer before
-sending such a reminder.
-
-The list archive is available at a few public sites:
-
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=3Dgit
-        http://www.spinics.net/lists/git/
-
-=46or those who prefer to read it over NNTP (including the maintainer):
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
-
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
-=3D217
-
-as it also allows people who subscribe to the mailing list as gmane
-newsgroup to "jump to" the article.
-
-Some members of the development community can sometimes also be found
-on the #git IRC channel on Freenode.  Its log is available at:
-
-        http://colabti.org/irclogger/irclogger_log/git
-
-* Reporting bugs
-
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
-
-Please remember to always state
-
- - what you wanted to achieve;
-
- - what you did (the version of git and the command sequence to reprodu=
-ce
-   the behavior);
-
- - what you saw happen (X above);
-
- - what you expected to see (Y above); and
-
- - how the last two are different.
-
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.
-
-* Repositories, branches and documentation.
-
-My public git.git repositories are at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://github.com/git/git/
-	https://code.google.com/p/git-core/
-	git://git.sourceforge.jp/gitroot/git-core/git.git/
-	git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
-
-A few gitweb interfaces are found at:
-
-        http://git.kernel.org/?p=3Dgit/git.git
-        http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-        git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-        git://repo.or.cz/git-{htmldocs,manpages}.git/
-        https://code.google.com/p/git-{htmldocs,manpages}.git/
-        https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-You can browse the HTML manual pages at:
-
-	http://git-htmldocs.googlecode.com/git/git.html
-
-There are four branches in git.git repository that track the source tre=
-e
-of git: "master", "maint", "next", and "pu".
-
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a "featu=
-re
-release" is cut from the tip of this branch and they typically are name=
-d
-with three dotted decimal digits.  The last such release was 1.8.0 done=
- on
-Oct 21, 2012. You can expect that the tip of the "master" branch is alw=
-ays
-more stable than any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious, safe and urgent fixes after a feature
-release are applied to this branch and maintenance releases are cut fro=
-m
-it.  The maintenance releases are named with four dotted decimal, named
-after the feature release they are updates to; the last such release wa=
-s
-1.8.0.2.  New features never go to this branch.  This branch is also
-merged into "master" to propagate the fixes forward as needed.
-
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" and your patches are queued
-there, and kept out of "master" while people test it out. The quality o=
-f
-topic branches are judged primarily by the mailing list discussions.
-
-Topic branches that are in good shape are merged to the "next" branch. =
-In
-general, the "next" branch always contains the tip of "master".  It mig=
-ht
-not be quite rock-solid, but is expected to work more or less without m=
-ajor
-breakage. The "next" branch is where new and exciting things take place=
-=2E A
-topic that is in "next" is expected to be polished to perfection before=
- it
-is merged to "master".
-
-The "pu" (proposed updates) branch bundles all the remaining topic bran=
-ches.
-The topics on the branch are not complete, well tested, nor well docume=
-nted
-and need further work. When a topic that was in "pu" proves to be in a
-testable shape, it is merged to "next".
-
-You can run "git log --first-parent master..pu" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns ou=
-t
-to be not so good and the topic can be dropped from "pu" in such a case=
-=2E
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have th=
-eir
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://ozlabs.org/~paulus/gitk
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-I would like to thank everybody who helped to raise git into the curren=
-t
-shape.  Especially I would like to thank the git list regulars whose he=
-lp
-I have relied on and expect to continue relying on heavily:
-
- - Linus Torvalds, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
-   Ren=C3=A9 Scharfe, Jeff King, Jonathan Nieder, Johan Herland, Johann=
-es
-   Sixt, Sverre Rabbelier, Michael J Gruber, Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy,
-   =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Thomas Rast for helping w=
-ith general
-   design and implementation issues and reviews on the mailing list.
-
- - Shawn and Nicolas Pitre for helping with packfile design and
-   implementation issues.
-
- - Martin Langhoff, Frank Lichtenheld and =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason for
-   cvsserver and cvsimport.
-
- - Paul Mackerras for gitk.
-
- - Eric Wong, David D. Kilzer and Sam Vilain for git-svn.
-
- - Simon Hausmann, Pete Wyckoff and Luke Diamond for git-p4.
-
- - Jakub Narebski, John Hawley, Petr Baudis, Luben Tuikov, Giuseppe
-   Bilotta for maintaining and enhancing gitweb.
-
- - =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason for kicking off the i18n effo=
-rt, and Jiang
-   Xin for volunteering to be the l10n coordinator.
-
- - Jens Lehmann, Heiko Voigt and Lars Hjemli for submodule related
-   Porcelains.
-
- - J. Bruce Fields, Jonathan Nieder, Michael J Gruber and Thomas Rast f=
-or
-   documentation (and countless others for proofreading and fixing).
-
- - Alexandre Julliard for Emacs integration.
-
- - David Aguilar and Charles Bailey for taking good care of git-mergeto=
-ol
-   (and Theodore Ts'o for creating it in the first place) and git-difft=
-ool.
-
- - Johannes Schindelin, Johannes Sixt, Erik Faye-Lund, Pat Thoyts and o=
-thers
-   for their effort to move things forward on the Windows front.
-
- - People on non-Linux platforms for keeping their eyes on portability;
-   especially, Randal Schwartz, Theodore Ts'o, Jason Riedy, Thomas Glan=
-zmann,
-   Brandon Casey, Jeff King, Alex Riesen and countless others.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211279>
+
+Sorry I'm late to this party...
+
+I'm an Nmap developer that is casually interested in git development.
+I've been lurking for a while and thought I'd post my thoughts on this
+thread.
+
+On Sun, Nov 25, 2012 at 6:25 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>> The most important issues to consider when imagining a future with a
+>> hybrid of code in C and some scripting language "X" are:
+>>
+>> * Portability: is "X" available on all platforms targeted by git, in
+>>   usable and mutually-compatible versions?
+>>
+>> * Startup time: Is the time to start the "X" interpreter prohibitive?
+>>   (On my computer, "python -c pass", which starts the Python
+>>   interpreter and does nothing, takes about 24ms.)  This overhead would
+>>   be incurred by every command that is not pure C.
+>>
+>> * Should the scripting language access the C functionality only by
+>>   calling pure-C executables or by dynamically or statically linking to
+>>   a binary module interface?  If the former, then the granularity of
+>>   interactions between "X" and C is necessarily coarse, and "X" cannot
+>>   be used to implement anything but the outermost layer of
+>>   functionality.  If the latter, then the way would be clear to
+>>   implement much more of git in "X" (and lua would also be worth
+>>   considering).
+>>
+>> * Learning curve for developers: how difficult is it for a typical git
+>>   developer to become conversant with "X", considering both (1) how
+>>   likely is it that the typical git developer already knows "X" and
+>>   (2) how straightforward and predictable is the language "X"?
+>>   In this category I think that Python has a huge advantage over
+>>   Perl, though certainly opinions will differ and Ruby would also be
+>>   a contender.
+>
+> * We might also need an embedded language variant, like Jeff's lua
+> experiment. I'd be nice if "X" can also take this role.
+
+Lua has been an incredible success for Nmap [2](and other projects).
+As an embedded scripting language, it's unrivaled in terms of ease of
+embedding, ease of use for users, and performance. I would strongly
+recommend the git developers to seriously consider it.
+
+Addressing the points listed above:
+
+>> * Portability: is "X" available on all platforms targeted by git, in
+>>   usable and mutually-compatible versions?
+
+Lua is written in ANSI C and so compiles basically anywhere (certainly
+anywhere git does).
+
+>> * Startup time: Is the time to start the "X" interpreter prohibitive?
+>>   (On my computer, "python -c pass", which starts the Python
+>>   interpreter and does nothing, takes about 24ms.)  This overhead would
+>>   be incurred by every command that is not pure C.
+
+As mentioned elsewhere in this thread by Joshua:
+
+"Because Lua was mentioned in another message of this thread, I'll
+provide the following:
+
+* A cold run of 'lua5.1 -e ""' takes 0.4 seconds.  The second run
+takes 0.03 seconds.
+* A cold run of LuaJIT takes the same."
+
+The runtime figures would probably be much lower if git modules (e.g.
+pull) were capable of calling other modules without forking, all
+within the same Lua environment.
+
+>> * Should the scripting language access the C functionality only by
+>>   calling pure-C executables or by dynamically or statically linking to
+>>   a binary module interface?  If the former, then the granularity of
+>>   interactions between "X" and C is necessarily coarse, and "X" cannot
+>>   be used to implement anything but the outermost layer of
+>>   functionality.  If the latter, then the way would be clear to
+>>   implement much more of git in "X" (and lua would also be worth
+>>   considering).
+
+Using Lua as a glue between a proper git C API and modules would be
+optimal in my opinion and experience.
+
+>> * Learning curve for developers: how difficult is it for a typical git
+>>   developer to become conversant with "X", considering both (1) how
+>>   likely is it that the typical git developer already knows "X" and
+>>   (2) how straightforward and predictable is the language "X"?
+>>   In this category I think that Python has a huge advantage over
+>>   Perl, though certainly opinions will differ and Ruby would also be
+>>   a contender.
+
+Lua is remarkably easy to learn and is engineered so it's approachable
+by novice (or non-) programmers. Still, it offers all the features you
+expect from a modern scripting language including GC, real lexical
+scoping and closure, tables/arrays, and *coroutines*. While Nmap
+occasionally gets questions about why we didn't use Python, no one
+complains about Lua itself.
+
+
+As for version considerations, Lua changes at a glacial pace compared
+to other popular languages like Python or Ruby. Lua 5.2 was released
+last year and 5.1 was released 5 years before that [1]. Still, while
+users (people who bind Lua to applications) are certainly encouraged
+to upgrade Lua, there is no real need to. Binding Lua to an
+application statically is not a significant cost as it compiles to
+less than 200 KB including base libraries; so, it's simple and cheap
+to remain independent of the system git runs on. It isn't unreasonable
+-- indeed, it is common -- to select one version of Lua and keep it
+for a significant lifetime of the project.
+
+[I'd be happy to answer any questions concerning Lua and/or scripting
+Git. I'd also be happy to assist in embedding Lua in Git.]
+
+[1] http://www.lua.org/versions.html
+[2] http://nmap.org/book/nse.html
+
+--
+- Patrick Donnelly
