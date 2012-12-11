@@ -1,7 +1,7 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 2/2] strbuf_add_wrapped*(): Remove unused return value
-Date: Tue, 11 Dec 2012 06:59:22 +0100
-Message-ID: <1355205562-23459-3-git-send-email-prohaska@zib.de>
+Subject: [PATCH 1/2] shortlog: Fix wrapping lines of wraplen (was broken since recent off-by-one fix)
+Date: Tue, 11 Dec 2012 06:59:21 +0100
+Message-ID: <1355205562-23459-2-git-send-email-prohaska@zib.de>
 References: <7v8v97efdv.fsf@alter.siamese.dyndns.org>
  <1355205562-23459-1-git-send-email-prohaska@zib.de>
 Cc: git@vger.kernel.org, "Jan H. Schoenherr" <schnhrr@cs.tu-berlin.de>,
@@ -13,108 +13,94 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiItd-0000vB-Ed
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 07:00:49 +0100
+	id 1TiItd-0000vB-Te
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 07:00:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584Ab2LKGAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 01:00:23 -0500
-Received: from mailer.zib.de ([130.73.108.11]:61159 "EHLO mailer.zib.de"
+	id S1752846Ab2LKGAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 01:00:24 -0500
+Received: from mailer.zib.de ([130.73.108.11]:61158 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752797Ab2LKGAV (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752456Ab2LKGAV (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 11 Dec 2012 01:00:21 -0500
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id qBB5xulP024501;
-	Tue, 11 Dec 2012 07:00:01 +0100 (CET)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id qBB5xt6i024500;
+	Tue, 11 Dec 2012 07:00:00 +0100 (CET)
 Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id qBB5xabP025369;
-	Tue, 11 Dec 2012 06:59:56 +0100 (MET)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id qBB5xabO025369;
+	Tue, 11 Dec 2012 06:59:55 +0100 (MET)
 X-Mailer: git-send-email 1.7.12.1.429.gf87fa45
 In-Reply-To: <1355205562-23459-1-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211282>
 
-Since shortlog isn't using the return value anymore (see previous
-commit), the functions can be changed to void.
+A recent commit [1] fixed a off-by-one wrapping error.  As
+a side-effect, the conditional in add_wrapped_shortlog_msg() whether to
+append a newline needs to be removed.  add_wrapped_shortlog_msg() should
+always append a newline, which was the case before the off-by-one fix,
+because strbuf_add_wrapped_text() never returned a value of wraplen.
+
+[1] 14e1a4e1ff70aff36db3f5d2a8b806efd0134d50 utf8: fix off-by-one
+    wrapping of text
 
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- utf8.c | 13 ++++++-------
- utf8.h |  4 ++--
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ builtin/shortlog.c  |  5 ++---
+ t/t4201-shortlog.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/utf8.c b/utf8.c
-index 5c61bbe..a4ee665 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -323,7 +323,7 @@ static size_t display_mode_esc_sequence_len(const char *s)
-  * If indent is negative, assume that already -indent columns have been
-  * consumed (and no extra indent is necessary for the first line).
-  */
--int strbuf_add_wrapped_text(struct strbuf *buf,
-+void strbuf_add_wrapped_text(struct strbuf *buf,
- 		const char *text, int indent1, int indent2, int width)
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index b316cf3..8360514 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -306,9 +306,8 @@ parse_done:
+ static void add_wrapped_shortlog_msg(struct strbuf *sb, const char *s,
+ 				     const struct shortlog *log)
  {
- 	int indent, w, assume_utf8 = 1;
-@@ -332,7 +332,7 @@ int strbuf_add_wrapped_text(struct strbuf *buf,
- 
- 	if (width <= 0) {
- 		strbuf_add_indented_text(buf, text, indent1, indent2);
--		return 1;
-+		return;
- 	}
- 
- retry:
-@@ -356,14 +356,14 @@ retry:
- 			if (w <= width || !space) {
- 				const char *start = bol;
- 				if (!c && text == start)
--					return w;
-+					return;
- 				if (space)
- 					start = space;
- 				else
- 					strbuf_addchars(buf, ' ', indent);
- 				strbuf_add(buf, start, text - start);
- 				if (!c)
--					return w;
-+					return;
- 				space = text;
- 				if (c == '\t')
- 					w |= 0x07;
-@@ -405,13 +405,12 @@ new_line:
- 	}
+-	int col = strbuf_add_wrapped_text(sb, s, log->in1, log->in2, log->wrap);
+-	if (col != log->wrap)
+-		strbuf_addch(sb, '\n');
++	strbuf_add_wrapped_text(sb, s, log->in1, log->in2, log->wrap);
++	strbuf_addch(sb, '\n');
  }
  
--int strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
-+void strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
- 			     int indent, int indent2, int width)
- {
- 	char *tmp = xstrndup(data, len);
--	int r = strbuf_add_wrapped_text(buf, tmp, indent, indent2, width);
-+	strbuf_add_wrapped_text(buf, tmp, indent, indent2, width);
- 	free(tmp);
--	return r;
+ void shortlog_output(struct shortlog *log)
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 6872ba1..02ac978 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -120,6 +120,30 @@ test_expect_success 'shortlog from non-git directory' '
+ 	test_cmp expect out
+ '
+ 
++test_expect_success 'shortlog should add newline when input line matches wraplen' '
++	cat >expect <<\EOF &&
++A U Thor (2):
++      bbbbbbbbbbbbbbbbbb: bbbbbbbb bbb bbbb bbbbbbb bb bbbb bbb bbbbb bbbbbb
++      aaaaaaaaaaaaaaaaaaaaaa: aaaaaa aaaaaaaaaa aaaa aaaaaaaa aa aaaa aa aaa
++
++EOF
++	git shortlog -w >out <<\EOF &&
++commit 0000000000000000000000000000000000000001
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:14:13 2005 -0700
++
++    aaaaaaaaaaaaaaaaaaaaaa: aaaaaa aaaaaaaaaa aaaa aaaaaaaa aa aaaa aa aaa
++    
++commit 0000000000000000000000000000000000000002
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:14:13 2005 -0700
++
++    bbbbbbbbbbbbbbbbbb: bbbbbbbb bbb bbbb bbbbbbb bb bbbb bbb bbbbb bbbbbb
++    
++EOF
++	test_cmp expect out
++'
++
+ iconvfromutf8toiso88591() {
+ 	printf "%s" "$*" | iconv -f UTF-8 -t ISO8859-1
  }
- 
- int is_encoding_utf8(const char *name)
-diff --git a/utf8.h b/utf8.h
-index 93ef600..a214238 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -9,9 +9,9 @@ int is_utf8(const char *text);
- int is_encoding_utf8(const char *name);
- int same_encoding(const char *, const char *);
- 
--int strbuf_add_wrapped_text(struct strbuf *buf,
-+void strbuf_add_wrapped_text(struct strbuf *buf,
- 		const char *text, int indent, int indent2, int width);
--int strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
-+void strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
- 			     int indent, int indent2, int width);
- 
- #ifndef NO_ICONV
 -- 
 1.8.1.rc1.2.gfb98a3a
