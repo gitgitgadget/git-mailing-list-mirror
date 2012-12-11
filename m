@@ -1,346 +1,135 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v7 2/3] submodule update: add --remote for submodule's upstream
- changes
-Date: Tue, 11 Dec 2012 13:58:16 -0500
-Message-ID: <64d109da03c521303ad87b8370bf09ab28a5c09f.1355251862.git.wking@tremily.us>
-References: <20121204001717.GA17375@odin.tremily.us>
- <cover.1355251862.git.wking@tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC/PATCH] ignoring a fetch that overwrites local symref
+Date: Tue, 11 Dec 2012 11:46:45 -0800
+Message-ID: <7v62488j8a.fsf_-_@alter.siamese.dyndns.org>
+References: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
+ <1271714912-56659-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 19:59:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O . Pearce" <spearce@spearce.org>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Stefan Zager <szager@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 11 20:47:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiV2t-00061S-Dk
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 19:59:11 +0100
+	id 1TiVnG-0004P8-S4
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 20:47:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632Ab2LKS6w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2012 13:58:52 -0500
-Received: from vms173009pub.verizon.net ([206.46.173.9]:63049 "EHLO
-	vms173009pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753754Ab2LKS6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 13:58:50 -0500
-Received: from odin.tremily.us ([unknown] [72.68.110.234])
- by vms173009.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MEV003S6RDA1N20@vms173009.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 11 Dec 2012 12:58:49 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 75E6871B437; Tue,
- 11 Dec 2012 13:58:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1355252302; bh=niiQgsK9t/4jZMb0CN0FrrdhA7Lw5QBI20UIYBNn3SU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:	 References;
-	b=j6QuJYnXa7HAzUfa/eYv+CGksYP5hF2/bcrlmR39lGwwygQSzml0WyulaC3TB3m9B
- yurphQ8tRekTcJF4mO4Bt8i9d4x9lu8NtCrv/gChs7GfkCrVVPY/OkLmvaag4Jxts1
- jEhhOKF3eqUwMIcQ0hTr+9kJP1Ry1Mh6rQ0W4byg=
-X-Mailer: git-send-email 1.7.8.6
-In-reply-to: <cover.1355251862.git.wking@tremily.us>
-In-reply-to: <cover.1355251862.git.wking@tremily.us>
-References: <cover.1355251862.git.wking@tremily.us>
+	id S1754515Ab2LKTqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 14:46:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41593 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754415Ab2LKTqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 14:46:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36082AF29;
+	Tue, 11 Dec 2012 14:46:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yx+D03l/vymgRC5uD7NGmybm8KY=; b=cT/0fi
+	MImI6qjEd0uE84oz46fIXCcz362yHGB0a/jk9NWTCg9JDnLZ/Wh6GoTqP1Tu+pcZ
+	0mPCsF/knRR2OKFB59Q9XCdtHOWdib13lORH/aghTFbYxrNcojQShJVALwVsvhMv
+	gsVkkS+NYzwNSx7hHeNaiMXKEnSbepo2hfUDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UGLCuBD5YpwPp8qJtcsnHEjs1VQuvE//
+	MIq7VY9ROt2JZr0k3FAei3sl8xq+lxSaNlmCxkOI7pl5REaDS704ycKBjs4dKaQx
+	E2RQOzyJaDh2OY21owcQ03OVGWMeTD6yaRGTre+eQsfmAJfwGbzAjr1/lCw/78Bj
+	3hq0Ad0vpO8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22282AF27;
+	Tue, 11 Dec 2012 14:46:48 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59A4BAF26; Tue, 11 Dec 2012
+ 14:46:47 -0500 (EST)
+In-Reply-To: <1271714912-56659-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Mon, 19 Apr 2010 18:08:29 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7FA9319E-43CB-11E2-BA18-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211297>
 
-=46rom: "W. Trevor King" <wking@tremily.us>
+This is a companion to an ancient thread
 
-The current `update` command incorporates the superproject's gitlinked
-SHA-1 ($sha1) into the submodule HEAD ($subsha1).  Depending on the
-options you use, it may checkout $sha1, rebase the $subsha1 onto
-$sha1, or merge $sha1 into $subsha1.  This helps you keep up with
-changes in the upstream superproject.
+    http://thread.gmane.org/gmane.comp.version-control.git/145311/focus=145337
 
-However, it's also useful to stay up to date with changes in the
-upstream subproject.  Previous workflows for incorporating such
-changes include the ungainly:
+in which an error was dealt with while pushing into a "mirror"
+repository that has a symbolic reference refs/remotes/origin/HEAD
+pointing at refs/remotes/origin/master with "git push --mirror".
+The issue was that the receiving end was told to update origin/HEAD
+and origin/master separately; if origin/HEAD is updated, that would
+update origin/master at the same time, and then when attempting to
+update origin/master, it would notice that it no longer has the
+expected old value and barf.  After the series, we started ignoring
+such pushes to HEAD on the receiving end.
 
-  $ git submodule foreach 'git checkout $(git config --file $toplevel/.=
-gitmodules submodule.$name.branch) && git pull'
+But you can suffer from a similar issue transferring objects in the
+opposite direction.  If you run "fetch --mirror" in to such a
+"mirror" repository, the other side would advertise both 'master'
+and 'HEAD' under refs/remotes/origin/ hierarchy, and refs/*:refs/*
+wildcard would try to grab both of them.
 
-With this patch, all of the useful functionality for incorporating
-superproject changes can be reused to incorporate upstream subproject
-updates.  When you specify --remote, the target $sha1 is replaced with
-a $sha1 of the submodule's origin/master tracking branch.  If you want
-to merge a different tracking branch, you can configure the
-`submodule.<name>.branch` option in `.gitmodules`.  You can override
-the `.gitmodules` configuration setting for a particular superproject
-by configuring the option in that superproject's default configuration
-(using the usual configuration hierarchy, e.g. `.git/config`,
-`~/.gitconfig`, etc.).
+Work it around by noticing a wildcard match that attempts to update
+a local symbolic ref and ignoring it.
 
-Previous use of submodule.<name>.branch
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Because we're adding a new configuration option, it's a good idea to
-check if anyone else is already using the option.  The foreach-pull
-example above was described by =C3=86var in
-
-  commit f030c96d8643fa0a1a9b2bd9c2f36a77721fb61f
-  Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-  Date:   Fri May 21 16:10:10 2010 +0000
-
-    git-submodule foreach: Add $toplevel variable
-
-Gerrit uses the same interpretation for the setting, but because
-Gerrit has direct access to the subproject repositories, it updates
-the superproject repositories automatically when a subproject changes.
-Gerrit also accepts the special value '.', which it expands into the
-superproject's branch name.
-
-Although the --remote functionality is using `submodule.<name>.branch`
-slightly differently, the effect is the same.  The foreach-pull
-example uses the option to record the name of the local branch to
-checkout before pulls.  The tracking branch to be pulled is recorded
-in `.git/modules/<name>/config`, which was initialized by the module
-clone during `submodule add` or `submodule init`.  Because the branch
-name stored in `submodule.<name>.branch` was likely the same as the
-branch name used during the initial `submodule add`, the same branch
-will be pulled in each workflow.
-
-Implementation details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-In order to ensure a current tracking branch state, `update --remote`
-fetches the submodule's remote repository before calculating the
-SHA-1.  However, I didn't change the logic guarding the existing fetch:
-
-  if test -z "$nofetch"
-  then
-    # Run fetch only if $sha1 isn't present or it
-    # is not reachable from a ref.
-    (clear_local_git_env; cd "$path" &&
-      ( (rev=3D$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
-       test -z "$rev") || git-fetch)) ||
-    die "$(eval_gettext "Unable to fetch in submodule path '\$path'")"
-  fi
-
-There will not be a double-fetch, because the new $sha1 determined
-after the `--remote` triggered fetch should always exist in the
-repository.  If it doesn't, it's because some racy process removed it
-from the submodule's repository and we *should* be re-fetching.
-
-Signed-off-by: W. Trevor King <wking@tremily.us>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config.txt        |  7 ++++++-
- Documentation/git-submodule.txt | 25 ++++++++++++++++++++++++-
- Documentation/gitmodules.txt    |  5 +++++
- git-submodule.sh                | 22 +++++++++++++++++++++-
- t/t7406-submodule-update.sh     | 31 +++++++++++++++++++++++++++++++
- 5 files changed, 87 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 11f320b..6f4663c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1998,7 +1998,12 @@ submodule.<name>.update::
- 	for a submodule.  These variables are initially populated
- 	by 'git submodule init'; edit them to override the
- 	URL and other values found in the `.gitmodules` file.  See
--	linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+ * While I do not think it is sane to have symbolic refs in the
+   receiving ref hierarchy (e.g. refs/remotes/origin/) that has a
+   matching ref in the corresponding ref hierarchy in the sending
+   side (e.g. the same, or refs/heads/ if you are doing a mirror) in
+   the first place, we addressed the issue brought by such a setting
+   on the push side, so it is probably a good idea to do it on the
+   fetch side.
+
+   This is marked RFC as it cheats by ignoring symrefs that were not
+   explicitly asked, instead of doing the "is the underlying thing
+   going to be updated with the same operation?" logic the old patch
+   did in da3efdb (receive-pack: detect aliased updates which can
+   occur with symrefs, 2010-04-19). I think this simpler logic is
+   sufficient but there may be corner cases that merit the more
+   elaborate one, hence RFC.
+
+ remote.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git i/remote.c w/remote.c
+index 6aa49c0..ca1f8f2 100644
+--- i/remote.c
++++ w/remote.c
+@@ -1370,6 +1370,16 @@ int branch_merge_matches(struct branch *branch,
+ 	return refname_match(branch->merge[i]->src, refname, ref_fetch_rules);
+ }
+ 
++static int ignore_symref_update(const char *refname)
++{
++	unsigned char sha1[20];
++	int flag;
 +
-+submodule.<name>.branch::
-+	The remote branch name for a submodule, used by `git submodule
-+	update --remote`.  Set this option to override the value found in
-+	the `.gitmodules` file.  See linkgit:git-submodule[1] and
-+	linkgit:gitmodules[5] for details.
-=20
- submodule.<name>.fetchRecurseSubmodules::
- 	This option can be used to control recursive fetching of this
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
-ule.txt
-index b4683bb..72dd52f 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	      [--reference <repository>] [--] <repository> [<path>]
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>=
-=2E..]
- 'git submodule' [--quiet] init [--] [<path>...]
--'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
-+'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch] [=
---rebase]
- 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>=
-=2E..]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-li=
-mit) <n>]
- 	      [commit] [--] [<path>...]
-@@ -236,6 +236,29 @@ OPTIONS
- 	(the default). This limit only applies to modified submodules. The
- 	size is always limited to 1 for added/deleted/typechanged submodules.
-=20
-+--remote::
-+	This option is only valid for the update command.  Instead of using
-+	the superproject's recorded SHA-1 to update the submodule, use the
-+	status of the submodule's remote tracking branch.  The remote used
-+	is branch's remote (`branch.<name>.remote`), defaulting to `origin`.
-+	The remote branch used defaults to `master`, but the branch name may
-+	be overridden by setting the `submodule.<name>.branch` option in
-+	either `.gitmodules` or `.git/config` (with `.git/config` taking
-+	precedence).
-++
-+This works for any of the supported update procedures (`--checkout`,
-+`--rebase`, etc.).  The only change is the source of the target SHA-1.
-+For example, `submodule update --remote --merge` will merge upstream
-+submodule changes into the submodules, while `submodule update
-+--merge` will merge superproject gitlink changes into the submodules.
-++
-+In order to ensure a current tracking branch state, `update --remote`
-+fetches the submodule's remote repository before calculating the
-+SHA-1.  This makes `submodule update --remote --merge` similar to
-+running `git pull` in the submodule.  If you don't want to fetch (for
-+something closer to `git merge`), you should use `submodule update
-+--remote --no-fetch --merge`.
++	if (!resolve_ref_unsafe(refname, sha1, 0, &flag))
++		return 0; /* non-existing refs are OK */
++	return (flag & REF_ISSYMREF);
++}
 +
- -N::
- --no-fetch::
- 	This option is only valid for the update command.
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.tx=
-t
-index 4effd78..4004fa6 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -47,6 +47,11 @@ submodule.<name>.update::
- 	This config option is overridden if 'git submodule update' is given
- 	the '--merge', '--rebase' or '--checkout' options.
-=20
-+submodule.<name>.branch::
-+	A remote branch name for tracking updates in the upstream submodule.
-+	If the option is not specified, it defaults to 'master'.  See the
-+	`--remote` documentation in linkgit:git-submodule[1] for details.
-+
- submodule.<name>.fetchRecurseSubmodules::
- 	This option can be used to control recursive fetching of this
- 	submodule. If this option is also present in the submodules entry in
-diff --git a/git-submodule.sh b/git-submodule.sh
-index f969f28..1395079 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -8,7 +8,8 @@ dashless=3D$(basename "$0" | sed -e 's/-/ /')
- USAGE=3D"[--quiet] add [-b branch] [-f|--force] [--reference <reposito=
-ry>] [--] <repository> [<path>]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path=
->...]
-    or: $dashless [--quiet] init [--] [<path>...]
--   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force=
-] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<=
-path>...]
-+   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] =
-[-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursi=
-ve] [--] [<path>...]
-+ges
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit=
- <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--] [<path>...]"
-@@ -26,6 +27,7 @@ cached=3D
- recursive=3D
- init=3D
- files=3D
-+remote=3D
- nofetch=3D
- update=3D
- prefix=3D
-@@ -535,6 +537,9 @@ cmd_update()
- 		-i|--init)
- 			init=3D1
- 			;;
-+		--remote)
-+			remote=3D1
-+			;;
- 		-N|--no-fetch)
- 			nofetch=3D1
- 			;;
-@@ -595,6 +600,7 @@ cmd_update()
- 		fi
- 		name=3D$(module_name "$sm_path") || exit
- 		url=3D$(git config submodule."$name".url)
-+		branch=3D$(get_submodule_config "$name" branch master)
- 		if ! test -z "$update"
- 		then
- 			update_module=3D$update
-@@ -629,6 +635,20 @@ Maybe you want to use 'update --init'?")"
- 			die "$(eval_gettext "Unable to find current revision in submodule p=
-ath '\$sm_path'")"
- 		fi
-=20
-+		if test -n "$remote"
-+		then
-+			if test -z "$nofetch"
-+			then
-+				# Fetch remote before determining tracking $sha1
-+				(clear_local_git_env; cd "$sm_path" && git-fetch) ||
-+				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'=
-")"
-+			fi
-+			remote_name=3D$(get_default_remote)
-+			sha1=3D$(clear_local_git_env; cd "$sm_path" &&
-+				git rev-parse --verify "${remote_name}/${branch}") ||
-+			die "$(eval_gettext "Unable to find current ${remote_name}/${branch=
-} revision in submodule path '\$sm_path'")"
-+		fi
-+
- 		if test "$subsha1" !=3D "$sha1" -o -n "$force"
- 		then
- 			subforce=3D$force
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 1542653..a567834 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -135,6 +135,37 @@ test_expect_success 'submodule update --force forc=
-ibly checks out submodules' '
- 	)
- '
-=20
-+test_expect_success 'submodule update --remote should fetch upstream c=
-hanges' '
-+	(cd submodule &&
-+	 echo line4 >> file &&
-+	 git add file &&
-+	 test_tick &&
-+	 git commit -m "upstream line4"
-+	) &&
-+	(cd super &&
-+	 git submodule update --remote --force submodule &&
-+	 cd submodule &&
-+	 test "$(git log -1 --oneline)" =3D "$(GIT_DIR=3D../../submodule/.git=
- git log -1 --oneline)"
-+	)
-+'
-+
-+test_expect_success 'local config should override .gitmodules branch' =
-'
-+	(cd submodule &&
-+	 git checkout -b test-branch &&
-+	 echo line5 >> file &&
-+	 git add file &&
-+	 test_tick &&
-+	 git commit -m "upstream line5" &&
-+	 git checkout master
-+	) &&
-+	(cd super &&
-+	 git config submodule.submodule.branch test-branch &&
-+	 git submodule update --remote --force submodule &&
-+	 cd submodule &&
-+	 test "$(git log -1 --oneline)" =3D "$(GIT_DIR=3D../../submodule/.git=
- git log -1 --oneline test-branch)"
-+	)
-+'
-+
- test_expect_success 'submodule update --rebase staying on master' '
- 	(cd super/submodule &&
- 	  git checkout master
---=20
-1.8.0
+ static struct ref *get_expanded_map(const struct ref *remote_refs,
+ 				    const struct refspec *refspec)
+ {
+@@ -1383,7 +1393,8 @@ static struct ref *get_expanded_map(const struct ref *remote_refs,
+ 		if (strchr(ref->name, '^'))
+ 			continue; /* a dereference item */
+ 		if (match_name_with_pattern(refspec->src, ref->name,
+-					    refspec->dst, &expn_name)) {
++					    refspec->dst, &expn_name) &&
++		    !ignore_symref_update(expn_name)) {
+ 			struct ref *cpy = copy_ref(ref);
+ 
+ 			cpy->peer_ref = alloc_ref(expn_name);
