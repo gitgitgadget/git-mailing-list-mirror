@@ -1,77 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Tue, 11 Dec 2012 10:15:23 -0800
-Message-ID: <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v7 0/3] submodule update: add --remote for submodule's upstream
+ changes
+Date: Tue, 11 Dec 2012 13:58:14 -0500
+Message-ID: <cover.1355251862.git.wking@tremily.us>
+References: <20121204001717.GA17375@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Tue Dec 11 19:15:51 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 19:59:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiUMr-000639-7I
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 19:15:45 +0100
+	id 1TiV2h-0005tH-NL
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 19:59:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759Ab2LKSP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 13:15:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49795 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753587Ab2LKSP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 13:15:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62272A879;
-	Tue, 11 Dec 2012 13:15:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BvkFET1GheOozvl3yiz32JvhOis=; b=dptQPq
-	lNcFtGL5Kqx7ZSjBFDOk1dPE3/D0L9NsyMqe8694MT6TbZmzL3auhKE+4zw/siQZ
-	yITMFsifP35gEh/J9fCIwkssTf4WKfauLN1ZI4cxa445xcm9Qk+iYrmGbIX2v5Vg
-	iqjE8QGr4PoEC2uR1HsA30q1juX/r5RulhYGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Us7/lJw6+JRfFaRgvXxSEZXpox7IYBRF
-	M8DH9nho7ghp6SISQQHoXYDLJYmmU3hKCrakI3q0aya+nSO2cAL6Rol1+fq8N0xY
-	uuOstNZ/pwsHqgp57XZn075iCONlmNt42l+EnicFJwcew82gOpq2L0oVYXWgMQsm
-	0YrOJvhljjU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50AE3A878;
-	Tue, 11 Dec 2012 13:15:26 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B0A8EA877; Tue, 11 Dec 2012
- 13:15:25 -0500 (EST)
-In-Reply-To: <20121211153903.7522d6b0@chalon.bertin.fr> (Yann Dirson's
- message of "Tue, 11 Dec 2012 15:39:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC588E9E-43BE-11E2-92DE-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754606Ab2LKS6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 13:58:42 -0500
+Received: from vms173001pub.verizon.net ([206.46.173.1]:56118 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753736Ab2LKS6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 13:58:41 -0500
+Received: from odin.tremily.us ([unknown] [72.68.110.234])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MEV00FTNRDAXW10@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 11 Dec 2012 12:58:23 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 1FC3D71B42D; Tue,
+ 11 Dec 2012 13:58:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1355252302; bh=SrjVEI2scIbUBhfz9xxqHY4a5xyOeDQD44aumyB2QQg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=nIedU0Bu+jN+th8ALfzSS9vnxF+qBsUKbTYiaEATzxTVuH4bpKPj/IIJskjzEjhsk
+ b9H4S4ka6b8OwTJbZaWjhCu9cx2V/hKki4UPLU4oaHy6CWSnyH31oFHbWeZjM9PrUP
+ QpVCdRds4PHNv0DQEYBhF1K/PzhiTfOUJbnWWnKk=
+X-Mailer: git-send-email 1.7.8.6
+In-reply-to: <20121204001717.GA17375@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211293>
 
-Yann Dirson <dirson@bertin.fr> writes:
+From: "W. Trevor King" <wking@tremily.us>
 
-> There seems to be some bad interactions between git-push and grafts.
-> The problem seems to occur when a commit that exists in the remote
-> repo is subject to a graft in the local repo, and we try to push one
-> of the fake parents.
+I see that this series has dropped out of "what's cooking?".
+Hopefully this reroll gets it back in ;).
 
-History tweaking by grafts is only visible inside your local
-repository and objects are not rewritten, and grafts are not
-transferred across repositories.  They were invented to be used as a
-stop-gap measure until you filter-branch the history before
-publishing (or if you do not publish, then you can keep using your
-local grafts).
+Changes since v6 (both in response to Junio's comments):
 
-Isn't this well known?  Perhaps we would need to document it better.
+* Fix style in get_submodule_config definition.
+* Drop the submodule.<name>.remote config option (v6's patch 4).
 
-What you can do is to use "replace" instead and publish the replace
-refs, I think.  Object transfer will then follow the true parenthood
-connectivity and people who choose to use the same replacement as
-you do can fetch the replace ref from you (this will grab objects
-necessary to complete the alternative history) and install it.
+W. Trevor King (3):
+  submodule: add get_submodule_config helper funtion
+  submodule update: add --remote for submodule's upstream changes
+  submodule add: If --branch is given, record it in .gitmodules
+
+ Documentation/config.txt        |  7 +++++-
+ Documentation/git-submodule.txt | 27 ++++++++++++++++++++-
+ Documentation/gitmodules.txt    |  5 ++++
+ git-submodule.sh                | 52 ++++++++++++++++++++++++++++++++++++++++-
+ t/t7400-submodule-basic.sh      |  1 +
+ t/t7406-submodule-update.sh     | 31 ++++++++++++++++++++++++
+ 6 files changed, 120 insertions(+), 3 deletions(-)
+
+-- 
+1.8.0
