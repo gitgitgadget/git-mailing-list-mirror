@@ -1,96 +1,98 @@
-From: Karl Brand <k.brand@erasmusmc.nl>
-Subject: How to avoid the ^M induced by Meld and Git
-Date: Tue, 11 Dec 2012 13:33:37 +0100
-Message-ID: <50C72821.10908@erasmusmc.nl>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: [BUG] Cannot push some grafted branches
+Date: Tue, 11 Dec 2012 15:39:03 +0100
+Organization: Bertin Technologies
+Message-ID: <20121211153903.7522d6b0@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 11 13:42:36 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 16:00:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiPAP-0000EI-W4
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 13:42:34 +0100
+	id 1TiRKA-00078R-Hn
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Dec 2012 16:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992Ab2LKMmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 07:42:17 -0500
-Received: from lists.erasmusmc.nl ([156.83.10.20]:61438 "EHLO
-	lists.erasmusmc.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173Ab2LKMmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 07:42:16 -0500
-X-Greylist: delayed 516 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Dec 2012 07:42:16 EST
-Received: from lists.erasmusmc.nl (localhost [127.0.0.1])
-	by lists.erasmusmc.nl (Postfix) with ESMTP id 91F44EB6A6C
-	for <git@vger.kernel.org>; Tue, 11 Dec 2012 13:35:12 +0100 (CET)
-X-Virus-Scanned: amavisd-new at erasmusmc.nl
-Received: from lists.erasmusmc.nl ([127.0.0.1])
-	by lists.erasmusmc.nl (lists.erasmusmc.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Ujx0IVWD2Hsl for <git@vger.kernel.org>;
-	Tue, 11 Dec 2012 13:35:10 +0100 (CET)
-Received: from rbox3.erasmusmc.nl (mailhost.erasmusmc.nl [156.83.10.13])
-	by lists.erasmusmc.nl (Postfix) with ESMTP id 5E50DEB6A71
-	for <git@vger.kernel.org>; Tue, 11 Dec 2012 13:35:10 +0100 (CET)
-Received: from rbox3.erasmusmc.nl (localhost.erasmusmc.nl [127.0.0.1])
-	by rbox3.erasmusmc.nl (Postfix) with ESMTP id 9F6306D442D
-	for <git@vger.kernel.org>; Tue, 11 Dec 2012 13:33:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at erasmusmc.nl
-Received: from rbox3.erasmusmc.nl ([127.0.0.1])
-	by rbox3.erasmusmc.nl (rbox3.erasmusmc.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id K5-YM5xX_8XU for <git@vger.kernel.org>;
-	Tue, 11 Dec 2012 13:33:38 +0100 (CET)
-Received: from [10.92.2.214] (4JH5P4J.erasmusmc.nl [10.92.2.214])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: 117730)
-	by rbox3.erasmusmc.nl (Postfix) with ESMTPSA id 7C5EB6D442A
-	for <git@vger.kernel.org>; Tue, 11 Dec 2012 13:33:38 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+	id S1753391Ab2LKPA3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2012 10:00:29 -0500
+Received: from cabourg.bertin.fr ([195.68.26.10]:49412 "EHLO cabourg.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753170Ab2LKPA2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2012 10:00:28 -0500
+X-Greylist: delayed 1283 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Dec 2012 10:00:28 EST
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 256E9A0F7F
+	for <git@vger.kernel.org>; Tue, 11 Dec 2012 15:39:02 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id F3EE3A0F76
+	for <git@vger.kernel.org>; Tue, 11 Dec 2012 15:39:01 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MEV00DE5FD1D2B0@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Tue, 11 Dec 2012 15:39:01 +0100 (CET)
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19438.007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211289>
 
-Esteemed Git users,
+There seems to be some bad interactions between git-push and grafts.
+The problem seems to occur when a commit that exists in the remote
+repo is subject to a graft in the local repo, and we try to push one
+of the fake parents.
 
-What i do:
+The problem was first seen on 1.7.12.3 in a private repo, and I could
+reproduce it using 1.8.1.rc0, as shown below.  1.7.10.4 seems even
+more affected, with something looking like a memory corruption issue.
 
-1. Create a script.r using Emacs/ESS.
-2. Make some modifications to script.r with the nice diff gui, Meld
-3. Commit these modifications using git commit -am "my message"
-4. Reopen script.r in Emacs/ESS to continue working.
+Here is the test:
 
-The lines added (&/edited ?) using Meld all end with ^M which i 
-certainly don't want. Lines not added/edited with Meld do NOT end with ^M.
+$ git clone git.git git-test
+Cloning into 'git-test'...
+done.
+Checking out files: 100% (2518/2518), done.
+$ cd git-test/
+git-test$ git co maint
+Branch maint set up to track remote branch maint from origin.
+Switched to a new branch 'maint'
+git-test$ echo >> README=20
+git-test$ git commit -a -m "test"
+[maint 0708279] test
+ 1 file changed, 1 insertion(+)
+git-test$ echo $(git rev-parse origin/master; git rev-parse origin/mast=
+er^; git rev-parse HEAD) > .git/info/grafts
 
-There are plenty of posts around about these being line endings used for 
-windows which can appear when working on a script under a *nix OS which 
-has previously been edited in a Windows OS. This is not the case here - 
-everything is taking place on Ubuntu 12.04.
+git-test$ git version
+git version 1.8.1.rc0
+git-test$ git push origin maint
+Total 0 (delta 0), reused 0 (delta 0)
+fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
+fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
+To /home/localadm/softs/git.git
+ ! [remote rejected] maint -> maint (missing necessary objects)
+error: failed to push some refs to '/home/localadm/softs/git.git'
 
-FWIW: the directory is being synced by dropbox; and in Meld, Preferences 
- > Encoding tab, "utf8" is entered in the text box.
 
-Current work around is running in a terminal: dos2unix /path/to/script.r 
-which strips the ^M's
+$ git version
+git version 1.7.10.4
 
-But this just shouldn't be necessary and I'd really appreciate the 
-reflections & advice on how to stop inducing these ^M's !
+git-test$ git push origin maint
+Total 0 (delta 0), reused 0 (delta 0)
+fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
+fatal: bad object 0708279e168b52003234dd23601796b3b12e278b
+Auto packing the repository for optimum performance.
+fatal: protocol error: bad line length character: Remo
+error: error in sideband demultiplexer
+error: =E0=AB=8F        >S=EF=BF=BD=EF=BF=BD=C5=8BJ=EF=BF=BDjB=EF=BF=BD=
+;=EF=BF=BDx'=EF=BF=BD=EF=BF=BDR died of signal 13
+To /home/localadm/softs/git.git
+ ! [remote rejected] maint -> maint (missing necessary objects)
+error: failed to push some refs to '/home/localadm/softs/git.git'
 
-With thanks,
-
-Karl
-
-(re)posted here as suggested off topic at SO:
-http://stackoverflow.com/questions/13799631/create-script-r-in-emacs-modify-with-meld-git-commit-reopen-in-emacs-m
-
--- 
-Karl Brand
-Dept of Cardiology and Dept of Bioinformatics
-Erasmus MC
-Dr Molewaterplein 50
-3015 GE Rotterdam
-T +31 (0)10 703 2460 |M +31 (0)642 777 268 |F +31 (0)10 704 4161
+--=20
+Yann Dirson - Bertin Technologies
