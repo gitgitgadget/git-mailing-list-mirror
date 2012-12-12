@@ -1,86 +1,57 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH 4/5] pretty: Use mailmap to display username and email
-Date: Wed, 12 Dec 2012 14:27:24 +0100
-Message-ID: <CALWbr2w65iAnegu-VSLWo1Ckh9q8291aVVjchcXaz1A24bLcEA@mail.gmail.com>
-References: <1355264493-8298-1-git-send-email-apelisse@gmail.com>
-	<1355264493-8298-5-git-send-email-apelisse@gmail.com>
-	<7vehiw6wc1.fsf@alter.siamese.dyndns.org>
+From: Eugene <ebeletskiy@gmail.com>
+Subject: Re: Bad URL passed to RA layer ('https')
+Date: Wed, 12 Dec 2012 14:36:23 +0000 (UTC)
+Message-ID: <loom.20121212T153500-401@post.gmane.org>
+References: <l2y5208b6091005040218t2890b871x1753a1788b67350b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Rich Midwinter <rich.midwinter@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 14:27:44 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 12 15:40:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TimLf-0004kT-JV
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 14:27:43 +0100
+	id 1TinTq-0004rT-MU
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 15:40:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab2LLN11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 08:27:27 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:56437 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752181Ab2LLN10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 08:27:26 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so228249eaa.19
-        for <git@vger.kernel.org>; Wed, 12 Dec 2012 05:27:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SlIQT5J+vQiDYDg3mYkjwgEzOgQs9rgjZ89UrjKWZhw=;
-        b=ZEPzb5lSU9xLvd1fBE1Y1dgq/ptKFmGmSsi+7aPEa0jjHmjLWKlj2Ou9SSo8ayD2Jr
-         hlJx1j54kZfiIanhaKGLJT0IA/s1+OolywDZxSlOlHCLeq0aEIQyPmDoY585txBNHlaf
-         7Fp6l1wiJ0BQ/yB+aewlgvZTls5R4rS4sOtSbqEixxfYL9HzTmzh7WeoYjA6bsYniaxd
-         Ex/gLdw0o4vFJ3R1CcSGVaOTCAmWBDzHauEkGa7xV9ScPbNnAoI7XZahDIFmLd7NddMZ
-         SlncDaMb0cbAnZIkXG4YC65xqq7TXG122nwwG0lb0IBfnSJB5L+iPKjNlNMeaJGLBTV1
-         mp6A==
-Received: by 10.14.208.137 with SMTP id q9mr2837612eeo.28.1355318845172; Wed,
- 12 Dec 2012 05:27:25 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Wed, 12 Dec 2012 05:27:24 -0800 (PST)
-In-Reply-To: <7vehiw6wc1.fsf@alter.siamese.dyndns.org>
+	id S1754329Ab2LLOj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 09:39:56 -0500
+Received: from plane.gmane.org ([80.91.229.3]:52020 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752825Ab2LLOj4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 09:39:56 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TinTg-0004fW-8S
+	for git@vger.kernel.org; Wed, 12 Dec 2012 15:40:04 +0100
+Received: from flock.master.volia.net ([93.72.4.140])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 15:40:04 +0100
+Received: from ebeletskiy by flock.master.volia.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 15:40:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 93.72.4.140 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211354>
 
-> Or it might be better to make those two strbufs output-only
-> parameter, e.g.
->
->         map_user(struct string_list *mailmap,
->                 const char *name, size_t namelen,
->                 const char *mail, size_t maillen,
->                 struct strbuf *name_out, struct strbuf *mail_out);
->
-> then after split_ident_line(), this caller could feed two pointers
-> into the original "line" as name and mail parameter, without making
-> any copies (the callee has to make a copy but it has to be done
-> anyway when the name/mail is mapped).  I suspect it would make this
-> caller simpler, but I do not know how invasive such changes are for
-> other callers of map_user().
+Here I. Come <me.detected <at> gmail.com> writes:
 
-It makes a lot of sense.
-blame.c::get_commit_info() hard code the length
-shortlog.c::insert_one_record() hard code the length
-pretty.c::format_person_part() hard code the length
+> ------------------8<-----------------------
+> $ git svn clone https://host/svn/myrepo
+> Initialized empty Git repository in /tmp/myrepo/.git/
+> Bad URL passed to RA layer: Unrecognized URL scheme for
+> 'https://host/svn/myrepo' at /usr/libexec/git-core/git-svn line 1770
+> ------------------8<-----------------------
 
-I don't think it will be invasive.
 
-> Such an update can be left outside of this series, of course.
-
-I will try to make it at the beginning of the series. It will avoid unnecessary
-conflicts.
-
->> +             strbuf_addch(sb, ' ');
->> +             strbuf_addch(sb, '<');
->> +             strbuf_add(sb, person_mail, strlen(person_mail));
->> +             strbuf_addch(sb, '>');
->>               strbuf_addch(sb, '\n');
->
-> Is that strbuf_addf(sb, " <%s>\n", person_mail)?
-
-Of couse ;) Fixed.
+Hi, I have faced with the same problem. Did you find out who to resolve it?
