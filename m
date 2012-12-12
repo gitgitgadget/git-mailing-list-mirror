@@ -1,86 +1,89 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Wed, 12 Dec 2012 07:43:06 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121212124306.GC25981@thyrsus.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
- <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
- <50B1F684.5020805@alum.mit.edu>
- <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
- <CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
- <CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
- <20121212033043.GA24937@thyrsus.com>
- <CACh33Fpk8_ZXw8Ladx83J+rmdRYf7ruYAMMkqOKcoH3OApKPJQ@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] index-format.txt: be more liberal on what can represent invalid cache tree
+Date: Wed, 12 Dec 2012 19:44:36 +0700
+Message-ID: <1355316276-7661-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Patrick Donnelly <batrick@batbytes.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 13:43:36 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 12 13:44:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tileu-0001Gl-C5
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 13:43:32 +0100
+	id 1Tilfp-0002K5-Jr
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 13:44:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab2LLMnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 07:43:15 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:34982
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752825Ab2LLMnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 07:43:15 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 12C3C4408D; Wed, 12 Dec 2012 07:43:07 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CACh33Fpk8_ZXw8Ladx83J+rmdRYf7ruYAMMkqOKcoH3OApKPJQ@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752862Ab2LLMoN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2012 07:44:13 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:55934 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751494Ab2LLMoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 07:44:12 -0500
+Received: by mail-pa0-f46.google.com with SMTP id bh2so572782pad.19
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 04:44:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=+VKosSzHX0EaRb2fT84xue7MgqBkCKWEqUGYD4pe+Us=;
+        b=IjnV2JMy26HyEc4v6rIAw18DJf8QzcGMoSrSyHGlypLKb2adZl6/ONajUyKA1ZqsRA
+         w7WzfcBbKRep6HJVAzcJdTAzG+5agOwD1eSHs/oH5j6ZEjK1OD2r5WxgotAl0zbtV7fp
+         Z7MpbPZf4I+kT+0RWv+4DcZ5SJLhHDbRQXG3CS2NnETXixm9Ql4PZo9zTTpVwHw91UPH
+         qFeNoAyEslPkt183RoMWHBEPT0aDj7BFjL0kWYq9OAYrtHMOXHlm+LkFoCZOgKVfg8F9
+         qZ4fgEzMGpK2SEAJeBnoqNf/M1924cojxxNZXyQbz+vah4UcZOKJjF10i6S2zMLpfi6r
+         gWNA==
+Received: by 10.68.241.136 with SMTP id wi8mr2469511pbc.95.1355316252454;
+        Wed, 12 Dec 2012 04:44:12 -0800 (PST)
+Received: from lanh ([115.74.41.198])
+        by mx.google.com with ESMTPS id qb3sm3920920pbb.35.2012.12.12.04.44.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Dec 2012 04:44:11 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Wed, 12 Dec 2012 19:44:45 +0700
+X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211352>
 
-Patrick Donnelly <batrick@batbytes.com>:
-> On Tue, Dec 11, 2012 at 10:30 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> > It might be a good fit for extending git; I wouldn't be very surprised if
-> > that worked. However, I do have concerns about the "Oh, we'll just
-> > lash together a binding to C" attitude common among lua programmers; I
-> > foresee maintainability problems and the possibility of slow death by
-> > low-level details as that strategy tries to scale up.
-> 
-> I think this is quite a prediction? Could you give an example
-> scenario?
+We have been writing -1 as "invalid" since day 1. On that same day we
+accept all negative entry counts as "invalid". So in theory all C Git
+versions out there would be happy to accept any negative numbers. JGit
+seems to do exactly the same.
 
-Everything old is new again.  I'm going by experience with Tcl back in the day.
+Correct the document to reflect the fact that -1 is not the only magic
+number. At least one implementation, libgit2, is found to treat -1
+this way.
 
->        How would another language (e.g. Python) mitigate this?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/technical/index-format.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The way you mitigate this sort of problem is to have a good set of
-high-level bindings for standard services (like socket I/O) built in
-your extension language and using its abstractions, so you don't get a
-proliferation of low-level semi-custom APIs for doing the same stuff.
-
-I have elsewhere referred to this as "the harsh lesson of Perl", which
-I do not love but which was the first scripting language to get this
-right.  There is a reason Tcl and a couple of earlier designs like csh
-that we would now call "scripting languages" were displaced by Python
-and Perl; this is it.
-
-My favorite present-day example of getting this right is the Python bindings
-for GTK.  They're lovely.  A work of art.
-
-> I don't see how these languages are more appropriate based on your concerns.
-
-Your previous exchange with Jeff King indicates that you don't
-understand glue scripting very well.  Your puzzlement here just
-confirms that.  Trust both of us on this, it's important.  And
-reread my previous three paragraphs.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
+echnical/index-format.txt
+index 9d25b30..2028a49 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -161,8 +161,8 @@ GIT index format
+     this span of index as a tree.
+=20
+   An entry can be in an invalidated state and is represented by having
+-  -1 in the entry_count field. In this case, there is no object name
+-  and the next entry starts immediately after the newline.
++  a negative number in the entry_count field. In this case, there is n=
+o
++  object name and the next entry starts immediately after the newline.
+=20
+   The entries are written out in the top-down, depth-first order.  The
+   first entry represents the root level of the repository, followed by=
+ the
+--=20
+1.8.0.rc2.23.g1fb49df
