@@ -1,83 +1,77 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Re: Fwd: possible Improving diff algoritm
-Date: Thu, 13 Dec 2012 00:32:53 +0100
-Message-ID: <CALZVapnzYBhPU1nR=eCSnm73c9-SpHq34DHu7OWCkouCQS0FxQ@mail.gmail.com>
-References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
- <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com>
- <7vvcc73yzh.fsf@alter.siamese.dyndns.org> <CANv4PNm45xGBn2veKi1o0wB4K9NgsbtCsiymHNO4xbCDpJ5tDg@mail.gmail.com>
- <7vpq2f2az4.fsf@alter.siamese.dyndns.org> <CAH5451=4dqqMnQa-R6O4ZrHOPSpHU9joWqf2UuOkbLtU9f8bkQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] submodule: add 'deinit' command
+Date: Wed, 12 Dec 2012 15:35:59 -0800
+Message-ID: <7vsj7a268w.fsf@alter.siamese.dyndns.org>
+References: <50BA3412.60309@web.de> <7vy5hhmcwp.fsf@alter.siamese.dyndns.org>
+ <50BBB22A.7050901@web.de> <7vhao31s9e.fsf@alter.siamese.dyndns.org>
+ <50BE6FB9.70301@web.de> <50C89DF3.20303@drmicha.warpmail.net>
+ <50C8BD6B.9010702@web.de> <7vr4mv3w2x.fsf@alter.siamese.dyndns.org>
+ <50C90469.8080303@web.de> <7vlid23nnc.fsf@alter.siamese.dyndns.org>
+ <20121212230926.GC7729@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Morten Welinder <mwelinder@gmail.com>, Kevin <ikke@ikke.info>,
-	git <git@vger.kernel.org>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 00:33:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Dec 13 00:36:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tivnw-0006oZ-OE
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 00:33:33 +0100
+	id 1Tivqf-0000g8-Mn
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 00:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754815Ab2LLXdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 18:33:15 -0500
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:34136 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754466Ab2LLXdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 18:33:14 -0500
-Received: by mail-qc0-f174.google.com with SMTP id o22so1091641qcr.19
-        for <git@vger.kernel.org>; Wed, 12 Dec 2012 15:33:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yYgApS8M5J5CZJPS5g66UW56mM56as0gw7FSxONcTgg=;
-        b=RyEl8sctjzhEtJ8kBpAMJhOokZ1XTLNZ4ieIi6/FJDnG/1j5qgRhUHRHgbQ5qscrJz
-         tQqb+Z18XP4vl9ksBcWYPaNhlvhgp75vxreRWajG1UmU61VBVPnlDBGUuH78fWEnfJLN
-         FmviKVbO+X4gmD0fumex+Dpb6KvR657EQM9QE67ivECrrDrQnAbcs39VGgL6rF8kFXu2
-         peD9Ysf1LTK3tjp2jx4Gz5rbqCQY/4S23ityFATKkR9NDOEB4dEMAbAZpmn5DVvFFGAB
-         tPhaHH0SBWtRUReomt/Qk7IFBrzVR4LtAXqrbrSq1usVN6EMZnekOtqg2GN6qCgQuCdH
-         Os/g==
-Received: by 10.224.107.3 with SMTP id z3mr171669qao.9.1355355194074; Wed, 12
- Dec 2012 15:33:14 -0800 (PST)
-Received: by 10.49.63.68 with HTTP; Wed, 12 Dec 2012 15:32:53 -0800 (PST)
-In-Reply-To: <CAH5451=4dqqMnQa-R6O4ZrHOPSpHU9joWqf2UuOkbLtU9f8bkQ@mail.gmail.com>
+	id S1754876Ab2LLXgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 18:36:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47559 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754724Ab2LLXgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 18:36:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B26CAE73;
+	Wed, 12 Dec 2012 18:36:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EtnqDrMhLSYR7RH87ousS+KvPBs=; b=uFHJBQ
+	Zt9fO3QdseiQLVkL8pEaWDZG9Bu0rGYpsc4wJldXmwXt4sJUhJpVXhKoX+fUkf4m
+	/l69PbeehN2NkDkcU87VThB4qel+rawEPK8OYbvZqDGqVS/09tdN1Ylos9s0C9Go
+	LuKxhFvT9wBmQ0GycrdHIfKaVAGW3rC+ltoTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TkUXoHnpuehOHKGmzjCXBvSumxu1D1/o
+	Qd9UrMeDXnt3fepYYMy2B5PcuPX63NmeIOk7NK1fIfa7Bj83mzrcrn2iWZjP52v3
+	qMpCmcQgkr7fLiT0p3eBG4NhVxssztb/Fm7qo5GGXbZ1wKbdOdfVRKhNic04urJT
+	HPorswI18Z0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68396AE72;
+	Wed, 12 Dec 2012 18:36:01 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB5B7AE70; Wed, 12 Dec 2012
+ 18:36:00 -0500 (EST)
+In-Reply-To: <20121212230926.GC7729@odin.tremily.us> (W. Trevor King's
+ message of "Wed, 12 Dec 2012 18:09:26 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AFC44078-44B4-11E2-9A35-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211419>
 
-I must say it is _quite_ helpfull having the diffs well done (natural
-diffs as here named), just because when you want to review a patch on
-the fly, this sort of things are annoying.
+"W. Trevor King" <wking@tremily.us> writes:
 
-I just wanted to say my opinion. No idea on how to fix that, nor why
-does it happen.
+> Should `deinit` remove the submodule checkout, replace it with the
+> original gitlink, and clear the .git/config information then?  That
+> would restore the user to the state they'd be in if they were never
+> interested in the submodule.
 
-Javier Domingo
-
-
-2012/12/12 Andrew Ardill <andrew.ardill@gmail.com>:
-> On 13 December 2012 08:53, Junio C Hamano <gitster@pobox.com> wrote:
->> The output being "a correct patch" is not the only thing we need to
->> consider, though, as I mentioned in another response to Kevin
->> regarding the "consequences".
->
-> The main benefit of picking a more 'natural' diff is a usability one.
-> I know that when a chunk begins and ends one line after the logical
-> break point (typically with braces in my experience) mentally parsing
-> the diff becomes significantly harder. If there was a way to teach git
-> where it should try and break out a chunk (potentially per filetype?)
-> this is a good thing for readability, and I think would outweigh any
-> temporary pain with regards to cached rerere and diff data.
->
-> Regards,
->
-> Andrew Ardill
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+AFAIU, "restore the user to the state" is the goal.  I am not sure
+what you meant by "replace it with the original gitlink", though.  A
+checkout with a submodule that the user is not interested in would
+have an empty directory at that path, no?
