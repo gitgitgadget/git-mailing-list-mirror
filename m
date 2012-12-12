@@ -1,70 +1,64 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Wed, 12 Dec 2012 11:54:23 +0100
-Organization: Bertin Technologies
-Message-ID: <20121212115423.3db6bb4d@chalon.bertin.fr>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
- <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
- <20121212094432.6e1e48c8@chalon.bertin.fr>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] mailmap from blobs
+Date: Wed, 12 Dec 2012 05:58:23 -0500
+Message-ID: <20121212105822.GA15842@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Wed Dec 12 11:54:49 2012
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 12 11:58:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tijxg-00056X-Va
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 11:54:49 +0100
+	id 1Tik1b-00058K-Lg
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 11:58:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab2LLKyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 05:54:31 -0500
-Received: from cabourg.bertin.fr ([195.68.26.10]:49435 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752181Ab2LLKyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 05:54:31 -0500
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 7BF6AA0F8D
-	for <git@vger.kernel.org>; Wed, 12 Dec 2012 11:54:21 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 3985CA0F7E
-	for <git@vger.kernel.org>; Wed, 12 Dec 2012 11:54:21 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MEW00C0TZMKL380@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 12 Dec 2012 11:54:21 +0100 (CET)
-In-reply-to: <20121212094432.6e1e48c8@chalon.bertin.fr>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19442.003
+	id S1753736Ab2LLK6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 05:58:35 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42753 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751632Ab2LLK6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 05:58:34 -0500
+Received: (qmail 22578 invoked by uid 107); 12 Dec 2012 10:59:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Dec 2012 05:59:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2012 05:58:23 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211336>
 
-On Wed, 12 Dec 2012 09:44:32 +0100 Yann Dirson <dirson@bertin.fr> wrote:
-> In fact, I even looked for a way to specify an alternate (or supplementary)
-> grafts file for this drafting work, so only well-controlled git invocations
-> would see them, whereas the others would just ignore them, and could not find
-> any - nor could I identify an existing way of disabling the use of grafts by
-> other means than moving it out of the way.  In this respect, they seem to be
-> lacking a few features, when compared to "replace" refs, but they have different
-> uses, and just using the latter as a drafting area is just not adequate.
-> 
-> I thought about adding support for a GIT_GRAFTS_FILE envvar, which would
-> default to $GITDIR/info/grafts, or maybe with a more general addition of a
-> GIT_EXTRA_GRAFT_FILES envvar, but I'm not sure the latter would be that useful.
+I noticed recently that the GitHub contributions page for git.git did
+not seem very accurate. The problem is that while it uses shortlog, it
+does not respect .mailmap, because we do not have a working tree from
+which to read the .mailmap.
 
-My bad on this point: there *is* a GIT_GRAFT_FILE envvar, it is just undocumented.
-In fact it is not the only one:
+This series adds a config option analogous to mailmap.file, but which
+reads from a blob in the repository (so the obvious thing to set it to
+is "HEAD:.mailmap" in a bare repo, and probably "master:.mailmap" if you
+frequently want to traverse while on unrelated branches). The obvious
+alternative is to checkout a temporary file of .mailmap and point
+mailmap.file at it, but this is a bit more convenient.
 
-git.git$ for v in $(git grep define.*_ENVIRONMENT master -- cache.h | cut -d'"' -f2|grep ^GIT_); do git grep -q $v master -- Documentation || echo "missing $v"; done
-missing GIT_GRAFT_FILE
-missing GIT_CONFIG_PARAMETERS
+A config option is perhaps not the most flexible way to access this. For
+example, one could in theory want to pull the mailmap from the tip of
+the history being traversed (e.g., because you have multiple unrelated
+DAGs in a single repo). But that could also produce the _wrong_ results,
+if you are looking at the shortlog of older history (e.g., when doing
+"git shortlog v1.5.0..v1.5.5", you would still want to be using the
+modern mailmap from "master").
 
+By making it a config option, the simple, common case does the right
+thing, and people with complex cases can use "git -c mailmap.blob=..."
+to feed the appropriate map for the history they are traversing. If
+somebody wants to do something fancier (like --mailmap-from-tip or
+something), it would be easy to build on top later.
 
--- 
-Yann Dirson - Bertin Technologies
+  [1/2]: mailmap: refactor mailmap parsing for non-file sources
+  [2/2]: mailmap: support reading mailmap from blobs
+
+-Peff
