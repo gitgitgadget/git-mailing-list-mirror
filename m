@@ -1,80 +1,108 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: (bug?) Inconsistent workdir file timestamps after initial clone.
-Date: Wed, 12 Dec 2012 10:48:54 -0500
-Message-ID: <50C8A766.30303@xiplink.com>
-References: <50C79D1F.1080709@xiplink.com> <7vy5h47003.fsf@alter.siamese.dyndns.org> <50C7AE84.2060400@xiplink.com> <7vr4mw6x3p.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to avoid the ^M induced by Meld and Git
+Date: Wed, 12 Dec 2012 17:08:42 +0100
+Message-ID: <50C8AC0A.1010306@drmicha.warpmail.net>
+References: <50C72821.10908@erasmusmc.nl> <50C89B68.8090309@drmicha.warpmail.net> <50C8A403.9050304@erasmusmc.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 16:48:53 2012
+Cc: git@vger.kernel.org
+To: Karl Brand <k.brand@erasmusmc.nl>
+X-From: git-owner@vger.kernel.org Wed Dec 12 17:09:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TioYG-0001kr-65
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 16:48:52 +0100
+	id 1Tiory-00049d-0d
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 17:09:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754527Ab2LLPse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 10:48:34 -0500
-Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:45418 "EHLO
-	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754485Ab2LLPs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 10:48:29 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp18.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id A81B3303E2;
-	Wed, 12 Dec 2012 10:48:28 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp18.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5DC20303DA;
-	Wed, 12 Dec 2012 10:48:28 -0500 (EST)
+	id S1754413Ab2LLQIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 11:08:45 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:58092 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752276Ab2LLQIn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2012 11:08:43 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id F138720B99;
+	Wed, 12 Dec 2012 11:08:42 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 12 Dec 2012 11:08:42 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=5pV8f/nG4VA6VhGG98DTeA
+	/zwUA=; b=iZ6FcJDpmfqD+K5j/rpULiplwH1ZupZ84WdZ8T5qZdoE9qgp+HWZ8T
+	6gXneIat/+zOpZ5qDdYrWGkaOenaRmgRN87OSC/ZfbGgFB+FytkYvICa6V5+UsO5
+	rarACCM9POvc9VN0Ckht5ofj8JHuRNoG0G5TD0LD44x5VTJWL+mak=
+X-Sasl-enc: gsDhcVVjpX3TNupOwH5M2LVhS9ikf0DnVFRawFallWxK 1355328522
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 7DA568E063E;
+	Wed, 12 Dec 2012 11:08:42 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vr4mw6x3p.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <50C8A403.9050304@erasmusmc.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211362>
 
-On 12-12-11 05:30 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
+Karl Brand venit, vidit, dixit 12.12.2012 16:34:
 > 
->> My point is that the initial checkout into an empty working directory should
->> create all files with the same timestamp.
+> 
+> On 12/12/12 15:57, Michael J Gruber wrote:
+>> Karl Brand venit, vidit, dixit 11.12.2012 13:33:
+>>> Esteemed Git users,
+>>>
+>>> What i do:
+>>>
+>>> 1. Create a script.r using Emacs/ESS.
+>>> 2. Make some modifications to script.r with the nice diff gui, Meld
+>>> 3. Commit these modifications using git commit -am "my message"
+>>> 4. Reopen script.r in Emacs/ESS to continue working.
+>>>
+>>> The lines added (&/edited ?) using Meld all end with ^M which i
+>>> certainly don't want. Lines not added/edited with Meld do NOT end with ^M.
 >>
->> Or, to be a bit more precise, whenever git-checkout *creates* files in the
->> work dir, *all* the created files should have the *same* timestamp (i.e. the
->> current time measured at the start of the checkout's execution, not some
->> bizarro other time specified by some arcane heuristic).
-> 
-> My knee-jerk reaction is that it is insane to do so, but what other
-> SCM does such a thing?
-
-I'm lucky enough to just care about git these days.
-
-> Even "tar xf" wouldn't do that, I think.
-
-"tar xf" uses the timestamps that are stored in the tar file.  I see this as
-an argument against git's exact-current-time-per-file approach: even the tar
-guys understand that it's insane.
-
->>> While not including files that can be rebuilt from the source may be
->>> the ideal solution, I've seen projects hide rules to rebuild such a
->>> "generated but needs special tools to build" and/or a "generated but
->>> normal developers do not have any business rebuilding" file (in your
->>> case, Makefile.in) in their Makefiles from the normal targets (like
->>> "make all") for this exact reason, when they choose to distribute
->>> such files by including in their commits.
+>> What happens if you leave out step 3? If the same happens then Meld is
+>> the culprit. (Unless you've set some special options, git does not
+>> modify your file on commit, so this can't be git related.)
 >>
->> I prefer to use the third-party code as-is, without hacking it, to have
->> smooth upgrades in the future.
 > 
-> Then perhaps take the complaints to that third-party upstream, not
-> here?
+> Leaving out step 3. results in exactly the same thing. Thus Git doesn't 
+> appear to be responsible for the ^M's. Thanks a lot for your effort on 
+> this and my apologies for not taking the care to dissect this more 
+> carefully as you suggested. Over to the Meld mailing list...
 
-Well, I thought that while I wait for some dozen-or-so projects to accept
-changes to their builds, it might be nice for git to solve this problem for
-me.  It is, after all, an effect of the way git operates.
+I didn't mean to shy you away ;)
 
-		M.
+Could it be that there is a ^M very early in the file (or rather
+something else which isn't covered by dos2unix) so that Meld thinks it's
+DOS and inserts line endings as DOS? At least that's what vim would do.
+
+In any case, Meld people over there should know (or get to know) that
+effect.
+
+>>> There are plenty of posts around about these being line endings used for
+>>> windows which can appear when working on a script under a *nix OS which
+>>> has previously been edited in a Windows OS. This is not the case here -
+>>> everything is taking place on Ubuntu 12.04.
+>>>
+>>> FWIW: the directory is being synced by dropbox; and in Meld, Preferences
+>>>   > Encoding tab, "utf8" is entered in the text box.
+>>>
+>>> Current work around is running in a terminal: dos2unix /path/to/script.r
+>>> which strips the ^M's
+>>>
+>>> But this just shouldn't be necessary and I'd really appreciate the
+>>> reflections & advice on how to stop inducing these ^M's !
+>>>
+>>> With thanks,
+>>>
+>>> Karl
+>>>
+>>> (re)posted here as suggested off topic at SO:
+>>> http://stackoverflow.com/questions/13799631/create-script-r-in-emacs-modify-with-meld-git-commit-reopen-in-emacs-m
+>>>
+>>
+> 
