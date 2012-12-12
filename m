@@ -1,98 +1,131 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Wed, 12 Dec 2012 09:44:32 +0100
-Organization: Bertin Technologies
-Message-ID: <20121212094432.6e1e48c8@chalon.bertin.fr>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
- <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
+From: Simon Oosthoek <s.oosthoek@xs4all.nl>
+Subject: Re: git-prompt.sh vs leading white space in
+ __git_ps1()::printf_format
+Date: Wed, 12 Dec 2012 09:55:07 +0100
+Message-ID: <20121212085507.GA32187@xs4all.nl>
+References: <CAA01Cso1E4EC4W667FEU_af2=uGOfPuaWEB3y+zPCpB+bPzoaA@mail.gmail.com>
+ <20121128132033.GA10082@xs4all.nl>
+ <CAA01CspHAHN7se2oJ2WgcmpuRfoa+9Sx9sUvaPEmQ-Y+kDwHhA@mail.gmail.com>
+ <50B66F41.1030305@xs4all.nl>
+ <7vlidltpyj.fsf@alter.siamese.dyndns.org>
+ <50C7B811.7030006@xs4all.nl>
+ <7v7goo6vi3.fsf@alter.siamese.dyndns.org>
+ <7vy5h45e7b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 09:44:49 2012
+X-From: git-owner@vger.kernel.org Wed Dec 12 09:56:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tihvt-0006bV-6v
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 09:44:49 +0100
+	id 1Tii6h-0008BI-R3
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 09:56:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650Ab2LLIoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 03:44:32 -0500
-Received: from cabourg.bertin.fr ([195.68.26.10]:39401 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751025Ab2LLIoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 03:44:32 -0500
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id B2959A0F7D
-	for <git@vger.kernel.org>; Wed, 12 Dec 2012 09:44:30 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 77B54A0F81
-	for <git@vger.kernel.org>; Wed, 12 Dec 2012 09:44:30 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MEW00CJ7TM5L350@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 12 Dec 2012 09:44:30 +0100 (CET)
-In-reply-to: <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19442.001
+	id S1751428Ab2LLIzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 03:55:43 -0500
+Received: from smtp-vbr2.xs4all.nl ([194.109.24.22]:1043 "EHLO
+	smtp-vbr2.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359Ab2LLIzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 03:55:42 -0500
+Received: from xs8.xs4all.nl (xs8.xs4all.nl [194.109.21.8])
+	by smtp-vbr2.xs4all.nl (8.13.8/8.13.8) with ESMTP id qBC8t8WO087946
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 12 Dec 2012 09:55:09 +0100 (CET)
+	(envelope-from osimon@xs4all.nl)
+Received: from xs8.xs4all.nl (IDENT:1251136@localhost [127.0.0.1])
+	by xs8.xs4all.nl (8.14.3/8.14.3/Debian-9.4) with ESMTP id qBC8t7cX018106;
+	Wed, 12 Dec 2012 09:55:08 +0100
+Received: (from osimon@localhost)
+	by xs8.xs4all.nl (8.14.3/8.14.3/Submit) id qBC8t7SW017845;
+	Wed, 12 Dec 2012 09:55:07 +0100
+Content-Disposition: inline
+In-Reply-To: <7vy5h45e7b.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211334>
 
-On Tue, 11 Dec 2012 10:15:23 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
+Hi Junio
 
-> Yann Dirson <dirson@bertin.fr> writes:
+This removes most of the ambiguities :-)
+Ack from me!
+
+I still have some minor nits, but I'll leave that for another time when I'm less busy.
+
+BTW, I haven't tried this yet, but if you pass 2 arguments to __git_ps1 when called from command-substition mode, I suppose it will think it's in PC mode and overwrite the PS1!
+
+At some point, I'd like to see this code split off into "pc" and "cs" functions which call a common function to get the git status. But that's a major rewrite and it may involve more overhead, since each function should process the output of the common function in a different way.
+
+Cheers
+
+Simon
+
+* Junio C Hamano <gitster@pobox.com> [2012-12-11 16:03:36 -0800]:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > There seems to be some bad interactions between git-push and grafts.
-> > The problem seems to occur when a commit that exists in the remote
-> > repo is subject to a graft in the local repo, and we try to push one
-> > of the fake parents.
+> > Perhaps like this?
 > 
-> History tweaking by grafts is only visible inside your local
-> repository and objects are not rewritten, and grafts are not
-> transferred across repositories.  They were invented to be used as a
-> stop-gap measure until you filter-branch the history before
-> publishing (or if you do not publish, then you can keep using your
-> local grafts).
+> OK, this time with a log message.
 > 
-> Isn't this well known?  Perhaps we would need to document it better.
-
-I am well aware of that, and did not intend to push any grafted commit.
-I am attempting to push a well-formed commit, which happens to be used as
-a grafted commit's fake parent, and my interpretation is that git reacts
-as if it was considering that the remote already had that commit, possibly
-because it would not ignore grafts when deciding which commits are already
-known to the remote.
-
-> What you can do is to use "replace" instead and publish the replace
-> refs, I think.  Object transfer will then follow the true parenthood
-> connectivity and people who choose to use the same replacement as
-> you do can fetch the replace ref from you (this will grab objects
-> necessary to complete the alternative history) and install it.
-
-I am only using grafts as a temporary and lightweight drafting area,
-before setting the results in stone - although in my case it will be
-with filter-branch rather than replace, but the idea is the same.  I just
-got bitten when attempting to push a valid branch while the grafts were in
-effect, when in fact they should have had no influence at all.
-
-In fact, I even looked for a way to specify an alternate (or supplementary)
-grafts file for this drafting work, so only well-controlled git invocations
-would see them, whereas the others would just ignore them, and could not find
-any - nor could I identify an existing way of disabling the use of grafts by
-other means than moving it out of the way.  In this respect, they seem to be
-lacking a few features, when compared to "replace" refs, but they have different
-uses, and just using the latter as a drafting area is just not adequate.
-
-I thought about adding support for a GIT_GRAFTS_FILE envvar, which would
-default to $GITDIR/info/grafts, or maybe with a more general addition of a
-GIT_EXTRA_GRAFT_FILES envvar, but I'm not sure the latter would be that useful.
-
--- 
-Yann Dirson - Bertin Technologies
+> -- >8 --
+> Subject: [PATCH] git-prompt.sh: update PROMPT_COMMAND documentation
+> 
+> The description of __git_ps1 function operating in two-arg mode was
+> not very clear.  It said "set PROMPT_COMMAND=__git_ps1" which is not
+> the right usage for this mode, followed by "To customize the prompt,
+> do this", giving a false impression that those who do not want to
+> customize it can get away with no-arg form, which was incorrect.
+> 
+> Make it clear that this mode always takes two arguments, pre and
+> post, with an example.
+> 
+> The straight-forward one should be listed as the primary usage, and
+> the confusing one should be an alternate for advanced users.  Swap
+> the order of these two.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  contrib/completion/git-prompt.sh | 16 +++++++++++-----
+>  1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index a8b53ba..9b074e1 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -10,14 +10,20 @@
+>  #    1) Copy this file to somewhere (e.g. ~/.git-prompt.sh).
+>  #    2) Add the following line to your .bashrc/.zshrc:
+>  #        source ~/.git-prompt.sh
+> -#    3a) In ~/.bashrc set PROMPT_COMMAND=__git_ps1
+> -#        To customize the prompt, provide start/end arguments
+> -#        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+> -#    3b) Alternatively change your PS1 to call __git_ps1 as
+> +#    3a) Change your PS1 to call __git_ps1 as
+>  #        command-substitution:
+>  #        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+>  #        ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+> -#        the optional argument will be used as format string
+> +#        the optional argument will be used as format string.
+> +#    3b) Alternatively, if you are using bash, __git_ps1 can be
+> +#        used for PROMPT_COMMAND with two parameters, <pre> and
+> +#        <post>, which are strings you would put in $PS1 before
+> +#        and after the status string generated by the git-prompt
+> +#        machinery.  e.g.
+> +#           PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+> +#        will show username, at-sign, host, colon, cwd, then
+> +#        various status string, followed by dollar and SP, as
+> +#        your prompt.
+>  #
+>  # The argument to __git_ps1 will be displayed only if you are currently
+>  # in a git repository.  The %s token will be the name of the current
+> -- 
+> 1.8.1.rc1.128.gd8d1528
+> 
