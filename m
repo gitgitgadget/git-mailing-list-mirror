@@ -1,75 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git(1): remove a defunct link to "list of authors"
-Date: Wed, 12 Dec 2012 07:24:48 -0500
-Message-ID: <20121212122448.GA20057@sigill.intra.peff.net>
-References: <7vobi5hhn9.fsf@alter.siamese.dyndns.org>
- <7vk3sthhfy.fsf@alter.siamese.dyndns.org>
- <CACsJy8A7AYpZs7mTc+B-F7BBLPdACim=gHCg8sK1Aci8YSEB4Q@mail.gmail.com>
- <7vboe2ct9p.fsf@alter.siamese.dyndns.org>
- <CACsJy8Dg1a0siDbiHtk4m1RhjLt-XKiS8kOO7qPKjwRczLF9vA@mail.gmail.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: Python extension commands in git - request for policy change
+Date: Wed, 12 Dec 2012 07:26:25 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20121212122625.GB25981@thyrsus.com>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+ <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+ <50B1F684.5020805@alum.mit.edu>
+ <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
+ <CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
+ <CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
+ <20121212033043.GA24937@thyrsus.com>
+ <20121212063208.GA18322@sigill.intra.peff.net>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 13:25:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Patrick Donnelly <batrick@batbytes.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 13:26:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TilN7-0001NX-5n
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 13:25:09 +0100
+	id 1TilOf-0002mV-17
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 13:26:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650Ab2LLMYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 07:24:53 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42867 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751561Ab2LLMYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 07:24:52 -0500
-Received: (qmail 23799 invoked by uid 107); 12 Dec 2012 12:25:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Dec 2012 07:25:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2012 07:24:48 -0500
+	id S1751561Ab2LLM02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 07:26:28 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:34911
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257Ab2LLM02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 07:26:28 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 9D5024408D; Wed, 12 Dec 2012 07:26:25 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <CACsJy8Dg1a0siDbiHtk4m1RhjLt-XKiS8kOO7qPKjwRczLF9vA@mail.gmail.com>
+In-Reply-To: <20121212063208.GA18322@sigill.intra.peff.net>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211349>
 
-On Mon, Dec 10, 2012 at 07:04:40PM +0700, Nguyen Thai Ngoc Duy wrote:
-
-> > With or without "--no-merges", the big picture you can get out of
-> > "git shortlog -s -n --since=1.year" does not change very much, but
-> > the headline numbers give a wrong impression.
+Jeff King <peff@peff.net>:
+> I think there are really two separate use cases to consider:
 > 
-> These numbers are approximate anyway. Commit counts or the number of
-> changed lines do not accurately reflect the effort in many cases. And
-> about merges, in this particular case of Git where the maintainer imo
-> has done an excellent job as a guard, I'd say it's the credit for
-> reviewing, not simply merging.
+>   1. Providing snippets of script to Git to get Turing-complete behavior
+>      for existing Git features. For example, selecting commits during a
+>      traversal (e.g., a better "log --grep"), formatting output (e.g., a
+>      better "log --format" or "for-each-ref --format").
+> 
+>   2. Writing whole new git commands in a language that is quicker or
+>      easier to develop in than C.
 
-I agree that commit count is approximate. But counting merges is really
-quite a large factor of error (in git.git, it more than doubles Junio's
-count, and represents over 20% of the total number of commits).
-
-The GitHub contributors page counts merges _and_ fails to use mailmap.
-Yuck. I'm working on fixing that now.
-
-> But not using the link is fine too. We can wait for Jeff's patch to be
-> merged.
-
-After the discussion in the PR, I am inclined to think the site (and
-possibly the manpage) should just point to some decent contributors
-graph (either GitHub, ohloh, or something else; suggestions welcome).
-Anything else is just recreating a crappy static version of something
-that could be much more dynamic and explorable.
-
-I find the ohloh one a little more informative than the GitHub graph. I
-couldn't find any others (Google Code does not seem to have one,
-kernel.org and other gitweb sites do not, and I can't think of anywhere
-else that hosts a mirror).
-
--Peff
+That's good analysis.  I agree with your use-case split, I guess I'm just not
+very aware of the places in git where (1) is important.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
