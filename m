@@ -1,109 +1,96 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v7 0/3] submodule update: add --remote for submodule's
- upstream changes
-Date: Wed, 12 Dec 2012 17:44:25 -0500
-Message-ID: <20121212224425.GA7729@odin.tremily.us>
-References: <20121204001717.GA17375@odin.tremily.us>
- <cover.1355251862.git.wking@tremily.us>
- <7vtxrr6d2f.fsf@alter.siamese.dyndns.org>
- <20121212152437.GB5157@odin.tremily.us>
- <7vzk1j3zgr.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
-Cc: Git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 23:45:01 2012
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v2 1/6] git-remote-helpers.txt: document invocation before input format
+Date: Wed, 12 Dec 2012 23:58:54 +0100
+Message-ID: <839EECE2-4459-4358-B7E8-5D64374A0540@quendi.de>
+References: <1354057407-83151-1-git-send-email-max@quendi.de> <1354057407-83151-2-git-send-email-max@quendi.de> <CAMP44s3vO9b4-XxqatEc2w3KJLqLGgyjPuKpQkAXHQwTJJEQTg@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 23:59:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiv2w-0007ec-2o
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 23:44:58 +0100
+	id 1TivGq-0002xJ-8s
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 23:59:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753593Ab2LLWol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 17:44:41 -0500
-Received: from vms173015pub.verizon.net ([206.46.173.15]:54948 "EHLO
-	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094Ab2LLWok (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 17:44:40 -0500
-Received: from odin.tremily.us ([unknown] [72.68.110.234])
- by vms173015.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MEX00IYMWI1NX90@vms173015.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 12 Dec 2012 16:44:30 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 5B2B271CBE0; Wed,
- 12 Dec 2012 17:44:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1355352265; bh=rbc9A8AQiec/6Es7ApSNgzPWP6paIEl0FloTAUaVUXM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=m7P+wm397LXSBuHBWcqDQ1UKpZ3b/HAUqKuObOKGKNSjgCQWh+GFEBVtF4m7C+d9Y
- PfEXgvoYsTS0Swuyzd1ECehwF1QidWfdI/1uOswG6OFjZC21uGMRdFP/cWUuPvlfzL
- DV9Zjo97GvolyiqgT0K0d6tjuRznE5dQ1wC65Icg=
-Content-disposition: inline
-In-reply-to: <7vzk1j3zgr.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755211Ab2LLW7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 17:59:03 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:42930 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754013Ab2LLW7B convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 17:59:01 -0500
+Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1TivGQ-0005YW-0f; Wed, 12 Dec 2012 23:58:54 +0100
+In-Reply-To: <CAMP44s3vO9b4-XxqatEc2w3KJLqLGgyjPuKpQkAXHQwTJJEQTg@mail.gmail.com>
+X-Mailer: Apple Mail (2.1283)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1355353141;d1ba251a;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211407>
 
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 12.12.2012, at 23:14, Felipe Contreras wrote:
 
-On Wed, Dec 12, 2012 at 10:19:32AM -0800, Junio C Hamano wrote:
-> In any case, I ended up applying them by editing the patches, and I
-> should have a good copy in 'pu'.  Please double check the result.
+> On Tue, Nov 27, 2012 at 5:03 PM, Max Horn <max@quendi.de> wrote:
+> 
+>> index 5ce4cda..9a7e583 100644
+>> --- a/Documentation/git-remote-helpers.txt
+>> +++ b/Documentation/git-remote-helpers.txt
+>> @@ -35,6 +35,37 @@ transport protocols, such as 'git-remote-http', 'git-remote-https',
+>> 'git-remote-ftp' and 'git-remote-ftps'. They implement the capabilities
+>> 'fetch', 'option', and 'push'.
+>> 
+>> +INVOCATION
+>> +----------
+>> +
+>> +Remote helper programs are invoked with one or (optionally) two
+>> +arguments. The first argument specifies a remote repository as in git;
+>> +it is either the name of a configured remote or a URL. The second
+>> +argument specifies a URL; it is usually of the form
+>> +'<transport>://<address>', but any arbitrary string is possible.
+>> +The 'GIT_DIR' environment variable is set up for the remote helper
+>> +and can be used to determine where to store additional data or from
+>> +which directory to invoke auxiliary git commands.
+>> +
+>> +When git encounters a URL of the form '<transport>://<address>', where
+>> +'<transport>' is a protocol that it cannot handle natively, it
+>> +automatically invokes 'git remote-<transport>' with the full URL as
+>> +the second argument. If such a URL is encountered directly on the
+>> +command line, the first argument is the same as the second, and if it
+>> +is encountered in a configured remote, the first argument is the name
+>> +of that remote.
+> 
+> Maybe it's worth mentioning that if the alias of the remote is not
+> specified, the URL is used instead.
 
-Your 'pu' branch looks good to me.  Most of the differences with my
-initial patch are due to irrelevant context lines.  I would change
-patch 3 (commit 2f507f9a in 'pu') to use
+Worth a thought yeah -- but beyond the scope of this patch: I merely moved this text around, but did not touch it otherwise.
 
-  git config -f .gitmodules submodule."$sm_name".branch "$branch"
-                                           ^
-instead of
+> 
+>> +A URL of the form '<transport>::<address>' explicitly instructs git to
+>> +invoke 'git remote-<transport>' with '<address>' as the second
+>> +argument. If such a URL is encountered directly on the command line,
+>> +the first argument is '<address>', and if it is encountered in a
+>> +configured remote, the first argument is the name of that remote.
+>> +
+>> +Additionally, when a configured remote has 'remote.<name>.vcs' set to
+>> +'<transport>', git explicitly invokes 'git remote-<transport>' with
+>> +'<name>' as the first argument. If set, the second argument is
+>> +'remote.<name>.url'; otherwise, the second argument is omitted.
+> 
+> I find all this text a bit confusing. First argument, second argument,
+> etc. Personally, I would describe everything in the terms of alias
+> (1st arg), and URL (2nd arg).
 
-  git config -f .gitmodules submodule."$sm_path".branch "$branch"
-                                           ^
-to match the nearby changes from 73b0898d.
+Yeah, I also thought about that, but as above, deliberately did not touch it here, but only moved it around. I'll be happy to revisit this on a future date, though.
 
-Trevor
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---k+w/mQv8wyuph6w0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQyQjIAAoJEEUbTsx0l5OMmhsQAIckKzQienn6Jyz1A2s8QD+F
-PYTyyGQZzdvfcbL4H7Rppaef1bm9Wp4S/cIRXvx6kjEh57VWFmdLV7D5I7cUpZVE
-0U3f3VixnO6kcaCCKLxpXzCMkcJsE6y5dkoZBh2LF0QED7bGOBkF6toVbGtKakNI
-zJnOdNSKez3lwxZd+R52vrSecX6WoFyQHIHmRXwWUAyw2gHj7/SdGUPCqXMRkrjL
-lJagxsy0/sk6GbYtUE/E1T8mZDM1qXHlGvz0R1YCQE5vTi7Zrst2BBAXz5gc6Qmj
-hzHq0J3OpaRn2VAY3CMja4KDAlH2W3Dk7LF78JW2Gg8RbmC0LmsnvK7OlvfbB9gv
-+eF34b268N16M9q+AcRqkPtm66NJy5BAXCVqbM3jTcDnnRWjWVuc1O4aN9HWL6kU
-Yd/4RHJ1E9vM5juX0x6c0hW7YLjjj+AP803SRHHNxGPZJ3T3Pd+2/AB+4cSuVByQ
-IKnTwOfHi/CaLXNTOfpwQeY3gH/Bnq1Y50b/kCSPt0johApWTYP4fO3kdqAHogHt
-5MaOSNvfEx1EtlnYVpUTpQNCaQom2FNRYwPOwcD6xG6Ryzjwo8Gd3+qynXydTbZZ
-tvMEwNJDA6L+m97uOZhr5zYfmHgtyrtSZ752mD7x/QJ7AHR25uu59+KMfFmVNcoV
-iYmgCCjLj0nUr37Nugla
-=ZiNV
------END PGP SIGNATURE-----
-
---k+w/mQv8wyuph6w0--
+Thanks for the feedback,
+Max
