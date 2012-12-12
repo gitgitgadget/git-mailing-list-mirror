@@ -1,67 +1,90 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Fwd: possible Improving diff algoritm
-Date: Thu, 13 Dec 2012 09:34:41 +1100
-Message-ID: <CAH5451=4dqqMnQa-R6O4ZrHOPSpHU9joWqf2UuOkbLtU9f8bkQ@mail.gmail.com>
-References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
- <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com>
- <7vvcc73yzh.fsf@alter.siamese.dyndns.org> <CANv4PNm45xGBn2veKi1o0wB4K9NgsbtCsiymHNO4xbCDpJ5tDg@mail.gmail.com>
- <7vpq2f2az4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Python extension commands in git - request for policy change
+Date: Wed, 12 Dec 2012 14:43:16 -0800
+Message-ID: <7vhanq3n97.fsf@alter.siamese.dyndns.org>
+References: <20121125024451.1ADD14065F@snark.thyrsus.com>
+ <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+ <50B1F684.5020805@alum.mit.edu>
+ <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
+ <CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
+ <CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
+ <20121212033043.GA24937@thyrsus.com>
+ <20121212063208.GA18322@sigill.intra.peff.net>
+ <7vpq2f5ffu.fsf@alter.siamese.dyndns.org>
+ <CAH5451nVqnS0UFBVDW5=Xmaj_6geiw7D7J4mR7922U+074W2qQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Morten Welinder <mwelinder@gmail.com>, Kevin <ikke@ikke.info>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 23:35:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, "Eric S. Raymond" <esr@thyrsus.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Patrick Donnelly <batrick@batbytes.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 23:43:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiute-0007cT-Bt
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 23:35:22 +0100
+	id 1Tiv1d-0006TW-Rd
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 23:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755638Ab2LLWfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 17:35:03 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:36146 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755582Ab2LLWfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 17:35:01 -0500
-Received: by mail-qa0-f46.google.com with SMTP id r4so5313482qaq.19
-        for <git@vger.kernel.org>; Wed, 12 Dec 2012 14:35:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cJCmkhUjaRzZFsl9CTg/4GerczJCWRNarE88WeHbgBg=;
-        b=nc9IWYpPI6YjRwEWLV+StP8fYIg8T9jb8XoVbea03WfmXMMiNWenJ4q3f4X4XDrXRe
-         zMp62diAShze7jEJi2DRlCH6uxpEpGsK/0ioB4DDl5PJ+k712Y3Ymdry9RCra4l+r80K
-         MfcLwjS59wTRfcBlBib9hka0XcSR2nLsSDT6DAD/ncS6KbUYKa54AgEDsaaqhXB2LSLv
-         lnbJv5O8WtL8JkTWhUNKGdJ0u8DNwaXRvuf7fxhfLXHlHvCidKSitbIwKVWza8/tca7W
-         TKulfvLAlSuxY/ke4GFXMwnq8o95xslgH1tMdMQ2dwrBhVuTHXhGt5GBecdgJ26+ylBi
-         16/Q==
-Received: by 10.49.48.104 with SMTP id k8mr6153243qen.49.1355351701103; Wed,
- 12 Dec 2012 14:35:01 -0800 (PST)
-Received: by 10.49.14.3 with HTTP; Wed, 12 Dec 2012 14:34:41 -0800 (PST)
-In-Reply-To: <7vpq2f2az4.fsf@alter.siamese.dyndns.org>
+	id S1755187Ab2LLWnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 17:43:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45517 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754245Ab2LLWnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 17:43:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04810A863;
+	Wed, 12 Dec 2012 17:43:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lVUx2BTs+yq2xv4UM1gL+7r5IgY=; b=Tuq95T
+	F1vFxN3E5sn5bUvKsL58npZwElBYUXdBn2Kuk/Mdfw5LWpBayRTkr17T7bzIR7y/
+	sTOsPCOChg7FGdXEBNO6KRG2e42J2KJFuTyku3ri8vukqGV1GE+AyuumKpEtq6pu
+	AEvQjj7Lq3jQASckZZBWa6QJRBz7RB8jVtHn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AXDsGWQC7NBiceVgsnoB85tkYH6srC0z
+	bYGqExat+Nzm/bkaBHvt4UJ68/BpS19QMZr81s1j1ZwVIGscTnW3X2EKHkhYjcox
+	1a7RCDDjcOccKEzf+EuO2v6IRppFUR/hu6sDwZ9idmrPir8Qwct6YPGE3pUruIK0
+	FQEF5ywzVuY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E120FA862;
+	Wed, 12 Dec 2012 17:43:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33BD6A85D; Wed, 12 Dec 2012
+ 17:43:18 -0500 (EST)
+Importance: high
+In-Reply-To: <CAH5451nVqnS0UFBVDW5=Xmaj_6geiw7D7J4mR7922U+074W2qQ@mail.gmail.com> (Andrew
+ Ardill's message of "Thu, 13 Dec 2012 09:21:55 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 52C00D64-44AD-11E2-BB22-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211405>
 
-On 13 December 2012 08:53, Junio C Hamano <gitster@pobox.com> wrote:
-> The output being "a correct patch" is not the only thing we need to
-> consider, though, as I mentioned in another response to Kevin
-> regarding the "consequences".
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-The main benefit of picking a more 'natural' diff is a usability one.
-I know that when a chunk begins and ends one line after the logical
-break point (typically with braces in my experience) mentally parsing
-the diff becomes significantly harder. If there was a way to teach git
-where it should try and break out a chunk (potentially per filetype?)
-this is a good thing for readability, and I think would outweigh any
-temporary pain with regards to cached rerere and diff data.
+> On 13 December 2012 04:49, Junio C Hamano <gitster@pobox.com> wrote:
+>> "bisect" with "<used-to-be, now-is> vs
+>> <good, bad>" issue unsettled
+>
+> Would you want to see this issue resolved in-script before a porting
+> attempt was started?
 
-Regards,
+Honestly, I do not care too much either way, but for the people who
+want to work either on the rewrite-to-C or on the semantics issue,
+it would be easier to manage it that way.
 
-Andrew Ardill
+And that "issue resolved in-script" does not have to be "implemented
+in-script".  The resolution could be to declare that it is not worth
+it and a promise to call the two states <good, bad> and with no
+other names.  It would give a semantics for the rewriters-to-C can
+start working on that is stable enough ;-).
