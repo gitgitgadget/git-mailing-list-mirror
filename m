@@ -1,110 +1,100 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v2] submodule: add 'deinit' command
-Date: Wed, 12 Dec 2012 23:25:45 +0100
-Message-ID: <50C90469.8080303@web.de>
-References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de> <20121130175309.GA718@odin.tremily.us> <CABURp0qNBcFnxbvhn7PsKWLUOsTiK4u5vx-=6cG3JQHw9aUeHA@mail.gmail.com> <50BA2892.7060706@web.de> <50BA3412.60309@web.de> <7vy5hhmcwp.fsf@alter.siamese.dyndns.org> <50BBB22A.7050901@web.de> <7vhao31s9e.fsf@alter.siamese.dyndns.org> <50BE6FB9.70301@web.de> <50C89DF3.20303@drmicha.warpmail.net> <50C8BD6B.9010702@web.de> <7vr4mv3w2x.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] completion: add option --recurse-submodules to "git push"
+Date: Wed, 12 Dec 2012 16:30:40 -0600
+Message-ID: <CAMP44s2GYoR1fM-jEj9inO58ATgix5FuZouqZg2+tU47BOaTew@mail.gmail.com>
+References: <1354883304-6860-1-git-send-email-steffen.jaeckel@stzedn.de>
+	<7vehj1ixr6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nahor <nahor.j+gmane@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Steffen Jaeckel <steffen.jaeckel@stzedn.de>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 23:26:29 2012
+X-From: git-owner@vger.kernel.org Wed Dec 12 23:31:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiukz-0008Ai-Ts
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 23:26:26 +0100
+	id 1TiupN-0003md-Nz
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 23:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755506Ab2LLW0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 17:26:08 -0500
-Received: from mout.web.de ([212.227.15.4]:56473 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754245Ab2LLW0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 17:26:07 -0500
-Received: from [192.168.178.41] ([91.3.191.206]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MXHXF-1TfSLg2S4T-00WDY2; Wed, 12 Dec 2012 23:25:50
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vr4mv3w2x.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.6
-X-Provags-ID: V02:K0:WBFiM+Ozi9oY5ZhA79KE1WP8KqbzgwvozbhtfUbCUWO
- hr7NmcA4BKg56/lx5EE8re6/gBuAi5ipAH2hr5Ymf22o/CiT5L
- QmOXzhrZx087CEXJf6MWzpYWTPvJptrHnqqPwqWmlsgAcGJ+bS
- NQVCQ9OxK0ouSItjY/hOHhWihOM0O9tLlucoBa2VnROalQ+qRA
- ZUyz0OaWzwMwXaykudZQA==
+	id S1755561Ab2LLWal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 17:30:41 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:38411 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755329Ab2LLWak (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 17:30:40 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so1381206oag.19
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 14:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=DnX32Hr7E/9vjljI2wYe8yyJEwdBdAMeJ+yxuXnRkqA=;
+        b=SyTteJnGrXp1R/fXVnkCDQInD73C5iMj/OVwWkOOYbrilWyIu5a4U7UOSv6QU2f+u5
+         ABdKBjCNv0RAglIBR9Q3YpWr5FFwQnSm2plNuHwe7rG6Q29/IsF/o8zUNO0SuAe8Eodz
+         fjhyaGViLSTc5cW+OwaW01cALOUj/TfZOZ2CIUTC0XFUI4Oabms5ST183oGKhDNOYgFV
+         DREMi5zXfiFgxGQ7Iw0SnG79VJmddkEB7iMTbSmwccTgBUY+zZE2jTLniGvl8pOkzyto
+         h4ZosMs2x9RR7NMsm2iQjKPPbdunD0Lweiw6pVOOzYDBL4HRlDuVdhnVnLIFvYs4aVND
+         5cMw==
+Received: by 10.182.111.104 with SMTP id ih8mr1384677obb.13.1355351440063;
+ Wed, 12 Dec 2012 14:30:40 -0800 (PST)
+Received: by 10.60.32.196 with HTTP; Wed, 12 Dec 2012 14:30:40 -0800 (PST)
+In-Reply-To: <7vehj1ixr6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211401>
 
-Am 12.12.2012 20:32, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Especially as I suspect the number of submodule users having
->> customized those in .git/config is not that high ...
-> 
-> I thought the point of "deinit" was to say "I am not interested in
-> having a checkout of these submodules in my working tree anymore".
+On Fri, Dec 7, 2012 at 11:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Steffen Jaeckel <steffen.jaeckel@stzedn.de> writes:
+>
+>> Signed-off-by: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
+>> ---
+>>  contrib/completion/git-completion.bash | 9 +++++++++
+>>  1 file changed, 9 insertions(+)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 0b77eb1..5b4d2e1 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1434,6 +1434,10 @@ _git_pull ()
+>>       __git_complete_remote_or_refspec
+>>  }
+>>
+>> +__git_push_recurse_submodules_options="
+>> +     check on-demand
+>> +"
+>
+> Most of the existing completion functions do not seem to define
+> separate variables like this; instead, they literally embed their
+> choices at the point of use.
+>
+> Is it expected that the same set of choices will appear in the
+> completion of many other subcommand options?  [jc: Cc'ed Heiko so
+> that we can sanity check the answer to this question].  If so, the
+> variable may be justified; otherwise, not.
+>
+>>  _git_push ()
+>>  {
+>>       case "$prev" in
+>> @@ -1446,10 +1450,15 @@ _git_push ()
+>>               __gitcomp_nl "$(__git_remotes)" "" "${cur##--repo=}"
+>>               return
+>>               ;;
+>> +     --recurse-submodules=*)
+>> +             __gitcomp "$__git_push_recurse_submodules_options" "" "${cur##--recurse-submodules=}"
+>> +             return
+>> +             ;;
+>
+> Owners of the completion script, does this look reasonable?
+> [jc: Cc'ed Felipe for this]
+>
+> This is a tangent, but why is it a double-hash "##" not a
+> single-hash "#", other than "because all others use ##"?
 
-Yes. (But I'm not sure users expect that command to also remove
-the work tree)
+Seems OK by me, but I agree, the options should be inline.
 
-> The user could do "rm -fr submodule && mkdir submodule" to remove it
-> locally and keep "diff" and "status" from noticing the removal, but
-> the primary reason the user needs an explicit "deinit" is because
-> many subcommands of "git submodule" are documented to operate on all
-> submodules that have been "init"ed when given no explicit submodule
-> names [*1*].
-
-The real reason we need deinit is that the next run of "submodule
-update" will otherwise happily recreate the submodule checkout you
-just removed as long as it finds the url setting in .git/config.
-
-> Your "deinit" is documented not to actually remove the submodule
-> checkout, but that very much goes against my intuition.  What is the
-> justification behind that choice?
-
-I thought it should match what "submodule init" does, which is to do
-nothing to the work tree until the next "submodule update" is run.
-(But I agree that analogy is somewhat flawed until we teach "update"
-to remove a deinitialized submodule - or maybe teach it the --deinit
-option which could do both). On the other hand with current git
-submodule work trees always stay around anyway until you remove them
-by hand (e.g. when you switch to a branch that doesn't have it), so
-I'm not sure what would surprise people more here. So I just left
-the work tree unchanged.
-
-> "We'll remove the configuration,
-> you remove the tree yourself" will invite the mistake of running
-> "git rm" on it, which you wanted to avoid with the addition to the
-> "git rm" documentation, no?
-
-I think that'll happen only if git would remind them that they
-still have a populated work tree, which I believe it shouldn't.
-
-> [Footnote]
-> 
-> *1* In reality, the code looks at presense of .git in the submodule
-> path to decide if it has been "init"ed (cf. cmd_update), but this
-> implementation of "deinit" does not seem to cause that .git to be
-> removed, leaving the submodule in "init"ed state from these other
-> command's perspective.
-
-Nope, cmd_update() checks first if the url is found in .git/config
-and skips the submodule if not. I rechecked and only "summary" and
-"foreach" still recurse into a deinitialized submodule, which they
-shouldn't. But a quick test shows that "git status" and "git diff"
-also still inspect a deinitialized submodule, so there's some work
-left to do to handle the case where the work tree is not removed.
-
-So unless people agree that deinit should also remove the work
-tree I'll prepare some patches teaching all git commands to
-consistently ignore deinitialized submodules. Opinions?
+-- 
+Felipe Contreras
