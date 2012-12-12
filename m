@@ -1,83 +1,120 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC/PATCH] ignoring a fetch that overwrites local symref
-Date: Wed, 12 Dec 2012 11:13:01 -0800
-Message-ID: <CAJo=hJu2X5u4oCGRVHK5a4sbf4X2meUbq_8kaGiQB1mdQspaXw@mail.gmail.com>
-References: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
- <1271714912-56659-1-git-send-email-jaysoffian@gmail.com> <7v62488j8a.fsf_-_@alter.siamese.dyndns.org>
+From: Kevin <ikke@ikke.info>
+Subject: Re: Fwd: possible Improving diff algoritm
+Date: Wed, 12 Dec 2012 20:30:01 +0100
+Message-ID: <CAO54GHANKuv_+S-FJzrTfeFyiXcKDbm5hLGdADQ7GVMh7jEMxw@mail.gmail.com>
+References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
+ <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com> <7vvcc73yzh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, Jay Soffian <jaysoffian@gmail.com>,
-	Stefan Zager <szager@google.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 20:13:40 2012
+X-From: git-owner@vger.kernel.org Wed Dec 12 20:30:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TirkR-0005qS-VO
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 20:13:40 +0100
+	id 1Tis0w-0001U3-EI
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 20:30:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754295Ab2LLTNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 14:13:22 -0500
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:44516 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752766Ab2LLTNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 14:13:21 -0500
-Received: by mail-qa0-f53.google.com with SMTP id a19so1568184qad.19
-        for <git@vger.kernel.org>; Wed, 12 Dec 2012 11:13:21 -0800 (PST)
+	id S1754779Ab2LLTaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 14:30:25 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:55469 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754076Ab2LLTaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 14:30:24 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so469454wey.19
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 11:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=95QexTOny30fzIji5EqX/1VRAdpoDvGJ4Rf8XKWbAOc=;
-        b=fhMwCYiTHu3UmDe8/U1OlX/x/FSkr76jtokUIfP4QVueG2CfGab3TURz5MBhAfvXWU
-         FtNp1wP7p7Xx5rwNBILTXo8C+zft+769lNZo95ymlDq6Go/AqepCX6cP4enkqdQXnQPm
-         C9qhO8cUIp5DRLSakkuNn8LaGp6+Qk3dz8Pxs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=95QexTOny30fzIji5EqX/1VRAdpoDvGJ4Rf8XKWbAOc=;
-        b=K+13QLTkr/T1K5jp33JY2uQVzBTUG6sWkvHzO4KKyRgPo8P9J8UguWk3tDlvx2puhJ
-         bOScuEd8Hpx6HQeo90d0Ht3e3UOFbQaTEofLc46ZMevjLX4M9Y2xBQtw9usSc9qMXGJp
-         vPLu9hzj7l6jYpZFsS7Yzu3uwvG37t7j6tZrt3syYUwHeI0L7lyiIwZTqa+L+oLxZWYc
-         QUhHnLahDP6TxjoJgMx5FI6eOHkNO5KFPlJYF/vzzbsEOKnrQy2WrYnM6blBiyT/971w
-         y+zjQSC5CwL/WCl7+LRdLUyFN1V4C1o6KB5zPX3/9XRZcPk+peOLUijgKVC/SH6cOfL0
-         782A==
-Received: by 10.229.75.224 with SMTP id z32mr1037853qcj.148.1355339601147;
- Wed, 12 Dec 2012 11:13:21 -0800 (PST)
-Received: by 10.49.60.198 with HTTP; Wed, 12 Dec 2012 11:13:01 -0800 (PST)
-In-Reply-To: <7v62488j8a.fsf_-_@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQmlfdbBJRrIY06gISwPqr0xcbziC6hqlVURYYpbIHlP1j6RxFyWihXqCFZLvz0uLlqTtkP6
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=CIpAG6EGgSfLitCR3pyDhIvrB9gkDsoKHpwBn+Hptw0=;
+        b=Oieu6QliM5RYm+9ZVNmnAeKQsi8SuJCl+sMGfL8tDT6iJxnxjTB4fXpplrM4ztn0zo
+         IJfzUf5kmVBrK8QfQmqhv4VthSxGFYlHAKvFgml0oFVzjCpS+5NSVV7s843ShOs67D70
+         ZcyOjOWBlQIBNdhFIn0YhFtXhqYhnasys1g1jlURSX7ec7cnfuLdcEnmtZvgRVoZIHS1
+         TwDpGJ0ImOMLghDTXl22FyipbcbGmjIWWyxzZ4fwFiWVXTFcxm/icCecZBKY/4ZdwK1n
+         Z6RoNcFj/kUJ96KNzGR56kG3JsgAbzlrmXa2bqws1ipEjkS07NDiAkN4voheOiwUPBFx
+         teAw==
+Received: by 10.180.19.73 with SMTP id c9mr24750566wie.8.1355340622855; Wed,
+ 12 Dec 2012 11:30:22 -0800 (PST)
+Received: by 10.227.9.14 with HTTP; Wed, 12 Dec 2012 11:30:01 -0800 (PST)
+In-Reply-To: <7vvcc73yzh.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: pMO1xW8_IHaPAqOEHs8BINvGOow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211384>
 
-On Tue, Dec 11, 2012 at 11:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> This is a companion to an ancient thread
->
->     http://thread.gmane.org/gmane.comp.version-control.git/145311/focus=145337
->
-> in which an error was dealt with while pushing into a "mirror"
-> repository that has a symbolic reference refs/remotes/origin/HEAD
-> pointing at refs/remotes/origin/master with "git push --mirror".
-> The issue was that the receiving end was told to update origin/HEAD
-> and origin/master separately; if origin/HEAD is updated, that would
-> update origin/master at the same time, and then when attempting to
-> update origin/master, it would notice that it no longer has the
-> expected old value and barf.  After the series, we started ignoring
-> such pushes to HEAD on the receiving end.
->
-> But you can suffer from a similar issue transferring objects in the
-> opposite direction.  If you run "fetch --mirror" in to such a
-> "mirror" repository, the other side would advertise both 'master'
-> and 'HEAD' under refs/remotes/origin/ hierarchy, and refs/*:refs/*
-> wildcard would try to grab both of them.
->
-> Work it around by noticing a wildcard match that attempts to update
-> a local symbolic ref and ignoring it.
+Yeah, I didn't mention it, but I didn't think it was doing this wrong
+in a systematic way. I only wondered if there was some kind of
+heuristic that could improve the cases where it goes wrong, without
+affecting the cases where it would do it right.
 
-At what point should we just support symrefs on the protocol? :-(
+I know this is not an easy problem, lest it would already been fixed.
+
+On Wed, Dec 12, 2012 at 7:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Kevin <ikke@ikke.info> writes:
+>
+>> Regularly I notice that the diffs that are provided (through diff, or
+>> add -p) tend to disconnect changes that belong to each other and
+>> report lines being changed that are not changed.
+>>
+>> An example for this is:
+>>
+>>      /**
+>> +     * Default parent
+>> +     *
+>> +     * @var int
+>> +     * @access protected
+>> +     * @index
+>> +     */
+>> +    protected $defaultParent;
+>> +
+>> +    /**
+>>
+>> I understand this is a valid view of what is changed, but not a very
+>> logical view from the point of the user.
+>>
+>> I wondered if there is a way to improve this, or would that have other
+>> consequences.
+>
+> I think your example shows a case where the end of the pre-context
+> matches the end of the added text in the hunk, and it appears it may
+> produce a better result if you shift the hunk up.  But I think that
+> works only half the time.  Imagine:
+>
+>    @@ -K,L +M,N @@
+>     }
+>
+>    +void new_function(void)
+>    +{
+>    +  printf("hello, world.\n");
+>    +}
+>    +
+>     void existing_one(void)
+>     {
+>       printf("goodbye, world.\n");
+>
+> Here the end of the pre-context matches the end of the added lines,
+> but it will produce worse result if you blindly apply the "shift the
+> hunk up" trick:
+>
+>      ... what was before the } we saw in the precontext ...
+>    +}
+>    +
+>    +void new_function(void)
+>    +{
+>    +  printf("hello, world.\n");
+>     }
+>
+>     void existing_one(void)
+>
+> So I think with s/Regularly/About half the time/, your observation
+> above is correct.
+>
+> I think the reason you perceived this as "Regularly" is that you do
+> not notice nor appreciate it when things go right (half the time),
+> but you tend to notice and remember only when a wrong side happened
+> to have been picked (the other half).
