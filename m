@@ -1,98 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git(1): remove a defunct link to "list of authors"
-Date: Wed, 12 Dec 2012 10:06:24 -0800
-Message-ID: <7v8v935en3.fsf@alter.siamese.dyndns.org>
-References: <7vobi5hhn9.fsf@alter.siamese.dyndns.org>
- <7vk3sthhfy.fsf@alter.siamese.dyndns.org>
- <CACsJy8A7AYpZs7mTc+B-F7BBLPdACim=gHCg8sK1Aci8YSEB4Q@mail.gmail.com>
- <7vboe2ct9p.fsf@alter.siamese.dyndns.org>
- <CACsJy8Dg1a0siDbiHtk4m1RhjLt-XKiS8kOO7qPKjwRczLF9vA@mail.gmail.com>
- <20121212122448.GA20057@sigill.intra.peff.net>
+Subject: Re: [PATCH] index-format.txt: be more liberal on what can represent
+ invalid cache tree
+Date: Wed, 12 Dec 2012 10:14:03 -0800
+Message-ID: <7v4njr5eac.fsf@alter.siamese.dyndns.org>
+References: <1355316276-7661-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 12 19:06:50 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 19:14:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiqhk-0001Je-Az
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 19:06:48 +0100
+	id 1Tiqp9-0000r5-0F
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 19:14:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755128Ab2LLSG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 13:06:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43671 "EHLO
+	id S1754586Ab2LLSOI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2012 13:14:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48204 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755232Ab2LLSG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 13:06:27 -0500
+	id S1754143Ab2LLSOF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2012 13:14:05 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 920DDA512;
-	Wed, 12 Dec 2012 13:06:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 72357A785;
+	Wed, 12 Dec 2012 13:14:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2/5f40I0jcJldyv4JQFCT/UTs4A=; b=DIqzj0
-	jeKf/N90JQbjzt4iuLU7e0kkli/4wLBoFT5qOEF8QXC0umC3BEkt114LT0IxBamB
-	QdkL1Iyf0v6HM7BaNQaqyO5EAmTCxMfuDiFaDBT0f/6EyedmgFcUKG/SifcsjJc7
-	bV9Utnsa/lz+HV1E5uIq8eoPj0Q5lKaf/QwwM=
+	:content-type:content-transfer-encoding; s=sasl; bh=5kinjuyFusMd
+	nEYNjU3xV6Afnrk=; b=BaSQJVeitrg3nNRHWKZsUYkr6Dhq5xRpIdVKP5MIfeaG
+	+ObzCp5l6h78jzYVLT7MLV95pfPd+Ho7zwTz45pR4so2QEwzeWc0/bR5tUt3Kz7m
+	EOH+0B2opabqQjPnqJR1Yw5sIgNZWJ7c1b67UCBA5oD8C7j5H/PXTGm6eX0fTkA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M98GZTXKaCBntUh77VY/M5EooJy25EXv
-	XvBVKF7BUu/5/kvsBIGPEg+0SbLQZy9dZSQeIXhiKSzXZw2OwYl13D7MfQ/mRyDq
-	bHEgZo4noOCre1rzZ0hapan9UCQ0BLRqXv5T5aFtlc/8JtzJHMf8L6HHrEwT4z4+
-	ANtjm+nH3hs=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=g7LEEl
+	yySQC/XVS4iP3OEVmUigi2UYxLgYczP+mIL89/lYvd7t9x2edT3ttPgEvjFypoH5
+	v8xUMIYvQbv1+lAyINmn6LPu2UkD2nSEEU21GlBltf6xC1lJfHJfOUakoK/3syEm
+	lGoLbGUuEG4azYlx/d27QjkoG+Js5QP8/VutI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EDCDA511;
-	Wed, 12 Dec 2012 13:06:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60154A784;
+	Wed, 12 Dec 2012 13:14:05 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F41C9A510; Wed, 12 Dec 2012
- 13:06:25 -0500 (EST)
-In-Reply-To: <20121212122448.GA20057@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 12 Dec 2012 07:24:48 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2171A783; Wed, 12 Dec 2012
+ 13:14:04 -0500 (EST)
+In-Reply-To: <1355316276-7661-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 12 Dec
+ 2012 19:44:36 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A50F4C28-4486-11E2-BC28-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B67BB158-4487-11E2-B033-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211378>
 
-Jeff King <peff@peff.net> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> I find the ohloh one a little more informative than the GitHub graph. I
-> couldn't find any others (Google Code does not seem to have one,
-> kernel.org and other gitweb sites do not, and I can't think of anywhere
-> else that hosts a mirror).
+> We have been writing -1 as "invalid" since day 1. On that same day we
+> accept all negative entry counts as "invalid". So in theory all C Git
+> versions out there would be happy to accept any negative numbers. JGi=
+t
+> seems to do exactly the same.
 
-Then let's do this.
+I am of two minds here.
 
--- >8 --
-Subject: git(1): show link to contributor summary page
+The existing code is being more lenient than specified when they
+read stuff others wrote, but it still adheres to -1 when writing.
+Allowing random implementations to write random negative values will
+close the door for us to later update the specification to encode
+more informatin about these invalid entries by using negative value
+other than -1 here.
 
-We earlier removed a link to list of contributors that pointed to a
-defunct page; let's use a working one from Ohloh.net to replace it
-instead.
+I am OK with a reword to say "negative means invalid, and writers
+should write -1 for invalid entries", but without the latter half,
+this change is not justified.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git c/Documentation/git.txt w/Documentation/git.txt
-index e643683..25e2f3a 100644
---- c/Documentation/git.txt
-+++ w/Documentation/git.txt
-@@ -869,7 +869,10 @@ Authors
- -------
- Git was started by Linus Torvalds, and is currently maintained by Junio
- C Hamano. Numerous contributions have come from the git mailing list
--<git@vger.kernel.org>.  If you have a clone of git.git itself, the
-+<git@vger.kernel.org>.  http://www.ohloh.net/p/git/contributors/summary
-+gives you a more complete list of contributors.
-+
-+If you have a clone of git.git itself, the
- output of linkgit:git-shortlog[1] and linkgit:git-blame[1] can show you
- the authors for specific parts of the project.
- 
+> diff --git a/Documentation/technical/index-format.txt b/Documentation=
+/technical/index-format.txt
+> index 9d25b30..2028a49 100644
+> --- a/Documentation/technical/index-format.txt
+> +++ b/Documentation/technical/index-format.txt
+> @@ -161,8 +161,8 @@ GIT index format
+>      this span of index as a tree.
+> =20
+>    An entry can be in an invalidated state and is represented by havi=
+ng
+> -  -1 in the entry_count field. In this case, there is no object name
+> -  and the next entry starts immediately after the newline.
+> +  a negative number in the entry_count field. In this case, there is=
+ no
+> +  object name and the next entry starts immediately after the newlin=
+e.
+> =20
+>    The entries are written out in the top-down, depth-first order.  T=
+he
+>    first entry represents the root level of the repository, followed =
+by the
