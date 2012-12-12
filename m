@@ -1,120 +1,96 @@
-From: Kevin <ikke@ikke.info>
-Subject: Re: Fwd: possible Improving diff algoritm
-Date: Wed, 12 Dec 2012 20:30:01 +0100
-Message-ID: <CAO54GHANKuv_+S-FJzrTfeFyiXcKDbm5hLGdADQ7GVMh7jEMxw@mail.gmail.com>
-References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
- <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com> <7vvcc73yzh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] submodule: add 'deinit' command
+Date: Wed, 12 Dec 2012 11:32:38 -0800
+Message-ID: <7vr4mv3w2x.fsf@alter.siamese.dyndns.org>
+References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de>
+ <20121130175309.GA718@odin.tremily.us>
+ <CABURp0qNBcFnxbvhn7PsKWLUOsTiK4u5vx-=6cG3JQHw9aUeHA@mail.gmail.com>
+ <50BA2892.7060706@web.de> <50BA3412.60309@web.de>
+ <7vy5hhmcwp.fsf@alter.siamese.dyndns.org> <50BBB22A.7050901@web.de>
+ <7vhao31s9e.fsf@alter.siamese.dyndns.org> <50BE6FB9.70301@web.de>
+ <50C89DF3.20303@drmicha.warpmail.net> <50C8BD6B.9010702@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 20:30:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Dec 12 20:32:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tis0w-0001U3-EI
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 20:30:42 +0100
+	id 1Tis38-00043h-QY
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 20:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754779Ab2LLTaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 14:30:25 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:55469 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754076Ab2LLTaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 14:30:24 -0500
-Received: by mail-we0-f174.google.com with SMTP id x10so469454wey.19
-        for <git@vger.kernel.org>; Wed, 12 Dec 2012 11:30:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=CIpAG6EGgSfLitCR3pyDhIvrB9gkDsoKHpwBn+Hptw0=;
-        b=Oieu6QliM5RYm+9ZVNmnAeKQsi8SuJCl+sMGfL8tDT6iJxnxjTB4fXpplrM4ztn0zo
-         IJfzUf5kmVBrK8QfQmqhv4VthSxGFYlHAKvFgml0oFVzjCpS+5NSVV7s843ShOs67D70
-         ZcyOjOWBlQIBNdhFIn0YhFtXhqYhnasys1g1jlURSX7ec7cnfuLdcEnmtZvgRVoZIHS1
-         TwDpGJ0ImOMLghDTXl22FyipbcbGmjIWWyxzZ4fwFiWVXTFcxm/icCecZBKY/4ZdwK1n
-         Z6RoNcFj/kUJ96KNzGR56kG3JsgAbzlrmXa2bqws1ipEjkS07NDiAkN4voheOiwUPBFx
-         teAw==
-Received: by 10.180.19.73 with SMTP id c9mr24750566wie.8.1355340622855; Wed,
- 12 Dec 2012 11:30:22 -0800 (PST)
-Received: by 10.227.9.14 with HTTP; Wed, 12 Dec 2012 11:30:01 -0800 (PST)
-In-Reply-To: <7vvcc73yzh.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: pMO1xW8_IHaPAqOEHs8BINvGOow
+	id S1754876Ab2LLTcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 14:32:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37066 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754602Ab2LLTcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 14:32:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 725B3A9CF;
+	Wed, 12 Dec 2012 14:32:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/0OpLRSUF3vIIjEfedcpKIwbWS8=; b=LbEWdM
+	mYXYC4r5ZCqqewSdU8Z+tDYFPhuUpoyvVMbDoBD3EFO/7C7eyGpG9Z5k5qGIyDO/
+	rv+neBJ4iQWd11HkGwC7owRaS6VgiFmHk6sjSsVKdceo/eSrWpDlpvr8qkQMYTMo
+	28GSYnQcjeXgdv8f2f06QYJrBOUsIGJJKo1Vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=auS+G52bIrB134QB17xr1J1xYHSO35qS
+	DRqnmnVgGLLfQZvoCM1K+r/kBSaxiByPd9FRjQ5Te0mhfQKLh9DHHimzul+Xn/n1
+	iXyy8pM7PPLWYWU/VO3Hf/vTB1+Wt2B9zM1cyX9hGBmK/DADbVaf5dlFxR4rDonV
+	Ge2Xlkf/ICI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EED7A9CE;
+	Wed, 12 Dec 2012 14:32:40 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C55E0A9CC; Wed, 12 Dec 2012
+ 14:32:39 -0500 (EST)
+In-Reply-To: <50C8BD6B.9010702@web.de> (Jens Lehmann's message of "Wed, 12
+ Dec 2012 18:22:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B0E871E4-4492-11E2-9FAD-995F2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211385>
 
-Yeah, I didn't mention it, but I didn't think it was doing this wrong
-in a systematic way. I only wondered if there was some kind of
-heuristic that could improve the cases where it goes wrong, without
-affecting the cases where it would do it right.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-I know this is not an easy problem, lest it would already been fixed.
+> Especially as I suspect the number of submodule users having
+> customized those in .git/config is not that high ...
 
-On Wed, Dec 12, 2012 at 7:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Kevin <ikke@ikke.info> writes:
->
->> Regularly I notice that the diffs that are provided (through diff, or
->> add -p) tend to disconnect changes that belong to each other and
->> report lines being changed that are not changed.
->>
->> An example for this is:
->>
->>      /**
->> +     * Default parent
->> +     *
->> +     * @var int
->> +     * @access protected
->> +     * @index
->> +     */
->> +    protected $defaultParent;
->> +
->> +    /**
->>
->> I understand this is a valid view of what is changed, but not a very
->> logical view from the point of the user.
->>
->> I wondered if there is a way to improve this, or would that have other
->> consequences.
->
-> I think your example shows a case where the end of the pre-context
-> matches the end of the added text in the hunk, and it appears it may
-> produce a better result if you shift the hunk up.  But I think that
-> works only half the time.  Imagine:
->
->    @@ -K,L +M,N @@
->     }
->
->    +void new_function(void)
->    +{
->    +  printf("hello, world.\n");
->    +}
->    +
->     void existing_one(void)
->     {
->       printf("goodbye, world.\n");
->
-> Here the end of the pre-context matches the end of the added lines,
-> but it will produce worse result if you blindly apply the "shift the
-> hunk up" trick:
->
->      ... what was before the } we saw in the precontext ...
->    +}
->    +
->    +void new_function(void)
->    +{
->    +  printf("hello, world.\n");
->     }
->
->     void existing_one(void)
->
-> So I think with s/Regularly/About half the time/, your observation
-> above is correct.
->
-> I think the reason you perceived this as "Regularly" is that you do
-> not notice nor appreciate it when things go right (half the time),
-> but you tend to notice and remember only when a wrong side happened
-> to have been picked (the other half).
+I thought the point of "deinit" was to say "I am not interested in
+having a checkout of these submodules in my working tree anymore".
+The user could do "rm -fr submodule && mkdir submodule" to remove it
+locally and keep "diff" and "status" from noticing the removal, but
+the primary reason the user needs an explicit "deinit" is because
+many subcommands of "git submodule" are documented to operate on all
+submodules that have been "init"ed when given no explicit submodule
+names [*1*].
+
+Your "deinit" is documented not to actually remove the submodule
+checkout, but that very much goes against my intuition.  What is the
+justification behind that choice?  "We'll remove the configuration,
+you remove the tree yourself" will invite the mistake of running
+"git rm" on it, which you wanted to avoid with the addition to the
+"git rm" documentation, no?
+
+
+[Footnote]
+
+*1* In reality, the code looks at presense of .git in the submodule
+path to decide if it has been "init"ed (cf. cmd_update), but this
+implementation of "deinit" does not seem to cause that .git to be
+removed, leaving the submodule in "init"ed state from these other
+command's perspective.
