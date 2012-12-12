@@ -1,63 +1,68 @@
-From: Jaime Frey <jfrey@cs.wisc.edu>
-Subject: directory permissions on AFS
-Date: Wed, 12 Dec 2012 17:39:30 -0600
-Message-ID: <0A6FA42F-986D-4C3C-BC50-9A7C0494C703@cs.wisc.edu>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 00:47:35 2012
+From: Javier Domingo <javierdo1@gmail.com>
+Subject: Re: Fwd: possible Improving diff algoritm
+Date: Thu, 13 Dec 2012 00:49:02 +0100
+Message-ID: <CALZVap=4hx6bwbuDpR5PUt-b6EtVAskw1FRo5N7zuvQRcGaqdQ@mail.gmail.com>
+References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
+ <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com>
+ <7vvcc73yzh.fsf@alter.siamese.dyndns.org> <CANv4PNm45xGBn2veKi1o0wB4K9NgsbtCsiymHNO4xbCDpJ5tDg@mail.gmail.com>
+ <7vpq2f2az4.fsf@alter.siamese.dyndns.org> <CAH5451=4dqqMnQa-R6O4ZrHOPSpHU9joWqf2UuOkbLtU9f8bkQ@mail.gmail.com>
+ <CALZVapnzYBhPU1nR=eCSnm73c9-SpHq34DHu7OWCkouCQS0FxQ@mail.gmail.com> <7vobhy25wd.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Morten Welinder <mwelinder@gmail.com>, Kevin <ikke@ikke.info>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 00:49:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiw1U-0001wx-OB
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 00:47:33 +0100
+	id 1Tiw3Y-0003ol-3H
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 00:49:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754990Ab2LLXrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 18:47:16 -0500
-Received: from sabe.cs.wisc.edu ([128.105.6.20]:34537 "EHLO sabe.cs.wisc.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754724Ab2LLXrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 18:47:15 -0500
-X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Dec 2012 18:47:15 EST
-Received: from [128.105.24.245] ([128.105.24.245])
-	(authenticated bits=0)
-	by sabe.cs.wisc.edu (8.14.1/8.14.1) with ESMTP id qBCNdU3G029160
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Wed, 12 Dec 2012 17:39:30 -0600
-X-Mailer: Apple Mail (2.1499)
+	id S1755155Ab2LLXtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 18:49:23 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:38812 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754276Ab2LLXtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 18:49:23 -0500
+Received: by mail-qa0-f46.google.com with SMTP id r4so5432370qaq.19
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 15:49:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qM138FyTEPWVwcoFe+nz/Epgfo2GUao8PRfqM1gbAMg=;
+        b=fxq84MbftB8NF5GWxB4E6DJaOP5yrz2okiLod059bWga5jU8YUygNDSJTWQvagPwCw
+         U/lylFIidc/L40s3cugkMoxTkuUTKrPI7rvDzkNIIhuwj0gJ0KTQ/k5a0DkKyabv7dtK
+         0267FG/OjYlcUtGOKg1qnUnkk99OD/t2CSKGoayl9eAZqr6cDZ4YnALA0dlMvQ3so8En
+         LddIAecQ+PWKC3pFm+tPpWFzhGndHBzSelodxZzCis6PkNWelZp+VARvE98c7s7ln/DM
+         4dnncyTiCktG2ZUsTgQYNI+zoQ3fri0j+hSZp3ujDOIGs1rEmwVZTyO+5fccbPOe1lqu
+         7QqA==
+Received: by 10.49.48.45 with SMTP id i13mr6103155qen.48.1355356162306; Wed,
+ 12 Dec 2012 15:49:22 -0800 (PST)
+Received: by 10.49.63.68 with HTTP; Wed, 12 Dec 2012 15:49:02 -0800 (PST)
+In-Reply-To: <7vobhy25wd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211422>
 
-Hi,
+So, how can it be fixed? or is diff command's problem?
+Javier Domingo
 
-We have a shared bare git repository on AFS, which our developers
-pull from and push to from their local repositories. Some developers
-access the bare repository directly over AFS and others use ssh.
-Every couple of months, all of the two-character directories under
-the objects directory disappear. Afterwards, most pushes fail with an
-error like this:
 
-error: unable to create temporary sha1 filename ./objects/fb:
-Permission denied
-
-Stracing git revealed that it successfully recreated the ./objects/fb 
-and then failed to chmod() it. It failed because it tried to set the
-S_ISGID bit, which mere mortals cannot do on AFS. Manually recreating 
-all of these directories solves the problem. 
-
-I took a quick look at the git source and it appears git always tries 
-to set the S_ISGID on a new directory if core.sharedrepository is 
-enabled in the config. I don't know what other effects would result  
-from setting core.sharedrepository to 0.
-
-Would it be feasible to allow the setting of S_ISGID to disabled,
-apart from modifying core.sharedrepository? Possibly a new config
-parameter or detecting if the directory is on AFS?
-
- -- Jaime Frey
+2012/12/13 Junio C Hamano <gitster@pobox.com>:
+> Javier Domingo <javierdo1@gmail.com> writes:
+>
+>> I must say it is _quite_ helpfull having the diffs well done (natural
+>> diffs as here named), just because when you want to review a patch on
+>> the fly, this sort of things are annoying.
+>
+> I do not think anybody is arguing that it would not help the human
+> users to shift the hunk boundaries in the case Kevin's original
+> message demonstrated.
+>
