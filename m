@@ -1,110 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Wed, 12 Dec 2012 03:32:11 -0500
-Message-ID: <20121212083210.GB18322@sigill.intra.peff.net>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
- <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
- <50B1F684.5020805@alum.mit.edu>
- <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
- <CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
- <CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
- <20121212033043.GA24937@thyrsus.com>
- <20121212063208.GA18322@sigill.intra.peff.net>
- <CACh33FrgZhsKp7o9ki6n1AbfRKYYbdLMWuGUGKUqDfH5m0Akng@mail.gmail.com>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Wed, 12 Dec 2012 09:44:32 +0100
+Organization: Bertin Technologies
+Message-ID: <20121212094432.6e1e48c8@chalon.bertin.fr>
+References: <20121211153903.7522d6b0@chalon.bertin.fr>
+ <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Eric S. Raymond" <esr@thyrsus.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Patrick Donnelly <batrick@batbytes.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 09:32:32 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 09:44:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tihjz-0004Br-NX
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 09:32:32 +0100
+	id 1Tihvt-0006bV-6v
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 09:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574Ab2LLIcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 03:32:15 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42647 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751183Ab2LLIcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 03:32:14 -0500
-Received: (qmail 21686 invoked by uid 107); 12 Dec 2012 08:33:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Dec 2012 03:33:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2012 03:32:11 -0500
-Content-Disposition: inline
-In-Reply-To: <CACh33FrgZhsKp7o9ki6n1AbfRKYYbdLMWuGUGKUqDfH5m0Akng@mail.gmail.com>
+	id S1751650Ab2LLIoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 03:44:32 -0500
+Received: from cabourg.bertin.fr ([195.68.26.10]:39401 "EHLO cabourg.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751025Ab2LLIoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 03:44:32 -0500
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id B2959A0F7D
+	for <git@vger.kernel.org>; Wed, 12 Dec 2012 09:44:30 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id 77B54A0F81
+	for <git@vger.kernel.org>; Wed, 12 Dec 2012 09:44:30 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MEW00CJ7TM5L350@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Wed, 12 Dec 2012 09:44:30 +0100 (CET)
+In-reply-to: <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19442.001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211333>
 
-On Wed, Dec 12, 2012 at 02:03:56AM -0500, Patrick Donnelly wrote:
+On Tue, 11 Dec 2012 10:15:23 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Wed, Dec 12, 2012 at 1:32 AM, Jeff King <peff@peff.net> wrote:
-> > It would take a lot of effort to expose git-core's internals in a clean
-> > way; you'd probably be better off starting from scratch and rewriting
-> > large parts in a friendly library-like manner. Fortunately, there is
-> > already a project underway to do so: libgit2.  It does not yet have
-> > feature parity with git, but it can do quite a bit.  And there are
-> > already ruby and python bindings.
+> Yann Dirson <dirson@bertin.fr> writes:
 > 
-> Of course, this comes back to the issue of whether it's a good idea to
-> use perl/ruby/python as a front-end to regular git commands
-> (pull/push/etc.).
+> > There seems to be some bad interactions between git-push and grafts.
+> > The problem seems to occur when a commit that exists in the remote
+> > repo is subject to a graft in the local repo, and we try to push one
+> > of the fake parents.
+> 
+> History tweaking by grafts is only visible inside your local
+> repository and objects are not rewritten, and grafts are not
+> transferred across repositories.  They were invented to be used as a
+> stop-gap measure until you filter-branch the history before
+> publishing (or if you do not publish, then you can keep using your
+> local grafts).
+> 
+> Isn't this well known?  Perhaps we would need to document it better.
 
-Yeah, I think that is a separate issue, though. I cannot see us ever
-writing core commands like "git pull" in any scripting language besides
-POSIX shell due to dependency issues. So language bindings are really
-for things that are not going to go into git-core, or are ancillary
-commands that people can live without (e.g., git-add--interactive,
-remote helpers, etc).
+I am well aware of that, and did not intend to push any grafted commit.
+I am attempting to push a well-formed commit, which happens to be used as
+a grafted commit's fake parent, and my interpretation is that git reacts
+as if it was considering that the remote already had that commit, possibly
+because it would not ignore grafts when deciding which commits are already
+known to the remote.
 
-> While, yes, bindings can be made for these languages, you are now
-> making git depend on the presence of one of these languages in order
-> for git to function. With Lua, the (static) dependence is very small
-> yet brings much to git in terms of extensibility and maintainability.
+> What you can do is to use "replace" instead and publish the replace
+> refs, I think.  Object transfer will then follow the true parenthood
+> connectivity and people who choose to use the same replacement as
+> you do can fetch the replace ref from you (this will grab objects
+> necessary to complete the alternative history) and install it.
 
-And I would include Lua in my list of "I cannot see..." above. It can be
-statically linked, so it is not a run-time dependency, but it would
-still be a build-time dependency. The community has historically been
-pretty resistant to dependencies (I do not care too much myself,
-though).
+I am only using grafts as a temporary and lightweight drafting area,
+before setting the results in stone - although in my case it will be
+with filter-branch rather than replace, but the idea is the same.  I just
+got bitten when attempting to push a valid branch while the grafts were in
+effect, when in fact they should have had no influence at all.
 
-I think doing anything significant in Lua would have the same problem as
-doing anything significant in Python: there would need to be substantial
-internal cleanup to make sane bindings. And again, that is what libgit2
-is doing (and yes, there are Lua bindings for it already).
+In fact, I even looked for a way to specify an alternate (or supplementary)
+grafts file for this drafting work, so only well-controlled git invocations
+would see them, whereas the others would just ignore them, and could not find
+any - nor could I identify an existing way of disabling the use of grafts by
+other means than moving it out of the way.  In this respect, they seem to be
+lacking a few features, when compared to "replace" refs, but they have different
+uses, and just using the latter as a drafting area is just not adequate.
 
-Using libgit2 bindings would introduce a new dependency, of course, but
-that is on par with a Lua dependency.
+I thought about adding support for a GIT_GRAFTS_FILE envvar, which would
+default to $GITDIR/info/grafts, or maybe with a more general addition of a
+GIT_EXTRA_GRAFT_FILES envvar, but I'm not sure the latter would be that useful.
 
-> As for Lua's suitability for your (2) point, I admit I'm not familiar
-> with how much "interacting with the outside world" the git commands
-> do; however, I would suspect that it is not significant enough to rule
-> Lua out?
-
-I did not mean to rule it out for point (2); I only meant that it is
-probably the only reasonable thing for point (1), whereas for point (2),
-we have many more options.  I suspect Lua would do just fine given the
-right set of modules, though I tend to prefer other languages myself
-when embeddedness is not an issue.
-
-As for "interacting with the outside world", I was specifically thinking
-of stuff like git-send-email (currently in perl) and git-imap-send
-(written in C). They need to open network sockets and speak standard
-protocols. I suspect Lua would need a module or custom bindings to do
-the former at all, and certainly the code would be much simpler if we
-re-used standard modules for speaking SMTP and IMAP (which of course
-increases our dependencies again...).
-
--Peff
+-- 
+Yann Dirson - Bertin Technologies
