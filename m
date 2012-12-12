@@ -1,101 +1,76 @@
-From: Patrick Donnelly <batrick@batbytes.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
 Subject: Re: Python extension commands in git - request for policy change
-Date: Tue, 11 Dec 2012 21:26:15 -0500
-Message-ID: <CACh33FqTBOMar=V8=aiE2asZ_ri37fAqeghJLqGecYk=qtvBiQ@mail.gmail.com>
+Date: Tue, 11 Dec 2012 22:30:43 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20121212033043.GA24937@thyrsus.com>
 References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<50B1F684.5020805@alum.mit.edu>
-	<CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
-	<CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
-	<CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
-	<1355273635-ner-4863@calvin>
-	<CACsJy8A9h4QJ_iWvQqTtYa4NPH6Q1Gy0NTozbgukC3=ep58mLA@mail.gmail.com>
+ <CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
+ <50B1F684.5020805@alum.mit.edu>
+ <CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
+ <CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
+ <CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Patrick Donnelly <batrick@batbytes.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 03:31:37 2012
+	git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 04:31:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tic6i-000376-IS
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 03:31:36 +0100
+	id 1Tid2I-0007s1-72
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 04:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754292Ab2LLCbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2012 21:31:19 -0500
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:39822 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753746Ab2LLCbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2012 21:31:18 -0500
-X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Dec 2012 21:31:18 EST
-Received: by mail-oa0-f50.google.com with SMTP id n16so179613oag.37
-        for <git@vger.kernel.org>; Tue, 11 Dec 2012 18:31:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=Jj0eQEEG5+WU5RiwR0abdQ0o8dN5KwRp94KYQE4kG4E=;
-        b=HsKB9LvYVoLOpZhqKHG7w/exyAT+gK+ievxINyzDvtuF+4FC7CvbUzsobRMc879dLs
-         V03d41dwn/YH24ddbvMM1i91cT+e5+NSAUZoxuzQL0HOE6qveuc9Fb5lsD3RgLDsBfaK
-         WWQXlsYM8JUtmC11S3LAH9kcT4BIVSD5oZ45NNx93GrK6cTdYdsy3ewY9CWkA/uBS5ZJ
-         A6UWKtaeSLIXDuQ1ewVntUvnaGoge9xZBln49zuPNViLP5nbhhNxo6PcmYoNTfLaRRlb
-         QgWJJ6ZiEwF1u8CdttIPT+TRSrqXZhlLBy298eXA4UHpmJ8YiXJToIdkw3VZTD8ljWUN
-         U50A==
-Received: by 10.60.0.136 with SMTP id 8mr97171oee.35.1355279175396; Tue, 11
- Dec 2012 18:26:15 -0800 (PST)
-Received: by 10.76.28.101 with HTTP; Tue, 11 Dec 2012 18:26:15 -0800 (PST)
-In-Reply-To: <CACsJy8A9h4QJ_iWvQqTtYa4NPH6Q1Gy0NTozbgukC3=ep58mLA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQnniHhWSazemasOQn394Spkni9m4vcoaqr56CZUG5Qt7sLLI33ilYjLKboFuNOo3/JczgA8
+	id S1754127Ab2LLDat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2012 22:30:49 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:60452
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752853Ab2LLDas (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2012 22:30:48 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id D995944029; Tue, 11 Dec 2012 22:30:43 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211324>
 
-Hi Duy,
+Sitaram Chamarty <sitaramc@gmail.com>:
+> [snipping the rest; all valid points no doubt]
 
-On Tue, Dec 11, 2012 at 8:50 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Wed, Dec 12, 2012 at 7:53 AM, Tomas Carnecky
-> <tomas.carnecky@gmail.com> wrote:
->> If it doesn't, it would be trivial to add. It's a one-liner. It's been a while
->> since I used Lua, but it would be something like this:
->>
->>     void L_putenv(lua_State *L) {
->>         putenv(lua_tostring(L, 1));
->>     }
->>
->> and then somewhere during setup:
->>
->>     lua_register(L, "putenv", L_putenv);
->
-> I should have done my homework before asking, but well.. is there any
-> way to automate this?
+I meant to respond to Patrick's post earlier.
 
-If you want these basic POSIX functions, use an existing library.
+I haven't actually written any code in lua yet, but I've read the book;
+I think I get it.  I've seen the effects of lua integration on another
+large project, Battle for Wesnoth.
 
-If you want to automate adding a number of application specific
-functions, you can use swig or similar. AFAIK, all languages rely on
-third party tools like swig to assist in automated binding generation.
-Although, automated binding generation is usually used to make it easy
-to export bindings for multiple languages easily. If Lua is going to
-be used as a "standard" module glue language, using swig is really
-overkill.
+I'm not, despite conclusions some people here might have jumped to,
+religiously attached to Python.  So I can say this: I think lua as a
+language is an *excellent* design.  It is clever, economical,
+minimalist, and (other than the one ugly detail of 1-origin indexing)
+shows consistent good taste.
 
-> If we use lua for writing "builtin" commands,
-> we'll need to export a lot of C functions and writing wrappers like
-> this is boring and time consuming. Also, assume I export fn(char*,int)
-> to Lua, then I change the prototype to fn(char*, char*), can Lua spot
-> all the call sites at compile time (or something) so I can update
-> them?
+It might be a good fit for extending git; I wouldn't be very surprised if
+that worked. However, I do have concerns about the "Oh, we'll just
+lash together a binding to C" attitude common among lua programmers; I
+foresee maintainability problems and the possibility of slow death by
+low-level details as that strategy tries to scale up.
 
-If the API calls are generic (don't require special handling), you can
-use some preprocessor magic to save time/space.
+And, of course, one problem with calling back into C a lot is that
+you walk back into C's resource-management issues.
 
---
-- Patrick Donnelly
+My sense is that git's use cases are better served by a glue language
+in the Python/Perl/Ruby class rather than an extension langage. But
+my mind is open on this issue.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
