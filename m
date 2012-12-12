@@ -1,96 +1,79 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: (bug?) Inconsistent workdir file timestamps after initial clone.
-Date: Wed, 12 Dec 2012 18:18:41 +0100
-Message-ID: <50C8BC71.8030204@web.de>
-References: <50C79D1F.1080709@xiplink.com> <7vy5h47003.fsf@alter.siamese.dyndns.org> <50C7AE84.2060400@xiplink.com> <7vr4mw6x3p.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2] submodule: add 'deinit' command
+Date: Wed, 12 Dec 2012 18:22:51 +0100
+Message-ID: <50C8BD6B.9010702@web.de>
+References: <20121130032719.GE29257@odin.tremily.us> <50B54A68.60309@web.de> <20121130175309.GA718@odin.tremily.us> <CABURp0qNBcFnxbvhn7PsKWLUOsTiK4u5vx-=6cG3JQHw9aUeHA@mail.gmail.com> <50BA2892.7060706@web.de> <50BA3412.60309@web.de> <7vy5hhmcwp.fsf@alter.siamese.dyndns.org> <50BBB22A.7050901@web.de> <7vhao31s9e.fsf@alter.siamese.dyndns.org> <50BE6FB9.70301@web.de> <50C89DF3.20303@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 18:19:05 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 18:25:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TipxW-0008Eb-Rc
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 18:19:03 +0100
+	id 1Tiq3n-0007Fs-76
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Dec 2012 18:25:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754413Ab2LLRSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 12:18:45 -0500
-Received: from mout.web.de ([212.227.17.12]:52161 "EHLO mout.web.de"
+	id S1754669Ab2LLRZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 12:25:10 -0500
+Received: from mout.web.de ([212.227.17.12]:54685 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753847Ab2LLRSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 12:18:45 -0500
-Received: from admins-macbook.lan ([195.67.191.23]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0Lm4Z3-1T9mJk2ZOr-00a6cl; Wed, 12 Dec 2012 18:18:42
+	id S1754570Ab2LLRZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 12:25:09 -0500
+Received: from [192.168.178.41] ([91.3.188.121]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0MaJng-1TP6DI1v1k-00KVrB; Wed, 12 Dec 2012 18:22:57
  +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vr4mw6x3p.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:ReTXKPwwJKcsRjCiaoguhPh0GH5Zlo/Uu9JwonThX0y
- l2cKClmnokw/xbzwjUtHh+AIOC2VbFG7lHLdhGSRrxX3apAU2Z
- XluIj8SmpOCPeMBGUh1MWObvSXPZYnwrsVJC/JA/w7bPk48pDd
- bV9Ru5Rhl/5pP3FQMTBfdMUW6g24+7xUXyZyw7LnfBGNb+gSwv
- /n1HHax5O/VxKfygBnVfA==
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <50C89DF3.20303@drmicha.warpmail.net>
+X-Enigmail-Version: 1.4.6
+X-Provags-ID: V02:K0:Kc5LjIQ2haHfia5YexAHHsHQlrZUMuwLShMS+61sUPo
+ qHfOuxohTfXxEBM+EFGWXlUost8jBGiEimMngLQQ0nAaFC3BaZ
+ qNx6JuTOIheZZvUO92B3WlLtpZBZP6rZ3VfskbkD/cVVhwoncc
+ DE8mnuuDhaThdeO3Vv/OJPGPHN+JFhch5NP8AvyulAp3hEQ16f
+ wQjmCr/COwaUonqD2n5Kg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211368>
 
-
- 
-On 11.12.12 23:30, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> My point is that the initial checkout into an empty working directory should
->> create all files with the same timestamp.
+Am 12.12.2012 16:08, schrieb Michael J Gruber:
+> Jens Lehmann venit, vidit, dixit 04.12.2012 22:48:
+>> With "git submodule init" the user is able to tell git he cares about one
+>> or more submodules and wants to have it populated on the next call to "git
+>> submodule update". But currently there is no easy way he could tell git he
+>> does not care about a submodule anymore and wants to get rid of his local
+>> work tree (except he knows a lot about submodule internals and removes the
+>> "submodule.$name.url" setting from .git/config himself).
 >>
->> Or, to be a bit more precise, whenever git-checkout *creates* files in the
->> work dir, *all* the created files should have the *same* timestamp (i.e. the
->> current time measured at the start of the checkout's execution, not some
->> bizarro other time specified by some arcane heuristic).
+>> Help those users by providing a 'deinit' command. This removes the whole
+>> submodule.<name> section from .git/config either for the given
+>> submodule(s) or for all those which have been initialized if none were
+>> given. Complain only when for a submodule given on the command line the
+>> url setting can't be found in .git/config.
 > 
-> My knee-jerk reaction is that it is insane to do so, but what other
-> SCM does such a thing? Even "tar xf" wouldn't do that, I think.
-> 
+> Whoaaa, so why not have "git rm" remove everything unless I specify a
+> file to be removed?
 
+Because "git add" doesn't add any file in that case either?
 
-ClearCase is doing such a thing.
+> I know I'm exaggerating a bit, but defaulting to "--all" for a
+> destructive operation seems to be a bit harsh, especially when the
+> command is targeted at "those" users that you mention.
 
-You need to check out a file to make it writable:
-"cleartool checkout main.c"
-[hack hack]
-If you after some hacking don't like your changes at all,
-you run 
-"cleartool unco main.c" (Undo checkout)
-(In git we just use "git checkout")
-
-While in ClearCase the timestamp of your file jumps back to where
-it was before the checkout, it gets the current timestamp in git.
-
-One consequence is that ClearCase users may wish to use "ClearMake"
-rather then make.
-
-A better make (which records all timestamps somewhere) would be helpful.
-
->>> While not including files that can be rebuilt from the source may be
->>> the ideal solution, I've seen projects hide rules to rebuild such a
->>> "generated but needs special tools to build" and/or a "generated but
->>> normal developers do not have any business rebuilding" file (in your
->>> case, Makefile.in) in their Makefiles from the normal targets (like
->>> "make all") for this exact reason, when they choose to distribute
->>> such files by including in their commits.
->>
->> I prefer to use the third-party code as-is, without hacking it, to have
->> smooth upgrades in the future.
-> 
-> Then perhaps take the complaints to that third-party upstream, not
-> here?
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+All other submodule commands (except add, which only operates on a
+single submodule to be) iterate over all submodules if none were
+explicitly given on the command line. So I made deinit just behave
+like all the others - and especially init - do. But if people really
+are surprised by being consistent here I won't argue against adding
+such a "--all" option, but currently I'm not convinced it is worth
+it. Especially as I suspect the number of submodule users having
+customized those in .git/config is not that high ...
