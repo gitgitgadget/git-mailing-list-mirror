@@ -1,70 +1,93 @@
 From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: [PATCH v2] git.txt: add missing info about --git-dir command-line option
-Date: Thu, 13 Dec 2012 18:57:19 +0100
-Message-ID: <1355421439-14024-1-git-send-email-manlio.perillo@gmail.com>
-Cc: Manlio Perillo <manlio.perillo@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 18:58:23 2012
+Subject: Re: [PATCH] Documentation/git: add missing info about --git-dir command-line
+ option
+Date: Thu, 13 Dec 2012 19:00:54 +0100
+Message-ID: <50CA17D6.2050700@gmail.com>
+References: <50C8B92F.8020408@gmail.com> <7vmwxj3vxx.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 19:01:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjD31-0000uS-Mt
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 18:58:16 +0100
+	id 1TjD60-0006QZ-18
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 19:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755873Ab2LMR56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2012 12:57:58 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:61504 "EHLO
+	id S1756019Ab2LMSBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2012 13:01:01 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:34768 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755619Ab2LMR55 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2012 12:57:57 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so1257847bkw.19
-        for <git@vger.kernel.org>; Thu, 13 Dec 2012 09:57:56 -0800 (PST)
+	with ESMTP id S1753481Ab2LMSBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2012 13:01:00 -0500
+Received: by mail-bk0-f46.google.com with SMTP id q16so1259783bkw.19
+        for <git@vger.kernel.org>; Thu, 13 Dec 2012 10:00:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=gtBb2T3GvFXr/R+UyZ2bYKHg7EABXw6da5RZy9nigXk=;
-        b=h14eyGKjd2tn6Tde+8fulmEyU0ZO3BCFrAMx05W/KZKvGGGcYER3H5aZKTinJOgBmt
-         woDfIXK6yT4i+Ko82j23uHCL9+smThKClUvwhgtCE3JfOIJr05R4eUYU/d34OgKftixZ
-         yscxWm/NRhf4FCMjosA0td/RkEfIDMZjvtGw8tEolNrjfzjkDg4mKzWKDjHUU15+dy5t
-         eYwKEyvPBsrQENYNL/HzTK5fVKH4c/ewiqpzFAT2ieKh5mGaNBLJPCORrHHaXgWAF6SG
-         fj4+y4hWbrUAUNmgJM4crm/o+sxjz7udSVEiI7ja4E5cEl7TAyAVeuPSC27tGCowBEu7
-         yPkQ==
-Received: by 10.204.146.6 with SMTP id f6mr1419825bkv.69.1355421476693;
-        Thu, 13 Dec 2012 09:57:56 -0800 (PST)
-Received: from synapsis.synapsis ([151.70.213.162])
-        by mx.google.com with ESMTPS id i20sm2220451bkw.5.2012.12.13.09.57.54
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=kEYczVYA4uNnFrBTreadxvEX0/BwpWgMS6+YFD7YekA=;
+        b=OI1e3Itg50WBLw3jYqnJbedACOwZweq3tOH104OiE72DWlTAIULfwGhUJqb9qIqorz
+         qL7m26+wP5byAPGyvE2ihSjo+YB5vigvoudcQGtC7q3h0pv4YZUuQPtQnk5czw4ae4T0
+         y3PZeCYrOB6tG5znKtE79ENRlx4RALBnHMtauVweL8DBQYr5GIw+PPO+eszxQRzCJMfg
+         t07UkwhMiM61CiD6yBI0a6QZ62tUEHOE170lSfr1UlvaKbDjyvpFPwFEYz7Erfi9Svwo
+         5wXfeYlfHQn0dei1Sqlz1XSgEH8cHVXNzKV6PqOQXB392UyRDRQhxGIIHcol7eoFhKYg
+         GAdg==
+Received: by 10.204.136.207 with SMTP id s15mr1481611bkt.5.1355421659550;
+        Thu, 13 Dec 2012 10:00:59 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.213.162])
+        by mx.google.com with ESMTPS id y11sm2229724bkw.8.2012.12.13.10.00.57
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Dec 2012 09:57:55 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc1.19.g2021cc5.dirty
+        Thu, 13 Dec 2012 10:00:58 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121027 Icedove/3.0.11
+In-Reply-To: <7vmwxj3vxx.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211460>
 
-Unlike other environment variables (e.g. GIT_WORK_TREE,	GIT_NAMESPACE),
-the Documentation/git.txt file did not mention that the GIT_DIR
-environment variable can also be set using the --git-dir command line
-option.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Signed-off-by: Manlio Perillo <manlio.perillo@gmail.com>
----
- Documentation/git.txt | 1 +
- 1 file changed, 1 insertion(+)
+Il 12/12/2012 20:35, Junio C Hamano ha scritto:
+> Manlio Perillo <manlio.perillo@gmail.com> writes:
+> 
+>> The Documentation/git.txt file, in the GIT_DIR environment variable
+>> section, did not mentioned that this value can also be set using the
+>> --git-dir command line option.
+>> ---
+> 
+> s/mentioned/mention/; Also it may help to say
+> 
+> 	Unlike other environment variables (e.g. GIT_WORK_TREE,
+> 	GIT_NAMESPACE),
+> 
+> somewhere in the description.
+> 
+> Please sign-off your patch (see Documentation/SubmittingPatches).
+> 
+> Thanks.
+> 
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index e643683..60db292 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -650,6 +650,7 @@ git so take care if using Cogito etc.
- 	If the 'GIT_DIR' environment variable is set then it
- 	specifies a path to use instead of the default `.git`
- 	for the base of the repository.
-+	The '--git-dir' command-line option also sets this value.
- 
- 'GIT_WORK_TREE'::
- 	Set the path to the working tree.  The value will not be
--- 
-1.8.1.rc1.19.g2021cc5.dirty
+Thanks to you.
+
+I have sent the updated patch, let me know if is ok.
+
+
+
+Manlio Perillo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDKF9YACgkQscQJ24LbaUQyHwCcDiaJjFZ5vwHzxjHyhEBCyFdd
+GnIAn34MjoWmQOcLKJEl/EpE0ImeQBLG
+=yrux
+-----END PGP SIGNATURE-----
