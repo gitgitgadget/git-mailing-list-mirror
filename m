@@ -1,77 +1,106 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: Re: Build fixes for another obscure Unix
-Date: Thu, 13 Dec 2012 17:30:27 -0500
-Message-ID: <CAEvUa7nNNYREAsxc==tfg+e1XNZFbDVOpGXE6z-7+SfbqNrp6Q@mail.gmail.com>
-References: <CAEvUa7nn9M5np3wD=Z1152K4pwNGhSKkC=rS9U=yc=UcaOxMCw@mail.gmail.com>
-	<871B6C10EBEFE342A772D1159D13208539FF9088@umechphg.easf.csd.disa.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2012, #03; Wed, 12)
+Date: Thu, 13 Dec 2012 15:42:19 -0800
+Message-ID: <7vsj79wmck.fsf@alter.siamese.dyndns.org>
+References: <7vhanq257s.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2DAuhk5FkDm0-cYsikY0o6vuZ4FyAnXhbtsgqKQF1dpg@mail.gmail.com>
+ <7vvcc6z801.fsf@alter.siamese.dyndns.org>
+ <CAMP44s3uyC0V6ycTv78mG36_i7ugMLwwNk2cqNZatEJuL7Ee1w@mail.gmail.com>
+ <7vmwxhycii.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0qK6yNiPe0ERDJWK-wfm3DdXZYwRzisoCPJ7PjsdkObQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 13 23:30:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 00:42:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjHIk-0004MC-65
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 23:30:46 +0100
+	id 1TjIQL-0007xa-Hw
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 00:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755109Ab2LMWa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2012 17:30:29 -0500
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:52432 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753753Ab2LMWa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2012 17:30:28 -0500
-Received: by mail-vb0-f46.google.com with SMTP id b13so3043925vby.19
-        for <git@vger.kernel.org>; Thu, 13 Dec 2012 14:30:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=kak6ZUxYp39vaHyzSMSiIon6dGfYq2RVJ8xvuCTQx14=;
-        b=miwY/XKkiLbtIJS2WIi5Xv4PjHfjSEmYKL0AUSNGbjiY89JhgEvQzovxiyuzqREGD6
-         0mB9CcbB0ZJdlBHItaktaV47mOE7ZHYqA67qziQsDhSUx7E4UjeQ785akSGdi0RwyfzB
-         FIqhvKhUQ3e1G9uBUvNkzXtlTAN3P7kNn3KRtUPoK/j9Ep5snnqrMQrchfEXaou/5tON
-         ulZ+6qIJI5NJ2dgWj4IaogCxNqmP+10F1yzBg1QXh9l5plpIpPyAkfo2RBJ7Q1UsypNE
-         KGFxG7HhG7409Rt+kRuSjx4FtaqlXcC/uHkjQYMxkioVSqmJ5fO8TwT00tvIEdMek8SV
-         EXlA==
-Received: by 10.52.29.175 with SMTP id l15mr5441348vdh.2.1355437827932; Thu,
- 13 Dec 2012 14:30:27 -0800 (PST)
-Received: by 10.58.85.138 with HTTP; Thu, 13 Dec 2012 14:30:27 -0800 (PST)
-In-Reply-To: <871B6C10EBEFE342A772D1159D13208539FF9088@umechphg.easf.csd.disa.mil>
+	id S1753674Ab2LMXmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2012 18:42:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50770 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753028Ab2LMXmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2012 18:42:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE1A4AFFF;
+	Thu, 13 Dec 2012 18:42:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QZVZVe21WrN6tHDQOzNgHYIU3yA=; b=Dio4Bx
+	8iwMM5D6PU5CaCl2wdM2uujUBmKVeI+iP8wImiKsAN+fq9ae2Sh4HsiDRrACS83O
+	qxi5eZZF9c1y5FU8DcCuBJWnmPUxIRHqn2wtRJBw/pdVWKfOQ1ghI6hfAdDAHzBQ
+	/RNV6BtVYRd1mfg64GkESgKiViSbobtlf30Ec=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uj/4ZPgN8wgmjfQaaAg/0wYMw0RBJkQU
+	q6H7Qs5mQdZb3hQOOH6aqN1I7dMg6UO+A2y7tVqJ1rFeI9Kt71jfDQwlJNHZb5jc
+	8xIq3Rey2MIbGavDwly3d3vUvgrkNihg70W343Fv0X0i8bCmiCrJ1OJNg+GZAFhM
+	wSIDvo+xljQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB287AFFE;
+	Thu, 13 Dec 2012 18:42:21 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34CF4AFFD; Thu, 13 Dec 2012
+ 18:42:21 -0500 (EST)
+In-Reply-To: <CAMP44s0qK6yNiPe0ERDJWK-wfm3DdXZYwRzisoCPJ7PjsdkObQ@mail.gmail.com> (Felipe
+ Contreras's message of "Thu, 13 Dec 2012 16:05:08 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BCEAD5EE-457E-11E2-AF9E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211477>
 
-Hi,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On Thu, Dec 13, 2012 at 12:18 PM, Pyeron, Jason J CTR (US)
-<jason.j.pyeron.ctr@mail.mil> wrote:
->> Would there be any interest in applying such individual compatibility
->> fixes for this system, even if a full port doesn't reach completion?
+> On Thu, Dec 13, 2012 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> One of the review points were about this piece in the test:
+>>
+>>     > +cmd=<<EOF
+>>     > +import bzrlib
+>>     > +bzrlib.initialize()
+>>     > +import bzrlib.plugin
+>>     > +bzrlib.plugin.load_plugins()
+>>     > +import bzrlib.plugins.fastimport
+>>     > +EOF
+>>     > +if ! "$PYTHON_PATH" -c "$cmd"; then
+>>
+>>     I cannot see how this could have ever worked.
+>>
+>> And I still don't see how your "would work just fine" can be true.
 >
-> What are the down sides? Can your changes be shown to not impact builds on other systems?
+> As I have explained, all this code is the equivalent of python -c '',
+> or rather, it's a no-op. It works in the sense that it doesn't break
+> anything.
 
-I've pushed a handful of small compatibility patches to GitHub[1]
-which are enough to successfully compile the project.  The default
-values of the new variables should make them unnoticeable to other
-systems.
+Aren't you ashamed of yourself after having said this?
 
-Are there any concerns with this type of change?  If they would be
-acceptable, I can try sending the first four of those patches to the
-list properly.  (I expect the last two may be tweaked as I continue
-working with the port.)
+> The purpose of the code is to check for the fastimport plug-in, but
+> that plug-in is not used any more, it's vestigial code, it doesn't
+> matter if the check works or not, as long as it doesn't fail.
 
-I do have a concern with strings.h, though.  That file will be
-included for most people who run ./configure, when it wasn't before.
-Do you think it's worth making a more detailed test to see if
-strcasecmp is still undefined after string.h is included, rather than
-just testing for the header's existence?
+If so, the final version that is suitable for merging would have
+that unused code stripped away, no?
 
-Thanks.
+>> But it is totally a different matter to merge a crap with known
+>> breakage that is one easy fix away from the get-go.  Allowing that
+>> means that all the times we spend on reviewing patches here go
+>> wasted, discouraging reviewers.
+>
+> There is no breakage.
 
-David
+Unused code that burdens others to read through to make sure nothing
+is broken is already broken from maintenance point of view.
 
-[1] https://github.com/dm0-/git/commits
+Why are you wasting my time and everybody's bandwidth on this, when
+you are very well capable of rerolling the series with removal and
+style fixes in far shorter time?
