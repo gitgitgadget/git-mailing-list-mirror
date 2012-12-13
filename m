@@ -1,55 +1,62 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: Build fixes for another obscure Unix
-Date: Thu, 13 Dec 2012 10:22:44 -0500
-Message-ID: <CAEvUa7nn9M5np3wD=Z1152K4pwNGhSKkC=rS9U=yc=UcaOxMCw@mail.gmail.com>
+From: "Srb, Michal" <michal.srb11@imperial.ac.uk>
+Subject: RE: FW: Git log --graph doesn't output color when redirected
+Date: Thu, 13 Dec 2012 15:34:29 +0000
+Message-ID: <72BB37CB88C48F4B925365539F1EE46C1826168A@icexch-m3.ic.ac.uk>
+References: <72BB37CB88C48F4B925365539F1EE46C182613A9@icexch-m3.ic.ac.uk>
+ <72BB37CB88C48F4B925365539F1EE46C18261403@icexch-m3.ic.ac.uk>,<20121213131329.GA5042@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 16:23:36 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 13 16:35:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjAdG-0006PN-5x
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 16:23:30 +0100
+	id 1TjAoy-0001gi-37
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 16:35:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756217Ab2LMPWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2012 10:22:47 -0500
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:60882 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756026Ab2LMPWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2012 10:22:45 -0500
-Received: by mail-vb0-f46.google.com with SMTP id b13so2391015vby.19
-        for <git@vger.kernel.org>; Thu, 13 Dec 2012 07:22:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=tQLp/1O1t/vc3y6b+wuImYDAGevDqNifLFQnHOtLX9I=;
-        b=pl1Kp8+DFmTRi1EvMCflLLDPRVr1aMwQ3UM0Yl5dL0etSjnAL/9lpz9HjUjv/oJXl5
-         rUk2QRPGQgmZZv01/9H24nn7F4VbNWbsoWns+XTcRPjzCHzEKfa0NPLD8wsrweqc3Yqy
-         VFvE5cW5iFmwSdAPOniu3lmlhUE8d2pTrfcjODeAJWPRD30SaWOVGaR0NTV+tsGCRRFj
-         GJfB+ncpL01uWbs4OPQgMneHyiyIVVDrkV5/EgoyrjcEhmWxvS3azeOs7X78QDvaeaEP
-         7sPEKsjwnETDXVXCBVbjCjOsShvOBmW9xfkttiHC7NECdmkwnsdSUT47dVIDTVT4Cn80
-         0MPA==
-Received: by 10.52.98.36 with SMTP id ef4mr3355641vdb.104.1355412164982; Thu,
- 13 Dec 2012 07:22:44 -0800 (PST)
-Received: by 10.58.85.138 with HTTP; Thu, 13 Dec 2012 07:22:44 -0800 (PST)
+	id S1755440Ab2LMPfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2012 10:35:17 -0500
+Received: from smtp2.cc.ic.ac.uk ([155.198.5.156]:58769 "EHLO
+	smtp2.cc.ic.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753603Ab2LMPfQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Dec 2012 10:35:16 -0500
+Received: from icexch-h1.ic.ac.uk ([2001:630:12:610::111])
+	by smtp2.cc.ic.ac.uk with esmtp (Exim 4.77)
+	(envelope-from <michal.srb11@imperial.ac.uk>)
+	id 1TjAoc-0006HP-Ra; Thu, 13 Dec 2012 15:35:15 +0000
+Received: from icexch-m3.ic.ac.uk ([fe80::bd02:fc07:49f4:cded]) by
+ icexch-h1.ic.ac.uk ([fe80::89d7:b737:8af9:634f%10]) with mapi id
+ 14.02.0309.002; Thu, 13 Dec 2012 15:34:29 +0000
+Thread-Topic: FW: Git log --graph doesn't output color when redirected
+Thread-Index: Ac3Yjq+meElrbMKnQcaf7CGn5O9CJQAAFB29ACkpGYAABNEB3A==
+In-Reply-To: <20121213131329.GA5042@sigill.intra.peff.net>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [92.29.152.206]
+X-IC-MsgID: 1TjAoc-0006HP-Ra
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211455>
 
-Hi,
+From: Jeff King [peff@peff.net]
+Sent: Thursday, December 13, 2012 1:13 PM
 
-I've been experimenting with git running on z/OS USS.  It is not yet
-stable, but I have had to make a few fixes and generalizations in the
-build system to get it to compile.
+>> Is there a setting somewhere in config to change this?
 
-Would there be any interest in applying such individual compatibility
-fixes for this system, even if a full port doesn't reach completion?
-
-Thanks.
-
-David
+> Yes. If you use "--color" on the command line, that means
+> "unconditionally use color". If you set color.ui (or any other
+> color config option) to "always", then you will always get color (and
+> you can disable it for a particular run with "--no-color"). Setting a color
+> config option to "true" is the same as "auto", which gets you 
+> the auto mode.
+ 
+Setting color in gitconfig didn't work for me on msys, but --color 
+works like magic, thanks!
