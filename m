@@ -1,72 +1,64 @@
-From: Max Horn <postbox@quendi.de>
-Subject: Re: What's cooking in git.git (Dec 2012, #03; Wed, 12)
-Date: Thu, 13 Dec 2012 13:04:32 +0100
-Message-ID: <BF9B1394-0321-4F1C-AD1B-F40D02DBE71A@quendi.de>
-References: <7vhanq257s.fsf@alter.siamese.dyndns.org> <CAMP44s2DAuhk5FkDm0-cYsikY0o6vuZ4FyAnXhbtsgqKQF1dpg@mail.gmail.com> <7vvcc6z801.fsf@alter.siamese.dyndns.org> <CAMP44s3uyC0V6ycTv78mG36_i7ugMLwwNk2cqNZatEJuL7Ee1w@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 13:05:22 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git(1): remove a defunct link to "list of authors"
+Date: Thu, 13 Dec 2012 07:25:19 -0500
+Message-ID: <20121213122518.GA25613@sigill.intra.peff.net>
+References: <7vobi5hhn9.fsf@alter.siamese.dyndns.org>
+ <7vk3sthhfy.fsf@alter.siamese.dyndns.org>
+ <CACsJy8A7AYpZs7mTc+B-F7BBLPdACim=gHCg8sK1Aci8YSEB4Q@mail.gmail.com>
+ <7vboe2ct9p.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Dg1a0siDbiHtk4m1RhjLt-XKiS8kOO7qPKjwRczLF9vA@mail.gmail.com>
+ <20121212122448.GA20057@sigill.intra.peff.net>
+ <7v8v935en3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 13:25:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tj7XV-0002hW-Bi
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 13:05:21 +0100
+	id 1Tj7rG-0000yA-FH
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 13:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753373Ab2LMMFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2012 07:05:00 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:36760 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752802Ab2LMME7 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2012 07:04:59 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1Tj7X4-0007K4-NG; Thu, 13 Dec 2012 13:04:54 +0100
-In-Reply-To: <CAMP44s3uyC0V6ycTv78mG36_i7ugMLwwNk2cqNZatEJuL7Ee1w@mail.gmail.com>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;postbox@quendi.de;1355400299;9a105ee9;
+	id S1753970Ab2LMMZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2012 07:25:30 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48526 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753603Ab2LMMZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2012 07:25:29 -0500
+Received: (qmail 3492 invoked by uid 107); 13 Dec 2012 12:26:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Dec 2012 07:26:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Dec 2012 07:25:19 -0500
+Content-Disposition: inline
+In-Reply-To: <7v8v935en3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211449>
 
+On Wed, Dec 12, 2012 at 10:06:24AM -0800, Junio C Hamano wrote:
 
-On 13.12.2012, at 11:08, Felipe Contreras wrote:
-
-> On Thu, Dec 13, 2012 at 2:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> Jeff King <peff@peff.net> writes:
 > 
->>>> New remote helper for bzr (v3).  With minor fixes, this may be ready
->>>> for 'next'.
->>> 
->>> What minor fixes?
->> 
->> Lookng at the above (fixup), $gmane/210744 comes to mind
+> > I find the ohloh one a little more informative than the GitHub graph. I
+> > couldn't find any others (Google Code does not seem to have one,
+> > kernel.org and other gitweb sites do not, and I can't think of anywhere
+> > else that hosts a mirror).
 > 
-> That doesn't matter. The code and the tests would work just fine.
-
-
-It doesn't matter? I find that statement hard to align with what the maintainer of git, and thus the person who decides whether your patch series gets merged or not, wrote just above? In fact, it seems to me that what Junio said matters a great deal...
-
-This is a very strange attitude...
-
-In another email, you complained about nobody reviewing your patches respectively nobody voicing any constructive criticism. Yet Junio did just that, and again in $gmane/210745 -- and you replied to neither, and acted on neither (not even by refuting the points brought up), and now summarily dismiss them as irrelevant. I find that quite disturbing :-(.
-
+> Then let's do this.
 > 
->> but there may be others.  It is the responsibility of a contributor to keep
->> track of review comments others give to his or her patches and
->> reroll them, so I do not recall every minor details, sorry.
+> -- >8 --
+> Subject: git(1): show link to contributor summary page
 > 
-> There is nothing that prevents remote-bzr from being merged.
+> We earlier removed a link to list of contributors that pointed to a
+> defunct page; let's use a working one from Ohloh.net to replace it
+> instead.
 
-Well, I think that is up to Junio to decide in the end, though :-). He wrote 
+Looks good to me. Thanks.
 
-
-Cheers,
-Max
+-Peff
