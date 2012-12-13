@@ -1,107 +1,126 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2] submodule: add 'deinit' command
-Date: Wed, 12 Dec 2012 19:28:05 -0500
-Message-ID: <20121213002805.GA8380@odin.tremily.us>
-References: <50BBB22A.7050901@web.de> <7vhao31s9e.fsf@alter.siamese.dyndns.org>
- <50BE6FB9.70301@web.de> <50C89DF3.20303@drmicha.warpmail.net>
- <50C8BD6B.9010702@web.de> <7vr4mv3w2x.fsf@alter.siamese.dyndns.org>
- <50C90469.8080303@web.de> <7vlid23nnc.fsf@alter.siamese.dyndns.org>
- <20121212230926.GC7729@odin.tremily.us>
- <7vsj7a268w.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2] index-format.txt: be more liberal on what can represent invalid cache tree
+Date: Thu, 13 Dec 2012 08:14:47 +0700
+Message-ID: <1355361287-10875-1-git-send-email-pclouds@gmail.com>
+References: <7v4njr5eac.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=YZ5djTAD1cGYuMQK
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 01:28:29 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 13 02:14:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiwf6-0002gT-5K
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 01:28:28 +0100
+	id 1TixNh-0005e7-5R
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 02:14:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755020Ab2LMA2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 19:28:11 -0500
-Received: from vms173001pub.verizon.net ([206.46.173.1]:42644 "EHLO
-	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754793Ab2LMA2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 19:28:10 -0500
-Received: from odin.tremily.us ([unknown] [72.68.110.234])
- by vms173001.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MEY000F01ATEK10@vms173001.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 12 Dec 2012 18:28:08 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 3D2B971CD1E; Wed,
- 12 Dec 2012 19:28:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1355358485; bh=XHxnTYVR/Bc5TScakiY4dLpEtYbO0hj2rtjqf4lLWUc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DvRjOxyWo+RASaCW2kWMyUhVgpxm7WyiOW0Xf+i8tBU+SUrrwAdt6U6+nWGp2H8rD
- MhBM7fHKQam4zbHwqY60QBzut42TCfzL1uonPXX40zAXJVY/KPpZpX4NMkfVILt1fR
- DN2MuDPFP4L/9VWXm7ivrBNqynIGKXjqS1OfIfq4=
-Content-disposition: inline
-In-reply-to: <7vsj7a268w.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755225Ab2LMBOQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2012 20:14:16 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:65096 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755130Ab2LMBOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 20:14:15 -0500
+Received: by mail-da0-f46.google.com with SMTP id p5so488919dak.19
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 17:14:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=CASUEAfnxfQ/J2ZLoIHZQxyrDfLH0S41vh4gGrRZMwc=;
+        b=wDyuE4vuqkhnfW9CepXty+42h5ko5zYF0/hUCnG7iXzhC6Op/nSilx9/CyMjb5n94s
+         lhnVHScjqiRqxMoYhy4HrkZ4NpLRj5Qdx5cPMVQ7HXudgZWlQg46r5mtWqEJVB6+DHPe
+         mFviAkkAxO4pQbAoGGhnl5b7ixt/NeFU0Pm6lOm44lVyZp9RULbsEsWNyYg144tCU1sb
+         c9s/KfDNhpGIziFY2O/D/SrJHPY8vkHEI/olz3lJMzlZnyDVxEp2x+VxmA0VS8Iqw5jU
+         4WcRtp2SF+k6NnBtcAZ5JKBUhOr5scfZemhYcI15dNGgJmXVQBK9mdaspdkVTzcs8DQT
+         c5wA==
+Received: by 10.68.241.136 with SMTP id wi8mr201132pbc.95.1355361255395;
+        Wed, 12 Dec 2012 17:14:15 -0800 (PST)
+Received: from lanh ([115.74.41.198])
+        by mx.google.com with ESMTPS id is3sm16541634pbc.6.2012.12.12.17.14.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Dec 2012 17:14:14 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 13 Dec 2012 08:14:49 +0700
+X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
+In-Reply-To: <7v4njr5eac.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211428>
 
+We have been writing -1 as "invalid" since day 1. On that same day we
+accept all negative entry counts as "invalid". So in theory all C Git
+versions out there would be happy to accept any negative numbers. JGit
+seems to do exactly the same.
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Correct the document to reflect the fact that -1 is not the only magic
+number. At least one implementation, libgit2, is found to treat -1
+this way.
 
-On Wed, Dec 12, 2012 at 03:35:59PM -0800, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
->=20
-> > Should `deinit` remove the submodule checkout, replace it with the
-> > original gitlink, and clear the .git/config information then?  That
-> > would restore the user to the state they'd be in if they were never
-> > interested in the submodule.
->=20
-> AFAIU, "restore the user to the state" is the goal.  I am not sure
-> what you meant by "replace it with the original gitlink", though.  A
-> checkout with a submodule that the user is not interested in would
-> have an empty directory at that path, no?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Thu, Dec 13, 2012 at 1:14 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+ > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+ >
+ >> We have been writing -1 as "invalid" since day 1. On that same day =
+we
+ >> accept all negative entry counts as "invalid". So in theory all C G=
+it
+ >> versions out there would be happy to accept any negative numbers. J=
+Git
+ >> seems to do exactly the same.
+ >
+ > I am of two minds here.
+ >
+ > The existing code is being more lenient than specified when they
+ > read stuff others wrote, but it still adheres to -1 when writing.
+ > Allowing random implementations to write random negative values will
+ > close the door for us to later update the specification to encode
+ > more informatin about these invalid entries by using negative value
+ > other than -1 here.
 
-Ah yes, the gitlink is only in the index.  Sorry for the noise.
+ How would that work with existing versions? If you write -2 in
+ cache-tree, the next time 1.8.0 updates cache tree it writes -1 back.
+ That loses whatever information you attach to -2. A new cache-tree
+ extension is probably better.
 
+ > I am OK with a reword to say "negative means invalid, and writers
+ > should write -1 for invalid entries", but without the latter half,
+ > this change is not justified.
+
+ Done.
+
+ Documentation/technical/index-format.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
+echnical/index-format.txt
+index 9d25b30..ce28a7a 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -161,8 +161,9 @@ GIT index format
+     this span of index as a tree.
+=20
+   An entry can be in an invalidated state and is represented by having
+-  -1 in the entry_count field. In this case, there is no object name
+-  and the next entry starts immediately after the newline.
++  a negative number in the entry_count field. In this case, there is n=
+o
++  object name and the next entry starts immediately after the newline.
++  When writing an invalid entry, -1 should always be used as entry_cou=
+nt.
+=20
+   The entries are written out in the top-down, depth-first order.  The
+   first entry represents the root level of the repository, followed by=
+ the
 --=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQySETAAoJEEUbTsx0l5OMq7QP/3jzQESkLSGeyWLugwGzf1Ra
-ZKf3RiHi3UatzsTgGBq50rM9RDu6ao+hGjWZkvVaCBG/jXV9sPSLdCPTrUOC/5NU
-bsOtb1RBWbhzJXu7K77rz3VctjCBF+SftEnRUCb1YM5mtT0hHWACa1GdxqjGBHRy
-+guzvmAPnzMpfOXxAz77y7z/YadKD39PSMA316Y1g+AzQr8pWbXqpbNUc4r/c+6d
-zi7N2jPgBQntORW/tvT8rzBy1L9sei2NXrMsW4GNZQa1e1xgntzUwGwTvA/98XFz
-hqPliQdR/jJl0wgWGgGl4yOVxsqf+dLR4zOANvlUtiW8fhgeXHxu6WeOy+26ZkGw
-+HzojJPUVijLP4Ag1CJH8BGeG+RMQamyS9lbycx0D40r/1vKrVw+40G7zXxlJ1bp
-BGNG5TiPmBcZt7AdElr7/gxtL5t6gN/0yq0+VlpyErOCMJ6PL4ErLGjJiSd02fXO
-mps7/Mcv2L3oalFV0Gitj5DqvpRW3Yet+gBMCIXuMmiLvpSzxoo/4TSeqOuOSPop
-k5aSffxN79Hs3AIZbtrQlDY/6rYBhGV0iO6Lm8/Yk0B40AaS6LMnNaEioRD5c9JO
-D5Rn9WWrLlYcOQc0Evy9dchQ8ycCfJbOQuZeD8eur19m4kwJXfJCv6xdCTFB/Mua
-3DZZSwGp2lD6hPmQ+eaV
-=MZm1
------END PGP SIGNATURE-----
-
---YZ5djTAD1cGYuMQK--
+1.8.0.rc2.23.g1fb49df
