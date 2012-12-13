@@ -1,99 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: directory permissions on AFS
-Date: Wed, 12 Dec 2012 16:17:28 -0800
-Message-ID: <7vd2ye24br.fsf@alter.siamese.dyndns.org>
-References: <0A6FA42F-986D-4C3C-BC50-9A7C0494C703@cs.wisc.edu>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2] submodule: add 'deinit' command
+Date: Wed, 12 Dec 2012 19:28:05 -0500
+Message-ID: <20121213002805.GA8380@odin.tremily.us>
+References: <50BBB22A.7050901@web.de> <7vhao31s9e.fsf@alter.siamese.dyndns.org>
+ <50BE6FB9.70301@web.de> <50C89DF3.20303@drmicha.warpmail.net>
+ <50C8BD6B.9010702@web.de> <7vr4mv3w2x.fsf@alter.siamese.dyndns.org>
+ <50C90469.8080303@web.de> <7vlid23nnc.fsf@alter.siamese.dyndns.org>
+ <20121212230926.GC7729@odin.tremily.us>
+ <7vsj7a268w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jaime Frey <jfrey@cs.wisc.edu>
-X-From: git-owner@vger.kernel.org Thu Dec 13 01:17:57 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=YZ5djTAD1cGYuMQK
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 01:28:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiwUm-0002Ua-Pt
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 01:17:49 +0100
+	id 1Tiwf6-0002gT-5K
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 01:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755065Ab2LMARc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 19:17:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37274 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754962Ab2LMARb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2012 19:17:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B55AB3A;
-	Wed, 12 Dec 2012 19:17:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aJEcu4yxd4hjj4L6y87geLVxWLg=; b=PbvGss
-	0kAJejL/ZcRCBu40F0R6so60T8GzLTG2cHVoHqEI7K3kPOcfEN1iFG1oDvvw2DcP
-	aJ6ng49Y1UXgcSDN0iVsPodC2YRJdmJRfe4ryAU5UOBdLBUHv242r2rRiM5Vd+zt
-	vk2Lcp2+A/llWAz+aUyOhFNEnNy5iyDoZSE7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SSEuD+zcIoVu7P+LhvsI59W1MWDBExOG
-	REb9lGhXD1NACnMGQTmAQ+Uz33+YG2PDKs0mfB5czmLQl3RnqoIWLZXi6Wzw8C/W
-	Cgc/mxxDdlAcTTfTNfGhP5oUIIT04jPj5xgUSxoTfPIU70TBytfsR4PN8XYqaRuD
-	X22xdoAVQOo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47365AB39;
-	Wed, 12 Dec 2012 19:17:30 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A04F0AB37; Wed, 12 Dec 2012
- 19:17:29 -0500 (EST)
-In-Reply-To: <0A6FA42F-986D-4C3C-BC50-9A7C0494C703@cs.wisc.edu> (Jaime Frey's
- message of "Wed, 12 Dec 2012 17:39:30 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7B3B7F32-44BA-11E2-8373-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755020Ab2LMA2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 19:28:11 -0500
+Received: from vms173001pub.verizon.net ([206.46.173.1]:42644 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754793Ab2LMA2K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 19:28:10 -0500
+Received: from odin.tremily.us ([unknown] [72.68.110.234])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MEY000F01ATEK10@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 12 Dec 2012 18:28:08 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 3D2B971CD1E; Wed,
+ 12 Dec 2012 19:28:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1355358485; bh=XHxnTYVR/Bc5TScakiY4dLpEtYbO0hj2rtjqf4lLWUc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=DvRjOxyWo+RASaCW2kWMyUhVgpxm7WyiOW0Xf+i8tBU+SUrrwAdt6U6+nWGp2H8rD
+ MhBM7fHKQam4zbHwqY60QBzut42TCfzL1uonPXX40zAXJVY/KPpZpX4NMkfVILt1fR
+ DN2MuDPFP4L/9VWXm7ivrBNqynIGKXjqS1OfIfq4=
+Content-disposition: inline
+In-reply-to: <7vsj7a268w.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211427>
 
-Jaime Frey <jfrey@cs.wisc.edu> writes:
 
-> Stracing git revealed that it successfully recreated the ./objects/fb 
-> and then failed to chmod() it. It failed because it tried to set the
-> S_ISGID bit, which mere mortals cannot do on AFS. Manually recreating 
-> all of these directories solves the problem. 
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We fix directory permissions after creating any directory under .git
-with the same code, so that in a repository shared by group, new
-subdirectories created by a random somebody who belongs to that
-group will belong to that group (we also chmod to g+wx in case such
-a random somebody has overly strict umask).  Instead of running
-chown(2) on every new file created by us, we let the filesystem to
-take care of it by telling the directories we create that new files
-in them should inherit their group ownership.
+On Wed, Dec 12, 2012 at 03:35:59PM -0800, Junio C Hamano wrote:
+> "W. Trevor King" <wking@tremily.us> writes:
+>=20
+> > Should `deinit` remove the submodule checkout, replace it with the
+> > original gitlink, and clear the .git/config information then?  That
+> > would restore the user to the state they'd be in if they were never
+> > interested in the submodule.
+>=20
+> AFAIU, "restore the user to the state" is the goal.  I am not sure
+> what you meant by "replace it with the original gitlink", though.  A
+> checkout with a submodule that the user is not interested in would
+> have an empty directory at that path, no?
 
-What we were worried about back when we decided to use S_ISGID was a
-scenario like this:
+Ah yes, the gitlink is only in the index.  Sorry for the noise.
 
- * A repository is shared by group "src".
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
- * A user belongs to the group "src".  That group may or may not be
-   his primary group (i.e. "mkdir foo" done at random place by him
-   may not belong to the "src" group).
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
- * The user attempts to create a new branch "foo/bar" by pushing
-   from outside.  There is no other branch whose name is
-   "foo/anything" when this happens.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
- * An equivalent of "mkdir -p .git/refs/heads/foo" needs to be done
-   before an equivalent of "echo $sha >.git/refs/heads/foo/bar"
-   happens to accept this push.  We want "foo" and "bar" to belong
-   to "src" group and they get appropriate permission bits suitable
-   to be accessed by the members of the "src" group.
+iQIcBAEBAgAGBQJQySETAAoJEEUbTsx0l5OMq7QP/3jzQESkLSGeyWLugwGzf1Ra
+ZKf3RiHi3UatzsTgGBq50rM9RDu6ao+hGjWZkvVaCBG/jXV9sPSLdCPTrUOC/5NU
+bsOtb1RBWbhzJXu7K77rz3VctjCBF+SftEnRUCb1YM5mtT0hHWACa1GdxqjGBHRy
++guzvmAPnzMpfOXxAz77y7z/YadKD39PSMA316Y1g+AzQr8pWbXqpbNUc4r/c+6d
+zi7N2jPgBQntORW/tvT8rzBy1L9sei2NXrMsW4GNZQa1e1xgntzUwGwTvA/98XFz
+hqPliQdR/jJl0wgWGgGl4yOVxsqf+dLR4zOANvlUtiW8fhgeXHxu6WeOy+26ZkGw
++HzojJPUVijLP4Ag1CJH8BGeG+RMQamyS9lbycx0D40r/1vKrVw+40G7zXxlJ1bp
+BGNG5TiPmBcZt7AdElr7/gxtL5t6gN/0yq0+VlpyErOCMJ6PL4ErLGjJiSd02fXO
+mps7/Mcv2L3oalFV0Gitj5DqvpRW3Yet+gBMCIXuMmiLvpSzxoo/4TSeqOuOSPop
+k5aSffxN79Hs3AIZbtrQlDY/6rYBhGV0iO6Lm8/Yk0B40AaS6LMnNaEioRD5c9JO
+D5Rn9WWrLlYcOQc0Evy9dchQ8ycCfJbOQuZeD8eur19m4kwJXfJCv6xdCTFB/Mua
+3DZZSwGp2lD6hPmQ+eaV
+=MZm1
+-----END PGP SIGNATURE-----
 
-The story is the same for loose objects and their fan-out directory.
-Storing a commit object fb/012345... may need to create the leading
-fan-out ".git/objects/fb" and we want that directory and any future
-files created in it to belong to the "src" group.
-
-Any alternative implementation that achieves the same result that
-works on AFS can be substituted with the current code, or made
-conditionally activated on AFS.
+--YZ5djTAD1cGYuMQK--
