@@ -1,92 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] index-format.txt: be more liberal on what can
- represent invalid cache tree
-Date: Wed, 12 Dec 2012 17:55:01 -0800
-Message-ID: <7v8v921zt6.fsf@alter.siamese.dyndns.org>
-References: <7v4njr5eac.fsf@alter.siamese.dyndns.org>
- <1355361287-10875-1-git-send-email-pclouds@gmail.com>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: Fwd: possible Improving diff algoritm
+Date: Wed, 12 Dec 2012 20:55:59 -0500
+Message-ID: <CANv4PNnC1J54TSpHuBOpY=rbuU_naysYkmoyi=utNF0vWK1CnA@mail.gmail.com>
+References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
+	<CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com>
+	<7vvcc73yzh.fsf@alter.siamese.dyndns.org>
+	<CANv4PNm45xGBn2veKi1o0wB4K9NgsbtCsiymHNO4xbCDpJ5tDg@mail.gmail.com>
+	<7vpq2f2az4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 02:55:31 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Kevin <ikke@ikke.info>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 02:56:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tiy1K-0003Iw-7I
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 02:55:30 +0100
+	id 1Tiy28-0003xA-77
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 02:56:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755233Ab2LMBzI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2012 20:55:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57490 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755020Ab2LMBzH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2012 20:55:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5210A805;
-	Wed, 12 Dec 2012 20:55:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5nds+JZbiY45
-	UO30COYkjw75qK0=; b=tvokeVXUlDl8rj9Or3fj9CHaueNv9BpUPqmieZci9hXh
-	w/8ZXyWIUFfWdpDQGnGfAdFzPkF8IkdOBj+7PPft4yfcPsk0hypI9hMTLbRZYadR
-	3iY/ubQIGhAwvMR9aQ9cKso9rMEEL7WLuUn4pSgF6WYCiF9Q1srRG7gtxUE0HgM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Y/IOsU
-	8lV851WZxEwqHaS8jjtvHZvC4EFcVZwL8cJgk15qdZ97ivONIXL/oo1wiF7Nay0X
-	eid1Pg6u83Ycu9B+UNoVW5eEhkoVQMykZGjy7K+sq8juwe2HupFEf5txF+bNVZmD
-	R/hDcRtWnYFeHoo5P0LFIW+qhxoGLuaZBOGPg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92080A804;
-	Wed, 12 Dec 2012 20:55:06 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89D14A802; Wed, 12 Dec 2012
- 20:55:05 -0500 (EST)
-In-Reply-To: <1355361287-10875-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 13 Dec
- 2012 08:14:47 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1DA06384-44C8-11E2-8701-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755436Ab2LMB4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 20:56:01 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:61923 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755427Ab2LMB4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 20:56:00 -0500
+Received: by mail-la0-f46.google.com with SMTP id p5so1284603lag.19
+        for <git@vger.kernel.org>; Wed, 12 Dec 2012 17:55:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=aA1kDvRDJ36bt+MfbUMNQpcJA3tKoTON1gAfBF2CACk=;
+        b=mClgGrVsxXqmAllEKfWjf2TdF7wlrwahfGJSyt5e+2RI+SoznGrNG0ill0MaXe6VuL
+         HKkAJVTGHUKN15avh7xvejLWriVHpFwwPdnI91mcSicgFKhjTESR2CpRHhl4fHtqXd/3
+         x6omnFcG7UrP8ImZsU0AXfPV49IffV9TPYqasEUa27KLBmXH7WtgZIDqLWJoYrgB5oKp
+         WOWlD2ISIFJHcPqCrpvHcA+2+MUsqC+mRCD1lJIX0u6f2toIY4SpuxAIn96NnslawuOR
+         9QFExa4fLWoZ1HQSXXmkimpiOej6aY9rOt8ODUgP4qOvyIzYr78JqDlU1CyKhS40Y7I1
+         gCtQ==
+Received: by 10.152.111.161 with SMTP id ij1mr152381lab.28.1355363759336; Wed,
+ 12 Dec 2012 17:55:59 -0800 (PST)
+Received: by 10.112.29.195 with HTTP; Wed, 12 Dec 2012 17:55:59 -0800 (PST)
+In-Reply-To: <7vpq2f2az4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211432>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>> Is there a reason why picking among the choices in a sliding window
+>> must be contents neutral?
+>
+> Sorry, you might be getting at something interesting but I do not
+> understand the question.  I have no idea what you mean by "contents
+> neutral".
 
->  How would that work with existing versions? If you write -2 in
->  cache-tree, the next time 1.8.0 updates cache tree it writes -1 back=
-=2E
->  That loses whatever information you attach to -2. A new cache-tree
->  extension is probably better.
+I was merely asking if an algorithm to pick between the
+2+ choices was allowed to look at the contents of the
+lines.
 
-You can easily imagine a definition like this:
+I.e., an algorithm would look at the C comment
+example and determine that the choice starting containing
+a full inserted comment is preferable over the one that
+appears to close one comment and open a new.
 
- - If non-negative, the entry is valid and it is the number of index
-   entries that are covered by this subtree;
+And the in inserted-function case it would prefer the one
+where the matching { and } are in correct order.
 
- - If -1, the cached-tree does not know the object name of the tree
-   object, and nothing else is known. The caller needs to walk the
-   index to skip the entries that could have been covered by this
-   subtree, if the cached tree information were valid;
-
- - If less than -1, the cached-tree does not know the object name of
-   the tree object, but we know the number of index entries that are
-   covered by this subtree.  The caller, instead of walking the index,
-   can subtract the count from -1 and skip that many entries to find
-   the index entry after the part that is inside this directory.
-
-Newer Git may write -201 and newer Git may be able to take advantage
-of the new information encoded there, saving 200 calls to
-prefixcmp(), while given the same index, older Git will operate just
-as correctly as before.  An older Git may write that part of the
-cache-tree back with -1, defeating the optimization when a newer Git
-reads it back, but by definition the older Git does not know what to
-write to help that optimization that did not exist when it was done,
-and writing -1 will not confuse the newer Git.
+Morten
