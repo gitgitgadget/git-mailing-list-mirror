@@ -1,118 +1,99 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Fwd: possible Improving diff algoritm
-Date: Thu, 13 Dec 2012 01:00:08 +0100
-Message-ID: <50C91A88.1090306@alum.mit.edu>
-References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com> <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com> <7vvcc73yzh.fsf@alter.siamese.dyndns.org> <CANv4PNm45xGBn2veKi1o0wB4K9NgsbtCsiymHNO4xbCDpJ5tDg@mail.gmail.com> <7vpq2f2az4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: directory permissions on AFS
+Date: Wed, 12 Dec 2012 16:17:28 -0800
+Message-ID: <7vd2ye24br.fsf@alter.siamese.dyndns.org>
+References: <0A6FA42F-986D-4C3C-BC50-9A7C0494C703@cs.wisc.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Morten Welinder <mwelinder@gmail.com>, Kevin <ikke@ikke.info>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 01:00:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jaime Frey <jfrey@cs.wisc.edu>
+X-From: git-owner@vger.kernel.org Thu Dec 13 01:17:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TiwE4-00054y-HO
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 01:00:33 +0100
+	id 1TiwUm-0002Ua-Pt
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 01:17:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754990Ab2LMAAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2012 19:00:13 -0500
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:60917 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754815Ab2LMAAM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2012 19:00:12 -0500
-X-AuditID: 12074413-b7f786d0000008bb-e7-50c91a8b9469
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 88.FB.02235.B8A19C05; Wed, 12 Dec 2012 19:00:11 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qBD009I2014224
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 12 Dec 2012 19:00:10 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vpq2f2az4.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqNstdTLAYOoNZYuuK91MFg29V5gt
-	7rc8YLKYPmspswOLx85Zd9k9ft19yeZx8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGZ13tzEV
-	TBOrWL/oDnsD4yG+LkYODgkBE4nDPxS7GDmBTDGJC/fWs3UxcnEICVxmlNi+YBs7hHOcSWJl
-	0wo2kCpeAW2JL7f/sIPYLAKqEmsedoLZbAK6Eot6mplAbFGBAInFS86xQ9QLSpyc+YQFxBYR
-	UJOY2HaIBWQxs0CqxKTGQJCwsICRxLUfkxkhdq1jkrh7vBOsnlPATOLEkllgNrOAjsS7vgfM
-	ELa8xPa3c5gnMArMQrJiFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfLzSzR
-	S00p3cQICWfhHYy7TsodYhTgYFTi4W06fyJAiDWxrLgy9xCjJAeTkijvUomTAUJ8SfkplRmJ
-	xRnxRaU5qcWHGCU4mJVEeNv/A5XzpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFk
-	ZTg4lCR4+YFxKyRYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPitT4YmCsgqR4gPZ+
-	lARq5y0uSMwFikK0nmLU5diwvv0JoxBLXn5eqpQ4ryjI4QIgRRmleXArYMnrFaM40MfCvK9B
-	RvEAEx/cpFdAS5iAlsRdOg6ypCQRISXVwMi+1HaLg1PLpH8sh5/L8v17w8eotHjR3u+mGjKP
-	hDct3LJZTc3OR//tb6Mv+1NrlHWtPTxnyd9bNflm9YEOX876b5nbZHYnlPRW/PNu 
+	id S1755065Ab2LMARc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2012 19:17:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37274 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754962Ab2LMARb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2012 19:17:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B55AB3A;
+	Wed, 12 Dec 2012 19:17:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aJEcu4yxd4hjj4L6y87geLVxWLg=; b=PbvGss
+	0kAJejL/ZcRCBu40F0R6so60T8GzLTG2cHVoHqEI7K3kPOcfEN1iFG1oDvvw2DcP
+	aJ6ng49Y1UXgcSDN0iVsPodC2YRJdmJRfe4ryAU5UOBdLBUHv242r2rRiM5Vd+zt
+	vk2Lcp2+A/llWAz+aUyOhFNEnNy5iyDoZSE7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SSEuD+zcIoVu7P+LhvsI59W1MWDBExOG
+	REb9lGhXD1NACnMGQTmAQ+Uz33+YG2PDKs0mfB5czmLQl3RnqoIWLZXi6Wzw8C/W
+	Cgc/mxxDdlAcTTfTNfGhP5oUIIT04jPj5xgUSxoTfPIU70TBytfsR4PN8XYqaRuD
+	X22xdoAVQOo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47365AB39;
+	Wed, 12 Dec 2012 19:17:30 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A04F0AB37; Wed, 12 Dec 2012
+ 19:17:29 -0500 (EST)
+In-Reply-To: <0A6FA42F-986D-4C3C-BC50-9A7C0494C703@cs.wisc.edu> (Jaime Frey's
+ message of "Wed, 12 Dec 2012 17:39:30 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7B3B7F32-44BA-11E2-8373-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211426>
 
-On 12/12/2012 10:53 PM, Junio C Hamano wrote:
-> Morten Welinder <mwelinder@gmail.com> writes:
-> 
->> Is there a reason why picking among the choices in a sliding window
->> must be contents neutral?
-> 
-> Sorry, you might be getting at something interesting but I do not
-> understand the question.  I have no idea what you mean by "contents
-> neutral".
-> 
-> Picking between these two choices
-> 
->          /**                         +    /**                         
->     +     * Default parent           +     * Default parent           
->     +     *                          +     *                          
->     +     * @var int                 +     * @var int                 
->     +     * @access protected        +     * @access protected        
->     +     * @index                   +     * @index                   
->     +     */                         +     */                         
->     +    protected $defaultParent;   +    protected $defaultParent;   
->     +                                +                                
->     +    /**                              /**                         
-> 
-> would not affect the correctness of the patch.  You may pick
-> whatever you deem the most desirable, but your answer must be a
-> correct patch (the definition of "correct" here is "applying that
-> patch to the preimage produces the intended postimage").
-> 
-> And I think if you inserted a block of text B after a context C
-> where the tail of B matches the tail of C like the above, you can
-> shift what you treat as "inserted" up and still come up with a
-> correct patch.
+Jaime Frey <jfrey@cs.wisc.edu> writes:
 
-I have the feeling that a few crude heuristics would go a long way
-towards improving diffs like this.  For example:
+> Stracing git revealed that it successfully recreated the ./objects/fb 
+> and then failed to chmod() it. It failed because it tried to set the
+> S_ISGID bit, which mere mortals cannot do on AFS. Manually recreating 
+> all of these directories solves the problem. 
 
-* Prefer to have an add/remove block that has balanced begin/end pairs
-(where begin/end pairs might be opening and closing parentheses,
-brackets, braces, and angle brackets, "/*" and "*/", and perhaps a
-couple of other things.  For SGML-like text begin and end tags could be
-matched up.
+We fix directory permissions after creating any directory under .git
+with the same code, so that in a repository shared by group, new
+subdirectories created by a random somebody who belongs to that
+group will belong to that group (we also chmod to g+wx in case such
+a random somebody has overly strict umask).  Instead of running
+chown(2) on every new file created by us, we let the filesystem to
+take care of it by telling the directories we create that new files
+in them should inherit their group ownership.
 
-It would be possible to read these begin/end pairs from a
-filetype-specific table or configuration setting, though this would add
-complication and would also make it possible that diffs generated by two
-different people are not identical if their configurations differ.
+What we were worried about back when we decided to use S_ISGID was a
+scenario like this:
 
-* Prefer to have a block where the first non-blank line of the block and
-the first non-blank line after the block are indented by the same amount.
+ * A repository is shared by group "src".
 
-* Prefer to have a block with trailing (as opposed to leading or
-embedded) blank lines--the more the better.
+ * A user belongs to the group "src".  That group may or may not be
+   his primary group (i.e. "mkdir foo" done at random place by him
+   may not belong to the "src" group).
 
-The beautiful thing is that even if the heuristics sometimes fail, the
-correctness of the patch (in the sense that you have defined) is not
-compromised.
+ * The user attempts to create a new branch "foo/bar" by pushing
+   from outside.  There is no other branch whose name is
+   "foo/anything" when this happens.
 
-Michael
+ * An equivalent of "mkdir -p .git/refs/heads/foo" needs to be done
+   before an equivalent of "echo $sha >.git/refs/heads/foo/bar"
+   happens to accept this push.  We want "foo" and "bar" to belong
+   to "src" group and they get appropriate permission bits suitable
+   to be accessed by the members of the "src" group.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+The story is the same for loose objects and their fan-out directory.
+Storing a commit object fb/012345... may need to create the leading
+fan-out ".git/objects/fb" and we want that directory and any future
+files created in it to belong to the "src" group.
+
+Any alternative implementation that achieves the same result that
+works on AFS can be substituted with the current code, or made
+conditionally activated on AFS.
