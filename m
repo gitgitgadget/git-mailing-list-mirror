@@ -1,84 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: What's cooking in git.git (Dec 2012, #03; Wed, 12)
-Date: Thu, 13 Dec 2012 00:11:42 -0800
-Message-ID: <7vvcc6z801.fsf@alter.siamese.dyndns.org>
+Date: Thu, 13 Dec 2012 04:08:17 -0600
+Message-ID: <CAMP44s3uyC0V6ycTv78mG36_i7ugMLwwNk2cqNZatEJuL7Ee1w@mail.gmail.com>
 References: <7vhanq257s.fsf@alter.siamese.dyndns.org>
- <CAMP44s2DAuhk5FkDm0-cYsikY0o6vuZ4FyAnXhbtsgqKQF1dpg@mail.gmail.com>
+	<CAMP44s2DAuhk5FkDm0-cYsikY0o6vuZ4FyAnXhbtsgqKQF1dpg@mail.gmail.com>
+	<7vvcc6z801.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 09:12:05 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 11:08:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tj3tk-0005bY-UU
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 09:12:05 +0100
+	id 1Tj5iV-00077P-RY
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Dec 2012 11:08:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390Ab2LMILq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2012 03:11:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57867 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752958Ab2LMILp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2012 03:11:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B142E69AD;
-	Thu, 13 Dec 2012 03:11:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=neJO7pyhssLZZjTrxAwbDL8WxUo=; b=fXLl3g
-	8UFf7EMHbZhJhgsPx1VMyOKev+JhfTeJBkFKV6qrsJR0xPm7vFu9YT2Aaj7SxIpZ
-	AUs4uydl5Hg3XfUMCQGQ5LBV6w/1VG07MQPNVhMjQKGup58hC6C2UGNkoSONPoNs
-	+ZLIUSOeoEi/dVnef9Kc8AOPLzPKNUTFmuAqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ozVKg+XyCRtdx3xokvu1rZmE0N5Cpmzn
-	Xv0Qi4x7YO5uMjpn0ST7nLljSzZIrif4pH1rP4YZ5/wvnFJ8N4UyCtdfJTXhlsjF
-	eTQKSN1un+pR6l8r931Aw2Lsime8nHmV9KlxgN3vHMF2jyTP23OvY7JXXrbqzpmm
-	hQHBN9RwyDI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E62569AC;
-	Thu, 13 Dec 2012 03:11:44 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1CA7669AB; Thu, 13 Dec 2012
- 03:11:44 -0500 (EST)
-In-Reply-To: <CAMP44s2DAuhk5FkDm0-cYsikY0o6vuZ4FyAnXhbtsgqKQF1dpg@mail.gmail.com> (Felipe
- Contreras's message of "Thu, 13 Dec 2012 00:08:48 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB699E1C-44FC-11E2-9CC6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752843Ab2LMKIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2012 05:08:19 -0500
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:59881 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486Ab2LMKIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2012 05:08:18 -0500
+Received: by mail-vb0-f46.google.com with SMTP id b13so1920135vby.19
+        for <git@vger.kernel.org>; Thu, 13 Dec 2012 02:08:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Fc9p2gql1ubPMenBbPKhM5QnsogDfywdcKNXgtXvH2w=;
+        b=nelSGmOPj93ClIDFVdpc6wMDhoxaCFzh6as+XqfObqpStUySerk4KiApUo+FBu20VR
+         1Pq3p2ru6wssT0ohEZRtUvfce4QSCEJuqkcx/IC2HdVYw7YHs8N66yimiG+pHj/ODVZ6
+         ba6zOvHjUJ5eLm5J44fwq7LJ5a7H9DgWSS5RSJa3JaeqLgbfA2pbdR1+g2XTUg2kYGeV
+         QP3TtN26q2cZ4LPH5zFhNrhtOaC2Rvz0GZ6EJBQH/kI+IC70i0cYs2ZwRYiJnFpZIu4y
+         Erd0lI4PlAA1MDD/zTaLc6pyNpd7jF50MPV3C4EsCYYGyE5JSLCdmC0ZaLIPM1mJbxIB
+         axSA==
+Received: by 10.52.66.144 with SMTP id f16mr1859405vdt.60.1355393297386; Thu,
+ 13 Dec 2012 02:08:17 -0800 (PST)
+Received: by 10.58.34.51 with HTTP; Thu, 13 Dec 2012 02:08:17 -0800 (PST)
+In-Reply-To: <7vvcc6z801.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211447>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, Dec 13, 2012 at 2:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Wed, Dec 12, 2012 at 5:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> [Stalled]
+>>>  New remote helper for bzr (v3).  With minor fixes, this may be ready
+>>>  for 'next'.
 >>
->> * fc/remote-bzr (2012-11-28) 10 commits
->>  - (fixup) test-bzr.sh: fix multi-line string assignment
->>  - remote-bzr: detect local repositories
->>  - remote-bzr: add support for older versions of bzr
->>  - remote-bzr: add support to push special modes
->>  - remote-bzr: add support for fecthing special modes
->>  - remote-bzr: add simple tests
->>  - remote-bzr: update working tree
->>  - remote-bzr: add support for remote repositories
->>  - remote-bzr: add support for pushing
->>  - Add new remote-bzr transport helper
->>
->>  New remote helper for bzr (v3).  With minor fixes, this may be ready
->>  for 'next'.
+>> What minor fixes?
 >
-> What minor fixes?
+> Lookng at the above (fixup), $gmane/210744 comes to mind
 
-Lookng at the above (fixup), $gmane/210744 comes to mind, but there
-may be others.  It is the responsibility of a contributor to keep
-track of review comments others give to his or her patches and
-reroll them, so I do not recall every minor details, sorry.
+That doesn't matter. The code and the tests would work just fine.
+
+> but there may be others.  It is the responsibility of a contributor to keep
+> track of review comments others give to his or her patches and
+> reroll them, so I do not recall every minor details, sorry.
+
+There is nothing that prevents remote-bzr from being merged.
+
+Cheers.
+
+-- 
+Felipe Contreras
