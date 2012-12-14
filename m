@@ -1,128 +1,88 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH/RFC 0/3] compiling git with gcc -O3 -Wuninitialized
-Date: Fri, 14 Dec 2012 17:09:04 -0500
-Message-ID: <20121214220903.GA18418@sigill.intra.peff.net>
+Subject: [PATCH 1/3] remote-testsvn: fix unitialized variable
+Date: Fri, 14 Dec 2012 17:11:44 -0500
+Message-ID: <20121214221144.GA19677@sigill.intra.peff.net>
+References: <20121214220903.GA18418@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 23:09:28 2012
+X-From: git-owner@vger.kernel.org Fri Dec 14 23:12:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjdRf-00046r-3x
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 23:09:27 +0100
+	id 1TjdUC-0006Fh-3S
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 23:12:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756091Ab2LNWJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2012 17:09:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55051 "EHLO
+	id S1756046Ab2LNWLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2012 17:11:47 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55053 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755435Ab2LNWJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2012 17:09:07 -0500
-Received: (qmail 16115 invoked by uid 107); 14 Dec 2012 22:10:09 -0000
+	id S1755435Ab2LNWLr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2012 17:11:47 -0500
+Received: (qmail 16184 invoked by uid 107); 14 Dec 2012 22:12:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Dec 2012 17:10:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2012 17:09:04 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Dec 2012 17:12:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2012 17:11:44 -0500
 Content-Disposition: inline
+In-Reply-To: <20121214220903.GA18418@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211506>
 
-I always compile git with "gcc -Wall -Werror", because it catches a lot
-of dubious constructs, and we usually keep the code warning-free.
-However, I also typically compile with "-O0" because I end up debugging
-a fair bit.
+In remote-test-svn, there is a parse_rev_note function to
+parse lines of the form "Revision-number" from notes. If it
+finds such a line and parses it, it returns 0, copying the
+value into a "struct rev_note". If it finds an entry that is
+garbled or out of range, it returns -1 to signal an error.
 
-Sometimes, though, I compile with -O3, which yields a bunch of new
-"variable might be used uninitialized" warnings. What's happening is
-that as functions get inlined, the compiler can do more static analysis
-of the variables. So given two functions like:
+However, if it does not find any "Revision-number" line at
+all, it returns success but does not put anything into the
+rev_note. So upon a successful return, the rev_note may or
+may not be initialized, and the caller has no way of
+knowing.
 
-  int get_foo(int *foo)
-  {
-        if (something_that_might_fail() < 0)
-                return error("unable to get foo");
-        *foo = 0;
-        return 0;
-  }
+gcc does not usually catch the use of the unitialized
+variable because the conditional assignment happens in a
+separate function from the point of use. However, when
+compiling with -O3, gcc will inline parse_rev_note and
+notice the problem.
 
-  void some_fun(void)
-  {
-          int foo;
-          if (get_foo(&foo) < 0)
-                  return -1;
-          printf("foo is %d\n", foo);
-  }
+We can fix it by returning "-1" when no note is found (so on
+a zero return, we always found a valid value).
 
-If get_foo() is not inlined, then when compiling some_fun, gcc sees only
-that a pointer to the local variable is passed, and must assume that it
-is an out parameter that is initialized after get_foo returns.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I think this is the right fix, but I am not too familiar with this code,
+so I might be missing a case where a missing "Revision-number" should
+provide some sentinel value (like "0") instead of returning an error. In
+fact, of the two callsites, one already does such a zero-initialization.
 
-However, when get_foo() is inlined, the compiler may look at all of the
-code together and see that some code paths in get_foo() do not
-initialize the variable. And we get the extra warnings.
+ remote-testsvn.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-In some cases, this can actually reveal real bugs. The first patch fixes
-such a bug:
-
-  [1/3]: remote-testsvn: fix unitialized variable
-
-In most cases, though (including the example above), it's a false
-positive. We know something the compiler does not: that error() always
-returns -1, and therefore we will either exit early from some_fun, or
-"foo" will be properly initialized.
-
-The second two patches:
-
-  [2/3]: inline error functions with constant returns
-  [3/3]: silence some -Wuninitialized warnings around errors
-
-try to expose that return value more clearly to the calling code. After
-applying both, git compiles cleanly with "-Wall -O3". But the patches
-themselves are kind of ugly.
-
-Patch 2/3 tries inlining error() and a few other functions, which lets
-the caller see the return value.  Unfortunately, this doesn't actually
-work in all cases. I think what is happening is that because error() is
-a variadic function, gcc refuses to inline it (and if you give it the
-"always_inline" attribute, it complains loudly). So it works for some
-functions, but not for error(), which is the most common one.
-
-Patch 3/3 takes a more heavy-handed approach, and replaces some
-instances of "return error(...)" with "error(...); return -1". This
-works, but it's kind of ugly. The whole point of error()'s return code
-is to allow the "return error(...)" shorthand, and it basically means we
-cannot use it in some instances.
-
-I really like keeping us -Wall clean (because it means when warnings do
-come up, it's easy to pay attention to them). But I feel like patch 3 is
-making the code less readable just to silence the false positives. We
-can always use the "int foo = foo" trick, but I'd like to avoid that
-where we can. Not only is it ugly in itself, but it means that we've
-shut off the warnings if a problem is ever introduced to that spot.
-
-Can anybody think of a clever way to expose the constant return value of
-error() to the compiler? We could do it with a macro, but that is also
-out for error(), as we do not assume the compiler has variadic macros. I
-guess we could hide it behind "#ifdef __GNUC__", since it is after all
-only there to give gcc's analyzer more information. But I'm not sure
-there is a way to make a macro that is syntactically identical. I.e.,
-you cannot just replace "error(...)" in "return error(...);" with a
-function call plus a value for the return statement. You'd need
-something more like:
-
-  #define RETURN_ERROR(fmt, ...) \
-  do { \
-    error(fmt, __VA_ARGS__); \
-    return -1; \
-  } while(0) \
-
-which is awfully ugly.
-
-Thoughts?
-
--Peff
+diff --git a/remote-testsvn.c b/remote-testsvn.c
+index 51fba05..5ddf11c 100644
+--- a/remote-testsvn.c
++++ b/remote-testsvn.c
+@@ -90,10 +90,12 @@ static int parse_rev_note(const char *msg, struct rev_note *res)
+ 			if (end == value || i < 0 || i > UINT32_MAX)
+ 				return -1;
+ 			res->rev_nr = i;
++			return 0;
+ 		}
+ 		msg += len + 1;
+ 	}
+-	return 0;
++	/* didn't find it */
++	return -1;
+ }
+ 
+ static int note2mark_cb(const unsigned char *object_sha1,
+-- 
+1.8.0.2.4.g59402aa
