@@ -1,74 +1,92 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH] README: Git is released under the GPLv2, not just "the GPL"
-Date: Fri, 14 Dec 2012 16:37:47 +0100
-Message-ID: <966a27bab02e7deb41ad2268800bfd4a53279a8f.1355499408.git.stefano.lattarini@gmail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 16:38:23 2012
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH] Documentation/git: add missing info about --git-dir command-line
+ option
+Date: Fri, 14 Dec 2012 18:26:27 +0100
+Message-ID: <50CB6143.4040505@gmail.com>
+References: <50C8B92F.8020408@gmail.com> <7vmwxj3vxx.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 18:27:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjXL9-0006a1-Rh
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 16:38:20 +0100
+	id 1TjZ2K-0003tI-MO
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 18:27:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756229Ab2LNPiC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2012 10:38:02 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:37892 "EHLO
+	id S932142Ab2LNR0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2012 12:26:46 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:37403 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756217Ab2LNPiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2012 10:38:01 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so1815711bkw.19
-        for <git@vger.kernel.org>; Fri, 14 Dec 2012 07:38:00 -0800 (PST)
+	with ESMTP id S932137Ab2LNR0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2012 12:26:44 -0500
+Received: by mail-bk0-f46.google.com with SMTP id q16so1887949bkw.19
+        for <git@vger.kernel.org>; Fri, 14 Dec 2012 09:26:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=AhNz5phyb2nb0ZnMZYQqI+wPsJh1xEQTIx50SWvb6sU=;
-        b=pzGAlL043Wi+37beYffrMIjXO9fjoi5Mb4F8ihnV6iCIMKReiA91o2inPvH+jKxoSC
-         kTFsaX2X9EiUWi6sw0l8krXKuC1Kvus6o2N7gbCbKkiuncfAzfyt6og4o5mSFenTQcL0
-         UZ/6D1aEr5E/NaQX+76QAoQC+2C3bsknfAPOWZ4+Bq3CyFG2kyIoLQZNBA/1RK0qfdG6
-         jTtom4gETOdK+ksPXII06D26vsOH8yN4ADo5zzQnBO3LOstkrrTLU1TggU3DFdkInq7H
-         OHllaktsU74CGqs0flpvCHrVZytHxJz0JhzAaZCKwUYIb3L3FyaMcAAc6l/BHHnV6NCL
-         jyrg==
-Received: by 10.204.127.27 with SMTP id e27mr2945835bks.126.1355499480001;
-        Fri, 14 Dec 2012 07:38:00 -0800 (PST)
-Received: from localhost.localdomain (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
-        by mx.google.com with ESMTPS id c10sm4916530bkw.1.2012.12.14.07.37.58
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=g1LC85i2j9x/dPYTvLqk/VayHL0cXqLMt+J8tGEH0y0=;
+        b=s72IUYtJ3jaJFE/AchsFzbyhlIP8mJ2jA68bR4tZT5mcXN53tngyM9Cx+zqoiM+yvW
+         r3hc49CCR32g5aTAGFWbOjzAJEEuNenE6WqvA2ksyQf7r3brYiGVARIkLni5w9/TjdVp
+         Z6R8R7Ny1a9/p4IF4fqQ6nom3rDOM/REotm3IPe81smUPHMpzAW7qKaeV6N8Zkcks+fV
+         wjxid8lyHKjus4Gw8cAMR/38VsA1NYZiS5ucvt6tItSUTDrr+xVIBLY9XytKugIthDiR
+         PZ311jhhMbL4/fdkxFHKMG1+U7P6rQgAUmY96o6t36tvzBvv6SpzI6Eqax3Ey8iYTl40
+         pW4g==
+Received: by 10.204.156.139 with SMTP id x11mr2985905bkw.128.1355506002835;
+        Fri, 14 Dec 2012 09:26:42 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.213.162])
+        by mx.google.com with ESMTPS id z5sm5256931bkv.11.2012.12.14.09.26.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Dec 2012 07:37:59 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.1.347.gf94c325
+        Fri, 14 Dec 2012 09:26:41 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121027 Icedove/3.0.11
+In-Reply-To: <7vmwxj3vxx.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211495>
 
-And this is clearly stressed by Linus in the COPYING file.  So make it
-clear in the README as well, to avoid possible misunderstandings.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
----
- README | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Il 12/12/2012 20:35, Junio C Hamano ha scritto:
+> Manlio Perillo <manlio.perillo@gmail.com> writes:
+> 
+>> The Documentation/git.txt file, in the GIT_DIR environment variable
+>> section, did not mentioned that this value can also be set using the
+>> --git-dir command line option.
+>> ---
+> 
+> s/mentioned/mention/; Also it may help to say
+> 
+> 	Unlike other environment variables (e.g. GIT_WORK_TREE,
+> 	GIT_NAMESPACE),
+> 
 
-diff --git a/README b/README
-index d2690ec..c50e6f4 100644
---- a/README
-+++ b/README
-@@ -19,9 +19,10 @@ Git is a fast, scalable, distributed revision control system with an
- unusually rich command set that provides both high-level operations
- and full access to internals.
- 
--Git is an Open Source project covered by the GNU General Public License.
--It was originally written by Linus Torvalds with help of a group of
--hackers around the net. It is currently maintained by Junio C Hamano.
-+Git is an Open Source project covered by the GNU General Public License
-+(version 2).  It was originally written by Linus Torvalds with help
-+of a group of hackers around the net. It is currently maintained by
-+Junio C Hamano.
- 
- Please read the file INSTALL for installation instructions.
- 
--- 
-1.8.0.1.347.gf94c325
+I'm sorry, I just copied this text "as is" (I'm lazy) in the commit
+message failing to notice the use of the tab character.
+
+When I checked the patch email message, my editor rendered the tab
+character as a single space...
+
+
+That's the reason why I have all my editors configured to never ever use
+tabs.
+
+
+Manlio Perillo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDLYUMACgkQscQJ24LbaUTUPACcDhufXkawZZPBV0p/af1GFu1D
+/BcAnjPARpeTi4EdyM/3wV0eI9U9Fu51
+=rSfl
+-----END PGP SIGNATURE-----
