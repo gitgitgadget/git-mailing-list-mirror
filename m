@@ -1,120 +1,71 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: [PATCH 2/2] Port to QNX
-Date: Fri, 14 Dec 2012 10:38:20 -0800
-Message-ID: <1355510300-31541-3-git-send-email-kraai@ftbfs.org>
-References: <1355510300-31541-1-git-send-email-kraai@ftbfs.org>
-Cc: Matt Kraai <matt.kraai@amo.abbott.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 19:39:11 2012
+From: David Michael <fedora.dm0@gmail.com>
+Subject: Re: Build fixes for another obscure Unix
+Date: Fri, 14 Dec 2012 14:48:52 -0500
+Message-ID: <CAEvUa7nP=yWZTLLoSRN_gucrj_eDhCz5ki3DMsHd+_c6ci14CA@mail.gmail.com>
+References: <CAEvUa7nn9M5np3wD=Z1152K4pwNGhSKkC=rS9U=yc=UcaOxMCw@mail.gmail.com>
+	<871B6C10EBEFE342A772D1159D13208539FF9088@umechphg.easf.csd.disa.mil>
+	<CAEvUa7nNNYREAsxc==tfg+e1XNZFbDVOpGXE6z-7+SfbqNrp6Q@mail.gmail.com>
+	<kaem06$3go$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 20:49:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjaA6-0007gw-PY
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 19:39:07 +0100
+	id 1TjbFv-0007ey-Jj
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 20:49:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756841Ab2LNSik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2012 13:38:40 -0500
-Received: from kvm.ftbfs.org ([46.22.115.26]:57374 "EHLO kvm.ftbfs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756626Ab2LNSij (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2012 13:38:39 -0500
-Received: from kraai by kvm.ftbfs.org with local (Exim 4.72)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1Tja9d-0008Dh-Oe; Fri, 14 Dec 2012 10:38:37 -0800
-X-Mailer: git-send-email 1.7.2.5
-In-Reply-To: <1355510300-31541-1-git-send-email-kraai@ftbfs.org>
+	id S1756687Ab2LNTsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2012 14:48:54 -0500
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:50321 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754461Ab2LNTsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2012 14:48:53 -0500
+Received: by mail-vb0-f46.google.com with SMTP id b13so4486599vby.19
+        for <git@vger.kernel.org>; Fri, 14 Dec 2012 11:48:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=NaII3LFPbfIkI2p2DquyBZMwzwtMMY6Bu+lNwP6+t1Y=;
+        b=aHnpQT3cwBHDSv/x4/uHter8D1byTWhBJI/rEm9/XxTKrvwGjTtHH/th30GpA6P49G
+         LZ9Q0O2h5jDa/eBCJkkfznQq4+yjuQRVgNMsUjBLDyNHniqEnx3o43YO3erweGSwrEDJ
+         4zDX8dk8hlO8FtBSNHwLd7PV1gAgF6EM4/ZQPmtUE8ifClf+c7Fki8qNrnp1wSg9U6KG
+         c+MBTw7FIZJP9tg9oQ9k9pwO4KGLdFrZcKn0Dl0UN4WLkG7RJ2w8+CnxD99OtHZ+ZaO6
+         sKMR/fJnNZw7Q9eHJlBmBDfnCy10NuW0xJthm34OztZH2DYyeYXnQoRVG+MfnHAVBZYi
+         auQg==
+Received: by 10.59.13.197 with SMTP id fa5mr11244923ved.47.1355514532975; Fri,
+ 14 Dec 2012 11:48:52 -0800 (PST)
+Received: by 10.58.85.138 with HTTP; Fri, 14 Dec 2012 11:48:52 -0800 (PST)
+In-Reply-To: <kaem06$3go$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211499>
 
-From: Matt Kraai <matt.kraai@amo.abbott.com>
+Hi,
 
-Signed-off-by: Matt Kraai <matt.kraai@amo.abbott.com>
----
- Makefile          | 19 +++++++++++++++++++
- git-compat-util.h |  8 ++++++--
- 2 files changed, 25 insertions(+), 2 deletions(-)
+On Fri, Dec 14, 2012 at 2:54 AM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
+> For what's it worth: I ACK your HP-NonStop patch (as you can see by my
+> comment in git-compat-util.h I was thinking along the same line)
+> https://github.com/dm0-/git/commit/933d72a5cfdc63fa9c3c68afa2f4899d9c3f791e
+> together with its prerequisit
+> https://github.com/dm0-/git/commit/301032c6488aeabb94ccc81bfb6d65ff2c23b924
+>
+> ACKed by: Joachim Schmitz <jojo@schmitz-digital.de>
 
-diff --git a/Makefile b/Makefile
-index 736ecd4..ed2539d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -78,6 +78,8 @@ all::
- #
- # Define NO_MEMMEM if you don't have memmem.
- #
-+# Define NO_GETPAGESIZE if you don't have getpagesize.
-+#
- # Define NO_STRLCPY if you don't have strlcpy.
- #
- # Define NO_STRTOUMAX if you don't have both strtoimax and strtoumax in the
-@@ -1448,6 +1450,20 @@ else
- 	NO_CURL = YesPlease
- endif
- endif
-+ifeq ($(uname_S),QNX)
-+	COMPAT_CFLAGS += -DSA_RESTART=0
-+	NEEDS_SOCKET = YesPlease
-+	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
-+	NO_FNMATCH_CASEFOLD = YesPlease
-+	NO_GETPAGESIZE = YesPlease
-+	NO_ICONV = YesPlease
-+	NO_MEMMEM = YesPlease
-+	NO_NSEC = YesPlease
-+	NO_STRCASESTR = YesPlease
-+	NO_STRLCPY = YesPlease
-+	PTHREAD_LIBS =
-+endif
- 
- -include config.mak.autogen
- -include config.mak
-@@ -1859,6 +1875,9 @@ ifdef NO_MEMMEM
- 	COMPAT_CFLAGS += -DNO_MEMMEM
- 	COMPAT_OBJS += compat/memmem.o
- endif
-+ifdef NO_GETPAGESIZE
-+	COMPAT_CFLAGS += -DNO_GETPAGESIZE
-+endif
- ifdef INTERNAL_QSORT
- 	COMPAT_CFLAGS += -DINTERNAL_QSORT
- 	COMPAT_OBJS += compat/qsort.o
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 2e79b8a..6c588ca 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -75,7 +75,7 @@
- # endif
- #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) && \
-       !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
--      !defined(__TANDEM)
-+      !defined(__TANDEM) && !defined(__QNX__)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
-@@ -99,7 +99,7 @@
- #include <stdlib.h>
- #include <stdarg.h>
- #include <string.h>
--#ifdef __TANDEM /* or HAVE_STRINGS_H or !NO_STRINGS_H? */
-+#if defined(__TANDEM) || defined(__QNX__) /* or HAVE_STRINGS_H or !NO_STRINGS_H? */
- #include <strings.h> /* for strcasecmp() */
- #endif
- #include <errno.h>
-@@ -411,6 +411,10 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
-                 const void *needle, size_t needlelen);
- #endif
- 
-+#ifdef NO_GETPAGESIZE
-+#define getpagesize() sysconf(_SC_PAGESIZE)
-+#endif
-+
- #ifdef FREAD_READS_DIRECTORIES
- #ifdef fopen
- #undef fopen
--- 
-1.8.1-rc1
+Okay, thanks for verifying.  Especially since another port needing
+that header was just sent to the list, I'd prefer to see some
+generalized feature test rather than building and maintaining an
+explicit OS list.
+
+No one has suggested any adjustments, so I'll send out those patches now.
+
+Thanks.
+
+David
