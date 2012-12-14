@@ -1,78 +1,79 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH 4/4] Declare that HP NonStop systems require strings.h
-Date: Fri, 14 Dec 2012 23:45:38 +0100
-Message-ID: <kaga6l$pp8$1@ger.gmane.org>
-References: <CAEvUa7mSOe6gs8JqkewYV=CXt78Y68nTFbFEfEOuCzaV5-DO8A@mail.gmail.com> <50CB8C80.6040802@kdbg.org>
+From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+Subject: Re: possible Improving diff algoritm
+Date: Fri, 14 Dec 2012 23:29:38 +0100
+Message-ID: <20121214222938.GB19410@client.brlink.eu>
+References: <CAO54GHC4AXQO1MbU2qXMdcDO5mtUFhrXfXND5evc93kQhNfCrw@mail.gmail.com>
+ <CAO54GHD3C2RKUvE5jK_XOCVbbDuE_c5xfe28rOL+DaE5anL-Wg@mail.gmail.com>
+ <7vvcc73yzh.fsf@alter.siamese.dyndns.org>
+ <CANv4PNm45xGBn2veKi1o0wB4K9NgsbtCsiymHNO4xbCDpJ5tDg@mail.gmail.com>
+ <7vpq2f2az4.fsf@alter.siamese.dyndns.org>
+ <CANv4PNnC1J54TSpHuBOpY=rbuU_naysYkmoyi=utNF0vWK1CnA@mail.gmail.com>
+ <B1564B28-9BB9-48A2-B59E-7D7C0B0DDECF@adacore.com>
+ <7vzk1izcv6.fsf@alter.siamese.dyndns.org>
+ <CALZVap=r0toqWT7aJxiKtezmR8s4QDd0x92JX-eBLWhKaJsmOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 23:46:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Geert Bosch <bosch@adacore.com>,
+	Morten Welinder <mwelinder@gmail.com>, Kevin <ikke@ikke.info>,
+	git <git@vger.kernel.org>
+To: Javier Domingo <javierdo1@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 23:53:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tje1M-0001RR-Vf
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 23:46:21 +0100
+	id 1Tje7o-0007EO-Hj
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Dec 2012 23:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932485Ab2LNWqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2012 17:46:03 -0500
-Received: from plane.gmane.org ([80.91.229.3]:54377 "EHLO plane.gmane.org"
+	id S932591Ab2LNWwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2012 17:52:43 -0500
+Received: from server.brlink.eu ([78.46.187.186]:47611 "EHLO server.brlink.eu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932396Ab2LNWqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2012 17:46:01 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Tje1B-0001Gx-3q
-	for git@vger.kernel.org; Fri, 14 Dec 2012 23:46:09 +0100
-Received: from dsdf-4db522c0.pool.mediaways.net ([77.181.34.192])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 Dec 2012 23:46:09 +0100
-Received: from jojo by dsdf-4db522c0.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 Dec 2012 23:46:09 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4db522c0.pool.mediaways.net
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932173Ab2LNWwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2012 17:52:42 -0500
+X-Greylist: delayed 1374 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Dec 2012 17:52:42 EST
+Received: from client.brlink.eu 
+	by server.brlink.eu with esmtpsa (tls-peer-hash KfHJgA)
+	id 1TjdlG-0002L4-Eq; Fri, 14 Dec 2012 23:29:42 +0100
+Received: with local; Fri, 14 Dec 2012 23:29:41 +0100
+Content-Disposition: inline
+In-Reply-To: <CALZVap=r0toqWT7aJxiKtezmR8s4QDd0x92JX-eBLWhKaJsmOw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211510>
 
-Johannes Sixt wrote:
-> Am 14.12.2012 20:57, schrieb David Michael:
->> This platform previously included strings.h automatically.  However,
->> the build system now requires an explicit option to do so.
->> 
->> Signed-off-by: David Michael <fedora.dm0@gmail.com>
->> ---
->>  Makefile | 1 +
->>  1 file changed, 1 insertion(+)
->> 
->> diff --git a/Makefile b/Makefile
->> index fb78f7f..e84b0cb 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -1357,6 +1357,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
->>      # Added manually, see above.
->>      NEEDS_SSL_WITH_CURL = YesPlease
->>      HAVE_LIBCHARSET_H = YesPlease
->> +    HAVE_STRINGS_H = YesPlease
->>      NEEDS_LIBICONV = YesPlease
->>      NEEDS_LIBINTL_BEFORE_LIBICONV = YesPlease
->>      NO_SYS_SELECT_H = UnfortunatelyYes
-> 
-> If NONSTOP_KERNEL is the platform that defines __TANDEM, then this
-> should be squashed into the previous patch, shouldn't it?
+* Javier Domingo <javierdo1@gmail.com> [121214 13:20]:
+> I think the idea of being preferable to have a blank line at the end
+> of the added/deleted block is key in this case.
 
-Patch 4/4 does not work without 3/4, Not for HP-NonStop.
+For symmetry I'd suggest to make it preferable to have blank lines
+at the end or the beginning.
 
-Bye, Jojo
+  {
+  old
++ }
++
++ {
++ new
+  }
+
+vs
+
+  {
+  old
+  }
++
++ {
++ new
++ }
+
+is just the same case in blue.
+(Although empty lines alone feels not quite optimal, it is at least a
+good start).
+
+        Bernhard R. Link
