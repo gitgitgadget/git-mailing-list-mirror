@@ -1,92 +1,105 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH 4/4] Declare that HP NonStop systems require strings.h
-Date: Sat, 15 Dec 2012 09:25:15 +0100
-Message-ID: <00c701cdda9d$b5ee33e0$21ca9ba0$@schmitz-digital.de>
-References: <00c601cdda4c$eb6be9a0$c243bce0$@schmitz-digital.de> <50CBB34E.8090609@kdbg.org>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [Patch] Renumber list in api-command.txt
+Date: Sat, 15 Dec 2012 09:29:07 +0100 (CET)
+Message-ID: <683281078.296628.1355560147606.JavaMail.ngmail@webmail08.arcor-online.net>
+References: <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net> <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: <gitster@pobox.com>, <fedora.dm0@gmail.com>,
-	"'Git Mailing List'" <git@vger.kernel.org>
-To: "'Johannes Sixt'" <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Dec 15 09:25:39 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 15 09:29:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tjn3x-0007XX-Lw
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 09:25:37 +0100
+	id 1Tjn7h-00024n-3e
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 09:29:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537Ab2LOIZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 03:25:20 -0500
-Received: from moutng.kundenserver.de ([212.227.126.186]:53185 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618Ab2LOIZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 03:25:19 -0500
-Received: from DualCore (dsdf-4db5eef8.pool.mediaWays.net [77.181.238.248])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0Mctwz-1TSX9h1SK1-00HyF4; Sat, 15 Dec 2012 09:25:16 +0100
-In-Reply-To: <50CBB34E.8090609@kdbg.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQFbKK0kjyTjI9j2FDPnwLybJDATHAJX/BqdmOwqIHA=
-Content-Language: de
-X-Provags-ID: V02:K0:3nTgCnT/YBkcw+38JU1a3fntCEEYQx40nZu+9zBPerx
- r355ECy0OO+5oWIjEaj4hd0NnU6ZTXwZWioylGPbtvew/t93i4
- cQ8qwCwuuDxqS5vEz52NB0MLL6NHjzGcmO56nwHZ9YA6Rc1pej
- 21D24pDDjVlJOuWQxfuPiYaK/kYHbdM6M56KIuK4MdNqk1yLe/
- AiGETxlFu1hxASAqXMHBTM+GUEs7daI3sbevSwBo9yR5L5ea32
- s27oGR1rU3cPErIc/IyxmnB77g8PNV+cSdHJKGGdwuspeouEIO
- nzvYqIJfLM3951Tgp0yiSmY7teDQKEbVNwbyUvr5b6Hzq2m8uf
- eIn4S+w67V4nMQPfVuyv293auXXnZudssJG0SEXHBmDh7bu8sp
- C1WMJKFFP/npw==
+	id S1753610Ab2LOI3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 03:29:10 -0500
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:53768 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751618Ab2LOI3J (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Dec 2012 03:29:09 -0500
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mx.arcor.de (Postfix) with ESMTP id A640015605A
+	for <git@vger.kernel.org>; Sat, 15 Dec 2012 09:29:07 +0100 (CET)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id A121E7FEEBC
+	for <git@vger.kernel.org>; Sat, 15 Dec 2012 09:29:07 +0100 (CET)
+Received: from webmail08.arcor-online.net (webmail08.arcor-online.net [151.189.8.44])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 9D7F1ED891
+	for <git@vger.kernel.org>; Sat, 15 Dec 2012 09:29:07 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 9D7F1ED891
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1355560147; bh=08q/7YJkYADpnN2YZYaGv6TWpqqaQOMLdAKgRIWw91w=;
+	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=drDOO8wFYykkhKumOPhYZPmMYXI65CrgvfgVOSen8gtCTr4QjAlx/x3MGTeKieVjk
+	 CWnr8eATeQNtcx5Gm1SC8Xc8agkeRRC7jCsdQXkTD7LHXFYen5rZuPhsIKyM3Lqt2f
+	 0UsgtI0J/cI5dhj66/HsD4aiKyjk/9bHArArbXrI=
+Received: from [94.217.29.98] by webmail08.arcor-online.net (151.189.8.44) with HTTP (Arcor Webmail); Sat, 15 Dec 2012 09:29:07 +0100 (CET)
+In-Reply-To: <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.29.98
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211523>
 
-> From: Johannes Sixt [mailto:j6t@kdbg.org]
-> Sent: Saturday, December 15, 2012 12:17 AM
-> To: Joachim Schmitz
-> Cc: gitster@pobox.com; fedora.dm0@gmail.com; Git Mailing List
-> Subject: Re: [PATCH 4/4] Declare that HP NonStop systems require strings.h
-> 
-> Am 14.12.2012 23:46, schrieb Joachim Schmitz:
-> > Johannes Sixt wrote:
-> >> Am 14.12.2012 20:57, schrieb David Michael:
-> >>> This platform previously included strings.h automatically.  However,
-> >>> the build system now requires an explicit option to do so.
-> >>>
-> >>> Signed-off-by: David Michael <fedora.dm0@gmail.com>
-> >>> ---
-> >>>  Makefile | 1 +
-> >>>  1 file changed, 1 insertion(+)
-> >>>
-> >>> diff --git a/Makefile b/Makefile
-> >>> index fb78f7f..e84b0cb 100644
-> >>> --- a/Makefile
-> >>> +++ b/Makefile
-> >>> @@ -1357,6 +1357,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-> >>>      # Added manually, see above.
-> >>>      NEEDS_SSL_WITH_CURL = YesPlease
-> >>>      HAVE_LIBCHARSET_H = YesPlease
-> >>> +    HAVE_STRINGS_H = YesPlease
-> >>>      NEEDS_LIBICONV = YesPlease
-> >>>      NEEDS_LIBINTL_BEFORE_LIBICONV = YesPlease
-> >>>      NO_SYS_SELECT_H = UnfortunatelyYes
-> >>
-> >> If NONSTOP_KERNEL is the platform that defines __TANDEM, then this
-> >> should be squashed into the previous patch, shouldn't it?
-> >
-> > Patch 4/4 does not work without 3/4, Not for HP-NonStop.
-> 
-> That is clear from the order of the patches in the series.
-> 
-> To put it in a different way: Do all supported platforms still work
-> after 3/4, but without 4/4?
 
-Sorry I didn't make myself clear, I left out a "and vice versa"
+- Start list with 1 instead of 0 because ASCIIDOC will renumber it anyway
 
-Bye, Jojo
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/technical/api-command.txt | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/technical/api-command.txt b/Documentation/technical/api-command.txt
+index ea9b2ed..d3b9781 100644
+--- a/Documentation/technical/api-command.txt
++++ b/Documentation/technical/api-command.txt
+@@ -71,28 +71,28 @@ Integrating a command
+ Here are the things you need to do when you want to merge a new
+ subcommand into the git tree.
+ 
+-0. Don't forget to sign off your patch!
++1. Don't forget to sign off your patch!
+ 
+-1. Append your command name to one of the variables BUILTIN_OBJS,
++2. Append your command name to one of the variables BUILTIN_OBJS,
+ EXTRA_PROGRAMS, SCRIPT_SH, SCRIPT_PERL or SCRIPT_PYTHON.
+ 
+-2. Drop its test in the t directory.
++3. Drop its test in the t directory.
+ 
+-3. If your command is implemented in an interpreted language with a
++4. If your command is implemented in an interpreted language with a
+ p-code intermediate form, make sure .gitignore in the main directory
+ includes a pattern entry that ignores such files.  Python .pyc and
+ .pyo files will already be covered.
+ 
+-4. If your command has any dependency on a particular version of
++5. If your command has any dependency on a particular version of
+ your language, document it in the INSTALL file.
+ 
+-5. There is a file command-list.txt in the distribution main directory
++6. There is a file command-list.txt in the distribution main directory
+ that categorizes commands by type, so they can be listed in appropriate
+ subsections in the documentation's summary command list.  Add an entry
+ for yours.  To understand the categories, look at git-cmmands.txt
+ in the main directory.
+ 
+-6. Give the maintainer one paragraph to include in the RelNotes file
++7. Give the maintainer one paragraph to include in the RelNotes file
+ to describe the new feature; a good place to do so is in the cover
+ letter [PATCH 0/n].
+ 
+-- 
+1.8.0.msysgit.0
+
+
+---
+Thomas
