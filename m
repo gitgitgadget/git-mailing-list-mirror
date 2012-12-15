@@ -1,75 +1,150 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH] README: Git is released under the GPLv2, not just "the
- GPL"
-Date: Sat, 15 Dec 2012 20:58:08 +0100
-Message-ID: <50CCD650.40303@gmail.com>
-References: <966a27bab02e7deb41ad2268800bfd4a53279a8f.1355499408.git.stefano.lattarini@gmail.com> <7vhanntchw.fsf@alter.siamese.dyndns.org> <7v38z7tb7q.fsf@alter.siamese.dyndns.org> <50CCCE0A.40305@gmail.com> <7vhannrtot.fsf@alter.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Makefile: detect when PYTHON_PATH changes
+Date: Sat, 15 Dec 2012 21:09:50 +0100 (CET)
+Message-ID: <20121215.210950.1929890617364602070.chriscool@tuxfamily.org>
+References: <20121215140719.2409.27365.chriscool@tuxfamily.org>
+	<7vehirustv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 20:58:34 2012
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Dec 15 21:10:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjxsU-0000my-Ki
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 20:58:30 +0100
+	id 1Tjy4C-00013S-C1
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 21:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751549Ab2LOT6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 14:58:13 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:48596 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093Ab2LOT6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 14:58:13 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so2210374bkw.19
-        for <git@vger.kernel.org>; Sat, 15 Dec 2012 11:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=tJZ6PF4zNV1KvjzwjTQQiXyy0V4qoceMYiEcaEquz5s=;
-        b=Ku6KCVGsAARku90t7sLYReZu6wwqzBK+c9tSudCsIgJ146l6cBsqVvxbP1nD/wdPHk
-         Cj0WEeFucDD13PjceGn1+ikriDRzOseqj7sapiBGdfNQDEtydiBpaLZ5BSHtlpv8acre
-         NEdp9S0BlXy4y6c8TXxhvuyhTW+c+TuvmKnAfuUQtogQeLeOt1qQpEdpUuWEGW0wqwGO
-         Ij2JOGe5f26zvvD9Gu14J8EQAWk33nKB2aGSW3eJWk/aVAsHd+9TXTf7/dKAv/n3v1Pe
-         gfxKc5zjjbqI2Ey0QQHdiJP2nfDEAfzsRzUsQAxRPFL4BNlUs7M42PM1B8O09WEuKX+n
-         e/1Q==
-Received: by 10.204.11.208 with SMTP id u16mr4344960bku.81.1355601491637;
-        Sat, 15 Dec 2012 11:58:11 -0800 (PST)
-Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
-        by mx.google.com with ESMTPS id r16sm6703561bkv.3.2012.12.15.11.58.09
-        (version=SSLv3 cipher=OTHER);
-        Sat, 15 Dec 2012 11:58:10 -0800 (PST)
-In-Reply-To: <7vhannrtot.fsf@alter.siamese.dyndns.org>
+	id S1751818Ab2LOUKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 15:10:13 -0500
+Received: from [194.158.122.56] ([194.158.122.56]:39878 "EHLO mail-1d.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751591Ab2LOUKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 15:10:12 -0500
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-1d.bbox.fr (Postfix) with ESMTP id 0B104A4;
+	Sat, 15 Dec 2012 21:09:50 +0100 (CET)
+In-Reply-To: <7vehirustv.fsf@alter.siamese.dyndns.org>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211569>
 
-On 12/15/2012 08:39 PM, Junio C Hamano wrote:
-> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: detect when PYTHON_PATH changes
+Date: Sat, 15 Dec 2012 09:29:48 -0800
+
+> Christian Couder <chriscool@tuxfamily.org> writes:
 > 
->> On 12/15/2012 07:35 PM, Junio C Hamano wrote:
->>> ...
->>> -Git is an Open Source project covered by the GNU General Public License.
->>> +Git is an Open Source project covered by the GNU General Public
->>> +License version 2 (some parts of it are under different licenses).
->>>
->> Maybe you could be even more explicit ans state "some parts of it are
->> under different licenses, compatible with the GPLv2".  But maybe this
->> is just overkill?
+>> @@ -2636,6 +2636,18 @@ GIT-GUI-VARS: FORCE
+>>              fi
+>>  endif
+>>  
+>> +### Detect Python interpreter path changes
+>> +ifndef NO_PYTHON
+>> +TRACK_VARS = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
+>> +
+>> +GIT-PYTHON-VARS: FORCE
+>> +	@VARS='$(TRACK_VARS)'; \
+>> +	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
+>> +		echo 1>&2 "    * new Python interpreter location"; \
+>> +		echo "$$VARS" >$@; \
+>> +            fi
+>> +endif
 > 
-> I personally do not think it is an overkill; because this "clarify
-> that we are version 2", followed by "not everything is, but as a
-> whole it is still GPLv2" is in the end about covering our ass, it is
-> better to be as clear as possible without making it into a novel.
+> Do we have the same issue when you decide to use /usr/local/bin/sh
+> after building with /bin/sh set to SHELL_PATH?
 > 
-Well, if you put it this way :-)  I agree that it's better be safe
-than be sorry.
+>  - If yes, I presume that there will be follow-up patches to this
+>    one, for SHELL_PATH, PERL_PATH, and TCLTK_PATH (there may be
+>    other languages but I didn't bother to check).  How would the use
+>    of language agnostic looking TRACK_VARS variable in this patch
+>    affect such follow-up patches?
+
+Actually, just above the above hunk, there is:
+
+### Detect Tck/Tk interpreter path changes
+ifndef NO_TCLTK
+TRACK_VARS = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
+
+GIT-GUI-VARS: FORCE
+        @VARS='$(TRACK_VARS)'; \
+            if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
+                echo 1>&2 "    * new Tcl/Tk interpreter location"; \
+                echo "$$VARS" >$@; \
+            fi
+endif
+
+But you are right, TRACK_VARS should probably be something like
+TRACK_TCLTK when used for TCLTK and TRACK_PYTHON when used for Python.
+
+By the way it looks like GIT-GUI-VARS is not used, so perhaps the
+detection of Tck/Tk interpreter path changes above could be removed.
+
+(The detection is done in git-gui/Makefile too.)
+
+About shell, there is the following:
+
+SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+        $(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
+        $(gitwebdir_SQ):$(PERL_PATH_SQ)
+
+and then
+
+GIT-SCRIPT-DEFINES: FORCE
+        @FLAGS='$(SCRIPT_DEFINES)'; \
+            if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
+                echo 1>&2 "    * new script parameters"; \
+                echo "$$FLAGS" >$@; \
+            fi
+
+
+$(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh GIT-SCRIPT-DEFINES
+        $(QUIET_GEN)$(cmd_munge_script) && \
+        chmod +x $@+ && \
+        mv $@+ $@
+
+$(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+        $(QUIET_GEN)$(cmd_munge_script) && \
+        mv $@+ $@
+
+So it looks to me that at least for SHELL_PATH, things are done
+properly. 
+
+>  - If no (in other words, if we rebuild shell-scripted porcelains
+>    when SHELL_PATH changes), wouldn't it be better to see how it is
+>    done and hook into the same mechanism?
+
+You would like me to just add $(PYTHON_PATH_SQ) in SCRIPT_DEFINES and
+then use GIT-SCRIPT-DEFINES instead of GIT-PYTHON-VARS to decide if
+python scripts should be rebuilt?
+
+>  - If no, and if the approach taken in this patch is better than the
+>    one used to rebuild shell scripts (it may limit the scope of
+>    rebuilding when path changes, or something, but again, I didn't
+>    bother to check), 
+
+Yeah, I think it is better because it limits the scope of rebuilding,
+and because nothing is done for Python, while there are some
+mechanisms in place for other languages.
+
+> then again follow-up patches to this one to
+>    describe dependencies to build scripts in other languages in a
+>    similar way to this patch would come in the future.  The same
+>    question regarding TRACK_VARS applies in this case.
+
+I agree about TRACK_VARS. About other languages, I will have another
+look, but it seems that they already have what they need.
+
+> By the way, "1>&2" is easier to read if written as just ">&2", I
+> think.
+
+Ok I will change this.
 
 Thanks,
-  Stefano
+Christian.
