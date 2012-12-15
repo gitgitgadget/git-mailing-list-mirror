@@ -1,114 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: FW: Git log --graph doesn't output color when redirected
-Date: Sat, 15 Dec 2012 10:30:12 -0800
-Message-ID: <7v7gojtbgr.fsf@alter.siamese.dyndns.org>
-References: <72BB37CB88C48F4B925365539F1EE46C182613A9@icexch-m3.ic.ac.uk>
- <72BB37CB88C48F4B925365539F1EE46C18261403@icexch-m3.ic.ac.uk>
- <20121213131329.GA5042@sigill.intra.peff.net>
- <CACsJy8AgtwtJfMXzArJLiHQtR+WNRJxRdRgUts30EN-QvgGT=g@mail.gmail.com>
- <20121215101659.GB21577@sigill.intra.peff.net>
+Subject: Re: [PATCH] README: Git is released under the GPLv2, not just "the
+ GPL"
+Date: Sat, 15 Dec 2012 10:35:37 -0800
+Message-ID: <7v38z7tb7q.fsf@alter.siamese.dyndns.org>
+References: <966a27bab02e7deb41ad2268800bfd4a53279a8f.1355499408.git.stefano.lattarini@gmail.com> <7vhanntchw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Srb\, Michal" <michal.srb11@imperial.ac.uk>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 15 19:30:37 2012
+Cc: git@vger.kernel.org
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 15 19:36:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjwVQ-0002Lv-VE
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 19:30:37 +0100
+	id 1Tjwai-0006YN-I6
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 19:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450Ab2LOSaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 13:30:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39681 "EHLO
+	id S1752095Ab2LOSfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 13:35:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42798 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750995Ab2LOSaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 13:30:16 -0500
+	id S1750995Ab2LOSfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 13:35:40 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A86DAD6A;
-	Sat, 15 Dec 2012 13:30:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BA18AF33;
+	Sat, 15 Dec 2012 13:35:40 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DZcOxta3oQNTeZn90Kq90QnSVQw=; b=CpsJhN
-	w+mPn5pxzcqkrXHMVFvx0JEi0AwoxMb6LZ8XvLJGALwlpuAKDaw7x/LWznc+cnum
-	aGTn4vlwIoeU80hLe5hRe9jwnCKXOQ+d46R5jwllaBfLYLr754dM1WrtlGYzTYly
-	jQFbagWYBwk6ykNGC/wGhTNKrZALM+6mC/L5o=
+	:content-type; s=sasl; bh=ErhG2BL+7PfuvEG97EmtzUFI/lc=; b=qmF/4C
+	ej8aCMJAVhetOXOtZ/LtdlVeHPyWMXr6HbORz80HlwK0KFrZBZq/b7C0qRY/9uu6
+	OKXkgNheUu33fq72HbcBZo2vuO6Q5/5/77dNVH2b84Pmi6kFcMncPb3f5YNHGWN9
+	qKL9yElbNl2ui2Bv1lA7aBS7+O0VpyTJ7Jkkk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j/XzYnfapicbGnj30d/BcbE4DYaWB+Ll
-	P9r+ZUG4naX55rO5OSzzkiNBfvXV89eomAe8db1SXO8ZWrmo7fDdQkCH3dDjAa2T
-	JCSYmrjaC+g5vL8Rej7EVmbWICJj8MfdL8VbuBIYWtNtkHg/fdJN1VMzP0HNx751
-	DdZGZizqajo=
+	:content-type; q=dns; s=sasl; b=k1nDbcRsVuGhWRTfR0tqTzf55TomhrR1
+	vpE+Vw7rlZMtBFfVIRsnxijQXigRkhpcdSpVASEd3+1LrxQ5XFRn+bJT8I01fyAm
+	9BnE4nOkZTvEMSIZIwogWKNGwVC+ZIENlOGieQfJdQUAl55QOnss9grCrMrbeqe1
+	PE2O4POWdQg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 469FBAD69;
-	Sat, 15 Dec 2012 13:30:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07C8EAF32;
+	Sat, 15 Dec 2012 13:35:40 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BF78AD67; Sat, 15 Dec 2012
- 13:30:14 -0500 (EST)
-In-Reply-To: <20121215101659.GB21577@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 15 Dec 2012 05:16:59 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58C29AF30; Sat, 15 Dec 2012
+ 13:35:39 -0500 (EST)
+In-Reply-To: <7vhanntchw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 15 Dec 2012 10:07:55 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 77D5814E-46E5-11E2-A77B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 39626E94-46E6-11E2-A102-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211555>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sat, Dec 15, 2012 at 10:23:10AM +0700, Nguyen Thai Ngoc Duy wrote:
+> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
 >
->> On Thu, Dec 13, 2012 at 8:13 PM, Jeff King <peff@peff.net> wrote:
->> > If you are using --format="%C(red)" or similar placeholders,
->> > they are the odd duck by not respecting the auto-color mode.
->> 
->> But they should, shouldn't they? Just asking. I may do it to when I
->> revive nd/pretty-placeholder-with-color-option.
+>> And this is clearly stressed by Linus in the COPYING file.  So make it
+>> clear in the README as well, to avoid possible misunderstandings.
+>>
+>> Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+>> ---
 >
-> If I were designing --format today, I would certainly say so. The only
-> thing holding me back would be backwards compatibility. We could get
-> around that by introducing a new placeholder like %c(color) that behaves
-> like %C(color), except respects the --color flag.
+> I have nothing against this patch, but I am curious if you saw any
+> misunderstandings in the real world, or if you are merely trying to
+> avoid "possible" ones.
+>
+>>  README | 7 ++++---
+>>  1 file changed, 4 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/README b/README
+>> index d2690ec..c50e6f4 100644
+>> --- a/README
+>> +++ b/README
+>> @@ -19,9 +19,10 @@ Git is a fast, scalable, distributed revision control system with an
+>>  unusually rich command set that provides both high-level operations
+>>  and full access to internals.
+>>  
+>> -Git is an Open Source project covered by the GNU General Public License.
+>> -It was originally written by Linus Torvalds with help of a group of
+>> -hackers around the net. It is currently maintained by Junio C Hamano.
+>> +Git is an Open Source project covered by the GNU General Public License
+>> +(version 2).  It was originally written by Linus Torvalds with help
+>> +of a group of hackers around the net. It is currently maintained by
+>> +Junio C Hamano.
+>>  
+>>  Please read the file INSTALL for installation instructions.
 
-I think the %c(color) thing is a good way to go if we want to pursue
-this.
+The project as a whole is GPLv2, and inclusion of pieces licensed
+under different but compatible terms does not change it, but we may
+want to do this instead.
 
-Another possibility without wasting one more special letter would be
-to allow %C(auto,red), perhaps like this (untested):
+I am just one of the "group of hackers around the net" in the
+context of this overview, so I think it is OK to drop that
+"currently maintained by" bit. The audience of this document does
+not have to find out and interact with the maintainer.
 
- pretty.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git i/pretty.c w/pretty.c
-index dba6828..77cf826 100644
---- i/pretty.c
-+++ w/pretty.c
-@@ -960,12 +960,19 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 	switch (placeholder[0]) {
- 	case 'C':
- 		if (placeholder[1] == '(') {
--			const char *end = strchr(placeholder + 2, ')');
-+			const char *begin = placeholder + 2;
-+			const char *end = strchr(begin, ')');
- 			char color[COLOR_MAXLEN];
-+
- 			if (!end)
- 				return 0;
--			color_parse_mem(placeholder + 2,
--					end - (placeholder + 2),
-+			if (!memcmp(begin, "auto,", 5)) {
-+				if (!want_color(GIT_COLOR_AUTO))
-+					return 0;
-+				begin += 5;
-+			}
-+			color_parse_mem(begin,
-+					end - begin,
- 					"--pretty format", color);
- 			strbuf_addstr(sb, color);
- 			return end - placeholder + 1;
+diff --git a/README b/README
+index d2690ec..c365e3c 100644
+--- a/README
++++ b/README
+@@ -19,9 +19,10 @@ Git is a fast, scalable, distributed revision control system with an
+ unusually rich command set that provides both high-level operations
+ and full access to internals.
+ 
+-Git is an Open Source project covered by the GNU General Public License.
++Git is an Open Source project covered by the GNU General Public
++License version 2 (some parts of it are under different licenses).
+ It was originally written by Linus Torvalds with help of a group of
+-hackers around the net. It is currently maintained by Junio C Hamano.
++hackers around the net.
+ 
+ Please read the file INSTALL for installation instructions.
+ 
+-- 
+1.8.1.rc1.148.gfac1be9
