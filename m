@@ -1,150 +1,90 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: detect when PYTHON_PATH changes
-Date: Sat, 15 Dec 2012 21:09:50 +0100 (CET)
-Message-ID: <20121215.210950.1929890617364602070.chriscool@tuxfamily.org>
-References: <20121215140719.2409.27365.chriscool@tuxfamily.org>
-	<7vehirustv.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/7] Allow git log to use mailmap file
+Date: Sat, 15 Dec 2012 12:18:38 -0800
+Message-ID: <7vd2ybrrvl.fsf@alter.siamese.dyndns.org>
+References: <1355594754-27589-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Dec 15 21:10:42 2012
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 15 21:19:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tjy4C-00013S-C1
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 21:10:36 +0100
+	id 1TjyCM-0006x4-FX
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 21:19:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818Ab2LOUKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 15:10:13 -0500
-Received: from [194.158.122.56] ([194.158.122.56]:39878 "EHLO mail-1d.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751591Ab2LOUKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 15:10:12 -0500
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1d.bbox.fr (Postfix) with ESMTP id 0B104A4;
-	Sat, 15 Dec 2012 21:09:50 +0100 (CET)
-In-Reply-To: <7vehirustv.fsf@alter.siamese.dyndns.org>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1751827Ab2LOUSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 15:18:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48530 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751570Ab2LOUSl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 15:18:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A88EA08C;
+	Sat, 15 Dec 2012 15:18:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BVFzuD5lswjXj4ZVvbuR+yfvMWU=; b=oPoF9m
+	AQt2wxm0G+ICo4dajJIRfqh+jzBDtIpgjBicx6jLfCiIuvgDxbGiMWdfdBasJpR6
+	1UGW+L6LwXHl4SGMznVXgWMxSurN8UVm+4qxo+Uckzzjfmx7igWc3XEksmRY+gIC
+	YzZ2LeJY3YBQv2M7DQdr2okJ37HxM59kLBIYg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eg/cpBG3Ff2+Rhqfvoun0UDzGD4Urql0
+	WDMiv/93rmFtJVAjAhcpYoj7Npp7VkH4any1jX13v0B5Q0Zy+tZONY9IAtZQ39fa
+	b0Xg1Ak+lDSW2p6hFJQfLdHoBjap8uatN9d/FTYM4kcPEf00IHIwnRp7gAWVjgQw
+	2gFUnRf6Sro=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87E92A08A;
+	Sat, 15 Dec 2012 15:18:40 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3027A088; Sat, 15 Dec 2012
+ 15:18:39 -0500 (EST)
+In-Reply-To: <1355594754-27589-1-git-send-email-apelisse@gmail.com> (Antoine
+ Pelisse's message of "Sat, 15 Dec 2012 19:05:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9D49E460-46F4-11E2-9030-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211570>
 
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: detect when PYTHON_PATH changes
-Date: Sat, 15 Dec 2012 09:29:48 -0800
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> 
->> @@ -2636,6 +2636,18 @@ GIT-GUI-VARS: FORCE
->>              fi
->>  endif
->>  
->> +### Detect Python interpreter path changes
->> +ifndef NO_PYTHON
->> +TRACK_VARS = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
->> +
->> +GIT-PYTHON-VARS: FORCE
->> +	@VARS='$(TRACK_VARS)'; \
->> +	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
->> +		echo 1>&2 "    * new Python interpreter location"; \
->> +		echo "$$VARS" >$@; \
->> +            fi
->> +endif
-> 
-> Do we have the same issue when you decide to use /usr/local/bin/sh
-> after building with /bin/sh set to SHELL_PATH?
-> 
->  - If yes, I presume that there will be follow-up patches to this
->    one, for SHELL_PATH, PERL_PATH, and TCLTK_PATH (there may be
->    other languages but I didn't bother to check).  How would the use
->    of language agnostic looking TRACK_VARS variable in this patch
->    affect such follow-up patches?
+> Implement the feature suggested by Rich Mindwinter and Junio C Hamano
+> (and following his advices)
+>
+>
+>
+> Allows git show/log commands to map author and committer
+> names and emails using the mailmap file.
+>
+> Updates related to this second series:
+>   - All tests are successful after each patch
+>   - Use split_ident_line in shortlog.c
+>   - Documentation has been added to git-log.txt
+>   - Test has been added to check that we use the file
+>   - Lots of improvements in the way strbufs are used
+>   - New interface to map_user()
+>   - Bunch of other fixes
 
-Actually, just above the above hunk, there is:
+The updated map_user() and its users look much nicer now.  Applying
+your patches with "git am --whitespace=error" spots a few style
+violations, though.
 
-### Detect Tck/Tk interpreter path changes
-ifndef NO_TCLTK
-TRACK_VARS = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
+> git glog --committer/--author is still not looking for mailmap user
+> names.
 
-GIT-GUI-VARS: FORCE
-        @VARS='$(TRACK_VARS)'; \
-            if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
-                echo 1>&2 "    * new Tcl/Tk interpreter location"; \
-                echo "$$VARS" >$@; \
-            fi
-endif
+I think we should stop using the header grep mechanism for these and
+instead keep two separate grep expressions in struct rev_info and
+use them in revision.c::commit_match().  The unification of header
+filter and message grep filter done in 2d10c55 (git log: Unify
+header_filter and message_filter into one., 2006-09-20) may not have
+been a good idea.
 
-But you are right, TRACK_VARS should probably be something like
-TRACK_TCLTK when used for TCLTK and TRACK_PYTHON when used for Python.
-
-By the way it looks like GIT-GUI-VARS is not used, so perhaps the
-detection of Tck/Tk interpreter path changes above could be removed.
-
-(The detection is done in git-gui/Makefile too.)
-
-About shell, there is the following:
-
-SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
-        $(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
-        $(gitwebdir_SQ):$(PERL_PATH_SQ)
-
-and then
-
-GIT-SCRIPT-DEFINES: FORCE
-        @FLAGS='$(SCRIPT_DEFINES)'; \
-            if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
-                echo 1>&2 "    * new script parameters"; \
-                echo "$$FLAGS" >$@; \
-            fi
-
-
-$(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh GIT-SCRIPT-DEFINES
-        $(QUIET_GEN)$(cmd_munge_script) && \
-        chmod +x $@+ && \
-        mv $@+ $@
-
-$(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
-        $(QUIET_GEN)$(cmd_munge_script) && \
-        mv $@+ $@
-
-So it looks to me that at least for SHELL_PATH, things are done
-properly. 
-
->  - If no (in other words, if we rebuild shell-scripted porcelains
->    when SHELL_PATH changes), wouldn't it be better to see how it is
->    done and hook into the same mechanism?
-
-You would like me to just add $(PYTHON_PATH_SQ) in SCRIPT_DEFINES and
-then use GIT-SCRIPT-DEFINES instead of GIT-PYTHON-VARS to decide if
-python scripts should be rebuilt?
-
->  - If no, and if the approach taken in this patch is better than the
->    one used to rebuild shell scripts (it may limit the scope of
->    rebuilding when path changes, or something, but again, I didn't
->    bother to check), 
-
-Yeah, I think it is better because it limits the scope of rebuilding,
-and because nothing is done for Python, while there are some
-mechanisms in place for other languages.
-
-> then again follow-up patches to this one to
->    describe dependencies to build scripts in other languages in a
->    similar way to this patch would come in the future.  The same
->    question regarding TRACK_VARS applies in this case.
-
-I agree about TRACK_VARS. About other languages, I will have another
-look, but it seems that they already have what they need.
-
-> By the way, "1>&2" is easier to read if written as just ">&2", I
-> think.
-
-Ok I will change this.
-
-Thanks,
-Christian.
+Thanks.
