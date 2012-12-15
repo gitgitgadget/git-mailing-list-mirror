@@ -1,82 +1,69 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2012, #03; Wed, 12)
-Date: Sat, 15 Dec 2012 03:24:35 -0600
-Message-ID: <CAMP44s0ou-8u1N7k8U9qHfagFJR4Jn6HYWZ8_jWgXgRUuzUJEQ@mail.gmail.com>
-References: <7vhanq257s.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2DAuhk5FkDm0-cYsikY0o6vuZ4FyAnXhbtsgqKQF1dpg@mail.gmail.com>
-	<7vvcc6z801.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3uyC0V6ycTv78mG36_i7ugMLwwNk2cqNZatEJuL7Ee1w@mail.gmail.com>
-	<BF9B1394-0321-4F1C-AD1B-F40D02DBE71A@quendi.de>
-	<CAMP44s3Es-rLjwe6sgOi9OmwQouM4AbFKAbGB5UgS6sUtYRgKQ@mail.gmail.com>
-	<F151B265-7E3E-4989-AA16-EB7CAC298126@quendi.de>
-	<CAMP44s0r_KAKt7Lm1cdumN1cOWzjab3ruYqxp-s6OR1g1qqbcQ@mail.gmail.com>
-	<50CC2244.4040103@alum.mit.edu>
-	<CAMP44s0=R3rdnD-Zpzz_7wY6HKKsAL1sPVYh4pc3z1CBbX2ODg@mail.gmail.com>
-	<CACsJy8A=-3-C29LKQasfUih24cSZrRuQRJ28WjP0zKg=NaFuUA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 0/3] compiling git with gcc -O3 -Wuninitialized
+Date: Sat, 15 Dec 2012 05:09:55 -0500
+Message-ID: <20121215100954.GA21577@sigill.intra.peff.net>
+References: <20121214220903.GA18418@sigill.intra.peff.net>
+ <CACsJy8BqOEvEHy7i89fKSgQH5kUYFWvchJwD_fQsYjagrh+X2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Max Horn <postbox@quendi.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 10:25:17 2012
+X-From: git-owner@vger.kernel.org Sat Dec 15 11:10:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjnzY-0001Rs-NL
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 10:25:09 +0100
+	id 1TjohW-0002P9-Lt
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 11:10:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061Ab2LOJYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 04:24:38 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:37281 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956Ab2LOJYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 04:24:36 -0500
-Received: by mail-oa0-f46.google.com with SMTP id h16so4386256oag.19
-        for <git@vger.kernel.org>; Sat, 15 Dec 2012 01:24:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=D92+FS3fO7Y/vEG73NjRgqKwPmcBeJ8omw1HUr4Ix4A=;
-        b=kybDvhxNlS4fCeGx/LlmyTQ+h6BsG/QwkkvP3NE6VxA1pPi1riiTeV2SYAd2jbBhC8
-         85D8IGFLhHL6ySkjNUbCaVn034TzpcD5uqGbuCwM7G0d071nzbIfZlaJAbqaVrb2Vta9
-         H2p9OUy5vO6jFoPTp8hJtXNVZ8YzTef4sRf9p6oVgXOlimk+qY9DcVhyp/6+uxVIaRg0
-         04inY8d0I2Xqo/quenVqf+6M+S0Hy8Xu5TVxrfQpyA5v9V4mRBCVYH4GNpOsHHZpT4DS
-         NvzcCHaHCjhEhEzLD5spsTFLCCBQGBEXciRIYVX5r30kET7kI4L3yNVOU335iGFmZYTp
-         JHJw==
-Received: by 10.60.1.132 with SMTP id 4mr6716680oem.140.1355563476072; Sat, 15
- Dec 2012 01:24:36 -0800 (PST)
-Received: by 10.60.32.196 with HTTP; Sat, 15 Dec 2012 01:24:35 -0800 (PST)
-In-Reply-To: <CACsJy8A=-3-C29LKQasfUih24cSZrRuQRJ28WjP0zKg=NaFuUA@mail.gmail.com>
+	id S1751544Ab2LOKKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 05:10:07 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55326 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751057Ab2LOKKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 05:10:06 -0500
+Received: (qmail 19339 invoked by uid 107); 15 Dec 2012 10:11:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 15 Dec 2012 05:11:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Dec 2012 05:09:55 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BqOEvEHy7i89fKSgQH5kUYFWvchJwD_fQsYjagrh+X2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211526>
 
-On Sat, Dec 15, 2012 at 2:44 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Sat, Dec 15, 2012 at 2:45 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
+On Sat, Dec 15, 2012 at 10:07:54AM +0700, Nguyen Thai Ngoc Duy wrote:
 
->>> Cruft in the codebase is a problem for git *developers* because it makes
->>> the code harder to maintain and extend.
->>
->> A problem big enough to warrant the rejection of the patch series? No.
->
-> May I suggest you maintain remote-bzr as a separate project? You have
-> total control that way without anyone's disagreeing with you.
+> > If get_foo() is not inlined, then when compiling some_fun, gcc sees only
+> > that a pointer to the local variable is passed, and must assume that it
+> > is an out parameter that is initialized after get_foo returns.
+> >
+> > However, when get_foo() is inlined, the compiler may look at all of the
+> > code together and see that some code paths in get_foo() do not
+> > initialize the variable. And we get the extra warnings.
+> 
+> Other options:
+> 
+>  - Any __attribute__ or #pragma to aid flow analysis (or would gcc dev be
+>    willing to add one)?
 
-Which disagreement? We have all agreed how the code should look like
-in the end. The disagreement is on how and when this code should be
-merged to git.git. A separate project is not going to help there.
+I looked through the full list of __attribute__ flags and couldn't find
+anything that would help.
 
-> And speaking from someone whose series may take months to get
-> in, why the rush?
+>  - Maintain a list of false positives and filter them out from gcc output?
 
-Why the delay? Junio had already merged this code to 'next'.
+I think it would be just as simple to use the "int foo = foo" hack,
+which accomplishes the same thing without any post-processing step.
 
--- 
-Felipe Contreras
+> And if we do this, should we support other compilers as well? I tried
+> clang once a long while ago and got a bunch of warnings iirc.
+
+I don't use clang myself, but I don't have any problem with other people
+submitting patches to clean up its warnings, provided they don't make
+the code harder to read or write.
+
+-Peff
