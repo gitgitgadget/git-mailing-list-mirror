@@ -1,77 +1,76 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] mailmap.c: Fix a sparse warning
-Date: Sat, 15 Dec 2012 19:25:21 +0000
-Message-ID: <50CCCEA1.1020000@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Make lock local to fetch_pack
+Date: Sat, 15 Dec 2012 11:31:27 -0800
+Message-ID: <7vpq2bru28.fsf@alter.siamese.dyndns.org>
+References: <1355510300-31541-1-git-send-email-kraai@ftbfs.org>
+ <1355510300-31541-2-git-send-email-kraai@ftbfs.org>
+ <7vtxrnrwer.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: apelisse@gmail.com
-X-From: git-owner@vger.kernel.org Sat Dec 15 20:28:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matt Kraai <matt.kraai@amo.abbott.com>
+To: Matt Kraai <kraai@ftbfs.org>
+X-From: git-owner@vger.kernel.org Sat Dec 15 20:31:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjxPN-0004LJ-2A
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 20:28:25 +0100
+	id 1TjxSd-0006hE-Gc
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 20:31:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451Ab2LOT2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 14:28:08 -0500
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:41611 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093Ab2LOT2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 14:28:06 -0500
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 3F3F7384081;
-	Sat, 15 Dec 2012 19:28:05 +0000 (GMT)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 8CED6384080;	Sat, 15 Dec 2012 19:28:04 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;	Sat, 15 Dec 2012 19:28:02 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-X-MDF-HostID: 4
+	id S1751341Ab2LOTba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 14:31:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49085 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751093Ab2LOTba (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 14:31:30 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F72B8A08;
+	Sat, 15 Dec 2012 14:31:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9DeKEse7VG/nBoiLB2qEekMpeZ8=; b=M9DGmp
+	wErN3SXSGxrrFT6EqMEnkH4qIGQc7Hvdba6DMho+4GiY8hAT8UqvajvOqEJ5bQ9R
+	14WCdgMhrjBMvxrXgNhE4Ea4Ia/pRKJO5+YAal3QvlagZtK+OwZEvGh5qImnHNj4
+	NnNDISZmBAxL3QkCR+PKIF7DaFXdvgyo8Dd5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YgyQOmSNanOQkFnIHj8a7k4V9ULIBJ3V
+	FVLtYqwS1KDQFTcTsl2gHcFmwDc5KEvpmaBJSiYHAKhIlm37VztN+fyjHnjKqfYi
+	zwlJFb1yiin7nvNz0lgEzeVlRc9G1TdowbcZMlhegbKfUzb8wq+/NRhpmTkQfmXJ
+	jbU/dV4BiY4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A90B8A07;
+	Sat, 15 Dec 2012 14:31:29 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA0B78A05; Sat, 15 Dec 2012
+ 14:31:28 -0500 (EST)
+In-Reply-To: <7vtxrnrwer.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 15 Dec 2012 10:40:44 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 05C8125C-46EE-11E2-AB69-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211565>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-In particular, sparse issues an "Using plain integer as NULL pointer"
-warning (line 214), since an integer zero is passed as the second
-actual argument in a strbuf_detach() call. The expected type for
-this parameter is 'size_t *'. In order to suppress the warning, we
-simply pass a NULL pointer constant instead.
+> Matt Kraai <kraai@ftbfs.org> writes:
+>
+>> From: Matt Kraai <matt.kraai@amo.abbott.com>
+>>
+>> lock is only used by fetch_pack, so move it into that function.
+>>
+>> Signed-off-by: Matt Kraai <matt.kraai@amo.abbott.com>
+>> ---
+>>  fetch-pack.c | 3 +--
+>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> Eh, did you base your patch on something older than 2d4177c (Make
+> fetch-pack a builtin with an internal API, 2007-09-10)???
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Antoine,
-
-When you re-roll your mailmap patches (branch 'ap/log-mailmap') could
-you please squash this into commit a09b6cd9 ("mailmap: Remove buffer
-length limit in map_user", 11-12-2012).
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- mailmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mailmap.c b/mailmap.c
-index e636278..0608eb3 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -211,7 +211,7 @@ int map_user(struct string_list *map,
- 	for (i = 0; i < end_of_email - email; i++)
- 		strbuf_addch(&buf, tolower(email[i]));
- 	strbuf_addch(&buf, 0);
--	mailbuf = strbuf_detach(&buf, 0);
-+	mailbuf = strbuf_detach(&buf, NULL);
- 
- 	debug_mm("map_user: map '%s' <%s>\n", name, mailbuf);
- 	item = string_list_lookup(map, mailbuf);
--- 
-1.8.0
+Ah, nevermind.  I see we refactored this out recently but that is
+still in flight.
