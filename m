@@ -1,65 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation: don't link to example mail addresses
-Date: Sat, 15 Dec 2012 12:20:18 -0500
-Message-ID: <20121215172018.GA18696@sigill.intra.peff.net>
-References: <20121215150314.GC2725@river.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: detect when PYTHON_PATH changes
+Date: Sat, 15 Dec 2012 09:29:48 -0800
+Message-ID: <7vehirustv.fsf@alter.siamese.dyndns.org>
+References: <20121215140719.2409.27365.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Dec 15 18:20:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Dec 15 18:30:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjvPl-0006x8-7r
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 18:20:41 +0100
+	id 1TjvYv-0005at-NU
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 18:30:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754118Ab2LORUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 12:20:24 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55509 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751841Ab2LORUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 12:20:23 -0500
-Received: (qmail 22262 invoked by uid 107); 15 Dec 2012 17:21:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 15 Dec 2012 12:21:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Dec 2012 12:20:18 -0500
-Content-Disposition: inline
-In-Reply-To: <20121215150314.GC2725@river.lan>
+	id S1751842Ab2LOR3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 12:29:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34224 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751791Ab2LOR3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 12:29:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A803E942E;
+	Sat, 15 Dec 2012 12:29:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g2vauAts0XaiadER93ZQ+flxTsI=; b=Au2cn8
+	7KCsR2Z+rHUBvf1jlqrthCBeWk+rONV4gfyZtdE/z/MwJ3RFmM9mYvYunJcQyEGm
+	r2N1VtYSeV5jwC7Ip3UAA5BmqekPNcVCw6vUaT98JwGnrh7B1B5OP4MZvb19tEjh
+	3DJ0XR35Ir9RHyEHMJGtfhBIR+WNKhSyP2M/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DWMId0rGpvpKY4GGYImBMl7WQI5qrR8E
+	bm3eo0DmYsfsxDM7gB0efGa/FEooC52TJM062R6PnWM9njQM3Ho17wMrPZOBOtFU
+	hkqm7lpD+jB8ppOKngxANnS+gAI7H065dCJyxN1My9sa0cU0R4x6QnFSlbHZYwgu
+	+8QgGDnxyrU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 913C4942D;
+	Sat, 15 Dec 2012 12:29:50 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2226942B; Sat, 15 Dec 2012
+ 12:29:49 -0500 (EST)
+In-Reply-To: <20121215140719.2409.27365.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Sat, 15 Dec 2012 15:07:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 076028D6-46DD-11E2-98C2-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211535>
 
-On Sat, Dec 15, 2012 at 03:03:15PM +0000, John Keeping wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> Mail addresses in documentation are converted into mailto: hyperlinks in
-> the HTML output and footnotes in man pages.  This isn't desirable for
-> cases where the address is used as an example and is not valid.
-> 
-> Particularly annoying is the example "jane@laptop.(none)" which appears
-> in git-shortlog(1) as "jane@laptop[1].(none)", with note 1 saying:
-> 
-> 	1. jane@laptop
-> 	   mailto:jane@laptop
+> @@ -2636,6 +2636,18 @@ GIT-GUI-VARS: FORCE
+>              fi
+>  endif
+>  
+> +### Detect Python interpreter path changes
+> +ifndef NO_PYTHON
+> +TRACK_VARS = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
+> +
+> +GIT-PYTHON-VARS: FORCE
+> +	@VARS='$(TRACK_VARS)'; \
+> +	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
+> +		echo 1>&2 "    * new Python interpreter location"; \
+> +		echo "$$VARS" >$@; \
+> +            fi
+> +endif
 
-Thanks, this is definitely worth fixing.
+Do we have the same issue when you decide to use /usr/local/bin/sh
+after building with /bin/sh set to SHELL_PATH?
 
-> Fix this by quoting example mail addresses with "$$", preventing
-> Asciidoc from processing them.
-> 
-> In the case of mailmap.txt, render the address monospaced so that it
-> matches the block examples surrounding that paragraph.
+ - If yes, I presume that there will be follow-up patches to this
+   one, for SHELL_PATH, PERL_PATH, and TCLTK_PATH (there may be
+   other languages but I didn't bother to check).  How would the use
+   of language agnostic looking TRACK_VARS variable in this patch
+   affect such follow-up patches?
 
-I think I'd just render them monospace everywhere. We are very
-inconsistent about which form of quotes we use in the documentation (I
-think because most of the developers read the source directly and not
-the rendered asciidoc). And then we don't have to worry about the "$$"
-construct (and IMHO it makes the source much more readable, and marking
-the address as a literal looks good in the output, too).
+ - If no (in other words, if we rebuild shell-scripted porcelains
+   when SHELL_PATH changes), wouldn't it be better to see how it is
+   done and hook into the same mechanism?
 
--Peff
+ - If no, and if the approach taken in this patch is better than the
+   one used to rebuild shell scripts (it may limit the scope of
+   rebuilding when path changes, or something, but again, I didn't
+   bother to check), then again follow-up patches to this one to
+   describe dependencies to build scripts in other languages in a
+   similar way to this patch would come in the future.  The same
+   question regarding TRACK_VARS applies in this case.
+
+By the way, "1>&2" is easier to read if written as just ">&2", I
+think.
+
+Thanks.
