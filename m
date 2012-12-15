@@ -1,103 +1,65 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] Documentation: don't link to example mail addresses
-Date: Sat, 15 Dec 2012 15:03:15 +0000
-Message-ID: <20121215150314.GC2725@river.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: don't link to example mail addresses
+Date: Sat, 15 Dec 2012 12:20:18 -0500
+Message-ID: <20121215172018.GA18696@sigill.intra.peff.net>
+References: <20121215150314.GC2725@river.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 15 16:03:45 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Dec 15 18:20:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TjtHF-0004SG-28
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 16:03:45 +0100
+	id 1TjvPl-0006x8-7r
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 18:20:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754147Ab2LOPDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 10:03:20 -0500
-Received: from woodbine.london.02.net ([87.194.255.145]:39159 "EHLO
-	woodbine.london.02.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753090Ab2LOPDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 10:03:17 -0500
-Received: from river.lan (188.222.177.116) by woodbine.london.02.net (8.5.140)
-        id 4FED9DF1046A4C11; Sat, 15 Dec 2012 15:03:15 +0000
+	id S1754118Ab2LORUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2012 12:20:24 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55509 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751841Ab2LORUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2012 12:20:23 -0500
+Received: (qmail 22262 invoked by uid 107); 15 Dec 2012 17:21:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 15 Dec 2012 12:21:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Dec 2012 12:20:18 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20121215150314.GC2725@river.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211534>
 
-Mail addresses in documentation are converted into mailto: hyperlinks in
-the HTML output and footnotes in man pages.  This isn't desirable for
-cases where the address is used as an example and is not valid.
+On Sat, Dec 15, 2012 at 03:03:15PM +0000, John Keeping wrote:
 
-Particularly annoying is the example "jane@laptop.(none)" which appears
-in git-shortlog(1) as "jane@laptop[1].(none)", with note 1 saying:
+> Mail addresses in documentation are converted into mailto: hyperlinks in
+> the HTML output and footnotes in man pages.  This isn't desirable for
+> cases where the address is used as an example and is not valid.
+> 
+> Particularly annoying is the example "jane@laptop.(none)" which appears
+> in git-shortlog(1) as "jane@laptop[1].(none)", with note 1 saying:
+> 
+> 	1. jane@laptop
+> 	   mailto:jane@laptop
 
-	1. jane@laptop
-	   mailto:jane@laptop
+Thanks, this is definitely worth fixing.
 
-Fix this by quoting example mail addresses with "$$", preventing
-Asciidoc from processing them.
+> Fix this by quoting example mail addresses with "$$", preventing
+> Asciidoc from processing them.
+> 
+> In the case of mailmap.txt, render the address monospaced so that it
+> matches the block examples surrounding that paragraph.
 
-In the case of mailmap.txt, render the address monospaced so that it
-matches the block examples surrounding that paragraph.
+I think I'd just render them monospace everywhere. We are very
+inconsistent about which form of quotes we use in the documentation (I
+think because most of the developers read the source directly and not
+the rendered asciidoc). And then we don't have to worry about the "$$"
+construct (and IMHO it makes the source much more readable, and marking
+the address as a literal looks good in the output, too).
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-
-I can't see any other uses of the "$$" quote in the documentation, so
-it's probably worth noting that I've tested this with Asciidoc 8.6.8,
-although I can't see anything in the changelog to indicate that
-Asciidoc's treatment of it has changed recently.
-
- Documentation/git-fast-import.txt | 2 +-
- Documentation/git-tag.txt         | 2 +-
- Documentation/mailmap.txt         | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index d1844ea..05913cc 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -427,7 +427,7 @@ they made it.
- 
- Here `<name>` is the person's display name (for example
- ``Com M Itter'') and `<email>` is the person's email address
--(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
-+(``$$cm@example.com$$'').  `LT` and `GT` are the literal less-than (\x3c)
- and greater-than (\x3e) symbols.  These are required to delimit
- the email address from the other fields in the line.  Note that
- `<name>` and `<email>` are free-form and may contain any sequence
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 247534e..ed63edb 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -129,7 +129,7 @@ This option is only applicable when listing tags without annotation lines.
- CONFIGURATION
- -------------
- By default, 'git tag' in sign-with-default mode (-s) will use your
--committer identity (of the form "Your Name <your@email.address>") to
-+committer identity (of the form "Your Name $$<your@email.address>$$") to
- find a key.  If you want to use a different default key, you can specify
- it in the repository configuration as follows:
- 
-diff --git a/Documentation/mailmap.txt b/Documentation/mailmap.txt
-index 288f04e..dd89fca 100644
---- a/Documentation/mailmap.txt
-+++ b/Documentation/mailmap.txt
-@@ -46,7 +46,7 @@ Jane Doe         <jane@desktop.(none)>
- Joe R. Developer <joe@example.com>
- ------------
- 
--Note how there is no need for an entry for <jane@laptop.(none)>, because the
-+Note how there is no need for an entry for `<jane@laptop.(none)>`, because the
- real name of that author is already correct.
- 
- Example 2: Your repository contains commits from the following
--- 
-1.8.0
+-Peff
