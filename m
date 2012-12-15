@@ -1,140 +1,93 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 1/2] cache-tree: invalidate i-t-a paths after
- generating trees
-Date: Sat, 15 Dec 2012 09:52:52 +0700
-Message-ID: <CACsJy8BcLmGmxBUq3+4_Go4v1-HOFDOj9wi8A_-fbk-on4MX3A@mail.gmail.com>
-References: <7vip89bz4v.fsf@alter.siamese.dyndns.org> <1355362747-13474-1-git-send-email-pclouds@gmail.com>
- <7v4njq1ze7.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC 0/3] compiling git with gcc -O3 -Wuninitialized
+Date: Sat, 15 Dec 2012 10:07:54 +0700
+Message-ID: <CACsJy8BqOEvEHy7i89fKSgQH5kUYFWvchJwD_fQsYjagrh+X2w@mail.gmail.com>
+References: <20121214220903.GA18418@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathon Mah <me@jonathonmah.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 03:53:46 2012
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 15 04:12:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tjhsn-0001EH-7A
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 03:53:45 +0100
+	id 1TjiAn-0007FP-D4
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Dec 2012 04:12:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755539Ab2LOCxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2012 21:53:23 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:61080 "EHLO
+	id S1755547Ab2LODIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2012 22:08:25 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:38364 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754735Ab2LOCxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2012 21:53:22 -0500
-Received: by mail-ob0-f174.google.com with SMTP id ta14so4045944obb.19
-        for <git@vger.kernel.org>; Fri, 14 Dec 2012 18:53:22 -0800 (PST)
+	with ESMTP id S1753518Ab2LODIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2012 22:08:24 -0500
+Received: by mail-ob0-f174.google.com with SMTP id ta14so4052077obb.19
+        for <git@vger.kernel.org>; Fri, 14 Dec 2012 19:08:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=or9rzJLau+qsmxRLW0gS36gpR6ujch22BxbQQ/mNuPs=;
-        b=l3Izm0SKLN6Oq/PKy0PHR8C1L53CBi5pcxCt8cUiyzWS4iKBiTaHAAOs38v3KfPko1
-         O4ZVgBMa+LAyqMjTwzMxl6ENyWekfVdnv3Bd7MzKjEWxukVkMe+H+WnKlaK3ocXCLSlm
-         uEkOsFkhicNCrXS8mFw09gQTQ7hl6LGQ0ML67u2KJZW1Hteum95v9LVjWsF8fUpb17yj
-         O21C14qezxYuXj++Yc9SsLNroBj3ijbodsCmOiWB6JlXvAFSoD0nfMxYca2BeafamhvS
-         KDoKZhlPQkqu7cSbBI3fOc6/cIi9lmXmsLz1bhNeSK7UvCms/Iemdf2faqdabM1eg3oN
-         EkAA==
-Received: by 10.60.30.70 with SMTP id q6mr6267346oeh.107.1355540002138; Fri,
- 14 Dec 2012 18:53:22 -0800 (PST)
-Received: by 10.182.41.229 with HTTP; Fri, 14 Dec 2012 18:52:52 -0800 (PST)
-In-Reply-To: <7v4njq1ze7.fsf@alter.siamese.dyndns.org>
+        bh=M+Eu3wP/rgG/AOK/cB0BGcU7CWP2W8101Xo/0i2OGec=;
+        b=nMhWZDbkg150YOQUR8SIXV0+Ln+F352AWsQWKkyubpFou177q30h4Kwv4t+A253gno
+         qkCzNd4hbzsJkPmwi8FgLVk4oocb7HZCNp6xqbKouuN0EOt+/sZpt3yeayZOoaSXE+Ou
+         icZ5cu5eL3Hi40XsUcLu08hhjE0ixVG0eXnNvyUgKsUVPuIzFBbvmotZNR7LcXxFU4ic
+         +pHmkYDvKo5mmuPnbL2nWGzguHF2SUoImqE74YECnqj0doVprDVbpkRfRSOIy2PjQnOm
+         +9+ueH89H1lN5MRTrW5PIlHPxbjBvSOu8luNq1h+yCCYawH4OYN3Z+GMtAMRRtPi8znc
+         FUgg==
+Received: by 10.182.177.72 with SMTP id co8mr6368389obc.53.1355540904334; Fri,
+ 14 Dec 2012 19:08:24 -0800 (PST)
+Received: by 10.182.41.229 with HTTP; Fri, 14 Dec 2012 19:07:54 -0800 (PST)
+In-Reply-To: <20121214220903.GA18418@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211516>
 
-On Thu, Dec 13, 2012 at 9:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> @@ -324,7 +325,14 @@ static int update_one(struct cache_tree *it,
->>                       if (!sub)
->>                               die("cache-tree.c: '%.*s' in '%s' not found",
->>                                   entlen, path + baselen, path);
->> -                     i += sub->cache_tree->entry_count - 1;
->> +                     i--; /* this entry is already counted in "sub" */
+On Sat, Dec 15, 2012 at 5:09 AM, Jeff King <peff@peff.net> wrote:
+> I always compile git with "gcc -Wall -Werror", because it catches a lot
+> of dubious constructs, and we usually keep the code warning-free.
+> However, I also typically compile with "-O0" because I end up debugging
+> a fair bit.
 >
-> Huh?
+> Sometimes, though, I compile with -O3, which yields a bunch of new
+> "variable might be used uninitialized" warnings. What's happening is
+> that as functions get inlined, the compiler can do more static analysis
+> of the variables. So given two functions like:
 >
-> The "-1" in the original is the bog-standard compensation for the
-> for(;;i++) loop.
-
-Exactly. It took me a while to figure out what " - 1" was for and I
-wanted to avoid that for other developers. Only I worded it badly.
-I'll replace the for loop with a while loop to make it clearer...
-
+>   int get_foo(int *foo)
+>   {
+>         if (something_that_might_fail() < 0)
+>                 return error("unable to get foo");
+>         *foo = 0;
+>         return 0;
+>   }
 >
->> +                     if (sub->cache_tree->entry_count < 0) {
->> +                             i -= sub->cache_tree->entry_count;
->> +                             sub->cache_tree->entry_count = -1;
->> +                             to_invalidate = 1;
->> +                     }
->> +                     else
->> +                             i += sub->cache_tree->entry_count;
+>   void some_fun(void)
+>   {
+>           int foo;
+>           if (get_foo(&foo) < 0)
+>                   return -1;
+>           printf("foo is %d\n", foo);
+>   }
 >
-> While the rewritten version is not *wrong* per-se, I have a feeling
-> that it may be much easier to read if written like this:
+> If get_foo() is not inlined, then when compiling some_fun, gcc sees only
+> that a pointer to the local variable is passed, and must assume that it
+> is an out parameter that is initialized after get_foo returns.
 >
->         if (sub->cache_tree_entry_count < 0) {
->                 to_invalidate = 1;
->                 to_skip = 0 - sub->cache_tree_entry_count;
->                 sub->cache_tree_entry_count = -1;
->         } else {
->                 to_skip = sub->cache_tree_entry_count;
->         }
->         i += to_skip - 1;
->
+> However, when get_foo() is inlined, the compiler may look at all of the
+> code together and see that some code paths in get_foo() do not
+> initialize the variable. And we get the extra warnings.
 
-..or this would be fine too. Which way to go?
+Other options:
 
-A while we're still at the cache tree
+ - Any __attribute__ or #pragma to aid flow analysis (or would gcc dev be
+   willing to add one)?
 
-> -               if (ce->ce_flags & (CE_REMOVE | CE_INTENT_TO_ADD))
-> -                       continue; /* entry being removed or placeholder */
-> +               /*
-> +                * CE_REMOVE entries are removed before the index is
-> +                * written to disk. Skip them to remain consistent
-> +                * with the future on-disk index.
-> +                */
-> +               if (ce->ce_flags & CE_REMOVE)
-> +                       continue;
-> +
+ - Maintain a list of false positives and filter them out from gcc output?
 
-A CE_REMOVE entry is removed later from the index, however it is still
-counted in entry_count. entry_count serves two purposes: to skip the
-number of processed entries in the in-memory index, and to record the
-number of entries in the on-disk index. These numbers do not match
-when CE_REMOVE is present. We have correct in-memory entry_count,
-which means incorrect on-disk entry_count in this case.
-
-I tested with an index that has a/b and a/c. The latter has CE_REMOVE.
-After writing cache tree I get:
-
-$ git ls-files --stage
-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       a/b
-$ ../test-dump-cache-tree
-878e27c626266ac04087a203e4bdd396dcf74763  (2 entries, 1 subtrees)
-878e27c626266ac04087a203e4bdd396dcf74763 #(ref)  (1 entries, 1 subtrees)
-4277b6e69d25e5efa77c455340557b384a4c018a a/ (2 entries, 0 subtrees)
-4277b6e69d25e5efa77c455340557b384a4c018a #(ref) a/ (1 entries, 0 subtrees)
-
-If I throw out that index, create a new one with a/b alone and write-tree, I get
-
-$ ../test-dump-cache-tree
-878e27c626266ac04087a203e4bdd396dcf74763  (1 entries, 1 subtrees)
-4277b6e69d25e5efa77c455340557b384a4c018a a/ (1 entries, 0 subtrees)
-
-Shall we fix this too? I'm thinking of adding "skip" argument to update_one and
-
-   i += sub->cache_tree->entry_count - 1;
-
-would become
-
-   i += sub->cache_tree->entry_count + skip - 1;
-
-and entry_count would always reflect on-disk value. This "skip" can be
-reused for this i-t-a patch as well.
+And if we do this, should we support other compilers as well? I tried
+clang once a long while ago and got a bunch of warnings iirc.
 -- 
 Duy
