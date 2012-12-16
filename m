@@ -1,85 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation: don't link to example mail addresses
-Date: Sun, 16 Dec 2012 07:04:05 -0500
-Message-ID: <20121216120405.GA14320@sigill.intra.peff.net>
-References: <20121215150314.GC2725@river.lan>
- <20121215172018.GA18696@sigill.intra.peff.net>
- <20121215182408.GD2725@river.lan>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH] Move api-command.txt to the end of API list in
+ api-index.txt
+Date: Sun, 16 Dec 2012 13:23:12 +0100 (CET)
+Message-ID: <1702872710.62174.1355660592713.JavaMail.ngmail@webmail12.arcor-online.net>
+References: <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net> <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net> <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Dec 16 13:04:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: th.acker@arcor.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 16 13:23:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkCxN-0005dk-Bx
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 13:04:33 +0100
+	id 1TkDFk-0001Ib-Cz
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 13:23:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597Ab2LPMEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 07:04:16 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56012 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752375Ab2LPMEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 07:04:15 -0500
-Received: (qmail 29558 invoked by uid 107); 16 Dec 2012 12:05:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 16 Dec 2012 07:05:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Dec 2012 07:04:05 -0500
-Content-Disposition: inline
-In-Reply-To: <20121215182408.GD2725@river.lan>
+	id S1752682Ab2LPMXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 07:23:15 -0500
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:47923 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752375Ab2LPMXO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Dec 2012 07:23:14 -0500
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mx.arcor.de (Postfix) with ESMTP id B829A107C08
+	for <git@vger.kernel.org>; Sun, 16 Dec 2012 13:23:12 +0100 (CET)
+Received: from mail-in-18.arcor-online.net (mail-in-18.arcor-online.net [151.189.21.58])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id B5D087FEC9B;
+	Sun, 16 Dec 2012 13:23:12 +0100 (CET)
+Received: from webmail12.arcor-online.net (webmail12.arcor-online.net [151.189.8.64])
+	by mail-in-18.arcor-online.net (Postfix) with ESMTP id ACA513DC30C;
+	Sun, 16 Dec 2012 13:23:12 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-18.arcor-online.net ACA513DC30C
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1355660592; bh=mT00/dAqcUW4QX5Gr3SCBMtVTdb4L44PMfeUdhS7HU4=;
+	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=SiueeaB0Yv9AG1Gn3DCsbNNFk0PHdDXhsKwo9+X92fJ+hJJIm6pRfcYzAvEUdH3PY
+	 d7UfDoKIUHWAzID/BW9HpBKUMgl8BDklqnY1MkWLf3pC7HtqI9KB9D73kRE2PC+nUR
+	 M05BEa8aATf+K/KmASGmznx5mg0EY7I9W4S73x2g=
+Received: from [94.217.21.17] by webmail12.arcor-online.net (151.189.8.64) with HTTP (Arcor Webmail); Sun, 16 Dec 2012 13:23:12 +0100 (CET)
+In-Reply-To: <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.21.17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211591>
 
-On Sat, Dec 15, 2012 at 06:24:09PM +0000, John Keeping wrote:
 
-> > I think I'd just render them monospace everywhere. We are very
-> > inconsistent about which form of quotes we use in the documentation (I
-> > think because most of the developers read the source directly and not
-> > the rendered asciidoc). And then we don't have to worry about the "$$"
-> > construct (and IMHO it makes the source much more readable, and marking
-> > the address as a literal looks good in the output, too).
-> 
-> I agree that the source is more readable as monospaced, but I think we
-> need to keep the quotes around the text in git-tag(1) and probably
-> git-fast-import(1) so that it is differentiated from the surrounding
-> text in the man page output.
+- because it describes a different form of API than the other api-* documents
 
-Hmm, good point. I use MAN_BOLD_LITERAL, which serves that purpose, but
-I guess not everyone does (and it is not the default; I wonder if it
-should be).  But if MAN_BOLD_LITERAL is not in use, then `` literals
-have zero typographical impact in the manpages.
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/technical/api-index.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-So maybe we do need to do something else. I was just hoping we could get
-away with something more readable in the source.
+diff --git a/Documentation/technical/api-index.sh b/Documentation/technical/api-index.sh
+index 9c3f413..c2c68ed 100755
+--- a/Documentation/technical/api-index.sh
++++ b/Documentation/technical/api-index.sh
+@@ -10,12 +10,16 @@
+ 	while read filename
+ 	do
+ 		case "$filename" in
+-		api-index-skel.txt | api-index.txt) continue ;;
++		api-index-skel.txt | api-index.txt | api-command.txt) continue ;;
+ 		esac
+ 		title=$(sed -e 1q "$filename")
+ 		html=${filename%.txt}.html
+ 		echo "* link:$html[$title]"
+ 	done
++	filename=api-command.txt
++	title=$(sed -e 1q "$filename")
++	html=${filename%.txt}.html
++	echo "* link:$html[$title]"
+ 	echo "$c"
+ 	sed -n -e '/^\/\/ table of contents end/,$p' "$skel"
+ ) >api-index.txt+
+-- 
+1.8.0.msysgit.0
 
-By my reading of the asciidoc user guide, the mechanism that is hurting
-us is that mailto is an inline macro, and that foo@bar automatically
-triggers that inline macro. Furthermore, the right way to suppress
-expansion of macros is with a backslash escape. Doing this:
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index d1844ea..68bca1a 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -427,7 +427,7 @@ Here `<name>` is the person's display name (for example
- 
- Here `<name>` is the person's display name (for example
- ``Com M Itter'') and `<email>` is the person's email address
--(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
-+(``\cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
- and greater-than (\x3e) symbols.  These are required to delimit
- the email address from the other fields in the line.  Note that
- `<name>` and `<email>` are free-form and may contain any sequence
-
-seems to produce the output we want. I think it's a little less ugly
-than the "$$" quoting, but not by much. No clue if one is accepted by
-more asciidoc versions or not.
-
--Peff
+---
+Thomas
