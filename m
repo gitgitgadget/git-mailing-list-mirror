@@ -1,117 +1,92 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2] Documentation: don't link to example mail addresses
-Date: Sun, 16 Dec 2012 14:00:29 +0000
-Message-ID: <20121216140029.GE2725@river.lan>
-References: <20121215150314.GC2725@river.lan>
- <20121215172018.GA18696@sigill.intra.peff.net>
- <20121215182408.GD2725@river.lan>
- <20121216120405.GA14320@sigill.intra.peff.net>
+Subject: Prebuilt man pages on Google code
+Date: Sun, 16 Dec 2012 16:28:27 +0000
+Message-ID: <20121216162827.GA22351@river.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 16 15:08:15 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 17:28:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkEt1-0001k5-Ol
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 15:08:12 +0100
+	id 1TkH58-0007WU-GD
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 17:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753072Ab2LPOFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 09:05:53 -0500
-Received: from anakin.london.02.net ([87.194.255.134]:39022 "EHLO
+	id S1751456Ab2LPQ2d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Dec 2012 11:28:33 -0500
+Received: from anakin.london.02.net ([87.194.255.134]:42482 "EHLO
 	anakin.london.02.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753029Ab2LPOFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 09:05:53 -0500
-X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Dec 2012 09:05:52 EST
+	with ESMTP id S1750955Ab2LPQ2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 11:28:32 -0500
 Received: from river.lan (188.222.177.116) by anakin.london.02.net (8.5.140)
-        id 4FED9D1503C523B5; Sun, 16 Dec 2012 14:00:29 +0000
+        id 4FED9D1503C60547; Sun, 16 Dec 2012 16:28:27 +0000
 Content-Disposition: inline
-In-Reply-To: <20121216120405.GA14320@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211593>
 
-Email addresses in documentation are converted into mailto: hyperlinks
-in the HTML output and footnotes in man pages.  This isn't desirable for
-cases where the address is used as an example and is not valid.
+While investigating Asciidoc's quoting in this thread [1], I noticed
+that my system man pages don't display Asciidoc double quoted text
+correctly.
 
-Particularly annoying is the example "jane@laptop.(none)" which appears
-in git-shortlog(1) as "jane@laptop[1].(none)", with note 1 saying:
+[1] http://article.gmane.org/gmane.comp.version-control.git/211533
 
-	1. jane@laptop
-	   mailto:jane@laptop
+=46or example in git-fast-import(1):
 
-Fix this by escaping these email addresses with a leading backslash, to
-prevent Asciidoc expanding them as inline macros.
+   Here <name> is the person=E2=80=99s display name (for example `Com M=
+ Itter'')
+   and `<email> is the person=E2=80=99s email address (`cm@example.com'=
+'). `LT
+   and GT are the literal less-than (\x3c) and greater-than (\x3e)
+   symbols.
 
-In the case of mailmap.txt, render the address monospaced so that it
-matches the block examples surrounding that paragraph.
+It turns out that Gentoo installs the man pages from git-core on Google
+code, and the error can be seen in the "source" there [2].
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
+[2] http://code.google.com/p/git-manpages/source/browse/man1/git-fast-i=
+mport.1#379
 
-On Sun, Dec 16, 2012 at 07:04:05AM -0500, Jeff King wrote:
-> Furthermore, the right way to suppress
-> expansion of macros is with a backslash escape.
-[snipped an example]
-> I think it's a little less ugly
-> than the "$$" quoting, but not by much. No clue if one is accepted by
-> more asciidoc versions or not.
+When I generate man pages here, I get paired quotes (\u201C and \u201D)=
+:
 
->From a quick reading of the Asciidoc changelog, I think backslash
-escaping should be supported just as well as "$$" quoting, which leaves
-the minimal patch looking like this.
+   Here <name> is the person=E2=80=99s display name (for example =E2=80=
+=9CCom M Itter=E2=80=9D)
+   and <email> is the person=E2=80=99s email address (=E2=80=9Ccm@examp=
+le.com=E2=80=9D). LT and
+   GT are the literal less-than (\x3c) and greater-than (\x3e) symbol
 
- Documentation/git-fast-import.txt | 2 +-
- Documentation/git-tag.txt         | 2 +-
- Documentation/mailmap.txt         | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+I can't see any configuration option that could cause this difference,
+so I assume it must be caused by some particular tool version on the
+machine used to generate these man pages.
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index d1844ea..68bca1a 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -427,7 +427,7 @@ they made it.
- 
- Here `<name>` is the person's display name (for example
- ``Com M Itter'') and `<email>` is the person's email address
--(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
-+(``\cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
- and greater-than (\x3e) symbols.  These are required to delimit
- the email address from the other fields in the line.  Note that
- `<name>` and `<email>` are free-form and may contain any sequence
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 247534e..2f1c0c3 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -129,7 +129,7 @@ This option is only applicable when listing tags without annotation lines.
- CONFIGURATION
- -------------
- By default, 'git tag' in sign-with-default mode (-s) will use your
--committer identity (of the form "Your Name <your@email.address>") to
-+committer identity (of the form "Your Name <\your@email.address>") to
- find a key.  If you want to use a different default key, you can specify
- it in the repository configuration as follows:
- 
-diff --git a/Documentation/mailmap.txt b/Documentation/mailmap.txt
-index 288f04e..dd89fca 100644
---- a/Documentation/mailmap.txt
-+++ b/Documentation/mailmap.txt
-@@ -46,7 +46,7 @@ Jane Doe         <jane@desktop.(none)>
- Joe R. Developer <joe@example.com>
- ------------
- 
--Note how there is no need for an entry for <jane@laptop.(none)>, because the
-+Note how there is no need for an entry for `<jane@laptop.(none)>`, because the
- real name of that author is already correct.
- 
- Example 2: Your repository contains commits from the following
--- 
-1.8.0.2
+If the output is a side-effect of avoiding non-ASCII characters, is is
+useful to do something like this (with appropriate Makefile support)?
+
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 1273a85..6655ec7 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -89,6 +89,16 @@ template::[header-declarations]
+ endif::backend-docbook[]
+ endif::doctype-manpage[]
+=20
++ifdef::doctype-manpage[]
++ifdef::git-asciidoc-man-ascii[]
++[attributes]
++lsquo=3D&#39;
++rsquo=3D&#39;
++ldquo=3D&#34;
++rdquo=3D&#34;
++endif::git-asciidoc-man-ascii[]
++endif::doctype-manpage[]
++
+ ifdef::backend-xhtml11[]
+ [attributes]
+ git-relative-html-prefix=3D
