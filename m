@@ -1,60 +1,66 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] t3070: Disable some failing fnmatch tests
-Date: Sun, 16 Dec 2012 11:31:59 +0700
-Message-ID: <CACsJy8DOhZjm05KVQYaR+HbQAu=wDNR=+NZ7H_hG8P5ZsNzSKg@mail.gmail.com>
-References: <50CCCD36.9020001@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git.c: add --index-file command-line option.
+Date: Sat, 15 Dec 2012 21:59:39 -0800
+Message-ID: <7vvcc2r0z8.fsf@alter.siamese.dyndns.org>
+References: <1355484219-7517-1-git-send-email-manlio.perillo@gmail.com>
+ <7vpq2btcqp.fsf@alter.siamese.dyndns.org> <50CCC73B.3070802@gmail.com>
+ <7vliczrttq.fsf@alter.siamese.dyndns.org> <50CCF324.5060802@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sun Dec 16 05:32:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Manlio Perillo <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 07:00:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tk5uB-0007B5-VC
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 05:32:48 +0100
+	id 1Tk7Gh-00073p-J5
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 07:00:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521Ab2LPEca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2012 23:32:30 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:41573 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309Ab2LPEca (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2012 23:32:30 -0500
-Received: by mail-ob0-f174.google.com with SMTP id ta14so4678225obb.19
-        for <git@vger.kernel.org>; Sat, 15 Dec 2012 20:32:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=zn/Heb+OzYAQYcL37bKrZgX+KnOvww9dyE3JGuyNTc4=;
-        b=zgDenNfCW6OLIZ4xKeonREgTIeBJ0lpzM0rKJkawYlruYAe2DWZIazgGar1EPjv6Gy
-         EBux3mvyC2FJWqA+SAWsJ9QE8b4sxagYiX3Qs5+HEkuYn1t4KIBymJz1Ug27Lf+zkR8f
-         bsJ03KV3D8w5bC9fNxgT5X9hmbIOfSDHQq2698PZutAm50Qg32idhVgpYJaueRkY+bcc
-         kbk7G9+C1Xs66h2yS3CkI9qnG09bJvyLZ6kJAfkmuHbG6Nkrgly3tWkI6buXXtcXDJ+N
-         zDrZyOle7KwnH7nReQEbu6sUZazDLKNfifZlKdyVFmqqJlJOvy8EIOFi8OwnLz8c9goN
-         Y13A==
-Received: by 10.182.141.103 with SMTP id rn7mr8526159obb.5.1355632349488; Sat,
- 15 Dec 2012 20:32:29 -0800 (PST)
-Received: by 10.182.27.168 with HTTP; Sat, 15 Dec 2012 20:31:59 -0800 (PST)
-In-Reply-To: <50CCCD36.9020001@ramsay1.demon.co.uk>
+	id S1751133Ab2LPF7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 00:59:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33207 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750955Ab2LPF7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 00:59:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CBB0AFD8;
+	Sun, 16 Dec 2012 00:59:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8HxJASSqr15GD54h0amc80BMW14=; b=TcCr3k
+	zTQM8lCzUlUcIddgzjY8OI27nw2axxFZhjcia9vT7r3cxjYRhPhKLnX0h7MSFqkh
+	/d1LA/w8V5mL4W5U7H3N10z4rfmSkhjQJLgUZGnzw5UpkeJamHlaNwm7JxzmUhnW
+	uhgW1G+GwWim0LlsPPwLK74B4YRuLJ9DqcB+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Hs/lQm2e4pdcKJU/vNoN4RBpP9hzlKtw
+	sLW/CmovBrMRgr6uUt/xbcqLycijxiUK1EZqd+J2F3Nv2pwizZVwM/+7O8r845s+
+	8x30nnFp2Us6uaHY7CAPYnhAXxkXNC4P8DZ/ZhFWmJcq7PYtLw8HJnljkzSZ+/8H
+	fAWKHE25Jyk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A954AFD7;
+	Sun, 16 Dec 2012 00:59:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C2D8AFD6; Sun, 16 Dec 2012
+ 00:59:41 -0500 (EST)
+In-Reply-To: <50CCF324.5060802@gmail.com> (Manlio Perillo's message of "Sat,
+ 15 Dec 2012 23:01:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C87CD8E4-4745-11E2-9B75-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211580>
 
-On Sun, Dec 16, 2012 at 2:19 AM, Ramsay Jones
-<ramsay@ramsay1.demon.co.uk> wrote:
->
-> The failing tests make use of a POSIX character class, '[:xdigit:]'
-> in this case, which some versions of the fnmatch() library function
-> do not support. In the spirit of commit f1cf7b79 ("t3070: disable
-> unreliable fnmatch tests", 15-10-2012), we disable the fnmatch() half
-> of these tests.
+I
+Manlio Perillo <manlio.perillo@gmail.com> writes:
 
-I have no problem with this. You're on cygwin, right?
--- 
-Duy
+> This works with a shell.
+> I'm using Python to write a custom git command.
+
+I would be very surprised if Python lacked a way to spawn a
+subprocess with an environment modified from the current process.
