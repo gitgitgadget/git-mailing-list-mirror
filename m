@@ -1,88 +1,117 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: [PATCH] Move api-command.txt to the end of API list in
- api-index.txt
-Date: Sun, 16 Dec 2012 13:23:12 +0100 (CET)
-Message-ID: <1702872710.62174.1355660592713.JavaMail.ngmail@webmail12.arcor-online.net>
-References: <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net> <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net> <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2] Documentation: don't link to example mail addresses
+Date: Sun, 16 Dec 2012 14:00:29 +0000
+Message-ID: <20121216140029.GE2725@river.lan>
+References: <20121215150314.GC2725@river.lan>
+ <20121215172018.GA18696@sigill.intra.peff.net>
+ <20121215182408.GD2725@river.lan>
+ <20121216120405.GA14320@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: th.acker@arcor.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 16 13:23:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 16 15:08:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkDFk-0001Ib-Cz
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 13:23:32 +0100
+	id 1TkEt1-0001k5-Ol
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 15:08:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682Ab2LPMXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 07:23:15 -0500
-Received: from mail-in-07.arcor-online.net ([151.189.21.47]:47923 "EHLO
-	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752375Ab2LPMXO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Dec 2012 07:23:14 -0500
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mx.arcor.de (Postfix) with ESMTP id B829A107C08
-	for <git@vger.kernel.org>; Sun, 16 Dec 2012 13:23:12 +0100 (CET)
-Received: from mail-in-18.arcor-online.net (mail-in-18.arcor-online.net [151.189.21.58])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id B5D087FEC9B;
-	Sun, 16 Dec 2012 13:23:12 +0100 (CET)
-Received: from webmail12.arcor-online.net (webmail12.arcor-online.net [151.189.8.64])
-	by mail-in-18.arcor-online.net (Postfix) with ESMTP id ACA513DC30C;
-	Sun, 16 Dec 2012 13:23:12 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-18.arcor-online.net ACA513DC30C
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1355660592; bh=mT00/dAqcUW4QX5Gr3SCBMtVTdb4L44PMfeUdhS7HU4=;
-	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=SiueeaB0Yv9AG1Gn3DCsbNNFk0PHdDXhsKwo9+X92fJ+hJJIm6pRfcYzAvEUdH3PY
-	 d7UfDoKIUHWAzID/BW9HpBKUMgl8BDklqnY1MkWLf3pC7HtqI9KB9D73kRE2PC+nUR
-	 M05BEa8aATf+K/KmASGmznx5mg0EY7I9W4S73x2g=
-Received: from [94.217.21.17] by webmail12.arcor-online.net (151.189.8.64) with HTTP (Arcor Webmail); Sun, 16 Dec 2012 13:23:12 +0100 (CET)
-In-Reply-To: <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 94.217.21.17
+	id S1753072Ab2LPOFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 09:05:53 -0500
+Received: from anakin.london.02.net ([87.194.255.134]:39022 "EHLO
+	anakin.london.02.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753029Ab2LPOFx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 09:05:53 -0500
+X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Dec 2012 09:05:52 EST
+Received: from river.lan (188.222.177.116) by anakin.london.02.net (8.5.140)
+        id 4FED9D1503C523B5; Sun, 16 Dec 2012 14:00:29 +0000
+Content-Disposition: inline
+In-Reply-To: <20121216120405.GA14320@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211592>
 
+Email addresses in documentation are converted into mailto: hyperlinks
+in the HTML output and footnotes in man pages.  This isn't desirable for
+cases where the address is used as an example and is not valid.
 
-- because it describes a different form of API than the other api-* documents
+Particularly annoying is the example "jane@laptop.(none)" which appears
+in git-shortlog(1) as "jane@laptop[1].(none)", with note 1 saying:
 
-Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+	1. jane@laptop
+	   mailto:jane@laptop
+
+Fix this by escaping these email addresses with a leading backslash, to
+prevent Asciidoc expanding them as inline macros.
+
+In the case of mailmap.txt, render the address monospaced so that it
+matches the block examples surrounding that paragraph.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
- Documentation/technical/api-index.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/technical/api-index.sh b/Documentation/technical/api-index.sh
-index 9c3f413..c2c68ed 100755
---- a/Documentation/technical/api-index.sh
-+++ b/Documentation/technical/api-index.sh
-@@ -10,12 +10,16 @@
- 	while read filename
- 	do
- 		case "$filename" in
--		api-index-skel.txt | api-index.txt) continue ;;
-+		api-index-skel.txt | api-index.txt | api-command.txt) continue ;;
- 		esac
- 		title=$(sed -e 1q "$filename")
- 		html=${filename%.txt}.html
- 		echo "* link:$html[$title]"
- 	done
-+	filename=api-command.txt
-+	title=$(sed -e 1q "$filename")
-+	html=${filename%.txt}.html
-+	echo "* link:$html[$title]"
- 	echo "$c"
- 	sed -n -e '/^\/\/ table of contents end/,$p' "$skel"
- ) >api-index.txt+
+On Sun, Dec 16, 2012 at 07:04:05AM -0500, Jeff King wrote:
+> Furthermore, the right way to suppress
+> expansion of macros is with a backslash escape.
+[snipped an example]
+> I think it's a little less ugly
+> than the "$$" quoting, but not by much. No clue if one is accepted by
+> more asciidoc versions or not.
+
+>From a quick reading of the Asciidoc changelog, I think backslash
+escaping should be supported just as well as "$$" quoting, which leaves
+the minimal patch looking like this.
+
+ Documentation/git-fast-import.txt | 2 +-
+ Documentation/git-tag.txt         | 2 +-
+ Documentation/mailmap.txt         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index d1844ea..68bca1a 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -427,7 +427,7 @@ they made it.
+ 
+ Here `<name>` is the person's display name (for example
+ ``Com M Itter'') and `<email>` is the person's email address
+-(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
++(``\cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
+ and greater-than (\x3e) symbols.  These are required to delimit
+ the email address from the other fields in the line.  Note that
+ `<name>` and `<email>` are free-form and may contain any sequence
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 247534e..2f1c0c3 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -129,7 +129,7 @@ This option is only applicable when listing tags without annotation lines.
+ CONFIGURATION
+ -------------
+ By default, 'git tag' in sign-with-default mode (-s) will use your
+-committer identity (of the form "Your Name <your@email.address>") to
++committer identity (of the form "Your Name <\your@email.address>") to
+ find a key.  If you want to use a different default key, you can specify
+ it in the repository configuration as follows:
+ 
+diff --git a/Documentation/mailmap.txt b/Documentation/mailmap.txt
+index 288f04e..dd89fca 100644
+--- a/Documentation/mailmap.txt
++++ b/Documentation/mailmap.txt
+@@ -46,7 +46,7 @@ Jane Doe         <jane@desktop.(none)>
+ Joe R. Developer <joe@example.com>
+ ------------
+ 
+-Note how there is no need for an entry for <jane@laptop.(none)>, because the
++Note how there is no need for an entry for `<jane@laptop.(none)>`, because the
+ real name of that author is already correct.
+ 
+ Example 2: Your repository contains commits from the following
 -- 
-1.8.0.msysgit.0
-
-
----
-Thomas
+1.8.0.2
