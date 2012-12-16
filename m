@@ -1,97 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Move api-command.txt to the end of API list in
- api-index.txt
-Date: Sun, 16 Dec 2012 12:01:25 -0800
-Message-ID: <7vwqwhpy0a.fsf@alter.siamese.dyndns.org>
-References: <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net>
- <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net>
- <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
- <1702872710.62174.1355660592713.JavaMail.ngmail@webmail12.arcor-online.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Sun Dec 16 21:01:58 2012
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: [PATCH] git-completion.bash: add support for path completion
+Date: Sun, 16 Dec 2012 22:24:40 +0100
+Message-ID: <1355693080-4765-1-git-send-email-manlio.perillo@gmail.com>
+Cc: Manlio Perillo <manlio.perillo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 16 22:25:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkKPH-0008OO-6c
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 21:01:51 +0100
+	id 1TkLi1-0000pA-Vc
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 22:25:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155Ab2LPUBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 15:01:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54210 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752123Ab2LPUBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 15:01:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DEEA10F;
-	Sun, 16 Dec 2012 15:01:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oydLK3orKAFHZE9yKHuWed2IVdA=; b=iYctyB
-	1IoxU/a1HfWK0XtdfZG+ce4+wdPQOb/fz/lg6E3ryB0p5UCV4tJBi4mIuKgCJRqe
-	Qk+4zDoEE/rxRi/C7tjBX99v/nSu2UhhO5t7+rHwm6szkH14Rd/qe5av1MSEt7JT
-	8AYK7XdzQzincUBpwvNsU92bAQxCHklwoRMj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qgmG7hLVK6T569thibdATV/mj5BQfC5z
-	zyuDMTQnqlOKs4u70OL7r3xfoA65Dr/kEPcde8DJjw0w5b2n5RYuHL4XyqJB7Z9R
-	ZbOg+qAQeOqsMfBDqTWqs7IykPHNK/BnKJPEU+XengphLeBUxah1hwQiiLDXo/gF
-	TzcczrmOTi0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7569CA10E;
-	Sun, 16 Dec 2012 15:01:32 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72F50A10A; Sun, 16 Dec 2012
- 15:01:31 -0500 (EST)
-In-Reply-To: <1702872710.62174.1355660592713.JavaMail.ngmail@webmail12.arcor-online.net>
- (Thomas Ackermann's message of "Sun, 16 Dec 2012 13:23:12 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 62B147D6-47BB-11E2-94F8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751302Ab2LPVY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 16:24:59 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:50796 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750798Ab2LPVY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 16:24:59 -0500
+Received: by mail-bk0-f46.google.com with SMTP id q16so2419839bkw.19
+        for <git@vger.kernel.org>; Sun, 16 Dec 2012 13:24:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=TvKS+FG/8h5EZWUpaigmrO64B3R9eefpa0Sj4TBdOZk=;
+        b=1Ahej8MEhtueV4xoEgSsiXdct0a4dVvvrSDafkJJwreLD2dymSysGTaQ9JY1ZiwjZx
+         OJvXqBBapinnZ4AvBdfqkAV0jqw6/Bj93H5ccYQsPPn0iOcHuX0l/N4DPKnNM3qw/82V
+         4NcVIYBL+Ac12BlTvwujpCM6LHH9/GW3PIwvXy70SnMxpbDnJB9QnAwVYFlyY2iVMGmA
+         5/0EeNjR3Bah1YEPDEvp9njG4uZJciajlv0FHxtQC24uO/o9OPdwd06CSN5iJQc3parq
+         WNTQOTEVeyZOOelHsK6f+hnw/BTUUuAJmFnEr3NpESOH+S2Nqs0UJtPg26e2rASeZgRk
+         Zy5Q==
+Received: by 10.204.149.26 with SMTP id r26mr5113069bkv.71.1355693097602;
+        Sun, 16 Dec 2012 13:24:57 -0800 (PST)
+Received: from synapsis.synapsis ([151.70.213.162])
+        by mx.google.com with ESMTPS id d16sm7976539bkw.2.2012.12.16.13.24.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 16 Dec 2012 13:24:56 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc1.18.g9db0d25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211613>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
+The git-completion.bash script did not implemented full support for
+completion, for git commands that operate on files from the current
+working directory or the index.
 
-> - because it describes a different form of API than the other api-* documents
+For these commands, only options completion was available.
 
-Drop that "- "; it is not like you are enumerating many reasons.
+Full support for completion is now implemented, for git commands where
+the non-option arguments always refer to paths on the current working
+directory or the index, as the follow:
 
-It makes me wonder if a more correct "fix" is to move this document
-to the ../howto/ hierarchy.
+* the path completion for the "git mv" and "git rm" commands is provided
+  using "git ls-files --exclude-standard"
 
->
-> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
-> ---
->  Documentation/technical/api-index.sh | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/api-index.sh b/Documentation/technical/api-index.sh
-> index 9c3f413..c2c68ed 100755
-> --- a/Documentation/technical/api-index.sh
-> +++ b/Documentation/technical/api-index.sh
-> @@ -10,12 +10,16 @@
->  	while read filename
->  	do
->  		case "$filename" in
-> -		api-index-skel.txt | api-index.txt) continue ;;
-> +		api-index-skel.txt | api-index.txt | api-command.txt) continue ;;
->  		esac
->  		title=$(sed -e 1q "$filename")
->  		html=${filename%.txt}.html
->  		echo "* link:$html[$title]"
->  	done
-> +	filename=api-command.txt
-> +	title=$(sed -e 1q "$filename")
-> +	html=${filename%.txt}.html
-> +	echo "* link:$html[$title]"
->  	echo "$c"
->  	sed -n -e '/^\/\/ table of contents end/,$p' "$skel"
->  ) >api-index.txt+
+* the path completion for the "git add" command is provided using
+  "git ls-files --exclude-standard -o -m"
+
+* the path completion for the "git clean" command is provided using
+  "git ls-files --exclude-standard -o"
+
+* the path completion for the "git commit" command is provides using
+  "git diff-index --name-only HEAD"
+
+Signed-off-by: Manlio Perillo <manlio.perillo@gmail.com>
+---
+ contrib/completion/git-completion.bash | 39 ++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0b77eb1..8b348c3 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -233,6 +233,25 @@ __gitcomp_nl ()
+ 	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
+ }
+ 
++__git_files ()
++{
++	local dir="$(__gitdir)"
++	if [ -d "$dir" ]; then
++		git --git-dir="$dir" ls-files --exclude-standard $*
++		return
++	fi
++}
++
++# Return all staged files with modification from current HEAD
++__git_commit_files ()
++{
++	local dir="$(__gitdir)"
++	if [ -d "$dir" ]; then
++		git --git-dir="$dir" diff-index --name-only HEAD
++		return
++	fi
++}
++
+ __git_heads ()
+ {
+ 	local dir="$(__gitdir)"
+@@ -770,8 +789,6 @@ _git_apply ()
+ 
+ _git_add ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "
+@@ -780,7 +797,8 @@ _git_add ()
+ 			"
+ 		return
+ 	esac
+-	COMPREPLY=()
++	# XXX should we care for --update and --all options ?
++	__gitcomp_nl "$(__git_files -o -m)" "" "$cur" ""
+ }
+ 
+ _git_archive ()
+@@ -930,15 +948,14 @@ _git_cherry_pick ()
+ 
+ _git_clean ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--dry-run --quiet"
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	# TODO: check for -x option
++	__gitcomp_nl "$(__git_files -o)" "" "$cur" ""
+ }
+ 
+ _git_clone ()
+@@ -969,8 +986,6 @@ _git_clone ()
+ 
+ _git_commit ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--cleanup=*)
+ 		__gitcomp "default strip verbatim whitespace
+@@ -998,7 +1013,7 @@ _git_commit ()
+ 			"
+ 		return
+ 	esac
+-	COMPREPLY=()
++	__gitcomp_nl "$(__git_commit_files)" "" "$cur" ""
+ }
+ 
+ _git_describe ()
+@@ -1362,7 +1377,7 @@ _git_mv ()
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	__gitcomp_nl "$(__git_files)" "" "$cur" ""
+ }
+ 
+ _git_name_rev ()
+@@ -2068,15 +2083,13 @@ _git_revert ()
+ 
+ _git_rm ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--cached --dry-run --ignore-unmatch --quiet"
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	__gitcomp_nl "$(__git_files)" "" "$cur" ""
+ }
+ 
+ _git_shortlog ()
+-- 
+1.8.1.rc1.18.g9db0d25
