@@ -1,107 +1,67 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 2/2] Makefile: detect when PYTHON_PATH changes
-Date: Sun, 16 Dec 2012 20:38:49 +0100
-Message-ID: <20121216193850.23461.10354.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 16 20:40:06 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove misleading date form api-index-skel.txt
+Date: Sun, 16 Dec 2012 11:59:14 -0800
+Message-ID: <7v1ueprcod.fsf@alter.siamese.dyndns.org>
+References: <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net>
+ <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net>
+ <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
+ <38388978.118261.1355647369577.JavaMail.ngmail@webmail21.arcor-online.net>
+ <m2ip828jtx.fsf@linux-m68k.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Ackermann <th.acker@arcor.de>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Dec 16 20:59:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkK4C-0002xs-4m
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 20:40:04 +0100
+	id 1TkKND-0006x1-8L
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 20:59:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354Ab2LPTjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 14:39:47 -0500
-Received: from [194.158.122.134] ([194.158.122.134]:43516 "EHLO
-	mail-4d.bbox.fr" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753129Ab2LPTjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 14:39:46 -0500
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-4d.bbox.fr (Postfix) with ESMTP id 0D7C6C8;
-	Sun, 16 Dec 2012 20:39:24 +0100 (CET)
-X-git-sha1: 87400351ef5f1f4068f85abb1421b01d02bea90a 
-X-Mailer: git-mail-commits v0.5.2
+	id S1751570Ab2LPT7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 14:59:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50838 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751365Ab2LPT7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 14:59:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 371A3ADEC;
+	Sun, 16 Dec 2012 14:59:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YLs2ZcWJbz+Wud6jkmBouRqVRSQ=; b=bYAmny
+	z2mtlREAmL1zBsaP7bPxxQrML5hDS3tTnD4AXibcRTHdNZ42kKD7II+P5aGRTw/v
+	UEvCwtCtfXmwDSQf20gVYZrid+rAhhwl0ziiWh5Sx3LK6ytxE+0XlXh/gCOu5X+Q
+	4AeL/jsRNIFQ6rFIZIXP37XxcwajSCDVm+7l8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PqL5ETtWIsEVVMn1G27VWiFiyw6F7bGd
+	Py5P5R/di75ZOQkxVGihbPkwnDz3OqcWHJ3emgBFvukrCi0Ylo7oNsOOWQT0XzWu
+	UrVynJ/tnoSEa4xlE6x0YE+LNyW3WPiI8wW+7yqltE58Ja//53k0eUidxMVRxXPn
+	WPYK9JwlQU4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 023B1ADE7;
+	Sun, 16 Dec 2012 14:59:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 424F1ADE5; Sun, 16 Dec 2012
+ 14:59:16 -0500 (EST)
+In-Reply-To: <m2ip828jtx.fsf@linux-m68k.org> (Andreas Schwab's message of
+ "Sun, 16 Dec 2012 09:47:22 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 12B48BC6-47BB-11E2-9C97-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211611>
 
-When make is run, the python scripts are created from *.py files that
-are changed to use the python given by PYTHON_PATH. And PYTHON_PATH
-is set by default to /usr/bin/python on Linux.
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-This is nice except when you run make another time setting a
-different PYTHON_PATH, because, as the python scripts have already
-been created, make finds nothing to do.
+> s/form/from/
+>
+> Andreas.
 
-The goal of this patch is to detect when the PYTHON_PATH changes and
-to create the python scripts again when this happens. To do that we
-use the same trick that is done to track other variables like prefix,
-flags, tcl/tk path and shell path. We update a GIT-PYTHON-VARS file
-with the PYTHON_PATH and check if it changed.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- .gitignore |  1 +
- Makefile   | 16 ++++++++++++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/.gitignore b/.gitignore
-index 6d69ae1..086c5af 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -2,6 +2,7 @@
- /GIT-CFLAGS
- /GIT-LDFLAGS
- /GIT-PREFIX
-+/GIT-PYTHON-VARS
- /GIT-SCRIPT-DEFINES
- /GIT-USER-AGENT
- /GIT-VERSION-FILE
-diff --git a/Makefile b/Makefile
-index 585b2eb..7db8445 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2245,7 +2245,7 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)) git-instaweb: % : unimplemented.sh
- endif # NO_PERL
- 
- ifndef NO_PYTHON
--$(patsubst %.py,%,$(SCRIPT_PYTHON)): GIT-CFLAGS GIT-PREFIX
-+$(patsubst %.py,%,$(SCRIPT_PYTHON)): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
- $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_helpers -s \
-@@ -2624,6 +2624,18 @@ ifdef GIT_PERF_MAKE_OPTS
- 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@
- endif
- 
-+### Detect Python interpreter path changes
-+ifndef NO_PYTHON
-+TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
-+
-+GIT-PYTHON-VARS: FORCE
-+	@VARS='$(TRACK_PYTHON)'; \
-+	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
-+		echo 1>&2 "    * new Python interpreter location"; \
-+		echo "$$VARS" >$@; \
-+            fi
-+endif
-+
- test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
- 
- all:: $(TEST_PROGRAMS) $(test_bindir_programs)
-@@ -2899,7 +2911,7 @@ ifndef NO_TCLTK
- 	$(MAKE) -C git-gui clean
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
--	$(RM) GIT-USER-AGENT GIT-PREFIX GIT-SCRIPT-DEFINES
-+	$(RM) GIT-USER-AGENT GIT-PREFIX GIT-SCRIPT-DEFINES GIT-PYTHON-VARS
- 
- .PHONY: all install profile-clean clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
--- 
-1.8.1.rc1.2.g8740035
+Thanks; will apply.
