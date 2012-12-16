@@ -1,101 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] tests: Allow customization of how say_color() prints
-Date: Sat, 15 Dec 2012 22:34:23 -0800
-Message-ID: <7vobhuqzdc.fsf@alter.siamese.dyndns.org>
-References: <50CCCB86.5080701@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v4 3/4] cache-tree: fix writing cache-tree when CE_REMOVE
+ is present
+Date: Sat, 15 Dec 2012 23:20:36 -0800
+Message-ID: <7vk3siqx8b.fsf@alter.siamese.dyndns.org>
+References: <1355631328-26678-1-git-send-email-pclouds@gmail.com>
+ <1355631328-26678-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sun Dec 16 07:37:54 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 08:21:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tk7rB-0005Um-Ni
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 07:37:50 +0100
+	id 1Tk8Wz-0006fw-UB
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 08:21:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751110Ab2LPGe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 01:34:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47948 "EHLO
+	id S1751221Ab2LPHUk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Dec 2012 02:20:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34994 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750845Ab2LPGe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 01:34:27 -0500
+	id S1750919Ab2LPHUj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Dec 2012 02:20:39 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B9BA666F;
-	Sun, 16 Dec 2012 01:34:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A57476EEE;
+	Sun, 16 Dec 2012 02:20:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=65vfNPFGBUV0S8W9jwIRTpwkeLo=; b=l5QCDk
-	u8NMSCym5CiygvchTuUeww/fNfr8rG0Zrw4Br/f2WAqbfYatZI3Caey774B2CjUf
-	vStY37mpYz7AdX6tyvKdUa1rt+/G3gEs6a+jZVE2DgA1eDYE/6WImK6ToDEc6Dv5
-	a2xwPj4VDeWsMP+LoGekByztM21y4fqWY+PrY=
+	:content-type:content-transfer-encoding; s=sasl; bh=W3BhdY/NbxAK
+	e+X26zgHPu7Hx+0=; b=RIkNIROrjuJLajH93iky8u6BG8UZ1kanPsXpUrBrwO9q
+	7TlaSke73lPxU4dlhqPbwUl8oYzdmxLnIazpLvsN2AKhS+AJ0j7nPnCCoc+Cc1sT
+	gbfuMxuVeFyr+GWWRX05sDpH67g12f/m96S1TPi65JR4wls4yfskcKhkAVrq764=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nWKnvO24uWWxtiQdH2/zRicEs9Knondi
-	+7DvgIPWtib4FBh633q30jXDfWReCslWgYBaSZvvg6lfhfFRxofABONrSw4GhU+Q
-	S+Zg3zupntzRZdJH6jYtah7EnZb07/tA6aA8jvqSNEYJ//HbhpoIbjIBDY4G0VGR
-	NHE0CFxSIpE=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JdSDzv
+	hl0+MXMQHH+4BKUR4LjJRWrT1HSHvXQCdmVyca7A+qRsXiEFpltyrOfiFJmU2e67
+	+DG/gUqecBey5H//xprKx3Zq3IqPZO/wHYsolbG5O3L2mXHxk3YqdJH/ShNfYALa
+	blnKz4VonEGVj7yH+lCY++0zEhTcsHlC0mrzw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48F72666E;
-	Sun, 16 Dec 2012 01:34:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91FC46EEB;
+	Sun, 16 Dec 2012 02:20:38 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A781666D; Sun, 16 Dec 2012
- 01:34:25 -0500 (EST)
-In-Reply-To: <50CCCB86.5080701@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Sat, 15 Dec 2012 19:12:06 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 10F696EE5; Sun, 16 Dec 2012
+ 02:20:37 -0500 (EST)
+In-Reply-To: <1355631328-26678-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 16 Dec
+ 2012 11:15:27 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A29AD1C6-474A-11E2-9B34-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 17252586-4751-11E2-82EC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211582>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index f50f834..9dcf3c1 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -202,6 +202,15 @@ do
->  	esac
->  done
->  
-> +if test -z "$GIT_TEST_PRINT"
-> +then
-> +	GIT_TEST_PRINT="printf %s"
-> +fi
-> +if test -z "$GIT_TEST_PRINT_LN"
-> +then
-> +	GIT_TEST_PRINT_LN="printf %s\n"
-> +fi
-> +
->  if test -n "$color"
->  then
->  	say_color () {
-> @@ -221,7 +230,7 @@ then
->  			test -n "$quiet" && return;;
->  		esac
->  		shift
-> -		printf "%s" "$*"
-> +		$GIT_TEST_PRINT "$*"
->  		tput sgr0
->  		echo
->  		)
-> @@ -230,7 +239,7 @@ else
->  	say_color() {
->  		test -z "$1" && test -n "$quiet" && return
->  		shift
-> -		printf "%s\n" "$*"
-> +		$GIT_TEST_PRINT_LN "$*"
->  	}
->  fi
+> entry_count is used in update_one() for two purposes:
+>
+> 1. to skip through the number of processed entries in in-memory index
+> 2. to record the number of entries this cache-tree covers on disk
+>
+> Unfortunately when CE_REMOVE is present these numbers are not the sam=
+e
+> because CE_REMOVE entries are automatically removed before writing to
+> disk but entry_count is not adjusted and still counts CE_REMOVE
+> entries.
 
-As you said, this is ugly and also unwieldy in that I do not see an
-easy way for a platform/builder to define something that needs to
-pass a parameter with $IFS in it in these two variables.
+Nicely explained.  I wonder if we can also add a piece of test to
+the patch 4/4 to demonstrate the issue with CE_REMOVE entries,
+though.
 
-Why does your printf die in the first place???
+Thanks.
