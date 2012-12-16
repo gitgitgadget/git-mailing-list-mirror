@@ -1,100 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Adam Spiers <git@adamspiers.org>
 Subject: Re: [PATCH v6 0/7] make test output coloring more intuitive
-Date: Sun, 16 Dec 2012 10:54:50 -0800
-Message-ID: <7v8v8xrfnp.fsf@alter.siamese.dyndns.org>
+Date: Sun, 16 Dec 2012 19:01:56 +0000
+Message-ID: <CAOkDyE9B_HfUZmqNqO35mtjTvdihBTiW=uOV2oEQgLUw1xyf=A@mail.gmail.com>
 References: <1355682495-22382-1-git-send-email-git@adamspiers.org>
+	<7v8v8xrfnp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Sun Dec 16 19:55:13 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 20:02:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkJMl-0000PZ-9H
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 19:55:11 +0100
+	id 1TkJTd-0004d5-2A
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 20:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303Ab2LPSyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 13:54:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62808 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751504Ab2LPSyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 13:54:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01254ADCB;
-	Sun, 16 Dec 2012 13:54:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=diRNdI8LiwJw7T9eS/ojQ80gZBc=; b=oOQ0mJ
-	fN0QPQrmQD3S7l6GS7qqr6htkS8sW818A6zDqp6DoJM/1RlzG7VwyzcCR5LGfIhR
-	LHb3alY7vJy6arkhSvDNrz78+4bISLtVtmPls4Q02jVS7qXNjRWBSRwOE3hw5O3X
-	50wVeH/N95kQgmg1z2uTygU321Ct/KnrBeyoM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hvqrINI+iYIPIfRIehnMgTNzmVwkeStP
-	ApPwQzZha2F3P2cMz86wWybfr/xfHxgJtaxE08ZFz9c33wob6nsTu3QiZnRcddyJ
-	qJG4QafigyDXURs0NJSClNirqK2dE1tEJQvOcMgZ/u/PYmXcjL8CIg1KFbSpCzXh
-	UjAPGma61uk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7E27ADCA;
-	Sun, 16 Dec 2012 13:54:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 10AE8ADC2; Sun, 16 Dec 2012
- 13:54:51 -0500 (EST)
-In-Reply-To: <1355682495-22382-1-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Sun, 16 Dec 2012 18:28:08 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 12E4A030-47B2-11E2-B5A3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753066Ab2LPTB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 14:01:59 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:56463 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632Ab2LPTB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 14:01:58 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so2357504wey.19
+        for <git@vger.kernel.org>; Sun, 16 Dec 2012 11:01:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Uq5W2AR6CHkx4qr90pig1QuTX3bGP+aD3ZJivQAlG+A=;
+        b=Kdqcx7A3IkC3x5tC/PwTigUYYZMzSA7frZLAO14OMeImpZ897j/U2EHHRoxrOKpMnt
+         xMV66mblfnG730OpetrCLRK6GF5bXA/ecSKvefgK9oIAz2frvmWIUrwFZkeg3aGzrJ+O
+         et0xeOigHxBq2t5ipkxh0TGGr8j5G8SFaQ4fuM+efjXDz3Tzb0d3zOX2mZ2qCxJM6UCM
+         WFScCcM2Lyq+CFjZlNT0iBNO4UeJDgKDzJhw3BK28RuZr5eFes+cnwXjap4sUxUZ41dX
+         nxVbuphN9MDCV/d0qStAzWZdY3sWYsUqb1bZodLlOtGT3RnMZVMyU4OR9pIeyA4Ppc/n
+         NZsw==
+Received: by 10.180.102.40 with SMTP id fl8mr11916833wib.22.1355684516709;
+ Sun, 16 Dec 2012 11:01:56 -0800 (PST)
+Received: by 10.194.56.232 with HTTP; Sun, 16 Dec 2012 11:01:56 -0800 (PST)
+In-Reply-To: <7v8v8xrfnp.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: XVrj4IPBA7xNZYSLi3zzgj35u9c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211604>
 
-Adam Spiers <git@adamspiers.org> writes:
-
-> This series of commits attempts to make test output coloring
-> more intuitive,...
-
-Thanks; I understand that this is to replace the previous one
-b465316 (tests: paint unexpectedly fixed known breakages in bold
-red, 2012-09-19)---am I correct?
-
->   - red is only used for things which have gone unexpectedly wrong:
->     test failures, unexpected test passes, and failures with the
->     framework,
+On Sun, Dec 16, 2012 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Adam Spiers <git@adamspiers.org> writes:
 >
->   - yellow is only used for known breakages,
+>> This series of commits attempts to make test output coloring
+>> more intuitive,...
 >
->   - green is only used for things which have gone to plan and
->     require no further work to be done,
->
->   - blue is only used for skipped tests, and
->
->   - cyan is used for other informational messages.
+> Thanks; I understand that this is to replace the previous one
+> b465316 (tests: paint unexpectedly fixed known breakages in bold
+> red, 2012-09-19)---am I correct?
 
-OK.
+Correct.  AFAICS I have incorporated all feedback raised in previous
+reviews.
 
-> Since unexpected test passes are no longer treated as passes, the
-> summary lines displayed at the end of a test run have enough different
-> possible outputs to warrant them being covered in the test framework's
-> self-tests.  Therefore this series also refactors and extends the
-> self-tests.
->
-> Adam Spiers (7):
->   tests: test number comes first in 'not ok $count - $message'
->   tests: paint known breakages in bold yellow
->   tests: paint skipped tests in bold blue
->   tests: change info messages from yellow/brown to bold cyan
->   tests: refactor mechanics of testing in a sub test-lib
->   tests: test the test framework more thoroughly
->   tests: paint unexpectedly fixed known breakages in bold red
->
->  t/t0000-basic.sh | 211 ++++++++++++++++++++++++++++++++++++++++++-------------
->  t/test-lib.sh    |  25 ++++---
->  2 files changed, 180 insertions(+), 56 deletions(-)
+> Will take a look; thanks.
 
-Will take a look; thanks.
+Thanks.  Sorry again for the delay.  I'm now (finally) resuming work
+on as/check-ignore.
