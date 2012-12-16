@@ -1,86 +1,90 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH 2/3] Documentation: move support for old compilers to CodingGuidelines
-Date: Sun, 16 Dec 2012 19:36:00 +0000
-Message-ID: <1355686561-1057-3-git-send-email-git@adamspiers.org>
-References: <1355686561-1057-1-git-send-email-git@adamspiers.org>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 16 20:36:39 2012
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/2] Makefile: remove tracking of TCLTK_PATH
+Date: Sun, 16 Dec 2012 20:38:48 +0100
+Message-ID: <20121216193850.23461.28099.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 20:40:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkK0t-0000fB-3V
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 20:36:39 +0100
+	id 1TkK4B-0002xs-LM
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Dec 2012 20:40:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364Ab2LPTgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 14:36:06 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:41239 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753164Ab2LPTgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 14:36:04 -0500
-Received: from localhost (4.8.9.4.4.5.7.d.4.0.6.a.a.2.0.b.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:b02a:a604:d754:4984])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 4A4902E65F
-	for <git@vger.kernel.org>; Sun, 16 Dec 2012 19:36:03 +0000 (GMT)
-X-Mailer: git-send-email 1.7.12.1.396.g53b3ea9
-In-Reply-To: <1355686561-1057-1-git-send-email-git@adamspiers.org>
+	id S1753060Ab2LPTjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 14:39:46 -0500
+Received: from [194.158.122.134] ([194.158.122.134]:43512 "EHLO
+	mail-4d.bbox.fr" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750798Ab2LPTjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 14:39:45 -0500
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-4d.bbox.fr (Postfix) with ESMTP id A7ADCAD;
+	Sun, 16 Dec 2012 20:39:23 +0100 (CET)
+X-git-sha1: dabe3f9742f6e6bd4f9de4500484fe0b2f4dcb29 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211609>
 
-The "Try to be nice to older C compilers" text is clearly a guideline
-to be borne in mind whilst coding rather than when submitting patches.
+It looks like we are tracking the value of TCLTK_PATH in the main
+Makefile for no good reason, as this is done in git-gui too and the
+GIT-GUI-VARS is not used in the Makefile.
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
+This patch removes the useless code used to do this tracking.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/CodingGuidelines  |  8 ++++++++
- Documentation/SubmittingPatches | 13 -------------
- 2 files changed, 8 insertions(+), 13 deletions(-)
+ .gitignore |  1 -
+ Makefile   | 14 +-------------
+ 2 files changed, 1 insertion(+), 14 deletions(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 57da6aa..69f7e9b 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -112,6 +112,14 @@ For C programs:
+diff --git a/.gitignore b/.gitignore
+index f702415..6d69ae1 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,7 +1,6 @@
+ /GIT-BUILD-OPTIONS
+ /GIT-CFLAGS
+ /GIT-LDFLAGS
+-/GIT-GUI-VARS
+ /GIT-PREFIX
+ /GIT-SCRIPT-DEFINES
+ /GIT-USER-AGENT
+diff --git a/Makefile b/Makefile
+index 4ad6fbd..585b2eb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2624,18 +2624,6 @@ ifdef GIT_PERF_MAKE_OPTS
+ 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@
+ endif
  
-  - We try to keep to at most 80 characters per line.
+-### Detect Tck/Tk interpreter path changes
+-ifndef NO_TCLTK
+-TRACK_VARS = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
+-
+-GIT-GUI-VARS: FORCE
+-	@VARS='$(TRACK_VARS)'; \
+-	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
+-		echo 1>&2 "    * new Tcl/Tk interpreter location"; \
+-		echo "$$VARS" >$@; \
+-            fi
+-endif
+-
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
  
-+ - We try to support a wide range of C compilers to compile git with,
-+   including old ones. That means that you should not use C99
-+   initializers, even if a lot of compilers grok it.
-+
-+ - Variables have to be declared at the beginning of the block.
-+
-+ - NULL pointers shall be written as NULL, not as 0.
-+
-  - When declaring pointers, the star sides with the variable
-    name, i.e. "char *string", not "char* string" or
-    "char * string".  This makes it easier to understand code
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index c107cb1..c34c9d1 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -127,19 +127,6 @@ in templates/hooks--pre-commit.  To help ensure this does not happen,
- run git diff --check on your changes before you commit.
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+@@ -2910,7 +2898,7 @@ ifndef NO_TCLTK
+ 	$(MAKE) -C gitk-git clean
+ 	$(MAKE) -C git-gui clean
+ endif
+-	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
++	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX GIT-SCRIPT-DEFINES
  
- 
--(1a) Try to be nice to older C compilers
--
--We try to support a wide range of C compilers to compile
--git with. That means that you should not use C99 initializers, even
--if a lot of compilers grok it.
--
--Also, variables have to be declared at the beginning of the block
--(you can check this with gcc, using the -Wdeclaration-after-statement
--option).
--
--Another thing: NULL pointers shall be written as NULL, not as 0.
--
--
- (2) Generate your patch using git tools out of your commits.
- 
- git based diff tools generate unidiff which is the preferred format.
+ .PHONY: all install profile-clean clean strip
 -- 
-1.7.12.1.396.g53b3ea9
+1.8.1.rc1.2.g8740035
