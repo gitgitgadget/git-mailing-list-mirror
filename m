@@ -1,120 +1,80 @@
-From: Woody Wu <narkewoody@gmail.com>
-Subject: Re: How to specify remote branch correctly
-Date: Mon, 17 Dec 2012 07:41:33 +0000 (UTC)
-Message-ID: <slrnkctj37.mmj.narkewoody@zuhnb712.local.com>
-References: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
- <CAH5451=7frqa-YHXubvO=dMK2CvVoWR-VFZ3XCmKouNiQz4gAg@mail.gmail.com>
- <slrnkcta0j.mlu.narkewoody@zuhnb712.local.com>
- <CAH5451kmTW+nO4V4pjSdaqhHAb=RX-tawLo=rJfuPnDRDWeSEA@mail.gmail.com>
- <1355722245-ner-6603@calvin> <slrnkctgqh.mmj.narkewoody@zuhnb712.local.com>
- <1355728904-ner-4851@calvin>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Mon, 17 Dec 2012 08:52:42 +0100
+Organization: Bertin Technologies
+Message-ID: <20121217085242.02a77243@chalon.bertin.fr>
+References: <20121211153903.7522d6b0@chalon.bertin.fr>
+ <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
+ <20121212094432.6e1e48c8@chalon.bertin.fr>
+ <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 08:42:11 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 08:53:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkVKz-0008DD-4v
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:42:09 +0100
+	id 1TkVVy-0005vg-Nj
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530Ab2LQHlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 02:41:52 -0500
-Received: from plane.gmane.org ([80.91.229.3]:39656 "EHLO plane.gmane.org"
+	id S1751331Ab2LQHxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 02:53:13 -0500
+Received: from cabourg.bertin.fr ([195.68.26.10]:33612 "EHLO cabourg.bertin.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751387Ab2LQHlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 02:41:51 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TkVKr-00087R-L3
-	for git@vger.kernel.org; Mon, 17 Dec 2012 08:42:01 +0100
-Received: from 59.37.26.98 ([59.37.26.98])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:42:01 +0100
-Received: from narkewoody by 59.37.26.98 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:42:01 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 59.37.26.98
-User-Agent: slrn/0.9.9p1 (Linux)
+	id S1750768Ab2LQHxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 02:53:12 -0500
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id C0C98A0F6A
+	for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:52:40 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id 9085AA0F63
+	for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:52:40 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MF600FA40JSTV30@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Mon, 17 Dec 2012 08:52:40 +0100 (CET)
+In-reply-to: <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19456.005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211655>
 
-On 2012-12-17, Tomas Carnecky <tomas.carnecky@gmail.com> wrote:
-> On Mon, 17 Dec 2012 07:02:46 +0000, Woody Wu <narkewoody@gmail.com> wrote:
->> On 2012-12-17, Tomas Carnecky <tomas.carnecky@gmail.com> wrote:
->> > 'git checkout foo' has special meaning if a local branch with that
->> > name doesn't exist but there is a remote branch with that name. In
->> > that case it's equivalent to: git checkout -t -b foo origin/foo.
->> > Because that's what people usually want.
->> 
->> I think this is what exactly happened to me in the first time I got the
->> 'foo'.  One new thing to me is the '-t'.  I am not sure wether the '-t'
->> was used or not in the background.  How do I check the 'upstream'
->> relationships?  Is there any file under .git recoreded that kind of
->> information?
->
-> Yes, that information is recorded in a file somewhere in .git. However, for
-> most users it's irrelevant which file it is. Git has commands to access this
-> information. Try one of these:
->
->   git branch -vv
+On Wed, 12 Dec 2012 11:57:47 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Run this on my local linux tree, I got:
-  lgf2410-2.6.16.4         7af1fda - added a ignore rule in .gitignore
-  (*~)
-  * lgf2410-2.6.34.13        50d3f9d ax88796b verbose debug output
-    lgf2410-2.6.34.13-16C554 3ec82e0 more debug on 16C554
-      master                   9489e9d [origin/master] Linux 3.7-rc7
+> Yann Dirson <dirson@bertin.fr> writes:
+> 
+> > ....  In this respect, they seem to be
+> > lacking a few features, when compared to "replace" refs, but they have different
+> > uses, ...
+> 
+> Not reallyl; grafts were old hack whose use is still supported with
+> its original limitations; replace is meant to replace all uses of
+> grafts while removing grafts' largest warts.
 
-Does this mean, I only have local branch master tracked to remote?
+OK, I'll take this into account.
 
+But this situation should probably be make more clear in the docs.  Currently,
+gitrepository-layout.txt describes refs/replace/ (and shallow) by reference to grafts,
+and those are not marked as discouraged-use or anything.
 
->   git remote show origin
-Running this I got,
+And we may still want the bug fixed, or would we just list it as a known bug ?
+At least it does not seem to occur with "replace" refs:
 
-    ...
-    linux-3.1.y    tracked
-    linux-3.2.y    tracked
-    linux-3.3.y    tracked
-    linux-3.4.y    tracked
-    linux-3.5.y    tracked
-    linux-3.6.y    tracked
-    linux-3.7.y    new (next fetch will store in remotes/origin)
-    master         tracked
-  Local branch configured for 'git pull':
-    master rebases onto remote master
-  Local ref configured for 'git push':
-    master pushes to master (local out of date)
-
-I am curious to know how the last 4 lines were printed by git.
-
-  -----
-  Local branch configured for 'git pull':
-    master rebases onto remote master
-  -----
-
-If I have addtional branch other than master that also track to some
-remote branch, will it also be listed under this 'git pull' line?
-
-  ----
-  Local ref configured for 'git push':
-    master pushes to master (local out of date)
-  ---
-
-This I totally don't understand, what it mean? I think I did not do a
-modification on the local 'master'.
-
-Thanks!
+git-test$ rm .git/info/grafts 
+git-test$ echo "fake merge" | git commit-tree master^{tree} -p master^ -p maint
+b821b2aa00973a47936d7cd25c9a5978b1c839c6
+git-test$ git replace master b821b2aa00973a47936d7cd25c9a5978b1c839c6
+git-test$ git push origin maint
+...
+   50b03b0..79211fe  maint -> maint
 
 -- 
-woody
-I can't go back to yesterday - because I was a different person then.
+Yann Dirson - Bertin Technologies
