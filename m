@@ -1,73 +1,53 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
-Date: Mon, 17 Dec 2012 09:59:54 +0100
-Message-ID: <50CEDF0A.7040603@viscovery.net>
-References: <1355726702-27974-1-git-send-email-chris@rorvick.com> <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org> <50CED5D4.5040705@viscovery.net> <7vk3shm5d5.fsf@alter.siamese.dyndns.org>
+From: Prasad Karmarkar <prasad.s.karmarkar@gmail.com>
+Subject: git log reliability
+Date: Mon, 17 Dec 2012 14:56:17 +0530
+Message-ID: <CANirugRmpoGb=T1V2ZBw3GEE5nYwD-hyLOfWgt-UVvMXh-i_OA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Woody Wu <narkewoody@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 10:00:23 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 10:26:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkWYb-00013O-VH
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:00:18 +0100
+	id 1TkWyA-0008KD-BN
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:26:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366Ab2LQJAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 04:00:00 -0500
-Received: from so.liwest.at ([212.33.55.24]:49029 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750805Ab2LQI77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 03:59:59 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TkWYE-0004mS-HR; Mon, 17 Dec 2012 09:59:54 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 414981660F;
-	Mon, 17 Dec 2012 09:59:54 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vk3shm5d5.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.6
-X-Spam-Score: -1.0 (-)
+	id S1751896Ab2LQJ0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 04:26:19 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:62447 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751533Ab2LQJ0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 04:26:18 -0500
+Received: by mail-oa0-f46.google.com with SMTP id h16so5667574oag.19
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 01:26:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=V0RgpLmM5InbC1T2GLcAs7IwXNSyzPmovtuQqlc5oxE=;
+        b=SNZrk7CVlIzAFRHencchU1TcNX45VYuwic8ahmNkNfrXnzcKpVxVHE+viLl87394EE
+         Kx9nVaE6r64toQ7m0JSut9abVUiOf1L8V9K/mpoihvH3dA3z1Jd8DwRdwnkEXYZahM14
+         Wf8wvJ7KtEmeN+4H+5c5Rxh5WT0kihTTVkeUKQEzTrNU+hyf8RDZZx8tFtTCxcfKHlgC
+         NpQjTsZPdTyJqdpmjT3ScaeHOZwYUX7f/ezwIqiRWfKQ/Qc9CidCLE/koP1GrDCOdIdo
+         eHUeZsZBiwuhCX31ioL9vogUI+X4hiK9m0/z6Hxb+BYo7Pa0/pP8SzCrkvTCMcBZEVQW
+         aFYA==
+Received: by 10.182.17.66 with SMTP id m2mr11125758obd.86.1355736378016; Mon,
+ 17 Dec 2012 01:26:18 -0800 (PST)
+Received: by 10.76.27.34 with HTTP; Mon, 17 Dec 2012 01:26:17 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211666>
 
-Am 12/17/2012 9:48, schrieb Junio C Hamano:
-> Here is what I tentatively have ...
+Hi ,
 
-Thanks!
+I have been hearing from my Release Management that git log is not
+reliable. Is it so ?
+Is there a known instance where Git log has missed out on commits ?
 
-> -'git checkout' [--detach] [<commit>]::
-> +'git checkout' --detach [<commit>]::
-> +'git checkout' <commit>::
->  
-> -	Update the index and working tree to reflect the specified
-> -	commit and set HEAD to point directly to <commit> (see
-> -	"DETACHED HEAD" section.)  Passing `--detach` forces this
-> -	behavior even if <commit> is a branch.
-> +	Prepare to work on building new history on top of <commit>,
-> +	by detaching HEAD at the commit (see "DETACHED HEAD"
-> +	section), and updating the index and the files in the
-> +	working tree.  Local modifications to the files in the
-> +	working tree are kept, so that they can be committed on the
-> +	<branch>.
+Any information about this would be really helpful
 
-The last half-sentence should better be removed.
-
-> ++
-> +Passing `--detach` forces this behavior even if <commit> is a branch.
->  
->  'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
-
--- Hannes
+Regards,
+Prasad
