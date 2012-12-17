@@ -1,80 +1,75 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Mon, 17 Dec 2012 08:52:42 +0100
-Organization: Bertin Technologies
-Message-ID: <20121217085242.02a77243@chalon.bertin.fr>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
- <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
- <20121212094432.6e1e48c8@chalon.bertin.fr>
- <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
+Date: Mon, 17 Dec 2012 09:20:36 +0100
+Message-ID: <50CED5D4.5040705@viscovery.net>
+References: <1355726702-27974-1-git-send-email-chris@rorvick.com> <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	Woody Wu <narkewoody@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 08:53:33 2012
+X-From: git-owner@vger.kernel.org Mon Dec 17 09:21:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkVVy-0005vg-Nj
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:53:31 +0100
+	id 1TkVwc-0004FC-I4
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 09:21:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331Ab2LQHxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 02:53:13 -0500
-Received: from cabourg.bertin.fr ([195.68.26.10]:33612 "EHLO cabourg.bertin.fr"
+	id S1750938Ab2LQIUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 03:20:44 -0500
+Received: from so.liwest.at ([212.33.55.24]:13271 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768Ab2LQHxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 02:53:12 -0500
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id C0C98A0F6A
-	for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:52:40 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 9085AA0F63
-	for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:52:40 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MF600FA40JSTV30@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Mon, 17 Dec 2012 08:52:40 +0100 (CET)
-In-reply-to: <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19456.005
+	id S1750768Ab2LQIUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 03:20:44 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TkVwD-0002Km-Lu; Mon, 17 Dec 2012 09:20:37 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2574D1660F;
+	Mon, 17 Dec 2012 09:20:37 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vhanlnnz7.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211657>
 
-On Wed, 12 Dec 2012 11:57:47 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
+Am 12/17/2012 8:21, schrieb Junio C Hamano:
+> Chris Rorvick <chris@rorvick.com> writes:
+>>  'git checkout' [<branch>]::
 
-> Yann Dirson <dirson@bertin.fr> writes:
-> 
-> > ....  In this respect, they seem to be
-> > lacking a few features, when compared to "replace" refs, but they have different
-> > uses, ...
-> 
-> Not reallyl; grafts were old hack whose use is still supported with
-> its original limitations; replace is meant to replace all uses of
-> grafts while removing grafts' largest warts.
+Is <branch> really optional in this form?
 
-OK, I'll take this into account.
+BTW, what does plain 'git checkout' do? Just report ahead/behind information?
 
-But this situation should probably be make more clear in the docs.  Currently,
-gitrepository-layout.txt describes refs/replace/ (and shallow) by reference to grafts,
-and those are not marked as discouraged-use or anything.
-
-And we may still want the bug fixed, or would we just list it as a known bug ?
-At least it does not seem to occur with "replace" refs:
-
-git-test$ rm .git/info/grafts 
-git-test$ echo "fake merge" | git commit-tree master^{tree} -p master^ -p maint
-b821b2aa00973a47936d7cd25c9a5978b1c839c6
-git-test$ git replace master b821b2aa00973a47936d7cd25c9a5978b1c839c6
-git-test$ git push origin maint
+>> +
+>> +	Update the index, working tree, and HEAD to reflect the
+>> +	specified branch.
 ...
-   50b03b0..79211fe  maint -> maint
+>> +'git checkout' [--detach] [<commit>]::
 
--- 
-Yann Dirson - Bertin Technologies
+The title here is better spelled as two lines:
+
+'git checkout' <commit>::
+'git checkout' --detach <branch>::
+
+I don't think that <commit> or <branch> should be indicated as optional here.
+
+>> +
+>> +	Update the index and working tree to reflect the specified
+>> +	commit and set HEAD to point directly to <commit> (see
+>> +	"DETACHED HEAD" section.)  Passing `--detach` forces this
+>> +	behavior even if <commit> is a branch.
+> 
+> 	Prepare to work on building new history on top of <commit>,
+>         by detaching HEAD at the commit and ...(likewise)...
+
+-- Hannes
