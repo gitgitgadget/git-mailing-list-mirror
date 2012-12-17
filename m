@@ -1,79 +1,77 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH] Move api-command.txt to the end of API list in
- api-index.txt
-Date: Mon, 17 Dec 2012 10:43:52 +0100 (CET)
-Message-ID: <1944303.2385893.1355737432979.JavaMail.ngmail@webmail11.arcor-online.net>
-References: <7vwqwhpy0a.fsf@alter.siamese.dyndns.org> <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net>
- <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net>
- <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
- <1702872710.62174.1355660592713.JavaMail.ngmail@webmail12.arcor-online.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] Documentation: don't link to example mail addresses
+Date: Mon, 17 Dec 2012 09:44:46 +0000
+Message-ID: <20121217094446.GA24036@river.lan>
+References: <20121215150314.GC2725@river.lan>
+ <7vobhtnt57.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Mon Dec 17 10:44:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 10:45:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkXF5-00013U-QV
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:44:12 +0100
+	id 1TkXG3-0001cJ-OT
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980Ab2LQJnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 04:43:55 -0500
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:46381 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751213Ab2LQJny (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2012 04:43:54 -0500
-Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
-	by mx.arcor.de (Postfix) with ESMTP id F1519304F0;
-	Mon, 17 Dec 2012 10:43:52 +0100 (CET)
-Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
-	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 0176F14A568;
-	Mon, 17 Dec 2012 10:43:53 +0100 (CET)
-Received: from webmail11.arcor-online.net (webmail11.arcor-online.net [151.189.8.83])
-	by mail-in-15.arcor-online.net (Postfix) with ESMTP id E77501AB51F;
-	Mon, 17 Dec 2012 10:43:52 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-15.arcor-online.net E77501AB51F
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1355737432; bh=XyqwUrMbvEREqXoLfUHk0drTBgm9+6OBWkHVHiuyhoI=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=EEgxmiUdOhzK/X99qNZjNIYmV6vcSh7gJQS2pysO43/sQfQDer9ZtUwH2Elu9fTRl
-	 tY/lgHkOsFZo75SomI94LUpLT/1dLcsGEbVTg2Oq0ROv5gtPjHzCa2S516baxCWsYa
-	 PiXqt08IDPYxXI1xB90OIQO8l7VqSvjow6L4f8M0=
-Received: from [194.138.39.59] by webmail11.arcor-online.net (151.189.8.83) with HTTP (Arcor Webmail); Mon, 17 Dec 2012 10:43:52 +0100 (CET)
-In-Reply-To: <7vwqwhpy0a.fsf@alter.siamese.dyndns.org>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 194.138.39.59
+	id S1752023Ab2LQJov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 04:44:51 -0500
+Received: from anakin.london.02.net ([87.194.255.134]:45532 "EHLO
+	anakin.london.02.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751213Ab2LQJov (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 04:44:51 -0500
+Received: from river.lan (188.222.177.116) by anakin.london.02.net (8.5.140)
+        id 4FED9D1503CBC97A; Mon, 17 Dec 2012 09:44:46 +0000
+Content-Disposition: inline
+In-Reply-To: <7vobhtnt57.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211669>
 
- 
-OK; I would also prefer to have it in ./howto.
-So please drop this patch; I will provide a new one.
-
------ Original Nachricht ----
-Von:     Junio C Hamano <gitster@pobox.com>
-An:      Thomas Ackermann <th.acker@arcor.de>
-Datum:   16.12.2012 21:01
-Betreff: Re: [PATCH] Move api-command.txt to the end of API list in
- api-index.txt
-
-> Thomas Ackermann <th.acker@arcor.de> writes:
+On Sun, Dec 16, 2012 at 09:29:24PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>>  Here `<name>` is the person's display name (for example
+>>  ``Com M Itter'') and `<email>` is the person's email address
+>> -(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
+>> +(``$$cm@example.com$$'').  `LT` and `GT` are the literal less-than (\x3c)
+>>  and greater-than (\x3e) symbols.  These are required to delimit
+>>  the email address from the other fields in the line.  Note that
+>>  `<name>` and `<email>` are free-form and may contain any sequence
 > 
-> > - because it describes a different form of API than the other api-*
-> documents
+> AsciiDoc 8.5.2 gives this:   
 > 
-> It makes me wonder if a more correct "fix" is to move this document
-> to the ../howto/ hierarchy.
+>     asciidoc: WARNING: git-fast-import.txt: line 434: nested inline passthrough
 > 
+> Also in git-fast-import.1, there is this line:
+> 
+>     ... person\(cqs display name (for example `Com M Itter\(aq\(aq) and `<ema...
+> 
+> (notice two leftover `s); not that this is a new issue with this patch.
+> 
+> Which is puzzling, because the next input line formats better:
+> 
+>     ...  email address (\(lqcm@example\&.com\(rq)\&. ...
+
+I wonder if you're hitting this bug, which is listed as fixed in
+AsciiDoc 8.6.0 [1]:
+
+    FIXED: Sometimes multiple double quoted text elements in the same
+    paragraph were mistakenly seen as starting with an inline literal.
+
+As you said in your other message, it may be better to avoid using the
+pretty quotes, although I don't think just changing them to `monospace
+output` is sufficient as monospace output is not distinguished in the
+default man page output.  IMHO that's necessary for any examples that
+contain whitespace.  Perhaps a patch series turning MAN_BOLD_LITERAL on
+by default and then changing these examples to `monospace output`?
 
 
----
-Thomas
+John
+
+[1] http://www.methods.co.nz/asciidoc/CHANGELOG.html#_version_8_6_0_2010_08_16
