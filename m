@@ -1,164 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-clean: Display more accurate delete messages
-Date: Mon, 17 Dec 2012 13:40:03 -0800
-Message-ID: <7vsj74jr2k.fsf@alter.siamese.dyndns.org>
-References: <1355743765-17549-1-git-send-email-zoltan.klinger@gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
+Date: Tue, 18 Dec 2012 08:50:15 +1100
+Message-ID: <CAH5451nVe1VcD3VzCO7EtKSkzv9CyJs=uqQ9MkMTJEXMTwEvmw@mail.gmail.com>
+References: <1355726702-27974-1-git-send-email-chris@rorvick.com>
+ <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org>
+ <17103971665F4C4495C6C96086A58B8F@PhilipOakley> <7v1ueol6ut.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Zoltan Klinger <zoltan.klinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 22:40:29 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Chris Rorvick <chris@rorvick.com>,
+	Git List <git@vger.kernel.org>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	Woody Wu <narkewoody@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 22:50:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkiQG-0002cT-BZ
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 22:40:28 +0100
+	id 1TkiaM-0008Cd-Nr
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 22:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287Ab2LQVkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 16:40:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48041 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752646Ab2LQVkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 16:40:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A6BB9F99;
-	Mon, 17 Dec 2012 16:40:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K+mYI6FuxWCYvDyftV9Je9L1YpY=; b=vVcy18
-	Kf1qiEwNC8ARw94Ajn5dWwCKI7/s8WwtYbWxPugEmMTALIUdwTJr/lqos4ZtAFxm
-	GuJYqw9DO/3ia4BRC6LOlaunWw8ilJf5pwqQ2PzGTUc4Dwmrld63ZcObVM1IOJka
-	ad8Kyr1ZMDxmGf6yGgqlDqpC69N3/dlBnIc0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KSnzgR2TYRoR7K9G+Drr5uANGquXRt8h
-	nZSUKSENdlDoSk/mFZ9wfUwsMiISU4ezyHU7LTX9gensWPlhf0eiiiFgJrNqxEK4
-	mW4ibSAZiJ6SSrihhdKYoSHK86/jeZLKAmDpzzdcCt14ds8RLsqda5a4AjZ98Om8
-	LsW2b+41a2o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 571C19F98;
-	Mon, 17 Dec 2012 16:40:06 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 848F39F95; Mon, 17 Dec 2012
- 16:40:05 -0500 (EST)
-In-Reply-To: <1355743765-17549-1-git-send-email-zoltan.klinger@gmail.com>
- (Zoltan Klinger's message of "Mon, 17 Dec 2012 22:29:25 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 522ADB52-4892-11E2-A10A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753844Ab2LQVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 16:50:37 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:47142 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889Ab2LQVug (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 16:50:36 -0500
+Received: by mail-qa0-f53.google.com with SMTP id a19so55279qad.19
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 13:50:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JJH4CezZR01ptdneiMoVJJbKL4WuWFuHMY3qpg8GZXE=;
+        b=BmpJsISgjri5PG4QJGm3O2Eu2xYbTmJpNpHeM0TPmhB3zZDqRrkrEov0Ax0AXgbs7u
+         SgIry1jhTBXkc4vuCO+C5Wi99pTOHR64aPC15l+6m4WZcWve+cywc4THB3jbgbByZLIy
+         EURRqx80Xpka1om5EwbmkdCJKdeQuZsY266bw10qQl2DucyWcxN25kXsL24Y3sMnoB5B
+         YTFS0cVaJVT1bdjyxoll0ImGF/BiXc5y+9PCZji0WRPL5X8a/l3ESgcceA0RQj92DtDc
+         SYHNcdi3tr5DRlNs7IZEB1+O7LnT9l7zGChgtBDPWZPWUbypCDUeQAGpDLLIcdwppf8T
+         JWow==
+Received: by 10.49.48.104 with SMTP id k8mr7972862qen.49.1355781035381; Mon,
+ 17 Dec 2012 13:50:35 -0800 (PST)
+Received: by 10.49.14.3 with HTTP; Mon, 17 Dec 2012 13:50:15 -0800 (PST)
+In-Reply-To: <7v1ueol6ut.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211707>
 
-Zoltan Klinger <zoltan.klinger@gmail.com> writes:
+On 18 December 2012 08:13, Junio C Hamano <gitster@pobox.com> wrote:
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> From: "Junio C Hamano" <gitster@pobox.com> Sent: Monday, December 17,
+>>> This is to "check out the branch" ;-)
+>>> ...
+>>
+>> From a user perspective it's better to refer to the working directory
+>> first rather than the internal mechanics.
+>>
+>>    Prepare to work on <branch>, by updating the files in the
+>>    working tree and index to the branch's previous content, and
+>>    pointing HEAD to it.
+>
+> I agree that the mention of "pointing HEAD to" may be better to be
+> rephrased in the user facing terms.
+>
+> Because the primary purpose of "git checkout <branch>" is to "check
+> out the branch so that further work is done on that branch", that
+> aspect of the behaviour should be mentioned first.  Updating of the
+> working tree files and the index is the implemenation detail of
+> starting to work on that branch.
 
-> +static void print_filtered(const char *msg, struct string_list *lst)
-> +{
-> +	int i;
-> +	char *name;
-> +	char *dir = 0;
-> +
-> +	sort_string_list(lst);
-> +
-> +	for (i = 0; i < lst->nr; i++) {
-> +		name = lst->items[i].string;
-> +		if (dir == 0 || strncmp(name, dir, strlen(dir)) != 0)
-> +			printf("%s %s\n", msg, name);
-> +		if (name[strlen(name) - 1] == '/')
-> +			dir = name;
-> +	}
-> +}
+Even if the primary purpose of "git checkout <branch>" is to "check
+out the branch so that further work is done on that branch", I don't
+believe that means it has to be stated first. In fact, I would say
+that there are enough other use cases that the language should be
+slightly more use-case agnostic in the first situation. For example,
+someone might switch to another branch or commit simply to see what
+state the tree was in at that point. Some people use checkout to
+deploy a tag of the working tree onto a production server. The first
+example in particular is, I think, a common enough operation that
+restricting the opening lines of documentation to talking about
+building further work is misleading.
 
-Here, prefixcmp() may be easier to read than strncmp().  We tend to
-prefer writing comparison with zero like this:
+My earlier submission dealt with this by using the 'Switch to the
+specified ...' terminology. For me this is implicitly stating 'Switch
+the state of the repository to be the same as the specified ...' but
+perhaps it would do to be more explicit? I prefer the shorter form
+myself.
 
-	if (!dir || prefixcmp(name, dir))
-		...
+By following this with the typical use case it makes it clear what the
+intended use of the command is, and some idea about the mechanics of
+its function.
 
-but I think we can go either way.
+I realised that my signature was improperly placed when I submitted my
+suggestion last, so I will include it here as reference for anyone who
+skipped over it. It builds on top of the two original patches.
 
-My reading of the above is that "lst" after sorting is expected to
-have something like:
+Regards,
 
-	a/
-        a/b/
-	a/b/to-be-removed
-        a/to-be-removed
+Andrew Ardill
 
-and we first show "a/", remember that prefix in "dir", not show
-"a/b/" because it matches prefix, but still update the prefix to
-"a/b/", not show "a/b/to-be-removed", and because "a/to-be-removed"
-does not match the latest prefix, it is now shown.  Am I confused???
+-->8--
 
-> @@ -150,43 +170,45 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->  		if (S_ISDIR(st.st_mode)) {
->  			strbuf_addstr(&directory, ent->name);
->  			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-> -			if (show_only && (remove_directories ||
-> -			    (matches == MATCHED_EXACTLY))) {
-> -				printf(_("Would remove %s\n"), qname);
-> -			} else if (remove_directories ||
-> -				   (matches == MATCHED_EXACTLY)) {
-> -				if (!quiet)
-> -					printf(_("Removing %s\n"), qname);
-> -				if (remove_dir_recursively(&directory,
-> -							   rm_flags) != 0) {
-> -					warning(_("failed to remove %s"), qname);
-> -					errors++;
-> -				}
-> -			} else if (show_only) {
-> -				printf(_("Would not remove %s\n"), qname);
-> -			} else {
-> -				printf(_("Not removing %s\n"), qname);
-> +			if (remove_directories || (matches == MATCHED_EXACTLY)) {
-> +				remove_dir_recursively_with_dryrun(&directory, rm_flags, dry_run,
-> +						&dels, &skips, &errs, prefix);
->  			}
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Date: Mon, 17 Dec 2012 18:53:41 +1100
+Subject: [PATCH] Documentation/git-checkout.txt: Use consistent terminology
 
-Moving the above logic to a single helper function makes sense, but
-can we name it a bit more concisely?  Also this helper feels very
-specific to "clean"---does it need to go to dir.[ch], I have to
-wonder.
+git checkout is described as 'switching' branches in places. Use this
+terminology more consistently.
 
-Other than the above two points, the resulting builtin/clean.c looks
-much more nicely structured than before.
+Expand on the purpose of switching to a branch or commit, which is
+typically to prepare to build history on top of that branch or commit.
 
-I am not very much pleased by the change to dir.[ch] in this patch,
-though.
+Signed-off-by: Andrew Ardill <andrew.ardill@gmail.com>
+---
+ Documentation/git-checkout.txt | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-> +static void append_dir_name(struct string_list *dels, struct string_list *skips,
-> +		struct string_list *errs, char *name, const char * prefix, int failed, int isdir)
-> +{
-> +	struct strbuf quoted = STRBUF_INIT;
-> +
-> +	quote_path_relative(name, strlen(name), &quoted, prefix);
-> +	if (isdir && quoted.buf[strlen(quoted.buf) -1] != '/')
-> +		strbuf_addch(&quoted, '/');
-> +
-> +	if (skips)
-> +		string_list_append(skips, quoted.buf);
-> +	else if (!failed && dels)
-> +		string_list_append(dels, quoted.buf);
-> +	else if (errs)
-> +		string_list_append(errs, quoted.buf);
-> +}
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index db89cf7..e6db14f 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -23,8 +23,11 @@ branch.
 
-The three lists dels/skips/errs are mostly mutually exclusive (the
-caller knows which one to throw the element in) except that failed
-controls which one between dels or errs is used.
+ 'git checkout' [<branch>]::
 
-That's an ugly interface, I have to say.  I think the quote-path
-part should become a separate helper function to be used by the
-callers of this function, and the callers should stuff the path to
-the list they want to put the element in.  That will eliminate the
-need for this ugliness.
+-       Update the index, working tree, and HEAD to reflect the
+-       specified branch.
++       Switch to the specified <branch>. Prepares for building new
++       history on <branch>, by updating the index and the files in the
++       working tree, and by pointing HEAD at the branch. Local
++       modifications to the files in the working tree are kept, so that
++       they can be committed on the <branch>.
+ +
+ If <branch> is not found but there does exist a tracking branch in
+ exactly one remote (call it <remote>) with a matching name, treat as
+@@ -56,10 +59,13 @@ successful.
 
-Also, didn't you make remove_dir_recursively() excessively leaky by
-doing this?  The string in quoted is still created, even though the
-caller passes NULL to all the lists.
+ 'git checkout' [--detach] [<commit>]::
 
-Thanks.
+-       Update the index and working tree to reflect the specified
+-       commit and set HEAD to point directly to <commit> (see
+-       "DETACHED HEAD" section.)  Passing `--detach` forces this
+-       behavior even if <commit> is a branch.
++       Switch to the specified <commit>. Prepares for building new
++       history on top of <commit>, by updating the index and the files
++       in the working tree, and by pointing HEAD at <commit>. Local
++       modifications to the files in the working tree are kept, so that
++       they can be committed on top of <commit>. Passing `--detach`
++       forces HEAD to point directly at <commit> even if <commit> is a
++       branch (see "DETACHED HEAD" section.)
+
+ 'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
+
+--
