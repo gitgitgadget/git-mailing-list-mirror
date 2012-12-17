@@ -1,109 +1,100 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
-Date: Mon, 17 Dec 2012 00:45:01 -0600
-Message-ID: <1355726702-27974-2-git-send-email-chris@rorvick.com>
-References: <1355726702-27974-1-git-send-email-chris@rorvick.com>
-Cc: Chris Rorvick <chris@rorvick.com>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Woody Wu <narkewoody@gmail.com>
+From: Woody Wu <narkewoody@gmail.com>
+Subject: Re: How to specify remote branch correctly
+Date: Mon, 17 Dec 2012 06:48:57 +0000 (UTC)
+Message-ID: <slrnkctg0k.mmj.narkewoody@zuhnb712.local.com>
+References: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
+ <CAH5451=7frqa-YHXubvO=dMK2CvVoWR-VFZ3XCmKouNiQz4gAg@mail.gmail.com>
+ <slrnkcta0j.mlu.narkewoody@zuhnb712.local.com>
+ <CAH5451kmTW+nO4V4pjSdaqhHAb=RX-tawLo=rJfuPnDRDWeSEA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 07:46:54 2012
+X-From: git-owner@vger.kernel.org Mon Dec 17 07:49:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkUTO-0003Kl-Lf
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 07:46:46 +0100
+	id 1TkUW7-0004ob-Ie
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 07:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab2LQGq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 01:46:29 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:32986 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab2LQGq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 01:46:28 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so5175615iay.19
-        for <git@vger.kernel.org>; Sun, 16 Dec 2012 22:46:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=E80CuYlnPCK1ZE3s+wjOM8W30mAJr/yecpkLFwgFfjI=;
-        b=dYFhuRfhpFbOp0JI/WF0cRejb2qmrO66dBnocYaEtMVEkG2j11lijf8YWmbupHYCNu
-         xW7gJ8xuqW8dY/zQEoIUjo8WeeW0HNyx8qnGao0RL4A2Ho6Xin1PBJaUIQM/e/rR+aPU
-         WDdKckP7M4g2BAqhL+g4IKYc5WaE6iZZD0EX0Aa+qjaumEszQ+GljF7Y0jY1UOkOvzPr
-         iLbPOm4r12ne/CNRL0YbhRUybdSBgsrrhPyhCuf/aWKSI7y5KhRnkn18K6dtvQYaFj+e
-         6jHCDObyK4LyITjKewdPfYMD8VgQFLmGlbwyBW5wzWN5l3QQFf84FCSsxKZzWZn2Hu7M
-         tCRA==
-Received: by 10.50.197.169 with SMTP id iv9mr8286753igc.32.1355726788469;
-        Sun, 16 Dec 2012 22:46:28 -0800 (PST)
-Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
-        by mx.google.com with ESMTPS id aa6sm5087935igc.14.2012.12.16.22.46.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 16 Dec 2012 22:46:27 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc1.203.g1ddc124
-In-Reply-To: <1355726702-27974-1-git-send-email-chris@rorvick.com>
+	id S1751187Ab2LQGtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 01:49:18 -0500
+Received: from plane.gmane.org ([80.91.229.3]:52791 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751018Ab2LQGtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 01:49:18 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TkUW1-0004iR-KL
+	for git@vger.kernel.org; Mon, 17 Dec 2012 07:49:29 +0100
+Received: from 59.37.26.98 ([59.37.26.98])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 07:49:29 +0100
+Received: from narkewoody by 59.37.26.98 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 07:49:29 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 59.37.26.98
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211639>
 
-The forms of checkout that do not take a path are lumped together in the
-DESCRIPTION section, but the description for this group is dominated by
-explanation of the -b|-B form.  Split these apart for more clarity.
+On 2012-12-17, Andrew Ardill <andrew.ardill@gmail.com> wrote:
+> On 17 December 2012 16:06, Woody Wu <narkewoody@gmail.com> wrote:
+>> 1. git checkout foo.
+>> By this command, I think I am checking out files in my local branch
+>> named foo, and after that I also switch to the branch. Right?
+>
+> Correct. Your working directory (files) switch over to whatever your
+> local branch 'foo' points to, and your HEAD is updated to point to
+> your local branch 'foo'. Unless something goes wrong/you have
+> conflicting files/uncommitted changes etc.
+>
+>> 2. git checkout origin/foo
+>> By this command, I am checking out files in remote branch origin/foo,
+>> but don't create a local branch, so I am not in any branch now. This is
+>> the reason why git tell me that I am in a 'detached HEAD'. Is this
+>> understanding right?
+>
+> Correct! Your working directory is updated, however it doesn't make
+> sense for you to make changes to a remote branch, so HEAD is updated
+> to be detached.
+>
+>>>
+>>> There are lots of patterns that can emerge from this functionality,
+>>> but the main thing to remember is that to create changes on top of a
+>>> remote branch, we first need to create a local copy of it. A 'detached
+>>> HEAD' here means that we are looking at the remote repository's branch
+>>> but don't have a local copy of it, so any changes we make might be
+>>> 'lost' (that is, not have an easy to find branch name).
+>>>
+>>
+>> I think here is a little confuse to me.  You mean that a 'detached HEAD'
+>> means I don't have a local copy, but I remember that if I run something
+>> like:
+>>     $ git checkout a-tag-name
+>> then I ususally went into 'detached HEAD' but my local files really get
+>> switched to those files in the tag 'a-tag-name'.  So what does you mean
+>> by 'don't have a local copy'?
+>
+> I should have been more clear. Here I mean that you don't have a local
+> copy of the branch reference. Your working directory is updated to be
+> in sync with the remote branch, but you haven't yet copied that remote
+> reference to a local branch that you can update with your changes.
+>
+> Hope that clears it up.
+>
 
-Signed-off-by: Chris Rorvick <chris@rorvick.com>
----
- Documentation/git-checkout.txt | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+Andre, by this in further exaplaination, I think I fully understood.
+Thanks a lot!
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 7958a47..a47555c 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -22,17 +22,18 @@ also update `HEAD` to set the specified branch as the current
- branch.
- 
- 'git checkout' [<branch>]::
-+
-+	Update the index, working tree, and HEAD to reflect the
-+	specified branch.
-+
- 'git checkout' -b|-B <new_branch> [<start point>]::
--'git checkout' [--detach] [<commit>]::
- 
--	This form switches branches by updating the index, working
--	tree, and HEAD to reflect the specified branch or commit.
--+
--If `-b` is given, a new branch is created as if linkgit:git-branch[1]
--were called and then checked out; in this case you can
--use the `--track` or `--no-track` options, which will be passed to
--'git branch'.  As a convenience, `--track` without `-b` implies branch
--creation; see the description of `--track` below.
-+	Specifying `-b` causes a new branch to be created as if
-+	linkgit:git-branch[1] were called and then checked out.  In
-+	this case you can use the `--track` or `--no-track` options,
-+	which will be passed to 'git branch'.  As a convenience,
-+	`--track` without `-b` implies branch creation; see the
-+	description of `--track` below.
- +
- If `-B` is given, <new_branch> is created if it doesn't exist; otherwise, it
- is reset. This is the transactional equivalent of
-@@ -45,6 +46,13 @@ $ git checkout <branch>
- that is to say, the branch is not reset/created unless "git checkout" is
- successful.
- 
-+'git checkout' [--detach] [<commit>]::
-+
-+	Update the index and working tree to reflect the specified
-+	commit and set HEAD to point directly to <commit> (see
-+	"DETACHED HEAD" section.)  Passing `--detach` forces this
-+	behavior even if <commit> is a branch.
-+
- 'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
- 
- 	When <paths> or `--patch` are given, 'git checkout' does *not*
 -- 
-1.8.1.rc1.203.g1ddc124
+woody
+I can't go back to yesterday - because I was a different person then.
