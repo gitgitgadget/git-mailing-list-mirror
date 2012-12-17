@@ -1,97 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] SubmittingPatches: add convention of prefixing
- commit messages
-Date: Sun, 16 Dec 2012 15:15:10 -0800
-Message-ID: <7vobhtpp1d.fsf@alter.siamese.dyndns.org>
-References: <1355686561-1057-1-git-send-email-git@adamspiers.org>
- <1355686561-1057-2-git-send-email-git@adamspiers.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH 12/12] Add git-check-ignore sub-command
+Date: Mon, 17 Dec 2012 00:10:13 +0000
+Message-ID: <20121217001013.GB3673@gmail.com>
+References: <1350282212-4270-1-git-send-email-pclouds@gmail.com>
+ <1350282486-4646-1-git-send-email-pclouds@gmail.com>
+ <1350282486-4646-12-git-send-email-pclouds@gmail.com>
+ <7vlif7v03r.fsf@alter.siamese.dyndns.org>
+ <CAOkDyE9g6rNiv7nnTu2i34dbn_z7r5SmhDuxief7iEQLVxtO5g@mail.gmail.com>
+ <7vmwzmtmyd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 00:15:35 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 01:10:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkNQj-0001eA-S5
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 00:15:34 +0100
+	id 1TkOI1-0001AV-4o
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 01:10:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965Ab2LPXPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 18:15:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46102 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751442Ab2LPXPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 18:15:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A54FA4F9;
-	Sun, 16 Dec 2012 18:15:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B1Lk+cw5ys4I5xRIYZRLY2ME2TU=; b=I+/rEi
-	pcDSw5aTfGpJfUPm27LJCM6TMNTjO1By+A9FyCQpDrjYbCKQ9/7KfFd6P24EoC5Z
-	6vyjZaAfmpNM9DlpDKzghU0XwD82GyTsKo99+II4jAN2pezQnRPnTjsP+G0LuLkI
-	ttOploQJhvhhAAPzQtSBTdjXSbN/rduT8m9HM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kOdEGV9cftTcvj9F/Z2ha7ge2MO5uD+W
-	kcn3UNPq00ta0lq9zbWkoo4hpmI01anOJJXr9MPW6qqnVytp3folchbhzI41fCR7
-	h2Jjc9mCKu3MFQmTpSfJFF5o57YfLf6YTf7wEJnMzqy8NI+T4G2NbAFIaGBohaqn
-	bH8nJp1CrwU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56B4BA4F7;
-	Sun, 16 Dec 2012 18:15:12 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A537FA4F4; Sun, 16 Dec 2012
- 18:15:11 -0500 (EST)
-In-Reply-To: <1355686561-1057-2-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Sun, 16 Dec 2012 19:35:59 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 70E0472E-47D6-11E2-922E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751525Ab2LQAKS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Dec 2012 19:10:18 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:41519 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368Ab2LQAKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 19:10:17 -0500
+Received: from localhost (4.8.9.4.4.5.7.d.4.0.6.a.a.2.0.b.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:b02a:a604:d754:4984])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 36F502E5D5
+	for <git@vger.kernel.org>; Mon, 17 Dec 2012 00:10:15 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vmwzmtmyd.fsf@alter.siamese.dyndns.org>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211619>
 
-Adam Spiers <git@adamspiers.org> writes:
+On Tue, Oct 16, 2012 at 09:12:58AM -0700, Junio C Hamano wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+> > On Mon, Oct 15, 2012 at 3:31 PM, Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> >> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> wri=
+tes:
+> >>> +For each pathname given via the command-line or from a file via
+> >>> +`--stdin`, this command will list the first exclude pattern foun=
+d (if
+> >>> +any) which explicitly excludes or includes that pathname.  Note =
+that
+> >>> +within any given exclude file, later patterns take precedence ov=
+er
+> >>> +earlier ones, so any matching pattern which this command outputs=
+ may
+> >>> +not be the one you would immediately expect.
+> >>
+> >> "The first exclude pattern" is very misleading, isn't it?
+> >
+> > I don't think so, because of the second sentence.
+> >
+> >> For example, with these in $GIT_DIR/info/exclude, I would get:
+> >>
+> >>         $ cat -n .git/info/exclude
+> >>           1 *~
+> >>           2 Makefile~
+> >>         $ git check-ignore -v Makefile~
+> >>         .git/info/exclude:2:Makefile~   Makefile~
+> >>
+> >> which is the correct result (the last one in a single source decid=
+es
+> >> the fate of the path), but it hardly is "first one found" and the
+> >> matching pattern in the output would not be something unexpected f=
+or
+> >> the users, either.
+> >>
+> >> The reason it is "the first one found" is because the implementati=
+on
+> >> arranges the loop in such a way that it can stop early when it fin=
+ds
+> >> a match---it simply checks matches from the end of the source.
+> >>
+> >> But that is not visible to end-users,
+> >
+> > Correct; that's precisely why I wrote the second sentence which
+> > explicitly explains this.
+> >
+> >> and they will find the above description just wrong, no?
+> >
+> > It's not wrong AFAICS, but suggestions for rewording this more clea=
+rly
+> > are of course welcome.  Maybe s/immediately/intuitively/ ?
+>=20
+> I think this is sufficient:
+>=20
+> 	For each pathname given via the command-line or from a file
+> 	via `--stdin`, show the pattern from .gitignore (or other
+> 	input files to the exclude mechanism) that decides if the
+> 	pathname is excluded.
+>=20
+> and without "Note that" at all.
 
-> Conscientious newcomers to git development will read SubmittingPatches
-> and CodingGuidelines, but could easily miss the convention of
-> prefixing commit messages with a single word identifying the file
-> or area the commit touches.
->
-> Signed-off-by: Adam Spiers <git@adamspiers.org>
-> ---
->  Documentation/SubmittingPatches | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 0dbf2c9..c107cb1 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -9,6 +9,14 @@ Checklist (and a short version for the impatient):
->  	- the first line of the commit message should be a short
->  	  description (50 characters is the soft limit, see DISCUSSION
->  	  in git-commit(1)), and should skip the full stop
-> +	- it is also conventional in most cases to prefix the
-> +	  first line with "area: " where the area is a filename
-> +	  or identifier for the general area of the code being
-> +	  modified, e.g.
-> +	  . archive: ustar header checksum is computed unsigned
-> +	  . git-cherry-pick.txt: clarify the use of revision range notation
-> +	  (if in doubt which identifier to use, run "git log --no-merges"
-> +	  on the files you are modifying to see the current conventions)
+I don't think this is quite sufficient.  Firstly, it does not cover
+negated patterns (my original text contained "or includes").
 
-Thanks; I have to wonder if these details should be left in the
-longer version to keep the "short" one short, though.
+Secondly, I think there is still potential for this rewording to
+result in confused users.  If the "backwards-ness" of the internal
+algorithm is kept hidden from them, then in your example above, most
+users would be more likely to intuitively expect check-ignore to
+return the first line of .git/info/exclude ("*~").  When they saw it
+returning the second, they might draw the conclusion that the first
+line failed to match (e.g. by mistakenly thinking that the file format
+requires regular expressions rather than globs), rather than that git
+starts at the end of the file.
 
-We should probably add "learn from good examples." (aka "read 'git
-log' output and the pattern should be obvious to you") as the first
-item to this list, too.
+This is precisely why I chose not to hide this aspect of the
+implementation when initially writing this documentation.
+Unfortunately my wording managed to confuse several of you, so clearly
+it was not adequate.  Therefore I propose an extension of your
+version:
 
->  	- the body should provide a meaningful commit message, which:
->  	  . explains the problem the change tries to solve, iow, what
->  	    is wrong with the current code without the change.
+	For each pathname given via the command-line or from a file
+	via `--stdin`, show the pattern from .gitignore (or other
+	input files to the exclude mechanism) that decides if the
+	pathname is excluded or included.  Later patterns within a
+	file take precedence over earlier ones.
