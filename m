@@ -1,144 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/4] gitk-git/Makefile: track TCLTK_PATH as it used to
- be tracked
-Date: Sun, 16 Dec 2012 23:33:54 -0800
-Message-ID: <7vvcc1m8t9.fsf@alter.siamese.dyndns.org>
-References: <20121217071716.26209.54407.chriscool@tuxfamily.org>
+From: Woody Wu <narkewoody@gmail.com>
+Subject: Re: How to specify remote branch correctly
+Date: Mon, 17 Dec 2012 07:41:33 +0000 (UTC)
+Message-ID: <slrnkctj37.mmj.narkewoody@zuhnb712.local.com>
+References: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
+ <CAH5451=7frqa-YHXubvO=dMK2CvVoWR-VFZ3XCmKouNiQz4gAg@mail.gmail.com>
+ <slrnkcta0j.mlu.narkewoody@zuhnb712.local.com>
+ <CAH5451kmTW+nO4V4pjSdaqhHAb=RX-tawLo=rJfuPnDRDWeSEA@mail.gmail.com>
+ <1355722245-ner-6603@calvin> <slrnkctgqh.mmj.narkewoody@zuhnb712.local.com>
+ <1355728904-ner-4851@calvin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 08:34:23 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 08:42:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkVDK-0003iU-SY
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:34:15 +0100
+	id 1TkVKz-0008DD-4v
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246Ab2LQHd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 02:33:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44451 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768Ab2LQHd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 02:33:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BD849CE5;
-	Mon, 17 Dec 2012 02:33:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h8GBsevANDEPLyaoFx+t87Mjd5o=; b=F0rjxp
-	9TO6n5pT58i5rSRk9sMbXiOpUlGVCQmLw72n072E1rJ/nVl+s+FRyJHClODefmoy
-	LtU1fbs/1EWvw/Bkwfdth2K399LyWNMENoOLsdLac0sb46UYs7lJrDwJqnnhLRad
-	q3dIgz8bWo2fTZ4Ff2Pqwy82RmMnLjkamA8M4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MAQiC5Z2kAQlCRrMYePnC/JOaRAMKPg6
-	iKTJNbJQ/mKA8yBKznKVJI7M5cqOhe5dlWxjkshBuD8DfvqnzkoKop49+y/s3klZ
-	z8Y1i3TN8xqvM3eVH3rb1YMLvdqQFO+uF7UZLnfH1eABtEV0ZE4QUadKTMlBGo7m
-	SroVGhHYYro=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 191E39CE4;
-	Mon, 17 Dec 2012 02:33:57 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 597B09CE3; Mon, 17 Dec 2012
- 02:33:56 -0500 (EST)
-In-Reply-To: <20121217071716.26209.54407.chriscool@tuxfamily.org> (Christian
- Couder's message of "Mon, 17 Dec 2012 08:17:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D61316C-481C-11E2-B3C0-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751530Ab2LQHlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 02:41:52 -0500
+Received: from plane.gmane.org ([80.91.229.3]:39656 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751387Ab2LQHlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 02:41:51 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TkVKr-00087R-L3
+	for git@vger.kernel.org; Mon, 17 Dec 2012 08:42:01 +0100
+Received: from 59.37.26.98 ([59.37.26.98])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:42:01 +0100
+Received: from narkewoody by 59.37.26.98 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 08:42:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 59.37.26.98
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211654>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On 2012-12-17, Tomas Carnecky <tomas.carnecky@gmail.com> wrote:
+> On Mon, 17 Dec 2012 07:02:46 +0000, Woody Wu <narkewoody@gmail.com> wrote:
+>> On 2012-12-17, Tomas Carnecky <tomas.carnecky@gmail.com> wrote:
+>> > 'git checkout foo' has special meaning if a local branch with that
+>> > name doesn't exist but there is a remote branch with that name. In
+>> > that case it's equivalent to: git checkout -t -b foo origin/foo.
+>> > Because that's what people usually want.
+>> 
+>> I think this is what exactly happened to me in the first time I got the
+>> 'foo'.  One new thing to me is the '-t'.  I am not sure wether the '-t'
+>> was used or not in the background.  How do I check the 'upstream'
+>> relationships?  Is there any file under .git recoreded that kind of
+>> information?
+>
+> Yes, that information is recorded in a file somewhere in .git. However, for
+> most users it's irrelevant which file it is. Git has commands to access this
+> information. Try one of these:
+>
+>   git branch -vv
 
-> In 62ba514 (Move gitk to its own subdirectory, 2007-11-17) some
-> code used to track TCLTK_PATH was left in the main Makefile instead
-> of being moved to the new Makefile that was created in gitk-git/.
->
-> The code left in the main Makefile should have been removed by a
-> previous patch in the same series as this one.
->
-> And this patch puts some code back to track TCLTK_PATH properly
-> where it should be, that is in gitk-git/Makefile.
->
-> Note that there is already some code to do that in git-gui/Makefile.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  .gitignore          |  1 -
->  gitk-git/.gitignore |  2 ++
->  gitk-git/Makefile   | 16 ++++++++++++++--
+Run this on my local linux tree, I got:
+  lgf2410-2.6.16.4         7af1fda - added a ignore rule in .gitignore
+  (*~)
+  * lgf2410-2.6.34.13        50d3f9d ax88796b verbose debug output
+    lgf2410-2.6.34.13-16C554 3ec82e0 more debug on 16C554
+      master                   9489e9d [origin/master] Linux 3.7-rc7
 
-I'll apply the .gitignore part to my tree, but could you split the
-rest out and have Paul apply to his tree at
+Does this mean, I only have local branch master tracked to remote?
 
-    git://ozlabs.org/~paulus/gitk.git
 
->  3 files changed, 16 insertions(+), 3 deletions(-)
->  create mode 100644 gitk-git/.gitignore
->
-> diff --git a/.gitignore b/.gitignore
-> index 086c5af..56a4b2b 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -171,7 +171,6 @@
->  /git-whatchanged
->  /git-write-tree
->  /git-core-*/?*
-> -/gitk-git/gitk-wish
->  /gitweb/GITWEB-BUILD-OPTIONS
->  /gitweb/gitweb.cgi
->  /gitweb/static/gitweb.js
-> diff --git a/gitk-git/.gitignore b/gitk-git/.gitignore
-> new file mode 100644
-> index 0000000..d7ebcaf
-> --- /dev/null
-> +++ b/gitk-git/.gitignore
-> @@ -0,0 +1,2 @@
-> +/GIT-TCLTK-VARS
-> +/gitk-wish
-> diff --git a/gitk-git/Makefile b/gitk-git/Makefile
-> index e1b6045..5acdc90 100644
-> --- a/gitk-git/Makefile
-> +++ b/gitk-git/Makefile
-> @@ -17,6 +17,16 @@ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
->  bindir_SQ = $(subst ','\'',$(bindir))
->  TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
->  
-> +### Detect Tck/Tk interpreter path changes
-> +TRACK_TCLTK = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
-> +
-> +GIT-TCLTK-VARS: FORCE
-> +	@VARS='$(TRACK_TCLTK)'; \
-> +		if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
-> +			echo 1>&2 "    * new Tcl/Tk interpreter location"; \
-> +			echo "$$VARS" >$@; \
-> +		fi
-> +
->  ## po-file creation rules
->  XGETTEXT   ?= xgettext
->  ifdef NO_MSGFMT
-> @@ -49,9 +59,9 @@ uninstall::
->  	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
->  
->  clean::
-> -	$(RM) gitk-wish po/*.msg
-> +	$(RM) gitk-wish po/*.msg GIT-TCLTK-VARS
->  
-> -gitk-wish: gitk
-> +gitk-wish: gitk GIT-TCLTK-VARS
->  	$(QUIET_GEN)$(RM) $@ $@+ && \
->  	sed -e '1,3s|^exec .* "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' <gitk >$@+ && \
->  	chmod +x $@+ && \
-> @@ -65,3 +75,5 @@ $(ALL_MSGFILES): %.msg : %.po
->  	@echo Generating catalog $@
->  	$(MSGFMT) --statistics --tcl $< -l $(basename $(notdir $<)) -d $(dir $@)
->  
-> +.PHONY: all install uninstall clean update-po
-> +.PHONY: FORCE
+>   git remote show origin
+Running this I got,
+
+    ...
+    linux-3.1.y    tracked
+    linux-3.2.y    tracked
+    linux-3.3.y    tracked
+    linux-3.4.y    tracked
+    linux-3.5.y    tracked
+    linux-3.6.y    tracked
+    linux-3.7.y    new (next fetch will store in remotes/origin)
+    master         tracked
+  Local branch configured for 'git pull':
+    master rebases onto remote master
+  Local ref configured for 'git push':
+    master pushes to master (local out of date)
+
+I am curious to know how the last 4 lines were printed by git.
+
+  -----
+  Local branch configured for 'git pull':
+    master rebases onto remote master
+  -----
+
+If I have addtional branch other than master that also track to some
+remote branch, will it also be listed under this 'git pull' line?
+
+  ----
+  Local ref configured for 'git push':
+    master pushes to master (local out of date)
+  ---
+
+This I totally don't understand, what it mean? I think I did not do a
+modification on the local 'master'.
+
+Thanks!
+
+-- 
+woody
+I can't go back to yesterday - because I was a different person then.
