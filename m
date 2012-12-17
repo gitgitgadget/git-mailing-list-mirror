@@ -1,119 +1,151 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
-Date: Mon, 17 Dec 2012 11:12:16 -0800
-Message-ID: <7vbodsmr1r.fsf@alter.siamese.dyndns.org>
-References: <1355726702-27974-1-git-send-email-chris@rorvick.com>
- <1355726702-27974-2-git-send-email-chris@rorvick.com>
- <7vhanlnnz7.fsf@alter.siamese.dyndns.org> <50CED5D4.5040705@viscovery.net>
- <7vk3shm5d5.fsf@alter.siamese.dyndns.org> <50CEDF0A.7040603@viscovery.net>
+Subject: Re: [PATCH] log --format: teach %C(auto,black) to paint it black
+ only on terminals
+Date: Mon, 17 Dec 2012 11:34:48 -0800
+Message-ID: <7v4njkmq07.fsf@alter.siamese.dyndns.org>
+References: <72BB37CB88C48F4B925365539F1EE46C182613A9@icexch-m3.ic.ac.uk>
+ <72BB37CB88C48F4B925365539F1EE46C18261403@icexch-m3.ic.ac.uk>
+ <20121213131329.GA5042@sigill.intra.peff.net>
+ <CACsJy8AgtwtJfMXzArJLiHQtR+WNRJxRdRgUts30EN-QvgGT=g@mail.gmail.com>
+ <20121215101659.GB21577@sigill.intra.peff.net>
+ <7v7gojtbgr.fsf@alter.siamese.dyndns.org>
+ <7vobhtm5pk.fsf_-_@alter.siamese.dyndns.org>
+ <CACsJy8Dt4vEpO+EcAhWnko=XAajQ9OMgbDbVx78Eb=sZTjmKQA@mail.gmail.com>
+ <20121217121354.GB21858@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Woody Wu <narkewoody@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Dec 17 20:12:41 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	"Srb\, Michal" <michal.srb11@imperial.ac.uk>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 17 20:35:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tkg7D-0001I2-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 20:12:39 +0100
+	id 1TkgT4-0005x3-1o
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 20:35:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753983Ab2LQTMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 14:12:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39964 "EHLO
+	id S1753809Ab2LQTew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 14:34:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64178 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753766Ab2LQTMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 14:12:20 -0500
+	id S1753797Ab2LQTev (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 14:34:51 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1466A92B2;
-	Mon, 17 Dec 2012 14:12:19 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E521A8F7;
+	Mon, 17 Dec 2012 14:34:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pNTRhlMG1qKN2JtEaz0bms7bMPg=; b=XO4xCR
-	sluqNpKgUbtyM1ziQHx4MlJE1hX3YUuaSKRoeCywqvyflRhY6IoGWhqzjMSeR2B9
-	59KGXp73whSirlFH2lSu8ADDBMfR/JDP5h6w3D8Rm4ilcKxvbd8SptLKxJ4j74bA
-	y3LGjmKOEhE49eLxvXzEHKbI3Au5SZ2X6+Uk0=
+	:content-type; s=sasl; bh=ilJ/G8HoidJWFDIQkIfKQoJx69c=; b=pOo6UN
+	Y49+pmNrkydfRQW8Edxz0iLxWWPkClwrTuDL4biHp4T9U7vbetw4P+k3m5n6uAvq
+	A8uaEBvaSSQ5GSN0jjWsvB7FGVd+1ooX2TSoBj949YURvTfARh7PvrJl47XsEHse
+	UYdl0ASNwZm5F2v7zThcQNFszFR+rJsj0D5hw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oMAKm19mk7LnyiO8xT/bZ3wdAIItJ4G6
-	JEDba4mFALiDgLtIjkTQtgZr8XzGgDgKH5gz4WriqapjjuKRGBMAD0nDP35MdMcO
-	GNL2P6ZZcIspKESjnuyLzQ/Y9w6KAnoxS7sg4Pb1jFcmY7SU04cs3d9GDo3/ioxX
-	cP4XpXIXaIc=
+	:content-type; q=dns; s=sasl; b=pFOQkvyNkpdhiFZGorBVt87Hqov2JyGR
+	fMs/W6F10InsFHQtLFyW2ho9q/mdTZH3ETHMDxUh+ySmIlIAotAP+hrXSJ4xSGa5
+	RQhSXC1xb+m4QOqKEK96zTG8VUXntNb2rPRZf9fFM3HE7AMnnj5kWAPSBvtD3LjS
+	3+ACZxCEPnI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01E4992B1;
-	Mon, 17 Dec 2012 14:12:19 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AAE0A8F6;
+	Mon, 17 Dec 2012 14:34:50 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5015F92AD; Mon, 17 Dec 2012
- 14:12:18 -0500 (EST)
-In-Reply-To: <50CEDF0A.7040603@viscovery.net> (Johannes Sixt's message of
- "Mon, 17 Dec 2012 09:59:54 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A57F4A8F3; Mon, 17 Dec 2012
+ 14:34:49 -0500 (EST)
+In-Reply-To: <20121217121354.GB21858@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 17 Dec 2012 07:13:54 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ACEA9614-487D-11E2-BC62-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D25D11B2-4880-11E2-AD21-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211692>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 12/17/2012 9:48, schrieb Junio C Hamano:
->> Here is what I tentatively have ...
+> On Mon, Dec 17, 2012 at 06:44:10PM +0700, Nguyen Thai Ngoc Duy wrote:
 >
-> Thanks!
+>> >                         if (!end)
+>> >                                 return 0;
+>> > -                       color_parse_mem(placeholder + 2,
+>> > -                                       end - (placeholder + 2),
+>> > +                       if (!memcmp(begin, "auto,", 5)) {
+>> > +                               if (!want_color(-1))
+>> > +                                       return end - placeholder + 1;
+>> 
+>> This want_color() checks color.ui and only when color.ui = auto, it
+>> bothers to check if the output is tty. I think the document should say
+>> that "auto," (or maybe another name because it's not really auto)
+>> respects color.ui.
 >
->> -'git checkout' [--detach] [<commit>]::
->> +'git checkout' --detach [<commit>]::
->> +'git checkout' <commit>::
->>  
->> -	Update the index and working tree to reflect the specified
->> -	commit and set HEAD to point directly to <commit> (see
->> -	"DETACHED HEAD" section.)  Passing `--detach` forces this
->> -	behavior even if <commit> is a branch.
->> +	Prepare to work on building new history on top of <commit>,
->> +	by detaching HEAD at the commit (see "DETACHED HEAD"
->> +	section), and updating the index and the files in the
->> +	working tree.  Local modifications to the files in the
->> +	working tree are kept, so that they can be committed on the
->> +	<branch>.
->
-> The last half-sentence should better be removed.
+> Yeah, that should definitely be documented. I wonder if it should
+> actually respect color.diff, which is what "log" usually uses (albeit
+> mostly for the diff itself, we have always used it for the graph and for
+> the "commit" header of each entry).
 
-True; we do not have a particular "on the <branch>" in this state.
-At least, "on the <branch>" needs to be removed.  But I think we may
-want a more different wording here, including the earlier "work on
-building new history on top of" part.
+I actually do not like this patch very much.  The original motive
+behind this "auto" thing was to relieve the script writers from
+the burden of having to write:
 
-The detached HEAD state primarily is a sightseeing mode, where the
-user is expected to view but not touch.  Even for experienced users,
-commits on a detached HEAD are for keeping snapshots of interim
-states during a throw-away experiment, so the purpose of detaching
-is not exactly "to work on *building* new history" in the first
-place.
+	if tty -s
+        then
+        	warn='%C(red)'
+                reset='%C(reset)'
+	else
+        	warn= reset=
+	fi
+        fmt="${warn}WARNING: boo${reset} %s"
 
-Carefree experimentation is encouraged by not forbidding commmits
-from this state, with the expectation that:
+and instead let them write:
 
- (1) if it does not lead to interesting result, another "git
-     checkout <branch>" will wipe the throw-away experiment without
-     affecting any of your more important branches; and
+	fmt="%C(auto,red)WARNING: boo%C(auto,reset) %s"
 
- (2) an experiment that yielded something useful can be further
-     polished on a concrete branch by "git checkout -b <newbranch>".
+but between the two, there is no $cmd.color configuration involved
+in the first place.  I am not sure what $cmd.color configuration
+should take effect---perhaps for a "git frotz" script, we should
+allow the script writer to honor frotz.color=(auto,never,always)
+configuration, not just ui.color variable.
 
-I think the above discussion on detached HEAD can be added to its
-own section.
+Also the patch as posted deliberately omits support to honor command
+line override --color=(auto,never,always), but it may be more
+natural to expect
 
-	Prepare to work on top of <commit>, by detaching HEAD at it
-	(see "DETACHED HEAD" section), and updating te index and the
-	files in the working tree.  Local modifications to the files
-	in the working tree are kept, so that the resulting working
-	tree will be the state recorded in the commit plus the local
-	modifications.
+    git show --format='%C(auto,red)%s%C(auto,reset)' --color=never
 
-Or something, perhaps?
+to defeat the "auto," part the script writer wrote.
+
+Now, such a script would be run by its end users as
+
+    $ git frotz --color=never
+
+It has to do its own option parsing before running the underlying
+"git show" to decide if it passes "--color=never" from the command
+line for that to happen.
+
+But at that point, we are back to the square one.  Such a script
+would be doing something like:
+
+	if cmdline_has_color_flag
+        then
+		use_color=... that flag ...
+	elif git config --get-colorbool frotz.color
+	then
+		use_color=--color=always
+	else
+		use_color=--color=never
+	fi
+
+in its early part to decide $use_color, to be used in the call it
+makes to "git show" later on:
+
+	git show --format="$fmt" $use_color
+
+Adding the logic to decide if %C(...) should be added to $fmt no
+longer is an additional burden to the script writer, making the
+whole %C(auto,red) machinery of little use.
+
+So...
