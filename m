@@ -1,93 +1,69 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
-Date: Mon, 17 Dec 2012 22:40:59 -0000
-Organization: OPDS
-Message-ID: <050EEC5C75504678BC8A858FD0A55B19@PhilipOakley>
-References: <1355726702-27974-1-git-send-email-chris@rorvick.com> <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org> <17103971665F4C4495C6C96086A58B8F@PhilipOakley> <7v1ueol6ut.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] log --format: teach %C(auto,black) to paint it black
+ only on terminals
+Date: Mon, 17 Dec 2012 17:55:16 -0500
+Message-ID: <20121217225516.GA1408@sigill.intra.peff.net>
+References: <20121213131329.GA5042@sigill.intra.peff.net>
+ <CACsJy8AgtwtJfMXzArJLiHQtR+WNRJxRdRgUts30EN-QvgGT=g@mail.gmail.com>
+ <20121215101659.GB21577@sigill.intra.peff.net>
+ <7v7gojtbgr.fsf@alter.siamese.dyndns.org>
+ <7vobhtm5pk.fsf_-_@alter.siamese.dyndns.org>
+ <CACsJy8Dt4vEpO+EcAhWnko=XAajQ9OMgbDbVx78Eb=sZTjmKQA@mail.gmail.com>
+ <20121217121354.GB21858@sigill.intra.peff.net>
+ <7v4njkmq07.fsf@alter.siamese.dyndns.org>
+ <20121217194926.GA5209@sigill.intra.peff.net>
+ <7vmwxcla3n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Chris Rorvick" <chris@rorvick.com>,
-	"Git List" <git@vger.kernel.org>,
-	"Andrew Ardill" <andrew.ardill@gmail.com>,
-	"Tomas Carnecky" <tomas.carnecky@gmail.com>,
-	"Woody Wu" <narkewoody@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 23:40:43 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"Srb, Michal" <michal.srb11@imperial.ac.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 23:55:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkjMT-0005in-Q7
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 23:40:38 +0100
+	id 1Tkjb3-00053i-6R
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 23:55:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892Ab2LQWkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 17:40:19 -0500
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:12739 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752106Ab2LQWkS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2012 17:40:18 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgIFAIWSz1BcHmeG/2dsb2JhbABFi3qyLBdzghkFAQEEAQgBAS4eAQEhBQYCAwUCAQMVAQslFAEEGgYHFwYTCAIBAgMBh3wKujqMXYFngXthA4gshVGYVYJmDQ
-X-IronPort-AV: E=Sophos;i="4.84,304,1355097600"; 
-   d="scan'208";a="394248176"
-Received: from host-92-30-103-134.as13285.net (HELO PhilipOakley) ([92.30.103.134])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 17 Dec 2012 22:40:16 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753379Ab2LQWzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 17:55:23 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57087 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752491Ab2LQWzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 17:55:19 -0500
+Received: (qmail 10774 invoked by uid 107); 17 Dec 2012 22:56:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Dec 2012 17:56:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2012 17:55:16 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmwxcla3n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211713>
 
-From: "Junio C Hamano" <gitster@pobox.com> Sent: Monday, December 17, 
-2012 9:13 PM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> From: "Junio C Hamano" <gitster@pobox.com> Sent: Monday, December 17,
->>> This is to "check out the branch" ;-)
->>> ...
->>
->> From a user perspective it's better to refer to the working directory
->> first rather than the internal mechanics.
->>
->>    Prepare to work on <branch>, by updating the files in the
->>    working tree and index to the branch's previous content, and
->>    pointing HEAD to it.
->
-> I agree that the mention of "pointing HEAD to" may be better to be
-> rephrased in the user facing terms.
->
-> Because the primary purpose of "git checkout <branch>" is to "check
-> out the branch so that further work is done on that branch", that
-> aspect of the behaviour should be mentioned first.
+On Mon, Dec 17, 2012 at 12:03:40PM -0800, Junio C Hamano wrote:
 
-That part is OK, but it is a bit tautological.
+> > So no, I do not think you can cover every conceivable case. But having
+> > git-log respect --color and the usual color.* variables for this feature
+> > seems like the only sane default. It makes the easy cases just work, and
+> > the hard cases are not any worse off (and they may even be better off,
+> > since the script can manipulate --color instead of rewriting their
+> > format strings, but that is a minor difference).
+> 
+> OK, care to reroll the one with your patch in the other message
+> squashed in, possibly with fixes to the test (the result should now
+> honor --color={always,never}, I think)?
 
->               Updating of the
-> working tree files and the index is the implemenation detail of
-> starting to work on that branch.
+Here it is. It was easier to just skip using test_format, so it did not
+need to be touched. I broke its cleanups out into a separate patch.
 
-It was this part that I felt needed the worker's work-tree mentioned 
-first.
+  [1/2]: t6006: clean up whitespace
+  [2/2]: log --format: teach %C(auto,black) to respect color config
 
-It could be argued that workers think they do work on the tree, and that 
-the branch name is an administrative place holder.
-
-When the two sentences are back to back it was OK, as you had still 
-included the key element of my suggestion.
-
->
-> So your suggestion is going backwards, I'd have to say.
->
-A misunderstanding of the suggestion perhaps?
-
-Philip 
+-Peff
