@@ -1,118 +1,61 @@
-From: Oren Held <oren@held.org.il>
-Subject: [PATCH] Pretty formats: skip color codes if !want_color()
-Date: Tue, 18 Dec 2012 00:57:03 +0200
-Message-ID: <20121217225703.GC25103@orenhe-laptop>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] t6006: clean up whitespace
+Date: Mon, 17 Dec 2012 17:59:58 -0500
+Message-ID: <20121217225958.GA1809@sigill.intra.peff.net>
+References: <20121217225516.GA1408@sigill.intra.peff.net>
+ <20121217225552.GA1653@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 23:58:23 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"Srb, Michal" <michal.srb11@imperial.ac.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 00:00:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tkjdc-0006WL-QO
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 23:58:21 +0100
+	id 1TkjfZ-0007ho-5L
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 00:00:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653Ab2LQW5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 17:57:51 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:42632 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753472Ab2LQW5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 17:57:48 -0500
-Received: from homiemail-a34.g.dreamhost.com (caiajhbdccah.dreamhost.com [208.97.132.207])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 9C044AB9F
-	for <git@vger.kernel.org>; Mon, 17 Dec 2012 14:57:48 -0800 (PST)
-Received: from homiemail-a34.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a34.g.dreamhost.com (Postfix) with ESMTP id D96D21005D
-	for <git@vger.kernel.org>; Mon, 17 Dec 2012 14:57:08 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=held.org.il; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=
-	held.org.il; b=Dg/rbJaG0EF0wkvN/WzCqtIq/SzGJ184oBrZWkvjFTAxdHgDV
-	hOnFgBvSfxlVc88325gdSh+6qIzB7DVDO+M+yzFE7fNtFSYaF2ZXfaNRhcouTRSW
-	AqhzkKd9vuFq7rKXQtsDXSQcs97Zf84lwyEr+/u/2vV2DdmQWYWvn1e+6s=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=held.org.il; h=date:from
-	:to:subject:message-id:mime-version:content-type; s=held.org.il;
-	 bh=DSAJ/w73Jav1fe+LBY/upCbcdw4=; b=QiYxIsjojr9PhUuJ7NvJ/4yNa/aZ
-	Q8W7cqlshX6FyLWeDg8xzjPVcQhuU6jZCGSR4ZUDlc9+2rW5C7IjPe8VkOZcMwfY
-	5/5wflxiuBI2voUoWWOP93oNAmTIy+hHpEfLzyE/Mezue3FHmO+EfErdT76B1qMf
-	DQ/eGLu4htkW3ng=
-Received: from orenhe-laptop (85.65.7.156.dynamic.barak-online.net [85.65.7.156])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: oren@held.org.il)
-	by homiemail-a34.g.dreamhost.com (Postfix) with ESMTPSA id B71F010049
-	for <git@vger.kernel.org>; Mon, 17 Dec 2012 14:57:07 -0800 (PST)
+	id S1752712Ab2LQXAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 18:00:01 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57113 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752412Ab2LQXAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 18:00:00 -0500
+Received: (qmail 11021 invoked by uid 107); 17 Dec 2012 23:01:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Dec 2012 18:01:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2012 17:59:58 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20121217225552.GA1653@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211717>
 
-Avoid color escape codes if colors are disabled, just like the behavior of other git commands.
-This solves the case of color escape codes in stdout when piping or redirecting, e.g.:
-$ git log --format=%Cred%h > out
+On Mon, Dec 17, 2012 at 05:55:52PM -0500, Junio C Hamano wrote:
 
-Signed-off-by: Oren Held <oren@held.org.il>
----
-Would appreciate your help or comments :)
+> From: Junio C Hamano <gitster@pobox.com>
+> To: Junio C Hamano <gitster@pobox.com>
+>
+> The test_format function did not indent its in-line test
+> script in an attempt to make the output of the test look
+> better. But it does not make a big difference to the output,
+> and the source looks quite ugly. Let's use our normal
+> indenting instead.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
 
- pretty.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+Argh. This is me accidentally impersonating Junio because my home-grown
+send-email replacement does not grok patches by other authors properly.
+Sorry for the noise; I've just resent with a proper header.
 
-diff --git a/pretty.c b/pretty.c
-index 5bdc2e7..9637dfd 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -947,6 +947,12 @@ static int format_reflog_person(struct strbuf *sb,
- 	return format_person_part(sb, part, ident, strlen(ident), dmode);
- }
- 
-+static void conditional_strbuf_addstr(int conditional, struct strbuf *sb,
-+				      const char *s) {
-+	if (conditional)
-+		strbuf_addstr(sb, s);
-+}
-+
- static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 				void *context)
- {
-@@ -956,6 +962,8 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 	struct commit_list *p;
- 	int h1, h2;
- 
-+	int colors_enabled = want_color(GIT_COLOR_UNKNOWN);
-+
- 	/* these are independent of the commit */
- 	switch (placeholder[0]) {
- 	case 'C':
-@@ -967,20 +975,20 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 			color_parse_mem(placeholder + 2,
- 					end - (placeholder + 2),
- 					"--pretty format", color);
--			strbuf_addstr(sb, color);
-+			conditional_strbuf_addstr(colors_enabled, sb, color);
- 			return end - placeholder + 1;
- 		}
- 		if (!prefixcmp(placeholder + 1, "red")) {
--			strbuf_addstr(sb, GIT_COLOR_RED);
-+			conditional_strbuf_addstr(colors_enabled, sb, GIT_COLOR_RED);
- 			return 4;
- 		} else if (!prefixcmp(placeholder + 1, "green")) {
--			strbuf_addstr(sb, GIT_COLOR_GREEN);
-+			conditional_strbuf_addstr(colors_enabled, sb, GIT_COLOR_GREEN);
- 			return 6;
- 		} else if (!prefixcmp(placeholder + 1, "blue")) {
--			strbuf_addstr(sb, GIT_COLOR_BLUE);
-+			conditional_strbuf_addstr(colors_enabled, sb, GIT_COLOR_BLUE);
- 			return 5;
- 		} else if (!prefixcmp(placeholder + 1, "reset")) {
--			strbuf_addstr(sb, GIT_COLOR_RESET);
-+			conditional_strbuf_addstr(colors_enabled, sb, GIT_COLOR_RESET);
- 			return 6;
- 		} else
- 			return 0;
--- 
-1.7.10.4
+I should probably fix my script before I embarrass myself again with
+it...
+
+-Peff
