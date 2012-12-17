@@ -1,147 +1,84 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
-Date: Mon, 17 Dec 2012 19:53:19 +1100
-Message-ID: <CAH5451=U47Aastune7==e67nK9X4A9khdtZvKzhpwkC-eR=o8A@mail.gmail.com>
-References: <1355726702-27974-1-git-send-email-chris@rorvick.com>
- <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org>
- <50CED5D4.5040705@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Mon, 17 Dec 2012 00:56:06 -0800
+Message-ID: <7vfw35m509.fsf@alter.siamese.dyndns.org>
+References: <20121211153903.7522d6b0@chalon.bertin.fr>
+ <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
+ <20121212094432.6e1e48c8@chalon.bertin.fr>
+ <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
+ <20121217085242.02a77243@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chris Rorvick <chris@rorvick.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Woody Wu <narkewoody@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Dec 17 09:53:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Yann Dirson <dirson@bertin.fr>
+X-From: git-owner@vger.kernel.org Mon Dec 17 09:56:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkWSU-0005l8-C1
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 09:53:58 +0100
+	id 1TkWUt-0007EK-Cl
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 09:56:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884Ab2LQIxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 03:53:41 -0500
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:59403 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674Ab2LQIxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 03:53:40 -0500
-Received: by mail-qa0-f53.google.com with SMTP id a19so2141384qad.19
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 00:53:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=k+HUq3XQNigpXLxLvFfvBnPsDDQiUQViCLLlcV2xQYk=;
-        b=RhrWzH1sQvSqAkarQqgL7kYNSSR4lWNX4u9SStWUmTDMdsHRbL1ySd4+nywTPWI3PG
-         ekb9A94esUxM6gtaLK/7qgGAPebYdBpUF73Kv/6Ks4pgjVRGQg6UxHMPCHE7Pqyqixwm
-         5EUs4JHkjxkkbWtOukeQxmzG/7IHW5q4JHKguZng6JE2vEEQWGjRuX23j0gyrfXDl8qa
-         VUUL/d9opO5JGFdZRFLdtkmXiUqtwZH8dMqS1BECU2bTpaxUMrN7yDYq25I9A9tPl741
-         H2LvJpZnhxuqdCDC72fyYNY/adalpKME/BysqDlQgelpYZ8g9J1zpiaFU1VokUQ+mnuF
-         NzPA==
-Received: by 10.49.48.104 with SMTP id k8mr6835414qen.49.1355734419592; Mon,
- 17 Dec 2012 00:53:39 -0800 (PST)
-Received: by 10.49.14.3 with HTTP; Mon, 17 Dec 2012 00:53:19 -0800 (PST)
-In-Reply-To: <50CED5D4.5040705@viscovery.net>
+	id S1751791Ab2LQI4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 03:56:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36664 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751448Ab2LQI4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 03:56:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BF5C88D1;
+	Mon, 17 Dec 2012 03:56:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0j2yXXSW3jUzNllEEwxxuT4CGjA=; b=Q5Nw+1
+	k5nesx5Ylt4375xuemZbTSjfuQva1xq20HCpuz6/9kRF7o9k5TWS83WY61dZRVjI
+	Xq8Onk7geM+cRsf0JnAqnW4Cmgse96j5bCydKTUAHZB4ymXRQGYz1uRZp/Kv6PuR
+	trzO47ChLPdgCM1YRGEdI2wgYAeNqchOdoeSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ktnMe0/+9Hg2clUYHfqUWERqpNRgeADx
+	9ch+oIepdkkWVwBvSJd5qODsnuxlwndlVnBt/GZpBjnG0JV3EInJtEspdPqnURcp
+	rt88AtONyWvihlv7qv9QaPXm6IYS7vMCWsRznNTO0mTC9DySviDG6vAsBOKMitcD
+	zWUyoAoT9ls=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 482D788D0;
+	Mon, 17 Dec 2012 03:56:08 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C13988C5; Mon, 17 Dec 2012
+ 03:56:07 -0500 (EST)
+In-Reply-To: <20121217085242.02a77243@chalon.bertin.fr> (Yann Dirson's
+ message of "Mon, 17 Dec 2012 08:52:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98A5E3BC-4827-11E2-AAC8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211663>
 
-Regards,
+Yann Dirson <dirson@bertin.fr> writes:
 
-Andrew Ardill
+> And we may still want the bug fixed, or would we just list it as a known bug ?
+> At least it does not seem to occur with "replace" refs:
 
+The "replace" was designed to "fix" known limitation of grafts,
+which is _inherent_ to it; the graft information was designed _not_
+to be shared across repositories.  The fix was done by by using a
+different mechanism to allow propagating the information across
+repositories.
 
-On 17 December 2012 19:20, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 12/17/2012 8:21, schrieb Junio C Hamano:
->> Chris Rorvick <chris@rorvick.com> writes:
->>>  'git checkout' [<branch>]::
+So there is nothing further to fix, except that there is a documentation
+bug you can fix if you didn't find it documented.
+
+Thanks.
+
 >
-> Is <branch> really optional in this form?
->
-> BTW, what does plain 'git checkout' do? Just report ahead/behind information?
-
-I think it defaults to either HEAD or the current branch, which shows
-uncommitted changes and relationship to upstream.
-
->>> +
->>> +    Update the index, working tree, and HEAD to reflect the
->>> +    specified branch.
+> git-test$ rm .git/info/grafts 
+> git-test$ echo "fake merge" | git commit-tree master^{tree} -p master^ -p maint
+> b821b2aa00973a47936d7cd25c9a5978b1c839c6
+> git-test$ git replace master b821b2aa00973a47936d7cd25c9a5978b1c839c6
+> git-test$ git push origin maint
 > ...
->>> +'git checkout' [--detach] [<commit>]::
->
-> The title here is better spelled as two lines:
->
-> 'git checkout' <commit>::
-> 'git checkout' --detach <branch>::
->
-> I don't think that <commit> or <branch> should be indicated as optional here.
-
-doing 'git checkout --detach' will detach from the current branch if
-you have one, but maybe listing <branch> as optional would work in
-that case?
-
-
-Here is my suggestion, differing from what Junio put forward primarily
-by first indicating that a checkout is a 'switch' to a different
-branch or commit. This makes sense to me, and is used elsewhere in the
-documentation, so I thought it might make sense here too.
-
--->8--
-
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Date: Mon, 17 Dec 2012 18:53:41 +1100
-Subject: [PATCH] Documentation/git-checkout.txt: Use consistent terminology
-
-git checkout is described as 'switching' branches in places. Use this
-terminology more consistently.
-
-Expand on the purpose of switching to a branch or commit, which is
-typically to prepare to build history on top of that branch or commit.
-
-Signed-off-by: Andrew Ardill <andrew.ardill@gmail.com>
----
- Documentation/git-checkout.txt | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index db89cf7..e6db14f 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -23,8 +23,11 @@ branch.
-
- 'git checkout' [<branch>]::
-
--       Update the index, working tree, and HEAD to reflect the
--       specified branch.
-+       Switch to the specified <branch>. Prepares for building new
-+       history on <branch>, by updating the index and the files in the
-+       working tree, and by pointing HEAD at the branch. Local
-+       modifications to the files in the working tree are kept, so that
-+       they can be committed on the <branch>.
- +
- If <branch> is not found but there does exist a tracking branch in
- exactly one remote (call it <remote>) with a matching name, treat as
-@@ -56,10 +59,13 @@ successful.
-
- 'git checkout' [--detach] [<commit>]::
-
--       Update the index and working tree to reflect the specified
--       commit and set HEAD to point directly to <commit> (see
--       "DETACHED HEAD" section.)  Passing `--detach` forces this
--       behavior even if <commit> is a branch.
-+       Switch to the specified <commit>. Prepares for building new
-+       history on top of <commit>, by updating the index and the files
-+       in the working tree, and by pointing HEAD at <commit>. Local
-+       modifications to the files in the working tree are kept, so that
-+       they can be committed on top of <commit>. Passing `--detach`
-+       forces HEAD to point directly at <commit> even if <commit> is a
-+       branch (see "DETACHED HEAD" section.)
-
- 'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
-
---
+>    50b03b0..79211fe  maint -> maint
