@@ -1,85 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Documentation: don't link to example mail addresses
-Date: Sun, 16 Dec 2012 18:24:58 -0800
-Message-ID: <7vehippg91.fsf@alter.siamese.dyndns.org>
-References: <20121215150314.GC2725@river.lan>
- <20121215172018.GA18696@sigill.intra.peff.net>
- <20121215182408.GD2725@river.lan>
- <20121216120405.GA14320@sigill.intra.peff.net>
- <20121216140029.GE2725@river.lan>
+From: Woody Wu <narkewoody@gmail.com>
+Subject: How to specify remote branch correctly
+Date: Mon, 17 Dec 2012 02:30:00 +0000 (UTC)
+Message-ID: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Dec 17 03:25:34 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 04:40:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkQOb-0001dE-Fy
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 03:25:33 +0100
+	id 1TkRYr-0001Fj-2S
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 04:40:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945Ab2LQCZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 21:25:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39945 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768Ab2LQCZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 21:25:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19882A1E7;
-	Sun, 16 Dec 2012 21:25:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dYBURQc2cKcLJ6yNpbnqGnH4mHc=; b=q66Jds
-	Jrkp1HkwrrD5QaPPsDfdIL5++0pDT5eIL7xO4BPIzgQWFUiUlynfrffSzIrZa41r
-	W71sHA9OYLXbr/nB6V+vRJx0nUruYM+q2pntK/8GSJP0s8CkDFnlaJS/V5/5AUyG
-	D7XazuuK7Q4pMTEOviOBOjPbLtweJBg4uIz2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wu9FmlEp8fB4MxRybK1yCpRnTmbRET95
-	bYqStYSB00zfG2V9ktO5h0dGjO043u8ZX8pNnL7g75EaR1Yrrxowk4Dz4vwJgKeT
-	Yj61nlfEcwwOIeWQUi3sEjoFbqnV5Gu8iA4ohS55qsjemX9zE5eo0Zzt0wfd9pvV
-	xxwV7pg4m9M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07768A1E6;
-	Sun, 16 Dec 2012 21:25:01 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59412A1E0; Sun, 16 Dec 2012
- 21:25:00 -0500 (EST)
-In-Reply-To: <20121216140029.GE2725@river.lan> (John Keeping's message of
- "Sun, 16 Dec 2012 14:00:29 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F510176C-47F0-11E2-BD00-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751086Ab2LQDjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 22:39:55 -0500
+Received: from plane.gmane.org ([80.91.229.3]:47559 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750989Ab2LQDjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 22:39:54 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TkRYh-00019E-AY
+	for git@vger.kernel.org; Mon, 17 Dec 2012 04:40:03 +0100
+Received: from 59.37.26.98 ([59.37.26.98])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 04:40:03 +0100
+Received: from narkewoody by 59.37.26.98 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 04:40:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 59.37.26.98
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211624>
 
-John Keeping <john@keeping.me.uk> writes:
+Hi, List
 
-> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-> index d1844ea..68bca1a 100644
-> --- a/Documentation/git-fast-import.txt
-> +++ b/Documentation/git-fast-import.txt
-> @@ -427,7 +427,7 @@ they made it.
->  
->  Here `<name>` is the person's display name (for example
->  ``Com M Itter'') and `<email>` is the person's email address
-> -(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
-> +(``\cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
+I have two branches in the remote, say, origin/master, origin/foo.  Then
+when I tried to switch to the remote foo branch, the following two
+methods gave me different results:
 
-I seem to be getting
+1. git checkout foo
+2. git checkout origin/foo
 
-(<tt>`\cm@example.com'').  `LT</tt> and <tt>GT</tt> are the literal less-than (\x3c)
+The first method run silently with success, but the second method
+complains that I got a 'detached HEAD'.  So, I think I don't understand
+the difference between 'foo' and 'origin/foo'.  Can someone give me a
+hint?
 
-out of this part in the resulting HTML output, which is probably not
-what you wanted to see.
+Supposing I have another remote defined in .git/config that points
+to another repository but also have a same name branch, say
+'remote-x/foo', how do I tell git which 'foo' I want to switch to?
 
-I have a feeling that it might be a better solution to stop using
-these pretty quotes.  It's not like we use them a lot and a quick
-scanning of "git grep '``'" output seems to tell me that many of
-them should be `monospace output`, and the rest (mostly references
-to section headers) can be "Section".
+The similar problem also exists for 'fetch' command to me.  From the man
+page, I don't find answer of how to specify which remote I am going to
+fetch from. Can you help me?
+
+Thanks in advance.
+
+
+-- 
+woody
+I can't go back to yesterday - because I was a different person then.
