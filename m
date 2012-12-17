@@ -1,89 +1,70 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: How to specify remote branch correctly
-Date: Mon, 17 Dec 2012 15:27:46 +1100
-Message-ID: <CAH5451=7frqa-YHXubvO=dMK2CvVoWR-VFZ3XCmKouNiQz4gAg@mail.gmail.com>
-References: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] Makefile: remove tracking of TCLTK_PATH
+Date: Sun, 16 Dec 2012 20:31:06 -0800
+Message-ID: <7v4njlpaet.fsf@alter.siamese.dyndns.org>
+References: <20121216193850.23461.28099.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Woody Wu <narkewoody@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 05:28:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Dec 17 05:31:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkSJZ-0002jv-Be
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 05:28:29 +0100
+	id 1TkSMS-0004M0-7P
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 05:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049Ab2LQE2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 23:28:08 -0500
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:56180 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915Ab2LQE2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 23:28:07 -0500
-Received: by mail-qc0-f180.google.com with SMTP id v28so3603776qcm.11
-        for <git@vger.kernel.org>; Sun, 16 Dec 2012 20:28:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=GLKIhNI6MLbGVcW2bHYnfMTFD5oSyjyg8rcy4C9fgds=;
-        b=I/CZHUAGmSF5beZ321e3i5fFowCkdqwtnJ0I1uCg4qk7u1DT1wSXkJnUTEIsOsWGUT
-         QOyk5B6AAa9h7UEEABdc5aGvY5657xrhYbPHRa9u+fRckyAUqflUh50NNFTabnQAZWDf
-         R13Swg/1rr4Ktp2bsxT5iLD1l30Scr6hult7SIRahxX+/pPkB/YYk+O7nQg1bkiFuh/J
-         F1R609D/gx7wm2tm0UI/crqnZk/T8wsDSEEvdBA4F3N6JNGxz+ZnqJcX8JL+bDb8cZSA
-         5TrKQjkO1Qc9SADLGFymMsWLfS5P3QqL5QpTqRZZw//Dq1wYAwab/TN8GjfK1QkrsYQs
-         +JKA==
-Received: by 10.49.118.138 with SMTP id km10mr6335368qeb.18.1355718486104;
- Sun, 16 Dec 2012 20:28:06 -0800 (PST)
-Received: by 10.49.14.3 with HTTP; Sun, 16 Dec 2012 20:27:46 -0800 (PST)
-In-Reply-To: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
+	id S1751516Ab2LQEbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 23:31:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65181 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751362Ab2LQEbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 23:31:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 174EDA83D;
+	Sun, 16 Dec 2012 23:31:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8NJcTkNzg50IHy1yz2+Gllsl62U=; b=SNceHW
+	MIcKefehgnZfB+6tgfIpRgmu8yQGvN9iw5kBxoc2S6qtZwpc1ILNYD5vTCJxe+Ed
+	kUUZcjKIFVWZs7D9wMR2LG7cpVhtvfrmvBWVcRjiJlZIOhravhXIvOB9ax6S0p7V
+	EhwOuCPf/ST+Bxm63TedMxI5bFoSbhFdMmzmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bzluBaIb0pkGEtbCcD7mxk1zjFgcE2Qo
+	ORoSzBY7g9c914+DKDLLCmQdl38uQkb652qHBDvztAmOXiWfMoJdCF/LYFZs2zKG
+	vpdsmxwNKyfY//v2X0aIYTzy0JiwUkFDVFgCJh1667JaO2+aqNUT9YaZhzKMZYW4
+	I6Eci9xxSY4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 055DFA83B;
+	Sun, 16 Dec 2012 23:31:08 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77FE4A838; Sun, 16 Dec 2012
+ 23:31:07 -0500 (EST)
+In-Reply-To: <20121216193850.23461.28099.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Sun, 16 Dec 2012 20:38:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 936BD57A-4802-11E2-B23E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211627>
 
-On 17 December 2012 13:30, Woody Wu <narkewoody@gmail.com> wrote:
-> 1. git checkout foo
-> 2. git checkout origin/foo
->
-> The first method run silently with success, but the second method
-> complains that I got a 'detached HEAD'.  So, I think I don't understand
-> the difference between 'foo' and 'origin/foo'.  Can someone give me a
-> hint?
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Hi Woody,
+> It looks like we are tracking the value of TCLTK_PATH in the main
+> Makefile for no good reason, as this is done in git-gui too and the
+> GIT-GUI-VARS is not used in the Makefile.
 
-I think you are just missing a couple of important distinctions that
-git makes about the different references that exist in your
-repository.
+This was added to the main Makefile when we slurped gitk to our
+project at the top-level, so I am not surprised if git-gui were
+not depending on it at all.
 
-A remote reference (origin/foo) describes exactly the state of
-somebody else's branch at the time you last synchronised with them. It
-does not make sense for you to be able to 'edit' this state, as it
-doesn't belong to you. Instead, we create a copy of that reference and
-give it a name (git checkout foo origin/foo) and call this a local
-reference (foo). Git then provides machinery around keeping these in
-sync with each other (git branch --set-upstream foo origin/foo) but we
-don't _have_ to keep these in sync at all! In fact, the names can be
-completely arbitrary and we don't have to track the upstream at all.
-
-If I have some other remote (remote-x) that has the same branch as
-origin but with some other changes I want to look at, we can just
-check that out to another branch (git checkout remote-x-foo
-remote-x/foo), or simply download it as a remote ref and merge the
-changes on top of my existing local branch (git fetch remote-x; git
-checkout foo; git merge remote-x/foo).
-
-There are lots of patterns that can emerge from this functionality,
-but the main thing to remember is that to create changes on top of a
-remote branch, we first need to create a local copy of it. A 'detached
-HEAD' here means that we are looking at the remote repository's branch
-but don't have a local copy of it, so any changes we make might be
-'lost' (that is, not have an easy to find branch name).
-
-Regards,
-
-Andrew Ardill
+A better explanation is that t62ba514 (Move gitk to its own
+subdirectory, 2007-11-17) should have moved these lines to
+gitk-git/Makefile (and I think we should move them there in a
+separate patch).
