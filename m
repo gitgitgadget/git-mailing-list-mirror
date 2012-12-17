@@ -1,84 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Mon, 17 Dec 2012 00:56:06 -0800
-Message-ID: <7vfw35m509.fsf@alter.siamese.dyndns.org>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
- <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
- <20121212094432.6e1e48c8@chalon.bertin.fr>
- <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
- <20121217085242.02a77243@chalon.bertin.fr>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
+Date: Mon, 17 Dec 2012 09:59:54 +0100
+Message-ID: <50CEDF0A.7040603@viscovery.net>
+References: <1355726702-27974-1-git-send-email-chris@rorvick.com> <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org> <50CED5D4.5040705@viscovery.net> <7vk3shm5d5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Mon Dec 17 09:56:33 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	Woody Wu <narkewoody@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 10:00:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkWUt-0007EK-Cl
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 09:56:27 +0100
+	id 1TkWYb-00013O-VH
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751791Ab2LQI4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 03:56:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36664 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751448Ab2LQI4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 03:56:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BF5C88D1;
-	Mon, 17 Dec 2012 03:56:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0j2yXXSW3jUzNllEEwxxuT4CGjA=; b=Q5Nw+1
-	k5nesx5Ylt4375xuemZbTSjfuQva1xq20HCpuz6/9kRF7o9k5TWS83WY61dZRVjI
-	Xq8Onk7geM+cRsf0JnAqnW4Cmgse96j5bCydKTUAHZB4ymXRQGYz1uRZp/Kv6PuR
-	trzO47ChLPdgCM1YRGEdI2wgYAeNqchOdoeSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ktnMe0/+9Hg2clUYHfqUWERqpNRgeADx
-	9ch+oIepdkkWVwBvSJd5qODsnuxlwndlVnBt/GZpBjnG0JV3EInJtEspdPqnURcp
-	rt88AtONyWvihlv7qv9QaPXm6IYS7vMCWsRznNTO0mTC9DySviDG6vAsBOKMitcD
-	zWUyoAoT9ls=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 482D788D0;
-	Mon, 17 Dec 2012 03:56:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C13988C5; Mon, 17 Dec 2012
- 03:56:07 -0500 (EST)
-In-Reply-To: <20121217085242.02a77243@chalon.bertin.fr> (Yann Dirson's
- message of "Mon, 17 Dec 2012 08:52:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 98A5E3BC-4827-11E2-AAC8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751366Ab2LQJAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 04:00:00 -0500
+Received: from so.liwest.at ([212.33.55.24]:49029 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750805Ab2LQI77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 03:59:59 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TkWYE-0004mS-HR; Mon, 17 Dec 2012 09:59:54 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 414981660F;
+	Mon, 17 Dec 2012 09:59:54 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vk3shm5d5.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211665>
 
-Yann Dirson <dirson@bertin.fr> writes:
+Am 12/17/2012 9:48, schrieb Junio C Hamano:
+> Here is what I tentatively have ...
 
-> And we may still want the bug fixed, or would we just list it as a known bug ?
-> At least it does not seem to occur with "replace" refs:
+Thanks!
 
-The "replace" was designed to "fix" known limitation of grafts,
-which is _inherent_ to it; the graft information was designed _not_
-to be shared across repositories.  The fix was done by by using a
-different mechanism to allow propagating the information across
-repositories.
+> -'git checkout' [--detach] [<commit>]::
+> +'git checkout' --detach [<commit>]::
+> +'git checkout' <commit>::
+>  
+> -	Update the index and working tree to reflect the specified
+> -	commit and set HEAD to point directly to <commit> (see
+> -	"DETACHED HEAD" section.)  Passing `--detach` forces this
+> -	behavior even if <commit> is a branch.
+> +	Prepare to work on building new history on top of <commit>,
+> +	by detaching HEAD at the commit (see "DETACHED HEAD"
+> +	section), and updating the index and the files in the
+> +	working tree.  Local modifications to the files in the
+> +	working tree are kept, so that they can be committed on the
+> +	<branch>.
 
-So there is nothing further to fix, except that there is a documentation
-bug you can fix if you didn't find it documented.
+The last half-sentence should better be removed.
 
-Thanks.
+> ++
+> +Passing `--detach` forces this behavior even if <commit> is a branch.
+>  
+>  'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
 
->
-> git-test$ rm .git/info/grafts 
-> git-test$ echo "fake merge" | git commit-tree master^{tree} -p master^ -p maint
-> b821b2aa00973a47936d7cd25c9a5978b1c839c6
-> git-test$ git replace master b821b2aa00973a47936d7cd25c9a5978b1c839c6
-> git-test$ git push origin maint
-> ...
->    50b03b0..79211fe  maint -> maint
+-- Hannes
