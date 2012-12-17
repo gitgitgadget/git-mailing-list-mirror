@@ -1,76 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] Makefile: use -Wdeclaration-after-statement if
- supported
-Date: Sun, 16 Dec 2012 20:18:33 -0800
-Message-ID: <7v8v8xpazq.fsf@alter.siamese.dyndns.org>
-References: <1355686561-1057-1-git-send-email-git@adamspiers.org>
- <1355686561-1057-4-git-send-email-git@adamspiers.org>
- <7vk3shphru.fsf@alter.siamese.dyndns.org> <20121217021501.GA13745@gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: How to specify remote branch correctly
+Date: Mon, 17 Dec 2012 15:27:46 +1100
+Message-ID: <CAH5451=7frqa-YHXubvO=dMK2CvVoWR-VFZ3XCmKouNiQz4gAg@mail.gmail.com>
+References: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 05:19:06 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Woody Wu <narkewoody@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 05:28:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkSAQ-0005PJ-Sp
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 05:19:03 +0100
+	id 1TkSJZ-0002jv-Be
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 05:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429Ab2LQESg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2012 23:18:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58335 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026Ab2LQESg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2012 23:18:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 636CCA3D8;
-	Sun, 16 Dec 2012 23:18:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j5R//dHwl+iLF3UI3exSJYcboUo=; b=cS1HD8
-	ZpoqFh5ldcDDWjqzRZfd6O92Jr+VUDeWoexdvoBuExSEwph5qyixqboC/OF6zbrO
-	Epd707OSYBUUQ9Fp4BmDrtG/E70+6tpPGHubBnRLpS4hwe1PdOB7PI19QfUV2Q0K
-	ogJ6q1n1m44KoxoiQemGQZNcaYO613lWHrMe4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B0QjMRGx6tyw8iZCF9//t6SF3PgeQxpm
-	gVF8+s8TEITJ8OtiCA15buog0ksVDk5YXviH5w3a0rl+a+b/dAasjo1EqlDbuciC
-	nPJM02iLsyAm7Zf0dzkF5R0Y3mxGxIKjMnfffnJL+uHW4rqlwowZHrdsFKOo41Ko
-	NVhJ85bs5hU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51785A3D7;
-	Sun, 16 Dec 2012 23:18:35 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C55CAA3D6; Sun, 16 Dec 2012
- 23:18:34 -0500 (EST)
-In-Reply-To: <20121217021501.GA13745@gmail.com> (Adam Spiers's message of
- "Mon, 17 Dec 2012 02:15:01 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D2C9A37A-4800-11E2-A3AE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751049Ab2LQE2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2012 23:28:08 -0500
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:56180 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915Ab2LQE2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2012 23:28:07 -0500
+Received: by mail-qc0-f180.google.com with SMTP id v28so3603776qcm.11
+        for <git@vger.kernel.org>; Sun, 16 Dec 2012 20:28:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GLKIhNI6MLbGVcW2bHYnfMTFD5oSyjyg8rcy4C9fgds=;
+        b=I/CZHUAGmSF5beZ321e3i5fFowCkdqwtnJ0I1uCg4qk7u1DT1wSXkJnUTEIsOsWGUT
+         QOyk5B6AAa9h7UEEABdc5aGvY5657xrhYbPHRa9u+fRckyAUqflUh50NNFTabnQAZWDf
+         R13Swg/1rr4Ktp2bsxT5iLD1l30Scr6hult7SIRahxX+/pPkB/YYk+O7nQg1bkiFuh/J
+         F1R609D/gx7wm2tm0UI/crqnZk/T8wsDSEEvdBA4F3N6JNGxz+ZnqJcX8JL+bDb8cZSA
+         5TrKQjkO1Qc9SADLGFymMsWLfS5P3QqL5QpTqRZZw//Dq1wYAwab/TN8GjfK1QkrsYQs
+         +JKA==
+Received: by 10.49.118.138 with SMTP id km10mr6335368qeb.18.1355718486104;
+ Sun, 16 Dec 2012 20:28:06 -0800 (PST)
+Received: by 10.49.14.3 with HTTP; Sun, 16 Dec 2012 20:27:46 -0800 (PST)
+In-Reply-To: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211626>
 
-Adam Spiers <git@adamspiers.org> writes:
+On 17 December 2012 13:30, Woody Wu <narkewoody@gmail.com> wrote:
+> 1. git checkout foo
+> 2. git checkout origin/foo
+>
+> The first method run silently with success, but the second method
+> complains that I got a 'detached HEAD'.  So, I think I don't understand
+> the difference between 'foo' and 'origin/foo'.  Can someone give me a
+> hint?
 
-> OK; I expect these issues with the implementation are all
-> surmountable.  I did not necessarily expect this to be the final
-> implementation anyhow, as indicated by my comments below the divider
-> line.  However it's not clear to me what you think about the idea in
-> principle, and whether other compiler flags would merit inclusion.
+Hi Woody,
 
-As different versions of GCC behave differently, and the same GCC
-(mis)detect issues differently depending on the optimization level,
-I do not know if it will be a fruitful exercise to try to come up
-with one expression to come up with the set of flags to suit
-everybody.  One flag I prefer to use is -Werror, but that means the
-other flags must have zero false positive rate.
+I think you are just missing a couple of important distinctions that
+git makes about the different references that exist in your
+repository.
 
-If you are interested, the flags I personally use with the version
-of GCC I happen to have is in the Make script on the 'todo' branch.
+A remote reference (origin/foo) describes exactly the state of
+somebody else's branch at the time you last synchronised with them. It
+does not make sense for you to be able to 'edit' this state, as it
+doesn't belong to you. Instead, we create a copy of that reference and
+give it a name (git checkout foo origin/foo) and call this a local
+reference (foo). Git then provides machinery around keeping these in
+sync with each other (git branch --set-upstream foo origin/foo) but we
+don't _have_ to keep these in sync at all! In fact, the names can be
+completely arbitrary and we don't have to track the upstream at all.
+
+If I have some other remote (remote-x) that has the same branch as
+origin but with some other changes I want to look at, we can just
+check that out to another branch (git checkout remote-x-foo
+remote-x/foo), or simply download it as a remote ref and merge the
+changes on top of my existing local branch (git fetch remote-x; git
+checkout foo; git merge remote-x/foo).
+
+There are lots of patterns that can emerge from this functionality,
+but the main thing to remember is that to create changes on top of a
+remote branch, we first need to create a local copy of it. A 'detached
+HEAD' here means that we are looking at the remote repository's branch
+but don't have a local copy of it, so any changes we make might be
+'lost' (that is, not have an easy to find branch name).
+
+Regards,
+
+Andrew Ardill
