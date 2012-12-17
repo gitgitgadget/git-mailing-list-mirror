@@ -1,66 +1,79 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Re: git log reliability
-Date: Mon, 17 Dec 2012 09:38:22 +0000
-Message-ID: <1355737102-ner-5842@calvin>
-References: <CANirugRmpoGb=T1V2ZBw3GEE5nYwD-hyLOfWgt-UVvMXh-i_OA@mail.gmail.com>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH] Move api-command.txt to the end of API list in
+ api-index.txt
+Date: Mon, 17 Dec 2012 10:43:52 +0100 (CET)
+Message-ID: <1944303.2385893.1355737432979.JavaMail.ngmail@webmail11.arcor-online.net>
+References: <7vwqwhpy0a.fsf@alter.siamese.dyndns.org> <1582223824.296627.1355560147565.JavaMail.ngmail@webmail08.arcor-online.net>
+ <1479174763.154268.1350408444997.JavaMail.ngmail@webmail15.arcor-online.net>
+ <1213313884.154031.1350407865830.JavaMail.ngmail@webmail15.arcor-online.net>
+ <1702872710.62174.1355660592713.JavaMail.ngmail@webmail12.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: Prasad Karmarkar <prasad.s.karmarkar@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 10:38:47 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Mon Dec 17 10:44:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkX9q-0006ZD-CZ
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:38:46 +0100
+	id 1TkXF5-00013U-QV
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131Ab2LQJi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 04:38:27 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:53539 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448Ab2LQJi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 04:38:26 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so2283052eaa.19
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 01:38:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:references:in-reply-to:mime-version:date:message-id
-         :content-type;
-        bh=xfsOUeicq7A9McKTTReOP4YGTobdxDRRF7IthFgDeIk=;
-        b=sXihnntd+PpjItY/3SUA7v9XCdtOHq/XbAibMClsyHVMNlB8oW49Lczn5ug6qFkKUV
-         soTl4Md9U4XPkNDpSBzc2IOaV+6tOE3MqKyMGsvTntxUB3wG134HIbueWk3DquweF5oS
-         nGVXh1LFZvKLORAvXxL8HhNGF0euou6D8OXc4bXPa54jpmx/RTsLHLlPHttVQFmaf1IT
-         96swMPAY4BSuPMTT1QaTUPZyZMJNrhYfyboyc3GfhfydJTR5jIn3leg/DZtN7iGIItc9
-         JPAgblL3ozY24M5vmEWNScJzhTa/1fmJ2JZ6YUG6k7EGoNr3ENGGQD7nHTOPJvirZ+M0
-         SB6A==
-Received: by 10.14.225.72 with SMTP id y48mr39488952eep.46.1355737105781;
-        Mon, 17 Dec 2012 01:38:25 -0800 (PST)
-Received: from calvin.caurea.org (pub082136067238.dh-hfc.datazug.ch. [82.136.67.238])
-        by mx.google.com with ESMTPS id 46sm27936417eeg.4.2012.12.17.01.38.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 17 Dec 2012 01:38:25 -0800 (PST)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id 9E3D0129243; Mon, 17 Dec 2012 09:38:22 +0000 (UTC)
-In-Reply-To: <CANirugRmpoGb=T1V2ZBw3GEE5nYwD-hyLOfWgt-UVvMXh-i_OA@mail.gmail.com>
+	id S1751980Ab2LQJnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 04:43:55 -0500
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:46381 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751213Ab2LQJny (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2012 04:43:54 -0500
+Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
+	by mx.arcor.de (Postfix) with ESMTP id F1519304F0;
+	Mon, 17 Dec 2012 10:43:52 +0100 (CET)
+Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
+	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 0176F14A568;
+	Mon, 17 Dec 2012 10:43:53 +0100 (CET)
+Received: from webmail11.arcor-online.net (webmail11.arcor-online.net [151.189.8.83])
+	by mail-in-15.arcor-online.net (Postfix) with ESMTP id E77501AB51F;
+	Mon, 17 Dec 2012 10:43:52 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-15.arcor-online.net E77501AB51F
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1355737432; bh=XyqwUrMbvEREqXoLfUHk0drTBgm9+6OBWkHVHiuyhoI=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=EEgxmiUdOhzK/X99qNZjNIYmV6vcSh7gJQS2pysO43/sQfQDer9ZtUwH2Elu9fTRl
+	 tY/lgHkOsFZo75SomI94LUpLT/1dLcsGEbVTg2Oq0ROv5gtPjHzCa2S516baxCWsYa
+	 PiXqt08IDPYxXI1xB90OIQO8l7VqSvjow6L4f8M0=
+Received: from [194.138.39.59] by webmail11.arcor-online.net (151.189.8.83) with HTTP (Arcor Webmail); Mon, 17 Dec 2012 10:43:52 +0100 (CET)
+In-Reply-To: <7vwqwhpy0a.fsf@alter.siamese.dyndns.org>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 194.138.39.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211668>
 
-On Mon, 17 Dec 2012 14:56:17 +0530, Prasad Karmarkar <prasad.s.karmarkar@gmail.com> wrote:
-> Hi ,
+ 
+OK; I would also prefer to have it in ./howto.
+So please drop this patch; I will provide a new one.
+
+----- Original Nachricht ----
+Von:     Junio C Hamano <gitster@pobox.com>
+An:      Thomas Ackermann <th.acker@arcor.de>
+Datum:   16.12.2012 21:01
+Betreff: Re: [PATCH] Move api-command.txt to the end of API list in
+ api-index.txt
+
+> Thomas Ackermann <th.acker@arcor.de> writes:
 > 
-> I have been hearing from my Release Management that git log is not
-> reliable. Is it so ?
-> Is there a known instance where Git log has missed out on commits ?
+> > - because it describes a different form of API than the other api-*
+> documents
 > 
-> Any information about this would be really helpful
+> It makes me wonder if a more correct "fix" is to move this document
+> to the ../howto/ hierarchy.
+> 
 
-Are you talking about git skipping commits due to history simplification (read
-the corresponding section in the git-log man page)?
 
-Also, what for does your release management use git log? Maybe there is
-a better way to do what you need to do.
+---
+Thomas
