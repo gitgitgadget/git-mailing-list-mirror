@@ -1,93 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Documentation: don't link to example mail addresses
-Date: Mon, 17 Dec 2012 11:57:33 -0800
-Message-ID: <7vr4moladu.fsf@alter.siamese.dyndns.org>
-References: <20121215150314.GC2725@river.lan>
- <20121215172018.GA18696@sigill.intra.peff.net>
- <20121215182408.GD2725@river.lan>
- <20121216120405.GA14320@sigill.intra.peff.net>
- <20121216140029.GE2725@river.lan> <7vehippg91.fsf@alter.siamese.dyndns.org>
- <20121217120253.GA21858@sigill.intra.peff.net>
+Subject: Re: [PATCH] log --format: teach %C(auto,black) to paint it black
+ only on terminals
+Date: Mon, 17 Dec 2012 12:03:40 -0800
+Message-ID: <7vmwxcla3n.fsf@alter.siamese.dyndns.org>
+References: <72BB37CB88C48F4B925365539F1EE46C182613A9@icexch-m3.ic.ac.uk>
+ <72BB37CB88C48F4B925365539F1EE46C18261403@icexch-m3.ic.ac.uk>
+ <20121213131329.GA5042@sigill.intra.peff.net>
+ <CACsJy8AgtwtJfMXzArJLiHQtR+WNRJxRdRgUts30EN-QvgGT=g@mail.gmail.com>
+ <20121215101659.GB21577@sigill.intra.peff.net>
+ <7v7gojtbgr.fsf@alter.siamese.dyndns.org>
+ <7vobhtm5pk.fsf_-_@alter.siamese.dyndns.org>
+ <CACsJy8Dt4vEpO+EcAhWnko=XAajQ9OMgbDbVx78Eb=sZTjmKQA@mail.gmail.com>
+ <20121217121354.GB21858@sigill.intra.peff.net>
+ <7v4njkmq07.fsf@alter.siamese.dyndns.org>
+ <20121217194926.GA5209@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	"Srb\, Michal" <michal.srb11@imperial.ac.uk>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 17 20:58:01 2012
+X-From: git-owner@vger.kernel.org Mon Dec 17 21:04:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tkgp4-0002PG-RV
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 20:57:59 +0100
+	id 1Tkguv-0005gW-JT
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 21:04:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658Ab2LQT5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 14:57:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47820 "EHLO
+	id S1753189Ab2LQUDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 15:03:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53905 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753410Ab2LQT5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 14:57:36 -0500
+	id S1752276Ab2LQUDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 15:03:43 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B3D294C7;
-	Mon, 17 Dec 2012 14:57:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D506C9A34;
+	Mon, 17 Dec 2012 15:03:42 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fv57JZK06RvRTpcQAr9cIdLsZPY=; b=oglFw1
-	GonidRYB2JFysZvMhlJ2dyNhnMzsk2qDKOawgIMc4PpbFAHY8KiI3aWSnW8Zh2OG
-	LOmZjKNac4EqNb+Jh+ovnd2wRuM9ItgZbHk2AuzYSFQ54fj/8ELM3ioL6NdaWpE/
-	34dS0bPNbPySylZhZ94KKepATgH1cXV8sfovM=
+	:content-type; s=sasl; bh=crE/CtcWRqQhWOkY0dMV72vfNCs=; b=aqRQZE
+	mT0QgQPxXI1ne6MwrQHLI38GFOd/3xjqFCdwXoUrdZ8N7qJmU0KMXysAyr3Ibu28
+	aFeVwd6RoYMR0INAsZDw6O+4ClqiDgwzxtm7Ekvbhj89jHjNzGTIXsVOvX1/G4SU
+	cZ5SUrXKa67NZuv57V04Db/Vxts3V0II7VyUg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G1zWRMq89jgA9t2yhHNrrz6GU69XT6Yl
-	zB5VXJTyp7TWjiOemd5v9nqXTCeyCMgDg7OMLP1Gi6DuG8S7FTSM/lcc5WLzzmAo
-	opVG6G000kVWkwGBbMhhSPnGpsChpgolZ4BerK2LFN797g0YaSBzvtT7sptg5lBn
-	0EBBP8J1+7c=
+	:content-type; q=dns; s=sasl; b=tnrE8m6FKRp/1dUvEP36DFbjbb7YQ75n
+	d+FrkzWi89JlCDenehrldka/ODTgh3MjLnP7lv4YISXjAqLaiSFK7/aOF01Mv/19
+	h+AxhXJFgJEwdiW4oseuCHPA8ZTNoxMy+L6TPpSn5szeNf+h3AZ8yUv0sKejEZzK
+	sbiIypSVxbE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB6B194C6;
-	Mon, 17 Dec 2012 14:57:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1A439A33;
+	Mon, 17 Dec 2012 15:03:42 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52DD294C4; Mon, 17 Dec 2012
- 14:57:35 -0500 (EST)
-In-Reply-To: <20121217120253.GA21858@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 17 Dec 2012 07:02:54 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1EEFD9A31; Mon, 17 Dec 2012
+ 15:03:42 -0500 (EST)
+In-Reply-To: <20121217194926.GA5209@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 17 Dec 2012 14:49:26 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 005C4C88-4884-11E2-ADEE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DAFBD8EA-4884-11E2-AA1D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211697>
 
 Jeff King <peff@peff.net> writes:
 
-> On Sun, Dec 16, 2012 at 06:24:58PM -0800, Junio C Hamano wrote:
->
->> I seem to be getting
->> 
->> (<tt>`\cm@example.com'').  `LT</tt> and <tt>GT</tt> are the literal less-than (\x3c)
->> 
->> out of this part in the resulting HTML output, which is probably not
->> what you wanted to see.
->> 
->> I have a feeling that it might be a better solution to stop using
->> these pretty quotes.  It's not like we use them a lot and a quick
->> scanning of "git grep '``'" output seems to tell me that many of
->> them should be `monospace output`, and the rest (mostly references
->> to section headers) can be "Section".
->
-> Typographically speaking, I would also be just as happy to use regular
-> double-quotes throughout.  But here's an example where they also caused
-> a problem (which was fixed by moving to smart-quotes in f34e9ed):
->
->   http://thread.gmane.org/gmane.comp.version-control.git/163067
+> If "git frotz" wants to have a separate "color.frotz" option to override
+> that, then they would need to implement that themselves either with or
+> without your patch. I do not think its presence makes things any harder.
 
-I agree with the typography argument.
+That _was_ (but no longer is) exactly my point.  Eh, rather, its
+absense does not make things any harder.
 
-Many monospaced fonts used in the windows where the programmers view
-the source of the docmentation, a 'normal' single quote does not
-slant by the same amount to the `opposite` quote, so ``a pair does
-not balance'' visually in the source.  And the whole point of
-writing documentation in AsciiDoc is to keep the source readable.
-The use of pretty quote throws discards that primary benefit of
-choosing AsciiDoc in the first place.
+> So no, I do not think you can cover every conceivable case. But having
+> git-log respect --color and the usual color.* variables for this feature
+> seems like the only sane default. It makes the easy cases just work, and
+> the hard cases are not any worse off (and they may even be better off,
+> since the script can manipulate --color instead of rewriting their
+> format strings, but that is a minor difference).
+
+OK, care to reroll the one with your patch in the other message
+squashed in, possibly with fixes to the test (the result should now
+honor --color={always,never}, I think)?
+
+Thanks.
