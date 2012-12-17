@@ -1,53 +1,50 @@
-From: Dinesh Subramani <dinesh.subramani@gmail.com>
-Subject: Git Log and History Simplification
-Date: Mon, 17 Dec 2012 17:03:09 +0530
-Message-ID: <CAE116wxTY0sFh5nZwGEYRz=gJwXgFEj8Nvwh41RCYH4vgYCqSQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
+Subject: RFC: "git config -l" should not expose sensitive information
+Date: Mon, 17 Dec 2012 12:35:54 +0100
+Message-ID: <50CF039A.7010800@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 12:33:37 2012
+X-From: git-owner@vger.kernel.org Mon Dec 17 12:36:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkYwq-0006L2-Fc
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 12:33:28 +0100
+	id 1TkYzX-0007yg-Qu
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 12:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255Ab2LQLdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 06:33:11 -0500
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:35359 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751958Ab2LQLdK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 06:33:10 -0500
-Received: by mail-ia0-f174.google.com with SMTP id y25so5365746iay.19
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 03:33:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=HHsWEj2H5jxdL8gql5TGqSXK/rsJ1IhPXGdEztG/EM4=;
-        b=UO09WFrlY7aASy2qPdbLWY7JX6Qhj0qdJFDpe54EWvgA8pKBEv5Q8C5+qXHTZ+NIst
-         1xE2756R05Fb4SoLxLln6nuvPcbC3h1aXv7/iU1t+FBWEcU0SviXw895BLWR6syVv/1x
-         yKqKqHbDKenvFfTproVRr3Q7xr/M/q8yRQwdt7o7ERC0hCOGLdbLJk5w8g4Jmm0ThGYE
-         lcBtFjG5nUHKZj34dj2e/R3xlRS9jorqbEz1nq43MYq+0CFqKjGGrwNFyFWzrOcNjt0B
-         T03YKMMHgI0VydI7V/8AB+wEpqXZfwCzKeoOKjaPDHxYax5EnGeMf58Hdle9WNHmJdkK
-         Qnhw==
-Received: by 10.50.57.200 with SMTP id k8mr8777685igq.29.1355743989762; Mon,
- 17 Dec 2012 03:33:09 -0800 (PST)
-Received: by 10.64.53.169 with HTTP; Mon, 17 Dec 2012 03:33:09 -0800 (PST)
+	id S1752300Ab2LQLf6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2012 06:35:58 -0500
+Received: from mout.gmx.net ([212.227.17.21]:54604 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752142Ab2LQLf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 06:35:58 -0500
+Received: from mailout-de.gmx.net ([10.1.76.38]) by mrigmx.server.lan
+ (mrigmx001) with ESMTP (Nemesis) id 0MSFoz-1TYqdL1NCl-00TXrA for
+ <git@vger.kernel.org>; Mon, 17 Dec 2012 12:35:56 +0100
+Received: (qmail invoked by alias); 17 Dec 2012 11:35:56 -0000
+Received: from f054055138.adsl.alicedsl.de (EHLO [78.54.55.138]) [78.54.55.138]
+  by mail.gmx.net (mp038) with SMTP; 17 Dec 2012 12:35:56 +0100
+X-Authenticated: #5108953
+X-Provags-ID: V01U2FsdGVkX180o2YeK0U0kzYbZKa9XgJcsfQ0AebX0j0mPizhaD
+	zvw1MTqxMEZWZ9
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
+X-Enigmail-Version: 1.4.6
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211676>
 
-I am using the below command :
+often the output is requested in help forums - and a
+"git config -l | wgetpaste" exposes parameters like sendmail.smtppass -
+so hide those variables in the output (if not explicitly wanted) would
+makes sense, or ?
 
-git log --stat --decorate=full --since=<date>
-
-Can you please let me know if the above command will list all the
-commits and would not skip any of the commits due to History
-Simplification. Any help would be very useful.
-
-Regards,
-Dinesh
+--=20
+MfG/Sincerely
+Toralf F=C3=B6rster
+pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
