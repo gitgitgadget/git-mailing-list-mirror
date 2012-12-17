@@ -1,90 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Documentation/git-checkout.txt: document 70c9ac2
- behavior
-Date: Sun, 16 Dec 2012 23:21:32 -0800
-Message-ID: <7vd2y9nnyb.fsf@alter.siamese.dyndns.org>
-References: <1355726702-27974-1-git-send-email-chris@rorvick.com>
- <1355726702-27974-3-git-send-email-chris@rorvick.com>
+From: Tomas Carnecky <tomas.carnecky@gmail.com>
+Subject: Re: How to specify remote branch correctly
+Date: Mon, 17 Dec 2012 07:21:44 +0000
+Message-ID: <1355728904-ner-4851@calvin>
+References: <slrnkct0r3.dsp.narkewoody@zuhnb712.local.com>
+	<CAH5451=7frqa-YHXubvO=dMK2CvVoWR-VFZ3XCmKouNiQz4gAg@mail.gmail.com>
+	<slrnkcta0j.mlu.narkewoody@zuhnb712.local.com>
+	<CAH5451kmTW+nO4V4pjSdaqhHAb=RX-tawLo=rJfuPnDRDWeSEA@mail.gmail.com>
+	<1355722245-ner-6603@calvin> <slrnkctgqh.mmj.narkewoody@zuhnb712.local.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andrew Ardill <andrew.ardill@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Woody Wu <narkewoody@gmail.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 08:21:53 2012
+Content-Type: text/plain
+To: Woody Wu <narkewoody@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 08:22:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkV1M-0005By-UE
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:21:53 +0100
+	id 1TkV1Y-0005IY-DS
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 08:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751155Ab2LQHVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 02:21:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35531 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751018Ab2LQHVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 02:21:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B5189594;
-	Mon, 17 Dec 2012 02:21:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lSFjfiag1+5dJENKhZ3s3pIGAyQ=; b=CqETQq
-	qiUz1fkAKVq/JFwxEBMuMJVxv48YRP7QPOhhxObU1aKpUGQl7gpHnfk+fVg+ScFY
-	5ZGrsKab0RWoQ95H0Y0BF0V60udq3sP63sQQMwuoADLPdGtqdSUVd78VynNvrwj4
-	GF5mjK6L30G85c9FuaizhGXacaW0uiIWbJJEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ayBrJqGO2gbawKE1vTe01x87gIlXBhmZ
-	VjmUaU5n/gQBNE19LxHubvfqqaxPR89mCrp80lYxkshXxC/WIpHD1ZEo0b4GS3zj
-	C4MdRhW9IxpgjvmR+FyZk5kzlFG5sD8hT/O1CKi1es3OqQBsAPbHKwquLFQEy0nH
-	Qf31ULy6NVc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 085BE9593;
-	Mon, 17 Dec 2012 02:21:35 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 642C69591; Mon, 17 Dec 2012
- 02:21:34 -0500 (EST)
-In-Reply-To: <1355726702-27974-3-git-send-email-chris@rorvick.com> (Chris
- Rorvick's message of "Mon, 17 Dec 2012 00:45:02 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6323EE1C-481A-11E2-AEF9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751124Ab2LQHVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 02:21:48 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:55517 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938Ab2LQHVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 02:21:47 -0500
+Received: by mail-ee0-f46.google.com with SMTP id e53so3006564eek.19
+        for <git@vger.kernel.org>; Sun, 16 Dec 2012 23:21:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:to:references:in-reply-to:mime-version:date:message-id
+         :content-type;
+        bh=7iDpkbvw4O07OOieLeUhvyeEFRWQVEW1UqG1mZrS6o4=;
+        b=xWN34XQZeDa6JmtNi1kkWdt1pW+yywPUR9DJN07rsdrUh3Weg8wa7Ink9H8CM1SB+0
+         eduXNy6sI/Ayk3ikSIzkr0ILG/3viSJPEoAahhmKtCGAwOGK9o6Us666hBV7ROMfAogU
+         kEOBZcm3R40C8LEAGwu8IfGbcnBLds9Ec/tcWKR7wZx41t/aS12xetMpnEKiT3+AbOzO
+         E8MVeTWdELOB09H4oC6OxTQvpDbWFV60xkuV9erbTwB8+npb7pDXVJEc/LlQxoFyBMve
+         HxeTgOvMhrH1D1Gjc1aTsv0vTj19xSv0y4/hLIPoEc8AzdVvNdU996r4YHqxpS0uRuJq
+         +x9A==
+Received: by 10.14.213.134 with SMTP id a6mr38866045eep.45.1355728906089;
+        Sun, 16 Dec 2012 23:21:46 -0800 (PST)
+Received: from calvin.caurea.org (pub082136067238.dh-hfc.datazug.ch. [82.136.67.238])
+        by mx.google.com with ESMTPS id w3sm27323550eel.17.2012.12.16.23.21.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 16 Dec 2012 23:21:45 -0800 (PST)
+Received: by calvin.caurea.org (Postfix, from userid 3301)
+	id 55C0212656B; Mon, 17 Dec 2012 07:21:44 +0000 (UTC)
+In-Reply-To: <slrnkctgqh.mmj.narkewoody@zuhnb712.local.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211647>
 
-Chris Rorvick <chris@rorvick.com> writes:
+On Mon, 17 Dec 2012 07:02:46 +0000, Woody Wu <narkewoody@gmail.com> wrote:
+> On 2012-12-17, Tomas Carnecky <tomas.carnecky@gmail.com> wrote:
+> > 'git checkout foo' has special meaning if a local branch with that
+> > name doesn't exist but there is a remote branch with that name. In
+> > that case it's equivalent to: git checkout -t -b foo origin/foo.
+> > Because that's what people usually want.
+> 
+> I think this is what exactly happened to me in the first time I got the
+> 'foo'.  One new thing to me is the '-t'.  I am not sure wether the '-t'
+> was used or not in the background.  How do I check the 'upstream'
+> relationships?  Is there any file under .git recoreded that kind of
+> information?
 
-> Document the behavior implemented in 70c9ac2 (DWIM "git checkout
-> frotz" to "git checkout -b frotz origin/frotz").
->
-> Signed-off-by: Chris Rorvick <chris@rorvick.com>
-> ---
->  Documentation/git-checkout.txt | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index a47555c..db89cf7 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -25,6 +25,14 @@ branch.
->  
->  	Update the index, working tree, and HEAD to reflect the
->  	specified branch.
-> ++
-> +If <branch> is not found but there does exist a tracking branch in
-> +exactly one remote (call it <remote>) with a matching name, treat as
-> +equivalent to
-> ++
-> +------------
-> +$ git checkout -b <branch> --track <remote>/<branch>
-> +------------
->  
->  'git checkout' -b|-B <new_branch> [<start point>]::
+Yes, that information is recorded in a file somewhere in .git. However, for
+most users it's irrelevant which file it is. Git has commands to access this
+information. Try one of these:
 
-Thanks; does it format well (I didn't check)?
+  git branch -vv
+  git remote show origin
+  git rev-parse --abbrev-ref --symbolic-full-name @{u}
