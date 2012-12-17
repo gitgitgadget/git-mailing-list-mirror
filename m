@@ -1,77 +1,65 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] Documentation: don't link to example mail addresses
-Date: Mon, 17 Dec 2012 09:44:46 +0000
-Message-ID: <20121217094446.GA24036@river.lan>
-References: <20121215150314.GC2725@river.lan>
- <7vobhtnt57.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
+Subject: problem with BOINC repository and CR/LF
+Date: Mon, 17 Dec 2012 11:23:05 +0100
+Message-ID: <50CEF289.4040503@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 10:45:13 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 11:28:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TkXG3-0001cJ-OT
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 10:45:12 +0100
+	id 1TkXvx-0001UF-8K
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Dec 2012 11:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023Ab2LQJov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 04:44:51 -0500
-Received: from anakin.london.02.net ([87.194.255.134]:45532 "EHLO
-	anakin.london.02.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213Ab2LQJov (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 04:44:51 -0500
-Received: from river.lan (188.222.177.116) by anakin.london.02.net (8.5.140)
-        id 4FED9D1503CBC97A; Mon, 17 Dec 2012 09:44:46 +0000
-Content-Disposition: inline
-In-Reply-To: <7vobhtnt57.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751397Ab2LQK2L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2012 05:28:11 -0500
+Received: from mout.gmx.net ([212.227.17.20]:64033 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751132Ab2LQK2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 05:28:11 -0500
+X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Dec 2012 05:28:11 EST
+Received: from mailout-de.gmx.net ([10.1.76.41]) by mrigmx.server.lan
+ (mrigmx001) with ESMTP (Nemesis) id 0Lqod2-1TF2WP0EYU-00eIHx for
+ <git@vger.kernel.org>; Mon, 17 Dec 2012 11:23:07 +0100
+Received: (qmail invoked by alias); 17 Dec 2012 10:23:06 -0000
+Received: from f054055138.adsl.alicedsl.de (EHLO [78.54.55.138]) [78.54.55.138]
+  by mail.gmx.net (mp041) with SMTP; 17 Dec 2012 11:23:06 +0100
+X-Authenticated: #5108953
+X-Provags-ID: V01U2FsdGVkX1/U4PdrcfvUMMxq7xcS+VPk8zyznTO9VA+67v7934
+	UyB9fkERqSPzy7
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
+X-Enigmail-Version: 1.4.6
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211670>
 
-On Sun, Dec 16, 2012 at 09:29:24PM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
->>  Here `<name>` is the person's display name (for example
->>  ``Com M Itter'') and `<email>` is the person's email address
->> -(``cm@example.com'').  `LT` and `GT` are the literal less-than (\x3c)
->> +(``$$cm@example.com$$'').  `LT` and `GT` are the literal less-than (\x3c)
->>  and greater-than (\x3e) symbols.  These are required to delimit
->>  the email address from the other fields in the line.  Note that
->>  `<name>` and `<email>` are free-form and may contain any sequence
-> 
-> AsciiDoc 8.5.2 gives this:   
-> 
->     asciidoc: WARNING: git-fast-import.txt: line 434: nested inline passthrough
-> 
-> Also in git-fast-import.1, there is this line:
-> 
->     ... person\(cqs display name (for example `Com M Itter\(aq\(aq) and `<ema...
-> 
-> (notice two leftover `s); not that this is a new issue with this patch.
-> 
-> Which is puzzling, because the next input line formats better:
-> 
->     ...  email address (\(lqcm@example\&.com\(rq)\&. ...
+Hello,
 
-I wonder if you're hitting this bug, which is listed as fixed in
-AsciiDoc 8.6.0 [1]:
+I'm faced with this situation :
+http://lists.ssl.berkeley.edu/mailman/private/boinc_alpha/2012-December=
+/017371.html
+and even a "git stash" doesn't help.
 
-    FIXED: Sometimes multiple double quoted text elements in the same
-    paragraph were mistakenly seen as starting with an inline literal.
-
-As you said in your other message, it may be better to avoid using the
-pretty quotes, although I don't think just changing them to `monospace
-output` is sufficient as monospace output is not distinguished in the
-default man page output.  IMHO that's necessary for any examples that
-contain whitespace.  Perhaps a patch series turning MAN_BOLD_LITERAL on
-by default and then changing these examples to `monospace output`?
+Now /me wonders whether that repository is just screwed up or whether I
+do have with git.1.8.0.2 at an almost stable Gentoo linux a problem.
+=46WIW I already played (unsuccessful) with this too:
 
 
-John
+$ grep -B 3 crlf .gitconfig
+        confirm =3D never
 
-[1] http://www.methods.co.nz/asciidoc/CHANGELOG.html#_version_8_6_0_2010_08_16
+[core]
+        autocrlf =3D true
+
+
+--=20
+MfG/Sincerely
+Toralf F=C3=B6rster
+pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
