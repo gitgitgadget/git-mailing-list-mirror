@@ -1,65 +1,62 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
-Date: Mon, 17 Dec 2012 22:34:07 -0800
-Message-ID: <CANiSa6h3Qf=6hw6fzHVw=CeuhnNeq+cuEvwwmVhUaSOcVgCSBA@mail.gmail.com>
-References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
-	<7vlir6brjw.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: What's cooking in git.git (Dec 2012, #04; Sun, 16)
+Date: Tue, 18 Dec 2012 09:28:05 +0100
+Message-ID: <kap9eo$j5c$1@ger.gmane.org>
+References: <20121217213730.GA17212@ftbfs.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 07:34:28 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 18 09:28:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tkql0-0001KU-LS
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 07:34:26 +0100
+	id 1TksXY-0006r7-Ez
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 09:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221Ab2LRGeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2012 01:34:08 -0500
-Received: from mail-ia0-f175.google.com ([209.85.210.175]:50443 "EHLO
-	mail-ia0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228Ab2LRGeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 01:34:07 -0500
-Received: by mail-ia0-f175.google.com with SMTP id z3so225733iad.6
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 22:34:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IssRvM7kvX/AYjkKdD+ldTfNs/N/6xSlaTJiNlwM+zY=;
-        b=HQCp0cL7WDt97PgMbG/PiMdihy8k+AytUaTwF6m4xVrCq7rK/Juw8QkAtcWSCdLHwX
-         KEp2KQuL80Wh9xew8bi5oyjt3CkjZfObY/MsPJpEUxCDd737xGqYtKgU4MZ0ttYl47i8
-         YaGOPQdMiz5NNsTOT9rj7KY+fLtjhMld8zlVV1zZcmL8FTpL4QmQVE+RrVU2S3ehChxE
-         Ihs0tqvQLXCkY694yCchvgErvR8HsWuYHKery8nBDZxvofPkY1yJdiImMuM9y7LiWYdr
-         7seln5c09I0E9dluzhKC12dcuVO2GWvFBfR61Lx0mT9iZmhkKNhB2LON6kemvGGr85+/
-         B+4A==
-Received: by 10.50.214.68 with SMTP id ny4mr981792igc.65.1355812447100; Mon,
- 17 Dec 2012 22:34:07 -0800 (PST)
-Received: by 10.64.91.99 with HTTP; Mon, 17 Dec 2012 22:34:07 -0800 (PST)
-In-Reply-To: <7vlir6brjw.fsf@alter.siamese.dyndns.org>
+	id S1754423Ab2LRI2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2012 03:28:22 -0500
+Received: from plane.gmane.org ([80.91.229.3]:53191 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754237Ab2LRI2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 03:28:22 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TksXQ-0006lS-Fr
+	for git@vger.kernel.org; Tue, 18 Dec 2012 09:28:32 +0100
+Received: from dsdf-4db52f94.pool.mediaways.net ([77.181.47.148])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Dec 2012 09:28:32 +0100
+Received: from jojo by dsdf-4db52f94.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Dec 2012 09:28:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4db52f94.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211738>
 
-On Wed, Nov 23, 2011 at 10:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I am guilty of introducing "git reset --soft HEAD^" before I invented
-> "commit --amend" during v1.3.0 timeframe to solve the issue "soft" reset
-> originally wanted to.
+Matt Kraai wrote:
+> Junio C Hamano wrote:
+>> It could turn out that we may be able to get rid of sys/param.h
+>> altogether, but one step at a time.  Inputs from people on minority
+>> platforms are very much appreciated---does your platform build fine
+>> when the inclusion of the file is removed from git-compat-util.h?
+> 
+> QNX builds fine when sys/param.h is not included.
 
-I do use "commit --amend" a lot, but I still appreciate having "reset
---soft". For example, to squash the last few commits:
+HP-NonStop build fine too without it.
 
-git reset --soft HEAD^^^ && git commit --amend
-
-or undo "commit --amend":
-
-git reset --soft HEAD@{1} && git commit --amend
-
-Maybe there's a better way of doing that?
+Bye, Jojo
