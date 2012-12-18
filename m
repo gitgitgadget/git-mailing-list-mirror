@@ -1,106 +1,86 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH] git-completion.bash: add support for path completion
-Date: Tue, 18 Dec 2012 17:25:44 +0100
-Message-ID: <50D09908.6020007@gmail.com>
-References: <1355693080-4765-1-git-send-email-manlio.perillo@gmail.com> <7vy5gxnuy1.fsf@alter.siamese.dyndns.org> <50CEFF3A.4050802@gmail.com> <7vzk1clb3n.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: problem with BOINC repository and CR/LF
+Date: Tue, 18 Dec 2012 11:41:32 -0500
+Message-ID: <20121218164132.GC20122@sigill.intra.peff.net>
+References: <50CEF289.4040503@gmx.de>
+ <CAH5451=FpmtGVVJ=mubE0KeD-tTVaNU96audzTRnNQh2BEEXPg@mail.gmail.com>
+ <50CF41EB.1060402@gmx.de>
+ <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com>
+ <50D03D80.3090005@gmx.de>
+ <50D05E62.7090605@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 17:33:53 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Dec 18 17:41:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tl076-0006pD-8O
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 17:33:52 +0100
+	id 1Tl0Er-000322-1w
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 17:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932273Ab2LRQd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2012 11:33:27 -0500
-Received: from mail-bk0-f50.google.com ([209.85.214.50]:62862 "EHLO
-	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932265Ab2LRQdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 11:33:25 -0500
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Dec 2012 11:33:25 EST
-Received: by mail-bk0-f50.google.com with SMTP id jf3so456640bkc.37
-        for <git@vger.kernel.org>; Tue, 18 Dec 2012 08:33:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=Kb0vCyMqaAFMOmayH5Q/sXwhsw8prOwzIdQcoAMPfbQ=;
-        b=m4sDGDxjUoZBETMttyGj6tozpEAd0BeuCiuYXF6NB8C5sl+C1TgFo4VdgzKrKeK3B1
-         7skVnCOTQcVa+N9lJ+3VWniAkAw3iuZbbAyk0J6Ay+JC0Cc76u2fozYQrFsGwNuXmPTZ
-         bZu2+yY1OP8OXZvIwiZanWL2LynBPoipEPbunM21RtkFOYnqt703uXQp6zww2EyFGo6Q
-         KaUnA259K7fPrFenRZRkDTDMUyFVW9xD0AREB8xlVhbLPhevJip8hri9M8il/9myqqaT
-         f3Lo7JkUAxllbVURRiHSsBlHdQoGpJWP6qylthtpyeXMxO0O/93fyJxqFkHUrLmOfk8L
-         FmzQ==
-X-Received: by 10.204.131.76 with SMTP id w12mr990811bks.44.1355847956244;
-        Tue, 18 Dec 2012 08:25:56 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.213.162])
-        by mx.google.com with ESMTPS id l17sm1845302bkw.12.2012.12.18.08.25.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 18 Dec 2012 08:25:55 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <7vzk1clb3n.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
+	id S932272Ab2LRQlf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2012 11:41:35 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57696 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932202Ab2LRQlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 11:41:35 -0500
+Received: (qmail 19091 invoked by uid 107); 18 Dec 2012 16:42:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Dec 2012 11:42:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Dec 2012 11:41:32 -0500
+Content-Disposition: inline
+In-Reply-To: <50D05E62.7090605@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211760>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Dec 18, 2012 at 01:15:30PM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-Il 17/12/2012 20:42, Junio C Hamano ha scritto:
-> [...]
->>> I am not sure how you would handle the last parameter to "git mv",
->>> though.  That is by definition a path that does not exist,
->>> i.e. cannot be completed.
->>
->> Right, the code should be changed.
->> No completion should be done for the second parameter.
-> 
-> I deliberately wrote "the last" not "the second", as you can do
-> 
-> 	$ mkdir X
->         $ git mv COPYING README X/.
-> 
+> I could re-produce the problem here:
+> git version 1.8.0.197.g5a90748
+> Mac OS X (that what I had at hands fastest)
 
-The patch is ready, however I decided to leave git mv completion simple.
-Pressing <TAB> will always try to autocomplete using all cached files.
-I have added a note to remember it needs more work.
+I could reproduce it, too, on Linux.
 
+The reason it does not always happen is that git will not re-examine th=
+e
+file content unless the timestamp on the file is older than what's in
+the index. So it is a race condition for git to see whether the file is
+stat-dirty.
 
-P.S.:
-git-completion.bash has a lot of other things that may be improved:
+But you can make sure all files are stat-dirty by just resetting the
+index:
 
-* adding missing commands
- (as an example, there is strangely no custom support fot "git status")
+  $ git clone git://boinc.berkeley.edu/boinc.git
+  $ rm .git/index
+  $ git reset
 
-* completion support for commands like "git checkout" is not complete.
-  "git checkout <TAB>" will correctly try to complete the tree-ish,
-  however "git checkout HEAD -- <TAB>" will try to complete the path
-  using *all* files in the working directory.
+which shows the complete list of files with LF/CRLF normalization
+issues.
 
-  This is easy to fix, using the new functions I have added
+> So my conclusion is:
+> The file has CRLF in the repo, but should have LF.
+> This is not a good thing, and the files need to be normalized.
 
-* not all long options are supported.
-  The script documentation says that only common long options are
-  supported, so I'm not sure it is ok to add support for all available
-  long options.
+Yes, exactly. The project has told git via .gitattributes that certain
+files should have particular line endings in the repository, but that i=
+s
+not the case with the current versions. Doing:
 
+  $ git commit -a -m 'normalize line endings according to gitattributes=
+'
 
-Regards   Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+on top of the commands above would fix it (for that commit and onwards,
+anyway).
 
-iEYEARECAAYFAlDQmQgACgkQscQJ24LbaUSw9QCfT1lCH/yjA4Lgmb2nMspNWM3l
-hMMAn26UxWesuoOxMbuwhqaypPjkmN84
-=Wh4c
------END PGP SIGNATURE-----
+-Peff
