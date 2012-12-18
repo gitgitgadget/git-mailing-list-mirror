@@ -1,75 +1,69 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
+From: Chris Rorvick <chris@rorvick.com>
 Subject: Re: [PATCH 1/2] Documentation/git-checkout.txt: clarify usage
-Date: Tue, 18 Dec 2012 13:12:57 +1100
-Message-ID: <CAH5451nVVSoJeTkCsuyKfJksg15mwPfcZxym9WCzNK2ENezg-w@mail.gmail.com>
+Date: Mon, 17 Dec 2012 20:55:56 -0600
+Message-ID: <CAEUsAPZHsTh77VJxzg9uetGuGbipJ-E3iCc=NU3-KmtoEr4wdg@mail.gmail.com>
 References: <1355726702-27974-1-git-send-email-chris@rorvick.com>
- <1355726702-27974-2-git-send-email-chris@rorvick.com> <7vhanlnnz7.fsf@alter.siamese.dyndns.org>
- <17103971665F4C4495C6C96086A58B8F@PhilipOakley> <7v1ueol6ut.fsf@alter.siamese.dyndns.org>
- <CAH5451nVe1VcD3VzCO7EtKSkzv9CyJs=uqQ9MkMTJEXMTwEvmw@mail.gmail.com>
- <7vobhsjq6a.fsf@alter.siamese.dyndns.org> <7vvcc0i0rz.fsf@alter.siamese.dyndns.org>
+	<1355726702-27974-2-git-send-email-chris@rorvick.com>
+	<7vhanlnnz7.fsf@alter.siamese.dyndns.org>
+	<50CED5D4.5040705@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Chris Rorvick <chris@rorvick.com>,
-	Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andrew Ardill <andrew.ardill@gmail.com>,
 	Tomas Carnecky <tomas.carnecky@gmail.com>,
 	Woody Wu <narkewoody@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 03:13:39 2012
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Dec 18 04:04:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tkmgc-0000mK-BY
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 03:13:38 +0100
+	id 1TknTW-00074f-HP
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 04:04:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753608Ab2LRCNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2012 21:13:19 -0500
-Received: from mail-qc0-f175.google.com ([209.85.216.175]:50378 "EHLO
-	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752106Ab2LRCNS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2012 21:13:18 -0500
-Received: by mail-qc0-f175.google.com with SMTP id j3so42342qcs.34
-        for <git@vger.kernel.org>; Mon, 17 Dec 2012 18:13:18 -0800 (PST)
+	id S1752286Ab2LRDDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2012 22:03:53 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:51273 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751253Ab2LRDDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2012 22:03:52 -0500
+Received: by mail-la0-f46.google.com with SMTP id p5so84720lag.19
+        for <git@vger.kernel.org>; Mon, 17 Dec 2012 19:03:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Hj5F34r7WHBsuoI+LSvtuuHCUka2sPyZK1pK4KLVesw=;
-        b=YU4LY94Ej1zPSv9tcXf5z0mvgx9NHPC4WpHYEwk4L4/SCYu6SCZ6Efq7V55nPmUVl3
-         bTSBBsZR8ful5XNQxNdT0dfeDdaA6/AXyT0dJrP1nyeCHfvizEyec9hDaLvm3EOmzTXG
-         37dUMIu2LRqTkph0qIDrazswgFXLZ+rJtF0ZdxKEynDRAiAZIzZwjE/PbI89HbuCQ3nf
-         T3MAZvUXor0aYYnmSn7ZtIq2tKmgk2f+4dtTY0xFc0a23vivmqowBQdu9anJcHGbbOIx
-         31qSX+w1rr0W0PvjwhRl31+NBh4auYl04to2CdhAHU0GxrBTYm9UkGxy5wR2bJpYNISd
-         488Q==
-Received: by 10.224.96.4 with SMTP id f4mr223275qan.79.1355796798047; Mon, 17
- Dec 2012 18:13:18 -0800 (PST)
-Received: by 10.49.14.3 with HTTP; Mon, 17 Dec 2012 18:12:57 -0800 (PST)
-In-Reply-To: <7vvcc0i0rz.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=w/xeLc/QirFNBiwpYBVLOWT18EPwI+WOWEdcjKsx3dY=;
+        b=eOIc1+AR7qmM516NsgdklO1FXFvUYeJQPaMfoObfVOZPQsBb6qW9kAVG77VuXgRFhJ
+         ikmuyjbflwa2Pwbq8lGFqpAebSfocThs9Nj+2h7G1wo6lilqqsqImeqv1F/A8f4QAL3T
+         VEzG+orcUaph3BZqAqJPQX5lI/Ev5o5CLqJWNm9OI1jw+K7X7DvVZ6uFaMWaayyiTVd0
+         EyJuM/mswmUaqn2UT3Mk9Wvp+CaxdTenzGebQrEtIopu/S5MvIrh4UybWS80yulwA0Tm
+         9YjMliufADmlKz1f0XgIzSN8atm6OF76NMmBc0erTSzJG4SAIrdxR/zlt807OGBkMfPq
+         nmOw==
+Received: by 10.152.111.41 with SMTP id if9mr428997lab.23.1355799356693; Mon,
+ 17 Dec 2012 18:55:56 -0800 (PST)
+Received: by 10.114.94.131 with HTTP; Mon, 17 Dec 2012 18:55:56 -0800 (PST)
+In-Reply-To: <50CED5D4.5040705@viscovery.net>
+X-Google-Sender-Auth: RwDyqGMpGOXZ9PaEDj03vDLRWGg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211732>
 
-I like these, and I think they are conveying the right amount of
-information. There is a slight discrepancy between the <branch> and
-<commit> versions, where it seems we are assuming that by checking out
-a commit you are intending to work 'on top of' it. This could be
-avoided by using the term 'with' in both cases. Also, they are in
-different tenses, but I'm not sure which is preferred ('Prepare to' vs
-'To prepare for').
+On Mon, Dec 17, 2012 at 2:20 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> +'git checkout' [--detach] [<commit>]::
+>
+> The title here is better spelled as two lines:
+>
+> 'git checkout' <commit>::
+> 'git checkout' --detach <branch>::
 
-In the second tense, these opening lines might look like this:
+AsciiDoc renders these horizontally separated by a comma when
+formatted as a man page instead of vertically as written (and as
+rendered by the HTML documentation.)  I think this makes this
+separation into two less effective, but at least it doesn't line wrap
+on an 80-wide terminal like the previous title did.
 
-+       To prepare for working with <branch>, switch to it by updating
-
-+       To prepare for working with <commit>, detach HEAD at it
-+       (see "DETACHED HEAD" section), and update the index and the
-+       files in the working tree.
-
-
-Regards,
-
-Andrew Ardill
+Chris
