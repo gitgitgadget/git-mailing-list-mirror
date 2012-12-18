@@ -1,90 +1,107 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 3/3] Makefile: replace "echo 1>..." with "echo >..."
-Date: Tue, 18 Dec 2012 20:00:08 +0100
-Message-ID: <20121218190009.29910.53988.chriscool@tuxfamily.org>
+Subject: [PATCH v5 2/3] Makefile: detect when PYTHON_PATH changes
+Date: Tue, 18 Dec 2012 20:00:07 +0100
+Message-ID: <20121218190009.29910.39426.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 20:01:20 2012
+X-From: git-owner@vger.kernel.org Tue Dec 18 20:01:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tl2Pg-0002uO-Vz
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 20:01:13 +0100
+	id 1Tl2Pp-00030k-Tn
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 20:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537Ab2LRTA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755535Ab2LRTA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 18 Dec 2012 14:00:56 -0500
-Received: from mail-3d.bbox.fr ([194.158.122.58]:42661 "EHLO mail-3d.bbox.fr"
+Received: from mail-3d.bbox.fr ([194.158.122.58]:42660 "EHLO mail-3d.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755503Ab2LRTAy (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754833Ab2LRTAy (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 18 Dec 2012 14:00:54 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3d.bbox.fr (Postfix) with ESMTP id CE77095;
+	by mail-3d.bbox.fr (Postfix) with ESMTP id 8B0DC67;
 	Tue, 18 Dec 2012 20:00:53 +0100 (CET)
-X-git-sha1: bafa10b36fd5c960c426deb5d9160c89e2271f30 
+X-git-sha1: 73a522788db8922743cc7aa0ef8ee8e1bc614d92 
 X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211775>
 
-This is clearer to many people this way.
+When make is run, the python scripts are created from *.py files that
+are changed to use the python given by PYTHON_PATH. And PYTHON_PATH
+is set by default to /usr/bin/python on Linux.
+
+This is nice except when you run make another time setting a
+different PYTHON_PATH, because, as the python scripts have already
+been created, make finds nothing to do.
+
+The goal of this patch is to detect when the PYTHON_PATH changes and
+to create the python scripts again when this happens. To do that we
+use the same trick that is done to track other variables like prefix,
+flags, tcl/tk path and shell path. We update a GIT-PYTHON-VARS file
+with the PYTHON_PATH and check if it changed.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .gitignore |  1 +
+ Makefile   | 16 ++++++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index 64a454b..56a4b2b 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,6 +2,7 @@
+ /GIT-CFLAGS
+ /GIT-LDFLAGS
+ /GIT-PREFIX
++/GIT-PYTHON-VARS
+ /GIT-SCRIPT-DEFINES
+ /GIT-USER-AGENT
+ /GIT-VERSION-FILE
 diff --git a/Makefile b/Makefile
-index 7db8445..e055c9a 100644
+index 585b2eb..7db8445 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2183,7 +2183,7 @@ endef
- GIT-SCRIPT-DEFINES: FORCE
- 	@FLAGS='$(SCRIPT_DEFINES)'; \
- 	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo 1>&2 "    * new script parameters"; \
-+		echo >&2 "    * new script parameters"; \
- 		echo "$$FLAGS" >$@; \
-             fi
+@@ -2245,7 +2245,7 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)) git-instaweb: % : unimplemented.sh
+ endif # NO_PERL
  
-@@ -2564,7 +2564,7 @@ TRACK_PREFIX = $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ):\
- GIT-PREFIX: FORCE
- 	@FLAGS='$(TRACK_PREFIX)'; \
- 	if test x"$$FLAGS" != x"`cat GIT-PREFIX 2>/dev/null`" ; then \
--		echo 1>&2 "    * new prefix flags"; \
-+		echo >&2 "    * new prefix flags"; \
- 		echo "$$FLAGS" >GIT-PREFIX; \
- 	fi
- 
-@@ -2573,7 +2573,7 @@ TRACK_CFLAGS = $(CC):$(subst ','\'',$(ALL_CFLAGS)):$(USE_GETTEXT_SCHEME)
- GIT-CFLAGS: FORCE
- 	@FLAGS='$(TRACK_CFLAGS)'; \
- 	    if test x"$$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" ; then \
--		echo 1>&2 "    * new build flags"; \
-+		echo >&2 "    * new build flags"; \
- 		echo "$$FLAGS" >GIT-CFLAGS; \
-             fi
- 
-@@ -2582,7 +2582,7 @@ TRACK_LDFLAGS = $(subst ','\'',$(ALL_LDFLAGS))
- GIT-LDFLAGS: FORCE
- 	@FLAGS='$(TRACK_LDFLAGS)'; \
- 	    if test x"$$FLAGS" != x"`cat GIT-LDFLAGS 2>/dev/null`" ; then \
--		echo 1>&2 "    * new link flags"; \
-+		echo >&2 "    * new link flags"; \
- 		echo "$$FLAGS" >GIT-LDFLAGS; \
-             fi
- 
-@@ -2631,7 +2631,7 @@ TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
- GIT-PYTHON-VARS: FORCE
- 	@VARS='$(TRACK_PYTHON)'; \
- 	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo 1>&2 "    * new Python interpreter location"; \
-+		echo >&2 "    * new Python interpreter location"; \
- 		echo "$$VARS" >$@; \
-             fi
+ ifndef NO_PYTHON
+-$(patsubst %.py,%,$(SCRIPT_PYTHON)): GIT-CFLAGS GIT-PREFIX
++$(patsubst %.py,%,$(SCRIPT_PYTHON)): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
+ $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+ 	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_helpers -s \
+@@ -2624,6 +2624,18 @@ ifdef GIT_PERF_MAKE_OPTS
+ 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@
  endif
+ 
++### Detect Python interpreter path changes
++ifndef NO_PYTHON
++TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
++
++GIT-PYTHON-VARS: FORCE
++	@VARS='$(TRACK_PYTHON)'; \
++	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
++		echo 1>&2 "    * new Python interpreter location"; \
++		echo "$$VARS" >$@; \
++            fi
++endif
++
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ 
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+@@ -2899,7 +2911,7 @@ ifndef NO_TCLTK
+ 	$(MAKE) -C git-gui clean
+ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
+-	$(RM) GIT-USER-AGENT GIT-PREFIX GIT-SCRIPT-DEFINES
++	$(RM) GIT-USER-AGENT GIT-PREFIX GIT-SCRIPT-DEFINES GIT-PYTHON-VARS
+ 
+ .PHONY: all install profile-clean clean strip
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
 -- 
 1.8.1.rc1.2.g8740035
