@@ -1,231 +1,88 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
-Subject: Re: problem with BOINC repository and CR/LF
-Date: Tue, 18 Dec 2012 10:55:12 +0100
-Message-ID: <50D03D80.3090005@gmx.de>
-References: <50CEF289.4040503@gmx.de> <CAH5451=FpmtGVVJ=mubE0KeD-tTVaNU96audzTRnNQh2BEEXPg@mail.gmail.com> <50CF41EB.1060402@gmx.de> <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Tue, 18 Dec 2012 12:00:58 +0100
+Organization: Bertin Technologies
+Message-ID: <20121218120058.0c558ba5@chalon.bertin.fr>
+References: <20121211153903.7522d6b0@chalon.bertin.fr>
+ <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
+ <20121212094432.6e1e48c8@chalon.bertin.fr>
+ <7v38zb3ux0.fsf@alter.siamese.dyndns.org> <877goht6eu.fsf@pctrast.inf.ethz.ch>
+ <20121217114058.449cbc3c@chalon.bertin.fr>
+ <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com>
+ <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 11:00:46 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 12:01:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tktyf-0006Fi-1L
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 11:00:45 +0100
+	id 1TkuvR-0004h9-GQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 12:01:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754454Ab2LRKA1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2012 05:00:27 -0500
-Received: from mout.gmx.net ([212.227.15.19]:61658 "EHLO mout.gmx.net"
+	id S1754650Ab2LRLBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2012 06:01:11 -0500
+Received: from cabourg.bertin.fr ([195.68.26.10]:61111 "EHLO cabourg.bertin.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753862Ab2LRKA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 05:00:26 -0500
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Dec 2012 05:00:25 EST
-Received: from mailout-de.gmx.net ([10.1.76.32]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0MB0os-1TulGW4BL2-009u3j for
- <git@vger.kernel.org>; Tue, 18 Dec 2012 10:55:21 +0100
-Received: (qmail invoked by alias); 18 Dec 2012 09:55:20 -0000
-Received: from g224044128.adsl.alicedsl.de (EHLO [92.224.44.128]) [92.224.44.128]
-  by mail.gmx.net (mp032) with SMTP; 18 Dec 2012 10:55:20 +0100
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX1/XZpkpB4nXwmZVnXBQyMf7CZaHGXlp/Hm3g2CJMJ
-	bVc6p3ipbP4uIW
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com>
-X-Enigmail-Version: 1.4.6
-X-Y-GMX-Trusted: 0
+	id S1754532Ab2LRLBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 06:01:09 -0500
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id D029CA0F84
+	for <git@vger.kernel.org>; Tue, 18 Dec 2012 12:01:07 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id 10763A0F78
+	for <git@vger.kernel.org>; Tue, 18 Dec 2012 12:01:07 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MF80068Q3XU0FA0@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Tue, 18 Dec 2012 12:01:06 +0100 (CET)
+In-reply-to: <7vwqwgjs8f.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19458.006
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211743>
 
-On 12/18/2012 02:56 AM, Andrew Ardill wrote:
-> On 18 December 2012 03:01, Toralf F=C3=B6rster <toralf.foerster@gmx.d=
-e> wrote:
->> On 12/17/2012 12:38 PM, Andrew Ardill wrote:
->>> On 17 December 2012 21:23, Toralf F=C3=B6rster <toralf.foerster@gmx=
-=2Ede> wrote:
->>>> Hello,
->>>>
->>>> I'm faced with this situation :
->>>> http://lists.ssl.berkeley.edu/mailman/private/boinc_alpha/2012-Dec=
-ember/017371.html
->>>> and even a "git stash" doesn't help.
->>>
->>> Hi Toralf,
->>>
->>> That list is private and not visible without an account. Can you
->>> transcribe the relevant parts?
->>>
->>> Regards,
->>>
->>> Andrew Ardill
->>>
->> Oh of course :
->>
->>
->> On 12/17/2012 12:03 AM, Gianfranco Costamagna wrote:
->>> So if you have further issues with boinc feel free to look in our d=
-ebian
->>> git and feel free to download appropriate patches :-)
->>>
->>> Gianfranco
->> thx
->>
->> Currently I'm struggling with a git problem of the boinc repository
->> itself and b/c I'm using git for the linux kernel tree w/o any probl=
-ems
->> since eons /me wonders whether this is a BOINC-repository specific p=
-roblem :
->>
->>
->> After doing the following sequence with git 1.8.0.2 :
->>
->> $> git clone git://boinc.berkeley.edu/boinc.git
->> $> cd boinc
->> $> git checkout client_release_7.0.39
->> $> git checkout master
->> (sometimes I've to repeat this :
->>         $> git checkout client_release_7.0.39
->>         $> git checkout master
->> )
->> I'm faced with this situation :
->>
->> $ git status
->> # On branch master
->> # Changes not staged for commit:
->> #   (use "git add <file>..." to update what will be committed)
->> #   (use "git checkout -- <file>..." to discard changes in working
->> directory)
->> #
->> #       modified:   clientgui/AsyncRPC.cpp
->> #       modified:   clientgui/sg_BoincSimpleFrame.cpp
->> #
->> no changes added to commit (use "git add" and/or "git commit -a")
->>
->> (sometimes only clientgui/sg_BoincSimpleFrame.cpp is mentioned)
->>
->> Now these commands
->>
->> $ git checkout -- clientgui/AsyncRPC.cpp
->> $ git checkout -- clientgui/sg_BoincSimpleFrame.cpp
->>
->> doesn't help - the status is still the same (and ofc now I'm no long=
-er
->> allowed to make a "git checkout" - due to un-commited changes).
->>
->> Now I'm wondering where to start to investigate this issue ...
->=20
-> Hi Toralf,
->=20
-> That does look like a weird issue. What operating system are you on?
+On Mon, 17 Dec 2012 13:14:56 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-I'm running a stable Gentoo Linux x86, 32bit with gcc 4.6.3 and current
-stable kernel 3.6.1x and 3.7.1, file system is ext4 at an external USB
-2.0 drive.
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+> 
+> > Christian Couder <christian.couder@gmail.com> writes:
+> >
+> >> Yeah, at one point I wanted to have a command that created to craft a
+> >> new commit based on an existing one.
+> >
+> > This isn't hard to do, you only have to resort to plumbing:
+> >
+> > $ git cat-file commit fef11965da875c105c40f1a9550af1f5e34a6e62 | sed s/bfae342c973b0be3c9e99d3d86ed2e6b152b4a6b/790c83cda92f95f1b4b91e2ddc056a52a99a055d/ | git hash-object -t commit --stdin -w
+> > bb45cc6356eac6c7fa432965090045306dab7026
+> 
+> Good.  I do not think an extra special-purpose command is welcome
+> here.
 
-=46WIW from the boinc maintainer I know that all tags till 7.0.3X are
-imported from svn.
+Well, I'm not sure this is intuitive enough to be useful to the average user :)
+Adding git-rev-parse calls for convenience, and calling git-replace, would make it
+a more complete recipe, and we could suggest that as an alias in the collection that's
+in the wiki (which is not even linked any more from git-scm.com btw), but imho that
+would be hiding valuable information in a dark corner.
 
-I upgraded to git 1.8.0.2 from 1.7.8.6 - situation is the same. The
-emerge gave :
+Anyway, in this form it will only replace a parent with another, whereas a full
+graft replacement should allow to write a different number of new parents instead.
+That is, instead of this simple sed, something like:
 
-failed test(s): t3600 t7508
+(NEWPARENTS='parent xxx\nparent yyy\nparent zzz\n; git cat-file commit master | perl -ne 'BEGIN { $state=0 }; if ($state eq 0) { if (/^parent/) { $state=1 } else { print } } elsif ($state eq 1) { if (/^author/) { print "'"$NEWPARENTS"'"; print; $state=2 } } else { print }')
 
-fixed   0
-success 8342
-failed  8
-broken  56
-total   8528
-
-Ok, now answering your other questions:
-
-
-$> git stash
-warning: CRLF will be replaced by LF in clientgui/AsyncRPC.cpp.
-The file will have its original line endings in your working directory.
-warning: CRLF will be replaced by LF in clientgui/sg_BoincSimpleFrame.c=
-pp.
-The file will have its original line endings in your working directory.
-warning: CRLF will be replaced by LF in clientgui/AsyncRPC.cpp.
-The file will have its original line endings in your working directory.
-warning: CRLF will be replaced by LF in clientgui/sg_BoincSimpleFrame.c=
-pp.
-The file will have its original line endings in your working directory.
-Saved working directory and index state WIP on master: 4a296dc - client
-simulator: fix build errors
-HEAD is now at 4a296dc - client simulator: fix build errors
-
-After that the situation is unchanged.
-
-> What happens if you do a hard reset to the branch?
-
-$> git reset --hard HEAD~1
-
-not better.
-
-
-> What is the ouptut of git diff --cached ?
-
-The output is empty but "git status" shows still modified files.
-
-
-
-=46WIW there's a related issue I'm wondering about which might help:
-
-$> git clone git://boinc.berkeley.edu/boinc.git
-$> tar -cpf boinc.tar boinc/
-$> rm -rf boinc/
-$> tar -xpf boinc.tar
-$> cd boinc/
-$> git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working
-directory)
-#
-#       modified:   client/win/boinc_log.h
-#       modified:   client/win/boinc_log.rc
-#       modified:   clientctrl/boincsvcctrl.cpp
-#       modified:   clientctrl/boincsvcctrl.h
-#       modified:   clientctrl/boincsvcctrl.rc
-#       modified:   clientgui/AsyncRPC.cpp
-#       modified:   clientgui/DlgEventLog.cpp
-#       modified:   clientgui/DlgEventLog.h
-#       modified:   clientgui/DlgEventLogListCtrl.cpp
-#       modified:   clientgui/DlgEventLogListCtrl.h
-#       modified:   clientgui/DlgExitMessage.h
-#       modified:   clientgui/DlgItemProperties.h
-#       modified:   clientgui/TermsOfUsePage.cpp
-#       modified:   clientgui/TermsOfUsePage.h
-#       modified:   clientgui/ViewNotices.cpp
-#       modified:   clientgui/ViewNotices.h
-#       modified:   clientgui/sg_BoincSimpleFrame.cpp
-#       modified:   clientscr/boinc_ss_opengl.h
-#       modified:   clientscr/boinc_ss_opengl.rc
-#       modified:   clientscr/screensaver.cpp
-#       modified:   clienttray/boinc_tray.h
-#       modified:   clienttray/boinc_tray.rc
-#       modified:   clienttray/tray_win.cpp
-#       modified:   clienttray/tray_win.h
-#       modified:   coprocs/NVIDIA/include/nvapi.h
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-$> git diff --cached
-$>
-
-
-
-Meaning, w/o any other interaction a tar'ed archive has modified files =
--
-and the diff is empty...
-
---=20
-MfG/Sincerely
-Toralf F=C3=B6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+Well, a short bash script should be more readable and possibly faster, but that's the
+idea.  Such a script could be a candidate for contrib ?
+-- 
+Yann Dirson - Bertin Technologies
