@@ -1,298 +1,141 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: [PATCH v3] git-completion.bash: add support for path completion
-Date: Tue, 18 Dec 2012 18:25:10 +0100
-Message-ID: <1355851510-13438-1-git-send-email-manlio.perillo@gmail.com>
-Cc: Manlio Perillo <manlio.perillo@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFH/PATCH] git-compat-util.h: do not #include <sys/param.h> by
+ default
+Date: Tue, 18 Dec 2012 09:35:33 -0800
+Message-ID: <7v623zgt5m.fsf_-_@alter.siamese.dyndns.org>
+References: <20121217213730.GA17212@ftbfs.org>
+ <50D02B9A.1040906@viscovery.net> <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 18 18:25:51 2012
+X-From: git-owner@vger.kernel.org Tue Dec 18 18:36:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tl0vH-0003ZR-Eo
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 18:25:43 +0100
+	id 1Tl15K-0001gD-Ri
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 18:36:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110Ab2LRRZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2012 12:25:25 -0500
-Received: from mail-bk0-f42.google.com ([209.85.214.42]:43918 "EHLO
-	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754847Ab2LRRZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 12:25:25 -0500
-Received: by mail-bk0-f42.google.com with SMTP id ji2so497112bkc.15
-        for <git@vger.kernel.org>; Tue, 18 Dec 2012 09:25:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=XcPA8iOm+byc9mT2GVQc1cJD6kWJtXrViEGXgt0NNhg=;
-        b=gdhlyJ5QM4SavPZKrouXKDZU1Oxbufh4VUqSuDLJtHM1Kr1EWGWKqknIqZVCP0eKkA
-         iF90mqoU0AYHsSkZ17YFoX1ZuwWayACsdDisiKSIb/P5rvuvBfPI4H2RT907Bk7c7wHw
-         NnhKDPb1xlyEbu1fkVYZ3Pf3JlqfNv6hgNxvdCogwYyB5oSnoYrah8L3zEn8DxmXf0j6
-         XSjWri85/D5C2ypVj0+ktUI3HcI6alFeRn9q7LLVDJ6312XA7ZYkZVFKOJYe896OnPa5
-         xq4vGdKaKTyoVXuIMuaupaOoTh49jOHX04ont7kQPxBEcH2bjlmO3eHBClf0rSfMZ/8c
-         Pk3g==
-X-Received: by 10.204.129.66 with SMTP id n2mr1124023bks.94.1355851523665;
-        Tue, 18 Dec 2012 09:25:23 -0800 (PST)
-Received: from synapsis.synapsis ([151.70.213.162])
-        by mx.google.com with ESMTPS id 18sm2032063bkv.0.2012.12.18.09.25.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 18 Dec 2012 09:25:22 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc1.18.g9db0d25
+	id S1755277Ab2LRRfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2012 12:35:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35342 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755232Ab2LRRfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 12:35:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58B9597FC;
+	Tue, 18 Dec 2012 12:35:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lm01Bfuyqr0jcllqGKmm3QRDGjM=; b=CsPCTl
+	anV55L8uyoTJwWH1CkDBXmU2IVKZF6OIW5jXIGaMtPtudppGOREOhmyvqpVFKAAY
+	kxNpgkd+lKcSoeCBO2kJ9iBtwf1gxFbPpDnEFE5Vr55S5VSp0W5iTQ4GL91/wsiy
+	JDDcT7Y8XF7q0x2OMq+v4gbEVTrCf88Zn1Pa8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m5erOMv5LBaVK+WT9HOxt/1acI/oefKq
+	nAp8kH8QSTL8xo1xl8DAwMV0+vwpHqm5FpIMcXFIWUYATDNOx1B2hPrZQY2C9off
+	rFqpURhfOggHkEat5ZpQGMQtkfiKBedwj5x19dEK0QYEKUels/SBnGJrDoXMn4m6
+	dWgAdTtsFvY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EAD197FB;
+	Tue, 18 Dec 2012 12:35:36 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BA5697FA; Tue, 18 Dec 2012
+ 12:35:35 -0500 (EST)
+In-Reply-To: <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 18 Dec 2012 09:01:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 547AA304-4939-11E2-AA5E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211765>
 
-The git-completion.bash script did not implemented full, git aware,
-support for completion, for git commands that operate on files within
-the current working directory or the index.
+Earlier we allowed platforms that lack <sys/param.h> not to include
+the header file from git-compat-util.h; we have included this header
+file since the early days back when we used MAXPATHLEN (which we no
+longer use) and also depended on it slurping ULONG_MAX (which we get
+by including stdint.h or inttypes.h these days).
 
-For these commands, only long options completion was available.
-As an example:
+It turns out that we can compile our modern codebase just file
+without including it on many platforms (so far, Debian, Ubuntu,
+MinGW, HP-Nonstop, QNX and z/OS are reported to be OK).
 
-	git add <TAB>
+Let's stop including it by default, and on platforms that need it to
+be included, leave "make NEEDS_SYS_PARAM_H=YesPlease" as an escape
+hatch and ask them to report to us, so that we can find out about
+the real dependency and fix it in a more platform agnostic way.
 
-will suggest all files in the current working directory, including
-ignored files and files that have not been modified.
-
-Full support for completion is now implemented, for git commands where
-the non-option arguments always refer to paths within the current
-working directory or the index, as the follow:
-
-* the path completion for the "git mv", "git rm" and "git ls-tree"
-  commands will suggest all cached files.
-
-* the path completion for the "git add" command will suggest all
-  untracked and modified files.  Ignored files are excluded.
-
-* the path completion for the "git clean" command will suggest all
-  untracked files.  Ignored files are excluded.
-
-* the path completion for the "git commit" command will suggest all
-  files that have been modified from the HEAD.
-
-For all affected commands, completion will always stop at directory
-boundary.  Only standard ignored files are excluded, using the
---exclude-standard option of the ls-files command.
-
-Signed-off-by: Manlio Perillo <manlio.perillo@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- contrib/completion/git-completion.bash | 112 ++++++++++++++++++++++++++++-----
- 1 file changed, 97 insertions(+), 15 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0b77eb1..923ef37 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -13,6 +13,7 @@
- #    *) .git/remotes file names
- #    *) git 'subcommands'
- #    *) tree paths within 'ref:path/to/file' expressions
-+#    *) file paths within current working directory and index
- #    *) common --long-options
+ * I'd propose queuing this on top of dm/port topic, cook it in
+   'next' for a while and then unleash it to the public.
+
+ Makefile          | 8 +++++---
+ configure.ac      | 6 ------
+ git-compat-util.h | 2 +-
+ 3 files changed, 6 insertions(+), 10 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 5cd1de0..2c1f04f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -167,7 +167,9 @@ all::
+ # Define NO_POLL if you do not have or don't want to use poll().
+ # This also implies NO_SYS_POLL_H.
  #
- # To use these routines:
-@@ -233,6 +234,59 @@ __gitcomp_nl ()
- 	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
- }
- 
-+# Perl filter used to process path list returned by ls-files and
-+# diff-index --name-only commands, in order to list file names
-+# relative to a specified directory, and append a slash to directory
-+# names.
-+# The script expects the prefix path in the "pfx" environ variable.
-+# The output must be processed with the uniq filter, to remove
-+# duplicate directories.
-+# XXX remove duplicates in the Perl script ?
-+__git_index_file_list_filter='$pfx = $ENV{"pfx"};
-+			$idx = index($_, $pfx);
-+			if ($idx == 0) {
-+				$_ = substr $_, length($pfx);
-+				@segments = split("/", $_);
-+				if ($segments[1]) {
-+					print $segments[0], "/\n"
-+				} else {
-+					print $segments[0], "\n"
-+				}
-+			}'
-+
-+# __git_files accepts 1 or 2 arguments:
-+# 1: A string for file index status mode ("c", "m", "d", "o"), as
-+#    supported by git ls-files command.  This is required.
-+# 2: An optional directory path.  If provided, only files within the
-+#    specified directory are listed.  Sub directories are never recursed.
-+#    Path must have a trailing slash.
-+__git_files ()
-+{
-+	local dir="$(__gitdir)" flags="-${1}"
-+
-+	if [ -d "$dir" ]; then
-+		git --git-dir="$dir" ls-files --exclude-standard ${flags} ${pfx} \
-+			| pfx=$2 perl -ne "${__git_index_file_list_filter}" \
-+			| uniq
-+		return
-+	fi
-+}
-+
-+# __git_commit_files accepts 1 optional argument: a directory path.
-+# If provided, only files within the specified directory are listed.
-+# Sub directories are never recursed.  Path must have a trailing slash.
-+__git_commit_files ()
-+{
-+	local dir="$(__gitdir)"
-+
-+	if [ -d "$dir" ]; then
-+		git --git-dir="$dir" diff-index --name-only HEAD \
-+			| pfx=$1 perl -ne "${__git_index_file_list_filter}" \
-+			| uniq
-+		return
-+	fi
-+}
-+
- __git_heads ()
- {
- 	local dir="$(__gitdir)"
-@@ -430,6 +484,25 @@ __git_complete_revlist_file ()
- }
- 
- 
-+# __git_complete_index_file requires 1 argument, the file index
-+# status mode
-+_git_complete_index_file ()
-+{
-+	local pfx cur_="$cur" flags=${1}
-+	case "$cur_" in
-+		?*/*)
-+			pfx="${cur_%/*}"
-+			cur_="${cur_##*/}"
-+			pfx="${pfx}/"
-+
-+			__gitcomp_nl "$(__git_files ${flags} ${pfx})" "$pfx" "$cur_" ""
-+			;;
-+		*)
-+			__gitcomp_nl "$(__git_files ${flags})" "" "$cur_" ""
-+			;;
-+	esac
-+}
-+
- __git_complete_file ()
- {
- 	__git_complete_revlist_file
-@@ -770,8 +843,6 @@ _git_apply ()
- 
- _git_add ()
- {
--	__git_has_doubledash && return
--
- 	case "$cur" in
- 	--*)
- 		__gitcomp "
-@@ -780,7 +851,8 @@ _git_add ()
- 			"
- 		return
- 	esac
--	COMPREPLY=()
-+	# XXX should we check for --update and --all options ?
-+	_git_complete_index_file "om"
- }
- 
- _git_archive ()
-@@ -930,15 +1002,14 @@ _git_cherry_pick ()
- 
- _git_clean ()
- {
--	__git_has_doubledash && return
--
- 	case "$cur" in
- 	--*)
- 		__gitcomp "--dry-run --quiet"
- 		return
- 		;;
- 	esac
--	COMPREPLY=()
-+	# XXX should we check for -x option ?
-+	_git_complete_index_file "o"
- }
- 
- _git_clone ()
-@@ -969,7 +1040,7 @@ _git_clone ()
- 
- _git_commit ()
- {
--	__git_has_doubledash && return
-+	local pfx cur_=${cur}
- 
- 	case "$cur" in
- 	--cleanup=*)
-@@ -997,8 +1068,20 @@ _git_commit ()
- 			--verbose --quiet --fixup= --squash=
- 			"
- 		return
-+		;;
-+	?*/*)
-+		pfx="${cur_%/*}"
-+		cur_="${cur_##*/}"
-+		pfx="${pfx}/"
-+
-+		__gitcomp_nl "$(__git_commit_files ${pfx})" "$pfx" "$cur_" ""
-+		return
-+		;;
-+	*)
-+		__gitcomp_nl "$(__git_commit_files)" "" "$cur_" ""
-+		return
-+		;;
- 	esac
--	COMPREPLY=()
- }
- 
- _git_describe ()
-@@ -1216,8 +1299,6 @@ _git_init ()
- 
- _git_ls_files ()
- {
--	__git_has_doubledash && return
--
- 	case "$cur" in
- 	--*)
- 		__gitcomp "--cached --deleted --modified --others --ignored
-@@ -1230,7 +1311,9 @@ _git_ls_files ()
- 		return
- 		;;
- 	esac
--	COMPREPLY=()
-+	# XXX ignore options like --modified and always suggest all cached
-+	# files.
-+	_git_complete_index_file "c"
- }
- 
- _git_ls_remote ()
-@@ -1362,7 +1445,8 @@ _git_mv ()
- 		return
- 		;;
- 	esac
--	COMPREPLY=()
-+	# XXX needs more work
-+	_git_complete_index_file "c"
- }
- 
- _git_name_rev ()
-@@ -2068,15 +2152,13 @@ _git_revert ()
- 
- _git_rm ()
- {
--	__git_has_doubledash && return
--
- 	case "$cur" in
- 	--*)
- 		__gitcomp "--cached --dry-run --ignore-unmatch --quiet"
- 		return
- 		;;
- 	esac
--	COMPREPLY=()
-+	_git_complete_index_file "c"
- }
- 
- _git_shortlog ()
+-# Define NO_SYS_PARAM_H if you don't have sys/param.h.
++# Define NEEDS_SYS_PARAM_H if you need to include sys/param.h to compile,
++# *PLEASE* REPORT to git@vger.kernel.org if your platform needs this;
++# we want to know more about the issue.
+ #
+ # Define NO_PTHREADS if you do not have or do not want to use Pthreads.
+ #
+@@ -1747,8 +1749,8 @@ endif
+ ifdef NO_SYS_POLL_H
+ 	BASIC_CFLAGS += -DNO_SYS_POLL_H
+ endif
+-ifdef NO_SYS_PARAM_H
+-	BASIC_CFLAGS += -DNO_SYS_PARAM_H
++ifdef NEEDS_SYS_PARAM_H
++	BASIC_CFLAGS += -DNEEDS_SYS_PARAM_H
+ endif
+ ifdef NO_INTTYPES_H
+ 	BASIC_CFLAGS += -DNO_INTTYPES_H
+diff --git a/configure.ac b/configure.ac
+index e3ab6fe..8fbb533 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -699,12 +699,6 @@ AC_CHECK_HEADER([sys/poll.h],
+ [NO_SYS_POLL_H=UnfortunatelyYes])
+ GIT_CONF_SUBST([NO_SYS_POLL_H])
+ #
+-# Define NO_SYS_PARAM_H if you don't have sys/param.h
+-AC_CHECK_HEADER([sys/param.h],
+-[NO_SYS_PARAM_H=],
+-[NO_SYS_PARAM_H=UnfortunatelyYes])
+-GIT_CONF_SUBST([NO_SYS_PARAM_H])
+-#
+ # Define NO_INTTYPES_H if you don't have inttypes.h
+ AC_CHECK_HEADER([inttypes.h],
+ [NO_INTTYPES_H=],
+diff --git a/git-compat-util.h b/git-compat-util.h
+index d7359ef..a88147b 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -104,7 +104,7 @@
+ #endif
+ #include <errno.h>
+ #include <limits.h>
+-#ifndef NO_SYS_PARAM_H
++#ifdef NEEDS_SYS_PARAM_H
+ #include <sys/param.h>
+ #endif
+ #include <sys/types.h>
 -- 
-1.8.1.rc1.18.g9db0d25
+1.8.1.rc2.136.gb42b73a
