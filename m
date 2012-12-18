@@ -1,102 +1,298 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: track TCLTK_PATH as it used to be tracked
-Date: Tue, 18 Dec 2012 09:07:05 -0800
-Message-ID: <7vk3sfguh2.fsf@alter.siamese.dyndns.org>
-References: <20121218145753.28253.98431.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 18:07:37 2012
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: [PATCH v3] git-completion.bash: add support for path completion
+Date: Tue, 18 Dec 2012 18:25:10 +0100
+Message-ID: <1355851510-13438-1-git-send-email-manlio.perillo@gmail.com>
+Cc: Manlio Perillo <manlio.perillo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 18 18:25:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tl0dh-00012g-O0
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 18:07:34 +0100
+	id 1Tl0vH-0003ZR-Eo
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Dec 2012 18:25:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221Ab2LRRHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2012 12:07:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42351 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932119Ab2LRRHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 12:07:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07B52A361;
-	Tue, 18 Dec 2012 12:07:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wBebq/OcLksZK0mVS95pdOLYW/0=; b=E7mMzo
-	FzA1/O5ufRtxfBQjPbyKYeVQaMiQot0VI9FcM0/2V5I69EO/EvWd34kDQcrq0vzy
-	NigTIh46okTn2gI8cOzlZRDwTXV8uLWXKhUfHogIcMtOdwafWXXqdiiYO2nOXTia
-	XQFIDR+pZEZw5OGuzJwq/8oUh8Wt3uoxGavV4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D7XDM4o8pQQ1bd+pQBf0OswDAGrGkDUO
-	jB9XydB+ZZGA58RT2d/NdPTNmsvLSXj+6w07vrxTSnSEepMFcxGqDdIW299wUavN
-	9MuxXtq8x++apcRsHyEpIERbOnwfNRNGuW5uDhlydD25bDG8liOSibSPNcQRLsuL
-	L4pxApcUdvk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7F76A360;
-	Tue, 18 Dec 2012 12:07:11 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B47C6A35F; Tue, 18 Dec 2012
- 12:07:06 -0500 (EST)
-In-Reply-To: <20121218145753.28253.98431.chriscool@tuxfamily.org> (Christian
- Couder's message of "Tue, 18 Dec 2012 15:57:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A0DA46E-4935-11E2-8DF1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755110Ab2LRRZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2012 12:25:25 -0500
+Received: from mail-bk0-f42.google.com ([209.85.214.42]:43918 "EHLO
+	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754847Ab2LRRZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 12:25:25 -0500
+Received: by mail-bk0-f42.google.com with SMTP id ji2so497112bkc.15
+        for <git@vger.kernel.org>; Tue, 18 Dec 2012 09:25:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=XcPA8iOm+byc9mT2GVQc1cJD6kWJtXrViEGXgt0NNhg=;
+        b=gdhlyJ5QM4SavPZKrouXKDZU1Oxbufh4VUqSuDLJtHM1Kr1EWGWKqknIqZVCP0eKkA
+         iF90mqoU0AYHsSkZ17YFoX1ZuwWayACsdDisiKSIb/P5rvuvBfPI4H2RT907Bk7c7wHw
+         NnhKDPb1xlyEbu1fkVYZ3Pf3JlqfNv6hgNxvdCogwYyB5oSnoYrah8L3zEn8DxmXf0j6
+         XSjWri85/D5C2ypVj0+ktUI3HcI6alFeRn9q7LLVDJ6312XA7ZYkZVFKOJYe896OnPa5
+         xq4vGdKaKTyoVXuIMuaupaOoTh49jOHX04ont7kQPxBEcH2bjlmO3eHBClf0rSfMZ/8c
+         Pk3g==
+X-Received: by 10.204.129.66 with SMTP id n2mr1124023bks.94.1355851523665;
+        Tue, 18 Dec 2012 09:25:23 -0800 (PST)
+Received: from synapsis.synapsis ([151.70.213.162])
+        by mx.google.com with ESMTPS id 18sm2032063bkv.0.2012.12.18.09.25.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 18 Dec 2012 09:25:22 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc1.18.g9db0d25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211764>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+The git-completion.bash script did not implemented full, git aware,
+support for completion, for git commands that operate on files within
+the current working directory or the index.
 
-> A long time ago, gitk used to live at the root of the git.git
-> repository. In 62ba514 (Move gitk to its own subdirectory,
-> 2007-11-17) it was moved to a subdirectory, but some code used
-> to track TCLTK_PATH was left in the main Makefile instead
-> of being moved to the new Makefile that was created in gitk-git/.
->
-> The code left in the main Makefile in git.git should now have
-> been removed because it was found useless.
->
-> And this patch puts some code back to track TCLTK_PATH properly
-> where it should be.
+For these commands, only long options completion was available.
+As an example:
 
-It is more like "should have been moved to gitk's Makefile back
-then, but didn't.  Make it so.".
+	git add <TAB>
 
->
-> Note that there is already some code to do that in git-gui.
->
-> At the same time this patch creates a .gitignore and also marks
-> some targets in the Makefile as PHONY.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> Hi Paul,
->
-> In this thread:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/211641
->
-> Junio asked me to send you this patch.
-> So here it is, for you to apply to your tree.
+will suggest all files in the current working directory, including
+ignored files and files that have not been modified.
 
-Paul, just to clarify, I didn't review the contents of the patch; I
-merely redirected the patch in the right direction, so this still
-needs to be vetted by you ;-)
+Full support for completion is now implemented, for git commands where
+the non-option arguments always refer to paths within the current
+working directory or the index, as the follow:
 
-> ...
-> +GIT-TCLTK-VARS: FORCE
-> +	@VARS='$(TRACK_TCLTK)'; \
-> +		if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
-> +			echo 1>&2 "    * new Tcl/Tk interpreter location"; \
+* the path completion for the "git mv", "git rm" and "git ls-tree"
+  commands will suggest all cached files.
 
-I think in a related patch to the top-level Makefile changes it to
-lose "1" to read it as "echo >&2" here.
+* the path completion for the "git add" command will suggest all
+  untracked and modified files.  Ignored files are excluded.
+
+* the path completion for the "git clean" command will suggest all
+  untracked files.  Ignored files are excluded.
+
+* the path completion for the "git commit" command will suggest all
+  files that have been modified from the HEAD.
+
+For all affected commands, completion will always stop at directory
+boundary.  Only standard ignored files are excluded, using the
+--exclude-standard option of the ls-files command.
+
+Signed-off-by: Manlio Perillo <manlio.perillo@gmail.com>
+---
+ contrib/completion/git-completion.bash | 112 ++++++++++++++++++++++++++++-----
+ 1 file changed, 97 insertions(+), 15 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0b77eb1..923ef37 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -13,6 +13,7 @@
+ #    *) .git/remotes file names
+ #    *) git 'subcommands'
+ #    *) tree paths within 'ref:path/to/file' expressions
++#    *) file paths within current working directory and index
+ #    *) common --long-options
+ #
+ # To use these routines:
+@@ -233,6 +234,59 @@ __gitcomp_nl ()
+ 	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
+ }
+ 
++# Perl filter used to process path list returned by ls-files and
++# diff-index --name-only commands, in order to list file names
++# relative to a specified directory, and append a slash to directory
++# names.
++# The script expects the prefix path in the "pfx" environ variable.
++# The output must be processed with the uniq filter, to remove
++# duplicate directories.
++# XXX remove duplicates in the Perl script ?
++__git_index_file_list_filter='$pfx = $ENV{"pfx"};
++			$idx = index($_, $pfx);
++			if ($idx == 0) {
++				$_ = substr $_, length($pfx);
++				@segments = split("/", $_);
++				if ($segments[1]) {
++					print $segments[0], "/\n"
++				} else {
++					print $segments[0], "\n"
++				}
++			}'
++
++# __git_files accepts 1 or 2 arguments:
++# 1: A string for file index status mode ("c", "m", "d", "o"), as
++#    supported by git ls-files command.  This is required.
++# 2: An optional directory path.  If provided, only files within the
++#    specified directory are listed.  Sub directories are never recursed.
++#    Path must have a trailing slash.
++__git_files ()
++{
++	local dir="$(__gitdir)" flags="-${1}"
++
++	if [ -d "$dir" ]; then
++		git --git-dir="$dir" ls-files --exclude-standard ${flags} ${pfx} \
++			| pfx=$2 perl -ne "${__git_index_file_list_filter}" \
++			| uniq
++		return
++	fi
++}
++
++# __git_commit_files accepts 1 optional argument: a directory path.
++# If provided, only files within the specified directory are listed.
++# Sub directories are never recursed.  Path must have a trailing slash.
++__git_commit_files ()
++{
++	local dir="$(__gitdir)"
++
++	if [ -d "$dir" ]; then
++		git --git-dir="$dir" diff-index --name-only HEAD \
++			| pfx=$1 perl -ne "${__git_index_file_list_filter}" \
++			| uniq
++		return
++	fi
++}
++
+ __git_heads ()
+ {
+ 	local dir="$(__gitdir)"
+@@ -430,6 +484,25 @@ __git_complete_revlist_file ()
+ }
+ 
+ 
++# __git_complete_index_file requires 1 argument, the file index
++# status mode
++_git_complete_index_file ()
++{
++	local pfx cur_="$cur" flags=${1}
++	case "$cur_" in
++		?*/*)
++			pfx="${cur_%/*}"
++			cur_="${cur_##*/}"
++			pfx="${pfx}/"
++
++			__gitcomp_nl "$(__git_files ${flags} ${pfx})" "$pfx" "$cur_" ""
++			;;
++		*)
++			__gitcomp_nl "$(__git_files ${flags})" "" "$cur_" ""
++			;;
++	esac
++}
++
+ __git_complete_file ()
+ {
+ 	__git_complete_revlist_file
+@@ -770,8 +843,6 @@ _git_apply ()
+ 
+ _git_add ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "
+@@ -780,7 +851,8 @@ _git_add ()
+ 			"
+ 		return
+ 	esac
+-	COMPREPLY=()
++	# XXX should we check for --update and --all options ?
++	_git_complete_index_file "om"
+ }
+ 
+ _git_archive ()
+@@ -930,15 +1002,14 @@ _git_cherry_pick ()
+ 
+ _git_clean ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--dry-run --quiet"
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	# XXX should we check for -x option ?
++	_git_complete_index_file "o"
+ }
+ 
+ _git_clone ()
+@@ -969,7 +1040,7 @@ _git_clone ()
+ 
+ _git_commit ()
+ {
+-	__git_has_doubledash && return
++	local pfx cur_=${cur}
+ 
+ 	case "$cur" in
+ 	--cleanup=*)
+@@ -997,8 +1068,20 @@ _git_commit ()
+ 			--verbose --quiet --fixup= --squash=
+ 			"
+ 		return
++		;;
++	?*/*)
++		pfx="${cur_%/*}"
++		cur_="${cur_##*/}"
++		pfx="${pfx}/"
++
++		__gitcomp_nl "$(__git_commit_files ${pfx})" "$pfx" "$cur_" ""
++		return
++		;;
++	*)
++		__gitcomp_nl "$(__git_commit_files)" "" "$cur_" ""
++		return
++		;;
+ 	esac
+-	COMPREPLY=()
+ }
+ 
+ _git_describe ()
+@@ -1216,8 +1299,6 @@ _git_init ()
+ 
+ _git_ls_files ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--cached --deleted --modified --others --ignored
+@@ -1230,7 +1311,9 @@ _git_ls_files ()
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	# XXX ignore options like --modified and always suggest all cached
++	# files.
++	_git_complete_index_file "c"
+ }
+ 
+ _git_ls_remote ()
+@@ -1362,7 +1445,8 @@ _git_mv ()
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	# XXX needs more work
++	_git_complete_index_file "c"
+ }
+ 
+ _git_name_rev ()
+@@ -2068,15 +2152,13 @@ _git_revert ()
+ 
+ _git_rm ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--cached --dry-run --ignore-unmatch --quiet"
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++	_git_complete_index_file "c"
+ }
+ 
+ _git_shortlog ()
+-- 
+1.8.1.rc1.18.g9db0d25
