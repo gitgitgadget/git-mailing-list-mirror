@@ -1,75 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Prebuilt man pages on Google code
-Date: Tue, 18 Dec 2012 15:03:07 -0800
-Message-ID: <7vhanjdkus.fsf@alter.siamese.dyndns.org>
-References: <20121216162827.GA22351@river.lan>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH v5 2/3] Makefile: detect when PYTHON_PATH changes
+Date: Tue, 18 Dec 2012 18:42:02 -0500
+Message-ID: <20121218234202.GA13151@padd.com>
+References: <20121218190009.29910.39426.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Dec 19 00:03:29 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Dec 19 00:42:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tl6C8-0003lE-N4
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 00:03:29 +0100
+	id 1Tl6o7-00007r-P6
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 00:42:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754698Ab2LRXDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2012 18:03:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63316 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751367Ab2LRXDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 18:03:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD6F2A96D;
-	Tue, 18 Dec 2012 18:03:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MZm94acITcJDtu7OirjVja5m9Gc=; b=CQzgDG
-	q4HWvDh5q3kQ6PJrHxNGMYIWhxoIqCtNavPzeNsyKFTYahPtdk+zAv+UGGrABKK2
-	soEPzLhOh7vIbxkYmpT/8ypLaqG6kWQAq2yBkHpKjNKPIgiN2abOD5mpxQZs1iDT
-	5dBkhK1z4KoeRHGU7bwV74quU4rJhKbz7V7yY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yi4yPsz3+By3JtLiehTMEcJsqHqzuu0+
-	434OAG1JE1GKHGv8QDNn8bSl5zhMnRu1i3zUos6h0QW1dPT/gu2lCe2y0cVdgCEo
-	ZS+7jfZLKc7IzS/nvMQb2C5NGzfsCjsBjq4t80DiOEJVek14hYjrGqAkrtrn6dvS
-	PKXcKbEIX4E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C3A1A96C;
-	Tue, 18 Dec 2012 18:03:09 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19AFAA96B; Tue, 18 Dec 2012
- 18:03:09 -0500 (EST)
-In-Reply-To: <20121216162827.GA22351@river.lan> (John Keeping's message of
- "Sun, 16 Dec 2012 16:28:27 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1703E912-4967-11E2-BFCF-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755177Ab2LRXmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2012 18:42:07 -0500
+Received: from honk.padd.com ([74.3.171.149]:44422 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754945Ab2LRXmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 18:42:05 -0500
+Received: from arf.padd.com (unknown [50.55.150.96])
+	by honk.padd.com (Postfix) with ESMTPSA id 17DCD20C2;
+	Tue, 18 Dec 2012 15:42:05 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id DC27022615; Tue, 18 Dec 2012 18:42:02 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20121218190009.29910.39426.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211795>
 
-John Keeping <john@keeping.me.uk> writes:
+chriscool@tuxfamily.org wrote on Tue, 18 Dec 2012 20:00 +0100:
+> When make is run, the python scripts are created from *.py files that
+> are changed to use the python given by PYTHON_PATH. And PYTHON_PATH
+> is set by default to /usr/bin/python on Linux.
+> 
+> This is nice except when you run make another time setting a
+> different PYTHON_PATH, because, as the python scripts have already
+> been created, make finds nothing to do.
+> 
+> The goal of this patch is to detect when the PYTHON_PATH changes and
+> to create the python scripts again when this happens. To do that we
+> use the same trick that is done to track other variables like prefix,
+> flags, tcl/tk path and shell path. We update a GIT-PYTHON-VARS file
+> with the PYTHON_PATH and check if it changed.
+> 
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 
-> While investigating Asciidoc's quoting in this thread [1], I noticed
-> that my system man pages don't display Asciidoc double quoted text
-> correctly.
-> ...
-> I can't see any configuration option that could cause this difference,
-> so I assume it must be caused by some particular tool version on the
-> machine used to generate these man pages.
+I played around with this a bit in the context of git-p4; and it
+seems to work fine.
 
-Yeah, Debian ships with a tad older one, and I've been using
-asciidoc 8.5.2 on my primary box.
+It's interesting that the code in git_remote_helpers/Makefile
+does not work with python3, but that's not a problem to solve
+here.  If you get interested in looking, that approach to
+installing always struck me as a bit odd.  If it is the right
+way, though, maybe we should try to unify the approach to git-p4
+and potential future .py scripts in git.
 
-I'm experimenting a newer one from the latest tarball (asciidoc
-8.6.8) and the result looks promising.  If everything goes smoothly,
-I'll probably do another -rc before the final 1.8.1 release goes out
-with the new asciidoc, but no promises (yet).
+Acked-by: Pete Wyckoff <pw@padd.com>
 
-Thanks.
+Thanks for fixing this bug.
+
+		-- Pete
