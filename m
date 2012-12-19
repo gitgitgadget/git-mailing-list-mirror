@@ -1,87 +1,72 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] add GIT_PATHSPEC_GLOB environment variable
-Date: Wed, 19 Dec 2012 17:12:50 -0500
-Message-ID: <20121219221250.GA22823@sigill.intra.peff.net>
+Date: Wed, 19 Dec 2012 14:16:52 -0800
+Message-ID: <7v38z18z6z.fsf@alter.siamese.dyndns.org>
 References: <20121219203449.GA10001@sigill.intra.peff.net>
  <7vk3sd930z.fsf@alter.siamese.dyndns.org>
  <20121219210919.GA11894@sigill.intra.peff.net>
  <20121219215008.GA17908@sigill.intra.peff.net>
  <7v7god8zz0.fsf@alter.siamese.dyndns.org>
+ <20121219221250.GA22823@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:13:12 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:17:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlRt1-0001xt-OF
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:13:12 +0100
+	id 1TlRww-0004NT-4b
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:17:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815Ab2LSWMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 17:12:55 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58836 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751742Ab2LSWMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 17:12:53 -0500
-Received: (qmail 1763 invoked by uid 107); 19 Dec 2012 22:13:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Dec 2012 17:13:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2012 17:12:50 -0500
-Content-Disposition: inline
-In-Reply-To: <7v7god8zz0.fsf@alter.siamese.dyndns.org>
+	id S1751115Ab2LSWQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 17:16:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49400 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750983Ab2LSWQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 17:16:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C6E07BCD;
+	Wed, 19 Dec 2012 17:16:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bs1ErDWDQyBY1IdVZ4rLnFqpZpI=; b=hSCyUk
+	MVOJSWMv48N5Aq818KgVbNdqgrmrh5KBTNq+eh3vt/jfh8Qaj6sc/3Myt85n9diO
+	9x2BI5zRf+88m0CnNQsZE10sPPaVySvehUlvd07UaMRCdXYF1USySJ8CEi6s0s1d
+	WWzaVUGThfOChSUci4LCk8a1gF6pdPXTQ+Hbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ijQpmGPXbZNkBhRHdRrAHldhBNz4zMda
+	aebCAL3I08xjPA1+zClFVRkDeki/mAbt3wtHV7Hkk7SgnzQ8xwi2Dr7dS5ilHtBZ
+	QIEwiMEOtjpMbMi0FEPUEPdTG2blwEyaoAyJtDfHaLfXH/EZrHrZ/us5173MjOvp
+	lXhe222cZv0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29A387BCC;
+	Wed, 19 Dec 2012 17:16:55 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 994B27BC8; Wed, 19 Dec 2012
+ 17:16:54 -0500 (EST)
+In-Reply-To: <20121219221250.GA22823@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 19 Dec 2012 17:12:50 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CBB5EEF6-4A29-11E2-B7AD-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211858>
 
-On Wed, Dec 19, 2012 at 02:00:03PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Subject: add GIT_PATHSPEC_GLOB environment variable
-> 
-> Seems cleanly done from a quick look.
-> 
-> Given that the normal mode of operation is to use globbing, I
-> suspect that the names would have been more natural if the toggle
-> were GIT_PATHSPEC_LITERAL and the boolean function were
-> limit_pathspec_to_literal(), instead of "allow_pathspec_glob()",
-> sounding as if using glob is done only upon request.
-> 
-> But that is a minor issue.
+>> Will queue; thanks.
+>
+> Do we want to change the variable name and invert the logic?
 
-Yeah, I was trying to avoid the double-negation of "noglob=false" for
-the default behavior. I guess calling it literal is another way of
-accomplishing that, and it keeps the default at "false". I don't have a
-strong preference.
+That would be my preference.
 
-> > This patch introduces an environment variable to turn all
-> > pathspecs into literal strings. This makes it easy to turn
-> > off the globbing behavior for a whole environment (e.g., if
-> > you are serving repos via a web interface that is only going
-> > to use literal programmatic pathspecs), or for a particular
-> > run.
-> 
-> I am not sure if "web interface" is a particularly good example,
-> though.  Is it unusual to imagine a Web UI that takes pathspecs from
-> the user to limit its output (e.g. "diff" or "ls-tree") to those
-> paths that match them?  In such a case, the user would expect their
-> pathspecs to work the same way as the Git installed on their
-> desktop, I would think.
-
-Yes. If you want to provide for user-provided globbing pathspecs, then
-you'd have to annotate each invocation with whether you want globbing or
-not. What I was trying to illustrate was more how "gitweb" will let you
-click on the "history" link for "foo" in a tree listing, resulting in a
-page that is generated by calling "git rev-list foo". You would probably
-not want pathspec globbing there.
-
-> Will queue; thanks.
-
-Do we want to change the variable name and invert the logic? Now is
-probably the best time to do it.
-
--Peff
+I am deep into today's integration cycle, and this PATHSPEC_GLOB
+version is sitting at the tip of 'pu', so today's pushout will
+contain that version, though.
