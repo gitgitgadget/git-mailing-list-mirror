@@ -1,107 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-completion.bash: add support for path completion
-Date: Wed, 19 Dec 2012 14:49:59 -0800
-Message-ID: <7vy5gt7j3c.fsf@alter.siamese.dyndns.org>
-References: <1355693080-4765-1-git-send-email-manlio.perillo@gmail.com>
- <7vy5gxnuy1.fsf@alter.siamese.dyndns.org> <50CEFF3A.4050802@gmail.com>
- <7vzk1clb3n.fsf@alter.siamese.dyndns.org> <50D23960.4070108@gmail.com>
+Subject: Re: [PATCH v2] Add directory pattern matching to attributes
+Date: Wed, 19 Dec 2012 14:58:19 -0800
+Message-ID: <7vr4ml7ipg.fsf@alter.siamese.dyndns.org>
+References: <201212192233.53002.avila.jn@gmail.com>
+ <7vbodp90o4.fsf@alter.siamese.dyndns.org>
+ <201212192334.51085.avila.jn@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Manlio Perillo <manlio.perillo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:50:24 2012
+To: =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <avila.jn@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:58:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlST1-00052h-Db
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:50:23 +0100
+	id 1TlSb2-0000nT-3a
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581Ab2LSWuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 17:50:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46627 "EHLO
+	id S1751285Ab2LSW6X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2012 17:58:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51533 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750859Ab2LSWuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 17:50:03 -0500
+	id S1751076Ab2LSW6V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2012 17:58:21 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 427199833;
-	Wed, 19 Dec 2012 17:50:02 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 725DF9C08;
+	Wed, 19 Dec 2012 17:58:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Db1OuXTkD6g45UIV3V6DP87dVjI=; b=DWRUMC
-	kPvLd6qnyrqgA8HViUQh4alUBxpT/Ejxp2NWLd+6jvzzuuf/1URifurcXGmzTajF
-	8ZCLkRar2V81GvA+0Fnr0j5CDIof1M1MXOqDeH4vccEKVD2uWQPCsebcm9d9UiI3
-	TXJaomkZ83eCskxpYSl3Qax4dEslI+57BzUrU=
+	:content-type:content-transfer-encoding; s=sasl; bh=RMD8cnS/4OuS
+	R7o0K9PFEwM8GMs=; b=JTSCUgtSRT0zT35g49HOFwwirCxgtu1TLK1Ba0YlMwX9
+	EoJdUPstwfzcuOP+JxNMvHwpcrD/Lo8pKDUJ3xXjRwHsMV5yAFlIz8dXBD72fn2k
+	PSZM4KpzRzvCCsNIhIQ5mIEL/CSiPfz1QA4Pi6/9HG7pGkvVvt9JLt48nmEWUzA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NhywKX/lg3PntvVqgJJx2im467i52kcP
-	XJxNXj1+gQlKba96lvm1Kf2SbbDkYb2bHmH0j3cVxtMwUi88VjfmjbwqGlJlhXe0
-	yDryIIuak+jHrg6z0+iTUCe3bc77u0khIrLw0whWkuVzqeSfuVZ5h5JirOwOKbHA
-	dvxHaHgVaH4=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=X5ruQB
+	kTatxvCX5Oehv8k2L+cG5odc68OHGHD58wBoSzalUu2ql9kwmtaI0nyb8yVafROT
+	xuPTEmEF5fZCZXwSI14+Jy7KT0R65iDUdvehhCgtaDfrgPN5wXsNu+eg/WhoSjCj
+	uRpac1NHOmoKAN8Dy3ftesJNfoD8InR0yvS8Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CABE99832;
-	Wed, 19 Dec 2012 17:50:01 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F8EB9C06;
+	Wed, 19 Dec 2012 17:58:21 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB3B39831; Wed, 19 Dec 2012
- 17:50:00 -0500 (EST)
-In-Reply-To: <50D23960.4070108@gmail.com> (Manlio Perillo's message of "Wed,
- 19 Dec 2012 23:02:08 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D08F49C03; Wed, 19 Dec 2012
+ 17:58:20 -0500 (EST)
+In-Reply-To: <201212192334.51085.avila.jn@gmail.com> (=?utf-8?Q?=22Jean-No?=
+ =?utf-8?Q?=C3=ABl?= AVILA"'s message of "Wed, 19 Dec 2012 23:34:50 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B94DC8A-4A2E-11E2-9F7B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 959E1536-4A2F-11E2-82D1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211863>
 
-Manlio Perillo <manlio.perillo@gmail.com> writes:
+"Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> writes:
 
->> 	git mv COPYING README X
+> Le mercredi 19 d=C3=A9cembre 2012 22:44:59, vous avez =C3=A9crit :
+>> "Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> writes:
+>> > This patch was not reviewed when I submitted it for the second tim=
+e.
+>>=20
+>> Did you miss this?
+>>   =20
 >
-> Assuming X is a new untracked directory, do you think it is an usability
-> problem if an user try to do:
->
-> 	git mv COPYING README <TAB>
->
-> and X does not appear in the completion list?
+> Grml, I did. Sorry for the noise.
 
-It is hard to say.  Will it show "Documentation/" in the list?  Will
-it show "git.c" in the list?
-
-Your "git mv git.<TAB>" completing to "git mv git.c" would be an
-improvement compared to the stock "less git.<TAB>" that offers
-"git.c" and "git.o" as choices.  For things like "mv" and "rm", this
-may not make too much of a difference, "git add <TAB>" would be a
-vast improvement from the stock one.  The users will notice that the
-completion knows what it is doing, and will come to depend on it.
-
-But at that point, if "git mv COPYING README <TAB>" offers only
-directories that contain tracked files, the users may get irritated,
-because it is likely that the destination directory was created
-immediately before the user started typing "git mv".  You will hear
-"Surely I created X, it is there, why aren't you showing it to me?"
-
-The updated completion knows what it is doing everywhere else, and
-it sets the user-expectation at that level.  Uneven cleverness will
-stand out like a sore thumb and hurts the user perception, which is
-arguably unfair, but nothing in life is fair X-<.
-
-I think over-showing the choices is much better than hiding some
-choices, if we cannot do a perfect completion in some cases.  "You
-should know that I won't be moving these files in Y, as I already
-marked it to be ignored in the .gitignore file!" is less grave a
-gripe than "You know I created X just a minute ago, and it is there,
-why aren't you showing it to me?" because you can simply say "but Y
-is there as a directory." admitting that you are less clever than
-the user expects you to be, but at least you are giving the choice
-to the user of not picking it.
-
-In the ideal world (read: I am *not* saying "you should implement it
-this way, or we won't look at your patch"), I think you would want
-to show tracked files (because it may be the third path that the
-user wants to move with the command, not the destination directory)
-and any directory on the filesystem (it could be the third path that
-is being moved if it has tracked files, or it could be the final
-destination directory argument).
+That's OK.  Your previous one, with the update suggested in the
+thread, has already been queued in 'next' and will be cooking
+there throughout the pre-release feature freeze.
