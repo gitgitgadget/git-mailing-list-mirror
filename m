@@ -1,66 +1,99 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: sys/param.h
-Date: Wed, 19 Dec 2012 08:59:27 +0100
-Message-ID: <CABPQNSZQk6hHm-dWqFFQf0HF34Mvbjc8-mgzCr=G0zbBKiYUvA@mail.gmail.com>
-References: <20121217213730.GA17212@ftbfs.org> <50D02B9A.1040906@viscovery.net>
- <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Wed, 19 Dec 2012 09:29:20 +0100
+Organization: Bertin Technologies
+Message-ID: <20121219092920.2dc0f33e@chalon.bertin.fr>
+References: <20121211153903.7522d6b0@chalon.bertin.fr>
+ <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
+ <20121212094432.6e1e48c8@chalon.bertin.fr>
+ <7v38zb3ux0.fsf@alter.siamese.dyndns.org> <877goht6eu.fsf@pctrast.inf.ethz.ch>
+ <20121217114058.449cbc3c@chalon.bertin.fr>
+ <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com>
+ <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org>
+ <20121218120058.0c558ba5@chalon.bertin.fr>
+ <7vehinibpc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 09:29:35 2012
+X-From: git-owner@vger.kernel.org Wed Dec 19 09:29:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlF1y-0001jz-JW
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 09:29:34 +0100
+	id 1TlF25-0001nb-4M
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 09:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723Ab2LSI3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 03:29:17 -0500
-Received: from mail-da0-f43.google.com ([209.85.210.43]:60544 "EHLO
-	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752589Ab2LSI3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 03:29:16 -0500
-X-Greylist: delayed 1748 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Dec 2012 03:29:16 EST
-Received: by mail-da0-f43.google.com with SMTP id u36so799370dak.30
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 00:29:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=yxXY7gOEuD2ghNs6UGm+JSLJUOara89kc2v5DhUQJc4=;
-        b=w3hKJNhaOOYvlYMMLC0+ezQaRq/nXtz+nT9JsyruCLNfOvQ5DVcPBz+C+PWzaxiJYj
-         m9ezwI/k/YxI/9c5NnuoBzR9paeSZslr7Uy4y++Dz/3gCPlC7LMqujlMTkJZphmY6yG0
-         QeH45IY0w0VOusLlfKXSFd7w2PMGQ3qH8v1vR1GmNkCJd6T950l+sqlMIGNex/gUvBSR
-         /Ni2SnD1fSOzjQ5YsupE5sP+ul7KQOTbjpCGVZFXTF95vwi0qeYOeFFk8/+ipOxZkxHS
-         6bHSwa+raKCvb+8VFO/4Sk5AxLcYI0QyjPfH482T/n3MkgqC5RPjq4/cjCNr0WVwl2n1
-         UEUA==
-Received: by 10.68.189.163 with SMTP id gj3mr15816822pbc.110.1355904007753;
- Wed, 19 Dec 2012 00:00:07 -0800 (PST)
-Received: by 10.66.126.51 with HTTP; Tue, 18 Dec 2012 23:59:27 -0800 (PST)
-In-Reply-To: <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org>
+	id S1752759Ab2LSI3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 03:29:23 -0500
+Received: from cabourg.bertin.fr ([195.68.26.10]:60941 "EHLO cabourg.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752589Ab2LSI3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 03:29:21 -0500
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 057BBA0F98
+	for <git@vger.kernel.org>; Wed, 19 Dec 2012 09:29:20 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id 2F803A0F96
+	for <git@vger.kernel.org>; Wed, 19 Dec 2012 09:29:19 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MF900ACNRKUHR80@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Wed, 19 Dec 2012 09:29:19 +0100 (CET)
+In-reply-to: <7vehinibpc.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19462.002
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211813>
 
-On Tue, Dec 18, 2012 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
->
->>> Junio C Hamano wrote:
->>>> It could turn out that we may be able to get rid of sys/param.h
->>>> altogether, but one step at a time.  Inputs from people on minority
->>>> platforms are very much appreciated---does your platform build fine
->>>> when the inclusion of the file is removed from git-compat-util.h?
->>
->> MinGW works fine with sys/param.h removed from git-compat-util.h.
->
-> It seems that OpenBSD 5.2 does not mind it getting removed, either.
-> Debian 5 and Debian 6 seem OK; so do Ubuntu 10.04 and 12.04.  I have
-> a hunch that Fedora or anything based on glibc would be fine, too.
+On Tue, 18 Dec 2012 08:09:35 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-And just to be sure; Fedora 17: OK.
+> Yann Dirson <dirson@bertin.fr> writes:
+> 
+> > On Mon, 17 Dec 2012 13:14:56 -0800
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> >> Andreas Schwab <schwab@linux-m68k.org> writes:
+> >> 
+> >> > Christian Couder <christian.couder@gmail.com> writes:
+> >> >
+> >> >> Yeah, at one point I wanted to have a command that created to craft a
+> >> >> new commit based on an existing one.
+> >> >
+> >> > This isn't hard to do, you only have to resort to plumbing:
+> >> >
+> >> > $ git cat-file commit fef11965da875c105c40f1a9550af1f5e34a6e62 | sed s/bfae342c973b0be3c9e99d3d86ed2e6b152b4a6b/790c83cda92f95f1b4b91e2ddc056a52a99a055d/ | git hash-object -t commit --stdin -w
+> >> > bb45cc6356eac6c7fa432965090045306dab7026
+> >> 
+> >> Good.  I do not think an extra special-purpose command is welcome
+> >> here.
+> >
+> > Well, I'm not sure this is intuitive enough to be useful to the average user :)
+> 
+> I do not understand why you even want to go in the harder route in
+> the first place, only to complicate things?
+
+Although the approach you propose is elegant, it still looks like one
+could not leave the worktree untouched in the case of creating a merge replace,
+which the "just forge an arbitrary commit" approach handles easily.
+
+It seems the latter would also be more powerful, in that you can create new commits with an
+arbitrary number of parents, even when merge-octopus would simply refuse to help;
+and it is has no special case for creating merges.
+
+> Is this not intuitive enough?
+
+I would say it is a nice read that can help an advanced user to earn
+some XP - but well, replace refs are also meant for somewhat advanced users :)
+
+-- 
+Yann Dirson - Bertin Technologies
