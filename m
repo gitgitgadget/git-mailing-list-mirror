@@ -1,104 +1,248 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Wed, 19 Dec 2012 12:07:36 -0800
-Message-ID: <7vvcbx956f.fsf@alter.siamese.dyndns.org>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
- <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
- <20121212094432.6e1e48c8@chalon.bertin.fr>
- <7v38zb3ux0.fsf@alter.siamese.dyndns.org>
- <877goht6eu.fsf@pctrast.inf.ethz.ch>
- <20121217114058.449cbc3c@chalon.bertin.fr>
- <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com>
- <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org>
- <20121218120058.0c558ba5@chalon.bertin.fr>
- <7vehinibpc.fsf@alter.siamese.dyndns.org>
- <87ip7yp4mf.fsf@pctrast.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] add core.pathspecGlob config option
+Date: Wed, 19 Dec 2012 15:34:49 -0500
+Message-ID: <20121219203449.GA10001@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yann Dirson <dirson@bertin.fr>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 19 21:08:05 2012
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 19 21:35:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlPvp-0006T5-CZ
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 21:07:57 +0100
+	id 1TlQMC-0004YA-Bw
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 21:35:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751397Ab2LSUHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 15:07:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46207 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750945Ab2LSUHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 15:07:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37B7EA60C;
-	Wed, 19 Dec 2012 15:07:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SLvjuZP3hJ7gJ6s3SE+D8oohP58=; b=NFZAek
-	r9ps/kDygU8ifwJv8zm63sP4jAUhp3IQqy3j+ACqYfwu1PIVlenLCaLUOLw9TyjH
-	LNJc5SAUX2ZcepXXxK9xipiGa2Eooaqp5MqfwwuVnXypTqAYtyUAg+lzAn0c0Qo+
-	IcrO9utxcFeg56WdmShaLULEGSIs5Hpb4TPmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H3OPUfhsDBxKt2a068+LEEyniwmgVeqA
-	zIjPMewop/uon3bn182kSLdJUIHr6N7AmnNE90Xa5EzqX+DlF+JZ/C7o2hgJK1PT
-	FxZU6b0ZI6HFf/pycItVHjIvpX21xGutmk+NHgIAF2qsNjCC+Be5F3kEOwMdjwpO
-	bE5ZONrUKKA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23115A60B;
-	Wed, 19 Dec 2012 15:07:38 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97543A60A; Wed, 19 Dec 2012
- 15:07:37 -0500 (EST)
-In-Reply-To: <87ip7yp4mf.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
- "Wed, 19 Dec 2012 14:12:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC31B3E6-4A17-11E2-B8D4-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751622Ab2LSUey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 15:34:54 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58757 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751521Ab2LSUex (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 15:34:53 -0500
+Received: (qmail 32722 invoked by uid 107); 19 Dec 2012 20:35:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Dec 2012 15:35:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2012 15:34:49 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211845>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Git takes pathspec arguments in many places to limit the
+scope of an operation. These pathspecs are treated not as
+literal paths, but as glob patterns that can be fed to
+fnmatch. When a user is giving a specific pattern, this is a
+nice feature.
 
-> I still wouldn't recommend this approach in git-replace(1) for several
-> reasons:
->
-> * It does not generalize in any direction.  For each field you may want
->   to change, you have to know a _specific_ way of getting just the
->   commit you want.
->
-> * More to the point of replacing the parent lists, while the above might
->   be expected of a slightly advanced git user, you get into deep magic
->   the second you want to fake a merge commit with an arbitrary
->   combination of parents.  (No, you don't need to tell me how.  I'm just
->   saying that fooling with either MERGE_HEAD or read-tree is not for
->   mere mortals.)
+However, when programatically providing pathspecs, it can be
+a nuisance. For example, to find the latest revision which
+modified "$foo", one can use "git rev-list -- $foo". But if
+"$foo" contains glob characters (e.g., "f*"), it will
+erroneously match more entries than desired. The caller
+needs to quote the characters in $foo, and even then, the
+results may not be exactly the same as with a literal
+pathspec. For instance, the depth checks in
+match_pathspec_depth do not kick in if we match via fnmatch.
 
-I do not buy either of the above.  When you are replacing one with
-something else, you ought to know what that something else is and
-how to create it.  Editing a text file with an editor to replace
-40-hex object names with another is not a more intuitive way for end
-users, either (in other words, you are seeing this from the point of
-view of somebody who *knows* the internal representation of Git
-objects too much).
+This patch introduces a config option to turn all pathspecs
+into literal strings. This makes it easy to turn off the
+globbing behavior for a whole environment (e.g., if you are
+serving repos via a web interface that is only going to
+use literal programmatic pathspecs), or for a particular run
+(by using "git -c" to set the option for this run).
 
-> * The above potentially introduces clock skew into the repository, which
->   can trigger bugs (like rev-list accidentally missing out on some side
->   arm!) until we get around to implementing and using generation
->   numbers.
+It cannot turn off globbing for particular pathspecs. That
+could eventually be done with a ":(noglob)" magic pathspec
+prefix. However, that level of granularity is not often
+needed, and doing ":(noglob)" right would mean converting
+the whole codebase to use "struct pathspec", as the usual
+"const char **pathspec" cannot represent extra per-item
+flags.
 
-That is an irrelevant point when comparing the "go down to bare
-metal replacing the object representation" vs "use the usual Git
-tools the end users are already familiar with" approaches.  You will
-encounter the issue you are raising if you make a newer commit a
-parent of an existing child with an older commit timestamp, no
-matter how you do the grafting.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Part of me thinks this is just gross, because ":(noglob)" is the right
+solution. But after spending a few hours trying it this morning, there
+is a ton of refactoring required to make it work correctly everywhere
+(although we could die() if we see it in places that are not using
+init_pathspec, so at least we could say "not supported yet" and not just
+silently ignore it).
+
+Still, this is so easy to do, and the lack of granularity does not hurt
+my use cases at all (which, if you have not guessed, are improving
+corner cases in scripted calls on GitHub). And I do not think it is just
+me, or just GitHub. Any server-side porcelain would be better off with
+such an option (for example, I think gitweb has the same issues; it is
+just that they are pretty rare, because most people do not put glob
+metacharacters into their filenames).
+
+So I think this is a nice, simple approach for sites that want it, and
+noglob magic can come later (and will not be any harder to implement as
+a result of this patch).
+
+ cache.h                    |  1 +
+ config.c                   |  5 +++++
+ dir.c                      | 12 +++++-----
+ environment.c              |  1 +
+ t/t6130-pathspec-noglob.sh | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 70 insertions(+), 5 deletions(-)
+ create mode 100755 t/t6130-pathspec-noglob.sh
+
+diff --git a/cache.h b/cache.h
+index 18fdd18..0725a33 100644
+--- a/cache.h
++++ b/cache.h
+@@ -555,6 +555,7 @@ extern int precomposed_unicode;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
++extern int core_pathspec_glob;
+ 
+ enum branch_track {
+ 	BRANCH_TRACK_UNSPECIFIED = -1,
+diff --git a/config.c b/config.c
+index fb3f868..8a96ba7 100644
+--- a/config.c
++++ b/config.c
+@@ -760,6 +760,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.pathspecglob")) {
++		core_pathspec_glob = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/dir.c b/dir.c
+index 5a83aa7..6e81d4f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -126,7 +126,7 @@ static int match_one(const char *match, const char *name, int namelen)
+ 		for (;;) {
+ 			unsigned char c1 = tolower(*match);
+ 			unsigned char c2 = tolower(*name);
+-			if (c1 == '\0' || is_glob_special(c1))
++			if (c1 == '\0' || (core_pathspec_glob && is_glob_special(c1)))
+ 				break;
+ 			if (c1 != c2)
+ 				return 0;
+@@ -138,7 +138,7 @@ static int match_one(const char *match, const char *name, int namelen)
+ 		for (;;) {
+ 			unsigned char c1 = *match;
+ 			unsigned char c2 = *name;
+-			if (c1 == '\0' || is_glob_special(c1))
++			if (c1 == '\0' || (core_pathspec_glob && is_glob_special(c1)))
+ 				break;
+ 			if (c1 != c2)
+ 				return 0;
+@@ -148,14 +148,16 @@ static int match_one(const char *match, const char *name, int namelen)
+ 		}
+ 	}
+ 
+-
+ 	/*
+ 	 * If we don't match the matchstring exactly,
+ 	 * we need to match by fnmatch
+ 	 */
+ 	matchlen = strlen(match);
+-	if (strncmp_icase(match, name, matchlen))
++	if (strncmp_icase(match, name, matchlen)) {
++		if (!core_pathspec_glob)
++			return 0;
+ 		return !fnmatch_icase(match, name, 0) ? MATCHED_FNMATCH : 0;
++	}
+ 
+ 	if (namelen == matchlen)
+ 		return MATCHED_EXACTLY;
+@@ -1429,7 +1431,7 @@ int init_pathspec(struct pathspec *pathspec, const char **paths)
+ 
+ 		item->match = path;
+ 		item->len = strlen(path);
+-		item->use_wildcard = !no_wildcard(path);
++		item->use_wildcard = core_pathspec_glob && !no_wildcard(path);
+ 		if (item->use_wildcard)
+ 			pathspec->has_wildcard = 1;
+ 	}
+diff --git a/environment.c b/environment.c
+index 85edd7f..d0d30a0 100644
+--- a/environment.c
++++ b/environment.c
+@@ -59,6 +59,7 @@ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ int core_apply_sparse_checkout;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
++int core_pathspec_glob = 1;
+ struct startup_info *startup_info;
+ unsigned long pack_size_limit_cfg;
+ 
+diff --git a/t/t6130-pathspec-noglob.sh b/t/t6130-pathspec-noglob.sh
+new file mode 100755
+index 0000000..bb962ac
+--- /dev/null
++++ b/t/t6130-pathspec-noglob.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='test globbing (and noglob) of pathspec limiting'
++. ./test-lib.sh
++
++test_expect_success 'create commits with glob characters' '
++	test_commit unrelated bar &&
++	test_commit vanilla foo &&
++	test_commit star "f*" &&
++	test_commit bracket "f[o][o]"
++'
++
++test_expect_success 'vanilla pathspec matches literally' '
++	echo vanilla >expect &&
++	git log --format=%s -- foo >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'star pathspec globs' '
++	cat >expect <<-\EOF &&
++	bracket
++	star
++	vanilla
++	EOF
++	git log --format=%s -- "f*" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'bracket pathspec globs and matches literal brackets' '
++	cat >expect <<-\EOF &&
++	bracket
++	vanilla
++	EOF
++	git log --format=%s -- "f[o][o]" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'no-glob config matches literally (vanilla)' '
++	echo vanilla >expect &&
++	git -c core.pathspecglob=false log --format=%s -- foo >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'no-glob config matches literally (star)' '
++	echo star >expect &&
++	git -c core.pathspecglob=false log --format=%s -- "f*" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'no-glob config matches literally (bracket)' '
++	echo bracket >expect &&
++	git -c core.pathspecglob=false log --format=%s -- "f[o][o]" >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+1.8.1.rc2.24.gf3bad77
