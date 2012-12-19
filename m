@@ -1,124 +1,111 @@
-From: Patrick Donnelly <batrick@batbytes.com>
-Subject: Re: Python extension commands in git - request for policy change
-Date: Tue, 18 Dec 2012 21:30:22 -0500
-Message-ID: <CACh33Fo=FqvVf-P6-FTdv3aXAQMDEN4sVdE8dm_49fnSMreAWA@mail.gmail.com>
-References: <20121125024451.1ADD14065F@snark.thyrsus.com>
-	<CAMP44s18MzmWRNRiRjL6hvpK1cm=S-97fB2ep-_0RAhnfs5cvA@mail.gmail.com>
-	<50B1F684.5020805@alum.mit.edu>
-	<CACsJy8BgOpWdxgCfwBwZ=abAEDr+sbj3hnmKY2EYCFeBPRUT7w@mail.gmail.com>
-	<CACh33FrGPhaeNzZ2Tj5OxScecOPN13idw8TwU8Mf6o0KsAOB9A@mail.gmail.com>
-	<CAMK1S_hy8U0rVY=-u-QCqXjhn-6jwz5ofj_q_mbokVn8CGCMtw@mail.gmail.com>
-	<20121212033043.GA24937@thyrsus.com>
-	<CACh33Fpk8_ZXw8Ladx83J+rmdRYf7ruYAMMkqOKcoH3OApKPJQ@mail.gmail.com>
-	<20121212124306.GC25981@thyrsus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-clean: Display more accurate delete messages
+Date: Tue, 18 Dec 2012 18:37:14 -0800
+Message-ID: <7vy5gudaxx.fsf@alter.siamese.dyndns.org>
+References: <1355743765-17549-1-git-send-email-zoltan.klinger@gmail.com>
+ <7vsj74jr2k.fsf@alter.siamese.dyndns.org>
+ <CAKJhZwRPzrsnbnW_HgRTo86T6jqmm_osznDqpYo7pKO=cUaVDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Eric Raymond <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 03:36:02 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 03:37:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tl9Vn-0003kv-2k
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 03:35:59 +0100
+	id 1Tl9XM-0004Xw-M4
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 03:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754656Ab2LSCfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2012 21:35:41 -0500
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:48188 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754317Ab2LSCfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2012 21:35:40 -0500
-Received: by mail-oa0-f43.google.com with SMTP id k1so1478727oag.30
-        for <git@vger.kernel.org>; Tue, 18 Dec 2012 18:35:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=iUDF5az6OIKI9bGLnnNLDQ5gpaZenY03HZxDc2FwniY=;
-        b=j45PDtcQE2d/zjt34XMArMSqnpHLJizkf6859Hg3j/OcfMt++cbJLNt4mO3Hx4LjIw
-         /MS4KtOjXb1YhRhURm7ExCXyyfJ4kW0KlJakp8pS92K79PG442b9MytHOnZ5iRW4BGKp
-         hkHbdGtDT+75z7pkVUOoJnvuXQB2Bx/NTzYM0QgP+HWYz/p+O0bv84I3w6ZfqUAUaBTQ
-         OHR0PIGZPAPZ6NlZ1dSN+6hhrPu1axsa8VlRMHbDN5TTWpiq2H6DSZnENfhIdGcvEfiW
-         BHMZaYaf4irEaeZ97wNV+m8OIPN+6gzntbj2rDML0pJGcuREPPu4WUqys4is2p1OW5ID
-         UtGA==
-Received: by 10.60.2.135 with SMTP id 7mr3511304oeu.127.1355884223039; Tue, 18
- Dec 2012 18:30:23 -0800 (PST)
-Received: by 10.76.13.234 with HTTP; Tue, 18 Dec 2012 18:30:22 -0800 (PST)
-In-Reply-To: <20121212124306.GC25981@thyrsus.com>
-X-Gm-Message-State: ALoCoQl7cSdmhJLV5K2Wgp4TKQETAFXFsrRBJy9FxiE0RZ6Bu+9L0Y6rXFqaV6BqxsNiFZXW6jZo
+	id S1754173Ab2LSChT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2012 21:37:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46498 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752799Ab2LSChS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2012 21:37:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4307DA3F5;
+	Tue, 18 Dec 2012 21:37:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uUrBR0WsAUzZcKbCiv1QAHzCcyQ=; b=DMr62N
+	zQzaubEenMoh/Is42xVBEGODxCXQ85GUDQC//WK53uAM/NRQsTDpfB8ZNbHZmvdg
+	FScuX7W0eBEk2CQ1UbtdZ/+uHuU2LpcKQDNvc5QHAh38p70weOFqgf9RAfuAZ0cn
+	i6kPkzieqJC5MpuhYHINfqX/Au344SvmBs+WY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IA9Fjrgl1QpY2am0lQvZ8Y8328/o7jwE
+	Nic/++tj2eXOkdAH0AQDfunLqzrLQSu9vfJYAvtjSd26YNXLu+TLq69qOiQYzu1V
+	0yMW4xlSG3NjrJanAmOyn1mP32Bi5t7P75WJeZOP0FolSycYsh6NIHhgkjP2B9gE
+	n+hwurM6V5c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 308E1A3EB;
+	Tue, 18 Dec 2012 21:37:17 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E949A3E9; Tue, 18 Dec 2012
+ 21:37:16 -0500 (EST)
+In-Reply-To: <CAKJhZwRPzrsnbnW_HgRTo86T6jqmm_osznDqpYo7pKO=cUaVDA@mail.gmail.com> (Zoltan
+ Klinger's message of "Wed, 19 Dec 2012 11:59:59 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 00AB9200-4985-11E2-BEC7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211799>
 
-On Wed, Dec 12, 2012 at 7:43 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Patrick Donnelly <batrick@batbytes.com>:
->>        How would another language (e.g. Python) mitigate this?
+Zoltan Klinger <zoltan.klinger@gmail.com> writes:
+
+> Thanks for the feedback.
 >
-> The way you mitigate this sort of problem is to have a good set of
-> high-level bindings for standard services (like socket I/O) built in
-> your extension language and using its abstractions, so you don't get a
-> proliferation of low-level semi-custom APIs for doing the same stuff.
+>> My reading of the above is that "lst" after sorting is expected to
+>> have something like:
+>>
+>>         a/
+>>         a/b/
+>>         a/b/to-be-removed
+>>         a/to-be-removed
+>>
+>> and we first show "a/", remember that prefix in "dir", not show
+>> "a/b/" because it matches prefix, but still update the prefix to
+>> "a/b/", not show "a/b/to-be-removed", and because "a/to-be-removed"
+>> does not match the latest prefix, it is now shown.  Am I confused???
 >
-> I have elsewhere referred to this as "the harsh lesson of Perl", which
-> I do not love but which was the first scripting language to get this
-> right.  There is a reason Tcl and a couple of earlier designs like csh
-> that we would now call "scripting languages" were displaced by Python
-> and Perl; this is it.
+> No, it's a bug. The correct output should be just "a/". Thanks for
+> pointing it out, I'm going to fix that.
 
-Okay, I understand what you were trying to say earlier.
+I am not sure if the approach taken by the patch is an effective
+design to achieve what you are trying to do.
 
-I'm not going to say Lua is a silver bullet for all embedded language
-needs. If you seriously need an exotic suite of libraries built into
-the language, then Lua is not really going to work well for you. In
-reality though, many projects that require an extension language do
-not need all the system programming facilities thrown in. In fact,
-many don't want them due to bloat or security considerations. So, you
-take on a hyperopic viewpoint by ruling out Lua simply because it
-lacks a suite of system libraries.
+Imagine the code is told to "clean" (or "clean a") and is currentlly
+looking at "a/b" directory.  If it cannot remove some paths under
+that directory, you know that you cannot abbreviate the result to
+"removed a/b" and have to report a/b/<paths you managed to remove>
+at that point.  On the other hand, if you removed everything in that
+directory, you know you have only two possible outcomes regarding
+that directory in the final output:
 
-With Jeff's response:
+ (1) You would say "removed a/b" if you failed to remove paths that
+     are neighbours to that directory (e.g. "a/to-be-removed" may
+     not go away for some reason), because you will also list
+     "removed a/<other path>" next to it, and report that you
+     couldn't remove "a/to-be-removed".  You will not report
+     anything about "a/b/to-be-removed" in such a case; or
 
-> As for "interacting with the outside world", I was specifically thinking
-> of stuff like git-send-email (currently in perl) and git-imap-send
-> (written in C). They need to open network sockets and speak standard
-> protocols. I suspect Lua would need a module or custom bindings to do
-> the former at all, and certainly the code would be much simpler if we
-> re-used standard modules for speaking SMTP and IMAP (which of course
->increases our dependencies again...).
+ (2) You would not even say "removed a/b" if you will successfully
+     remove all other paths under "a/".
 
-I would think this can perhaps be exported into another script Lua
-could exec as needed. Or luasocket may be sufficient. These
-dependencies would need to be examined in detail. I wouldn't recommend
-selecting a language because of one odd network protocol dependency
-satisfied by an obscure built-in library (I realize Jeff's example was
-exactly that, an example).
+So in either case, if you managed to remove everything in "a/b", I
+do not see any reason to keep the list of successfully removed paths
+annd report them upwards.  They will never be used by the caller
+that is looking at "a/", or its caller that is looking at the root
+level, will they?
 
-On Wed, Dec 12, 2012 at 7:43 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
->> I don't see how these languages are more appropriate based on your concerns.
->
-> Your previous exchange with Jeff King indicates that you don't
-> understand glue scripting very well.  Your puzzlement here just
-> confirms that.  Trust both of us on this, it's important.  And
-> reread my previous three paragraphs.
-
-What I didn't understand coming into this thread was Git's ecosystem.
-I understand embedded scripting languages very well and have been
-working with Lua for years.
-
-What does puzzle me is your dismissal of Lua because it doesn't have
-the library suite Python does. Lua is not a system programming
-language and I could argue Python is not really an embedded language.
-I came here to try to stimulate discussion about what Git actually
-needs/wants from a higher level language. If a small embedded language
-would fit well, the Lua should be a candidate for consideration.
-
---
-- Patrick Donnelly
+On the other hand, if you failed to remove some paths under "a/b",
+before recursion leaves that directory, you know which paths to be
+reported as successful or failure, which means you can start
+producing output without waiting until the traversal touches the
+entire tree. That can be a huge latency win, which matters a lot in
+a large project.
