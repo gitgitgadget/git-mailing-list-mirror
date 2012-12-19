@@ -1,87 +1,114 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] t9020: use configured Python to run test helper
-Date: Wed, 19 Dec 2012 08:15:40 -0500
-Message-ID: <20121219131540.GA14207@padd.com>
-References: <7vip7yd4u2.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t0200: "locale" may not exist
+Date: Wed, 19 Dec 2012 08:18:22 -0500
+Message-ID: <20121219131822.GB7134@sigill.intra.peff.net>
+References: <7vlicubkt4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 14:16:02 2012
+X-From: git-owner@vger.kernel.org Wed Dec 19 14:18:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlJVB-0006pN-V0
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 14:16:02 +0100
+	id 1TlJXn-0008EX-ON
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 14:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751302Ab2LSNPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 08:15:45 -0500
-Received: from honk.padd.com ([74.3.171.149]:44421 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751114Ab2LSNPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 08:15:44 -0500
-Received: from arf.padd.com (unknown [50.55.150.96])
-	by honk.padd.com (Postfix) with ESMTPSA id C7FDE20C2;
-	Wed, 19 Dec 2012 05:15:42 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 30B9422615; Wed, 19 Dec 2012 08:15:40 -0500 (EST)
+	id S1752255Ab2LSNS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 08:18:27 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58438 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751187Ab2LSNSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 08:18:25 -0500
+Received: (qmail 28675 invoked by uid 107); 19 Dec 2012 13:19:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Dec 2012 08:19:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2012 08:18:22 -0500
 Content-Disposition: inline
-In-Reply-To: <7vip7yd4u2.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vlicubkt4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211821>
 
-gitster@pobox.com wrote on Tue, 18 Dec 2012 20:49 -0800:
-> The test helper svnrdump_sim.py is used as "svnrdump" during the
-> execution of this test, but the arrangement had a few undesirable
-> things:
-> 
->  - it relied on symbolic links;
->  - unportable "export VAR=VAL" was used;
->  - GIT_BUILD_DIR variable was not quoted correctly;
->  - it assumed that the Python interpreter is in /usr/bin/ and
->    called "python" (i.e. not "python2.7" etc.)
-> 
-> Rework this by writing a small shell script that spawns the right
-> Python interpreter, using the right quoting.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * The analysis above counts more bugs than the number of lines that
->    are deleted in this section of the code...
-> 
->  t/t9020-remote-svn.sh | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/t/t9020-remote-svn.sh b/t/t9020-remote-svn.sh
-> index 4f2dfe0..d7be66a 100755
-> --- a/t/t9020-remote-svn.sh
-> +++ b/t/t9020-remote-svn.sh
-> @@ -12,9 +12,13 @@ then
->  	test_done
->  fi
->  
-> -# We override svnrdump by placing a symlink to the svnrdump-emulator in .
-> -export PATH="$HOME:$PATH"
-> -ln -sf $GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py "$HOME/svnrdump"
-> +# Override svnrdump with our simulator
-> +PATH="$HOME:$PATH"
-> +export PATH PYTHON_PATH GIT_BUILD_DIR
-> +
-> +write_script "$HOME/svnrdump" <<\EOF
-> +exec "$PYTHON_PATH" "$GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py" "$@"
-> +EOF
+On Tue, Dec 18, 2012 at 10:47:03PM -0800, Junio C Hamano wrote:
 
-You don't really need to export PYTHON_PATH and GIT_BUILD_DIR if
-you get them expanded in the svnrdump script wrapper.  Unquote
-the EOF but add \ for $@.
+> On systems without "locale" installed, t0200-gettext-basic.sh leaked
+> error messages when checking if some test locales are available.
+> Hide them, as they are not very useful.
 
-Either way it's a nice improvement, especially with the
-bugs/lines metric being >1.
+Obviously correct, though there is another way:
 
-		-- Pete
+> diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
+> index 0f76f6c..ae8883a 100644
+> --- a/t/lib-gettext.sh
+> +++ b/t/lib-gettext.sh
+> @@ -14,12 +14,14 @@ export GIT_TEXTDOMAINDIR GIT_PO_PATH
+>  if test_have_prereq GETTEXT && ! test_have_prereq GETTEXT_POISON
+
+If we turn this line into:
+
+  test_expect_success GETTEXT,!GETTEXT_POISON 'setup locale' '
+
+then people can see the error output of the setup step in verbose mode.
+
+Annoyingly, though, it means tweaking the quoting throughout the block
+to handle embedded single-quotes (if there is one feature I could take
+from perl back into shell, it would be arbitrary quote delimiters).
+
+Patch is below. I don't know if it is worth the complexity.
+
+-Peff
+
+diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
+index 0f76f6c..d962c00 100644
+--- a/t/lib-gettext.sh
++++ b/t/lib-gettext.sh
+@@ -11,18 +11,17 @@ then
+ 
+ . "$GIT_BUILD_DIR"/git-sh-i18n
+ 
+-if test_have_prereq GETTEXT && ! test_have_prereq GETTEXT_POISON
+-then
++test_expect_success GETTEXT,!GETTEXT_POISON 'setup locale' '
+ 	# is_IS.UTF-8 on Solaris and FreeBSD, is_IS.utf8 on Debian
+-	is_IS_locale=$(locale -a | sed -n '/^is_IS\.[uU][tT][fF]-*8$/{
++	is_IS_locale=$(locale -a | sed -n "/^is_IS\.[uU][tT][fF]-*8\$/{
+ 		p
+ 		q
+-	}')
++	}")
+ 	# is_IS.ISO8859-1 on Solaris and FreeBSD, is_IS.iso88591 on Debian
+-	is_IS_iso_locale=$(locale -a | sed -n '/^is_IS\.[iI][sS][oO]8859-*1$/{
++	is_IS_iso_locale=$(locale -a | sed -n "/^is_IS\.[iI][sS][oO]8859-*1\$/{
+ 		p
+ 		q
+-	}')
++	}")
+ 
+ 	# Export them as an environment variable so the t0202/test.pl Perl
+ 	# test can use it too
+@@ -37,7 +36,7 @@ then
+ 		# Exporting for t0202/test.pl
+ 		GETTEXT_LOCALE=1
+ 		export GETTEXT_LOCALE
+-		say "# lib-gettext: Found '$is_IS_locale' as an is_IS UTF-8 locale"
++		say "# lib-gettext: Found \"$is_IS_locale\" as an is_IS UTF-8 locale"
+ 	else
+ 		say "# lib-gettext: No is_IS UTF-8 locale available"
+ 	fi
+@@ -48,8 +47,8 @@ then
+ 		# Some of the tests need the reference Icelandic locale
+ 		test_set_prereq GETTEXT_ISO_LOCALE
+ 
+-		say "# lib-gettext: Found '$is_IS_iso_locale' as an is_IS ISO-8859-1 locale"
++		say "# lib-gettext: Found \"$is_IS_iso_locale\" as an is_IS ISO-8859-1 locale"
+ 	else
+ 		say "# lib-gettext: No is_IS ISO-8859-1 locale available"
+ 	fi
+-fi
++'
