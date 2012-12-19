@@ -1,84 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG?] git-subtree behavior when the -P tree is removed and
- recreated
-Date: Wed, 19 Dec 2012 07:59:14 -0800
-Message-ID: <7v8v8uav8t.fsf@alter.siamese.dyndns.org>
-References: <CACUV5ofmuUku=byR1_+Cq+g0SdzqZbH1Z1tPfQf4eNABVyYb_Q@mail.gmail.com>
- <CACUV5odffQoCxr=hTuP+S+DU4+6qD7y=YkTCN3iRr7rjar1bLQ@mail.gmail.com>
- <CACUV5ocT56iOS3dZsJ4JLo70o1HJv2TSrvBHE646SyQVmOuYRg@mail.gmail.com>
- <877gozuooz.fsf@pctrast.inf.ethz.ch>
- <CACUV5odJx1+47ggOAppN7whJhLABrRP-3mRWo8adQqbxF4mA5A@mail.gmail.com>
+From: wking@tremily.us
+Subject: [PATCH v8 0/3] submodule update: add --remote for submodule's upstream
+ changes
+Date: Wed, 19 Dec 2012 11:03:30 -0500
+Message-ID: <cover.1355932282.git.wking@tremily.us>
+References: <20121212230217.GB7729@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Avery Pennarun <apenwarr@gmail.com>,
-	"David A.Greene" <greened@obbligato.org>
-To: Tomi Belan <tomi.belan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 16:59:40 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 19 17:04:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlM3U-0000S1-U4
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 16:59:37 +0100
+	id 1TlM7x-0003Qa-Pe
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 17:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755541Ab2LSP7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 10:59:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54781 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754724Ab2LSP7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 10:59:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12E3DBB89;
-	Wed, 19 Dec 2012 10:59:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PJ4bWVM0nvHdj67gKHYkzgOZQUE=; b=oPQKPD
-	/e2tq+MLaJImAmcCBrkJ3BgK8gCBWu57CjZHZgTMzleBcFEX3AC0Raqg0QUH8+Gx
-	e55DeLGSkQcv04IVbjh0UMWTCX3F6/rBiSmbvDAhNSiGcDU0M+izHfTTWVWq19D0
-	Ru5RdkNjIvZNnGRKHgbQFpv/liL1YLn46kA/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RN3UA5dtA8tS8glBgnUlEkUIMFof0crg
-	80nGxF5NKfNOAgbxKiYkSITJuck24FO3WaPgpXn0xYq733fL3xOd+9lx0bdbPYJy
-	wh6x1hQXu54fXzEHoI4gFltReMzMh86gwGCKHz2QZ0m7WuzdjwfZBbVb/rEMuVeK
-	Sygy+BvSYMI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE441BB88;
-	Wed, 19 Dec 2012 10:59:16 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 586B6BB86; Wed, 19 Dec 2012
- 10:59:16 -0500 (EST)
-In-Reply-To: <CACUV5odJx1+47ggOAppN7whJhLABrRP-3mRWo8adQqbxF4mA5A@mail.gmail.com> (Tomi
- Belan's message of "Wed, 19 Dec 2012 16:40:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0A555884-49F5-11E2-A389-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755608Ab2LSQDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 11:03:55 -0500
+Received: from vms173019pub.verizon.net ([206.46.173.19]:50261 "EHLO
+	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755579Ab2LSQDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 11:03:54 -0500
+Received: from odin.tremily.us ([unknown] [72.68.92.119])
+ by vms173019.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MFA00JEYCLQ8A90@vms173019.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 19 Dec 2012 10:03:28 -0600 (CST)
+Received: from mjolnir (mjolnir.tremily.us [192.168.0.6])
+	by odin.tremily.us (Postfix) with SMTP id 81B9B737703; Wed,
+ 19 Dec 2012 11:03:25 -0500 (EST)
+Received: by mjolnir (sSMTP sendmail emulation); Wed, 19 Dec 2012 11:03:38 -0500
+X-Mailer: git-send-email 1.8.0
+In-reply-to: <20121212230217.GB7729@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211830>
 
-Tomi Belan <tomi.belan@gmail.com> writes:
+From: "W. Trevor King" <wking@tremily.us>
 
-> Thanks. Here's one more bump. Avery? David?
+Comments on v7 seem to have petered out, so here's v8.  Changes since
+v7:
 
-Thanks for your persistence.
+* Series based on gitster/master instead of v1.8.0.
+* In Documentation/config.txt, restored trailing line of
+  submodule.<name>.update documentation, which I had accidentally
+  removed in v7.
+* In Documentation/git-submodule.txt, make --no-fetch example in the
+  --remote description more general, following Phil's suggestion.
+* In git-submodule.sh:
+  * Remove accidental "ges" line.
+  * Use the submodule's default remote to determine which tracking
+    branch to fetch.  In v7 I'd been using the superproject's default
+    remote.
+  * In cmd_add(), use sm_name instead of sm_path to store the --branch
+    option (catching up with 73b0898).
 
-I am moderately dissapointed by the inaction on the subtree part so
-far.  It was merged hoping that it will have more exposure to the
-end-users if it were in my tree, and it obviously is gettng that,
-but the people involved in the subtree part does not seem to be
-holding their end of the bargain.
+W. Trevor King (3):
+  submodule: add get_submodule_config helper funtion
+  submodule update: add --remote for submodule's upstream changes
+  submodule add: If --branch is given, record it in .gitmodules
 
-I am seriously considering to remove it from the contrib/ area of my
-tree if we do not see any response.  The contrib/ area is not meant
-to be a dumping ground for abandoned WIP.
+ Documentation/config.txt        |  6 +++++
+ Documentation/git-submodule.txt | 25 +++++++++++++++++++-
+ Documentation/gitmodules.txt    |  5 ++++
+ git-submodule.sh                | 51 ++++++++++++++++++++++++++++++++++++++++-
+ t/t7400-submodule-basic.sh      |  1 +
+ t/t7406-submodule-update.sh     | 31 +++++++++++++++++++++++++
+ 6 files changed, 117 insertions(+), 2 deletions(-)
 
-Maybe it is a seasonal thing, just before the holiday season, but
-this has been unresponded for a couple of months, not even with a
-"That combination is not supported", or "Thanks for a bug report".
-
-Grumpy.
+-- 
+1.8.0
