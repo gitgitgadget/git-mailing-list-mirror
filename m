@@ -1,248 +1,95 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH v3] git-completion.bash: add support for path completion
-Date: Wed, 19 Dec 2012 22:54:05 +0100
-Message-ID: <50D2377D.90100@gmail.com>
-References: <1355943496-5533-1-git-send-email-manlio.perillo@gmail.com> <7vzk1995mx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add GIT_PATHSPEC_GLOB environment variable
+Date: Wed, 19 Dec 2012 14:00:03 -0800
+Message-ID: <7v7god8zz0.fsf@alter.siamese.dyndns.org>
+References: <20121219203449.GA10001@sigill.intra.peff.net>
+ <7vk3sd930z.fsf@alter.siamese.dyndns.org>
+ <20121219210919.GA11894@sigill.intra.peff.net>
+ <20121219215008.GA17908@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 22:59:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:00:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlRgC-0002S8-DI
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 22:59:56 +0100
+	id 1TlRgi-0002n7-6s
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:00:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751175Ab2LSV7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 16:59:39 -0500
-Received: from mail-we0-f173.google.com ([74.125.82.173]:43142 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751017Ab2LSV7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 16:59:38 -0500
-X-Greylist: delayed 313 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Dec 2012 16:59:37 EST
-Received: by mail-we0-f173.google.com with SMTP id z2so1184526wey.4
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 13:59:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=3NY8JaQTlO+S8MxxNQwWoywLMjOVRauCTYcy4ovHNZc=;
-        b=Ce9esrBcme9H0Im7HCY5PTQpgB3iDXZUI/3CWviScXWVgre7iE84ONgKtAOwt1yyWh
-         hb5iBZ42kqFlWTBScoku4+q3lk0r8hgOond+qSLE+x0/FxnpFeCs0YpbTyp0QJ7aXken
-         ZIUiU8JK0sWKJti5c6MxjvzPGrMJZvF0OJkntr8Aq9PTtViRDTq700Us1ZmaY6kHOMTk
-         AE01fmDXice7YYNqxhD7TgY58RD7p+jbEWRrVfLOOT09WsTRnMVxAJcPhRE+LIzZqcnw
-         INu0h5dldtIHXPvuA8FCOuKcmXd3DJZzo7X1mgknuRMDdzPH2KHqAFZ8f5LG0+wZPMOD
-         O8OA==
-X-Received: by 10.194.71.244 with SMTP id y20mr5617049wju.19.1355954063080;
-        Wed, 19 Dec 2012 13:54:23 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.213.162])
-        by mx.google.com with ESMTPS id i6sm22428520wix.5.2012.12.19.13.54.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 19 Dec 2012 13:54:22 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <7vzk1995mx.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
+	id S1751254Ab2LSWAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 17:00:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63079 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751017Ab2LSWAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 17:00:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C78FD68B7;
+	Wed, 19 Dec 2012 17:00:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g6fnci6VxgLjVSK0/ymXuzX3OkA=; b=Q+hN18
+	RjCC2UHiOReKBRNQH7w4OEU2AGKD2iuv760im2APYayHDVZU0dv9qZDi6r8p+Mks
+	oVEREUYZPJlt0r53PtIgx2BeZsaDGsajSV2M41ES6IeSCaoUwI2Fhb/Y+RAEU7qD
+	wR4TycO8SjYK3lE+/ino+qCdzrGHg37e/ef+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CoA78dMFw4QlrFGekdEfyDuDTYkqXgQP
+	wZhqBl1sgAuNnzjHTLANY6PLqJ6T3dzwGmgaveOTYI/WyzQ3ZQ0HnQmiAHmPPWpP
+	tugeLw72cJolAZbjQspv7ZeiNbQ5NRDHGFFvCnsHkWvycxyv8ninX53V/FW/MmYg
+	9mtXluk6Zl4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7897B68B5;
+	Wed, 19 Dec 2012 17:00:08 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46C2E68B3; Wed, 19 Dec 2012
+ 17:00:07 -0500 (EST)
+In-Reply-To: <20121219215008.GA17908@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 19 Dec 2012 16:50:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 736849DA-4A27-11E2-9B74-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211855>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Jeff King <peff@peff.net> writes:
 
-Il 19/12/2012 20:57, Junio C Hamano ha scritto:
-> [jch: again, adding area experts to Cc]
-> 
-> Manlio Perillo <manlio.perillo@gmail.com> writes:
-> 
->> Changes from version 2:
->>
->> 	* Perl is no more used.
->> 	* Fixed some coding style issues.
->> 	* Refactorized code, to improve future path completion support for
->> 	  the "git reset" command.
-> 
-> Thanks.  Will replace what was queued on 'pu'.
-> 
->> +# Process path list returned by "ls-files" and "diff-index --name-only"
->> +# commands, in order to list only file names relative to a specified
->> +# directory, and append a slash to directory names.
->> +# It accepts 1 optional argument: a directory path.  The path must have
->> +# a trailing slash.
-> 
-> The callsites that call this function, and the way the argument is
-> used, do not make it look like it is an optional argument to me.
-> 
-> After reading later parts of the patch, I think the callers are
-> wrong (see below) and you did intend to make "$1" optional.
-> 
+> I included the common_prefix fix you mentioned (I do not think it
+> produced incorrect results as it was, but it did not take full advantage
+> of an optimization).
 
-Thanks for the corrections.
-As you can see, I'm not very expert in bash programming.
-I will review the code to use proper escaping and correct optional
-parameters handling, based on your review.
+I do not think it would have affected the outcome; you would only
+have worked with more cycles.
 
-In this case, I incorrectly assumed that bash expands ${1} to an empty
-string, in case no arguments are passed to the function.
+> Subject: add GIT_PATHSPEC_GLOB environment variable
 
->> +__git_index_file_list_filter ()
->> +{
->> +	local path
->> +
->> +	while read -r path; do
->> +		path=${path#$1}
-> 
-> This will work correctly only if $1 does not have any shell
-> metacharacter that removes prefix of $path that matches $1 as a
-> pathname expansion pattern.  As this file is for bash completion,
-> using string-oriented Bash-isms like ${#1} (to get the length of the
-> prefix) and ${path:$offset} (to get substring) are perfectly fine
-> way to correct it.
-> 
+Seems cleanly done from a quick look.
 
-Ok.
+Given that the normal mode of operation is to use globbing, I
+suspect that the names would have been more natural if the toggle
+were GIT_PATHSPEC_LITERAL and the boolean function were
+limit_pathspec_to_literal(), instead of "allow_pathspec_glob()",
+sounding as if using glob is done only upon request.
 
-> Also, as $1 is optional, won't this barf if it is run under "set -u"?
->
+But that is a minor issue.
 
-Ok.
-Here I should use ${1-}.
+> This patch introduces an environment variable to turn all
+> pathspecs into literal strings. This makes it easy to turn
+> off the globbing behavior for a whole environment (e.g., if
+> you are serving repos via a web interface that is only going
+> to use literal programmatic pathspecs), or for a particular
+> run.
 
->> +# __git_index_files accepts 1 or 2 arguments:
->> +# 1: A string for file index status mode ("c", "m", "d", "o"), as
->> +#    supported by git ls-files command.
->> +# 2: A directory path (optional).
->> +#    If provided, only files within the specified directory are listed.
->> +#    Sub directories are never recursed.  Path must have a trailing
->> +#    slash.
->> +__git_index_files ()
->> +{
->> +	local dir="$(__gitdir)"
->> +
->> +	if [ -d "$dir" ]; then
->> +		git --git-dir="$dir" ls-files --exclude-standard "-${1}" "${2}" |
->> +			__git_index_file_list_filter ${2} | uniq
-> 
-> Even though everywhere else you seem to quote the variables with dq,
-> but this ${2} is not written as "${2}", which looks odd.  Deliberate?
-> 
+I am not sure if "web interface" is a particularly good example,
+though.  Is it unusual to imagine a Web UI that takes pathspecs from
+the user to limit its output (e.g. "diff" or "ls-tree") to those
+paths that match them?  In such a case, the user would expect their
+pathspecs to work the same way as the Git installed on their
+desktop, I would think.
 
-No, I simply missed it.
-
-> If you wanted to call __git_index_file_list_filter without parameter
-> when the caller did not give you the optional $2, then the above is
-> not the way to write it.  It would be ${2+"$2"}.
-
-Yes, this seems the better solution.
-
-> [...]
-
->> +# __git_diff_index_files accepts 1 or 2 arguments:
->> +# 1) The id of a tree object.
->> +# 2) A directory path (optional).
->> +#    If provided, only files within the specified directory are listed.
->> +#    Sub directories are never recursed.  Path must have a trailing
->> +#    slash.
->> +__git_diff_index_files ()
->> +{
->> +	local dir="$(__gitdir)"
->> +
->> +	if [ -d "$dir" ]; then
->> +		git --git-dir="$dir" diff-index --name-only "${1}" |
->> +			__git_index_file_list_filter "${2}" | uniq
-> 
-> This one, when the optional $2 is absent, will call __git_index_file_list_filter
-> with an empty string in its "$1".  Intended, or is it also ${2+"$2"}?
-
-No, it was not intended. But here it should probably be ${2-}.
-
-One possible rule is:
-    * ${n+"$n"} should be used by the _git_complete_xxx_file function;
-    * ${n-} should be used by the _git_xxx_file functions
-
-The alternative is for each function to use ${n-}, or {n+"$n"}.
-
-But I'm not sure.  What is the best practice in bash for optional
-parameters "propagation"?
-
-
-> 
->> +# __git_complete_index_file requires 1 argument: the file index
->> +# status mode
->> +__git_complete_index_file ()
->> +{
->> +	local pfx cur_="$cur"
->> +
->> +	case "$cur_" in
->> +		?*/*)
->> +			pfx="${cur_%/*}"
->> +			cur_="${cur_##*/}"
->> +			pfx="${pfx}/"
->> +
->> +			__gitcomp_nl "$(__git_index_files ${1} ${pfx})" "$pfx" "$cur_" ""
->> +			;;
->> +		*)
->> +			__gitcomp_nl "$(__git_index_files ${1})" "" "$cur_" ""
->> +			;;
->> +	esac
-> 
-> Please dedent the case arms by one level, i.e.
->
-
-I missed it.
-Vim do not intent correctly this, and I forgot to dedent.
-
-
-> [...]
->> +# __git_complete_diff_index_file requires 1 argument: the id of a tree
->> +# object
->> +__git_complete_diff_index_file ()
->> +{
->> +	local pfx cur_="$cur"
->> +
->> +	case "$cur_" in
->> +		?*/*)
->> +			pfx="${cur_%/*}"
->> +			cur_="${cur_##*/}"
->> +			pfx="${pfx}/"
->> +
->> +			__gitcomp_nl "$(__git_diff_index_files ${1} ${pfx})" "$pfx" "$cur_" ""
->> +			;;
->> +		*)
->> +			__gitcomp_nl "$(__git_diff_index_files ${1})" "" "$cur_" ""
->> +			;;
-> 
-> Unquoted $1 looks fishy, even if the only caller of this function
-> always gives "HEAD" to it (in which case you can do without making
-> it a parameter in the first place).
-> 
-
-Currently it is always "HEAD", but in future it may contain an arbitrary
-tree-ish (for my planned "git reset" path completion support).
-This is the reason why in version 3 of the patch I added this new
-__git_complete_diff_index_file function.
-
-Better to quote it.
-
-> Unquoted ${pfx} given to __git_diff_index_files also looks fishy.
-
-I missed it.
-
-
-Thanks   Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlDSN30ACgkQscQJ24LbaUQPRQCgkQaDyBeXjk5gMJsufGoe9FCe
-yDkAn2M4d1xRYSkF6P0lQQmENlbYiCb8
-=iml7
------END PGP SIGNATURE-----
+Will queue; thanks.
