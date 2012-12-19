@@ -1,88 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 3/3] submodule add: If --branch is given, record it in
- .gitmodules
-Date: Wed, 19 Dec 2012 09:43:30 -0800
-Message-ID: <7vhani9bul.fsf@alter.siamese.dyndns.org>
-References: <20121212230217.GB7729@odin.tremily.us>
- <cover.1355932282.git.wking@tremily.us>
- <2c8df95b9f4cc9ceb9d6d96d5deac22320541dd9.1355932282.git.wking@tremily.us>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH] Remove duplicate entry in ./Documentation/Makefile
+Date: Wed, 19 Dec 2012 19:15:25 +0100 (CET)
+Message-ID: <1674037566.22743.1355940925216.JavaMail.ngmail@webmail07.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>
-To: wking@tremily.us
-X-From: git-owner@vger.kernel.org Wed Dec 19 18:43:55 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: th.acker@arcor.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 19 19:15:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlNgP-0007Iz-1M
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 18:43:53 +0100
+	id 1TlOBE-00015u-S7
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 19:15:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754317Ab2LSRng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 12:43:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46488 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753072Ab2LSRne (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 12:43:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 919E2B230;
-	Wed, 19 Dec 2012 12:43:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VEmxDudFNDNQt6pYg5rf1oEpOuU=; b=cgWtpb
-	3odd+yz8vzXbKrzskHVH/0iv+m5uHXDfGySCCBdFsT4afU1vi+onxDZdKS/oLaWa
-	kjRd7snnpo5+EUr/uewKI5rTPJJiMZKsnHgEOpBhH2QdrjgdsUg0HuhcsJYHtfbr
-	ms3M47CGQG6eNY+akL7PNdafRg54xQ6geQ5Fk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a6Dl9QNagBpWd+5DZG4UnN18vvylwtd8
-	SvzqpVB2GqgU3YcQZReOWaBCL5+HFoUNQqoAqq7qeaJjyty91ES5tm5G4JusNhHg
-	H6XHf+5sHUqbqiBLur70+bzeaHM3zuFZkgyF7rA+zs2MDO+2t5qsOUK0RSWfNfhk
-	F35AVdphGOI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AE65B22D;
-	Wed, 19 Dec 2012 12:43:33 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD9CBB22A; Wed, 19 Dec 2012
- 12:43:32 -0500 (EST)
-In-Reply-To: <2c8df95b9f4cc9ceb9d6d96d5deac22320541dd9.1355932282.git.wking@tremily.us>
- (wking@tremily.us's message of "Wed, 19 Dec 2012 11:03:33 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9B81A3C2-4A03-11E2-B1ED-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751592Ab2LSSP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 13:15:28 -0500
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:55092 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751342Ab2LSSP0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2012 13:15:26 -0500
+Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
+	by mx.arcor.de (Postfix) with ESMTP id 3E3EC107BCE
+	for <git@vger.kernel.org>; Wed, 19 Dec 2012 19:15:25 +0100 (CET)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 3D32933B14F;
+	Wed, 19 Dec 2012 19:15:25 +0100 (CET)
+Received: from webmail07.arcor-online.net (webmail07.arcor-online.net [151.189.8.8])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 35A1210C4A7;
+	Wed, 19 Dec 2012 19:15:25 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-06.arcor-online.net 35A1210C4A7
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1355940925; bh=reE1ytUVxOvp34camgz7UKDT44Gnyayyzu7p43TD83g=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=fB3yGzTGQ5AFOkBbRk9EkXFxdjS6r2NsPE2M8oBPydHpoK741507CnZhaZe9g6SFv
+	 du8PiELUVAWO4xxD27QSbTj2A3QMbsLzx3eIWcbBgya5ck1TCEqqAQr78MlwH09h43
+	 VWpu4anaMGfrZL4HxLJ+bqQMJy2sDQoGtX/AFiNQ=
+Received: from [94.217.21.164] by webmail07.arcor-online.net (151.189.8.8) with HTTP (Arcor Webmail); Wed, 19 Dec 2012 19:15:24 +0100 (CET)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.21.164
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211838>
 
-wking@tremily.us writes:
 
-> From: "W. Trevor King" <wking@tremily.us>
->
-> This allows you to easily record a submodule.<name>.branch option in
-> .gitmodules when you add a new submodule.  With this patch,
->
->   $ git submodule add -b <branch> <repository> [<path>]
->   $ git config -f .gitmodules submodule.<path>.branch <branch>
->
-> reduces to
->
->   $ git submodule add -b <branch> <repository> [<path>]
->
-> This means that future calls to
->
->   $ git submodule update --remote ...
->
-> will get updates from the same branch that you used to initialize the
-> submodule, which is usually what you want.
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-I agree that it would usually be what you want when you are using
-the --remote option.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3615504..7df75d0 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -31,7 +31,6 @@ SP_ARTICLES += howto/separating-topic-branches
+ SP_ARTICLES += howto/revert-a-faulty-merge
+ SP_ARTICLES += howto/recover-corrupted-blob-object
+ SP_ARTICLES += howto/rebuild-from-update-hook
+-SP_ARTICLES += howto/rebuild-from-update-hook
+ SP_ARTICLES += howto/rebase-from-internal-branch
+ SP_ARTICLES += howto/maintain-git
+ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+-- 
+1.8.0.msysgit.0
 
-Will replace the previous round with this.  Thanks.
+
+---
+Thomas
