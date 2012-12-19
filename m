@@ -1,95 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add GIT_PATHSPEC_GLOB environment variable
-Date: Wed, 19 Dec 2012 14:00:03 -0800
-Message-ID: <7v7god8zz0.fsf@alter.siamese.dyndns.org>
-References: <20121219203449.GA10001@sigill.intra.peff.net>
- <7vk3sd930z.fsf@alter.siamese.dyndns.org>
- <20121219210919.GA11894@sigill.intra.peff.net>
- <20121219215008.GA17908@sigill.intra.peff.net>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH] git-completion.bash: add support for path completion
+Date: Wed, 19 Dec 2012 23:02:08 +0100
+Message-ID: <50D23960.4070108@gmail.com>
+References: <1355693080-4765-1-git-send-email-manlio.perillo@gmail.com> <7vy5gxnuy1.fsf@alter.siamese.dyndns.org> <50CEFF3A.4050802@gmail.com> <7vzk1clb3n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:00:35 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:02:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlRgi-0002n7-6s
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:00:28 +0100
+	id 1TlRin-0004E1-Cm
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254Ab2LSWAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 17:00:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63079 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751017Ab2LSWAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 17:00:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C78FD68B7;
-	Wed, 19 Dec 2012 17:00:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g6fnci6VxgLjVSK0/ymXuzX3OkA=; b=Q+hN18
-	RjCC2UHiOReKBRNQH7w4OEU2AGKD2iuv760im2APYayHDVZU0dv9qZDi6r8p+Mks
-	oVEREUYZPJlt0r53PtIgx2BeZsaDGsajSV2M41ES6IeSCaoUwI2Fhb/Y+RAEU7qD
-	wR4TycO8SjYK3lE+/ino+qCdzrGHg37e/ef+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CoA78dMFw4QlrFGekdEfyDuDTYkqXgQP
-	wZhqBl1sgAuNnzjHTLANY6PLqJ6T3dzwGmgaveOTYI/WyzQ3ZQ0HnQmiAHmPPWpP
-	tugeLw72cJolAZbjQspv7ZeiNbQ5NRDHGFFvCnsHkWvycxyv8ninX53V/FW/MmYg
-	9mtXluk6Zl4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7897B68B5;
-	Wed, 19 Dec 2012 17:00:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46C2E68B3; Wed, 19 Dec 2012
- 17:00:07 -0500 (EST)
-In-Reply-To: <20121219215008.GA17908@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 19 Dec 2012 16:50:09 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 736849DA-4A27-11E2-9B74-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751600Ab2LSWCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 17:02:21 -0500
+Received: from mail-wg0-f54.google.com ([74.125.82.54]:64063 "EHLO
+	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349Ab2LSWCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 17:02:19 -0500
+Received: by mail-wg0-f54.google.com with SMTP id fg15so1233235wgb.9
+        for <git@vger.kernel.org>; Wed, 19 Dec 2012 14:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=HZwhSx5gWrltCfdEbw9Ce2wURx/ZlqFDw0uCwxHMAyI=;
+        b=RplKROvwECaoG9KMf7TboATVTGqeQ56/2WpLHFb7f5XLnXQukqPyXJOrf5bUCuFHoR
+         1Zd1WxvseR6QkfTM0GB3+6nYz+LKQ12pqMx3DXAaTISr93rE/ezAovtvXHB2cC2+fMAS
+         Xywm2QkWq0qL5Oa5gRuH+AoAcfbCwA13xGsCZyd9UvESsXVKJDaE7QCs8sqJqcnb531G
+         9bZ5puEAqEjNLAlxkwHQBRB8g5r/LsAFxuYiA9OS620xKWSoVNldukaoR6Nm93iHJEKK
+         JFY6kRUy2Fi3YZVyigAxHVxX55Sob+pJY46XWiPtuQM2GBal4B6xVeiBcv2B+BcpRCDV
+         Uljg==
+X-Received: by 10.194.143.35 with SMTP id sb3mr14069180wjb.30.1355954538518;
+        Wed, 19 Dec 2012 14:02:18 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.213.162])
+        by mx.google.com with ESMTPS id fv2sm22458405wib.4.2012.12.19.14.02.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 19 Dec 2012 14:02:17 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <7vzk1clb3n.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211856>
 
-Jeff King <peff@peff.net> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I included the common_prefix fix you mentioned (I do not think it
-> produced incorrect results as it was, but it did not take full advantage
-> of an optimization).
+Il 17/12/2012 20:42, Junio C Hamano ha scritto:
+> [...]
+>>> I am not sure how you would handle the last parameter to "git mv",
+>>> though.  That is by definition a path that does not exist,
+>>> i.e. cannot be completed.
+>>
+>> Right, the code should be changed.
+>> No completion should be done for the second parameter.
+> 
+> I deliberately wrote "the last" not "the second", as you can do
+> 
+> 	$ mkdir X
+>         $ git mv COPYING README X/.
+> 
+> You do need to expand the second parameter to README when the user
+> types
+> 
+> 	git mv COPYING REAMDE X
+> 
+> then goes back with \C-b to "M", types \C-d three times to remove
+> "MDE", and then finally says <TAB>, to result in
+> 
+> 	git mv COPYING README X
+> 
 
-I do not think it would have affected the outcome; you would only
-have worked with more cycles.
+Assuming X is a new untracked directory, do you think it is an usability
+problem if an user try to do:
 
-> Subject: add GIT_PATHSPEC_GLOB environment variable
+	git mv COPYING README <TAB>
 
-Seems cleanly done from a quick look.
+and X does not appear in the completion list?
 
-Given that the normal mode of operation is to use globbing, I
-suspect that the names would have been more natural if the toggle
-were GIT_PATHSPEC_LITERAL and the boolean function were
-limit_pathspec_to_literal(), instead of "allow_pathspec_glob()",
-sounding as if using glob is done only upon request.
+As far as I know, the solution is to only support custom expansion the
+first parameter, unless the user will do something like:
 
-But that is a minor issue.
+	git mv COPYING README -- <TAB>
 
-> This patch introduces an environment variable to turn all
-> pathspecs into literal strings. This makes it easy to turn
-> off the globbing behavior for a whole environment (e.g., if
-> you are serving repos via a web interface that is only going
-> to use literal programmatic pathspecs), or for a particular
-> run.
 
-I am not sure if "web interface" is a particularly good example,
-though.  Is it unusual to imagine a Web UI that takes pathspecs from
-the user to limit its output (e.g. "diff" or "ls-tree") to those
-paths that match them?  In such a case, the user would expect their
-pathspecs to work the same way as the Git installed on their
-desktop, I would think.
+Regards  Manlio
 
-Will queue; thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDSOWAACgkQscQJ24LbaUSOnACfds93RtX1CDOeGbwCGM5/N8HI
+yVwAn0AZEO6rE083gKgFimGIbiRTyN5Z
+=z7K5
+-----END PGP SIGNATURE-----
