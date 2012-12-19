@@ -1,68 +1,78 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
-Subject: Re: problem with BOINC repository and CR/LF
-Date: Wed, 19 Dec 2012 11:44:14 +0100
-Message-ID: <50D19A7E.2070406@gmx.de>
-References: <50CEF289.4040503@gmx.de> <CAH5451=FpmtGVVJ=mubE0KeD-tTVaNU96audzTRnNQh2BEEXPg@mail.gmail.com> <50CF41EB.1060402@gmx.de> <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com> <50D03D80.3090005@gmx.de> <50D05E62.7090605@web.de> <20121218164132.GC20122@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Wed, 19 Dec 2012 08:06:32 -0500
+Message-ID: <20121219130632.GA7134@sigill.intra.peff.net>
+References: <20121217114058.449cbc3c@chalon.bertin.fr>
+ <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com>
+ <m21ueo78f8.fsf@igel.home>
+ <7vwqwgjs8f.fsf@alter.siamese.dyndns.org>
+ <20121218120058.0c558ba5@chalon.bertin.fr>
+ <50D05BAF.4000200@viscovery.net>
+ <871uentthz.fsf@pctrast.inf.ethz.ch>
+ <20121218144157.00ccd915@chalon.bertin.fr>
+ <20121218162402.GA20122@sigill.intra.peff.net>
+ <50D16911.10000@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 19 11:44:41 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Yann Dirson <dirson@bertin.fr>, Thomas Rast <trast@inf.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	git list <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Dec 19 14:07:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlH8e-0002x0-4l
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 11:44:36 +0100
+	id 1TlJMX-0001xT-1Y
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 14:07:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296Ab2LSKoT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2012 05:44:19 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59748 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750976Ab2LSKoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 05:44:18 -0500
-Received: from mailout-de.gmx.net ([10.1.76.33]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0M6PTB-1SsSSp2pH1-00yUfu for
- <git@vger.kernel.org>; Wed, 19 Dec 2012 11:44:16 +0100
-Received: (qmail invoked by alias); 19 Dec 2012 10:44:16 -0000
-Received: from d221095.adsl.hansenet.de (EHLO [80.171.221.95]) [80.171.221.95]
-  by mail.gmx.net (mp033) with SMTP; 19 Dec 2012 11:44:16 +0100
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX18sFRdVX2QsKdg+fGd3Gx1TQNj0QcFFWsysPZMK1+
-	zGJMlNBnCjs7cx
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20121218164132.GC20122@sigill.intra.peff.net>
-X-Enigmail-Version: 1.4.6
-X-Y-GMX-Trusted: 0
+	id S1751302Ab2LSNGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 08:06:45 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58417 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751430Ab2LSNGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 08:06:43 -0500
+Received: (qmail 28492 invoked by uid 107); 19 Dec 2012 13:07:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Dec 2012 08:07:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2012 08:06:32 -0500
+Content-Disposition: inline
+In-Reply-To: <50D16911.10000@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211817>
 
-On 12/18/2012 05:41 PM, Jeff King wrote:
-> I could reproduce it, too, on Linux.
->=20
-> The reason it does not always happen is that git will not re-examine =
-the
-> file content unless the timestamp on the file is older than what's in
-> the index. So it is a race condition for git to see whether the file =
-is
-> stat-dirty.
->=20
+On Wed, Dec 19, 2012 at 08:13:21AM +0100, Johannes Sixt wrote:
 
-Ah - /me was wondering why sometimes (but rarely) I could not exactly
-reproduce the problem and was really wondering if the underlying file
-system (ext4) would give an extra layer of trouble or not.
+> Am 12/18/2012 17:24, schrieb Jeff King:
+> > I am not really interested in pushing this forward myself, but I worked
+> > up this toy that somebody might find interesting (you can "git replace
+> > HEAD~20" to get dumped in an editor). It should probably handle trees,
+> > and it would probably make sense to do per-object-type sanity checks
+> > (e.g., call verify_tag on tags).
+> 
+> I know it's just a throw-away patch, but I would discourage to go this
+> route without also adding all the sanity checks. Otherwise, it will have
+> just created a porcelain command that can generate a commit object with
+> any content you want!
 
-Thx for that explanation.
+I think I agree with you that it would not be worth doing without sanity
+checks. I am not sure if your "any content you want" statement means
+"bad people can easily make bogus objects" or "it is too easy to make
+arbitrary mistakes, putting your repo in a bogus state".
 
+I would agree that the latter is compelling, but not the former.  You
+can already easily generate a commit with any content you want via
+"hash-object -t commit", and I have frequently done this while testing
+corner cases of fsck, how git behaves when given buggy data, etc. So to
+me it is not about preventing intentional abuse, but about not promoting
+a feature that makes it too easy to screw up.
 
---=20
-MfG/Sincerely
-Toralf F=C3=B6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+-Peff
