@@ -1,60 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Wed, 19 Dec 2012 08:13:21 +0100
-Message-ID: <50D16911.10000@viscovery.net>
-References: <7v38zb3ux0.fsf@alter.siamese.dyndns.org> <877goht6eu.fsf@pctrast.inf.ethz.ch> <20121217114058.449cbc3c@chalon.bertin.fr> <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com> <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org> <20121218120058.0c558ba5@chalon.bertin.fr> <50D05BAF.4000200@viscovery.net> <871uentthz.fsf@pctrast.inf.ethz.ch> <20121218144157.00ccd915@chalon.bertin.fr> <20121218162402.GA20122@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: sys/param.h
+Date: Wed, 19 Dec 2012 08:59:27 +0100
+Message-ID: <CABPQNSZQk6hHm-dWqFFQf0HF34Mvbjc8-mgzCr=G0zbBKiYUvA@mail.gmail.com>
+References: <20121217213730.GA17212@ftbfs.org> <50D02B9A.1040906@viscovery.net>
+ <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Yann Dirson <dirson@bertin.fr>, Thomas Rast <trast@inf.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 19 08:13:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 09:29:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlDqd-0006BC-UR
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 08:13:48 +0100
+	id 1TlF1y-0001jz-JW
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 09:29:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713Ab2LSHNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 02:13:30 -0500
-Received: from so.liwest.at ([212.33.55.24]:13476 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751427Ab2LSHN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 02:13:28 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TlDqE-0002fi-4Q; Wed, 19 Dec 2012 08:13:22 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id BAE3E1660F;
-	Wed, 19 Dec 2012 08:13:21 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20121218162402.GA20122@sigill.intra.peff.net>
-X-Enigmail-Version: 1.4.6
-X-Spam-Score: -1.0 (-)
+	id S1752723Ab2LSI3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 03:29:17 -0500
+Received: from mail-da0-f43.google.com ([209.85.210.43]:60544 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752589Ab2LSI3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 03:29:16 -0500
+X-Greylist: delayed 1748 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Dec 2012 03:29:16 EST
+Received: by mail-da0-f43.google.com with SMTP id u36so799370dak.30
+        for <git@vger.kernel.org>; Wed, 19 Dec 2012 00:29:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=yxXY7gOEuD2ghNs6UGm+JSLJUOara89kc2v5DhUQJc4=;
+        b=w3hKJNhaOOYvlYMMLC0+ezQaRq/nXtz+nT9JsyruCLNfOvQ5DVcPBz+C+PWzaxiJYj
+         m9ezwI/k/YxI/9c5NnuoBzR9paeSZslr7Uy4y++Dz/3gCPlC7LMqujlMTkJZphmY6yG0
+         QeH45IY0w0VOusLlfKXSFd7w2PMGQ3qH8v1vR1GmNkCJd6T950l+sqlMIGNex/gUvBSR
+         /Ni2SnD1fSOzjQ5YsupE5sP+ul7KQOTbjpCGVZFXTF95vwi0qeYOeFFk8/+ipOxZkxHS
+         6bHSwa+raKCvb+8VFO/4Sk5AxLcYI0QyjPfH482T/n3MkgqC5RPjq4/cjCNr0WVwl2n1
+         UEUA==
+Received: by 10.68.189.163 with SMTP id gj3mr15816822pbc.110.1355904007753;
+ Wed, 19 Dec 2012 00:00:07 -0800 (PST)
+Received: by 10.66.126.51 with HTTP; Tue, 18 Dec 2012 23:59:27 -0800 (PST)
+In-Reply-To: <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211812>
 
-Am 12/18/2012 17:24, schrieb Jeff King:
-> I am not really interested in pushing this forward myself, but I worked
-> up this toy that somebody might find interesting (you can "git replace
-> HEAD~20" to get dumped in an editor). It should probably handle trees,
-> and it would probably make sense to do per-object-type sanity checks
-> (e.g., call verify_tag on tags).
+On Tue, Dec 18, 2012 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>
+>>> Junio C Hamano wrote:
+>>>> It could turn out that we may be able to get rid of sys/param.h
+>>>> altogether, but one step at a time.  Inputs from people on minority
+>>>> platforms are very much appreciated---does your platform build fine
+>>>> when the inclusion of the file is removed from git-compat-util.h?
+>>
+>> MinGW works fine with sys/param.h removed from git-compat-util.h.
+>
+> It seems that OpenBSD 5.2 does not mind it getting removed, either.
+> Debian 5 and Debian 6 seem OK; so do Ubuntu 10.04 and 12.04.  I have
+> a hunch that Fedora or anything based on glibc would be fine, too.
 
-I know it's just a throw-away patch, but I would discourage to go this
-route without also adding all the sanity checks. Otherwise, it will have
-just created a porcelain command that can generate a commit object with
-any content you want!
-
--- Hannes
+And just to be sure; Fedora 17: OK.
