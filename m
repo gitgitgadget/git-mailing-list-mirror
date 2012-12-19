@@ -1,100 +1,98 @@
-From: wking@tremily.us
-Subject: [PATCH v8 1/3] submodule: add get_submodule_config helper funtion
-Date: Wed, 19 Dec 2012 11:03:31 -0500
-Message-ID: <3377beb925bc209d90058493b74d174db1b7aa50.1355932282.git.wking@tremily.us>
-References: <20121212230217.GB7729@odin.tremily.us>
- <cover.1355932282.git.wking@tremily.us>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nahor <nahor.j+gmane@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 19 17:04:26 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] wildmatch: make dowild() take arbitrary flags
+Date: Wed, 19 Dec 2012 08:32:40 -0800
+Message-ID: <7v4njiatp3.fsf@alter.siamese.dyndns.org>
+References: <1355922488-20976-1-git-send-email-pclouds@gmail.com>
+ <1355922488-20976-2-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 17:33:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlM89-0003YL-OE
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 17:04:26 +0100
+	id 1TlMZq-0005ID-63
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 17:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644Ab2LSQEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 11:04:04 -0500
-Received: from vms173015pub.verizon.net ([206.46.173.15]:38340 "EHLO
-	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755640Ab2LSQD7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 11:03:59 -0500
-Received: from odin.tremily.us ([unknown] [72.68.92.119])
- by vms173015.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MFA003GMCLS0210@vms173015.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 19 Dec 2012 10:03:29 -0600 (CST)
-Received: from mjolnir (mjolnir.tremily.us [192.168.0.6])
-	by odin.tremily.us (Postfix) with SMTP id C04D5737705; Wed,
- 19 Dec 2012 11:03:26 -0500 (EST)
-Received: by mjolnir (sSMTP sendmail emulation); Wed, 19 Dec 2012 11:03:39 -0500
-X-Mailer: git-send-email 1.8.0
-In-reply-to: <cover.1355932282.git.wking@tremily.us>
-In-reply-to: <cover.1355932282.git.wking@tremily.us>
-References: <cover.1355932282.git.wking@tremily.us>
+	id S1754875Ab2LSQcp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2012 11:32:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39691 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754317Ab2LSQcn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2012 11:32:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD5F1A6E0;
+	Wed, 19 Dec 2012 11:32:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ytKGUKxWWOi8
+	N1v5SqypRLzzHD0=; b=rqZcnZEIvB/ZBhvZc6/DMqjV8GNlB/nTGIPiUYW3X6qM
+	mNcuXZkvogtTjOZpmNXH/o+bKhBQuJHMIusPzLQ+Ce4hTDG1xX6dPchLsftqEpAr
+	n3g0I3pGTUAFvLvMxjJ6iiE74RgdSSO+wCKXIFltJE75EKEVPwW5sBLH++je53U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XpQvYa
+	nLsNkFVJGJYWComFPNuhR1blg1gwUz3+RaZqAQAdY/9b/wDywtavnbLq/sU4X5Eq
+	sbS7xD6CWdq9W/CQ2prNux2DvQIUzJhSf1sKCR89AtM+ueOZGNDdxw0tiFkrBSsY
+	5kITk90TNhNAHStIyqu3/x7GpLAXMPWzoo2Ic=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CABB5A6D6;
+	Wed, 19 Dec 2012 11:32:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 384E8A6D3; Wed, 19 Dec 2012
+ 11:32:42 -0500 (EST)
+In-Reply-To: <1355922488-20976-2-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 19 Dec
+ 2012 20:08:06 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B5EC702A-49F9-11E2-9953-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211834>
 
-From: "W. Trevor King" <wking@tremily.us>
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Several submodule configuration variables
-(e.g. fetchRecurseSubmodules) are read from .gitmodules with local
-overrides from the usual git config files.  This shell function mimics
-that logic to help initialize configuration variables in
-git-submodule.sh.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  wildmatch.c | 13 ++++++-------
+>  1 file changed, 6 insertions(+), 7 deletions(-)
+>
+> diff --git a/wildmatch.c b/wildmatch.c
+> index 3972e26..9586ed9 100644
+> --- a/wildmatch.c
+> +++ b/wildmatch.c
+> @@ -55,7 +55,7 @@ typedef unsigned char uchar;
+>  #define ISXDIGIT(c) (ISASCII(c) && isxdigit(c))
+> =20
+>  /* Match pattern "p" against "text" */
+> -static int dowild(const uchar *p, const uchar *text, int force_lower=
+_case)
+> +static int dowild(const uchar *p, const uchar *text, int flags)
 
-Signed-off-by: W. Trevor King <wking@tremily.us>
----
- git-submodule.sh | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+It may be better to declare a bitset like this unsigned.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2365149..263a60c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -153,6 +153,32 @@ die_if_unmatched ()
- }
- 
- #
-+# Print a submodule configuration setting
-+#
-+# $1 = submodule name
-+# $2 = option name
-+# $3 = default value
-+#
-+# Checks in the usual git-config places first (for overrides),
-+# otherwise it falls back on .gitmodules.  This allows you to
-+# distribute project-wide defaults in .gitmodules, while still
-+# customizing individual repositories if necessary.  If the option is
-+# not in .gitmodules either, print a default value.
-+#
-+get_submodule_config () {
-+	name="$1"
-+	option="$2"
-+	default="$3"
-+	value=$(git config submodule."$name"."$option")
-+	if test -z "$value"
-+	then
-+		value=$(git config -f .gitmodules submodule."$name"."$option")
-+	fi
-+	printf '%s' "${value:-$default}"
-+}
-+
-+
-+#
- # Map submodule path to submodule name
- #
- # $1 = path
--- 
-1.8.0
+>  {
+>  	uchar p_ch;
+> =20
+> @@ -64,9 +64,9 @@ static int dowild(const uchar *p, const uchar *text=
+, int force_lower_case)
+>  		uchar t_ch, prev_ch;
+>  		if ((t_ch =3D *text) =3D=3D '\0' && p_ch !=3D '*')
+>  			return ABORT_ALL;
+> -		if (force_lower_case && ISUPPER(t_ch))
+> +		if (flags & FNM_CASEFOLD && ISUPPER(t_ch))
+
+Please add parentheses around bitwise-AND that is used as a boolean,
+i.e.
+
+	if ((flags & FNM_CASEFOLD) && ISUPPER(t_ch))
+
+Less chance of confusion.
