@@ -1,111 +1,84 @@
-From: Tomi Belan <tomi.belan@gmail.com>
-Subject: Re: [BUG?] git-subtree behavior when the -P tree is removed and recreated
-Date: Wed, 19 Dec 2012 16:40:03 +0100
-Message-ID: <CACUV5odJx1+47ggOAppN7whJhLABrRP-3mRWo8adQqbxF4mA5A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] git-subtree behavior when the -P tree is removed and
+ recreated
+Date: Wed, 19 Dec 2012 07:59:14 -0800
+Message-ID: <7v8v8uav8t.fsf@alter.siamese.dyndns.org>
 References: <CACUV5ofmuUku=byR1_+Cq+g0SdzqZbH1Z1tPfQf4eNABVyYb_Q@mail.gmail.com>
  <CACUV5odffQoCxr=hTuP+S+DU4+6qD7y=YkTCN3iRr7rjar1bLQ@mail.gmail.com>
- <CACUV5ocT56iOS3dZsJ4JLo70o1HJv2TSrvBHE646SyQVmOuYRg@mail.gmail.com> <877gozuooz.fsf@pctrast.inf.ethz.ch>
+ <CACUV5ocT56iOS3dZsJ4JLo70o1HJv2TSrvBHE646SyQVmOuYRg@mail.gmail.com>
+ <877gozuooz.fsf@pctrast.inf.ethz.ch>
+ <CACUV5odJx1+47ggOAppN7whJhLABrRP-3mRWo8adQqbxF4mA5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>,
 	"David A.Greene" <greened@obbligato.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 19 16:40:52 2012
+To: Tomi Belan <tomi.belan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 16:59:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlLlM-0004y1-Cf
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 16:40:52 +0100
+	id 1TlM3U-0000S1-U4
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 16:59:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477Ab2LSPkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 10:40:35 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:43852 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753703Ab2LSPke (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 10:40:34 -0500
-Received: by mail-ob0-f174.google.com with SMTP id ta14so2138332obb.33
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 07:40:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SqopOARxYodbTaqKeZCa8yS5l7bN9PdJ5RoQ/gxmsWU=;
-        b=BouOoOBsH7oYQRH0ZKqEN0bJm6JnsC+NHxHS2X4zqSklh9th/uBxUDYA94MqKLV8W3
-         4uK9uG+wJTH8LusYDxdZR+5u/mlgrGScLn9ud0nF9RgyCjtilGLl0JeGemSI1/eXvGcg
-         702s3+4V5PbIjBQIvNYp+gTnuo6dYANAHFT7jR5Vz2oLPrzNhuUpwNSjW19X9A3QGyO+
-         wk9OKxz8yRnKRDQRB6fb9xwduHOva2/+Uodkl0lmsmizEQhCdiCHm7rgnMJVMxMimw5v
-         EZ/pRlb8ObSKIpIZ5zNUTGGE31cUXdpaTucAdJEVpXENEnHQJKNN30sJIAORiunBUP7w
-         XqHA==
-Received: by 10.182.174.34 with SMTP id bp2mr5170734obc.16.1355931633486; Wed,
- 19 Dec 2012 07:40:33 -0800 (PST)
-Received: by 10.76.173.198 with HTTP; Wed, 19 Dec 2012 07:40:03 -0800 (PST)
-In-Reply-To: <877gozuooz.fsf@pctrast.inf.ethz.ch>
+	id S1755541Ab2LSP7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 10:59:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54781 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754724Ab2LSP7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 10:59:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12E3DBB89;
+	Wed, 19 Dec 2012 10:59:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PJ4bWVM0nvHdj67gKHYkzgOZQUE=; b=oPQKPD
+	/e2tq+MLaJImAmcCBrkJ3BgK8gCBWu57CjZHZgTMzleBcFEX3AC0Raqg0QUH8+Gx
+	e55DeLGSkQcv04IVbjh0UMWTCX3F6/rBiSmbvDAhNSiGcDU0M+izHfTTWVWq19D0
+	Ru5RdkNjIvZNnGRKHgbQFpv/liL1YLn46kA/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RN3UA5dtA8tS8glBgnUlEkUIMFof0crg
+	80nGxF5NKfNOAgbxKiYkSITJuck24FO3WaPgpXn0xYq733fL3xOd+9lx0bdbPYJy
+	wh6x1hQXu54fXzEHoI4gFltReMzMh86gwGCKHz2QZ0m7WuzdjwfZBbVb/rEMuVeK
+	Sygy+BvSYMI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE441BB88;
+	Wed, 19 Dec 2012 10:59:16 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 586B6BB86; Wed, 19 Dec 2012
+ 10:59:16 -0500 (EST)
+In-Reply-To: <CACUV5odJx1+47ggOAppN7whJhLABrRP-3mRWo8adQqbxF4mA5A@mail.gmail.com> (Tomi
+ Belan's message of "Wed, 19 Dec 2012 16:40:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A555884-49F5-11E2-A389-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211829>
 
-Thanks. Here's one more bump. Avery? David?
+Tomi Belan <tomi.belan@gmail.com> writes:
 
-(Apologies if my bumping is annoying -- because there's no bug
-tracker, it feels like the bug will be lost in the ML archives forever
-unless I keep calling attention to it. How can I help to get this
-issue fixed?)
+> Thanks. Here's one more bump. Avery? David?
 
-Tomi
+Thanks for your persistence.
 
-On Mon, Dec 3, 2012 at 4:42 PM, Thomas Rast <trast@student.ethz.ch> wrote:
->
-> Tomi Belan <tomi.belan@gmail.com> writes:
->
-> > Another bump. I reported this back in October, but there hasn't been
-> > any response yet...
-> >
-> > Note that the bug is still present in git 1.8.0.1.
->
-> Probably it would be a good idea to bring it to the attention of people
-> who have worked on it: Avery and David (cc'd).
->
-> >> On Sat, Oct 13, 2012 at 3:47 PM, Tomi Belan <tomi.belan@gmail.com> wrote:
-> >>>
-> >>> Hello folks,
-> >>>
-> >>> I think I might've found a bug in git-subtree: I have a repository
-> >>> containing a directory "foo". I'd like to use its code in other
-> >>> projects, so I want to split it off into its own repository with
-> >>> git-subtree. But it doesn't work as it should. I found out that long
-> >>> ago, my repository contained an unrelated directory also called "foo"
-> >>> which has since been deleted.
-> >>>
-> >>> Steps to reproduce (after installing git-subtree from contrib):
-> >>> git init repo
-> >>> cd repo
-> >>> mkdir foo; touch foo/v1
-> >>> git add -A .; git commit -m v1
-> >>> rm -rf foo; touch v2
-> >>> git add -A .; git commit -m v2
-> >>> mkdir foo; touch foo/v3
-> >>> git add -A .; git commit -m v3
-> >>> git subtree split -P foo -b splitfoo --annotate="split "
-> >>>
-> >>> What should happen: Either (A) splitfoo only contains "split v3", or
-> >>> (B) splitfoo contains "split v1" and "split v3"
-> >>>
-> >>> What happens instead: The parent of "split v3" is "v2", so splitfoo's
-> >>> full history is: "v1" -> "v2" -> "split v3".
-> >>>
-> >>> Git version: 1.7.12.2
-> >>>
-> >>> Bonus questions:
-> >>> - which is the intended behavior, (A) or (B)?
-> >>> - if it's (B), how do I convince git-subtree to do (A) once this bug
-> >>> gets fixed? (I might be getting too far ahead of myself here...)
-> >>>
-> >>> Tomi
->
-> --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
+I am moderately dissapointed by the inaction on the subtree part so
+far.  It was merged hoping that it will have more exposure to the
+end-users if it were in my tree, and it obviously is gettng that,
+but the people involved in the subtree part does not seem to be
+holding their end of the bargain.
+
+I am seriously considering to remove it from the contrib/ area of my
+tree if we do not see any response.  The contrib/ area is not meant
+to be a dumping ground for abandoned WIP.
+
+Maybe it is a seasonal thing, just before the holiday season, but
+this has been unresponded for a couple of months, not even with a
+"That combination is not supported", or "Thanks for a bug report".
+
+Grumpy.
