@@ -1,61 +1,45 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] add GIT_PATHSPEC_GLOB environment variable
-Date: Wed, 19 Dec 2012 17:20:35 -0500
-Message-ID: <20121219222035.GA22998@sigill.intra.peff.net>
-References: <20121219203449.GA10001@sigill.intra.peff.net>
- <7vk3sd930z.fsf@alter.siamese.dyndns.org>
- <20121219210919.GA11894@sigill.intra.peff.net>
- <20121219215008.GA17908@sigill.intra.peff.net>
- <7v7god8zz0.fsf@alter.siamese.dyndns.org>
- <20121219221250.GA22823@sigill.intra.peff.net>
- <7v38z18z6z.fsf@alter.siamese.dyndns.org>
+From: "=?utf-8?q?Jean-No=C3=ABl?= AVILA" <avila.jn@gmail.com>
+Subject: Re: [PATCH v2] Add directory pattern matching to attributes
+Date: Wed, 19 Dec 2012 23:34:50 +0100
+Message-ID: <201212192334.51085.avila.jn@gmail.com>
+References: <201212192233.53002.avila.jn@gmail.com> <7vbodp90o4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:21:08 2012
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:35:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlS0b-0006MY-DX
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:21:01 +0100
+	id 1TlSER-0005Iv-4D
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 23:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab2LSWUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 17:20:43 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58845 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751777Ab2LSWUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 17:20:39 -0500
-Received: (qmail 1974 invoked by uid 107); 19 Dec 2012 22:21:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Dec 2012 17:21:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2012 17:20:35 -0500
-Content-Disposition: inline
-In-Reply-To: <7v38z18z6z.fsf@alter.siamese.dyndns.org>
+	id S1751739Ab2LSWfA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2012 17:35:00 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:38454 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751605Ab2LSWe7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2012 17:34:59 -0500
+Received: from coriandre.localnet (unknown [IPv6:2a01:e35:2ef1:f910:216:6fff:fe38:e8a3])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 2944994001E
+	for <git@vger.kernel.org>; Wed, 19 Dec 2012 23:34:52 +0100 (CET)
+User-Agent: KMail/1.13.7 (Linux/3.6.0jna; KDE/4.8.4; i686; ; )
+In-Reply-To: <7vbodp90o4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211860>
 
-On Wed, Dec 19, 2012 at 02:16:52PM -0800, Junio C Hamano wrote:
+Le mercredi 19 d=C3=A9cembre 2012 22:44:59, vous avez =C3=A9crit :
+> "Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> writes:
+> > This patch was not reviewed when I submitted it for the second time=
+=2E
+>=20
+> Did you miss this?
+>=20
+>   =20
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> Will queue; thanks.
-> >
-> > Do we want to change the variable name and invert the logic?
-> 
-> That would be my preference.
-> 
-> I am deep into today's integration cycle, and this PATHSPEC_GLOB
-> version is sitting at the tip of 'pu', so today's pushout will
-> contain that version, though.
-
-That's fine. I'll send out a revised version, and you can pick it up
-later.
-
--Peff
+Grml, I did. Sorry for the noise.
