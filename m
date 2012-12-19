@@ -1,99 +1,60 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Wed, 19 Dec 2012 09:29:20 +0100
-Organization: Bertin Technologies
-Message-ID: <20121219092920.2dc0f33e@chalon.bertin.fr>
-References: <20121211153903.7522d6b0@chalon.bertin.fr>
- <7vd2yg8ngk.fsf@alter.siamese.dyndns.org>
- <20121212094432.6e1e48c8@chalon.bertin.fr>
- <7v38zb3ux0.fsf@alter.siamese.dyndns.org> <877goht6eu.fsf@pctrast.inf.ethz.ch>
- <20121217114058.449cbc3c@chalon.bertin.fr>
- <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com>
- <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org>
- <20121218120058.0c558ba5@chalon.bertin.fr>
- <7vehinibpc.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
+Subject: Re: problem with BOINC repository and CR/LF
+Date: Wed, 19 Dec 2012 11:43:25 +0100
+Message-ID: <50D19A4D.60000@gmx.de>
+References: <50CEF289.4040503@gmx.de> <CAH5451=FpmtGVVJ=mubE0KeD-tTVaNU96audzTRnNQh2BEEXPg@mail.gmail.com> <50CF41EB.1060402@gmx.de> <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com> <50D03D80.3090005@gmx.de> <50D05E62.7090605@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 09:29:44 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Dec 19 11:43:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlF25-0001nb-4M
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 09:29:41 +0100
+	id 1TlH7q-0002XN-S1
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Dec 2012 11:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759Ab2LSI3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 03:29:23 -0500
-Received: from cabourg.bertin.fr ([195.68.26.10]:60941 "EHLO cabourg.bertin.fr"
+	id S1751155Ab2LSKn3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2012 05:43:29 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59681 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752589Ab2LSI3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 03:29:21 -0500
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 057BBA0F98
-	for <git@vger.kernel.org>; Wed, 19 Dec 2012 09:29:20 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 2F803A0F96
-	for <git@vger.kernel.org>; Wed, 19 Dec 2012 09:29:19 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MF900ACNRKUHR80@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 19 Dec 2012 09:29:19 +0100 (CET)
-In-reply-to: <7vehinibpc.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-19462.002
+	id S1750779Ab2LSKn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 05:43:28 -0500
+Received: from mailout-de.gmx.net ([10.1.76.19]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0LzEj9-1SyYMZ2AWP-014WjH for
+ <git@vger.kernel.org>; Wed, 19 Dec 2012 11:43:26 +0100
+Received: (qmail invoked by alias); 19 Dec 2012 10:43:26 -0000
+Received: from d221095.adsl.hansenet.de (EHLO [80.171.221.95]) [80.171.221.95]
+  by mail.gmx.net (mp019) with SMTP; 19 Dec 2012 11:43:26 +0100
+X-Authenticated: #5108953
+X-Provags-ID: V01U2FsdGVkX1+dDGhJBYmdEPt7+axxOgl5cpbPXIXbwoWkFZSbf2
+	c9RVtfrLsT3uCz
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <50D05E62.7090605@web.de>
+X-Enigmail-Version: 1.4.6
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211815>
 
-On Tue, 18 Dec 2012 08:09:35 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
+On 12/18/2012 01:15 PM, Torsten B=C3=B6gershausen wrote:
+> HTH
+> /Torsten
 
-> Yann Dirson <dirson@bertin.fr> writes:
-> 
-> > On Mon, 17 Dec 2012 13:14:56 -0800
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> >> Andreas Schwab <schwab@linux-m68k.org> writes:
-> >> 
-> >> > Christian Couder <christian.couder@gmail.com> writes:
-> >> >
-> >> >> Yeah, at one point I wanted to have a command that created to craft a
-> >> >> new commit based on an existing one.
-> >> >
-> >> > This isn't hard to do, you only have to resort to plumbing:
-> >> >
-> >> > $ git cat-file commit fef11965da875c105c40f1a9550af1f5e34a6e62 | sed s/bfae342c973b0be3c9e99d3d86ed2e6b152b4a6b/790c83cda92f95f1b4b91e2ddc056a52a99a055d/ | git hash-object -t commit --stdin -w
-> >> > bb45cc6356eac6c7fa432965090045306dab7026
-> >> 
-> >> Good.  I do not think an extra special-purpose command is welcome
-> >> here.
-> >
-> > Well, I'm not sure this is intuitive enough to be useful to the average user :)
-> 
-> I do not understand why you even want to go in the harder route in
-> the first place, only to complicate things?
+Thx Torsten - I forwarded this answer (and all the other answers) to th=
+e
+boinc alpha mailing list
+- there's now a discussion about that.
 
-Although the approach you propose is elegant, it still looks like one
-could not leave the worktree untouched in the case of creating a merge replace,
-which the "just forge an arbitrary commit" approach handles easily.
 
-It seems the latter would also be more powerful, in that you can create new commits with an
-arbitrary number of parents, even when merge-octopus would simply refuse to help;
-and it is has no special case for creating merges.
 
-> Is this not intuitive enough?
-
-I would say it is a nice read that can help an advanced user to earn
-some XP - but well, replace refs are also meant for somewhat advanced users :)
-
--- 
-Yann Dirson - Bertin Technologies
+--=20
+MfG/Sincerely
+Toralf F=C3=B6rster
+pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
