@@ -1,65 +1,60 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: Re: [RFC] test: Old shells and physical paths
-Date: Thu, 20 Dec 2012 02:28:36 +0000
-Message-ID: <CAEvUa7=_iyXxaaRs3WtxZOy5PNnncG-iMAUNkCMLJ19ZtReqaw@mail.gmail.com>
-References: <CAEvUa7=sOPF9xwfGuBXv0CBZhT+79+8z3tm9ar_cz3q--kfqRQ@mail.gmail.com>
-	<7vmwx97f0o.fsf@alter.siamese.dyndns.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: sys/param.h
+Date: Wed, 19 Dec 2012 21:49:42 -0500
+Message-ID: <50D27CC6.3000203@gmail.com>
+References: <20121217213730.GA17212@ftbfs.org> <50D02B9A.1040906@viscovery.net> <7vobhrgupr.fsf_-_@alter.siamese.dyndns.org> <CABPQNSZQk6hHm-dWqFFQf0HF34Mvbjc8-mgzCr=G0zbBKiYUvA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 03:29:01 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 20 03:50:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlVsb-0005J3-19
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 03:29:01 +0100
+	id 1TlWD6-0003Bn-0U
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 03:50:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194Ab2LTC2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 21:28:44 -0500
-Received: from mail-vb0-f42.google.com ([209.85.212.42]:58657 "EHLO
-	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752143Ab2LTC2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 21:28:43 -0500
-Received: by mail-vb0-f42.google.com with SMTP id fa15so3223918vbb.29
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 18:28:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TVTzhY+bebCM3yfhgvBL+wVHGPvKGItOycl6DaOPhUU=;
-        b=buGsntyAnMHddB/2gZwEFh4mOuuTV3YA5N5DWteJVxLnxPhjopeXY060QWP18PWS+/
-         ym9Gzkabtpz/frgVOu0edz0BWDu9wGn+BPAV/U78V68QzfJkLK2X1i/ZXZvt61+BV0bx
-         tPwlOnnF40gHN2T2kXdgugA+qIwQ1hHbxSphyQgL83RgPxMYXyXNfENiCsCTSkXumzvj
-         nExNbwIt2k45FRqsI0DwXzeEf3/9SnYrruMiLN+tFvlgziiDhtwYjt0K/BYQM3bFwDDr
-         G8wxlbDRGX6HBMJNbvKDcgGuqVvniOurjM/XsRD/Xnx5ZM7+OK5dItxmRYJJz1zXpqK9
-         PO6w==
-Received: by 10.52.98.36 with SMTP id ef4mr10455765vdb.104.1355970516618; Wed,
- 19 Dec 2012 18:28:36 -0800 (PST)
-Received: by 10.58.85.138 with HTTP; Wed, 19 Dec 2012 18:28:36 -0800 (PST)
-In-Reply-To: <7vmwx97f0o.fsf@alter.siamese.dyndns.org>
+	id S1752227Ab2LTCty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 21:49:54 -0500
+Received: from plane.gmane.org ([80.91.229.3]:54622 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751975Ab2LTCtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 21:49:53 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TlWCz-0003A5-EW
+	for git@vger.kernel.org; Thu, 20 Dec 2012 03:50:05 +0100
+Received: from pool-173-79-102-236.washdc.fios.verizon.net ([173.79.102.236])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 03:50:05 +0100
+Received: from mlevedahl by pool-173-79-102-236.washdc.fios.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 03:50:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-173-79-102-236.washdc.fios.verizon.net
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <CABPQNSZQk6hHm-dWqFFQf0HF34Mvbjc8-mgzCr=G0zbBKiYUvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211871>
 
-Hi,
+On 12/19/2012 02:59 AM, Erik Faye-Lund wrote:
+> On Tue, Dec 18, 2012 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>>
+>>>> Junio C Hamano wrote:
+>>>>> It could turn out that we may be able to get rid of sys/param.h
+>>>>> altogether, but one step at a time.  Inputs from people on minority
+>>>>> platforms are very much appreciated---does your platform build fine
+>>>>> when the inclusion of the file is removed from git-compat-util.h?
 
-On Thu, Dec 20, 2012 at 12:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Is "here is a nickel, get a better shell" an option?
+cygwin is fine with that removed.
 
-It is, somewhat.  There is a pre-built port of GNU bash 2.03 for the
-platform, but I was trying to see how far things could go with the
-OS's supported shell before having to bring in unsupported
-dependencies.  Unfortunately, I do not believe the OS fully conforms
-to POSIX.1-2001 yet, so that means no "-P" or "-L" without going
-rogue.
-
-I'll carry test fixes for this platform locally.
-
-Thanks.
-
-David
+Mark
