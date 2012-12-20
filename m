@@ -1,56 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Python scripts audited for minimum compatible version
- and checks added.
-Date: Thu, 20 Dec 2012 09:48:13 -0500
-Message-ID: <20121220144813.GA27211@sigill.intra.peff.net>
-References: <20121220141855.05DAA44105@snark.thyrsus.com>
+Subject: Re: $PATH pollution and t9902-completion.sh
+Date: Thu, 20 Dec 2012 09:55:19 -0500
+Message-ID: <20121220145519.GB27211@sigill.intra.peff.net>
+References: <20121217010538.GC3673@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 15:48:45 2012
+Cc: git mailing list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Thu Dec 20 15:55:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlhQS-0000vl-9q
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 15:48:44 +0100
+	id 1TlhX9-0006xj-Rv
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 15:55:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751735Ab2LTOs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 09:48:26 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59663 "EHLO
+	id S1751133Ab2LTOzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 09:55:22 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59669 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751427Ab2LTOsY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 09:48:24 -0500
-Received: (qmail 9463 invoked by uid 107); 20 Dec 2012 14:49:27 -0000
+	id S1751031Ab2LTOzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 09:55:21 -0500
+Received: (qmail 9509 invoked by uid 107); 20 Dec 2012 14:56:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Dec 2012 09:49:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Dec 2012 09:48:13 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Dec 2012 09:56:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Dec 2012 09:55:19 -0500
 Content-Disposition: inline
-In-Reply-To: <20121220141855.05DAA44105@snark.thyrsus.com>
+In-Reply-To: <20121217010538.GC3673@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211892>
 
-On Thu, Dec 20, 2012 at 09:13:37AM -0500, Eric S. Raymond wrote:
+On Mon, Dec 17, 2012 at 01:05:38AM +0000, Adam Spiers wrote:
 
-> diff --git a/contrib/ciabot/ciabot.py b/contrib/ciabot/ciabot.py
-> index bd24395..b55648f 100755
-> --- a/contrib/ciabot/ciabot.py
-> +++ b/contrib/ciabot/ciabot.py
-> @@ -50,6 +50,11 @@
->  import os, sys, commands, socket, urllib
->  from xml.sax.saxutils import escape
->  
-> +if sys.hexversion < 0x02000000:
-> +	# The limiter is the xml.sax module
-> +        sys.stderr.write("import-zips.py: requires Python 2.0.0 or later.")
-> +        sys.exit(1)
+> t/t9902-completion.sh is currently failing for me because I happen to
+> have a custom shell-script called git-check-email in ~/bin, which is
+> on my $PATH.  This is different to a similar-looking case reported
+> recently, which was due to an unclean working tree:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/208085
+> 
+> It's not unthinkable that in the future other tests could break for
+> similar reasons.  Therefore it would be good to sanitize $PATH in the
+> test framework so that it cannot destabilize tests, although I am
+> struggling to think of a good way of doing this.  Naively stripping
+> directories under $HOME would not protect against git "plugins" such
+> as the above being installed into places like /usr/bin.  Thoughts?
 
-Should the error message say ciabot.py?
+I've run into this, too. I think sanitizing $PATH is the wrong approach.
+The real problem is that the test is overly picky. Right now it is
+failing because you happen to have "check-email" in your $PATH, but it
+will also need to be adjusted when a true "check-email" command is added
+to git.
+
+I can think of two other options:
+
+  1. Make the test input more specific (e.g., looking for "checkou").
+     This doesn't eliminate the problem, but makes it less likely
+     to occur.
+
+  2. Loosen the test to look for the presence of "checkout", but not
+     fail when other items are present. Bonus points if it makes sure
+     that everything returned starts with "check".
+
+I think (2) is the ideal solution in terms of behavior, but writing it
+may be more of a pain.
 
 -Peff
