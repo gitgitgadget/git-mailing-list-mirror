@@ -1,75 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] test: Old shells and physical paths
-Date: Wed, 19 Dec 2012 16:17:59 -0800
-Message-ID: <7vmwx97f0o.fsf@alter.siamese.dyndns.org>
-References: <CAEvUa7=sOPF9xwfGuBXv0CBZhT+79+8z3tm9ar_cz3q--kfqRQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] add core.pathspecGlob config option
+Date: Thu, 20 Dec 2012 08:28:57 +0700
+Message-ID: <CACsJy8BB3=3ZHD5Ua9M-0+98JVigHBBuo07gBSgEwanvB0zBSA@mail.gmail.com>
+References: <20121219203449.GA10001@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: David Michael <fedora.dm0@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 01:18:26 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 20 02:29:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlTqA-0006ix-Qc
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 01:18:23 +0100
+	id 1TlUxG-0006f4-Q9
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 02:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129Ab2LTASF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 19:18:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44464 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751175Ab2LTASD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 19:18:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 72F6D6DC4;
-	Wed, 19 Dec 2012 19:18:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DezJFLZft+5J/DOxg6j2QkoplC8=; b=fc5921
-	0Qa0JRkzSXg7ZiS9A2LQTCawYcT6QckVErmi4Isyciwm1PW/pSIt4IUSVwuRgijl
-	xg+6lkzpck++uHs4tjfxVrSHri5sB4vxvsp4aZWw6kv9lQ790ev7hoCXa8jskXgk
-	DiKT4vnV8dcGp3qI4yKjJQCahi4DB2fwRIQPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oezxjJJ4G9ObnMj79CrFf+6HghWZlWe+
-	jpPncyGi0+OJ2ycPwrjjpRvIr6T3Zw4piXxfWdYCRc+Z9mp1sHTp/IKGfkymeDLn
-	OP/eB2PLcvul1sgijgDmLhHpD4P+WydEHlbJmWzg0ZAUaAH90/RUJ/nj7Qy1SQIa
-	vJ+k9ecFwW0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CB666DC2;
-	Wed, 19 Dec 2012 19:18:02 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CACA26DC0; Wed, 19 Dec 2012
- 19:18:01 -0500 (EST)
-In-Reply-To: <CAEvUa7=sOPF9xwfGuBXv0CBZhT+79+8z3tm9ar_cz3q--kfqRQ@mail.gmail.com> (David
- Michael's message of "Wed, 19 Dec 2012 18:22:03 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B74D3044-4A3A-11E2-B604-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751581Ab2LTB33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 20:29:29 -0500
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:44403 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234Ab2LTB32 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 20:29:28 -0500
+Received: by mail-ob0-f178.google.com with SMTP id eh20so2737224obb.37
+        for <git@vger.kernel.org>; Wed, 19 Dec 2012 17:29:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LjUHR71WihsMla5UW8Wzic44opfW7gXIaVafuPI+YjA=;
+        b=CA7Hs5pJuWD58owdCKDt8qxFurBNAXjW7EI14BhgVIsPdPOeh5VNBRDts6AuWHxL2D
+         o0FSLiLjlN97ggfh3D0UPDKFgLTsFwThsYq+jmz6GT5yKo8imqFaBo//0QS1BKUyvwbU
+         LGjH7+XhARkFkHErk3Bt6DKNHRolkz3muJr+Z1WQe9Db5YYlQCAN//EmOPIHH1hVfqIo
+         8a5hmKSqls3imJ87Py45W4E9sjy1DfmjtoQTiaqBi+cD4xpW1zMweZjqKgqEwgEuOr7m
+         X+01JkmSI4Cos+/x2bhbhJa2FSBDE12ymydboicL1UwZ/Et3Nm+3ny1oWdoTl3YI3QBk
+         Sh2Q==
+Received: by 10.182.141.103 with SMTP id rn7mr6659870obb.5.1355966967911; Wed,
+ 19 Dec 2012 17:29:27 -0800 (PST)
+Received: by 10.182.27.168 with HTTP; Wed, 19 Dec 2012 17:28:57 -0800 (PST)
+In-Reply-To: <20121219203449.GA10001@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211868>
 
-David Michael <fedora.dm0@gmail.com> writes:
+On Thu, Dec 20, 2012 at 3:34 AM, Jeff King <peff@peff.net> wrote:
+> Part of me thinks this is just gross, because ":(noglob)" is the right
+> solution. But after spending a few hours trying it this morning, there
+> is a ton of refactoring required to make it work correctly everywhere
+> (although we could die() if we see it in places that are not using
+> init_pathspec, so at least we could say "not supported yet" and not just
+> silently ignore it).
 
-> In working on a port, I have to tolerate an ancient shell.  The "cd"
-> and "pwd" commands don't understand the "-P" flag for physical paths,
-> as some tests use.  The biggest offender is "cd -P" causing a failure
-> in t/test-lib.sh (since 1bd9c64), which is sourced by every test
-> script.
+Yep, I'm still half way to converting everything to the new pathspec
+code. I'm not there yet. And things like this probably better goes
+with a config key or command line option, appending :(noglob) to every
+pathspec item is not pleasant. :(icase) may go the same way.
 
-Is "here is a nickel, get a better shell" an option?  Running tests
-is one thing, but I'd be worried more about scripted Porcelains
-broken by a non-POSIX shell if I were you.
+> So I think this is a nice, simple approach for sites that want it, and
+> noglob magic can come later (and will not be any harder to implement as
+> a result of this patch).
 
-> Would it be acceptable to instead force the platform's shell option
-> (if it exists) to always use physical paths for the tests and drop the
-> "-P" flags?
-
-As a patch to the source files in my tree?  Not likely, even though
-I cannot say for sure without looking at how the change would look
-like.
+Any chance to make use of nd/pathspec-wildcard? It changes the same
+code path in match_one. If you base on top of nd/pathspec-wildcard,
+all you have to do is assign nowildcard_len to len (i.e. no wildcard
+part).
+-- 
+Duy
