@@ -1,110 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: $PATH pollution and t9902-completion.sh
-Date: Thu, 20 Dec 2012 13:02:30 -0800
-Message-ID: <7v7goc4eu1.fsf@alter.siamese.dyndns.org>
-References: <20121217010538.GC3673@gmail.com>
- <20121220145519.GB27211@sigill.intra.peff.net>
- <7vk3sc606f.fsf@alter.siamese.dyndns.org>
- <7vobho4hxa.fsf@alter.siamese.dyndns.org>
- <20121220200109.GC21785@sigill.intra.peff.net> <50D37AB2.1040508@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Adam Spiers <git@adamspiers.org>,
-	git mailing list <git@vger.kernel.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Dec 20 22:02:58 2012
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: [PATCH v2] oneway_merge(): only lstat() when told to update worktree
+Date: Thu, 20 Dec 2012 13:03:36 -0800
+Message-ID: <1356037416-23527-1-git-send-email-martinvonz@gmail.com>
+References: <7vk3sc4hle.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 22:04:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlnGY-0003Sc-HQ
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 22:02:54 +0100
+	id 1TlnHg-0004Uo-Q1
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 22:04:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496Ab2LTVCh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Dec 2012 16:02:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34898 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751299Ab2LTVCf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Dec 2012 16:02:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB0E8ADE5;
-	Thu, 20 Dec 2012 16:02:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1/NNYsJvKT7K
-	ZCNIqUZK7TYPO98=; b=LFHDKUWbIh/AhRKkCkJqN178u9bnsuM57E3fSHR/Cz1A
-	AV7vBrG6yfOT2SwIngDxK49O9TUTppLe6qx1WEEy2B38Fxl2mvdT8TN5hs0CCIbM
-	j3oHsOqisY7nIwqXgpZ3j2vxRcsRXuMyGAmORTr3K/eE83mldEFNZdoyvXuDKD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LQk4sa
-	y59I1JCAZTSXNg0GVsygBUXTinAV/rp9mtevVS8FltM7mHYDRb3N74dZ7ZGTaWv7
-	bX96iFz7uxugqgkjb3pjBiMrmk17Je/fiCMiq9iUzDDTJBXNFMExiWtC9yRl/Rz/
-	RTfuis2H4elWY4WXTHRKjmkBsgHYnErIQytcw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7A4AADE4;
-	Thu, 20 Dec 2012 16:02:32 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 300ADADE0; Thu, 20 Dec 2012
- 16:02:32 -0500 (EST)
-In-Reply-To: <50D37AB2.1040508@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of "Thu, 20 Dec 2012 21:53:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 924ED1F4-4AE8-11E2-86C1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751826Ab2LTVDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 16:03:42 -0500
+Received: from mail-gg0-f202.google.com ([209.85.161.202]:50328 "EHLO
+	mail-gg0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416Ab2LTVDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 16:03:40 -0500
+Received: by mail-gg0-f202.google.com with SMTP id k1so409479ggn.5
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 13:03:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:x-gm-message-state;
+        bh=ntbBu5TQ9zPJLR/Bf+d04a2XOiZYUkPZpdHVJLVh9cY=;
+        b=MdvJDQaBSykl6Wxe/RLqMw8YE4NBlU/j/V5a1CEkp3HBAv0k1vQrkixPa5Z9wFtF39
+         WnCCD1mPnpkP4iEZ66bM7r/GB1Pp/2+3yIx9JSeqPhJ5VCyFn6OF9q2KsBsWDzlEQL2H
+         Rc4uKzspVqPrJJ/lLgYSSqoiUxVyoDwxo2SMaslydfZWwSzEsx/g9wWPMqxV2YAfXb6i
+         ZA7VivRyR+LICIjrwRBqmDVqS6TmZErwg25Rd5W+bB0gihOqxRRakzVWyfMOydPYWbYN
+         9NClIK+bD1WxJbw+Zsz2cvC3AcmzzRlBkOxgipy1D9bfnCDSZyyWmAoOKJwmFDIohp9p
+         J+ow==
+X-Received: by 10.101.139.18 with SMTP id r18mr1226342ann.26.1356037419675;
+        Thu, 20 Dec 2012 13:03:39 -0800 (PST)
+Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id i27si848443yhe.4.2012.12.20.13.03.39
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 20 Dec 2012 13:03:39 -0800 (PST)
+Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 3A81D100047;
+	Thu, 20 Dec 2012 13:03:39 -0800 (PST)
+Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
+	id D66DF1024BA; Thu, 20 Dec 2012 13:03:38 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.1.240.ge8a1f5a
+In-Reply-To: <7vk3sc4hle.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQkyhCTRQ/wsoOF5Vcv/ZBbr1T/L+DLtSlLt711o6kYHGawpaVfFOt1zmMYf/4vHWp/eKFwF9WV5gB1VCTHkmGGK4Fmt1t0m5tRrEizncjkq5FHnAJStidPZJeDZ45Bhk9I1M9cuzLsgPuaVidhKQ/oXfrDhQd7Cek1AeisoOeN/NzQSpS1KS1yl1/kDi5l6y56Dc+vG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211929>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Although the subject line of 613f027 (read-tree -u one-way merge fix
+to check out locally modified paths., 2006-05-15) mentions "read-tree
+-u", it did not seem to check whether -u was in effect. Not checking
+whether -u is in effect makes e.g. "read-tree --reset" lstat() the
+worktree, even though the worktree stat should not matter for that
+operation.
 
-> On 20.12.12 21:01, Jeff King wrote:
->> +test_fully_contains () {
->>> +	sort "$1" >expect.sorted &&
->>> +	sort "$2" >actual.sorted &&
->>> +	test $(comm -23 expect.sorted actual.sorted | wc -l) =3D 0
->>> +}
->
-> (Good to learn about the comm command, thanks )
-> What do we think about this:
+This speeds up e.g. "git reset" a little on the linux-2.6 repo (best
+of five, warm cache):
 
-Three points to consider.
+        Before      After
+real    0m0.288s    0m0.233s
+user    0m0.190s    0m0.150s
+sys     0m0.090s    0m0.080s
 
- * Do _all_ tests that use test_completion not care about the actual
-   order of choices that come out of the completion machinery?
+Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+---
+ unpack-trees.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- * Do _all_ tests that use test_completion not care about having
-   extra choice, or is the command name completion the only odd
-   case?
-
- * Is this still as easy to extend as the original to conditionally
-   verify that all extra output share the same prefix?
-
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 3cd53f8..82eeba7 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -62,12 +62,16 @@ test_completion ()
->  {
->  	if test $# -gt 1
->  	then
-> -		printf '%s\n' "$2" >expected
-> +		printf '%s\n' "$2" | sort >expected.sorted
->  	else
-> -		sed -e 's/Z$//' >expected
-> +		sed -e 's/Z$//' | sort >expected.sorted
->  	fi &&
->  	run_completion "$1" &&
-> -	test_cmp expected out
-> +	sort <out >actual.sorted &&
-> +	>empty &&
-> +	comm -23 expected.sorted actual.sorted >actual &&
-> +	test_cmp empty actual &&
-> +	rm empty actual
->  }
-> =20
->  # Test __gitcomp.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 6d96366..61acc5e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1834,7 +1834,7 @@ int oneway_merge(struct cache_entry **src, struct unpack_trees_options *o)
+ 
+ 	if (old && same(old, a)) {
+ 		int update = 0;
+-		if (o->reset && !ce_uptodate(old) && !ce_skip_worktree(old)) {
++		if (o->reset && o->update && !ce_uptodate(old) && !ce_skip_worktree(old)) {
+ 			struct stat st;
+ 			if (lstat(old->name, &st) ||
+ 			    ie_match_stat(o->src_index, old, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE))
+-- 
+1.8.0.1.240.ge8a1f5a
