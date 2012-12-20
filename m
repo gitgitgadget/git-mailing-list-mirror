@@ -1,120 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: $PATH pollution and t9902-completion.sh
-Date: Thu, 20 Dec 2012 11:55:45 -0800
-Message-ID: <7vobho4hxa.fsf@alter.siamese.dyndns.org>
-References: <20121217010538.GC3673@gmail.com>
- <20121220145519.GB27211@sigill.intra.peff.net>
- <7vk3sc606f.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Dec 2012, #05; Tue, 18)
+Date: Thu, 20 Dec 2012 14:58:37 -0500
+Message-ID: <20121220195837.GB21785@sigill.intra.peff.net>
+References: <7v4njjf6fk.fsf@alter.siamese.dyndns.org>
+ <20121220145941.GC27211@sigill.intra.peff.net>
+ <7vwqwc617y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Spiers <git@adamspiers.org>,
-	git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 20 20:56:08 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 20:58:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlmDv-0003F2-01
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 20:56:07 +0100
+	id 1TlmGg-0005ly-1J
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 20:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348Ab2LTTzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 14:55:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44531 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750917Ab2LTTzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 14:55:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81874A3C1;
-	Thu, 20 Dec 2012 14:55:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=asihtzsE3qbBR/XAMbOsXlIUvPs=; b=AA5VxM
-	BmTenjNY+OBno3P1cC1UcD0XbY/Zyw3sZKo5Dwx9acjgoNdpYFyRs2hXNdJyRx0n
-	CSFn+ydM0NWwKbk+A5OxhV45fffdaz9m6qi56EBx+kBqFCNwHEJJr3jFTljW6Y3H
-	oS0mL10EFOtAx5NX9z8bF7i4EsUurjp+lJkYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sWZH5FZ4+JMJI0FBs6H3ZvAzItHkUgZH
-	XrqM/1ZNkhZRrH49GZeIo7yskqico3nqMShxhiMe1ERjiWsZ2/aYoDD3sf5um89r
-	vwBT/uDA2/ieuapT1kRsozIuzdcz8o2nkN+I20C4VFBrHE70UVPG49uG6zAuZURy
-	ipdBI95MoOk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DEEFA3C0;
-	Thu, 20 Dec 2012 14:55:47 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7EA3A3BD; Thu, 20 Dec 2012
- 14:55:46 -0500 (EST)
-In-Reply-To: <7vk3sc606f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 20 Dec 2012 10:36:08 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3EE0C2CE-4ADF-11E2-AF72-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751484Ab2LTT6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 14:58:41 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60015 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750917Ab2LTT6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 14:58:40 -0500
+Received: (qmail 14431 invoked by uid 107); 20 Dec 2012 19:59:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Dec 2012 14:59:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Dec 2012 14:58:37 -0500
+Content-Disposition: inline
+In-Reply-To: <7vwqwc617y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211922>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Dec 20, 2012 at 10:13:37AM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
->
->>   2. Loosen the test to look for the presence of "checkout", but not
->>      fail when other items are present. Bonus points if it makes sure
->>      that everything returned starts with "check".
->>
->> I think (2) is the ideal solution in terms of behavior, but writing it
->> may be more of a pain.
->
-> Yeah, I think (2) is the way to go.
+> >> * jk/error-const-return (2012-12-15) 2 commits
+> >>  - silence some -Wuninitialized false positives
+> >>  - make error()'s constant return value more visible
+> >> 
+> >>  Help compilers' flow analysis by making it more explicit that
+> >>  error() always returns -1, to reduce false "variable used
+> >>  uninitialized" warnings.
+> >> 
+> >>  This is still an RFC.
+> >
+> > What's your opinion on this?
+> 
+> Ugly but not too much so, and it would be useful.
+> 
+> The only thing that makes it ugly is that it promises error() will
+> return -1 and nothing else forever, but at this point in the
+> evolution of the codebase, I think we are pretty much committed to
+> it anyway, so I do not think it is a problem.
 
-The beginning of such a change may look like the attached patch.
+Right. I do not mind saying "error() will always return -1" and forcing
+somebody who changes that assumption to update the macro. But what
+worries me is that when they make that update, there is no compile-time
+check that indicates the macro and the function are no longer in sync.
+So our attempt for more compile-time safety may actually introduce a
+run-time bug.  And it is a hard bug to find, as the preprocessor
+"magically" converts the error code into -1 without you being able to
+see it in the code.
 
-If we want to go for the bonus points, we would either add another
-parameter "prefix" to the test_completion function, or introduce the
-test_complete_command function that takes that prefix parameter, and
-in addition to making sure lines from "expect" is fully contained in
-the "actual", make sure that output from
+It would be safer to just unconditionally use the macros and drop the
+return values from the functions entirely, like the patch below
+(squashed on top of what is in jk/error-const-return). But it cannot
+work for error(), because the variadic nature means we need to restrict
+ourselves to __GNUC__.
 
-	comm -13 expect.sorted actual.sorted
-
-all begin with that "prefix" string, perhaps with
-
-	grep -v "^$prefix"
-
-or something.  The test_fully_contains function needs to be renamed
-if somebody goes that additional step.
-
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 3cd53f8..5fab389 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -54,10 +54,16 @@ run_completion ()
- 	__git_wrap__git_main && print_comp
- }
+diff --git a/cache.h b/cache.h
+index 0e8e5d8..694b146 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1135,10 +1135,8 @@ extern int config_error_nonbool(const char *);
+ extern int check_repository_format_version(const char *var, const char *value, void *cb);
+ extern int git_env_bool(const char *, int);
+ extern int git_config_system(void);
+-extern int config_error_nonbool(const char *);
+-#ifdef __GNUC__
++extern void config_error_nonbool(const char *);
+ #define config_error_nonbool(s) (config_error_nonbool(s), -1)
+-#endif
+ extern const char *get_log_output_encoding(void);
+ extern const char *get_commit_output_encoding(void);
  
-+test_fully_contains () {
-+	sort "$1" >expect.sorted &&
-+	sort "$2" >actual.sorted &&
-+	test $(comm -23 expect.sorted actual.sorted | wc -l) = 0
-+}
-+
- # Test high-level completion
- # Arguments are:
- # 1: typed text so far (cur)
--# 2: expected completion
-+# 2: expected completion (if missing, this is read from stdin)
- test_completion ()
+diff --git a/config.c b/config.c
+index 526f682..a22e78c 100644
+--- a/config.c
++++ b/config.c
+@@ -1661,7 +1661,7 @@ int config_error_nonbool(const char *var)
+  * get a boolean value (i.e. "[my] var" means "true").
+  */
+ #undef config_error_nonbool
+-int config_error_nonbool(const char *var)
++void config_error_nonbool(const char *var)
  {
- 	if test $# -gt 1
-@@ -67,7 +73,7 @@ test_completion ()
- 		sed -e 's/Z$//' >expected
- 	fi &&
- 	run_completion "$1" &&
--	test_cmp expected out
-+	test_fully_contains expected out
+-	return error("Missing value for '%s'", var);
++	error("Missing value for '%s'", var);
+ }
+diff --git a/parse-options.c b/parse-options.c
+index 67e98a6..ba39dd9 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -586,11 +586,12 @@ int opterror(const struct option *opt, const char *reason, int flags)
  }
  
- # Test __gitcomp.
+ #undef opterror
+-int opterror(const struct option *opt, const char *reason, int flags)
++void opterror(const struct option *opt, const char *reason, int flags)
+ {
+ 	if (flags & OPT_SHORT)
+-		return error("switch `%c' %s", opt->short_name, reason);
++		error("switch `%c' %s", opt->short_name, reason);
+ 	if (flags & OPT_UNSET)
+-		return error("option `no-%s' %s", opt->long_name, reason);
+-	return error("option `%s' %s", opt->long_name, reason);
++		error("option `no-%s' %s", opt->long_name, reason);
++	else
++		error("option `%s' %s", opt->long_name, reason);
+ }
+diff --git a/parse-options.h b/parse-options.h
+index e703853..bd43314 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -176,10 +176,8 @@ extern int opterror(const struct option *opt, const char *reason, int flags);
+ 				   const struct option *options);
+ 
+ extern int optbug(const struct option *opt, const char *reason);
+-extern int opterror(const struct option *opt, const char *reason, int flags);
+-#ifdef __GNUC__
++extern void opterror(const struct option *opt, const char *reason, int flags);
+ #define opterror(o,r,f) (opterror((o),(r),(f)), -1)
+-#endif
+ 
+ /*----- incremental advanced APIs -----*/
+ 
