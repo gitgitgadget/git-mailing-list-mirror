@@ -1,116 +1,189 @@
-From: Matthew Blissett <matt@blissett.me.uk>
-Subject: Re: [PATCH] Highlight the link target line in Gitweb using CSS
-Date: Thu, 20 Dec 2012 22:35:03 +0000
-Message-ID: <CAKW1YCZLUS1LH+cAad08WhG5RLwXARMupEStrH8cdyhQY1itzg@mail.gmail.com>
-References: <1356027399-5356-1-git-send-email-matt@blissett.me.uk>
-	<7vbodo4f6q.fsf@alter.siamese.dyndns.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v6 0/7] make test output coloring more intuitive
+Date: Thu, 20 Dec 2012 23:28:57 +0000
+Message-ID: <CAOkDyE9tDYRYzojzNnjWsT7UygxMAurHqLSDGA66_LMPD2Wmnw@mail.gmail.com>
+References: <1355682495-22382-1-git-send-email-git@adamspiers.org>
+	<7v8v8xrfnp.fsf@alter.siamese.dyndns.org>
+	<CAOkDyE9B_HfUZmqNqO35mtjTvdihBTiW=uOV2oEQgLUw1xyf=A@mail.gmail.com>
+	<20121220153411.GA1497@sigill.intra.peff.net>
+	<CAOkDyE9y6JvNKTCBoJqu47Hn-3axfjZPUdBhf4bOEfSP-9Q84A@mail.gmail.com>
+	<20121220161110.GA10605@sigill.intra.peff.net>
+	<7vy5gs4jiy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 23:40:29 2012
+X-From: git-owner@vger.kernel.org Fri Dec 21 00:29:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlomv-0006Qu-Qn
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 23:40:26 +0100
+	id 1TlpYM-0006La-9m
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 00:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab2LTWkI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Dec 2012 17:40:08 -0500
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:49158 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752019Ab2LTWkG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Dec 2012 17:40:06 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Dec 2012 17:40:06 EST
-Received: by mail-qc0-f172.google.com with SMTP id b25so2184186qca.17
-        for <git@vger.kernel.org>; Thu, 20 Dec 2012 14:40:05 -0800 (PST)
+	id S1751765Ab2LTX3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 18:29:00 -0500
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:56314 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352Ab2LTX26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 18:28:58 -0500
+Received: by mail-wi0-f182.google.com with SMTP id hn14so2366107wib.9
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 15:28:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=blissett.me.uk; s=g;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MTqSxg7lAMRm24WZp3kDGQeb2UJkoq6vcugCO/Wj72I=;
-        b=icccgOb8LVlFMfI72O38htq4dKbLFBrTCfNOIZ9h6ooditF949c1c6hZluWdZQ9Gop
-         VdnSFuYjoHfYHYrQIyhawQyFiAASNHs0MrUg1Y4IMBvZv+8nJq01GQYygtJGjXc/gWB+
-         5OFK7Fuef0/B+MfFAuvLbTy5uQDUHGfSPVEZQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=MTqSxg7lAMRm24WZp3kDGQeb2UJkoq6vcugCO/Wj72I=;
-        b=LsoPdk1EBSaSHbobYOQr1/tHp6hvkw56rA1GZIMZ4EZkdMqq8OTPqcG/eGVfpPtAFY
-         E/e6QPC6G0NDQLE1ca0wdZHKgpJeI9H+QT5eCIuFnb5ilUByQqotvw9fsBzHNSUtKNZL
-         gqv8j9gDsvQ2nJdDYvSxtJvlZqd53tNRqBHYYPCmz2QY/qI5lF24CF4rablpRML0ldVW
-         kbhmqP9fYeSLyul4TlgRbyoBBCy83g8gFOb+jIwUPXlYZCrPPoStW2NkM4SWpoLU0mSd
-         ++gQ9yVJJNwgHqq8MFJW2hmy+fQfKUdu19Dy39GjDOQ+4lavm02xoP2UYztzTQ84GemH
-         Nrqw==
-Received: by 10.49.61.102 with SMTP id o6mr6572912qer.41.1356042903951; Thu,
- 20 Dec 2012 14:35:03 -0800 (PST)
-Received: by 10.49.73.162 with HTTP; Thu, 20 Dec 2012 14:35:03 -0800 (PST)
-In-Reply-To: <7vbodo4f6q.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQkN5XpdvfVKa903wLVklLm27m/izMcpKEtvpvBoldWJzQqHoPikECQkfTpKa5m2hkoZNbfr
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=GDjX6guYSqTzGYzmUnBBfjLCOwBEdFJmKgvSydCo7/Q=;
+        b=G/5rxm6HIrdEewk31FkhOzyBmL/BS1id/4Ra1hFepT+IqG1iMXsUBQu+Gb/k44XC97
+         SWYYddWU5mB5iDJUQZjuG3UUeMXypUUuFyv9rG6LFan3ppQachSAtTaDvdJyI2q3DJoK
+         +pW2MXec2WM4mznWqNLTS3X2MqEYFi8WheNg1Do/zA1NCDOuvQe1DTJnwE3TV2PMhwbl
+         MD3bxeHtQKfX7xW+zNU6WaGb8oqKmD2fImwxNbO0d0FFO+gZlakts4Af36v4TVTXt7le
+         cqqWN0y5gL2bMf8vZNoGrgu76uzjw8qylWMJOMSdAGETooIZAD/IzFMTEMb5wzLwJf0z
+         5LJQ==
+Received: by 10.194.88.98 with SMTP id bf2mr20374641wjb.49.1356046137303; Thu,
+ 20 Dec 2012 15:28:57 -0800 (PST)
+Received: by 10.194.56.232 with HTTP; Thu, 20 Dec 2012 15:28:57 -0800 (PST)
+In-Reply-To: <7vy5gs4jiy.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: NoQNw_ryvxWxey4hD_01eLYLjF4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211936>
 
-On 20 December 2012 20:54, Junio C Hamano <gitster@pobox.com> wrote:
-> [jc: adding area expert to Cc]
-
-Thanks.
-
-> Matthew Blissett <matt@blissett.me.uk> writes:
+On Thu, Dec 20, 2012 at 7:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>>> Good point, I forgot to check what it looked like with -v.  Since this
+>>> series is already on v6, is there a more lightweight way of addressing
+>>> this tiny tweak than sending v7?
+>>
+>> It is ultimately up to Junio, but I suspect he would be OK if you just
+>> reposted patch 4/7 with the above squashed. Or even just said "I like
+>> this, please squash it into patch 4 (change info messages from
+>> yellow/brown to bold cyan).
 >
-> > This is useful when a Gitweb link with a target (like #l100) refers=
- to
-> > a line in the last screenful of text.  Highlight the background in
-> > yellow, and display a =E2=9A=93 character on the left.  Show the sa=
-me
-> > highlight when hovering the mouse over a line number.
-> >
-> > Signed-off-by: Matthew Blissett <matt@blissett.me.uk>
-> > ---
-> > The background-colour change is the 'main' (tiny) change.
+> Surely; as long as the series is not in 'next', the change to be
+> squashed is not too big and it is not too much work (and in this
+> case it certainly is not).
+
+OK.
+
+> I actually wonder if "skipped test in bold blue" and "known breakage
+> in bold yellow" should also lose the boldness.  Errors and warnings
+> in bold are good, but I would say the degree of need for attention
+> are more like this:
 >
-> In the "blob" view, I think it does make it more discoverable that
-> these line numbers are links, so I personally think a.linenr:hover
-> part is an improvement.  I am not sure about other three changes
-> adding any value, though.
+>         error (failed tests - you should look into it)
+>         skip (skipped - perhaps you need more packages?)
+>         warn (expected failure - you may want to look into fixing it someday)
+>         info
+>         pass
 >
-> > Consider the ::before part a suggestion.  I think it helps show the
-> > target line, but it does overlap the first character of any line >9=
-99.
+> The "expected_failure" cases painted in "warn" are all long-known
+> failures; I do not think reminding about them in "bold" over and
+> over will help encouraging the developers take a look at them.
+
+As Peff already noted, on many (most?) X terminals "bold" colours are
+just brighter colours, rather than a heavier typeface.  How bold they
+look is therefore dependent on the colour scheme used by that
+terminal.
+
+> The "skipped" cases fall into two categories.  Either you already
+> know you choose to not to care (e.g. I do not expect to use git-p4
+> and decided not to install p4 anywhere, so I may have t98?? on
+> GIT_SKIP_TESTS environment) or you haven't reached that point on a
+> new system and haven't realized that you didn't install a package
+> needed to run tests you care about (e.g. cvsserver tests would not
+> run without Perl interface to SQLite).  For the former, the bold
+> output is merely distracting; for the latter, bold _might_ help in
+> this case.
+
+Very good point.
+
+> At least, I think
 >
-> Actually, when viewing the blame view, this is even worse, as it
-> seems to always overlap.  The background color ought to be enough
-> cue without being overly distracting, I would have to say.
+>         GIT_SKIP_TESTS=t98?? sh t9800-git-p4-basic.sh -v
+>
+> should paint "skipping test t9800 altogether" (emitted with "-v) and
+> the last line "1..0 # SKIP skip all tests in t9800" both in the same
+> "info" color.
+>
+> How about going further to reduce "bold" a bit more, like this?
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index aaf013e..2bbb81d 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -182,13 +182,13 @@ then
+>                 error)
+>                         tput bold; tput setaf 1;; # bold red
+>                 skip)
+> -                       tput bold; tput setaf 4;; # bold blue
+> +                       tput setaf 4;; # bold blue
 
-I didn't know about blame-view, sorry.  The line-number links in that
-view aren't self-referential, so the =E2=9A=93 symbol is misleading.  I=
-'m not
-sure if that's a mistake, or if the links are supposed to point to the
-commit that introduced the change.  In any case, often they point to
-the parent commit instead.
+The comment still says "bold".
 
-Just this:
-/* Pink highlight when hovering line numbers or linking to them */
-=2Epre a.linenr:hover,
-=2Epre a.linenr:target {
-	color: #444444;
-	background-color: #f8f;
-}
-is probably best.  A pink background, which shows up better than
-yellow, and only in blob view.  The :target background also helps mark
-the chosen line after scrolling.
+>                 warn)
+> -                       tput bold; tput setaf 3;; # bold brown/yellow
+> +                       tput setaf 3;; # bold brown/yellow
 
-If blame view is supposed to have the same behaviour (self-referential
-links) then these two CSS selectors are appropriate:
-    .blame tr:target .linenr a, .blame tr .linenr a:hover
+Ditto here ...
 
---=20
+>                 pass)
+>                         tput setaf 2;;            # green
+>                 info)
+> -                       tput bold; tput setaf 6;; # bold cyan
+> +                       tput setaf 6;; # bold cyan
+
+... and here.
+
+>                 *)
+>                         test -n "$quiet" && return;;
+>                 esac
+> @@ -589,7 +589,7 @@ for skp in $GIT_SKIP_TESTS
+>  do
+>         case "$this_test" in
+>         $skp)
+> -               say_color skip >&3 "skipping test $this_test altogether"
+> +               say_color info >&3 "skipping test $this_test altogether"
+>                 skip_all="skip all tests in $this_test"
+>                 test_done
+>         esac
+
+Yes, I like this last hunk especially.
+
+I have no objection in principle to a reduction in boldness.
+
+However, I am beginning to get disheartened that at this rate, this
+series will never land.  I already submitted v4 of the series which
+already had non-bold blue.  I then received feedback indicating that
+bold blue would be more suitable, so despite alarm bells beginning to
+ring in my head, I submitted v5 with bold blue, declaring that that
+would be my last version:
+
+  http://article.gmane.org/gmane.comp.version-control.git/206042
+
+A further concern about "info" messages not being blue prompted me
+to attempt to canvass more opinions:
+
+  http://article.gmane.org/gmane.comp.version-control.git/209321
+
+I received none, so submitted v6 based on my best judgement.  Now we
+are talking about a potential v7 going *back* to non-bold blue.  I can
+submit v7 if you think it's worth it, but would that really be the end
+of the discussion?  It's clear from the above that colour scheme
+design by committee is about as good an idea as asking a bunch of kids
+to reach consensus on their favourite colour ;-)
+
+So if possible I'd be very happy for Junio to simply make an executive
+decision (I don't care which way, as long as it fits the traffic
+lights scheme and uses distinct hues of blue/cyan for the different
+categories of skip/info messages), tweak the latest v6 series
+accordingly, and then push so that we can all go back to more pressing
+things ;-)
+
+Hopefully that is a reasonable way forward?
+
 Thanks,
-Matt
+Adam
