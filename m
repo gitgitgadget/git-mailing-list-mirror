@@ -1,74 +1,89 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetools/p4merge: Handle "/dev/null"
-Date: Wed, 19 Dec 2012 20:41:31 -0800
-Message-ID: <CAJDDKr5rxUPzqkiNAhPpEkK4ajyPNkNsGdPYWca3oggBrWybmg@mail.gmail.com>
-References: <1349925756-87801-1-git-send-email-davvid@gmail.com>
-	<508B9F89.7050909@game-point.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Thu Dec 20 05:41:52 2012
+Subject: [PATCH] mergetools/p4merge: Honor $TMPDIR for the /dev/null placeholder
+Date: Wed, 19 Dec 2012 20:45:54 -0800
+Message-ID: <1355978754-7041-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 05:53:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlXx9-0005YM-9W
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 05:41:51 +0100
+	id 1TlY7q-0005A2-VJ
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 05:52:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462Ab2LTEle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 23:41:34 -0500
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:57461 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752217Ab2LTElc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 23:41:32 -0500
-Received: by mail-vc0-f170.google.com with SMTP id fl11so3324561vcb.29
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 20:41:32 -0800 (PST)
+	id S1752459Ab2LTEwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 23:52:36 -0500
+Received: from mail-da0-f54.google.com ([209.85.210.54]:59752 "EHLO
+	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752194Ab2LTEwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 23:52:36 -0500
+X-Greylist: delayed 389 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Dec 2012 23:52:35 EST
+Received: by mail-da0-f54.google.com with SMTP id n2so1302625dad.41
+        for <git@vger.kernel.org>; Wed, 19 Dec 2012 20:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8RvywE9Z921o6lmGenfpOj0YC5Ldos0GNPJ4ww5Dumw=;
-        b=xl6qxQaJS4c9NN0GdbFCgkeoS7SaFOneP2VC0Z5hLUpwxTEJ11wzzkUOEAVHi9zez9
-         ylrZIzDpYVQqj0D3+JjxAOc18A2bQZ+bkVewUTau4u7RapwVUT8YKmIFDEJzY2gERLTQ
-         BuzKsaq714jCRkVV89UZNb6KEM/T2g84vHQNs18AmME3vqmVi+KXQhYhyyGqxqkpMZnx
-         IdvqLqLwkiro7sx2QAzShr6htQ508qCcXoVsFjFJK1bSw29DDDRQ9yjj4GiE8xY3hP9s
-         pvYu+LnEXFglhNpESC+SVXB2ucLpcyByGJxjycc03xWNWP60H+L/JwBbCnUR7+mr8Sbp
-         GwXg==
-Received: by 10.221.2.11 with SMTP id ns11mr12303771vcb.3.1355978492108; Wed,
- 19 Dec 2012 20:41:32 -0800 (PST)
-Received: by 10.58.182.10 with HTTP; Wed, 19 Dec 2012 20:41:31 -0800 (PST)
-In-Reply-To: <508B9F89.7050909@game-point.net>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=sJcy7c/B1j3j8xb1gjpRFrY8PyyLcS7ewpzyp8UBPwc=;
+        b=BCBn1DCO0lRJzhlc7HfdwN4klT7Yf6yThPXkPg4sz1/4OEYfgJM8TaLID/Tme9LWSj
+         w7qKV4gLb5i1/PX1GhY7W+UuFjhsNEWi0oMWSCMrgDuRvulZ+vie0XmAe+HSkoEzFCmL
+         PJEK0kG914TPNgHLaVFH2bAZGudDMV8QpzIyWtUXAV+x+pQYki3APQNVjNoKLZvuF9AC
+         6rCLI6t6ncjzqsyrADONg8GGGjsRyW6kDaeJZLdu81JV14LhXjP8RnttkIh16AM/wG21
+         9WqQezY9jnHZM+nG/bwu2cQwpNxq/yOnqBZ1bf1a9hOTkEV9BmNtxvj6j8bAEXPFEWEO
+         Sw/Q==
+X-Received: by 10.68.225.232 with SMTP id rn8mr25799282pbc.34.1355978765163;
+        Wed, 19 Dec 2012 20:46:05 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id is6sm4313711pbc.55.2012.12.19.20.46.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 19 Dec 2012 20:46:04 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc2.6.g18499ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211879>
 
-On Sat, Oct 27, 2012 at 1:47 AM, Jeremy Morton <admin@game-point.net> wrote:
-> Sorry to be replying to this so late; I hadn't noticed the post until now!
->
-> I've tried putting that code in my p4merge script and yes it does indeed
-> work fine.  However, it puts a temporary file in the working directory which
-> I'm not sure is a good idea?  If we look at this patch which actually solved
-> pretty much the same problem, but when merging and, during a merge conflict,
-> a file was created in both branches:
-> https://github.com/git/git/commit/ec245ba
->
-> ... it is creating a temp file in a proper temp dir, rather than in the
-> working dir.  I think that would be the proper solution here.  However, I
-> really want to get this fixed so I'd be happy for this band-aid fix of the
-> p4merge script to be checked in until we could get a patch more like the
-> aforementioned one, at a later date, to create empty files in a proper temp
-> dir and pass them as $LOCAL and $REMOTE.  :-)
+Use mktemp to create the /dev/null placeholder for p4merge.
+This keeps it out of the current directory.
 
-I had the same thoughts when I wrote it, but I figured that following
-the existing pattern used by mergetool for $REMOTE and $LOCAL when
-they do exist was simpler as the first step.
+Reported-by: Jeremy Morton <admin@game-point.net>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+I consider this a final finishing touch on a new 1.8.1 feature,
+so hopefully we can get this in before 1.8.1.
 
-I have a patch that fixes this by using mktemp that I will send shortly.
-It only does it for the /dev/null file since the existing behavior for
-files that do exist is fine.
+ mergetools/p4merge | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/mergetools/p4merge b/mergetools/p4merge
+index 295361a..090fa9b 100644
+--- a/mergetools/p4merge
++++ b/mergetools/p4merge
+@@ -4,13 +4,13 @@ diff_cmd () {
+ 	rm_remote=
+ 	if test "/dev/null" = "$LOCAL"
+ 	then
+-		LOCAL="./p4merge-dev-null.LOCAL.$$"
++		LOCAL="$(create_empty_file)"
+ 		>"$LOCAL"
+ 		rm_local=true
+ 	fi
+ 	if test "/dev/null" = "$REMOTE"
+ 	then
+-		REMOTE="./p4merge-dev-null.REMOTE.$$"
++		REMOTE="$(create_empty_file)"
+ 		>"$REMOTE"
+ 		rm_remote=true
+ 	fi
+@@ -33,3 +33,7 @@ merge_cmd () {
+ 	"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+ 	check_unchanged
+ }
++
++create_empty_file () {
++	mktemp -t git-difftool-p4merge-empty-file.XXXXXX
++}
 -- 
-David
+1.8.1.rc2.6.g18499ba
