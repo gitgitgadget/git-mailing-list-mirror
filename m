@@ -1,84 +1,65 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/3] wildmatch: support "no FNM_PATHNAME" mode
-Date: Thu, 20 Dec 2012 08:55:50 +0700
-Message-ID: <CACsJy8C9Nhdq_xBAOxtmLcUnrUioAMvWCPk=sBZKOzFY2WR+iA@mail.gmail.com>
-References: <1355922488-20976-1-git-send-email-pclouds@gmail.com>
- <1355922488-20976-3-git-send-email-pclouds@gmail.com> <7vlicu9cpk.fsf@alter.siamese.dyndns.org>
+From: David Michael <fedora.dm0@gmail.com>
+Subject: Re: [RFC] test: Old shells and physical paths
+Date: Thu, 20 Dec 2012 02:28:36 +0000
+Message-ID: <CAEvUa7=_iyXxaaRs3WtxZOy5PNnncG-iMAUNkCMLJ19ZtReqaw@mail.gmail.com>
+References: <CAEvUa7=sOPF9xwfGuBXv0CBZhT+79+8z3tm9ar_cz3q--kfqRQ@mail.gmail.com>
+	<7vmwx97f0o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 02:59:57 2012
+X-From: git-owner@vger.kernel.org Thu Dec 20 03:29:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlVQS-0001ZD-RU
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 02:59:57 +0100
+	id 1TlVsb-0005J3-19
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 03:29:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194Ab2LTB7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 20:59:38 -0500
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:41453 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555Ab2LTB4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 20:56:21 -0500
-Received: by mail-oa0-f42.google.com with SMTP id j1so2873460oag.1
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 17:56:20 -0800 (PST)
+	id S1752194Ab2LTC2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 21:28:44 -0500
+Received: from mail-vb0-f42.google.com ([209.85.212.42]:58657 "EHLO
+	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143Ab2LTC2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 21:28:43 -0500
+Received: by mail-vb0-f42.google.com with SMTP id fa15so3223918vbb.29
+        for <git@vger.kernel.org>; Wed, 19 Dec 2012 18:28:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=AkzOzVPnIBQwGzPhlR0lXH4AJx2fZqnVXbEPyYSUDqU=;
-        b=P/NLak1Z+GMIrctiFjgyNiKv1x8sJEO3Fc+d9AFQ2Xh8pulSCcgj801He9pdV8crjx
-         L2Ep+r3A+n6yd4apAaOBbu9zDqGE3DQP1ZkTWR3cuULv6D//rugGu8PG/TkWa7WCzpsb
-         LnOAWYzCJCuwcTJaB/upWVtnDrCGGNscFH+sXv7EpegMkQRljNKrWEwf4ygvcDhCqT8C
-         gnC5iJ5HXi30WYR1PSB5bTR2STbroboeWO9aVPH23b33P1MzdCfwipVUSAKkTWLBsNSf
-         naa9NGcByA6+pyJUYESQpmD4hRFVG+g+x4TizSmOneJui1wjoPF27Pw2/hK0X2jhJkbG
-         Gi5Q==
-Received: by 10.182.141.103 with SMTP id rn7mr6705429obb.5.1355968580607; Wed,
- 19 Dec 2012 17:56:20 -0800 (PST)
-Received: by 10.182.27.168 with HTTP; Wed, 19 Dec 2012 17:55:50 -0800 (PST)
-In-Reply-To: <7vlicu9cpk.fsf@alter.siamese.dyndns.org>
+        bh=TVTzhY+bebCM3yfhgvBL+wVHGPvKGItOycl6DaOPhUU=;
+        b=buGsntyAnMHddB/2gZwEFh4mOuuTV3YA5N5DWteJVxLnxPhjopeXY060QWP18PWS+/
+         ym9Gzkabtpz/frgVOu0edz0BWDu9wGn+BPAV/U78V68QzfJkLK2X1i/ZXZvt61+BV0bx
+         tPwlOnnF40gHN2T2kXdgugA+qIwQ1hHbxSphyQgL83RgPxMYXyXNfENiCsCTSkXumzvj
+         nExNbwIt2k45FRqsI0DwXzeEf3/9SnYrruMiLN+tFvlgziiDhtwYjt0K/BYQM3bFwDDr
+         G8wxlbDRGX6HBMJNbvKDcgGuqVvniOurjM/XsRD/Xnx5ZM7+OK5dItxmRYJJz1zXpqK9
+         PO6w==
+Received: by 10.52.98.36 with SMTP id ef4mr10455765vdb.104.1355970516618; Wed,
+ 19 Dec 2012 18:28:36 -0800 (PST)
+Received: by 10.58.85.138 with HTTP; Wed, 19 Dec 2012 18:28:36 -0800 (PST)
+In-Reply-To: <7vmwx97f0o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211870>
 
-On Thu, Dec 20, 2012 at 12:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> When that happens, we should want to retain the same "do not bother
-> to descend into subdirectories that will never match" optimization
-> for a pattern like "Doc*tion/**/*.txt".  Because of FNM_PATHNAME, we
-> can tell if a subdirectory is worth descending into by looking at
-> the not-so-simple prefix "Doc*tion/"; "Documentation" will match,
-> "Doc" will not (because '*' won't match '/').
->
-> Which tells me that integrating this _well_ into the rest of the
-> system is not just a matter of replacing fnmatch() with wildmatch().
+Hi,
 
-Yeah, we open a door for more opportunities and a lot more headache.
+On Thu, Dec 20, 2012 at 12:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Is "here is a nickel, get a better shell" an option?
 
-> I also expect that wildmatch() would be much slower than fnmatch()
-> especially when doing its "**" magic, but I personally do not think
-> it will be a showstopper.
+It is, somewhat.  There is a pre-built port of GNU bash 2.03 for the
+platform, but I was trying to see how far things could go with the
+OS's supported shell before having to bring in unsupported
+dependencies.  Unfortunately, I do not believe the OS fully conforms
+to POSIX.1-2001 yet, so that means no "-P" or "-L" without going
+rogue.
 
-A potential showstopper is the lack of multibyte support. I don't know
-if people want that though.
+I'll carry test fixes for this platform locally.
 
-> If the user asks for a more powerful but
-> expensive operation, we are saving time for the user by doing a more
-> powerful thing (reducing the need to postprocess the results) and
-> can afford to spend extra cycles.
+Thanks.
 
-In some case we may be able to spend fewer cycles by preprocessing
-patterns first.
-
-> As long as simpler patterns fnmatch() groks (namely, '?', '*', and
-> '[class]' wildcards only) are not slowed down by replacing it with
-> wildmatch(), that is, of course.
-
-I'm concerned about performance vs fnmatch too. I'll probably write a
-small program to exercise both and measure it with glibc.
--- 
-Duy
+David
