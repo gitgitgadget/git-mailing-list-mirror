@@ -1,86 +1,81 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: $PATH pollution and t9902-completion.sh
-Date: Thu, 20 Dec 2012 15:13:27 +0000
-Message-ID: <CAOkDyE-J7sTJ-GefhteP1wy7WorqTRnj5nn0k6hd1dp0VJz5iQ@mail.gmail.com>
-References: <20121217010538.GC3673@gmail.com>
-	<20121220145519.GB27211@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 0/7] make test output coloring more intuitive
+Date: Thu, 20 Dec 2012 10:34:11 -0500
+Message-ID: <20121220153411.GA1497@sigill.intra.peff.net>
+References: <1355682495-22382-1-git-send-email-git@adamspiers.org>
+ <7v8v8xrfnp.fsf@alter.siamese.dyndns.org>
+ <CAOkDyE9B_HfUZmqNqO35mtjTvdihBTiW=uOV2oEQgLUw1xyf=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 20 16:19:24 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Thu Dec 20 16:34:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlhu7-0002K5-LR
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 16:19:23 +0100
+	id 1Tli8l-00088Y-J8
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 16:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751036Ab2LTPTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 10:19:06 -0500
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:57480 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913Ab2LTPTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 10:19:03 -0500
-X-Greylist: delayed 330 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Dec 2012 10:19:03 EST
-Received: by mail-wi0-f176.google.com with SMTP id hm6so4368855wib.9
-        for <git@vger.kernel.org>; Thu, 20 Dec 2012 07:19:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=zK/sTx4wyCsx6LPb7bmMSyl7KVHh0RfSGjpcEg8HK90=;
-        b=h0MYK8y4lBusFzdShvqxndOC0ymDiJOxoVdU3VsiarY5YFmRjokQRZtiI+OkGBCrM0
-         OZ78PEwRt5+Ga2Fwgdh2pQ82yQ0CPT2dl73oY5Y6kHpgjoYogkKOgDAUcsJbXf2okBan
-         R6AL/+LZ+LtdqTCshQS6WpARGqASK8Bjhe/B8KLMC2a/LKMNMG3EnBNWP+9AKEtO1Ien
-         jhKGNcxEXUH0xPZzaCJr7E/wYtVnO8WI7cpTXl1j2u+KN7AgcmiXESqWUvWp8LDJ0hrv
-         yPZaHgWLxCO2ag7MyA3+FxgNZZN3vcfmSVR2JkQUMWoSFnh/WqqihNYDBblQXdKo/zTx
-         QGUA==
-Received: by 10.180.8.130 with SMTP id r2mr10602631wia.28.1356016407920; Thu,
- 20 Dec 2012 07:13:27 -0800 (PST)
-Received: by 10.194.56.232 with HTTP; Thu, 20 Dec 2012 07:13:27 -0800 (PST)
-In-Reply-To: <20121220145519.GB27211@sigill.intra.peff.net>
-X-Google-Sender-Auth: F6UqECGXhYu9PqeFGkzbcrNq_EY
+	id S1751063Ab2LTPeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 10:34:14 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59726 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751241Ab2LTPeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 10:34:13 -0500
+Received: (qmail 10012 invoked by uid 107); 20 Dec 2012 15:35:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Dec 2012 10:35:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Dec 2012 10:34:11 -0500
+Content-Disposition: inline
+In-Reply-To: <CAOkDyE9B_HfUZmqNqO35mtjTvdihBTiW=uOV2oEQgLUw1xyf=A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211897>
 
-On Thu, Dec 20, 2012 at 2:55 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Dec 17, 2012 at 01:05:38AM +0000, Adam Spiers wrote:
->> t/t9902-completion.sh is currently failing for me because I happen to
->> have a custom shell-script called git-check-email in ~/bin, which is
->> on my $PATH.  This is different to a similar-looking case reported
->> recently, which was due to an unclean working tree:
->>
->>   http://thread.gmane.org/gmane.comp.version-control.git/208085
->>
->> It's not unthinkable that in the future other tests could break for
->> similar reasons.  Therefore it would be good to sanitize $PATH in the
->> test framework so that it cannot destabilize tests, although I am
->> struggling to think of a good way of doing this.  Naively stripping
->> directories under $HOME would not protect against git "plugins" such
->> as the above being installed into places like /usr/bin.  Thoughts?
->
-> I've run into this, too. I think sanitizing $PATH is the wrong approach.
-> The real problem is that the test is overly picky. Right now it is
-> failing because you happen to have "check-email" in your $PATH, but it
-> will also need to be adjusted when a true "check-email" command is added
-> to git.
->
-> I can think of two other options:
->
->   1. Make the test input more specific (e.g., looking for "checkou").
->      This doesn't eliminate the problem, but makes it less likely
->      to occur.
->
->   2. Loosen the test to look for the presence of "checkout", but not
->      fail when other items are present. Bonus points if it makes sure
->      that everything returned starts with "check".
->
-> I think (2) is the ideal solution in terms of behavior, but writing it
-> may be more of a pain.
+On Sun, Dec 16, 2012 at 07:01:56PM +0000, Adam Spiers wrote:
 
-I agree with all your points.  Thanks for the suggestions.
+> On Sun, Dec 16, 2012 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Adam Spiers <git@adamspiers.org> writes:
+> >
+> >> This series of commits attempts to make test output coloring
+> >> more intuitive,...
+> >
+> > Thanks; I understand that this is to replace the previous one
+> > b465316 (tests: paint unexpectedly fixed known breakages in bold
+> > red, 2012-09-19)---am I correct?
+> 
+> Correct.  AFAICS I have incorporated all feedback raised in previous
+> reviews.
+> 
+> > Will take a look; thanks.
+> 
+> Thanks.  Sorry again for the delay.  I'm now (finally) resuming work
+> on as/check-ignore.
+
+I eyeballed the test output of "pu". I do think this resolves all of the
+issues brought up before, and I really hate to bikeshed on the colors at
+this point, but I find that bold cyan a bit hard on the eyes when
+running with "-v" (where most of the output is in that color, as it
+dumps the shell for each test).  Is there any reason not to tone it down
+a bit like:
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 256f1c6..31f59af 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -227,7 +227,7 @@ then
+ 		pass)
+ 			tput setaf 2;;            # green
+ 		info)
+-			tput bold; tput setaf 6;; # bold cyan
++			tput setaf 6;; # cyan
+ 		*)
+ 			test -n "$quiet" && return;;
+ 		esac
+
+-Peff
