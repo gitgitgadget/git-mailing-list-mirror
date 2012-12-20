@@ -1,70 +1,84 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] add core.pathspecGlob config option
-Date: Thu, 20 Dec 2012 08:28:57 +0700
-Message-ID: <CACsJy8BB3=3ZHD5Ua9M-0+98JVigHBBuo07gBSgEwanvB0zBSA@mail.gmail.com>
-References: <20121219203449.GA10001@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/3] wildmatch: support "no FNM_PATHNAME" mode
+Date: Thu, 20 Dec 2012 08:55:50 +0700
+Message-ID: <CACsJy8C9Nhdq_xBAOxtmLcUnrUioAMvWCPk=sBZKOzFY2WR+iA@mail.gmail.com>
+References: <1355922488-20976-1-git-send-email-pclouds@gmail.com>
+ <1355922488-20976-3-git-send-email-pclouds@gmail.com> <7vlicu9cpk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 20 02:29:55 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 02:59:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlUxG-0006f4-Q9
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 02:29:47 +0100
+	id 1TlVQS-0001ZD-RU
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 02:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581Ab2LTB33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2012 20:29:29 -0500
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:44403 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234Ab2LTB32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2012 20:29:28 -0500
-Received: by mail-ob0-f178.google.com with SMTP id eh20so2737224obb.37
-        for <git@vger.kernel.org>; Wed, 19 Dec 2012 17:29:27 -0800 (PST)
+	id S1752194Ab2LTB7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2012 20:59:38 -0500
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:41453 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752555Ab2LTB4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2012 20:56:21 -0500
+Received: by mail-oa0-f42.google.com with SMTP id j1so2873460oag.1
+        for <git@vger.kernel.org>; Wed, 19 Dec 2012 17:56:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=LjUHR71WihsMla5UW8Wzic44opfW7gXIaVafuPI+YjA=;
-        b=CA7Hs5pJuWD58owdCKDt8qxFurBNAXjW7EI14BhgVIsPdPOeh5VNBRDts6AuWHxL2D
-         o0FSLiLjlN97ggfh3D0UPDKFgLTsFwThsYq+jmz6GT5yKo8imqFaBo//0QS1BKUyvwbU
-         LGjH7+XhARkFkHErk3Bt6DKNHRolkz3muJr+Z1WQe9Db5YYlQCAN//EmOPIHH1hVfqIo
-         8a5hmKSqls3imJ87Py45W4E9sjy1DfmjtoQTiaqBi+cD4xpW1zMweZjqKgqEwgEuOr7m
-         X+01JkmSI4Cos+/x2bhbhJa2FSBDE12ymydboicL1UwZ/Et3Nm+3ny1oWdoTl3YI3QBk
-         Sh2Q==
-Received: by 10.182.141.103 with SMTP id rn7mr6659870obb.5.1355966967911; Wed,
- 19 Dec 2012 17:29:27 -0800 (PST)
-Received: by 10.182.27.168 with HTTP; Wed, 19 Dec 2012 17:28:57 -0800 (PST)
-In-Reply-To: <20121219203449.GA10001@sigill.intra.peff.net>
+        bh=AkzOzVPnIBQwGzPhlR0lXH4AJx2fZqnVXbEPyYSUDqU=;
+        b=P/NLak1Z+GMIrctiFjgyNiKv1x8sJEO3Fc+d9AFQ2Xh8pulSCcgj801He9pdV8crjx
+         L2Ep+r3A+n6yd4apAaOBbu9zDqGE3DQP1ZkTWR3cuULv6D//rugGu8PG/TkWa7WCzpsb
+         LnOAWYzCJCuwcTJaB/upWVtnDrCGGNscFH+sXv7EpegMkQRljNKrWEwf4ygvcDhCqT8C
+         gnC5iJ5HXi30WYR1PSB5bTR2STbroboeWO9aVPH23b33P1MzdCfwipVUSAKkTWLBsNSf
+         naa9NGcByA6+pyJUYESQpmD4hRFVG+g+x4TizSmOneJui1wjoPF27Pw2/hK0X2jhJkbG
+         Gi5Q==
+Received: by 10.182.141.103 with SMTP id rn7mr6705429obb.5.1355968580607; Wed,
+ 19 Dec 2012 17:56:20 -0800 (PST)
+Received: by 10.182.27.168 with HTTP; Wed, 19 Dec 2012 17:55:50 -0800 (PST)
+In-Reply-To: <7vlicu9cpk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211869>
 
-On Thu, Dec 20, 2012 at 3:34 AM, Jeff King <peff@peff.net> wrote:
-> Part of me thinks this is just gross, because ":(noglob)" is the right
-> solution. But after spending a few hours trying it this morning, there
-> is a ton of refactoring required to make it work correctly everywhere
-> (although we could die() if we see it in places that are not using
-> init_pathspec, so at least we could say "not supported yet" and not just
-> silently ignore it).
+On Thu, Dec 20, 2012 at 12:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> When that happens, we should want to retain the same "do not bother
+> to descend into subdirectories that will never match" optimization
+> for a pattern like "Doc*tion/**/*.txt".  Because of FNM_PATHNAME, we
+> can tell if a subdirectory is worth descending into by looking at
+> the not-so-simple prefix "Doc*tion/"; "Documentation" will match,
+> "Doc" will not (because '*' won't match '/').
+>
+> Which tells me that integrating this _well_ into the rest of the
+> system is not just a matter of replacing fnmatch() with wildmatch().
 
-Yep, I'm still half way to converting everything to the new pathspec
-code. I'm not there yet. And things like this probably better goes
-with a config key or command line option, appending :(noglob) to every
-pathspec item is not pleasant. :(icase) may go the same way.
+Yeah, we open a door for more opportunities and a lot more headache.
 
-> So I think this is a nice, simple approach for sites that want it, and
-> noglob magic can come later (and will not be any harder to implement as
-> a result of this patch).
+> I also expect that wildmatch() would be much slower than fnmatch()
+> especially when doing its "**" magic, but I personally do not think
+> it will be a showstopper.
 
-Any chance to make use of nd/pathspec-wildcard? It changes the same
-code path in match_one. If you base on top of nd/pathspec-wildcard,
-all you have to do is assign nowildcard_len to len (i.e. no wildcard
-part).
+A potential showstopper is the lack of multibyte support. I don't know
+if people want that though.
+
+> If the user asks for a more powerful but
+> expensive operation, we are saving time for the user by doing a more
+> powerful thing (reducing the need to postprocess the results) and
+> can afford to spend extra cycles.
+
+In some case we may be able to spend fewer cycles by preprocessing
+patterns first.
+
+> As long as simpler patterns fnmatch() groks (namely, '?', '*', and
+> '[class]' wildcards only) are not slowed down by replacing it with
+> wildmatch(), that is, of course.
+
+I'm concerned about performance vs fnmatch too. I'll probably write a
+small program to exercise both and measure it with glibc.
 -- 
 Duy
