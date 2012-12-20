@@ -1,73 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: "git config -l" should not expose sensitive information
-Date: Thu, 20 Dec 2012 10:49:52 -0800
-Message-ID: <7vbodo5zjj.fsf@alter.siamese.dyndns.org>
-References: <50CF039A.7010800@gmx.de>
- <20121220150408.GD27211@sigill.intra.peff.net>
- <50D33409.1050309@alum.mit.edu>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: Re: Q: do people compile with NO_FNMATCH on OpenBSD 5.2?
+Date: Thu, 20 Dec 2012 13:54:43 -0500
+Message-ID: <rmi8v8sy2oc.fsf@fnord.ir.bbn.com>
+References: <7va9tbf7vd.fsf@alter.siamese.dyndns.org>
+	<rmisj732jop.fsf@fnord.ir.bbn.com>
+	<7vzk1bdqy0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Dec 20 19:50:27 2012
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org, Arnout Engelen <arnouten@bzzt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 19:55:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TllCL-0003Ri-Oa
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 19:50:26 +0100
+	id 1TllGo-0007VG-Ak
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 19:55:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252Ab2LTSt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 13:49:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53056 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752139Ab2LTSt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 13:49:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B860AEFB;
-	Thu, 20 Dec 2012 13:49:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YfkprS/xjzL6AoCUTcUzwappOoI=; b=v3LDil
-	p/t3Gf1w48l0yRi5CqXL4vr+scyhvG2P8N0XHvWQHbWaFsP/HNPFBLqZy1IMpBuA
-	PICvqi3NDbJmuiBWBbh7BR6WmEtx3U0UJ4WLAtvqhWL+rQvBWSC1XxVcqd9kGvi/
-	AxeQLxl4XEWl8NsrTh2CeaN40Oln//HA9P4Jg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uq3Ry8VXqFPX3H69YX9kEddmI0+SKIFN
-	SQwlaI7x067X+bSi8mX1R9ULAtt0OfRtR72xkE6iqEabNcaV5C1gkoSdV7NymJSs
-	QAesosf56RNE1lN89V6YKUgAvw9x5IeftXvAD8utRCfKp4xYk7/56LvoFQLSBDfI
-	0NbK+6KDA+s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68A8DAEFA;
-	Thu, 20 Dec 2012 13:49:55 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB134AEF8; Thu, 20 Dec 2012
- 13:49:54 -0500 (EST)
-In-Reply-To: <50D33409.1050309@alum.mit.edu> (Michael Haggerty's message of
- "Thu, 20 Dec 2012 16:51:37 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B63627A-4AD6-11E2-98B0-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752081Ab2LTSyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 13:54:45 -0500
+Received: from fnord.ir.bbn.com ([192.1.100.210]:55926 "EHLO fnord.ir.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751582Ab2LTSyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 13:54:43 -0500
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id 08A42BCF7; Thu, 20 Dec 2012 13:54:43 -0500 (EST)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:121220:git@vger.kernel.org::25KxM3BX6DNgkr9U:0000000000000000000000000000000000000000000iXr
+X-Hashcash: 1:20:121220:gitster@pobox.com::25KxM3BX6DNgkr9U:0000000000000000000000000000000000000000000016JM
+X-Hashcash: 1:20:121220:arnouten@bzzt.net::25KxM3BX6DNgkr9U:000000000000000000000000000000000000000000004s5i
+In-Reply-To: <7vzk1bdqy0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 18 Dec 2012 12:51:35 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211918>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+--=-=-=
+Content-Type: text/plain
 
-> I think the problem is yet another step earlier: why do we build tools
-> that encourage people to store passwords in plaintext in a configuration
-> file that is by default world-readable?
 
-True.  This particular one mentioned in the thread predates
-credential helpers, so it is not faire to say "encourage".
-We didn't and we don't.
+  [mkstemp truncating output on error]
 
-Care to do a patch to deprecate sendemail.smtppass (i.e. give
-warnings to users when it is used) and perhaps replace it with
-something based on the credential store or something?
+  diff --git c/wrapper.c w/wrapper.c
+  index 68739aa..a066e2e 100644
+  --- c/wrapper.c
+  +++ w/wrapper.c
+  @@ -229,7 +229,7 @@ int xmkstemp(char *template)
+                  int saved_errno = errno;
+                  const char *nonrelative_template;
+
+  -		if (!template[0])
+  +		if (strlen(template) != strlen(origtemplate))
+                          template = origtemplate;
+
+                  nonrelative_template = absolute_path(template);
+
+Thanks for the quick fix.
+
+I applied this patch to 1.8.0.1, and then the tests get all the way to
+t1402 (separate msg when I figure out why).
+
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (NetBSD)
+
+iEYEARECAAYFAlDTXvMACgkQ+vesoDJhHiVgHQCgtc0QY8VLXTzMUb5409omAYEZ
+b8sAn3a0nGlx5oI8617r/1gAhLAfp/Oo
+=xCD7
+-----END PGP SIGNATURE-----
+--=-=-=--
