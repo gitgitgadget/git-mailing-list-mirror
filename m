@@ -1,84 +1,79 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: Re: [RFC] test: Old shells and physical paths
-Date: Thu, 20 Dec 2012 11:25:42 -0500
-Message-ID: <CAEvUa7k8uimzjHd9jA=qjqK2pH-=oNRoY=ypN=bosmyGV52LoQ@mail.gmail.com>
-References: <CAEvUa7=sOPF9xwfGuBXv0CBZhT+79+8z3tm9ar_cz3q--kfqRQ@mail.gmail.com>
-	<7vmwx97f0o.fsf@alter.siamese.dyndns.org>
-	<CAEvUa7=_iyXxaaRs3WtxZOy5PNnncG-iMAUNkCMLJ19ZtReqaw@mail.gmail.com>
-	<CAJDDKr78ugSo9hNerHO0Y46_bSzLJWznB3E3+6H98NjMtBwHsw@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: $PATH pollution and t9902-completion.sh
+Date: Thu, 20 Dec 2012 18:25:13 +0100
+Message-ID: <50D349F9.9030100@web.de>
+References: <20121217010538.GC3673@gmail.com> <20121220145519.GB27211@sigill.intra.peff.net> <CAOkDyE-J7sTJ-GefhteP1wy7WorqTRnj5nn0k6hd1dp0VJz5iQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 17:26:14 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git mailing list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Thu Dec 20 18:25:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tliwi-0003Eg-Ib
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 17:26:08 +0100
+	id 1TljsP-0003nx-36
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 18:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667Ab2LTQZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 11:25:50 -0500
-Received: from mail-vb0-f53.google.com ([209.85.212.53]:48335 "EHLO
-	mail-vb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601Ab2LTQZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 11:25:45 -0500
-Received: by mail-vb0-f53.google.com with SMTP id b23so3923687vbz.40
-        for <git@vger.kernel.org>; Thu, 20 Dec 2012 08:25:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=v3U4gJxzE59wB7K1UMAGAz0Ju7jvRCHQVJ+zo4VvdB4=;
-        b=XJpon6bW3SHag5IlneHgTvk4SlGTH7l1+UM6OpnTdSaa0JWPsD5WAQSy2gwOOVj+aC
-         yJlHzK5JjU25rGOKEp9vTAyntW18SbDkbWZZTMPS/Sr6ZlGcZSay01P9S9jN/CBZPYCo
-         1fN16J/zwYKjyTiU0C6uKtxEVyfuywoESehn5/BSQyaqR53hP5RFiMbgnRK/axgSUJaH
-         9H/o7LnUH66HcCdd4fiyYs+0KI8UzPAeDuymX1Bbx6TCtsZaVgUSXRInHtFDBkmoa0a3
-         EMrWrFWZUXOcxbYPsYKcCSJ/lvMsFgu4gyxGnrG5MA2dkeWbvpnqcuQa9DJEIkquSFt2
-         LPNA==
-Received: by 10.220.157.9 with SMTP id z9mr15350268vcw.45.1356020742731; Thu,
- 20 Dec 2012 08:25:42 -0800 (PST)
-Received: by 10.58.85.138 with HTTP; Thu, 20 Dec 2012 08:25:42 -0800 (PST)
-In-Reply-To: <CAJDDKr78ugSo9hNerHO0Y46_bSzLJWznB3E3+6H98NjMtBwHsw@mail.gmail.com>
+	id S1751367Ab2LTRZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 12:25:27 -0500
+Received: from mout.web.de ([212.227.17.11]:58949 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750956Ab2LTRZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 12:25:26 -0500
+Received: from [192.168.37.101] ([93.222.63.50]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0LopMx-1T9f9e3mWp-00gKmc; Thu, 20 Dec 2012 18:25:14
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <CAOkDyE-J7sTJ-GefhteP1wy7WorqTRnj5nn0k6hd1dp0VJz5iQ@mail.gmail.com>
+X-Provags-ID: V02:K0:22mZkVz3MAjMJgdjq5IqtFH0WDpTmLsdUD/9HBavgZ1
+ 06NUoM0tu7j6O7faTBXWqftNYWUcxhSVu/Y7BmIXwh5rqG4v/7
+ ASZpJQYSlokOhcx/su/0W+lpEvwYqBCK80H7/skiB/dMiIgPxj
+ A3PkqgewwkL7Zsx2znyHHCz3FGELjXb7Gk4s6W9IaVA4vVUXzL
+ Afy5t61pRmpUHavRA/sPg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211906>
 
-Hi,
-
-On Thu, Dec 20, 2012 at 12:01 AM, David Aguilar <davvid@gmail.com> wrote:
-> Do you know if the differences are relegated to "cd",
-> or do other common commands such as awk, grep, sed, mktemp, expr,
-> etc. have similar issues?
-
-There are almost certainly going to be incompatibilities with other
-commands.  The system implemented UNIX95 plus some extensions, then
-they began supporting UNIX03/SUSv3/POSIX.1-2001/whatever for certain
-commands by using an environment variable to toggle between the
-incompatible behaviors.
-
-Their documentation on the UNIX03 commands indicates it is still only
-partially supported.  For example: "cp" supports "-L" and "-P", but
-"cd" doesn't.
-
-> I wonder if it'd be helpful to have a low-numbered test that checks
-> the basics needed by the scripted Porcelains and test suite.
-> It would give us an easy way to answer these questions, and could
-> be a good way to document (in code) the capabilities we expect.
-
-I'd be in favor of something like this as well.
-
-Thanks.
-
-David
-
-
-P.S.
-In the meantime, I am handling the "cd" situation by replacing "-P"
-with "$PHYS" and prepending the following to t/test-lib.sh.
-set +o logical >/dev/null 2>&1 || PHYS=-P
+On 20.12.12 16:13, Adam Spiers wrote:
+> On Thu, Dec 20, 2012 at 2:55 PM, Jeff King <peff@peff.net> wrote:
+>> On Mon, Dec 17, 2012 at 01:05:38AM +0000, Adam Spiers wrote:
+>>> t/t9902-completion.sh is currently failing for me because I happen to
+>>> have a custom shell-script called git-check-email in ~/bin, which is
+>>> on my $PATH.  This is different to a similar-looking case reported
+>>> recently, which was due to an unclean working tree:
+>>>
+>>>   http://thread.gmane.org/gmane.comp.version-control.git/208085
+>>>
+>>> It's not unthinkable that in the future other tests could break for
+>>> similar reasons.  Therefore it would be good to sanitize $PATH in the
+>>> test framework so that it cannot destabilize tests, although I am
+>>> struggling to think of a good way of doing this.  Naively stripping
+>>> directories under $HOME would not protect against git "plugins" such
+>>> as the above being installed into places like /usr/bin.  Thoughts?
+>>
+>> I've run into this, too. I think sanitizing $PATH is the wrong approach.
+>> The real problem is that the test is overly picky. Right now it is
+>> failing because you happen to have "check-email" in your $PATH, but it
+>> will also need to be adjusted when a true "check-email" command is added
+>> to git.
+>>
+>> I can think of two other options:
+>>
+>>   1. Make the test input more specific (e.g., looking for "checkou").
+>>      This doesn't eliminate the problem, but makes it less likely
+>>      to occur.
+>>
+>>   2. Loosen the test to look for the presence of "checkout", but not
+>>      fail when other items are present. Bonus points if it makes sure
+>>      that everything returned starts with "check".
+>>
+>> I think (2) is the ideal solution in terms of behavior, but writing it
+>> may be more of a pain.
+> 
+> I agree with all your points.  Thanks for the suggestions.
+I volonteer for 1) (and we got for 2) later)
