@@ -1,63 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetools/p4merge: Honor $TMPDIR for the /dev/null
- placeholder
-Date: Wed, 19 Dec 2012 23:07:53 -0800
-Message-ID: <7v1uel6w1i.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetools/p4merge: Honor $TMPDIR for the /dev/null placeholder
+Date: Thu, 20 Dec 2012 00:03:35 -0800
+Message-ID: <CAJDDKr63Yf0-3yTppGKAW+19wHY_OOF0iiKZ_6XR+Vae-7Bx7w@mail.gmail.com>
 References: <1355978754-7041-1-git-send-email-davvid@gmail.com>
- <7v623x6xvv.fsf@alter.siamese.dyndns.org>
+	<7v623x6xvv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 08:08:33 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 09:11:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlaF3-0001Ih-Qe
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 08:08:30 +0100
+	id 1TlbE2-0005Fa-9R
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 09:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303Ab2LTHIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 02:08:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52216 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751155Ab2LTHID (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 02:08:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5AD09BD0;
-	Thu, 20 Dec 2012 02:08:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q6F4ecnVn9s19FY07pVf5tqxUnc=; b=I3imEZ
-	wggjHih7TiE7I+HxB3IKuBg89w+Ykt3tfrYY9lO2zqVJfvYDJzV2OIu+xyAb9KSx
-	N9Ml8bukwL2o8RulRQAGqI82Iwys4CH6Ck3y0xmUCNfPZxtgIin/xJt0NxO0vErG
-	hVNfG1Eyzrrl8m9471BB3RfnacLWQ6mT2a64s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hsou+2MUVDRazFs+eBuHDaxKvokZGWFq
-	t4yOe8sEms+CfaqPKglWIqf+MADA0wyJHMiiuSCEaU6BmIE/c1JkhnBiRbE2Yppq
-	AtVUyM+zpuxmY1X1ql/gi//9Ggg6uSX36PFBsGeUrfsp8WApcjYRhRN4TXkpa+8k
-	PdlzpsIhH/o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF6F89BCF;
-	Thu, 20 Dec 2012 02:08:02 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE79F9BCD; Thu, 20 Dec 2012
- 02:08:00 -0500 (EST)
-In-Reply-To: <7v623x6xvv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 19 Dec 2012 22:28:04 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FD74E722-4A73-11E2-A35F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751218Ab2LTILN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 03:11:13 -0500
+Received: from mail-vc0-f179.google.com ([209.85.220.179]:45494 "EHLO
+	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751069Ab2LTILL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 03:11:11 -0500
+Received: by mail-vc0-f179.google.com with SMTP id p1so3340068vcq.24
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 00:11:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SUa1TN1k6Yxin35iWx11zabbGjz1h2sMAqKIos5D4GU=;
+        b=tHTii5s8HZKvcg6G7ydLyLHVTh6C7BUyt5rJeoV//Kx8AMJZQII2VnKe2ljuicy9lX
+         M9LJX1qzvfALIxynrOqwvuO0yu2iHRQiAN+qHIAN17YKk7n2c1BFzmUpZCDxajCVpLXQ
+         9ynoYUxuWihirYj28vrQbMmoZ63Qq5BinWvHIONvKs1bKjVMpECNlnAnbx2MmTb47G8m
+         1hO3hKQJwBrSRCZejsQvk50i06ERqrcM9b/RsqgUDjluJpxiK8hoN/KNvm29GQPOfICx
+         szGuQi6nebhc3Ydob0CAYJVHZcMIr6qIFmG3VKWy7wfw3uIzwMwtE+cm8vhbvIWZyQwm
+         qG2Q==
+Received: by 10.52.37.9 with SMTP id u9mr11347880vdj.83.1355990615462; Thu, 20
+ Dec 2012 00:03:35 -0800 (PST)
+Received: by 10.58.182.10 with HTTP; Thu, 20 Dec 2012 00:03:35 -0800 (PST)
+In-Reply-To: <7v623x6xvv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211884>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Wed, Dec 19, 2012 at 10:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > David Aguilar <davvid@gmail.com> writes:
 >
 >> Use mktemp to create the /dev/null placeholder for p4merge.
@@ -75,101 +64,41 @@ Junio C Hamano <gitster@pobox.com> writes:
 > cooking it in 'next' for sufficiently long time to give it a chance
 > to be tried by wider audience.
 
-One approach may be to do something like this as a preparation step
-(current callers of unpack-file may want to do their temporary work
-in TMPDIR as well), and then use
+True.  I only tried Linux and Mac OS X, so I would not be
+surprised to find some exotic UNIX that does not have mktemp.
 
-	git unpack-file -t e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+I meant to write "is this portable?" in the section after
+the double-dash; saying that it's polish for a fix
+is only true if it's portable.
 
-to create your empty temporary file.
+The git-unpack thing looks interesting...
+is the SHA-1 in your example the special SHA-1 for an
+empty tree or blob?
 
- Documentation/git-unpack-file.txt | 10 +++++++---
- builtin/unpack-file.c             | 28 +++++++++++++++++++++-------
- 2 files changed, 28 insertions(+), 10 deletions(-)
+The reason I ask is because in this code path we are
+comparing an unknown blob, basically a blob that does
+not exist in one of the trees, so I'm not sure if an
+'unpack' command would help for this case because we
+would not have a blob SHA-1 to unpack.
 
-diff --git a/Documentation/git-unpack-file.txt b/Documentation/git-unpack-file.txt
-index e9f148a..56af328 100644
---- a/Documentation/git-unpack-file.txt
-+++ b/Documentation/git-unpack-file.txt
-@@ -10,16 +10,20 @@ git-unpack-file - Creates a temporary file with a blob's contents
- SYNOPSIS
- --------
- [verse]
--'git unpack-file' <blob>
-+'git unpack-file' [-t] <blob>
- 
- DESCRIPTION
- -----------
- Creates a file holding the contents of the blob specified by sha1. It
--returns the name of the temporary file in the following format:
--	.merge_file_XXXXX
-+returns the name of the temporary file (by default `.merge_file_XXXXX`).
-+
- 
- OPTIONS
- -------
-+-t::
-+	The temporary file is created in `$TMPDIR` directory,
-+	instead of the current directory.
-+
- <blob>::
- 	Must be a blob id
- 
-diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
-index 1920029..de1f845 100644
---- a/builtin/unpack-file.c
-+++ b/builtin/unpack-file.c
-@@ -1,8 +1,9 @@
- #include "builtin.h"
- 
--static char *create_temp_file(unsigned char *sha1)
-+static char *create_temp_file(unsigned char *sha1, int in_tempdir)
- {
--	static char path[50];
-+	static char path[1024];
-+	static const char template[] = ".merge_file_XXXXXX";
- 	void *buf;
- 	enum object_type type;
- 	unsigned long size;
-@@ -12,8 +13,12 @@ static char *create_temp_file(unsigned char *sha1)
- 	if (!buf || type != OBJ_BLOB)
- 		die("unable to read blob object %s", sha1_to_hex(sha1));
- 
--	strcpy(path, ".merge_file_XXXXXX");
--	fd = xmkstemp(path);
-+	if (in_tempdir) {
-+		fd = git_mkstemp(path, sizeof(path) - 1, template);
-+	} else {
-+		strcpy(path, template);
-+		fd = xmkstemp(path);
-+	}
- 	if (write_in_full(fd, buf, size) != size)
- 		die_errno("unable to write temp-file");
- 	close(fd);
-@@ -23,14 +28,23 @@ static char *create_temp_file(unsigned char *sha1)
- int cmd_unpack_file(int argc, const char **argv, const char *prefix)
- {
- 	unsigned char sha1[20];
-+	int in_tempdir = 0;
-+
-+	if (argc < 2 || 3 < argc || !strcmp(argv[1], "-h"))
-+		usage("git unpack-file [-t] <sha1>");
-+	if (argc == 3) {
-+		if (strcmp(argv[1], "-t"))
-+			usage("git unpack-file [-t] <sha1>");
-+		in_tempdir = 1;
-+		argc--;
-+		argv++;
-+	}
- 
--	if (argc != 2 || !strcmp(argv[1], "-h"))
--		usage("git unpack-file <sha1>");
- 	if (get_sha1(argv[1], sha1))
- 		die("Not a valid object name %s", argv[1]);
- 
- 	git_config(git_default_config, NULL);
- 
--	puts(create_temp_file(sha1));
-+	puts(create_temp_file(sha1, in_tempdir));
- 	return 0;
- }
+
+As far as portability goes, the "UNIX" list
+for p4merge is here:
+
+http://www.perforce.com/downloads/complete_list
+
+I do not have AIX, Solaris, or FreeBSD to test,
+so I agree that this can wait.
+
+Does msysgit have mktemp?
+
+p4merge is available on Windows too so I would
+need to check there too unless someone happens
+to know off the top of their heads.
+
+My other thought was to write a simple shell
+function that checks TMPDIR itself, and defaults
+to creating some file under /tmp when it is undefined.
+I can pursue this option if you think it's a safer choice.
+-- 
+David
