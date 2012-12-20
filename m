@@ -1,95 +1,84 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
-Subject: Re: RFC: "git config -l" should not expose sensitive information
-Date: Thu, 20 Dec 2012 17:20:49 +0100
-Message-ID: <50D33AE1.4020604@gmx.de>
-References: <50CF039A.7010800@gmx.de> <20121220150408.GD27211@sigill.intra.peff.net> <20121220154915.GA5162@pug.qqx.org>
+From: David Michael <fedora.dm0@gmail.com>
+Subject: Re: [RFC] test: Old shells and physical paths
+Date: Thu, 20 Dec 2012 11:25:42 -0500
+Message-ID: <CAEvUa7k8uimzjHd9jA=qjqK2pH-=oNRoY=ypN=bosmyGV52LoQ@mail.gmail.com>
+References: <CAEvUa7=sOPF9xwfGuBXv0CBZhT+79+8z3tm9ar_cz3q--kfqRQ@mail.gmail.com>
+	<7vmwx97f0o.fsf@alter.siamese.dyndns.org>
+	<CAEvUa7=_iyXxaaRs3WtxZOy5PNnncG-iMAUNkCMLJ19ZtReqaw@mail.gmail.com>
+	<CAJDDKr78ugSo9hNerHO0Y46_bSzLJWznB3E3+6H98NjMtBwHsw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 20 17:21:15 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 17:26:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlirw-00074Q-6y
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 17:21:12 +0100
+	id 1Tliwi-0003Eg-Ib
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 17:26:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751241Ab2LTQUz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Dec 2012 11:20:55 -0500
-Received: from mout.gmx.net ([212.227.17.20]:56791 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751114Ab2LTQUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 11:20:54 -0500
-Received: from mailout-de.gmx.net ([10.1.76.69]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0MQ9FN-1TgTo713fX-005HPB for
- <git@vger.kernel.org>; Thu, 20 Dec 2012 17:20:52 +0100
-Received: (qmail invoked by alias); 20 Dec 2012 16:20:51 -0000
-Received: from f054055243.adsl.alicedsl.de (EHLO [78.54.55.243]) [78.54.55.243]
-  by mail.gmx.net (mp069) with SMTP; 20 Dec 2012 17:20:51 +0100
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX19yRDZHXn5yLF2NR2w78lg8cCRKURODLKqCSh40WA
-	Fm6lzOxhBGdQuq
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20121220154915.GA5162@pug.qqx.org>
-X-Enigmail-Version: 1.4.6
-X-Y-GMX-Trusted: 0
+	id S1751667Ab2LTQZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 11:25:50 -0500
+Received: from mail-vb0-f53.google.com ([209.85.212.53]:48335 "EHLO
+	mail-vb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751601Ab2LTQZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 11:25:45 -0500
+Received: by mail-vb0-f53.google.com with SMTP id b23so3923687vbz.40
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 08:25:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=v3U4gJxzE59wB7K1UMAGAz0Ju7jvRCHQVJ+zo4VvdB4=;
+        b=XJpon6bW3SHag5IlneHgTvk4SlGTH7l1+UM6OpnTdSaa0JWPsD5WAQSy2gwOOVj+aC
+         yJlHzK5JjU25rGOKEp9vTAyntW18SbDkbWZZTMPS/Sr6ZlGcZSay01P9S9jN/CBZPYCo
+         1fN16J/zwYKjyTiU0C6uKtxEVyfuywoESehn5/BSQyaqR53hP5RFiMbgnRK/axgSUJaH
+         9H/o7LnUH66HcCdd4fiyYs+0KI8UzPAeDuymX1Bbx6TCtsZaVgUSXRInHtFDBkmoa0a3
+         EMrWrFWZUXOcxbYPsYKcCSJ/lvMsFgu4gyxGnrG5MA2dkeWbvpnqcuQa9DJEIkquSFt2
+         LPNA==
+Received: by 10.220.157.9 with SMTP id z9mr15350268vcw.45.1356020742731; Thu,
+ 20 Dec 2012 08:25:42 -0800 (PST)
+Received: by 10.58.85.138 with HTTP; Thu, 20 Dec 2012 08:25:42 -0800 (PST)
+In-Reply-To: <CAJDDKr78ugSo9hNerHO0Y46_bSzLJWznB3E3+6H98NjMtBwHsw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211905>
 
-yep - understood
+Hi,
 
+On Thu, Dec 20, 2012 at 12:01 AM, David Aguilar <davvid@gmail.com> wrote:
+> Do you know if the differences are relegated to "cd",
+> or do other common commands such as awk, grep, sed, mktemp, expr,
+> etc. have similar issues?
 
-On 12/20/2012 04:49 PM, Aaron Schrab wrote:
-> At 10:04 -0500 20 Dec 2012, Jeff King <peff@peff.net> wrote:
->> The problem seems to be that people are giving bad advice to tell
->> people to post "git config -l" output without looking at. Maybe we
->> could help them with a "git config --share-config" option that dumps
->> all config, but sanitizes the output. It would need to have a list o=
-f
->> sensitive keys (which does not exist yet), and would need to not jus=
-t
->> mark up things like smtppass, but would also need to pull credential
->> information out of remote.*.url strings. And maybe more (I haven't
->> thought too long on it).
->=20
-> If such an option is added, it is likely to cause more people to thin=
-k
-> that there is no need to examine the output before sharing it.  But, =
-I
-> don't think that the sanitizing could ever be sufficient to guarantee=
- that.
->=20
-> Tools outside of the core git tree may add support for new config key=
-s
-> which are meant to contain sensitive information, and there would be =
-no
-> way for `git config` to know about those.
->=20
-> Even for known sensitive keys, the person entering it might have made=
- a
-> typo in the name (e.g.  smptpass) preventing it from being recognized=
- as
-> sensitive by the software, but easily recognizable as such by a human=
-=2E
->=20
-> There's also the problem of varying opinions on what is considered as
-> sensitive.  You mention credential information in URLs, but some peop=
-le
-> may consider the entire URL as something which they would not want to
-> expose.
->=20
-> I think that attempting to do this would only result in a false sense=
- of
-> security.
->=20
+There are almost certainly going to be incompatibilities with other
+commands.  The system implemented UNIX95 plus some extensions, then
+they began supporting UNIX03/SUSv3/POSIX.1-2001/whatever for certain
+commands by using an environment variable to toggle between the
+incompatible behaviors.
+
+Their documentation on the UNIX03 commands indicates it is still only
+partially supported.  For example: "cp" supports "-L" and "-P", but
+"cd" doesn't.
+
+> I wonder if it'd be helpful to have a low-numbered test that checks
+> the basics needed by the scripted Porcelains and test suite.
+> It would give us an easy way to answer these questions, and could
+> be a good way to document (in code) the capabilities we expect.
+
+I'd be in favor of something like this as well.
+
+Thanks.
+
+David
 
 
---=20
-MfG/Sincerely
-Toralf F=C3=B6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+P.S.
+In the meantime, I am handling the "cd" situation by replacing "-P"
+with "$PHYS" and prepending the following to t/test-lib.sh.
+set +o logical >/dev/null 2>&1 || PHYS=-P
