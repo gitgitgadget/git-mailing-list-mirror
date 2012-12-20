@@ -1,60 +1,56 @@
-From: esr@thyrsus.com (Eric S. Raymond)
-Subject: Python version auditing followup
-Date: Thu, 20 Dec 2012 09:34:11 -0500 (EST)
-Message-ID: <20121220143411.BEA0744105@snark.thyrsus.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 20 15:34:54 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Python scripts audited for minimum compatible version
+ and checks added.
+Date: Thu, 20 Dec 2012 09:48:13 -0500
+Message-ID: <20121220144813.GA27211@sigill.intra.peff.net>
+References: <20121220141855.05DAA44105@snark.thyrsus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 15:48:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlhD0-0006eW-02
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 15:34:50 +0100
+	id 1TlhQS-0000vl-9q
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 15:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324Ab2LTOed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 09:34:33 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:35515
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116Ab2LTOeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 09:34:31 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id BEA0744105; Thu, 20 Dec 2012 09:34:11 -0500 (EST)
+	id S1751735Ab2LTOs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 09:48:26 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59663 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751427Ab2LTOsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 09:48:24 -0500
+Received: (qmail 9463 invoked by uid 107); 20 Dec 2012 14:49:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Dec 2012 09:49:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Dec 2012 09:48:13 -0500
+Content-Disposition: inline
+In-Reply-To: <20121220141855.05DAA44105@snark.thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211891>
 
-Most of the Python scripts in the distribution are small and simple to
-audit, so I am pretty sure of the results.  The only place where I
-have a concern is the git_helpers library; that is somewhat more
-complex and I might have missed a dependency somewhere.  Whoever
-owns that should check my finding that it should run under 2.4
+On Thu, Dec 20, 2012 at 09:13:37AM -0500, Eric S. Raymond wrote:
 
-That was the first of three patches I have promised.  In order to do
-the next one, which will be a development guidelines recommend
-compatibility back to some specific version X, I need a policy
-decision.  How do we set X?
+> diff --git a/contrib/ciabot/ciabot.py b/contrib/ciabot/ciabot.py
+> index bd24395..b55648f 100755
+> --- a/contrib/ciabot/ciabot.py
+> +++ b/contrib/ciabot/ciabot.py
+> @@ -50,6 +50,11 @@
+>  import os, sys, commands, socket, urllib
+>  from xml.sax.saxutils import escape
+>  
+> +if sys.hexversion < 0x02000000:
+> +	# The limiter is the xml.sax module
+> +        sys.stderr.write("import-zips.py: requires Python 2.0.0 or later.")
+> +        sys.exit(1)
 
-I don't think X can be < 2.4, nor does it need to be - 2.4 came out
-in 2004 and eight years is plenty of deployment time.
+Should the error message say ciabot.py?
 
-The later we set it, the more convenient for developers.  But of
-course by setting it late we trade away some portability to 
-older systems.
-
-In previous discussion of this issue I recommended X = 2.6.
-That is still my recommendation. Thoughts, comments, objections?
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-In recent years it has been suggested that the Second Amendment
-protects the "collective" right of states to maintain militias, while
-it does not protect the right of "the people" to keep and bear arms.
-If anyone entertained this notion in the period during which the
-Constitution and the Bill of Rights were debated and ratified, it
-remains one of the most closely guarded secrets of the eighteenth
-century, for no known writing surviving from the period between 1787
-and 1791 states such a thesis.
-        -- Stephen P. Halbrook, "That Every Man Be Armed", 1984
+-Peff
