@@ -1,86 +1,105 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v6 0/7] make test output coloring more intuitive
-Date: Thu, 20 Dec 2012 18:08:15 +0000
-Message-ID: <CAOkDyE-yfFQxxgsumRB8N1zXN2LTq89=pArU-85Z+3Oyruiwxg@mail.gmail.com>
-References: <1355682495-22382-1-git-send-email-git@adamspiers.org>
-	<7v8v8xrfnp.fsf@alter.siamese.dyndns.org>
-	<CAOkDyE9B_HfUZmqNqO35mtjTvdihBTiW=uOV2oEQgLUw1xyf=A@mail.gmail.com>
-	<20121220153411.GA1497@sigill.intra.peff.net>
-	<CAOkDyE9y6JvNKTCBoJqu47Hn-3axfjZPUdBhf4bOEfSP-9Q84A@mail.gmail.com>
-	<20121220161110.GA10605@sigill.intra.peff.net>
+From: Matthew Blissett <matt@blissett.me.uk>
+Subject: [PATCH] Highlight the link target line in Gitweb using CSS
+Date: Thu, 20 Dec 2012 18:16:38 +0000
+Message-ID: <1356027399-5356-1-git-send-email-matt@blissett.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 20 19:16:00 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthew Blissett <matt@blissett.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 20 19:17:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlkev-0006qh-UY
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 19:15:54 +0100
+	id 1Tlkgh-0008SW-KE
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 19:17:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061Ab2LTSPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 13:15:37 -0500
-Received: from mail-we0-f177.google.com ([74.125.82.177]:60328 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751274Ab2LTSPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 13:15:35 -0500
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Dec 2012 13:15:35 EST
-Received: by mail-we0-f177.google.com with SMTP id x48so1710201wey.22
-        for <git@vger.kernel.org>; Thu, 20 Dec 2012 10:15:34 -0800 (PST)
+	id S1751883Ab2LTSRZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Dec 2012 13:17:25 -0500
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:55024 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751427Ab2LTSRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 13:17:22 -0500
+Received: by mail-wg0-f42.google.com with SMTP id dr1so1059487wgb.5
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 10:17:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=U2/Q2PxqBeV3oVmvtoVTyId6XnVwZ4VKN66tvWrt4e8=;
-        b=Fw1NNn05vg1dIciQR+oHsuXrhcHxB77w0n9cpmL/j0Yy/5ybF0x7cBkZ77pj30rpKV
-         pXBpho2fpcuak1HpA06o4xSQWKMiZuA+q4vJaMRgUGiNVDeUA71QPlIb+1V2A14fv2JF
-         NdkppycC4DSZPLhJEFDSIjxqBMYiLTSQ/yMhyI0me3/AmNHY/5ERNMTSycv4k+mPlDOe
-         qyexQjWkt2vekAMTj/BfqyC28yk2tkcYb0py8Z8pPeuO97A0OJj/rQh1uLEAAsOTbIIl
-         eB7wfl4o7JKeQZ1wJq/VSTVZsU0h9EygAXvKGShLoHHN3ZYte60EdsQBR/ATtZfJvm3m
-         qAiQ==
-Received: by 10.180.85.165 with SMTP id i5mr18481903wiz.11.1356026895148; Thu,
- 20 Dec 2012 10:08:15 -0800 (PST)
-Received: by 10.194.56.232 with HTTP; Thu, 20 Dec 2012 10:08:15 -0800 (PST)
-In-Reply-To: <20121220161110.GA10605@sigill.intra.peff.net>
-X-Google-Sender-Auth: bVeo69tn9VZDLMTPd0ZykC0LCVs
+        d=blissett.me.uk; s=g;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=imNUiBNhQpQ6q6DNJ5rIGMlVyfq4kbVHvRxNOFfTLEE=;
+        b=H6G2WBN4L3Sio9Bqvr4kg7k8sqsRw3eQ3wTrMaAEOIpHXrBES30Z2brw4sRKkIW/XY
+         eKwwKnZ3ZX4ePBNn2F+JUIYhLwFfbTV+bWgS/Xi3l1+nuDPk/sLIBQRla/0u+/7OeYOA
+         3MxrfdaSkG8NaihUBBCIRf9QOSdMbvN9f3TAs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding:x-gm-message-state;
+        bh=imNUiBNhQpQ6q6DNJ5rIGMlVyfq4kbVHvRxNOFfTLEE=;
+        b=MNVnULvjOd40sU5w/wIuSM/4hc/S9FHJhaYfVnDAlmpPJa4papXlI2F/bPXzJhR+Ej
+         OAgLuWhFXPjYf38ZHbxB1jacb9C8jcU1y/KeWTKrjJE1GycKmiQmRPs7U72RJ2UmS9Bo
+         fdV++2oaCS3VEHW4v7NyQOjUjFtb5ZwPOYcNUChWSnWAudIZ+B5lDZ7f7yGO9MMLLqlx
+         h/1sn5mFxLA/Uxk3aNoo9BstBr0o+F+/YyvgX//hdszdmcv0UBDF7LiCyfoMs/DMwLHC
+         3/zIUF5/vvdKsSMRHQeUAKo7aGSgAOvaqFC+Fzp0WTpTjUfML1SIoDRvM8tgbGzSmq5q
+         D/jw==
+X-Received: by 10.194.57.206 with SMTP id k14mr19157756wjq.26.1356027441190;
+        Thu, 20 Dec 2012 10:17:21 -0800 (PST)
+Received: from a9487.ad.kew.org ([193.128.243.115])
+        by mx.google.com with ESMTPS id p2sm14275250wic.7.2012.12.20.10.17.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 20 Dec 2012 10:17:20 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.4
+X-Gm-Message-State: ALoCoQl7GUFLh0H8A8JskVLJkl/yNpRtCQECjYYoPRudTShBdT0wO8qn8MMvhgZlHC5Hk+5H0HkJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211911>
 
-On Thu, Dec 20, 2012 at 4:11 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Dec 20, 2012 at 03:44:53PM +0000, Adam Spiers wrote:
->> > diff --git a/t/test-lib.sh b/t/test-lib.sh
->> > index 256f1c6..31f59af 100644
->> > --- a/t/test-lib.sh
->> > +++ b/t/test-lib.sh
->> > @@ -227,7 +227,7 @@ then
->> >                 pass)
->> >                         tput setaf 2;;            # green
->> >                 info)
->> > -                       tput bold; tput setaf 6;; # bold cyan
->> > +                       tput setaf 6;; # cyan
->> >                 *)
->> >                         test -n "$quiet" && return;;
->> >                 esac
->> >
->>
->> Good point, I forgot to check what it looked like with -v.  Since this
->> series is already on v6, is there a more lightweight way of addressing
->> this tiny tweak than sending v7?
->
-> It is ultimately up to Junio, but I suspect he would be OK if you just
-> reposted patch 4/7 with the above squashed.
+This is useful when a Gitweb link with a target (like #l100) refers to
+a line in the last screenful of text.  Highlight the background in
+yellow, and display a =E2=9A=93 character on the left.  Show the same
+highlight when hovering the mouse over a line number.
 
-I'll do that if Junio is OK with that.
+Signed-off-by: Matthew Blissett <matt@blissett.me.uk>
+---
+The background-colour change is the 'main' (tiny) change.
 
-> Or even just said "I like
-> this, please squash it into patch 4 (change info messages from
-> yellow/brown to bold cyan).
+Consider the ::before part a suggestion.  I think it helps show the
+target line, but it does overlap the first character of any line >999.
 
-Yes, I'm OK with this way too :)  Of course "bold" would need to be dropped
-from the commit message.
+I've tested this on the browsers I have access to, which excludes
+Internet Explorer.  Since it's cosmetic it shouldn't matter if it doesn=
+'t
+work.
+
+Wikipedia use similar CSS for their citation links:
+<http://en.wikipedia.org/wiki/Git_(software)#cite_note-1>
+
+ gitweb/static/gitweb.css |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index cb86d2d..9f54311 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -546,6 +546,16 @@ a.linenr {
+ 	text-decoration: none
+ }
+=20
++a.linenr:hover, a.linenr:target {
++	color: #444444;
++	background-color: #ff4;
++}
++
++a.linenr:hover::before, a.linenr:target::before {
++	content: '=E2=9A=93';
++	position: absolute;
++}
++
+ a.rss_logo {
+ 	float: right;
+ 	padding: 3px 0px;
+--=20
+1.7.10.4
