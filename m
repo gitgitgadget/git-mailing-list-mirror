@@ -1,169 +1,171 @@
-From: Sergio Talens-Oliag <sto@iti.es>
-Subject: Gitweb running as FCGI does not print its output in UTF-8
-Date: Thu, 20 Dec 2012 14:53:57 +0100
-Message-ID: <20121220135357.GA27920@iti.es>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+HP7ph2BbKc20aGI"
+From: esr@thyrsus.com (Eric S. Raymond)
+Subject: [PATCH] Python scripts audited for minimum compatible version and
+ checks added.
+Date: Thu, 20 Dec 2012 09:13:37 -0500
+Message-ID: <20121220141855.05DAA44105@snark.thyrsus.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 20 15:12:02 2012
+X-From: git-owner@vger.kernel.org Thu Dec 20 15:19:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlgqu-0004LV-JQ
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 15:12:00 +0100
+	id 1TlgyG-0002SB-2a
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Dec 2012 15:19:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752300Ab2LTOLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 09:11:43 -0500
-Received: from smtpsal1.cc.upv.es ([158.42.249.61]:34250 "EHLO
-	marfik.cc.upv.es" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751709Ab2LTOLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 09:11:41 -0500
-X-Greylist: delayed 1060 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Dec 2012 09:11:41 EST
-Received: from smtpx.upv.es (smtpxv.cc.upv.es [158.42.249.46])
-	by marfik.cc.upv.es (8.13.6/8.13.6) with ESMTP id qBKDrxW4004479
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 20 Dec 2012 14:53:59 +0100
-Received: from smtp.upv.es (celaeno.cc.upv.es [158.42.249.55])
-	by smtpx.upv.es (8.14.3/8.14.3) with ESMTP id qBKDrxOh007547
-	for <git@vger.kernel.org>; Thu, 20 Dec 2012 14:53:59 +0100
-Received: from tormenta.iti.upv.es (grumete.iti.upv.es [158.42.165.251])
-	by smtp.upv.es (8.13.6/8.13.6) with ESMTP id qBKDrwWo030666
-	for <git@vger.kernel.org>; Thu, 20 Dec 2012 14:53:58 +0100
-Received: from maxc64.iti.upv.es (maxc64.iti.upv.es [192.168.1.125])
-	by tormenta.iti.upv.es (Postfix) with ESMTP id 655AE30C8014
-	for <git@vger.kernel.org>; Thu, 20 Dec 2012 14:53:57 +0100 (CET)
-Received: by maxc64.iti.upv.es (Postfix, from userid 1000)
-	id 3C25F1A000AD; Thu, 20 Dec 2012 14:53:57 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751168Ab2LTOTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 09:19:18 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:35449
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009Ab2LTOTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 09:19:17 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 05DAA44105; Thu, 20 Dec 2012 09:18:54 -0500 (EST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211889>
+
+Signed-off-by: Eric S. Raymond <esr@thyrsus.com>
+---
+ contrib/ciabot/ciabot.py           | 5 +++++
+ contrib/fast-import/import-zips.py | 5 +++++
+ contrib/hg-to-git/hg-to-git.py     | 5 +++++
+ contrib/p4import/git-p4import.py   | 5 +++++
+ contrib/svn-fe/svnrdump_sim.py     | 4 ++++
+ git-p4.py                          | 5 +++++
+ git-remote-testgit.py              | 5 +++++
+ git_remote_helpers/git/__init__.py | 4 ++++
+ 8 files changed, 38 insertions(+)
+
+diff --git a/contrib/ciabot/ciabot.py b/contrib/ciabot/ciabot.py
+index bd24395..b55648f 100755
+--- a/contrib/ciabot/ciabot.py
++++ b/contrib/ciabot/ciabot.py
+@@ -50,6 +50,11 @@
+ import os, sys, commands, socket, urllib
+ from xml.sax.saxutils import escape
+ 
++if sys.hexversion < 0x02000000:
++	# The limiter is the xml.sax module
++        sys.stderr.write("import-zips.py: requires Python 2.0.0 or later.")
++        sys.exit(1)
++
+ # Changeset URL prefix for your repo: when the commit ID is appended
+ # to this, it should point at a CGI that will display the commit
+ # through gitweb or something similar. The defaults will probably
+diff --git a/contrib/fast-import/import-zips.py b/contrib/fast-import/import-zips.py
+index 82f5ed3..d9ad71d 100755
+--- a/contrib/fast-import/import-zips.py
++++ b/contrib/fast-import/import-zips.py
+@@ -13,6 +13,11 @@ from sys import argv, exit
+ from time import mktime
+ from zipfile import ZipFile
+ 
++if sys.hexversion < 0x01060000:
++	# The limiter is the zipfile module
++        sys.stderr.write("import-zips.py: requires Python 1.6.0 or later.")
++        sys.exit(1)
++
+ if len(argv) < 2:
+ 	print 'Usage:', argv[0], '<zipfile>...'
+ 	exit(1)
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+index 046cb2b..9f39ce5 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -23,6 +23,11 @@ import os, os.path, sys
+ import tempfile, pickle, getopt
+ import re
+ 
++if sys.hexversion < 0x02030000:
++   # The behavior of the pickle module changed significantly in 2.3
++   sys.stderr.write("hg-to-git.py: requires Python 2.3 or later.")
++   sys.exit(1)
++
+ # Maps hg version -> git version
+ hgvers = {}
+ # List of children for each hg revision
+diff --git a/contrib/p4import/git-p4import.py b/contrib/p4import/git-p4import.py
+index b6e534b..fb48e2a 100644
+--- a/contrib/p4import/git-p4import.py
++++ b/contrib/p4import/git-p4import.py
+@@ -14,6 +14,11 @@ import sys
+ import time
+ import getopt
+ 
++if sys.hexversion < 0x02020000:
++   # The behavior of the marshal module changed significantly in 2.2
++   sys.stderr.write("git-p4import.py: requires Python 2.2 or later.")
++   sys.exit(1)
++
+ from signal import signal, \
+    SIGPIPE, SIGINT, SIG_DFL, \
+    default_int_handler
+diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
+index 1cfac4a..ed43dbb 100755
+--- a/contrib/svn-fe/svnrdump_sim.py
++++ b/contrib/svn-fe/svnrdump_sim.py
+@@ -7,6 +7,10 @@ to the highest revision that should be available.
+ """
+ import sys, os
+ 
++if sys.hexversion < 0x02040000:
++	# The limiter is the ValueError() calls. This may be too conservative
++        sys.stderr.write("svnrdump-sim.py: requires Python 2.4 or later.")
++        sys.exit(1)
+ 
+ def getrevlimit():
+         var = 'SVNRMAX'
+diff --git a/git-p4.py b/git-p4.py
+index 551aec9..ec060b4 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -12,6 +12,11 @@ import optparse, sys, os, marshal, subprocess, shelve
+ import tempfile, getopt, os.path, time, platform
+ import re, shutil
+ 
++if sys.hexversion < 0x02040000:
++    # The limiter is the subprocess module
++    sys.stderr.write("git-p4.py: requires Python 2.4 or later.")
++    sys.exit(1)
++
+ verbose = False
+ 
+ # Only labels/tags matching this will be imported/exported
+diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+index 5f3ebd2..22d2eb6 100644
+--- a/git-remote-testgit.py
++++ b/git-remote-testgit.py
+@@ -31,6 +31,11 @@ from git_remote_helpers.git.exporter import GitExporter
+ from git_remote_helpers.git.importer import GitImporter
+ from git_remote_helpers.git.non_local import NonLocalGit
+ 
++if sys.hexversion < 0x01050200:
++    # os.makedirs() is the limiter
++    sys.stderr.write("git-remote-testgit.py: requires Python 1.5.2 or later.")
++    sys.exit(1)
++
+ def get_repo(alias, url):
+     """Returns a git repository object initialized for usage.
+     """
+diff --git a/git_remote_helpers/git/__init__.py b/git_remote_helpers/git/__init__.py
+index e69de29..776e891 100644
+--- a/git_remote_helpers/git/__init__.py
++++ b/git_remote_helpers/git/__init__.py
+@@ -0,0 +1,4 @@
++if sys.hexversion < 0x02040000:
++    # The limiter is the subprocess module
++    sys.stderr.write("git_remote_helpers: requires Python 2.4 or later.")
++    sys.exit(1)
+-- 
+1.8.1.rc2
 
 
---+HP7ph2BbKc20aGI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello, I'm sending this message to explain a problem I've found with
-gitweb.cgi when running it using a call like the following:
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
 
-    export FCGI_SOCKET_PATH=3D"/run/gitweb.socket"
-    gitweb.cgi --fcgi --nproc 2
-
-I've fixed the problem for my installation usign a wrapper script, as
-explained below.
-
-I'm not sending a patch because I'm no expert in Perl and I'm unsure that
-the solution I've found is the right one, but in the hope that my descripti=
-on
-of the problem and the provided solution will be useful for others.
-
-Problem description:
-
-   When using gitweb.cgi in FCGI mode the answers from the script are retur=
-ned
-   using the wrong encoding (UTF-8 characters are printed as LATIN-1).
-  =20
-   It seems that the problem appears because the FCGI streams are implement=
-ed
-   using the older stream API, TIEHANDLE and applying PerlIO layers using
-   binmode() has no effect to them.
-
-Applied solution:
-
-   A solution similar to the use of binmode for the output stream is to
-   redefine the FCGI::Stream::PRINT function to use UTF-8 as output encodin=
-g.
-
-   To do it with minimal chages I've created a gitweb.cgi wrapper that
-   redefines the function and runs the original script; I'm doing it like t=
-his
-   to be able to use the packaged script until upstream includes a fix for =
-the
-   problem.
-
-Wrapper code (uses /usr/share/gitweb/gitweb.cgi as the PATH for gitweb.cgi):
-
-  #!/usr/bin/perl
-  # gitweb.cgi wrapper that fixes the UTF-8 problem with fastcgi
-
-  # Local redefinition of FCGI::Stream::PRINT
-  use Encode;
-  use FCGI;
-
-  our $enc =3D Encode::find_encoding('UTF-8');
-  our $org =3D \&FCGI::Stream::PRINT;
-  no warnings 'redefine';
-
-  local *FCGI::Stream::PRINT =3D sub {
-    my @OUTPUT =3D @_;
-    for (my $i =3D 1; $i < @_; $i++) {
-      $OUTPUT[$i] =3D $enc->encode($_[$i], Encode::FB_CROAK|Encode::LEAVE_S=
-RC);
-    }
-    @_ =3D @OUTPUT;
-    goto $org;
-  };
-
-  # Execute original script
-  do "/usr/share/gitweb/gitweb.cgi";
-
-References:
-
-   The applied solution has been found on the following StackOverflow
-   question:
-
-     http://stackoverflow.com/questions/5005104
-
-Environment:
-
-  The system I'm using is Debian Wheezy and I'm serving gitweb using nginx's
-  fastcgi interface.
-
-  The versions of the related debian packages are:
- =20
-	Package: git
-	Version: 1:1.7.10.4-1+wheezy1
-	Package: libcgi-fast-perl
-	Version: 5.14.2-16
-	Package: libfcgi-procmanager-perl
-	Version: 0.24-1
-	Package: perl
-	Version: 5.14.2-16
-
-  To launch gitweb as fastcgi I'm using an init.d script that runs the wrap=
-per
-  script in the background as the `www-user` using a call similar to the
-  following:
-
-    export FCGI_SOCKET_PATH=3D"/run/gitweb/socket"
-    gitweb.cgi-wrapper --fcgi --nproc 2
-
-Greetings,
-
-  Sergio.
-
---=20
-Sergio Talens-Oliag <sto@iti.es>               <http://www.iti.es/>
-Key fingerprint =3D FF77 A16B 9D09 FC7B 6656 CFAD 261D E19A 578A 36F2
-
---+HP7ph2BbKc20aGI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlDTGHUACgkQJh3hmleKNvJAtgCg418Bxi9OtQPqN+2oHAaHbf8R
-/w8AnA26ZV92aV57VqEl0Rq/5qlu9Mzd
-=X1Pn
------END PGP SIGNATURE-----
-
---+HP7ph2BbKc20aGI--
+"The state calls its own violence `law', but that of the individual `crime'"
+	-- Max Stirner
