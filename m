@@ -1,131 +1,105 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Noob Question
-Date: Fri, 21 Dec 2012 12:43:04 +1100
-Message-ID: <CAH5451kq8XwPTez0Jhst+rVCo=EteW7OMH4wr2a1rCXTW_f0jQ@mail.gmail.com>
-References: <50D3B669.1030204@hotmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-update-index: caution about tree
+ objects
+Date: Thu, 20 Dec 2012 18:56:58 -0800
+Message-ID: <7vvcbw2jut.fsf@alter.siamese.dyndns.org>
+References: <1356053738-14926-1-git-send-email-gdt@ir.bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: awingnut <wtriker.ffe@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 02:43:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Greg Troxel <gdt@ir.bbn.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 03:57:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlreM-0001lj-G4
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 02:43:46 +0100
+	id 1TlsnY-0003t1-RG
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 03:57:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134Ab2LUBn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 20:43:28 -0500
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:53332 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751337Ab2LUBnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 20:43:25 -0500
-Received: by mail-qc0-f181.google.com with SMTP id x40so2285485qcp.12
-        for <git@vger.kernel.org>; Thu, 20 Dec 2012 17:43:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=MhwLae1z1c9zaGKqTwirqAP+Gsp1PdZydybCpmjFdSA=;
-        b=YTafxSSlGOyY2dqXjDqQDQHR1Zm9y84R/zxyHJ1nGgchlv5nuqJX7zikgjOYQOTUD2
-         LzRuNPK/78t96F8LtnUR/i009mAoZmrHEJCIaeq4KO22KuMbPHNX5dVNSQTudGxb6YMm
-         ZX4ykPy0YXXTj/x4TbiCOek7UTh3xnMUa+ooZmx8+/3ysHp8CnHIBLql2q3/kI1UljZ0
-         xUC8rwljPWwS1GoO/7bpTc5sFamQQML5CjFZrLSPkmQ773pMOupZLpi7FoCTa3ng4Qfm
-         zcLpEfN+4a1N8aCix/OUA39MfHzBtNpvdeYvYod2mSn6I4OOMpTobqDZFG3lJ28hw5XQ
-         hFUg==
-Received: by 10.49.74.73 with SMTP id r9mr6582876qev.44.1356054204806; Thu, 20
- Dec 2012 17:43:24 -0800 (PST)
-Received: by 10.49.14.3 with HTTP; Thu, 20 Dec 2012 17:43:04 -0800 (PST)
-In-Reply-To: <50D3B669.1030204@hotmail.com>
+	id S1751758Ab2LUC5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 21:57:03 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39704 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751690Ab2LUC5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 21:57:01 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C557A432;
+	Thu, 20 Dec 2012 21:57:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kg5FMMPCmrnyVdjhpL1686153AE=; b=TP9uvQ
+	u5TDbARQZoWWjY9zH/uRF9tr2OHQyCXFMnlTEF5n/U6enzTJb+z8aD0fnmd0saM4
+	ge3/klMHOSke89vPiFXeo3An7tvZbXJWnrA0z0Nlh44KdbVsPOn0me8CSy44Ww2I
+	qQwAsppxbqYwT432JVJOfkRFAVcFhid15O80A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ROoBp+5EMfw0Qdv8zZU7P2yiZUZp0fJs
+	3aDJFIFAYQ/ly+A31lIPF/KrjtclVaai0R/74HkjaMH76ETTeQ4/0actl0MQhu5u
+	PQctKpIRa/iW8q9zJUtf58R629nTIJz3a1r79O5nNp9Oh+vl2mwm9Kgd9OJqYQZ1
+	GUbKfCuPmJE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A0BBA431;
+	Thu, 20 Dec 2012 21:57:00 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC03EA430; Thu, 20 Dec 2012
+ 21:56:59 -0500 (EST)
+In-Reply-To: <1356053738-14926-1-git-send-email-gdt@ir.bbn.com> (Greg
+ Troxel's message of "Thu, 20 Dec 2012 20:35:38 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 16D8DD26-4B1A-11E2-848D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211941>
 
-Hi!
+Greg Troxel <gdt@ir.bbn.com> writes:
 
-On 21 December 2012 12:07, awingnut <wtriker.ffe@gmail.com> wrote:
-> My main questions center around the git repository and accessing it.
+> While one can add tree objects to the index, this is not currently
+> useful.  Therefore, use "git ls-tree -r" as the example to be fed to
+> --index-info.  Add a section explaining about expected index contents.
+> (Thanks to Junio for explaining this to me in August of 2011.)
+>
+> Signed-off-by: Greg Troxel <gdt@ir.bbn.com>
+> ---
+>  Documentation/git-update-index.txt | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+> index 9d0b151..6ce65fa 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -29,6 +29,11 @@ Modifies the index or directory cache. Each file mentioned is updated
+>  into the index and any 'unmerged' or 'needs updating' state is
+>  cleared.
+>  
+> +Note that update-index does not check that the modifications preserve
+> +the expected invariants.  In particular, an index normally holds
+> +regular blobs, executable blobs, symlink blobs, and gitlinks.
+> +Therefore, adding a tree object is not likely useful.
+> +
 
-The main thing you need to know is that you can work on your code base
-in the *exact* same way while using git. You don't *have* to change
-anything about how you work, as git's primary purpose is to store
-snapshots of your work so that you have a history of what has changed.
+I find this unnecessarily alarmist as a description meant for
+general audiences.  For the normal mode of operations of the command
+(e.g. "git update-index --add --remove hello.c"), whatever you mean
+by "expected invariants" are fully preserved.
 
-That being said, you can (and maybe should) change how you work to
-take into account the power of git. Most of what you do will stay the
-same, however.
+I think you meant this for --cacheinfo and --index-info options,
+which are primarily meant for people who know what they are doing
+(that includes the use of this command in scripted Porceains) or Git
+developers who want to work on enhancing the index (and to them,
+being able to record anything is more convenient).
 
-> 1) Should I install git on Linux or Windows or does it matter?
+> @@ -210,7 +215,7 @@ back on 3-way merge.
+>  
+>      . mode SP type SP sha1          TAB path
+>  +
+> -The second format is to stuff 'git ls-tree' output
+> +The second format is to stuff 'git ls-tree -r' output
+>  into the index file.
 
-Install git wherever you need to access the code. From the sounds of
-it you will want git on both machines, as you are working on windows
-and but keeping the code on the linux shared drive. When working on
-the windows machine you will use a windows copy of git to manipulate
-the workspace, though I'm not sure if there are any gotchas with the
-interaction with a linux shared drive.
+This hunk is good.
 
-If you want to manipulate the repository from the linux machine you
-will need git on it as well.
-
-Unless you're using a git server, manipulating the repository is a
-local action and so is performed by the client. That is, when working
-on windows use the windows client, if you also work on the linux
-machine then you will need a client there as well.
-
-> 2) How will my build scripts access the source? Will it be the same as
-> now (my scripts 'cd' to the Eclipse project directory and run there) or
-> do I need to add a wrapper to my script to check out the entire source
-> for the builds?
-
-It's the same as now. Git uses the concept of a 'work tree' to talk
-about the actual files you are working on now. The work tree
-corresponds exactly to your current project files. When you create a
-git repository you gain the ability to store snapshots of this working
-tree into the 'object store', as well as metadata about the snapshots,
-so that you can restore that snapshot later.
-
-Your actual files keep their current layout and format, until you change them.
-
-> 3) How do I move my current Eclipse project into git after I create the
-> empty repository? I can only find info on how to import git into Eclipse
-> not the other way around.
-
-You have two options. Create the git repository in the same location
-as your Eclipse project. Navigate to the project folder using git bash
-and do a 'git init' inside it; voila! you now have a git repository.
-You can choose to create a 'remote' repository somewhere to store a
-backup of your code as well, but this _still_ requires you to init a
-local repository to backup.
-
-The other option is to create a blank repository somewhere (anywhere)
-and then tell that repository to use your Eclipse project as its
-working tree. The benefit to doing this is being able to keep your
-snapshots and metadata in a different location to your working
-directory (say keep the snapshots on a local windows drive while your
-working directory is on the linux share). Unless you shouldn't or
-aren't able to create the repository within the Eclipse project, I
-would recommend against this.
-
-> 4) Do I need to checkout the entire project from Eclipse to modify and
-> test it or only the classes I want to change? Does the plugin get the
-> others as needed when I run the app within Eclipse for testing?
-
-Not sure exactly what you are asking here, but in general people will
-'clone' an entire repository including all its history. If you want to
-update only certain files that is fine, but the commit object stores
-the state of the entire tree of files. Note that a commit object does
-_not_ store the difference between two snapshots, but stores the
-entire state of the files. You can grab a file from a given snapshot
-and test that along side files from a second snapshot, but if you
-wanted to commit the resulting tree to the repository it would store a
-third snapshot containing the exact state of all files.
-
-Hopefully that clears it up for you?
-
-Regards,
-
-Andrew Ardill
+Thanks.
