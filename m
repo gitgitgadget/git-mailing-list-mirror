@@ -1,192 +1,220 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH v4] git-completion.bash: add support for path completion
-Date: Fri, 21 Dec 2012 20:02:21 +0100
-Message-ID: <50D4B23D.2030507@gmail.com>
-References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com> <7vmwx71e2y.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, szeder@ira.uka.de, felipe.contreras@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 20:02:48 2012
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: [PATCH 1/2] tests: move test_cmp_rev to test-lib-functions
+Date: Fri, 21 Dec 2012 11:10:10 -0800
+Message-ID: <1356117013-20613-1-git-send-email-martinvonz@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 20:10:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm7rp-0007Ff-Kr
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 20:02:45 +0100
+	id 1Tm7zV-0005mS-5x
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 20:10:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095Ab2LUTC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 14:02:28 -0500
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:53696 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752008Ab2LUTC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 14:02:26 -0500
-Received: by mail-ee0-f41.google.com with SMTP id d41so2672634eek.0
-        for <git@vger.kernel.org>; Fri, 21 Dec 2012 11:02:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=SyeQz1soEgUSHavmDMtwus6jv2RZ0BixCwzlIoLsV8M=;
-        b=ZomsxAuqL+lKr4khpnZsyXmKo1K++awirCx1ZfJiHtaMLZj8pVJRn49bEsHMPxOWea
-         5qWaN1tznNnGw3UWK2CLiAlfll/tonpxkSOmdg+UEldQeBqdJX53UTlWW9EMcGdBbnk1
-         NK+TCzgNdA3vJZ4bgaxqmYqMPmgRN7flTjd7pbXc5ckISgi8TMBxuS6nGN7bmnQXyVQA
-         uYG3ethQUCTxwq1huvUvVHIVYn78FzpgbceDCzlcOhtaehcuyiyPFM76NdFfZOT5JlE8
-         UgQI6hRfxqlsmrTfBYh025uw9EuI9hY+0+SRT0JuRDR32+dY0rCbGmXpv/YC8MTPpDZQ
-         t7VA==
-X-Received: by 10.14.194.4 with SMTP id l4mr33942813een.42.1356116544745;
-        Fri, 21 Dec 2012 11:02:24 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.200.154])
-        by mx.google.com with ESMTPS id 6sm23313260eea.3.2012.12.21.11.02.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Dec 2012 11:02:24 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <7vmwx71e2y.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
+	id S1752052Ab2LUTKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 14:10:24 -0500
+Received: from mail-vb0-f74.google.com ([209.85.212.74]:51703 "EHLO
+	mail-vb0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752016Ab2LUTKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 14:10:22 -0500
+Received: by mail-vb0-f74.google.com with SMTP id s24so508815vbi.1
+        for <git@vger.kernel.org>; Fri, 21 Dec 2012 11:10:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer
+         :x-gm-message-state;
+        bh=NDKJsOIY10SWRLjMC6gv4zjGuHHfBGv75WNvkBEBYmc=;
+        b=bmq0W7TB2wQALSv3ERt3oP8I8mtcpqreqd88GYnIqeBb9yWnzs2731+1kxah63TAb0
+         K3GWXwocbXClwnOYdpXHjxR7adEMoPHCPsg3p8oUYxyHnxCe2MKVbQI26ZPoA4/CWCm8
+         KYYYPCcN+TTo8wng8+kH9awR9cDllS5MECSqZm0quMicCWYMSI0y9n4TL3FVAPj12QKQ
+         SuEJk7cypKkEhkWrtZsEtoIQii2tt+8lpqIPLmcuwF09ZPoHVAUumLTA2yLTr8rZXzOo
+         UGRb6wiZw5iLIaB8kcHLwHG2AInqXzy11n1fsiYPpE4SlzTGW18YrCtdUmA5BORIdg5Q
+         ze3w==
+X-Received: by 10.236.116.10 with SMTP id f10mr5966126yhh.9.1356117020361;
+        Fri, 21 Dec 2012 11:10:20 -0800 (PST)
+Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id r10si605185ann.1.2012.12.21.11.10.20
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Fri, 21 Dec 2012 11:10:20 -0800 (PST)
+Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 22AAC10004D;
+	Fri, 21 Dec 2012 11:10:20 -0800 (PST)
+Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
+	id 8D46E101386; Fri, 21 Dec 2012 11:10:19 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.1.240.ge8a1f5a
+X-Gm-Message-State: ALoCoQnq4ds4KAkf+zFtWtfd767kb0Kjutdm7ihUUnMa8VrY3pfw2QBZc1GdUAWVHKPKALY/clq8BZNgRykeEhWnBOE8GxWe8EBLm/QuLMZ+ejd2M7vBUSl9KhqqexEGU/WazLlvmyfHHbukBY4mlJn8Lp3SUuf67fnUcSa4fFstwZlKLiAuv8DSUN6vma3/uHFMss+xlH87
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212004>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A function for checking that two given parameters refer to the same
+revision was defined in several places, so move the definition to
+test-lib-functions.sh instead.
 
-Il 21/12/2012 18:59, Junio C Hamano ha scritto:
-> Manlio Perillo <manlio.perillo@gmail.com> writes:
-> 
->> +		case "$path" in
->> +		?*/*) echo "${path%%/*}/" ;;
->> +		*) echo $path ;;
-> 
-> $path unquoted???
-> 
+Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+---
+ t/t1505-rev-parse-last.sh           | 18 +++++-------------
+ t/t3404-rebase-interactive.sh       |  6 ------
+ t/t3507-cherry-pick-conflict.sh     |  6 ------
+ t/t3508-cherry-pick-many-commits.sh |  8 ++------
+ t/t3510-cherry-pick-sequence.sh     |  6 ------
+ t/t6030-bisect-porcelain.sh         |  4 +---
+ t/test-lib-functions.sh             |  7 +++++++
+ 7 files changed, 15 insertions(+), 40 deletions(-)
 
-Missed again, thanks.
-I hope this is really the last one!
-
-> [...]
->> +__git_index_files ()
->> +{
->> +	local dir="$(__gitdir)"
->> +
->> +	if [ -d "$dir" ]; then
->> +		# NOTE: $1 is not quoted in order to support multiple options
-> 
-> Good thinking to document this.  Thanks.
-> 
-> I take it that $1 never comes from the end user and it is known that
-> it is correct to split them at $IFS?  That is the way I read callers
-> of this function in this patch, but I am just double-checking.
-> 
-
-Yes, $1 is always set internally (but I will check again)
-Probably there are better solutions.
-
-
->> @@ -998,7 +1093,13 @@ _git_commit ()
->>  			"
->>  		return
->>  	esac
->> -	COMPREPLY=()
->> +
->> +	if git rev-parse --verify --quiet HEAD 1>/dev/null; then
-> 
-> s/1>/>/;
-> 
-
-What is the reason?
-Coding style?
-
->> +		__git_complete_diff_index_file "HEAD"
-> 
-> As this runs "git diff-index" without --cached, 
-> 
-> The completion will give only for paths that have difference between
-> the working tree and the HEAD.  If the user has a bogus contents
-> that was "git add"ed earlier, (i.e. the index is different from
-> HEAD), then realizes the mistake and fixes it in the working tree
-> with his editor to match "HEAD" (i.e. the working tree is the same
-> as HEAD):
-> 
-> 	git commit the-prefix-to-that-file<TAB>
-> 
-> to complete the filename will not give that file.  I do not think it
-> is a show-stopper, but it may puzzle the users when they encounter
-> the situation.
-> 
-
-Umh, I just checked this case.
-
-  0) git init test
-  1) Added a README file with "Hello World.", and committed.
-  2) Modified the README file with "Hello World!" and executed
-     git add README
-  3) Modified the README file with "Hello World." (the original content)
-  4) $ git diff HEAD:README README
-     $ git diff-index --name-only HEAD
-     README
-
-     git commit <TAB> shows the README file.
-
-If I understand correctly the documentation of diff-index, it will
-always compare the content of the index with HEAD.
-If --cached is specified, it will ignore the stat state of the file on disk.
-
-
-> I am wondering if reading from "git status --porcelain" might be a
-> better alternative, or if it is too much trouble and slow things
-> down to cover such a corner case.
-> 
-
-It have considered it.
-
-The problem is that the output of "git status --porcelain" is not
-trivial to parse.
-
-
->> @@ -1362,7 +1464,14 @@ _git_mv ()
->>  		return
->>  		;;
->>  	esac
->> -	COMPREPLY=()
->> +
->> +	if [ $cword -gt 2 ]; then
->> +		# We need to show both cached and untracked files (including
->> +		# empty directories) since this may not be the last argument.
->> +		__git_complete_index_file "--cached --others --directory"
->> +	else
->> +		__git_complete_index_file "--cached"
->> +	fi
-> 
-> Is $cword affected by the presense of "-f" in "git mv [-f] foo bar"?
-> Just being curious.
-> 
-
-Yes, it is affected; I missed it, thanks.
-It should count only non-option arguments.
-
-
-> Other than that, I do not see anything majorly wrong from the coding
-> and semantics point of view in the patch.  As to the interaction
-> with the rest of the completion machinery, I'll leave the review to
-> the area experts CC'ed and wait for their comments.
-> 
-> Thanks.
-> 
-
-Thanks for your review.
-
-
-Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlDUsjwACgkQscQJ24LbaUSGuwCffon7/VGFo98CCBsZlmOdNYYE
-91oAn3X8fbr5jtzMUOZkMp9CuGWCa7Cf
-=Qzsv
------END PGP SIGNATURE-----
+diff --git a/t/t1505-rev-parse-last.sh b/t/t1505-rev-parse-last.sh
+index d709ecf..4969edb 100755
+--- a/t/t1505-rev-parse-last.sh
++++ b/t/t1505-rev-parse-last.sh
+@@ -32,32 +32,24 @@ test_expect_success 'setup' '
+ #
+ # and 'side' should be the last branch
+ 
+-test_rev_equivalent () {
+-
+-	git rev-parse "$1" > expect &&
+-	git rev-parse "$2" > output &&
+-	test_cmp expect output
+-
+-}
+-
+ test_expect_success '@{-1} works' '
+-	test_rev_equivalent side @{-1}
++	test_cmp_rev side @{-1}
+ '
+ 
+ test_expect_success '@{-1}~2 works' '
+-	test_rev_equivalent side~2 @{-1}~2
++	test_cmp_rev side~2 @{-1}~2
+ '
+ 
+ test_expect_success '@{-1}^2 works' '
+-	test_rev_equivalent side^2 @{-1}^2
++	test_cmp_rev side^2 @{-1}^2
+ '
+ 
+ test_expect_success '@{-1}@{1} works' '
+-	test_rev_equivalent side@{1} @{-1}@{1}
++	test_cmp_rev side@{1} @{-1}@{1}
+ '
+ 
+ test_expect_success '@{-2} works' '
+-	test_rev_equivalent master @{-2}
++	test_cmp_rev master @{-2}
+ '
+ 
+ test_expect_success '@{-3} fails' '
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 32fdc99..8462be1 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -29,12 +29,6 @@ Initial setup:
+ 
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+ 
+-test_cmp_rev () {
+-	git rev-parse --verify "$1" >expect.rev &&
+-	git rev-parse --verify "$2" >actual.rev &&
+-	test_cmp expect.rev actual.rev
+-}
+-
+ set_fake_editor
+ 
+ # WARNING: Modifications to the initial repository can change the SHA ID used
+diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+index c82f721..223b984 100755
+--- a/t/t3507-cherry-pick-conflict.sh
++++ b/t/t3507-cherry-pick-conflict.sh
+@@ -11,12 +11,6 @@ test_description='test cherry-pick and revert with conflicts
+ 
+ . ./test-lib.sh
+ 
+-test_cmp_rev () {
+-	git rev-parse --verify "$1" >expect.rev &&
+-	git rev-parse --verify "$2" >actual.rev &&
+-	test_cmp expect.rev actual.rev
+-}
+-
+ pristine_detach () {
+ 	git checkout -f "$1^0" &&
+ 	git read-tree -u --reset HEAD &&
+diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
+index 340afc7..4e7136b 100755
+--- a/t/t3508-cherry-pick-many-commits.sh
++++ b/t/t3508-cherry-pick-many-commits.sh
+@@ -5,15 +5,11 @@ test_description='test cherry-picking many commits'
+ . ./test-lib.sh
+ 
+ check_head_differs_from() {
+-	head=$(git rev-parse --verify HEAD) &&
+-	arg=$(git rev-parse --verify "$1") &&
+-	test "$head" != "$arg"
++	! test_cmp_rev HEAD "$1"
+ }
+ 
+ check_head_equals() {
+-	head=$(git rev-parse --verify HEAD) &&
+-	arg=$(git rev-parse --verify "$1") &&
+-	test "$head" = "$arg"
++	test_cmp_rev HEAD "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index b5fb527..7b7a89d 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -24,12 +24,6 @@ pristine_detach () {
+ 	git clean -d -f -f -q -x
+ }
+ 
+-test_cmp_rev () {
+-	git rev-parse --verify "$1" >expect.rev &&
+-	git rev-parse --verify "$2" >actual.rev &&
+-	test_cmp expect.rev actual.rev
+-}
+-
+ test_expect_success setup '
+ 	git config advice.detachedhead false &&
+ 	echo unrelated >unrelated &&
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 72e28ee..3e0e15f 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -676,9 +676,7 @@ test_expect_success 'bisect fails if tree is broken on trial commit' '
+ check_same()
+ {
+ 	echo "Checking $1 is the same as $2" &&
+-	git rev-parse "$1" > expected.same &&
+-	git rev-parse "$2" > expected.actual &&
+-	test_cmp expected.same expected.actual
++	test_cmp_rev "$1" "$2"
+ }
+ 
+ test_expect_success 'bisect: --no-checkout - start commit bad' '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 22a4f8f..fa62d01 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -602,6 +602,13 @@ test_cmp() {
+ 	$GIT_TEST_CMP "$@"
+ }
+ 
++# Tests that its two parameters refer to the same revision
++test_cmp_rev () {
++	git rev-parse --verify "$1" >expect.rev &&
++	git rev-parse --verify "$2" >actual.rev &&
++	test_cmp expect.rev actual.rev
++}
++
+ # Print a sequence of numbers or letters in increasing order.  This is
+ # similar to GNU seq(1), but the latter might not be available
+ # everywhere (and does not do letters).  It may be used like:
+-- 
+1.8.0.1.240.ge8a1f5a
