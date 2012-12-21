@@ -1,105 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-update-index: caution about tree
- objects
-Date: Thu, 20 Dec 2012 18:56:58 -0800
-Message-ID: <7vvcbw2jut.fsf@alter.siamese.dyndns.org>
-References: <1356053738-14926-1-git-send-email-gdt@ir.bbn.com>
+Subject: Re: [PATCH] Documentation/git-clean: Document --force --force
+Date: Thu, 20 Dec 2012 19:01:41 -0800
+Message-ID: <7vr4mk2jmy.fsf@alter.siamese.dyndns.org>
+References: <b48ad5f0-25f7-45c3-b2dc-c0c01645a247@CO9EHSMHS031.ehs.local>
+ <335802a0-38b5-4cbc-9e52-92c92083119e@VA3EHSMHS005.ehs.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Greg Troxel <gdt@ir.bbn.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 03:57:21 2012
+Cc: <git@vger.kernel.org>
+To: Soren Brinkmann <soren.brinkmann@xilinx.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 04:02:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlsnY-0003t1-RG
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 03:57:21 +0100
+	id 1Tlss7-0007sC-9M
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 04:02:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758Ab2LUC5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 21:57:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39704 "EHLO
+	id S1751693Ab2LUDBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 22:01:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42138 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751690Ab2LUC5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 21:57:01 -0500
+	id S1751069Ab2LUDBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 22:01:44 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C557A432;
-	Thu, 20 Dec 2012 21:57:00 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E162DA591;
+	Thu, 20 Dec 2012 22:01:43 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kg5FMMPCmrnyVdjhpL1686153AE=; b=TP9uvQ
-	u5TDbARQZoWWjY9zH/uRF9tr2OHQyCXFMnlTEF5n/U6enzTJb+z8aD0fnmd0saM4
-	ge3/klMHOSke89vPiFXeo3An7tvZbXJWnrA0z0Nlh44KdbVsPOn0me8CSy44Ww2I
-	qQwAsppxbqYwT432JVJOfkRFAVcFhid15O80A=
+	:content-type; s=sasl; bh=dOjBwFuyTtJqQBb8FWtM2/ZHI+Q=; b=rucWw7
+	p2V/tm0UVH2RnEPtAnw+gVod4wXN9ogb4p16RBSE7Cry6Lzco4GzNuhMXYrr0Tl3
+	IMw5EptogCaOxc+0XtANUEzpBZnHBLZgee6rIYADyy8nm1en4kccLu35kt4Byjki
+	ZHcySI9YcdHhEl4Vccomojzu80riJJp1GLKAo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ROoBp+5EMfw0Qdv8zZU7P2yiZUZp0fJs
-	3aDJFIFAYQ/ly+A31lIPF/KrjtclVaai0R/74HkjaMH76ETTeQ4/0actl0MQhu5u
-	PQctKpIRa/iW8q9zJUtf58R629nTIJz3a1r79O5nNp9Oh+vl2mwm9Kgd9OJqYQZ1
-	GUbKfCuPmJE=
+	:content-type; q=dns; s=sasl; b=dP5k7OiIbB1k0uTCvRb5x4WDSVLyno0j
+	ySY1umMxgCha5olJiHPVCJHUoXaQl18nMt3PPrjCo7JxEdmIRct8I3sRfuA4dDVr
+	qt+obSQCXA7AjnZ2tmvCqpCRgy4wvRIWFbPMe5nlhgdTzGXHFElHeGRsuJku2zS4
+	TSuZGWurNqk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A0BBA431;
-	Thu, 20 Dec 2012 21:57:00 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF7B5A590;
+	Thu, 20 Dec 2012 22:01:43 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC03EA430; Thu, 20 Dec 2012
- 21:56:59 -0500 (EST)
-In-Reply-To: <1356053738-14926-1-git-send-email-gdt@ir.bbn.com> (Greg
- Troxel's message of "Thu, 20 Dec 2012 20:35:38 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FFF6A58E; Thu, 20 Dec 2012
+ 22:01:43 -0500 (EST)
+In-Reply-To: <335802a0-38b5-4cbc-9e52-92c92083119e@VA3EHSMHS005.ehs.local>
+ (Soren Brinkmann's message of "Thu, 20 Dec 2012 15:37:27 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 16D8DD26-4B1A-11E2-848D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BFB47B12-4B1A-11E2-8E9B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211942>
 
-Greg Troxel <gdt@ir.bbn.com> writes:
+Soren Brinkmann <soren.brinkmann@xilinx.com> writes:
 
-> While one can add tree objects to the index, this is not currently
-> useful.  Therefore, use "git ls-tree -r" as the example to be fed to
-> --index-info.  Add a section explaining about expected index contents.
-> (Thanks to Junio for explaining this to me in August of 2011.)
->
-> Signed-off-by: Greg Troxel <gdt@ir.bbn.com>
-> ---
->  Documentation/git-update-index.txt | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index 9d0b151..6ce65fa 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -29,6 +29,11 @@ Modifies the index or directory cache. Each file mentioned is updated
->  into the index and any 'unmerged' or 'needs updating' state is
->  cleared.
->  
-> +Note that update-index does not check that the modifications preserve
-> +the expected invariants.  In particular, an index normally holds
-> +regular blobs, executable blobs, symlink blobs, and gitlinks.
-> +Therefore, adding a tree object is not likely useful.
-> +
+> Ping?
 
-I find this unnecessarily alarmist as a description meant for
-general audiences.  For the normal mode of operations of the command
-(e.g. "git update-index --add --remove hello.c"), whatever you mean
-by "expected invariants" are fully preserved.
+I *think* it is a mistake for the command to remove a separate
+project repository within, with any number of "-f", so I'd rather
+see a patch to fix it, instead of casting such a misbehaviour as a
+feature in stone by documenting it.
 
-I think you meant this for --cacheinfo and --index-info options,
-which are primarily meant for people who know what they are doing
-(that includes the use of this command in scripted Porceains) or Git
-developers who want to work on enhancing the index (and to them,
-being able to record anything is more convenient).
+I dunno.
 
-> @@ -210,7 +215,7 @@ back on 3-way merge.
->  
->      . mode SP type SP sha1          TAB path
->  +
-> -The second format is to stuff 'git ls-tree' output
-> +The second format is to stuff 'git ls-tree -r' output
->  into the index file.
-
-This hunk is good.
-
-Thanks.
+> On Thu, Dec 13, 2012 at 05:46:55PM -0800, Soren Brinkmann wrote:
+>> This patch documents the behavior of 'git clean' when
+>> encountering nested git repositories.
+>> Such repositories are only deleted if '-f' is passed twice
+>> to 'git clean'.
+>> 
+>> Signed-off-by: Soren Brinkmann <soren.brinkmann@xilinx.com>
+>> ---
+>>  Documentation/git-clean.txt | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>> 
+>> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+>> index 9f42c0d..0b31454 100644
+>> --- a/Documentation/git-clean.txt
+>> +++ b/Documentation/git-clean.txt
+>> @@ -23,6 +23,9 @@ example, be useful to remove all build products.
+>>  If any optional `<path>...` arguments are given, only those paths
+>>  are affected.
+>>  
+>> +Nested git repositories are not removed unless the '-f' option is
+>> +passed to 'git clean' twice.
+>> +
+>>  OPTIONS
+>>  -------
+>>  -d::
+>> @@ -35,6 +38,8 @@ OPTIONS
+>>  --force::
+>>  	If the git configuration variable clean.requireForce is not set
+>>  	to false, 'git clean' will refuse to run unless given -f or -n.
+>> +	Pass this option twice to 'git clean' in order to also remove
+>> +	nested git repositories.
+>>  
+>>  -n::
+>>  --dry-run::
+>> -- 
+>> 1.8.0.2
+>> 
+>> 
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>> 
