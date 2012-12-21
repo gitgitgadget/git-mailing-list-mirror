@@ -1,103 +1,69 @@
-From: Soren Brinkmann <soren.brinkmann@xilinx.com>
-Subject: Re: [PATCH] Documentation/git-clean: Document --force --force
-Date: Thu, 20 Dec 2012 15:37:27 -0800
-Message-ID: <335802a0-38b5-4cbc-9e52-92c92083119e@VA3EHSMHS005.ehs.local>
-References: <b48ad5f0-25f7-45c3-b2dc-c0c01645a247@CO9EHSMHS031.ehs.local>
+From: awingnut <wtriker.ffe@gmail.com>
+Subject: Noob Question
+Date: Thu, 20 Dec 2012 20:07:53 -0500
+Message-ID: <50D3B669.1030204@hotmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 00:37:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 02:08:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlpgW-0005Sk-Km
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 00:37:52 +0100
+	id 1Tlr62-0005v4-2S
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 02:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923Ab2LTXhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 18:37:35 -0500
-Received: from va3ehsobe010.messaging.microsoft.com ([216.32.180.30]:48956
-	"EHLO va3outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751745Ab2LTXhe (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Dec 2012 18:37:34 -0500
-Received: from mail160-va3-R.bigfish.com (10.7.14.243) by
- VA3EHSOBE005.bigfish.com (10.7.40.25) with Microsoft SMTP Server id
- 14.1.225.23; Thu, 20 Dec 2012 23:37:33 +0000
-Received: from mail160-va3 (localhost [127.0.0.1])	by
- mail160-va3-R.bigfish.com (Postfix) with ESMTP id 1EAE6A01C6;	Thu, 20 Dec
- 2012 23:37:33 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:149.199.60.83;KIP:(null);UIP:(null);IPV:NLI;H:xsj-gw1;RD:unknown-60-83.xilinx.com;EFVD:NLI
-X-SpamScore: -1
-X-BigFish: VPS-1(zz98dI1432Izz1de0h1202h1e76h1d1ah1d2ahzz17326ah8275bh8275dhz2fh95h668h839h93fhd24hf0ah119dh1288h12a5h12a9h12bdh137ah13b6h1441h14ddh1504h1537h153bh162dh1631h1758h906i1155h)
-Received-SPF: pass (mail160-va3: domain of xilinx.com designates 149.199.60.83 as permitted sender) client-ip=149.199.60.83; envelope-from=soren.brinkmann@xilinx.com; helo=xsj-gw1 ;helo=xsj-gw1 ;
-Received: from mail160-va3 (localhost.localdomain [127.0.0.1]) by mail160-va3
- (MessageSwitch) id 1356046650131767_26581; Thu, 20 Dec 2012 23:37:30 +0000
- (UTC)
-Received: from VA3EHSMHS005.bigfish.com (unknown [10.7.14.245])	by
- mail160-va3.bigfish.com (Postfix) with ESMTP id 1C520260066;	Thu, 20 Dec 2012
- 23:37:30 +0000 (UTC)
-Received: from xsj-gw1 (149.199.60.83) by VA3EHSMHS005.bigfish.com
- (10.7.99.15) with Microsoft SMTP Server id 14.1.225.23; Thu, 20 Dec 2012
- 23:37:28 +0000
-Received: from unknown-38-66.xilinx.com ([149.199.38.66]
- helo=xsj-smtp1.xilinx.com)	by xsj-gw1 with esmtp (Exim 4.63)	(envelope-from
- <soren.brinkmann@xilinx.com>)	id 1Tlpg8-00059B-BR; Thu, 20 Dec 2012 15:37:28
- -0800
-Content-Disposition: inline
-In-Reply-To: <b48ad5f0-25f7-45c3-b2dc-c0c01645a247@CO9EHSMHS031.ehs.local>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-RCIS-Action: ALLOW
-X-OriginatorOrg: xilinx.com
+	id S1752093Ab2LUBH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 20:07:56 -0500
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:43169 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814Ab2LUBHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 20:07:55 -0500
+Received: by mail-gg0-f174.google.com with SMTP id k2so832785ggd.19
+        for <git@vger.kernel.org>; Thu, 20 Dec 2012 17:07:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=MDK4QFxUSZmhRhrmyekN4rfxGjSpiaRwE3KdDGYL0I0=;
+        b=y/BBAsu0Uc2d3/8y0iEiH6F0DLx7GL81RivDhphnx8Jl/+vSvfHRnrlWK8KLAX4BMC
+         IybpiRRwRJiaavzxHkMkLP2kqeFwtNldVdcACtFzdYN4bspOIJXpobMEDjzmnnf1NAoF
+         42Fv9hkCzYEQLufNq5pFSTP5kbyLSRGYJmlOWNxrv+Q98cUp/mrd6NEJ4YBWEw6kKpKP
+         HdraCMzkW67bg+5SpXdtjDoSYOGlTwZbY+pO0GneKf8681isYQpz3gdbkX2pV5ao4ubj
+         jJVpiFzxWwvXYdgLrOvwFH6aulyMY7seMH29ZS/FkxHQ5g3IeGf/1JNQ/0rQz7qR3az0
+         iFvQ==
+X-Received: by 10.236.133.225 with SMTP id q61mr3466657yhi.108.1356052074652;
+        Thu, 20 Dec 2012 17:07:54 -0800 (PST)
+Received: from [192.168.0.100] (adsl-74-232-16-78.asm.bellsouth.net. [74.232.16.78])
+        by mx.google.com with ESMTPS id s21sm9275314yhb.5.2012.12.20.17.07.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 20 Dec 2012 17:07:53 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/17.0 Thunderbird/17.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211938>
 
-Ping?
+I have not used git yet but am planning to. I am trying to get my head
+around how it will work and the documentation I found so far is of
+modest help. I currently have a Java application developed using Eclipse
+on Windows. However, the project is located on a Linux shared drive
+which is my Eclipse workspace. I do my builds using ANT on the Linux
+host. My main questions center around the git repository and accessing it.
 
-On Thu, Dec 13, 2012 at 05:46:55PM -0800, Soren Brinkmann wrote:
-> This patch documents the behavior of 'git clean' when
-> encountering nested git repositories.
-> Such repositories are only deleted if '-f' is passed twice
-> to 'git clean'.
-> 
-> Signed-off-by: Soren Brinkmann <soren.brinkmann@xilinx.com>
-> ---
->  Documentation/git-clean.txt | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-> index 9f42c0d..0b31454 100644
-> --- a/Documentation/git-clean.txt
-> +++ b/Documentation/git-clean.txt
-> @@ -23,6 +23,9 @@ example, be useful to remove all build products.
->  If any optional `<path>...` arguments are given, only those paths
->  are affected.
->  
-> +Nested git repositories are not removed unless the '-f' option is
-> +passed to 'git clean' twice.
-> +
->  OPTIONS
->  -------
->  -d::
-> @@ -35,6 +38,8 @@ OPTIONS
->  --force::
->  	If the git configuration variable clean.requireForce is not set
->  	to false, 'git clean' will refuse to run unless given -f or -n.
-> +	Pass this option twice to 'git clean' in order to also remove
-> +	nested git repositories.
->  
->  -n::
->  --dry-run::
-> -- 
-> 1.8.0.2
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+1) Should I install git on Linux or Windows or does it matter?
+2) How will my build scripts access the source? Will it be the same as
+now (my scripts 'cd' to the Eclipse project directory and run there) or
+do I need to add a wrapper to my script to check out the entire source
+for the builds?
+3) How do I move my current Eclipse project into git after I create the
+empty repository? I can only find info on how to import git into Eclipse
+not the other way around.
+4) Do I need to checkout the entire project from Eclipse to modify and
+test it or only the classes I want to change? Does the plugin get the
+others as needed when I run the app within Eclipse for testing?
+
+Thanks for any help understanding how I need to configure all this.
