@@ -1,201 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] refs: do not use cached refs in repack_without_ref
-Date: Fri, 21 Dec 2012 03:04:49 -0500
-Message-ID: <20121221080449.GA21741@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Change in cvsps maintainership, abd a --fast-export option
+Date: Fri, 21 Dec 2012 09:11:08 +0100
+Message-ID: <50D4199C.6000002@alum.mit.edu>
+References: <20121220215638.E54BC44119@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 21 09:05:23 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 09:11:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlxbd-00053U-2i
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 09:05:21 +0100
+	id 1Tlxha-00023I-V9
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 09:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153Ab2LUIEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 03:04:53 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60499 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750923Ab2LUIEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 03:04:51 -0500
-Received: (qmail 20696 invoked by uid 107); 21 Dec 2012 08:05:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Dec 2012 03:05:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Dec 2012 03:04:49 -0500
-Content-Disposition: inline
+	id S1751327Ab2LUILO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 03:11:14 -0500
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:58427 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751168Ab2LUILM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2012 03:11:12 -0500
+X-AuditID: 12074411-b7fa36d0000008cc-64-50d4199f7220
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 36.C3.02252.F9914D05; Fri, 21 Dec 2012 03:11:11 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qBL8B8Ds028714
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 21 Dec 2012 03:11:10 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20121220215638.E54BC44119@snark.thyrsus.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqDtf8kqAwZQ/UhZXt/hYdF3pZnJg
+	8lj2tZPF4/MmuQCmKG6bpMSSsuDM9Dx9uwTujH9f77AVLOOqmHe/g7mBcT1HFyMnh4SAiUTX
+	tCVsELaYxIV764FsLg4hgcuMEp8adjFDOMeZJLb9msDYxcjBwSugLTHjqAKIySKgKvH3TQBI
+	L5uArsSinmYmEFtUIEBi8ZJz7CA2r4CgxMmZT1hAbBEBdYkPR44yg7QyC4hL9P8DCwsLuEts
+	27mPGcQWErCUmDDpHdg5nAJWEqs6JoGNZBbQkXjX94AZwpaX2P52DvMERoFZSDbMQlI2C0nZ
+	AkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6pnq5mSV6qSmlmxghISq4g3HGSblDjAIcjEo8
+	vJEWlwOEWBPLiitzDzFKcjApifLOF7kSIMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEl+krUDlv
+	SmJlVWpRPkxKmoNFSZyXb4m6n5BAemJJanZqakFqEUxWhoNDSYI3SwJoqGBRanpqRVpmTglC
+	momDE2Q4l5RIcWpeSmpRYmlJRjwoSuOLgXEKkuIB2nscpJ23uCAxFygK0XqKUZfjVsPNp4xC
+	LHn5ealS4rwbQYoEQIoySvPgVsAS0itGcaCPhXnPgVTxAJMZ3KRXQEuYgJYE6V0AWVKSiJCS
+	amAM3WmtdVS87top3paLyRuuB3D3Xm5e2Wi4cnNDLUPmnPtSYUU7bidyJ08LWnZ/QnPuFYYX
+	d6t4CnUltGOtrBrux3y99mNNNNPHkhjbvi3euWdt5fPyclfdztkg+MuoPo7vUfpU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211957>
 
-When we delete a ref that is packed, we rewrite the whole
-packed-refs file and simply omit the ref that no longer
-exists. However, we base the rewrite on whatever happens to
-be in our refs cache, not what is necessarily on disk. That
-opens us up to a race condition if another process is
-simultaneously packing the refs, as we will overwrite their
-newly-made pack-refs file with our potentially stale data,
-losing commits.
+On 12/20/2012 10:56 PM, Eric S. Raymond wrote:
+> Earlier today David Mansfield handed off to me the cvsps project. This
+> is the code used as an engine for reading CVS repositories by
+> git-cvsimport.
+> [...] I have added a --fast-export option to
+> cvsps-3.0 that emits a git fast-import stream representing the CVS
+> history.
+> [...]
+> Possibly it fixes some other problems described there as well.  
+> I don't understand all the bug warnings on that page and would like to
+> discuss them with the author, whoever that is.  Possibly cvsps can be
+> further enhanced to address these problems; I'm willing to work on that.
 
-You can demonstrate the race like this:
+In 2009 I added tests demonstrating some of the erroneous behavior of
+git-cvsimport.  The failing tests in t9601-t9603 are concrete examples
+of the problems mentioned in the manpage.
 
-  # setup some repositories
-  git init --bare parent &&
-  (cd parent && git config core.logallrefupdates true) &&
-  git clone parent child &&
-  (cd child && git commit --allow-empty -m base)
+If you haven't yet seen it, there is a writeup of the algorithm used by
+cvs2git to infer the history of a CVS repository [1].  If your goal is
+to make cvsps more robust, you might want to consider the ideas
+described there.
 
-  # in one terminal, repack the refs repeatedly
-  cd parent &&
-  while true; do
-	git pack-refs --all
-  done
+Michael
 
-  # in another terminal, simultaneously push updates to
-  # master, and create and delete an unrelated ref
-  cd child &&
-  while true; do
-	git push origin HEAD:newbranch &&
-	git commit --allow-empty -m foo
-	us=`git rev-parse master` &&
-	git push origin master &&
-	git push origin :newbranch &&
-	them=`git --git-dir=../parent rev-parse master` &&
-	if test "$them" != "$us"; then
-		echo >&2 "$them" != "$us"
-		exit 1
-	fi
-  done
+[1] File doc/design-notes.txt in the cvs2svn source tree, also visible here:
 
-In many cases the two processes will conflict over locking
-the packed-refs file, and the deletion of newbranch will
-simply fail.  But eventually you will hit the race, which
-happens like this:
 
-  1. We push a new commit to master. It is already packed
-     (from the looping pack-refs call). We write the new
-     value (let us call it B) to $GIT_DIR/refs/heads/master,
-     but the old value (call it A) remains in the
-     packed-refs file.
+http://cvs2svn.tigris.org/source/browse/*checkout*/cvs2svn/trunk/doc/design-notes.txt
 
-  2. We push the deletion of newbranch, spawning a
-     receive-pack process. Receive-pack advertises all refs
-     to the client, causing it to iterate over each ref; it
-     caches the packed refs in memory, which points at the
-     stale value A.
-
-  3. Meanwhile, a separate pack-refs process is running. It
-     runs to completion, updating the packed-refs file to
-     point master at B, and deleting $GIT_DIR/refs/heads/master
-     which also pointed at B.
-
-  4. Back in the receive-pack process, we get the
-     instruction to delete :newbranch. We take a lock on
-     packed-refs (which works, as the other pack-refs
-     process has already finished). We then rewrite the
-     contents using the cached refs, which contain the stale
-     value A.
-
-The resulting packed-refs file points master once again at
-A. The loose ref which would override it to point at B was
-deleted (rightfully) in step 3. As a result, master now
-points at A. The only trace that B ever existed in the
-parent is in the reflog: the final entry will show master
-moving from A to B, even though the ref still points at A
-(so you can detect this race after the fact, because the
-next reflog entry will move from A to C).
-
-We can fix this by invalidating the packed-refs cache after
-we have taken the lock. This means that we will re-read the
-packed-refs file, and since we have the lock, we will be
-sure that what we read will be atomically up-to-date when we
-write (it may be out of date with respect to loose refs, but
-that is OK, as loose refs take precedence).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-We actually see this in practice on GitHub, though it is relatively
-rare (I've been chasing reports for a while, and in a very busy repo, it
-can happen every couple of weeks; this is probably due to the fact that
-we run "git gc" very frequently).
-
-There are a few other interesting races in this code that this does not
-fix:
-
-  1. We check to see whether the ref is packed based on the cached data.
-     That means that in the following sequence:
-
-       a. receive-pack starts, caches packed refs; master is not packed
-
-       b. meanwhile, pack-refs runs and packs master
-
-       c. receive-pack deletes the loose ref for master (which might be
-          a no-op if the pack-refs from (b) got there first). It checks
-          its cached packed-refs and sees that there is nothing to
-          delete.
-
-     We end up leaving the entry in packed-refs. In other words, the
-     deletion does not actually delete anything, but it still returns
-     success.
-
-     We could fix this by scanning the list of packed refs only after
-     we've acquired the lock. The downside is that this would increase
-     lock contention on packed-refs.lock. Right now, two deletions may
-     conflict if they are deletions of packed refs. With this change,
-     any two deletions might conflict, packed or not.
-
-     If we work under the assumption that deletions are relatively rare,
-     this is probably OK. And if you tend to keep your refs packed, it
-     would not make any difference. It would have an impact on repos
-     which do not pack refs, and which have frequent simultaneous
-     deletions.
-
-  2. The delete_ref function first deletes the loose ref, then rewrites
-     the packed-refs file. This means that for a moment, the ref may
-     appear to have rewound to whatever was in the packed-refs file, and
-     the reader has no way of knowing.
-
-     This is not a huge deal, but I think it could be fixed by swapping
-     the ordering. However, I think that would open us up to the reverse
-     race from above: we delete from packed-refs, then before we delete
-     the loose ref, a pack-refs process repacks it. Our deletion looks
-     successful, but the ref remains afterwards.
-
-I fixed just the race I did because it does not (as far as I can tell)
-have any downsides. And it is way more severe (the other ones are "a
-deleted ref might come back", whereas the fixed one will actually lose
-commits).
-
- refs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/refs.c b/refs.c
-index 6cec1c8..541fec2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1744,7 +1744,8 @@ static int repack_without_ref(const char *refname)
- static int repack_without_ref(const char *refname)
- {
- 	struct repack_without_ref_sb data;
--	struct ref_dir *packed = get_packed_refs(get_ref_cache(NULL));
-+	struct ref_cache *refs = get_ref_cache(NULL);
-+	struct ref_dir *packed = get_packed_refs(refs);
- 	if (find_ref(packed, refname) == NULL)
- 		return 0;
- 	data.refname = refname;
-@@ -1753,6 +1754,8 @@ static int repack_without_ref(const char *refname)
- 		unable_to_lock_error(git_path("packed-refs"), errno);
- 		return error("cannot delete '%s' from packed refs", refname);
- 	}
-+	clear_packed_ref_cache(refs);
-+	packed = get_packed_refs(refs);
- 	do_for_each_ref_in_dir(packed, 0, "", repack_without_ref_fn, 0, 0, &data);
- 	return commit_lock_file(&packlock);
- }
 -- 
-1.8.1.rc2.6.g05591da
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
