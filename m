@@ -1,86 +1,88 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH v7 2/7] tests: paint known breakages in yellow
-Date: Fri, 21 Dec 2012 17:59:52 +0100
-Message-ID: <50D49588.60305@gmail.com>
-References: <1356059558-23479-1-git-send-email-gitster@pobox.com> <1356059558-23479-3-git-send-email-gitster@pobox.com> <50D4230F.9080502@gmail.com> <7vd2y32ys0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: recommendation for patch maintenance
+Date: Fri, 21 Dec 2012 09:01:12 -0800
+Message-ID: <7vvcbv1grr.fsf@alter.siamese.dyndns.org>
+References: <50D475EF.6060303@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Adam Spiers <git@adamspiers.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 18:00:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Manlio Perillo <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 18:01:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm5xJ-0006mU-6W
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 18:00:17 +0100
+	id 1Tm5yi-0008CN-Ln
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 18:01:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504Ab2LURAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 12:00:00 -0500
-Received: from mail-bk0-f41.google.com ([209.85.214.41]:49212 "EHLO
-	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751091Ab2LUQ77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 11:59:59 -0500
-Received: by mail-bk0-f41.google.com with SMTP id jg9so2560655bkc.0
-        for <git@vger.kernel.org>; Fri, 21 Dec 2012 08:59:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=UzVM7ZRr0Y3yQQRK9JoVik4Qubkc2ngqc+hiZj4WNfg=;
-        b=oNtdSce2TiGAT+3FZHeo1+JsKZWxI2BmyUhUeYZd2YHAR39qbsgnuyP78DaIE8k8TA
-         UA4dFD9YMEmq89AqT3bL34FVL1y0/rq+mSRKSnshGsAaIQzrKs76JiDkD3BUjEDAWozT
-         vlDvvEJ2rDTzbuHkG4+hdvV3RBwLzkMGRXRzJVKcZP+ClC4VnRj0xI/Jtrgivi3eoVkV
-         NtSIBw78VMb1PT94iHPHSrGxTFytOQKa7WzmD2W5EA8PMJctVaQKdYj1ZKYXxpTFcS8C
-         Bjy2NQkMtVr8VP/2UDROhFWhd4mJ4vGgAIQ2btY51K/fcLl0uEvsSR/wrEsj6s3PZLZf
-         Bk0A==
-X-Received: by 10.204.131.76 with SMTP id w12mr6636564bks.44.1356109197719;
-        Fri, 21 Dec 2012 08:59:57 -0800 (PST)
-Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
-        by mx.google.com with ESMTPS id l17sm10683820bkw.12.2012.12.21.08.59.55
-        (version=SSLv3 cipher=OTHER);
-        Fri, 21 Dec 2012 08:59:56 -0800 (PST)
-In-Reply-To: <7vd2y32ys0.fsf@alter.siamese.dyndns.org>
+	id S1751393Ab2LURB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 12:01:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55422 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751091Ab2LURB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 12:01:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB214A5FD;
+	Fri, 21 Dec 2012 12:01:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3DiHctsIt2xEEfI4kA/xnT+Czic=; b=jfcHBl
+	Um6Y2w6ICgozatEGS4L/9Iz1La80H7HgR1nBxY27a0qJjrk8/1Df0f4WbE0F1cHe
+	RvRaiki0AozCvTGPrCuv7VKkY00qLc/AkA23r/Cnnda4VLWt2ohJjWRyR6duLPrU
+	zv4e6JpgDBgb5QEwTuUNvP2V+rKL1ZZnJsscE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yp/jbpt91wtkfIy64OaD+8NxnCT9he61
+	C03xoSerk8FNFadA8d+mbk4UHZmgdWvIc/fpjNL/TTVnbAjwz7WZQGIbvzY+2/uf
+	5B4tF7MY4ct4CMqTnzc6LDRjpNi0OyjYf6V7wH0r7zLgwk5Qx6Dw+LQpy6SX6m4y
+	EDMet6SZrFM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5D4BA5FC;
+	Fri, 21 Dec 2012 12:01:25 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E59BA5FB; Fri, 21 Dec 2012
+ 12:01:24 -0500 (EST)
+In-Reply-To: <50D475EF.6060303@gmail.com> (Manlio Perillo's message of "Fri,
+ 21 Dec 2012 15:45:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0DA27F48-4B90-11E2-BB3F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211986>
 
-On 12/21/2012 04:46 PM, Junio C Hamano wrote:
->
-> [SNIP]
->
-> The only thing the additional knowledge adds seems to be to give
-> rationale for the old choice of "bold green"---it was not chosen
-> from thin-air but can be viewed as following the automake/autotest
-> scheme, and other systems cannot agree on what color to pick for
-> this purpose.
-> 
-> I do not see a need to justify why we chose differently from
-> automake/autotest; we could say something like:
-> 
->     Yellow seems a more appropriate color than bold green when
->     considering the universal traffic lights coloring scheme, where
->     green conveys the impression that everything's OK, and amber that
->     something's not quite right.  This is in line with what 'prove'
->     uses, but different from 'automake/autotest' do.
-> 
-> but we are not in the business of choosing which is more correct
-> between prove and automake/autotest, and I do not see how it adds
-> much value to tell readers that color choices are not universally
-> agreed upon across various test software suites---that's kind of
-> known, isn't it?
-> 
-> So...
->
-That is fine with me, I just pointed it out because I suspected not
-everybody was aware of all these details.  If you decide they don't
-matter, it's perfectly OK -- but at least now it's an informed
-choice ;-)
+Manlio Perillo <manlio.perillo@gmail.com> writes:
 
-Thanks,
-  Stefano
+> I would like to have advices about some possible workflows to use when
+> maintaining a patch, that can evolve over the time (fixing bugs, and
+> applying advices from reviewers).
+>
+> In my case I have a single commit to maintain.
+>
+>
+> The workflow I use now is this:
+>
+>   1) create a topic branch, e.g. mp/complete-path
+>   2) write code
+>   3) commit
+>   4) format-patch --output=mp/complete-patch master
+>   5) review the patch
+>   6) send-email
+>
+> when I need to update the patch:
+>
+>   1) modify code
+>   2) commit --amend
+>   3) format-patch --subject-prefix="PATCH v<n>" \
+>      --output=mp/complete-patch master
+>   4) edit patch to add a list of what was changed
+>   5) review the patch
+>   6) send-email
+>
+> This is far from ideal, since all my local changes are lost.
+
+Not offering any answer, but it is unclear to me what local changes
+you are losing here.  Care to explain?
