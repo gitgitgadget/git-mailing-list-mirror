@@ -1,115 +1,347 @@
-From: Florian Lindner <mailinglists@xgm.de>
-Subject: Right way to import a repo
-Date: Fri, 21 Dec 2012 17:11:54 +0100
-Message-ID: <1530104.jO5zzzN8PS@horus>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: [PATCH v4] git-completion.bash: add support for path completion
+Date: Fri, 21 Dec 2012 17:54:32 +0100
+Message-ID: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com>
+Cc: szeder@ira.uka.de, felipe.contreras@gmail.com,
+	Manlio Perillo <manlio.perillo@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 21 17:12:21 2012
+X-From: git-owner@vger.kernel.org Fri Dec 21 17:55:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm5Cr-0004bY-PL
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 17:12:18 +0100
+	id 1Tm5sn-0002sq-Mi
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 17:55:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706Ab2LUQMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 11:12:00 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:55382 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484Ab2LUQL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 11:11:58 -0500
-Received: by mail-bk0-f46.google.com with SMTP id q16so2530044bkw.33
-        for <git@vger.kernel.org>; Fri, 21 Dec 2012 08:11:57 -0800 (PST)
+	id S1751721Ab2LUQzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 11:55:20 -0500
+Received: from mail-we0-f178.google.com ([74.125.82.178]:45560 "EHLO
+	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751293Ab2LUQzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 11:55:18 -0500
+Received: by mail-we0-f178.google.com with SMTP id x43so2222753wey.23
+        for <git@vger.kernel.org>; Fri, 21 Dec 2012 08:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=xgm.de; s=google;
-        h=x-received:from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type;
-        bh=X3NwmLe56q9NCk/q+Q8RURUHNVCvWyHiwz/+ubpYeJ8=;
-        b=fkmeq4VcBJf7+c32bn9sT8YveqB4zfL8l45wWugFaCGsizIEL9gYE1rKbmReBKO1He
-         yBo+/upikJuUQsNW0/3VednRO30ZYp9pqCnUyems4kNv3cMg/0qhpJrtLBnkwxf5YMpI
-         FOKCTwPZam1Xdglwf7TPXv3Gp5D2Q9Abv1D8I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type:x-gm-message-state;
-        bh=X3NwmLe56q9NCk/q+Q8RURUHNVCvWyHiwz/+ubpYeJ8=;
-        b=TDnKDORmLgpbqlbo6pSL5JTNSsnQKJB5JJ4Q1OYlo5jZ+EgwtdUOYfkeizx79mQi6q
-         wwj067+L08wMFbAs+nal6Eo/lRAxw/t7CE0oTkLlaSKZqmvFIwGmDI1yqb8K5a3Xm5mV
-         GlqmWGvgVfKkpySMYrIgLH7qGqEmNwwLskHDFo9LwTiLTnnyvEpLga3OAFmG5pRiztvg
-         DMZhMwYksoeJ5z8Z12pMnoFkbf/XSexrghE3gOvFPNFLspcyZFxfHIzmN3/HSDiMVPXE
-         6WkfZC+PeXc/HMBwnRClMnWCYag/4269SRgU9HLY72QcKn3tYvEkAwcfMEXouh3hitkH
-         WbaA==
-X-Received: by 10.204.153.197 with SMTP id l5mr6579004bkw.80.1356106317251;
-        Fri, 21 Dec 2012 08:11:57 -0800 (PST)
-Received: from horus.localnet (host134-2.natpool.mwn.de. [138.246.2.134])
-        by mx.google.com with ESMTPS id z5sm10535615bkv.11.2012.12.21.08.11.55
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=tVdM3ZtWiMSAoLcsHeoGeZOEAc0KsUVWBs2LmdOgwMU=;
+        b=BDMu1ktfIEoXGRzvBREAgd94stCP3UetPp5wMEVIy7h6a9VFLdmN1WvjvCKZHYxMfz
+         5W5sZdpTizaf+7+af0nm9eAu2ZMaNlJVozPpsafumb2DIS4zk7KWeSnrRXJ18RJdSReK
+         9vhptKEReMFSn018uDtGHF1bcOn4wHJScna0agx2qbuRxVdUJHSH/SSValfo2rDDdnjy
+         IZReu/3hNY21/Ieiqal8MfGPQLr2VwrWz1YK8te7vn8M/UQfC2nFs2nCMHgYhfPY15yj
+         EH3xUNDTb8q1Gof+69ksgcp9JYP6hkgOg9GerBP2pMdsrfHf96qZ+ATUg6Al9GoLIttx
+         5u5w==
+X-Received: by 10.180.87.228 with SMTP id bb4mr6800343wib.31.1356108917138;
+        Fri, 21 Dec 2012 08:55:17 -0800 (PST)
+Received: from synapsis.synapsis ([151.70.200.164])
+        by mx.google.com with ESMTPS id p2sm19116707wic.7.2012.12.21.08.55.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Dec 2012 08:11:56 -0800 (PST)
-User-Agent: KMail/4.9.4 (Linux/3.6.10-1-ARCH; KDE/4.9.4; x86_64; ; )
-X-Gm-Message-State: ALoCoQk/z/fCi65Q9Cxk9l1Hg6zDNrSTtsxIq8uprzkH3xpXyR5Xx82SoCMKkk2QbY+lXMH5Zip0
+        Fri, 21 Dec 2012 08:55:16 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc1.18.g9db0d25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211982>
 
-Hello,
+The git-completion.bash script did not implemented full, git aware,
+support to complete paths, for git commands that operate on files within
+the current working directory or the index.
 
-I have two repositories. tools and flof. I want to merge flof into tools (and 
-flof will be deleted after that) while keeping history intact. Of course I've 
-googled that and found a number of different solution which all seem to be 
-pretty komplex, so I just tried it myself. It seems to work.... are there any 
-problems with my approach?
+As an example:
 
-~/software/tools.test (git)-[master] % git remote add fl ~/flof
+	git add <TAB>
 
-~/software/tools.test (git)-[master] % git fetch fl
-warning: no common commits
-remote: Counting objects: 475, done.
-remote: Compressing objects: 100% (460/460), done.
-remote: Total 475 (delta 251), reused 0 (delta 0)
-Receiving objects: 100% (475/475), 190.40 KiB, done.
-Resolving deltas: 100% (251/251), done.
-From /home/florian/flof
- * [new branch]      master     -> fl/master
- * [new branch]      v2-rewrite -> fl/v2-rewrite
+will suggest all files in the current working directory, including
+ignored files and files that have not been modified.
 
-/software/tools.test (git)-[master] % git checkout -b import fl/master
-Branch import set up to track remote branch master from fl.
-Switched to a new branch 'import'
+Support path completion, for git commands where the non-option arguments
+always refer to paths within the current working directory or the index,
+as the follow:
 
-Doing some mkdir und git mv for reorganisation.
+* the path completion for the "git rm" and "git ls-files"
+  commands will suggest all cached files.
 
-~/software/tools.test/flof (git)-[import] % git commit -m "Reorganize flof."
-[import a00ab54] Reorganize flof.
- 152 files changed, 0 insertions(+), 0 deletions(-)
- rename {doc => flof/doc}/common.rst (100%)
- rename {doc => flof/doc}/conf.py (100%)
- [...]
+* the path completion for the "git add" command will suggest all
+  untracked and modified files.  Ignored files are excluded.
 
-~/software/tools.test/flof (git)-[import] % git checkout master
-Switched to branch 'master'
+* the path completion for the "git clean" command will suggest all
+  untracked files.  Ignored files are excluded.
 
-~/software/tools.test (git)-[master] % git merge import
-Auto-merging .gitignore
-CONFLICT (add/add): Merge conflict in .gitignore
-Automatic merge failed; fix conflicts and then commit the result.
+* the path completion for the "git mv" command will suggest all cached
+  files when expanding the first argument, and all untracked and cached
+  files for subsequent arguments.  In the latter case, empty directories
+  are included and ignored files are excluded.
 
-Resolving the conflict.
+* the path completion for the "git commit" command will suggest all
+  files that have been modified from the HEAD, if HEAD exists, otherwise
+  it will suggest all cached files.
 
-~/software/tools.test (git)-[master|merge] % git add .gitignore
+For all affected commands, completion will always stop at directory
+boundary.  Only standard ignored files are excluded, using the
+--exclude-standard option of the ls-files command.
 
-~/software/tools.test (git)-[master|merge] % git commit -m "Merged flof."
-[master b8c85be] Merged flof.
+Signed-off-by: Manlio Perillo <manlio.perillo@gmail.com>
+---
 
-~/software/tools.test (git)-[master] % git remote rm fl
+Changes from version 3:
 
-Are thery any problems with this procedure? The history seems to intact. I'm 
-quite unsure since still being a git beginner. 
+	* Fixed quoting issues
+	* Fixed default parameters handling
+	* Fixed a typo in the commit message: the affected command was ls-files,
+	  not ls-tree.
+	* Fixed incorrect behavior when expanding a path in "git commit"
+	  command, for a newly created repository (when HEAD does not
+	  exists).
+	* Make sure to always execute git commands with stderr redirected to
+	  /dev/null.
+	* Improved path completion for the git mv command.
+	  This required a small refactorization of the __git_index_files
+	  function, in order to support multiple options for ls-files.
 
-Thanks,
+ contrib/completion/git-completion.bash | 140 +++++++++++++++++++++++++++++----
+ 1 file changed, 124 insertions(+), 16 deletions(-)
 
-Florian
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0b77eb1..c8c6464 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -13,6 +13,7 @@
+ #    *) .git/remotes file names
+ #    *) git 'subcommands'
+ #    *) tree paths within 'ref:path/to/file' expressions
++#    *) file paths within current working directory and index
+ #    *) common --long-options
+ #
+ # To use these routines:
+@@ -233,6 +234,62 @@ __gitcomp_nl ()
+ 	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
+ }
+ 
++# Process path list returned by "ls-files" and "diff-index --name-only"
++# commands, in order to list only file names relative to a specified
++# directory, and append a slash to directory names.
++# It accepts 1 optional argument: a directory path.  The path must have
++# a trailing slash.
++__git_index_file_list_filter ()
++{
++	local pfx="${1-}" offset=${#pfx} path
++
++	while read -r path; do
++		path="${path:$offset}"
++
++		case "$path" in
++		?*/*) echo "${path%%/*}/" ;;
++		*) echo $path ;;
++		esac
++	done
++}
++
++# __git_index_files accepts 1 or 2 arguments:
++# 1: Options to pass to ls-files (required).
++#    Supported options are --cached, --modified, --deleted, --others,
++#    and --directory.
++# 2: A directory path (optional).
++#    If provided, only files within the specified directory are listed.
++#    Sub directories are never recursed.  Path must have a trailing
++#    slash.
++__git_index_files ()
++{
++	local dir="$(__gitdir)"
++
++	if [ -d "$dir" ]; then
++		# NOTE: $1 is not quoted in order to support multiple options
++		git --git-dir="$dir" ls-files --exclude-standard $1 ${2+"$2"} 2>/dev/null |
++			__git_index_file_list_filter ${2+"$2"} |
++			uniq
++	fi
++}
++
++# __git_diff_index_files accepts 1 or 2 arguments:
++# 1) The id of a tree object.
++# 2) A directory path (optional).
++#    If provided, only files within the specified directory are listed.
++#    Sub directories are never recursed.  Path must have a trailing
++#    slash.
++__git_diff_index_files ()
++{
++	local dir="$(__gitdir)"
++
++	if [ -d "$dir" ]; then
++		git --git-dir="$dir" diff-index --name-only "$1" 2>/dev/null |
++			__git_index_file_list_filter ${2+"$2"} |
++			uniq
++	fi
++}
++
+ __git_heads ()
+ {
+ 	local dir="$(__gitdir)"
+@@ -430,6 +487,46 @@ __git_complete_revlist_file ()
+ }
+ 
+ 
++# __git_complete_index_file requires 1 argument: the options to pass to
++# ls-file
++__git_complete_index_file ()
++{
++	local pfx cur_="$cur"
++
++	case "$cur_" in
++	?*/*)
++		pfx="${cur_%/*}"
++		cur_="${cur_##*/}"
++		pfx="${pfx}/"
++
++		__gitcomp_nl "$(__git_index_files "$1" "$pfx")" "$pfx" "$cur_" ""
++		;;
++	*)
++		__gitcomp_nl "$(__git_index_files "$1")" "" "$cur_" ""
++		;;
++	esac
++}
++
++# __git_complete_diff_index_file requires 1 argument: the id of a tree
++# object
++__git_complete_diff_index_file ()
++{
++	local pfx cur_="$cur"
++
++	case "$cur_" in
++	?*/*)
++		pfx="${cur_%/*}"
++		cur_="${cur_##*/}"
++		pfx="${pfx}/"
++
++		__gitcomp_nl "$(__git_diff_index_files "$1" "$pfx")" "$pfx" "$cur_" ""
++		;;
++	*)
++		__gitcomp_nl "$(__git_diff_index_files "$1")" "" "$cur_" ""
++		;;
++	esac
++}
++
+ __git_complete_file ()
+ {
+ 	__git_complete_revlist_file
+@@ -770,8 +867,6 @@ _git_apply ()
+ 
+ _git_add ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "
+@@ -780,7 +875,9 @@ _git_add ()
+ 			"
+ 		return
+ 	esac
+-	COMPREPLY=()
++
++	# XXX should we check for --update and --all options ?
++	__git_complete_index_file "--others --modified"
+ }
+ 
+ _git_archive ()
+@@ -930,15 +1027,15 @@ _git_cherry_pick ()
+ 
+ _git_clean ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--dry-run --quiet"
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++
++	# XXX should we check for -x option ?
++	__git_complete_index_file "--others"
+ }
+ 
+ _git_clone ()
+@@ -969,8 +1066,6 @@ _git_clone ()
+ 
+ _git_commit ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--cleanup=*)
+ 		__gitcomp "default strip verbatim whitespace
+@@ -998,7 +1093,13 @@ _git_commit ()
+ 			"
+ 		return
+ 	esac
+-	COMPREPLY=()
++
++	if git rev-parse --verify --quiet HEAD 1>/dev/null; then
++		__git_complete_diff_index_file "HEAD"
++	else
++		# This is the first commit
++		__git_complete_index_file "--cached"
++	fi
+ }
+ 
+ _git_describe ()
+@@ -1216,8 +1317,6 @@ _git_init ()
+ 
+ _git_ls_files ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--cached --deleted --modified --others --ignored
+@@ -1230,7 +1329,10 @@ _git_ls_files ()
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++
++	# XXX ignore options like --modified and always suggest all cached
++	# files.
++	__git_complete_index_file "--cached"
+ }
+ 
+ _git_ls_remote ()
+@@ -1362,7 +1464,14 @@ _git_mv ()
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++
++	if [ $cword -gt 2 ]; then
++		# We need to show both cached and untracked files (including
++		# empty directories) since this may not be the last argument.
++		__git_complete_index_file "--cached --others --directory"
++	else
++		__git_complete_index_file "--cached"
++	fi
+ }
+ 
+ _git_name_rev ()
+@@ -2068,15 +2177,14 @@ _git_revert ()
+ 
+ _git_rm ()
+ {
+-	__git_has_doubledash && return
+-
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--cached --dry-run --ignore-unmatch --quiet"
+ 		return
+ 		;;
+ 	esac
+-	COMPREPLY=()
++
++	__git_complete_index_file "--cached"
+ }
+ 
+ _git_shortlog ()
+-- 
+1.8.1.rc1.18.g9db0d25
