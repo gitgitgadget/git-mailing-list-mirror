@@ -1,88 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: recommendation for patch maintenance
-Date: Fri, 21 Dec 2012 09:01:12 -0800
-Message-ID: <7vvcbv1grr.fsf@alter.siamese.dyndns.org>
-References: <50D475EF.6060303@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http.c: Avoid username prompt for certifcate credentials
+Date: Fri, 21 Dec 2012 12:09:27 -0500
+Message-ID: <20121221170927.GA23574@sigill.intra.peff.net>
+References: <1356107479-6668-1-git-send-email-git@unrelated.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Manlio Perillo <manlio.perillo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 18:01:45 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Rene Bredlau <git@unrelated.de>
+X-From: git-owner@vger.kernel.org Fri Dec 21 18:09:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm5yi-0008CN-Ln
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 18:01:45 +0100
+	id 1Tm66X-00080d-OY
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 18:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393Ab2LURB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 12:01:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55422 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab2LURB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 12:01:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB214A5FD;
-	Fri, 21 Dec 2012 12:01:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3DiHctsIt2xEEfI4kA/xnT+Czic=; b=jfcHBl
-	Um6Y2w6ICgozatEGS4L/9Iz1La80H7HgR1nBxY27a0qJjrk8/1Df0f4WbE0F1cHe
-	RvRaiki0AozCvTGPrCuv7VKkY00qLc/AkA23r/Cnnda4VLWt2ohJjWRyR6duLPrU
-	zv4e6JpgDBgb5QEwTuUNvP2V+rKL1ZZnJsscE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yp/jbpt91wtkfIy64OaD+8NxnCT9he61
-	C03xoSerk8FNFadA8d+mbk4UHZmgdWvIc/fpjNL/TTVnbAjwz7WZQGIbvzY+2/uf
-	5B4tF7MY4ct4CMqTnzc6LDRjpNi0OyjYf6V7wH0r7zLgwk5Qx6Dw+LQpy6SX6m4y
-	EDMet6SZrFM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5D4BA5FC;
-	Fri, 21 Dec 2012 12:01:25 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E59BA5FB; Fri, 21 Dec 2012
- 12:01:24 -0500 (EST)
-In-Reply-To: <50D475EF.6060303@gmail.com> (Manlio Perillo's message of "Fri,
- 21 Dec 2012 15:45:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0DA27F48-4B90-11E2-BB3F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751932Ab2LURJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 12:09:32 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60957 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751226Ab2LURJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 12:09:30 -0500
+Received: (qmail 24943 invoked by uid 107); 21 Dec 2012 17:10:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Dec 2012 12:10:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Dec 2012 12:09:27 -0500
+Content-Disposition: inline
+In-Reply-To: <1356107479-6668-1-git-send-email-git@unrelated.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211987>
 
-Manlio Perillo <manlio.perillo@gmail.com> writes:
+On Fri, Dec 21, 2012 at 05:31:19PM +0100, Rene Bredlau wrote:
 
-> I would like to have advices about some possible workflows to use when
-> maintaining a patch, that can evolve over the time (fixing bugs, and
-> applying advices from reviewers).
->
-> In my case I have a single commit to maintain.
->
->
-> The workflow I use now is this:
->
->   1) create a topic branch, e.g. mp/complete-path
->   2) write code
->   3) commit
->   4) format-patch --output=mp/complete-patch master
->   5) review the patch
->   6) send-email
->
-> when I need to update the patch:
->
->   1) modify code
->   2) commit --amend
->   3) format-patch --subject-prefix="PATCH v<n>" \
->      --output=mp/complete-patch master
->   4) edit patch to add a list of what was changed
->   5) review the patch
->   6) send-email
->
-> This is far from ideal, since all my local changes are lost.
+> If sslCertPasswordProtected is set to true do not ask for username to
+> decrypt rsa key. This question is pointless, the key is only protected
+> by a password. Internaly the username is simply set to "".
 
-Not offering any answer, but it is unclear to me what local changes
-you are losing here.  Care to explain?
+Yeah, that makes sense. I suspect the cert-unlocking code paths for
+credential helpers are not that well used (and I do not think we have
+any test coverage for them at all), so I am not too surprised that this
+went unreported for a long time.
+
+Thanks.
+
+> Signed-off-by: Rene Bredlau <git@unrelated.de>
+
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
