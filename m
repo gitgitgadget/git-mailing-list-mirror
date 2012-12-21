@@ -1,90 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: [RFC/FR] Should "git checkout (-B|-b) branch
- master...branch" work?
-Date: Fri, 21 Dec 2012 09:12:44 -0800
-Message-ID: <7vr4mj1g8j.fsf@alter.siamese.dyndns.org>
-References: <7v8v8r2y8s.fsf@alter.siamese.dyndns.org>
- <CANiSa6jP_JN+DpDgYpWA9Aky9REJvFq3aR3Yj0vF3+axWvtmsw@mail.gmail.com>
- <CANiSa6ibS7ORY=QMS3WQzXYJQQH4ZYvPO75qgLgv-oWGMSBBrw@mail.gmail.com>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: recommendation for patch maintenance
+Date: Fri, 21 Dec 2012 18:29:37 +0100
+Message-ID: <50D49C81.5060007@gmail.com>
+References: <50D475EF.6060303@gmail.com> <7vvcbv1grr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 18:13:13 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 18:38:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm69n-0002c7-5K
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 18:13:11 +0100
+	id 1Tm6YI-0008Mh-2L
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 18:38:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694Ab2LURMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 12:12:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63896 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751293Ab2LURMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 12:12:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CD7BAABA;
-	Fri, 21 Dec 2012 12:12:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fAFKHLH0J4bDIZ6BpKqJxI6vH1E=; b=ucHl9c
-	jMqTkZbBtV+dNAGQNYwvOK4l0XH65H6CR7eIAsc/kKXS9qlvOBnSkdYTgE8IA6ox
-	qOSoUmips9wUhVYr9rRuEFYsvlzp8U0uG+x4HQ+PdeTBdvPCzaVWu4Ha3c8N+/WR
-	4p8D66nNtjUe1pZfsg3zlXqH9P1T2Q1VJf2kk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OhhA1wXpJWDaSB6/7PaoT0aBW4k6leM1
-	zIzL3M/CfAEBw16Sa1EPczUbaZ73S7PInFIP11I8eht9tPyXXvEG5x6Fl1MNED2s
-	UMrmtPi7+gIMWPTqF76RdyDkNQ4agtu41TzOqHdTi3v6/aOdm7ERCKRT1xHGnXlb
-	uFU8gzHE6vo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08357AAB9;
-	Fri, 21 Dec 2012 12:12:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 852E3AAB7; Fri, 21 Dec 2012
- 12:12:50 -0500 (EST)
-In-Reply-To: <CANiSa6ibS7ORY=QMS3WQzXYJQQH4ZYvPO75qgLgv-oWGMSBBrw@mail.gmail.com> (Martin
- von Zweigbergk's message of "Fri, 21 Dec 2012 08:55:43 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A6377708-4B91-11E2-93F5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751573Ab2LURiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 12:38:12 -0500
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:39095 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751318Ab2LURiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 12:38:11 -0500
+Received: by mail-wg0-f46.google.com with SMTP id dr13so2173831wgb.1
+        for <git@vger.kernel.org>; Fri, 21 Dec 2012 09:38:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=AzUfXmAPvKm0ZEFVxgUpkfCr00qb/9bbWAgq1FP5ayM=;
+        b=tng8SPk5UxL31Sg4ZIJLU6s7zZNRq0qmiBtUMwoQF4dP/C6lMmzwCIj3khhShf5ZbA
+         46BF8nXw7loZUFGLj70kWREhpluMzjJ1liEtj5RP1DTcCFILFIZGR7I+V89sqirirwlW
+         3mK0yHqoYcCxT5ZKhQ1Mo/LHNCYL5tdSVN2Inp3STFIlnnR1bkmm2LYGZuNBNpYYc0oD
+         Pu/14HDAAD5peze7gToOa3pZS1Z//dAR73NIMxMqaJtVO0LWz3wnkAGjHcCUjOHynB+o
+         Ib6LbVjhUOVNsOZM5BFEao+eXFF4KoVlMOLnze1NWWNllCBfqtTbNMppaBEM5Mi8bn7j
+         fbPQ==
+X-Received: by 10.194.173.195 with SMTP id bm3mr24860417wjc.32.1356110989224;
+        Fri, 21 Dec 2012 09:29:49 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.200.164])
+        by mx.google.com with ESMTPS id dw4sm19263553wib.1.2012.12.21.09.29.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 21 Dec 2012 09:29:48 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <7vvcbv1grr.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211990>
 
-Martin von Zweigbergk <martinvonz@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I keep forgetting what "git diff A..B" does.
+Il 21/12/2012 18:01, Junio C Hamano ha scritto:
+> Manlio Perillo <manlio.perillo@gmail.com> writes:
+> 
+>> I would like to have advices about some possible workflows to use when
+>> maintaining a patch, that can evolve over the time (fixing bugs, and
+>> applying advices from reviewers).
+>>
+> [...]
+>> when I need to update the patch:
+>>
+>>   1) modify code
+>>   2) commit --amend
+>>   3) format-patch --subject-prefix="PATCH v<n>" \
+>>      --output=mp/complete-patch master
+>>   4) edit patch to add a list of what was changed
+>>   5) review the patch
+>>   6) send-email
+>>
+>> This is far from ideal, since all my local changes are lost.
+> 
+> Not offering any answer, but it is unclear to me what local changes
+> you are losing here.  Care to explain?
 
-"diff" is always about two endpoints, not the path that connects
-these two endpoints (aka "range"), and when you want to "diff"
-between two commits, you say "diff A B".  "A..B" happens to be
-accepted as such only by accident (e.g. the old command line parser
-did not have a reliable way to tell "^A B" and "A..B" apart), not by
-design.
+I lose the history of all the changes I have made to produce the final
+version of a patch.
 
-    side note: incidentally, now we have rev_cmdline_info support,
-    we could start deprecating "diff A..B" syntax.
+Since for every new version of a patch I do a commit --amend, I can not
+see, as an example, the changes I have made between x and y versions of
+a patch.
 
-The special case "git checkout master...branch" is not about
-specifying a range.  The command knows it wants a single point (not
-two endpoints, nor a range), and A...B as a notation to specify a
-single point is $(merge-base A B).
+Of course the commits are not really lost, but I have to search them
+using the reflog.
 
-> I would have much preferred if
-> it was possible to make the revision parser generally interpret e.g.
-> "A.^.B" as "the merge base of A and B" (failing if not exactly one).
 
-Actually, in many places where the command line parser knows it
-wants a single point, and never a range, we should be able to apply
-the "A...B as a notation to specify a single point" rule.  
+Thanks   Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Of course you could come up with a symbol other than "..." for that
-purpose, and migrate the current "git checkout A...B" special case
-to use that other symbol, but that would be more work and also you
-would need to retrain existing users.
+iEYEARECAAYFAlDUnIAACgkQscQJ24LbaUTf0QCfX9WtA+/GLzVWDJFPbLMCPucJ
+bKQAnj0HJuQs9SVCPV/TlDXcpGDqIqfD
+=lhZ5
+-----END PGP SIGNATURE-----
