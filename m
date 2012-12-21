@@ -1,80 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Opera release Git-splitter, a sub-modularizing tool for Git
-Date: Fri, 21 Dec 2012 16:49:21 +0100
-Message-ID: <vpqhanf2yny.fsf@grenoble-inp.fr>
-References: <op.wpiovoj5qrq7tp@acorna.invalid.invalid>
-	<50D454D2.5030403@drmicha.warpmail.net>
-	<op.wpn2xz07vqd7e2@damia.oslo.osa>
-	<50D468E6.2090900@drmicha.warpmail.net>
-	<op.wpn9d6xuvqd7e2@damia.oslo.osa>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC/FR] Should "git checkout (-B|-b) branch master...branch" work?
+Date: Fri, 21 Dec 2012 07:58:27 -0800
+Message-ID: <7v8v8r2y8s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Michael J Gruber" <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: "Yngve Nysaeter Pettersen" <yngve@opera.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 16:50:07 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 16:59:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm4rL-0000LF-GH
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 16:50:03 +0100
+	id 1Tm50N-0000PI-76
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 16:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306Ab2LUPtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 10:49:45 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54054 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752426Ab2LUPtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 10:49:36 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qBLFdvx5009967
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 21 Dec 2012 16:39:57 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Tm4qg-0004Tr-6x; Fri, 21 Dec 2012 16:49:22 +0100
-In-Reply-To: <op.wpn9d6xuvqd7e2@damia.oslo.osa> (Yngve Nysaeter Pettersen's
-	message of "Fri, 21 Dec 2012 16:02:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 21 Dec 2012 16:39:57 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: qBLFdvx5009967
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1356709199.43193@LFY9mTRZIYk4/gLNXuz49g
+	id S1751622Ab2LUP6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 10:58:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45233 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751188Ab2LUP6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 10:58:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 802C68C57;
+	Fri, 21 Dec 2012 10:58:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=R
+	IzzQZH2EARMxs6bbELdcTx/HYU=; b=qDrU1VyMV3j3HP5wn9Xu9UzDdEPbmyEk9
+	FLq6G9AANvakaqo+wED7k/vBVen35G/X+egJacbnU0cwxlu7gPr6vFD2QBqZF0e9
+	V5Bqqt73R3fYTvA+6aJWw7r/ochKNgIihyas7gP8w/pDd/MdBHrhmJVzzs6D+InO
+	pXNm75mQQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=cLP
+	MSkFveEFfiwLJ4PJTRchbtTiHYMVvSHYFNSlkn7kI/doZoCDm/sJgBgyzxosBbZg
+	HG9WdZ4hqaczK0D+AD28zNQW60tOFU8RyehK2XQWgiAbrJieY6hy8NWl93z4Ifj9
+	fs2baQrSTHSkXNjCxhx887eordHxnSkZxJSw+kBU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CFC38C56;
+	Fri, 21 Dec 2012 10:58:32 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 66F598C48; Fri, 21 Dec 2012
+ 10:58:30 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 445F1234-4B87-11E2-A89C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211978>
 
-"Yngve Nysaeter Pettersen" <yngve@opera.com> writes:
+When you want to redo a branch forked from another branch (say
+'master'), a handy way to work is to first detach HEAD at the
+previous fork point:
 
-> The split command will create a new repository for all files foo in a
-> folder (path/foo) and their commit history.
->
-> The replant command reverses that process, re-adding the path prefix
-> for each file. It may be possible to extend that process into one that
-> automatically reintegrates the new commits in the original history,
-> but I never had time to complete that work.
->
-> I did originally add the "replant" functionality into my version of
-> the git-subtree script, but given the number of commits in the
-> original repository, git-subtree turned out to be inefficient, due to
-> the use of temporary files (tens of thousands of files IIRC).
->
-> Those problems led to my development of git-splitter in Python
-> (bypassing the problem of temporary files), but just including the
-> functionality I needed, join was not one of those functions.
+    $ git checkout master...branch
 
-That still doesn't answer the question: why did you need to write a new
-tool instead of extending git-subtree?
+and build an updated history on top of this state.  Once you are
+done, you can verify your results with commands like:
 
-If one doesn't use "replant", is your tool different from git-subtree?
+    $ git show-branch branch HEAD
+    $ git diff branch HEAD
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+and then finish it off with:
+
+    $ git checkout -B branch
+
+This way, you can keep the history of the previous round on 'branch'
+until you are done with the new history you build on the detached
+HEAD state, and if you do not like updated history, you can reset
+back to branch@{1} easily.
+
+But you may not even need to have such an easy access to the old
+history and just want to restart, with:
+
+    $ git checkout -B branch <old fork point>
+
+Unfortunately, master...branch syntax does not seem to work for
+specifying the "old fork point" for this purpose, even though we
+have special case to support the syntax in the "detach at that
+commit" case (the first command line example in this message).
+
+Perhaps we should teach the <start-point> parser this syntax as
+well?
