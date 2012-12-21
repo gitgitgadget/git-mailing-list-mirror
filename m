@@ -1,84 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] mergetools/p4merge: Honor $TMPDIR for the /dev/null
- placeholder
-Date: Fri, 21 Dec 2012 08:08:47 -0800
-Message-ID: <7v4njf2xrk.fsf@alter.siamese.dyndns.org>
-References: <1356073023-15376-1-git-send-email-davvid@gmail.com>
+From: Florian Lindner <mailinglists@xgm.de>
+Subject: Right way to import a repo
+Date: Fri, 21 Dec 2012 17:11:54 +0100
+Message-ID: <1530104.jO5zzzN8PS@horus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeremy Morton <admin@game-point.net>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 17:09:25 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 17:12:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm59v-0001I1-HQ
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 17:09:15 +0100
+	id 1Tm5Cr-0004bY-PL
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 17:12:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889Ab2LUQI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 11:08:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52560 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751885Ab2LUQI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 11:08:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61CE69114;
-	Fri, 21 Dec 2012 11:08:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HSJNFStBzqdR9fVzLCg645rirNc=; b=yka6G3
-	HOFLIhlvd2Mw0XKkSVRcQxlENR+YsSA7uDy4GMfQhNYoBriizZDwEKSojNF4RrEJ
-	+xzCOhZhR5zhoF1yZA0KfaX/262y9Lu3SHZYMVZuf//31M3c7E2pnJIrwFYM1HN0
-	GcZPoRdjbrJjbs+ubY2/t6zMHraki2PdheXrk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L48/lJc/pqCQwuIbit+34/XNSN2mei9I
-	PQIzviYI9UK5ulze5xqLBpmmddnvWehs01zPR4J61wfLsUXNwp94mXW11RAIfVg1
-	Ew+kpt3bZVkgBNKxIhVt3EusbHcSKY/TIlpncrnVKmwY+MHTGaMZqxc9e83nlbeQ
-	skfclWRxTCg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E1799113;
-	Fri, 21 Dec 2012 11:08:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B0A309110; Fri, 21 Dec 2012
- 11:08:55 -0500 (EST)
-In-Reply-To: <1356073023-15376-1-git-send-email-davvid@gmail.com> (David
- Aguilar's message of "Thu, 20 Dec 2012 22:57:03 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B87C3A38-4B88-11E2-AFFB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751706Ab2LUQMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 11:12:00 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:55382 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484Ab2LUQL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 11:11:58 -0500
+Received: by mail-bk0-f46.google.com with SMTP id q16so2530044bkw.33
+        for <git@vger.kernel.org>; Fri, 21 Dec 2012 08:11:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=xgm.de; s=google;
+        h=x-received:from:to:subject:date:message-id:user-agent:mime-version
+         :content-transfer-encoding:content-type;
+        bh=X3NwmLe56q9NCk/q+Q8RURUHNVCvWyHiwz/+ubpYeJ8=;
+        b=fkmeq4VcBJf7+c32bn9sT8YveqB4zfL8l45wWugFaCGsizIEL9gYE1rKbmReBKO1He
+         yBo+/upikJuUQsNW0/3VednRO30ZYp9pqCnUyems4kNv3cMg/0qhpJrtLBnkwxf5YMpI
+         FOKCTwPZam1Xdglwf7TPXv3Gp5D2Q9Abv1D8I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:subject:date:message-id:user-agent:mime-version
+         :content-transfer-encoding:content-type:x-gm-message-state;
+        bh=X3NwmLe56q9NCk/q+Q8RURUHNVCvWyHiwz/+ubpYeJ8=;
+        b=TDnKDORmLgpbqlbo6pSL5JTNSsnQKJB5JJ4Q1OYlo5jZ+EgwtdUOYfkeizx79mQi6q
+         wwj067+L08wMFbAs+nal6Eo/lRAxw/t7CE0oTkLlaSKZqmvFIwGmDI1yqb8K5a3Xm5mV
+         GlqmWGvgVfKkpySMYrIgLH7qGqEmNwwLskHDFo9LwTiLTnnyvEpLga3OAFmG5pRiztvg
+         DMZhMwYksoeJ5z8Z12pMnoFkbf/XSexrghE3gOvFPNFLspcyZFxfHIzmN3/HSDiMVPXE
+         6WkfZC+PeXc/HMBwnRClMnWCYag/4269SRgU9HLY72QcKn3tYvEkAwcfMEXouh3hitkH
+         WbaA==
+X-Received: by 10.204.153.197 with SMTP id l5mr6579004bkw.80.1356106317251;
+        Fri, 21 Dec 2012 08:11:57 -0800 (PST)
+Received: from horus.localnet (host134-2.natpool.mwn.de. [138.246.2.134])
+        by mx.google.com with ESMTPS id z5sm10535615bkv.11.2012.12.21.08.11.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 21 Dec 2012 08:11:56 -0800 (PST)
+User-Agent: KMail/4.9.4 (Linux/3.6.10-1-ARCH; KDE/4.9.4; x86_64; ; )
+X-Gm-Message-State: ALoCoQk/z/fCi65Q9Cxk9l1Hg6zDNrSTtsxIq8uprzkH3xpXyR5Xx82SoCMKkk2QbY+lXMH5Zip0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211981>
 
-David Aguilar <davvid@gmail.com> writes:
+Hello,
 
-> Use $TMPDIR when creating the /dev/null placeholder for p4merge.
-> This keeps it out of the current directory.
+I have two repositories. tools and flof. I want to merge flof into tools (and 
+flof will be deleted after that) while keeping history intact. Of course I've 
+googled that and found a number of different solution which all seem to be 
+pretty komplex, so I just tried it myself. It seems to work.... are there any 
+problems with my approach?
 
-The usual $REMOTE "this is theirs" and $LOCAL "this is ours" are
-still created in the current directory, no?  It is unclear why this
-"this side does not exist" case wants to be outside of the current
-directory in the first place.
+~/software/tools.test (git)-[master] % git remote add fl ~/flof
 
-In other words, "This keeps it out of the current directory" only
-explains what this patch changes, without explaining why it is a
-good thing to do in the first place.
+~/software/tools.test (git)-[master] % git fetch fl
+warning: no common commits
+remote: Counting objects: 475, done.
+remote: Compressing objects: 100% (460/460), done.
+remote: Total 475 (delta 251), reused 0 (delta 0)
+Receiving objects: 100% (475/475), 190.40 KiB, done.
+Resolving deltas: 100% (251/251), done.
+From /home/florian/flof
+ * [new branch]      master     -> fl/master
+ * [new branch]      v2-rewrite -> fl/v2-rewrite
 
-> +create_empty_file () {
-> +	empty_file="${TMPDIR:-/tmp}/git-difftool-p4merge-empty-file.$$"
-> +	>"$empty_file"
-> +
-> +	printf "$empty_file"
-> +}
+/software/tools.test (git)-[master] % git checkout -b import fl/master
+Branch import set up to track remote branch master from fl.
+Switched to a new branch 'import'
 
-Assuming that it makes sense to create only the "this side doe not
-exist, and here is a placeholder empty file" in $TMPDIR, I think
-this is probably sufficient.
+Doing some mkdir und git mv for reorganisation.
 
-By the way, who is going to remove this temporary file once the
-command is done?
+~/software/tools.test/flof (git)-[import] % git commit -m "Reorganize flof."
+[import a00ab54] Reorganize flof.
+ 152 files changed, 0 insertions(+), 0 deletions(-)
+ rename {doc => flof/doc}/common.rst (100%)
+ rename {doc => flof/doc}/conf.py (100%)
+ [...]
+
+~/software/tools.test/flof (git)-[import] % git checkout master
+Switched to branch 'master'
+
+~/software/tools.test (git)-[master] % git merge import
+Auto-merging .gitignore
+CONFLICT (add/add): Merge conflict in .gitignore
+Automatic merge failed; fix conflicts and then commit the result.
+
+Resolving the conflict.
+
+~/software/tools.test (git)-[master|merge] % git add .gitignore
+
+~/software/tools.test (git)-[master|merge] % git commit -m "Merged flof."
+[master b8c85be] Merged flof.
+
+~/software/tools.test (git)-[master] % git remote rm fl
+
+Are thery any problems with this procedure? The history seems to intact. I'm 
+quite unsure since still being a git beginner. 
+
+Thanks,
+
+Florian
