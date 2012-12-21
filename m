@@ -1,107 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 2/7] tests: paint known breakages in yellow
-Date: Fri, 21 Dec 2012 07:46:55 -0800
-Message-ID: <7vd2y32ys0.fsf@alter.siamese.dyndns.org>
-References: <1356059558-23479-1-git-send-email-gitster@pobox.com>
- <1356059558-23479-3-git-send-email-gitster@pobox.com>
- <50D4230F.9080502@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Opera release Git-splitter, a sub-modularizing tool for Git
+Date: Fri, 21 Dec 2012 16:49:21 +0100
+Message-ID: <vpqhanf2yny.fsf@grenoble-inp.fr>
+References: <op.wpiovoj5qrq7tp@acorna.invalid.invalid>
+	<50D454D2.5030403@drmicha.warpmail.net>
+	<op.wpn2xz07vqd7e2@damia.oslo.osa>
+	<50D468E6.2090900@drmicha.warpmail.net>
+	<op.wpn9d6xuvqd7e2@damia.oslo.osa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Spiers <git@adamspiers.org>,
-	Jeff King <peff@peff.net>
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 16:47:27 2012
+Content-Type: text/plain
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: "Yngve Nysaeter Pettersen" <yngve@opera.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 16:50:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm4oo-0006MX-Rv
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 16:47:27 +0100
+	id 1Tm4rL-0000LF-GH
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 16:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160Ab2LUPrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 10:47:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38624 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592Ab2LUPrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 10:47:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14C5A891F;
-	Fri, 21 Dec 2012 10:47:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rfkb29D9388wmOv2Xk4zv4ycg50=; b=G+a9Ux
-	/ol/0X8sb/NAXoXMJXIpqN0GWTaeWW4KmW0wbc9rH63gRdhGRKBUmF2kslxK+8M7
-	kVvhmJjnuRhsDJ5mVaEQN6Z+flLmv+//6mjQQR8BXHAUW4Nk+RmsNQsUBkymYA7u
-	C/e38cU4OlElVy0eXTqDTtMngfPBi7yQ/bDxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gm5VyKBNtrIfM9Twx/9Hf9J6gWCbDNZm
-	bM3z42seHjtTJtjHcZVTT11iIR9T4LYYso/byhvyR86BnCQLKWrCwPw1ZLzGZDvx
-	ptrpe8VirjtalrzJWXWHKw3C+xyH2okYtz6OiBHOVZNPDX5sPhipM2azTXdAvBoe
-	6Cm6Kg6fql8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0111B891E;
-	Fri, 21 Dec 2012 10:47:05 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2030D8913; Fri, 21 Dec 2012
- 10:47:01 -0500 (EST)
-In-Reply-To: <50D4230F.9080502@gmail.com> (Stefano Lattarini's message of
- "Fri, 21 Dec 2012 09:51:27 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A8ED6EE6-4B85-11E2-915C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751306Ab2LUPtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 10:49:45 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:54054 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752426Ab2LUPtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 10:49:36 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id qBLFdvx5009967
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 21 Dec 2012 16:39:57 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Tm4qg-0004Tr-6x; Fri, 21 Dec 2012 16:49:22 +0100
+In-Reply-To: <op.wpn9d6xuvqd7e2@damia.oslo.osa> (Yngve Nysaeter Pettersen's
+	message of "Fri, 21 Dec 2012 16:02:20 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 21 Dec 2012 16:39:57 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: qBLFdvx5009967
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1356709199.43193@LFY9mTRZIYk4/gLNXuz49g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211977>
 
-Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+"Yngve Nysaeter Pettersen" <yngve@opera.com> writes:
 
-> On 12/21/2012 04:12 AM, Junio C Hamano wrote:
->> From: Adam Spiers <git@adamspiers.org>
->> 
->> Yellow seems a more appropriate color than bold green when
->> considering the universal traffic lights coloring scheme, where
->> green conveys the impression that everything's OK, and amber that
->> something's not quite right.
->>
-> Here are few more details about the behaviour of other testing
-> tools, in case you want to squash them in the commit message for
-> future references:
+> The split command will create a new repository for all files foo in a
+> folder (path/foo) and their commit history.
 >
-> 1. Automake (at least up to 1.13) and Autotest (at least up to the
->    2.69 Autoconf release) use "bold" green for reporting expected
->    failures.
+> The replant command reverses that process, re-adding the path prefix
+> for each file. It may be possible to extend that process into one that
+> automatically reintegrates the new commits in the original history,
+> but I never had time to complete that work.
 >
-> 2. On the other hand, the 'prove' utility (as of TAP::Harness v3.23
->    and Perl v5.14.2) use yellow (not bold) for the same purpose.
+> I did originally add the "replant" functionality into my version of
+> the git-subtree script, but given the number of commits in the
+> original repository, git-subtree turned out to be inefficient, due to
+> the use of temporary files (tens of thousands of files IIRC).
+>
+> Those problems led to my development of git-splitter in Python
+> (bypassing the problem of temporary files), but just including the
+> functionality I needed, join was not one of those functions.
 
-Nice to know, thanks.
+That still doesn't answer the question: why did you need to write a new
+tool instead of extending git-subtree?
 
-I re-read the above three times, trying to see how to add it to the
-log message, but having hard time phrasing it.
+If one doesn't use "replant", is your tool different from git-subtree?
 
-The only thing the additional knowledge adds seems to be to give
-rationale for the old choice of "bold green"---it was not chosen
-from thin-air but can be viewed as following the automake/autotest
-scheme, and other systems cannot agree on what color to pick for
-this purpose.
-
-I do not see a need to justify why we chose differently from
-automake/autotest; we could say something like:
-
-    Yellow seems a more appropriate color than bold green when
-    considering the universal traffic lights coloring scheme, where
-    green conveys the impression that everything's OK, and amber that
-    something's not quite right.  This is in line with what 'prove'
-    uses, but different from 'automake/autotest' do.
-
-but we are not in the business of choosing which is more correct
-between prove and automake/autotest, and I do not see how it adds
-much value to tell readers that color choices are not universally
-agreed upon across various test software suites---that's kind of
-known, isn't it?
-
-So...
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
