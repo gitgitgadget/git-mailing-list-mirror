@@ -1,74 +1,80 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Pushing symbolic references to remote repositories?
-Date: Fri, 21 Dec 2012 13:54:29 -0800
-Message-ID: <CAJo=hJvqptfKqM+6J8Ddfb5qcqjAU8bB_JO9VB-XVsCCf64NUQ@mail.gmail.com>
-References: <CAD03jn5ACZyxJM9LEOSJov3BsT3W1N0sV3WYwcerJciMSpmSPA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Fwd: [RFC/FR] Should "git checkout (-B|-b) branch master...branch"
+ work?
+Date: Fri, 21 Dec 2012 22:59:44 +0100
+Message-ID: <50D4DBD0.7050601@alum.mit.edu>
+References: <7v8v8r2y8s.fsf@alter.siamese.dyndns.org> <CANiSa6jP_JN+DpDgYpWA9Aky9REJvFq3aR3Yj0vF3+axWvtmsw@mail.gmail.com> <CANiSa6ibS7ORY=QMS3WQzXYJQQH4ZYvPO75qgLgv-oWGMSBBrw@mail.gmail.com> <7vr4mj1g8j.fsf@alter.siamese.dyndns.org> <50D4BBDC.6030700@alum.mit.edu> <CANiSa6hcDHTpZnAXR3zxdv-H4r-yRjuSx_kgE5V1rSFk_pNhOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git ML <git@vger.kernel.org>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 22:55:11 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 23:00:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmAYe-0003Wg-Sh
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 22:55:09 +0100
+	id 1TmAdR-0008AY-Oi
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 23:00:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794Ab2LUVyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 16:54:52 -0500
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:60863 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468Ab2LUVyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 16:54:50 -0500
-Received: by mail-qa0-f53.google.com with SMTP id a19so3821979qad.19
-        for <git@vger.kernel.org>; Fri, 21 Dec 2012 13:54:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=O1EWvORifx1lFUG8tZw8jusurpzE7LIjHlTRzeETm5g=;
-        b=VPKwvU4I7tozJ7keKoJMt6H+TXdWwqFL41bYsDfCT4gF0nhZUcCI/26Q981F7aTse5
-         U5xcQhmsRzHPKmuvsUmU7anbauCXpAx1v4qIL9G+EKLXefJQju3z00NfSpxrE3e4iQ9+
-         nZ8gKIBjwZrhQs1vwn9Tov/x9qlwFaj/FodiU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=O1EWvORifx1lFUG8tZw8jusurpzE7LIjHlTRzeETm5g=;
-        b=d6f3TPlieIkike+feF1AURQKqVbRA3S4W+z8KGf+kNYTr532nuLvj+89zg6uG6hsO0
-         2oM6pWU80NjeItp6BCZk94Bk4utbvmitFCR6xlEuygdk+Ho2AdAJkUo3pCqDmLNZHalB
-         BW8RiIPycf7cECnXDNpFpVIgNQotCQV28ZqeztZor850RdanWFF9mahEushPyAfuv4F3
-         9SK+oZonkvoUKqMCVBP0GI0+ifZqjEDSqoPCsnM7wFrTjcvpUO2Gy/rlhxERpZ6yZXAp
-         BHQ/e/Z8NmvP4AYDTZzFrcIg1OWyY4YJzHMJJLQgeljFpFTW8e5RJpZEPgc0GpmCcCBi
-         27TQ==
-Received: by 10.224.196.70 with SMTP id ef6mr7770502qab.14.1356126890083; Fri,
- 21 Dec 2012 13:54:50 -0800 (PST)
-Received: by 10.49.120.4 with HTTP; Fri, 21 Dec 2012 13:54:29 -0800 (PST)
-In-Reply-To: <CAD03jn5ACZyxJM9LEOSJov3BsT3W1N0sV3WYwcerJciMSpmSPA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQkIKJ3xOIL0j8AKThxlgNbFZ9Y+z8dRewYOKn3lQnaua5S0mDT9r0rSmy3MP352dknp0Av1
+	id S1752232Ab2LUV7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 16:59:49 -0500
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:45617 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752010Ab2LUV7r (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2012 16:59:47 -0500
+X-AuditID: 1207440d-b7f306d0000008b7-b2-50d4dbd26370
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 17.94.02231.2DBD4D05; Fri, 21 Dec 2012 16:59:46 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qBLLxjHd001190
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 21 Dec 2012 16:59:46 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <CANiSa6hcDHTpZnAXR3zxdv-H4r-yRjuSx_kgE5V1rSFk_pNhOA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqHvp9pUAgy3vrSy6rnQzWTT0XmG2
+	6PzYxuLA7LFz1l12j4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M549fQVU8Fu9or22Y4NjO9Y
+	uxg5OSQETCSmzX0CZYtJXLi3nq2LkYtDSOAyo8SJJR+hnONMEufm7gOr4hXQlth49TgziM0i
+	oCpx4+QUNhCbTUBXYlFPMxOILSoQILF4yTl2iHpBiZMzn7CA2CICBhK3bt4Cm8MsYC2x4vVh
+	oHoODmGBcIlLm11BwkIC55gkvn+1BrE5BQIlulZ1gpUwC6hLrJ8nBNEpL7H97RzmCYwCs5As
+	mIVQNQtJ1QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFukZ6uZkleqkppZsYIUHLu4Px/zqZ
+	Q4wCHIxKPLxarVcChFgTy4orcw8xSnIwKYnyel0DCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh
+	9Z8HlONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfAm3wJqFCxKTU+t
+	SMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFaHwxMEpBUjxAextA2nmLCxJzgaIQracYdTlu
+	Ndx8yijEkpeflyolzlsLUiQAUpRRmge3ApaiXjGKA30szLscpIoHmN7gJr0CWsIEtERECWxJ
+	SSJCSqqBMSAle1agsenj2YrH09pWiRdVxRz2OviF7dnNrEVbPpr/7J8a+Id94VKTTYqlTgwN
+	7CKmOxv52dSFVNbrquq9CAp93SF16ZJFcqrN55na9w7xXcmxrWfa7NjJdtGXqeb8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212015>
 
-On Fri, Dec 21, 2012 at 11:53 AM, Dun Peal <dunpealer@gmail.com> wrote:
-> I need to share a symbolic reference - essentially, a named pointer to
-> another reference - among multiple repositories.
->
-> As shown in the code below, I can successfully create a local
-> symbolic-ref `foo_ptr` to branch `foo`, but can't push it to a remote,
-> in this case `origin`:
->
-> $ git branch foo; git symbolic-ref foo_ptr refs/heads/foo; git rev-parse foo_ptr
-> fbfec27dc6d42d48ca5d5b178caa34c666a4c39b
-> $ git push origin foo foo_ptr
-> error: dst ref refs/heads/foo receives from more than one src.
->
-> Is there a clean and reliable way to do that, or are symbolic
-> references just not meant to be shared?
+On 12/21/2012 10:31 PM, Martin von Zweigbergk wrote:
+> On Fri, Dec 21, 2012 at 11:43 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> On 12/21/2012 06:12 PM, Junio C Hamano wrote:
+>>>     side note: incidentally, now we have rev_cmdline_info support,
+>>>     we could start deprecating "diff A..B" syntax.
+>>
+>> I often find myself using "git diff A..B" syntax when using the command
+>> line history because the previous command used "A..B"; e.g.,
+>>
+>>     git log A..B
+>>     git diff A..B
+> 
+> The problem with this, to me, if it wasn't clear, is that "git log
+> A..B" shows you is new _since B branched off from A_, while "git diff
+> A..B" shows you what has changed _between A and B_.
 
-There is no support for symbolic references in the network protocol,
-so they cannot currently be shared by git push or git fetch.
+You are quite right, of course, though in many useful cases they are the
+same.  But I guess I should just buck myself up for the new orthodoxy :-)
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
