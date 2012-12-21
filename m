@@ -1,101 +1,125 @@
-From: Dennis Putnam <dap1@bellsouth.net>
-Subject: Installation Plan
-Date: Fri, 21 Dec 2012 09:43:53 -0500
-Message-ID: <50D475A9.9020407@bellsouth.net>
+From: "Yngve Nysaeter Pettersen" <yngve@opera.com>
+Subject: Re: Opera release Git-splitter, a sub-modularizing tool for Git
+Date: Fri, 21 Dec 2012 16:02:20 +0100
+Organization: Opera Software ASA
+Message-ID: <op.wpn9d6xuvqd7e2@damia.oslo.osa>
+References: <op.wpiovoj5qrq7tp@acorna.invalid.invalid>
+ <50D454D2.5030403@drmicha.warpmail.net> <op.wpn2xz07vqd7e2@damia.oslo.osa>
+ <50D468E6.2090900@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig8113CE7C413195FE75AB2B72"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 21 15:51:07 2012
+Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Michael J Gruber" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Dec 21 16:03:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm3wH-0005ug-Js
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 15:51:05 +0100
+	id 1Tm47s-0008EE-Mq
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 16:03:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318Ab2LUOus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 09:50:48 -0500
-Received: from nm12.access.bullet.mail.mud.yahoo.com ([66.94.237.213]:39843
-	"EHLO nm12.access.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751031Ab2LUOuq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2012 09:50:46 -0500
-X-Greylist: delayed 412 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Dec 2012 09:50:46 EST
-Received: from [66.94.237.195] by nm12.access.bullet.mail.mud.yahoo.com with NNFMP; 21 Dec 2012 14:43:54 -0000
-Received: from [98.138.226.240] by tm6.access.bullet.mail.mud.yahoo.com with NNFMP; 21 Dec 2012 14:43:54 -0000
-Received: from [127.0.0.1] by smtp111.sbc.mail.ne1.yahoo.com with NNFMP; 21 Dec 2012 14:43:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bellsouth.net; s=s1024; t=1356101034; bh=yrWdt3t+NNg0rd4ffUQlDzYu17k+Iti1RiibetWHIjk=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:X-Enigmail-Version:Content-Type; b=k8Uh/Be+9mc6TGsNbBJ8EiOt1PyNsO64kQjfD1l4zMwGg+YffGSPZ2ZRlDDGBQ77LJo3lBcV+jBsaHTDiQxvvkZasazPnYid6TsC88GL0nz2FYRZMZOHMTeGF5pexWPrOB5UeqlNZmSvYnc5yoNcVDwY+46wTowk8eWc8kSgUp4=
-X-Yahoo-Newman-Id: 91702.22694.bm@smtp111.sbc.mail.ne1.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: ksqJ2yMVM1nSHOtKZhVXCJLM85ZwC0_cHMUCRFGG9zT_sYt
- eYvlSby5SJotrAfAzqxx0Vkz.QXJFTRz_AFAZkkkvO9BllJDvyJARh8KYCCs
- 7vus8srVSh9Cyt3Lh9q4FmtfVJJObvQ33_NtvoH.sbPUX0N7DhwhAWFRx610
- hrGTVfdbyJjNeqm_oJ3nlGypE5GImV91Psf1lXdQXq9CytvqSPhuyUjG.9Et
- 35mBzVdnso2zGGnoLs.uF6rm9TbijOd1t0Qn5ZBcFa3LGajcCKulZTZ_Cc7z
- tS_nh6RHUx0OBcEdKp1totGAR853yHcCSTgTimHpApO8.N_GHM3OUEufu9_V
- yB5En19GdOImU9Ep7g5xooP.QYHdzlUtFdWAswGQXqHB15BqRS43UTndGJX8
- y2p9N646o3SFkrxHv2xRYOcCcepMM45PJv2offI3P3DAbcfMxS57E
-X-Yahoo-SMTP: vUK3UKuswBCE01YQVYEZ1wHCa.HPSVCYhektzgdifA--
-Received: from [192.168.0.100] (dap1@74.232.16.78 with plain)
-        by smtp111.sbc.mail.ne1.yahoo.com with SMTP; 21 Dec 2012 06:43:53 -0800 PST
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-X-Enigmail-Version: 1.4.6
+	id S1752158Ab2LUPCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 10:02:30 -0500
+Received: from smtp.opera.com ([213.236.208.81]:49544 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751352Ab2LUPC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 10:02:29 -0500
+Received: from damia.oslo.osa (oslo.jvpn.opera.com [213.236.208.46])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id qBLF2ONi008645
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 21 Dec 2012 15:02:25 GMT
+In-Reply-To: <50D468E6.2090900@drmicha.warpmail.net>
+User-Agent: Opera Mail/11.64 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211974>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig8113CE7C413195FE75AB2B72
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Fri, 21 Dec 2012 14:49:26 +0100, Michael J Gruber  
+<git@drmicha.warpmail.net> wrote:
 
-After re-reading the git documentation and with Andrew's input I have
-changed my thinking on how to set  this up and want a central
-repository. If I understand correctly, I am doing builds while I am
-developing new code so I need to clone my repository for Eclipse (I'm
-assuming the git plugin supports all this). Before I go to the trouble
-of setting it up please correct where my thinking is flawed or where I
-may run into gotchas.
+> Yngve Nysaeter Pettersen venit, vidit, dixit 21.12.2012 13:43:
+>> Hi,
+>>
+>> On Fri, 21 Dec 2012 13:23:46 +0100, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>
+>>> Yngve N. Pettersen (Developer Opera Software ASA) venit, vidit, dixit
+>>> 18.12.2012 15:51:
+>>>> Hello all,
+>>>>
+>>>> Today Opera Software released the "Git-splitter", a small tool for
+>>>> sub-modularizing code in a git repo, with complete commit history,  
+>>>> under
+>>>> the Apache 2.0 license.
+>>>>
+>>>> It's functionality is similar to "git-subtree", but also include a
+>>>> command
+>>>> for reversing the process.
+>>>
+>>> Is there something keeping you technically from adding a join command  
+>>> to
+>>> git-subtree?
+>>
+>> Probably not, but within the process I was working I did not want to  
+>> merge
+>> the branch with the recreated history for that path into the existing
+>> codebase (I don't like duplicate histories) so I used rebasing to move  
+>> the
+>> new commits over, instead, and therefore did not need a join command.
+>>
+>> Feel free to add a join command, if you want one.
+>
+> Im sorry, but that was a total misunderstanding. You said git-splitter
+> is like git-subtree but adds a command for reversing the process. My
+> question was: What kept you from adding that to git-subtree (rather than
+> redoing stiff that git-subtree does)?
+>
+> I just assumed that reversing the process of splitting must be joining.
+>
+> It may very well be that git-splitter does things differently, i.e. that
+> there are more differences than just added functionality (compared to
+> git-subtree), but that is not clear from the announcement.
 
-1) Install git on Linux.
-2) Copy existing Eclipse project to a new directory to become the
-central repository.
-3) git init in that new directory (I think I then do a git add and git
-commit).
-4) Modify build scripts to build from that directory (I am guessing I
-need to git ignore the javac generated binary directory).
-5) Install git plugin on Windows version of Eclipse. (Do I need git on
-Windows or is the plugin sufficient?)
-6) Configure plugin for remote git, if necessary?
-7) Clone new repository for development and testing on Windows. (Do I
-need the shared drive any more?)
-8) When a new version is ready for release, push commit to remote
-repository after which builds will use new code (I'm assuming the file
-copies happen automagically).
 
-Am I over simplifying things? I also think that this will open the door
-for collaborators in the event I need them with no changes to the way I
-work. I should note that builds are done on demand so is there a way to
-detect when a push is occurring and have the build script wait for
-completion and I suppose vise-versa? Thanks.
+The split command will create a new repository for all files foo in a  
+folder (path/foo) and their commit history.
+
+The replant command reverses that process, re-adding the path prefix for  
+each file. It may be possible to extend that process into one that  
+automatically reintegrates the new commits in the original history, but I  
+never had time to complete that work.
+
+I did originally add the "replant" functionality into my version of the  
+git-subtree script, but given the number of commits in the original  
+repository, git-subtree turned out to be inefficient, due to the use of  
+temporary files (tens of thousands of files IIRC).
+
+Those problems led to my development of git-splitter in Python (bypassing  
+the problem of temporary files), but just including the functionality I  
+needed, join was not one of those functions.
+
+>>>> The code is hosted on GitHub:
+>>>> <https://github.com/operasoftware/git-splitter>
+>>>>
+>>>> We have announced the release as part of another announcement of
+>>>> released
+>>>> code at the Opera Security Group home page:
+>>>> <http://my.opera.com/securitygroup/blog/2012/12/18/tls-prober-source-released-under-apache-2-0-license>
+>>>>
+>>
+>>
 
 
---------------enig8113CE7C413195FE75AB2B72
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iEYEARECAAYFAlDUdaoACgkQ/fiWYqZ2tVRuEQCgslAP3Obvbic1DtRARwNgovsD
-iZYAn06kkoxxhDEz9QpGFpFyg9EeCrRy
-=m6MA
------END PGP SIGNATURE-----
-
---------------enig8113CE7C413195FE75AB2B72--
+-- 
+Sincerely,
+Yngve N. Pettersen
+********************************************************************
+Senior Developer		     Email: yngve@opera.com
+Opera Software ASA                   http://www.opera.com/
+Phone:  +47 96 90 41 51              Fax:    +47 23 69 24 01
+********************************************************************
