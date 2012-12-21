@@ -1,111 +1,83 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] mergetools/p4merge: Honor $TMPDIR for the /dev/null placeholder
-Date: Thu, 20 Dec 2012 22:57:03 -0800
-Message-ID: <1356073023-15376-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Fri Dec 21 07:57:29 2012
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: Python version auditing followup
+Date: Fri, 21 Dec 2012 08:26:52 +0100
+Message-ID: <000d01cddf4c$8cbf2ca0$a63d85e0$@schmitz-digital.de>
+References: <20121220143411.BEA0744105@snark.thyrsus.com> <7vobho60fs.fsf@alter.siamese.dyndns.org> <kb001v$vps$1@ger.gmane.org> <7vzk182yka.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 08:27:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TlwXv-0003km-QI
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 07:57:28 +0100
+	id 1Tlx0w-0007sT-Sn
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 08:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008Ab2LUG5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 01:57:09 -0500
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:52242 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab2LUG5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 01:57:08 -0500
-Received: by mail-pb0-f44.google.com with SMTP id uo1so2523971pbc.17
-        for <git@vger.kernel.org>; Thu, 20 Dec 2012 22:57:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=RYn2PNHJU4f3gnZm50yUDNjqQbZULDooey0xSILf0NU=;
-        b=wBEFB7cFyC5JtgXUTFN1OQWB5lqPBOJ2Ojl2r0DwYQOP5/6fbZZ9ZVv5KWoB1WZ5Kb
-         rQxfol88y+YxsxrGtnncAK5NxsQs7v0KP8SU2PeE1prQu+Mj/3/dTjey9XHJdRRXgb+8
-         X/2kt7fOa02oKXMc8sfm+BUHAUj3XwxFN0hMqi5IgxdQMfmlUyiQWC0aqloTuSgyukQR
-         Wdt5YlA/XNfxy9v/i3xxUODpBIjJcmBPr7DZ0Zr3zW+qJ+F8OG8hFuAAOCENZUsgpLwM
-         QMeWee6K9ItNd+JUvmY/uI5y6Er9TEQEeryhoS0085jQ5Z5dVfxOQpsJjmigJKPuvDrH
-         w2hA==
-X-Received: by 10.68.212.200 with SMTP id nm8mr37867144pbc.4.1356073027462;
-        Thu, 20 Dec 2012 22:57:07 -0800 (PST)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id bh9sm6854254pab.12.2012.12.20.22.57.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 20 Dec 2012 22:57:06 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc2.6.g18499ba
+	id S1750868Ab2LUH1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 02:27:09 -0500
+Received: from moutng.kundenserver.de ([212.227.126.171]:63152 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740Ab2LUH1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 02:27:06 -0500
+Received: from DualCore (dsdf-4d0a157e.pool.mediaWays.net [77.10.21.126])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0MgJSU-1TPTub2Taw-00NrPL; Fri, 21 Dec 2012 08:27:03 +0100
+In-Reply-To: <7vzk182yka.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQGJcJ0OStfQbsM1tIQ7oyx+MGbnCwL3z68DAeXO9zcB00FfDph2LEBg
+Content-Language: de
+X-Provags-ID: V02:K0:YuRbBGuL0xVOgkvauF8eEB39HjbNjCFppaEcHg6enVt
+ HFzi06PVZRIqrDZK26QNFb19zvA+h0PwJkqZjihbnmofr638T0
+ zs5wRG3E1SYzka5XMUWCIQFI5/cm6oRVgBhxgW7BCkLfzuHM67
+ bMC64PkM+5HZ8HudpmCz29JE4SBAq774OSYfJFZtGUtEZ8V0ac
+ iUBKJszX7LsDPuURDV6fbskiRJR07g9KVpvPbUFKFOQg/pFmWu
+ 0PaUjzq9VaY7ID74lHV5d5uwFu8U5jCqWyW/sQAKqQfl2G2ltc
+ fkSpomPlSOAF9j+5Yg3CPGm99fTOPrbPb38vpwtw4i1jc6mOwN
+ zmFotryjd/Sj7O2RpHS+MkFB1wj3q2dUX5O4wcs0R9HUSB7zCa
+ J2e8iX0tcEy4A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211954>
 
-Use $TMPDIR when creating the /dev/null placeholder for p4merge.
-This keeps it out of the current directory.
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Thursday, December 20, 2012 10:39 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: Python version auditing followup
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> > Junio C Hamano wrote:
+> >> I personally would think 2.6 is recent enough.  Which platforms that
+> >> are long-term-maintained by their vendors still pin their Python at
+> >> 2.4.X?  2.4.6 was in 2008 that was source only, 2.4.4 was in late
+> >> 2006 that was the last 2.4 with binary release.
+> >>
+> >> Objections?  Comments?
+> >
+> > We have a working 2.4.2 for HP-NonStop and some major problems getting
+> > 2.7.3 to work.
+> 
+> I do not think a platform that stops at 2.4.2 instead of going to
+> higher 2.4.X series deserves to be called "long term maintained by
+> their vendors".  It sounds more like "attempted to supply 2.4.X and
+> abandoned the users once one port was done" to me.
 
-Reported-by: Jeremy Morton <admin@game-point.net>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-No mktemp usage in this round.
+Well, not entirely wrong, but not all true at too.
+I guess I need to defend the vendor here: It is not really the Vendor (HP) that provided Python 2.4.2 or tries to provide 2.7.3, it
+is a volunteer and community effort. HP did sponsor the 2.4.2 port though (by allowing an HP employee to do the port inn his regular
+working hours). It is not doing this any longer (since 2007). Since then it is a small group doing this on a purely voluntary basis
+in their spare time (one HP employee amongst them, me).
+Same goes for the git port BTW. And for every other port provided on http://ituglib.connect-cummunity.org (this machine is sponsored
+by HP).
+Almost every other port, as some pretty recently made it into the officially supported O/S version, so far: Samba, bash, coreutils,
+vim, gzip, bzip2, Perl, PHP.
 
- mergetools/p4merge | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/mergetools/p4merge b/mergetools/p4merge
-index 295361a..52f7c8f 100644
---- a/mergetools/p4merge
-+++ b/mergetools/p4merge
-@@ -1,29 +1,21 @@
- diff_cmd () {
-+	empty_file=
-+
- 	# p4merge does not like /dev/null
--	rm_local=
--	rm_remote=
- 	if test "/dev/null" = "$LOCAL"
- 	then
--		LOCAL="./p4merge-dev-null.LOCAL.$$"
--		>"$LOCAL"
--		rm_local=true
-+		LOCAL="$(create_empty_file)"
- 	fi
- 	if test "/dev/null" = "$REMOTE"
- 	then
--		REMOTE="./p4merge-dev-null.REMOTE.$$"
--		>"$REMOTE"
--		rm_remote=true
-+		REMOTE="$(create_empty_file)"
- 	fi
- 
- 	"$merge_tool_path" "$LOCAL" "$REMOTE"
- 
--	if test -n "$rm_local"
--	then
--		rm -f "$LOCAL"
--	fi
--	if test -n "$rm_remote"
-+	if test -n "$empty_file"
- 	then
--		rm -f "$REMOTE"
-+		rm -f "$empty_file"
- 	fi
- }
- 
-@@ -33,3 +25,10 @@ merge_cmd () {
- 	"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
- 	check_unchanged
- }
-+
-+create_empty_file () {
-+	empty_file="${TMPDIR:-/tmp}/git-difftool-p4merge-empty-file.$$"
-+	>"$empty_file"
-+
-+	printf "$empty_file"
-+}
--- 
-1.8.1.rc2.6.g18499ba
+Bye, Jojo
