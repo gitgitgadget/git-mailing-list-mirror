@@ -1,194 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v7 6/7] tests: test the test framework more thoroughly
-Date: Thu, 20 Dec 2012 19:12:37 -0800
-Message-ID: <1356059558-23479-7-git-send-email-gitster@pobox.com>
-References: <1356059558-23479-1-git-send-email-gitster@pobox.com>
-Cc: Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 21 04:13:27 2012
+Subject: Re: [PATCH] Python scripts audited for minimum compatible version
+ and checks added.
+Date: Thu, 20 Dec 2012 19:38:42 -0800
+Message-ID: <7vk3sc2hx9.fsf@alter.siamese.dyndns.org>
+References: <20121220141855.05DAA44105@snark.thyrsus.com>
+ <20121220144813.GA27211@sigill.intra.peff.net>
+ <20121220150252.GA24387@thyrsus.com>
+ <7vsj7060nj.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Fri Dec 21 04:39:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlt35-0000Og-Q0
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 04:13:24 +0100
+	id 1TltSK-0004o9-EK
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 04:39:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187Ab2LUDM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2012 22:12:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47682 "EHLO
+	id S1751706Ab2LUDir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2012 22:38:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60888 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752159Ab2LUDMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2012 22:12:54 -0500
+	id S1750875Ab2LUDiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2012 22:38:46 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69C8AA82F;
-	Thu, 20 Dec 2012 22:12:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28C4EAF1B;
+	Thu, 20 Dec 2012 22:38:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:in-reply-to
-	:references; s=sasl; bh=xU2OKv5n937QPLy0qGwsR553qBM=; b=OPLrBTd0
-	XUgPoLSjvwX7Brm2o7mSL5HJT95AviovEe2ODjdD2vk/xWqzJMQPTfrUG99RfJNQ
-	09rlxzIjC4sjIFXKY/Ok7E1swQH/qie+GXzYuoj63vH3oTtspMfoHR8t66YQsK/K
-	5puuoB8kmimtv1Ehl6QxxnXIsBl8MKchamA=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qhX38AELTpLu3IDNx/o5aIbmp6M=; b=OurTwm
+	3o3CT1BtVQRqBfJvu3tZ8bafDqqyvlktaXbw3E7TLeca/uWlCiy77NLpIdO6W0mj
+	2B2yKbOs/6P1LD4RVXmsiHOT9smr+Q2MrffSVlkrqx69JWjydvn1Cygh9cNxlFLj
+	FxGPbfCQ8milDO2cLo0JklxtTeqU2Vz2lQfeQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:in-reply-to
-	:references; q=dns; s=sasl; b=QKoLBeK4xgGezz4tWBJ91ubeWtgzjL0Rsv
-	maHjPNrHoYR4oaMc+sNINV6l7+y3xaAvqGiX1IB+pxNegoeySQ4g7cGnA+jIhamS
-	0V7YzVD90BTj2qUaHTgQIE0ky3AqFsCgcEnhJbNsJB1zVLIDtrZe1mJItqIAb7Jk
-	vjS0qpLxI=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J8pkjkF+hGb/2LR3Fol7l2tiF6sel9mH
+	iDio3HDfvU4mgNYxVZOXsBDZUIDsQKT6IRh6DFzKSX1vD161cXm3Zs9Ya+3aJzeQ
+	Q/uDOXfaB+Sx38HWCpAmFBcNoabm/RQPxToZ5CczdsCskCeiUcF7ZhF72vvnBBVv
+	mmWUlrzb73E=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56679A82E;
-	Thu, 20 Dec 2012 22:12:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15BC8AF1A;
+	Thu, 20 Dec 2012 22:38:45 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97BC8A828; Thu, 20 Dec 2012
- 22:12:52 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.rc2.225.g8d36ab4
-In-Reply-To: <1356059558-23479-1-git-send-email-gitster@pobox.com>
-In-Reply-To: <CAOkDyE9tDYRYzojzNnjWsT7UygxMAurHqLSDGA66_LMPD2Wmnw@mail.gmail.com>
-References: <CAOkDyE9tDYRYzojzNnjWsT7UygxMAurHqLSDGA66_LMPD2Wmnw@mail.gmail.com>
-X-Pobox-Relay-ID: 4EB68228-4B1C-11E2-A513-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87CFAAF19; Thu, 20 Dec 2012
+ 22:38:44 -0500 (EST)
+In-Reply-To: <7vsj7060nj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 20 Dec 2012 10:25:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EBBCF46E-4B1F-11E2-8044-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211951>
 
-From: Adam Spiers <git@adamspiers.org>
+I needed something like this on top of it to get it pass t5800.
 
-Add 5 new full test suite runs each with a different number of
-passing/failing/broken/fixed tests, in order to ensure that the
-correct exit code and output are generated in each case.  As before,
-these are run in a subdirectory to avoid disrupting the metrics for
-the parent tests.
-
-Signed-off-by: Adam Spiers <git@adamspiers.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0000-basic.sh | 105 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index d0f46e8..384b0ae 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -89,6 +89,56 @@ check_sub_test_lib_test () {
- 	)
- }
- 
-+test_expect_success 'pretend we have a fully passing test suite' "
-+	run_sub_test_lib_test full-pass '3 passing tests' <<-\\EOF &&
-+	for i in 1 2 3
-+	do
-+		test_expect_success \"passing test #\$i\" 'true'
-+	done
-+	test_done
-+	EOF
-+	check_sub_test_lib_test full-pass <<-\\EOF
-+	> ok 1 - passing test #1
-+	> ok 2 - passing test #2
-+	> ok 3 - passing test #3
-+	> # passed all 3 test(s)
-+	> 1..3
-+	EOF
-+"
+diff --git a/git_remote_helpers/git/__init__.py b/git_remote_helpers/git/__init__.py
+index 776e891..5047fd4 100644
+--- a/git_remote_helpers/git/__init__.py
++++ b/git_remote_helpers/git/__init__.py
+@@ -1,3 +1,5 @@
++import sys
 +
-+test_expect_success 'pretend we have a partially passing test suite' "
-+	test_must_fail run_sub_test_lib_test \
-+		partial-pass '2/3 tests passing' <<-\\EOF &&
-+	test_expect_success 'passing test #1' 'true'
-+	test_expect_success 'failing test #2' 'false'
-+	test_expect_success 'passing test #3' 'true'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test partial-pass <<-\\EOF
-+	> ok 1 - passing test #1
-+	> not ok 2 - failing test #2
-+	#	false
-+	> ok 3 - passing test #3
-+	> # failed 1 among 3 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+test_expect_success 'pretend we have a known breakage' "
-+	run_sub_test_lib_test failing-todo 'A failing TODO test' <<-\\EOF &&
-+	test_expect_success 'passing test' 'true'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test failing-todo <<-\\EOF
-+	> ok 1 - passing test
-+	> not ok 2 - pretend we have a known breakage # TODO known breakage
-+	> # still have 1 known breakage(s)
-+	> # passed all remaining 1 test(s)
-+	> 1..2
-+	EOF
-+"
-+
- test_expect_success 'pretend we have fixed a known breakage' "
- 	run_sub_test_lib_test passing-todo 'A passing TODO test' <<-\\EOF &&
- 	test_expect_failure 'pretend we have fixed a known breakage' 'true'
-@@ -102,6 +152,61 @@ test_expect_success 'pretend we have fixed a known breakage' "
- 	EOF
- "
- 
-+test_expect_success 'pretend we have a pass, fail, and known breakage' "
-+	test_must_fail run_sub_test_lib_test \
-+		mixed-results1 'mixed results #1' <<-\\EOF &&
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test mixed-results1 <<-\\EOF
-+	> ok 1 - passing test
-+	> not ok 2 - failing test
-+	> #	false
-+	> not ok 3 - pretend we have a known breakage # TODO known breakage
-+	> # still have 1 known breakage(s)
-+	> # failed 1 among remaining 2 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+test_expect_success 'pretend we have a mix of all possible results' "
-+	test_must_fail run_sub_test_lib_test \
-+		mixed-results2 'mixed results #2' <<-\\EOF &&
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_expect_failure 'pretend we have fixed a known breakage' 'true'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test mixed-results2 <<-\\EOF
-+	> ok 1 - passing test
-+	> ok 2 - passing test
-+	> ok 3 - passing test
-+	> ok 4 - passing test
-+	> not ok 5 - failing test
-+	> #	false
-+	> not ok 6 - failing test
-+	> #	false
-+	> not ok 7 - failing test
-+	> #	false
-+	> not ok 8 - pretend we have a known breakage # TODO known breakage
-+	> not ok 9 - pretend we have a known breakage # TODO known breakage
-+	> ok 10 - pretend we have fixed a known breakage # TODO known breakage
-+	> # fixed 1 known breakage(s)
-+	> # still have 2 known breakage(s)
-+	> # failed 3 among remaining 8 test(s)
-+	> 1..10
-+	EOF
-+"
-+
- test_set_prereq HAVEIT
- haveit=no
- test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
+ if sys.hexversion < 0x02040000:
+     # The limiter is the subprocess module
+     sys.stderr.write("git_remote_helpers: requires Python 2.4 or later.")
 -- 
-1.8.1.rc2.225.g8d36ab4
+1.8.1.rc2.225.g0e05fff
