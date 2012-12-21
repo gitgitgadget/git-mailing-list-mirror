@@ -1,174 +1,98 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH 2/2] learn to pick/revert into unborn branch
-Date: Fri, 21 Dec 2012 11:10:11 -0800
-Message-ID: <1356117013-20613-2-git-send-email-martinvonz@gmail.com>
-References: <1356117013-20613-1-git-send-email-martinvonz@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Martin von Zweigbergk <martinvonz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 21 20:40:38 2012
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Fwd: [RFC/FR] Should "git checkout (-B|-b) branch master...branch"
+ work?
+Date: Fri, 21 Dec 2012 20:43:24 +0100
+Message-ID: <50D4BBDC.6030700@alum.mit.edu>
+References: <7v8v8r2y8s.fsf@alter.siamese.dyndns.org> <CANiSa6jP_JN+DpDgYpWA9Aky9REJvFq3aR3Yj0vF3+axWvtmsw@mail.gmail.com> <CANiSa6ibS7ORY=QMS3WQzXYJQQH4ZYvPO75qgLgv-oWGMSBBrw@mail.gmail.com> <7vr4mj1g8j.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 20:43:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tm8SL-0007Km-KI
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 20:40:30 +0100
+	id 1Tm8VY-0001nz-6t
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 20:43:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050Ab2LUTkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 14:40:11 -0500
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:44609 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729Ab2LUTkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 14:40:09 -0500
-Received: by mail-vc0-f202.google.com with SMTP id m8so510945vcd.5
-        for <git@vger.kernel.org>; Fri, 21 Dec 2012 11:40:08 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:x-gm-message-state;
-        bh=EJLeTgoFLClGw9eIfbP9gf/b0Q4gBomrMqExMFxC0vk=;
-        b=TDBu+OmlWpaSs35U7NCHLmyQFNgaabtKm/dreJVuABUjFAELnNLSyNBpoOwKAArEnB
-         kmtP4xUdIt5J/MKO4cGyx2WMC2jocvbP03bhLOrSwvvz9bQtarVkm/N6FeBwJAj6qyLd
-         WGDvOFFKTy3wi+KZa3w/F8vk4BFwFxgNO8pfa+DK+fHxWQvdH248qsLlM3IjE4rBFlii
-         2CGV016EJ6mRq02SPsTeWhputKs9OOeOVR6KwNUbIR9xPkcOpF1jS5+Yrt0MbKgDDsri
-         TsVBpPuXCBdys3G/Az5teqDIsHa0+X24EU2D2c+Bji7o5gZ1+fOfCy8XtD+0J0d6cTzm
-         cIgA==
-X-Received: by 10.236.93.42 with SMTP id k30mr6041276yhf.19.1356117021486;
-        Fri, 21 Dec 2012 11:10:21 -0800 (PST)
-Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id j11si604380ank.2.2012.12.21.11.10.21
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Fri, 21 Dec 2012 11:10:21 -0800 (PST)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 37859100047;
-	Fri, 21 Dec 2012 11:10:21 -0800 (PST)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id EDBFF101386; Fri, 21 Dec 2012 11:10:20 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.1.240.ge8a1f5a
-In-Reply-To: <1356117013-20613-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQmxJXJI5vkmSRd0AknFWJVs51EoVJgVjwEhWavKK1gLSDWSgT3C7Ia0xHM3zxeAKEdRnAHdLUoHR9LQp/lvrjKoBrRVfLcgwFGrePNffGWwtKmPCPzlsw+W7sMVYpIISJu3T7zzwn43yFg5TMx6RWAdg/oRf9Oc0ab5H060Z7wDaNwM2Vut0TUWlYxHTwHH7nFIIl/o
+	id S1752106Ab2LUTnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 14:43:31 -0500
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:60246 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750748Ab2LUTn3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2012 14:43:29 -0500
+X-AuditID: 1207440e-b7f116d0000008ae-8d-50d4bbe0911b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id F1.3F.02222.0EBB4D05; Fri, 21 Dec 2012 14:43:28 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id qBLJhO9F027604
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 21 Dec 2012 14:43:26 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vr4mj1g8j.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqPtg95UAg75FShZdV7qZLBp6rzBb
+	dH5sY3Fg9tg56y67x8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGfMOr6HraCJr+LyuS6mBsYe
+	7i5GDg4JAROJg+8cuhg5gUwxiQv31rN1MXJxCAlcZpQ49/E4I4RznEli6r41jCBVvALaEqte
+	HmYHsVkEVCVO939mArHZBHQlFvU0g9miAgESi5ecY4eoF5Q4OfMJC4gtIqAmMbHtEJjNLOAq
+	ceXOUmaQI4QFwiUubXYFCQsJvGSUaPiZBRLmFDCT6N4mBFGtI/Gu7wEzhC0vsf3tHOYJjAKz
+	kCyYhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNKNzFCwpZvB2P7
+	eplDjAIcjEo8vJeargQIsSaWFVfmHmKU5GBSEuVdvgUoxJeUn1KZkVicEV9UmpNafIhRgoNZ
+	SYTXfx5QjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwbtwF1CjYFFq
+	empFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChK44uBcQqS4gHa2w3SzltckJgLFIVoPcWo
+	y3Gr4eZTRiGWvPy8VClx3iaQIgGQoozSPLgVsCT1ilEc6GNh3q0gVTzABAc36RXQEiagJSJK
+	YEtKEhFSUg2M9mYzN3at564xcPO5+lbi5c3Ygq/86yf8FrBl7HbLPdmiuXy9+6yz59ou/n55
+	PaVpxdV7jpdb+FrXMb+o9r8Zc+hPnbW50IY7TyYtScvxOfixj3GBcC6Dzeczq450 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212007>
 
->From the user's point of view, it seems natural to think that
-cherry-picking into an unborn branch should work, so make it work,
-with or without --ff.
+On 12/21/2012 06:12 PM, Junio C Hamano wrote:
+> "diff" is always about two endpoints, not the path that connects
+> these two endpoints (aka "range"), and when you want to "diff"
+> between two commits, you say "diff A B".  "A..B" happens to be
+> accepted as such only by accident (e.g. the old command line parser
+> did not have a reliable way to tell "^A B" and "A..B" apart), not by
+> design.
+> 
+>     side note: incidentally, now we have rev_cmdline_info support,
+>     we could start deprecating "diff A..B" syntax.
 
-Cherry-picking anything other than a commit that only adds files, will
-naturally result in conflicts. Similarly, revert also works, but will
-result in conflicts unless the specified revision only deletes files.
+I often find myself using "git diff A..B" syntax when using the command
+line history because the previous command used "A..B"; e.g.,
 
-Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+    git log A..B
+    git diff A..B
 
----
+It's quick to recall the previous command, edit "log" -> "diff", and
+press enter; having to remove the dots would require a few extra keypresses.
 
-The plan is to use this for fixing "git rebase --root" as discussed in
-http://thread.gmane.org/gmane.comp.version-control.git/205796
+> Actually, in many places where the command line parser knows it
+> wants a single point, and never a range, we should be able to apply
+> the "A...B as a notation to specify a single point" rule.  
+> 
+> Of course you could come up with a symbol other than "..." for that
+> purpose, and migrate the current "git checkout A...B" special case
+> to use that other symbol, but that would be more work and also you
+> would need to retrain existing users.
 
-Is there a better way of creating an unborn branch than what I do in
-the test cases?
+OTOH making A...B sometimes mean a range and sometimes a merge-base
+(depending on context) adds a confusing non-uniformity, and also has the
+disadvantage of making merge-base shorthand unavailable in contexts that
+allow a range.
 
- sequencer.c                   | 19 +++++++++++--------
- t/t3501-revert-cherry-pick.sh |  9 +++++++++
- t/t3506-cherry-pick-ff.sh     |  8 ++++++++
- 3 files changed, 28 insertions(+), 8 deletions(-)
+OTOOH git already has so many notations that can be used on the command
+line; inventing yet another one would make it that much more overwhelming.
 
-diff --git a/sequencer.c b/sequencer.c
-index 2260490..1ac1ceb 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -186,14 +186,15 @@ static int error_dirty_index(struct replay_opts *opts)
- 	return -1;
- }
- 
--static int fast_forward_to(const unsigned char *to, const unsigned char *from)
-+static int fast_forward_to(const unsigned char *to, const unsigned char *from,
-+			   int unborn)
- {
- 	struct ref_lock *ref_lock;
- 
- 	read_cache();
- 	if (checkout_fast_forward(from, to, 1))
- 		exit(1); /* the callee should have complained already */
--	ref_lock = lock_any_ref_for_update("HEAD", from, 0);
-+	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from, 0);
- 	return write_ref_sha1(ref_lock, to, "cherry-pick");
- }
- 
-@@ -390,7 +391,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
- 	char *defmsg = NULL;
- 	struct strbuf msgbuf = STRBUF_INIT;
--	int res;
-+	int res, unborn = 0;
- 
- 	if (opts->no_commit) {
- 		/*
-@@ -402,9 +403,10 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		if (write_cache_as_tree(head, 0, NULL))
- 			die (_("Your index file is unmerged."));
- 	} else {
--		if (get_sha1("HEAD", head))
--			return error(_("You do not have a valid HEAD"));
--		if (index_differs_from("HEAD", 0))
-+		unborn = get_sha1("HEAD", head);
-+		if (unborn)
-+			hashcpy(head, EMPTY_TREE_SHA1_BIN);
-+		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD", 0))
- 			return error_dirty_index(opts);
- 	}
- 	discard_cache();
-@@ -435,8 +437,9 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	else
- 		parent = commit->parents->item;
- 
--	if (opts->allow_ff && parent && !hashcmp(parent->object.sha1, head))
--		return fast_forward_to(commit->object.sha1, head);
-+	if (opts->allow_ff &&
-+	    (parent && !hashcmp(parent->object.sha1, head) || !parent && unborn))
-+	     return fast_forward_to(commit->object.sha1, head, unborn);
- 
- 	if (parent && parse_commit(parent) < 0)
- 		/* TRANSLATORS: The first %s will be "revert" or
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 34c86e5..6f489e2 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -100,4 +100,13 @@ test_expect_success 'revert forbidden on dirty working tree' '
- 
- '
- 
-+test_expect_success 'chery-pick on unborn branch' '
-+	git checkout --orphan unborn &&
-+	git rm --cached -r . &&
-+	rm -rf * &&
-+	git cherry-pick initial &&
-+	git diff --quiet initial &&
-+	! test_cmp_rev initial HEAD
-+'
-+
- test_done
-diff --git a/t/t3506-cherry-pick-ff.sh b/t/t3506-cherry-pick-ff.sh
-index 51ca391..373aad6 100755
---- a/t/t3506-cherry-pick-ff.sh
-+++ b/t/t3506-cherry-pick-ff.sh
-@@ -105,4 +105,12 @@ test_expect_success 'cherry pick a root commit with --ff' '
- 	test "$(git rev-parse --verify HEAD)" = "1df192cd8bc58a2b275d842cede4d221ad9000d1"
- '
- 
-+test_expect_success 'chery-pick --ff on unborn branch' '
-+	git checkout --orphan unborn &&
-+	git rm --cached -r . &&
-+	rm -rf * &&
-+	git cherry-pick --ff first &&
-+	test_cmp_rev first HEAD
-+'
-+
- test_done
+Michael
+
 -- 
-1.8.0.1.240.ge8a1f5a
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
