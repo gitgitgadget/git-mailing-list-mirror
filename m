@@ -1,50 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 0/7] coloring test output after traffic signal
-Date: Fri, 21 Dec 2012 03:15:21 -0500
-Message-ID: <20121221081521.GA22193@sigill.intra.peff.net>
-References: <CAOkDyE9tDYRYzojzNnjWsT7UygxMAurHqLSDGA66_LMPD2Wmnw@mail.gmail.com>
- <1356059558-23479-1-git-send-email-gitster@pobox.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v8 0/3] submodule update: add --remote for submodule's
+	upstream changes
+Date: Fri, 21 Dec 2012 09:18:03 +0100
+Message-ID: <20121221081803.GA560@book.hvoigt.net>
+References: <20121212230217.GB7729@odin.tremily.us> <cover.1355932282.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Adam Spiers <git@adamspiers.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 09:15:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nahor <nahor.j+gmane@gmail.com>
+To: wking@tremily.us
+X-From: git-owner@vger.kernel.org Fri Dec 21 09:19:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tlxle-0005e6-4p
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 09:15:42 +0100
+	id 1TlxpI-0000YJ-05
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Dec 2012 09:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060Ab2LUIPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 03:15:25 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60525 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750812Ab2LUIPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2012 03:15:24 -0500
-Received: (qmail 20879 invoked by uid 107); 21 Dec 2012 08:16:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Dec 2012 03:16:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Dec 2012 03:15:21 -0500
+	id S1751105Ab2LUITL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 03:19:11 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.31.25]:36018 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812Ab2LUITI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 03:19:08 -0500
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Tlxnx-0004gg-1I; Fri, 21 Dec 2012 09:18:05 +0100
 Content-Disposition: inline
-In-Reply-To: <1356059558-23479-1-git-send-email-gitster@pobox.com>
+In-Reply-To: <cover.1355932282.git.wking@tremily.us>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/211959>
 
-On Thu, Dec 20, 2012 at 07:12:31PM -0800, Junio C Hamano wrote:
+Hi,
 
-> To conclude the bikeshedding discussion we had today, here is what I
-> queued by squashing stuff into relevant patches, so that people can
-> eyeball the result for the last time.
+On Wed, Dec 19, 2012 at 11:03:30AM -0500, wking@tremily.us wrote:
+> From: "W. Trevor King" <wking@tremily.us>
+> 
+> Comments on v7 seem to have petered out, so here's v8.  Changes since
+> v7:
+> 
+> * Series based on gitster/master instead of v1.8.0.
+> * In Documentation/config.txt, restored trailing line of
+>   submodule.<name>.update documentation, which I had accidentally
+>   removed in v7.
+> * In Documentation/git-submodule.txt, make --no-fetch example in the
+>   --remote description more general, following Phil's suggestion.
+> * In git-submodule.sh:
+>   * Remove accidental "ges" line.
+>   * Use the submodule's default remote to determine which tracking
+>     branch to fetch.  In v7 I'd been using the superproject's default
+>     remote.
+>   * In cmd_add(), use sm_name instead of sm_path to store the --branch
+>     option (catching up with 73b0898).
 
-Thanks, this looks OK to me.
+Sorry, I was not able to follow the discussion that closely lately but I
+like the outcome. For me there is nothing to change or add functionality
+wise. Thanks.
 
-And thank you, Adam, for your patience. Seven iterations of color
-bikeshedding is more than should be asked of anyone. :)
-
--Peff
+Cheers Heiko
