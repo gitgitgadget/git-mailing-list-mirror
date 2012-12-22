@@ -1,142 +1,89 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [BUG] Cannot push some grafted branches
-Date: Sat, 22 Dec 2012 17:38:46 +0100
-Message-ID: <50D5E216.4080006@drmicha.warpmail.net>
-References: <20121211153903.7522d6b0@chalon.bertin.fr> <7vd2yg8ngk.fsf@alter.siamese.dyndns.org> <20121212094432.6e1e48c8@chalon.bertin.fr> <7v38zb3ux0.fsf@alter.siamese.dyndns.org> <877goht6eu.fsf@pctrast.inf.ethz.ch> <20121217114058.449cbc3c@chalon.bertin.fr> <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com> <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org> <20121218120058.0c558ba5@chalon.bertin.fr> <7vehinibpc.fsf@alter.siamese.dyndns.org> <87ip7yp4mf.fsf@pctrast.inf.ethz.ch> <7vvcbx956f.fsf@alter.siamese.dyndns.org> <50D45A78.3020104@drmicha.warpmail.net> <7vzk171gvh.fsf@alter.siamese.dyndns.org>
+Subject: Re: Opera release Git-splitter, a sub-modularizing tool for Git
+Date: Sat, 22 Dec 2012 17:41:27 +0100
+Message-ID: <50D5E2B7.5010303@drmicha.warpmail.net>
+References: <op.wpiovoj5qrq7tp@acorna.invalid.invalid> <50D454D2.5030403@drmicha.warpmail.net> <op.wpn2xz07vqd7e2@damia.oslo.osa> <50D468E6.2090900@drmicha.warpmail.net> <op.wpn9d6xuvqd7e2@damia.oslo.osa> <vpqhanf2yny.fsf@grenoble-inp.fr> <op.wpontloxvqd7e2@damia.oslo.osa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Yann Dirson <dirson@bertin.fr>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 22 17:39:14 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Yngve Nysaeter Pettersen <yngve@opera.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 17:41:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmS6S-00022m-Ks
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 17:39:12 +0100
+	id 1TmS91-0004mK-Lp
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 17:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751731Ab2LVQi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 11:38:56 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38631 "EHLO
+	id S1751742Ab2LVQle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 11:41:34 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:43632 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751659Ab2LVQiy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 11:38:54 -0500
+	by vger.kernel.org with ESMTP id S1751659Ab2LVQld (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 11:41:33 -0500
 Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 3B8F9204F9;
-	Sat, 22 Dec 2012 11:38:53 -0500 (EST)
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id D0DF3203D8;
+	Sat, 22 Dec 2012 11:41:32 -0500 (EST)
 Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Sat, 22 Dec 2012 11:38:53 -0500
+  by compute3.internal (MEProxy); Sat, 22 Dec 2012 11:41:32 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=n630MrzBQpI/fFb2qZU0B0
-	OzHwc=; b=Z4Yq3xTV+mlmAVWA769i8rGpfLboEADxenAcw8UgBFuzkUShMHBhvh
-	2QjUPrZJQs4hGuka/wU3qU0r8hAv0Am0lJFkSom1s5XpVEgPecO/Zpo2Bd2LXc1R
-	LBg+kaxaiRpT6GsYoM2vbdZAZ46SSV8rrfb3s4fKX6k0uBVsfXZAo=
-X-Sasl-enc: zdtgRZtnZ7wT2dNRjVrBJ38eDBVN5c1YwPNG/yfAzcMp 1356194332
+	:content-transfer-encoding; s=smtpout; bh=FijCUxQ10n6TfxU2BA+6Ao
+	9f2Sw=; b=bWYmhn/FaFtQycRcklLOqstqz346bW8EtP+0cda0TSMuxeookV6w2z
+	yhfvhJx6+jzBH8NmTVp+/wGdkZ27wPjKOznsifXH3hniNo5IEyT90ALfnA0gLTZB
+	QD2rl0QXRXlYV7uNhimHjNPhHZOZBz01vZcbaErlPAy9S1Q/lswkU=
+X-Sasl-enc: lNp/uyrdMbMRhJ+9ifVxkhG+WuNQb4iS3SfG40sf1x+8 1356194492
 Received: from localhost.localdomain (unknown [88.70.134.107])
-	by mail.messagingengine.com (Postfix) with ESMTPA id F1D6D8E06FF;
-	Sat, 22 Dec 2012 11:38:51 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1E2988E06FA;
+	Sat, 22 Dec 2012 11:41:31 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vzk171gvh.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <op.wpontloxvqd7e2@damia.oslo.osa>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212057>
 
-Junio C Hamano venit, vidit, dixit 21.12.2012 17:58:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Yngve Nysaeter Pettersen venit, vidit, dixit 21.12.2012 21:13:
+> On Fri, 21 Dec 2012 16:49:21 +0100, Matthieu Moy  
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
 > 
->> While replace refs are much more general than grafts, it seems the two
->> main uses are:
+>> "Yngve Nysaeter Pettersen" <yngve@opera.com> writes:
 >>
->> - grafts (change the recorded parents for a commit)
->> - svn cleanup (convert tagging commits into tag objects)
+>>> The split command will create a new repository for all files foo in a
+>>> folder (path/foo) and their commit history.
+>>>
+>>> The replant command reverses that process, re-adding the path prefix
+>>> for each file. It may be possible to extend that process into one that
+>>> automatically reintegrates the new commits in the original history,
+>>> but I never had time to complete that work.
+>>>
+>>> I did originally add the "replant" functionality into my version of
+>>> the git-subtree script, but given the number of commits in the
+>>> original repository, git-subtree turned out to be inefficient, due to
+>>> the use of temporary files (tens of thousands of files IIRC).
+>>>
+>>> Those problems led to my development of git-splitter in Python
+>>> (bypassing the problem of temporary files), but just including the
+>>> functionality I needed, join was not one of those functions.
 >>
->> The latter one being quite a special case already.
->>
->> The script below has helped me move from grafts to replace objects.
->> While not being super clean, something like it may be fit for contrib.
->>
->> I think we ought to help John Doe get along with parents, while we can
->> safely leave most more advanced operations to people who know how to
->> edit a raw object file. Putting that facility into "git-commit" seems to
->> be too encouraging, though - people would use replace when they should
->> use amend or rebase-i. I'd prefer a special git-replace mode (be it
->> "--graft" or "--graft-commit") which does just what my script does. We
->> could add things like "--commit-tag" later, a full blown
->> "object-factory" seems like overkill.
->>
->> Michael
->>
->> --->%---
->>
->> #!/bin/sh
->>
->> die () {
->> 	echo "$@"
->> 	rm -f "$commitfile"
->>  	exit 1
->> }
->>
->> warn () {
->> 	echo "$@"
->> }
->>
->> test $# -gt 0 || die "Usage: $0 <commit> [<parent>]*"
->>
->> for commit
->> do
->> 	git rev-parse --verify -q "$commit" >/dev/null || die "Cannot parse
->> $commit."
->> 	test x$(git cat-file -t $commit) == "xcommit" || die "$commit is no
->> commit."
+>> That still doesn't answer the question: why did you need to write a new
+>> tool instead of extending git-subtree?
 > 
-> s/==/=/ or you have to say #!/bin/bash on the first line, I think.
-> Appears multiple times throughout this script.
+> The primary problem with git-subtree was that I ended up with a temporary  
+> file directory containing 100+K files, which I tracked back to being used  
+> to manage the commit-to-tree mapping. On Windows, at least, that literally  
+> slowed down the process to a crawl.
 > 
+>> If one doesn't use "replant", is your tool different from git-subtree?
 > 
->> done
->>
->> commit="$1"
->> shift
->>
->> commitfile=$(mktemp)
->>
->> git cat-file commit "$commit" | while read a b
->> do
->> 	if test "$a" != "parent"
->> 	then
->> 		echo $a $b
-> 
-> You are losing information on non-header lines by reading without
-> "-r" in the above, and also multi-line headers (e.g. mergetag),
-> aren't you?
->
+> No, it is not different. However, my tool will use RAM, not diskspace to  
+> manage information.
 
-Oh yes, it has bashisms and imperfections. It's not a submitted patch,
-not even RFC. It's meant to show the git-replace mode that many users
-could benefit from: works for commits only and replaces the parent list,
-but takes any rev arguments as the new parents, rather than forcing the
-user to specify a full sha1.
+That is some valuable input. It can help improve git-subtree for Windows
+users, or replace it by something else.
 
->> 	fi
->> 	if test "$a" == "tree"
->> 	then
->> 		for parent
->> 		do
->> 			echo "parent $(git rev-parse $parent)"
->> 		done
->> 	fi
->> done >$commitfile
->> hash=$(git hash-object -t commit -w "$commitfile") || die "Cannot create
->> commit object."
->> git replace "$commit" $hash
->> rm -f $commitfile
+Michael
