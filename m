@@ -1,68 +1,59 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Change in cvsps maintainership, abd a --fast-export option
-Date: Sat, 22 Dec 2012 15:21:34 +0100
-Message-ID: <m2vcbuqia9.fsf@igel.home>
-References: <20121220215638.E54BC44119@snark.thyrsus.com>
-	<50D4199C.6000002@alum.mit.edu> <20121221104437.GA5244@thyrsus.com>
-	<20121222034751.GA11635@book-mint> <20121222140453.GB375@thyrsus.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: [PATCH] git-subtree: ignore git-subtree executable
+Date: Sat, 22 Dec 2012 15:45:40 +0100
+Message-ID: <50D5C794.4070400@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Sat Dec 22 15:22:02 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 22 15:57:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmPxi-0007ju-Co
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 15:22:02 +0100
+	id 1TmQVc-0006tS-GH
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 15:57:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238Ab2LVOVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 09:21:45 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:40906 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751113Ab2LVOVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 09:21:44 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3YT85v6yH9z3hhm3;
-	Sat, 22 Dec 2012 15:21:38 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3YT85t1vgFzbbgW;
-	Sat, 22 Dec 2012 15:21:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id 2ULOk0tGB6il; Sat, 22 Dec 2012 15:21:34 +0100 (CET)
-X-Auth-Info: qmqIqrOcm9oJCNveLMsRbNb7flrMnChRqMf5qtMLRNY=
-Received: from igel.home (ppp-88-217-127-54.dynamic.mnet-online.de [88.217.127.54])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat, 22 Dec 2012 15:21:34 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id A1502CA2A2; Sat, 22 Dec 2012 15:21:34 +0100 (CET)
-X-Yow: I am NOT a nut....
-In-Reply-To: <20121222140453.GB375@thyrsus.com> (Eric S. Raymond's message of
-	"Sat, 22 Dec 2012 09:04:53 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.91 (gnu/linux)
+	id S1751182Ab2LVO4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 09:56:46 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:56855 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751144Ab2LVO4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 09:56:45 -0500
+X-Greylist: delayed 358 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Dec 2012 09:56:45 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 04691DE062
+	for <git@vger.kernel.org>; Sat, 22 Dec 2012 15:50:31 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id N1EPJSfUpEwT for <git@vger.kernel.org>;
+	Sat, 22 Dec 2012 15:50:30 +0100 (CET)
+Received: from [192.168.1.3] (p5DD1564E.dip.t-dialin.net [93.209.86.78])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id DE29CDE05B
+	for <git@vger.kernel.org>; Sat, 22 Dec 2012 15:50:30 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212053>
 
-"Eric S. Raymond" <esr@thyrsus.com> writes:
+Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+---
+ contrib/subtree/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
 
-> esr@snark:~/WWW/cvsps/fixrepos$ git clone http://repo.or.cz/w/cvsps-hv.git
-
->From <http://repo.or.cz/w/cvsps-hv.git>:
-
-URL  git://repo.or.cz/cvsps-hv.git
-     http://repo.or.cz/r/cvsps-hv.git
-
-Andreas.
-
+diff --git a/contrib/subtree/.gitignore b/contrib/subtree/.gitignore
+index 7e77c9d..91360a3 100644
+--- a/contrib/subtree/.gitignore
++++ b/contrib/subtree/.gitignore
+@@ -1,4 +1,5 @@
+ *~
++git-subtree
+ git-subtree.xml
+ git-subtree.1
+ mainline
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.8.1.rc2.333.g912e06f.dirty
