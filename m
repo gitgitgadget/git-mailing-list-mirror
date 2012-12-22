@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 2/8] wildmatch: rename constants and update prototype
-Date: Sat, 22 Dec 2012 14:57:02 +0700
-Message-ID: <1356163028-29967-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 3/8] wildmatch: make dowild() take arbitrary flags
+Date: Sat, 22 Dec 2012 14:57:03 +0700
+Message-ID: <1356163028-29967-4-git-send-email-pclouds@gmail.com>
 References: <1356163028-29967-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,341 +17,107 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmJyB-0008UB-5r
+	id 1TmJyA-0008UB-MM
 	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 08:58:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113Ab2LVH5l convert rfc822-to-quoted-printable (ORCPT
+	id S1751091Ab2LVH5l convert rfc822-to-quoted-printable (ORCPT
 	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Dec 2012 02:57:41 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:39567 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832Ab2LVH5i (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:38629 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853Ab2LVH5i (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 22 Dec 2012 02:57:38 -0500
-Received: by mail-pa0-f47.google.com with SMTP id fa10so3255705pad.6
-        for <git@vger.kernel.org>; Fri, 21 Dec 2012 23:57:28 -0800 (PST)
+Received: by mail-pa0-f50.google.com with SMTP id hz10so3282659pad.23
+        for <git@vger.kernel.org>; Fri, 21 Dec 2012 23:57:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=G3C58p3/vIMjnVKwg0k3uYpjY9jBuIgzs/Fn8Knbhfg=;
-        b=ABeRjGDEOD4tWYQsFWRUBBNR5YUX66Hv0BKoz+W1IgtQLP1Tt42LfPCGhrWWvcs2I6
-         fzXLqKyxuxCwhRCpdnaes3yRoTQB0YwQD/s1wmGprU+IdkIzf6AabB33AjNlGLbx/rVJ
-         xnTHzfW8/hQtMcxI8YONcUTJWlG3oej9oaXRJbVhWhl7ClYgLsPWTwAchjUGrEEdgwCh
-         BBny4NENJOYJ7c1dma3vg5eHogjXItuggxnH529h+0fVgPdj8JNMNFMdxYcFv/gdrUxW
-         G4YRRx1BIS0pOJDg8QNAXoHND8VeC70lZtCmSF2sLe6364gDzE2yu0i0v+LiX/lDAKrU
-         FCoA==
-X-Received: by 10.68.197.68 with SMTP id is4mr46704245pbc.30.1356163048754;
-        Fri, 21 Dec 2012 23:57:28 -0800 (PST)
+        bh=Gq3GLndNZU4cnyvpaM6d+MFnvERBMDVrf/Knx6i5bWI=;
+        b=dSA9Ybez0CuaW+Gf9YQni/WcLFulh+fsZmmImhfVQFjVtW4XXC2QyLmYOkcw5uZQtF
+         4a8dEGnzFaq1sE+SyqR6WT2VjRuL201e796N+yMoy7mvSY4Vb+5fLLjMmv6uozjvPlme
+         uf/LRRma0hhqX5aaaGruAP87fNc+yztMhaEj3JaTy5XeeR07z258u82on8NJaAXyOImA
+         lkmRCrzafV3vEvP9tkOANpdzA2WVE8n8S0IrMZr7ii6Vd3EZ+T+D9pmE18+agSCtvl9t
+         WbieUlI0cmq8JDLfdsz0C0BRodtP9KaR/BaQCXnxnDP/RTw7/R5tuUnFUg//au7G9s8A
+         mW1w==
+X-Received: by 10.68.137.41 with SMTP id qf9mr46787091pbb.103.1356163055219;
+        Fri, 21 Dec 2012 23:57:35 -0800 (PST)
 Received: from lanh ([115.74.46.73])
-        by mx.google.com with ESMTPS id na4sm8430517pbc.18.2012.12.21.23.57.25
+        by mx.google.com with ESMTPS id gj1sm8432516pbc.11.2012.12.21.23.57.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Dec 2012 23:57:28 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 22 Dec 2012 14:57:24 +0700
+        Fri, 21 Dec 2012 23:57:34 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 22 Dec 2012 14:57:30 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1356163028-29967-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212031>
 
-- All exported constants now have a prefix WM_
-- Do not rely on FNM_* constants, use the WM_ counterparts
-- Remove TRUE and FALSE to follow Git's coding style
-- While at it, turn flags type from int to unsigned int
-- Add an (unused yet) argument to carry extra information
-  so that we don't have to change the prototype again later
-  when we need to pass other stuff to wildmatch
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- dir.c            |  3 +-
- test-wildmatch.c |  4 +--
- wildmatch.c      | 86 +++++++++++++++++++++++++++---------------------=
---------
- wildmatch.h      | 22 ++++++++++-----
- 4 files changed, 61 insertions(+), 54 deletions(-)
+ wildmatch.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index cb7328b..175a182 100644
---- a/dir.c
-+++ b/dir.c
-@@ -595,7 +595,8 @@ int match_pathname(const char *pathname, int pathle=
-n,
- 	}
-=20
- 	return wildmatch(pattern, name,
--			 ignore_case ? FNM_CASEFOLD : 0) =3D=3D 0;
-+			 ignore_case ? WM_CASEFOLD : 0,
-+			 NULL) =3D=3D 0;
- }
-=20
- /* Scan the list and let the last match determine the fate.
-diff --git a/test-wildmatch.c b/test-wildmatch.c
-index e384c8e..4bb23b4 100644
---- a/test-wildmatch.c
-+++ b/test-wildmatch.c
-@@ -12,9 +12,9 @@ int main(int argc, char **argv)
- 			argv[i] +=3D 3;
- 	}
- 	if (!strcmp(argv[1], "wildmatch"))
--		return !!wildmatch(argv[3], argv[2], 0);
-+		return !!wildmatch(argv[3], argv[2], 0, NULL);
- 	else if (!strcmp(argv[1], "iwildmatch"))
--		return !!wildmatch(argv[3], argv[2], FNM_CASEFOLD);
-+		return !!wildmatch(argv[3], argv[2], WM_CASEFOLD, NULL);
- 	else if (!strcmp(argv[1], "fnmatch"))
- 		return !!fnmatch(argv[3], argv[2], FNM_PATHNAME);
- 	else
 diff --git a/wildmatch.c b/wildmatch.c
-index 3972e26..6ee1b09 100644
+index 6ee1b09..a79f97e 100644
 --- a/wildmatch.c
 +++ b/wildmatch.c
-@@ -18,9 +18,6 @@ typedef unsigned char uchar;
- #define NEGATE_CLASS	'!'
- #define NEGATE_CLASS2	'^'
+@@ -52,7 +52,7 @@ typedef unsigned char uchar;
+ #define ISXDIGIT(c) (ISASCII(c) && isxdigit(c))
 =20
--#define FALSE 0
--#define TRUE 1
--
- #define CC_EQ(class, len, litmatch) ((len) =3D=3D sizeof (litmatch)-1 =
-\
- 				    && *(class) =3D=3D *(litmatch) \
- 				    && strncmp((char*)class, litmatch, len) =3D=3D 0)
-@@ -63,7 +60,7 @@ static int dowild(const uchar *p, const uchar *text, =
+ /* Match pattern "p" against "text" */
+-static int dowild(const uchar *p, const uchar *text, int force_lower_c=
+ase)
++static int dowild(const uchar *p, const uchar *text, unsigned int flag=
+s)
+ {
+ 	uchar p_ch;
+=20
+@@ -61,9 +61,9 @@ static int dowild(const uchar *p, const uchar *text, =
 int force_lower_case)
- 		int matched, special;
  		uchar t_ch, prev_ch;
  		if ((t_ch =3D *text) =3D=3D '\0' && p_ch !=3D '*')
--			return ABORT_ALL;
-+			return WM_ABORT_ALL;
- 		if (force_lower_case && ISUPPER(t_ch))
+ 			return WM_ABORT_ALL;
+-		if (force_lower_case && ISUPPER(t_ch))
++		if ((flags & WM_CASEFOLD) && ISUPPER(t_ch))
  			t_ch =3D tolower(t_ch);
- 		if (force_lower_case && ISUPPER(p_ch))
-@@ -76,12 +73,12 @@ static int dowild(const uchar *p, const uchar *text=
-, int force_lower_case)
- 			/* FALLTHROUGH */
- 		default:
- 			if (t_ch !=3D p_ch)
--				return NOMATCH;
-+				return WM_NOMATCH;
- 			continue;
- 		case '?':
- 			/* Match anything but '/'. */
- 			if (t_ch =3D=3D '/')
--				return NOMATCH;
-+				return WM_NOMATCH;
- 			continue;
- 		case '*':
- 			if (*++p =3D=3D '*') {
-@@ -100,33 +97,33 @@ static int dowild(const uchar *p, const uchar *tex=
-t, int force_lower_case)
+-		if (force_lower_case && ISUPPER(p_ch))
++		if ((flags & WM_CASEFOLD) && ISUPPER(p_ch))
+ 			p_ch =3D tolower(p_ch);
+ 		switch (p_ch) {
+ 		case '\\':
+@@ -97,7 +97,7 @@ static int dowild(const uchar *p, const uchar *text, =
+int force_lower_case)
  					 * both foo/bar and foo/a/bar.
  					 */
  					if (p[0] =3D=3D '/' &&
--					    dowild(p + 1, text, force_lower_case) =3D=3D MATCH)
--						return MATCH;
--					special =3D TRUE;
-+					    dowild(p + 1, text, force_lower_case) =3D=3D WM_MATCH)
-+						return WM_MATCH;
-+					special =3D 1;
+-					    dowild(p + 1, text, force_lower_case) =3D=3D WM_MATCH)
++					    dowild(p + 1, text, flags) =3D=3D WM_MATCH)
+ 						return WM_MATCH;
+ 					special =3D 1;
  				} else
--					return ABORT_MALFORMED;
-+					return WM_ABORT_MALFORMED;
- 			} else
--				special =3D FALSE;
-+				special =3D 0;
- 			if (*p =3D=3D '\0') {
- 				/* Trailing "**" matches everything.  Trailing "*" matches
- 				 * only if there are no more slash characters. */
- 				if (!special) {
- 					if (strchr((char*)text, '/') !=3D NULL)
--						return NOMATCH;
-+						return WM_NOMATCH;
- 				}
--				return MATCH;
-+				return WM_MATCH;
- 			}
+@@ -116,7 +116,7 @@ static int dowild(const uchar *p, const uchar *text=
+, int force_lower_case)
  			while (1) {
  				if (t_ch =3D=3D '\0')
  					break;
--				if ((matched =3D dowild(p, text,  force_lower_case)) !=3D NOMATCH)=
- {
--					if (!special || matched !=3D ABORT_TO_STARSTAR)
-+				if ((matched =3D dowild(p, text,  force_lower_case)) !=3D WM_NOMAT=
+-				if ((matched =3D dowild(p, text,  force_lower_case)) !=3D WM_NOMAT=
 CH) {
-+					if (!special || matched !=3D WM_ABORT_TO_STARSTAR)
++				if ((matched =3D dowild(p, text,  flags)) !=3D WM_NOMATCH) {
+ 					if (!special || matched !=3D WM_ABORT_TO_STARSTAR)
  						return matched;
  				} else if (!special && t_ch =3D=3D '/')
--					return ABORT_TO_STARSTAR;
-+					return WM_ABORT_TO_STARSTAR;
- 				t_ch =3D *++text;
- 			}
--			return ABORT_ALL;
-+			return WM_ABORT_ALL;
- 		case '[':
- 			p_ch =3D *++p;
- #ifdef NEGATE_CLASS2
-@@ -134,101 +131,102 @@ static int dowild(const uchar *p, const uchar *=
-text, int force_lower_case)
- 				p_ch =3D NEGATE_CLASS;
- #endif
- 			/* Assign literal TRUE/FALSE because of "matched" comparison. */
--			special =3D p_ch =3D=3D NEGATE_CLASS? TRUE : FALSE;
-+			special =3D p_ch =3D=3D NEGATE_CLASS;
- 			if (special) {
- 				/* Inverted character class. */
- 				p_ch =3D *++p;
- 			}
- 			prev_ch =3D 0;
--			matched =3D FALSE;
-+			matched =3D 0;
- 			do {
- 				if (!p_ch)
--					return ABORT_ALL;
-+					return WM_ABORT_ALL;
- 				if (p_ch =3D=3D '\\') {
- 					p_ch =3D *++p;
- 					if (!p_ch)
--						return ABORT_ALL;
-+						return WM_ABORT_ALL;
- 					if (t_ch =3D=3D p_ch)
--						matched =3D TRUE;
-+						matched =3D 1;
- 				} else if (p_ch =3D=3D '-' && prev_ch && p[1] && p[1] !=3D ']') {
- 					p_ch =3D *++p;
- 					if (p_ch =3D=3D '\\') {
- 						p_ch =3D *++p;
- 						if (!p_ch)
--							return ABORT_ALL;
-+							return WM_ABORT_ALL;
- 					}
- 					if (t_ch <=3D p_ch && t_ch >=3D prev_ch)
--						matched =3D TRUE;
-+						matched =3D 1;
- 					p_ch =3D 0; /* This makes "prev_ch" get set to 0. */
- 				} else if (p_ch =3D=3D '[' && p[1] =3D=3D ':') {
- 					const uchar *s;
- 					int i;
- 					for (s =3D p +=3D 2; (p_ch =3D *p) && p_ch !=3D ']'; p++) {} /*SH=
-ARED ITERATOR*/
- 					if (!p_ch)
--						return ABORT_ALL;
-+						return WM_ABORT_ALL;
- 					i =3D p - s - 1;
- 					if (i < 0 || p[-1] !=3D ':') {
- 						/* Didn't find ":]", so treat like a normal set. */
- 						p =3D s - 2;
- 						p_ch =3D '[';
- 						if (t_ch =3D=3D p_ch)
--							matched =3D TRUE;
-+							matched =3D 1;
- 						continue;
- 					}
- 					if (CC_EQ(s,i, "alnum")) {
- 						if (ISALNUM(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "alpha")) {
- 						if (ISALPHA(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "blank")) {
- 						if (ISBLANK(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "cntrl")) {
- 						if (ISCNTRL(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "digit")) {
- 						if (ISDIGIT(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "graph")) {
- 						if (ISGRAPH(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "lower")) {
- 						if (ISLOWER(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "print")) {
- 						if (ISPRINT(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "punct")) {
- 						if (ISPUNCT(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "space")) {
- 						if (ISSPACE(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "upper")) {
- 						if (ISUPPER(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else if (CC_EQ(s,i, "xdigit")) {
- 						if (ISXDIGIT(t_ch))
--							matched =3D TRUE;
-+							matched =3D 1;
- 					} else /* malformed [:class:] string */
--						return ABORT_ALL;
-+						return WM_ABORT_ALL;
- 					p_ch =3D 0; /* This makes "prev_ch" get set to 0. */
- 				} else if (t_ch =3D=3D p_ch)
--					matched =3D TRUE;
-+					matched =3D 1;
- 			} while (prev_ch =3D p_ch, (p_ch =3D *++p) !=3D ']');
- 			if (matched =3D=3D special || t_ch =3D=3D '/')
--				return NOMATCH;
-+				return WM_NOMATCH;
- 			continue;
- 		}
- 	}
-=20
--	return *text ? NOMATCH : MATCH;
-+	return *text ? WM_NOMATCH : WM_MATCH;
- }
-=20
- /* Match the "pattern" against the "text" string. */
--int wildmatch(const char *pattern, const char *text, int flags)
-+int wildmatch(const char *pattern, const char *text,
-+	      unsigned int flags, struct wildopts *wo)
+@@ -227,6 +227,5 @@ static int dowild(const uchar *p, const uchar *text=
+, int force_lower_case)
+ int wildmatch(const char *pattern, const char *text,
+ 	      unsigned int flags, struct wildopts *wo)
  {
- 	return dowild((const uchar*)pattern, (const uchar*)text,
--		      flags & FNM_CASEFOLD ? 1 :0);
-+		      flags & WM_CASEFOLD ? 1 :0);
+-	return dowild((const uchar*)pattern, (const uchar*)text,
+-		      flags & WM_CASEFOLD ? 1 :0);
++	return dowild((const uchar*)pattern, (const uchar*)text, flags);
  }
-diff --git a/wildmatch.h b/wildmatch.h
-index 984a38c..1c814fd 100644
---- a/wildmatch.h
-+++ b/wildmatch.h
-@@ -1,9 +1,17 @@
--/* wildmatch.h */
-+#ifndef WILDMATCH_H
-+#define WILDMATCH_H
-=20
--#define ABORT_MALFORMED 2
--#define NOMATCH 1
--#define MATCH 0
--#define ABORT_ALL -1
--#define ABORT_TO_STARSTAR -2
-+#define WM_CASEFOLD 1
-=20
--int wildmatch(const char *pattern, const char *text, int flags);
-+#define WM_ABORT_MALFORMED 2
-+#define WM_NOMATCH 1
-+#define WM_MATCH 0
-+#define WM_ABORT_ALL -1
-+#define WM_ABORT_TO_STARSTAR -2
-+
-+struct wildopts;
-+
-+int wildmatch(const char *pattern, const char *text,
-+	      unsigned int flags,
-+	      struct wildopts *wo);
-+#endif
 --=20
 1.8.0.rc2.23.g1fb49df
