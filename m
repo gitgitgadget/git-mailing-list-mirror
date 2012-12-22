@@ -1,182 +1,122 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH 1/2] log: grep author/committer using mailmap
-Date: Sat, 22 Dec 2012 17:58:31 +0100
-Message-ID: <1356195512-4846-2-git-send-email-apelisse@gmail.com>
-References: <1356195512-4846-1-git-send-email-apelisse@gmail.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 22 18:07:12 2012
+From: esr@thyrsus.com (Eric S. Raymond)
+Subject: cvsps, parsecvs, svn2git and the CVS exporter mess
+Date: Sat, 22 Dec 2012 12:36:48 -0500 (EST)
+Message-ID: <20121222173649.04C5B44119@snark.thyrsus.com>
+To: Yann Dirson <ydirson@free.fr>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Bart Massey <bart@cs.pdx.edu>,
+	Keith Packard <keithp@keithp.com>,
+	David Mansfield <david@cobite.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 22 18:37:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmSXX-0003FR-7k
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 18:07:11 +0100
+	id 1TmT11-0006Fy-4b
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 18:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751845Ab2LVRGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 12:06:53 -0500
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:41437 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836Ab2LVRGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 12:06:51 -0500
-Received: by mail-wg0-f43.google.com with SMTP id e12so2558096wge.34
-        for <git@vger.kernel.org>; Sat, 22 Dec 2012 09:06:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=QuyBmmYgDlWdTifSF2rkcsaFAEVcQBcOkvgcp+1YXUI=;
-        b=mB/+2rBuJOBIQu2YxjdoYJkbjlgAyqCbq5idehiEOEQOT4l0LHZNlX9em/9hsZwjiq
-         xlG8i9zxyQenrBq5cZzhXCxh9qyFLmFkUprTG7dRM8l7wWa+SPvMgs9ThmTaWmrpbWWD
-         qH3ETURuDc76qVTpOawe0W23x8WU9vQP1i3Ssk/fJzun7XC0cbOUrJ8q+mXNkb/0+VGA
-         YP0NKbuBtu7EW/ITNdmUJML5301zfVw44neQ5eKERO1lB/gaKvs9UYFYb7pN0T7jXfrs
-         O25qNcMW84zk3H7K1qh0/NFKBeZiZUZ3Eln+iyIs1Y8za6KcrLphOB49NFbyrTEqMp5K
-         T5Xw==
-X-Received: by 10.194.242.69 with SMTP id wo5mr29223057wjc.10.1356195520599;
-        Sat, 22 Dec 2012 08:58:40 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id s10sm24125843wiw.4.2012.12.22.08.58.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 22 Dec 2012 08:58:39 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc1.39.g9092a12
-In-Reply-To: <1356195512-4846-1-git-send-email-apelisse@gmail.com>
+	id S1751790Ab2LVRhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 12:37:14 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:53527
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751731Ab2LVRhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 12:37:12 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 04C5B44119; Sat, 22 Dec 2012 12:36:48 -0500 (EST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212061>
 
-Currently mailmap can be used to display log authors and committers
-but there no way to use mailmap to find commits with mapped values.
+Wanting reposurgeon to be able to read CVS repositories has landed me
+in the middle of a mess.  This note explains my thinking, what I
+intend to do to fix the mess, and how others can help if they are
+motivated.  I have copied all the individuals who I know have an
+interest in the problem, and the git list because what I'm planning is
+going to be significant for them.
 
-This commit allows those commands to work:
+My requirement is not complicated to describe. For use as a
+reposurgeon front end I need a tool that is basically a
+cvs-fast-export, runnable in either a CVS repository or a checkout
+(either will do, both is not required) and emitting a fast-import
+stream.
 
-    git log --use-mailmap --author mapped_name_or_email
-    git log --use-mailmap --committer mapped_name_or_email
+There are three competing tools that might fit this bill.  
 
-Of course it only works if the --use-mailmap option is used.
+* One is Michael Haggerty's cvs2git.  I had bad experiences with the
+cvs2svn code it's derived from in the past, but Michael believes those
+problems have been fixed and I will accept that - at least until I can
+test for myself.  Its documented interface is not quite good enough
+yet; as the documentation says, "The data that should be fed to git
+fast-import are written to two files, which have to be loaded into git
+fast-import manually."
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
-I probably missed something but I didn't find the connection with
-commit 2d10c55. Let me know if I went the wrong direction.
+* Another is the cvsps code formerly maintained by David Mansfield and
+used by git-cvsimport; he passed the maintainer's baton to me, and I
+have shipped a 3.0 with a working --fast-export option.
 
- revision.c         |   53 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- t/t4203-mailmap.sh |   18 ++++++++++++++++++
- 2 files changed, 71 insertions(+)
+* A third is parsecvs, which Keith Packard and Bart Massey handed off
+to me a week before David invited me to take over cvsps.  While
+parsecvs does not yet have a --fast-export option, I anticipate no
+great difficulty in adding one.
 
-diff --git a/revision.c b/revision.c
-index 95d21e6..fb9fd41 100644
---- a/revision.c
-+++ b/revision.c
-@@ -13,6 +13,7 @@
- #include "decorate.h"
- #include "log-tree.h"
- #include "string-list.h"
-+#include "mailmap.h"
+It is pure accident that I now maintain two of these.  Initially I
+was interested in parsecvs, but it failed to build for me.  By the
+time Bart Massey sent me a fix patch, I had already been handed 
+cvsps, added --fast-export, and shipped 3.0.
 
- volatile show_early_output_fn_t show_early_output;
+Having three different tools for this job seems to me duplicative and
+pointless; two of them should probably be let die an honorable death.
+I don't actually care which of the three survives - and, in
+particular, if I determine that cvs2git is doing the best job of the
+three I am quite willing to declare end-of-life for cvsps and
+parsecvs.  It's not like I don't have plenty of other projects to work
+on.
 
-@@ -2219,6 +2220,50 @@ static int rewrite_parents(struct rev_info *revs, struct commit *commit)
- 	return 0;
- }
+Therefore, I think my main focus needs to be developing a really
+effective test suite to triage these tools with and applying it to all
+three.  I have already made a solid start on this; see
+tests/cvstest.py and tests/basic.tst in the cvsps-3.0 distribution for
+my test framework.
 
-+static int commit_rewrite_authors(struct strbuf *buf, const char *what, struct string_list *mailmap)
-+{
-+	char *author, *endp;
-+	size_t len;
-+	struct strbuf name = STRBUF_INIT;
-+	struct strbuf mail = STRBUF_INIT;
-+	struct ident_split ident;
-+
-+	author = strstr(buf->buf, what);
-+	if (!author)
-+		goto error;
-+
-+	author += strlen(what);
-+	endp = strstr(author, "\n");
-+	if (!endp)
-+		goto error;
-+
-+	len = endp - author;
-+
-+	if (split_ident_line(&ident, author, len)) {
-+	error:
-+		strbuf_release(&name);
-+		strbuf_release(&mail);
-+
-+		return 1;
-+	}
-+
-+	strbuf_add(&name, ident.name_begin, ident.name_end - ident.name_begin);
-+	strbuf_add(&mail, ident.mail_begin, ident.mail_end - ident.mail_begin);
-+
-+	map_user(mailmap, &mail, &name);
-+
-+	strbuf_addf(&name, " <%s>", mail.buf);
-+
-+	strbuf_splice(buf, ident.name_begin - buf->buf,
-+		      ident.mail_end - ident.name_begin + 1,
-+		      name.buf, name.len);
-+
-+	strbuf_release(&name);
-+	strbuf_release(&mail);
-+
-+	return 0;
-+}
-+
- static int commit_match(struct commit *commit, struct rev_info *opt)
- {
- 	int retval;
-@@ -2237,6 +2282,14 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
- 	if (buf.len)
- 		strbuf_addstr(&buf, commit->buffer);
+I presently know of three test suites other than mine. One was built
+by Heiko to test cvsps, another lives in the git t/ directory, and the
+third is cvs2git's. I haven't looked at cv2git's yet, but the others
+are not in their present form suited to where I am taking cvsps and
+parsecvs.  Heiko's relies on the default human-readable cvsps format,
+which I consider obsolete and uninteresting.  The git tests are
+dependent on details of porcelain behavior.  I think it would be
+better to test import-stream output.
 
-+	if (opt->mailmap) {
-+		if (!buf.len)
-+			strbuf_addstr(&buf, commit->buffer);
-+
-+		commit_rewrite_authors(&buf, "\nauthor ", opt->mailmap);
-+		commit_rewrite_authors(&buf, "\ncommitter ", opt->mailmap);
-+	}
-+
- 	/* Append "fake" message parts as needed */
- 	if (opt->show_notes) {
- 		if (!buf.len)
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index db043dc..e16187f 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -248,11 +248,29 @@ Author: Other Author <other@author.xx>
- Author: Some Dude <some@dude.xx>
- Author: A U Thor <author@example.com>
- EOF
-+
- test_expect_success 'Log output with --use-mailmap' '
- 	git log --use-mailmap | grep Author >actual &&
- 	test_cmp expect actual
- '
+Here is what I propose.  Let's build a common test suite that cvs2git,
+git-cvsimport, cvsps, and parsecvs can all use, apply it rigorously,
+and let the best tool win.  (This would mean, among other things, that
+git can stop carrying things that are essentially cvsps tests in its
+tree.)
 
-+cat >expect <<\EOF
-+Author: Santa Claus <santa.claus@northpole.xx>
-+Author: Santa Claus <santa.claus@northpole.xx>
-+EOF
-+
-+test_expect_success 'Grep author with --use-mailmap' '
-+	git log --use-mailmap --author Santa | grep Author >actual &&
-+	test_cmp expect actual
-+'
-+
-+>expect
-+
-+test_expect_success 'Only grep replaced author with --use-mailmap' '
-+	git log --use-mailmap --author "<cto@coompany.xx>" >actual &&
-+	test_cmp expect actual
-+'
-+
- # git blame
- cat >expect <<\EOF
- ^OBJI (A U Thor     DATE 1) one
---
-1.7.9.5
+The two people I most need to sign off on this are, I guess, Michael
+Haggerty and either Junio Hamano or whoever specifically owns
+git-cvsimport and its tests.  Whichever way this comes out, the back
+end of git-cvsimport is going to need some work - I don't plan to put
+any further effort into the output format it's presently using.
+
+If we can agree on this, I'll start a public repo, and contribute my
+Python framework - it's more capable than any of the shell harnesses
+out there because it can easily drive interleaved operations on multiple 
+checkout directories.
+
+Anybody who is still interested in this problem should contribute
+tests.  Heiko Voigt, I'd particularly like you in on this.  David
+Mansfield, if you can spare the few minutes required to write
+generators for the "funky" and "invalid" tag cases, that would be
+really helpful.  Michael Haggerty, your piece would be moving the
+cvs2git tests to the new framework.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+The kind of charity you can force out of people nourishes about as much as
+the kind of love you can buy --- and spreads even nastier diseases.
