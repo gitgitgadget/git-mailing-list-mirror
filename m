@@ -1,70 +1,73 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
-Subject: Re: problem with BOINC repository and CR/LF
-Date: Sat, 22 Dec 2012 13:31:23 +0100
-Message-ID: <50D5A81B.1000306@gmx.de>
-References: <50CEF289.4040503@gmx.de> <CAH5451=FpmtGVVJ=mubE0KeD-tTVaNU96audzTRnNQh2BEEXPg@mail.gmail.com> <50CF41EB.1060402@gmx.de> <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com> <50D03D80.3090005@gmx.de> <50D05E62.7090605@web.de> <20121218164132.GC20122@sigill.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: Change in cvsps maintainership, abd a --fast-export
+ option
+Date: Sat, 22 Dec 2012 14:04:52 +0100
+Message-ID: <20121222130452.GB13549@book-mint>
+References: <20121220215638.E54BC44119@snark.thyrsus.com>
+ <50D4199C.6000002@alum.mit.edu>
+ <20121221104437.GA5244@thyrsus.com>
+ <20121222034751.GA11635@book-mint>
+ <20121222062118.GA31331@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 22 13:31:48 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 14:05:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmOF0-0007JV-EB
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 13:31:46 +0100
+	id 1TmOlP-0004LG-N4
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 14:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182Ab2LVMb3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Dec 2012 07:31:29 -0500
-Received: from mout.gmx.net ([212.227.17.20]:55596 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751059Ab2LVMb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 07:31:28 -0500
-Received: from mailout-de.gmx.net ([10.1.76.69]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0MbvL6-1TUJgZ3u6A-00JLt0 for
- <git@vger.kernel.org>; Sat, 22 Dec 2012 13:31:25 +0100
-Received: (qmail invoked by alias); 22 Dec 2012 12:31:25 -0000
-Received: from d221135.adsl.hansenet.de (EHLO [80.171.221.135]) [80.171.221.135]
-  by mail.gmx.net (mp069) with SMTP; 22 Dec 2012 13:31:25 +0100
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX1+y5/t5YFCyS1tnWcl+h8IT+eYJwy14zHfgjtVIbs
-	cju7T4cJl/pvKW
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20121218164132.GC20122@sigill.intra.peff.net>
-X-Enigmail-Version: 1.4.6
-X-Y-GMX-Trusted: 0
+	id S1751168Ab2LVNE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 08:04:58 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.99]:37936 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751091Ab2LVNE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 08:04:57 -0500
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1TmOl3-0002qg-5w; Sat, 22 Dec 2012 14:04:53 +0100
+Content-Disposition: inline
+In-Reply-To: <20121222062118.GA31331@thyrsus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212047>
 
-On 12/18/2012 05:41 PM, Jeff King wrote:
-> I could reproduce it, too, on Linux.
->=20
-> The reason it does not always happen is that git will not re-examine =
-the
-> file content unless the timestamp on the file is older than what's in
-> the index. So it is a race condition for git to see whether the file =
-is
-> stat-dirty.
+Hi,
 
-/me still wonders whether this race condition is a feature or an issue
-in GIT - b/c it means that 2 different people cloning the same
-repository get different results.
+On Sat, Dec 22, 2012 at 01:21:18AM -0500, Eric S. Raymond wrote:
+> Heiko Voigt <hvoigt@hvoigt.net>:
+> > Back then when I was converting some repositories to git and I also
+> > wrote a quick testsuite for cvsps in an attempt to fix the bugs but gave
+> > up. That was the point when I wrote about cvsimports limitations in the
+> > documentation.
+> > 
+> > My commits can be found here:
+> > 
+> > 	http://repo.or.cz/w/cvsps-hv.git
+> > 
+> > I just quickly checked and it seems that it does not run cleanly on a
+> > modern Linux anymore. If it is of interest to you I can try to get it
+> > running again.
+> 
+> That would be helpful.  Please give it some effort.
 
+Here you go. I have pushed my changes on the master branch there.
 
->=20
-> -Peff
->=20
+You should now be able to run my tests with
 
+	make test
 
---=20
-MfG/Sincerely
-Toralf F=C3=B6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+from the root directory of the repository. The expected and actual
+output can be found in the t[0-9]{4}... directories underneath t/.
+
+Cheers Heiko
