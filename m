@@ -1,44 +1,65 @@
-From: Earl Gresh <egresh@codeaurora.org>
-Subject: Missing Refs after Garbage Collection
-Date: Fri, 21 Dec 2012 17:41:43 -0800
-Message-ID: <C0A16EC8-D05A-41D0-BF2A-34BF3B1B839E@codeaurora.org>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] mergetools/p4merge: Honor $TMPDIR for the /dev/null
+ placeholder
+Date: Fri, 21 Dec 2012 17:53:36 -0800
+Message-ID: <7v38yysvhb.fsf@alter.siamese.dyndns.org>
+References: <1356073023-15376-1-git-send-email-davvid@gmail.com>
+ <7v4njf2xrk.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 22 02:42:43 2012
+Cc: Jeremy Morton <admin@game-point.net>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 02:56:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmE6r-0002Vr-Lu
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 02:42:42 +0100
+	id 1TmEKX-0007yk-2N
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 02:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751468Ab2LVBlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2012 20:41:42 -0500
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:58524 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751033Ab2LVBlk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2012 20:41:40 -0500
-X-IronPort-AV: E=Sophos;i="4.84,333,1355126400"; 
-   d="scan'208";a="16091663"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 21 Dec 2012 17:41:40 -0800
-Received: from myvpn-r-02368.ras.qualcomm.com (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id E9BDE10004B4
-	for <git@vger.kernel.org>; Fri, 21 Dec 2012 17:41:39 -0800 (PST)
-X-Mailer: Apple Mail (2.1499)
+	id S1751352Ab2LVBxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2012 20:53:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45784 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750832Ab2LVBxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2012 20:53:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D08CA510;
+	Fri, 21 Dec 2012 20:53:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nocvbXHLE75PLNR54Fz6ZT5MQcU=; b=pLgY62
+	mWc8CZHoID+aBpUVWqEdjsy4TufA183EmF9kpPMpCTBfMvNVvlLu6Ky1yFHjoatG
+	mN5hgXBBLm3k0d7rZV/DKYpu/y2HyFkKGVdR3Hz7IPwStpbCPgNGoz8uCfubYtkl
+	+t1oKWPHN2/KGaWnNBs6WGg44cIpx/8NSV210=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ESxU7+QBj//nyWAGOk8OUEuKDt7f+X9a
+	/jImcZTcZaGz63b7mXPEz22VA6lIktHi1Iq0zOT9WmIYU+18Ep5u49jnmZQQ0dx1
+	wSQBUDX6+sE2pIVjthzW6SxrPrR00r9fRpUgy+5FKNLWWU0/QZppFI1HVAKx7XQR
+	aYh5urfYuTY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BBEAA50F;
+	Fri, 21 Dec 2012 20:53:39 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA81FA50D; Fri, 21 Dec 2012
+ 20:53:38 -0500 (EST)
+In-Reply-To: <7v4njf2xrk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 21 Dec 2012 08:08:47 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 67A54422-4BDA-11E2-899E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212023>
 
-Hi-
+Junio C Hamano <gitster@pobox.com> writes:
 
-I have observed that after running GC, one particular git repository ended up with some missing refs in the refs/changes/* namespace the Gerrit uses for storing patch sets. The refs were valid and should not have been pruned. Concerned about loosing data, GC is still enabled but ref packing is turned off. Now the number of refs has grown to the point that it's causing performance problems when cloning the project.
+> By the way, who is going to remove this temporary file once the
+> command is done?
 
-Is anyone familiar with git gc deleting valid references? I'm running git version 1.7.8. Have there been any patches in later git releases that might address this issue ( if it is a git problem )?
-
-Thanks
+Nevermind; I can see that once the backend returns it is removed in
+the same function.
