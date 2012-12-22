@@ -1,132 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/7] get_patch_filename(): drop "just-numbers" hack
-Date: Sat, 22 Dec 2012 00:33:30 -0800
-Message-ID: <1356165212-5611-6-git-send-email-gitster@pobox.com>
-References: <1356165212-5611-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 22 09:34:23 2012
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Pushing symbolic references to remote repositories?
+Date: Sat, 22 Dec 2012 10:26:32 +0100
+Message-ID: <m2ehiiv3nb.fsf@linux-m68k.org>
+References: <CAD03jn5ACZyxJM9LEOSJov3BsT3W1N0sV3WYwcerJciMSpmSPA@mail.gmail.com>
+	<CAJo=hJvqptfKqM+6J8Ddfb5qcqjAU8bB_JO9VB-XVsCCf64NUQ@mail.gmail.com>
+	<7vip7vrof6.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Dun Peal <dunpealer@gmail.com>, Shawn Pearce <spearce@spearce.org>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 10:27:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmKX9-00086k-Bw
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 09:34:15 +0100
+	id 1TmLMO-0005pB-1M
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 10:27:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317Ab2LVIdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 03:33:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64929 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751060Ab2LVIdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 03:33:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A58D828E
-	for <git@vger.kernel.org>; Sat, 22 Dec 2012 03:33:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=T0Nu
-	GUp64BLYZcZYnWLaNnGRl/g=; b=q2iWr/+U++qNvQcwhQ5OSv83jRK4mF+pq0Lp
-	g+gKTVuueyRE9rEKVvdBf0h6Lj03vScfqaMV988JuWjA35egfsiKqxIXO2TUypv8
-	XteZ1eXiLyy3lifYD68RdWlOlcsi/aR7XSJ/SpP3QpmjNgmJk6b4OcIPluEBVm1B
-	6EWGEZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=xLYoEK
-	5SvmkmtINhKsCru/NnfIDHJ5/VsXc9WJL3jj5H0YlCpv8LwlADMgBkyQL981/hgy
-	E0Bkf+JiJd6EjKvxH/40QK5aHybHGAvzYkRP8vZGyxf068qVdwgQMjGVNC5ZE7/8
-	IGuDKJplg+RmxFuvuBkqlXgjNIh34OpUq5XOI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8762F828D
-	for <git@vger.kernel.org>; Sat, 22 Dec 2012 03:33:44 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D764B828C for
- <git@vger.kernel.org>; Sat, 22 Dec 2012 03:33:43 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.rc2.227.g7335c9f
-In-Reply-To: <1356165212-5611-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 4BC56B32-4C12-11E2-B2D6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751059Ab2LVJ0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 04:26:46 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:59444 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816Ab2LVJ0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 04:26:44 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3YT1YV6MHGz4KK22;
+	Sat, 22 Dec 2012 10:26:38 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3YT1YV66yKzbbhf;
+	Sat, 22 Dec 2012 10:26:38 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id S6_4erFQ417c; Sat, 22 Dec 2012 10:26:37 +0100 (CET)
+X-Auth-Info: 5er4DH+fQF6hn7hNKHB32YReM/wdujzmwnh73SDPVh4=
+Received: from linux.local (ppp-88-217-127-54.dynamic.mnet-online.de [88.217.127.54])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sat, 22 Dec 2012 10:26:37 +0100 (CET)
+Received: by linux.local (Postfix, from userid 501)
+	id E6C9B1E541F; Sat, 22 Dec 2012 10:26:33 +0100 (CET)
+X-Yow: I've got to get these SNACK CAKES to NEWARK by DAWN!!
+In-Reply-To: <7vip7vrof6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 21 Dec 2012 15:11:25 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212044>
 
-The function chooses from three operating modes (format using the
-subject, the commit, or just number) based on NULL-ness of two of
-its parameters, which is an ugly hack for sharing only a bit of
-code.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Separate out the "just numbers" part out to the callers.
+> I think that the only one and a half sensible use cases that
+> unconditionally make sense to update symrefs across repositories are
+> to update bare.git/HEAD symref:
+>
+>  - update bare.git/HEAD of a repository that is a local mirror of a
+>    more authoritative repository with "git fetch --mirror", in which
+>    case you do want to follow what branch is designated as the
+>    primary by the project you are mirroring from;
+>
+>  - update bare.git/HEAD from outside by some means to change which
+>    branch is the primary one for the project. Only because your
+>    hosting site does not give you an easy way to do so, pushing from
+>    another repository that happens to point its HEAD at a different
+>    branch seems to be one plausible way to do so, but that does not
+>    have to be the only way.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/log.c |  5 ++++-
- log-tree.c    | 29 ++++++++++++++---------------
- 2 files changed, 18 insertions(+), 16 deletions(-)
+This is not limited to HEAD, any ref may want to be set up as a symref
+at a remote repo.  For example, I want to set up a symref master ->
+trunk at a repository I have no shell access to.  Without this I get
+spurious error whenever I fetch from that remote (where master and trunk
+are separate refs) into a local mirror which does have the symref:
 
-diff --git a/builtin/log.c b/builtin/log.c
-index d9946ec..3c6f20a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -684,7 +684,10 @@ static int reopen_stdout(struct commit *commit, const char *subject,
- 			strbuf_addch(&filename, '/');
- 	}
- 
--	get_patch_filename(&filename, commit, subject, rev);
-+	if (rev->numbered_files)
-+		strbuf_addf(&filename, "%d", rev->nr);
-+	else
-+		get_patch_filename(&filename, commit, subject, rev);
- 
- 	if (!quiet)
- 		fprintf(realstdout, "%s\n", filename.buf + outdir_offset);
-diff --git a/log-tree.c b/log-tree.c
-index ceed6b6..d9f86ce 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -307,21 +307,18 @@ void get_patch_filename(struct strbuf *buf,
- 	int nr = info->nr;
- 	int suffix_len = strlen(suffix) + 1;
- 	int start_len = buf->len;
-+	int max_len = start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
- 
--	strbuf_addf(buf, commit || subject ? "%04d-" : "%d", nr);
--	if (commit || subject) {
--		int max_len = start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
-+	strbuf_addf(buf, "%04d-", nr);
-+	if (subject)
-+		strbuf_addstr(buf, subject);
-+	else if (commit) {
- 		struct pretty_print_context ctx = {0};
--
--		if (subject)
--			strbuf_addstr(buf, subject);
--		else if (commit)
--			format_commit_message(commit, "%f", buf, &ctx);
--
--		if (max_len < buf->len)
--			strbuf_setlen(buf, max_len);
--		strbuf_addstr(buf, suffix);
-+		format_commit_message(commit, "%f", buf, &ctx);
- 	}
-+	if (max_len < buf->len)
-+		strbuf_setlen(buf, max_len);
-+	strbuf_addstr(buf, suffix);
- }
- 
- void log_write_email_headers(struct rev_info *opt, struct commit *commit,
-@@ -390,9 +387,11 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			 mime_boundary_leader, opt->mime_boundary);
- 		extra_headers = subject_buffer;
- 
--		get_patch_filename(&filename,
--				   opt->numbered_files ? NULL : commit, NULL,
--				   opt);
-+		if (opt->numbered_files)
-+			strbuf_addf(&filename, "%d", opt->nr);
-+		else
-+			get_patch_filename(&filename, commit, NULL,
-+					   opt);
- 		snprintf(buffer, sizeof(buffer) - 1,
- 			 "\n--%s%s\n"
- 			 "Content-Type: text/x-patch;"
+>From git://repo.or.cz/emacs
+   f0ae89f..5595931  master     -> master
+error: Ref refs/heads/trunk is at 559593152b9de5a1c144729e0583fa7968abab22 but expected f0ae89f92326beb3f5a19e90c8f4fe0ab6197926
+ ! f0ae89f..5595931  trunk      -> trunk  (unable to update local ref)
+
+Andreas.
+
 -- 
-1.8.0.6.gd28b5d4.dirty
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
