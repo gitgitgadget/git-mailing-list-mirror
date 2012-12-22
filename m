@@ -1,67 +1,142 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Change in cvsps maintainership, abd a --fast-export option
-Date: Sat, 22 Dec 2012 17:25:57 +0100
-Message-ID: <m2r4miqciy.fsf@igel.home>
-References: <20121220215638.E54BC44119@snark.thyrsus.com>
-	<50D4199C.6000002@alum.mit.edu> <20121221104437.GA5244@thyrsus.com>
-	<20121222034751.GA11635@book-mint> <20121222140453.GB375@thyrsus.com>
-	<CALWbr2zZFq_9qa+pTx3nYn+KFv61LrSMcNM4N1Xs5cmnr8teXg@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG] Cannot push some grafted branches
+Date: Sat, 22 Dec 2012 17:38:46 +0100
+Message-ID: <50D5E216.4080006@drmicha.warpmail.net>
+References: <20121211153903.7522d6b0@chalon.bertin.fr> <7vd2yg8ngk.fsf@alter.siamese.dyndns.org> <20121212094432.6e1e48c8@chalon.bertin.fr> <7v38zb3ux0.fsf@alter.siamese.dyndns.org> <877goht6eu.fsf@pctrast.inf.ethz.ch> <20121217114058.449cbc3c@chalon.bertin.fr> <CAP8UFD2pkotNy=t5wTxDH-pMivQsTz-kw2y8Y7rWY42YKabp7g@mail.gmail.com> <m21ueo78f8.fsf@igel.home> <7vwqwgjs8f.fsf@alter.siamese.dyndns.org> <20121218120058.0c558ba5@chalon.bertin.fr> <7vehinibpc.fsf@alter.siamese.dyndns.org> <87ip7yp4mf.fsf@pctrast.inf.ethz.ch> <7vvcbx956f.fsf@alter.siamese.dyndns.org> <50D45A78.3020104@drmicha.warpmail.net> <7vzk171gvh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: esr@thyrsus.com, Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 22 17:26:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Yann Dirson <dirson@bertin.fr>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 17:39:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmRu6-0006di-3y
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 17:26:26 +0100
+	id 1TmS6S-00022m-Ks
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 17:39:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751695Ab2LVQ0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 11:26:07 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:49792 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751659Ab2LVQ0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 11:26:06 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3YTBsN6BzPz3hhj4;
-	Sat, 22 Dec 2012 17:25:59 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3YTBsL6gKPzbbcZ;
-	Sat, 22 Dec 2012 17:25:58 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id hGHeR5Dzq8_Q; Sat, 22 Dec 2012 17:25:58 +0100 (CET)
-X-Auth-Info: zUYSdXUuBkabFIBEo2qfzqD0GRGtq4FPmyR04l6Nock=
-Received: from igel.home (ppp-88-217-127-54.dynamic.mnet-online.de [88.217.127.54])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat, 22 Dec 2012 17:25:58 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id E825FCA2A2; Sat, 22 Dec 2012 17:25:57 +0100 (CET)
-X-Yow: ...A housewife is wearing a polypyrene jumpsuit!!
-In-Reply-To: <CALWbr2zZFq_9qa+pTx3nYn+KFv61LrSMcNM4N1Xs5cmnr8teXg@mail.gmail.com>
-	(Antoine Pelisse's message of "Sat, 22 Dec 2012 15:10:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.91 (gnu/linux)
+	id S1751731Ab2LVQi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 11:38:56 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38631 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751659Ab2LVQiy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 11:38:54 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 3B8F9204F9;
+	Sat, 22 Dec 2012 11:38:53 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Sat, 22 Dec 2012 11:38:53 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=n630MrzBQpI/fFb2qZU0B0
+	OzHwc=; b=Z4Yq3xTV+mlmAVWA769i8rGpfLboEADxenAcw8UgBFuzkUShMHBhvh
+	2QjUPrZJQs4hGuka/wU3qU0r8hAv0Am0lJFkSom1s5XpVEgPecO/Zpo2Bd2LXc1R
+	LBg+kaxaiRpT6GsYoM2vbdZAZ46SSV8rrfb3s4fKX6k0uBVsfXZAo=
+X-Sasl-enc: zdtgRZtnZ7wT2dNRjVrBJ38eDBVN5c1YwPNG/yfAzcMp 1356194332
+Received: from localhost.localdomain (unknown [88.70.134.107])
+	by mail.messagingengine.com (Postfix) with ESMTPA id F1D6D8E06FF;
+	Sat, 22 Dec 2012 11:38:51 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vzk171gvh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212056>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Junio C Hamano venit, vidit, dixit 21.12.2012 17:58:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> While replace refs are much more general than grafts, it seems the two
+>> main uses are:
+>>
+>> - grafts (change the recorded parents for a commit)
+>> - svn cleanup (convert tagging commits into tag objects)
+>>
+>> The latter one being quite a special case already.
+>>
+>> The script below has helped me move from grafts to replace objects.
+>> While not being super clean, something like it may be fit for contrib.
+>>
+>> I think we ought to help John Doe get along with parents, while we can
+>> safely leave most more advanced operations to people who know how to
+>> edit a raw object file. Putting that facility into "git-commit" seems to
+>> be too encouraging, though - people would use replace when they should
+>> use amend or rebase-i. I'd prefer a special git-replace mode (be it
+>> "--graft" or "--graft-commit") which does just what my script does. We
+>> could add things like "--commit-tag" later, a full blown
+>> "object-factory" seems like overkill.
+>>
+>> Michael
+>>
+>> --->%---
+>>
+>> #!/bin/sh
+>>
+>> die () {
+>> 	echo "$@"
+>> 	rm -f "$commitfile"
+>>  	exit 1
+>> }
+>>
+>> warn () {
+>> 	echo "$@"
+>> }
+>>
+>> test $# -gt 0 || die "Usage: $0 <commit> [<parent>]*"
+>>
+>> for commit
+>> do
+>> 	git rev-parse --verify -q "$commit" >/dev/null || die "Cannot parse
+>> $commit."
+>> 	test x$(git cat-file -t $commit) == "xcommit" || die "$commit is no
+>> commit."
+> 
+> s/==/=/ or you have to say #!/bin/bash on the first line, I think.
+> Appears multiple times throughout this script.
+> 
+> 
+>> done
+>>
+>> commit="$1"
+>> shift
+>>
+>> commitfile=$(mktemp)
+>>
+>> git cat-file commit "$commit" | while read a b
+>> do
+>> 	if test "$a" != "parent"
+>> 	then
+>> 		echo $a $b
+> 
+> You are losing information on non-header lines by reading without
+> "-r" in the above, and also multi-line headers (e.g. mergetag),
+> aren't you?
+>
 
-> I guess 'w' means write
+Oh yes, it has bashisms and imperfections. It's not a submitted patch,
+not even RFC. It's meant to show the git-replace mode that many users
+could benefit from: works for commits only and replaces the parent list,
+but takes any rev arguments as the new parents, rather than forcing the
+user to specify a full sha1.
 
-No, 'w' mean gitweb.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+>> 	fi
+>> 	if test "$a" == "tree"
+>> 	then
+>> 		for parent
+>> 		do
+>> 			echo "parent $(git rev-parse $parent)"
+>> 		done
+>> 	fi
+>> done >$commitfile
+>> hash=$(git hash-object -t commit -w "$commitfile") || die "Cannot create
+>> commit object."
+>> git replace "$commit" $hash
+>> rm -f $commitfile
