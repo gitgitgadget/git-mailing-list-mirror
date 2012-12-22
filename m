@@ -1,68 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Pushing symbolic references to remote repositories?
-Date: Sat, 22 Dec 2012 10:27:35 -0800
-Message-ID: <7vy5gqq6w8.fsf@alter.siamese.dyndns.org>
-References: <CAD03jn5ACZyxJM9LEOSJov3BsT3W1N0sV3WYwcerJciMSpmSPA@mail.gmail.com>
- <CAJo=hJvqptfKqM+6J8Ddfb5qcqjAU8bB_JO9VB-XVsCCf64NUQ@mail.gmail.com>
- <7vip7vrof6.fsf@alter.siamese.dyndns.org> <m2ehiiv3nb.fsf@linux-m68k.org>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH] Sort howto documents in howto-index.txt
+Date: Sat, 22 Dec 2012 19:34:27 +0100 (CET)
+Message-ID: <1870890640.302608.1356201267202.JavaMail.ngmail@webmail13.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dun Peal <dunpealer@gmail.com>, Shawn Pearce <spearce@spearce.org>,
-	Git ML <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Dec 22 19:28:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: th.acker@arcor.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 22 19:34:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmTng-0002qk-Rv
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 19:27:57 +0100
+	id 1TmTuI-0001H8-PW
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 19:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071Ab2LVS1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 13:27:39 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40745 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752037Ab2LVS1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 13:27:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96516AE7E;
-	Sat, 22 Dec 2012 13:27:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cIciowULF22fZByD4FmisGvUkd8=; b=ZVUqkI
-	OlS/rTpDNvaz6skE8yUtOdNNgeJZ5nlC/6kaYvU4+X33EeGm0SBgDqV8J4c6ATyU
-	1P3CD+H4ODYD7PNYc4MNGWvbG1o9Uny5nYJiwTn3ywNfbco/m6d9zS3gGPDBuAfz
-	hmFyHrf2cPBatySjrCC4Yf17+M6yGowsXX3Es=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=noGO3AqBrWO0TACKZyBXYVCi2A1HjV3A
-	bVTqKeTZfJ/T0oqxPk+hDcCpfeQrERBynUmXyHbXIwlM37pD4dhoDGGlK3zsxZW6
-	Gmt2eaL+DMM42C9qAjiBlzSKq7PdtmcqlJDLRqCPgGstOgISu/ql1GjoMpcv3rOI
-	l9ve7hOGGpc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83E75AE7D;
-	Sat, 22 Dec 2012 13:27:37 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 053FEAE7C; Sat, 22 Dec 2012
- 13:27:36 -0500 (EST)
-In-Reply-To: <m2ehiiv3nb.fsf@linux-m68k.org> (Andreas Schwab's message of
- "Sat, 22 Dec 2012 10:26:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 42C73850-4C65-11E2-BFAE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751866Ab2LVSea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 13:34:30 -0500
+Received: from mail-in-08.arcor-online.net ([151.189.21.48]:42483 "EHLO
+	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751790Ab2LVSe2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 13:34:28 -0500
+Received: from mail-in-15-z2.arcor-online.net (mail-in-15-z2.arcor-online.net [151.189.8.32])
+	by mx.arcor.de (Postfix) with ESMTP id 3F39B3AEF65
+	for <git@vger.kernel.org>; Sat, 22 Dec 2012 19:34:27 +0100 (CET)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-15-z2.arcor-online.net (Postfix) with ESMTP id 361C211204A;
+	Sat, 22 Dec 2012 19:34:27 +0100 (CET)
+Received: from webmail13.arcor-online.net (webmail13.arcor-online.net [151.189.8.66])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 30F7CD8149;
+	Sat, 22 Dec 2012 19:34:27 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-03.arcor-online.net 30F7CD8149
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1356201267; bh=cYbKbvfo6Q7fsFEM+1/Etv8w3p/MJjQYVzzMVlMT8lM=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=EOILB1uwdYU+ZlTu6btRvYw2Vgj/FRzKIVpamAIR9R6CFWSh/pXiPDdAfu4h76aMy
+	 SYcLgBoxQ0rdFnPQffaMr4bSsH8LsWnWd445s5d3dRabn41AF05pKKfk6tt7Ih0st2
+	 tukbAQ+bnxb+uTKce23DDjVecGrU9EomwQqlvDRc=
+Received: from [94.217.21.153] by webmail13.arcor-online.net (151.189.8.66) with HTTP (Arcor Webmail); Sat, 22 Dec 2012 19:34:27 +0100 (CET)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.21.153
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212064>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
 
-> This is not limited to HEAD, any ref may want to be set up as a symref
-> at a remote repo.  For example, I want to set up a symref master ->
-> trunk at a repository I have no shell access to.
+Howto documents in howto-index.txt were listed in a rather
+random order. So better sort them.
 
-That is exactly the "hosting side does not give you an easy way so
-pushing seems to be one plausible but not necessarily has to be the
-only way" case, so it is already covered in the discussion.
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index d7417b8..ff8ad9a 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -348,7 +348,7 @@ $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+ 
+ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	$(QUIET_GEN)$(RM) $@+ $@ && \
+-	'$(SHELL_PATH_SQ)' ./howto-index.sh $(wildcard howto/*.txt) >$@+ && \
++	'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
+ 	mv $@+ $@
+ 
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+-- 
+1.8.0.msysgit.0
+
+
+
+---
+Thomas
