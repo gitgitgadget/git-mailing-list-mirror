@@ -1,118 +1,68 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Right way to import a repo
-Date: Sat, 22 Dec 2012 18:57:40 +0100
-Message-ID: <50D5F494.7060200@drmicha.warpmail.net>
-References: <1530104.jO5zzzN8PS@horus>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Pushing symbolic references to remote repositories?
+Date: Sat, 22 Dec 2012 10:27:35 -0800
+Message-ID: <7vy5gqq6w8.fsf@alter.siamese.dyndns.org>
+References: <CAD03jn5ACZyxJM9LEOSJov3BsT3W1N0sV3WYwcerJciMSpmSPA@mail.gmail.com>
+ <CAJo=hJvqptfKqM+6J8Ddfb5qcqjAU8bB_JO9VB-XVsCCf64NUQ@mail.gmail.com>
+ <7vip7vrof6.fsf@alter.siamese.dyndns.org> <m2ehiiv3nb.fsf@linux-m68k.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Florian Lindner <mailinglists@xgm.de>
-X-From: git-owner@vger.kernel.org Sat Dec 22 18:58:06 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Dun Peal <dunpealer@gmail.com>, Shawn Pearce <spearce@spearce.org>,
+	Git ML <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Dec 22 19:28:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmTKm-0000ni-Sf
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 18:58:05 +0100
+	id 1TmTng-0002qk-Rv
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 19:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945Ab2LVR5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 12:57:47 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35562 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751883Ab2LVR5q (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 12:57:46 -0500
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id A6BF8207F0;
-	Sat, 22 Dec 2012 12:57:45 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Sat, 22 Dec 2012 12:57:45 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=c2TPyrGBZuRbi0P+gSFnBZ
-	1e5xY=; b=bK7cdtj8Uam4W7KuEGwpcy1W1xo9nIn3TGDp8jSwCnSRBHiTsebIEy
-	doY6m4hq4RnVAOjkXfRdq0pnrJjArUD0iK/gMBkUTnckvvWMztlgiaO14G7SYe0c
-	q69aa8ozsDzDYHtsFoUSbsj5LwiGFEgzHuIcmuTCd7c0udrIVX418=
-X-Sasl-enc: YEZCCEiOahhKtiF1V0sAMn8YhN6jo5CNuyYoYHNeGhTV 1356199065
-Received: from localhost.localdomain (unknown [88.70.134.107])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 119F28E06FC;
-	Sat, 22 Dec 2012 12:57:44 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <1530104.jO5zzzN8PS@horus>
+	id S1752071Ab2LVS1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 13:27:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40745 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752037Ab2LVS1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 13:27:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96516AE7E;
+	Sat, 22 Dec 2012 13:27:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cIciowULF22fZByD4FmisGvUkd8=; b=ZVUqkI
+	OlS/rTpDNvaz6skE8yUtOdNNgeJZ5nlC/6kaYvU4+X33EeGm0SBgDqV8J4c6ATyU
+	1P3CD+H4ODYD7PNYc4MNGWvbG1o9Uny5nYJiwTn3ywNfbco/m6d9zS3gGPDBuAfz
+	hmFyHrf2cPBatySjrCC4Yf17+M6yGowsXX3Es=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=noGO3AqBrWO0TACKZyBXYVCi2A1HjV3A
+	bVTqKeTZfJ/T0oqxPk+hDcCpfeQrERBynUmXyHbXIwlM37pD4dhoDGGlK3zsxZW6
+	Gmt2eaL+DMM42C9qAjiBlzSKq7PdtmcqlJDLRqCPgGstOgISu/ql1GjoMpcv3rOI
+	l9ve7hOGGpc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83E75AE7D;
+	Sat, 22 Dec 2012 13:27:37 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 053FEAE7C; Sat, 22 Dec 2012
+ 13:27:36 -0500 (EST)
+In-Reply-To: <m2ehiiv3nb.fsf@linux-m68k.org> (Andreas Schwab's message of
+ "Sat, 22 Dec 2012 10:26:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 42C73850-4C65-11E2-BFAE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212063>
 
-Florian Lindner venit, vidit, dixit 21.12.2012 17:11:
-> Hello,
-> 
-> I have two repositories. tools and flof. I want to merge flof into tools (and 
-> flof will be deleted after that) while keeping history intact. Of course I've 
-> googled that and found a number of different solution which all seem to be 
-> pretty komplex, so I just tried it myself. It seems to work.... are there any 
-> problems with my approach?
-> 
-> ~/software/tools.test (git)-[master] % git remote add fl ~/flof
-> 
-> ~/software/tools.test (git)-[master] % git fetch fl
-> warning: no common commits
-> remote: Counting objects: 475, done.
-> remote: Compressing objects: 100% (460/460), done.
-> remote: Total 475 (delta 251), reused 0 (delta 0)
-> Receiving objects: 100% (475/475), 190.40 KiB, done.
-> Resolving deltas: 100% (251/251), done.
-> From /home/florian/flof
->  * [new branch]      master     -> fl/master
->  * [new branch]      v2-rewrite -> fl/v2-rewrite
-> 
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Two disjoint histories, nothing wrong with that.
+> This is not limited to HEAD, any ref may want to be set up as a symref
+> at a remote repo.  For example, I want to set up a symref master ->
+> trunk at a repository I have no shell access to.
 
-> /software/tools.test (git)-[master] % git checkout -b import fl/master
-> Branch import set up to track remote branch master from fl.
-> Switched to a new branch 'import'
-> 
-> Doing some mkdir und git mv for reorganisation.
-
-Here avoid possible problems from both projects using the same root (in
-the filesystem/tree sense).
-
-> ~/software/tools.test/flof (git)-[import] % git commit -m "Reorganize flof."
-> [import a00ab54] Reorganize flof.
->  152 files changed, 0 insertions(+), 0 deletions(-)
->  rename {doc => flof/doc}/common.rst (100%)
->  rename {doc => flof/doc}/conf.py (100%)
->  [...]
-> 
-> ~/software/tools.test/flof (git)-[import] % git checkout master
-> Switched to branch 'master'
-> 
-> ~/software/tools.test (git)-[master] % git merge import
-> Auto-merging .gitignore
-> CONFLICT (add/add): Merge conflict in .gitignore
-> Automatic merge failed; fix conflicts and then commit the result.
-> 
-> Resolving the conflict.
-> 
-> ~/software/tools.test (git)-[master|merge] % git add .gitignore
-> 
-> ~/software/tools.test (git)-[master|merge] % git commit -m "Merged flof."
-> [master b8c85be] Merged flof.
-> 
-> ~/software/tools.test (git)-[master] % git remote rm fl
-> 
-> Are thery any problems with this procedure? The history seems to intact. I'm 
-> quite unsure since still being a git beginner. 
-
-It works in the sense that git follows the renames (moves) you had to do
-prior to the merge.
-
-Other tools like git-subtree do that history implanting in one step, by
-putting the added project into a subtree (rewriting the history). That
-way you don't have reorg commits in the history.
-
-Michael
+That is exactly the "hosting side does not give you an easy way so
+pushing seems to be one plausible but not necessarily has to be the
+only way" case, so it is already covered in the discussion.
