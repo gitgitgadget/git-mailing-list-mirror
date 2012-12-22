@@ -1,105 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: problem with BOINC repository and CR/LF
-Date: Sat, 22 Dec 2012 11:17:25 -0800
-Message-ID: <7vhandrj5m.fsf@alter.siamese.dyndns.org>
-References: <50CEF289.4040503@gmx.de>
- <CAH5451=FpmtGVVJ=mubE0KeD-tTVaNU96audzTRnNQh2BEEXPg@mail.gmail.com>
- <50CF41EB.1060402@gmx.de>
- <CAH5451=xiipSKrAb_DFXCW=+NAn+mnSm1zPzjhEVc8fZ2KGcnw@mail.gmail.com>
- <50D03D80.3090005@gmx.de> <50D05E62.7090605@web.de>
- <20121218164132.GC20122@sigill.intra.peff.net> <50D5A81B.1000306@gmx.de>
+Subject: Re: [PATCH] Sort howto documents in howto-index.txt
+Date: Sat, 22 Dec 2012 11:40:03 -0800
+Message-ID: <7v8v8pri3w.fsf@alter.siamese.dyndns.org>
+References: <1870890640.302608.1356201267202.JavaMail.ngmail@webmail13.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Dec 22 20:23:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sat Dec 22 20:40:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmUeu-0008Rf-J4
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 20:22:56 +0100
+	id 1TmUvp-00024G-FX
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Dec 2012 20:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923Ab2LVTRa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Dec 2012 14:17:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36446 "EHLO
+	id S1752046Ab2LVTkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 14:40:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48995 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750853Ab2LVTR2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 14:17:28 -0500
+	id S1751034Ab2LVTkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 14:40:06 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1D8FAF60;
-	Sat, 22 Dec 2012 14:17:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DDE1A65F;
+	Sat, 22 Dec 2012 14:40:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=iBXQbMQ/unJgZdDy3VmjWXbEz
-	tU=; b=L/jOKXyWu5wSy+CcDHJTrBO1tv1iL5NDcG+rmJAkSYVnbPgNfTBpv1ZXX
-	vlP6muJiDnl8l7i6EjUEYY15lE7ujOfkHNLiOl0OC0U7kyHHmgUDA3+mFAOVoJu4
-	jbX2gOdIlcTp1XAkUgLZr9u4J/ahWkEBSUh8Q7ph6aHHFj0eoE=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6awXh0cIiJe0ij5k6ZaLNOuFnFs=; b=PVXQ44
+	5nbHolKRX3sA2vWUPzgoj2X9dRq2o0tbK1BRnr5c4gkBRtMna9mFN7e5QNuaOHtv
+	OzfBDvSmMe6YBoa+NZPAd6mzZfGNQm48N4d0MCN3BHdVP+ACrabjLR3UUWt/nh4L
+	YI4F4IluivyaRrNBS4hLlpmt6mhtb2Mc/4nq8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=cw7X+RJ/+znpa+jSZ4c
-	5FunZt8KrDeqDb3nHRI97jKU2TuJxpbeYDbidzrRg6ijJW15mUaX38yxAo8+OvL3
-	50g67rSxITCfCZx6pnmGZ9/kF/QQ5DEj/lfsnBUZFnUTZFOoFEZFws+jf+9JKcQN
-	n+CI4fTEfiufnQBMBnqqxwaE=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QVyKkdMp6WbOVh0TbTHbxNJNL0IVzo2e
+	cPLNzwpuqFzymExq4HTPUJnbNDzfuK3rTWdy4dRs+NtMO9FtHfsJrFGBIRKCmMwK
+	6QdG4XddlJh814TlDE4Du4kng9kk+vIkCSETCdTYvzK768scXzEDKqatAre+z5p4
+	Il1FJ0QQbDA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEF64AF5F;
-	Sat, 22 Dec 2012 14:17:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88606A65D;
+	Sat, 22 Dec 2012 14:40:05 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21EBAAF5E; Sat, 22 Dec 2012
- 14:17:27 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E016AA65C; Sat, 22 Dec 2012
+ 14:40:04 -0500 (EST)
+In-Reply-To: <1870890640.302608.1356201267202.JavaMail.ngmail@webmail13.arcor-online.net>
+ (Thomas Ackermann's message of "Sat, 22 Dec 2012 19:34:27 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 39070578-4C6C-11E2-81F1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 62537EAE-4C6F-11E2-8223-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212069>
 
-Toralf F=C3=B6rster <toralf.foerster@gmx.de> writes:
+Thomas Ackermann <th.acker@arcor.de> writes:
 
-> On 12/18/2012 05:41 PM, Jeff King wrote:
->> I could reproduce it, too, on Linux.
->>=20
->> The reason it does not always happen is that git will not re-examine=
- the
->> file content unless the timestamp on the file is older than what's i=
-n
->> the index. So it is a race condition for git to see whether the file=
- is
->> stat-dirty.
+> Howto documents in howto-index.txt were listed in a rather
+> random order. So better sort them.
 >
-> /me still wonders whether this race condition is a feature or an issu=
-e
-> in GIT - b/c it means that 2 different people cloning the same
-> repository get different results.
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
 
-The primary point of Peff's demonstration was to show that you told
-your repository to lie to Git, I think.  It promised that the
-contents in the repository was with certain line endings when they
-are not.  At that point Git can do whatever happens when it trusts
-its behaviour on that broken promise.
+I think $(wildcard) used to sort but in recent GNU make it no longer
+does, so this is probably a good change.
 
-When the timestamp is set one way, Git happened to be extra careful
-for other reasons---Git is not in the business of suspecting that
-the user lied and double checking by wasting cycles [*1*]---and that
-extra check that does not have anything to do with the end-of-line
-conversion found that it was lied and noticed differences.
+Do we need to explicitly sort the api-index as well?  $(API_DOCS) is
+fed to the script that reads filenames one at a time in the given
+order, but I do not see anybody asking for a sorted list while
+producing that list.  The result looks to be sorted in my build
+farm with GNU make 3.82, but that could be by accident.
 
-That is neither a feature nor a bug.
-
-[Footnote]
-
-*1* This extra carefulness is to handle the case where *filesystems*
-lie to Git.  The user cannot do anything to make the filesystem not
-to lie, so we try to be extra careful and examine the contents even
-when the stat information (incorrectly) says that the file is not
-modified.  Also luckily this happens only to minority of the paths
-(i.e. you do "git add" and then replace the file with different
-contents of the same length within the same timestamp granularity,
-or something like that), so we can afford to.
+>  Documentation/Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index d7417b8..ff8ad9a 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -348,7 +348,7 @@ $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+>  
+>  howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+>  	$(QUIET_GEN)$(RM) $@+ $@ && \
+> -	'$(SHELL_PATH_SQ)' ./howto-index.sh $(wildcard howto/*.txt) >$@+ && \
+> +	'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
+>  	mv $@+ $@
+>  
+>  $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
