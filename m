@@ -1,78 +1,160 @@
-From: Dennis Putnam <dap1@bellsouth.net>
-Subject: Using Eclipse git plugin
-Date: Sun, 23 Dec 2012 11:16:51 -0500
-Message-ID: <50D72E73.8070501@bellsouth.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] learn to pick/revert into unborn branch
+Date: Sun, 23 Dec 2012 11:18:51 -0800
+Message-ID: <7v4njcpof8.fsf@alter.siamese.dyndns.org>
+References: <1356117013-20613-1-git-send-email-martinvonz@gmail.com>
+ <1356117013-20613-2-git-send-email-martinvonz@gmail.com>
+ <7vr4mhpi0l.fsf@alter.siamese.dyndns.org>
+ <CANiSa6i0-Z=FkPnSJxgT+3ABHTzgOTNNNUb=wHQpm2DKAN_UOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig9A953E2A9ADBD75C56FDB829"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 23 17:17:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 23 20:19:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmoEi-0004Ou-DV
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Dec 2012 17:17:12 +0100
+	id 1Tmr58-0004vR-UR
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Dec 2012 20:19:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482Ab2LWQQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Dec 2012 11:16:52 -0500
-Received: from nm4-vm0.access.bullet.mail.mud.yahoo.com ([66.94.237.138]:41291
-	"EHLO nm4-vm0.access.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751215Ab2LWQQu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Dec 2012 11:16:50 -0500
-Received: from [66.94.237.126] by nm4.access.bullet.mail.mud.yahoo.com with NNFMP; 23 Dec 2012 16:16:49 -0000
-Received: from [98.139.244.53] by tm1.access.bullet.mail.mud.yahoo.com with NNFMP; 23 Dec 2012 16:16:49 -0000
-Received: from [127.0.0.1] by smtp115.sbc.mail.bf1.yahoo.com with NNFMP; 23 Dec 2012 16:16:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bellsouth.net; s=s1024; t=1356279409; bh=C/K1JHxAzQ8GS0rQ9CvHBCFzLb+vHTXLFnqlUy6ooCY=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:X-Enigmail-Version:Content-Type; b=iN2bP+tDkyfEUTXVdEJ62BSVUVPUgjYb4Y8jqUyuiQzU3phPd5B9HRAw91szRjRvz+voblltrNYUmu/vTmy7x4h2aYUGa6JnVUHSjJfyVaSyhBj4KEBzXsvBPnCEXhWMLln11z2WwJ+sfjbSK1FJbiPRWnSDMUfJIHKHLjidfuI=
-X-Yahoo-Newman-Id: 824163.9798.bm@smtp115.sbc.mail.bf1.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: mlw7un0VM1noqhpjhB3h4bodxhpGNAg2__VFxzHlfhShwyO
- 0NnR89e.4lqIDLB_.j2fI0mfPfbtYXII8WQDoeZzhAUEGQWgQb1H8FLvDzOs
- SRVWYkxAzH3kmLucSCnG8mF._nIXlcrXWZzeh7C75Q.LMatlSnvNOuFXmDCq
- e19v9JR6trTqw2ENu.QcPiE2AcgE3xhvI.Zoi4RiD4mOFdckafrw9rrGD8H7
- ROyyuS5I3.auspWkxvBxKwS6L0aMOtbxt.W1PHi18oIKQmTtPCt0NDRRYSSm
- WpY1Pu0aomZg0fKzNqvwUBWpQmdgQYXsqVxnAz5GDkWcJVyt5BMd4edhFl5s
- TmQX8ituU7PPQBDOJig4Zm4PWUpO8PWgU_WdTOONApNQDG5G.DfF7PzNDh7M
- yxSQw3qpbYip2HxWGGEcTd_qbD_Pz9.TpuWpbV5zQqmK8y7U_wcOq6A--
-X-Yahoo-SMTP: vUK3UKuswBCE01YQVYEZ1wHCa.HPSVCYhektzgdifA--
-Received: from [192.168.0.100] (dap1@74.176.50.42 with plain)
-        by smtp115.sbc.mail.bf1.yahoo.com with SMTP; 23 Dec 2012 08:16:49 -0800 PST
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-X-Enigmail-Version: 1.4.6
+	id S1752151Ab2LWTS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Dec 2012 14:18:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51258 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751511Ab2LWTSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Dec 2012 14:18:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 723CDAB5F;
+	Sun, 23 Dec 2012 14:18:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BvXMs98nCgXERqez0qDKrDAvefk=; b=nfjaiv
+	xNmZnC3gQ4gRXgV/NNmufA9WqLGDR2g/WGo19sTxDCXFWTVxCxPrBq7HIumU551n
+	6/SZKPEXhQYMlzNs2JrSmNz1wGnGx4nxc8J86S9b3CyC61e4DcjIPlXd5vidX5jL
+	WiHf6R0me/EafXG7oz2uFSo5WwEGDZMJJU6H0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pnvuy4pQkyo238FJtRADZ1FfZ7WEqdqQ
+	wCvmBJn8Hwro4lJ/g9QPRB0qTwgmiMXMaVvn4a3Khqy7iy+A8fK74Stv6cJTaT2f
+	v0MQ2nyRyWceEhOV8XKOab5q8qRVR0hRIDjXHkSPRPGSPnhABCWi4LwjpyVevMT0
+	e/29N9p5SxU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E4EBAB58;
+	Sun, 23 Dec 2012 14:18:54 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B145AB54; Sun, 23 Dec 2012
+ 14:18:53 -0500 (EST)
+In-Reply-To: <CANiSa6i0-Z=FkPnSJxgT+3ABHTzgOTNNNUb=wHQpm2DKAN_UOw@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Sat, 22 Dec 2012 22:24:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 96FED75E-4D35-11E2-A467-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212086>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig9A953E2A9ADBD75C56FDB829
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-This may be more of an Eclipse question than a git question but
-hopefully someone on this list knows both. I now have a working git
-central repository (on Linux) and a local repository clone (on Windows).
-I can see and edit my files in Eclipse, commit them and push them to the
-remote repository. The problem I am having now is developing my code in
-Eclipse. It seems I can no longer run the code as the 'Run as
-Application' menu item is missing. How do I test my code now? TIA.
+> On Sat, Dec 22, 2012 at 7:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Martin von Zweigbergk <martinvonz@gmail.com> writes:
+>>
+>>>>From the user's point of view, it seems natural to think that
+>>> cherry-picking into an unborn branch should work, so make it work,
+>>> with or without --ff.
+>>
+>> I actually am having a hard time imagining how that could ever be
+>> natural.
+>
+> Fair enough. What's natural is of course very subjective.  ...
+> happens to be empty. Of course, pretty much any operation that needs
+> more than the tree (indirectly) pointed to by HEAD would fail the
+> "whenever possible" clause. I realize that cherry-pick _does_ need the
+> current commit to record the parent of the resulting commit,...
 
+Yes, and I do not think it is an implementation detail.
 
---------------enig9A953E2A9ADBD75C56FDB829
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+I am not opposed to an "internal use" of the cherry-pick machinery to
+implement a corner case of "rebase -i":
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+    1. Your first commit adds "Makefile" and "hello.c", to build the
+       "Hello world" program.
 
-iEYEARECAAYFAlDXLnMACgkQ/fiWYqZ2tVTW1ACgnbxqeaix7rXvPUshXe1YKRO0
-NAgAoNNKjwWLLEjmzhLzhEtADN9/nds1
-=ylPL
------END PGP SIGNATURE-----
+    2. Your second commmit adds "goodbye.c" and modifies "Makefile",
+       to add the "Goodbye world" program.
 
---------------enig9A953E2A9ADBD75C56FDB829--
+    3. You run "rebase -i --root" to get this insn sheet:
+
+	pick Add Makefile and hello.c for "Hello world"
+        pick Add goodbye.c for "Goodbye world"
+
+       and swap them:
+
+        pick Add goodbye.c for "Goodbye world"
+	pick Add Makefile and hello.c for "Hello world"
+
+    4. The first one conflicts, as it wants to add new bits in
+       "Makefile" that does not exist.  You edit it and make the
+       result pretend as if "goodbye.c were the first program you
+       added to the project (i.e. adding the common build
+       infrastructure bits you did not change from the real first
+       commit back to "Makefile", but making sure it does not yet
+       mention "hello.c").
+
+    5. "rebase --continue" will give you conflicts for the second
+       one too, and your resolution is likely to match the tip
+       before you started the whole "rebase -i".
+
+In step 4., you would be internally using the cherry-pick machinery
+to implement the step of "rebase -i" sequence.  That is what I would
+call an implementation detail.  And that is cherry-picking to the
+root.  It transplants something that used to depend on the entire
+history behind it to be the beginning of the history so its log
+needs to be adjusted, but "rebase -i" can choose to always make it
+conflict and force the user to write a correct log message, so it
+won't expose the fundamental flaw you would add if you allowed the
+end-user facing "cherry-pick" to pick something to create a new root
+commit without interaction.
+
+> In the same way, I think "git reset" should work on an unborn branch,
+> even though there is no commit that we can be "modifying index and
+> working tree to match" (from man page).
+
+I agree that "git reset" without any commit parameter to reset the
+index and optionally the working tree (with "--hard") should reset
+from an empty tree when you do not yet have any commit.  If HEAD
+points at an existing commit, its tree is what you reset the
+contents from.  If you do not have any commit yet, by definition
+that tree is an empty tree.
+
+But I do not think it has anything to do with "cherry-pick to empty",
+so I do not agree with "In the same way" at all.
+
+> As for use cases, I didn't consider that much more than that it might
+> be useful for implementing "git rebase --root". I haven't implemented
+> that yet, so I can't say for sure that it will work out.
+
+I think it makes sense only as an internal implementation detail of
+"rebase -i --root".
+
+> One use case might be to rewrite history by creating an new unborn
+> branch and picking the initial commit and a subset of other commits.
+
+If you mean, in the above sample history, to "git cherry-pick" the
+commit that starts the "Hello world" and then do something else on
+top of the resulting history, how would that be different from
+forking from that existing root commit?
+
+> Anyway, I didn't implement it because I thought it would be very
+> useful, but mostly because I just thought it should work (for
+> completeness).
+
+I would not exactly call X "complete" if X works in one way in most
+cases and it works in quite a different way in one other case, only
+because it would have to barf if it wanted to work in the same way
+as in most cases, and the different behaviour is chosen only because
+"X that does something is better than X that stops in an impossible
+situation and barfs".
