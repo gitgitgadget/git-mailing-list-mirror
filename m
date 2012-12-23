@@ -1,172 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] log: add log.mailmap configuration option
-Date: Sat, 22 Dec 2012 20:26:16 -0800
-Message-ID: <7v8v8ppf6f.fsf@alter.siamese.dyndns.org>
-References: <1356195512-4846-1-git-send-email-apelisse@gmail.com>
- <1356195512-4846-3-git-send-email-apelisse@gmail.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH 2/2] learn to pick/revert into unborn branch
+Date: Sat, 22 Dec 2012 22:24:41 -0800
+Message-ID: <CANiSa6i0-Z=FkPnSJxgT+3ABHTzgOTNNNUb=wHQpm2DKAN_UOw@mail.gmail.com>
+References: <1356117013-20613-1-git-send-email-martinvonz@gmail.com>
+	<1356117013-20613-2-git-send-email-martinvonz@gmail.com>
+	<7vr4mhpi0l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 23 05:26:49 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 23 07:34:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tmd9B-0003CI-Vm
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Dec 2012 05:26:46 +0100
+	id 1Tmf8s-0003OQ-AZ
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Dec 2012 07:34:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752106Ab2LWE0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 23:26:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62898 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751983Ab2LWE0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2012 23:26:23 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E0A5A66A;
-	Sat, 22 Dec 2012 23:26:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mxg4w0wSy1eJimkudoc6SClkC2Q=; b=MvsBZg
-	JvbjZxbN7cRL0DG4oJLc4c6gJiLKgb+ppwKmX/Z+p/wL6oq8mr5NhzcG9d9mba0T
-	AqIQ7wIfkPU9XqNja3FNYTRikRVpZoBZeoud0Zya/6sOeSrZnRdO1uCt7Y0gNXoZ
-	BfUJwkry19Y5wPKriXNHcNEeJnu1PLgmvoc5E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UnIa73yOtl9mhG+29N1a1CC5yInxI5Qh
-	TwHfMXnrJtvluQErDOF12M8/am71S6JWKpO2PtX0RHF3FIohqLYmmCylJ5yWUU0y
-	iClGgXalO62wkX8NFlvbF04L3PtR2N52ByIVFrfCFCxgUiFQ44hqzUyi5qFYTET3
-	xHJ4go1cY5I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BE2EA669;
-	Sat, 22 Dec 2012 23:26:18 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAD9CA668; Sat, 22 Dec 2012
- 23:26:17 -0500 (EST)
-In-Reply-To: <1356195512-4846-3-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Sat, 22 Dec 2012 17:58:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E52B8DAA-4CB8-11E2-8E58-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751545Ab2LWGYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Dec 2012 01:24:43 -0500
+Received: from mail-ia0-f182.google.com ([209.85.210.182]:53127 "EHLO
+	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751452Ab2LWGYm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Dec 2012 01:24:42 -0500
+Received: by mail-ia0-f182.google.com with SMTP id x2so5227889iad.27
+        for <git@vger.kernel.org>; Sat, 22 Dec 2012 22:24:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=DT3ELc88nqEROBmUWebC6idI75zo1mMCENZ95Vc+ro8=;
+        b=tRqSeU2GXwyrNUru7Ezgk23Do39ViDqYu3pV8vjYlqH6pwCNhAn7HEk4PzZ0CN95BK
+         RgKIQHr9DohyONeTItRIR476RwjCFQQNstACUtOUuSV/8Ar0lbHD1TFcejqrw6OYnCFi
+         NRS1NSSBs+h8FP/ihqZ7AkIFZCWPdrb6Wo1ueNQsIgkf6qrefYAd6Qjc6+rkm1Y+13KA
+         bNKxUuFr71epHTsSJlHtfRCSuRvB4TyL4+EZBwYb78CeBDE7RF/UZPPFgFWt6+/ZvhLr
+         B0h8hEDPVCx35wchsyAq0j85tPSLgov5cBsqwRHoCRBGeX1u4RUVJizoUb8WPDbCqm7s
+         lqgA==
+Received: by 10.50.42.169 with SMTP id p9mr17156131igl.17.1356243881734; Sat,
+ 22 Dec 2012 22:24:41 -0800 (PST)
+Received: by 10.64.86.68 with HTTP; Sat, 22 Dec 2012 22:24:41 -0800 (PST)
+In-Reply-To: <7vr4mhpi0l.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212081>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+On Sat, Dec 22, 2012 at 7:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martinvonz@gmail.com> writes:
+>
+>>>From the user's point of view, it seems natural to think that
+>> cherry-picking into an unborn branch should work, so make it work,
+>> with or without --ff.
+>
+> I actually am having a hard time imagining how that could ever be
+> natural.
 
-> This patch provides a new configuration option 'log.mailmap' to
-> automatically use the --use-mailmap option from git-show, git-log and
-> git-whatchanged commands.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
-> I'm wondering if it would be needed to add a no-use-mailmap option to
-> log command so that it can cancel this configuration option.
+Fair enough. What's natural is of course very subjective. In my
+opinion, whenever possible, operations on an unborn branch should
+behave exactly as they would on an arbitrary commit whose tree just
+happens to be empty. Of course, pretty much any operation that needs
+more than the tree (indirectly) pointed to by HEAD would fail the
+"whenever possible" clause. I realize that cherry-pick _does_ need the
+current commit to record the parent of the resulting commit, but that
+almost seems like an implementation detail, i.e whether we're adding a
+parent or adding no parent (when on unborn branch) to the list of
+parents.
 
-The usual way for adding a new feature is to add a --enable-feature
-long-option without any configuration variable to let users try it
-out in the field, and then add the configuration to let it be
-default for users who opt in.  The first step should also allow a
-command line option to disable (which should come for free if you
-use parse-options API correctly).
+In the same way, I think "git reset" should work on an unborn branch,
+even though there is no commit that we can be "modifying index and
+working tree to match" (from man page). I think many users, like me,
+think of unborn branches as having an empty tree, rather than being a
+special state before history is created. Sure, such thinking is not
+technically correct, but it still seems to be some people's intuition
+(including mine).
 
->  Documentation/config.txt |    4 ++++
->  builtin/log.c            |    8 +++++++-
->  t/t4203-mailmap.sh       |   24 ++++++++++++++++++++++++
->  3 files changed, 35 insertions(+), 1 deletion(-)
+>> Cherry-picking anything other than a commit that only adds files, will
+>> naturally result in conflicts. Similarly, revert also works, but will
+>> result in conflicts unless the specified revision only deletes files.
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index bf8f911..226362a 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1509,6 +1509,10 @@ log.showroot::
->  	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
->  	normally hide the root commit will now show it. True by default.
+> You may be able to make it "work" for some definition of "work", but
+> I am not sure how useful it is.
+
+As for use cases, I didn't consider that much more than that it might
+be useful for implementing "git rebase --root". I haven't implemented
+that yet, so I can't say for sure that it will work out.
+
+One use case might be to rewrite history by creating an new unborn
+branch and picking the initial commit and a subset of other commits.
+Anyway, I didn't implement it because I thought it would be very
+useful, but mostly because I just thought it should work (for
+completeness).
+
+I could resend as part of my rebase series (called mz/rebase-range at
+some point) once that's done. Then we can discuss another solution in
+the scope of that series if we don't agree on allowing on cherry-pick
+on an unborn branch.
+
+Btw, I have another series, which I'll send after 1.8.1, that teaches
+"git reset" to work on an unborn branch (among other things). We might
+want to decide to support both or neither of the commands on an unborn
+branch.
+
+On Sat, Dec 22, 2012 at 7:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martinvonz@gmail.com> writes:
 >
-> +log.mailmap::
-> +	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
-> +	linkgit:git-whatchanged[1] assume `--use-mailmap`.
-> +
->  mailmap.file::
->  	The location of an augmenting mailmap file. The default
->  	mailmap, located in the root of the repository, is loaded
-> diff --git a/builtin/log.c b/builtin/log.c
-> index d2bd8ce..f6936ff 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -31,6 +31,7 @@ static int default_abbrev_commit;
->  static int default_show_root = 1;
->  static int decoration_style;
->  static int decoration_given;
-> +static int use_mailmap;
->  static const char *fmt_patch_subject_prefix = "PATCH";
->  static const char *fmt_pretty;
+>>>From the user's point of view, it seems natural to think that
+>> cherry-picking into an unborn branch should work, so make it work,
+>> with or without --ff.
 >
-> @@ -138,7 +139,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
->  	if (source)
->  		rev->show_source = 1;
+> I actually am having a hard time imagining how that could ever be
+> natural.
 >
-> -	if (mailmap) {
-> +	if (mailmap || use_mailmap) {
->  		rev->mailmap = xcalloc(1, sizeof(struct string_list));
->  		read_mailmap(rev->mailmap, NULL);
->  	}
-> @@ -358,6 +359,11 @@ static int git_log_config(const char *var, const char *value, void *cb)
->  	}
->  	if (!prefixcmp(var, "color.decorate."))
->  		return parse_decorate_color_config(var, 15, value);
-> +	if (!strcmp(var, "log.mailmap")) {
-> +		use_mailmap = git_config_bool(var, value);
-> +		return 0;
-> +	}
-> +
->  	if (grep_config(var, value, cb) < 0)
->  		return -1;
->  	return git_diff_ui_config(var, value, cb);
-> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-> index e16187f..7d4d31c 100755
-> --- a/t/t4203-mailmap.sh
-> +++ b/t/t4203-mailmap.sh
-> @@ -255,6 +255,21 @@ test_expect_success 'Log output with --use-mailmap' '
->  '
+> When you are on an unborn branch, you may have some files in your
+> working tree, and some of them may even be registered to the index,
+> but the index is merely for your convenience to create your first
+> commit, and as far as the history is concered, it does not matter.
 >
->  cat >expect <<\EOF
-> +Author: CTO <cto@company.xx>
-> +Author: Santa Claus <santa.claus@northpole.xx>
-> +Author: Santa Claus <santa.claus@northpole.xx>
-> +Author: Other Author <other@author.xx>
-> +Author: Other Author <other@author.xx>
-> +Author: Some Dude <some@dude.xx>
-> +Author: A U Thor <author@example.com>
-> +EOF
-> +
-> +test_expect_success 'Log output with log.mailmap' '
-> +	git -c log.mailmap=True log | grep Author >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +cat >expect <<\EOF
->  Author: Santa Claus <santa.claus@northpole.xx>
->  Author: Santa Claus <santa.claus@northpole.xx>
->  EOF
-> @@ -263,6 +278,15 @@ test_expect_success 'Grep author with --use-mailmap' '
->  	git log --use-mailmap --author Santa | grep Author >actual &&
->  	test_cmp expect actual
->  '
-> +cat >expect <<\EOF
-> +Author: Santa Claus <santa.claus@northpole.xx>
-> +Author: Santa Claus <santa.claus@northpole.xx>
-> +EOF
-> +
-> +test_expect_success 'Grep author with log.mailmap' '
-> +	git -c log.mailmap=True log --author Santa | grep Author >actual &&
-> +	test_cmp expect actual
-> +'
+> By definition you do not have any history in such a state.  What
+> does it even mean to "cherry-pick" another commit, especially
+> without the --no-commit option?  The resulting commit will carry the
+> message taken from the original commit, but does what it says match
+> what you have done?
 >
->  >expect
+> I can understand that it may sometimes make sense to do
 >
-> --
-> 1.7.9.5
+>   $ git show --diff-filter=A $that_commit | git apply
+>
+> as a way to further update the uncommitted state you have in the
+> working tree, so I can sort of buy that --no-commit case might make
+> some sense (but if you make a commit after "cherry-pick --no-commit",
+> you still get the log message from that commit, which does not
+> explain the other things you have in your working tree) in a limited
+> situation.
+>
+> It seems to me that the only case that may make sense is to grab the
+> contents from an existing tree, which might be better served with
+>
+>   $ git checkout $that_commit -- $these_paths_I_am_interested_in
+>
+>> Cherry-picking anything other than a commit that only adds files, will
+>> naturally result in conflicts. Similarly, revert also works, but will
+>> result in conflicts unless the specified revision only deletes files.
+>
+> You may be able to make it "work" for some definition of "work", but
+> I am not sure how useful it is.
+>
+> Puzzled...
+>
