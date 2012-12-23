@@ -1,81 +1,91 @@
-From: Dennis Putnam <dap1@bellsouth.net>
-Subject: Push Windows to Linux Repository Problem
-Date: Sat, 22 Dec 2012 19:30:08 -0500
-Message-ID: <50D65090.4010303@bellsouth.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Missing Refs after Garbage Collection
+Date: Sat, 22 Dec 2012 20:04:27 -0500
+Message-ID: <20121223010427.GA2878@sigill.intra.peff.net>
+References: <C0A16EC8-D05A-41D0-BF2A-34BF3B1B839E@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig1AEAB1A90E686A21F7ED5437"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 23 01:35:43 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Earl Gresh <egresh@codeaurora.org>
+X-From: git-owner@vger.kernel.org Sun Dec 23 02:14:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TmZXY-0007Gn-Rs
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Dec 2012 01:35:41 +0100
+	id 1Tma92-0000AZ-TA
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Dec 2012 02:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406Ab2LWAfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2012 19:35:21 -0500
-Received: from nm13.access.bullet.mail.sp2.yahoo.com ([98.139.44.140]:28679
-	"EHLO nm13.access.bullet.mail.sp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752359Ab2LWAfT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2012 19:35:19 -0500
-X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Dec 2012 19:35:19 EST
-Received: from [98.139.44.106] by nm13.access.bullet.mail.sp2.yahoo.com with NNFMP; 23 Dec 2012 00:30:08 -0000
-Received: from [67.195.14.108] by tm11.access.bullet.mail.sp2.yahoo.com with NNFMP; 23 Dec 2012 00:30:08 -0000
-Received: from [127.0.0.1] by smtp105.sbc.mail.gq1.yahoo.com with NNFMP; 23 Dec 2012 00:30:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bellsouth.net; s=s1024; t=1356222608; bh=EqyzjHBV+CQ/DyQVuq3R6o1Ik7/BFam48dzEKaz8psc=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:X-Enigmail-Version:Content-Type; b=LJIgW8kh6WjhxWj5Iw3nYBG056Eylv78ROX+U9TOZ8E9A/uMFEqflcgP0MdOrAodm2LUp1oHwcv+adqaZ7yTRBjsVl1yKUPDQIa6AZakgpKZiEOXZUVUsUVvHE5JcGG7u8U0g+3EjE8+doFZnwHS/2gRCgflkmFB02D5l6iEplk=
-X-Yahoo-Newman-Id: 94066.96398.bm@smtp105.sbc.mail.gq1.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: 0nz6zpYVM1mjLmiRhwyHKoNsIaudUNFDT8K487xaeuLFtMn
- UM8Zg38zrIC72TO3J9HuGcDFEmP8cQBMg9OAuoMhXkRvXe8ynbmPOVTBeaOW
- Cb0xXh8mM8mJ0UjOQUdO1KzisCF4h2MIsgZRqQodqFNiIpu_hOgSsl7pclxk
- dq9d8mpiTSgB96IEas1jJgC3Xm9HCgYSo1rFCwU0BaCCcZ6xxgvHxq4W_2HW
- SlvN5E5qtRf6gQhQsoXPKZ5EdevZrpWauUy.DlDx.mIFzZ9N5fMAFOIOg1kj
- ZdgGhCERgmfkRTeZ.FWi88CysSfGI5SxF11r1krw2XbTvuEu1y_R6BAdyU6P
- x0jV175XsPnqL6JZdRGvpvPmzDY8JVESj_YD44IJYo4PHJ5p3.TM0ptCzZ7T
- dmEsujKC9.WKTjD6d1VyQUbsBrvT_ZrkK58fCArCPa79M4k1TflHkfZq.Xcm
- J7GhU4fa8cI6AVh4bIMPBHK7yvomb
-X-Yahoo-SMTP: vUK3UKuswBCE01YQVYEZ1wHCa.HPSVCYhektzgdifA--
-Received: from [192.168.0.100] (dap1@74.176.50.42 with plain)
-        by smtp105.sbc.mail.gq1.yahoo.com with SMTP; 22 Dec 2012 16:30:08 -0800 PST
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-X-Enigmail-Version: 1.4.6
+	id S1752406Ab2LWBEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2012 20:04:32 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34081 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752344Ab2LWBEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2012 20:04:31 -0500
+Received: (qmail 7221 invoked by uid 107); 23 Dec 2012 01:05:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 22 Dec 2012 20:05:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Dec 2012 20:04:27 -0500
+Content-Disposition: inline
+In-Reply-To: <C0A16EC8-D05A-41D0-BF2A-34BF3B1B839E@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212074>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig1AEAB1A90E686A21F7ED5437
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Fri, Dec 21, 2012 at 05:41:43PM -0800, Earl Gresh wrote:
 
-I think I have my Linux central repository set up correctly. I can pull
-and push from/to the repository on the Linux host itself.  My problem is
-trying to push commits to that repository from windows. I keep getting
-"fatal: Could not read from remote repository." When I run 'ls' commands
-using plink from the command line it works fine with the same
-credentials. Clearly there is an issue with git on Windows and using SSH
-to access the remote repository. I'm stuck as to how to debug this. Can
-anyone point me in the right direction? TIA
+> I have observed that after running GC, one particular git repository
+> ended up with some missing refs in the refs/changes/* namespace the
+> Gerrit uses for storing patch sets. The refs were valid and should not
+> have been pruned. Concerned about loosing data, GC is still enabled
+> but ref packing is turned off. Now the number of refs has grown to the
+> point that it's causing performance problems when cloning the project.
+> 
+> Is anyone familiar with git gc deleting valid references? I'm running
+> git version 1.7.8. Have there been any patches in later git releases
+> that might address this issue ( if it is a git problem )?
 
+I have never seen deletion, but I did recently find a race condition
+with ref packing that caused rewinds, where:
 
---------------enig1AEAB1A90E686A21F7ED5437
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+  1. Two processes simultaneously repack the refs.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+  2. At least one process is using an "old" version of the pack-refs
+     file. That is, it cached the packed refs list earlier in the
+     process and is now rewriting it based on that cached notion.
 
-iEYEARECAAYFAlDWUJAACgkQ/fiWYqZ2tVTmMgCfSpMn4AAPjdemF6TE9a17YsI2
-kr0An0/LeuMCr4s6xxs7v4ogbTTU7Ov6
-=QjEQ
------END PGP SIGNATURE-----
+  3. The first process takes the lock, packs refs, drops the
+     lock, and then deletes the loose versions. The simultaneous packer
+     then takes the lock, overwrites the packed-refs file with a stale
+     copy from its memory, and then releases the lock. We're left with
+     the stale copy in pack-refs, and deleted loose refs.
 
---------------enig1AEAB1A90E686A21F7ED5437--
+In my case, it looked like a rewind, because the stale, memory-cached
+refs had the old version. But if you have a ref which was not previously
+packed, it would appear to have been deleted.
+
+The tricky thing about triggering this race is that step (2) needs a
+process which has previously read and cached the packed-refs, and then
+decided to pack the refs. The "git pack-refs" command does not do this,
+because it starts, packs the ref, and exists. But processes which delete
+a ref need to rewrite the packed-refs file (omitting the deleted ref),
+and depending on the process, may have previously read and cached the
+packed refs file. The obvious candidate is "receive-pack".
+
+So this may be your culprit if:
+
+  1. This is a repo people are pushing into via C git.
+
+  2. You simultaneously run "git pack-refs" (or "git gc") while people
+     may be pushing.
+
+You mentioned Gerrit, so I wonder if people are actually pushing via C
+git (I thought it used JGit entirely). Or perhaps JGit has the same bug.
+My fix (which is not yet released in any git version) is here:
+
+  http://article.gmane.org/gmane.comp.version-control.git/211956
+
+-Peff
