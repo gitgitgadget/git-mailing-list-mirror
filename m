@@ -1,114 +1,70 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: [PATCH] Python scripts audited for minimum compatible version
- and checks added.
-Date: Mon, 24 Dec 2012 10:32:57 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121224153257.GA28213@thyrsus.com>
-References: <20121220141855.05DAA44105@snark.thyrsus.com>
- <20121224133649.GA1400@padd.com>
-Reply-To: esr@thyrsus.com
+From: Jeff King <peff@peff.net>
+Subject: Re: Find the starting point of a local branch
+Date: Mon, 24 Dec 2012 10:34:15 -0500
+Message-ID: <20121224153415.GA28670@sigill.intra.peff.net>
+References: <20121224035825.GA17203@zuhnb712>
+ <201212240409.qBO49wkV020768@no.baka.org>
+ <CACsJy8CNd3W_WUMbZ1QZ4ReZ5ziX90QejK9mh1TMs0ig33kGMw@mail.gmail.com>
+ <20121224061938.GA25186@sigill.intra.peff.net>
+ <CACsJy8Dt94XLSa8Sg3T0URJYG9cHD_sUySuhm3Vu4ESy-VrXag@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Dec 24 16:33:46 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Seth Robertson <in-gitvger@baka.org>,
+	Woody Wu <narkewoody@gmail.com>, git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 24 16:34:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TnA2C-00043d-A7
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Dec 2012 16:33:44 +0100
+	id 1TnA31-0004ow-85
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Dec 2012 16:34:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077Ab2LXPd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Dec 2012 10:33:26 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:35496
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752597Ab2LXPdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Dec 2012 10:33:25 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id E5DF04411F; Mon, 24 Dec 2012 10:32:57 -0500 (EST)
+	id S1753142Ab2LXPeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Dec 2012 10:34:18 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35148 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752597Ab2LXPeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Dec 2012 10:34:17 -0500
+Received: (qmail 20418 invoked by uid 107); 24 Dec 2012 15:35:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Dec 2012 10:35:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Dec 2012 10:34:15 -0500
 Content-Disposition: inline
-In-Reply-To: <20121224133649.GA1400@padd.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CACsJy8Dt94XLSa8Sg3T0URJYG9cHD_sUySuhm3Vu4ESy-VrXag@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212113>
 
-Pete Wyckoff <pw@padd.com>:
-> esr@thyrsus.com wrote on Thu, 20 Dec 2012 09:13 -0500:
-> > diff --git a/git-p4.py b/git-p4.py
-> > index 551aec9..ec060b4 100755
-> > --- a/git-p4.py
-> > +++ b/git-p4.py
-> > @@ -12,6 +12,11 @@ import optparse, sys, os, marshal, subprocess, shelve
-> >  import tempfile, getopt, os.path, time, platform
-> >  import re, shutil
-> >  
-> > +if sys.hexversion < 0x02040000:
-> > +    # The limiter is the subprocess module
-> > +    sys.stderr.write("git-p4.py: requires Python 2.4 or later.")
-> > +    sys.exit(1)
-> > +
-> >  verbose = False
+On Mon, Dec 24, 2012 at 06:16:05PM +0700, Nguyen Thai Ngoc Duy wrote:
+
+> > The reason that git does not bother storing "where did I start this
+> > branch" is that it is usually not useful. The right question is usually
+> > "what is the merge base". There are exceptions, of course (e.g., if you
+> > are asking something like "what work did I do while checked out on the
+> > 'foo' branch"). But for merging and rebasing, I think the computed
+> > merge-base is much more likely to do what people want.
 > 
-> If 2.3 does not have the subprocess module, this script will fail
-> at the import, and not run your version test.
+> Rebasing is exactly why I want this. Merge base works most of the time
+> until you rewrite upstream (which I do sometimes).
 
-Yes, the import of subprocess should move to after the check.
+True, although wouldn't you generally want to rebase it on top of the
+rewritten upstream in that case (which is what "pull --rebase" will do,
+by scanning the reflog for the last version of the upstream that you
+actually built on).
 
-> All the uses of sys.stderr.write() should probably include a
-> newline.  Presumably you used write instead of print to avoid
-> 2to3 differences.
+> There are also cases when I create a branch without upstream, or when
+> upstream is renamed. Still, making "rebase -i --topic" == "rebase -i
+> $(git merge-base HEAD @{upstream})" would be cool.
 
-That is correct.
- 
-> The name of this particular script, as users would type it, is
-> "git p4"; no dash and no ".py".
-> 
-> Many of your changes have these three problems; I just picked on
-> my favorite one.
+Yeah. I usually just do "rebase -i @{upstream}" which picks the same
+commits, but moves to the updated version of upstream (IOW, I both
+rewrite and move forward at the same time). But there is value in
+rewriting without moving forward in many workflows. That seems like a
+sensible feature to me.
 
-Should I resubmit, or do you intend to fix these while merging?
- 
-> > diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-> > index 5f3ebd2..22d2eb6 100644
-> > --- a/git-remote-testgit.py
-> > +++ b/git-remote-testgit.py
-> > @@ -31,6 +31,11 @@ from git_remote_helpers.git.exporter import GitExporter
-> >  from git_remote_helpers.git.importer import GitImporter
-> >  from git_remote_helpers.git.non_local import NonLocalGit
-> >  
-> > +if sys.hexversion < 0x01050200:
-> > +    # os.makedirs() is the limiter
-> > +    sys.stderr.write("git-remote-testgit.py: requires Python 1.5.2 or later.")
-> > +    sys.exit(1)
-> > +
-> 
-> This one, though, is a bit of a lie because git_remote_helpers
-> needs 2.4, and you add that version enforcement in the library.
-
-Agreed. The goal here was simply to have the depedencies of the individual
-scripts be clearly documented, and establish a practice for future
-submitters to emulate.
-
-> I assume what you're trying to do here is to make the
-> version-related failures more explicit, rather than have users
-> parse an ImportError traceback, e.g.
-
-See above.  At least half the point is making our dependencies
-explicit rather than implicit, so we can make better policy
-decisions.
-
-> But what about the high-end of the version range?  I'm pretty
-> sure most of these scripts will throw syntax errors on >= 3.0,
-> how should we catch that before users see it?
-
-That's a problem for another day, when 3.x is more widely deployed.
-I'd be willing to run 2to3 on these scripts and check forward 
-compatibility.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+-Peff
