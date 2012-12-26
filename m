@@ -1,181 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-prompt.sh vs leading white space in
- __git_ps1()::printf_format
-Date: Tue, 25 Dec 2012 23:47:53 -0800
-Message-ID: <7vvcbpp846.fsf@alter.siamese.dyndns.org>
-References: <CAA01Cso1E4EC4W667FEU_af2=uGOfPuaWEB3y+zPCpB+bPzoaA@mail.gmail.com>
- <20121128132033.GA10082@xs4all.nl>
- <CAA01CspHAHN7se2oJ2WgcmpuRfoa+9Sx9sUvaPEmQ-Y+kDwHhA@mail.gmail.com>
- <50B66F41.1030305@xs4all.nl> <7vlidltpyj.fsf@alter.siamese.dyndns.org>
- <50C7B811.7030006@xs4all.nl> <7v7goo6vi3.fsf@alter.siamese.dyndns.org>
- <7vy5h45e7b.fsf@alter.siamese.dyndns.org> <20121212085507.GA32187@xs4all.nl>
- <7vlid35fe4.fsf@alter.siamese.dyndns.org> <50C8E857.5080000@xs4all.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	git@vger.kernel.org
-To: Simon Oosthoek <s.oosthoek@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Dec 26 08:48:24 2012
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: [PATCH] gitweb: fix error when highlight is enabled
+Date: Wed, 26 Dec 2012 09:54:16 +0200
+Message-ID: <1356508456-17454-1-git-send-email-orgads@gmail.com>
+Cc: Orgad Shaneh <orgads@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 26 09:01:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tnlix-0006e0-K6
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Dec 2012 08:48:23 +0100
+	id 1TnlvQ-0007kt-1j
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Dec 2012 09:01:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab2LZHr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2012 02:47:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58028 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751972Ab2LZHr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2012 02:47:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 042EC95F2;
-	Wed, 26 Dec 2012 02:47:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qsVwHm/hGydCPdNXM0l/YtqB6Cw=; b=xp9I0b
-	YDRSGd2btdA2ESwP8N+UVSPxixGsb4rFMMNUgKBtfKlOevezowzgAmMQ88td6TxU
-	wzuEgNOoU7XhfPPogyL9qSDtayOmURqITwF5x4yeAIwb0E1T+kSUtmRLkWAN/K0J
-	GrOhAYot1713Svt+fYqV1PtaZT0NK0p5FqKBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QA0aWzmHOaoov0zLUNVikrBlwjE7CvLh
-	SORJMq6ftr3V2kfbz0fHqwAY5GZrOssd+OzlLnSzdWJXmGffYcQPCm8rmWpfQPOp
-	lEchhdyL4IGjNvdpp5aeWtUsb0Gqf8q1x+OvH15rQ+rbVBOwx5dgtrQ95CfLGtka
-	7cJIHnBhkbU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6EBB95F1;
-	Wed, 26 Dec 2012 02:47:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 17F5C95F0; Wed, 26 Dec 2012
- 02:47:56 -0500 (EST)
-In-Reply-To: <50C8E857.5080000@xs4all.nl> (Simon Oosthoek's message of "Wed,
- 12 Dec 2012 21:25:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8F9E163A-4F30-11E2-A6A7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753338Ab2LZIAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2012 03:00:55 -0500
+Received: from mail-we0-f180.google.com ([74.125.82.180]:65047 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751189Ab2LZIAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2012 03:00:53 -0500
+X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Dec 2012 03:00:53 EST
+Received: by mail-we0-f180.google.com with SMTP id t57so3785594wey.39
+        for <git@vger.kernel.org>; Wed, 26 Dec 2012 00:00:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=KREySpAgJkra4mwnLT4BGOcbh8p0NbUh/LE8n6ZDjzw=;
+        b=KjtCMoBVKoYO9JUDlZ/q5yIcGRkWjk/zj1qplXiF+N2N50kRJ97jd/JK8iV2z7u+Zq
+         oR9plNF4KIcZVLp/wvtd/tx1T3hx9TNljNnohMQMTG3H5eQ+CsjgRAOtpVxPTcdx7URW
+         OrkJlgzi2bDvyn9AC7rrwlxyWlP1eJpxlh759KDqNhRmZ41078LSYTiHaTNTqcs0U1Uv
+         KvKpqkgT20EmMX9FPbm72W0LFhb3wmUDFr+t17Plmz7xRuERH4VWT551kYYRox+AMFoh
+         PR+cC+A5AEvb62MGUV0CqiS38SxBYBZ8LiMMi22UiRUARvCjwoXbcNowh+7k7qWPbt1l
+         HyJQ==
+X-Received: by 10.180.107.130 with SMTP id hc2mr41536466wib.12.1356508478472;
+        Tue, 25 Dec 2012 23:54:38 -0800 (PST)
+Received: from localhost.localdomain (IGLD-84-228-63-15.inter.net.il. [84.228.63.15])
+        by mx.google.com with ESMTPS id ex6sm42636182wid.3.2012.12.25.23.54.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 25 Dec 2012 23:54:36 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212130>
 
-Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
+Use of uninitialized value in substitution iterator at gitweb.cgi line 1560
 
-> On 12/12/12 18:50, Junio C Hamano wrote:
->> Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
->> 
->>> This removes most of the ambiguities :-)
->>> Ack from me!
->> 
->> OK, as this is a low-impact finishing touch for a new feature, I'll
->> fast-track this to 'master' before the final release.
->> 
->
-> Ok, wonderful!
-> BTW, I tried the thing I mentioned and it was safe to do:
-> PS1='blabla$(__git_ps1 x y)blabla'
-> will not eat your prompt, although I'd recommend putting something
-> useful instead of blabla ;-)
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Actually, I deeply regret merging this to 'master'.  The original
-"as a command substitution in PS1" mode, you could add anything
-around the status string, so I could do:
-
-	PS1=': \h \W$(__git_ps1 "/%s"); '
-
-to get something like:
-
-	: hostname dirname/<STATUS>; <CURSOR HERE>
-
-In the new PROMPT_COMMAND mode, there is always parentheses around
-the status string (and an SP before the parenthesees) that the user
-cannot get rid of.
-
-This is not a usability regression per-se (if you do not like the
-extra parentheses, you do not have to use the colored mode), but is
-something that will make me never use the mode.
-
-Can we make it take an optional third parameter so that we could say
-
-	PROMPT_COMMAND='__git_ps1 ": \h \W" "; " "/%s"'
-
-to do the same as what the command substitution mode would have
-given for
-
-	PS1=': \h \W$(__git_ps1 "/%s"); '
-
-perhaps?
-
-Totally untested, but perhaps along this line.
-
- contrib/completion/git-prompt.sh | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 9b074e1..b2579f4 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -236,9 +236,10 @@ __git_ps1 ()
- 	local printf_format=' (%s)'
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0f207f2..862b9cd 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1556,7 +1556,7 @@ sub sanitize {
+ 	return undef unless defined $str;
  
- 	case "$#" in
--		2)	pcmode=yes
-+		2|3)	pcmode=yes
- 			ps1pc_start="$1"
- 			ps1pc_end="$2"
-+			printf_format="${3:-$printf_format}"
- 		;;
- 		0|1)	printf_format="${1:-$printf_format}"
- 		;;
-@@ -339,6 +340,7 @@ __git_ps1 ()
+ 	$str = to_utf8($str);
+-	$str =~ s|([[:cntrl:]])|($1 =~ /[\t\n\r]/ ? $1 : quot_cec($1))|eg;
++	$str =~ s|([[:cntrl:]])|($1 =~ /([\t\n\r])/ ? $1 : quot_cec($1))|eg;
+ 	return $str;
+ }
  
- 		local f="$w$i$s$u"
- 		if [ $pcmode = yes ]; then
-+			local ps1=
- 			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
- 				local c_red='\e[31m'
- 				local c_green='\e[32m'
-@@ -356,29 +358,31 @@ __git_ps1 ()
- 					branch_color="$bad_color"
- 				fi
- 
--				# Setting PS1 directly with \[ and \] around colors
-+				# Setting ps1 directly with \[ and \] around colors
- 				# is necessary to prevent wrapping issues!
--				PS1="$ps1pc_start (\[$branch_color\]$branchstring\[$c_clear\]"
-+				ps1="\[$branch_color\]$branchstring\[$c_clear\]"
- 
- 				if [ -n "$w$i$s$u$r$p" ]; then
--					PS1="$PS1 "
-+					ps1="$ps1 "					
- 				fi
- 				if [ "$w" = "*" ]; then
--					PS1="$PS1\[$bad_color\]$w"
-+					ps1="$ps1\[$bad_color\]$w"
- 				fi
- 				if [ -n "$i" ]; then
--					PS1="$PS1\[$ok_color\]$i"
-+					ps1="$ps1\[$ok_color\]$i"
- 				fi
- 				if [ -n "$s" ]; then
--					PS1="$PS1\[$flags_color\]$s"
-+					ps1="$ps1\[$flags_color\]$s"
- 				fi
- 				if [ -n "$u" ]; then
--					PS1="$PS1\[$bad_color\]$u"
-+					ps1="$ps1\[$bad_color\]$u"
- 				fi
--				PS1="$PS1\[$c_clear\]$r$p)$ps1pc_end"
-+				ps1="$ps1\[$c_clear\]$r$p"
- 			else
--				PS1="$ps1pc_start ($c${b##refs/heads/}${f:+ $f}$r$p)$ps1pc_end"
-+				ps1="$c${b##refs/heads/}${f:+ $f}$r$p"
- 			fi
-+			ps1=$(printf -- "$printf_format" "$ps1")
-+			PS1="$ps1pc_start$ps1$ps1pc_end"
- 		else
- 			# NO color option unless in PROMPT_COMMAND mode
- 			printf -- "$printf_format" "$c${b##refs/heads/}${f:+ $f}$r$p"
+-- 
+1.7.10.4
