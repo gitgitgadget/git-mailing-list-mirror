@@ -1,70 +1,123 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: Re: [PATCH] make __git_ps1 accept a third parameter in pcmode
-Date: Wed, 26 Dec 2012 22:03:24 +0100
-Message-ID: <20121226210324.GA20704@xs4all.nl>
-References: <7vvcbpp846.fsf@alter.siamese.dyndns.org>
- <20121226191505.GA29210@simaj.xs4all.nl>
- <7vmwx0oavn.fsf@alter.siamese.dyndns.org>
- <20121226201944.GA15039@xs4all.nl>
- <7vfw2so8q3.fsf@alter.siamese.dyndns.org>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH 1/2] log: grep author/committer using mailmap
+Date: Wed, 26 Dec 2012 22:12:16 +0100
+Message-ID: <CALWbr2xW6r5ysJ8KQZa1eGYehG8ZbEp6K+s5JkG2goK9ef7rcA@mail.gmail.com>
+References: <1356195512-4846-1-git-send-email-apelisse@gmail.com>
+	<1356195512-4846-2-git-send-email-apelisse@gmail.com>
+	<7vr4mcobpu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: piotr.krukowiecki@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 26 22:08:19 2012
+X-From: git-owner@vger.kernel.org Wed Dec 26 22:12:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TnyCz-0001RO-0w
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Dec 2012 22:08:13 +0100
+	id 1TnyHF-0003vx-DA
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Dec 2012 22:12:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918Ab2LZVEC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2012 16:04:02 -0500
-Received: from smtp-vbr19.xs4all.nl ([194.109.24.39]:4068 "EHLO
-	smtp-vbr19.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750851Ab2LZVEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2012 16:04:00 -0500
-Received: from xs8.xs4all.nl (xs8.xs4all.nl [194.109.21.8])
-	by smtp-vbr19.xs4all.nl (8.13.8/8.13.8) with ESMTP id qBQL3QhP091094
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 26 Dec 2012 22:03:26 +0100 (CET)
-	(envelope-from osimon@xs4all.nl)
-Received: from xs8.xs4all.nl (IDENT:1251136@localhost [127.0.0.1])
-	by xs8.xs4all.nl (8.14.3/8.14.3/Debian-9.4) with ESMTP id qBQL3PcO021669;
-	Wed, 26 Dec 2012 22:03:25 +0100
-Received: (from osimon@localhost)
-	by xs8.xs4all.nl (8.14.3/8.14.3/Submit) id qBQL3OxU021668;
-	Wed, 26 Dec 2012 22:03:24 +0100
-Content-Disposition: inline
-In-Reply-To: <7vfw2so8q3.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1751005Ab2LZVMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2012 16:12:19 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:43334 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750851Ab2LZVMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2012 16:12:18 -0500
+Received: by mail-ee0-f46.google.com with SMTP id e53so4356360eek.19
+        for <git@vger.kernel.org>; Wed, 26 Dec 2012 13:12:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kJbZzUAlI4geINd5pFvw+8DLHpGqYwNYOhzBu1JZpv8=;
+        b=FNMhSibuqScOSb+mi7XWEkWOVJ+qsBNyNIzhKj5EZ4RR5F3yGfcaJDnUV1Y8jqA+fl
+         pvxmRL+/jIZHXe0hViVM90sosv927wBy35QWRDEuv0dz5ThlV3RNVPyZADx6qpcIOaiz
+         5Ocu6PhrO9QnYKlFoZ0lrWEfMaqtQGsbDx1ybvPRqZbBTzBF61Yp7i8GbWnc+LbOis9h
+         mhKvw5hKHgTL565OJtuXTq7UzhtNmETJWJc/SmBFRA85+L7tiUv2jM5m1QuDbKKVWuZ3
+         I6liXv90Rbpw7x7hFSYmRBO9DcFAkHjikzVFpr9m6MDe5SqbAvBbTHYg7Iif/o3bTsfg
+         Rnrg==
+Received: by 10.14.178.196 with SMTP id f44mr72713674eem.14.1356556336987;
+ Wed, 26 Dec 2012 13:12:16 -0800 (PST)
+Received: by 10.14.187.6 with HTTP; Wed, 26 Dec 2012 13:12:16 -0800 (PST)
+In-Reply-To: <7vr4mcobpu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212156>
 
-* Junio C Hamano <gitster@pobox.com> [2012-12-26 12:32:20 -0800]:
-> The point of the above two was that __git_ps1 does not have to set
-> PS1 as long as the insn says user to use PROMPT_COMMAND that sets
-> PS1 himself, exactly as illustrated above.  In other words, replace
-> the last PS1=...  in the "prompt command" mode with an echo or
-> something and make the user responsible for assigning it to PS1 in
-> his PROMPT_COMMAND.
-> 
-> Or put it in another way, I was hoping that we can do without adding
-> the prompt command mode---if there is no two modes, there is no need
-> to switch between them.
-> 
-> But as I said, there probably is a reason why that approach does not
-> work, that is why I said...
-> 
+>>
+>> +static int commit_rewrite_authors(struct strbuf *buf, const char *what, struct string_list *mailmap)
+>> +{
+>> +     char *author, *endp;
+>> +     size_t len;
+>> +     struct strbuf name = STRBUF_INIT;
+>> +     struct strbuf mail = STRBUF_INIT;
+>> +     struct ident_split ident;
+>> +
+>> +     author = strstr(buf->buf, what);
+>> +     if (!author)
+>> +             goto error;
+>
+> This does not stop at the end of the header part and would match a
+> random line in the log message that happens to begin with "author ";
+> is this something we would worry about, or would we leave it to "fsck"?
 
-The only reason to my knowledge is that bash's handling of zero-length strings, like terminal colour commands, is producing a PS1 that outputs less visible characters than bash thinks and thus bash makes mistakes when wrapping the commandline. The way to prevent that is to use \[ and \] around those and that doesn't seem to work from a string produced from command-substitution. (BTW, the colours come through just fine, just the \[ and \] don't)
+The only worrying case would be:
+ - commit doesn't have "\nauthor" in the header (can that happen
+without corruption?)
+ - commit has "\nauthor" in the commit log
+ - This line from commit log contains an <email> (split_ident_line works)
+Then, I guess it's going to replace the name in the commit log.
 
-Another approach could be to split up the functionality and have a few support functions to set various variables (corresponding with the gitstring features, like *%+ characters and colour hints). These variables could then be used by a custom PROMPT_COMMAND function or a command substitution function to produce a gitstring. I suppose that would mean a complete rewrite or very close to it ;-)
+Otherwise, it would not replace anything, as there is no author to
+replace anyway.
 
-/Simon
+It looks like most mechanisms using mailmap would have the same issue.
+
+>> +     author += strlen(what);
+>> +     endp = strstr(author, "\n");
+>
+> Using strchr(author, '\n') would feel more natural.  Also rename
+> "author" to "person" or something, as you would be using this
+> function for the committer information as well?
+
+Both fixed
+
+>> +     if (!endp)
+>> +             goto error;
+>> +
+>> +     len = endp - author;
+>> +
+>> +     if (split_ident_line(&ident, author, len)) {
+>> +     error:
+>> +             strbuf_release(&name);
+>> +             strbuf_release(&mail);
+>> +
+>> +             return 1;
+>
+> We usually signal error by returning a negative integer.  It does
+> not matter too much in this case as no callers seem to check the
+> return value from this function, though.
+
+Fixed, or would you rather see it `void` ?
+
+>> +     }
+>> +
+>> +     strbuf_add(&name, ident.name_begin, ident.name_end - ident.name_begin);
+>> +     strbuf_add(&mail, ident.mail_begin, ident.mail_end - ident.mail_begin);
+>> +
+>> +     map_user(mailmap, &mail, &name);
+>> +
+>> +     strbuf_addf(&name, " <%s>", mail.buf);
+>> +
+>> +     strbuf_splice(buf, ident.name_begin - buf->buf,
+>> +                   ident.mail_end - ident.name_begin + 1,
+>> +                   name.buf, name.len);
+>
+> Would it give us better performance if we splice only when
+> map_user() tells us that we actually rewrote the ident?
+
+My intuition was that the cost of splice belongs to "memoving", when the
+size is different. Yet, Fixed, as it removes two copies.
