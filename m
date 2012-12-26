@@ -1,99 +1,105 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH v2] wt-status: Show ignored files in untracked dirs
-Date: Wed, 26 Dec 2012 14:31:14 +0100
-Message-ID: <1356528674-2730-1-git-send-email-apelisse@gmail.com>
-References: <1356516985-31068-1-git-send-email-apelisse@gmail.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 26 14:31:40 2012
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v2 00/14] new git check-ignore sub-command
+Date: Wed, 26 Dec 2012 15:44:32 +0000
+Message-ID: <CAOkDyE_hs9kVtk4DbN+0gTaud35oLv4S4wiuAgYmtxCnPuUzhA@mail.gmail.com>
+References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
+	<1348170383-15751-1-git-send-email-git@adamspiers.org>
+	<7v4nms9yja.fsf@alter.siamese.dyndns.org>
+	<7vsjac8j52.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 26 16:44:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tnr59-0002xb-HL
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Dec 2012 14:31:39 +0100
+	id 1TntAA-0003Da-Ft
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Dec 2012 16:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754400Ab2LZNbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2012 08:31:22 -0500
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:64728 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752105Ab2LZNbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2012 08:31:20 -0500
-Received: by mail-wi0-f182.google.com with SMTP id hn14so4814934wib.15
-        for <git@vger.kernel.org>; Wed, 26 Dec 2012 05:31:19 -0800 (PST)
+	id S1752682Ab2LZPof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2012 10:44:35 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:52285 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538Ab2LZPod (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2012 10:44:33 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so3995671wey.33
+        for <git@vger.kernel.org>; Wed, 26 Dec 2012 07:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=Ul5gnkg4SylFVQE7M6dxZtEjV7H8NwUhDR/tsBDkgkY=;
-        b=bGkWbGdq/2z8OWEtraabfoH7oycvr9lHN9Wrjj4j+3bOpKE7NpZHpN6ev69WzrJ/dU
-         06C9KL7UebY4Nw5Xpm8CPeXivvYWtUQn+Wz7gwdnNs5tHC8o/X33jPj5AyKFseUpLLJK
-         z62GUXcUQXMexvgT4ud02UBXBJt7Xw03SxXHHpc/I/9XCHssIwWGIBWXPtrGR/nmJSnA
-         8gbCaLpFbDQ2wCm7GqpNN1mMlSxFc56HlEquRolYfMjRzQ9mAq1Sl6cI3r/b1CP7WvCI
-         kdDWdtFaG9R/BbuziyXF+udNHaHC1iWio7kUYpnCTLziiNznngqpZQAs/pyGNdFxpbaa
-         uKfw==
-X-Received: by 10.180.81.39 with SMTP id w7mr43279048wix.15.1356528679534;
-        Wed, 26 Dec 2012 05:31:19 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id fv2sm52618546wib.4.2012.12.26.05.31.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 26 Dec 2012 05:31:17 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc3.12.g8864e38
-In-Reply-To: <1356516985-31068-1-git-send-email-apelisse@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=+1qZRv9VZJ0GIOKbsFIOOkS0aCTR73E6jLbytWOXSDE=;
+        b=QY18j6novDkVEkUa0hqrKcY9RxI4Z/DFsBBRKV9aIZsMuGG4YW0Qpwxit3/T8SD/8U
+         ebkOr3mZvbNo5QSH02v+p6Az65uB5ndaFsML9/YwY+kBwpmgDmHXF70HVozu5VWHtsPa
+         qVJF6gdxbzBn1kR+3ETzneiH2fUW5pL4dcrIGEXeyJ4Ud24hpdKxqidEc+vNubEyPzpH
+         eGqsgvZ7nOZ/pfIlx2KH+4W6+GT6NZN53RV5eG5SdRXypaa9oF4+DG/gOfrke4NI1LOb
+         qdn7Jso21xkM+/NhXImoD7Vf7z/nRQh2qd5Bv/Tb5y8Pf4K2yvvVz7aJvOLn1Bg0lK+k
+         H1vg==
+Received: by 10.194.236.68 with SMTP id us4mr45010100wjc.11.1356536672155;
+ Wed, 26 Dec 2012 07:44:32 -0800 (PST)
+Received: by 10.194.84.97 with HTTP; Wed, 26 Dec 2012 07:44:32 -0800 (PST)
+In-Reply-To: <7vsjac8j52.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: AULlRQPyD85wxl2uZKtloZeOmcY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212137>
 
-When looking for ignored files, we do not recurse into untracked
-directory, and simply consider the directory ignored status.
-As a consequence, we don't see ignored files in those directories.
+On Thu, Sep 20, 2012 at 10:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> Adam Spiers <git@adamspiers.org> writes:
+>>> Adam Spiers (14):
+>>>   Update directory listing API doc to match code
+>>>   Improve documentation and comments regarding directory traversal API
+>>>   Rename cryptic 'which' variable to more consistent name
+>>>   Rename path_excluded() to is_path_excluded()
+>>>   Rename excluded_from_list() to is_excluded_from_list()
+>>>   Rename excluded() to is_excluded()
+>>>   Refactor is_excluded_from_list()
+>>>   Refactor is_excluded()
+>>>   Refactor is_path_excluded()
+>>>   For each exclude pattern, store information about where it came from
+>>>   Refactor treat_gitlinks()
+>>>   Extract some useful pathspec handling code from builtin/add.c into a
+>>>     library
+>>>   Provide free_directory() for reclaiming dir_struct memory
+>>>   Add git-check-ignore sub-command
 
-Change that behavior by recursing into untracked directories, if not
-ignored themselves, searching for ignored files.
+[snipped]
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
-Actually, the previous patch breaks the case where the directory is ignored.
-This one should fix both issues.
-Let me know if you see any other use case that could be an issue.
+> As to the "who owns x->src and when is it freed" question, it may
+> make sense to give el a "filename" field (command line and other
+> special cases would get whatever value you deem appropriate, like
+> NULL or "<command line>"), have x->src point at that field when you
+> queue many x's to the el in add_exc_from_file_to_list().  Then when
+> you pop an element in the exclude_stack, you can free el->filename
+> to plug a potential leak.
 
- dir.c       | 7 +++++++
- wt-status.c | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+I have done this, but it required a change to struct dir:
 
-diff --git a/dir.c b/dir.c
-index 5a83aa7..2863799 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1042,6 +1042,13 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 			return path_ignored;
- 	}
+Currently, when dir->exclude_stack is more than one entry deep, the
+exclude_list pointed to by dir->exclude_list[EXC_DIRS] is a
+concatenation of exclude elements from multiple files, so there will
+be different values for src.  The same is true of EXC_FILE, which
+typically mixes patterns from .git/info/exclude and core.excludesfile.
+Therefore I have split each exclude_list into potentially multiple
+exclude_lists, one per pattern source, whilst preserving the EXC_*
+grouping and ordering.
 
-+	/*
-+	 * Don't recurse into ignored directories when looking for
-+	 * ignored files, but still show the directory as ignored.
-+	 */
-+	if (exclude && (dir->flags & DIR_SHOW_IGNORED) && dtype == DT_DIR)
-+		return path_handled;
-+
- 	switch (dtype) {
- 	default:
- 		return path_ignored;
-diff --git a/wt-status.c b/wt-status.c
-index 2a9658b..7c41488 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -516,7 +516,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
+My latest re-roll of as/check-ignore is nearly ready, and when I send
+it, you will see a new patch in there covering the above change.
 
- 	if (s->show_ignored_files) {
- 		dir.nr = 0;
--		dir.flags = DIR_SHOW_IGNORED | DIR_SHOW_OTHER_DIRECTORIES;
-+		dir.flags = DIR_SHOW_IGNORED;
- 		fill_directory(&dir, s->pathspec);
- 		for (i = 0; i < dir.nr; i++) {
- 			struct dir_entry *ent = dir.entries[i];
---
-1.8.1.rc3.12.g8864e38
+> Also I do not see why you need to have the strdup() in the caller of
+> add_excludes_from_file_to_list().  If you need to keep it stable
+> because you are copying it away in exclude or excludde_list,
+> wouldn't it make more sense to do that at the beginning of the
+> callee, i.e. add_excludes_from_file_to_list() function?
+
+No, because in all other callers of add_excludes_from_file_to_list(),
+the exclude source is already stable.  The re-roll will make this
+clearer.
