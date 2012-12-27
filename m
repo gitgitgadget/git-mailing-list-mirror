@@ -1,166 +1,115 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v3 09/19] dir.c: refactor is_path_excluded()
-Date: Thu, 27 Dec 2012 02:32:28 +0000
-Message-ID: <1356575558-2674-10-git-send-email-git@adamspiers.org>
+Subject: [PATCH v3 04/19] dir.c: rename path_excluded() to is_path_excluded()
+Date: Thu, 27 Dec 2012 02:32:23 +0000
+Message-ID: <1356575558-2674-5-git-send-email-git@adamspiers.org>
 References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
 To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 27 03:34:01 2012
+X-From: git-owner@vger.kernel.org Thu Dec 27 03:34:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1To3IG-0006l1-B2
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 03:34:00 +0100
+	id 1To3IH-0006l1-1F
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 03:34:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548Ab2L0Cda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2012 21:33:30 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:53766 "EHLO
+	id S1752547Ab2L0Cdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2012 21:33:33 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:53764 "EHLO
 	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752286Ab2L0Ccr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2012 21:32:47 -0500
+	with ESMTP id S1751923Ab2L0Ccn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2012 21:32:43 -0500
 Received: from localhost (host-2-103-56-128.as13285.net [2.103.56.128])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 80F822E5E4
-	for <git@vger.kernel.org>; Thu, 27 Dec 2012 02:32:45 +0000 (GMT)
+	by coral.adamspiers.org (Postfix) with ESMTPSA id D6C4E2E5E4
+	for <git@vger.kernel.org>; Thu, 27 Dec 2012 02:32:41 +0000 (GMT)
 X-Mailer: git-send-email 1.7.11.2.249.g31c7954
 In-Reply-To: <1356575558-2674-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212187>
 
-In a similar way to the previous commit, this extracts a new helper
-function last_exclude_matching_path() which return the last
-exclude_list element which matched, or NULL if no match was found.
-is_path_excluded() becomes a wrapper around this, and just returns 0
-or 1 depending on whether any matching exclude_list element was found.
+Start adopting clearer names for exclude functions.  This 'is_*'
+naming pattern for functions returning booleans was agreed here:
 
-This allows callers to find out _why_ a given path was excluded,
-rather than just whether it was or not, paving the way for a new git
-sub-command which allows users to test their exclude lists from the
-command line.
+http://thread.gmane.org/gmane.comp.version-control.git/204661/focus=204924
 
 Signed-off-by: Adam Spiers <git@adamspiers.org>
 ---
- dir.c | 47 ++++++++++++++++++++++++++++++++++++++---------
- dir.h |  3 +++
- 2 files changed, 41 insertions(+), 9 deletions(-)
+ builtin/add.c      | 2 +-
+ builtin/ls-files.c | 2 +-
+ dir.c              | 4 ++--
+ dir.h              | 2 +-
+ unpack-trees.c     | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/add.c b/builtin/add.c
+index 89dce56..c689f37 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -453,7 +453,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 			    && !file_exists(pathspec[i])) {
+ 				if (ignore_missing) {
+ 					int dtype = DT_UNKNOWN;
+-					if (path_excluded(&check, pathspec[i], -1, &dtype))
++					if (is_path_excluded(&check, pathspec[i], -1, &dtype))
+ 						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
+ 				} else
+ 					die(_("pathspec '%s' did not match any files"),
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 31b3f2d..ef7f99a 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -203,7 +203,7 @@ static void show_ru_info(void)
+ static int ce_excluded(struct path_exclude_check *check, struct cache_entry *ce)
+ {
+ 	int dtype = ce_to_dtype(ce);
+-	return path_excluded(check, ce->name, ce_namelen(ce), &dtype);
++	return is_path_excluded(check, ce->name, ce_namelen(ce), &dtype);
+ }
+ 
+ static void show_files(struct dir_struct *dir)
 diff --git a/dir.c b/dir.c
-index b9d4234..16e10b0 100644
+index f31aa59..f1c0abd 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -709,6 +709,7 @@ void path_exclude_check_init(struct path_exclude_check *check,
- 			     struct dir_struct *dir)
- {
- 	check->dir = dir;
-+	check->exclude = NULL;
- 	strbuf_init(&check->path, 256);
- }
- 
-@@ -718,18 +719,21 @@ void path_exclude_check_clear(struct path_exclude_check *check)
- }
- 
- /*
-- * Is this name excluded?  This is for a caller like show_files() that
-- * do not honor directory hierarchy and iterate through paths that are
-- * possibly in an ignored directory.
-+ * For each subdirectory in name, starting with the top-most, checks
-+ * to see if that subdirectory is excluded, and if so, returns the
-+ * corresponding exclude structure.  Otherwise, checks whether name
-+ * itself (which is presumably a file) is excluded.
-  *
+@@ -685,8 +685,8 @@ void path_exclude_check_clear(struct path_exclude_check *check)
   * A path to a directory known to be excluded is left in check->path to
   * optimize for repeated checks for files in the same excluded directory.
   */
--int is_path_excluded(struct path_exclude_check *check,
--		     const char *name, int namelen, int *dtype)
-+struct exclude *last_exclude_matching_path(struct path_exclude_check *check,
-+					   const char *name, int namelen,
-+					   int *dtype)
+-int path_excluded(struct path_exclude_check *check,
+-		  const char *name, int namelen, int *dtype)
++int is_path_excluded(struct path_exclude_check *check,
++		     const char *name, int namelen, int *dtype)
  {
  	int i;
  	struct strbuf *path = &check->path;
-+	struct exclude *exclude;
- 
- 	/*
- 	 * we allow the caller to pass namelen as an optimization; it
-@@ -739,11 +743,17 @@ int is_path_excluded(struct path_exclude_check *check,
- 	if (namelen < 0)
- 		namelen = strlen(name);
- 
-+	/*
-+	 * If path is non-empty, and name is equal to path or a
-+	 * subdirectory of path, name should be excluded, because
-+	 * it's inside a directory which is already known to be
-+	 * excluded and was previously left in check->path.
-+	 */
- 	if (path->len &&
- 	    path->len <= namelen &&
- 	    !memcmp(name, path->buf, path->len) &&
- 	    (!name[path->len] || name[path->len] == '/'))
--		return 1;
-+		return check->exclude;
- 
- 	strbuf_setlen(path, 0);
- 	for (i = 0; name[i]; i++) {
-@@ -751,8 +761,12 @@ int is_path_excluded(struct path_exclude_check *check,
- 
- 		if (ch == '/') {
- 			int dt = DT_DIR;
--			if (is_excluded(check->dir, path->buf, &dt))
--				return 1;
-+			exclude = last_exclude_matching(check->dir,
-+							path->buf, &dt);
-+			if (exclude) {
-+				check->exclude = exclude;
-+				return exclude;
-+			}
- 		}
- 		strbuf_addch(path, ch);
- 	}
-@@ -760,7 +774,22 @@ int is_path_excluded(struct path_exclude_check *check,
- 	/* An entry in the index; cannot be a directory with subentries */
- 	strbuf_setlen(path, 0);
- 
--	return is_excluded(check->dir, name, dtype);
-+	return last_exclude_matching(check->dir, name, dtype);
-+}
-+
-+/*
-+ * Is this name excluded?  This is for a caller like show_files() that
-+ * do not honor directory hierarchy and iterate through paths that are
-+ * possibly in an ignored directory.
-+ */
-+int is_path_excluded(struct path_exclude_check *check,
-+		  const char *name, int namelen, int *dtype)
-+{
-+	struct exclude *exclude =
-+		last_exclude_matching_path(check, name, namelen, dtype);
-+	if (exclude)
-+		return exclude->flags & EXC_FLAG_NEGATIVE ? 0 : 1;
-+	return 0;
- }
- 
- static struct dir_entry *dir_entry_new(const char *pathname, int len)
 diff --git a/dir.h b/dir.h
-index d68a997..dcb1ad3 100644
+index 680c1eb..c59bad8 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -119,10 +119,13 @@ extern int match_pathname(const char *, int,
-  */
- struct path_exclude_check {
- 	struct dir_struct *dir;
-+	struct exclude *exclude;
- 	struct strbuf path;
+@@ -123,7 +123,7 @@ struct path_exclude_check {
  };
  extern void path_exclude_check_init(struct path_exclude_check *, struct dir_struct *);
  extern void path_exclude_check_clear(struct path_exclude_check *);
-+extern struct exclude *last_exclude_matching_path(struct path_exclude_check *, const char *,
-+						  int namelen, int *dtype);
- extern int is_path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
+-extern int path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
++extern int is_path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
  
  
+ extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 33a5819..3ac6370 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1372,7 +1372,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
+ 		return 0;
+ 
+ 	if (o->dir &&
+-	    path_excluded(o->path_exclude_check, name, -1, &dtype))
++	    is_path_excluded(o->path_exclude_check, name, -1, &dtype))
+ 		/*
+ 		 * ce->name is explicitly excluded, so it is Ok to
+ 		 * overwrite it.
 -- 
 1.7.11.2.249.g31c7954
