@@ -1,145 +1,233 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] log: grep author/committer using mailmap
-Date: Thu, 27 Dec 2012 10:45:38 -0800
-Message-ID: <7v1uebmizx.fsf@alter.siamese.dyndns.org>
+Date: Thu, 27 Dec 2012 10:48:56 -0800
+Message-ID: <7vwqw3l49z.fsf@alter.siamese.dyndns.org>
 References: <7vy5gkmr53.fsf@alter.siamese.dyndns.org>
  <1356622318-19523-1-git-send-email-apelisse@gmail.com>
+ <7v1uebmizx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>
 To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 27 19:46:04 2012
+X-From: git-owner@vger.kernel.org Thu Dec 27 19:49:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ToISt-0000bZ-D0
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 19:45:59 +0100
+	id 1ToIW5-0002s8-RX
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 19:49:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362Ab2L0Spn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Dec 2012 13:45:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60479 "EHLO
+	id S1753270Ab2L0StA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Dec 2012 13:49:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63563 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753361Ab2L0Spm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Dec 2012 13:45:42 -0500
+	id S1752369Ab2L0Ss7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2012 13:48:59 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3612C9E95;
-	Thu, 27 Dec 2012 13:45:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 931ECA0CE;
+	Thu, 27 Dec 2012 13:48:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UEUJ1/QCFevl7Md+Lgz3ko1/Ro0=; b=D1CrRG
-	+fRUMwiALYAND1FoNu6DUpokySrwusKPd63UTCLxXtEy7Vme+fSeMpTszyqDk37P
-	CedYaq6bqDEzveFSHS4WYPwSQqDYEPeqjKrfXOd1kmcqvSxamn+/vnJURMrfBq6J
-	C5kN4o2Kll3LtUkklYzQxumCs3kmmJQ4vfhYE=
+	:content-type; s=sasl; bh=aZQMgE2+bdzQ6Atgkjdxzu3ieR8=; b=ND8GZK
+	PKwx1XE0QbKXl3j0D/gW6CV/xHTDwv6jVC4PcaprSx5vahdyJGLgIR+f5UDdOMgX
+	xf4xgiVAoEZKbwWPRRG9DsbMVVQZQNwT7HGWikeUVaVH1I39BHpIAI+9vVZmJWbG
+	9SzcLEjYA/heu+C5xzFJS2MYF8huctEmOoHVk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=it6/2mmIhf+tLN1pseZHYJUYmQW/mqPk
-	4qJUETWRH2o4R79WlNMShBC8euuY4c7R7267tycStrPiEfbX0fo3egDdkCyJN+S8
-	L3bfijJ2GHv0PedDkU6QfBl9zNO3aqAQpLRkOfa4q+Sds6HGIvRMs76HuQVG4N5i
-	fqgUIrhAocM=
+	:content-type; q=dns; s=sasl; b=lWUYBya4HohAXRU2YkPp7aaz48nPfzMr
+	DcPK60zcQRzHsUuMtHTL7epdC66LTkOcSkhspmTq9xxhQRs4QvjjTRrWBmdG0uw2
+	F9msnDUdGp88499lx6EMukX/qfc/kdkxB+UJ8c6H5BjV2L7P71LvvxvGKBwfnTl+
+	EWc+OKowC/c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21FAE9E93;
-	Thu, 27 Dec 2012 13:45:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 804B1A0CD;
+	Thu, 27 Dec 2012 13:48:58 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5392D9E8F; Thu, 27 Dec 2012
- 13:45:40 -0500 (EST)
-In-Reply-To: <1356622318-19523-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Thu, 27 Dec 2012 16:31:58 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6C8FA0C8; Thu, 27 Dec 2012
+ 13:48:57 -0500 (EST)
+In-Reply-To: <7v1uebmizx.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 27 Dec 2012 10:45:38 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C92E0DE-5055-11E2-911F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 12375464-5056-11E2-9D9C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212209>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Currently you can use mailmap to display log authors and committers
-> but you can't use the mailmap to find commits with mapped values.
+> Thanks.  I'll queue this on top.
 >
-> This commit allows you to run:
->
->     git log --use-mailmap --author mapped_name_or_email
->     git log --use-mailmap --committer mapped_name_or_email
->
-> Of course it only works if the --use-mailmap option is used.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
+> -- >8 --
+> Subject: [PATCH] log --use-mailmap: optimize for cases without --author/--committer search
 
-Thanks.  I'll queue this on top.
+And this I will *not* queue further on top.
 
 -- >8 --
-Subject: [PATCH] log --use-mailmap: optimize for cases without --author/--committer search
+Subject: [PATCH] [DO NOT USE] log --use-mailmap --author/--committer: further
+ optimize identity rewriting
 
-When we taught the commit_match() mechanism to pay attention to the
-new --use-mailmap option, we started to unconditionally copy the
-commit object to a temporary buffer, just in case we need the author
-and committer lines updated via the mailmap mechanism.
+We used to always allocate a temporary buffer to search for
+author/committer names even when the author/committer does not
+appear in the mailmap.  Update the logic to do the allocation
+on demand to reduce needless malloc()/free() calls.
 
-It turns out that this has a rather unpleasant performance
-implications.  In the linux kernel repository, running
+It turns out that this does not affect performance at all; all the
+time is spent in map_user() which is a look-up in string_list, so
+let's not use this patch in the production, but it illustrates an
+interesting point.
 
-  $ git log --author='Junio C Hamano' --pretty=short >/dev/null
+In map_identities() function, we already know who the author
+recorded in the commit is, either in "author" strbuf, or in buffer
+between [a_at..a_len], so we could grep_buffer() the author
+regexp(s) specified from the command line right there, and combine
+that result with the main grep_buffer() done for the --grep= option
+at the end of the commit_match() function.
 
-under /usr/bin/time, with and without --use-mailmap (the .mailmap
-file is 118 entries long, the particular author does not appear in
-it), cost (with warm cache):
+That may essentially amount to going in the totally opposite
+direction from what 2d10c55 (git log: Unify header_filter and
+message_filter into one., 2006-09-20) attempted to do.  We used to
+have two grep expressions (one for header, the other one for body)
+commit_match() runs grep_buffer() on and combined the results.
+2d10c55 merged them into one grep expression by introducing a term
+that matches only header elements.  But we would instead split the
+"header" expression into "author" and "committer" expressions
+(making it three from one) if we go that route.
 
-  [without --use-mailmap]
-  5.34user 0.25system 0:05.60elapsed 100%CPU (0avgtext+0avgdata 2004832maxresident)k
-  0inputs+0outputs (0major+137600minor)pagefaults 0swaps
-
-  [with --use-mailmap]
-  6.87user 0.24system 0:07.11elapsed 99%CPU (0avgtext+0avgdata 2006352maxresident)k
-  0inputs+0outputs (0major+137696minor)pagefaults 0swaps
-
-which is with about 29% overhead.  The command is doing extra work,
-so the extra cost may be justified.
-
-But it is inexcusable to pay the cost when we do not need
-author/committer match.  In the same repository,
-
-  $ git log --grep='fix menuconfig on debian lenny' --pretty=short >/dev/null
-
-shows very similar numbers as the above:
-
-  [without --use-mailmap]
-  5.30user 0.24system 0:05.55elapsed 99%CPU (0avgtext+0avgdata 2004896maxresident)k
-  0inputs+0outputs (0major+137604minor)pagefaults 0swaps
-
-  [with --use-mailmap]
-  6.82user 0.26system 0:07.07elapsed 100%CPU (0avgtext+0avgdata 2006352maxresident)k
-  0inputs+0outputs (0major+137697minor)pagefaults 0swaps
-
-The latter case is an unnecessary performance regression.  We may
-want to _show_ the result with mailmap applied, but we do not have
-to copy and rewrite the author/committer of all commits we try to
-match if we do not query for these fields.
-
-Trivially optimize this performace regression by limiting the
-rewrites for only when we are matching with author/committer fields.
+In any case, I *think* the bottleneck is in map_user() so until that
+is solved, such an update (or this patch) is not very useful.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- revision.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ revision.c | 95 +++++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 57 insertions(+), 38 deletions(-)
 
 diff --git a/revision.c b/revision.c
-index fa16b9d..56b72f7 100644
+index 56b72f7..4b66598 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2283,7 +2283,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+@@ -2220,49 +2220,73 @@ static int rewrite_parents(struct rev_info *revs, struct commit *commit)
+ 	return 0;
+ }
+ 
+-static int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap)
++static void map_person(const char *buf, size_t len, const char *head, int headlen,
++		       struct strbuf *result, struct string_list *mailmap,
++		       int *matchofs, int *matchlen)
+ {
+-	char *person, *endp;
+-	size_t len;
++	struct ident_split ident;
++	const char *endp, *person;
+ 	struct strbuf name = STRBUF_INIT;
+ 	struct strbuf mail = STRBUF_INIT;
+-	struct ident_split ident;
+ 
+-	person = strstr(buf->buf, what);
++	person = memmem(buf, len, head, headlen);
+ 	if (!person)
+-		goto left_intact;
+-
+-	person += strlen(what);
++		return;
++	person += headlen;
+ 	endp = strchr(person, '\n');
+ 	if (!endp)
+-		goto left_intact;
+-
+-	len = endp - person;
+-
+-	if (split_ident_line(&ident, person, len))
+-		goto left_intact;
+-
++		return;
++	*matchofs = person - buf;
++	*matchlen = endp - person;
++	if (split_ident_line(&ident, person, *matchlen))
++		return;
+ 	strbuf_add(&name, ident.name_begin, ident.name_end - ident.name_begin);
+ 	strbuf_add(&mail, ident.mail_begin, ident.mail_end - ident.mail_begin);
+-
+-	if (map_user(mailmap, &mail, &name)) {
+-		strbuf_addf(&name, " <%s>", mail.buf);
+-
+-		strbuf_splice(buf, ident.name_begin - buf->buf,
+-			      ident.mail_end - ident.name_begin + 1,
+-			      name.buf, name.len);
+-
+-		strbuf_release(&name);
+-		strbuf_release(&mail);
+-
+-		return 1;
+-	}
+-
+-left_intact:
++	if (map_user(mailmap, &mail, &name))
++		strbuf_addf(result, "%s <%s>", name.buf, mail.buf);
+ 	strbuf_release(&name);
+ 	strbuf_release(&mail);
++}
+ 
+-	return 0;
++static void map_identities(struct strbuf *buf, const char *buffer, struct string_list *mailmap)
++{
++	const char *eob;
++	struct strbuf author = STRBUF_INIT;
++	struct strbuf committer = STRBUF_INIT;
++	int a_at = -1, a_len, c_at = -1, c_len;
++
++	eob = strstr(buffer, "\n\n");
++	if (!eob)
++		eob = buffer + strlen(buffer);
++	map_person(buffer, eob - buffer, "\nauthor ", 8, &author, mailmap,
++		   &a_at, &a_len);
++	map_person(buffer, eob - buffer, "\ncommitter ", 11, &committer, mailmap,
++		   &c_at, &c_len);
++	if (!author.len && !committer.len)
++		goto done;
++
++	/* Now, we know we need rewriting */
++	if (!buf->len)
++		strbuf_addstr(buf, buffer);
++
++	if (c_at < 0 || !committer.len) {
++		strbuf_splice(buf, a_at, a_len, author.buf, author.len);
++	} else if (a_at < 0 || !author.len) {
++		strbuf_splice(buf, c_at, c_len, committer.buf, committer.len);
++	} else if (a_at < c_at) {
++		strbuf_splice(buf, c_at, c_len, committer.buf, committer.len);
++		strbuf_splice(buf, a_at, a_len, author.buf, author.len);
++	} else {
++		/*
++		 * The commit records committer before the author, which is malformed,
++		 * which we may want to warn about.
++		 */
++		strbuf_splice(buf, a_at, a_len, author.buf, author.len);
++		strbuf_splice(buf, c_at, c_len, committer.buf, committer.len);
++	}
++ done:
++	strbuf_release(&author);
++	strbuf_release(&committer);
+ }
+ 
+ static int commit_match(struct commit *commit, struct rev_info *opt)
+@@ -2283,13 +2307,8 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
  	if (buf.len)
  		strbuf_addstr(&buf, commit->buffer);
  
--	if (opt->mailmap) {
-+	if (opt->grep_filter.header_list && opt->mailmap) {
- 		if (!buf.len)
- 			strbuf_addstr(&buf, commit->buffer);
+-	if (opt->grep_filter.header_list && opt->mailmap) {
+-		if (!buf.len)
+-			strbuf_addstr(&buf, commit->buffer);
+-
+-		commit_rewrite_person(&buf, "\nauthor ", opt->mailmap);
+-		commit_rewrite_person(&buf, "\ncommitter ", opt->mailmap);
+-	}
++	if (opt->grep_filter.header_list && opt->mailmap)
++		map_identities(&buf, commit->buffer, opt->mailmap);
  
+ 	/* Append "fake" message parts as needed */
+ 	if (opt->show_notes) {
 -- 
 1.8.1.rc3.221.g8d09d94
