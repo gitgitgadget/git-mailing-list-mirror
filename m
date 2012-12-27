@@ -1,117 +1,125 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v3] mergetools/p4merge: Honor $TMPDIR for the /dev/null placeholder
-Date: Wed, 26 Dec 2012 16:45:29 -0800
-Message-ID: <1356569129-10024-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Jeremy Morton <admin@game-point.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 27 01:45:54 2012
+From: Adam Spiers <git@adamspiers.org>
+Subject: [PATCH v3 05/19] dir.c: rename excluded_from_list() to is_excluded_from_list()
+Date: Thu, 27 Dec 2012 02:32:24 +0000
+Message-ID: <1356575558-2674-6-git-send-email-git@adamspiers.org>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 27 03:33:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1To1bd-0005lh-Ke
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 01:45:53 +0100
+	id 1To3HL-0006HI-2c
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 03:33:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290Ab2L0Ape (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2012 19:45:34 -0500
-Received: from mail-da0-f54.google.com ([209.85.210.54]:44452 "EHLO
-	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075Ab2L0Apd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2012 19:45:33 -0500
-Received: by mail-da0-f54.google.com with SMTP id n2so4071019dad.27
-        for <git@vger.kernel.org>; Wed, 26 Dec 2012 16:45:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=ACQlG866pfXjpYaWTqS8VUjd64i6VylaV5QBup/pICU=;
-        b=DC7hWmcZnjaVt2dcKJGiapQCzA4VZPEhjhBoYPYxbmoywY+8pBB6RtFaz/OIoIlRUd
-         aqWI7K6kdhdOXWsypk8u3ebTfs83dvDxG9hZJ3Bq9wHbIqZ0y2cHy/mdKtYpngznwpPx
-         PVFO+qqfPTXG/IkGh+bCCyyFvq1NZ2FlWb4Me35DsTqi6JuvqTpzuvEY3jpEcTsqIgy/
-         9gsWU7ArGA3CDaBfjR1jifAURyGRqkBHFfNLnq/9DyNY48sGPQe+kCqlFBcnbOnEFWHY
-         kytlCpTp3gDaakxt4HAeWsIlPZ40TOBuNotvVp4HXPik/VnMkffEydMD7bxTov5qqY+8
-         +KZg==
-X-Received: by 10.68.238.165 with SMTP id vl5mr91290484pbc.0.1356569132704;
-        Wed, 26 Dec 2012 16:45:32 -0800 (PST)
-Received: from horus.socal.rr.com (cpe-76-175-168-235.socal.res.rr.com. [76.175.168.235])
-        by mx.google.com with ESMTPS id nf9sm16731933pbc.17.2012.12.26.16.45.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 26 Dec 2012 16:45:31 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc3.11.g86c3e6e
+	id S1752351Ab2L0Ccp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2012 21:32:45 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:53762 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752286Ab2L0Ccn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2012 21:32:43 -0500
+Received: from localhost (host-2-103-56-128.as13285.net [2.103.56.128])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 8972B2E5E6
+	for <git@vger.kernel.org>; Thu, 27 Dec 2012 02:32:42 +0000 (GMT)
+X-Mailer: git-send-email 1.7.11.2.249.g31c7954
+In-Reply-To: <1356575558-2674-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212169>
 
-Use $TMPDIR when creating the /dev/null placeholder for p4merge.
-This prevents users from finding a seemingly random untracked file
-in their worktree.
+Continue adopting clearer names for exclude functions.  This 'is_*'
+naming pattern for functions returning booleans was discussed here:
 
-This is different than what mergetool does with $LOCAL and
-$REMOTE because those files exist to aid users when resolving
-merges.  p4merge's /dev/null placeholder is not helpful in that
-situation so it is sensible to keep it out of the worktree.
+http://thread.gmane.org/gmane.comp.version-control.git/204661/focus=204924
 
-Reported-by: Jeremy Morton <admin@game-point.net>
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Also adjust their callers as necessary.
+
+Signed-off-by: Adam Spiers <git@adamspiers.org>
 ---
-v3 revised the commit message to better justify the change.
-This is a replacement for what's current in 'next'.
+ dir.c          | 11 ++++++-----
+ dir.h          |  4 ++--
+ unpack-trees.c |  8 +++++---
+ 3 files changed, 13 insertions(+), 10 deletions(-)
 
- mergetools/p4merge | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/mergetools/p4merge b/mergetools/p4merge
-index 295361a..52f7c8f 100644
---- a/mergetools/p4merge
-+++ b/mergetools/p4merge
-@@ -1,29 +1,21 @@
- diff_cmd () {
-+	empty_file=
-+
- 	# p4merge does not like /dev/null
--	rm_local=
--	rm_remote=
- 	if test "/dev/null" = "$LOCAL"
- 	then
--		LOCAL="./p4merge-dev-null.LOCAL.$$"
--		>"$LOCAL"
--		rm_local=true
-+		LOCAL="$(create_empty_file)"
- 	fi
- 	if test "/dev/null" = "$REMOTE"
- 	then
--		REMOTE="./p4merge-dev-null.REMOTE.$$"
--		>"$REMOTE"
--		rm_remote=true
-+		REMOTE="$(create_empty_file)"
- 	fi
+diff --git a/dir.c b/dir.c
+index f1c0abd..0800491 100644
+--- a/dir.c
++++ b/dir.c
+@@ -605,9 +605,9 @@ int match_pathname(const char *pathname, int pathlen,
+ /* Scan the list and let the last match determine the fate.
+  * Return 1 for exclude, 0 for include and -1 for undecided.
+  */
+-int excluded_from_list(const char *pathname,
+-		       int pathlen, const char *basename, int *dtype,
+-		       struct exclude_list *el)
++int is_excluded_from_list(const char *pathname,
++			  int pathlen, const char *basename, int *dtype,
++			  struct exclude_list *el)
+ {
+ 	int i;
  
- 	"$merge_tool_path" "$LOCAL" "$REMOTE"
+@@ -654,8 +654,9 @@ static int excluded(struct dir_struct *dir, const char *pathname, int *dtype_p)
  
--	if test -n "$rm_local"
--	then
--		rm -f "$LOCAL"
--	fi
--	if test -n "$rm_remote"
-+	if test -n "$empty_file"
- 	then
--		rm -f "$REMOTE"
-+		rm -f "$empty_file"
- 	fi
- }
+ 	prep_exclude(dir, pathname, basename-pathname);
+ 	for (st = EXC_CMDL; st <= EXC_FILE; st++) {
+-		switch (excluded_from_list(pathname, pathlen, basename,
+-					   dtype_p, &dir->exclude_list[st])) {
++		switch (is_excluded_from_list(pathname, pathlen,
++					      basename, dtype_p,
++					      &dir->exclude_list[st])) {
+ 		case 0:
+ 			return 0;
+ 		case 1:
+diff --git a/dir.h b/dir.h
+index c59bad8..554f87a 100644
+--- a/dir.h
++++ b/dir.h
+@@ -98,8 +98,8 @@ extern int within_depth(const char *name, int namelen, int depth, int max_depth)
+ extern int fill_directory(struct dir_struct *dir, const char **pathspec);
+ extern int read_directory(struct dir_struct *, const char *path, int len, const char **pathspec);
  
-@@ -33,3 +25,10 @@ merge_cmd () {
- 	"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
- 	check_unchanged
- }
-+
-+create_empty_file () {
-+	empty_file="${TMPDIR:-/tmp}/git-difftool-p4merge-empty-file.$$"
-+	>"$empty_file"
-+
-+	printf "$empty_file"
-+}
+-extern int excluded_from_list(const char *pathname, int pathlen, const char *basename,
+-			      int *dtype, struct exclude_list *el);
++extern int is_excluded_from_list(const char *pathname, int pathlen, const char *basename,
++				 int *dtype, struct exclude_list *el);
+ struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len);
+ 
+ /*
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3ac6370..c0da094 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -836,7 +836,8 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+ {
+ 	struct cache_entry **cache_end;
+ 	int dtype = DT_DIR;
+-	int ret = excluded_from_list(prefix, prefix_len, basename, &dtype, el);
++	int ret = is_excluded_from_list(prefix, prefix_len,
++					basename, &dtype, el);
+ 
+ 	prefix[prefix_len++] = '/';
+ 
+@@ -855,7 +856,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+ 	 * with ret (iow, we know in advance the incl/excl
+ 	 * decision for the entire directory), clear flag here without
+ 	 * calling clear_ce_flags_1(). That function will call
+-	 * the expensive excluded_from_list() on every entry.
++	 * the expensive is_excluded_from_list() on every entry.
+ 	 */
+ 	return clear_ce_flags_1(cache, cache_end - cache,
+ 				prefix, prefix_len,
+@@ -938,7 +939,8 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 
+ 		/* Non-directory */
+ 		dtype = ce_to_dtype(ce);
+-		ret = excluded_from_list(ce->name, ce_namelen(ce), name, &dtype, el);
++		ret = is_excluded_from_list(ce->name, ce_namelen(ce),
++					    name, &dtype, el);
+ 		if (ret < 0)
+ 			ret = defval;
+ 		if (ret > 0)
 -- 
-1.8.1.rc3.11.g86c3e6e
+1.7.11.2.249.g31c7954
