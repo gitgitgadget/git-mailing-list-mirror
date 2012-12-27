@@ -1,105 +1,119 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v3 03/19] dir.c: rename cryptic 'which' variable to more consistent name
-Date: Thu, 27 Dec 2012 02:32:22 +0000
-Message-ID: <1356575558-2674-4-git-send-email-git@adamspiers.org>
-References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 27 03:34:06 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] wt-status: Show ignored files in untracked dirs
+Date: Wed, 26 Dec 2012 18:37:55 -0800
+Message-ID: <7vip7omd8c.fsf@alter.siamese.dyndns.org>
+References: <1356516985-31068-1-git-send-email-apelisse@gmail.com>
+ <1356528674-2730-1-git-send-email-apelisse@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 27 03:38:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1To3II-0006l1-Ry
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 03:34:03 +0100
+	id 1To3MQ-0000WR-DY
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Dec 2012 03:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559Ab2L0Cdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2012 21:33:35 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:53763 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890Ab2L0Ccm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2012 21:32:42 -0500
-Received: from localhost (host-2-103-56-128.as13285.net [2.103.56.128])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 35C262E5DB
-	for <git@vger.kernel.org>; Thu, 27 Dec 2012 02:32:41 +0000 (GMT)
-X-Mailer: git-send-email 1.7.11.2.249.g31c7954
-In-Reply-To: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+	id S1751744Ab2L0CiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2012 21:38:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46713 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751495Ab2L0Ch7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2012 21:37:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7013AADA2;
+	Wed, 26 Dec 2012 21:37:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x1Cwm7yDSrIHDFTCJ09ay4/BKew=; b=G7V4uj
+	1JB74yAMMV3XkjMfb2mEUY1W8YAWhSif6jffwY2lZRuZ6+7BEYugptKF4PWo2orl
+	5BebtgJFzucnRu2FqyR/DSs5ltTVZKDMg857wJUj3mcziuRnJEvCDA6+6gKe5pw8
+	MKK7aX5nILCH6IrbQQROWIHGvp10Wq22FCdK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QkyG44+jmdqK/ycWGEwgkE61QbyLQgqP
+	TKjxnZ/NEAEIy3LbpcuoU0zchnvF/FFQaaqbIynfYa+uAPsmeHT+4g3+0mGYr0yx
+	Qe7upq4g8dc7cSrBtNTU+2YKLCtoeUqs+hCQq2l0HBp11HoQLjWJebjuR3lfeNZE
+	ucriPEuQYOk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B397ADA1;
+	Wed, 26 Dec 2012 21:37:58 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B42BEAD9E; Wed, 26 Dec 2012
+ 21:37:57 -0500 (EST)
+In-Reply-To: <1356528674-2730-1-git-send-email-apelisse@gmail.com> (Antoine
+ Pelisse's message of "Wed, 26 Dec 2012 14:31:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6C8B2338-4FCE-11E2-8C0F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212189>
 
-'el' is only *slightly* less cryptic, but is already used as the
-variable name for a struct exclude_list pointer in numerous other
-places, so this reduces the number of cryptic variable names in use by
-one :-)
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- dir.c | 10 +++++-----
- dir.h |  4 ++--
- 2 files changed, 7 insertions(+), 7 deletions(-)
+> When looking for ignored files, we do not recurse into untracked
+> directory, and simply consider the directory ignored status.
 
-diff --git a/dir.c b/dir.c
-index 89e27a6..f31aa59 100644
---- a/dir.c
-+++ b/dir.c
-@@ -349,7 +349,7 @@ void parse_exclude_pattern(const char **pattern,
- }
- 
- void add_exclude(const char *string, const char *base,
--		 int baselen, struct exclude_list *which)
-+		 int baselen, struct exclude_list *el)
- {
- 	struct exclude *x;
- 	int patternlen;
-@@ -373,8 +373,8 @@ void add_exclude(const char *string, const char *base,
- 	x->base = base;
- 	x->baselen = baselen;
- 	x->flags = flags;
--	ALLOC_GROW(which->excludes, which->nr + 1, which->alloc);
--	which->excludes[which->nr++] = x;
-+	ALLOC_GROW(el->excludes, el->nr + 1, el->alloc);
-+	el->excludes[el->nr++] = x;
- }
- 
- static void *read_skip_worktree_file_from_index(const char *path, size_t *size)
-@@ -416,7 +416,7 @@ int add_excludes_from_file_to_list(const char *fname,
- 				   const char *base,
- 				   int baselen,
- 				   char **buf_p,
--				   struct exclude_list *which,
-+				   struct exclude_list *el,
- 				   int check_index)
- {
- 	struct stat st;
-@@ -463,7 +463,7 @@ int add_excludes_from_file_to_list(const char *fname,
- 		if (buf[i] == '\n') {
- 			if (entry != buf + i && entry[0] != '#') {
- 				buf[i - (i && buf[i-1] == '\r')] = 0;
--				add_exclude(entry, base, baselen, which);
-+				add_exclude(entry, base, baselen, el);
- 			}
- 			entry = buf + i + 1;
- 		}
-diff --git a/dir.h b/dir.h
-index e0869bc..680c1eb 100644
---- a/dir.h
-+++ b/dir.h
-@@ -127,11 +127,11 @@ extern int path_excluded(struct path_exclude_check *, const char *, int namelen,
- 
- 
- extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
--					  char **buf_p, struct exclude_list *which, int check_index);
-+					  char **buf_p, struct exclude_list *el, int check_index);
- extern void add_excludes_from_file(struct dir_struct *, const char *fname);
- extern void parse_exclude_pattern(const char **string, int *patternlen, int *flags, int *nowildcardlen);
- extern void add_exclude(const char *string, const char *base,
--			int baselen, struct exclude_list *which);
-+			int baselen, struct exclude_list *el);
- extern void free_excludes(struct exclude_list *el);
- extern int file_exists(const char *);
- 
--- 
-1.7.11.2.249.g31c7954
+When asked to show ignored ones, instead of listing all ignored
+files in such a directory, we just say "everything in this directory
+is ignored"?
+
+That sounds like a more desirable behaviour, than listing everything
+there, at least to me, but perhaps I am missing something.
+
+Care to add a test for this new behaviour?
+
+> As a consequence, we don't see ignored files in those directories.
+>
+> Change that behavior by recursing into untracked directories, if not
+> ignored themselves, searching for ignored files.
+>
+> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+> ---
+> Actually, the previous patch breaks the case where the directory is ignored.
+> This one should fix both issues.
+> Let me know if you see any other use case that could be an issue.
+>
+>  dir.c       | 7 +++++++
+>  wt-status.c | 2 +-
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 5a83aa7..2863799 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1042,6 +1042,13 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
+>  			return path_ignored;
+>  	}
+>
+> +	/*
+> +	 * Don't recurse into ignored directories when looking for
+> +	 * ignored files, but still show the directory as ignored.
+> +	 */
+> +	if (exclude && (dir->flags & DIR_SHOW_IGNORED) && dtype == DT_DIR)
+> +		return path_handled;
+> +
+>  	switch (dtype) {
+>  	default:
+>  		return path_ignored;
+> diff --git a/wt-status.c b/wt-status.c
+> index 2a9658b..7c41488 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -516,7 +516,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
+>
+>  	if (s->show_ignored_files) {
+>  		dir.nr = 0;
+> -		dir.flags = DIR_SHOW_IGNORED | DIR_SHOW_OTHER_DIRECTORIES;
+> +		dir.flags = DIR_SHOW_IGNORED;
+>  		fill_directory(&dir, s->pathspec);
+>  		for (i = 0; i < dir.nr; i++) {
+>  			struct dir_entry *ent = dir.entries[i];
+> --
+> 1.8.1.rc3.12.g8864e38
