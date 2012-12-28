@@ -1,94 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 17/19] pathspec.c: extract new validate_path() for
- reuse
-Date: Fri, 28 Dec 2012 12:44:43 -0800
-Message-ID: <7v38ypj490.fsf@alter.siamese.dyndns.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v3 16/19] pathspec.c: move reusable code from builtin/add.c
+Date: Fri, 28 Dec 2012 20:45:00 +0000
+Message-ID: <CAOkDyE8vSyT=eJ4FxRwYgz7Jzqu1+0LSzxtq9iSSzJEgTD1M0g@mail.gmail.com>
 References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
- <1356575558-2674-18-git-send-email-git@adamspiers.org>
+	<1356575558-2674-17-git-send-email-git@adamspiers.org>
+	<7v8v8hj4t0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Fri Dec 28 21:45:05 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 28 21:45:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tognh-0003fR-3t
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 21:45:05 +0100
+	id 1Tognx-0003kx-Ta
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 21:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187Ab2L1Uoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 15:44:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63657 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752689Ab2L1Uop (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2012 15:44:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49D27AC49;
-	Fri, 28 Dec 2012 15:44:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qS5OBGFAQVQOfUQMyfN1NZrb2G4=; b=Yco7mj
-	/X7AA0opd9XDIJnLC52LJi+38pfuJqVCsF2m7iuTBEmMBCLbB5O1S27vjYdXWmsw
-	XyoRAFzSVNmPLrylKgKLDVNPS4EJEEOyvnNZIlODF3XuNvgFG5XP4fSvBaDEuJR2
-	+F7NVqPdEP2+PacM3lHlJOhtTyLC3GZr9fY8U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GFDfDJd3dOMc3VVII+BB2aPwI3ZbJXuS
-	XAI2EpVDLuTxRXo2FTUfLlGnphSWkNQ+HkqG3cioXCbfVTHtr/oaqUQQa1Da07NU
-	EKHorwfaLFI0ROvYtk8ABgV+5mgvYLziq+UdRfBxOO8IxU2/rIEMaAS+12fVqP95
-	XV7ruuBMqaU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34997AC46;
-	Fri, 28 Dec 2012 15:44:45 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92311AC43; Fri, 28 Dec 2012
- 15:44:44 -0500 (EST)
-In-Reply-To: <1356575558-2674-18-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Thu, 27 Dec 2012 02:32:36 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 694682AA-512F-11E2-96A9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754255Ab2L1UpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 15:45:04 -0500
+Received: from mail-we0-f169.google.com ([74.125.82.169]:62418 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752689Ab2L1UpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2012 15:45:01 -0500
+Received: by mail-we0-f169.google.com with SMTP id t49so5199126wey.0
+        for <git@vger.kernel.org>; Fri, 28 Dec 2012 12:45:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=KfYs1TOGl33DL16oOy7pNI/SaRsGYektipXvn4iAr38=;
+        b=BxllhHra2c+Nfjjs05d/5HN+jpwK7Cj6iTTMOfbagg3UW3XQ7k+EZzNdZtqeB+Crdb
+         sBxWXGDp/41d+NnmkHLmzcxNu1loGi5cimuRr9+xT8yjRnhl2v0y9xrWnpBSUUQJO1qF
+         wYlSPbDNuymBQZ7eSNsNOVwln7xTMFLoP6S7b2prY0hxk7jXEnKgrxYT3z4GTUuX3UVC
+         Y1GPSyEB41q4FitoLU8DfyTLFUUxO9WC/RajGFQEhlaCvu+So9dTusoDTDlW7yN1A41r
+         HPpbCZh2BIgoS0zS8lw+CHyX+5siUHGNz+wqTuwFaiTDEewiSA8kJ9kEwT45j5OkCQwT
+         kNcw==
+Received: by 10.194.88.98 with SMTP id bf2mr55600590wjb.49.1356727500344; Fri,
+ 28 Dec 2012 12:45:00 -0800 (PST)
+Received: by 10.194.84.97 with HTTP; Fri, 28 Dec 2012 12:45:00 -0800 (PST)
+In-Reply-To: <7v8v8hj4t0.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: hUWLVB6m_njpVPMyWtdy9MKRiXQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212262>
 
-Adam Spiers <git@adamspiers.org> writes:
-
-> This will be reused by a new git check-ignore command.
+On Fri, Dec 28, 2012 at 8:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Adam Spiers <git@adamspiers.org> writes:
 >
-> Signed-off-by: Adam Spiers <git@adamspiers.org>
-> ---
->  pathspec.c | 20 ++++++++++++++------
->  pathspec.h |  1 +
->  2 files changed, 15 insertions(+), 6 deletions(-)
+>> diff --git a/pathspec.h b/pathspec.h
+>> new file mode 100644
+>> index 0000000..8bb670b
+>> --- /dev/null
+>> +++ b/pathspec.h
+>> @@ -0,0 +1,5 @@
+>> +extern char *find_used_pathspec(const char **pathspec);
+>> +extern void fill_pathspec_matches(const char **pathspec, char *seen, int specs);
+>> +extern const char *treat_gitlink(const char *path);
+>> +extern void treat_gitlinks(const char **pathspec);
+>> +extern const char **validate_pathspec(const char **argv, const char *prefix);
 >
-> diff --git a/pathspec.c b/pathspec.c
-> index 8aea0d2..6724121 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -77,9 +77,20 @@ void treat_gitlinks(const char **pathspec)
->  }
->  
->  /*
-> + * Dies if the given path refers to a file inside a symlinked
-> + * directory.
-> + */
-> +void validate_path(const char *path, const char *prefix)
+> Protect this against multiple inclusion with "#ifndef PATHSPEC_H".
 
-The name needs to be a lot more specific.
+Yep good idea, how should I submit this?  It will cause a trivially
+resolvable conflict with the next patch in the series (17/19):
 
-There may be 47 different kinds of "validations" various callers may
-want to do on a path, but this function only caters to one kind of
-callers that want to make sure that the path refers to something
-that we would directly add to our index.
+  pathspec.c: extract new validate_path() for reuse
 
-> +{
-> +	if (has_symlink_leading_path(path, strlen(path))) {
-> +		int len = prefix ? strlen(prefix) : 0;
-> +		die(_("'%s' is beyond a symbolic link"), path + len);
-> +	}
-> +}
+but I'd prefer not to re-roll 16--19 when just 16 and 17 are sufficient.
