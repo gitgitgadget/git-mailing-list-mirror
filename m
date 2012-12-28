@@ -1,119 +1,97 @@
-From: Woody Wu <narkewoody@gmail.com>
-Subject: Re: Find the starting point of a local branch
-Date: Fri, 28 Dec 2012 13:15:15 +0800
-Message-ID: <20121228051514.GA4028@zuhnb712.ap.bm.net>
-References: <20121224035825.GA17203@zuhnb712>
- <201212240409.qBO49wkV020768@no.baka.org>
- <20121224073103.GA10793@zuhnb712>
- <CANiSa6iSYvLbp1s8h9pwi=P1m0QdZPqf06hAm+4muChgJUuj=g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] wildmatch: support "no FNM_PATHNAME" mode
+Date: Thu, 27 Dec 2012 22:24:16 -0800
+Message-ID: <7vwqw2k833.fsf@alter.siamese.dyndns.org>
+References: <1356163028-29967-1-git-send-email-pclouds@gmail.com>
+ <1356163028-29967-5-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Seth Robertson <in-gitvger@baka.org>, git <git@vger.kernel.org>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 28 06:17:06 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 28 07:24:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ToSJd-0008MG-L1
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 06:17:05 +0100
+	id 1ToTN8-0004mS-CJ
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 07:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750820Ab2L1FQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 00:16:47 -0500
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:57586 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750743Ab2L1FQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2012 00:16:46 -0500
-Received: by mail-pb0-f52.google.com with SMTP id ro2so5702299pbb.25
-        for <git@vger.kernel.org>; Thu, 27 Dec 2012 21:16:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=A+de9jqH7luHzym47g+wkBgYqEyJbUTKzvM19IBoKos=;
-        b=n8F51Nu/1TkpqahK82k7tJI6RR986Io3Rt3f4KRzRv2V5/VMgY6HruqNiUgV4JJAjW
-         PArl85IueCxfKmgtUbmgAJuf/JWPgwQDJK8hFxcBmoecdoshpoxHvv8zPmYTR5OaZYpb
-         ufAy93zXHPMn70+u1FfOkyPCpvNweie4AsS6fKLQeueGst/+ed0IYm7MpKheKq+T83rC
-         2Y4eLmYfUBilP8xQLssXgROD+pJLy8Fz4OEpM4Eqggi4NdRa/kPgHW/8Z1DTCfGlwV3P
-         14OFxliuKMBPdUNCLPPrSSKLTA9JEeabNiquyH6zSKdJp0eYavLnN4rvKmKnXLue6f0k
-         yhlw==
-X-Received: by 10.68.223.35 with SMTP id qr3mr102090192pbc.27.1356671805176;
-        Thu, 27 Dec 2012 21:16:45 -0800 (PST)
-Received: from localhost ([59.37.26.98])
-        by mx.google.com with ESMTPS id f5sm19698643pav.22.2012.12.27.21.16.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 27 Dec 2012 21:16:44 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CANiSa6iSYvLbp1s8h9pwi=P1m0QdZPqf06hAm+4muChgJUuj=g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750898Ab2L1GYV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Dec 2012 01:24:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46640 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750826Ab2L1GYT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Dec 2012 01:24:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB1F176F2;
+	Fri, 28 Dec 2012 01:24:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=4aYGD6zQSURrtRdfNhBUmSNjt
+	/s=; b=ArjHep0l4OYbcELgG9S4NbrSFP1nli88ONe+SlKqttSbJkT8ciYJqwr5P
+	scoEormPdTQl6iEFFmp8EWZPVDcKyhtqDLHOCDJjnKnzNSb+T3euDfhkjZJAt7zS
+	S/HfG15obPWmWVrETOgwhtrmem6oDCguXLr6GL5mdF7ThVJsIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=AQE8hNgbVHXIoK7xO+D
+	xFSYkSxzdUA3jCaFauFVPnT6nHuwUmtIabn5t+lIo5QeKD0rFVN5sI+z9sVD8Z5J
+	wMEGEfxAzS4Vq6Zd5ijmNwG01eukIIDHQ3y2ywii7BwI47EujirhZME/x9bm6d1c
+	UpBuo/xfvH+Np90uCyW5V2Q0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C740A76F1;
+	Fri, 28 Dec 2012 01:24:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32B4C76EE; Fri, 28 Dec 2012
+ 01:24:18 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 358C1F38-50B7-11E2-A56D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212234>
 
-On Mon, Dec 24, 2012 at 09:24:39AM -0800, Martin von Zweigbergk wrote:
-> On Sun, Dec 23, 2012 at 11:31 PM, Woody Wu <narkewoody@gmail.com> wrote:
-> > On Sun, Dec 23, 2012 at 11:09:58PM -0500, Seth Robertson wrote:
-> >>
-> >> In message <20121224035825.GA17203@zuhnb712>, Woody Wu writes:
-> >>
-> >>     How can I find out what's the staring reference point (a commit number
-> >>     or tag name) of a locally created branch? I can use gitk to find out it
-> >>     but this method is slow, I think there might be a command line to do it
-> >>     quickly.
-> >>
-> >> The answer is more complex than you probably suspected.
-> >>
-> >> Technically, `git log --oneline mybranch | tail -n 1` will tell you
-> >> the starting point of any branch.  But...I'm sure that isn't what you
-> >> want to know.
-> >>
-> >> You want to know "what commit was I at when I typed `git branch
-> >> mybranch`"?
-> >
-> > Yes, this is exactly I want to know.
-> >
-> >>The problem is git doesn't record this information and
-> >> doesn't have the slightest clue.
-> >>
-> >> But, you say, I can use `gitk` and see it.  See?  Right there.  That
-> >> isn't (necessarily) the "starting point" of the branch, it is the
-> >> place where your branch diverged from some other branch.  Git is
-> >> actually quite able to tell you when the last time your branch
-> >> diverged from some other branch.  `git merge-base mybranch master`
-> >> will tell you this, and is probably the answer you were looking for.
-> >
-> > This is not working to me since I have more than one local branch that
-> > diverged from the master, and in fact, the branch I have in question was
-> > diverged from another local branch.
-> 
-> As Jeff mentions in a later message, "git pull --rebase" would
-> probably do what you want. It works with local branches too.
-> 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-I think what 'git pull --rebase' would do is to fetch from the origin
-and do a 'git rebase'.  On one hand, I don't understand 'git rebase' so
-much from the manual, ont the other hand, I did not get the point why
-'git rebase' has something to do with the thing I want to do (what I
-want is just query some kind of history information).
+> diff --git a/wildmatch.c b/wildmatch.c
+> index a79f97e..4fe1d65 100644
+> --- a/wildmatch.c
+> +++ b/wildmatch.c
+> @@ -77,14 +77,17 @@ static int dowild(const uchar *p, const uchar *te=
+xt, unsigned int flags)
+>  			continue;
+>  		case '?':
+>  			/* Match anything but '/'. */
+> -			if (t_ch =3D=3D '/')
+> +			if ((flags & WM_PATHNAME) && t_ch =3D=3D '/')
+>  				return WM_NOMATCH;
+>  			continue;
+>  		case '*':
+>  			if (*++p =3D=3D '*') {
+>  				const uchar *prev_p =3D p - 2;
+>  				while (*++p =3D=3D '*') {}
+> -				if ((prev_p =3D=3D text || *prev_p =3D=3D '/') ||
+> +				if (!(flags & WM_PATHNAME))
+> +					/* without WM_PATHNAME, '*' =3D=3D '**' */
+> +					special =3D 1;
+> +				else if ((prev_p =3D=3D text || *prev_p =3D=3D '/') ||
 
-I know, my knowledge about git is still so limit. I will keep study from
-the man pages.
+Not a new issue in this patch, but here, "prev_p" points into the
+pattern string, two bytes before p, which is the byte before the
+"**" that we are looking at (which might be before the beginning of
+the pattern).  "text" is the string we are trying to match that
+pattern against.  How can these two pointers be compared to yield a
+meaningful value?
 
+>  				    (*p =3D=3D '\0' || *p =3D=3D '/' ||
+>  				     (p[0] =3D=3D '\\' && p[1] =3D=3D '/'))) {
 
-> I once tried to add the same cleverness that "git pull --rebase"
-> directly in "git rebase" [1], but there were several issues with those
-> patches, one of was regarding the performance ("git pull --rebase" can
-> be equally slow, but since it often involves network, users probably
-> rarely notice). I think it would be nice to at least add it as an
-> option to "git rebase" some day. Until then, "git pull --rebase" works
-> fine.
-> 
->  [1] http://thread.gmane.org/gmane.comp.version-control.git/166710
+OK.  "**/", "**" (end of pattern), and "**\/" are handled here. =20
 
--- 
-woody
-I can't go back to yesterday - because I was a different person then.
+Do we have to worry about "**[/]" the same way, or a class never
+matches the directory separator, even if it is a singleton class
+that consists of '/' (which is fine by me)?  If so, is "\/" more or
+less like "[/]"?
