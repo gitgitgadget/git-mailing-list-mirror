@@ -1,81 +1,99 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: git diff --ignore-space-at-eol issue
-Date: Fri, 28 Dec 2012 21:33:24 +0100
-Message-ID: <CALWbr2zSe6GEy=_7SXqRocKwhXauXmP7eMMmDur4Vg7npqBPyg@mail.gmail.com>
-References: <BLU163-W40634B340214076467C88ECF360@phx.gbl>
-	<CALWbr2y3BdqcD-62jhPSQsK3U=8-Dc=R-jxg8H0yqpgVfdHJXw@mail.gmail.com>
-	<BLU163-W51DAB90003C969CDF837A2CF3F0@phx.gbl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 18/19] setup.c: document get_pathspec()
+Date: Fri, 28 Dec 2012 12:36:34 -0800
+Message-ID: <7v7go1j4ml.fsf@alter.siamese.dyndns.org>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+ <1356575558-2674-19-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git <git@vger.kernel.org>
-To: John Moon <johnmoon77@hotmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 28 21:33:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Fri Dec 28 21:37:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Togci-0006N4-Te
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 21:33:45 +0100
+	id 1Togg7-0008A8-Ro
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 21:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754077Ab2L1Ud1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 15:33:27 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:54529 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752501Ab2L1Ud0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Dec 2012 15:33:26 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e53so5480470eek.33
-        for <git@vger.kernel.org>; Fri, 28 Dec 2012 12:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=5ByjZ/yaw9NRcFonqYYWWmKbOo6l0OM928JstHH/rGU=;
-        b=kfixr2UPrj+Qrm3uGsh810y3jtWZrKiNo23AtsGhA3pRtMrgYWNS4yqL/nB6sVFhEo
-         rM7tTD/m6o2Q4JiAJI+HJoctKN8apVsFDAEruqoJWii1Xb4zZASihjnjVAQvd27pTN2+
-         i+IkGtCKcj2Rr4cCaxt6maCVbKuCbrONgb5/BdtEgaawB4KGQHcIR8UUm6kmm/q4TQ4v
-         JMyiLeEh0KSeBLgXXdzM34y9pFz8GIafZ19v9GXwM6kxlzbviNM4tD1u5nWxsxTdodD4
-         Q5Ck6+krG9N83RAvWWriu6E/9zU1oMzIVxXnwOO4xBn6Vh5qZPNMLLpGWPBg+o1iURlW
-         yktw==
-Received: by 10.14.225.72 with SMTP id y48mr88240118eep.46.1356726805013; Fri,
- 28 Dec 2012 12:33:25 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Fri, 28 Dec 2012 12:33:24 -0800 (PST)
-In-Reply-To: <BLU163-W51DAB90003C969CDF837A2CF3F0@phx.gbl>
+	id S1754785Ab2L1Ugl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 15:36:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59583 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932139Ab2L1Ugh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2012 15:36:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FBB0A9D2;
+	Fri, 28 Dec 2012 15:36:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ex4ii+laUCT6Pt3ORjusZf4D7/o=; b=mYtBwe
+	fcfg/3CBI1o5Txch7hoF7QpIm/+Y2/cjAfa28zQsWJWMTyUVvSoNAgBzeGtZskgD
+	aHyN38su0UwVIzvrNHCAuf7I8OYPviyAgIaoASpbWpcjbFSPsjOHKr8l11lGY/2c
+	GsF0yDuMzGgMc3YjYr9h6R9oRSfx0Zj7hPJLQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QXj6sJPD+PnTXwZ7PkxCmdpsdvmXeB24
+	z/EOA6Fhv/WG6b7yuESyBu9vMsSCtokBONMZRHvZiegC6AY03FE0g+XrYe5dqQpa
+	aNwJPv+w44HERVI14brQ9AMAOdgkUZwQoKm3j7+aL5Eh4JLZXp4sRnX0LyZipbQZ
+	Ac3TvJGPupg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E4E9A9D1;
+	Fri, 28 Dec 2012 15:36:36 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D03DDA9D0; Fri, 28 Dec 2012
+ 15:36:35 -0500 (EST)
+In-Reply-To: <1356575558-2674-19-git-send-email-git@adamspiers.org> (Adam
+ Spiers's message of "Thu, 27 Dec 2012 02:32:37 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 45F58306-512E-11E2-AB48-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212258>
 
-Then you should give the output of diff --stat, and he will be able to
-ignore files with no changes.
+Adam Spiers <git@adamspiers.org> writes:
 
-The change was originally made for permission changes. diff --stat
-needs to show files have changed even though, indeed, there is no diff
-output.
+> Since we have just created a new pathspec-handling library, now is a
+> good time to add some comments explaining get_pathspec().
+>
+> Signed-off-by: Adam Spiers <git@adamspiers.org>
+> ---
 
-You could also use --numstat and filter out files with no changes
-(starting by 0 0).
+Yes, but we would rather not to see new users of this function added
+to our codebase in its current form, as explained in the nearby
+comment.  We would want to migrate everybody to "struct pathspec"
+based interface to support magic pathspecs in the longer term.
 
-On Fri, Dec 28, 2012 at 8:59 PM, John Moon <johnmoon77@hotmail.com> wrote:
+>  setup.c | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 >
->
->> $ git diff --ignore-space-at-eol test.txt
->> $ git diff --ignore-space-at-eol --stat test.txt
->> test.txt | 0
->> 1 file changed, 0 insertions(+), 0 deletions(-)
->> $ git diff --ignore-space-at-eol --name-status test.txt
->> M test.txt
->>
->> The idea is that even though diff doesn't show any differences, stat,
->> shortstat, numstat and name-status reports the file as being changed.
->> This is available since v1.8.1-rc0.
->
-> Thanks for the info.  Unfortunately it's not what i would expect.
-> If i told git diff specifically to ignore line endings, why is --name-status  showing me a file as being modified when the only modification is the very thing i told it to ignore.
-> The same thing for --stat, why is it showing me a file with zero changes?  Just my opinion though.
->
-> I'll tell you why this is a problem for me, basically what i am doing is running the "git diff --ignore-space-at-eol --name-status "  on my root directory to give to someone else who is not using git to give them the files that i have modified.  I don't want to give them a file where only the line ending has changed.
->
-> Cheers.
+> diff --git a/setup.c b/setup.c
+> index 7663a4c..03d6d5c 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -249,6 +249,21 @@ static const char *prefix_pathspec(const char *prefix, int prefixlen, const char
+>  		return prefix_path(prefix, prefixlen, copyfrom);
+>  }
+>  
+> +/*
+> + * prefix - a path relative to the root of the working tree
+> + * pathspec - a list of paths underneath the prefix path
+> + *
+> + * Iterates over pathspec, prepending each path with prefix,
+> + * and return the resulting list.
+> + *
+> + * If pathspec is empty, return a singleton list containing prefix.
+> + *
+> + * If pathspec and prefix are both empty, return an empty list.
+> + *
+> + * This is typically used by built-in commands such as add.c, in order
+> + * to normalize argv arguments provided to the built-in into a list of
+> + * paths to process, all relative to the root of the working tree.
+> + */
+>  const char **get_pathspec(const char *prefix, const char **pathspec)
+>  {
+>  	const char *entry = *pathspec;
