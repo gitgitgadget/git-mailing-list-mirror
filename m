@@ -1,182 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.0.3
-Date: Thu, 27 Dec 2012 16:48:23 -0800
-Message-ID: <7v8v8jknmw.fsf@alter.siamese.dyndns.org>
+From: David <bouncingcats@gmail.com>
+Subject: git log commit limiting "show commits with >1 child" possible?
+Date: Fri, 28 Dec 2012 14:12:57 +1100
+Message-ID: <CAMPXz=rQxh3niOKiASZE3qqbYUEKXN6TscPsjPPoZjZLnCRpFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Fri Dec 28 01:48:55 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Fri Dec 28 04:13:28 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1ToO84-0000XX-Pb
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 28 Dec 2012 01:48:53 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1ToQNs-0004NF-Dy
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 04:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752789Ab2L1As3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 27 Dec 2012 19:48:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42348 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752399Ab2L1As0 convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 27 Dec 2012 19:48:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6473A8E5;
-	Thu, 27 Dec 2012 19:48:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=7FKXDvvu3AlZDXxZoP8mmvThn
-	yQ=; b=u27pNUGqNbCccJsSx98ePuc3RN18uM0bzS94HiEqq7W+J83UU/ZGjRLUW
-	kRDT7w7xzV0ooQK0zafi4DBLbyz/tEqw9GbjPNUTUt+gb3hiJoVVVKRB/8uydW0x
-	0/S1NPjncinESoJkKivlh7PyaT1rsjmyu4FvftVZFonbrePhcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=q7+uXjkiWmAUKhsp5jt
-	wS+K6lKFj6hnkyvWdkrhygTchmjVtnXlw2+2pWQl96unDPfPnVZ2K4mTgll+K8dY
-	ICIEwjQwHBs/+vNN9y6IYSRh4kISulFJSLNnWwiMKqF+bsCT7DgCi72jFBAmFJTt
-	C/ojelsdZffzJQYsXCDd37KA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2D3EA8E1;
-	Thu, 27 Dec 2012 19:48:25 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 070D6A8E0; Thu, 27 Dec 2012
- 19:48:24 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 49513960-5088-11E2-9603-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753107Ab2L1DNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Dec 2012 22:13:01 -0500
+Received: from mail-bk0-f45.google.com ([209.85.214.45]:56348 "EHLO
+	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753024Ab2L1DM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2012 22:12:59 -0500
+Received: by mail-bk0-f45.google.com with SMTP id jk13so4452284bkc.4
+        for <git@vger.kernel.org>; Thu, 27 Dec 2012 19:12:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=ZyPYDjDKkasQWyJuhHEfjC8FEk1bzsTzlHaEspxQuyg=;
+        b=Y4RXOSQanYe2m3l4qlK7KpH4MRvZk/cg9+IpiY2RfbG2c+xcAJ47Q4iLXHDZdgOznG
+         eusuh61+ZLc6bBYN6PyjFburSIisd5F9j1uKEMoy/ZGIZl3zQLPlgiCZtuenbx456we5
+         5jFrqzf/SLOtPQ7/rw96OY7rhcuuew65oVZBOXDMYFSfPr0+/PzXY/NmowY/lEybmWee
+         Lp9O/AGJ2O2YMo6PmYLGl7wIWM6pmTF3iBjHz2iNaM9BGeWgTR+QwJPxM4yRwRQ2q7qv
+         qbMroLJu6r0oN+k+aWLLCkGNWZbgMHNHOe8Xlt3JhzUPUu1UuKtQo4xQIV+Ti4pKXNJ9
+         2YCg==
+Received: by 10.204.149.88 with SMTP id s24mr15938326bkv.14.1356664378253;
+ Thu, 27 Dec 2012 19:12:58 -0800 (PST)
+Received: by 10.204.165.4 with HTTP; Thu, 27 Dec 2012 19:12:57 -0800 (PST)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212217>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212221>
 
-The latest maintenance release Git v1.8.0.3 is now available at
-the usual places.
+My branches are very long so for years I have been doing a lot of scrolling
+when using gitk. I have just now discovered how to see a simplified history.
 
-This is primarily to down-merge documentation updates that have been
-accumulating to the 'master' front for the upcoming 1.8.1 to the
-maintenance series.
+For this example history where commits were added in alphabetical order:
 
-The release tarballs are found at:
+A--B--C--D--H
+       \
+        E--F--G--I
+                \
+                 J
 
-    http://code.google.com/p/git-core/downloads/list
+I do this:
 
-and their SHA-1 checksums are:
+$ git log --graph --branches --simplify-by-decoration --source --oneline
+* 00a27e0       J
+| * 160d232     I
+|/
+| * daa5b69     H
+|/
+* 734db0c       A
 
-b1695f28448c00e61e110b3c7bcd66c8047ef176  git-1.8.0.3.tar.gz
-83c46b62e0c3979c5ef77a407ca41507658b5726  git-htmldocs-1.8.0.3.tar.gz
-63df55f90b9c6c11dd827ce1880b5b5fdf79c1c1  git-manpages-1.8.0.3.tar.gz
+and similar in gitk using the View > Edit View > Simple History = 1
+This is a great step forward for me! I am very happy with it.
 
-Also the following public repositories all have a copy of the v1.8.0.3
-tag and the maint branch that the tag points at:
+Is there any way to ask git log to additionally display all commits with
+more than one child, to show where each branch diverges?
 
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+So I hope to see:
 
-Git v1.8.0.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+* 00a27e0       J
+| * 160d232     I
+|/
+* b981ea0       G
+| * daa5b69     H
+|/
+* 546ae44       C
+* 734db0c       A
 
-=46ixes since v1.8.0.2
---------------------
+I have read man git-log but I do not understand it all. If there is a way to
+achieve this then I am not seeing it.
 
- * "git log -p -S<string>" did not apply the textconv filter while
-   looking for the <string>.
+I notice that there is commit limiting by --merges and --no-merges.
+If --merges means "show only commits with more than one parent", and
+--no-merges means "show only commits with only one parent", what I
+want is "show also commits with more than one child".
 
- * In the documentation, some invalid example e-mail addresses were
-   formatted into mailto: links.
+Or perhaps "show only commits with more than one parent or child".
 
-Also contains many documentation updates backported from the 'master'
-branch that is preparing for the upcoming 1.8.1 release.
-
-----------------------------------------------------------------
-
-Changes since v1.8.0.2 are as follows:
-
-Adam Spiers (2):
-      SubmittingPatches: add convention of prefixing commit messages
-      Documentation: move support for old compilers to CodingGuidelines
-
-Anders Kaseorg (1):
-      git-prompt: Document GIT_PS1_DESCRIBE_STYLE
-
-Chris Rorvick (2):
-      Documentation/git-checkout.txt: clarify usage
-      Documentation/git-checkout.txt: document 70c9ac2 behavior
-
-Gunnlaugur =C3=9E=C3=B3r Briem (1):
-      Document git-svn fetch --log-window-size parameter
-
-Jeff King (7):
-      pickaxe: hoist empty needle check
-      pickaxe: use textconv for -S counting
-      .mailmap: match up some obvious names/emails
-      .mailmap: fix broken entry for Martin Langhoff
-      .mailmap: normalize emails for Jeff King
-      .mailmap: normalize emails for Linus Torvalds
-      contrib: update stats/mailmap script
-
-John Keeping (1):
-      Documentation: don't link to example mail addresses
-
-Junio C Hamano (6):
-      fetch --tags: clarify documentation
-      README: it does not matter who the current maintainer is
-      t7004: do not create unneeded gpghome/gpg.conf when GPG is not us=
-ed
-      Documentation: Describe "git diff <blob> <blob>" separately
-      git(1): show link to contributor summary page
-      Git 1.8.0.3
-
-Krzysztof Mazur (1):
-      doc: git-reset: make "<mode>" optional
-
-Manlio Perillo (1):
-      git.txt: add missing info about --git-dir command-line option
-
-Matthew Daley (1):
-      Fix sizeof usage in get_permutations
-
-Max Horn (1):
-      git-remote-helpers.txt: document invocation before input format
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-      index-format.txt: clarify what is "invalid"
-
-Ramkumar Ramachandra (1):
-      Documentation: move diff.wordRegex from config.txt to diff-config=
-=2Etxt
-
-Sebastian Leske (4):
-      git-svn: Document branches with at-sign(@).
-      git-svn: Recommend use of structure options.
-      git-svn: Expand documentation for --follow-parent
-      git-svn: Note about tags.
-
-Sitaram Chamarty (1):
-      clarify -M without % symbol in diff-options
-
-Stefano Lattarini (1):
-      README: Git is released under the GPLv2, not just "the GPL"
-
-Thomas Ackermann (8):
-      Split over-long synopsis in git-fetch-pack.txt into several lines
-      Shorten two over-long lines in git-bisect-lk2009.txt by abbreviat=
-ing some sha1
-      Change headline of technical/send-pack-pipeline.txt to not confus=
-e its content with content from git-send-pack.txt
-      Documentation/technical: convert plain text files to asciidoc
-      Documentation/howto: convert plain text files to asciidoc
-      Documentation: build html for all files in technical and howto
-      Remove misleading date from api-index-skel.txt
-      Sort howto documents in howto-index.txt
-
-Tom Jones (1):
-      Add -S, --gpg-sign option to manpage of "git commit"
+Is there a way to do this? It will be nice if it also works in gitk.
+Presently I have git version 1.7.2.3
