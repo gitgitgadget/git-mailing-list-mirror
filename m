@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 6/9] test-wildmatch: add "perf" command to compare wildmatch and fnmatch
-Date: Fri, 28 Dec 2012 11:10:51 +0700
-Message-ID: <1356667854-8686-7-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 7/9] wildmatch: make a special case for "*/" with FNM_PATHNAME
+Date: Fri, 28 Dec 2012 11:10:52 +0700
+Message-ID: <1356667854-8686-8-git-send-email-pclouds@gmail.com>
 References: <1356667854-8686-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,308 +11,126 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 28 05:12:14 2012
+X-From: git-owner@vger.kernel.org Fri Dec 28 05:12:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ToRIn-00011r-CR
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 05:12:09 +0100
+	id 1ToRIv-00015V-4X
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 05:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327Ab2L1ELv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Dec 2012 23:11:51 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:53200 "EHLO
+	id S1753361Ab2L1EL6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Dec 2012 23:11:58 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:43093 "EHLO
 	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753267Ab2L1ELt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Dec 2012 23:11:49 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so5794793pad.8
-        for <git@vger.kernel.org>; Thu, 27 Dec 2012 20:11:48 -0800 (PST)
+	with ESMTP id S1753267Ab2L1EL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2012 23:11:57 -0500
+Received: by mail-pa0-f49.google.com with SMTP id bi1so5794849pad.8
+        for <git@vger.kernel.org>; Thu, 27 Dec 2012 20:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=SL6jUd3GUonzzQQ49JnzcGunopziE0zgI3+xz4NQE7U=;
-        b=DklcW0XxIVjVQgfi82dvRz6ygCuNrGotIvIiWcPWVRglfLQz1ABCwmAf2XnOPeX5Fg
-         tlA+U/qZqPMigf9toaNDtXALqc1SBDWmF7nHC1umHdqwkEyuRaaODwsBo/vYt3C1tYtV
-         DG/y8Svaz9PuWFOy6u8oSjA/IrNP+XFH+5MjFaE21wvPDcb/jyIHDMo7eH35YZrHl/wz
-         1FNDDHiENSll8wDgHcjz1Jwuv0zC2Gcy+cr6ZKxkpC0vZ5/LlpiYK8+tX7FTZySlqY7D
-         aJ7qyW7d3uSehR7MZ2BDXQGahE+F6g+A9BnBXVtc87I/ZPVG5Frw2zHiE7NumuBMmL/5
-         +mxw==
-X-Received: by 10.66.80.65 with SMTP id p1mr95229177pax.20.1356667908707;
-        Thu, 27 Dec 2012 20:11:48 -0800 (PST)
+        bh=9c6gryEh+gLA6ou4/ZDvqY4X9jGfjsfzo6pIjDT0U0k=;
+        b=lg43UQ2tQ9So7/kIFLLSEbNox6fPomN9+9BPFnokYrcr8I/fKGWFxrhHWtk1E6JvL2
+         InelCYQE7N4G3AwMyNwAfHBx048tv/dVfMv45J6m5ODKITACtVNYFwe7GC70JMmMYYi6
+         734R92lbceRGxyyfJVLVbTtZ1+mgKN3O1r/BQ62Krqlm62EZlFl7f4RktOMUnZONCmAH
+         5aa5CZi/Hsa3WX+ZILx4jdbKI6dhn+YrBje5hhV3OP29RSObWBDVaE0Qv4vEhldtpfvz
+         FMqz2nNdqlLibKPM/1kNyuAx1g6IWpIOOkjAPbwy0d3s566ZIDyUUgUPWpsCLCPLWZ07
+         yLLg==
+X-Received: by 10.68.223.230 with SMTP id qx6mr102285502pbc.159.1356667916413;
+        Thu, 27 Dec 2012 20:11:56 -0800 (PST)
 Received: from lanh ([115.74.54.149])
-        by mx.google.com with ESMTPS id vs3sm18916880pbc.61.2012.12.27.20.11.44
+        by mx.google.com with ESMTPS id rk6sm18928795pbc.20.2012.12.27.20.11.52
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 27 Dec 2012 20:11:48 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 28 Dec 2012 11:11:48 +0700
+        Thu, 27 Dec 2012 20:11:55 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 28 Dec 2012 11:11:56 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1356667854-8686-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212230>
 
-It takes a text file, a pattern, a number <n> and pathname flag. Each
-line in the text file is matched against the pattern <n> times. If
-"pathname" is given, FNM_PATHNAME is used.
+Normally we need recursion for "*". In this case we know that it
+matches everything until "/" so we can skip the recursion.
 
-test-wildmatch is built with -O2 and tested against glibc 2.14.1 (also
--O2) and compat/fnmatch. The input file is linux-2.6.git file list.
-<n> is 2000. The complete command list is at the end.
+glibc, '*/*/*' on linux-2.6.git file list 2000 times
+before:
+wildmatch 8s 74513us
+fnmatch   1s 97042us or 13.59% faster
+after:
+wildmatch 3s 521862us
+fnmatch   3s 488616us or 99.06% slower
 
-wildmatch is beaten in the following cases. Apparently it needs some
-improvement in FNM_PATHNAME case:
-
-glibc, '*/*/*' with FNM_PATHNAME:
-wildmatch 8s 1559us
-fnmatch   1s 11877us or 12.65% faster
-
-compat, '*/*/*' with FNM_PATHNAME:
-wildmatch 7s 922458us
-fnmatch   2s 905111us or 36.67% faster
-
-compat, '*/*/*' without FNM_PATHNAME:
-wildmatch 7s 264201us
-fnmatch   2s 1897us or 27.56% faster
-
-compat, '[a-z]*/[a-z]*/[a-z]*' with FNM_PATHNAME:
-wildmatch 8s 742827us
-fnmatch   0s 922943us or 10.56% faster
-
-compat, '[a-z]*/[a-z]*/[a-z]*' without FNM_PATHNAME:
-wildmatch 8s 284520us
-fnmatch   0s 6936us or 0.08% faster
-
-The rest of glibc numbers
--------------------------
-
-'Documentation/*'
-wildmatch 1s 529479us
-fnmatch   1s 98263us or 71.81% slower
-
-'drivers/*'
-wildmatch 1s 988288us
-fnmatch   1s 192049us or 59.95% slower
-
-'Documentation/*' pathname
-wildmatch 1s 557507us
-fnmatch   1s 93696us or 70.22% slower
-
-'drivers/*' pathname
-wildmatch 2s 161626us
-fnmatch   1s 230372us or 56.92% slower
-
-'[Dd]ocu[Mn]entation/*'
-wildmatch 1s 776581us
-fnmatch   1s 471693us or 82.84% slower
-
-'[Dd]o?u[Mn]en?ati?n/*'
-wildmatch 1s 770770us
-fnmatch   1s 555727us or 87.86% slower
-
-'[Dd]o?u[Mn]en?ati?n/*' pathname
-wildmatch 1s 783507us
-fnmatch   1s 537029us or 86.18% slower
-
-'[A-Za-z][A-Za-z]??*'
-wildmatch 4s 110386us
-fnmatch   4s 926306us or 119.85% slower
-
-'[A-Za-z][A-Za-z]??'
-wildmatch 3s 918114us
-fnmatch   3s 686175us or 94.08% slower
-
-'[A-Za-z][A-Za-z]??*' pathname
-wildmatch 4s 453746us
-fnmatch   4s 955856us or 111.27% slower
-
-'[A-Za-z][A-Za-z]??' pathname
-wildmatch 3s 896646us
-fnmatch   3s 733828us or 95.82% slower
-
-'*/*/*'
-wildmatch 7s 287985us
-fnmatch   1s 74083us or 14.74% slower
-
-'[a-z]*/[a-z]*/[a-z]*' pathname
-wildmatch 8s 796659us
-fnmatch   1s 568409us or 17.83% slower
-
-'[a-z]*/[a-z]*/[a-z]*'
-wildmatch 8s 316559us
-fnmatch   3s 430652us or 41.25% slower
-
-The rest of compat numbers
---------------------------
-
-'Documentation/*'
-wildmatch 1s 520389us
-fnmatch   0s 62579us or 4.12% slower
-
-'drivers/*'
-wildmatch 1s 955354us
-fnmatch   0s 190109us or 9.72% slower
-
-'Documentation/*' pathname
-wildmatch 1s 561675us
-fnmatch   0s 55336us or 3.54% slower
-
-'drivers/*' pathname
-wildmatch 2s 106100us
-fnmatch   0s 219680us or 10.43% slower
-
-'[Dd]ocu[Mn]entation/*'
-wildmatch 1s 750810us
-fnmatch   0s 542721us or 31.00% slower
-
-'[Dd]o?u[Mn]en?ati?n/*'
-wildmatch 1s 724791us
-fnmatch   0s 538948us or 31.25% slower
-
-'[Dd]o?u[Mn]en?ati?n/*' pathname
-wildmatch 1s 731403us
-fnmatch   0s 537474us or 31.04% slower
-
-'[A-Za-z][A-Za-z]??*'
-wildmatch 4s 28555us
-fnmatch   1s 67297us or 26.49% slower
-
-'[A-Za-z][A-Za-z]??'
-wildmatch 3s 838279us
-fnmatch   0s 880005us or 22.93% slower
-
-'[A-Za-z][A-Za-z]??*' pathname
-wildmatch 4s 379476us
-fnmatch   1s 55643us or 24.10% slower
-
-'[A-Za-z][A-Za-z]??' pathname
-wildmatch 3s 830910us
-fnmatch   0s 849699us or 22.18% slower
-
-The following commands are used:
-
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt 'Documentation/*' 2000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt 'drivers/*' 2000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt 'Documentation/*' 2000=
- pathname
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt 'drivers/*' 2000 pathn=
-ame
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[Dd]ocu[Mn]entation/*=
-' 2000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[Dd]o?u[Mn]en?ati?n/*=
-' 2000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[Dd]o?u[Mn]en?ati?n/*=
-' 2000 pathname
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[A-Za-z][A-Za-z]??*' =
-2000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[A-Za-z][A-Za-z]??' 2=
-000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[A-Za-z][A-Za-z]??*' =
-2000 pathname
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[A-Za-z][A-Za-z]??' 2=
-000 pathname
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '*/*/*' 2000
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '*/*/*' 2000 pathname
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[a-z]*/[a-z]*/[a-z]*'=
- 2000 pathname
-LANG=3DC ./test-wildmatch perf /tmp/filelist.txt '[a-z]*/[a-z]*/[a-z]*'=
- 2000
+Same test with compat/fnmatch:
+wildmatch 8s 110763us
+fnmatch   2s 980845us or 36.75% faster
+wildmatch 3s 522156us
+fnmatch   1s 544487us or 43.85% slower
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- test-wildmatch.c | 73 ++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 file changed, 73 insertions(+)
+ t/t3070-wildmatch.sh |  8 ++++++++
+ wildmatch.c          | 12 ++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/test-wildmatch.c b/test-wildmatch.c
-index a5f4833..ac86800 100644
---- a/test-wildmatch.c
-+++ b/test-wildmatch.c
-@@ -1,9 +1,82 @@
- #include "cache.h"
- #include "wildmatch.h"
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index dbfa903..4cdb13b 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -203,6 +203,10 @@ match 1 1 'XXX/adobe/courier/bold/o/normal//12/120=
+/75/75/m/70/iso8859/1' 'XXX/*/
+ match 0 0 'XXX/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/=
+1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+ match 1 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n=
+*t'
+ match 0 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*=
+n*t'
++match 0 x foo '*/*/*'
++match 0 x foo/bar '*/*/*'
++match 1 x foo/bba/arr '*/*/*'
++match 0 x foo/bb/aa/rr '*/*/*'
 =20
-+static int perf(int ac, char **av)
-+{
-+	struct timeval tv1, tv2;
-+	struct stat st;
-+	int fd, i, n, flags1 =3D 0, flags2 =3D 0;
-+	char *buffer, *p;
-+	uint32_t usec1, usec2;
-+	const char *lang;
-+	const char *file =3D av[0];
-+	const char *pattern =3D av[1];
-+
-+	lang =3D getenv("LANG");
-+	if (lang && strcmp(lang, "C"))
-+		die("Please test it on C locale.");
-+
-+	if ((fd =3D open(file, O_RDONLY)) =3D=3D -1 || fstat(fd, &st))
-+		die_errno("file open");
-+
-+	buffer =3D xmalloc(st.st_size + 2);
-+	if (read(fd, buffer, st.st_size) !=3D st.st_size)
-+		die_errno("read");
-+
-+	buffer[st.st_size] =3D '\0';
-+	buffer[st.st_size + 1] =3D '\0';
-+	for (i =3D 0; i < st.st_size; i++)
-+		if (buffer[i] =3D=3D '\n')
-+			buffer[i] =3D '\0';
-+
-+	n =3D atoi(av[2]);
-+	if (av[3] && !strcmp(av[3], "pathname")) {
-+		flags1 =3D WM_PATHNAME;
-+		flags2 =3D FNM_PATHNAME;
-+	}
-+
-+	gettimeofday(&tv1, NULL);
-+	for (i =3D 0; i < n; i++) {
-+		for (p =3D buffer; *p; p +=3D strlen(p) + 1)
-+			wildmatch(pattern, p, flags1, NULL);
-+	}
-+	gettimeofday(&tv2, NULL);
-+
-+	usec1 =3D (uint32_t)tv2.tv_sec * 1000000 + tv2.tv_usec;
-+	usec1 -=3D (uint32_t)tv1.tv_sec * 1000000 + tv1.tv_usec;
-+	printf("wildmatch %ds %dus\n",
-+	       (int)(usec1 / 1000000),
-+	       (int)(usec1 % 1000000));
-+
-+	gettimeofday(&tv1, NULL);
-+	for (i =3D 0; i < n; i++) {
-+		for (p =3D buffer; *p; p +=3D strlen(p) + 1)
-+			fnmatch(pattern, p, flags2);
-+	}
-+	gettimeofday(&tv2, NULL);
-+
-+	usec2 =3D (uint32_t)tv2.tv_sec * 1000000 + tv2.tv_usec;
-+	usec2 -=3D (uint32_t)tv1.tv_sec * 1000000 + tv1.tv_usec;
-+	if (usec2 > usec1)
-+		printf("fnmatch   %ds %dus or %.2f%% slower\n",
-+		       (int)((usec2 - usec1) / 1000000),
-+		       (int)((usec2 - usec1) % 1000000),
-+		       (float)(usec2 - usec1) / usec1 * 100);
-+	else
-+		printf("fnmatch   %ds %dus or %.2f%% faster\n",
-+		       (int)((usec1 - usec2) / 1000000),
-+		       (int)((usec1 - usec2) % 1000000),
-+		       (float)(usec1 - usec2) / usec1 * 100);
-+	return 0;
-+}
-+
- int main(int argc, char **argv)
- {
- 	int i;
-+
-+	if (!strcmp(argv[1], "perf"))
-+		return perf(argc - 2, argv + 2);
-+
- 	for (i =3D 2; i < argc; i++) {
- 		if (argv[i][0] =3D=3D '/')
- 			die("Forward slash is not allowed at the beginning of the\n"
+ pathmatch 1 foo foo
+ pathmatch 0 foo fo
+@@ -218,5 +222,9 @@ pathmatch 0 foo/bba/arr 'foo/*z'
+ pathmatch 0 foo/bba/arr 'foo/**z'
+ pathmatch 1 foo/bar 'foo?bar'
+ pathmatch 1 foo/bar 'foo[/]bar'
++pathmatch 0 foo '*/*/*'
++pathmatch 0 foo/bar '*/*/*'
++pathmatch 1 foo/bba/arr '*/*/*'
++pathmatch 1 foo/bb/aa/rr '*/*/*'
+=20
+ test_done
+diff --git a/wildmatch.c b/wildmatch.c
+index 0c8edb8..f6d45d5 100644
+--- a/wildmatch.c
++++ b/wildmatch.c
+@@ -116,6 +116,18 @@ static int dowild(const uchar *p, const uchar *tex=
+t, unsigned int flags)
+ 						return WM_NOMATCH;
+ 				}
+ 				return WM_MATCH;
++			} else if (*p =3D=3D '/' && (flags & WM_PATHNAME) && !match_slash) =
+{
++				/*
++				 * an asterisk followed by a slash
++				 * with WM_PATHNAME matches the next
++				 * directory
++				 */
++				const char *slash =3D strchr((char*)text, '/');
++				if (!slash)
++					return WM_NOMATCH;
++				text =3D (const uchar*)slash;
++				/* the slash is consumed by the top-level for loop */
++				break;
+ 			}
+ 			while (1) {
+ 				if (t_ch =3D=3D '\0')
 --=20
 1.8.0.rc2.23.g1fb49df
