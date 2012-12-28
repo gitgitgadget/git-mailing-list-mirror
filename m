@@ -1,113 +1,86 @@
-From: David <bouncingcats@gmail.com>
-Subject: Re: git log commit limiting "show commits with >1 child" possible?
-Date: Fri, 28 Dec 2012 14:15:28 +1100
-Message-ID: <CAMPXz=ove0ezk4U8ykWDb09jTbvx+yp7J4803wYpQ6MVqawXSg@mail.gmail.com>
-References: <CAMPXz=rQxh3niOKiASZE3qqbYUEKXN6TscPsjPPoZjZLnCRpFA@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 0/9] fnmatch replacement step 1
+Date: Fri, 28 Dec 2012 11:10:45 +0700
+Message-ID: <1356667854-8686-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 28 04:15:51 2012
+X-From: git-owner@vger.kernel.org Fri Dec 28 05:11:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ToQQG-0005yI-2L
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 04:15:48 +0100
+	id 1ToRI4-0000bF-5Y
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 05:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753081Ab2L1DPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Dec 2012 22:15:31 -0500
-Received: from mail-bk0-f48.google.com ([209.85.214.48]:56486 "EHLO
-	mail-bk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752645Ab2L1DP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Dec 2012 22:15:29 -0500
-Received: by mail-bk0-f48.google.com with SMTP id jc3so4427464bkc.7
-        for <git@vger.kernel.org>; Thu, 27 Dec 2012 19:15:28 -0800 (PST)
+	id S1753227Ab2L1ELD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Dec 2012 23:11:03 -0500
+Received: from mail-da0-f54.google.com ([209.85.210.54]:59589 "EHLO
+	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753169Ab2L1ELB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2012 23:11:01 -0500
+Received: by mail-da0-f54.google.com with SMTP id n2so4605041dad.27
+        for <git@vger.kernel.org>; Thu, 27 Dec 2012 20:11:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=ggcZ5twcsPEL5EvbtkqjgiQN9oZyAraripzvQPKb2LM=;
-        b=k0cYTbvLYbwfLHikvVwaIqd1xc7IFCTDUjsY9Ad2/1HRbpvp8QLs2GmTUaBlI5+yCG
-         CR58NvtouIL1o95kheu3ZDpW1MYT0EhIfPBRk3ROapawsWl64w/04V2pwWHQxhgcQWv1
-         D0+LWA5gUBtNrRodfy0Dpa1WLh8yIrysW6gVmtwlbjhfc5sEYxPbQYrOXZ2una3PjsFK
-         JcnPB9bHQNEpvuJKsWh4utaVnt2fJ/BS0BNBm+t95nanbtps69fzh+oqLkR+FxMbQzJW
-         tI+bjx3XPQkhrt3K4noWbT0CZHJlPjjhuf7ZzGv73zZ5ncIMm/5yt/SNcXaWEkr/XSuL
-         kSGg==
-Received: by 10.204.143.147 with SMTP id v19mr15299067bku.32.1356664528202;
- Thu, 27 Dec 2012 19:15:28 -0800 (PST)
-Received: by 10.204.165.4 with HTTP; Thu, 27 Dec 2012 19:15:28 -0800 (PST)
-In-Reply-To: <CAMPXz=rQxh3niOKiASZE3qqbYUEKXN6TscPsjPPoZjZLnCRpFA@mail.gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=hK2lxGGwp2aeaccqy2voCwQoTFRIn+b/94SUpeWgRGo=;
+        b=yR+nxHiJorllFlU7gtaHpdqK21oNBCX+kMRvPL89vDY/HC1gZ6oFKPePJhKmwQNNCz
+         59FUfWNC+a2KGL5SucPUcY+MzD/BAkRF5cos0uWscsMCj3tdZVhEgR2g5Xa/8fWBt21P
+         xP/ZWZ8FlW+g2iO2BX1Hbd0kv5CHaaPzdIsdw5AgepsbCczGfdkd4GGu/zn0BgjrJZqW
+         cTNlgfXLNDnvxXib1qZOlcKCGwJK79r3Gle0SximvE2il9CVoPLsLmuhB6LjXhoKLxnx
+         j4nGOEsIiNXke/QBKa5904meTSsM4QK4EGJ0cdhW0D3mqXOUPjxX/G+QUEDJ6TwVrR2L
+         Sd0A==
+X-Received: by 10.66.81.68 with SMTP id y4mr95360452pax.66.1356667860838;
+        Thu, 27 Dec 2012 20:11:00 -0800 (PST)
+Received: from lanh ([115.74.54.149])
+        by mx.google.com with ESMTPS id sy1sm18915110pbc.66.2012.12.27.20.10.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 27 Dec 2012 20:10:59 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 28 Dec 2012 11:10:59 +0700
+X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212223>
 
-CORRECTION:
+v2 has no big changes:
 
-So I hope to see:
+ - 'special' variable in dowild() is removed in favor of two
+   new, better named ones
+ - fix TRUE/FALSE in comments as well as code in the rename patch
+ - some tests for "*/" and "*<literal>" optimizations
+ - USE_WILDMATCH patch is moved to the end of the series
 
-* 00a27e0       J
-| * 160d232     I
-|/
-* b981ea0       F
-| * daa5b69     H
-|/
-* 546ae44       B
-* 734db0c       A
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (9):
+  compat/fnmatch: respect NO_FNMATCH* even on glibc
+  wildmatch: replace variable 'special' with better named ones
+  wildmatch: rename constants and update prototype
+  wildmatch: make dowild() take arbitrary flags
+  wildmatch: support "no FNM_PATHNAME" mode
+  test-wildmatch: add "perf" command to compare wildmatch and fnmatch
+  wildmatch: make a special case for "*/" with FNM_PATHNAME
+  wildmatch: advance faster in <asterisk> + <literal> patterns
+  Makefile: add USE_WILDMATCH to use wildmatch as fnmatch
 
-On 28/12/2012, David <bouncingcats@gmail.com> wrote:
-> My branches are very long so for years I have been doing a lot of scrolling
-> when using gitk. I have just now discovered how to see a simplified
-> history.
->
-> For this example history where commits were added in alphabetical order:
->
-> A--B--C--D--H
->        \
->         E--F--G--I
->                 \
->                  J
->
-> I do this:
->
-> $ git log --graph --branches --simplify-by-decoration --source --oneline
-> * 00a27e0       J
-> | * 160d232     I
-> |/
-> | * daa5b69     H
-> |/
-> * 734db0c       A
->
-> and similar in gitk using the View > Edit View > Simple History = 1
-> This is a great step forward for me! I am very happy with it.
->
-> Is there any way to ask git log to additionally display all commits with
-> more than one child, to show where each branch diverges?
->
-> So I hope to see:
->
-> * 00a27e0       J
-> | * 160d232     I
-> |/
-> * b981ea0       G
-> | * daa5b69     H
-> |/
-> * 546ae44       C
-> * 734db0c       A
->
-> I have read man git-log but I do not understand it all. If there is a way
-> to
-> achieve this then I am not seeing it.
->
-> I notice that there is commit limiting by --merges and --no-merges.
-> If --merges means "show only commits with more than one parent", and
-> --no-merges means "show only commits with only one parent", what I
-> want is "show also commits with more than one child".
->
-> Or perhaps "show only commits with more than one parent or child".
->
-> Is there a way to do this? It will be nice if it also works in gitk.
-> Presently I have git version 1.7.2.3
->
+ Makefile                 |   6 ++
+ compat/fnmatch/fnmatch.c |   3 +-
+ dir.c                    |   3 +-
+ git-compat-util.h        |  13 +++++
+ t/t3070-wildmatch.sh     |  41 +++++++++++++
+ test-wildmatch.c         |  82 +++++++++++++++++++++++++-
+ wildmatch.c              | 147 +++++++++++++++++++++++++++++----------=
+--------
+ wildmatch.h              |  23 +++++---
+ 8 files changed, 251 insertions(+), 67 deletions(-)
+
+--=20
+1.8.0.rc2.23.g1fb49df
