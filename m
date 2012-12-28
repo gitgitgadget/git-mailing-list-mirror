@@ -1,88 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: (unknown)
-Date: Fri, 28 Dec 2012 11:33:31 -0800
-Message-ID: <7vk3s2hsz8.fsf@alter.siamese.dyndns.org>
-References: <20121228164322.B102B4413A@snark.thyrsus.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v3 00/19] new git check-ignore sub-command
+Date: Fri, 28 Dec 2012 19:39:46 +0000
+Message-ID: <CAOkDyE8gfW9TvyP=iE7gVEXOqCpOqMRjpr=Vnyd_pnummy4Qsg@mail.gmail.com>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+	<7v38yqj9ix.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com (Eric S. Raymond)
-X-From: git-owner@vger.kernel.org Fri Dec 28 20:34:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git list <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 28 20:40:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tofgx-00013k-7d
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 20:34:03 +0100
+	id 1Tofmx-0004Mo-S8
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 20:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932373Ab2L1Tdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 14:33:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59159 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932316Ab2L1Tde (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2012 14:33:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22401A31A;
-	Fri, 28 Dec 2012 14:33:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fotmqbClnl6d7momPUjjyWbSx5U=; b=SWgbu4
-	ZYl8xxK/jSK2eoupVUkxFr++zxps66frF8dnyit5vJsQpde91J7Bio7WydO2svqE
-	XsxenYenGZp7lmabVX+iZjKQE4lqJ0zcmsG6BC0zD67jANiUr88+Rd+wJtUcTjkh
-	LAIgZ/JjXBgQioKxLmDZ2/C05+kHCrn4ZKfQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BPjwQh/0B9wUHlNaEo+sthrK8x3Uq1OB
-	YAPMc+XjS9Th+WL7pX3yi8gWuVaikOw/9mT2vHKCK4ra7C+WShiKEsIVUli7iJf1
-	UHtXAYOTt2dM74ltRaPEPtgyNAeYOVg+8yxd3+tuYEEotGwevb3TvdrV2oZBBpJi
-	egFm3LN8Y8s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10837A319;
-	Fri, 28 Dec 2012 14:33:34 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C1B3A318; Fri, 28 Dec 2012
- 14:33:33 -0500 (EST)
-In-Reply-To: <20121228164322.B102B4413A@snark.thyrsus.com> (Eric S. Raymond's
- message of "Fri, 28 Dec 2012 11:43:22 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 777783BA-5125-11E2-B2C7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932235Ab2L1Tjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 14:39:52 -0500
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:47102 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932148Ab2L1Tjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2012 14:39:48 -0500
+Received: by mail-wi0-f177.google.com with SMTP id hm2so6083931wib.4
+        for <git@vger.kernel.org>; Fri, 28 Dec 2012 11:39:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=5m5VmyFdUpUkzkppt11wNU+xmQSsCqkBByGaoNGJSWk=;
+        b=DQwYU4ozT8xIwz50WcUz3rYlAsZj4xcsM0oT04ZSdrWrJKBVgimQeWlJhIBcF4hXrV
+         2C69p7tixOrq3bpcDXdPdwUkyzPkaTrRthP/5HAr1tJNZ7kkL1kCftMtZITa1Ry3zruy
+         etkr8KkIc0v1CnK9O/MSadLxbXDSlj9d1LpFc5e8hEgGbwV3MRRm2Qflz9/3MGhlDuSr
+         0H/bwMB9TzNQZTM3McAnaQjg4Li4NrB7H2e5HESCsQzG9kFAPLqzDO+5lTQe6BdrwH+X
+         /Mpm/QWNH8PNHy3bPtnXHxX1GQVzaUeJvjrhjv/FYdPTOgw9NCDqmTDgFOGgVmh9O2T1
+         H2hg==
+Received: by 10.194.85.234 with SMTP id k10mr55097674wjz.53.1356723586468;
+ Fri, 28 Dec 2012 11:39:46 -0800 (PST)
+Received: by 10.194.84.97 with HTTP; Fri, 28 Dec 2012 11:39:46 -0800 (PST)
+In-Reply-To: <7v38yqj9ix.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: D3sgqdvHHIv-7fT-E9nZmayMw30
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212253>
 
-esr@thyrsus.com (Eric S. Raymond) writes:
-
-> From: "Eric S. Raymond" <esr@thyrsus.com>
-> Date: Fri, 28 Dec 2012 11:40:59 -0500
-> Subject: [PATCH] Add checks to Python scripts for version dependencies.
+On Fri, Dec 28, 2012 at 6:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Adam Spiers <git@adamspiers.org> writes:
 >
-> ---
->  contrib/ciabot/ciabot.py           | 8 +++++++-
-> ...
-> diff --git a/contrib/fast-import/import-zips.py b/contrib/fast-import/import-zips.py
-> index 82f5ed3..b989941 100755
-> --- a/contrib/fast-import/import-zips.py
-> +++ b/contrib/fast-import/import-zips.py
-> @@ -9,10 +9,15 @@
->  ##  git log --stat import-zips
->  
->  from os import popen, path
-> -from sys import argv, exit
-> +from sys import argv, exit, hexversion
->  from time import mktime
->  from zipfile import ZipFile
->  
-> +if hexversion < 0x01060000:
+>> This v3 re-roll of my check-ignore series is a reasonably substantial
+>> revamp over v2, and applies on top of Junio's current
+>> nd/attr-match-optim-more branch (82dce998c202).
+>
+> Thanks.
+>
+> Does this (and should this, if it doesn't) interact with the more
+> recent discussion around "git status --untracked/--ignored" [*1*],
+> which also wants to touch the recursive directory traversal logic in
+> "dir.c"?
 
-I am assuming that you are carefully limiting what you import from
-"sys" by adding only hexversion to the import above, but then can we
-refer to sys.stderr below?
-
-> +	# The limiter is the zipfile module
-> +        sys.stderr.write("import-zips.py: requires Python 1.6.0 or later.\n")
-> +        sys.exit(1)
-> +
+I cannot think of a reason why they would or should interact.  If I'm
+wrong, I expect that either set of unit tests would show me up :-)
