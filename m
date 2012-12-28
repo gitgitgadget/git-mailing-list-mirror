@@ -1,30 +1,30 @@
 From: Aaron Schrab <aaron@schrab.com>
-Subject: [PATCH 2/4] hooks: support variable number of parameters
-Date: Fri, 28 Dec 2012 17:57:30 -0500
-Message-ID: <1356735452-21667-3-git-send-email-aaron@schrab.com>
+Subject: [PATCH 4/4] Add sample pre-push hook script
+Date: Fri, 28 Dec 2012 17:57:32 -0500
+Message-ID: <1356735452-21667-5-git-send-email-aaron@schrab.com>
 References: <1356735452-21667-1-git-send-email-aaron@schrab.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 28 23:58:06 2012
+X-From: git-owner@vger.kernel.org Fri Dec 28 23:58:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ToisO-000114-57
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 23:58:04 +0100
+	id 1ToisP-000114-4E
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Dec 2012 23:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754662Ab2L1W5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 17:57:45 -0500
-Received: from pug.qqx.org ([50.116.43.67]:57402 "EHLO pug.qqx.org"
+	id S1755010Ab2L1W5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 17:57:48 -0500
+Received: from pug.qqx.org ([50.116.43.67]:57405 "EHLO pug.qqx.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754173Ab2L1W5n (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754560Ab2L1W5n (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 28 Dec 2012 17:57:43 -0500
 Received: from zim.qqx.org (cpe-107-015-024-243.nc.res.rr.com [107.15.24.243])
-	by pug.qqx.org (Postfix) with ESMTPSA id E4E4C1D0A4
+	by pug.qqx.org (Postfix) with ESMTPSA id 027981D2D5
 	for <git@vger.kernel.org>; Fri, 28 Dec 2012 17:57:41 -0500 (EST)
 Received: from ats (uid 1000)
 	(envelope-from aaron@schrab.com)
-	id 480a6
+	id 480af
 	by zim.qqx.org (DragonFly Mail Agent);
 	Fri, 28 Dec 2012 17:57:41 -0500
 X-Mailer: git-send-email 1.7.10.4
@@ -33,95 +33,87 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212272>
 
-Define the run_hook_argv() function to allow hooks to be created where
-the number of parameters to be passed is variable.  The existing
-run_hook() function uses stdarg to allow it to receive a variable number
-of arguments, but the number of arguments that a given caller is passing
-is fixed at compile time.  This function will allow the caller of a hook
-to determine the number of arguments to pass when preparing to call the
-hook.
-
-The first use of this function will be for a pre-push hook which will
-add an argument for every reference which is to be pushed.
+Create a sample of a script for a pre-push hook.  The main purpose is to
+illustrate how a script may parse the parameters which are supplied to
+such a hook.  The script may also be useful to some people as-is for
+avoiding to push commits which are marked as a work in progress.
 
 Signed-off-by: Aaron Schrab <aaron@schrab.com>
 ---
- run-command.c |   20 +++++++++++++-------
- run-command.h |    2 ++
- 2 files changed, 15 insertions(+), 7 deletions(-)
+ templates/hooks--pre-push.sample |   63 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+ create mode 100644 templates/hooks--pre-push.sample
 
-diff --git a/run-command.c b/run-command.c
-index 49c8fa0..e07202b 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -2,7 +2,6 @@
- #include "run-command.h"
- #include "exec_cmd.h"
- #include "sigchain.h"
--#include "argv-array.h"
- 
- #ifndef SHELL_PATH
- # define SHELL_PATH "/bin/sh"
-@@ -746,10 +745,8 @@ char *find_hook(const char *name)
- 
- int run_hook(const char *index_file, const char *name, ...)
- {
--	struct child_process hook;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
--	const char *p, *env[2];
--	char index[PATH_MAX];
-+	const char *p;
- 	va_list args;
- 	int ret;
- 
-@@ -764,6 +761,17 @@ int run_hook(const char *index_file, const char *name, ...)
- 		argv_array_push(&argv, p);
- 	va_end(args);
- 
-+	ret = run_hook_argv(index_file, argv);
-+	argv_array_clear(&argv);
-+	return ret;
-+}
+diff --git a/templates/hooks--pre-push.sample b/templates/hooks--pre-push.sample
+new file mode 100644
+index 0000000..1d3b4a3
+--- /dev/null
++++ b/templates/hooks--pre-push.sample
+@@ -0,0 +1,63 @@
++#!/bin/sh
 +
-+int run_hook_argv(const char *index_file, struct argv_array argv)
-+{
-+	struct child_process hook;
-+	char index[PATH_MAX];
-+	const char *env[2];
++# An example hook script to verify what is about to be pushed.
++# Called by "git push" after it has checked the remote status, but before
++# anything has been pushed.  If this script exits with a non-zero status
++# nothing will be pushed.
++#
++# This hook is called with the following parameters:
++#
++# $1 -- Name of the remote to which the push is being done
++# $2 -- URL to which the push is being done
++#
++#   If pushing without using a named remote those arguments will be equal.
++#
++# Further arguments provide information about the commits which are being
++# pushed in the form:
++#
++#   <local ref>:<local sha1>:<remote ref>:<remote sha1>
++#
++# This sample shows how to prevent push of commits where the log
++# message starts with "WIP" (work in progress).
 +
- 	memset(&hook, 0, sizeof(hook));
- 	hook.argv = argv.argv;
- 	hook.no_stdin = 1;
-@@ -775,7 +783,5 @@ int run_hook(const char *index_file, const char *name, ...)
- 		hook.env = env;
- 	}
- 
--	ret = run_command(&hook);
--	argv_array_clear(&argv);
--	return ret;
-+	return run_command(&hook);
- }
-diff --git a/run-command.h b/run-command.h
-index 221ce33..12faa5b 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -1,6 +1,7 @@
- #ifndef RUN_COMMAND_H
- #define RUN_COMMAND_H
- 
-+#include "argv-array.h"
- #ifndef NO_PTHREADS
- #include <pthread.h>
- #endif
-@@ -47,6 +48,7 @@ int run_command(struct child_process *);
- 
- extern char *find_hook(const char *name);
- extern int run_hook(const char *index_file, const char *name, ...);
-+extern int run_hook_argv(const char *index_file, struct argv_array);
- 
- #define RUN_COMMAND_NO_STDIN 1
- #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
++remote="$1"
++url="$2"
++shift 2
++
++z40=0000000000000000000000000000000000000000
++
++old_ifs="$IFS"
++for to_push in "$@"
++do
++	# Split the value into its parts
++	IFS=:
++	set -- $to_push
++	IFS="$old_ifs"
++
++	local_ref="$1"
++	local_sha="$2"
++	remote_ref="$3"
++	remote_sha="$4"
++
++	if [ "$local_sha" = $z40 ]
++	then
++		range=''
++		# Handle deletes
++	else
++		if [ "$remote_sha" = $z40 ]
++		then
++			range="$local_sha"
++		else
++			range="$remote_sha..$local_sha"
++		fi
++
++		commit=`git rev-list -n 1 --grep '^WIP' "$range"`
++		if [ -n "$commit" ]
++		then
++			echo "Found WIP commit in $local_ref, not pushing"
++			exit 1
++		fi
++	fi
++done
++
++exit 0
 -- 
 1.7.10.4
