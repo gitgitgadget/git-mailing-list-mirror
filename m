@@ -1,71 +1,66 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: Hold your fire, please
-Date: Sat, 29 Dec 2012 15:09:32 +0000
-Message-ID: <CAOkDyE80NX9rw==7uqcKqGvXq07A74Gy7Zu69p7MYe7drvKHRQ@mail.gmail.com>
-References: <7vd2y1rix1.fsf@alter.siamese.dyndns.org>
-	<7vehi9hgz3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] pre-push hook support
+Date: Sat, 29 Dec 2012 08:48:01 -0800
+Message-ID: <7vlicgg5z2.fsf@alter.siamese.dyndns.org>
+References: <1356735452-21667-1-git-send-email-aaron@schrab.com>
+ <7v1ue9hb06.fsf@alter.siamese.dyndns.org> <20121229145025.GA3789@pug.qqx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 29 16:10:05 2012
+To: Aaron Schrab <aaron@schrab.com>
+X-From: git-owner@vger.kernel.org Sat Dec 29 17:48:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Toy2w-0002CJ-J1
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 16:09:58 +0100
+	id 1TozaF-00088C-Gg
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 17:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952Ab2L2PJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2012 10:09:35 -0500
-Received: from mail-wg0-f49.google.com ([74.125.82.49]:44235 "EHLO
-	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753012Ab2L2PJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Dec 2012 10:09:34 -0500
-Received: by mail-wg0-f49.google.com with SMTP id 15so5352568wgd.16
-        for <git@vger.kernel.org>; Sat, 29 Dec 2012 07:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=WUDXfSFvckwyQ3RzNViC3uYtbNuz6e6i0CVxgnnrMDM=;
-        b=YqFgvoiGrkycwS0GgE3w34uVQXC6h/VFMW3ZuqKmgXRu/V5XtWb4/YcQbNDDU9IdGO
-         gP8SPmeYT+69Jb7YdjoN3pG7NAel+X2b3w/yXJJS+ZsiwD+H/+v7RxLl4HJR6i55RzYd
-         iwh7LwQhpBuFgbO4ISA1daUZLWLks7E9SARtTyAB+yIaXy+zWc2973aTAmUUl4oSyg62
-         wBRHNnoRaj3IT6CJ17JfUN2HPwrExANSqYlJqhWQc0Abc9UuLSOf3kGsg48z4nFaFwmw
-         Dm5W9ciibXhEg9fakEIhZ++sRraQyQp+rjjqSYWm9BXgJ6Q+OB6ECD7ZQBISq6rLYN4K
-         +0NQ==
-Received: by 10.180.82.69 with SMTP id g5mr57488262wiy.21.1356793772535; Sat,
- 29 Dec 2012 07:09:32 -0800 (PST)
-Received: by 10.194.84.97 with HTTP; Sat, 29 Dec 2012 07:09:32 -0800 (PST)
-In-Reply-To: <7vehi9hgz3.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: ZYMZIgMMYuWN83pfZq-0DC5lDOI
+	id S1753236Ab2L2QsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2012 11:48:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37032 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753123Ab2L2QsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2012 11:48:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CCF8ADE9;
+	Sat, 29 Dec 2012 11:48:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=esmgdKzeV07WBQN8hqwclWRErNo=; b=PbB5t/
+	Ir4sJTuRW24unyO4fy8QbbjOWQR2m5v4g886y2xb/G04rVlSrMI9sk/pnSLrdIEK
+	PApduPSs0zhzJpbnQhQkGS8H3b4FyQS2Un7MvaZveIfFSiCrTkVMjjXOVSFrhOl/
+	mDmyojkaGvsUvQzNfPKrNJp8fGs8fdNqQjiTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gX7ql0TOTxLAJwvhYSihfIq/cc5iO9Et
+	EzBEG6xEDpEVpnbXV/IUOGXqkbQ9JV+rCuK/wTizV0vpOOsm6jIdtf2dd4PuaMV8
+	5MKCKSdj3/kfDauUokFRb404Q89GkcltNIGG8v39AwizJDAKxMvPvbTaIKs6/5o4
+	EI7fsX4Nb10=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88B0AADE8;
+	Sat, 29 Dec 2012 11:48:03 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E55E9ADE6; Sat, 29 Dec 2012
+ 11:48:02 -0500 (EST)
+In-Reply-To: <20121229145025.GA3789@pug.qqx.org> (Aaron Schrab's message of
+ "Sat, 29 Dec 2012 09:50:25 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82D6ECA2-51D7-11E2-9095-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212313>
 
-On Fri, Dec 28, 2012 at 11:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Aaron Schrab <aaron@schrab.com> writes:
+
+> At 18:01 -0800 28 Dec 2012, Junio C Hamano <gitster@pobox.com> wrote:
+>>Will it be "all-or-none", or "I'll allow these but not those"?
 >
->> Primarily in order to force me concentrate on the releng for the
->> upcoming release, and also to encourage contributors to focus on
->> finding and fixing any last minute regressions (rather than
->> distracting others by showing publicly scratching their itches), I
->> won't be queuing any patch that is not a regression fix, at least
->> for the next few days.  I may not even review them.
->>
->> Thanks.
->
-> Just as a friendly reminder, I am reposting this to remind people.
+> Currently it just uses the exit code to communicate that back, so it's
+> all-or-none.  I think I'll keep that in the updated version as well.
 
-Ah, I thought this period had elapsed already.  I assume this applies
-to check-ignore, in which case how long should I hold off before
-submitting v4?
-
->> And have a nice holiday if you are in areas where it is a holiday
->> season ;-)
-
-You too :-)
+Thanks; that sounds sensible.
