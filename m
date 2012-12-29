@@ -1,78 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] hooks: Add function to check if a hook exists
-Date: Sat, 29 Dec 2012 08:54:41 -0800
-Message-ID: <7vhan4g5ny.fsf@alter.siamese.dyndns.org>
-References: <1356735452-21667-1-git-send-email-aaron@schrab.com>
- <1356735452-21667-2-git-send-email-aaron@schrab.com>
- <7vwqw1fw5a.fsf@alter.siamese.dyndns.org> <20121229145032.GB3789@pug.qqx.org>
+From: Davide Baldini <baldiniebaldini@gmail.com>
+Subject: Fail to push over HTTP with MySQL authentication (Apache2)
+Date: Sat, 29 Dec 2012 20:54:32 +0100
+Message-ID: <50DF4A78.5000206@gmail.com>
+Reply-To: Davide Baldini <baldiniebaldini@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Aaron Schrab <aaron@schrab.com>
-X-From: git-owner@vger.kernel.org Sat Dec 29 17:55:12 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 29 21:04:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tozgg-0003Xf-KJ
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 17:55:06 +0100
+	id 1Tp2eJ-0003zp-Jr
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 21:04:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916Ab2L2Qyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2012 11:54:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39940 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752311Ab2L2Qyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Dec 2012 11:54:44 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8006AF8C;
-	Sat, 29 Dec 2012 11:54:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eLdQGCRjERTgX1ZjzBD+dSKl8LY=; b=Y8crzH
-	GN3L8K0g1HqgA0awLaVZwAhaPODpWfRHq1AX1kp1IEoDQpClvuavkCwzCBPICi8q
-	4NrY5ntXpqiK1ElI/zZG2jrmauR+1S1kWUhJ3Mo0XJ72uyLds4nTaH7HCuIyT8WR
-	h8zR7kGl7a+8yBcXPNcUlPEHaUJNl+m9CrylA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KFBAlclASrWE1U5jJhpOPwTXf1M3MwEk
-	TmNWlMvly95IznXDaXQXa9XFB7RXJcynU5ciW2W6x7Nvqh7r+4MRTjI+8QTaDUg6
-	9DRxFJs8WfC6+lYJeJgO1GaZQ2oGPQF4UEKDN2Kk5WaAcLJpWbfDdTsoZanWgOKS
-	sL45Vto6Khs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5D2FAF8B;
-	Sat, 29 Dec 2012 11:54:43 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 331EEAF8A; Sat, 29 Dec 2012
- 11:54:43 -0500 (EST)
-In-Reply-To: <20121229145032.GB3789@pug.qqx.org> (Aaron Schrab's message of
- "Sat, 29 Dec 2012 09:50:32 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 716B36A2-51D8-11E2-8647-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753134Ab2L2UC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2012 15:02:57 -0500
+Received: from mail-ee0-f47.google.com ([74.125.83.47]:51226 "EHLO
+	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472Ab2L2UCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2012 15:02:55 -0500
+Received: by mail-ee0-f47.google.com with SMTP id e51so5593358eek.20
+        for <git@vger.kernel.org>; Sat, 29 Dec 2012 12:02:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:reply-to:user-agent:mime-version:to
+         :subject:content-type:content-transfer-encoding;
+        bh=hNWrdtwnhEBYOXY5U677xA7srnDKFPXuIsMSCUuU0bk=;
+        b=Br1bGR9sLNBSk8isMNvmhabxl017Pa3va2BumbnTe8Jc1iIb/4F+XiNvq5/QFXOI/9
+         bgxcnXQCRYPr9sqIgH9JSFGkJ1iajlkE5TxOdFqZjjQYnzHPlkJ4jgpjpMpYO5H4OfaK
+         7SHPXHS2oPueiWxrBSOqS40t9pfRj6jMOq6G1fgbyM0wCI0LN/4/E81neYfFvidXGpjI
+         b0d40B5W44FkPfjMrBLvQ/3qN6L/qBxSz+HyXgRnTEJqKymO1ywnHfRKa6Qfav3dSWqO
+         gcSTxoj/EmEW+gEs7X5JFYfQ58iDP67tcvtTQWHX8oFbIjkORjLy5YZRyc0U7t5tiKi9
+         8B8Q==
+X-Received: by 10.14.1.195 with SMTP id 43mr97368451eed.31.1356810936635;
+        Sat, 29 Dec 2012 11:55:36 -0800 (PST)
+Received: from [192.168.1.11] ([87.19.240.177])
+        by mx.google.com with ESMTPS id b2sm74170504eep.9.2012.12.29.11.55.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 29 Dec 2012 11:55:35 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20120507 Icedove/3.0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212315>
 
-Aaron Schrab <aaron@schrab.com> writes:
+Hi,
 
-> Since I'm going to be changing the interface for this hook in v2 of
-> the series so that it will be more complicated than can be readily
-> addressed with the run_hook() API (and will have use a fixed number of
-> arguments anyway) I'll be dropping the run_hook_argv() function.
+I'm not able to setup a public Git repository over plain HTTP with
+MySQL authentication.
+Both HTTP and authentication are provided by Apache2.
 
-Just to make sure there is no misunderstanding (sorry for sending
-the message without finishing it with this clarification at the end
-in the first place).  I didn't mean that converting all of the
-existing callers must come earlier than introducing a new hook
-invoker.
+SETUP:
+-----
 
-I just wanted to make sure that we are aware that we are adding to
-our technical debt, if we are adding another that is also
-specialized; as the proposed interface looked sufficiently generic,
-it would be the ideal one to make _other_ ones thin wrappers around
-it to unify the various codepaths.
+This setup is performed on Debian 6.0.4.
 
-Thanks.
+Apache2 (v. 2.2), with modules:
+    auth_mysql
+    WebDAV
+
+Git (v. 1.7.8.3)
+Git repository location:
+    local, for webserver: /var/www/public/GT_rulesets/GT00.git
+    public, for Git:      http://greatturn.org:8081/GT00.git
+
+Git repository has been configured as:
+    cd /var/www/public/GT_rulesets/GT00.git
+    git init --bare
+    mv hooks/post-update.sample hooks/post-update
+    git update server-info
+    chmode 777 /var/www/public/GT_rulesets/GT00.git  # for testing.
+
+
+FACTS:
+-----
+
+The Apache side of my setup seems to work:
+_   HTTP, MySQL authentication:
+        I point Iceweasel to http://greatturn.org:8081/ .
+        It asks for authentication; I authenticate with a username/
+        password pair taken from MySQL database (which doesn't exist as
+        a system user); It works, and I can see all the content of
+        the git repository "GT00.git".
+_   WebDAV:
+        I point Konqueror to webdav://greatturn.org:8081/ .
+        Works exactly as previous point.
+_   Git:
+        Git can fetch the repository without problems:
+        git clone http://username:password@greatturn.org:8081/GT00.git
+
+Pushing the locally fetched repository back to the remote one doesn't
+work:
+    "git push http://greatturn.org:8081/GT00.git master"
+    asks for username and password:
+        > Username for 'greatturn.org:8081':
+        > Password for 'greatturn.org:8081':
+
+    I enter my credentials, then git outputs the following and exits:
+        > error: Cannot access URL http://greatturn.org:8081/GT00.git/,
+return code 22
+        > fatal: git-http-push failed
+
+    On Apache's access.log, git produces all and no more than the
+    following:
+        > 87.19.240.177 - - [29/Dec/2012:16:43:22 +0100] "GET /GT00.git
+/info/refs?service=git-receive-pack HTTP/1.1" 401 767 "-"
+"git/1.7.8.3"
+        > 87.19.240.177 - - [29/Dec/2012:16:43:26 +0100] "GET
+/GT00.git/info/refs?service=git-receive-pack HTTP/1.1" 401 767 "-"
+"git/1.7.8.3"
+        > 87.19.240.177 - davide [29/Dec/2012:16:43:26 +0100] "GET
+/GT00.git/info/refs?service=git-receive-pack HTTP/1.1" 200 233 "-"
+"git/1.7.8.3"
+        > 87.19.240.177 - davide [29/Dec/2012:16:43:26 +0100] "GET
+/GT00.git/HEAD HTTP/1.1" 200 258 "-" "git/1.7.8.3"
+        > 87.19.240.177 - - [29/Dec/2012:16:43:26 +0100] "PROPFIND
+/GT00.git/ HTTP/1.1" 401 767 "-" "git/1.7.8.3"
