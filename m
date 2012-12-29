@@ -1,80 +1,122 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v3 18/19] setup.c: document get_pathspec()
-Date: Sat, 29 Dec 2012 00:52:25 +0000
-Message-ID: <CAOkDyE89fm5_z2V=VW5n+8XAvB6tE+DqciXttbhX29X8mWjXTQ@mail.gmail.com>
-References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
-	<1356575558-2674-19-git-send-email-git@adamspiers.org>
-	<7v7go1j4ml.fsf@alter.siamese.dyndns.org>
-	<CAOkDyE-UXGhe1aiWy_1_y7cvrmfvivSBxY9LHudOmeZD=M-12A@mail.gmail.com>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Lockless Refs?
+Date: Fri, 28 Dec 2012 18:07:23 -0700
+Organization: CAF
+Message-ID: <201212281807.23533.mfick@codeaurora.org>
+References: <20121221080449.GA21741@sigill.intra.peff.net> <201212271611.52203.mfick@codeaurora.org> <7vlicijepv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git list <git@vger.kernel.org>
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 29 01:52:53 2012
+X-From: git-owner@vger.kernel.org Sat Dec 29 02:07:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TokfV-0003Os-5G
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 01:52:53 +0100
+	id 1Toktx-0003FK-51
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 02:07:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755172Ab2L2Aw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 19:52:28 -0500
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:44019 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755123Ab2L2Aw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2012 19:52:27 -0500
-Received: by mail-wg0-f52.google.com with SMTP id 12so5119317wgh.7
-        for <git@vger.kernel.org>; Fri, 28 Dec 2012 16:52:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=IwDfq0hvFP/FbyqQez/7nIbH03rPlCoHhfJt/3HLPKo=;
-        b=SZPz8Xw/BoAQUHeDd7wr7Nc4E8x2QVig8cBnw69t2cW/yLXpIYaiHoz3zrMys1Dtea
-         cTcX8VORn2RmyMOqg2aa7D7weGz6D1dFZhe8+gkxuMOdocxUzc293DYegD9d9mf7K5mM
-         ZF7km1xWTNU6WXMBq+yN3JErvH/GcVooRzoMTjwDJKcsb08JhrfrI0TAsGGy6eBoAHIG
-         jc0SgfzU/N1lVDnWYShH3N9RRI+hly+w8QmlHY1a9honnyHCBRJXV571suYv9M9aYftR
-         oULlyrdMl5xO/AL6Os9jEHwLdkt320U+at8Dxftt1ns8CNxHQCY1RTb3K+T9JPuUI32F
-         SkQQ==
-Received: by 10.194.236.68 with SMTP id us4mr56455924wjc.11.1356742345509;
- Fri, 28 Dec 2012 16:52:25 -0800 (PST)
-Received: by 10.194.84.97 with HTTP; Fri, 28 Dec 2012 16:52:25 -0800 (PST)
-In-Reply-To: <CAOkDyE-UXGhe1aiWy_1_y7cvrmfvivSBxY9LHudOmeZD=M-12A@mail.gmail.com>
-X-Google-Sender-Auth: PYIUjB3-yH-WniAcdVAeK5Q4gGI
+	id S1755161Ab2L2BHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 20:07:31 -0500
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:53715 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755077Ab2L2BHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2012 20:07:30 -0500
+X-IronPort-AV: E=Sophos;i="4.84,372,1355126400"; 
+   d="scan'208";a="16992961"
+Received: from pdmz-ns-snip_115_219.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.115.219])
+  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 28 Dec 2012 17:07:29 -0800
+Received: from mfick-laptop.localnet (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 323C710004B1;
+	Fri, 28 Dec 2012 17:07:28 -0800 (PST)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-41-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7vlicijepv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212280>
 
-On Fri, Dec 28, 2012 at 8:40 PM, Adam Spiers <git@adamspiers.org> wrote:
-> On Fri, Dec 28, 2012 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Adam Spiers <git@adamspiers.org> writes:
->>
->>> Since we have just created a new pathspec-handling library, now is a
->>> good time to add some comments explaining get_pathspec().
->>>
->>> Signed-off-by: Adam Spiers <git@adamspiers.org>
->>> ---
->>
->> Yes, but we would rather not to see new users of this function added
->> to our codebase in its current form, as explained in the nearby
->> comment.  We would want to migrate everybody to "struct pathspec"
->> based interface to support magic pathspecs in the longer term.
->
-> I see.  Please feel free to drop that patch from the series or amend
-> as you see fit.
+On Friday, December 28, 2012 09:58:36 am Junio C Hamano 
+wrote:
+> Martin Fick <mfick@codeaurora.org> writes:
+> > 3) To create a ref, it must be renamed from the null
+> > file (sha 0000...) to the new value just as if it were
+> > being updated from any other value, but there is one
+> > extra condition: before renaming the null file, a full
+> > directory scan must be done to ensure that the null
+> > file is the only file in the directory...
+> 
+> While you are scanning this directory to make sure it is
+> empty, 
 
-I've added this sentence to the top of the comments above
-get_pathspec():
+The objective is not to scan for an empty dir, but to scan 
+for the existence of only the null file.
 
-    /*
-     * N.B. get_pathspec() is deprecated in favor of the "struct pathspec"
-     * based interface - see pathspec_magic above.
-     *
-    [...]
+> I am contemplating to create the same ref with a
+> different value.  You finished checking but haven't
+> created the null.
 
-That should be sufficient to discourage people from adding new users
-of get_pathspec().
+The scan needs to happen after creating the null, not before, 
+so I don't believe the rest of the scenario below is possible 
+then?
+
+> I have also scanned, created the null
+> and renamed it to my value.  Now you try to create the
+> null, succeed, and then rename.  We won't know which of
+> the two non-null values are valid, but worse yet, I think
+> one of them should have failed in the first place.
+
+
+
+> Sounds like we would need some form of locking around
+> here.  Is your goal "no locks", or "less locks"?
+(answered below)
+
+> > I don't know how this new scheme could be made to work
+> > with the current scheme,...
+> 
+> It is much more important to know if/why yours is better
+> than the current scheme in the first place.  
+
+The goal is: "no locks which do not have a clearly defined 
+reliable recovery procedure".
+
+Stale locks without a reliable recovery procedure will lead 
+to stolen locks.  At this point it is only a matter of luck 
+whether this leads to data loss or not.  So I do hope to 
+convince people first that the current scheme is bad, not that 
+my scheme is better!  My scheme was proposed to get people 
+thinking that we may not have to use locks to get reliable 
+updates.
+
+
+> Without an
+> analysis on how the new scheme interacts with the packed
+> refs and gives better behaviour, that is kinda difficult.
+
+Fair enough. I will attempt this if the basic idea seems at 
+least sane?  I do hope that eventually the packed-refs piece 
+and its locking will be reconsidered also; as Michael pointed 
+out it has issues already.  So, I am hoping to get people 
+thinking more about lockless approaches to all the pieces. I 
+think I have some solutions to some of the other pieces also, 
+but I don't want to overwhelm the discussion all at once 
+(especially if my first piece is shown to be flawed, or if no 
+one has any interest in eliminating the current locks?)
+
+ 
+> I think transition plans can wait until that is done.  If
+> it is not even marginally better, we do not have to worry
+> about transitioning at all.  If it is only marginally
+> better, the transition has to be designed to be no impact
+> to the existing repositories.  If it is vastly better, we
+> might be able to afford a flag day.
+
+OK, makes sense, I jumped the gun a bit,
+
+-Martin
