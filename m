@@ -1,83 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] hooks: Add function to check if a hook exists
-Date: Fri, 28 Dec 2012 18:08:01 -0800
-Message-ID: <7vwqw1fw5a.fsf@alter.siamese.dyndns.org>
-References: <1356735452-21667-1-git-send-email-aaron@schrab.com>
- <1356735452-21667-2-git-send-email-aaron@schrab.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v3 19/19] Add git-check-ignore sub-command
+Date: Sat, 29 Dec 2012 03:32:27 +0000
+Message-ID: <20121229033227.GA13848@gmail.com>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+ <1356575558-2674-20-git-send-email-git@adamspiers.org>
+ <7vtxr5ho01.fsf@alter.siamese.dyndns.org>
+ <20121229012352.GA20379@pacific.linksys.moosehall>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Aaron Schrab <aaron@schrab.com>
-X-From: git-owner@vger.kernel.org Sat Dec 29 03:09:12 2012
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 29 04:37:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TolrI-0003oD-M7
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 03:09:08 +0100
+	id 1TonEq-0002rp-Pa
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 04:37:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755201Ab2L2CIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 21:08:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58029 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755191Ab2L2CIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2012 21:08:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEA6FAA3E;
-	Fri, 28 Dec 2012 21:08:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z6yWoRDQX6adgwUm2iL9quV1OuE=; b=KglGxp
-	R1H3OsY0qM//miUNGaoKZJWwK8DaXOnsCUNlf9tlmoShqy2Gt37LHEAwFqZkmk0h
-	IjDWtwgabs5UuwhNZsiflREN5pMVZtNZVTx/RAu9JdH94i9C3gS7HYAlMP59Qsif
-	PrxpRHokxmnTyFYSXwU7bHxCnRgwFQnScCpn4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s3D+QDkx5w9c+kcdZXyVzJLlBQxq1ZDO
-	07q6xJtoVhvZO0jf1aVzJ1+RZZFeMpGjxclfe7Nfzift0vxczuHX5jXCN0fRq/jy
-	rDmCV/VZU9d0uuLKX8nUgDf7HHV/LJQkVEJl7stUUaQCv+KmrDbMJYNK5FfY0YpK
-	AnylDrpiXts=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D928EAA3D;
-	Fri, 28 Dec 2012 21:08:03 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2DD46AA3A; Fri, 28 Dec 2012
- 21:08:03 -0500 (EST)
-In-Reply-To: <1356735452-21667-2-git-send-email-aaron@schrab.com> (Aaron
- Schrab's message of "Fri, 28 Dec 2012 17:57:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 93BC36E2-515C-11E2-9A1B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751078Ab2L2Dca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 22:32:30 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:56497 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750891Ab2L2Dc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2012 22:32:29 -0500
+Received: from localhost (4.1.1.e.a.b.1.2.1.7.9.8.4.4.8.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d844:8971:21ba:e114])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 009CF2E5D3
+	for <git@vger.kernel.org>; Sat, 29 Dec 2012 03:32:27 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <20121229012352.GA20379@pacific.linksys.moosehall>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212285>
 
-Aaron Schrab <aaron@schrab.com> writes:
+On Sat, Dec 29, 2012 at 01:23:52AM +0000, Adam Spiers wrote:
+> FYI, attached is the diff between check-ignore-v3 and my current
+> check-ignore, which is available at github:
+> 
+>     https://github.com/aspiers/git/commits/check-ignore
 
-> Create find_hook() function to determine if a given hook exists and is
-> executable.  If it is the path to the script will be returned, otherwise
-> NULL is returned.
+[snipped]
 
-Sounds like a sensible thing to do.  To make sure the API is also
-sensible, all the existing hooks should be updated to use this API,
-no?
+> diff --git a/pathspec.c b/pathspec.c
+> index 6724121..3789b14 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
 
-> This is in support for an upcoming run_hook_argv() function which will
-> expect the full path to the hook script as the first element in the
-> argv_array.  
+[snipped]
 
-There is currently a public function called run_hook() that squats
-on the good name with a kludgy API that is too specific to using
-separate index file.  Back when it was a private helper in the
-implementation of "git commit", it was perfectly fine, but it was
-exported without giving much thought on the API.
+> -void validate_path(const char *path, const char *prefix)
+> +void die_if_path_beyond_symlink(const char *path, const char *prefix)
 
-If you are introducing a new run_hook_* function, give it a generic
-enough API that lets all the existing hook callers to use it.  I
-would imagine that the API requirement may be modelled after
-run_command() API so that we can pass argv[] and tweak the hook's
-environ[], as well as feeding its stdin and possibly reading from
-its stdout.  That would be very useful.
+[snipped]
+
+> diff --git a/pathspec.h b/pathspec.h
+> index c251441..1961b19 100644
+> --- a/pathspec.h
+> +++ b/pathspec.h
+> @@ -1,6 +1,11 @@
+> +#ifndef PATHSPEC_H
+> +#define PATHSPEC_H
+> +
+>  extern char *find_used_pathspec(const char **pathspec);
+>  extern void fill_pathspec_matches(const char **pathspec, char *seen, int specs);
+>  extern const char *treat_gitlink(const char *path);
+>  extern void treat_gitlinks(const char **pathspec);
+>  extern void validate_path(const char *path, const char *prefix);
+               ^^^^^^^^^^^^^
+I forgot to rename this one.  Will be fixed in v4.
