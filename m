@@ -1,91 +1,130 @@
 From: Martin Fick <mfick@codeaurora.org>
 Subject: Re: Lockless Refs?  (Was [PATCH] refs: do not use cached refs in repack_without_ref)
-Date: Sat, 29 Dec 2012 14:29:55 -0700
-Message-ID: <befe9a89-8f71-437e-ad33-c4dc4ee90507@email.android.com>
-References: <20121221080449.GA21741@sigill.intra.peff.net> <50DAB447.8000101@alum.mit.edu> <201212271611.52203.mfick@codeaurora.org> <201212280750.14695.mfick@codeaurora.org> <20121229081200.GD15408@sigill.intra.peff.net>
+Date: Sat, 29 Dec 2012 15:18:49 -0700
+Message-ID: <029f9379-a284-40e6-b4b9-529bd82d6e3e@email.android.com>
+References: <20121221080449.GA21741@sigill.intra.peff.net> <50DAB447.8000101@alum.mit.edu> <201212271611.52203.mfick@codeaurora.org> <20121229081021.GC15408@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <sop@google.com>
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 29 22:35:59 2012
+X-From: git-owner@vger.kernel.org Sat Dec 29 23:24:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tp44R-0006sf-9e
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 22:35:55 +0100
+	id 1Tp4pq-0001EV-QG
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 23:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753302Ab2L2Vfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2012 16:35:31 -0500
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:60833 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753161Ab2L2Vfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Dec 2012 16:35:30 -0500
-X-IronPort-AV: E=Sophos;i="4.84,378,1355126400"; 
-   d="scan'208";a="17057558"
+	id S1753331Ab2L2WYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2012 17:24:12 -0500
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:17206 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753300Ab2L2WYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2012 17:24:10 -0500
+X-IronPort-AV: E=Sophos;i="4.84,379,1355126400"; 
+   d="scan'208";a="16934838"
 Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Dec 2012 13:35:30 -0800
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Dec 2012 14:24:10 -0800
 Received: from [192.168.1.181] (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 6E83F10004B1;
-	Sat, 29 Dec 2012 13:35:23 -0800 (PST)
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 9DDE010004B1;
+	Sat, 29 Dec 2012 14:24:09 -0800 (PST)
 User-Agent: K-9 Mail for Android
-In-Reply-To: <20121229081200.GD15408@sigill.intra.peff.net>
+In-Reply-To: <20121229081021.GC15408@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212320>
 
 Jeff King <peff@peff.net> wrote:
 
->On Fri, Dec 28, 2012 at 07:50:14AM -0700, Martin Fick wrote:
+>On Thu, Dec 27, 2012 at 04:11:51PM -0700, Martin Fick wrote:
+>> My idea is based on using filenames to store sha1s instead of 
+>> file contents.  To do this, the sha1 one of a ref would be 
+>> stored in a file in a directory named after the loose ref.  I 
+>> believe this would then make it possible to have lockless 
+>> atomic ref updates by renaming the file.
+>> 
+>> To more fully illustrate the idea, imagine that any file 
+>> (except for the null file) in the directory will represent the 
+>> value of the ref with its name, then the following 
+>> transitions can represent atomic state changes to a refs 
+>> value and existence:
 >
->> Hmm, actually I believe that with a small modification to the 
->> semantics described here it would be possible to make multi 
->> repo/branch commits work.   Simply allow the ref filename to 
->> be locked by a transaction by appending the transaction ID to 
->> the filename.  So if transaction 123 wants to lock master 
->> which points currently to abcde, then it will move 
->> master/abcde to master/abcde_123.  If transaction 123 is 
->> designed so that any process can commit/complete/abort it 
->> without requiring any locks which can go stale, then this ref 
->> lock will never go stale either (easy as long as it writes 
->> all its proposed updates somewhere upfront and has atomic 
->> semantics for starting, committing and aborting).  On commit, 
->> the ref lock gets updated to its new value: master/newsha and 
->> on abort it gets unlocked: master/abcde.
+>Hmm. So basically you are relying on atomic rename() to move the value
+>around within a directory, rather than using write to move it around
+>within a file. Atomic rename is usually something we have on local
+>filesystems (and I think we rely on it elsewhere). Though I would not
+>be
+>surprised if it is not atomic on all networked filesystems (though it
+>is
+>on NFS, at least).
+
+Yes.  I assume this is OK because doesn't git already rely on atomic renames?  For example to rename the new packed-refs file to unlock it?
+
+...
+
+>> 3) To create a ref, it must be renamed from the null file (sha 
+>> 0000...) to the new value just as if it were being updated 
+>> from any other value, but there is one extra condition: 
+>> before renaming the null file, a full directory scan must be 
+>> done to ensure that the null file is the only file in the 
+>> directory (this condition exists because creating the 
+>> directory and null file cannot be atomic unless the filesystem 
+>> supports atomic directory renames, an expectation git does 
+>> not currently make).  I am not sure how this compares to 
+>> today's approach, but including the setup costs (described 
+>> below), I suspect it is slower.
 >
->Hmm. I thought our goal was to avoid locks? Isn't this just locking by
->another name?
+>Hmm. mkdir is atomic. So wouldn't it be sufficient to just mkdir and
+>create the correct sha1 file?
 
-It is a lock, but it is a lock with an owner: the transaction.  If the transaction has reliable recovery semantics, then the lock will be recoverable also.  This is possible if we have lock ownership (the transaction) which does not exist today for the ref locks.  With good lock ownership we gain the ability to reliably delete locks for a specific owner without the risk of deleting the lock when held by another owner (putting the owner in the filename is "good", while putting the owner in the filecontents is not).   Lastly, for reliable recovery of stale locks we need the ability to determine when an owner has abandoned a lock.  I believe that the transaction semantics laid out below give this.
+But then a process could mkdir and die leaving a stale empty dir with no reliable recovery mechanism.
 
 
->I guess your point is to have no locks in the "normal" case, and have
->locked transactions as an optional add-on?
+Unfortunately, I think I see another flaw though! :( I should have known that I cannot separate an important check from its state transitioning action.  The following could happen:
 
-Basically.  If we design the transaction into the git semantics we could ensure that it is recoverable and we should not need to expose these reflocks outside of the transaction APIs.
+ A does mkdir
+ A creates null file
+ A checks dir -> no other files 
+ B checks dir -> no other files
+ A renames null file to abcd
+ C creates second null file 
+ B renames second null file to defg
 
-To illustrate a simple transaction approach (borrowing some of Shawn's ideas), we could designate a directory to hold transaction files *1.  To prepare a transaction: write a list of repo:ref:oldvalue:newvalue to a file named id.new (in a stable sorted order based on repo:ref to prevent deadlocks).  This is not a state change and thus this file could be deleted by any process at anytime (preferably after a long grace period).
+One way to fix this is to rely on directory renames, but I believe this is something git does not want to require of every FS? If we did, we could Change #3 to be:
 
-If file renames are atomic on the filesystem holding the transaction files then 1, 2, 3 below will be atomic state changes.  It does not matter who performs state transitions 2 or 3.  It does not matter who implements the work following any of the 3 transitions, many processes could attempt the work in parallel (so could a human).
- 
-1) To start the transaction, rename the id.new file to id.  If the rename fails, start over if desired/still possible.  On success, ref locks for each entry should be acquired in listed order (to prevent deadlocks), using transaction id and oldvalue.  It is never legal to unlock a ref in this state (because a block could cause the unlock to be delayed until the commit phase).  However, it is legal for any process to transition to abort at any time from this state, perhaps because of a failure to acquire a lock (held by another transaction), and definitely if a ref has changed (is no longer oldvalue).
+3) To create a ref, it must be renamed from the null file (sha 0000...) to the new value just as if it were being updated from any other value. (No more scan)
 
-2) To abort the transaction, rename the id file to id.abort.  This should only ever fail if commit was achieved first.  Once in this state, any process may/should unlock any ref locks belonging to this transaction id.  Once all refs are unlocked, id.abort may be deleted (it could be deleted earlier, but then cleanup will take longer).
+Then, with reliable directory renames, a process could do what you suggested to a temporary directory, mkdir + create null file, then rename the temporary dir to refname.  This would prevent duplicate null files.  With a grace period, the temporary dirs could be cleaned up in case a process dies before the rename.  This is your approach with reliable recovery.
 
-3) To commit the transaction, rename the file to id.commit.  This should only ever fail if abort was achieved first. This transition should never be done until every listed ref is locked by the current transaction id.  Once in this phase, all refs may/should be moved to their new values and unlocked by any process. Once all refs are unlocked, id.commit may be deleted. 
 
-Since any process attempting any of the work in these transactions could block at any time for an indefinite amount of time, these processes may wake after the transaction is aborted or comitted and the transaction files are cleaned up.  I believe that in these cases the only actions which could succeed by these waking processes is the ref locking action.  All such abandoned ref locks may/should be unlocked by any process.  This last rule means that no transaction ids should ever be reused,
+>> I don't know how this new scheme could be made to work with 
+>> the current scheme, it seems like perhaps new git releases 
+>> could be made to understand both the old and the new, and a 
+>> config option could be used to tell it which method to write 
+>> new refs with.  Since in this new scheme ref directory names 
+>> would conflict with old ref filenames, this would likely 
+>> prevent both schemes from erroneously being used 
+>> simultaneously (so they shouldn't corrupt each other), except 
+>> for the fact that refs can be nested in directories which 
+>> confuses things a bit.  I am not sure what a good solution to 
+>> this is?
+>
+>I think you would need to bump core.repositoryformatversion, and just
+>never let old versions of git access the repository directly. Not the
+>end of the world, but it certainly increases deployment effort. If we
+>were going to do that, it would probably make sense to think about
+>solving the D/F conflict issues at the same time (i.e., start calling
+>"refs/heads/foo" in the filesystem "refs.d/heads.d/foo.ref" so that it
+>cannot conflict with "refs.d/heads.d/foo.d/bar.ref").
+
+Wouldn't you want to use a non legal ref character instead of dot? And without locks, we free up more of the ref namespace too I think? (Refs could end in ".lock")
 
 -Martin
-
-
-*1 We may want to adapt the simple model illustrated above to use git mechanisms such as refs to hold transaction info instead of files in a directory, and git submodule files to hold the list of refs to update.  
 
 Employee of Qualcomm Innovation Center,Inc. which is a member of Code Aurora Forum
