@@ -1,122 +1,147 @@
-From: Davide Baldini <baldiniebaldini@gmail.com>
-Subject: Fail to push over HTTP with MySQL authentication (Apache2)
-Date: Sat, 29 Dec 2012 20:54:32 +0100
-Message-ID: <50DF4A78.5000206@gmail.com>
-Reply-To: Davide Baldini <baldiniebaldini@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [BUG] two-way read-tree can write null sha1s into index
+Date: Sat, 29 Dec 2012 15:51:54 -0500
+Message-ID: <20121229205154.GA21058@sigill.intra.peff.net>
+References: <20120728150132.GA25042@sigill.intra.peff.net>
+ <20120728150524.GB25269@sigill.intra.peff.net>
+ <20121229100130.GA31497@elie.Belkin>
+ <20121229102707.GA26730@sigill.intra.peff.net>
+ <20121229103430.GG18903@elie.Belkin>
+ <20121229110541.GA1408@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 29 21:04:53 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 29 21:52:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tp2eJ-0003zp-Jr
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 21:04:51 +0100
+	id 1Tp3OH-0005uJ-V8
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 21:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753134Ab2L2UC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2012 15:02:57 -0500
-Received: from mail-ee0-f47.google.com ([74.125.83.47]:51226 "EHLO
-	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472Ab2L2UCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Dec 2012 15:02:55 -0500
-Received: by mail-ee0-f47.google.com with SMTP id e51so5593358eek.20
-        for <git@vger.kernel.org>; Sat, 29 Dec 2012 12:02:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:reply-to:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=hNWrdtwnhEBYOXY5U677xA7srnDKFPXuIsMSCUuU0bk=;
-        b=Br1bGR9sLNBSk8isMNvmhabxl017Pa3va2BumbnTe8Jc1iIb/4F+XiNvq5/QFXOI/9
-         bgxcnXQCRYPr9sqIgH9JSFGkJ1iajlkE5TxOdFqZjjQYnzHPlkJ4jgpjpMpYO5H4OfaK
-         7SHPXHS2oPueiWxrBSOqS40t9pfRj6jMOq6G1fgbyM0wCI0LN/4/E81neYfFvidXGpjI
-         b0d40B5W44FkPfjMrBLvQ/3qN6L/qBxSz+HyXgRnTEJqKymO1ywnHfRKa6Qfav3dSWqO
-         gcSTxoj/EmEW+gEs7X5JFYfQ58iDP67tcvtTQWHX8oFbIjkORjLy5YZRyc0U7t5tiKi9
-         8B8Q==
-X-Received: by 10.14.1.195 with SMTP id 43mr97368451eed.31.1356810936635;
-        Sat, 29 Dec 2012 11:55:36 -0800 (PST)
-Received: from [192.168.1.11] ([87.19.240.177])
-        by mx.google.com with ESMTPS id b2sm74170504eep.9.2012.12.29.11.55.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 29 Dec 2012 11:55:35 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20120507 Icedove/3.0.11
+	id S1753138Ab2L2Uv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2012 15:51:58 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39016 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752945Ab2L2Uv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2012 15:51:56 -0500
+Received: (qmail 31880 invoked by uid 107); 29 Dec 2012 20:53:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 29 Dec 2012 15:53:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Dec 2012 15:51:54 -0500
+Content-Disposition: inline
+In-Reply-To: <20121229110541.GA1408@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212316>
 
-Hi,
+On Sat, Dec 29, 2012 at 06:05:41AM -0500, Jeff King wrote:
 
-I'm not able to setup a public Git repository over plain HTTP with
-MySQL authentication.
-Both HTTP and authentication are provided by Apache2.
+>   [clear state from last run]
+>   $ rm -rf .git/rebase-apply
+>   $ git reset --hard
+> 
+>   [apply the patch; we get a conflict]
+>   $ git am -3sc queue-3.2/alsa-usb-audio-fix-missing-autopm-for-midi-input.patch
+> 
+>   [now run just the read-tree from "am --abort"]
+>   $ git.compile read-tree --reset -u HEAD ORIG_HEAD
+>   warning: cache entry has null sha1: sound/usb/midi.c
+> 
+>   [and now check our index]
+>   $ git ls-files -s sound/usb/midi.c
+>   100644 0000000000000000000000000000000000000000 0 sound/usb/midi.c
+> 
+>   [yes, this index is bogus]
+>   $ git write-tree
+>   error: invalid object 100644 0000000000000000000000000000000000000000 for 'sound/usb/midi.c'
+>   fatal: git-write-tree: error building trees
+> 
+> So I think this check may actually be finding a real bug. I have seen
+> these null sha1s in the wild, but I was never able to track down the
+> actual cause. Maybe this will give us a clue. Now we just need to work
+> backwards and figure out who is putting it in the in-memory index and
+> why.
 
-SETUP:
------
+I made some progress on this, but I'd like a sanity check from others
+(especially Junio). As far as I can tell, this is a bug in read-tree.
 
-This setup is performed on Debian 6.0.4.
+When we call "read-tree --reset -u HEAD ORIG_HEAD", the first thing we
+do with the index is call read_cache_unmerged. Originally that would
+read the index, leaving aside any unmerged entries. However, as of
+d1a43f2 (reset --hard/read-tree --reset -u: remove unmerged new paths,
+2008-10-15), it actually creates a new cache entry. This serves as a
+placeholder, so that we later know to update the working tree.
 
-Apache2 (v. 2.2), with modules:
-    auth_mysql
-    WebDAV
+However, we later noticed that the sha1 of that unmerged entry was
+just copied from some higher stage, leaving you with random content in
+the index.  That was fixed by e11d7b5 ("reset --merge": fix unmerged
+case, 2009-12-31), which instead puts the null sha1 into the newly
+created entry, and sets a CE_CONFLICTED flag. At the same time, it
+teaches the unpack-trees machinery to pay attention to this flag, so
+that oneway_merge throws away the current value.
 
-Git (v. 1.7.8.3)
-Git repository location:
-    local, for webserver: /var/www/public/GT_rulesets/GT00.git
-    public, for Git:      http://greatturn.org:8081/GT00.git
+However, it did not update the code paths for  twoway_merge, which is
+where we end up in the read-tree above. We notice that the HEAD and
+ORIG_HEAD versions are the same, and say "oh, we can just reuse the
+current version". But that's not true. The current version is bogus.
 
-Git repository has been configured as:
-    cd /var/www/public/GT_rulesets/GT00.git
-    git init --bare
-    mv hooks/post-update.sample hooks/post-update
-    git update server-info
-    chmode 777 /var/www/public/GT_rulesets/GT00.git  # for testing.
+So I think we need to update twoway_merge to recognize unmerged entries,
+which gives us two options:
 
+  1. Reject the merge.
 
-FACTS:
------
+  2. Throw away the current unmerged entry in favor of the "new" entry
+     (when old and new are the same, of course; otherwise we would
+     reject).
 
-The Apache side of my setup seems to work:
-_   HTTP, MySQL authentication:
-        I point Iceweasel to http://greatturn.org:8081/ .
-        It asks for authentication; I authenticate with a username/
-        password pair taken from MySQL database (which doesn't exist as
-        a system user); It works, and I can see all the content of
-        the git repository "GT00.git".
-_   WebDAV:
-        I point Konqueror to webdav://greatturn.org:8081/ .
-        Works exactly as previous point.
-_   Git:
-        Git can fetch the repository without problems:
-        git clone http://username:password@greatturn.org:8081/GT00.git
+I think (2) is the right thing. It fixes the entry of the bogus sha1
+into the index, _and_ it solves the problem that "git am --abort" leaves
+the conflicted entry as a modification. It should just go away. But
+maybe I am forgetting some other case where read-tree should be more
+conservative, and (1) is a safer choice.
 
-Pushing the locally fetched repository back to the remote one doesn't
-work:
-    "git push http://greatturn.org:8081/GT00.git master"
-    asks for username and password:
-        > Username for 'greatturn.org:8081':
-        > Password for 'greatturn.org:8081':
+Something like this patch:
 
-    I enter my credentials, then git outputs the following and exits:
-        > error: Cannot access URL http://greatturn.org:8081/GT00.git/,
-return code 22
-        > fatal: git-http-push failed
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 6d96366..e06e01f 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1746,14 +1746,19 @@ int twoway_merge(struct cache_entry **src, struct unpack_trees_options *o)
+ 		newtree = NULL;
+ 
+ 	if (current) {
+-		if ((!oldtree && !newtree) || /* 4 and 5 */
+-		    (!oldtree && newtree &&
+-		     same(current, newtree)) || /* 6 and 7 */
+-		    (oldtree && newtree &&
+-		     same(oldtree, newtree)) || /* 14 and 15 */
+-		    (oldtree && newtree &&
+-		     !same(oldtree, newtree) && /* 18 and 19 */
+-		     same(current, newtree))) {
++		if (current->ce_flags & CE_CONFLICTED) {
++			if (same(oldtree, newtree))
++				return merged_entry(newtree, current, o);
++			return o->gently ? -1 : reject_merge(current, o);
++		}
++		else if ((!oldtree && !newtree) || /* 4 and 5 */
++			 (!oldtree && newtree &&
++			  same(current, newtree)) || /* 6 and 7 */
++			 (oldtree && newtree &&
++			  same(oldtree, newtree)) || /* 14 and 15 */
++			 (oldtree && newtree &&
++			  !same(oldtree, newtree) && /* 18 and 19 */
++			  same(current, newtree))) {
+ 			return keep_entry(current, o);
+ 		}
+ 		else if (oldtree && !newtree && same(current, oldtree)) {
 
-    On Apache's access.log, git produces all and no more than the
-    following:
-        > 87.19.240.177 - - [29/Dec/2012:16:43:22 +0100] "GET /GT00.git
-/info/refs?service=git-receive-pack HTTP/1.1" 401 767 "-"
-"git/1.7.8.3"
-        > 87.19.240.177 - - [29/Dec/2012:16:43:26 +0100] "GET
-/GT00.git/info/refs?service=git-receive-pack HTTP/1.1" 401 767 "-"
-"git/1.7.8.3"
-        > 87.19.240.177 - davide [29/Dec/2012:16:43:26 +0100] "GET
-/GT00.git/info/refs?service=git-receive-pack HTTP/1.1" 200 233 "-"
-"git/1.7.8.3"
-        > 87.19.240.177 - davide [29/Dec/2012:16:43:26 +0100] "GET
-/GT00.git/HEAD HTTP/1.1" 200 258 "-" "git/1.7.8.3"
-        > 87.19.240.177 - - [29/Dec/2012:16:43:26 +0100] "PROPFIND
-/GT00.git/ HTTP/1.1" 401 767 "-" "git/1.7.8.3"
+I suspect threeway_merge may need a similar update, but I haven't looked
+too carefully yet.
+
+-Peff
