@@ -1,68 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use longer alias names in subdirectory tests
-Date: Fri, 28 Dec 2012 19:42:18 -0800
-Message-ID: <7vsj6pfrs5.fsf@alter.siamese.dyndns.org>
-References: <1356735786-24001-1-git-send-email-aaron@schrab.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC] pack-objects: compression level for non-blobs
+Date: Sat, 29 Dec 2012 11:34:09 +0700
+Message-ID: <CACsJy8D_E0shqJAvZH7xqij6F4a6qUxkUPNcZL=0yX5w9bLd_g@mail.gmail.com>
+References: <1353911154-23495-1-git-send-email-b@rr-dav.id.au> <20121229004104.GA24828@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Aaron Schrab <aaron@schrab.com>
-X-From: git-owner@vger.kernel.org Sat Dec 29 04:47:51 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: David Michael Barr <b@rr-dav.id.au>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 29 05:35:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TonOh-0008FL-8r
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 04:47:43 +0100
+	id 1Too8R-0007rQ-LV
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Dec 2012 05:34:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751111Ab2L2DmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2012 22:42:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35174 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750891Ab2L2DmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2012 22:42:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FF86AE2A;
-	Fri, 28 Dec 2012 22:42:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EzGLyhQtFqgdZPUfQH//qMTZCa4=; b=BkijUO
-	z+e0s6iE2BpPWXSQ7Aa8bdDEjjYE43nZ51AVy1fHZPTEY/eEkMc1OECuuSFRHPr1
-	ArhzRmt0QrEd3Ycg8r1ONTJp8U+8aEnVsAM3btX8R7k8F8NB29ClkMIwhZUYnA/O
-	Qe2B1e8IMWhb/GYdw2rxsk5RNYVW37NBOqFJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c/K77+eOvNS7DivnZ6F7lgUyFuNLlehR
-	/krCzmCKR6i+NYbRLCrQ3SyEc1Zgmc7OVdE7n/R1kblYSCFYNAwM/orqDv71WppU
-	upea+h8s/c8Qc9m3mew6LP9vnNTkqH6w+kblsurn9j9VPSNMm5LDUHj5Y5qAyma6
-	WVdck+3eztc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D809AE29;
-	Fri, 28 Dec 2012 22:42:21 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8712BAE28; Fri, 28 Dec 2012
- 22:42:20 -0500 (EST)
-In-Reply-To: <1356735786-24001-1-git-send-email-aaron@schrab.com> (Aaron
- Schrab's message of "Fri, 28 Dec 2012 18:03:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BFC9783C-5169-11E2-A003-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751472Ab2L2Eel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2012 23:34:41 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41355 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751321Ab2L2Eek (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2012 23:34:40 -0500
+Received: by mail-ob0-f174.google.com with SMTP id ta14so10293534obb.33
+        for <git@vger.kernel.org>; Fri, 28 Dec 2012 20:34:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Asj4CBCb+x9fFDeIcL7JNBR0c7ufmcC76RkzbtL5eeg=;
+        b=AC/aXZ/Xb57AsczpkFDH9Jn/PcfkNFthYFVAjFlrWcf4FMWMAX3LCWLFZ/33zZwN4R
+         nai+LTE2vkysekfecvAQYzT9tPsDFy6qd7w+RFao6jRpUzxgGAR1BnUGntN99MGmXrMV
+         YTacLBavdtQqtlkwSiqyznrh2XGjGbPslXzBUenCKKH72FeSqzAKNlOTox7Qj/N9KQ+J
+         vI91weJnuHMnol8RJ7TKjhSS9ezz2clsP68SLKYZgTyVVjJU+IHi/Ipivq1VvqljKixn
+         U87ZbnovX4RM8h5BbQfne5294nJzwJEkLdTNtaNUXIS6kVk9FcEMUhhX4FU/6hJyTFjh
+         HOqw==
+Received: by 10.60.30.70 with SMTP id q6mr17197680oeh.107.1356755679942; Fri,
+ 28 Dec 2012 20:34:39 -0800 (PST)
+Received: by 10.182.27.168 with HTTP; Fri, 28 Dec 2012 20:34:09 -0800 (PST)
+In-Reply-To: <20121229004104.GA24828@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212287>
 
-Aaron Schrab <aaron@schrab.com> writes:
+On Sat, Dec 29, 2012 at 7:41 AM, Jeff King <peff@peff.net> wrote:
+> I wonder if we could do even better, though. For a traversal, we only
+> need to look at the commit header. We could potentially do a progressive
+> inflate and stop before getting to the commit message (which is the bulk
+> of the data, and the part that is most likely to benefit from
+> compression).
 
-> When testing aliases in t/t1020-subdirectory.sh use longer names so that
-> they're less likely to conflict with a git-* command somewhere in the
-> $PATH.
-
-Thanks.
-
-In the longer term we might want to rethink the way we run the tests
-so that random $PATH the user has has less chance of interacting
-with our tests (we had a similar topic around completion output
-recently), but until that happens, I think this is a good change.
+Commit cache should solve this efficiently as it also eliminates
+parsing cost. We discussed this last time as a side topic of the
+reachability bitmap feature.
+-- 
+Duy
