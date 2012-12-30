@@ -1,153 +1,122 @@
-From: Jeff King <peff@peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [RFC] pack-objects: compression level for non-blobs
-Date: Sun, 30 Dec 2012 07:05:42 -0500
-Message-ID: <20121230120542.GA10820@sigill.intra.peff.net>
+Date: Sun, 30 Dec 2012 19:53:48 +0700
+Message-ID: <CACsJy8C4UttGKcw11do1POcHZJM7iZ2r7F3ESOqEnWL8kdz+dQ@mail.gmail.com>
 References: <1353911154-23495-1-git-send-email-b@rr-dav.id.au>
- <20121229004104.GA24828@sigill.intra.peff.net>
- <CACsJy8D_E0shqJAvZH7xqij6F4a6qUxkUPNcZL=0yX5w9bLd_g@mail.gmail.com>
- <20121229050707.GA14475@sigill.intra.peff.net>
- <CACsJy8AN3y_4wcZ_w0zz+ZAaDasRT-+h8vA_fp2j4+FL00dbLw@mail.gmail.com>
- <20121229052747.GA14928@sigill.intra.peff.net>
+ <20121229004104.GA24828@sigill.intra.peff.net> <CACsJy8D_E0shqJAvZH7xqij6F4a6qUxkUPNcZL=0yX5w9bLd_g@mail.gmail.com>
+ <20121229050707.GA14475@sigill.intra.peff.net> <CACsJy8AN3y_4wcZ_w0zz+ZAaDasRT-+h8vA_fp2j4+FL00dbLw@mail.gmail.com>
+ <20121229052747.GA14928@sigill.intra.peff.net> <20121230120542.GA10820@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: David Michael Barr <b@rr-dav.id.au>,
 	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 30 13:06:16 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 30 13:54:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpHef-0001Br-RH
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 13:06:14 +0100
+	id 1TpIPd-0006ev-MI
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 13:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253Ab2L3MFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2012 07:05:55 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39631 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753806Ab2L3MFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2012 07:05:53 -0500
-Received: (qmail 3483 invoked by uid 107); 30 Dec 2012 12:07:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 30 Dec 2012 07:07:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Dec 2012 07:05:42 -0500
-Content-Disposition: inline
-In-Reply-To: <20121229052747.GA14928@sigill.intra.peff.net>
+	id S1754511Ab2L3MyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2012 07:54:21 -0500
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:55472 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754482Ab2L3MyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2012 07:54:19 -0500
+Received: by mail-ob0-f179.google.com with SMTP id x4so10780629obh.24
+        for <git@vger.kernel.org>; Sun, 30 Dec 2012 04:54:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ao/2KUyQpks/8tjgL0fMG+z939Mygo4NxySggd49xi0=;
+        b=OTznzCGzc8KlDmVV1OL1I2MpTRu/7zaGIvwxfBqHSHlWu6dDgjnA1n/5oEkeVbM1rI
+         l5kfWpAwsqqE/SkCws8MX/b2NEHAABItxuLktGQ247kXhHzZ5ToAnycn9+TziYGUbkdL
+         uiFb3l84Tf0zG6PdSGpTOGu7LK27Tmsk5InI77EQrPlwKkJ8M8A0UdwbWvT+4z55jTNb
+         9YTbHUHd4or8TrYEMtd3zgDiT8rxyFKVXQ4A3BnzE1eX0e+xgEXlcUr3mvOpUGveEcfk
+         tFvMzbxWJXUDS/++Mwao0TmMGoScCabopTfEwPs4/aNesq79S73A8mmyEmoo/yL7f8hr
+         NrEw==
+Received: by 10.60.32.44 with SMTP id f12mr20599796oei.61.1356872058738; Sun,
+ 30 Dec 2012 04:54:18 -0800 (PST)
+Received: by 10.182.27.168 with HTTP; Sun, 30 Dec 2012 04:53:48 -0800 (PST)
+In-Reply-To: <20121230120542.GA10820@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212330>
 
-On Sat, Dec 29, 2012 at 12:27:47AM -0500, Jeff King wrote:
+On Sun, Dec 30, 2012 at 7:05 PM, Jeff King <peff@peff.net> wrote:
+> So I was thinking about this, which led to some coding, which led to
+> some benchmarking.
 
-> > If reachability bitmap is implemented, we'll have per-pack cache
-> > infrastructure ready, so less work there for commit cache.
-> 
-> True. I don't want to dissuade you from doing any commit cache work. I
-> only wanted to point out that this alternative may have merit because of
-> its simplicity (so we can use it until a caching solution exists, or
-> even after, if managing the cache has downsides).
+I like your way of thinking! May I suggest you take a new year break
+first, then "think" about reachability bitmaps ;-) 2013 will be an
+exciting year.
 
-So I was thinking about this, which led to some coding, which led to
-some benchmarking.
+> I want to clean up a few things in the code before I post it, but the
+> general idea is to have arbitrary per-pack cache files in the
+> objects/pack directory. Like this:
+>
+>   $ cd objects/pack && ls
+>   pack-a3e262f40d95fc0cc97d92797ff9988551367b75.commits
+>   pack-a3e262f40d95fc0cc97d92797ff9988551367b75.idx
+>   pack-a3e262f40d95fc0cc97d92797ff9988551367b75.pack
+>   pack-a3e262f40d95fc0cc97d92797ff9988551367b75.parents
+>   pack-a3e262f40d95fc0cc97d92797ff9988551367b75.timestamps
+>   pack-a3e262f40d95fc0cc97d92797ff9988551367b75.trees
+>
+> Each file describes the objects in the matching pack. If a new pack is
+> generated, you'd throw away the old cache files along with the old pack,
+> and generate new ones. Or not. These are totally optional, and an older
+> version of git will just ignore them. A newer version will use them if
+> they're available, and otherwise fallback to the existing code (i.e.,
+> reading the whole object from the pack). So you can generate them at
 
-I want to clean up a few things in the code before I post it, but the
-general idea is to have arbitrary per-pack cache files in the
-objects/pack directory. Like this:
+You have probably thought about this (and I don't have the source to
+check first), but we may need to version these extra files so we can
+change the format later if needed. Git versions that do not recognize
+new versions simply ignore the cahce.
 
-  $ cd objects/pack && ls
-  pack-a3e262f40d95fc0cc97d92797ff9988551367b75.commits
-  pack-a3e262f40d95fc0cc97d92797ff9988551367b75.idx
-  pack-a3e262f40d95fc0cc97d92797ff9988551367b75.pack
-  pack-a3e262f40d95fc0cc97d92797ff9988551367b75.parents
-  pack-a3e262f40d95fc0cc97d92797ff9988551367b75.timestamps
-  pack-a3e262f40d95fc0cc97d92797ff9988551367b75.trees
+> repack time, later on, or not at all. For now I have a separate command
+> that generates them based on the pack index; if this turns out to be a
+> good idea, it would probably get called as part of "repack".
 
-Each file describes the objects in the matching pack. If a new pack is
-generated, you'd throw away the old cache files along with the old pack,
-and generate new ones. Or not. These are totally optional, and an older
-version of git will just ignore them. A newer version will use them if
-they're available, and otherwise fallback to the existing code (i.e.,
-reading the whole object from the pack). So you can generate them at
-repack time, later on, or not at all. For now I have a separate command
-that generates them based on the pack index; if this turns out to be a
-good idea, it would probably get called as part of "repack".
+I'd like to make it part of index-pack, where we have nearly
+everything in memory. But let's leave it as a separate command first.
 
-Each file is a set of fixed-length records. The "commits" file contains
-the sha1 of every commit in the pack (sorted). A binary search of the
-mmap'd file gives the position of a particular commit within the list,
-and that position is used to index the parents, timestamps, and trees
-files (obviously if it is missing, then the other files are useless, but
-we already have to be able to fallback to just reading the objects
-anyway).
+> Each file is a set of fixed-length records. The "commits" file contains
+> the sha1 of every commit in the pack (sorted). A binary search of the
+> mmap'd file gives the position of a particular commit within the list,
 
-I split it out into multiple files because you can actually operate with
-a subset (though in my initial attempt, I transparently plug in at the
-parse_commit layer, which means we need all items to consider the commit
-"parsed", whether the caller actually cares or not. But in theory a
-reader could only want to ask for one item).  Making a "generation"
-cache file is an obvious next step (and because we already have
-"commits", it is only 4 bytes per commit on top of it). Reachability
-bitmaps would be another one (though due to the compression, I am not
-sure they will work with a fixed-size record design, so this may need
-some modification).
+I think we could avoid storing sha-1 in the cache with Shawn's idea
+[1]. But now I read it again I fail to see it :(
 
-Anyway, here are the numbers I came up with (appended to my earlier
-compression numbers):
+[1] http://article.gmane.org/gmane.comp.version-control.git/206485
 
-git.git:
- Pack  | Size          |  Cold Revs  |  Warm Revs  | Cold Objects | Warm Objects
--------+---------------+-------------+-------------+--------------+--------------
-  none |  56.72        | 0.68        | 0.33        |  2.45        |  1.94       
-commit |  64.61 (+13%) | 0.50 (-26%) | 0.09 (-74%) |  2.42  (-1%) |  1.69 (-13%)
-  tree |  60.68  (+6%) | 0.79 (+16%) | 0.33   (0%) |  2.23  (-8%) |  1.75  (-9%)
-  both |  68.54 (+20%) | 0.48 (-29%) | 0.08 (-75%) |  2.24  (-8%) |  1.48 (-23%)
- cache |  59.29  (+4%) | 0.57 (-16%) | 0.05 (-84%) |  2.23  (-8%) |  1.66 (-14%)
+> Of course, it does very little for the full --objects listing, where we
+> spend most of our time inflating trees. We could couple this with
+> uncompressed trees (which are not all that much bigger, since the sha1s
+> do not compress anyway). Or we could have an external tree cache, but
+> I'm not sure exactly what it would look like (this is basically
+> reinventing bits of packv4, but doing so in a way that is redundant with
+> the existing packfile, rather than replacing it).
 
-linux.git:
- Pack  | Size          |  Cold Revs  |  Warm Revs  | Cold Objects | Warm Objects
--------+---------------+-------------+-------------+--------------+--------------
-  none | 864.61        | 8.66        | 4.07        | 42.76        | 36.32       
-commit | 970.46 (+12%) | 8.87  (+2%) | 1.02 (-74%) | 42.94   (0%) | 33.43  (-7%)
-  tree | 895.37  (+3%) | 9.08  (+4%) | 4.07   (0%) | 36.01 (-15%) | 29.62 (-18%)
-  both |1001.25 (+15%) | 8.90  (+2%) | 1.03 (-74%) | 35.57 (-16%) | 26.25 (-27%)
- cache | 894.78  (+3%) | 4.88 (-43%) | 0.69 (-83%) | 38.80  (-9%) | 32.79  (-9%)
+Depending on the use case, we could just generate packv4-like cache
+for recently-used trees only. I'm not sure how tree cache impact a
+merge operation on a very large worktree (iow, a lot of trees
+referenced from HEAD to be inflated). This is something a cache can
+do, but a new pack version cannot.
 
-webkit.git:
- Pack  | Size          |  Cold Revs  |  Warm Revs  | Cold Objects | Warm Objects
--------+---------------+-------------+-------------+--------------+--------------
-  none |   3.46        | 1.61        | 1.38        | 20.46        | 18.72       
-commit |   3.54  (+2%) | 1.42 (-11%) | 0.34 (-75%) | 20.42   (0%) | 17.57  (-6%)
-  tree |   3.59  (+3%) | 1.61   (0%) | 1.39   (0%) | 16.01 (-21%) | 14.00 (-25%)
-  both |   3.67  (+6%) | 1.45 (-10%) | 0.34 (-75%) | 15.94 (-22%) | 12.91 (-31%)
- cache |   3.47   (0%) | 0.49 (-69%) | 0.14 (-90%) | 19.53  (-4%) | 17.86  (-4%)
+> Or since the point of
+> --objects is usually reachability, it may make more sense to pursue the
+> bitmap, which should be even faster still.
 
-
-So you can see that it performs even better than no-compression on the
-warm-revs case. Which makes sense, since we do not even have to touch
-the object data at all, and can do the whole traversal straight out of
-the cache. So we do not even have to memcpy the bytes around. And it
-takes up even less space (3-4% versus 12-13% on the first two repos).
-Which makes sense, because even though we are duplicating some
-information that is in the packfile, we are leaving all of the commit
-message bodies compressed.
-
-The other interesting thing is that the cold cache performance also
-improves by a lot. Again, this makes sense; we are doing the traversal
-completely out of cache, and our data is even more tightly packed in the
-cache than it is in the packfile.
-
-Of course, it does very little for the full --objects listing, where we
-spend most of our time inflating trees. We could couple this with
-uncompressed trees (which are not all that much bigger, since the sha1s
-do not compress anyway). Or we could have an external tree cache, but
-I'm not sure exactly what it would look like (this is basically
-reinventing bits of packv4, but doing so in a way that is redundant with
-the existing packfile, rather than replacing it). Or since the point of
---objects is usually reachability, it may make more sense to pursue the
-bitmap, which should be even faster still.
-
--Peff
+Yes. And if narrow clone ever comes, which needs --objects limited by
+pathspec, we could just produce extra bitmaps for frequently-used
+pathspecs and only allow narrow clone with those pathspecs.
+-- 
+Duy
