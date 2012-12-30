@@ -1,58 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/3] Move CodingGuidelines and SubmittingPatches to ./Documentation/technical
-Date: Sun, 30 Dec 2012 17:22:45 +0530
-Message-ID: <CALkWK0=FFt2qfrUop9kwDVQ1FfPm+4WY8kBBY+rtyp16QFOR_A@mail.gmail.com>
-References: <1023165134.213650.1356863340563.JavaMail.ngmail@webmail06.arcor-online.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Sun Dec 30 12:53:36 2012
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: [PATCH] gitweb: fix error in sanitize when highlight is enabled
+Date: Sun, 30 Dec 2012 13:52:53 +0200
+Message-ID: <1356868373-12721-1-git-send-email-orgads@gmail.com>
+Cc: Orgad Shaneh <orgads@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 30 13:01:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpHSR-0002Al-Ka
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 12:53:35 +0100
+	id 1TpHZp-0006bp-Ca
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 13:01:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754092Ab2L3LxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2012 06:53:07 -0500
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:61289 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753670Ab2L3LxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2012 06:53:06 -0500
-Received: by mail-oa0-f50.google.com with SMTP id n16so11013774oag.37
-        for <git@vger.kernel.org>; Sun, 30 Dec 2012 03:53:05 -0800 (PST)
+	id S1754556Ab2L3MAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2012 07:00:53 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:34022 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754547Ab2L3MAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2012 07:00:53 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so5514560wey.19
+        for <git@vger.kernel.org>; Sun, 30 Dec 2012 04:00:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Glfh3+r8p9wtm3XbdvcARrn/ahvrKh3yRn6/GdgP42M=;
-        b=AbvLlk8tEoh/WyJ0ouw8GPm3bxADkeSc6yRdVO8iJluLPIdzdI3auM8DXwhgHhiRIK
-         zZLooVyn9sv0TJnMIgfcwikL9G60Eqp/t2xr6wXi/xU01HgjBKxpEAv7LyPemq3si9ld
-         ViiucsFLB36IwcW5+NBqKVZ3gYyT6m8HgaMdmMi9+V3qVS7a1sAbbkl80ET3tyQpCcst
-         9GwbjllktmWuXorjfqACsRpOJTCuvh9cQAFo5+N4uj8N0Geeo0hRmTm2xtmP153YbnX2
-         XssxRwD5ACeriI6lpnvIcw5SxcFDVyiZlD2M5rRJbx6TmKjg1DBeMDs+XpfyW5ybXJJp
-         Ypxw==
-Received: by 10.60.28.129 with SMTP id b1mr20458462oeh.106.1356868385260; Sun,
- 30 Dec 2012 03:53:05 -0800 (PST)
-Received: by 10.76.75.198 with HTTP; Sun, 30 Dec 2012 03:52:45 -0800 (PST)
-In-Reply-To: <1023165134.213650.1356863340563.JavaMail.ngmail@webmail06.arcor-online.net>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=2tY/MVwDNeggqIsDyesx0ULIsZXNGafZRatCLvmuhlQ=;
+        b=0udOihqM/OQK4EFlIEiGhEJalU7w4555CY7R+s1bQbD+bfmNpwBLJsmO/zSCaUS4C6
+         UlbGpPGFBR7D64+m7NVYn5X/6Xe3NEfpHclAJC37bICKilhow5F+fONecsbmU0JrdMRW
+         znEYCqlXzlxZSUCtm3m5Fnc8ztBEv9pJ5Ht6fG80W/Qmk/LzosOxtGBCh02BieHha0gA
+         3XFbGz/77ms6D9yLfQOdRbXfVvJapI6u3Xelb/JbGRaCJHnsrZav5beUHq+gbZDBV1l2
+         2mb+QSVonUMygtw296rZXP4n91GJCJfLihNSICFZEnFxpnvsifVEx9zlPIAASdpgHp7m
+         2lOQ==
+X-Received: by 10.180.99.1 with SMTP id em1mr57951758wib.20.1356868387438;
+        Sun, 30 Dec 2012 03:53:07 -0800 (PST)
+Received: from localhost.localdomain (IGLD-84-228-100-27.inter.net.il. [84.228.100.27])
+        by mx.google.com with ESMTPS id ew4sm64227823wid.11.2012.12.30.03.53.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 30 Dec 2012 03:53:06 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212328>
 
-Thomas Ackermann wrote:
-> CodingGuidelines and SubmittingPatches are IMHO a little bit hidden in ./Documentation
-> and with respect to their content should be better placed in ./Documentation/technical.
+$1 becomes undef by internal regex, since it has no capture groups.
 
-I don't think SubmittingPatches and CodingGuidelines belong to
-Documentation/technical; that location is mostly reserved for API
-documentation.  Also, being prominent documents, they're probably
-linked to by many places on the internet.  I wouldn't want to
-unnecessarily break those links.
+Match against accpetable control characters using index() instead of a regex.
 
-Ram
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0f207f2..6d5aeab 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1556,7 +1556,7 @@ sub sanitize {
+ 	return undef unless defined $str;
+ 
+ 	$str = to_utf8($str);
+-	$str =~ s|([[:cntrl:]])|($1 =~ /[\t\n\r]/ ? $1 : quot_cec($1))|eg;
++	$str =~ s|([[:cntrl:]])|(index("\t\n\r", $1) != -1 ? $1 : quot_cec($1))|eg;
+ 	return $str;
+ }
+ 
+-- 
+1.7.10.4
