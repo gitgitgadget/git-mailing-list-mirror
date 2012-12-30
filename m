@@ -1,75 +1,139 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH 1/2] dir.c: Make git-status --ignored more consistent
-Date: Sun, 30 Dec 2012 15:01:22 +0000
-Message-ID: <CAOkDyE_N-fOMsrSaHKyu=M1PAN5h0JAYJ9ekN=q7skg9SOzSKg@mail.gmail.com>
-References: <20121229072249.GB15408@sigill.intra.peff.net>
-	<1356878341-12942-1-git-send-email-apelisse@gmail.com>
-	<CALWbr2w=CWkpbJhC5sjd9HnErmWj9JQnD6UUiDM91ovJ_-16vA@mail.gmail.com>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Lockless Refs?  (Was [PATCH] refs: do not use cached refs in repack_without_ref)
+Date: Sun, 30 Dec 2012 10:03:19 -0700
+Organization: CAF
+Message-ID: <201212301003.19802.mfick@codeaurora.org>
+References: <20121221080449.GA21741@sigill.intra.peff.net> <20121229081021.GC15408@sigill.intra.peff.net> <029f9379-a284-40e6-b4b9-529bd82d6e3e@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 30 16:01:48 2012
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 30 18:03:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpKOX-0000BS-Nj
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 16:01:46 +0100
+	id 1TpMId-0007Cw-Mp
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 18:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754244Ab2L3PB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2012 10:01:27 -0500
-Received: from mail-we0-f173.google.com ([74.125.82.173]:47527 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753101Ab2L3PB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2012 10:01:26 -0500
-Received: by mail-we0-f173.google.com with SMTP id z2so5541898wey.18
-        for <git@vger.kernel.org>; Sun, 30 Dec 2012 07:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=iDg1MsIp6Tf1kNNws+1MbJ2LOVuAdOpDqiRjIdanSVY=;
-        b=TMmSuQZGZIrD0Auw8zh6h2POzNGaVunwFOh7P1UtwXaU3GzyvYp+gD6kxeTfI9vjms
-         SEOnjz70lFGtDtA4fwAJ7grJpCNw2O047IiRAdw7gqxsXApwZvImH59QAOGEprCld0Xl
-         PUbQDPmYwGF89prnk+wmctTmk3p8mQl2bQFtw7GOQbXAjgh09i6LQW40B2LTWxK3lyuA
-         +AhGyTaItIrxDVC5aoy+py0RzkLds/E5M5VK6qufGHHcsFbaGFoHiKPvt+NUJ3a0nGJZ
-         G7znLhAr+S22rijcRBA81oX2WVb0iW/BsFA/BwwG4eLj/UtBQtWh0P3m33cbkl0LB0mO
-         O7/g==
-Received: by 10.194.88.98 with SMTP id bf2mr61311514wjb.49.1356879682414; Sun,
- 30 Dec 2012 07:01:22 -0800 (PST)
-Received: by 10.194.84.97 with HTTP; Sun, 30 Dec 2012 07:01:22 -0800 (PST)
-In-Reply-To: <CALWbr2w=CWkpbJhC5sjd9HnErmWj9JQnD6UUiDM91ovJ_-16vA@mail.gmail.com>
-X-Google-Sender-Auth: GJQ9baZgrWoLTtunaEgnqQWucvc
+	id S1754699Ab2L3RDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2012 12:03:22 -0500
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:52388 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753957Ab2L3RDV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2012 12:03:21 -0500
+X-IronPort-AV: E=Sophos;i="4.84,382,1355126400"; 
+   d="scan'208";a="16972456"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 30 Dec 2012 09:03:20 -0800
+Received: from mfick-laptop.localnet (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 9405C10004BE;
+	Sun, 30 Dec 2012 09:03:20 -0800 (PST)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-41-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <029f9379-a284-40e6-b4b9-529bd82d6e3e@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212336>
 
-On Sun, Dec 30, 2012 at 2:54 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
-> By the way, that merges without conflicts with Adam's series, but it
-> will not compile as he renamed functions that I'm now using
-> (path_excluded() -> is_path_excluded() that is).
+On Saturday, December 29, 2012 03:18:49 pm Martin Fick wrote:
+> Jeff King <peff@peff.net> wrote:
+> >On Thu, Dec 27, 2012 at 04:11:51PM -0700, Martin Fick 
+wrote:
+> >> My idea is based on using filenames to store sha1s
+> >> instead of file contents.  To do this, the sha1 one of
+> >> a ref would be stored in a file in a directory named
+> >> after the loose ref.  I believe this would then make
+> >> it possible to have lockless atomic ref updates by
+> >> renaming the file.
+> >> 
+> >> To more fully illustrate the idea, imagine that any
+> >> file (except for the null file) in the directory will
+> >> represent the value of the ref with its name, then the
+> >> following transitions can represent atomic state
+> >> changes to a refs
+> >
+> >> value and existence:
+> >Hmm. So basically you are relying on atomic rename() to
+> >move the value around within a directory, rather than
+> >using write to move it around within a file. Atomic
+> >rename is usually something we have on local filesystems
+> >(and I think we rely on it elsewhere). Though I would
+> >not be
+> >surprised if it is not atomic on all networked
+> >filesystems (though it is
+> >on NFS, at least).
+> 
+> Yes.  I assume this is OK because doesn't git already rely
+> on atomic renames?  For example to rename the new
+> packed-refs file to unlock it?
+> 
+> ...
+> 
+> >> 3) To create a ref, it must be renamed from the null
+> >> file (sha 0000...) to the new value just as if it were
+> >> being updated from any other value, but there is one
+> >> extra condition: before renaming the null file, a full
+> >> directory scan must be done to ensure that the null
+> >> file is the only file in the directory (this condition
+> >> exists because creating the directory and null file
+> >> cannot be atomic unless the filesystem supports atomic
+> >> directory renames, an expectation git does not
+> >> currently make).  I am not sure how this compares to
+> >> today's approach, but including the setup costs
+> >> (described below), I suspect it is slower.
+> >
+> >Hmm. mkdir is atomic. So wouldn't it be sufficient to
+> >just mkdir and create the correct sha1 file?
+> 
+> But then a process could mkdir and die leaving a stale
+> empty dir with no reliable recovery mechanism.
+> 
+> 
+> Unfortunately, I think I see another flaw though! :( I
+> should have known that I cannot separate an important
+> check from its state transitioning action.  The following
+> could happen:
+> 
+>  A does mkdir
+>  A creates null file
+>  A checks dir -> no other files
+>  B checks dir -> no other files
+>  A renames null file to abcd
+>  C creates second null file
+>  B renames second null file to defg
+> 
+> One way to fix this is to rely on directory renames, but I
+> believe this is something git does not want to require of
+> every FS? If we did, we could Change #3 to be:
+> 
+> 3) To create a ref, it must be renamed from the null file
+> (sha 0000...) to the new value just as if it were being
+> updated from any other value. (No more scan)
+> 
+> Then, with reliable directory renames, a process could do
+> what you suggested to a temporary directory, mkdir +
+> create null file, then rename the temporary dir to
+> refname.  This would prevent duplicate null files.  With
+> a grace period, the temporary dirs could be cleaned up in
+> case a process dies before the rename.  This is your
+> approach with reliable recovery.
 
-Ah, renames!  I forgot about those.
+The whole null file can go away if we use directory renames.  
+Make #3:
 
-> By the way, Junio, how do you handle this situation as a maintainer ?
-> Do you keep a note to manually make the change every time you remerge
-> the series together ? That is the kind of use-case you can't handle
-> with git-rerere, and I've been trying to find a solution to it.
+3) To create a ref, create a temporary directory containing a 
+file named after the sha1 of the ref to be created and rename 
+the directory to the name of the ref to create.  If the 
+rename fails, the create fails.  If the rename succeeds, the 
+create succeeds.
 
-Not sure if it helps to note that I am already basing my patch series
-on top of Junio's nd/attr-match-optim-more branch.  Nguyen created
-that branch which conflicted with mine, but then resolved the conflicts,
-so I am basing mine on his to avoid having to continually resolve the
-same conflicts.
+With a grace period, the temporary dirs could be cleaned up 
+in case a process dies before the rename,
 
-So you could take the same approach and rebase yours on top of mine,
-e.g.
-
-    git remote add junio git://github.com/gitster/git.git
-    git fetch junio
-    git rebase junio/as/check-ignore
+-Martin
