@@ -1,91 +1,75 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH 0/3] Move CodingGuidelines and SubmittingPatches to
- ./Documentation/technical
-Date: Sun, 30 Dec 2012 15:56:33 +0100 (CET)
-Message-ID: <1965427282.405137.1356879393533.JavaMail.ngmail@webmail18.arcor-online.net>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH 1/2] dir.c: Make git-status --ignored more consistent
+Date: Sun, 30 Dec 2012 15:01:22 +0000
+Message-ID: <CAOkDyE_N-fOMsrSaHKyu=M1PAN5h0JAYJ9ekN=q7skg9SOzSKg@mail.gmail.com>
+References: <20121229072249.GB15408@sigill.intra.peff.net>
+	<1356878341-12942-1-git-send-email-apelisse@gmail.com>
+	<CALWbr2w=CWkpbJhC5sjd9HnErmWj9JQnD6UUiDM91ovJ_-16vA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: artagnon@gmail.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Sun Dec 30 15:56:58 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 30 16:01:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpKJp-0005Gh-Uc
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 15:56:54 +0100
+	id 1TpKOX-0000BS-Nj
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 16:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643Ab2L3O4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2012 09:56:36 -0500
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:53665 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753101Ab2L3O4e (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Dec 2012 09:56:34 -0500
-Received: from mail-in-15-z2.arcor-online.net (mail-in-15-z2.arcor-online.net [151.189.8.32])
-	by mx.arcor.de (Postfix) with ESMTP id 83440306E9;
-	Sun, 30 Dec 2012 15:56:33 +0100 (CET)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-15-z2.arcor-online.net (Postfix) with ESMTP id 7FD3733F5C1;
-	Sun, 30 Dec 2012 15:56:33 +0100 (CET)
-Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 7A55D197AC0;
-	Sun, 30 Dec 2012 15:56:33 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 7A55D197AC0
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1356879393; bh=Adj3Ltwc24Kwm7ZAY6zOcGYMATnt8AEui2vCE6OFbtw=;
-	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=r5PoSkoVRNRAGWFvMtNuBoqdqlOKrDoWwiVGkctU7+x+ZI7/T7aXa/DK7xG0RwyUd
-	 et1SG64dFhvnJP4RmNGxctG5dhvFIZOxwzw1yAcHgEA1uFfUSXLi3xVUyLmxFT+VA2
-	 88dJGgUTJ5zEMyq4RAM+yY0vCwkKVzk/h9SoQQsc=
-Received: from [188.98.241.53] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Sun, 30 Dec 2012 15:56:33 +0100 (CET)
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.98.241.53
+	id S1754244Ab2L3PB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2012 10:01:27 -0500
+Received: from mail-we0-f173.google.com ([74.125.82.173]:47527 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753101Ab2L3PB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2012 10:01:26 -0500
+Received: by mail-we0-f173.google.com with SMTP id z2so5541898wey.18
+        for <git@vger.kernel.org>; Sun, 30 Dec 2012 07:01:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=iDg1MsIp6Tf1kNNws+1MbJ2LOVuAdOpDqiRjIdanSVY=;
+        b=TMmSuQZGZIrD0Auw8zh6h2POzNGaVunwFOh7P1UtwXaU3GzyvYp+gD6kxeTfI9vjms
+         SEOnjz70lFGtDtA4fwAJ7grJpCNw2O047IiRAdw7gqxsXApwZvImH59QAOGEprCld0Xl
+         PUbQDPmYwGF89prnk+wmctTmk3p8mQl2bQFtw7GOQbXAjgh09i6LQW40B2LTWxK3lyuA
+         +AhGyTaItIrxDVC5aoy+py0RzkLds/E5M5VK6qufGHHcsFbaGFoHiKPvt+NUJ3a0nGJZ
+         G7znLhAr+S22rijcRBA81oX2WVb0iW/BsFA/BwwG4eLj/UtBQtWh0P3m33cbkl0LB0mO
+         O7/g==
+Received: by 10.194.88.98 with SMTP id bf2mr61311514wjb.49.1356879682414; Sun,
+ 30 Dec 2012 07:01:22 -0800 (PST)
+Received: by 10.194.84.97 with HTTP; Sun, 30 Dec 2012 07:01:22 -0800 (PST)
+In-Reply-To: <CALWbr2w=CWkpbJhC5sjd9HnErmWj9JQnD6UUiDM91ovJ_-16vA@mail.gmail.com>
+X-Google-Sender-Auth: GJQ9baZgrWoLTtunaEgnqQWucvc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212335>
 
- 
-./Documentation/technical contains not only API documentation but also
-several other documents describing Git implementation topics and thus
-is the place someone wanting to join Git development should look at.
-So IMHO CodingGuidelines and SubmittingPatches should also be there.
-(One could even consider renaming ./technical to ./internal to stress this point
-and get rid of the rather generic "technical" ...)
+On Sun, Dec 30, 2012 at 2:54 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> By the way, that merges without conflicts with Adam's series, but it
+> will not compile as he renamed functions that I'm now using
+> (path_excluded() -> is_path_excluded() that is).
 
-In contrast ./howto implies containing documents a Git *user* might 
-need to solve some tricky problems (and to this end maintain-git.txt
-and new-command.txt should also be moved to ./technical (sorry for
-being the guy who just moved ./technical/api-command to 
-./howto/new-command.txt ;-)).
+Ah, renames!  I forgot about those.
 
-./Documentation itself should only contain the command manpages
-and tutorials.
+> By the way, Junio, how do you handle this situation as a maintainer ?
+> Do you keep a note to manually make the change every time you remerge
+> the series together ? That is the kind of use-case you can't handle
+> with git-rerere, and I've been trying to find a solution to it.
 
------ Original Nachricht ----
-Von:     Ramkumar Ramachandra <artagnon@gmail.com>
-An:      Thomas Ackermann <th.acker@arcor.de>
-Datum:   30.12.2012 12:52
-Betreff: Re: [PATCH 0/3] Move CodingGuidelines and SubmittingPatches to ./Documentation/technical
+Not sure if it helps to note that I am already basing my patch series
+on top of Junio's nd/attr-match-optim-more branch.  Nguyen created
+that branch which conflicted with mine, but then resolved the conflicts,
+so I am basing mine on his to avoid having to continually resolve the
+same conflicts.
 
-> Thomas Ackermann wrote:
-> > CodingGuidelines and SubmittingPatches are IMHO a little bit hidden in
-> ./Documentation
-> > and with respect to their content should be better placed in
-> ./Documentation/technical.
-> 
-> I don't think SubmittingPatches and CodingGuidelines belong to
-> Documentation/technical; that location is mostly reserved for API
-> documentation.  Also, being prominent documents, they're probably
-> linked to by many places on the internet.  I wouldn't want to
-> unnecessarily break those links.
-> 
-> Ram
-> 
+So you could take the same approach and rebase yours on top of mine,
+e.g.
 
----
-Thomas
+    git remote add junio git://github.com/gitster/git.git
+    git fetch junio
+    git rebase junio/as/check-ignore
