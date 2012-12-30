@@ -1,139 +1,83 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Lockless Refs?  (Was [PATCH] refs: do not use cached refs in repack_without_ref)
-Date: Sun, 30 Dec 2012 10:03:19 -0700
-Organization: CAF
-Message-ID: <201212301003.19802.mfick@codeaurora.org>
-References: <20121221080449.GA21741@sigill.intra.peff.net> <20121229081021.GC15408@sigill.intra.peff.net> <029f9379-a284-40e6-b4b9-529bd82d6e3e@email.android.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 30 18:03:49 2012
+From: Jason Holden <jason.k.holden.swdev@gmail.com>
+Subject: [PATCH 2/2] Provide better guidance for submitting patches against git-gui, gitk
+Date: Sun, 30 Dec 2012 13:18:55 -0500
+Message-ID: <1356891535-5647-3-git-send-email-jason.k.holden.swdev@gmail.com>
+References: <1356891535-5647-1-git-send-email-jason.k.holden.swdev@gmail.com>
+Cc: gitster@pobox.com, paulus@samba.org,
+	patthoyts@users.sourceforge.net,
+	Jason Holden <jason.k.holden.swdev@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 30 19:20:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpMId-0007Cw-Mp
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 18:03:48 +0100
+	id 1TpNUe-0008Ru-R3
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Dec 2012 19:20:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754699Ab2L3RDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2012 12:03:22 -0500
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:52388 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753957Ab2L3RDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2012 12:03:21 -0500
-X-IronPort-AV: E=Sophos;i="4.84,382,1355126400"; 
-   d="scan'208";a="16972456"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 30 Dec 2012 09:03:20 -0800
-Received: from mfick-laptop.localnet (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 9405C10004BE;
-	Sun, 30 Dec 2012 09:03:20 -0800 (PST)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-41-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <029f9379-a284-40e6-b4b9-529bd82d6e3e@email.android.com>
+	id S1754756Ab2L3STw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2012 13:19:52 -0500
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:41941 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754708Ab2L3STu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2012 13:19:50 -0500
+Received: by mail-vc0-f176.google.com with SMTP id fo13so12235021vcb.35
+        for <git@vger.kernel.org>; Sun, 30 Dec 2012 10:19:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=4Zb2/shzXWgwZR4foO3Yk6kEW4jAkTUGnPQH8iZvZ18=;
+        b=uU+F7RQkgeu38X3ylg0ASGUjLRfgiXuROLxHBO2f2BiUtU4IHMiXU3E3TEEWshP3iF
+         SYDcXTCNQNnQHJGB8Bcfp3OzSqnceTTjHf/RK1Wm/HpQQgAAGuHBIMb7PDQkJo2CUeYn
+         MpTWINx9P3dVtuf2vvNW2+Pta1SZLhauMGslWLHHGTqkZb+jCll6YHOwgTrwZUuSBsSH
+         Cj9vDaYCVxAUdvpcA7EWtYrC7ygccgwlESoSEk/iMu7j66tNpWYh5DGu3Mvp3Qb01UJ/
+         SfNT4njV5yGQA/0hpyNGpvFUkRMPIfw6pZ2hPTMx2uTdw/mVittgnV2Duw4YHRiLUXUx
+         xlDA==
+X-Received: by 10.58.168.135 with SMTP id zw7mr61546756veb.4.1356891589813;
+        Sun, 30 Dec 2012 10:19:49 -0800 (PST)
+Received: from rowblue.hsd1.nh.comcast.net (c-75-69-185-21.hsd1.nh.comcast.net. [75.69.185.21])
+        by mx.google.com with ESMTPS id a10sm34079005vez.10.2012.12.30.10.19.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 30 Dec 2012 10:19:49 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc3.28.g0ab5d1f
+In-Reply-To: <1356891535-5647-1-git-send-email-jason.k.holden.swdev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212337>
 
-On Saturday, December 29, 2012 03:18:49 pm Martin Fick wrote:
-> Jeff King <peff@peff.net> wrote:
-> >On Thu, Dec 27, 2012 at 04:11:51PM -0700, Martin Fick 
-wrote:
-> >> My idea is based on using filenames to store sha1s
-> >> instead of file contents.  To do this, the sha1 one of
-> >> a ref would be stored in a file in a directory named
-> >> after the loose ref.  I believe this would then make
-> >> it possible to have lockless atomic ref updates by
-> >> renaming the file.
-> >> 
-> >> To more fully illustrate the idea, imagine that any
-> >> file (except for the null file) in the directory will
-> >> represent the value of the ref with its name, then the
-> >> following transitions can represent atomic state
-> >> changes to a refs
-> >
-> >> value and existence:
-> >Hmm. So basically you are relying on atomic rename() to
-> >move the value around within a directory, rather than
-> >using write to move it around within a file. Atomic
-> >rename is usually something we have on local filesystems
-> >(and I think we rely on it elsewhere). Though I would
-> >not be
-> >surprised if it is not atomic on all networked
-> >filesystems (though it is
-> >on NFS, at least).
-> 
-> Yes.  I assume this is OK because doesn't git already rely
-> on atomic renames?  For example to rename the new
-> packed-refs file to unlock it?
-> 
-> ...
-> 
-> >> 3) To create a ref, it must be renamed from the null
-> >> file (sha 0000...) to the new value just as if it were
-> >> being updated from any other value, but there is one
-> >> extra condition: before renaming the null file, a full
-> >> directory scan must be done to ensure that the null
-> >> file is the only file in the directory (this condition
-> >> exists because creating the directory and null file
-> >> cannot be atomic unless the filesystem supports atomic
-> >> directory renames, an expectation git does not
-> >> currently make).  I am not sure how this compares to
-> >> today's approach, but including the setup costs
-> >> (described below), I suspect it is slower.
-> >
-> >Hmm. mkdir is atomic. So wouldn't it be sufficient to
-> >just mkdir and create the correct sha1 file?
-> 
-> But then a process could mkdir and die leaving a stale
-> empty dir with no reliable recovery mechanism.
-> 
-> 
-> Unfortunately, I think I see another flaw though! :( I
-> should have known that I cannot separate an important
-> check from its state transitioning action.  The following
-> could happen:
-> 
->  A does mkdir
->  A creates null file
->  A checks dir -> no other files
->  B checks dir -> no other files
->  A renames null file to abcd
->  C creates second null file
->  B renames second null file to defg
-> 
-> One way to fix this is to rely on directory renames, but I
-> believe this is something git does not want to require of
-> every FS? If we did, we could Change #3 to be:
-> 
-> 3) To create a ref, it must be renamed from the null file
-> (sha 0000...) to the new value just as if it were being
-> updated from any other value. (No more scan)
-> 
-> Then, with reliable directory renames, a process could do
-> what you suggested to a temporary directory, mkdir +
-> create null file, then rename the temporary dir to
-> refname.  This would prevent duplicate null files.  With
-> a grace period, the temporary dirs could be cleaned up in
-> case a process dies before the rename.  This is your
-> approach with reliable recovery.
+git-gui and gitk are maintained upstream of git.  Document this, and the
+procedure for submitting patches to these tools
 
-The whole null file can go away if we use directory renames.  
-Make #3:
+Signed-off-by: Jason Holden <jason.k.holden.swdev@gmail.com>
+---
+ Documentation/SubmittingPatches | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-3) To create a ref, create a temporary directory containing a 
-file named after the sha1 of the ref to be created and rename 
-the directory to the name of the ref to create.  If the 
-rename fails, the create fails.  If the rename succeeds, the 
-create succeeds.
-
-With a grace period, the temporary dirs could be cleaned up 
-in case a process dies before the rename,
-
--Martin
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 75935d5..b82d426 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -58,6 +58,17 @@ Checklist (and a short version for the impatient):
+ 	  please test it first by sending email to yourself.
+ 	- see below for instructions specific to your mailer
+ 
++	Improving the GUI's
++	- gitk and git-gui are maintained upstream of Git despite being 
++	  included in Git's git repository
++	- Patches should be made against the upstream gui repository, 
++	  and not against the version in Git's git repository
++	- The resulting patch should still be emailed for review
++	  to the git mailing list (git@vger.kernel.org), cc'ing the 
++	  applicable gui maintainer
++	- Please see the MAINTAINER's file for the gui maintainer's contact 
++	  information and canonical repository location
++
+ Long version:
+ 
+ I started reading over the SubmittingPatches document for Linux
+-- 
+1.8.1.rc3.28.g0ab5d1f
