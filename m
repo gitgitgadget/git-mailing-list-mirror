@@ -1,188 +1,98 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Lockless Refs?  (Was [PATCH] refs: do not use cached refs in repack_without_ref)
-Date: Mon, 31 Dec 2012 03:30:53 -0700
-Organization: CAF
-Message-ID: <201212310330.53835.mfick@codeaurora.org>
-References: <20121221080449.GA21741@sigill.intra.peff.net> <50DAB447.8000101@alum.mit.edu> <201212271611.52203.mfick@codeaurora.org>
+From: =?ISO-8859-1?Q?Gr=E9gory_Pakosz?= <gpakosz@visionobjects.com>
+Subject: git filter-branch doesn't dereference annotated tags
+Date: Mon, 31 Dec 2012 15:36:16 +0100
+Message-ID: <CAC_01E3a5Bwb-KjJs+wvb6rO_A1OyDrzBRRetC0tPxUADMhYrQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Shawn Pearce <sop@google.com>
-X-From: git-owner@vger.kernel.org Mon Dec 31 11:31:14 2012
+Content-Type: multipart/mixed; boundary=bcaec53aedb4c4a2bf04d226f0ec
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 31 15:52:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpceH-0003Fn-N2
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Dec 2012 11:31:14 +0100
+	id 1Tpgit-0000qB-GH
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Dec 2012 15:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211Ab2LaKa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2012 05:30:56 -0500
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:26482 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075Ab2LaKay (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2012 05:30:54 -0500
-X-IronPort-AV: E=Sophos;i="4.84,385,1355126400"; 
-   d="scan'208";a="17024822"
-Received: from pdmz-ns-snip_115_219.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.115.219])
-  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 31 Dec 2012 02:30:54 -0800
-Received: from mfick-laptop.localnet (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id E482510004BE;
-	Mon, 31 Dec 2012 02:30:53 -0800 (PST)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-41-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <201212271611.52203.mfick@codeaurora.org>
+	id S1751283Ab2LaOv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2012 09:51:56 -0500
+Received: from mail.elysmail.net ([188.165.34.231]:50982 "EHLO elysmail.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751235Ab2LaOvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2012 09:51:54 -0500
+X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Dec 2012 09:51:54 EST
+DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns;
+        d=visionobjects.com; s=vo2010objects;
+        h=received:received:received:mime-version:received:from:date
+          :message-id:subject:to:content-type:x-declude-sender
+          :x-declude-spoolname:x-declude-refid:x-declude-note
+          :x-declude-scan:x-declude-tests:x-country-chain:x-declude-code
+          :x-helo:x-identity;
+        b=X0L6Ypbz+0Y/pQsPf+3jHlPEV0ZU0gvB1vbVW0/kj7fvM8ACXiG9pH9l8DdDHyZVW
+          pRz3L4SUmKPx58enthKfx/VSB0zOIrkSira1aSyv4MTem6rTGnc2lJ3ht0Yvq/jkv
+          5RR7i4MaG5/92c3A7cLBHiPZh+GVY71ThwvNLR8d0=
+Received: from mail-vb0-f46.google.com (mail-vb0-f46.google.com [209.85.212.46]) by elysmail.net with SMTP;
+   Mon, 31 Dec 2012 15:36:36 +0100
+Received: by mail-vb0-f46.google.com with SMTP id b13so12572991vby.19
+        for <git@vger.kernel.org>; Mon, 31 Dec 2012 06:36:36 -0800 (PST)
+Received: by 10.52.156.40 with SMTP id wb8mr56034920vdb.39.1356964596851; Mon,
+ 31 Dec 2012 06:36:36 -0800 (PST)
+Received: by 10.52.65.233 with HTTP; Mon, 31 Dec 2012 06:36:16 -0800 (PST)
+X-Declude-Sender: gpakosz@visionobjects.com [209.85.212.46]
+X-Declude-Spoolname: 21157105.eml
+X-Declude-RefID: 
+X-Declude-Note: Scanned by Declude 4.10.59 "http://www.declude.com/x-note.htm"
+X-Declude-Scan: Outgoing Score [0] at 15:36:39 on 31 Dec 2012
+X-Declude-Tests: Whitelisted
+X-Country-Chain: 
+X-Declude-Code: 0
+X-HELO: mail-vb0-f46.google.com
+X-Identity: 209.85.212.46 |  | vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212352>
 
-On Thursday, December 27, 2012 04:11:51 pm Martin Fick wrote:
-> It concerns me that git uses any locking at all, even for
-> refs since it has the potential to leave around stale
-> locks.
-> ...
-> [a previous not so great attempt to fix this]
-> ...
+--bcaec53aedb4c4a2bf04d226f0ec
+Content-Type: text/plain; charset=ISO-8859-1
 
-I may have finally figured out a working loose ref update 
-mechanism which I think can avoid stale locks.  Unfortunately 
-it requires atomic directory renames and universally unique 
-identifiers (uuids).  These may be no-go criteria?  But I 
-figure it is worth at least exploring this idea because of the 
-potential benefits?
+Hello,
 
-The general approach is to setup a transaction and either 
-commit or abort it.  A transaction can be setup by renaming 
-an appropriately setup directory to the "ref.lock" name.  If 
-the rename succeeds, the transaction is begun.  Any actor can 
-abort the transaction (up until it is committed) by simply 
-deleting the "ref.lock" directory, so it is not at risk of 
-going stale.  However, once the actor who sets up the 
-transaction commits it, deleting the "ref.lock" directory 
-simply aids in cleaning it up for the next transaction 
-(instead of aborting it).
+I noticed git-filter-branch doesn't dereference annotated tags prior
+to invoking git update-ref -d.
 
-One important piece of the transaction is the use of uuids.  
-The uuids provide a mechanism to tie the atomic commit pieces 
-to the transactions and thus to prevent long sleeping process 
-from inadvertently performing actions which could be out of 
-date when they wake finally up.  In each case, the atomic 
-commit piece is the renaming of a file.   For the create and 
-update pieces, a file is renamed from the "ref.lock" dir to 
-the "ref" file resulting in an update to the sha for the ref.  
-However, in the delete case, the "ref" file is instead renamed 
-to end up in the "ref.lock" directory resulting in a delete 
-of the ref.  This scheme does not affect the way refs are read 
-today,
+Please find a patch attached that changes the call to git update-ref:
 
-To prepare for a transaction, an actor first generates a uuid 
-(an exercise I will delay for now).  Next, a tmp directory 
-named after the uuid is generated in the parent directory for 
-the ref to be updated, perhaps something like:  ".lock_uuid".  
-In this directory is places either a file or a directory named 
-after the uuid, something like: ".lock_uuid/,uuid".  In the 
-case of a create or an update, the new sha is written to this 
-file.  In the case of a delete, it is a directory.  
+-git update-ref -m "filter-branch: delete" -d "$ref" $sha1
++git update-ref -m "filter-branch: delete" -d $(git rev-parse --verify
+"$ref^{commit}") $sha1
 
-Once the tmp directory is setup, the initiating actor 
-attempts to start the transaction by renaming the tmp 
-directory to "ref.lock".  If the rename fails, the update 
-fails. If the rename succeeds, the actor can then attempt to 
-commit the transaction (before another actor aborts it). 
+Regards,
+Gregory
 
-In the case of a create, the actor verifies that "ref" does 
-not currently exist, and then renames the now named 
-"ref.lock/uuid" file to "ref". On success, the ref was 
-created.
+--bcaec53aedb4c4a2bf04d226f0ec
+Content-Type: application/octet-stream; 
+	name="0001-git-filter-branch-Dereference-annotated-tags-upon-de.patch"
+Content-Disposition: attachment; 
+	filename="0001-git-filter-branch-Dereference-annotated-tags-upon-de.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_hbdpm83f0
 
-In the case of an update, the actor verifies that "ref" 
-currently contains the old sha, and then also renames the now 
-named "ref.lock/uuid" file to "ref". On success, the ref was 
-updated.
-
-In the case of a delete, the actor may verify that "ref" 
-currently contains the sha to "prune" if it needs to, and 
-then renames the "ref" file to "ref.lock/uuid/delete". On 
-success, the ref was deleted.
-
-Whether successful or not, the actor may now simply delete 
-the "ref.lock" directory, clearing the way for a new 
-transaction.  Any other actor may delete this directory at 
-any time also, likely either on conflict (if they are 
-attempting to initiate a transaction), or after a grace 
-period just to cleanup the FS.  Any actor may also safely 
-cleanup the tmp directories, preferably also after a grace 
-period.
-
-One neat part about this scheme is that I believe it would be 
-backwards compatible with the current locking mechanism since 
-the transaction directory will simply appear to be a lock to 
-older clients.  And the old lock file should continue to lock 
-out these newer transactions.
-
-Due to this backwards compatibility, I believe that this 
-could be incrementally employed today without affecting very 
-much.  It could be deployed in place of any updates which 
-only hold ref.locks to update the loose ref.  So for example 
-I think it could replace step 4a below from Michael 
-Haggerty's description of today's loose ref pruning during 
-ref packing:
-
-> * Pack references:
-...
-> 4. prune_refs(): for each ref in the ref_to_prune list,
-> call  prune_ref():
->
->     a. Lock the reference using lock_ref_sha1(), 
->     verifying that the recorded SHA1 is still valid.  If it
->     is, unlink the loose reference file then free the lock;
->     otherwise leave the loose reference file untouched.
-
-I think it would also therefore be able to replace the loose 
-ref locking in Michael's new ref-packing scheme as well as 
-the locking in Michael's new ref deletion scheme (again steps 
-4):
-
-> * Delete reference foo:
-...
->   4. Delete loose ref for "foo":
-> 
->      a. Acquire the lock $GIT_DIR/refs/heads/foo.lock
-> 
->      b. Unlink $GIT_DIR/refs/heads/foo if it is unchanged.
->  If it is changed, leave it untouched.  If it is deleted,
-> that is OK too.
-> 
->      c. Release lock $GIT_DIR/refs/heads/foo.lock
-
-...
-> * Pack references:
-...
->   4. prune_refs(): for each ref in the ref_to_prune list,
-> call prune_ref():
-> 
->      a. Lock the loose reference using lock_ref_sha1(),
-> verifying that the recorded SHA1 is still valid
-> 
->      b. If it is, unlink the loose reference file
-> (otherwise, leave it untouched)
-> 
->      c. Release the lock on the loose reference
-
-To be honest, I suspect I missed something obvious because 
-this seems almost too simple to work.  I am ashamed that it 
-took me so long to come up with (of course, I will be even 
-more ashamed :( when it is shown to be flawed!)  This scheme 
-also feels extensible. if there are no obvious flaws in it, I 
-will try to post solutions for ref packing and for multiple 
-repository/ref transactions also soon.
-
-I welcome any comments/criticisms,
-
--Martin
+RnJvbSBjZWU1NDYyZjI2YmJiMjgwZjQ3MWJhMTIyMDM5ODkyNGJmZDRiZmQ3IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBHcmVnb3J5IFBha29zeiA8Z3Bha29zekB2aXNpb25vYmplY3Rz
+LmNvbT4KRGF0ZTogTW9uLCAzMSBEZWMgMjAxMiAxNTozMDozNiArMDEwMApTdWJqZWN0OiBbUEFU
+Q0hdIGdpdC1maWx0ZXItYnJhbmNoOiBEZXJlZmVyZW5jZSBhbm5vdGF0ZWQgdGFncyB1cG9uIGRl
+bGV0aW9uCgpnaXQtZmlsdGVyLWJyYW5jaCBkaWRuJ3QgZGVyZWZlcmVuY2UgYW5ub3RhdGVkIHRh
+Z3MgdXBvbiBkZWxldGlvbiB3aGljaCBtYWRlCmdpdC11cGRhdGUtcmVmIC1kIHVuaGFwcHkuCi0t
+LQogZ2l0LWZpbHRlci1icmFuY2guc2ggfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRp
+b24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9naXQtZmlsdGVyLWJyYW5jaC5zaCBi
+L2dpdC1maWx0ZXItYnJhbmNoLnNoCmluZGV4IDUzMTQyNDkuLjc3M2E5MWIgMTAwNzU1Ci0tLSBh
+L2dpdC1maWx0ZXItYnJhbmNoLnNoCisrKyBiL2dpdC1maWx0ZXItYnJhbmNoLnNoCkBAIC0zODMs
+NyArMzgzLDcgQEAgZG8KIAljYXNlICIkcmV3cml0dGVuIiBpbgogCScnKQogCQllY2hvICJSZWYg
+JyRyZWYnIHdhcyBkZWxldGVkIgotCQlnaXQgdXBkYXRlLXJlZiAtbSAiZmlsdGVyLWJyYW5jaDog
+ZGVsZXRlIiAtZCAiJHJlZiIgJHNoYTEgfHwKKwkJZ2l0IHVwZGF0ZS1yZWYgLW0gImZpbHRlci1i
+cmFuY2g6IGRlbGV0ZSIgLWQgJChnaXQgcmV2LXBhcnNlIC0tdmVyaWZ5ICIkcmVmXntjb21taXR9
+IikgJHNoYTEgfHwKIAkJCWRpZSAiQ291bGQgbm90IGRlbGV0ZSAkcmVmIgogCTs7CiAJJF94NDAp
+Ci0tIAoxLjguMC4xCgo=
+--bcaec53aedb4c4a2bf04d226f0ec--
