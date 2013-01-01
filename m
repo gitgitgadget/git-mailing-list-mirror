@@ -1,79 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git fetch --all --tags doesn't fetch remote branches, only
- tags
-Date: Mon, 31 Dec 2012 17:15:03 -0800
-Message-ID: <7vbod9d7qg.fsf@alter.siamese.dyndns.org>
-References: <50E2311D.8080707@gmail.com>
+From: greened@obbligato.org
+Subject: Re: [PATCH] Add --unannotate option to git-subtree
+Date: Mon, 31 Dec 2012 19:15:23 -0600
+Message-ID: <87a9st4sb8.fsf@waller.obbligato.org>
+References: <CABVa4NinSighUn7GKbzMx9qZj3Ao2dCtEZxUqCPwO9TocZ8Kkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Dennis Heidsiek <dennis.heidsiek@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 01 02:15:44 2013
+To: James Nylen <jnylen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 01 02:16:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpqSC-000751-HT
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 02:15:40 +0100
+	id 1TpqSq-0007X0-QH
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 02:16:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294Ab3AABPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2012 20:15:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50224 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750876Ab3AABPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2012 20:15:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C862A5AE;
-	Mon, 31 Dec 2012 20:15:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LaxqDyEXwA2KxQGRu9de7QdTrAk=; b=gdtAF/
-	nYKNlCk8xvUY7FmGA6iW+ETZFqqzgnEWWeH5MEliMt1U82b+33nw6/KC39YKvKQ6
-	udG3kaLWzOt3ecPtSiMNEGK+h3ID2Mpev2AZf8mZkgmKBO3Ax5BhdSV2KpuoLKHb
-	afzYgkK6uzncNEeQMqQz+qJNFzTATQyALyNgM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QCcLkHPKXiomqd41AUnotgZjSxhWTd6E
-	gigKsscd/H8BHt4OXH1QKusBWY5AAqldncOvznFetNDu9ETmduO54DtpNGWDUHhH
-	DRD+Ta/8x6NnjRavDaJ0NGLgBt1dSs/YE2dDs75SENzWkvKZTkiKrsDQ9S9T3hSS
-	hR9XuJaF7PQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2E48A5AD;
-	Mon, 31 Dec 2012 20:15:06 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6FF42A5AB; Mon, 31 Dec 2012
- 20:15:06 -0500 (EST)
-In-Reply-To: <50E2311D.8080707@gmail.com> (Dennis Heidsiek's message of "Tue,
- 01 Jan 2013 01:43:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD7ED912-53B0-11E2-9A98-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751256Ab3AABQC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2012 20:16:02 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:48226 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750876Ab3AABQB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2012 20:16:01 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <greened@obbligato.org>)
+	id 1TpqZa-0005KO-Ra; Mon, 31 Dec 2012 19:23:19 -0600
+In-Reply-To: <CABVa4NinSighUn7GKbzMx9qZj3Ao2dCtEZxUqCPwO9TocZ8Kkg@mail.gmail.com>
+	(James Nylen's message of "Tue, 9 Oct 2012 16:26:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  James Nylen <jnylen@gmail.com> writes: > Rather than adding
+    a marker to each commit when splitting out the > commits back to the subproject,
+    --unannotate removes the specified > string (or bash glob pattern) from the
+    beginning of the first line of > the commit message. This enables the following
+    workflow: [...] 
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed thro 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212375>
 
-Dennis Heidsiek <dennis.heidsiek@gmail.com> writes:
+James Nylen <jnylen@gmail.com> writes:
 
-> i think there may be a bug in the fetch command: The command
->
->> $ git fetch --all --tags
->> Fetching origin
->
-> doesn’t fetch new commits from origin/master, while i see via the
-> web browser of my remote repository that they exist.
+> Rather than adding a marker to each commit when splitting out the
+> commits back to the subproject, --unannotate removes the specified
+> string (or bash glob pattern) from the beginning of the first line of
+> the commit message.  This enables the following workflow:
 
-The "--all" option asks to fetch from all remotes, and "--tags"
-option asks to disable the configured fetch refspecs and instead
-grab only the tags.  It appears that what you observed is exactly
-what should happen and in line with the documentation:
+I applied the patch to my working copy but it doesn't seem to do
+what I'd expect.  The test script does something like this:
 
-$ git help fetch | sed -ne '/^ .*-t.*--tags/,/^$/p'
- -t, --tags
-     This is a short-hand for giving "refs/tags/:refs/tags/" refspec
-     from the command line, to ask all tags to be fetched and stored
-     locally. Because this acts as an explicit refspec, the default
-     refspecs (configured with the remote.$name.fetch variable) are
-     overridden and not used.
+- create project A
+- add file to project A with message "subproj: add F1"
+- add file to project A with message "subproj: add F2"
+- add project A as a subtree of project B under directory subdir
+- add a file to subdir with message "subproj: add F3"
+- do a split --unannotate="subproj:"
+
+I expected to see a log with no mention of "subproj" anywhere.  Instead
+I get:
+
+add F3
+subproj: add F2
+subproj: add F1
+
+Is this as you intend?  Is --unannotate only supposed to strip the
+string for commits added when A was a subtree of B?
+
+I guess this behavior makes sense in that the user would want to
+see the same commits that existed before A became a subproject.
+
+                   -David
