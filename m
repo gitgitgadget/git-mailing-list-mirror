@@ -1,7 +1,7 @@
 From: "David A. Greene" <greened@obbligato.org>
-Subject: [PATCH 8/8] Fix Documentation Typo
-Date: Mon, 31 Dec 2012 21:57:35 -0600
-Message-ID: <1357012655-24974-9-git-send-email-greened@obbligato.org>
+Subject: [PATCH 7/8] Ignore git-subtree
+Date: Mon, 31 Dec 2012 21:57:34 -0600
+Message-ID: <1357012655-24974-8-git-send-email-greened@obbligato.org>
 References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
 Cc: Michael Schubert <mschub@elegosoft.com>,
 	"David A. Greene" <greened@obbligato.org>
@@ -12,20 +12,20 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tpt0E-00006e-BP
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 04:58:58 +0100
+	id 1Tpt0E-00006e-Rd
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 04:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932Ab3AAD6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2012 22:58:33 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:48341 "EHLO
+	id S1751937Ab3AAD6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2012 22:58:37 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:48337 "EHLO
 	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751865Ab3AAD6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2012 22:58:30 -0500
+	with ESMTP id S1751910Ab3AAD63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2012 22:58:29 -0500
 Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
 	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
 	(Exim 4.80)
 	(envelope-from <greened@obbligato.org>)
-	id 1Tpt6q-0005na-Qb; Mon, 31 Dec 2012 22:05:49 -0600
+	id 1Tpt6p-0005na-Co; Mon, 31 Dec 2012 22:05:48 -0600
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1357012655-24974-1-git-send-email-greened@obbligato.org>
 X-Filter-Spam-Score: -2.9 (--)
@@ -34,25 +34,24 @@ X-Filter-Spam-Report: Spam detection software, running on the system "johnson.ob
  has been attached to this so you can view it (if it isn't spam) or label
  similar future email.  If you have any questions, see
  @@CONTACT_ADDRESS@@ for details.
- Content preview:  From: Michael Schubert <mschub@elegosoft.com> "split" is documented
-    below "push" so fix the reference to it in push's documentation. Author:
-   Michael Schubert <mschub@elegosoft.com> [...] 
+ Content preview:  From: Michael Schubert <mschub@elegosoft.com> Add the git-subtree
+    command executable to .gitignore. Author: Michael Schubert <mschub@elegosoft.com>
+    [...] 
  Content analysis details:   (-2.9 points, 5.0 required)
   pts rule name              description
  ---- ---------------------- --------------------------------------------------
  -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
  -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-                             [scor 
+                             [score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212408>
 
 From: Michael Schubert <mschub@elegosoft.com>
 
-"split" is documented below "push" so fix the reference to it in
-push's documentation.
+Add the git-subtree command executable to .gitignore.
 
 Author:    Michael Schubert <mschub@elegosoft.com>
 
@@ -60,21 +59,18 @@ Signed-off-by:    Michael Schubert <mschub@elegosoft.com>
 
 Signed-off-by: David A. Greene <greened@obbligato.org>
 ---
- contrib/subtree/git-subtree.txt |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/subtree/.gitignore |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 89c2d6e..078d4ac 100644
---- a/contrib/subtree/git-subtree.txt
-+++ b/contrib/subtree/git-subtree.txt
-@@ -94,7 +94,7 @@ pull::
- 	repository.
- 	
- push::
--	Does a 'split' (see above) using the <prefix> supplied
-+	Does a 'split' (see below) using the <prefix> supplied
- 	and then does a 'git push' to push the result to the 
- 	repository and refspec. This can be used to push your
- 	subtree to different branches of the remote repository.
+diff --git a/contrib/subtree/.gitignore b/contrib/subtree/.gitignore
+index 7e77c9d..91360a3 100644
+--- a/contrib/subtree/.gitignore
++++ b/contrib/subtree/.gitignore
+@@ -1,4 +1,5 @@
+ *~
++git-subtree
+ git-subtree.xml
+ git-subtree.1
+ mainline
 -- 
 1.7.10.4
