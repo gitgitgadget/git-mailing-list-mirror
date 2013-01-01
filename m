@@ -1,97 +1,90 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/3] format-patch: pick up branch description when no ref is specified
-Date: Tue,  1 Jan 2013 16:30:54 +0700
-Message-ID: <1357032655-21103-2-git-send-email-pclouds@gmail.com>
-References: <1357032655-21103-1-git-send-email-pclouds@gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH] Remove the suggestion to use parsecvs, which is currently
+ broken.
+Date: Tue, 01 Jan 2013 23:05:00 +1300
+Message-ID: <50E2B4CC.7050503@gmail.com>
+References: <20121228162025.8565E4413A@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 01 10:31:37 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Tue Jan 01 11:04:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TpyC2-00023H-Jd
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 10:31:30 +0100
+	id 1Tpyhx-0007DI-UM
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 11:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752117Ab3AAJbE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jan 2013 04:31:04 -0500
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:45433 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752105Ab3AAJbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 04:31:03 -0500
-Received: by mail-pb0-f50.google.com with SMTP id wz7so7378882pbc.9
-        for <git@vger.kernel.org>; Tue, 01 Jan 2013 01:31:02 -0800 (PST)
+	id S1752109Ab3AAKEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2013 05:04:08 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:61641 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752044Ab3AAKEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2013 05:04:07 -0500
+Received: by mail-da0-f46.google.com with SMTP id p5so6021485dak.5
+        for <git@vger.kernel.org>; Tue, 01 Jan 2013 02:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=vIxAWIoPTzgaOi2rUNOzNlUEyo1dr80NQMl4LryK1Vc=;
-        b=IYSc42qHqsvfYP/iSnT7hO/pEFyM73d2MGUe8I0/N/7ZWv4Ospf4RzdD9LPjwGcSW1
-         F/fVmMbL+1C9vgbc2hM6oGPhJL9MsX43we3pDvYVkyi4cWQTkwZXwzHLlHPuLtbAF1Zm
-         HB4CGPmRr58v7JHxQBDmokfbAWX/1JEE8DonWRPzh6z6tXqI/5lJvAAAHhBed5d6YYC/
-         E5+L6cGko2CoALG9/4Vjiuxy256zxatMKHG7THG+rLsbdcPuNte2vPTpwnWX1PvQopxm
-         smXYPPVE/aQAaMMqw+5wp90nRR0E8b8UomwTHSr+cnVXM9g1G+4QuiUO3Bn2aEa8DtB3
-         CGWQ==
-X-Received: by 10.66.79.74 with SMTP id h10mr107005135pax.25.1357032662311;
-        Tue, 01 Jan 2013 01:31:02 -0800 (PST)
-Received: from lanh ([115.74.57.25])
-        by mx.google.com with ESMTPS id oi3sm26400691pbb.1.2013.01.01.01.30.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Jan 2013 01:31:01 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 01 Jan 2013 16:31:06 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1357032655-21103-1-git-send-email-pclouds@gmail.com>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=pjZ9nh/+JXLqTzvtKHnrDTY2OsvX7qj5BHSxTXFkXZc=;
+        b=JsRlOsGhY5d2ymR9b+LsuuvRMgd0Dwx9sqlnSuJ0k7NWIvIXIETVW+8G4pCBnZGe8Q
+         6sOzwVKiPrSNeUXLpFapvtALyEDSDTnKrZpPQZWn9dv5z6wizPVjw2QxCWDgcr69H5SM
+         pHuUKdWBwOk1hSlICsiOckQ9wJZj7mjlrRnko0GRymuLmyXMcXgsxB5PS7p/JxEt5qqB
+         8pHweIkdq0jRktWgwx4ig84/Rsmzd2XaB9M3qeopAYVZOglTXajLjn9/r6GJuReydqCo
+         Bx9JiGq/8W7L/W9TXDvmYZyH0hALCLMI1RyyGhMx1Ns6YjolunxAXKkwf/HAAVAorwj2
+         hqvg==
+X-Received: by 10.66.87.8 with SMTP id t8mr127908739paz.28.1357034647083;
+        Tue, 01 Jan 2013 02:04:07 -0800 (PST)
+Received: from [192.168.1.103] (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPS id na7sm26428611pbc.48.2013.01.01.02.04.05
+        (version=SSLv3 cipher=OTHER);
+        Tue, 01 Jan 2013 02:04:06 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20121228162025.8565E4413A@snark.thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212420>
 
-find_branch_name() fails to detect "format-patch --cover-letter -3"
-where no command line arguments are given and HEAD is automatically
-added. Detect branch name in this case so we can pick up the branch's
-description in cover letter.
+Minor typo
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/log.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+On 12/29/2012 05:20 AM, Eric S. Raymond wrote:
+> The parsecvs code has been neglected for a long time, and the only
+> public version does not even build correctly.  I have been handed
+> control of the project and intend to fix this, but until I do it
+> cannot be recommended.
+> 
+> Also, the project URL given for Subversion needed to be updated
+> to follow their site move.
+> ---
+>  Documentation/git-cvsimport.txt | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+> index 98d9881..9d5353e 100644
+> --- a/Documentation/git-cvsimport.txt
+> +++ b/Documentation/git-cvsimport.txt
+> @@ -213,11 +213,9 @@ Problems related to tags:
+>  * Multiple tags on the same revision are not imported.
+>  
+>  If you suspect that any of these issues may apply to the repository you
+> -want to import consider using these alternative tools which proved to be
+> -more stable in practice:
+> +want to imort, consider using cvs2git:
 
-diff --git a/builtin/log.c b/builtin/log.c
-index e7b7db1..115f118 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1027,8 +1027,22 @@ static char *find_branch_name(struct rev_info *r=
-ev)
- 		else
- 			return NULL;
- 	}
--	if (positive < 0)
-+	if (positive < 0) {
-+		/*
-+		 * No actual ref from command line, but "HEAD" from
-+		 * rev->def was added in setup_revisions()
-+		 * e.g. format-patch --cover-letter -12
-+		 */
-+		if (!rev->cmdline.nr &&
-+		    rev->pending.nr =3D=3D 1 &&
-+		    !strcmp(rev->pending.objects[0].name, "HEAD")) {
-+			const char *ref;
-+			ref =3D resolve_ref_unsafe("HEAD", branch_sha1, 1, NULL);
-+			if (ref && !prefixcmp(ref, "refs/heads/"))
-+				return xstrdup(ref + strlen("refs/heads/"));
-+		}
- 		return NULL;
-+	}
- 	strbuf_addf(&buf, "refs/heads/%s", rev->cmdline.rev[positive].name);
- 	branch =3D resolve_ref_unsafe(buf.buf, branch_sha1, 1, NULL);
- 	if (!branch ||
---=20
-1.8.0.rc2.23.g1fb49df
+s/imort/import/
+
+>  
+> -* cvs2git (part of cvs2svn), `http://cvs2svn.tigris.org`
+> -* parsecvs, `http://cgit.freedesktop.org/~keithp/parsecvs`
+> +* cvs2git (part of cvs2svn), `http://subversion.apache.org/`
+>  
+>  GIT
+>  ---
+> 
