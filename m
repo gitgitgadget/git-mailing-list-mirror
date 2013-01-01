@@ -1,110 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/8] Fix Synopsis
-Date: Tue, 01 Jan 2013 13:40:44 -0800
-Message-ID: <7vwqvw8tur.fsf@alter.siamese.dyndns.org>
-References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
- <1357012655-24974-5-git-send-email-greened@obbligato.org>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH 2/4] t9810: Do not use sed -i
+Date: Tue, 1 Jan 2013 22:40:37 +0100
+Message-ID: <201301012240.37769.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Tue Jan 01 22:41:13 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de
+To: git@vger.kernel.org, pw@padd.com
+X-From: git-owner@vger.kernel.org Tue Jan 01 22:41:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tq9a8-0000GT-Or
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 22:41:09 +0100
+	id 1Tq9aK-0000LJ-Cw
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 22:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752503Ab3AAVks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2013 16:40:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49671 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752490Ab3AAVkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 16:40:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC6109A41;
-	Tue,  1 Jan 2013 16:40:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=96/brG6SDtQesayvAp0EGEzNqvU=; b=I3BibY
-	rKrBIV3WWnHubGYwrcR/IqfgYO9I4i+dWElzP9NYHfFyh6nS9kiKJJZZt3KFU1Yb
-	VU5WjoEHHL9qLkgJWYYroWVHzG9DomGaqLquUrpC9mvgvI/a7sGSTQB20j6QUKKr
-	M94+1Oy+kTi9/NVQ6+7AmI2EYWjBLEBFmjeM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mrxFQP7SbU3wjA5MLBwjLKT3FESoJgju
-	jCJAcpAxfNuTcb9keqsQShFtCOnPSpGLOv0dieUbyH3w+DlpB4fGm8nX+uSRnP0l
-	fvV3N4s3OmHS5fN5Zo++6VH9EXBr7yWiAYjH692vFP6nqfym3ZQCcxWSBKPmGbo/
-	n8L22Z8w5zY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADE729A40;
-	Tue,  1 Jan 2013 16:40:46 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 126EA9A3F; Tue,  1 Jan 2013
- 16:40:45 -0500 (EST)
-In-Reply-To: <1357012655-24974-5-git-send-email-greened@obbligato.org> (David
- A. Greene's message of "Mon, 31 Dec 2012 21:57:31 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E685ED1C-545B-11E2-A4DC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752509Ab3AAVlB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jan 2013 16:41:01 -0500
+Received: from mout.web.de ([212.227.15.4]:62194 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752476Ab3AAVlA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jan 2013 16:41:00 -0500
+Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb003) with
+ ESMTPA (Nemesis) id 0Mb8xf-1TZrkV2Yqx-00KN3v; Tue, 01 Jan 2013 22:40:55 +0100
+X-Provags-ID: V02:K0:5xxNcszWo+8/GzmFHcWI+7F3oN8D3ri0Ry1YfvX+QOa
+ Rk3DrMBQeo2/b+YygW+KcdsTO+nPFmENMVxRLFpLpXHyBi8+s8
+ b4lGOa3vFwMDAW80X3ypzZF/HHVw6GbxLAgfSThJ2zKpHEdCm6
+ T+xbFVYYcT71lgioTShczjCpNEOeqNevHdifxskrc3EdPHGQ7V
+ js+7+m2zjgcL5FJNFkxxA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212448>
 
-"David A. Greene" <greened@obbligato.org> writes:
+sed -i is not portable on all systems.
+Use sed with different input and output files.
+Utilize a tmp file whenever needed
 
-> From: "David A. Greene" <greened@obbligato.org>
->
-> Fix the documentation of add to show that a repository can be
-> specified along with a commit.
->
-> Change "commit" to "refspec" in the synopsis for add.
->
-> Suggested by Yann Dirson <dirson@bertin.fr>.
->
-> Signed-off-by: David A. Greene <greened@obbligato.org>
-> ---
->  contrib/subtree/git-subtree.sh  |    3 ++-
->  contrib/subtree/git-subtree.txt |    3 ++-
->  2 files changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index b8a807a..ad62dfb 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -8,7 +8,8 @@ if [ $# -eq 0 ]; then
->      set -- -h
->  fi
->  OPTS_SPEC="\
-> -git subtree add   --prefix=<prefix> <commit>
-> +git subtree add   --prefix=<prefix> <refspec>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t9810-git-p4-rcs.sh | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-Again, this is not <refspec> but <commit>.
-
-> +git subtree add   --prefix=<prefix> <repository> <refspec>
-
-This is given to "fetch" and it seems to acccept any <refspec>, so
-it is probably a good change (I didn't fully follow the codepath,
-though).
-
->  git subtree merge --prefix=<prefix> <commit>
->  git subtree pull  --prefix=<prefix> <repository> <refspec...>
->  git subtree push  --prefix=<prefix> <repository> <refspec...>
-> diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-> index ae420aa..89c2d6e 100644
-> --- a/contrib/subtree/git-subtree.txt
-> +++ b/contrib/subtree/git-subtree.txt
-> @@ -9,7 +9,8 @@ git-subtree - Merge subtrees together and split repository into subtrees
->  SYNOPSIS
->  --------
->  [verse]
-> -'git subtree' add   -P <prefix> <commit>
-> +'git subtree' add   -P <prefix> <refspec>
-> +'git subtree' add   -P <prefix> <repository> <refspec>
->  'git subtree' pull  -P <prefix> <repository> <refspec...>
->  'git subtree' push  -P <prefix> <repository> <refspec...>
->  'git subtree' merge -P <prefix> <commit>
+diff --git a/t/t9810-git-p4-rcs.sh b/t/t9810-git-p4-rcs.sh
+index 0c2fc3e..5bf9291 100755
+--- a/t/t9810-git-p4-rcs.sh
++++ b/t/t9810-git-p4-rcs.sh
+@@ -26,10 +26,8 @@ test_expect_success 'init depot' '
+ 		line7
+ 		line8
+ 		EOF
+-		cp filek fileko &&
+-		sed -i "s/Revision/Revision: do not scrub me/" fileko
+-		cp fileko file_text &&
+-		sed -i "s/Id/Id: do not scrub me/" file_text
++		sed <filek "s/Revision/Revision: do not scrub me/" >fileko
++		sed <fileko "s/Id/Id: do not scrub me/" >file_text
+ 		p4 add -t text+k filek &&
+ 		p4 submit -d "filek" &&
+ 		p4 add -t text+ko fileko &&
+@@ -88,7 +86,8 @@ test_expect_success 'edit far away from RCS lines' '
+ 	(
+ 		cd "$git" &&
+ 		git config git-p4.skipSubmitEdit true &&
+-		sed -i "s/^line7/line7 edit/" filek &&
++		sed <filek "s/^line7/line7 edit/" >filek.tmp &&
++		mv -f filek.tmp filek &&
+ 		git commit -m "filek line7 edit" filek &&
+ 		git p4 submit &&
+ 		scrub_k_check filek
+@@ -105,7 +104,8 @@ test_expect_success 'edit near RCS lines' '
+ 		cd "$git" &&
+ 		git config git-p4.skipSubmitEdit true &&
+ 		git config git-p4.attemptRCSCleanup true &&
+-		sed -i "s/^line4/line4 edit/" filek &&
++		sed <filek "s/^line4/line4 edit/" >filek.tmp &&
++		mv -f filek.tmp filek &&
+ 		git commit -m "filek line4 edit" filek &&
+ 		git p4 submit &&
+ 		scrub_k_check filek
+@@ -122,7 +122,8 @@ test_expect_success 'edit keyword lines' '
+ 		cd "$git" &&
+ 		git config git-p4.skipSubmitEdit true &&
+ 		git config git-p4.attemptRCSCleanup true &&
+-		sed -i "/Revision/d" filek &&
++		sed <filek "/Revision/d" >filek.tmp &&
++		mv -f filek.tmp filek &&
+ 		git commit -m "filek remove Revision line" filek &&
+ 		git p4 submit &&
+ 		scrub_k_check filek
+@@ -139,7 +140,8 @@ test_expect_success 'scrub ko files differently' '
+ 		cd "$git" &&
+ 		git config git-p4.skipSubmitEdit true &&
+ 		git config git-p4.attemptRCSCleanup true &&
+-		sed -i "s/^line4/line4 edit/" fileko &&
++		sed <fileko "s/^line4/line4 edit/" >fileko.tmp &&
++		mv -f fileko.tmp fileko &&
+ 		git commit -m "fileko line4 edit" fileko &&
+ 		git p4 submit &&
+ 		scrub_ko_check fileko &&
+@@ -189,12 +191,14 @@ test_expect_success 'do not scrub plain text' '
+ 		cd "$git" &&
+ 		git config git-p4.skipSubmitEdit true &&
+ 		git config git-p4.attemptRCSCleanup true &&
+-		sed -i "s/^line4/line4 edit/" file_text &&
++		sed <file_text "s/^line4/line4 edit/" >file_text.tmp &&
++		mv -f file_text.tmp file_text &&
+ 		git commit -m "file_text line4 edit" file_text &&
+ 		(
+ 			cd "$cli" &&
+ 			p4 open file_text &&
+-			sed -i "s/^line5/line5 p4 edit/" file_text &&
++			sed <file_text "s/^line5/line5 p4 edit/" >file_text.tmp &&
++			mv -f file_text.tmp file_text &&
+ 			p4 submit -d "file5 p4 edit"
+ 		) &&
+ 		echo s | test_expect_code 1 git p4 submit &&
+--=20
+1.8.0.197.g5a90748
