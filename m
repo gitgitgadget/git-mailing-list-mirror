@@ -1,90 +1,71 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH] Remove the suggestion to use parsecvs, which is currently
- broken.
-Date: Tue, 01 Jan 2013 23:05:00 +1300
-Message-ID: <50E2B4CC.7050503@gmail.com>
-References: <20121228162025.8565E4413A@snark.thyrsus.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC] pack-objects: compression level for non-blobs
+Date: Tue, 1 Jan 2013 19:10:54 +0700
+Message-ID: <CACsJy8DpnO6X6jdQVsr1NwrXF2MDBBcHZQTay=TyLFc5p_z9eg@mail.gmail.com>
+References: <1353911154-23495-1-git-send-email-b@rr-dav.id.au>
+ <20121229004104.GA24828@sigill.intra.peff.net> <CACsJy8D_E0shqJAvZH7xqij6F4a6qUxkUPNcZL=0yX5w9bLd_g@mail.gmail.com>
+ <20121229050707.GA14475@sigill.intra.peff.net> <CACsJy8AN3y_4wcZ_w0zz+ZAaDasRT-+h8vA_fp2j4+FL00dbLw@mail.gmail.com>
+ <20121229052747.GA14928@sigill.intra.peff.net> <20121230120542.GA10820@sigill.intra.peff.net>
+ <CACsJy8C4UttGKcw11do1POcHZJM7iZ2r7F3ESOqEnWL8kdz+dQ@mail.gmail.com>
+ <20121230213124.GA15946@sigill.intra.peff.net> <CAJo=hJtjtpiPVd6Koy9q5je7s7A4EyDa-CptJNCnHLSLgd9W7g@mail.gmail.com>
+ <CACsJy8CygfaM+Ee6rURFB-cP2khO8URGDJMG2f3mqg0ebYz+8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Tue Jan 01 11:04:34 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	David Michael Barr <b@rr-dav.id.au>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 01 13:11:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tpyhx-0007DI-UM
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 11:04:30 +0100
+	id 1Tq0hG-0000Rz-LX
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 13:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109Ab3AAKEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2013 05:04:08 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:61641 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044Ab3AAKEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 05:04:07 -0500
-Received: by mail-da0-f46.google.com with SMTP id p5so6021485dak.5
-        for <git@vger.kernel.org>; Tue, 01 Jan 2013 02:04:07 -0800 (PST)
+	id S1752188Ab3AAML1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2013 07:11:27 -0500
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:56164 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752150Ab3AAML0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2013 07:11:26 -0500
+Received: by mail-ob0-f179.google.com with SMTP id x4so12007710obh.24
+        for <git@vger.kernel.org>; Tue, 01 Jan 2013 04:11:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=pjZ9nh/+JXLqTzvtKHnrDTY2OsvX7qj5BHSxTXFkXZc=;
-        b=JsRlOsGhY5d2ymR9b+LsuuvRMgd0Dwx9sqlnSuJ0k7NWIvIXIETVW+8G4pCBnZGe8Q
-         6sOzwVKiPrSNeUXLpFapvtALyEDSDTnKrZpPQZWn9dv5z6wizPVjw2QxCWDgcr69H5SM
-         pHuUKdWBwOk1hSlICsiOckQ9wJZj7mjlrRnko0GRymuLmyXMcXgsxB5PS7p/JxEt5qqB
-         8pHweIkdq0jRktWgwx4ig84/Rsmzd2XaB9M3qeopAYVZOglTXajLjn9/r6GJuReydqCo
-         Bx9JiGq/8W7L/W9TXDvmYZyH0hALCLMI1RyyGhMx1Ns6YjolunxAXKkwf/HAAVAorwj2
-         hqvg==
-X-Received: by 10.66.87.8 with SMTP id t8mr127908739paz.28.1357034647083;
-        Tue, 01 Jan 2013 02:04:07 -0800 (PST)
-Received: from [192.168.1.103] (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id na7sm26428611pbc.48.2013.01.01.02.04.05
-        (version=SSLv3 cipher=OTHER);
-        Tue, 01 Jan 2013 02:04:06 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20121228162025.8565E4413A@snark.thyrsus.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lT+n0zzChC5vECuxzFDrF/P3gHobuvGI9a93p/PBiIg=;
+        b=0wF8pSG4XwC3by9WW39M9hdv6/aQQBgwWaCjq6pTMXCEoLDOC4SFg39z7GRy2F+9Go
+         lZXBpFKVSTVhB7zRudabx+0RtqFtzlhJgrGrrslV/5ykvBA6de5PgRefahFfWcnviMdw
+         G0K/3EZO6Yfs69vxdZ5nX9VScZXvbQkdO9SJazFdOq00GVtI2MMlDmb8sXr2p8+motRn
+         1+xZVYyy1gy6raQfw66A91uDzw2J6QALWyhsbBQaiyVkzCHTGX2ADKBiopTW9F835eBC
+         /bBwLZ6nT6IMcjR6v64q7Y2QE1zS/2llZtq2kW/fnr80IGeBCpgKK5pQC2vIqWwWZreT
+         nMLQ==
+Received: by 10.60.12.74 with SMTP id w10mr24717338oeb.100.1357042285830; Tue,
+ 01 Jan 2013 04:11:25 -0800 (PST)
+Received: by 10.182.27.168 with HTTP; Tue, 1 Jan 2013 04:10:54 -0800 (PST)
+In-Reply-To: <CACsJy8CygfaM+Ee6rURFB-cP2khO8URGDJMG2f3mqg0ebYz+8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212421>
 
-Minor typo
+On Tue, Jan 1, 2013 at 11:15 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> Fix pack-objects to behave the way JGit does, cluster commits first in
+>> the pack stream. Now you have a dense space of commits. If I remember
+>> right this has a tiny positive improvement for most rev-list
+>> operations with very little downside.
+>
+> I was going to suggest a similar thing. The current state of C Git's
+> pack writing is not bad. We mix commits and tags together, but tags
 
-On 12/29/2012 05:20 AM, Eric S. Raymond wrote:
-> The parsecvs code has been neglected for a long time, and the only
-> public version does not even build correctly.  I have been handed
-> control of the project and intend to fix this, but until I do it
-> cannot be recommended.
-> 
-> Also, the project URL given for Subversion needed to be updated
-> to follow their site move.
-> ---
->  Documentation/git-cvsimport.txt | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-> index 98d9881..9d5353e 100644
-> --- a/Documentation/git-cvsimport.txt
-> +++ b/Documentation/git-cvsimport.txt
-> @@ -213,11 +213,9 @@ Problems related to tags:
->  * Multiple tags on the same revision are not imported.
->  
->  If you suspect that any of these issues may apply to the repository you
-> -want to import consider using these alternative tools which proved to be
-> -more stable in practice:
-> +want to imort, consider using cvs2git:
-
-s/imort/import/
-
->  
-> -* cvs2git (part of cvs2svn), `http://cvs2svn.tigris.org`
-> -* parsecvs, `http://cgit.freedesktop.org/~keithp/parsecvs`
-> +* cvs2git (part of cvs2svn), `http://subversion.apache.org/`
->  
->  GIT
->  ---
-> 
+And I was wrong. At least since 1b4bb16 (pack-objects: optimize
+"recency order" - 2011-06-30) commits are spread out and can be mixed
+with trees too. Grouping them back defeats what Junio did in that
+commit, I think.
+-- 
+Duy
