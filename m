@@ -1,84 +1,81 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH 1/8] Use %B for Split Subject/Body
-Date: Tue, 01 Jan 2013 16:24:46 -0600
-Message-ID: <877gnwh781.fsf@waller.obbligato.org>
-References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
-	<1357012655-24974-2-git-send-email-greened@obbligato.org>
-	<7vtxr1bg4g.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] two-way read-tree can write null sha1s into index
+Date: Tue, 01 Jan 2013 14:24:46 -0800
+Message-ID: <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+References: <20120728150132.GA25042@sigill.intra.peff.net>
+ <20120728150524.GB25269@sigill.intra.peff.net>
+ <20121229100130.GA31497@elie.Belkin>
+ <20121229102707.GA26730@sigill.intra.peff.net>
+ <20121229103430.GG18903@elie.Belkin>
+ <20121229110541.GA1408@sigill.intra.peff.net>
+ <20121229205154.GA21058@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Techlive Zheng <techlivezheng@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 01 23:25:43 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 01 23:25:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqAHG-0005IR-EU
+	id 1TqAHF-0005IR-Uy
 	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 23:25:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502Ab3AAWZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2013 17:25:24 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:48576 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752477Ab3AAWZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 17:25:23 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1TqAO4-0001E3-KQ; Tue, 01 Jan 2013 16:32:45 -0600
-In-Reply-To: <7vtxr1bg4g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 31 Dec 2012 21:56:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: > "David A. Greene"
-    <greened@obbligato.org> writes: > >> From: Techlive Zheng <techlivezheng@gmail.com>
-    >> >> Use %B to format the commit message and body to avoid an extra newline
-    >> if a commit only has a subject line. > > Is this an unconditional improvement,
-    or is it generally an > improvement but for some users it may be a regression?
-    I am > guessing it is the former but am just making sure. [...] 
- Content analysis details:   (-2.9 points, 5.0 required)
-  pts rule name       
+	id S1752495Ab3AAWYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2013 17:24:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35567 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752477Ab3AAWYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2013 17:24:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2A52A5F6;
+	Tue,  1 Jan 2013 17:24:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZjDeAVRMLZrvsucmWViFFUXEnVg=; b=cTzFvT
+	70rJy9n3nce1ewrjW9W/WuSxcc8+n8bOg2z12+EhoXJPXVNDfESCLxdO+EdZwsA+
+	KD61AS+EpKaqkqM4WLeAy/ag0s9m+9KltaKiS/9OHL6blqzFAuPQIqrljSOOlzGH
+	3OSvZjvwiMZPgGfK93jtp5D2fsUYO6vNZNxaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XxzMjOGjO5R6KfR5uJLJ3aiFo3yBoZaa
+	mQ9Jy5Z6hvwXmY1SzX8OYYlrj/8CVHCjG6xexjnp7RzFLelWi3v0cTvghgmweWDb
+	rEpYG9aeEtcql3ruaOB4zdb51vo6rUAtkQWqUnLkpmDkLwQitF9JlO8HV2tDLxh+
+	NY6a1wQpGG8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3C6FA5F5;
+	Tue,  1 Jan 2013 17:24:48 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 418F8A5F3; Tue,  1 Jan 2013
+ 17:24:48 -0500 (EST)
+In-Reply-To: <20121229205154.GA21058@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 29 Dec 2012 15:51:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D649EBE-5462-11E2-A5C5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212461>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> "David A. Greene" <greened@obbligato.org> writes:
+> So I think we need to update twoway_merge to recognize unmerged entries,
+> which gives us two options:
 >
->> From: Techlive Zheng <techlivezheng@gmail.com>
->>
->> Use %B to format the commit message and body to avoid an extra newline
->> if a commit only has a subject line.
+>   1. Reject the merge.
 >
-> Is this an unconditional improvement, or is it generally an
-> improvement but for some users it may be a regression?  I am
-> guessing it is the former but am just making sure.
-
-The former.
-
->> Author:    Techlive Zheng <techlivezheng@gmail.com>
->>
->> Signed-off-by: David A. Greene <greened@obbligato.org>
+>   2. Throw away the current unmerged entry in favor of the "new" entry
+>      (when old and new are the same, of course; otherwise we would
+>      reject).
 >
-> Please don't do "Author: " which does not add anything new.  That is
-> what "From: " is for.  Instead it needs to be a sign-off.
+> I think (2) is the right thing.
 
-Ok.  Unfortunately I sent a number of patches like that.  Do you want me
-to re-send them?
+As "--reset" in "read-tree --reset -u A B" is a way to say "we know
+we are based on A and we want to go to B no matter what", I agree we
+should not reject the merge.
 
-> Also, is that a real name, I have to wonder?
-
-No idea.  Not likely, I'd say.
-
-                        -David
+With -m instead of --reset, I am not sure what the right semantics
+should be, though.
