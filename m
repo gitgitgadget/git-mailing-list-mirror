@@ -1,76 +1,67 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH] For git-subtree, when installing docs (make install-doc), create man1 folder first.
-Date: Mon, 31 Dec 2012 21:01:20 -0600
-Message-ID: <87623hy5bz.fsf@waller.obbligato.org>
-References: <1355429376-4192-1-git-send-email-lyager@gmail.com>
-	<7v8v91y97f.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/7] format-patch --reroll-count
+Date: Tue, 1 Jan 2013 10:04:36 +0700
+Message-ID: <CACsJy8D5Ch2W-tfV6+UuyEzxtL_5E3rkffnZc5AO9yrMDJsaXQ@mail.gmail.com>
+References: <1356165212-5611-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jesper L. Nielsen" <lyager@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 01 04:02:17 2013
+X-From: git-owner@vger.kernel.org Tue Jan 01 04:05:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tps7K-0003aq-SL
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 04:02:15 +0100
+	id 1TpsAS-0005iW-3B
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 04:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496Ab3AADB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2012 22:01:56 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:48290 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751324Ab3AADBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2012 22:01:55 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1TpsE5-0005bR-P9; Mon, 31 Dec 2012 21:09:14 -0600
-In-Reply-To: <7v8v91y97f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 13 Dec 2012 12:43:16 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: > "Jesper L. Nielsen"
-    <lyager@gmail.com> writes: > >> From: "Jesper L. Nielsen" <lyager@gmail.com>
-    >> >> Hi.. >> >> I installed Git subtree and discovered that the if the man1dir
-    doesn't exist the man-page for Git Subtree is just called man1. >> >> So,
-    small patch to create the folder first in the Makefile. Hope everything is
-    right with the patch and submitting of the patch. >> >> Best Regards >> Jesper
-    >> >> Signed-off-by: Jesper L. Nielsen <lyager@gmail.com> >> --- > > Thank 
+	id S1751497Ab3AADFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2012 22:05:09 -0500
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:55637 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751294Ab3AADFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2012 22:05:07 -0500
+Received: by mail-oa0-f43.google.com with SMTP id k1so12082610oag.2
+        for <git@vger.kernel.org>; Mon, 31 Dec 2012 19:05:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=EpH0t/3Rh8PzLxKtdXkR+f5MZF/ev9ERzTjqqbeLsh0=;
+        b=x0YR38Wl2q1U24ZtcVTWupW17nGD9aGfQR7Yj8mUrImIAu39Wmj4mU2QkoHY2DSERL
+         CntkLceSqZu1Ki8fxd6+KYydHEDpc1By/EHCLkniDkzuctuj/kbMp6RvStldX9qx68tq
+         lTflZvHd10mwQlVR/XmP0y8E5QOysV0EyMZPA96RZBATCsifeG0pWxz/Fv0DDUYC1XBe
+         0eNLCsIdj4+PB+Niq52mvoncbdHRxK8zp6r8IGK51Wz67i207uGed380IDv8vegO2d3N
+         9it6+KjsPBopDOYLVcXNXZp6sRYhXCOMjvL3hhhtOewCn5zBKZwca/GCCQiL61H9V0XX
+         rzUg==
+Received: by 10.60.32.44 with SMTP id f12mr24368259oei.61.1357009506665; Mon,
+ 31 Dec 2012 19:05:06 -0800 (PST)
+Received: by 10.182.27.168 with HTTP; Mon, 31 Dec 2012 19:04:36 -0800 (PST)
+In-Reply-To: <1356165212-5611-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212397>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "Jesper L. Nielsen" <lyager@gmail.com> writes:
+On Sat, Dec 22, 2012 at 3:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The --reroll-count=$N option, when given a positive integer:
 >
->> From: "Jesper L. Nielsen" <lyager@gmail.com>
->>
->> Hi..
->>
->> I installed Git subtree and discovered that the if the man1dir doesn't exist the man-page for Git Subtree is just called man1.
->>
->> So, small patch to create the folder first in the Makefile. Hope everything is right with the patch and submitting of the patch.
->>
->> Best Regards
->> Jesper
->>
->> Signed-off-by: Jesper L. Nielsen <lyager@gmail.com>
->> ---
+>  - Adds " v$N" to the subject prefix specified.  As the default
+>    subject prefix string is "PATCH", --reroll-count=2 makes it
+>    "PATCH v2".
 >
-> Thanks.  David, Ack?
+>  - Prefixes "v$N-" to the names used for output files.  The cover
+>    letter, whose name is usually 0000-cover-letter.patch, becomes
+>    v2-0000-cover-letter.patch when given --reroll-count=2.
 
-Yep.  I can add it to my queue which I'll send to you tomorrow.
-Otherwise, feel free to apply it to your copy.
+On the same subject of format-patch improvements, perhaps we should also:
 
-                               -David
+   - Keep subject line in branch.%s.description too. No point in
+     keeping writing the subject on every reroll.
+
+   - Perhaps an option to save the current tip in reflog with reroll
+     count so one can easily diff between two rerolls.
+-- 
+Duy
