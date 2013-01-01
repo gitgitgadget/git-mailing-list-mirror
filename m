@@ -1,110 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Correct example restore from bundle
-Date: Tue, 01 Jan 2013 12:51:13 -0800
-Message-ID: <7vvcbgaapq.fsf@alter.siamese.dyndns.org>
-References: <1357053973.22772208@f75.mail.ru>
+Subject: Re: [PATCH v3 02/19] Improve documentation and comments regarding
+ directory traversal API
+Date: Tue, 01 Jan 2013 12:52:23 -0800
+Message-ID: <7vobh8aans.fsf@alter.siamese.dyndns.org>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+ <1356575558-2674-3-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Kirill Brilliantov <brilliantov@inbox.ru>
+Cc: git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
 X-From: git-owner@vger.kernel.org Tue Jan 01 21:53:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tq8pR-0002cd-TM
+	id 1Tq8pS-0002cd-Cl
 	for gcvg-git-2@plane.gmane.org; Tue, 01 Jan 2013 21:52:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752461Ab3AAUvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2013 15:51:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59691 "EHLO
+	id S1752467Ab3AAUw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2013 15:52:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60169 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752440Ab3AAUvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 15:51:16 -0500
+	id S1752440Ab3AAUwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2013 15:52:25 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C8F3BC8F;
-	Tue,  1 Jan 2013 15:51:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C925BCD3;
+	Tue,  1 Jan 2013 15:52:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=APXsnePg9alISzsvedi0zUdR6zQ=; b=Q546Inr+vuonkZdI5ZDN
-	kxjmuZBpN41QBWJ4r9+lTIa1TWXVD4adC/Xl2a+8fgtBeD5Vqkn9GAH1y+IqQCFH
-	idoUCOeGGh1IFxJ4voIqO5AcN/CiNrRtZ0mImxC3nF9AHHYgqJMrA7lGmZli6ExS
-	lBDe+5NMMMFDsa+0Q0/2JeE=
+	 s=sasl; bh=s0S0iyLowdWV07d3nGGXCjSZjpE=; b=PQt+fUK2SYNuQC3obGar
+	4WJItAQzpJi6b+t6q8bs4iNuuRYSOMLMFAD1IoqMx4T5p/hOleGyx+6l8YZTUiwz
+	b79gQ+teN3LfUfkY6nqMR8uBk8Qw508ZmmL7KTXnTIwpTNi3nRXqZuBexBxFOdRu
+	hId2T7QBtj5jIwfVQv4fTsg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=KSxMFQU+sAyxiMlWCK0/9aj8xyvbmf2Zedq7ufdF4sSc8L
-	SzpOkVZvu54Jlpkhdi15SYKeBgcEPjMfd9S8l6JBvqMJtp6kCDQFG/qv8X1FNgpm
-	MvPX0/uqxWNX2eophi0GvHF0h52iua5i6M0ZVXzq68TD3+KlGIZl3u7SoMVP4=
+	 q=dns; s=sasl; b=v7moCD90alyN/XVupfd7/z2JI/XfkvrU514B+Jd0SSAsbq
+	6LfGOrgBNC/11Ip9sC/H8SLWRkf0xsgabQXBOUqQVoxKYJB/K7PVGwN5dZ0XOOCe
+	2E4WVC0AEJz6gHZCWWer+s4CGVGZtBUN6zEGdMonh0vRXHjPI3c3AMTopkj4g=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D970BC8D;
-	Tue,  1 Jan 2013 15:51:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F6ABBCD2;
+	Tue,  1 Jan 2013 15:52:25 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1D07BC8C; Tue,  1 Jan 2013
- 15:51:14 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B28ADBCD1; Tue,  1 Jan 2013
+ 15:52:24 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FB8A408E-5454-11E2-8373-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 252FE6B4-5455-11E2-8F5D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212439>
 
-Kirill Brilliantov <brilliantov@inbox.ru> writes:
+Adam Spiers <git@adamspiers.org> writes:
 
->  ----------------
-> -machineB$ git clone /home/me/tmp/file.bundle R2
-> +machineB$ git clone /home/me/tmp/file.bundle R2 -b master
+> diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+> index 0356d25..944fc39 100644
+> --- a/Documentation/technical/api-directory-listing.txt
+> +++ b/Documentation/technical/api-directory-listing.txt
+> @@ -9,8 +9,11 @@ Data structure
+>  --------------
+>  
+>  `struct dir_struct` structure is used to pass directory traversal
+> -options to the library and to record the paths discovered.  The notable
+> -options are:
+> +options to the library and to record the paths discovered.  A single
+> +`struct dir_struct` is used regardless of whether or not the traversal
+> +recursively descends into subdirectories.
 
-I think the command line should follow the convention that is
-suggested in "git clone -h" output, i.e.
+I am somewhat lukewarm on this part of the change.
 
-    git clone -b master /home/me/tmp/file.bundle R2
+The added "regardless of..." does not seem to add as much value as
+the two extra lines the patch spends.  If we say something like:
 
-I also think 'git bundle create" should record HEAD that points at
-the only branch it is packing so the person who clones from it
-should not say which branch, and when that is done this patch will
-become unnecessary, but that is a separate topic.
+	A `struct dir_struct` structure is used to pass options to
+        traverse directories recursively, and to record all the
+        paths discovered by the traversal.
 
-Thanks; I'll queue this after rewording some.
+it might be much more direct and informative, I suspect, though.
 
--- >8 --
-From: Kirill Brilliantov <brilliantov@inbox.ru>
-Date: Tue, 1 Jan 2013 17:54:44 +0400
-Subject: [PATCH] Documentation: correct example restore from bundle
+After all, the word "traversal" pretty much implies that the library
+goes in and out of the directories recursively.
 
-Because the bundle created in the example does not record HEAD, "git
-clone" will not check out the files to the working tree:
+> @@ -39,7 +42,7 @@ options are:
+>  	If set, recurse into a directory that looks like a git
+>  	directory.  Otherwise it is shown as a directory.
+>  
+> -The result of the enumeration is left in these fields::
+> +The result of the enumeration is left in these fields:
 
-    $ git clone pr.bundle q/
-    Cloning into 'q'...
-    Receiving objects: 100% (619/619), 13.52 MiB | 18.74 MiB/s, done.
-    Resolving deltas: 100% (413/413), done.
-    warning: remote HEAD refers to nonexistent ref, unable to checkout.
+Good eyes.
 
-Avoid alarming the readers by adding "-b master" to the example.  A
-better fix may be to arrange the bundle created in the earlier step
-to record HEAD, so that it can be cloned without this workaround.
+> diff --git a/dir.c b/dir.c
+> index ee8e711..89e27a6 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2,6 +2,8 @@
+>   * This handles recursive filename detection with exclude
+>   * files, index knowledge etc..
+>   *
+> + * See Documentation/technical/api-directory-listing.txt
+> + *
+>   * Copyright (C) Linus Torvalds, 2005-2006
+>   *		 Junio Hamano, 2005-2006
+>   */
+> @@ -476,6 +478,10 @@ void add_excludes_from_file(struct dir_struct *dir, const char *fname)
+>  		die("cannot use %s as an exclude file", fname);
+>  }
+>  
+> +/*
+> + * Loads the per-directory exclude list for the substring of base
+> + * which has a char length of baselen.
+> + */
+>  static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+>  {
+>  	struct exclude_list *el;
+> @@ -486,7 +492,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+>  	    (baselen + strlen(dir->exclude_per_dir) >= PATH_MAX))
+>  		return; /* too long a path -- ignore */
+>  
+> -	/* Pop the ones that are not the prefix of the path being checked. */
+> +	/* Pop the directories that are not the prefix of the path being checked. */
 
-Signed-off-by: Brilliantov Kirill Vladimirovich <brilliantov@inbox.ru>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-bundle.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The "one" does not refer to a "directory", but to an "exclude-list".
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 16a6b0a..5c8ba44 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -118,7 +118,7 @@ were a remote repository instead of creating an empty repository and then
- pulling or fetching objects from the bundle:
- 
- ----------------
--machineB$ git clone /home/me/tmp/file.bundle R2
-+machineB$ git clone -b master /home/me/tmp/file.bundle R2
- ----------------
- 
- This will define a remote called "origin" in the resulting repository that
--- 
-1.8.1.209.gc32ab23
+	Pop the ones that are not for parent directories of the path
+	being checked
+
+perhaps?
