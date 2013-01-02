@@ -1,130 +1,187 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: Test failures with python versions when building git 1.8.1
-Date: Wed, 2 Jan 2013 10:09:17 +0100
-Message-ID: <kc0tg0$suo$1@ger.gmane.org>
-References: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com> <7va9ss5fhq.fsf@alter.siamese.dyndns.org> <20130102065345.GA8685@sigill.intra.peff.net> <7v1ue459yh.fsf@alter.siamese.dyndns.org> <20130102085935.GB9328@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
+Date: Wed, 2 Jan 2013 04:46:36 -0500
+Message-ID: <20130102094635.GD9328@sigill.intra.peff.net>
+References: <201301012240.10722.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 02 10:10:00 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jan 02 10:47:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqKKl-00021B-JQ
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 10:09:59 +0100
+	id 1TqKuj-00086e-GY
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 10:47:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382Ab3ABJJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 04:09:40 -0500
-Received: from plane.gmane.org ([80.91.229.3]:33276 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751503Ab3ABJJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 04:09:38 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TqKKc-0001wk-Fm
-	for git@vger.kernel.org; Wed, 02 Jan 2013 10:09:50 +0100
-Received: from dsdf-4d0a16c6.pool.mediaways.net ([77.10.22.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Jan 2013 10:09:50 +0100
-Received: from jojo by dsdf-4d0a16c6.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Jan 2013 10:09:50 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4d0a16c6.pool.mediaways.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752666Ab3ABJqv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 04:46:51 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41261 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752546Ab3ABJqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 04:46:50 -0500
+Received: (qmail 28789 invoked by uid 107); 2 Jan 2013 09:47:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Jan 2013 04:47:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jan 2013 04:46:36 -0500
+Content-Disposition: inline
+In-Reply-To: <201301012240.10722.tboegi@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212511>
 
-Jeff King wrote:
-> On Tue, Jan 01, 2013 at 11:18:46PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> [1] This symlink is doubly wrong, because any use of symbolic links
->>>     in the test scripts needs to depend on the SYMLINKS prereq, and
->>>     this does not.
->>
->> Yeah, I think we have discussed this once already in
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/210688/focus=210714
->
-> Thanks for the pointer; it looks like nothing productive came of the
-> earlier discussion. To give a hat trick of failure to this line of
-> code, I notice that the existing code also does not properly put
-> quotes around $GIT_BUILD_DIR.
->
->>> [2] In both the current code and what I showed above, the test
->>>     scripts depend on things in contrib/. This is probably a bad
->>>     idea in general, as the quality of what goes into contrib is
->>>     not as closely watched (especially with respect to things like
->>>     portability). Certainly I would not have known to look more
->>>     carefully at a patch to contrib/svn-fe for breakage to the test
->>> suite.
->>
->> As long as such tests are made skippable with appropriate
->> prerequisites, I do not think it is bad to have their tests in t/; I
->> would say it is rather better than having them in contrib/ and leave
->> it not run by anybody, which happened to some of the stuff in
->> contrib/ already.
->
-> Good point. While my sense of decorum wants to keep contrib totally
-> split out, from a practical point of view, it is better to have more
-> people run the tests and report failures than not.
->
-> Whether we end up doing something with contrib and tests or not, the
-> patch below gives a minimal fix in the meantime. Dan, does it fix your
-> problem?
->
-> -- >8 --
-> Subject: [PATCH] t9020: don't run python from $PATH
->
-> In t9020, we symlink in a python script from contrib to help
-> with the testing. However, we don't munge its #!-line, which
-> means we may run the wrong python (we want the one in
-> PYTHON_PATH). On top of this, we use a symlink without
-> checking the SYMLINKS prereq, and we fail to properly quote
-> GIT_BUILD_DIR, which may have spaces.
->
-> Instead of symlinking, let's just write a small script which
-> will feed the contrib script to PYTHON_PATH. To avoid
-> quoting issues, we just export the variables the script
-> needs to run.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> t/t9020-remote-svn.sh | 5 ++++-
-> t/test-lib.sh         | 2 +-
-> 2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t9020-remote-svn.sh b/t/t9020-remote-svn.sh
-> index 4f2dfe0..416623b 100755
-> --- a/t/t9020-remote-svn.sh
-> +++ b/t/t9020-remote-svn.sh
-> @@ -14,7 +14,10 @@ export PATH="$HOME:$PATH"
->
-> # We override svnrdump by placing a symlink to the svnrdump-emulator
-> in . export PATH="$HOME:$PATH"
+On Tue, Jan 01, 2013 at 10:40:08PM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-With this patch that comment is no longer true.
+> Add the perl script "check-non-portable-shell.pl" to detect non-porta=
+ble
+> shell syntax
 
-> -ln -sf $GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py "$HOME/svnrdump"
-> +export GIT_BUILD_DIR
-> +write_script svnrdump <<\EOF
-> +exec "$PYTHON_PATH" "$GIT_BUILD_DIR"/contrib/svn-fe/svnrdump_sim.py
-> "$@" +EOF
->
-> init_git () {
->  rm -fr .git &&
+Cool. Thanks for adding more test-lint. But...
+
+> diff --git a/t/Makefile b/t/Makefile
+> index 88e289f..7b0c4dc 100644
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -23,7 +23,7 @@ TGITWEB =3D $(sort $(wildcard t95[0-9][0-9]-*.sh))
+> =20
+>  all: $(DEFAULT_TEST_TARGET)
+> =20
+> -test: pre-clean $(TEST_LINT)
+> +test: pre-clean test-lint-shell-syntax $(TEST_LINT)
+>  	$(MAKE) aggregate-results-and-cleanup
+
+I do not think it should be a hard-coded dependency of "test", as then
+there is no way to turn it off. It would make more sense to me to set a
+default TEST_LINT that includes it, but could be overridden by the user=
+=2E
+
+>  prove: pre-clean $(TEST_LINT)
+> @@ -43,7 +43,7 @@ clean-except-prove-cache:
+>  clean: clean-except-prove-cache
+>  	$(RM) .prove
+> =20
+> -test-lint: test-lint-duplicates test-lint-executable
+> +test-lint: test-lint-duplicates test-lint-executable test-lint-shell=
+-syntax
+
+This, however, is right. The point of "test-lint" is "use all the lint"=
+,
+so adding it here makes sense (and anyone who has set "TEST_LINT =3D
+test-lint" will get the new check).
+
+> +test-lint-shell-syntax:
+> +	$(PERL_PATH) check-non-portable-shell.pl $(T)
+
+This is wrong if $(PERL_PATH) contains spaces, no? Doing "$(PERL_PATH)"
+is also wrong, because the expansion happens in 'make', and a
+$(PERL_PATH) with double-quotes would fool the shell. Since we export
+$PERL_PATH, I think doing:
+
+  "$$PERL_PATH"" check-non-portable-shell.pl $(T)
+
+would be sufficient.
+
+> --- /dev/null
+> +++ b/t/check-non-portable-shell.pl
+> @@ -0,0 +1,67 @@
+> +#!/usr/bin/perl -w
+
+This "-w" is ignored, since we execute by using $PERL_PATH. Maybe "use
+warnings" instead?
+
+> +sub check_one_file($) {
+
+Perl subroutine prototypes are generally frowned on unless there is a
+good reason to use them.
+
+> +	my $lineno=3D1;
+
+Perl keeps track of this for you in the "$." variable.
+
+> +	my $filename=3Dshift;
+
+And if you use the automagic "<>" handle, this is already in $ARGV (but
+note that you need to do a little bit of magic to make that work with
+$.; see the entry for "$." in perlvar, and "eof" in perlfunc).
+
+> +	open(FINPUT, "<$filename") || die "Couldn't open filename $filename=
+";
+> +	my @fdata =3D <FINPUT>;
+> +	close(FINPUT);
+> +
+> +	while (my $line =3D shift @fdata) {
+
+Not that our test scripts are so huge they won't fit into memory, but i=
+t
+is generally good practice to loop on the handle rather than reading al=
+l
+of the lines into an array.
+
+> +    do {
+
+What's this do block for?
+
+> +      # sed -i
+> +      if ($line =3D~ /^\s*sed\s+-i/) {
+> +        printf("%s:%d:error: \"sed -i not portable\" %s\n", $filenam=
+e, $lineno, $line);
+> +				$exitcode=3D1;
+> +      }
+
+These would be a lot more readable if the printf was pulled out into a
+helper function. And you can avoid the escaped quotes by using perl's q=
+q
+operator. E.g., qq(this string has "quotes" in it).
+
+Also, putting a space before the "error:" matches what gcc outputs,
+which some editors (e.g., vim) can recognize and let the user jump
+straight to the error.
+
+> +while (@ARGV) {
+> +	my $arg =3D shift @ARGV;
+> +  check_one_file($arg);
+> +}
+
+You can replace this with the magic <> filehandle.
+
+
+So taking all of that, a more idiomatic perl script would look somethin=
+g
+like:
+
+  my $exit_code;
+  sub err {
+    my $msg =3D shift;
+    print "$ARGV:$.: error: $msg: $_\n";
+    $exit_code =3D 1;
+  }
+
+  while (<>) {
+    chomp;
+    if (/^\s*sed\s+-i/) {
+      err('sed -i is not portable');
+    }
+    # ...and so on
+
+    # this resets our $. for each file
+    close ARGV if eof;
+  }
+  exit $exit_code;
+
+I'd personally probably write the conditions like:
+
+  /^\s*sed\s+-i/ and err('sed -i is not portable');
+
+to make the structure of the program (i.e., a list of conditions to
+complain about) clear, but I know not everybody agrees with such a ters=
+e
+style.
+
+-Peff
