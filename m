@@ -1,72 +1,91 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
- bugs.
-Date: Wed, 2 Jan 2013 11:18:48 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20130102161848.GA18447@thyrsus.com>
-References: <20130101172645.GA5506@thyrsus.com>
- <7vfw2k8t7k.fsf@alter.siamese.dyndns.org>
- <20130102003344.GA9651@thyrsus.com>
- <20130102080247.GA20002@elie.Belkin>
- <20130102105919.GA14391@thyrsus.com>
- <20130102153933.GA30813@elie.Belkin>
-Reply-To: esr@thyrsus.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
+Date: Wed, 02 Jan 2013 08:28:13 -0800
+Message-ID: <7vmwwr4kiq.fsf@alter.siamese.dyndns.org>
+References: <201301012240.10722.tboegi@web.de>
+ <20130102094635.GD9328@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 17:19:54 2013
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 02 17:28:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqR2o-0004Xz-A7
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 17:19:54 +0100
+	id 1TqRBE-0000TD-2Q
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 17:28:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903Ab3ABQTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 11:19:35 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:36254
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752853Ab3ABQTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 11:19:34 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 7AB9F4415C; Wed,  2 Jan 2013 11:18:48 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20130102153933.GA30813@elie.Belkin>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752783Ab3ABQ2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 11:28:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64594 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752694Ab3ABQ2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 11:28:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC50FB282;
+	Wed,  2 Jan 2013 11:28:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ObefBjB3OKqDXiRvCZONWF88TMQ=; b=R+/WKM
+	P7yzkVfQ7MfTi2rStmQrHkNISnntlOQMP98rVj9NMbIeyHDhIxTHZGAtLZf019H4
+	QTzLjVwb7lTtGIXFxJj68QVaED7xVOdsGLkqL3GLzuu5vYBV+Hm6L87CKNdda2+5
+	2wueuMQ21bts6A4Muq8DVXzlgVJ3F0khwWsK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H/wsK04W6hNZxkgVzstMceectORr7H0V
+	t20gqw2StPazN+e6l4WhPVhD8ItFjxun/BzdzOi6K/3ySKmGKpyc+0Q39LouEyuK
+	g91DBGTyb2Zo66jlx2LX1Ay9CN8Idr1Yz97tTrYFAm0Zj6CAj2Skmr5M1sJuYcFp
+	Ew4Pswny44c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E079B281;
+	Wed,  2 Jan 2013 11:28:15 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0AC78B27F; Wed,  2 Jan 2013
+ 11:28:14 -0500 (EST)
+In-Reply-To: <20130102094635.GD9328@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 2 Jan 2013 04:46:36 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 687369F6-54F9-11E2-BB26-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212518>
 
-Jonathan Nieder <jrnieder@gmail.com>:
-> The former is already loudly advertised in the package description and
-> manpage, at least lets you get work done, and works fine for simple
-> repositories with linear history.
+Jeff King <peff@peff.net> writes:
 
-Two of the three claims in this paragraph are false.  The manual page
-does not tell you what is true, which is that old cvsps will fuck up
-every branch by putting the root point at the wrong place.  And if you
-call silently and randomly damaging imports getting work done, your
-definitions of "work" and "done" are broken.
+> So taking all of that, a more idiomatic perl script would look something
+> like:
+>
+>   my $exit_code;
+>   sub err {
+>     my $msg = shift;
+>     print "$ARGV:$.: error: $msg: $_\n";
+>     $exit_code = 1;
+>   }
+>
+>   while (<>) {
+>     chomp;
+>     if (/^\s*sed\s+-i/) {
+>       err('sed -i is not portable');
+>     }
+>     # ...and so on
+>
+>     # this resets our $. for each file
+>     close ARGV if eof;
+>   }
+>   exit $exit_code;
+>
+> I'd personally probably write the conditions like:
+>
+>   /^\s*sed\s+-i/ and err('sed -i is not portable');
+>
+> to make the structure of the program (i.e., a list of conditions to
+> complain about) clear, but I know not everybody agrees with such a terse
+> style.
 
-> Taking away a command that people have been using in everyday work is
-> pretty much a textbook example of a regression, no?
-
-That would be, but we are talking about replacing total breakage with
-a git-cvsimport that actually works and that you invoke in pretty much the
-same way as the old one.  Nothing is or will be taken away.
-
-In any case, once the distros package cvsps 3.x, old cvsimport will terminate
-with an error return, because cvsps-3.x sees an obsolete option that 
-git-cvsimport tries to use as a command to treminate after displaying
-a prompt to upgrade.
-
-The most we can accomplish by being "conservative" is to lengthen the
-window during which people will falsely believe that their conversion
-process is working.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Thanks for a nicely-done review.
