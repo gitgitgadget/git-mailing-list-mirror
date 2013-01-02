@@ -1,79 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFH] NetBSD 6?
-Date: Wed, 02 Jan 2013 15:11:50 -0800
-Message-ID: <7vd2xn18p5.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
+Date: Thu, 03 Jan 2013 00:14:32 +0100
+Message-ID: <50E4BF58.4090808@web.de>
+References: <201301012240.10722.tboegi@web.de> <20130102094635.GD9328@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 03 00:12:19 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 03 00:15:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqXTo-0005ci-Ir
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 00:12:12 +0100
+	id 1TqXWe-0006w7-RB
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 00:15:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745Ab3ABXLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 18:11:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42914 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752206Ab3ABXLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 18:11:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58378AD9E;
-	Wed,  2 Jan 2013 18:11:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=U
-	nJw2FZfhogZsH/WU1TA5bH9aCg=; b=fm4Dn5gNHiXDXXrmD5b1+7HchMcK69F39
-	KY+8i6jy1tV9MXAwXYC7rDLjFW15f4bNL70S0+9I4CfEqMbav3eZVuOFzp8QQ7wD
-	aHwfvZqCHNt+yEoCFVLjZYVs0u20nOaks483GSZ0Ec3tBSgnPoyCFidJvP3+rZjt
-	AZa4bS9LYg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=ybE
-	cuHuZ7iZu5+GEkB37f6Jry82DRiThVt2AjArS/xRxM/d7ogRmC4FKNo2bV2a4wOd
-	fuiIXRK8tIGdqNQ+/EmfimXzvuEaSZZPrSoSuUwVDuQGdCOcqiOI4NBqLubq+ZQE
-	eMZUP/rXSvTj+s+DK2ylx8dhx1DjsLdtSXuiu8oI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49C1BAD9C;
-	Wed,  2 Jan 2013 18:11:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B976EAD9B; Wed,  2 Jan 2013
- 18:11:51 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CABCBF76-5531-11E2-9E7C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752811Ab3ABXOt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 18:14:49 -0500
+Received: from mout.web.de ([212.227.15.4]:56833 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752206Ab3ABXOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 18:14:48 -0500
+Received: from [192.168.2.107] ([79.244.162.201]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0MfHQo-1Tg8AN2PX8-00OxlV; Thu, 03 Jan 2013 00:14:34
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20130102094635.GD9328@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:2s0YDtyKr8ZXMdKWY2g1oCy6XyuLv8Z5+tzfRr23/E3
+ aZsQNi6o3H5us2C2Odh0kLr9o7+IGjycxKM5Wi73fmGzoeY66O
+ aWyE0cBJn5jBUSrqd3WX8ZbKDLR+lFYZpz8MBxA6/a9G29SxmJ
+ PburbWoNcOqCTSxrKbnKKKewYXiYJ2gG5L47McrB5HFmsI/Cjq
+ W2cKO4Y5NheZ3IdxpmVlA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212554>
 
-I would appreciate if somebody with more familiarlity with the
-platform can suggest a better alternative than applying the
-following patch to our Makefile.  Right now I have an equivalent of
-this change in config.mak locally when building on the said
-platform.
+On 02.01.13 10:46, Jeff King wrote:> On Tue, Jan 01, 2013 at 10:40:08PM=
+ +0100, Torsten B=F6gershausen wrote:
+>=20
+>> Add the perl script "check-non-portable-shell.pl" to detect non-port=
+able
+>> shell syntax
+>=20
+> Cool. Thanks for adding more test-lint. But...
+>=20
+>> diff --git a/t/Makefile b/t/Makefile
+>> index 88e289f..7b0c4dc 100644
+>> --- a/t/Makefile
+>> +++ b/t/Makefile
+>> @@ -23,7 +23,7 @@ TGITWEB =3D $(sort $(wildcard t95[0-9][0-9]-*.sh))
+>> =20
+>>  all: $(DEFAULT_TEST_TARGET)
+>> =20
+>> -test: pre-clean $(TEST_LINT)
+>> +test: pre-clean test-lint-shell-syntax $(TEST_LINT)
+>>  	$(MAKE) aggregate-results-and-cleanup
+>=20
+> I do not think it should be a hard-coded dependency of "test", as the=
+n
+> there is no way to turn it off. It would make more sense to me to set=
+ a
+> default TEST_LINT that includes it, but could be overridden by the us=
+er.
+>=20
+>>  prove: pre-clean $(TEST_LINT)
+>> @@ -43,7 +43,7 @@ clean-except-prove-cache:
+>>  clean: clean-except-prove-cache
+>>  	$(RM) .prove
+>> =20
+>> -test-lint: test-lint-duplicates test-lint-executable
+>> +test-lint: test-lint-duplicates test-lint-executable test-lint-shel=
+l-syntax
+>=20
+> This, however, is right. The point of "test-lint" is "use all the lin=
+t",
+> so adding it here makes sense (and anyone who has set "TEST_LINT =3D
+> test-lint" will get the new check).
+>=20
+>> +test-lint-shell-syntax:
+>> +	$(PERL_PATH) check-non-portable-shell.pl $(T)
+>=20
+> This is wrong if $(PERL_PATH) contains spaces, no? Doing "$(PERL_PATH=
+)"
+> is also wrong, because the expansion happens in 'make', and a
+> $(PERL_PATH) with double-quotes would fool the shell. Since we export
+> $PERL_PATH, I think doing:
+>=20
+>   "$$PERL_PATH"" check-non-portable-shell.pl $(T)
+Thanks, but:            =20
+- The double "" after PERL_PATH makes the string un-terminated.
 
-The "2.7" bit certainly looks fishy, as users should be able to
-choose between "2.6" and "2.7" (and possibly "3.0"), IIUC.
+- Using "$$PERL_PATH" expands from make into "$PERL_PATH" on the comman=
+d line
 
- Makefile | 3 +++
- 1 file changed, 3 insertions(+)
+- If the Makefile looks like this:
+PERL_PATH =3D "/Users/tb/projects/git/tb/pe rl"
+[snip]
+$(PERL_PATH) check-non-portable-shell.pl $(T)
+The command line will look like this:
+"/Users/tb/projects/git/tb/pe rl" check-non-portable-shell.pl t0000-bas=
+ic.sh ...
 
-diff --git a/Makefile b/Makefile
-index b0df41b..2ca6047 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1163,8 +1163,11 @@ ifeq ($(uname_S),NetBSD)
- 	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
- 		NEEDS_LIBICONV = YesPlease
- 	endif
-+	PYTHON_PATH = /usr/pkg/bin/python2.7
-+	PERL_PATH = /usr/pkg/bin/perl
- 	BASIC_CFLAGS += -I/usr/pkg/include
- 	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
-+	OLD_ICONV = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	HAVE_PATHS_H = YesPlease
+So I think that PERL_PATH should be quoted when it is defined in the Ma=
+kefile.
+
+[snip]
+Peff, many thanks. Please see V2 patch comming soon
