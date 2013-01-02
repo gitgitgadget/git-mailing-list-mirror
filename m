@@ -1,139 +1,85 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v3 02/19] Improve documentation and comments regarding
- directory traversal API
-Date: Wed, 2 Jan 2013 12:54:19 +0000
-Message-ID: <CAOkDyE_DX8iAAd5ubJaQ_guPQ-PSz4-sFETZoRf7JRTrH6Qcpw@mail.gmail.com>
-References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
-	<1356575558-2674-3-git-send-email-git@adamspiers.org>
-	<7vobh8aans.fsf@alter.siamese.dyndns.org>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH v2] build: do not automatically reconfigure unless configure.ac
+ changed
+Date: Wed, 02 Jan 2013 15:13:47 +0100
+Message-ID: <50E4409B.4070203@gmail.com>
+References: <CANiSa6jt7_ixi7L6U9sfpV2mvT_7zgYV+m+sLiXjkDsFehAuwA@mail.gmail.com> <20130102072141.GB18974@elie.Belkin> <CANiSa6iMea95ELqS3-w01bL=LTgE9Cx6+8sXK=s-pPPFwjGCCA@mail.gmail.com> <20130102082544.GD18974@elie.Belkin> <20130102083837.GA9328@sigill.intra.peff.net> <20130102084807.GB22919@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 13:54:41 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 15:14:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqNqC-0003fx-9j
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 13:54:40 +0100
+	id 1TqP5B-0000mL-3F
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 15:14:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684Ab3ABMyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 07:54:22 -0500
-Received: from mail-we0-f170.google.com ([74.125.82.170]:50554 "EHLO
-	mail-we0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670Ab3ABMyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 07:54:20 -0500
-Received: by mail-we0-f170.google.com with SMTP id r1so6636037wey.15
-        for <git@vger.kernel.org>; Wed, 02 Jan 2013 04:54:19 -0800 (PST)
+	id S1752694Ab3ABONz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 09:13:55 -0500
+Received: from mail-bk0-f44.google.com ([209.85.214.44]:58702 "EHLO
+	mail-bk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752627Ab3ABONx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 09:13:53 -0500
+Received: by mail-bk0-f44.google.com with SMTP id w11so6046734bku.3
+        for <git@vger.kernel.org>; Wed, 02 Jan 2013 06:13:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=xfiyS4CMEoaXNXtJRBLRwT7knAWorrN8qHZMQzV5dFA=;
-        b=KD0Df4qanU83/vb2ozih7seJiT/Adkn4HlMH6xsuHbubNQguHFyP9Dwx3WcISH5Om8
-         cuF5CHsV9K451Gpia0XK1NfOqt3MTgCXYG0mFHWNUKYQNdIFympYlU4y5r8445ZWqPRJ
-         u31KFG5SxBYbrchV4hcuM8FXbPMA96xloKWdqCUZFjfi7jNerocP2gsNYB1TdKdIsHyE
-         Aah8W70xkKsnSDRsDJIqyYwo2/Hg5Pn5MtxUR5RjoUeQSjqL4LMxH3euHMRPhdp4/yX3
-         hp0EUH7c7drmXw58/OxiE0IgvHx89CDz7uW6m7CHuzw+SBL1wIuOEFZwYzHGkoJls7NQ
-         NubA==
-Received: by 10.180.101.99 with SMTP id ff3mr71158984wib.21.1357131259091;
- Wed, 02 Jan 2013 04:54:19 -0800 (PST)
-Received: by 10.194.84.97 with HTTP; Wed, 2 Jan 2013 04:54:19 -0800 (PST)
-In-Reply-To: <7vobh8aans.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: _FWE_Nd8DmlhTcGM6KmOzttK1kg
+        h=x-received:message-id:date:from:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=pF+/QAA2EBrGve+0O3thTYNca8YoJkWWAP0rhg7WA6s=;
+        b=HIiIn4NkA0661B4EjkwucIEE9gb428L8YH1h8kpWG0Z/ortzyLX1jDvZu2gI5Zpnmz
+         Xqt79hHNiWXlquPmtuK6Fl8+jYE0MllGOcRHJV2QTfJb1R5mQcnidIm/gIkBmHvVDIKF
+         f4RErvI3Vi9fTxscvxCQUC0GSdzHbMnpBQJgt+vLOk5+8UF5LmkNEF6/NGPzj9bBm144
+         DPlrvIjBrglAk8dh17ZOnLk/sFERB8zqbfzkQKclWR7ReVaLNV7hK3mQBp8EotN4Uxqq
+         vt5zMM8JV4llLktnuPf8CtauRQzgQ8zDE+YJYuUaifRGhxyglitKBmS7/mOVSNuOUbmQ
+         u4/w==
+X-Received: by 10.204.5.211 with SMTP id 19mr21922300bkw.42.1357136032055;
+        Wed, 02 Jan 2013 06:13:52 -0800 (PST)
+Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
+        by mx.google.com with ESMTPS id d16sm31299303bkw.2.2013.01.02.06.13.49
+        (version=SSLv3 cipher=OTHER);
+        Wed, 02 Jan 2013 06:13:51 -0800 (PST)
+In-Reply-To: <20130102084807.GB22919@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212514>
 
-On Tue, Jan 1, 2013 at 8:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Adam Spiers <git@adamspiers.org> writes:
+On 01/02/2013 09:48 AM, Jonathan Nieder wrote:
+> Jeff King wrote:
+> 
+>> It seems I am late to the party. But FWIW, this looks the most sane to
+>> me of the patches posted in this thread.
+> 
+> Thanks.  config.status runs ./configure itself, though, so the rule
+> should actually be
+> 
+> 	config.status: configure.ac
+> 		$(QUIET_GEN)$(MAKE) configure && \
+> 		if test -f config.status; then \
+> 		  ./config.status --recheck; \
+> 		else \
+> 		  ./configure;
+> 		fi
+> 
+> Rather than screw it up yet again, I'm going to sleep. :)  If someone
+> else corrects the patch before tomorrow, I won't mind.
 >
->> diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
->> index 0356d25..944fc39 100644
->> --- a/Documentation/technical/api-directory-listing.txt
->> +++ b/Documentation/technical/api-directory-listing.txt
->> @@ -9,8 +9,11 @@ Data structure
->>  --------------
->>
->>  `struct dir_struct` structure is used to pass directory traversal
->> -options to the library and to record the paths discovered.  The notable
->> -options are:
->> +options to the library and to record the paths discovered.  A single
->> +`struct dir_struct` is used regardless of whether or not the traversal
->> +recursively descends into subdirectories.
->
-> I am somewhat lukewarm on this part of the change.
->
-> The added "regardless of..." does not seem to add as much value as
-> the two extra lines the patch spends.  If we say something like:
->
->         A `struct dir_struct` structure is used to pass options to
->         traverse directories recursively, and to record all the
->         paths discovered by the traversal.
->
-> it might be much more direct and informative, I suspect, though.
+FYI, this seems a sane approach to me.  At least until Autoconf is
+improved to offer better (read: some :-) support to "dynamic" package
+version numbers specified at configure runtime.  I hope that day
+isn't too far, since the current Autoconf limitation has been causing
+its share of annoyances small woes in Automake and Gnulib as well.
 
-I somewhat disagree ;) When I first encountered this code, I naturally
-assumed that one struct would be created per sub-directory traversed.
-This is after all a natural and very common design pattern.  The point
-of this hunk was to make it explicitly clear that this is *not* how it
-works in dir.c.  IMHO your rewording still contains a certain amount of
-ambiguity in this regard.  For example, it could mean that each
-dir_struct records all the paths discovered underneath the sub-directory
-it represents, and that these recursively bubble up to a top-level
-dir_struct.
+The only nit I have to offer is that I'd like to see more comments in
+the git Makefile about why this "semi-hack" is needed.
 
->> diff --git a/dir.c b/dir.c
->> index ee8e711..89e27a6 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -2,6 +2,8 @@
->>   * This handles recursive filename detection with exclude
->>   * files, index knowledge etc..
->>   *
->> + * See Documentation/technical/api-directory-listing.txt
->> + *
->>   * Copyright (C) Linus Torvalds, 2005-2006
->>   *            Junio Hamano, 2005-2006
->>   */
->> @@ -476,6 +478,10 @@ void add_excludes_from_file(struct dir_struct *dir, const char *fname)
->>               die("cannot use %s as an exclude file", fname);
->>  }
->>
->> +/*
->> + * Loads the per-directory exclude list for the substring of base
->> + * which has a char length of baselen.
->> + */
->>  static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
->>  {
->>       struct exclude_list *el;
->> @@ -486,7 +492,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
->>           (baselen + strlen(dir->exclude_per_dir) >= PATH_MAX))
->>               return; /* too long a path -- ignore */
->>
->> -     /* Pop the ones that are not the prefix of the path being checked. */
->> +     /* Pop the directories that are not the prefix of the path being checked. */
->
-> The "one" does not refer to a "directory", but to an "exclude-list".
-
-No, if that was the case, it would mean that multiple exclude lists
-would be popped, but that is not the case here (prior to v4).
-
->         Pop the ones that are not for parent directories of the path
->         being checked
-
-Better would be:
-
-    Pop the entries within the EXCL_DIRS exclude list which originate
-    from directories not in the prefix of the path being checked.
-
-although as previously stated, the v4 series I have been holding off
-from submitting (in order not to distract you from a maint release)
-actually changes this behaviour so EXCL_DIRS becomes an exclude_group of
-multiple exclude_lists, one per directory.  So in v4, multiple
-exclude_lists *will* be popped.  I'll tweak the comment in v4 to make
-this clear.
+Thanks,
+  Stefano
