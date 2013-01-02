@@ -1,74 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test failures with python versions when building git 1.8.1
-Date: Wed, 02 Jan 2013 08:35:59 -0800
-Message-ID: <7vehi34k5s.fsf@alter.siamese.dyndns.org>
-References: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com>
- <7va9ss5fhq.fsf@alter.siamese.dyndns.org>
- <20130102065345.GA8685@sigill.intra.peff.net>
- <7v1ue459yh.fsf@alter.siamese.dyndns.org>
- <20130102085935.GB9328@sigill.intra.peff.net>
- <CAEik5nMRAoHdx166Q7Zb5Yve6DiyVgN6EXQWGF=GgUtSyjiuSA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
+ bugs.
+Date: Wed, 2 Jan 2013 08:35:58 -0800
+Message-ID: <20130102163527.GA31196@elie.Belkin>
+References: <20130101172645.GA5506@thyrsus.com>
+ <7vfw2k8t7k.fsf@alter.siamese.dyndns.org>
+ <20130102003344.GA9651@thyrsus.com>
+ <20130102080247.GA20002@elie.Belkin>
+ <20130102105919.GA14391@thyrsus.com>
+ <20130102153933.GA30813@elie.Belkin>
+ <20130102161848.GA18447@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	David Michael Barr <b@rr-dav.id.au>,
-	"Eric S. Raymond" <esr@thyrsus.com>
-To: Dan McGee <dan@archlinux.org>
-X-From: git-owner@vger.kernel.org Wed Jan 02 17:36:26 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 17:36:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqRIk-00046c-Ab
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 17:36:22 +0100
+	id 1TqRIq-0004Ac-JD
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 17:36:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990Ab3ABQgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 11:36:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35217 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752736Ab3ABQgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 11:36:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52CC5B4D6;
-	Wed,  2 Jan 2013 11:36:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qQ9xhXhXGdhgiY6C7eXR11TPJv4=; b=XLJ8GF
-	0CCkK/AAAnOsdZhUDFwv+DiFW+Qb66Jf3obvkGY0v8sRI7PFSEaabP6r4oq30A62
-	wA/8HGLVwGd2wIjTBpiAzQSJCPeF74msIAs1+l4St5hXS2lXFdu3uNuSpZPMKw5w
-	5gyLUf2+pRSULT6hjIS/uG50AK7eYTpwLkC7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QYSaLL1fbL/a7LsIuMNjKANe8LsQeN33
-	9mH0cad1NNzh2zdxjsCWe8FrRWXSukEfeXOX818LsqcAAJszKSp0e83ZVepCZZAh
-	t6ImFdKmhqDJsVjv7MRTx3YmfS2+8rEKbGHvTUiqMj1ujGlijpVMjN/l29aw8o9R
-	nmw2GaJuhw8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 410C7B4D5;
-	Wed,  2 Jan 2013 11:36:01 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9B24B4D4; Wed,  2 Jan 2013
- 11:36:00 -0500 (EST)
-In-Reply-To: <CAEik5nMRAoHdx166Q7Zb5Yve6DiyVgN6EXQWGF=GgUtSyjiuSA@mail.gmail.com> (Dan
- McGee's message of "Wed, 2 Jan 2013 08:18:12 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E041742-54FA-11E2-BD87-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753011Ab3ABQgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 11:36:09 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:43713 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003Ab3ABQgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 11:36:08 -0500
+Received: by mail-pa0-f51.google.com with SMTP id fb11so8112842pad.10
+        for <git@vger.kernel.org>; Wed, 02 Jan 2013 08:36:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=7v5w/WQXzlIIdkyFjvacqLjpPahX5oXK9u2ZKg0ri0E=;
+        b=nkz7n4ff5EseiE9KpYoFgZUEPazedPcRr2gbOW/BJ69O0UhnSTnxDjzLV7+kVbL9aY
+         1t8noHSiz/ZsonIua96boJefREIB0B6pt5FQEMLm10VHxJrWGpSgHmWqU9oW2nauH2rh
+         Up3uIzyrLT1mVAF7/Q6g1ggzjzF53Iy3zqB/hPXCTUkrthyuexwhzVGUz5TVuWpes8K0
+         kRjXTZKOcMrlsB0lvCAoqCWzQDqs0y8nXcO/LbNVJctO/zS1zW+k3He5oTiusc+tfhUU
+         BkLGU/U9Ji9kSuwAwh0ELdCqsd+YljN/1+7qPkoh8XriuPMdTbI4hFhhNc3dRgtNdMuL
+         nF4Q==
+X-Received: by 10.68.83.68 with SMTP id o4mr147049641pby.25.1357144567537;
+        Wed, 02 Jan 2013 08:36:07 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id w5sm29565838pax.28.2013.01.02.08.36.05
+        (version=SSLv3 cipher=OTHER);
+        Wed, 02 Jan 2013 08:36:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20130102161848.GA18447@thyrsus.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212521>
 
-Dan McGee <dan@archlinux.org> writes:
+Eric S. Raymond wrote:
+> Jonathan Nieder <jrnieder@gmail.com>:
 
-> This works great now, thanks! I ran it through our package build
-> scripts and all tests now pass as expected.
+>> The former is already loudly advertised in the package description and
+>> manpage, at least lets you get work done, and works fine for simple
+>> repositories with linear history.
+>
+> Two of the three claims in this paragraph are false.
 
-If you have a chance, could you try tip of the 'next' branch without
-this patch applied?  We had an equivalent patch cooking there for
-some time by now.
+Give me a break.
 
-Thanks.
+Are you telling me that when multiple users read a manpage that states
+
+| WARNING: for certain situations the import leads to incorrect
+| results. Please see the section ISSUES for further reference.
+[...]
+| Problems related to timestamps:
+[...]
+| Problems related to branches:
+[...]
+| Problems related to tags:
+[...]
+| consider using these alternative tools which proved to be more
+| stable in practice:
+
+and a package description that states
+
+| The git cvsimport tool can incrementally import from a repository
+| that is being actively developed and only requires remote access
+| over CVS protocol. Unfortunately, in many situations the import
+| leads to incorrect results. For reliable, one-shot imports, cvs2git
+| from the cvs2svn package or parsecvs may be a better fit.
+
+and decide to use the tool anyway, this is not evidence that the tool
+is invaluable to them, despite its shortcomings?
+
+Perhaps the users reporting bugs didn't read the manpage and package
+description (despite quoting the same passages and explaining why they
+used the command nonetheless) or I should ignore the judgement calls
+they make.
+
+Consider the following workflow:
+
+ 1. Update imported project periodically using git-cvsimport
+ 2. Hack, do code archaeology using "git log -S" and "git bisect",
+    etc.
+ 3. Fall back to a web browser and cvsweb to confirm conclusions.
+
+You are telling me that it is not a regression to change the workflow
+to the following:
+
+ 1. Try to use git-cvsimport.
+ 2. Wonder where that command went.
+
+Meanwhile Junio has already suggested a way out.  Just rename the
+command.
+
+Hope that helps,
+Jonathan
