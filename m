@@ -1,46 +1,47 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Test failures with python versions when building git 1.8.1
-Date: Wed, 2 Jan 2013 00:45:48 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20130102054548.GA13483@thyrsus.com>
+Date: Wed, 2 Jan 2013 01:53:45 -0500
+Message-ID: <20130102065345.GA8685@sigill.intra.peff.net>
 References: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com>
  <7va9ss5fhq.fsf@alter.siamese.dyndns.org>
-Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Dan McGee <dan@archlinux.org>,
 	GIT Mailing-list <git@vger.kernel.org>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	David Michael Barr <b@rr-dav.id.au>
+	David Michael Barr <b@rr-dav.id.au>,
+	"Eric S. Raymond" <esr@thyrsus.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 06:47:02 2013
+X-From: git-owner@vger.kernel.org Wed Jan 02 07:54:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqHAK-00033q-FO
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 06:47:00 +0100
+	id 1TqIDI-000446-DD
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 07:54:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623Ab3ABFqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 00:46:34 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:33508
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752616Ab3ABFqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 00:46:33 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 64EA54415C; Wed,  2 Jan 2013 00:45:48 -0500 (EST)
+	id S1750916Ab3ABGxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 01:53:49 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41147 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750802Ab3ABGxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 01:53:48 -0500
+Received: (qmail 27600 invoked by uid 107); 2 Jan 2013 06:54:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Jan 2013 01:54:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jan 2013 01:53:45 -0500
 Content-Disposition: inline
 In-Reply-To: <7va9ss5fhq.fsf@alter.siamese.dyndns.org>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212493>
 
-Junio C Hamano <gitster@pobox.com>:
+On Tue, Jan 01, 2013 at 09:19:13PM -0800, Junio C Hamano wrote:
+
 > Dan McGee <dan@archlinux.org> writes:
 > 
 > > A test case snuck in this release that assumes /usr/bin/python is
@@ -56,19 +57,37 @@ Junio C Hamano <gitster@pobox.com>:
 > 
 > Eric?
 
-Yeah, git's stuff is nowhere even *near* python3 ready.
+Yeah, but the worrying thing to me is that we are not respecting
+PYTHON_PATH. So even if Arch does everything right, it is getting
+punished just for having python3 on the system at all.
 
-I have it on my to-do list to run 2to3 on the in-tree scripts as a
-diagnostic, but I haven't had time to do that yet...mainly because
-cvsps/cvsimport blew up in my face when I poked at them.
+I think we need to either:
 
-Now I need to go beat parsecvs into shape and run both it and cvs2git
-against the CVS torture tests I'm developing, so the 2to3 check won't
-happen for a week or two at least. Sorry.
+  1. Build contrib/svn-fe/svnrdump_sim.py into svnrdump using our normal
+     build procedure, which handles $PYTHON_PATH (right now we seem to
+     just symlink[1] it into place as svnrdump during the test script
+     run).
 
-As in a general thing, I wouldn't advise worrying too much about python3
-compatibility.  That version is not gaining adoption very fast, mainly
-due to the rat's nest around plain strings vs. UTF-8 which can make
-code conversion a serious pain in the ass.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+  2. Create svnrdump as a shell script in the test suite to do something
+     like[2]:
+
+       $PYTHON_PATH "$TEST_DIRECTORY"/../contrib/svn-fe/svnrdump_sim.py
+
+-Peff
+
+[1] This symlink is doubly wrong, because any use of symbolic links
+    in the test scripts needs to depend on the SYMLINKS prereq, and this
+    does not.
+
+[2] In both the current code and what I showed above, the test scripts
+    depend on things in contrib/. This is probably a bad idea in
+    general, as the quality of what goes into contrib is not as closely
+    watched (especially with respect to things like portability).
+    Certainly I would not have known to look more carefully at a patch
+    to contrib/svn-fe for breakage to the test suite.
+
+    FWIW, we also have this situation with t9902 (bash completion),
+    though the dependency is a little more obvious there. It might be
+    worth promoting bash completion out of contrib (or alternatively,
+    demoting t9902 into contrib/completion/, possibly with a feature to
+    make it easier to run tests out of contrib).
