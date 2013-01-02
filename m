@@ -1,110 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge: Honor prepare-commit-msg return code
-Date: Wed, 02 Jan 2013 13:21:21 -0800
-Message-ID: <7vwqvv1dta.fsf@alter.siamese.dyndns.org>
-References: <1357152170-5511-1-git-send-email-apelisse@gmail.com>
- <7v623f2uam.fsf@alter.siamese.dyndns.org>
- <CALWbr2wWjwUnHFq1icMRuW=vjQDhTO1e_chffqUvDWY5za1Kiw@mail.gmail.com>
+From: Dan McGee <dan@archlinux.org>
+Subject: Re: Test failures with python versions when building git 1.8.1
+Date: Wed, 2 Jan 2013 15:25:55 -0600
+Message-ID: <CAEik5nPL1J8m3_CyF0m1=4HWran4+6nRGZKtHOEdD_FWBHX6bA@mail.gmail.com>
+References: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com>
+	<7va9ss5fhq.fsf@alter.siamese.dyndns.org>
+	<20130102065345.GA8685@sigill.intra.peff.net>
+	<7v1ue459yh.fsf@alter.siamese.dyndns.org>
+	<20130102085935.GB9328@sigill.intra.peff.net>
+	<CAEik5nMRAoHdx166Q7Zb5Yve6DiyVgN6EXQWGF=GgUtSyjiuSA@mail.gmail.com>
+	<7vehi34k5s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>, Jay Soffian <jaysoffian@gmail.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 22:21:54 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Michael Barr <b@rr-dav.id.au>,
+	"Eric S. Raymond" <esr@thyrsus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 22:26:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqVl3-0005BP-3H
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 22:21:53 +0100
+	id 1TqVpI-0007IR-3C
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 22:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852Ab3ABVV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 16:21:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50291 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751867Ab3ABVVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 16:21:23 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4735CA74D;
-	Wed,  2 Jan 2013 16:21:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1KF5dGzJI0vh7PRVK5UOn23D2es=; b=RiIAam
-	XjOThjXudhqgilIw4TqsKE/Ku6O8uzlHVgcdyKjKQ/le16unGzDdDVdl1ecpbNiD
-	TyHhpSBYq5mX1tFMglyVXXSiw0wm8iZwGy6y+I8rmYOORZGL7Wv2choPCupKytOZ
-	uoJVbsZCkeTsFPw9XLyK0NvGtVfVnsYKJ7YLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h+KFZ94td9CPnnRVMV4cINcqF097w5EP
-	WeRIiEdklqz+Oy63in2KsBZ1cDVNA97eAqm3xmtMB5/URiaSI9VXSvGlagNh1tWD
-	OcJF4+tdi05o8TJ8DjIabSmLVUe4EkPhGYGGqbc3Rei95dgPRrW67KeTaMjfeds3
-	Dl0+vaTSo80=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3767DA74C;
-	Wed,  2 Jan 2013 16:21:23 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFD30A74B; Wed,  2 Jan 2013
- 16:21:22 -0500 (EST)
-In-Reply-To: <CALWbr2wWjwUnHFq1icMRuW=vjQDhTO1e_chffqUvDWY5za1Kiw@mail.gmail.com> (Antoine
- Pelisse's message of "Wed, 2 Jan 2013 22:02:30 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B85CC92-5522-11E2-B8E7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752771Ab3ABVZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 16:25:57 -0500
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:63898 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867Ab3ABVZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 16:25:56 -0500
+Received: by mail-vc0-f171.google.com with SMTP id n11so14624243vch.16
+        for <git@vger.kernel.org>; Wed, 02 Jan 2013 13:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=cbczGfzqWj9EaQ/5h3qa6j9wUiiJ6UOm5dP3NG0EPbc=;
+        b=cw5227lRs85vt9sXgK/L+J7GinBnraWAy5xB5gFAI0wkJTbYjidJ0nVnptW0EDFgW0
+         t9HJCvGnQyvhMzn5uZKnUqgMNIlEOpg3Dq9UGt8tlGl4E8OqOVkG41KcNFHYE42buhIc
+         79y+Y2oqLQrUyl5NIvjCOpzXu8jEoetxjWrOboA1eO0RI6sJsIccRY9yd9tgN6NL+QMx
+         nYo86tLTRT9ykbpW7uAKlBrVf1AO0SGpOeEbN7pTFe9L0khHF0KxMiVEHxfGZHM211HD
+         hPiGiwu8HUeqNFvdmaYhskXhfjaWyFoqaJgjeg2ydLeRvIEtANjg48irOXpFK+vUDB83
+         W3/g==
+Received: by 10.58.233.210 with SMTP id ty18mr60530065vec.46.1357161955543;
+ Wed, 02 Jan 2013 13:25:55 -0800 (PST)
+Received: by 10.58.34.11 with HTTP; Wed, 2 Jan 2013 13:25:55 -0800 (PST)
+In-Reply-To: <7vehi34k5s.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: k6nDDHickj35u49VQU-d6CeCJS4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212545>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
-
->>> prepare-commit-msg hook is run when committing to prepare the log
->>> message. If the exit-status is non-zero, the commit should be aborted.
->>
->> I was scratching my head why you CC'ed Jay, until I dug up 65969d4
->> (merge: honor prepare-commit-msg hook, 2011-02-14).
+On Wed, Jan 2, 2013 at 10:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dan McGee <dan@archlinux.org> writes:
 >
-> I did as suggested in "SubmittingPatches" :)
-
-Oh, that wasn't meant as a complaint.  I am tempted to rewrite the
-log message like so, though:
-
-    65969d4 (merge: honor prepare-commit-msg hook, 2011-02-14) tried to
-    make "git commit" and "git merge" consistent, because a merge that
-    required user assistance has to be concluded with "git commit", but
-    only "git commit" triggered prepare-commit-msg hook.  When it added
-    a call to run the prepare-commit-msg hook, however, it forgot to
-    check the exit code from the hook like "git commit" does, and ended
-    up replacing one inconsistency with another.
-
->> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
->> index bc497bc..3573751 100755
->> --- a/t/t7505-prepare-commit-msg-hook.sh
->> +++ b/t/t7505-prepare-commit-msg-hook.sh
->> @@ -172,11 +172,12 @@ test_expect_success 'with failing hook (merge)' '
->>         git checkout -B other HEAD@{1} &&
->>         echo "more" >> file &&
->>         git add file &&
->> -       chmod -x $HOOK &&
->> +       rm -f "$HOOK" &&
->>         git commit -m other &&
->> -       chmod +x $HOOK &&
->> +       write_script "$HOOK" <<-EOF
->> +       exit 1
->> +       EOF
->>         git checkout - &&
->> -       head=`git rev-parse HEAD` &&
->>         test_must_fail git merge other
->>
->>  '
+>> This works great now, thanks! I ran it through our package build
+>> scripts and all tests now pass as expected.
 >
-> What about moving the hook file then ? Not very important to me, just
-> a suggestion as it would keep the shebang.
+> If you have a chance, could you try tip of the 'next' branch without
+> this patch applied?  We had an equivalent patch cooking there for
+> some time by now.
 
-Strictly speaking, the way $HOOK is prepared in the original is
-wrong.  The script is always run under "#!/bin/sh" instead of the
-shell the user told us to use with $SHELL_PATH.  For a simple one
-liner that only exits with 1, it does not matter, though.
+Yeah, this worked great as well. Thanks again everyone.
 
-Many test scripts got this wrong and that was the reason we later
-added write_script helper function to the test suite.
+-Dan
