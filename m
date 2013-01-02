@@ -1,7 +1,7 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Thomas Berg <merlin66b@gmail.com>
 Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major bugs.
-Date: Wed, 02 Jan 2013 17:43:51 +0100
-Message-ID: <m2fw2j3588.fsf@igel.home>
+Date: Wed, 2 Jan 2013 17:48:07 +0100
+Message-ID: <CABYiQpkLze8aBZecGovBdMbxSE=kYH__KZntQDt7KwqUadUYdg@mail.gmail.com>
 References: <20130101172645.GA5506@thyrsus.com>
 	<7vfw2k8t7k.fsf@alter.siamese.dyndns.org>
 	<20130102003344.GA9651@thyrsus.com>
@@ -9,65 +9,72 @@ References: <20130101172645.GA5506@thyrsus.com>
 	<20130102105919.GA14391@thyrsus.com>
 	<20130102153933.GA30813@elie.Belkin>
 	<20130102161848.GA18447@thyrsus.com>
+	<CACPiFCKDoAoKxM4YU6uKoOGcDgLbXnCoUMO5iyf-wCWXh3j70A@mail.gmail.com>
+	<20130102164107.GA19006@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Wed Jan 02 17:44:24 2013
+X-From: git-owner@vger.kernel.org Wed Jan 02 17:48:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqRQU-0007z7-0A
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 17:44:22 +0100
+	id 1TqRUS-0001OY-4y
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 17:48:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981Ab3ABQoC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 11:44:02 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:41088 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752856Ab3ABQoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 11:44:01 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3Ybykz67MWz4KK3J;
-	Wed,  2 Jan 2013 17:43:55 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3Ybykz5y0tzbbjK;
-	Wed,  2 Jan 2013 17:43:55 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id cTiIQK9PKNdV; Wed,  2 Jan 2013 17:43:39 +0100 (CET)
-X-Auth-Info: ilzrep9RzhZ3WDf6MP8uMjudRmBBEgs32EJ1vLsPqV0=
-Received: from igel.home (ppp-88-217-103-193.dynamic.mnet-online.de [88.217.103.193])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Wed,  2 Jan 2013 17:43:52 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id E95ECCA2A2; Wed,  2 Jan 2013 17:43:51 +0100 (CET)
-X-Yow: I'm RELIGIOUS!!  I love a man with a HAIRPIECE!!
- Equip me with MISSILES!!
-In-Reply-To: <20130102161848.GA18447@thyrsus.com> (Eric S. Raymond's message
-	of "Wed, 2 Jan 2013 11:18:48 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.91 (gnu/linux)
+	id S1753004Ab3ABQsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 11:48:09 -0500
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:41339 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752856Ab3ABQsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 11:48:08 -0500
+Received: by mail-vc0-f178.google.com with SMTP id l6so604039vcl.9
+        for <git@vger.kernel.org>; Wed, 02 Jan 2013 08:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HNTAmmC86XgCvokB9JewyYLaPlfrhODqZFIhVpz1Vr0=;
+        b=fMQBLWJaRShb/cGKsoeNK/OITwtgn7KigdSsR1uPneKe/2Sag573wcjuUfz3Km8C2Y
+         6hkeDNr0y+MYRXKfl6ObbTixMFFVrKfe6kONIbQZF3BfmZY2Rlf+ixUNCiWkD5Qc9lVv
+         b7c10tPLdu7ayCMOlKG+NpNXZwVq+ifWv0ZUkW1beGzZYF0XvD2hBeydm6ZQ+JLj4Xkn
+         qbbNQly/nD9wxzlGluNAiRzWVszqgc1aQ72SZFaR6Y4CbqOfymAFcK1IJI/8MTP+FyEf
+         I107BEGsRiv13AcwxqsTM0+C4ZKF7/0vypKveGAT8KTz9ZWmottpfNX0kuw42i7Xkfa1
+         3NoA==
+Received: by 10.58.223.200 with SMTP id qw8mr73999219vec.12.1357145287469;
+ Wed, 02 Jan 2013 08:48:07 -0800 (PST)
+Received: by 10.58.233.197 with HTTP; Wed, 2 Jan 2013 08:48:07 -0800 (PST)
+In-Reply-To: <20130102164107.GA19006@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212525>
 
-"Eric S. Raymond" <esr@thyrsus.com> writes:
+On Wed, Jan 2, 2013 at 5:41 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> Martin Langhoff <martin.langhoff@gmail.com>:
+>> Replacement with something more solid is welcome, but until you are
+>> extremely confident of its handling of legacy setups... I would still
+>> provide the old cvsimport, perhaps in contrib.
+>
+> I am extremely confident.  I built a test suite so I could be.
 
-> Two of the three claims in this paragraph are false.  The manual page
-> does not tell you what is true, which is that old cvsps will fuck up
-> every branch by putting the root point at the wrong place.
+I too am glad to see some work go into the cvsimport script. So just
+to clear things up, previously you said this:
+> Yes, they must install an updated cvsps.
 
-That doesn't look like being a widespread problem, or more people would
-have complained.
+This is the problem, and one that is easily "solved" by just keeping a
+copy of the old command.
 
-Andreas.
+Remember that for many users of these tools it doesn't matter if the
+history is correct or not, as long as the head checkout contains the
+right files and they are able to submit new changes. With this
+definition of "works" git-cvsimport is not that broken I think.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Cheers,
+- Thomas
