@@ -1,129 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
- bugs.
-Date: Tue, 01 Jan 2013 17:06:29 -0800
-Message-ID: <7v1ue475re.fsf@alter.siamese.dyndns.org>
-References: <20130101172645.GA5506@thyrsus.com>
- <7vfw2k8t7k.fsf@alter.siamese.dyndns.org> <20130102003344.GA9651@thyrsus.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Makefile dependency from 'configure' to 'GIT-VERSION-FILE'
+Date: Tue, 1 Jan 2013 17:11:37 -0800
+Message-ID: <CANiSa6jt7_ixi7L6U9sfpV2mvT_7zgYV+m+sLiXjkDsFehAuwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Wed Jan 02 02:09:17 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 02:12:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqCpZ-0000Ze-Dq
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 02:09:17 +0100
+	id 1TqCsE-0001yI-TW
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 02:12:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425Ab3ABBGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2013 20:06:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37224 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752403Ab3ABBGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 20:06:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B085BA09;
-	Tue,  1 Jan 2013 20:06:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CdU3NZDqfAvjvCgWRVQRAzGDB/Q=; b=C5Pjq5
-	Ji+kRAGu6XvYU49W9n467cl3m8apZTs/XIS98KSy8QIHzvnoQX8bmkx0mfm7vLgH
-	HdGyyHBa2JI9+LOe8SzznsC8BQv3PHiwSe8Y9x1rTF7K/XGJoVfXy24PbZYOCo3J
-	MZt6wY3PWdExMIC49VjYUoBQI+m7u0/hhNwSg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f/YDdXL1H21OS74g05yyP4yKEgHL0UUV
-	FxTWeWwwPf0WL2A+2fi7cGaW2n3dWSzBaWW/Ello34VLPh7VZ/0v5YWVn7g/k/Fw
-	BMXNUjmtL0Rdr/mWok8C/s9w9VlgiRITwSuJS2Y6M0wl03gX51bb+ph2JBhwp6Fq
-	3hyCcW4kgMw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DFF5BA08;
-	Tue,  1 Jan 2013 20:06:31 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 095A9BA07; Tue,  1 Jan 2013
- 20:06:30 -0500 (EST)
-In-Reply-To: <20130102003344.GA9651@thyrsus.com> (Eric S. Raymond's message
- of "Tue, 1 Jan 2013 19:33:44 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A4B1C10A-5478-11E2-BD95-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752452Ab3ABBLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2013 20:11:42 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:49605 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752351Ab3ABBLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2013 20:11:40 -0500
+Received: by mail-ie0-f181.google.com with SMTP id 16so15940101iea.40
+        for <git@vger.kernel.org>; Tue, 01 Jan 2013 17:11:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=lQW8sv4kicS9USuSqRjhJF4jYtCo98G0EAL252s4t9o=;
+        b=qvou37Oq+Vk2cA5KBuW1zgUK9DvWqykdZWgme4P9g9f0PK5J/CbN+VluFUnTSFMI9g
+         tWC3ERcxxLcnC3uqQAiFH9CbNKdX0ZvAxUy8wTmpDoB9J83KQCBPa7C3ziDMfnI3Zcic
+         z3cKNMaVFfr9Wr14VHbB4f0e6/SVeW/LHN6vueAR9mETi2R+5u40DlAhLWBK3o5AeAQk
+         SYyFn2Fdkga3Iqlt0YhjujP9nAbVLf41fr1Y6UdrxUkzcx08wFgiMsakaFad0zOZ52de
+         GrLvAKIxGmHGdCvlxRtY4C1Ri6x59XrZm3JrBc4MYMKpJWMlPdkYIwX3gPTmtVtSQVQl
+         akag==
+Received: by 10.50.42.169 with SMTP id p9mr38474957igl.17.1357089098078; Tue,
+ 01 Jan 2013 17:11:38 -0800 (PST)
+Received: by 10.64.86.68 with HTTP; Tue, 1 Jan 2013 17:11:37 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212480>
 
-"Eric S. Raymond" <esr@thyrsus.com> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com>:
->> So..., is this a flag-day patch?
->> 
->> After this is merged, users who have been interoperating with CVS
->> repositories with the older cvsps have to install the updated cvsps
->> before using a new version of Git that ships with it?
->
-> Yes, they must install an updated cvsps. But this is hardly a loss, as
-> the old version was perilously broken.
->
-> There was an error or typo in the branch-analysis code, dating from
-> 2006 and possibly earlier, that meant that branch root points would
-> almost always be attributed to parent patchsets one patchset earlier
-> than they should have been.  Shocked me when I found it - how was this
-> missed for six years?
+I use autoconf with git.git. I have noticed lately, especially when
+doing things like "git rebase -i --exec make", that ./configure is run
+every time. If I understand correctly, this is because of 8242ff4
+(build: reconfigure automatically if configure.ac changes,
+2012-07-19). Just a few days before that commit, on 2012-07-15, the
+branch jn/makefile-cleanup including 520a6cd (Makefile: move
+GIT-VERSION-FILE dependencies closer to use, 2012-06-20) was merged
+(to next?). I wonder if these two subjects were aware of each other.
 
-Would it be that not many people use branchy history in CVS, as
-merging there was soooo painful?
+The reason 'configure' depends on GIT-VERSION-FILE is because it
+inserts the version into the call to AC_INIT. I have close to no
+experience with autoconf or even make and it's not at all clear to me
+why we need to pass the verison to AC_INIT. It seems like it's just
+for messages printed by ./configure. If that's the case, we shouldn't
+need to generate a new 'configure' file ever time. At the very least,
+we shouldn't need to run it.
 
->> Or am I being too conservative?
->
-> I think you are being too conservative.  This patch is *not* a mere
-> feature upgrade. The branch-analysis bug I found three days ago is not
-> a minor problem, it is a big ugly showstopper for any case beside the
-> simplest linear histories.  Only linear histories will not break.
+Do you think we should simply remove the dependency from 'configure'
+to 'GIT-VERSION-FILE' and leave a comment there instead? Or should we
+instead somehow make 'reconfigure' depend only on 'configure.ac'? Both
+of these feel a little wrong to me, because they would remove real
+dependencies. Maybe the (probably mangled) patch at the end of this
+message is better?
 
-That is exactly my point.  It never worked in a branchy history, and
-that is an indication that people who didn't complain and used the
-old cvsimport with branch-incapable cvsps happily would have been
-working with a linear history.  Either nobody uses cvsimport in the
-daily work, in which case a flag-day is perfectly fine, or we will
-have many people who are forced to update to unproven version for no
-immediate upside because the upstream repositories they work with, or
-options they use cvsimport, do not trigger the multi-branch bug.
+Martin
 
-I however do understand that updating is the only sensible thing to
-do for them *in the longer term*, as older cvsimport and cvsps are
-no longer maintained, and sooner they update the better the chance
-the new cvsimport becomes perfect earlier.
 
-> 'People with existing set-ups' should absolutely *not* 'keep using the
-> old one'; we should yank that choice away from them and get the old
-> cvsimport/cvsps pair out of use *as fast as possible*, because it
-> silently mangles branchy imports.
+diff --git a/Makefile b/Makefile
+index 736ecd4..ec5d7ca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2267,12 +2267,9 @@ $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : unimplemented.sh
+        mv $@+ $@
+ endif # NO_PYTHON
 
-I still am not convinced, especially without a "we make sure we do
-not regress in linear histories" side-by-side test in place.  That
-sounds irresponsible.
+-configure: configure.ac GIT-VERSION-FILE
+-       $(QUIET_GEN)$(RM) $@ $<+ && \
+-       sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-           $< > $<+ && \
+-       autoconf -o $@ $<+ && \
+-       $(RM) $<+
++configure: configure.ac
++       $(QUIET_GEN)$(RM) $@ && \
++       autoconf -o $@ $<
 
-But others may disagree, and I'd have to sleep on it.
+ ifdef AUTOCONFIGURED
+ config.status: configure
+diff --git a/configure.ac b/configure.ac
+index ad215cc..00c3e38 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -142,7 +142,10 @@ fi
+ ## Configure body starts here.
 
-I'd prefer to hear from somebody who is *not* defending on his newer
-implementation, but from somebody who is actively using cvsimport as
-an end user.  On the end-users' side, there always is this anxiety
-that a radical rewrite will always introduce new bugs, even when
-they know the rewrite is done very competently.
+ AC_PREREQ(2.59)
+-AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
++AC_INIT([git],
++       m4_esyscmd([ ./GIT-VERSION-GEN &&
++                    { sed -ne 's/GIT_VERSION = //p' GIT-VERSION-FILE
+| xargs echo -n; } ]),
++       [git@vger.kernel.org])
 
-> Here is what I have done to ease the transition:
->
-> If you try to use old git-cvsimport with new cvsps, new cvsps will detect
-> this and ship a message to stderr telling you to upgrade
-
-Sounds sensible.
-
-> If you try to use new git-cvsimport with old cvsps, old cvsps will complain
-> of an invalid argument and git-cvsimport will quit.
-
-With an error message that tells the user to update cvsps, this also
-sounds sensible.
+ AC_CONFIG_SRCDIR([git.c])
