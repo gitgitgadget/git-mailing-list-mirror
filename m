@@ -1,109 +1,78 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] merge: Honor prepare-commit-msg return code
-Date: Wed, 2 Jan 2013 20:05:26 +0100
-Message-ID: <CALWbr2wCe4riywfZ6X3JhsHPvZZQJn8bkdtOakCQK+zJr-5iew@mail.gmail.com>
-References: <1357152170-5511-1-git-send-email-apelisse@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
+ bugs.
+Date: Wed, 02 Jan 2013 11:07:41 -0800
+Message-ID: <7vmwwr2yki.fsf@alter.siamese.dyndns.org>
+References: <20130101172645.GA5506@thyrsus.com>
+ <7vfw2k8t7k.fsf@alter.siamese.dyndns.org> <20130102003344.GA9651@thyrsus.com>
+ <7vr4m331bn.fsf@alter.siamese.dyndns.org>
+ <20130102183710.GB19006@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 02 20:05:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Wed Jan 02 20:08:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqTdK-0007pQ-MF
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 20:05:47 +0100
+	id 1TqTfX-0000Uf-TC
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 20:08:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab3ABTF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 14:05:28 -0500
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:50247 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752404Ab3ABTF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 14:05:27 -0500
-Received: by mail-ea0-f174.google.com with SMTP id e13so5854279eaa.5
-        for <git@vger.kernel.org>; Wed, 02 Jan 2013 11:05:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TZWTL0hic3ZAxVqUZXzvbDAxYPc4ZGD8rOYchInwiTE=;
-        b=cvIs5N65aOHBcmMhRQLNgA1byaQPdf7zNrMW+1Vl18H19bc/mA5hixM7s6BgUwBj8G
-         0Sd6SnyfDDVTQTau57aPYzma4cpppszbYqvH24ChcsqgXRzg7tp7SaosPZr8FbpDbBGk
-         sEMxjVyFy1/Yr1uEEDGJCwunp3VEdzcBKbfOwsTLOW+1T0nY3rVSHAQUdD3BFBwEXiS+
-         lXD5dsl/w1EqKS7+DtJjUfmgIDBvJThRepO+gQb0dfQIYoLD1opX6pu0HeNXaq3hACUI
-         ZdO+Ikng6GkWwCm4ldppU25kLEI7GZJ+5niV/uWHDqiI5Mq+fuvMyguIgo4w0EndJ0fe
-         /s7g==
-Received: by 10.14.208.137 with SMTP id q9mr126913278eeo.28.1357153526403;
- Wed, 02 Jan 2013 11:05:26 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Wed, 2 Jan 2013 11:05:26 -0800 (PST)
-In-Reply-To: <1357152170-5511-1-git-send-email-apelisse@gmail.com>
+	id S1752636Ab3ABTHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 14:07:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46488 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752404Ab3ABTHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 14:07:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5948A652;
+	Wed,  2 Jan 2013 14:07:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FPluHeHuZIctztumwtH8Im7Wafw=; b=MNbdJN
+	BXl2F+bYH2ai6CL106priY6+9uHPlUKb66Tb9R7MkQZOYvp9rpzlq/ipHsvCSh5J
+	NUPwPbxJHEUT6Xu7+Wk0ZgdbfqRp8lsBauyRPCp7YL8SL7+cWjJ0zahYkbOhYVkg
+	7q3+a4dsEUTWGLk9pmETOzgE2oRaC4DjARbwE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wMetXwnc6Yq6ZRDZOezMRwx1Jn+eMjde
+	VwbjyWC9pLdmKxCgNr77YgTUh+EsUSA3I8HgYAcuOHGv0o+9O/jyMKkRtfPy35zN
+	RJ06ufMViiDRqJxYP9Aa3cHJBYP8DOThdPuVdvVvEUjEN8jRE9Lyy42YyCV471/3
+	FZonJA2JYDU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7375A651;
+	Wed,  2 Jan 2013 14:07:43 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 342A0A650; Wed,  2 Jan 2013
+ 14:07:43 -0500 (EST)
+In-Reply-To: <20130102183710.GB19006@thyrsus.com> (Eric S. Raymond's message
+ of "Wed, 2 Jan 2013 13:37:10 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AF861030-550F-11E2-A819-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212534>
 
-On Wed, Jan 2, 2013 at 7:42 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
-> prepare-commit-msg hook is run when committing to prepare the log
-> message. If the exit-status is non-zero, the commit should be aborted.
->
-> While the script is run before committing a successful merge, the
-> exit-status is ignored and a non-zero exit doesn't abort the commit.
->
-> Abort the commit if prepare-commit-msg returns with a non-zero status
-> when committing a successful merge.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
->  builtin/merge.c                    |  5 +++--
->  t/t7505-prepare-commit-msg-hook.sh | 13 +++++++++++++
->  2 files changed, 16 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index a96e8ea..3a31c4b 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -800,8 +800,9 @@ static void prepare_to_commit(struct commit_list *remoteheads)
->         if (0 < option_edit)
->                 strbuf_add_lines(&msg, "# ", comment, strlen(comment));
->         write_merge_msg(&msg);
-> -       run_hook(get_index_file(), "prepare-commit-msg",
-> -                git_path("MERGE_MSG"), "merge", NULL, NULL);
-> +       if (run_hook(get_index_file(), "prepare-commit-msg",
-> +                    git_path("MERGE_MSG"), "merge", NULL, NULL))
-> +               abort_commit(remoteheads, NULL);
->         if (0 < option_edit) {
->                 if (launch_editor(git_path("MERGE_MSG"), NULL, NULL))
->                         abort_commit(remoteheads, NULL);
-> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-> index 5b4b694..bc497bc 100755
-> --- a/t/t7505-prepare-commit-msg-hook.sh
-> +++ b/t/t7505-prepare-commit-msg-hook.sh
-> @@ -167,5 +167,18 @@ test_expect_success 'with failing hook (--no-verify)' '
->
->  '
->
-> +test_expect_success 'with failing hook (merge)' '
-> +
-> +       git checkout -B other HEAD@{1} &&
-> +       echo "more" >> file &&
-> +       git add file &&
-> +       chmod -x $HOOK &&
-> +       git commit -m other &&
-> +       chmod +x $HOOK &&
-> +       git checkout - &&
-> +       head=`git rev-parse HEAD` &&
+"Eric S. Raymond" <esr@thyrsus.com> writes:
 
-The line above is useless ... Sorry about the noise.
+> Junio C Hamano <gitster@pobox.com>:
+>> As your version already knows how to detect the case where cvsps is
+>> too old to operate with it, I imagine it to be straight-forward to
+>> ship the old cvsimport under obscure name, "git cvsimport--old" or
+>> something, and spawn it from your version when necessary, perhaps
+>> after issuing a warning "cvsps 3.0 not found; switching to an old
+>> and unmaintained version of cvsimport..."
+>
+> This can be done.  As this may not be the last case in which it comes up,
+> perhaps we should have an 'obsolete' directory distinct from 'contrib'.
+>
+> I'll ship another patch.
 
-> +       test_must_fail git merge other
-> +
-> +'
->
->  test_done
-> --
-> 1.8.1.rc3.27.g3b73c7d.dirty
->
+Alright; thanks.
+
+Don't forget to sign-off your patch ;-)
