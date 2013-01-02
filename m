@@ -1,78 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
- bugs.
-Date: Wed, 02 Jan 2013 11:07:41 -0800
-Message-ID: <7vmwwr2yki.fsf@alter.siamese.dyndns.org>
-References: <20130101172645.GA5506@thyrsus.com>
- <7vfw2k8t7k.fsf@alter.siamese.dyndns.org> <20130102003344.GA9651@thyrsus.com>
- <7vr4m331bn.fsf@alter.siamese.dyndns.org>
- <20130102183710.GB19006@thyrsus.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH v2] build: do not automatically reconfigure unless configure.ac
+ changed
+Date: Wed, 02 Jan 2013 20:35:18 +0100
+Message-ID: <50E48BF6.2020900@gmail.com>
+References: <CANiSa6jt7_ixi7L6U9sfpV2mvT_7zgYV+m+sLiXjkDsFehAuwA@mail.gmail.com> <20130102072141.GB18974@elie.Belkin> <CANiSa6iMea95ELqS3-w01bL=LTgE9Cx6+8sXK=s-pPPFwjGCCA@mail.gmail.com> <20130102082544.GD18974@elie.Belkin> <20130102083837.GA9328@sigill.intra.peff.net> <20130102084807.GB22919@elie.Belkin> <50E4409B.4070203@gmail.com> <7va9sr4jgu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Wed Jan 02 20:08:06 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 20:35:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqTfX-0000Uf-TC
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 20:08:04 +0100
+	id 1TqU6I-0005GX-Li
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 20:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab3ABTHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 14:07:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46488 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752404Ab3ABTHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 14:07:44 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5948A652;
-	Wed,  2 Jan 2013 14:07:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FPluHeHuZIctztumwtH8Im7Wafw=; b=MNbdJN
-	BXl2F+bYH2ai6CL106priY6+9uHPlUKb66Tb9R7MkQZOYvp9rpzlq/ipHsvCSh5J
-	NUPwPbxJHEUT6Xu7+Wk0ZgdbfqRp8lsBauyRPCp7YL8SL7+cWjJ0zahYkbOhYVkg
-	7q3+a4dsEUTWGLk9pmETOzgE2oRaC4DjARbwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wMetXwnc6Yq6ZRDZOezMRwx1Jn+eMjde
-	VwbjyWC9pLdmKxCgNr77YgTUh+EsUSA3I8HgYAcuOHGv0o+9O/jyMKkRtfPy35zN
-	RJ06ufMViiDRqJxYP9Aa3cHJBYP8DOThdPuVdvVvEUjEN8jRE9Lyy42YyCV471/3
-	FZonJA2JYDU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7375A651;
-	Wed,  2 Jan 2013 14:07:43 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 342A0A650; Wed,  2 Jan 2013
- 14:07:43 -0500 (EST)
-In-Reply-To: <20130102183710.GB19006@thyrsus.com> (Eric S. Raymond's message
- of "Wed, 2 Jan 2013 13:37:10 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AF861030-550F-11E2-A819-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752668Ab3ABTfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 14:35:24 -0500
+Received: from mail-ee0-f44.google.com ([74.125.83.44]:42351 "EHLO
+	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752426Ab3ABTfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 14:35:22 -0500
+Received: by mail-ee0-f44.google.com with SMTP id b47so6991506eek.17
+        for <git@vger.kernel.org>; Wed, 02 Jan 2013 11:35:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=5lTk5ObO6YFh8OxHrE8jQZKSOQF9oNW/hOe7jc8XbUw=;
+        b=PAQc2dmutgyP5zI/v9AGEA02b/BfccgivQZgOgsk+oKrjQS6FxGGxnNTuKwN+ILwb6
+         r/DZffvkNAX5PBD+iWO3OU4LO2qd7QiFUV77KkiIO9IBpMi6u+Tu07YmnWGaqttf0mKG
+         n0uocj+xiTxVW5oi0hTj+X/8zaSWfzm67q8lTBbrFTr8omL0dgOj20ZLMFE3m7aLMCNU
+         Y/spzqW2xGfT2wBRRxXFn5ykTTuVTrwLr7DEN91RVxOlllRl0EF8jTzrE6IPmYt0j2jZ
+         37MVOwITL48bCpGt4hFVx04fU7OmMxwbuWFBNdliC6y4snBrMYn/PoG7+SiYQpk0DBt/
+         MkZw==
+X-Received: by 10.14.205.199 with SMTP id j47mr127308316eeo.26.1357155321735;
+        Wed, 02 Jan 2013 11:35:21 -0800 (PST)
+Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
+        by mx.google.com with ESMTPS id f49sm99404764eep.12.2013.01.02.11.35.19
+        (version=SSLv3 cipher=OTHER);
+        Wed, 02 Jan 2013 11:35:20 -0800 (PST)
+In-Reply-To: <7va9sr4jgu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212535>
 
-"Eric S. Raymond" <esr@thyrsus.com> writes:
-
-> Junio C Hamano <gitster@pobox.com>:
->> As your version already knows how to detect the case where cvsps is
->> too old to operate with it, I imagine it to be straight-forward to
->> ship the old cvsimport under obscure name, "git cvsimport--old" or
->> something, and spawn it from your version when necessary, perhaps
->> after issuing a warning "cvsps 3.0 not found; switching to an old
->> and unmaintained version of cvsimport..."
+On 01/02/2013 05:50 PM, Junio C Hamano wrote:
+> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+> 
+>> On 01/02/2013 09:48 AM, Jonathan Nieder wrote:
+>>> Jeff King wrote:
+>>>
+>>>> It seems I am late to the party. But FWIW, this looks the most sane to
+>>>> me of the patches posted in this thread.
+>>> ...
+>> FYI, this seems a sane approach to me....
+>> The only nit I have to offer is that I'd like to see more comments in
+>> the git Makefile about why this "semi-hack" is needed.
+> 
+> Thanks, everybody.
+> 
+> Please eyeball the below for (hopefully) the last time, to be
+> eventually merged to maint-1.7.12, maint-1.8.0 and maint (aka
+> maint-1.8.1) branches.
+> 
+> -- >8 --
+> From: Jonathan Nieder <jrnieder@gmail.com>
+> Date: Wed, 2 Jan 2013 00:25:44 -0800
+> Subject: [PATCH] build: do not automatically reconfigure unless configure.ac changed
+> 
+> Starting with v1.7.12-rc0~4^2 (build: reconfigure automatically if
+> configure.ac changes, 2012-07-19), "config.status --recheck" is
+> automatically run every time the "configure" script changes.  In
+> particular, that means the configuration procedure repeats whenever
+> the version number changes (since the configure script changes to
+> support "./configure --version" and "./configure --help"), making
+> bisecting painfully slow.
+> 
+> The intent was to make the reconfiguration process only trigger for
+> changes to configure.ac's logic.  Tweak the Makefile rule to match
+> that intent by depending on configure.ac instead of configure.
+> 
+> Reported-by: Martin von Zweigbergk <martinvonz@gmail.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Reviewed-by: Jeff King <peff@peff.net>
+> Reviewed-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+> ---
+>  Makefile | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 26b697d..2f5e2ab 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2167,8 +2167,14 @@ configure: configure.ac GIT-VERSION-FILE
+>  	$(RM) $<+
+>  
+>  ifdef AUTOCONFIGURED
+> -config.status: configure
+> -	$(QUIET_GEN)if test -f config.status; then \
+> +# We avoid depending on 'configure' here, because it gets rebuilt
+> +# every time GIT-VERSION-FILE is modified, only to update the embedded
+> +# version number string, which config.status does not care about.
 >
-> This can be done.  As this may not be the last case in which it comes up,
-> perhaps we should have an 'obsolete' directory distinct from 'contrib'.
->
-> I'll ship another patch.
+Alas, config.status *do* care about it, in that the '@PACKAGE_VERSION@',
+'@PACKAGE_STRING@' and '@DEFS@' substitutions are affected by what is
+hard-coded in configure as the version number [1].  But if we do not
+use those substitutions in any of our files (and I believe we don't),
+then *we* can happily not care about the configure embedded version
+number string, and thus avoid the extra configure runs.  Phew.
 
-Alright; thanks.
+ [1] Yes, this is a mess.  We know.  Sorry!
 
-Don't forget to sign-off your patch ;-)
+> +# We
+> +# do want to recheck when the platform/environment detection logic
+> +# changes, hence this depends on configure.ac.
+> +config.status: configure.ac
+> +	$(QUIET_GEN)$(MAKE) configure && \
+> +	if test -f config.status; then \
+>  	  ./config.status --recheck; \
+>  	else \
+>  	  ./configure; \
+
+HTH,
+  Stefano
