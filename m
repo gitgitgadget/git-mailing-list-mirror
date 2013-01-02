@@ -1,68 +1,89 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: add a checkbox to control the visibility of tags
-Date: Wed, 2 Jan 2013 18:17:01 +1100
-Message-ID: <20130102071701.GG20724@iris.ozlabs.ibm.com>
-References: <1354309737-4280-1-git-send-email-stlman@poczta.fm>
- <7vlidhmc5i.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Test failures with python versions when building git 1.8.1
+Date: Tue, 01 Jan 2013 23:18:46 -0800
+Message-ID: <7v1ue459yh.fsf@alter.siamese.dyndns.org>
+References: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com>
+ <7va9ss5fhq.fsf@alter.siamese.dyndns.org>
+ <20130102065345.GA8685@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?=C5=81ukasz?= Stelmach <stlman@poczta.fm>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 08:17:27 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan McGee <dan@archlinux.org>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Michael Barr <b@rr-dav.id.au>,
+	"Eric S. Raymond" <esr@thyrsus.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 02 08:19:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqIZq-0004Y7-6Z
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 08:17:26 +0100
+	id 1TqIbU-0005Ha-97
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 08:19:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061Ab3ABHRG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 02:17:06 -0500
-Received: from ozlabs.org ([203.10.76.45]:40172 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763Ab3ABHRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 02:17:05 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 4816F2C0094; Wed,  2 Jan 2013 18:17:04 +1100 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vlidhmc5i.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751972Ab3ABHSu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 02:18:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46064 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750943Ab3ABHSt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 02:18:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CBF29EDE;
+	Wed,  2 Jan 2013 02:18:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HYVqv7Qw9cwCnqWQZd9YIjaJ5q0=; b=aFFg/Q
+	lRcNRgYS/dazGO+rQzUSerLjIsSGa6Tt0N4/VubXpQHPb8v+NMxbDqSwRNj9BIoP
+	ZDhNtwM0KGMbksx1zPirBXiXEtndCwc+lMLxpcPzEnSNXv/wJufdI/fH2S3Qbxal
+	2MED7AQF/2jLz/gViGFPQOcTSftJy5Op1QVFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pyk7hbY+fdyFAoiTeWBpJrbgwmWJiGOM
+	2u20AuKqE2nydXFLWbtgQEWB5Amv9see/K5srZxowvVYaJtZacQa5Y+naZfsMHBs
+	OB0dNnJ8gknzd7JxwW8cq3xXkJ4ZEVjcErX0EIKE9AbSWXPMSbsAfdcBEwVyapiw
+	ADMCvgwqWrI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EC049EDD;
+	Wed,  2 Jan 2013 02:18:48 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1DC49EDC; Wed,  2 Jan 2013
+ 02:18:47 -0500 (EST)
+In-Reply-To: <20130102065345.GA8685@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 2 Jan 2013 01:53:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A65C660C-54AC-11E2-BA1F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212496>
 
-On Sat, Dec 01, 2012 at 06:16:25PM -0800, Junio C Hamano wrote:
-> =C5=81ukasz Stelmach <stlman@poczta.fm> writes:
->=20
-> > Enable hiding of tags displayed in the tree as yellow labels.
-> > If a repository is used together with a system like Gerrit
-> > there may be quite a lot of tags used to control building
-> > and there may be hardly any place left for commit subjects.
-> >
-> > Signed-off-by: =C5=81ukasz Stelmach <stlman@poczta.fm>
-> > ---
->=20
-> Paul, this patch is not done against your tree (does not have gitk
-> at the top-level), but other than that, the change mimics the way
-> existing hideremoes is implemented and looks reasonable to me.
->=20
-> We _may_ want to unify these two "hidestuff" into a list of patterns
-> that hides any ref that match one of the patterns in the list, e.g.
->=20
-> 	set hidestuff {refs/heads/*/* refs/tags/* refs/remotes/*}
->=20
-> may hide all tags, all remote-tracking branches and local branches
-> that have a slash in their names.
+Jeff King <peff@peff.net> writes:
 
-If the concern is the amount of screen real-estate that the tags take
-up when there are many of them (which is a reasonable concern), I'd
-rather just put a single tag icon with "tags..." inside it and arrange
-to list all the tags in the diff display pane when the user clicks on
-it.  I think that would be better than not showing the tags at all.
+> [1] This symlink is doubly wrong, because any use of symbolic links
+>     in the test scripts needs to depend on the SYMLINKS prereq, and this
+>     does not.
 
-Paul.
+Yeah, I think we have discussed this once already in
+
+http://thread.gmane.org/gmane.comp.version-control.git/210688/focus=210714
+
+> [2] In both the current code and what I showed above, the test scripts
+>     depend on things in contrib/. This is probably a bad idea in
+>     general, as the quality of what goes into contrib is not as closely
+>     watched (especially with respect to things like portability).
+>     Certainly I would not have known to look more carefully at a patch
+>     to contrib/svn-fe for breakage to the test suite.
+
+As long as such tests are made skippable with appropriate
+prerequisites, I do not think it is bad to have their tests in t/; I
+would say it is rather better than having them in contrib/ and leave
+it not run by anybody, which happened to some of the stuff in
+contrib/ already.
+
+>     ... possibly with a feature to
+>     make it easier to run tests out of contrib).
+
+Yes, that certainly is a workable alternative.
