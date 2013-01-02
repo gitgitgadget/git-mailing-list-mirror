@@ -1,113 +1,78 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
-Date: Thu, 03 Jan 2013 00:14:32 +0100
-Message-ID: <50E4BF58.4090808@web.de>
-References: <201301012240.10722.tboegi@web.de> <20130102094635.GD9328@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git filter-branch doesn't dereference annotated tags
+Date: Wed, 02 Jan 2013 15:19:25 -0800
+Message-ID: <7v623f18ci.fsf@alter.siamese.dyndns.org>
+References: <CAC_01E174m_6tDwPKZ5P0BUxnLNWUf9p+VkECFosPTzip0sYsA@mail.gmail.com>
+ <7vsj6mdqeo.fsf@alter.siamese.dyndns.org>
+ <CAC_01E3twtNq8YXQ8=SU5oXxmnAQS43L-46NF=7RyT4tFQvU5g@mail.gmail.com>
+ <7vfw2kbs4h.fsf@alter.siamese.dyndns.org>
+ <CAC_01E3VWtsFd8ww+7W8DMhRAs4WgHf=bm+xoh9wszCkb-DfUA@mail.gmail.com>
+ <7vk3rwaa3r.fsf@alter.siamese.dyndns.org>
+ <CAC_01E2iHgNvh5PnBh3TcNKr2pLazZwRojVK9ksaE3x0a1QHmQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 03 00:15:18 2013
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: =?utf-8?Q?Gr=C3=A9gory?= Pakosz <gpakosz@visionobjects.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 00:19:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqXWe-0006w7-RB
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 00:15:09 +0100
+	id 1TqXbA-0000WB-2t
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 00:19:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811Ab3ABXOt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 18:14:49 -0500
-Received: from mout.web.de ([212.227.15.4]:56833 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752206Ab3ABXOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 18:14:48 -0500
-Received: from [192.168.2.107] ([79.244.162.201]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0MfHQo-1Tg8AN2PX8-00OxlV; Thu, 03 Jan 2013 00:14:34
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130102094635.GD9328@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:2s0YDtyKr8ZXMdKWY2g1oCy6XyuLv8Z5+tzfRr23/E3
- aZsQNi6o3H5us2C2Odh0kLr9o7+IGjycxKM5Wi73fmGzoeY66O
- aWyE0cBJn5jBUSrqd3WX8ZbKDLR+lFYZpz8MBxA6/a9G29SxmJ
- PburbWoNcOqCTSxrKbnKKKewYXiYJ2gG5L47McrB5HFmsI/Cjq
- W2cKO4Y5NheZ3IdxpmVlA==
+	id S1752757Ab3ABXTa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 18:19:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46661 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752206Ab3ABXT2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2013 18:19:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3CE3B087;
+	Wed,  2 Jan 2013 18:19:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=fZ8VsTrS7ugQZkhnbQIy0pgSY
+	Rg=; b=P2HBlp44ftLiSQ9iAr47r19umyuQlfPJ9MJWZVWcIUFPbtrj7kXBFFz7o
+	FPX8yVV1xMoHnQWX4qOusxTgLhSO8nXnf6O6/F67MNsUkZk2tAcsu+Oymgv7albN
+	BQ9ej0UqH55okyXv3AHzCgjoRtWpJo97S++2Kds+SThjLYsS90=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=X5OtSdVlajXYVietls1
+	HVfkiVCi0Jrwmhxwm1+CXXPzXAIJCczGzh+MRQgeRlqSprZ5EBDpk+U3+tifzZCZ
+	ad7L9p8wQBjKM6Gw60fZBWcXycOvzPDJHS6w9b2LOtrJebxNtRJrZs8jmG9+8oVZ
+	sMKcEe4CUt4TFpx8VfpNRjXo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A49B9B086;
+	Wed,  2 Jan 2013 18:19:27 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21C4EB082; Wed,  2 Jan 2013
+ 18:19:27 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DA2A32C6-5532-11E2-BFFE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212555>
 
-On 02.01.13 10:46, Jeff King wrote:> On Tue, Jan 01, 2013 at 10:40:08PM=
- +0100, Torsten B=F6gershausen wrote:
->=20
->> Add the perl script "check-non-portable-shell.pl" to detect non-port=
-able
->> shell syntax
->=20
-> Cool. Thanks for adding more test-lint. But...
->=20
->> diff --git a/t/Makefile b/t/Makefile
->> index 88e289f..7b0c4dc 100644
->> --- a/t/Makefile
->> +++ b/t/Makefile
->> @@ -23,7 +23,7 @@ TGITWEB =3D $(sort $(wildcard t95[0-9][0-9]-*.sh))
->> =20
->>  all: $(DEFAULT_TEST_TARGET)
->> =20
->> -test: pre-clean $(TEST_LINT)
->> +test: pre-clean test-lint-shell-syntax $(TEST_LINT)
->>  	$(MAKE) aggregate-results-and-cleanup
->=20
-> I do not think it should be a hard-coded dependency of "test", as the=
-n
-> there is no way to turn it off. It would make more sense to me to set=
- a
-> default TEST_LINT that includes it, but could be overridden by the us=
-er.
->=20
->>  prove: pre-clean $(TEST_LINT)
->> @@ -43,7 +43,7 @@ clean-except-prove-cache:
->>  clean: clean-except-prove-cache
->>  	$(RM) .prove
->> =20
->> -test-lint: test-lint-duplicates test-lint-executable
->> +test-lint: test-lint-duplicates test-lint-executable test-lint-shel=
-l-syntax
->=20
-> This, however, is right. The point of "test-lint" is "use all the lin=
-t",
-> so adding it here makes sense (and anyone who has set "TEST_LINT =3D
-> test-lint" will get the new check).
->=20
->> +test-lint-shell-syntax:
->> +	$(PERL_PATH) check-non-portable-shell.pl $(T)
->=20
-> This is wrong if $(PERL_PATH) contains spaces, no? Doing "$(PERL_PATH=
-)"
-> is also wrong, because the expansion happens in 'make', and a
-> $(PERL_PATH) with double-quotes would fool the shell. Since we export
-> $PERL_PATH, I think doing:
->=20
->   "$$PERL_PATH"" check-non-portable-shell.pl $(T)
-Thanks, but:            =20
-- The double "" after PERL_PATH makes the string un-terminated.
+Gr=C3=A9gory Pakosz <gpakosz@visionobjects.com> writes:
 
-- Using "$$PERL_PATH" expands from make into "$PERL_PATH" on the comman=
-d line
+> So we have an annotated tag that points to a commit that is rewritten
+> to nothing as the result of the filtering. What should happen?
 
-- If the Makefile looks like this:
-PERL_PATH =3D "/Users/tb/projects/git/tb/pe rl"
-[snip]
-$(PERL_PATH) check-non-portable-shell.pl $(T)
-The command line will look like this:
-"/Users/tb/projects/git/tb/pe rl" check-non-portable-shell.pl t0000-bas=
-ic.sh ...
+If the user asked to filter that tag itself, it may make sense to
+remove it, rather than keeping it pointing at the original commit,
+because the commit it used to point at no longer exists in the
+alternate history being created by filter-branch.
 
-So I think that PERL_PATH should be quoted when it is defined in the Ma=
-kefile.
+> It's basically the same problem. In my opinion, lines 447-466 should
+> take into account $new_sha1 is empty.
 
-[snip]
-Peff, many thanks. Please see V2 patch comming soon
+Yeah, I think that is a sensible observation.
+
+Having said that, I welcome comments from others, of course.  My
+involvement in this script has been very limited.
