@@ -1,74 +1,92 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC] pack-objects: compression level for non-blobs
-Date: Wed, 2 Jan 2013 09:23:39 +0700
-Message-ID: <CACsJy8D0fQ4-DiLx=mqm16Om829Zcno2oTi5F1c78H615-Hivw@mail.gmail.com>
-References: <1353911154-23495-1-git-send-email-b@rr-dav.id.au>
- <20121229004104.GA24828@sigill.intra.peff.net> <CACsJy8D_E0shqJAvZH7xqij6F4a6qUxkUPNcZL=0yX5w9bLd_g@mail.gmail.com>
- <20121229050707.GA14475@sigill.intra.peff.net> <CACsJy8AN3y_4wcZ_w0zz+ZAaDasRT-+h8vA_fp2j4+FL00dbLw@mail.gmail.com>
- <20121229052747.GA14928@sigill.intra.peff.net> <20121230120542.GA10820@sigill.intra.peff.net>
- <CACsJy8C4UttGKcw11do1POcHZJM7iZ2r7F3ESOqEnWL8kdz+dQ@mail.gmail.com>
- <20121230213124.GA15946@sigill.intra.peff.net> <CAJo=hJtjtpiPVd6Koy9q5je7s7A4EyDa-CptJNCnHLSLgd9W7g@mail.gmail.com>
- <CACsJy8CygfaM+Ee6rURFB-cP2khO8URGDJMG2f3mqg0ebYz+8Q@mail.gmail.com>
- <CACsJy8DpnO6X6jdQVsr1NwrXF2MDBBcHZQTay=TyLFc5p_z9eg@mail.gmail.com> <CAJo=hJsZedd0kfYJnXPhcud8bz3mgU0NMf6O6-_PY1yqv-EfDg@mail.gmail.com>
+From: Dan McGee <dan@archlinux.org>
+Subject: Test failures with python versions when building git 1.8.1
+Date: Tue, 1 Jan 2013 22:12:17 -0600
+Message-ID: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, David Michael Barr <b@rr-dav.id.au>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jan 02 03:24:35 2013
+To: GIT Mailing-list <git@vger.kernel.org>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Michael Barr <b@rr-dav.id.au>
+X-From: git-owner@vger.kernel.org Wed Jan 02 05:12:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqE0M-0001hu-Nh
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 03:24:31 +0100
+	id 1TqFh1-0007Oc-6a
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 05:12:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752484Ab3ABCYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2013 21:24:11 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:63005 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752415Ab3ABCYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2013 21:24:10 -0500
-Received: by mail-ob0-f181.google.com with SMTP id oi10so12158210obb.40
-        for <git@vger.kernel.org>; Tue, 01 Jan 2013 18:24:09 -0800 (PST)
+	id S1752540Ab3ABEMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2013 23:12:20 -0500
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:35551 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752525Ab3ABEMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2013 23:12:18 -0500
+Received: by mail-vc0-f177.google.com with SMTP id m8so13752176vcd.22
+        for <git@vger.kernel.org>; Tue, 01 Jan 2013 20:12:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cvpAFca/VMe5V10epvhjGG5Z7y3j4up7evV+b0JZB0Q=;
-        b=GzGNxWuQ0txDTpee+Z34Qn3e/TWYMZ9zSoXGU7zwoIX8WBc45EJ37UruW7Abz4b+xv
-         /G+sX6vMwn/HTpDk5m7MBproIIW+M6Dx4HnUkZRy7GQa6t40lkIyoQtv8K7mQI++7PvT
-         50Hxy67lg1EXvracVxGijD4TQJ9z/iedJfuwunSCRHvDA0T9bkYKaKusLYPojNvpp4kK
-         ClABXfDP9rCfbw3A1+Kn032J9YNqjAYQkmUC45ZLTI/9EBQqJzhiW6Owk39bY/RLswbh
-         jWKAfpFlr3EgfSTaIkHb2atlRstuaCMPKT7TMXfiKZc7OlPPCf26MSux46Fnl88kAXMX
-         +kJA==
-Received: by 10.182.212.2 with SMTP id ng2mr36342346obc.81.1357093449153; Tue,
- 01 Jan 2013 18:24:09 -0800 (PST)
-Received: by 10.182.27.168 with HTTP; Tue, 1 Jan 2013 18:23:39 -0800 (PST)
-In-Reply-To: <CAJo=hJsZedd0kfYJnXPhcud8bz3mgU0NMf6O6-_PY1yqv-EfDg@mail.gmail.com>
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=JyzqoYPAT1bXzeeAShq+tsu9oIBAi5NGZpM8NV3Wmq8=;
+        b=BjbSLp0wRsgcg1tYkLVR+INmh+bXxoMf83aJa8nXnMWtPYn7Zq2RFo6Mhd9/xgDmH/
+         IoahVsdVNDbJ2mJrljU3UPvTlA7QPu9ZMYRUE40sMY8KhngKqhxgyGwD5s3eq7EX/T/h
+         ot47w6s/nFtvjUH6otWkgrMCOK4b5sdd0ONc3KHAoreT4vFzQ4ShYTudvcnJ9hbJ0gfN
+         GJIysIOlr1/LlWSxtXmajT7/hAJ/8YvuUJbEne//ErGKdJs/EvTMSYmvIXc4fBaUCW+S
+         yBn/6Cc/vFaRS8bYpCxnuKyYkAa4TobVw/zbK/NjpnCkBZ+BA9IVE++2vsSfRDqZZeVl
+         iQUQ==
+Received: by 10.59.6.39 with SMTP id cr7mr72354689ved.17.1357099937799; Tue,
+ 01 Jan 2013 20:12:17 -0800 (PST)
+Received: by 10.58.34.11 with HTTP; Tue, 1 Jan 2013 20:12:17 -0800 (PST)
+X-Google-Sender-Auth: ZyB-riWlf1-jElq7i0VTYJVulSM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212490>
 
-On Wed, Jan 2, 2013 at 12:17 AM, Shawn Pearce <spearce@spearce.org> wrote:
->> And I was wrong. At least since 1b4bb16 (pack-objects: optimize
->> "recency order" - 2011-06-30) commits are spread out and can be mixed
->> with trees too. Grouping them back defeats what Junio did in that
->> commit, I think.
->
-> I think you misunderstand what 1b4bb16 does. Junio uses a layout
-> similar to what JGit has done for years. Commits are packed, then
-> trees, then blobs. Only annotated tags are interspersed with commits.
-> The decision on where to place tags is different, but has a similar
-> purpose.
+A test case snuck in this release that assumes /usr/bin/python is
+python2 and causes test failures. Unlike all other tests and code
+depending on python, this one does not respect PYTHON_PATH, which we
+explicitly set when building git on Arch Linux due to python2 vs
+python3 differences.
 
-This is embarrassing. I looked at verify-pack output and somehow saw
-trees mixed with commits. I must have read it wrong. "git verify-pack
--v <pack>|awk '{print $2;}'|uniq on recently created pack shows that
-only tags and commits are mixed. Sorry for the noise.
--- 
-Duy
+-Dan
+
+make[1]: Entering directory `/build/src/git-1.8.1/t'
+rm -f -r test-results
+*** prove ***
+
+Test Summary Report
+-------------------
+t9020-remote-svn.sh                              (Wstat: 256 Tests: 6 Failed: 4)
+  Failed tests:  1-2, 5-6
+  Non-zero exit status: 1
+Files=608, Tests=8772, 76 wallclock secs ( 4.07 usr  0.65 sys + 91.83
+cusr 37.14 csys = 133.69 CPU)
+Result: FAIL
+make[1]: *** [prove] Error 1
+make[1]: Leaving directory `/build/src/git-1.8.1/t'
+make: *** [test] Error 2
+
+
+$ contrib/svn-fe/svnrdump_sim.py
+  File "contrib/svn-fe/svnrdump_sim.py", line 43
+    print "usage: %s dump URL -rLOWER:UPPER"
+                                           ^
+SyntaxError: invalid syntax
+
+diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
+index 1cfac4a..7e6148d 100755
+--- a/contrib/svn-fe/svnrdump_sim.py
++++ b/contrib/svn-fe/svnrdump_sim.py
+@@ -40,7 +40,7 @@ def writedump(url, lower, upper):
+
+ if __name__ == "__main__":
+         if not (len(sys.argv) in (3, 4, 5)):
+-                print "usage: %s dump URL -rLOWER:UPPER"
++                print("usage: %s dump URL -rLOWER:UPPER")
+                 sys.exit(1)
+         if not sys.argv[1] == 'dump': raise NotImplementedError('only
+"dump" is suppported.')
+         url = sys.argv[2]
