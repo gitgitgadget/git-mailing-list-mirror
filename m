@@ -1,85 +1,153 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH v2] build: do not automatically reconfigure unless configure.ac
- changed
-Date: Wed, 02 Jan 2013 15:13:47 +0100
-Message-ID: <50E4409B.4070203@gmail.com>
-References: <CANiSa6jt7_ixi7L6U9sfpV2mvT_7zgYV+m+sLiXjkDsFehAuwA@mail.gmail.com> <20130102072141.GB18974@elie.Belkin> <CANiSa6iMea95ELqS3-w01bL=LTgE9Cx6+8sXK=s-pPPFwjGCCA@mail.gmail.com> <20130102082544.GD18974@elie.Belkin> <20130102083837.GA9328@sigill.intra.peff.net> <20130102084807.GB22919@elie.Belkin>
+From: Dan McGee <dan@archlinux.org>
+Subject: Re: Test failures with python versions when building git 1.8.1
+Date: Wed, 2 Jan 2013 08:18:12 -0600
+Message-ID: <CAEik5nMRAoHdx166Q7Zb5Yve6DiyVgN6EXQWGF=GgUtSyjiuSA@mail.gmail.com>
+References: <CAEik5nOqge8ix4WGf-h+0Dmz1CanH_XtQdB-CxvPsggSu1-LzQ@mail.gmail.com>
+	<7va9ss5fhq.fsf@alter.siamese.dyndns.org>
+	<20130102065345.GA8685@sigill.intra.peff.net>
+	<7v1ue459yh.fsf@alter.siamese.dyndns.org>
+	<20130102085935.GB9328@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martinvonz@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 15:14:15 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Michael Barr <b@rr-dav.id.au>,
+	"Eric S. Raymond" <esr@thyrsus.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 02 15:18:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqP5B-0000mL-3F
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 15:14:13 +0100
+	id 1TqP9P-0002gF-Jm
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 15:18:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694Ab3ABONz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 09:13:55 -0500
-Received: from mail-bk0-f44.google.com ([209.85.214.44]:58702 "EHLO
-	mail-bk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752627Ab3ABONx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 09:13:53 -0500
-Received: by mail-bk0-f44.google.com with SMTP id w11so6046734bku.3
-        for <git@vger.kernel.org>; Wed, 02 Jan 2013 06:13:52 -0800 (PST)
+	id S1752709Ab3ABOSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 09:18:17 -0500
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:39301 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752627Ab3ABOSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 09:18:15 -0500
+Received: by mail-vc0-f181.google.com with SMTP id gb30so13988762vcb.26
+        for <git@vger.kernel.org>; Wed, 02 Jan 2013 06:18:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=pF+/QAA2EBrGve+0O3thTYNca8YoJkWWAP0rhg7WA6s=;
-        b=HIiIn4NkA0661B4EjkwucIEE9gb428L8YH1h8kpWG0Z/ortzyLX1jDvZu2gI5Zpnmz
-         Xqt79hHNiWXlquPmtuK6Fl8+jYE0MllGOcRHJV2QTfJb1R5mQcnidIm/gIkBmHvVDIKF
-         f4RErvI3Vi9fTxscvxCQUC0GSdzHbMnpBQJgt+vLOk5+8UF5LmkNEF6/NGPzj9bBm144
-         DPlrvIjBrglAk8dh17ZOnLk/sFERB8zqbfzkQKclWR7ReVaLNV7hK3mQBp8EotN4Uxqq
-         vt5zMM8JV4llLktnuPf8CtauRQzgQ8zDE+YJYuUaifRGhxyglitKBmS7/mOVSNuOUbmQ
-         u4/w==
-X-Received: by 10.204.5.211 with SMTP id 19mr21922300bkw.42.1357136032055;
-        Wed, 02 Jan 2013 06:13:52 -0800 (PST)
-Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
-        by mx.google.com with ESMTPS id d16sm31299303bkw.2.2013.01.02.06.13.49
-        (version=SSLv3 cipher=OTHER);
-        Wed, 02 Jan 2013 06:13:51 -0800 (PST)
-In-Reply-To: <20130102084807.GB22919@elie.Belkin>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=vYYb5oDnvZ2bHaDgfiaqN06y0QnQOr/U1gKEw7GzCUQ=;
+        b=nMyf71VzhxHCzMX6Pxw9FGT/ifsrKIWeM0zA8fbq/3VQeSJORqdmK5XjoxgQhyawsZ
+         2vKPcyVeS5Y60MZPYY4QDBSstxzbGKEniDyyJQm5eFl6yZYc6cDxGz9Filzw3nOZnTER
+         wB/3s59YGCbscBiVN+NrFjNnqCBCfOW6nB1uW4TtHjsPrJDKNIDqOp9G2ohj28uvUsw1
+         7MiQKz7wi8ut44Te8GqpxmyRYUcy+D3y8jGNf9vuAbiNLZ8JmLWaPg8yykks0jMdFGb+
+         lgvz4+AebnsQ7uv9AQeIBFra9CAwEBWHFNRuZB3HFh8FQ59iwXhlGKa93ZmNpcnu393a
+         42sQ==
+Received: by 10.52.88.19 with SMTP id bc19mr31236004vdb.67.1357136292920; Wed,
+ 02 Jan 2013 06:18:12 -0800 (PST)
+Received: by 10.58.34.11 with HTTP; Wed, 2 Jan 2013 06:18:12 -0800 (PST)
+In-Reply-To: <20130102085935.GB9328@sigill.intra.peff.net>
+X-Google-Sender-Auth: YCFrQvjE9_5S4OVwnZUY_pP6JEI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212515>
 
-On 01/02/2013 09:48 AM, Jonathan Nieder wrote:
-> Jeff King wrote:
-> 
->> It seems I am late to the party. But FWIW, this looks the most sane to
->> me of the patches posted in this thread.
-> 
-> Thanks.  config.status runs ./configure itself, though, so the rule
-> should actually be
-> 
-> 	config.status: configure.ac
-> 		$(QUIET_GEN)$(MAKE) configure && \
-> 		if test -f config.status; then \
-> 		  ./config.status --recheck; \
-> 		else \
-> 		  ./configure;
-> 		fi
-> 
-> Rather than screw it up yet again, I'm going to sleep. :)  If someone
-> else corrects the patch before tomorrow, I won't mind.
+On Wed, Jan 2, 2013 at 2:59 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jan 01, 2013 at 11:18:46PM -0800, Junio C Hamano wrote:
 >
-FYI, this seems a sane approach to me.  At least until Autoconf is
-improved to offer better (read: some :-) support to "dynamic" package
-version numbers specified at configure runtime.  I hope that day
-isn't too far, since the current Autoconf limitation has been causing
-its share of annoyances small woes in Automake and Gnulib as well.
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > [1] This symlink is doubly wrong, because any use of symbolic links
+>> >     in the test scripts needs to depend on the SYMLINKS prereq, and this
+>> >     does not.
+>>
+>> Yeah, I think we have discussed this once already in
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/210688/focus=210714
+>
+> Thanks for the pointer; it looks like nothing productive came of the
+> earlier discussion. To give a hat trick of failure to this line of code,
+> I notice that the existing code also does not properly put quotes around
+> $GIT_BUILD_DIR.
+>
+>> > [2] In both the current code and what I showed above, the test scripts
+>> >     depend on things in contrib/. This is probably a bad idea in
+>> >     general, as the quality of what goes into contrib is not as closely
+>> >     watched (especially with respect to things like portability).
+>> >     Certainly I would not have known to look more carefully at a patch
+>> >     to contrib/svn-fe for breakage to the test suite.
+>>
+>> As long as such tests are made skippable with appropriate
+>> prerequisites, I do not think it is bad to have their tests in t/; I
+>> would say it is rather better than having them in contrib/ and leave
+>> it not run by anybody, which happened to some of the stuff in
+>> contrib/ already.
+>
+> Good point. While my sense of decorum wants to keep contrib totally
+> split out, from a practical point of view, it is better to have more
+> people run the tests and report failures than not.
+>
+> Whether we end up doing something with contrib and tests or not, the
+> patch below gives a minimal fix in the meantime. Dan, does it fix your
+> problem?
 
-The only nit I have to offer is that I'd like to see more comments in
-the git Makefile about why this "semi-hack" is needed.
+This works great now, thanks! I ran it through our package build
+scripts and all tests now pass as expected.
 
-Thanks,
-  Stefano
+Signed-off-by: Dan McGee <dan@archlinux.org>
+
+> -- >8 --
+> Subject: [PATCH] t9020: don't run python from $PATH
+>
+> In t9020, we symlink in a python script from contrib to help
+> with the testing. However, we don't munge its #!-line, which
+> means we may run the wrong python (we want the one in
+> PYTHON_PATH). On top of this, we use a symlink without
+> checking the SYMLINKS prereq, and we fail to properly quote
+> GIT_BUILD_DIR, which may have spaces.
+>
+> Instead of symlinking, let's just write a small script which
+> will feed the contrib script to PYTHON_PATH. To avoid
+> quoting issues, we just export the variables the script
+> needs to run.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t9020-remote-svn.sh | 5 ++++-
+>  t/test-lib.sh         | 2 +-
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t9020-remote-svn.sh b/t/t9020-remote-svn.sh
+> index 4f2dfe0..416623b 100755
+> --- a/t/t9020-remote-svn.sh
+> +++ b/t/t9020-remote-svn.sh
+> @@ -14,7 +14,10 @@ export PATH="$HOME:$PATH"
+>
+>  # We override svnrdump by placing a symlink to the svnrdump-emulator in .
+>  export PATH="$HOME:$PATH"
+> -ln -sf $GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py "$HOME/svnrdump"
+> +export GIT_BUILD_DIR
+> +write_script svnrdump <<\EOF
+> +exec "$PYTHON_PATH" "$GIT_BUILD_DIR"/contrib/svn-fe/svnrdump_sim.py "$@"
+> +EOF
+>
+>  init_git () {
+>         rm -fr .git &&
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index f50f834..c17db19 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -45,7 +45,7 @@ fi
+>  fi
+>
+>  . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+> -export PERL_PATH SHELL_PATH
+> +export PERL_PATH SHELL_PATH PYTHON_PATH
+>
+>  # if --tee was passed, write the output not only to the terminal, but
+>  # additionally to the file test-results/$BASENAME.out, too.
+> --
+> 1.8.1.rc3.4.gf3a2f57
+>
