@@ -1,110 +1,122 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
- bugs.
-Date: Wed, 2 Jan 2013 17:28:49 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20130102222849.GA21105@thyrsus.com>
-References: <20130101172645.GA5506@thyrsus.com>
- <7vfw2k8t7k.fsf@alter.siamese.dyndns.org>
- <20130102003344.GA9651@thyrsus.com>
- <20130102080247.GA20002@elie.Belkin>
- <20130102105919.GA14391@thyrsus.com>
- <20130102153933.GA30813@elie.Belkin>
- <20130102161848.GA18447@thyrsus.com>
- <CACPiFCKDoAoKxM4YU6uKoOGcDgLbXnCoUMO5iyf-wCWXh3j70A@mail.gmail.com>
- <20130102164107.GA19006@thyrsus.com>
- <CACPiFCKNkpaf6CgU=5rn1dyUSG2KV43oeTKJgRsSh9-Rhtq3Kw@mail.gmail.com>
-Reply-To: esr@thyrsus.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 23:29:58 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] format-patch: give --reroll-count a short synonym -v
+Date: Wed,  2 Jan 2013 14:42:05 -0800
+Message-ID: <1357166525-12188-2-git-send-email-gitster@pobox.com>
+References: <1357166525-12188-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 02 23:42:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqWos-0003E1-Ut
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 23:29:55 +0100
+	id 1TqX16-0000Yn-NR
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jan 2013 23:42:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752735Ab3ABW3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2013 17:29:37 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:39229
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752707Ab3ABW3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 17:29:35 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id DF5FF4415C; Wed,  2 Jan 2013 17:28:49 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CACPiFCKNkpaf6CgU=5rn1dyUSG2KV43oeTKJgRsSh9-Rhtq3Kw@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752784Ab3ABWmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 17:42:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59539 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752762Ab3ABWmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 17:42:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC9D9A33D
+	for <git@vger.kernel.org>; Wed,  2 Jan 2013 17:42:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ASPI
+	vJwWddhIZGe34NPNSgS6SNw=; b=PeWBuHFuHFrrxdfeD/rMVPlCJQKuHPbTYedi
+	L8jNiA+bNT4vaadjwbuhOsB443bw3QsehJJkW9Dgsdd2MUumVpcCOISLLW3JpRkH
+	ckF7b/IqwYYhY0Rglr+VyFMspUBRkkQUkkzNSPrhnzNopRwSYq81YKTp76r8cRxV
+	tkja+u8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Fx3B/t
+	YkWurvJqLIPw61rTLOAluznoNp9EIKZhQ/O11SXg8z8A1fBL4BVx9FAtYTwdvmlS
+	kapy5EAiu746q6yPGqTnazVAN7AVZ1jDdRoPamCRRBIQueM7/fXyFEISAm1ksq0F
+	mqbGRIELMvdXapU/XTx9zUED8WZDBi+r9n75A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDBE1A33C
+	for <git@vger.kernel.org>; Wed,  2 Jan 2013 17:42:09 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 699DCA33B for
+ <git@vger.kernel.org>; Wed,  2 Jan 2013 17:42:09 -0500 (EST)
+X-Mailer: git-send-email 1.8.1.203.gc241474
+In-Reply-To: <1357166525-12188-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: A4633D22-552D-11E2-96D5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212548>
 
-Martin Langhoff <martin.langhoff@gmail.com>:
-> I dealt with enough CVS repos to see that the branch point could be
-> ambiguous, and that some cases were incurably ugly and ambiguous.
+Accept "-v" as a synonym to "--reroll-count", so that users can say
+"git format-patch -v4 master", instead of having to fully spell it
+out as "git format-patch --reroll-count=4 master".
 
-You are quite right, but you have misintepreted the subject of my
-confidence.  I am under no illusion that the new cvsimport/cvsps 
-pair is a perfect solution to the CVS-lifting problem, nor even that
-such a solution is possible.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * As I do not think of a reason why users would want to tell the
+   command to be "verbose", I think it may be OK to squat on the
+   short and sweet single letter option, but I do not mind dropping
+   it.
 
-> My best guess is that you haven't dealt with enough ugly CVS repos. I
-> used to have the old original X.org repos, but no more. Surely
-> Mozilla's fugly old CVS repos are up somewhere, and may be
-> therapeutic.
+ Documentation/git-format-patch.txt | 3 ++-
+ builtin/log.c                      | 2 +-
+ t/t4014-format-patch.sh            | 8 ++++++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-Thanks, but since I wrote reposurgeon in 2010 I've done more conversions
-of messy CVS and Subversion repositories than I can easily remember (the
-Subversion ones being relevant because they often have truly nasty CVS
-artifacts in their early history).  Just off the top of my head there's
-been gpsd, the Network Utility Tools, Roundup, SSTK2000, the Hercules 
-project, and robotfindskitten.  And a raft of smaller projects - I sought
-them out as torture tests for reposurgeon.
-
-I am therefore intimately, painfully familiar with how bad CVS repos
-can get.  I take it as given that there are still boojums that will
-perplex my tools lurking out there in the unexplored jungle.
-
-In fact, this very kind of prior experience had been a major
-motivation for reposurgeon.  I became convinced several years back
-that the batchy design philosophy of conventional repo-conversion
-tools was flawed, not flexible enough to deal with the real-world
-messes out there.  So I wrote reposurgeon to amplify human judgment
-rather than try to replace it.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 736d8bf..ae3212e 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
+ 		   [--ignore-if-in-upstream]
+-		   [--subject-prefix=Subject-Prefix] [--reroll-count <n>]
++		   [--subject-prefix=Subject-Prefix] [(--reroll-count|-v) <n>]
+ 		   [--to=<email>] [--cc=<email>]
+ 		   [--cover-letter] [--quiet]
+ 		   [<common diff options>]
+@@ -166,6 +166,7 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	allows for useful naming of a patch series, and can be
+ 	combined with the `--numbered` option.
  
-An example of the batchiness mistake close to home is the -m and -M
-options in the old version of cvsimport.  It takes human judgment
-looking at the whole commit DAG in gitspace to decide what merge
-points would best express the (as you say, sometimes ambiguous) CVS
-history - what's needed is a scalpel and sutures in a surgeon's hand,
-not a regexp hammer.
-
-For extended discussion, see my blog post "Repositories In
-Translation" at http://esr.ibiblio.org/?p=3859 in which I argue that
-the process has much more in common with the ambiguity of literary
-translation than is normally understood.
-
-No, what I am very confident about is the performance and stability of
-the new cvsps/cvsimport code on *the cases the old code handled* - and
-a fairly well-defined larger group of many more cases.
-
-My confidence is derived from having built a test suite that
-incorporates and improves on the git-tree tests. I don't have to merely
-guess or hope that the new code works better, I can exhibit tests
-that demonstrate it.
-
-Among my near-term to-do items are applying those tests to cvs2git and
-parsecvs.  But I first need to get parsecvs working again; presently, as I've
-inherited it, it does not correctly create a HEAD reference in the
-translated git repo.
++-v <n>::
+ --reroll-count=<n>::
+ 	Mark the series as the <n>-th iteration of the topic. The
+ 	output filenames have `v<n>` pretended to them, and the
+diff --git a/builtin/log.c b/builtin/log.c
+index e101498..08e8a9d 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1081,7 +1081,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    N_("use <sfx> instead of '.patch'")),
+ 		OPT_INTEGER(0, "start-number", &start_number,
+ 			    N_("start numbering patches at <n> instead of 1")),
+-		OPT_INTEGER(0, "reroll-count", &reroll_count,
++		OPT_INTEGER('v', "reroll-count", &reroll_count,
+ 			    N_("mark the series as Nth re-roll")),
+ 		{ OPTION_CALLBACK, 0, "subject-prefix", &rev, N_("prefix"),
+ 			    N_("Use [<prefix>] instead of [PATCH]"),
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 0ff9958..03b8e51 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -245,6 +245,14 @@ test_expect_success 'reroll count' '
+ 	! grep -v "^Subject: \[PATCH v4 [0-3]/3\] " subjects
+ '
+ 
++test_expect_success 'reroll count (-v)' '
++	rm -fr patches &&
++	git format-patch -o patches --cover-letter -v 4 master..side >list &&
++	! grep -v "^patches/v4-000[0-3]-" list &&
++	sed -n -e "/^Subject: /p" $(cat list) >subjects &&
++	! grep -v "^Subject: \[PATCH v4 [0-3]/3\] " subjects
++'
++
+ check_threading () {
+ 	expect="$1" &&
+ 	shift &&
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.8.0.9.g5e84801
