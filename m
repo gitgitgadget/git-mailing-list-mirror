@@ -1,94 +1,220 @@
-From: Zoltan Klinger <zoltan.klinger@gmail.com>
-Subject: Re: [PATCH v3] git-clean: Display more accurate delete messages
-Date: Fri, 4 Jan 2013 10:21:45 +1100
-Message-ID: <CAKJhZwS6VUwWoX1QmNL19asNt1B3dPsDeg5-JTzq8FMd1WYkSw@mail.gmail.com>
-References: <1357091159-22080-1-git-send-email-zoltan.klinger@gmail.com>
-	<7vfw2j2vlp.fsf@alter.siamese.dyndns.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Lockless Refs?  (Was [PATCH] refs: do not use cached refs in repack_without_ref)
+Date: Thu, 3 Jan 2013 16:52:44 -0700
+Organization: CAF
+Message-ID: <201301031652.44982.mfick@codeaurora.org>
+References: <20121221080449.GA21741@sigill.intra.peff.net> <201212271611.52203.mfick@codeaurora.org> <201212310330.53835.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 04 00:29:46 2013
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <sop@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 04 00:53:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TquEJ-0001Z6-Jo
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 00:29:43 +0100
+	id 1Tqub9-0004Bg-IC
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 00:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab3ACX3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 18:29:25 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:60040 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753847Ab3ACX3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 18:29:23 -0500
-Received: by mail-ie0-f175.google.com with SMTP id qd14so19063352ieb.34
-        for <git@vger.kernel.org>; Thu, 03 Jan 2013 15:29:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jor06Z89V4MVrXAnh2PAdiPNaCEDyj61iJDylNZTbr8=;
-        b=WAEmzSBUDuiAwXkl+WJ7ZnE4tRFChycNjpC+oPIsFG6JTUREg/rK6X+rGI1qDK7xAh
-         m5M6RZvyJ2PeepOv2GictT43VxnU9CCVKIHTfACaijJ9ghEpGD8AHdvhEs3A6+jVb0sT
-         X3fMC3Oe9bwT0juO/TV7xVJOstZNtXNmSlcKx2KgP46u5lLuNOLDP8MWV8E/5yT2E++x
-         xIZr6kF88GRs9lnbeUUVD89as7+xfaY15/b21XtQSREDzOmyZva7KU3+BOxGOe3qBVXP
-         F6lU5bDnJmkKqFfjF86xSVFQt4CjlrY5yaaon0iNfaUUIvc0HXzbf4uYOoDv0/EdjnFw
-         VVSQ==
-Received: by 10.50.7.135 with SMTP id j7mr40507142iga.82.1357255306155; Thu,
- 03 Jan 2013 15:21:46 -0800 (PST)
-Received: by 10.50.13.104 with HTTP; Thu, 3 Jan 2013 15:21:45 -0800 (PST)
-In-Reply-To: <7vfw2j2vlp.fsf@alter.siamese.dyndns.org>
+	id S1754141Ab3ACXxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 18:53:00 -0500
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:57635 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754009Ab3ACXw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 18:52:59 -0500
+X-IronPort-AV: E=Sophos;i="4.84,405,1355126400"; 
+   d="scan'208";a="17642326"
+Received: from pdmz-ns-snip_115_219.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.115.219])
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 03 Jan 2013 15:52:45 -0800
+Received: from mfick-laptop.localnet (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 9637910004BE;
+	Thu,  3 Jan 2013 15:52:45 -0800 (PST)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-41-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <201212310330.53835.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212620>
 
-> The updated code structure is much nicer than the previous round,
-> but I am somewhat puzzled how return value of remove_dirs() and
-> &gone relate to each other.  Surely when gone is set to zero,
-> remove_dirs() is reporting that the directory it was asked to remove
-> recursively did not go away, so it must report failure, no?  Having
-> the &gone flag looks redundant and checking for gone in some places
-> while checking for the return value for others feels like an
-> invitation for future bugs.
+Any thoughts on this idea?  Is it flawed?  I am trying to 
+write it up in a more formal generalized manner and was 
+hoping to get at least one "it seems sane" before I do.
 
-The return value of remove_dirs() has an overall effect on the exit
-code of git-clean, and &gone indicates whether the directory we asked
-remove_dirs() to delete was actually removed. If all goes well  in
-remove_dirs() the return code is 0 and gone flag is 1. If file or
-subdirectory delete fails return code is 1 and the gone flag is set to
-0. The special case is when remove_dirs() is asked to remove an
-untracked git repo that should be ignored. In this case remove_dirs()
-is not going to remove the directory so the gone flag is set to zero
-but it is not an error so the return value will be set to zero too.
+Thanks,
 
-> Also the remove_dirs() function seems to replace the use of
-> remove_dir_recurse() from dir.c by copying large part of it, with
-> error message sprinkled.  Does remove_dir_recurse() still get used
-> by other codepaths?  If so, do the remaining callsites benefit from
-> using this updated version?
+-Martin
 
-In dir.c the remove_dir_recurse() is a private function that is called
-by the public remove_dir_recursively() wrapper function. The
-remove_dir_recursively() function is called from the following places:
-
-    builtin/clone.c:387:
-    builtin/clone.c:392:
-    builtin/rm.c:349:
-    notes-merge.c:771:
-    refs.c:1527:
-    sequencer.c:27:
-    transport.c:247:
-    transport.c:393:
-
-The messages that remove_dirs() prints out are very specific to
-git-clean and they are not really relevant in the above places where
-remove_dir_recursively() is called from. Also, the remove logic for
-files is slightly different in remove_dirs() when it comes to handling
-a failed file delete. While remove_dirs() continues removing other
-files in the same directory upon failure, remove_dir_recurse() will
-stop at the first error. So perhaps having the remove_dirs() in
-builtin/clean.c is OK.
+On Monday, December 31, 2012 03:30:53 am Martin Fick wrote:
+> On Thursday, December 27, 2012 04:11:51 pm Martin Fick 
+wrote:
+> > It concerns me that git uses any locking at all, even
+> > for refs since it has the potential to leave around
+> > stale locks.
+> > ...
+> > [a previous not so great attempt to fix this]
+> > ...
+> 
+> I may have finally figured out a working loose ref update
+> mechanism which I think can avoid stale locks. 
+> Unfortunately it requires atomic directory renames and
+> universally unique identifiers (uuids).  These may be
+> no-go criteria?  But I figure it is worth at least
+> exploring this idea because of the potential benefits?
+> 
+> The general approach is to setup a transaction and either
+> commit or abort it.  A transaction can be setup by
+> renaming an appropriately setup directory to the
+> "ref.lock" name.  If the rename succeeds, the transaction
+> is begun.  Any actor can abort the transaction (up until
+> it is committed) by simply deleting the "ref.lock"
+> directory, so it is not at risk of going stale.  However,
+> once the actor who sets up the transaction commits it,
+> deleting the "ref.lock" directory simply aids in cleaning
+> it up for the next transaction (instead of aborting it).
+> 
+> One important piece of the transaction is the use of
+> uuids. The uuids provide a mechanism to tie the atomic
+> commit pieces to the transactions and thus to prevent
+> long sleeping process from inadvertently performing
+> actions which could be out of date when they wake finally
+> up.  In each case, the atomic commit piece is the
+> renaming of a file.   For the create and update pieces, a
+> file is renamed from the "ref.lock" dir to the "ref" file
+> resulting in an update to the sha for the ref. However,
+> in the delete case, the "ref" file is instead renamed to
+> end up in the "ref.lock" directory resulting in a delete
+> of the ref.  This scheme does not affect the way refs are
+> read today,
+> 
+> To prepare for a transaction, an actor first generates a
+> uuid (an exercise I will delay for now).  Next, a tmp
+> directory named after the uuid is generated in the parent
+> directory for the ref to be updated, perhaps something
+> like:  ".lock_uuid". In this directory is places either a
+> file or a directory named after the uuid, something like:
+> ".lock_uuid/,uuid".  In the case of a create or an
+> update, the new sha is written to this file.  In the case
+> of a delete, it is a directory.
+> 
+> Once the tmp directory is setup, the initiating actor
+> attempts to start the transaction by renaming the tmp
+> directory to "ref.lock".  If the rename fails, the update
+> fails. If the rename succeeds, the actor can then attempt
+> to commit the transaction (before another actor aborts
+> it).
+> 
+> In the case of a create, the actor verifies that "ref"
+> does not currently exist, and then renames the now named
+> "ref.lock/uuid" file to "ref". On success, the ref was
+> created.
+> 
+> In the case of an update, the actor verifies that "ref"
+> currently contains the old sha, and then also renames the
+> now named "ref.lock/uuid" file to "ref". On success, the
+> ref was updated.
+> 
+> In the case of a delete, the actor may verify that "ref"
+> currently contains the sha to "prune" if it needs to, and
+> then renames the "ref" file to "ref.lock/uuid/delete". On
+> success, the ref was deleted.
+> 
+> Whether successful or not, the actor may now simply delete
+> the "ref.lock" directory, clearing the way for a new
+> transaction.  Any other actor may delete this directory at
+> any time also, likely either on conflict (if they are
+> attempting to initiate a transaction), or after a grace
+> period just to cleanup the FS.  Any actor may also safely
+> cleanup the tmp directories, preferably also after a grace
+> period.
+> 
+> One neat part about this scheme is that I believe it would
+> be backwards compatible with the current locking
+> mechanism since the transaction directory will simply
+> appear to be a lock to older clients.  And the old lock
+> file should continue to lock out these newer
+> transactions.
+> 
+> Due to this backwards compatibility, I believe that this
+> could be incrementally employed today without affecting
+> very much.  It could be deployed in place of any updates
+> which only hold ref.locks to update the loose ref.  So
+> for example I think it could replace step 4a below from
+> Michael Haggerty's description of today's loose ref
+> pruning during
+> 
+> ref packing:
+> > * Pack references:
+> ...
+> 
+> > 4. prune_refs(): for each ref in the ref_to_prune list,
+> > 
+> > call  prune_ref():
+> >     a. Lock the reference using lock_ref_sha1(),
+> >     verifying that the recorded SHA1 is still valid.  If
+> >     it is, unlink the loose reference file then free
+> >     the lock; otherwise leave the loose reference file
+> >     untouched.
+> 
+> I think it would also therefore be able to replace the
+> loose ref locking in Michael's new ref-packing scheme as
+> well as the locking in Michael's new ref deletion scheme
+> (again steps
+> 
+> 4):
+> > * Delete reference foo:
+> ...
+> 
+> >   4. Delete loose ref for "foo":
+> >      a. Acquire the lock $GIT_DIR/refs/heads/foo.lock
+> >      
+> >      b. Unlink $GIT_DIR/refs/heads/foo if it is
+> >      unchanged.
+> >  
+> >  If it is changed, leave it untouched.  If it is
+> >  deleted,
+> > 
+> > that is OK too.
+> > 
+> >      c. Release lock $GIT_DIR/refs/heads/foo.lock
+> 
+> ...
+> 
+> > * Pack references:
+> ...
+> 
+> >   4. prune_refs(): for each ref in the ref_to_prune
+> >   list,
+> > 
+> > call prune_ref():
+> >      a. Lock the loose reference using lock_ref_sha1(),
+> > 
+> > verifying that the recorded SHA1 is still valid
+> > 
+> >      b. If it is, unlink the loose reference file
+> > 
+> > (otherwise, leave it untouched)
+> > 
+> >      c. Release the lock on the loose reference
+> 
+> To be honest, I suspect I missed something obvious because
+> this seems almost too simple to work.  I am ashamed that
+> it took me so long to come up with (of course, I will be
+> even more ashamed :( when it is shown to be flawed!) 
+> This scheme also feels extensible. if there are no
+> obvious flaws in it, I will try to post solutions for ref
+> packing and for multiple repository/ref transactions also
+> soon.
+> 
+> I welcome any comments/criticisms,
+> 
+> -Martin
+> --
+> To unsubscribe from this list: send the line "unsubscribe
+> git" in the body of a message to
+> majordomo@vger.kernel.org More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
