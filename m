@@ -1,100 +1,116 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
-Date: Thu, 03 Jan 2013 01:23:26 +0100
-Message-ID: <50E4CF7E.9090302@web.de>
-References: <201301012240.10722.tboegi@web.de> <20130102094635.GD9328@sigill.intra.peff.net> <50E4BF58.4090808@web.de> <20130102232239.GA27952@sigill.intra.peff.net> <50E4C9B5.8070308@web.de> <7vlicbyvc2.fsf@alter.siamese.dyndns.org>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: Re: [RFH] NetBSD 6?
+Date: Wed, 02 Jan 2013 19:25:25 -0500
+Message-ID: <rmiy5gbun7u.fsf@fnord.ir.bbn.com>
+References: <7vd2xn18p5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 01:24:02 2013
+X-From: git-owner@vger.kernel.org Thu Jan 03 01:25:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqYbK-0001ts-4w
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 01:24:02 +0100
+	id 1TqYcz-0002fg-A4
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 01:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753031Ab3ACAXo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 19:23:44 -0500
-Received: from mout.web.de ([212.227.15.4]:56205 "EHLO mout.web.de"
+	id S1753025Ab3ACAZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2013 19:25:27 -0500
+Received: from fnord.ir.bbn.com ([192.1.100.210]:64852 "EHLO fnord.ir.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753015Ab3ACAXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2013 19:23:42 -0500
-Received: from [192.168.2.107] ([79.244.162.201]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0Md4V8-1TZRBK2G8Y-00INBC; Thu, 03 Jan 2013 01:23:29
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vlicbyvc2.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:vR1/ZmWqT/tak3mDs3jMFMIrCWp04v8XOp4LPps8AeD
- MJZ4GLSxbfxSyvbi+dM3XRmYWwUbSK2HQB//7hA6uTu8NdVK1Q
- POP6l4SVcChQYxj2NUG5vK5nRwVF8UHGlQFsdfnxWIG61RSJNP
- 816Z3qFpb62EA2ghyxvwPUl15jOtio/2105YAvKnCfw7OPOkdA
- oHfbc/tiV5sgmJiEN50uQ==
+	id S1752853Ab3ACAZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 19:25:26 -0500
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id 971BCA7B8; Wed,  2 Jan 2013 19:25:25 -0500 (EST)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:130102:git@vger.kernel.org::hBTk7JRwN/k/Zgy9:0000000000000000000000000000000000000000000Mfs
+X-Hashcash: 1:20:130102:gitster@pobox.com::hBTk7JRwN/k/Zgy9:000000000000000000000000000000000000000000001cun
+In-Reply-To: <7vd2xn18p5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 02 Jan 2013 15:11:50 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212564>
 
-On 03.01.13 01:16, Junio C Hamano wrote:
-> Torsten B=F6gershausen <tboegi@web.de> writes:
->=20
->> At least on my system the following combination works:
->>
->> git diff
->> diff --git a/t/Makefile b/t/Makefile
->> index f8f8c54..391a5ca 100644
->> --- a/t/Makefile
->> +++ b/t/Makefile
->> @@ -8,7 +8,7 @@
->> =20
->>  #GIT_TEST_OPTS =3D --verbose --debug
->>  SHELL_PATH ?=3D $(SHELL)
->> -PERL_PATH ?=3D /usr/bin/perl
->> +PERL_PATH =3D "/Users/tb/projects/git/tb/pe rl"
->=20
-> I do not think that will fly.  Having that in the main Makefile
-> where the existing users of the symbol relies on it without any
-> surrounding quotes, e.g.
->=20
-> $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl GIT-VERSION-FILE
-> 	$(QUIET_GEN)$(RM) $@ $@+ && \
-> 	INSTLIBDIR=3D`MAKEFLAGS=3D $(MAKE) -C perl -s --no-print-directory i=
-nstlibdir` && \
-> 	sed -e '1{' \
-> 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
-> 	    -e '	h' \
-> 	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || =
-"'"$$INSTLIBDIR"'"));=3D' \
-> 	    -e '	H' \
-> 	    -e '	x' \
-> 	    -e '}' \
-> 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-> 	    $@.perl >$@+ && \
-> 	chmod +x $@+ && \
-> 	mv $@+ $@
->=20
-> where $(PERL_PATH_SQ) is defined to replace each ' in $(PERL_PATH)
-> with '\'' so that '$(PERL_PATH_SQ)' becomes a shell-safe way to
-> quote the value of PERL_PATH without quotes, your definition will
-> look for a relative path that is inside a directory named '"'
-> (that's a single double-quote).
-
-Thanks to all for the explanations, fixing up and queing.
-
-And good news:
-pu today is "clean",there where no problems found:
-
-commit d69ea46220647c048d332c471a184446cce17627
-Merge: e552539 fcf30b3
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Wed Jan 2 12:44:33 2013 -0800
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
 
-When the dust has settled, we can either enable the check always, or me=
-ntion
-"make test-lint-shell-syntax" in the Documentation.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> [query about NetBSD-6]=20
+
+> The "2.7" bit certainly looks fishy, as users should be able to
+> choose between "2.6" and "2.7" (and possibly "3.0"), IIUC.
+>
+> +	PYTHON_PATH =3D /usr/pkg/bin/python2.7
+> +	PERL_PATH =3D /usr/pkg/bin/perl
+
+(I am one of the people who maintain the git package in pkgsrc.)
+
+(Strictly, this is not really about NetBSD, but about all systems where
+the standard approach to get python is via pkgsrc.  So that include
+DragonflyBSD as well.  (pkgsrc runs on many other systems, but it isn't
+the standard approach, so from the git viewpoint that's irrelevant.))
+
+You are entirely right that on e.g. NetBSD 6 the view is that users
+should be able to choose the python version.
+
+pkgsrc can install multiple versions of python at the same time, to cope
+with python-using packages that need different versions.  pkgsrc chooses
+not to have a 'python' program, because that would result in installed
+packages changing their binding of which python version to use when the
+default was changed.  The default python version is currently 2.7, so
+/usr/pkg/bin/python2.7 is the best guess for finding python on a NetBSD
+system, if you're only allowed one guess.  A user can set a
+PYTHON_VERSION_DEFAULT variable to choose the version they want; each
+package expresses which versions will work.
+
+This isn't relevant for git, not being a pure python library, but pkgsrc
+supports installing multiple versions of some packages, so one can have
+two versions installed at once:
+  py27-expat-0nb6     Python interface to expat
+  py26-expat-0nb6     Python interface to expat
+The git package just depends on one version; by default the git package
+depends on python (but one can tell it not to).
+
+The python.m4 macro that comes with automake seems to find one of the
+various pythonX.Y binaries in $PATH just fine.
+
+pkgsrc has an entry for git (at 1.8.0.1).
+The key line for handling python is:
+  MAKE_FLAGS+=3D	PYTHON_PATH=3D${PYTHONBIN}
+and there PYTHONBIN is set up by pkgsrc infrastructure for the right
+prefix (99.9% but not always /usr/pkg) and version.  After this,
+everything seems to come out right:
+
+  > head -1 /usr/pkg/libexec/git-core/git-p4
+  #!/usr/pkg/bin/python2.7
+
+So I'd say that if PYTHON_PATH is set in the environment to configure,
+it should behave as it does now.  And if not, it would be nice if the
+highest pythonX.Y found (that is known to work with git) is used.
+
+> +	PYTHON_PATH =3D /usr/pkg/bin/python2.7
+> +	PERL_PATH =3D /usr/pkg/bin/perl
+
+So it would be nice to make these work as ?=3D, letting an environment
+variable win if set.
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (NetBSD)
+
+iEYEARECAAYFAlDkz/UACgkQ+vesoDJhHiUy8gCeNotFuC4OVvvn62xvw1J16tJP
+y1wAnAizMaIyzlfV59kmgw/9Gy9T8CL9
+=sLg6
+-----END PGP SIGNATURE-----
+--=-=-=--
