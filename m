@@ -1,98 +1,80 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] merge: Honor prepare-commit-msg return code
-Date: Thu, 3 Jan 2013 18:33:29 +0100
-Message-ID: <CALWbr2zAWrGBSvMFOYMzhFnPejv6_uU3LH6dfOwimXs_1v1eMg@mail.gmail.com>
-References: <1357152170-5511-1-git-send-email-apelisse@gmail.com>
-	<7v623f2uam.fsf@alter.siamese.dyndns.org>
-	<CALWbr2wWjwUnHFq1icMRuW=vjQDhTO1e_chffqUvDWY5za1Kiw@mail.gmail.com>
-	<7vwqvv1dta.fsf@alter.siamese.dyndns.org>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: Re: [RFH] NetBSD 6?
+Date: Thu, 03 Jan 2013 13:27:34 -0500
+Message-ID: <rmiobh6rujt.fsf@fnord.ir.bbn.com>
+References: <7vd2xn18p5.fsf@alter.siamese.dyndns.org>
+	<rmipq1numzj.fsf@fnord.ir.bbn.com>
+	<7vd2xnypt6.fsf@alter.siamese.dyndns.org>
+	<rmi8v8av05d.fsf@fnord.ir.bbn.com>
+	<7vvcbew895.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Jay Soffian <jaysoffian@gmail.com>
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 18:33:53 2013
+X-From: git-owner@vger.kernel.org Thu Jan 03 19:27:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tqofx-0006Ly-1A
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 18:33:53 +0100
+	id 1TqpWE-0001ED-LV
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 19:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753503Ab3ACRde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 12:33:34 -0500
-Received: from mail-ea0-f180.google.com ([209.85.215.180]:55542 "EHLO
-	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753459Ab3ACRdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 12:33:33 -0500
-Received: by mail-ea0-f180.google.com with SMTP id f13so6298814eai.39
-        for <git@vger.kernel.org>; Thu, 03 Jan 2013 09:33:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TEuWPOns39hl6rmEVMEq34cufBSwegfkJ+pTPgJO9Vs=;
-        b=L1LEke318oArOQwSP8p1Ap6QQwyRwhu+OHKPMIymAoem3nMTc9rzHpe0SsNLTJugRT
-         6YgFbj/pgzBMswCz0r3lP7VZasBwcFNYfI5h1R3n4UrynCsO1ST1U/bfaBu8jJ3IEouU
-         HrodF81OE3z6jeNpXOaxqG/ZqqRFYM+/OgvMz0sf78zEgRqQd/bxEaVk8gAP9Y6So0et
-         EP+Te/AW0SjN5755vZRGwSN4nbjU4fESe3GRkFWYp7kJfWwHGB+r4a+Q0jyAk0zus9hc
-         6wakFjzl3B6L/iPBBxYHMbrRyqeVC9IJW7A+YTfI8i2U167G00SwcpmZDxqdb9xwkDO1
-         9L3g==
-Received: by 10.14.1.195 with SMTP id 43mr136141014eed.31.1357234409171; Thu,
- 03 Jan 2013 09:33:29 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Thu, 3 Jan 2013 09:33:29 -0800 (PST)
-In-Reply-To: <7vwqvv1dta.fsf@alter.siamese.dyndns.org>
+	id S1753792Ab3ACS1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 13:27:36 -0500
+Received: from fnord.ir.bbn.com ([192.1.100.210]:61974 "EHLO fnord.ir.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753779Ab3ACS1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 13:27:35 -0500
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id 1E9BDAE41; Thu,  3 Jan 2013 13:27:34 -0500 (EST)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:130103:gitster@pobox.com::eccL/Qw+svqJsq2r:000000000000000000000000000000000000000000000Wiq
+X-Hashcash: 1:20:130103:git@vger.kernel.org::eccL/Qw+svqJsq2r:000000000000000000000000000000000000000000BQme
+In-Reply-To: <7vvcbew895.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 03 Jan 2013 08:17:58 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212599>
 
-> Oh, that wasn't meant as a complaint.  I am tempted to rewrite the
-> log message like so, though:
+--=-=-=
+Content-Type: text/plain
+
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I forgot to mention that we also ship configure (and keep track of
+> configure.ac) so that optionally people can let autoconf machinery
+> to create config.mak.autogen to be included at the same place as
+> handcrafted config.mak in their build process.  I do not offhand
+> know if we do "for p in python python2.6 python2.7; do ..." kind of
+> thing, though.
+
+pkgsrc uses the configure method, but it seems not to output a
+PYTHON_PATH.  It looks like automake's python.m4 is not used by git's
+configure.ac.  But pkgsrc passes PYTHON_PATH in the environment to make,
+so it works out currently.
+
+> It refers to the type of the second parameter to iconv(); OLD_ICONV
+> makes it take "const char *", as opposed to "char *", the latter of
+> which matches
 >
->     65969d4 (merge: honor prepare-commit-msg hook, 2011-02-14) tried to
->     make "git commit" and "git merge" consistent, because a merge that
->     required user assistance has to be concluded with "git commit", but
->     only "git commit" triggered prepare-commit-msg hook.  When it added
->     a call to run the prepare-commit-msg hook, however, it forgot to
->     check the exit code from the hook like "git commit" does, and ended
->     up replacing one inconsistency with another.
+>   http://pubs.opengroup.org/onlinepubs/9699919799/functions/iconv.html
 
-That's fine with me
+Thanks - I now see our extra const and am looking into it.
 
->>> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
->>> index bc497bc..3573751 100755
->>> --- a/t/t7505-prepare-commit-msg-hook.sh
->>> +++ b/t/t7505-prepare-commit-msg-hook.sh
->>> @@ -172,11 +172,12 @@ test_expect_success 'with failing hook (merge)' '
->>>         git checkout -B other HEAD@{1} &&
->>>         echo "more" >> file &&
->>>         git add file &&
->>> -       chmod -x $HOOK &&
->>> +       rm -f "$HOOK" &&
->>>         git commit -m other &&
->>> -       chmod +x $HOOK &&
->>> +       write_script "$HOOK" <<-EOF
->>> +       exit 1
->>> +       EOF
->>>         git checkout - &&
->>> -       head=`git rev-parse HEAD` &&
->>>         test_must_fail git merge other
->>>
->>>  '
->>
->> What about moving the hook file then ? Not very important to me, just
->> a suggestion as it would keep the shebang.
->
-> Strictly speaking, the way $HOOK is prepared in the original is
-> wrong.  The script is always run under "#!/bin/sh" instead of the
-> shell the user told us to use with $SHELL_PATH.  For a simple one
-> liner that only exits with 1, it does not matter, though.
->
-> Many test scripts got this wrong and that was the reason we later
-> added write_script helper function to the test suite.
+--=-=-=
+Content-Type: application/pgp-signature
 
-So let's keep your suggestion and squash the commit.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (NetBSD)
 
-Thanks,
+iEUEARECAAYFAlDlzZYACgkQ+vesoDJhHiViMgCYqge6SBz+nJmWStA8fGXu1DGZ
+eACfRnG0ezY69vPbZt25TsvsNDKok0E=
+=e9e+
+-----END PGP SIGNATURE-----
+--=-=-=--
