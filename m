@@ -1,78 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] two-way read-tree can write null sha1s into index
-Date: Thu, 03 Jan 2013 14:33:09 -0800
-Message-ID: <7vzk0pvqvu.fsf@alter.siamese.dyndns.org>
-References: <20121229100130.GA31497@elie.Belkin>
- <20121229102707.GA26730@sigill.intra.peff.net>
- <20121229103430.GG18903@elie.Belkin>
- <20121229110541.GA1408@sigill.intra.peff.net>
- <20121229205154.GA21058@sigill.intra.peff.net>
- <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
- <20130103083712.GC32377@sigill.intra.peff.net>
- <7vehi2xote.fsf@alter.siamese.dyndns.org>
- <20130103202343.GA4632@sigill.intra.peff.net>
- <7vip7evwdo.fsf@alter.siamese.dyndns.org>
- <20130103203606.GA8188@sigill.intra.peff.net>
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: Re: [PATCH v3] git-clean: Display more accurate delete messages
+Date: Fri, 4 Jan 2013 10:21:45 +1100
+Message-ID: <CAKJhZwS6VUwWoX1QmNL19asNt1B3dPsDeg5-JTzq8FMd1WYkSw@mail.gmail.com>
+References: <1357091159-22080-1-git-send-email-zoltan.klinger@gmail.com>
+	<7vfw2j2vlp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 03 23:33:37 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 00:29:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqtLv-0000zE-Nv
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 23:33:32 +0100
+	id 1TquEJ-0001Z6-Jo
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 00:29:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754034Ab3ACWdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 17:33:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40397 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753941Ab3ACWdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 17:33:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6353A7C0;
-	Thu,  3 Jan 2013 17:33:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Gz237Og4ZwMK9FC6j1aiJ9ROdbg=; b=sWCtuE
-	/0nVtY7wenDTjiRFwk8IMJLImKWxrPX1QuIYHFoVwESpfpdN4wrW6u0Hls+A0zXB
-	nyaxlCeSt8iwcetgfSYDqxuVHq3W0U/p6Klv83ZBXLiA4zq61jDubNIB9Y5PI8p2
-	89F5DLLiIb8Ev33zwytZYF6M0WIjm+5OigE3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uVHcX4FDf0KDuT5t5IKPEVkpe/S83wic
-	6Q6RUIFOedYlEqEPng7RqJ44o3hjFihtoV/rYo5tcQDbQc5NNuH5RPG0GF3Lyt0e
-	q956qfnvnvbOUWKas7GXk0OMq7yz5au5J/C1gQ/TUfmS5sftvypGDaP+VuPvLD4e
-	9nJ9aetpA4w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B745EA7BF;
-	Thu,  3 Jan 2013 17:33:11 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2DE5AA7BD; Thu,  3 Jan 2013
- 17:33:11 -0500 (EST)
-In-Reply-To: <20130103203606.GA8188@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 3 Jan 2013 15:36:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8DFB8788-55F5-11E2-80D9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753946Ab3ACX3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 18:29:25 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:60040 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753847Ab3ACX3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 18:29:23 -0500
+Received: by mail-ie0-f175.google.com with SMTP id qd14so19063352ieb.34
+        for <git@vger.kernel.org>; Thu, 03 Jan 2013 15:29:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jor06Z89V4MVrXAnh2PAdiPNaCEDyj61iJDylNZTbr8=;
+        b=WAEmzSBUDuiAwXkl+WJ7ZnE4tRFChycNjpC+oPIsFG6JTUREg/rK6X+rGI1qDK7xAh
+         m5M6RZvyJ2PeepOv2GictT43VxnU9CCVKIHTfACaijJ9ghEpGD8AHdvhEs3A6+jVb0sT
+         X3fMC3Oe9bwT0juO/TV7xVJOstZNtXNmSlcKx2KgP46u5lLuNOLDP8MWV8E/5yT2E++x
+         xIZr6kF88GRs9lnbeUUVD89as7+xfaY15/b21XtQSREDzOmyZva7KU3+BOxGOe3qBVXP
+         F6lU5bDnJmkKqFfjF86xSVFQt4CjlrY5yaaon0iNfaUUIvc0HXzbf4uYOoDv0/EdjnFw
+         VVSQ==
+Received: by 10.50.7.135 with SMTP id j7mr40507142iga.82.1357255306155; Thu,
+ 03 Jan 2013 15:21:46 -0800 (PST)
+Received: by 10.50.13.104 with HTTP; Thu, 3 Jan 2013 15:21:45 -0800 (PST)
+In-Reply-To: <7vfw2j2vlp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212619>
 
-Jeff King <peff@peff.net> writes:
+> The updated code structure is much nicer than the previous round,
+> but I am somewhat puzzled how return value of remove_dirs() and
+> &gone relate to each other.  Surely when gone is set to zero,
+> remove_dirs() is reporting that the directory it was asked to remove
+> recursively did not go away, so it must report failure, no?  Having
+> the &gone flag looks redundant and checking for gone in some places
+> while checking for the return value for others feels like an
+> invitation for future bugs.
 
-> Oh, I agree it's insane to try to carry through unmerged entries. I'm
-> just concerned that not all code paths are careful enough to check.
+The return value of remove_dirs() has an overall effect on the exit
+code of git-clean, and &gone indicates whether the directory we asked
+remove_dirs() to delete was actually removed. If all goes well  in
+remove_dirs() the return code is 0 and gone flag is 1. If file or
+subdirectory delete fails return code is 1 and the gone flag is set to
+0. The special case is when remove_dirs() is asked to remove an
+untracked git repo that should be ignored. In this case remove_dirs()
+is not going to remove the directory so the gone flag is set to zero
+but it is not an error so the return value will be set to zero too.
 
-I would actually be surprised if some code path do assume somebody
-might give them an index with conflicting entries in it and guard
-against it.  We have been coding under the "index must exactly match
-the second tree when three-way unpack_trees() begin" requirement
-since day one.  An conflicted entry will appear as "index and HEAD
-not matching" and will cause reject_merge() early in threeway_merge()
-anyway, no?
+> Also the remove_dirs() function seems to replace the use of
+> remove_dir_recurse() from dir.c by copying large part of it, with
+> error message sprinkled.  Does remove_dir_recurse() still get used
+> by other codepaths?  If so, do the remaining callsites benefit from
+> using this updated version?
+
+In dir.c the remove_dir_recurse() is a private function that is called
+by the public remove_dir_recursively() wrapper function. The
+remove_dir_recursively() function is called from the following places:
+
+    builtin/clone.c:387:
+    builtin/clone.c:392:
+    builtin/rm.c:349:
+    notes-merge.c:771:
+    refs.c:1527:
+    sequencer.c:27:
+    transport.c:247:
+    transport.c:393:
+
+The messages that remove_dirs() prints out are very specific to
+git-clean and they are not really relevant in the above places where
+remove_dir_recursively() is called from. Also, the remove logic for
+files is slightly different in remove_dirs() when it comes to handling
+a failed file delete. While remove_dirs() continues removing other
+files in the same directory upon failure, remove_dir_recurse() will
+stop at the first error. So perhaps having the remove_dirs() in
+builtin/clean.c is OK.
