@@ -1,79 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] two-way read-tree can write null sha1s into index
-Date: Thu, 3 Jan 2013 03:37:12 -0500
-Message-ID: <20130103083712.GC32377@sigill.intra.peff.net>
-References: <20120728150132.GA25042@sigill.intra.peff.net>
- <20120728150524.GB25269@sigill.intra.peff.net>
- <20121229100130.GA31497@elie.Belkin>
- <20121229102707.GA26730@sigill.intra.peff.net>
- <20121229103430.GG18903@elie.Belkin>
- <20121229110541.GA1408@sigill.intra.peff.net>
- <20121229205154.GA21058@sigill.intra.peff.net>
- <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git filter-branch doesn't dereference annotated tags
+Date: Thu, 03 Jan 2013 10:38:32 +0100
+Message-ID: <50E55198.5080202@kdbg.org>
+References: <CAC_01E174m_6tDwPKZ5P0BUxnLNWUf9p+VkECFosPTzip0sYsA@mail.gmail.com> <7vsj6mdqeo.fsf@alter.siamese.dyndns.org> <CAC_01E3twtNq8YXQ8=SU5oXxmnAQS43L-46NF=7RyT4tFQvU5g@mail.gmail.com> <7vfw2kbs4h.fsf@alter.siamese.dyndns.org> <CAC_01E3VWtsFd8ww+7W8DMhRAs4WgHf=bm+xoh9wszCkb-DfUA@mail.gmail.com> <7vk3rwaa3r.fsf@alter.siamese.dyndns.org> <CAC_01E2iHgNvh5PnBh3TcNKr2pLazZwRojVK9ksaE3x0a1QHmQ@mail.gmail.com> <7v623f18ci.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?R3LDqWdvcnkgUGFrb3N6?= <gpakosz@visionobjects.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 09:37:39 2013
+X-From: git-owner@vger.kernel.org Thu Jan 03 10:39:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqgIz-0001Rx-9E
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 09:37:37 +0100
+	id 1TqhGM-00086N-B5
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 10:38:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752986Ab3ACIhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 03:37:18 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41864 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751422Ab3ACIhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 03:37:17 -0500
-Received: (qmail 4650 invoked by uid 107); 3 Jan 2013 08:38:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 03 Jan 2013 03:38:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jan 2013 03:37:12 -0500
-Content-Disposition: inline
-In-Reply-To: <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+	id S1752766Ab3ACJij convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jan 2013 04:38:39 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:35813 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751134Ab3ACJih (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 04:38:37 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 1B93113005B;
+	Thu,  3 Jan 2013 10:38:33 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 4119619F45D;
+	Thu,  3 Jan 2013 10:38:33 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7v623f18ci.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212576>
 
-On Tue, Jan 01, 2013 at 02:24:46PM -0800, Junio C Hamano wrote:
+Am 03.01.2013 00:19, schrieb Junio C Hamano:
+> Gr=C3=A9gory Pakosz <gpakosz@visionobjects.com> writes:
+>=20
+>> So we have an annotated tag that points to a commit that is rewritte=
+n
+>> to nothing as the result of the filtering. What should happen?
+>=20
+> If the user asked to filter that tag itself, it may make sense to
+> remove it, rather than keeping it pointing at the original commit,
+> because the commit it used to point at no longer exists in the
+> alternate history being created by filter-branch.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So I think we need to update twoway_merge to recognize unmerged entries,
-> > which gives us two options:
-> >
-> >   1. Reject the merge.
-> >
-> >   2. Throw away the current unmerged entry in favor of the "new" entry
-> >      (when old and new are the same, of course; otherwise we would
-> >      reject).
-> >
-> > I think (2) is the right thing.
-> 
-> As "--reset" in "read-tree --reset -u A B" is a way to say "we know
-> we are based on A and we want to go to B no matter what", I agree we
-> should not reject the merge.
-> 
-> With -m instead of --reset, I am not sure what the right semantics
-> should be, though.
+IOW, if the command was something like
 
-Good point; I was just thinking about the --reset case.
+  git filter-branch ...filter options... -- v1.0 master ...
 
-With "-m", though, we could in theory carry over the unmerged entries
-(again, assuming that "old" and "new" are the same; otherwise it is an
-obvious reject). But those entries would be confused with any new
-unmerged entries we create. It seems we already protect against this,
-though: "read-tree -m" will not run at all if you have unmerged entries.
+and v1.0 is an annotated tag, then it is reasonable to expect v1.0 to b=
+e
+deleted if the commit it points to goes away. But if the commit did not
+go away, but was rewritten, then it is equally reasonable to expect tha=
+t
+the tag is also rewritten. But I don't think that we currently do the
+latter.
 
-Likewise, "checkout" seems to have similar protections.
+Therefore, IMO, a change that implements the former behavior should als=
+o
+implement the latter behavior.
 
-So I think it may be a non-issue.
-
--Peff
+-- Hannes
