@@ -1,87 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/2] DEFAULT_DOC_TARGET
-Date: Thu, 3 Jan 2013 15:32:22 -0500
-Message-ID: <20130103203222.GB4632@sigill.intra.peff.net>
-References: <1357239920-2201-1-git-send-email-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] two-way read-tree can write null sha1s into index
+Date: Thu, 03 Jan 2013 12:34:27 -0800
+Message-ID: <7vip7evwdo.fsf@alter.siamese.dyndns.org>
+References: <20120728150132.GA25042@sigill.intra.peff.net>
+ <20120728150524.GB25269@sigill.intra.peff.net>
+ <20121229100130.GA31497@elie.Belkin>
+ <20121229102707.GA26730@sigill.intra.peff.net>
+ <20121229103430.GG18903@elie.Belkin>
+ <20121229110541.GA1408@sigill.intra.peff.net>
+ <20121229205154.GA21058@sigill.intra.peff.net>
+ <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+ <20130103083712.GC32377@sigill.intra.peff.net>
+ <7vehi2xote.fsf@alter.siamese.dyndns.org>
+ <20130103202343.GA4632@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 21:32:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 03 21:34:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqrT2-0002Wy-LN
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 21:32:44 +0100
+	id 1TqrV4-0003PJ-Lm
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 21:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870Ab3ACUc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 15:32:26 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42287 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753624Ab3ACUcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 15:32:25 -0500
-Received: (qmail 10252 invoked by uid 107); 3 Jan 2013 20:33:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 03 Jan 2013 15:33:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jan 2013 15:32:22 -0500
-Content-Disposition: inline
-In-Reply-To: <1357239920-2201-1-git-send-email-gitster@pobox.com>
+	id S1753855Ab3ACUec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 15:34:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44370 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753737Ab3ACUea (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 15:34:30 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB802BD45;
+	Thu,  3 Jan 2013 15:34:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oYqZzE5xWw7KuAeEoq8nR8nvlN8=; b=Y0v4gW
+	botPnCTy534MiyMMi8pUhj0HLevmEYyp8Y+th9r03tiryNYZdVkR4XclanKFvQIv
+	qbLXudDrEw0mUfW4FPjtE1jrJU92ATTrecBc76xPjfwWIVfWTMVGQfRuQwRkWuyx
+	D0OvnCf9lYmt0eMfYBjFkYBQf4f4PYKzV56QM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z3nmoYBIIZXjbAojuZuRTzwKezD8Gj6x
+	zaEuicTKlO0oiFrUvIc9JGUxYUJcFj6M3inrTIDQRr6bHcRrtwR/DWno1zjc+nFq
+	cAiubmLz060Dno/CjWlFMTS3wLrvh8iKUB+ntoOyB7JBCVrFVWQV4lt+zHT4Hqvj
+	bKE9Teohah8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADDD2BD44;
+	Thu,  3 Jan 2013 15:34:29 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E544BD43; Thu,  3 Jan 2013
+ 15:34:28 -0500 (EST)
+In-Reply-To: <20130103202343.GA4632@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 3 Jan 2013 15:23:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F8DCD9C8-55E4-11E2-96DD-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212607>
 
-On Thu, Jan 03, 2013 at 11:05:18AM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> This allows things like:
-> 
->   $ DEFAULT_DOC_TARGET=html make doc
->   $ DEFAULT_DOC_INSTALL_TARGET=html make install-doc
-> 
-> on a platform that does not have manpage viewer.  Which is not very
-> useful, given that you can already say
-> 
->   $ make install-html
-> 
-> on such a platform, and these install-$format targets will not go
-> away.
+> Or are you suggesting that the three-way case should always be protected
+> by checking that there are no unmerged entries before we start it? That
+> seems sane to me, but I haven't confirmed that that is the case.
 
-I think the usefulness is that it can be set by default for a particular
-uname, so people on Windows can just type "make install-doc" without
-having to care about setting anything (though to be honest, I do not
-even know what they build by default; maybe they do build manpages).
-Except that in the original thread:
+I think the normal (and hopefully only) "-m -u O A B" use case of
+threeway is the bog-standard "git merge", which requires even more:
+your index must exactly match HEAD, even though you are allowed to
+have local changes in the working tree.
 
->   http://thread.gmane.org/gmane.comp.version-control.git/207193/focus=207201
+That requirement is not likely to change, as cleanly merged paths
+are automatically added to the index, so "diff --cached" should show
+only the changes from cleanly merged part, while "diff" should show
+paths that still needs user's help.
 
-it became clear that to do that we would also want to hoist the uname
-automagic defaults into their own file that could be read from
-Documentation/Makefile.
-
-> The real motivation behind this was to let me say:
-> 
->   $ git checkout $some_old_fork_point
->   $ DEFAULT_DOC_TARGET=git-push.1 make doc
-> 
-> while updating the sources to the documentation for the maintainance
-> track, without having to format everything else that is different
-> between the old fork point and the primary branch I usually work on.
-
-I still don't see how this is any advantage over:
-
-  make -C Documentation git-push.1
-
-> The first one was discussed some time ago on the list and all the
-> fixes mentioned on the thread already squashed in.  The second one
-> is merely for completeness.
-
-I wonder...do we really need DEFAULT_DOC_INSTALL_TARGET? Why isn't it
-the same as DEFAULT_DOC_TARGET? I realize that right now we build html
-and manpages by default, but only install man. But then why do we bother
-building html then?
-
--Peff
+If we allowed local modification to the index (let alone conflicted
+entries in it) before the merge begins, the users would not be able
+to tell which paths are in what state after a half-merge stops and
+asks for help.  Updated paths may not have anything to do with the
+merge (i.e. earlier "git add" before the merge started), conflicting
+paths may not have anything to do with the merge (i.e. leftover
+conflicts before the merge started).
