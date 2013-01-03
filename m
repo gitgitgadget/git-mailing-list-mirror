@@ -1,87 +1,1169 @@
-From: Olivier Delalleau <shish@keba.be>
-Subject: Suggested improvements to the git-p4 documentation (branch-related)
-Date: Thu, 3 Jan 2013 15:58:05 -0500
-Message-ID: <CAFXk4bqt_pMVDtVKF-JiQuGbSpy2+_rGOg5RTTE+0pNKFcZh3w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/2] DEFAULT_DOC_TARGET
+Date: Thu, 3 Jan 2013 16:05:41 -0500
+Message-ID: <20130103210541.GA11783@sigill.intra.peff.net>
+References: <1357239920-2201-1-git-send-email-gitster@pobox.com>
+ <20130103203222.GB4632@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 03 21:58:31 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 22:06:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tqrrw-0006Qa-48
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 21:58:28 +0100
+	id 1TqrzJ-0001bO-Cr
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 22:06:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753958Ab3ACU6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 15:58:08 -0500
-Received: from mail-la0-f41.google.com ([209.85.215.41]:43679 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855Ab3ACU6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 15:58:07 -0500
-Received: by mail-la0-f41.google.com with SMTP id em20so8708269lab.0
-        for <git@vger.kernel.org>; Thu, 03 Jan 2013 12:58:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=3pn67GKLWEJEcVmp526QOpZ7PsUtSNzNDC6KOgeLB68=;
-        b=YskGr0e8pjw0xZzX1cJSb12IPdUobKXkqndqu86NnkSXOZmxrSmmiJvlRkhG9a4alG
-         jwjiewAr6usJWPQUykNQE6N9k/r9rjYEb2siAr+LrP5Myd6eyNtcPDljhRqev6Suon7e
-         il4INazzB6trygt7puBpiSYEA+KdV3Lbp4r2EWN6Z9RUI7ZGy4nC+fA1FM/HeANTOBQG
-         u9BFZ95FeLDzd0fStncRUO1G4iL2wRZhEbCNC7sJzZML4+ulgHE7S/fAt6xmOfB4wbH5
-         8AmZ+awDlfaLCSuzEhBAuSkkzAk5hF+pvHTt8XfwHnm4zQEBuFMSKxckt661WPGCopcr
-         8JFw==
-Received: by 10.152.132.137 with SMTP id ou9mr48433106lab.7.1357246685868;
- Thu, 03 Jan 2013 12:58:05 -0800 (PST)
-Received: by 10.152.131.10 with HTTP; Thu, 3 Jan 2013 12:58:05 -0800 (PST)
-X-Google-Sender-Auth: xXi7qxQwafQCn6E9O0hjYF8V5Es
+	id S1753986Ab3ACVFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 16:05:45 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42315 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753956Ab3ACVFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 16:05:44 -0500
+Received: (qmail 10627 invoked by uid 107); 3 Jan 2013 21:06:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 03 Jan 2013 16:06:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jan 2013 16:05:41 -0500
+Content-Disposition: inline
+In-Reply-To: <20130103203222.GB4632@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212614>
 
-Hi,
+On Thu, Jan 03, 2013 at 03:32:22PM -0500, Jeff King wrote:
 
-While struggling to get git-p4 to work properly with branches, I
-thought the documentation on http://git-scm.com/docs/git-p4 could use
-some improvements:
+> I think the usefulness is that it can be set by default for a particular
+> uname, so people on Windows can just type "make install-doc" without
+> having to care about setting anything (though to be honest, I do not
+> even know what they build by default; maybe they do build manpages).
+> Except that in the original thread:
+> 
+> >   http://thread.gmane.org/gmane.comp.version-control.git/207193/focus=207201
+> 
+> it became clear that to do that we would also want to hoist the uname
+> automagic defaults into their own file that could be read from
+> Documentation/Makefile.
 
-1. At the end of the "Branch detection" section, the following
-commands are provided (for when you want to explicitly provide branch
-mappings to git-p4):
+IOW, this (on the current master), which I think is a nice cleanup
+regardless of this series:
 
-git config git-p4.branchList main:branch1
-git p4 clone --detect-branches //depot@all
+-- >8 --
+Subject: [PATCH] Makefile: hoist uname autodetection to config.mak.uname
 
-The second command should end with a dot (".") because the first
-command only works if you are already in a git-initialized folder.
-Thus I would also suggest to add "git init" as first command to type.
+Our Makefile first sets up some sane per-platform defaults
+by looking at "uname", then modifies that according to the
+results of autoconf (if any), then modifies that according
+to the user's wishes in config.mak.
 
-2. Even though having a "main" branch is standard in Perforce, it
-would be worth mentioning what happens when you don't: there is a
-message "Could not detect main branch. No checkout/master branch
-created" output by the "git p4 clone" command. However, it will still
-work if you manually set the master branch ("git checkout -b master
-remotes/p4/my_custom_main_branch").
+For sub-Makefiles like Documentation/Makefile, the latter
+two are available, but the uname defaults are available only
+to the main Makefile. This hasn't been a problem so far,
+because the sub-Makefiles do not rely on any of those
+automatic settings to do their work.
 
-3. I don't know what I missed for that one, but I haven't been able to
-get the example for the --branch option to work. It says that after
-"git init", we can import a p4 branch with:
+This patch puts the uname magic into its own file so it can
+be reused in other Makefiles, opening up the possibility of
+new knobs.
 
-git p4 sync --branch=refs/remotes/p4/proj2 //depot/proj2
+Note that we leave one reference to uname in the top-level
+Makefile: if we are on Darwin, we must check the NO_FINK and
+NO_DARWIN_PORTS settings. But because we are combining uname
+settings with user-options, we must do so after all of the
+config is loaded. This is acceptable, as the resulting
+conditionals are about setting variables specific to the
+top-level Makefile (and if that ever changes, we can hoist
+them into a separate post-config include, too).
 
-However, after doing this, followed by "git checkout -b proj2
-remotes/p4/proj2", I am unable to properly use "git p4 sync" or "git
-p4 submit" from this branch, as git complains about a missing
-refs/remotes/p4/master.
-Maybe it only works if "git clone" has been used before? But then why
-have "git init" first?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I'm happy to call it "config.mak.autodetect" if you prefer. My rationale
+was that we might eventually have several levels of autodetection, and
+we would want to be able to order them individually (in fact, we already
+do; config.mak.autogen is another form that should take precedence over
+uname detection, and it is already split out).
 
-NB: it's quite possible some of my problems were caused by me not
-properly understanding the doc / how git/p4 works. My apologies if
-that's the case.
+ Makefile         | 526 +------------------------------------------------------
+ config.mak.uname | 522 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 523 insertions(+), 525 deletions(-)
+ create mode 100644 config.mak.uname
 
--=- Olivier
+diff --git a/Makefile b/Makefile
+index 736ecd4..5e4ee47 100644
+--- a/Makefile
++++ b/Makefile
+@@ -326,19 +326,6 @@ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
+-uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+-uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
+-uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
+-uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
+-uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
+-uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
+-
+-ifdef MSVC
+-	# avoid the MingW and Cygwin configuration sections
+-	uname_S := Windows
+-	uname_O := Windows
+-endif
+-
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
+ 
+ CFLAGS = -g -O2 -Wall
+@@ -937,518 +924,7 @@ GIT_USER_AGENT = git/$(GIT_VERSION)
+ 
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+ 
+-#
+-# Platform specific tweaks
+-#
+-
+-# We choose to avoid "if .. else if .. else .. endif endif"
+-# because maintaining the nesting to match is a pain.  If
+-# we had "elif" things would have been much nicer...
+-
+-ifeq ($(uname_M),x86_64)
+-	XDL_FAST_HASH = YesPlease
+-endif
+-ifeq ($(uname_S),OSF1)
+-	# Need this for u_short definitions et al
+-	BASIC_CFLAGS += -D_OSF_SOURCE
+-	SOCKLEN_T = int
+-	NO_STRTOULL = YesPlease
+-	NO_NSEC = YesPlease
+-endif
+-ifeq ($(uname_S),Linux)
+-	NO_STRLCPY = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	HAVE_PATHS_H = YesPlease
+-	LIBC_CONTAINS_LIBINTL = YesPlease
+-	HAVE_DEV_TTY = YesPlease
+-endif
+-ifeq ($(uname_S),GNU/kFreeBSD)
+-	NO_STRLCPY = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	HAVE_PATHS_H = YesPlease
+-	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+-	LIBC_CONTAINS_LIBINTL = YesPlease
+-endif
+-ifeq ($(uname_S),UnixWare)
+-	CC = cc
+-	NEEDS_SOCKET = YesPlease
+-	NEEDS_NSL = YesPlease
+-	NEEDS_SSL_WITH_CRYPTO = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	SHELL_PATH = /usr/local/bin/bash
+-	NO_IPV6 = YesPlease
+-	NO_HSTRERROR = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	BASIC_CFLAGS += -Kthread
+-	BASIC_CFLAGS += -I/usr/local/include
+-	BASIC_LDFLAGS += -L/usr/local/lib
+-	INSTALL = ginstall
+-	TAR = gtar
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-endif
+-ifeq ($(uname_S),SCO_SV)
+-	ifeq ($(uname_R),3.2)
+-		CFLAGS = -O2
+-	endif
+-	ifeq ($(uname_R),5)
+-		CC = cc
+-		BASIC_CFLAGS += -Kthread
+-	endif
+-	NEEDS_SOCKET = YesPlease
+-	NEEDS_NSL = YesPlease
+-	NEEDS_SSL_WITH_CRYPTO = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	SHELL_PATH = /usr/bin/bash
+-	NO_IPV6 = YesPlease
+-	NO_HSTRERROR = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	BASIC_CFLAGS += -I/usr/local/include
+-	BASIC_LDFLAGS += -L/usr/local/lib
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	INSTALL = ginstall
+-	TAR = gtar
+-endif
+-ifeq ($(uname_S),Darwin)
+-	NEEDS_CRYPTO_WITH_SSL = YesPlease
+-	NEEDS_SSL_WITH_CRYPTO = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
+-		OLD_ICONV = UnfortunatelyYes
+-	endif
+-	ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+-		NO_STRLCPY = YesPlease
+-	endif
+-	NO_MEMMEM = YesPlease
+-	USE_ST_TIMESPEC = YesPlease
+-	HAVE_DEV_TTY = YesPlease
+-	COMPAT_OBJS += compat/precompose_utf8.o
+-	BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
+-endif
+-ifeq ($(uname_S),SunOS)
+-	NEEDS_SOCKET = YesPlease
+-	NEEDS_NSL = YesPlease
+-	SHELL_PATH = /bin/bash
+-	SANE_TOOL_PATH = /usr/xpg6/bin:/usr/xpg4/bin
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_REGEX = YesPlease
+-	NO_FNMATCH_CASEFOLD = YesPlease
+-	NO_MSGFMT_EXTENDED_OPTIONS = YesPlease
+-	HAVE_DEV_TTY = YesPlease
+-	ifeq ($(uname_R),5.6)
+-		SOCKLEN_T = int
+-		NO_HSTRERROR = YesPlease
+-		NO_IPV6 = YesPlease
+-		NO_SOCKADDR_STORAGE = YesPlease
+-		NO_UNSETENV = YesPlease
+-		NO_SETENV = YesPlease
+-		NO_STRLCPY = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-		GIT_TEST_CMP = cmp
+-	endif
+-	ifeq ($(uname_R),5.7)
+-		NEEDS_RESOLV = YesPlease
+-		NO_IPV6 = YesPlease
+-		NO_SOCKADDR_STORAGE = YesPlease
+-		NO_UNSETENV = YesPlease
+-		NO_SETENV = YesPlease
+-		NO_STRLCPY = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-		GIT_TEST_CMP = cmp
+-	endif
+-	ifeq ($(uname_R),5.8)
+-		NO_UNSETENV = YesPlease
+-		NO_SETENV = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-		GIT_TEST_CMP = cmp
+-	endif
+-	ifeq ($(uname_R),5.9)
+-		NO_UNSETENV = YesPlease
+-		NO_SETENV = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-		GIT_TEST_CMP = cmp
+-	endif
+-	INSTALL = /usr/ucb/install
+-	TAR = gtar
+-	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
+-endif
+-ifeq ($(uname_O),Cygwin)
+-	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
+-		NO_D_TYPE_IN_DIRENT = YesPlease
+-		NO_D_INO_IN_DIRENT = YesPlease
+-		NO_STRCASESTR = YesPlease
+-		NO_MEMMEM = YesPlease
+-		NO_MKSTEMPS = YesPlease
+-		NO_SYMLINK_HEAD = YesPlease
+-		NO_IPV6 = YesPlease
+-		OLD_ICONV = UnfortunatelyYes
+-		CYGWIN_V15_WIN32API = YesPlease
+-	endif
+-	NO_THREAD_SAFE_PREAD = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+-	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
+-	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	# There are conflicting reports about this.
+-	# On some boxes NO_MMAP is needed, and not so elsewhere.
+-	# Try commenting this out if you suspect MMAP is more efficient
+-	NO_MMAP = YesPlease
+-	X = .exe
+-	COMPAT_OBJS += compat/cygwin.o
+-	UNRELIABLE_FSTAT = UnfortunatelyYes
+-	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
+-endif
+-ifeq ($(uname_S),FreeBSD)
+-	NEEDS_LIBICONV = YesPlease
+-	OLD_ICONV = YesPlease
+-	NO_MEMMEM = YesPlease
+-	BASIC_CFLAGS += -I/usr/local/include
+-	BASIC_LDFLAGS += -L/usr/local/lib
+-	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+-	USE_ST_TIMESPEC = YesPlease
+-	ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
+-		PTHREAD_LIBS = -pthread
+-		NO_UINTMAX_T = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-	endif
+-	PYTHON_PATH = /usr/local/bin/python
+-	HAVE_PATHS_H = YesPlease
+-endif
+-ifeq ($(uname_S),OpenBSD)
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	USE_ST_TIMESPEC = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	BASIC_CFLAGS += -I/usr/local/include
+-	BASIC_LDFLAGS += -L/usr/local/lib
+-	HAVE_PATHS_H = YesPlease
+-endif
+-ifeq ($(uname_S),NetBSD)
+-	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
+-		NEEDS_LIBICONV = YesPlease
+-	endif
+-	BASIC_CFLAGS += -I/usr/pkg/include
+-	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
+-	USE_ST_TIMESPEC = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	HAVE_PATHS_H = YesPlease
+-endif
+-ifeq ($(uname_S),AIX)
+-	DEFAULT_PAGER = more
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_STRLCPY = YesPlease
+-	NO_NSEC = YesPlease
+-	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+-	INTERNAL_QSORT = UnfortunatelyYes
+-	NEEDS_LIBICONV = YesPlease
+-	BASIC_CFLAGS += -D_LARGE_FILES
+-	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
+-		NO_PTHREADS = YesPlease
+-	else
+-		PTHREAD_LIBS = -lpthread
+-	endif
+-	ifeq ($(shell expr "$(uname_V).$(uname_R)" : '5\.1'),3)
+-		INLINE = ''
+-	endif
+-	GIT_TEST_CMP = cmp
+-endif
+-ifeq ($(uname_S),GNU)
+-	# GNU/Hurd
+-	NO_STRLCPY = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	HAVE_PATHS_H = YesPlease
+-	LIBC_CONTAINS_LIBINTL = YesPlease
+-endif
+-ifeq ($(uname_S),IRIX)
+-	NO_SETENV = YesPlease
+-	NO_UNSETENV = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	# When compiled with the MIPSpro 7.4.4m compiler, and without pthreads
+-	# (i.e. NO_PTHREADS is set), and _with_ MMAP (i.e. NO_MMAP is not set),
+-	# git dies with a segmentation fault when trying to access the first
+-	# entry of a reflog.  The conservative choice is made to always set
+-	# NO_MMAP.  If you suspect that your compiler is not affected by this
+-	# issue, comment out the NO_MMAP statement.
+-	NO_MMAP = YesPlease
+-	NO_REGEX = YesPlease
+-	NO_FNMATCH_CASEFOLD = YesPlease
+-	SNPRINTF_RETURNS_BOGUS = YesPlease
+-	SHELL_PATH = /usr/gnu/bin/bash
+-	NEEDS_LIBGEN = YesPlease
+-endif
+-ifeq ($(uname_S),IRIX64)
+-	NO_SETENV = YesPlease
+-	NO_UNSETENV = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	# When compiled with the MIPSpro 7.4.4m compiler, and without pthreads
+-	# (i.e. NO_PTHREADS is set), and _with_ MMAP (i.e. NO_MMAP is not set),
+-	# git dies with a segmentation fault when trying to access the first
+-	# entry of a reflog.  The conservative choice is made to always set
+-	# NO_MMAP.  If you suspect that your compiler is not affected by this
+-	# issue, comment out the NO_MMAP statement.
+-	NO_MMAP = YesPlease
+-	NO_REGEX = YesPlease
+-	NO_FNMATCH_CASEFOLD = YesPlease
+-	SNPRINTF_RETURNS_BOGUS = YesPlease
+-	SHELL_PATH = /usr/gnu/bin/bash
+-	NEEDS_LIBGEN = YesPlease
+-endif
+-ifeq ($(uname_S),HP-UX)
+-	INLINE = __inline
+-	NO_IPV6 = YesPlease
+-	NO_SETENV = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_STRLCPY = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_UNSETENV = YesPlease
+-	NO_HSTRERROR = YesPlease
+-	NO_SYS_SELECT_H = YesPlease
+-	NO_FNMATCH_CASEFOLD = YesPlease
+-	SNPRINTF_RETURNS_BOGUS = YesPlease
+-	NO_NSEC = YesPlease
+-	ifeq ($(uname_R),B.11.00)
+-		NO_INET_NTOP = YesPlease
+-		NO_INET_PTON = YesPlease
+-	endif
+-	ifeq ($(uname_R),B.10.20)
+-		# Override HP-UX 11.x setting:
+-		INLINE =
+-		SOCKLEN_T = size_t
+-		NO_PREAD = YesPlease
+-		NO_INET_NTOP = YesPlease
+-		NO_INET_PTON = YesPlease
+-	endif
+-	GIT_TEST_CMP = cmp
+-endif
+-ifeq ($(uname_S),Windows)
+-	GIT_VERSION := $(GIT_VERSION).MSVC
+-	pathsep = ;
+-	NO_PREAD = YesPlease
+-	NEEDS_CRYPTO_WITH_SSL = YesPlease
+-	NO_LIBGEN_H = YesPlease
+-	NO_POLL = YesPlease
+-	NO_SYMLINK_HEAD = YesPlease
+-	NO_IPV6 = YesPlease
+-	NO_UNIX_SOCKETS = YesPlease
+-	NO_SETENV = YesPlease
+-	NO_UNSETENV = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_STRLCPY = YesPlease
+-	NO_STRTOK_R = YesPlease
+-	NO_FNMATCH = YesPlease
+-	NO_MEMMEM = YesPlease
+-	# NEEDS_LIBICONV = YesPlease
+-	NO_ICONV = YesPlease
+-	NO_STRTOUMAX = YesPlease
+-	NO_STRTOULL = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	SNPRINTF_RETURNS_BOGUS = YesPlease
+-	NO_SVN_TESTS = YesPlease
+-	NO_PERL_MAKEMAKER = YesPlease
+-	RUNTIME_PREFIX = YesPlease
+-	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	NO_NSEC = YesPlease
+-	USE_WIN32_MMAP = YesPlease
+-	# USE_NED_ALLOCATOR = YesPlease
+-	UNRELIABLE_FSTAT = UnfortunatelyYes
+-	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+-	NO_REGEX = YesPlease
+-	NO_CURL = YesPlease
+-	NO_PYTHON = YesPlease
+-	BLK_SHA1 = YesPlease
+-	NO_POSIX_GOODIES = UnfortunatelyYes
+-	NATIVE_CRLF = YesPlease
+-	DEFAULT_HELP_FORMAT = html
+-
+-	CC = compat/vcbuild/scripts/clink.pl
+-	AR = compat/vcbuild/scripts/lib.pl
+-	CFLAGS =
+-	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+-	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
+-		compat/win32/pthread.o compat/win32/syslog.o \
+-		compat/win32/dirent.o
+-	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+-	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+-	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
+-	PTHREAD_LIBS =
+-	lib =
+-ifndef DEBUG
+-	BASIC_CFLAGS += -GL -Os -MT
+-	BASIC_LDFLAGS += -LTCG
+-	AR += -LTCG
+-else
+-	BASIC_CFLAGS += -Zi -MTd
+-endif
+-	X = .exe
+-endif
+-ifeq ($(uname_S),Interix)
+-	NO_INITGROUPS = YesPlease
+-	NO_IPV6 = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_STRTOUMAX = YesPlease
+-	NO_NSEC = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	ifeq ($(uname_R),3.5)
+-		NO_INET_NTOP = YesPlease
+-		NO_INET_PTON = YesPlease
+-		NO_SOCKADDR_STORAGE = YesPlease
+-		NO_FNMATCH_CASEFOLD = YesPlease
+-	endif
+-	ifeq ($(uname_R),5.2)
+-		NO_INET_NTOP = YesPlease
+-		NO_INET_PTON = YesPlease
+-		NO_SOCKADDR_STORAGE = YesPlease
+-		NO_FNMATCH_CASEFOLD = YesPlease
+-	endif
+-endif
+-ifeq ($(uname_S),Minix)
+-	NO_IPV6 = YesPlease
+-	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	NO_NSEC = YesPlease
+-	NEEDS_LIBGEN =
+-	NEEDS_CRYPTO_WITH_SSL = YesPlease
+-	NEEDS_IDN_WITH_CURL = YesPlease
+-	NEEDS_SSL_WITH_CURL = YesPlease
+-	NEEDS_RESOLV =
+-	NO_HSTRERROR = YesPlease
+-	NO_MMAP = YesPlease
+-	NO_CURL =
+-	NO_EXPAT =
+-endif
+-ifeq ($(uname_S),NONSTOP_KERNEL)
+-	# Needs some C99 features, "inline" is just one of them.
+-	# INLINE='' would just replace one set of warnings with another and
+-	# still not compile in c89 mode, due to non-const array initializations.
+-	CC = cc -c99
+-	# Disable all optimization, seems to result in bad code, with -O or -O2
+-	# or even -O1 (default), /usr/local/libexec/git-core/git-pack-objects
+-	# abends on "git push". Needs more investigation.
+-	CFLAGS = -g -O0
+-	# We'd want it to be here.
+-	prefix = /usr/local
+-	# Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
+-	PERL_PATH = ${prefix}/bin/perl
+-	PYTHON_PATH = ${prefix}/bin/python
+-
+-	# As detected by './configure'.
+-	# Missdetected, hence commented out, see below.
+-	#NO_CURL = YesPlease
+-	# Added manually, see above.
+-	NEEDS_SSL_WITH_CURL = YesPlease
+-	HAVE_LIBCHARSET_H = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	NEEDS_LIBINTL_BEFORE_LIBICONV = YesPlease
+-	NO_SYS_SELECT_H = UnfortunatelyYes
+-	NO_D_TYPE_IN_DIRENT = YesPlease
+-	NO_HSTRERROR = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_FNMATCH_CASEFOLD = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_STRLCPY = YesPlease
+-	NO_SETENV = YesPlease
+-	NO_UNSETENV = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	# Currently libiconv-1.9.1.
+-	OLD_ICONV = UnfortunatelyYes
+-	NO_REGEX = YesPlease
+-	NO_PTHREADS = UnfortunatelyYes
+-
+-	# Not detected (nor checked for) by './configure'.
+-	# We don't have SA_RESTART on NonStop, unfortunalety.
+-	COMPAT_CFLAGS += -DSA_RESTART=0
+-	# Apparently needed in compat/fnmatch/fnmatch.c.
+-	COMPAT_CFLAGS += -DHAVE_STRING_H=1
+-	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	NO_NSEC = YesPlease
+-	NO_PREAD = YesPlease
+-	NO_MMAP = YesPlease
+-	NO_POLL = YesPlease
+-	NO_INTPTR_T = UnfortunatelyYes
+-	# Bug report 10-120822-4477 submitted to HP NonStop development.
+-	MKDIR_WO_TRAILING_SLASH = YesPlease
+-	# RFE 10-120912-4693 submitted to HP NonStop development.
+-	NO_SETITIMER = UnfortunatelyYes
+-	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+-	SHELL_PATH = /usr/local/bin/bash
+-	# as of H06.25/J06.14, we might better use this
+-	#SHELL_PATH = /usr/coreutils/bin/bash
+-endif
+-ifneq (,$(findstring MINGW,$(uname_S)))
+-	pathsep = ;
+-	NO_PREAD = YesPlease
+-	NEEDS_CRYPTO_WITH_SSL = YesPlease
+-	NO_LIBGEN_H = YesPlease
+-	NO_POLL = YesPlease
+-	NO_SYMLINK_HEAD = YesPlease
+-	NO_UNIX_SOCKETS = YesPlease
+-	NO_SETENV = YesPlease
+-	NO_UNSETENV = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_STRLCPY = YesPlease
+-	NO_STRTOK_R = YesPlease
+-	NO_FNMATCH = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+-	OLD_ICONV = YesPlease
+-	NO_STRTOUMAX = YesPlease
+-	NO_MKDTEMP = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_SVN_TESTS = YesPlease
+-	NO_PERL_MAKEMAKER = YesPlease
+-	RUNTIME_PREFIX = YesPlease
+-	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	NO_NSEC = YesPlease
+-	USE_WIN32_MMAP = YesPlease
+-	USE_NED_ALLOCATOR = YesPlease
+-	UNRELIABLE_FSTAT = UnfortunatelyYes
+-	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+-	NO_REGEX = YesPlease
+-	NO_PYTHON = YesPlease
+-	BLK_SHA1 = YesPlease
+-	ETAGS_TARGET = ETAGS
+-	NO_INET_PTON = YesPlease
+-	NO_INET_NTOP = YesPlease
+-	NO_POSIX_GOODIES = UnfortunatelyYes
+-	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/win32
+-	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+-	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+-		compat/win32/pthread.o compat/win32/syslog.o \
+-		compat/win32/dirent.o
+-	EXTLIBS += -lws2_32
+-	PTHREAD_LIBS =
+-	X = .exe
+-	SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
+-ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+-	htmldir = doc/git/html/
+-	prefix =
+-	INSTALL = /bin/install
+-	EXTLIBS += /mingw/lib/libz.a
+-	NO_R_TO_GCC_LINKER = YesPlease
+-	INTERNAL_QSORT = YesPlease
+-	HAVE_LIBCHARSET_H = YesPlease
+-else
+-	NO_CURL = YesPlease
+-endif
+-endif
+-
++include config.mak.uname
+ -include config.mak.autogen
+ -include config.mak
+ 
+diff --git a/config.mak.uname b/config.mak.uname
+new file mode 100644
+index 0000000..3ccbb8e
+--- /dev/null
++++ b/config.mak.uname
+@@ -0,0 +1,522 @@
++# Platform specific Makefile tweaks based on uname detection
++
++uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
++uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
++uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
++uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
++uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
++uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
++
++ifdef MSVC
++	# avoid the MingW and Cygwin configuration sections
++	uname_S := Windows
++	uname_O := Windows
++endif
++
++# We choose to avoid "if .. else if .. else .. endif endif"
++# because maintaining the nesting to match is a pain.  If
++# we had "elif" things would have been much nicer...
++
++ifeq ($(uname_M),x86_64)
++	XDL_FAST_HASH = YesPlease
++endif
++ifeq ($(uname_S),OSF1)
++	# Need this for u_short definitions et al
++	BASIC_CFLAGS += -D_OSF_SOURCE
++	SOCKLEN_T = int
++	NO_STRTOULL = YesPlease
++	NO_NSEC = YesPlease
++endif
++ifeq ($(uname_S),Linux)
++	NO_STRLCPY = YesPlease
++	NO_MKSTEMPS = YesPlease
++	HAVE_PATHS_H = YesPlease
++	LIBC_CONTAINS_LIBINTL = YesPlease
++	HAVE_DEV_TTY = YesPlease
++endif
++ifeq ($(uname_S),GNU/kFreeBSD)
++	NO_STRLCPY = YesPlease
++	NO_MKSTEMPS = YesPlease
++	HAVE_PATHS_H = YesPlease
++	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
++	LIBC_CONTAINS_LIBINTL = YesPlease
++endif
++ifeq ($(uname_S),UnixWare)
++	CC = cc
++	NEEDS_SOCKET = YesPlease
++	NEEDS_NSL = YesPlease
++	NEEDS_SSL_WITH_CRYPTO = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	SHELL_PATH = /usr/local/bin/bash
++	NO_IPV6 = YesPlease
++	NO_HSTRERROR = YesPlease
++	NO_MKSTEMPS = YesPlease
++	BASIC_CFLAGS += -Kthread
++	BASIC_CFLAGS += -I/usr/local/include
++	BASIC_LDFLAGS += -L/usr/local/lib
++	INSTALL = ginstall
++	TAR = gtar
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++endif
++ifeq ($(uname_S),SCO_SV)
++	ifeq ($(uname_R),3.2)
++		CFLAGS = -O2
++	endif
++	ifeq ($(uname_R),5)
++		CC = cc
++		BASIC_CFLAGS += -Kthread
++	endif
++	NEEDS_SOCKET = YesPlease
++	NEEDS_NSL = YesPlease
++	NEEDS_SSL_WITH_CRYPTO = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	SHELL_PATH = /usr/bin/bash
++	NO_IPV6 = YesPlease
++	NO_HSTRERROR = YesPlease
++	NO_MKSTEMPS = YesPlease
++	BASIC_CFLAGS += -I/usr/local/include
++	BASIC_LDFLAGS += -L/usr/local/lib
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	INSTALL = ginstall
++	TAR = gtar
++endif
++ifeq ($(uname_S),Darwin)
++	NEEDS_CRYPTO_WITH_SSL = YesPlease
++	NEEDS_SSL_WITH_CRYPTO = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
++		OLD_ICONV = UnfortunatelyYes
++	endif
++	ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
++		NO_STRLCPY = YesPlease
++	endif
++	NO_MEMMEM = YesPlease
++	USE_ST_TIMESPEC = YesPlease
++	HAVE_DEV_TTY = YesPlease
++	COMPAT_OBJS += compat/precompose_utf8.o
++	BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
++endif
++ifeq ($(uname_S),SunOS)
++	NEEDS_SOCKET = YesPlease
++	NEEDS_NSL = YesPlease
++	SHELL_PATH = /bin/bash
++	SANE_TOOL_PATH = /usr/xpg6/bin:/usr/xpg4/bin
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
++	NO_REGEX = YesPlease
++	NO_FNMATCH_CASEFOLD = YesPlease
++	NO_MSGFMT_EXTENDED_OPTIONS = YesPlease
++	HAVE_DEV_TTY = YesPlease
++	ifeq ($(uname_R),5.6)
++		SOCKLEN_T = int
++		NO_HSTRERROR = YesPlease
++		NO_IPV6 = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRLCPY = YesPlease
++		NO_STRTOUMAX = YesPlease
++		GIT_TEST_CMP = cmp
++	endif
++	ifeq ($(uname_R),5.7)
++		NEEDS_RESOLV = YesPlease
++		NO_IPV6 = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRLCPY = YesPlease
++		NO_STRTOUMAX = YesPlease
++		GIT_TEST_CMP = cmp
++	endif
++	ifeq ($(uname_R),5.8)
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRTOUMAX = YesPlease
++		GIT_TEST_CMP = cmp
++	endif
++	ifeq ($(uname_R),5.9)
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRTOUMAX = YesPlease
++		GIT_TEST_CMP = cmp
++	endif
++	INSTALL = /usr/ucb/install
++	TAR = gtar
++	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
++endif
++ifeq ($(uname_O),Cygwin)
++	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
++		NO_D_TYPE_IN_DIRENT = YesPlease
++		NO_D_INO_IN_DIRENT = YesPlease
++		NO_STRCASESTR = YesPlease
++		NO_MEMMEM = YesPlease
++		NO_MKSTEMPS = YesPlease
++		NO_SYMLINK_HEAD = YesPlease
++		NO_IPV6 = YesPlease
++		OLD_ICONV = UnfortunatelyYes
++		CYGWIN_V15_WIN32API = YesPlease
++	endif
++	NO_THREAD_SAFE_PREAD = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
++	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
++	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	# There are conflicting reports about this.
++	# On some boxes NO_MMAP is needed, and not so elsewhere.
++	# Try commenting this out if you suspect MMAP is more efficient
++	NO_MMAP = YesPlease
++	X = .exe
++	COMPAT_OBJS += compat/cygwin.o
++	UNRELIABLE_FSTAT = UnfortunatelyYes
++	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
++endif
++ifeq ($(uname_S),FreeBSD)
++	NEEDS_LIBICONV = YesPlease
++	OLD_ICONV = YesPlease
++	NO_MEMMEM = YesPlease
++	BASIC_CFLAGS += -I/usr/local/include
++	BASIC_LDFLAGS += -L/usr/local/lib
++	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
++	USE_ST_TIMESPEC = YesPlease
++	ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
++		PTHREAD_LIBS = -pthread
++		NO_UINTMAX_T = YesPlease
++		NO_STRTOUMAX = YesPlease
++	endif
++	PYTHON_PATH = /usr/local/bin/python
++	HAVE_PATHS_H = YesPlease
++endif
++ifeq ($(uname_S),OpenBSD)
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	USE_ST_TIMESPEC = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	BASIC_CFLAGS += -I/usr/local/include
++	BASIC_LDFLAGS += -L/usr/local/lib
++	HAVE_PATHS_H = YesPlease
++endif
++ifeq ($(uname_S),NetBSD)
++	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
++		NEEDS_LIBICONV = YesPlease
++	endif
++	BASIC_CFLAGS += -I/usr/pkg/include
++	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
++	USE_ST_TIMESPEC = YesPlease
++	NO_MKSTEMPS = YesPlease
++	HAVE_PATHS_H = YesPlease
++endif
++ifeq ($(uname_S),AIX)
++	DEFAULT_PAGER = more
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
++	NO_STRLCPY = YesPlease
++	NO_NSEC = YesPlease
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
++	INTERNAL_QSORT = UnfortunatelyYes
++	NEEDS_LIBICONV = YesPlease
++	BASIC_CFLAGS += -D_LARGE_FILES
++	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
++		NO_PTHREADS = YesPlease
++	else
++		PTHREAD_LIBS = -lpthread
++	endif
++	ifeq ($(shell expr "$(uname_V).$(uname_R)" : '5\.1'),3)
++		INLINE = ''
++	endif
++	GIT_TEST_CMP = cmp
++endif
++ifeq ($(uname_S),GNU)
++	# GNU/Hurd
++	NO_STRLCPY = YesPlease
++	NO_MKSTEMPS = YesPlease
++	HAVE_PATHS_H = YesPlease
++	LIBC_CONTAINS_LIBINTL = YesPlease
++endif
++ifeq ($(uname_S),IRIX)
++	NO_SETENV = YesPlease
++	NO_UNSETENV = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKSTEMPS = YesPlease
++	NO_MKDTEMP = YesPlease
++	# When compiled with the MIPSpro 7.4.4m compiler, and without pthreads
++	# (i.e. NO_PTHREADS is set), and _with_ MMAP (i.e. NO_MMAP is not set),
++	# git dies with a segmentation fault when trying to access the first
++	# entry of a reflog.  The conservative choice is made to always set
++	# NO_MMAP.  If you suspect that your compiler is not affected by this
++	# issue, comment out the NO_MMAP statement.
++	NO_MMAP = YesPlease
++	NO_REGEX = YesPlease
++	NO_FNMATCH_CASEFOLD = YesPlease
++	SNPRINTF_RETURNS_BOGUS = YesPlease
++	SHELL_PATH = /usr/gnu/bin/bash
++	NEEDS_LIBGEN = YesPlease
++endif
++ifeq ($(uname_S),IRIX64)
++	NO_SETENV = YesPlease
++	NO_UNSETENV = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKSTEMPS = YesPlease
++	NO_MKDTEMP = YesPlease
++	# When compiled with the MIPSpro 7.4.4m compiler, and without pthreads
++	# (i.e. NO_PTHREADS is set), and _with_ MMAP (i.e. NO_MMAP is not set),
++	# git dies with a segmentation fault when trying to access the first
++	# entry of a reflog.  The conservative choice is made to always set
++	# NO_MMAP.  If you suspect that your compiler is not affected by this
++	# issue, comment out the NO_MMAP statement.
++	NO_MMAP = YesPlease
++	NO_REGEX = YesPlease
++	NO_FNMATCH_CASEFOLD = YesPlease
++	SNPRINTF_RETURNS_BOGUS = YesPlease
++	SHELL_PATH = /usr/gnu/bin/bash
++	NEEDS_LIBGEN = YesPlease
++endif
++ifeq ($(uname_S),HP-UX)
++	INLINE = __inline
++	NO_IPV6 = YesPlease
++	NO_SETENV = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKSTEMPS = YesPlease
++	NO_STRLCPY = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_UNSETENV = YesPlease
++	NO_HSTRERROR = YesPlease
++	NO_SYS_SELECT_H = YesPlease
++	NO_FNMATCH_CASEFOLD = YesPlease
++	SNPRINTF_RETURNS_BOGUS = YesPlease
++	NO_NSEC = YesPlease
++	ifeq ($(uname_R),B.11.00)
++		NO_INET_NTOP = YesPlease
++		NO_INET_PTON = YesPlease
++	endif
++	ifeq ($(uname_R),B.10.20)
++		# Override HP-UX 11.x setting:
++		INLINE =
++		SOCKLEN_T = size_t
++		NO_PREAD = YesPlease
++		NO_INET_NTOP = YesPlease
++		NO_INET_PTON = YesPlease
++	endif
++	GIT_TEST_CMP = cmp
++endif
++ifeq ($(uname_S),Windows)
++	GIT_VERSION := $(GIT_VERSION).MSVC
++	pathsep = ;
++	NO_PREAD = YesPlease
++	NEEDS_CRYPTO_WITH_SSL = YesPlease
++	NO_LIBGEN_H = YesPlease
++	NO_POLL = YesPlease
++	NO_SYMLINK_HEAD = YesPlease
++	NO_IPV6 = YesPlease
++	NO_UNIX_SOCKETS = YesPlease
++	NO_SETENV = YesPlease
++	NO_UNSETENV = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_STRLCPY = YesPlease
++	NO_STRTOK_R = YesPlease
++	NO_FNMATCH = YesPlease
++	NO_MEMMEM = YesPlease
++	# NEEDS_LIBICONV = YesPlease
++	NO_ICONV = YesPlease
++	NO_STRTOUMAX = YesPlease
++	NO_STRTOULL = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
++	SNPRINTF_RETURNS_BOGUS = YesPlease
++	NO_SVN_TESTS = YesPlease
++	NO_PERL_MAKEMAKER = YesPlease
++	RUNTIME_PREFIX = YesPlease
++	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	NO_NSEC = YesPlease
++	USE_WIN32_MMAP = YesPlease
++	# USE_NED_ALLOCATOR = YesPlease
++	UNRELIABLE_FSTAT = UnfortunatelyYes
++	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
++	NO_REGEX = YesPlease
++	NO_CURL = YesPlease
++	NO_PYTHON = YesPlease
++	BLK_SHA1 = YesPlease
++	NO_POSIX_GOODIES = UnfortunatelyYes
++	NATIVE_CRLF = YesPlease
++	DEFAULT_HELP_FORMAT = html
++
++	CC = compat/vcbuild/scripts/clink.pl
++	AR = compat/vcbuild/scripts/lib.pl
++	CFLAGS =
++	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
++	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
++		compat/win32/pthread.o compat/win32/syslog.o \
++		compat/win32/dirent.o
++	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
++	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
++	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
++	PTHREAD_LIBS =
++	lib =
++ifndef DEBUG
++	BASIC_CFLAGS += -GL -Os -MT
++	BASIC_LDFLAGS += -LTCG
++	AR += -LTCG
++else
++	BASIC_CFLAGS += -Zi -MTd
++endif
++	X = .exe
++endif
++ifeq ($(uname_S),Interix)
++	NO_INITGROUPS = YesPlease
++	NO_IPV6 = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_STRTOUMAX = YesPlease
++	NO_NSEC = YesPlease
++	NO_MKSTEMPS = YesPlease
++	ifeq ($(uname_R),3.5)
++		NO_INET_NTOP = YesPlease
++		NO_INET_PTON = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_FNMATCH_CASEFOLD = YesPlease
++	endif
++	ifeq ($(uname_R),5.2)
++		NO_INET_NTOP = YesPlease
++		NO_INET_PTON = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_FNMATCH_CASEFOLD = YesPlease
++	endif
++endif
++ifeq ($(uname_S),Minix)
++	NO_IPV6 = YesPlease
++	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	NO_NSEC = YesPlease
++	NEEDS_LIBGEN =
++	NEEDS_CRYPTO_WITH_SSL = YesPlease
++	NEEDS_IDN_WITH_CURL = YesPlease
++	NEEDS_SSL_WITH_CURL = YesPlease
++	NEEDS_RESOLV =
++	NO_HSTRERROR = YesPlease
++	NO_MMAP = YesPlease
++	NO_CURL =
++	NO_EXPAT =
++endif
++ifeq ($(uname_S),NONSTOP_KERNEL)
++	# Needs some C99 features, "inline" is just one of them.
++	# INLINE='' would just replace one set of warnings with another and
++	# still not compile in c89 mode, due to non-const array initializations.
++	CC = cc -c99
++	# Disable all optimization, seems to result in bad code, with -O or -O2
++	# or even -O1 (default), /usr/local/libexec/git-core/git-pack-objects
++	# abends on "git push". Needs more investigation.
++	CFLAGS = -g -O0
++	# We'd want it to be here.
++	prefix = /usr/local
++	# Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
++	PERL_PATH = ${prefix}/bin/perl
++	PYTHON_PATH = ${prefix}/bin/python
++
++	# As detected by './configure'.
++	# Missdetected, hence commented out, see below.
++	#NO_CURL = YesPlease
++	# Added manually, see above.
++	NEEDS_SSL_WITH_CURL = YesPlease
++	HAVE_LIBCHARSET_H = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	NEEDS_LIBINTL_BEFORE_LIBICONV = YesPlease
++	NO_SYS_SELECT_H = UnfortunatelyYes
++	NO_D_TYPE_IN_DIRENT = YesPlease
++	NO_HSTRERROR = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_FNMATCH_CASEFOLD = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_STRLCPY = YesPlease
++	NO_SETENV = YesPlease
++	NO_UNSETENV = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
++	# Currently libiconv-1.9.1.
++	OLD_ICONV = UnfortunatelyYes
++	NO_REGEX = YesPlease
++	NO_PTHREADS = UnfortunatelyYes
++
++	# Not detected (nor checked for) by './configure'.
++	# We don't have SA_RESTART on NonStop, unfortunalety.
++	COMPAT_CFLAGS += -DSA_RESTART=0
++	# Apparently needed in compat/fnmatch/fnmatch.c.
++	COMPAT_CFLAGS += -DHAVE_STRING_H=1
++	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	NO_NSEC = YesPlease
++	NO_PREAD = YesPlease
++	NO_MMAP = YesPlease
++	NO_POLL = YesPlease
++	NO_INTPTR_T = UnfortunatelyYes
++	# Bug report 10-120822-4477 submitted to HP NonStop development.
++	MKDIR_WO_TRAILING_SLASH = YesPlease
++	# RFE 10-120912-4693 submitted to HP NonStop development.
++	NO_SETITIMER = UnfortunatelyYes
++	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
++	SHELL_PATH = /usr/local/bin/bash
++	# as of H06.25/J06.14, we might better use this
++	#SHELL_PATH = /usr/coreutils/bin/bash
++endif
++ifneq (,$(findstring MINGW,$(uname_S)))
++	pathsep = ;
++	NO_PREAD = YesPlease
++	NEEDS_CRYPTO_WITH_SSL = YesPlease
++	NO_LIBGEN_H = YesPlease
++	NO_POLL = YesPlease
++	NO_SYMLINK_HEAD = YesPlease
++	NO_UNIX_SOCKETS = YesPlease
++	NO_SETENV = YesPlease
++	NO_UNSETENV = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_STRLCPY = YesPlease
++	NO_STRTOK_R = YesPlease
++	NO_FNMATCH = YesPlease
++	NO_MEMMEM = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	OLD_ICONV = YesPlease
++	NO_STRTOUMAX = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
++	NO_SVN_TESTS = YesPlease
++	NO_PERL_MAKEMAKER = YesPlease
++	RUNTIME_PREFIX = YesPlease
++	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	NO_NSEC = YesPlease
++	USE_WIN32_MMAP = YesPlease
++	USE_NED_ALLOCATOR = YesPlease
++	UNRELIABLE_FSTAT = UnfortunatelyYes
++	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
++	NO_REGEX = YesPlease
++	NO_PYTHON = YesPlease
++	BLK_SHA1 = YesPlease
++	ETAGS_TARGET = ETAGS
++	NO_INET_PTON = YesPlease
++	NO_INET_NTOP = YesPlease
++	NO_POSIX_GOODIES = UnfortunatelyYes
++	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/win32
++	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
++	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
++		compat/win32/pthread.o compat/win32/syslog.o \
++		compat/win32/dirent.o
++	EXTLIBS += -lws2_32
++	PTHREAD_LIBS =
++	X = .exe
++	SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
++ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
++	htmldir = doc/git/html/
++	prefix =
++	INSTALL = /bin/install
++	EXTLIBS += /mingw/lib/libz.a
++	NO_R_TO_GCC_LINKER = YesPlease
++	INTERNAL_QSORT = YesPlease
++	HAVE_LIBCHARSET_H = YesPlease
++else
++	NO_CURL = YesPlease
++endif
++endif
+-- 
+1.8.1.rc3.4.gf3a2f57
