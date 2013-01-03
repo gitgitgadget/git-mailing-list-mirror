@@ -1,121 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] Allow installing a non-default set of documentation
-Date: Thu,  3 Jan 2013 11:05:20 -0800
-Message-ID: <1357239920-2201-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 1/2] Allow generating a non-default set of documentation
+Date: Thu,  3 Jan 2013 11:05:19 -0800
+Message-ID: <1357239920-2201-2-git-send-email-gitster@pobox.com>
 References: <1357239920-2201-1-git-send-email-gitster@pobox.com>
 Cc: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 03 20:05:52 2013
+X-From: git-owner@vger.kernel.org Thu Jan 03 20:05:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tqq6y-0003wE-2G
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 20:05:52 +0100
+	id 1Tqq6x-0003wE-Hh
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 20:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910Ab3ACTFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 14:05:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64320 "EHLO
+	id S1753855Ab3ACTFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 14:05:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64294 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753698Ab3ACTF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 14:05:27 -0500
+	id S1753663Ab3ACTFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 14:05:25 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8467AC44;
-	Thu,  3 Jan 2013 14:05:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 849DBAC3F;
+	Thu,  3 Jan 2013 14:05:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=g7Kj
-	LKofewTxKDntwRfueGT93B8=; b=RXKu5b7EnxEheq4Qtm8QWdklCN7GEAk3MYuA
-	xFumIgSLBiOOTEQbmouiO2MW+9vYVIfFKYhXQg4QMy/Afvkzz5E5m0K3TvPvHOGm
-	hcnoDd18l6ZIA2JL9qDJ36KCWqcvstwlVPjZP3mrzQA1XrVlDNXIm5JSF/15Jj6G
-	klKzVcs=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=VjFE
+	IP5csj8pE+lqG5r+mJNpE4U=; b=Wl7tPebfrrjvhltntQNntt6ZwoILmpDbCTXm
+	o1mRGD3TqC0Eha7uz6jGx4pzZ5N0GWO2wLgQ9H/0tq8SgtwNsGpTCFNiZqgC1UuI
+	HBP9S5qMA4kv91W0EI4ASdgoIAVTVedCqV0fK57jkTUKmjDJL/02HUIIQ6lFLivW
+	MBOZO1U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	jUswuH8bQZkjaJ2Wbh72K9dbCbnJkEIwmYuF1RNhFI73IWG0me5YSEvnOBom67yp
-	kKup9FvDE9VNtp0UNnalx/ro48OvEVa36qM4E3YfbB5sPh8BzX0Kif3oHYHNefYW
-	YUgyd/KyRRyX70clVlPRSJEqpcJPsypR68YyBwYuDgY=
+	uCfgRF1vm53hD3JAdbVLtZwpSNsvmyDMuU/o/D+00GzndWsMKuQe/WtQpF0felGJ
+	7rSSsDH2M1t4NZK/6AvW582nx5RGGC0dLf7w95DOU1eqPsXP6KZ2TALJcdaVdwap
+	KITh8i3t2FZPpQ00K85zXV779XFmWfdjMyRWQTRHJRw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AAC8AC43;
-	Thu,  3 Jan 2013 14:05:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76B07AC3E;
+	Thu,  3 Jan 2013 14:05:24 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE2B4AC42; Thu,  3 Jan 2013
- 14:05:25 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B79BEAC3C; Thu,  3 Jan 2013
+ 14:05:23 -0500 (EST)
 X-Mailer: git-send-email 1.8.1.293.g4a210a9
 In-Reply-To: <1357239920-2201-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8818E986-55D8-11E2-B9A3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 86CFA718-55D8-11E2-B64B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212602>
 
-In a fashion similar to the previous DEFAULT_DOC_TARGET patch, teach
-the build procedure to allow installing the documentation sets
-specified via DEFAULT_DOC_INSTALL_TARGET.
+By default, "make doc" generates the manpages and htmldocs in the
+Documentation directory, but you may want to change this depending
+on the target environment, e.g. to include 'pdf'.  Introduce a new
+Makefile variable DEFAULT_DOC_TARGET to allow customizing this.
 
-These two symbols must be separate, as we should allow formatting
-more than what will be installed.  The default has been to format
-both html and manpages, and to install only the latter.
+The primary motivation is to let us check documentation patches with
 
-    $ make DEFAULT_DOC_INSTALL_TARGET='html man' install-doc
+    $ DEFAULT_DOC_TARGET=git-push.1 make doc
 
-will format and install both html and manpages.
+but it is not so far-fetched to imagine that Windows users may want to
+omit manpages with
+
+    $ DEFAULT_DOC_TARGET=html make doc
+
+or somesuch.  It won't be useful without additional support to tweak
+the format installed by default via DEFAULT_DOC_INSTALL_TARGET, though.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/Makefile | 3 ++-
- Makefile               | 5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ Documentation/Makefile |  7 ++++++-
+ Makefile               | 10 +++++++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 0f8fdf8..bd7800d 100644
+index 063fa69..0f8fdf8 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -69,6 +69,7 @@ endif
+@@ -1,3 +1,6 @@
++# The default target of this Makefile is...
++all::
++
+ MAN1_TXT= \
+ 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt)) \
+@@ -65,6 +68,8 @@ endif
+ -include ../config.mak.autogen
  -include ../config.mak
  
- DEFAULT_DOC_TARGET ?= html man
-+DEFAULT_DOC_INSTALL_TARGET ?= $(DEFAULT_DOC_TARGET)
- 
++DEFAULT_DOC_TARGET ?= html man
++
  #
  # For docbook-xsl ...
-@@ -171,7 +172,7 @@ info: git.info gitman.info
+ #	-1.68.1,	no extra settings are needed?
+@@ -151,7 +156,7 @@ ifndef V
+ endif
+ endif
  
- pdf: user-manual.pdf
+-all: html man
++all:: $(DEFAULT_DOC_TARGET)
  
--install: install-man
-+install: $(patsubst %,install-%,$(DEFAULT_DOC_INSTALL_TARGET))
+ html: $(DOC_HTML)
  
- install-man: man
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
 diff --git a/Makefile b/Makefile
-index 71655a7..422a15f 100644
+index 6b0c961..71655a7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -287,6 +287,8 @@ all::
- #   DEFAULT_DOC_TARGET='man html info pdf'
- #   DEFAULT_DOC_TARGET='html'
+@@ -281,6 +281,12 @@ all::
+ #   DEFAULT_EDITOR='$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR='"C:\Program Files\Vim\gvim.exe" --nofork'
  #
-+# DEFAULT_DOC_INSTALL_TARGET can be used in a similar way.
++# You can define DEFAULT_DOC_TARGET to change it from the built-in
++# default of generating manpages and htmldocs.  e.g.
++#
++#   DEFAULT_DOC_TARGET='man html info pdf'
++#   DEFAULT_DOC_TARGET='html'
 +#
  # Define COMPUTE_HEADER_DEPENDENCIES to "yes" if you want dependencies on
  # header files to be automatically computed, to avoid rebuilding objects when
  # an unrelated header file changes.  Define it to "no" to use the hard-coded
-@@ -1428,6 +1430,7 @@ ifneq (,$(SOCKLEN_T))
+@@ -1421,6 +1427,8 @@ ifneq (,$(SOCKLEN_T))
+ 	BASIC_CFLAGS += -Dsocklen_t=$(SOCKLEN_T)
  endif
  
- DEFAULT_DOC_TARGET ?= html man
-+DEFAULT_DOC_INSTALL_TARGET ?= man
- 
++DEFAULT_DOC_TARGET ?= html man
++
  ifeq ($(uname_S),Darwin)
  	ifndef NO_FINK
-@@ -2379,7 +2382,7 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 		ifeq ($(shell test -d /sw/lib && echo y),y)
+@@ -2371,7 +2379,7 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
  $(VCSSVN_LIB): $(VCSSVN_OBJS)
  	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
  
--export DEFAULT_EDITOR DEFAULT_PAGER DEFAULT_DOC_TARGET
-+export DEFAULT_EDITOR DEFAULT_PAGER DEFAULT_DOC_TARGET DEFAULT_DOC_INSTALL_TARGET
+-export DEFAULT_EDITOR DEFAULT_PAGER
++export DEFAULT_EDITOR DEFAULT_PAGER DEFAULT_DOC_TARGET
  
  doc:
  	$(MAKE) -C Documentation all
