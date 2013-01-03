@@ -1,101 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
 Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
-Date: Wed, 02 Jan 2013 16:16:29 -0800
-Message-ID: <7vlicbyvc2.fsf@alter.siamese.dyndns.org>
-References: <201301012240.10722.tboegi@web.de>
- <20130102094635.GD9328@sigill.intra.peff.net> <50E4BF58.4090808@web.de>
- <20130102232239.GA27952@sigill.intra.peff.net> <50E4C9B5.8070308@web.de>
+Date: Thu, 03 Jan 2013 01:23:26 +0100
+Message-ID: <50E4CF7E.9090302@web.de>
+References: <201301012240.10722.tboegi@web.de> <20130102094635.GD9328@sigill.intra.peff.net> <50E4BF58.4090808@web.de> <20130102232239.GA27952@sigill.intra.peff.net> <50E4C9B5.8070308@web.de> <7vlicbyvc2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 03 01:16:58 2013
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 01:24:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqYUQ-0007Ta-EW
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 01:16:54 +0100
+	id 1TqYbK-0001ts-4w
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 01:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009Ab3ACAQd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 19:16:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43233 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752975Ab3ACAQc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2013 19:16:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BEF1A2B7;
-	Wed,  2 Jan 2013 19:16:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8f8bttDxY3Ra
-	4XjHEi6RFjxptuY=; b=WXW6JDI0Xixp+EqicAgjM+yAIa/mCwWBwLnKRbNt/4P+
-	94VgQ+YhlN+5BXU7dNCPD65SDSW36Viv1RV/GTsn7VllfReoX9AdEhLDIQh2bdiy
-	Fh2BDKI0a02j2ME9JrldvfAJWG1mQwVNmqIoWpziYBSNG6j9/hCSw2J0sAuccqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=D96ZVb
-	Puzq8VU2dKUQiPTIOIgCRDFqgy07R3OHlYiZA8SIb7/Hwhsc6Ph0/D5d1DSjds9r
-	m9piY46yB9eh0pOk8hbBNrUk7nUVzaGbO0qpd/B+X+kj8GbGscij30w+rqtQDruR
-	sOpduxd8l3RJUGFBJyxwsd+sgbkmkU+7IkT20=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DB04A2B5;
-	Wed,  2 Jan 2013 19:16:31 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 099AEA2B4; Wed,  2 Jan 2013
- 19:16:30 -0500 (EST)
-In-Reply-To: <50E4C9B5.8070308@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of "Thu, 03 Jan 2013 00:58:45 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D2F80412-553A-11E2-81F1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753031Ab3ACAXo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2013 19:23:44 -0500
+Received: from mout.web.de ([212.227.15.4]:56205 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753015Ab3ACAXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2013 19:23:42 -0500
+Received: from [192.168.2.107] ([79.244.162.201]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0Md4V8-1TZRBK2G8Y-00INBC; Thu, 03 Jan 2013 01:23:29
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vlicbyvc2.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:vR1/ZmWqT/tak3mDs3jMFMIrCWp04v8XOp4LPps8AeD
+ MJZ4GLSxbfxSyvbi+dM3XRmYWwUbSK2HQB//7hA6uTu8NdVK1Q
+ POP6l4SVcChQYxj2NUG5vK5nRwVF8UHGlQFsdfnxWIG61RSJNP
+ 816Z3qFpb62EA2ghyxvwPUl15jOtio/2105YAvKnCfw7OPOkdA
+ oHfbc/tiV5sgmJiEN50uQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212563>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On 03.01.13 01:16, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>=20
+>> At least on my system the following combination works:
+>>
+>> git diff
+>> diff --git a/t/Makefile b/t/Makefile
+>> index f8f8c54..391a5ca 100644
+>> --- a/t/Makefile
+>> +++ b/t/Makefile
+>> @@ -8,7 +8,7 @@
+>> =20
+>>  #GIT_TEST_OPTS =3D --verbose --debug
+>>  SHELL_PATH ?=3D $(SHELL)
+>> -PERL_PATH ?=3D /usr/bin/perl
+>> +PERL_PATH =3D "/Users/tb/projects/git/tb/pe rl"
+>=20
+> I do not think that will fly.  Having that in the main Makefile
+> where the existing users of the symbol relies on it without any
+> surrounding quotes, e.g.
+>=20
+> $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl GIT-VERSION-FILE
+> 	$(QUIET_GEN)$(RM) $@ $@+ && \
+> 	INSTLIBDIR=3D`MAKEFLAGS=3D $(MAKE) -C perl -s --no-print-directory i=
+nstlibdir` && \
+> 	sed -e '1{' \
+> 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+> 	    -e '	h' \
+> 	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || =
+"'"$$INSTLIBDIR"'"));=3D' \
+> 	    -e '	H' \
+> 	    -e '	x' \
+> 	    -e '}' \
+> 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+> 	    $@.perl >$@+ && \
+> 	chmod +x $@+ && \
+> 	mv $@+ $@
+>=20
+> where $(PERL_PATH_SQ) is defined to replace each ' in $(PERL_PATH)
+> with '\'' so that '$(PERL_PATH_SQ)' becomes a shell-safe way to
+> quote the value of PERL_PATH without quotes, your definition will
+> look for a relative path that is inside a directory named '"'
+> (that's a single double-quote).
 
-> At least on my system the following combination works:
->
-> git diff
-> diff --git a/t/Makefile b/t/Makefile
-> index f8f8c54..391a5ca 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -8,7 +8,7 @@
-> =20
->  #GIT_TEST_OPTS =3D --verbose --debug
->  SHELL_PATH ?=3D $(SHELL)
-> -PERL_PATH ?=3D /usr/bin/perl
-> +PERL_PATH =3D "/Users/tb/projects/git/tb/pe rl"
+Thanks to all for the explanations, fixing up and queing.
 
-I do not think that will fly.  Having that in the main Makefile
-where the existing users of the symbol relies on it without any
-surrounding quotes, e.g.
+And good news:
+pu today is "clean",there where no problems found:
 
-$(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl GIT-VERSION-FILE
-	$(QUIET_GEN)$(RM) $@ $@+ && \
-	INSTLIBDIR=3D`MAKEFLAGS=3D $(MAKE) -C perl -s --no-print-directory ins=
-tlibdir` && \
-	sed -e '1{' \
-	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
-	    -e '	h' \
-	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "'=
-"$$INSTLIBDIR"'"));=3D' \
-	    -e '	H' \
-	    -e '	x' \
-	    -e '}' \
-	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-	    $@.perl >$@+ && \
-	chmod +x $@+ && \
-	mv $@+ $@
+commit d69ea46220647c048d332c471a184446cce17627
+Merge: e552539 fcf30b3
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed Jan 2 12:44:33 2013 -0800
 
-where $(PERL_PATH_SQ) is defined to replace each ' in $(PERL_PATH)
-with '\'' so that '$(PERL_PATH_SQ)' becomes a shell-safe way to
-quote the value of PERL_PATH without quotes, your definition will
-look for a relative path that is inside a directory named '"'
-(that's a single double-quote).
+
+When the dust has settled, we can either enable the check always, or me=
+ntion
+"make test-lint-shell-syntax" in the Documentation.
