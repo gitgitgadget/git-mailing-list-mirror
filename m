@@ -1,83 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
- bugs.
-Date: Thu, 03 Jan 2013 07:22:59 -0800
-Message-ID: <7vip7expd8.fsf@alter.siamese.dyndns.org>
-References: <20130101172645.GA5506@thyrsus.com>
- <CAEUsAPYwinmbDkSVu71WJRgUjLfBeNdKDFt6O1f8-Ti9evn6Hw@mail.gmail.com>
- <7vmwwqyc8w.fsf@alter.siamese.dyndns.org>
- <CALWbr2xx0beca_LUHO45pGMZ4Y0jZ9-iMWq8WBO6PmW==Ysw=A@mail.gmail.com>
+Subject: Re: [BUG] two-way read-tree can write null sha1s into index
+Date: Thu, 03 Jan 2013 07:34:53 -0800
+Message-ID: <7vehi2xote.fsf@alter.siamese.dyndns.org>
+References: <20120728150132.GA25042@sigill.intra.peff.net>
+ <20120728150524.GB25269@sigill.intra.peff.net>
+ <20121229100130.GA31497@elie.Belkin>
+ <20121229102707.GA26730@sigill.intra.peff.net>
+ <20121229103430.GG18903@elie.Belkin>
+ <20121229110541.GA1408@sigill.intra.peff.net>
+ <20121229205154.GA21058@sigill.intra.peff.net>
+ <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+ <20130103083712.GC32377@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chris Rorvick <chris@rorvick.com>, Eric Raymond <esr@thyrsus.com>,
-	git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 16:23:27 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 03 16:35:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tqmdg-0000TW-N9
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 16:23:25 +0100
+	id 1TqmpB-0006NP-4T
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 16:35:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753261Ab3ACPXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 10:23:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43768 "EHLO
+	id S1753242Ab3ACPe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 10:34:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49115 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753215Ab3ACPXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 10:23:04 -0500
+	id S1753073Ab3ACPe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 10:34:56 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58167B88D;
-	Thu,  3 Jan 2013 10:23:02 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3039ABB8E;
+	Thu,  3 Jan 2013 10:34:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n110s4WwGkfn3wQt1DgSwErb4nM=; b=S0dbfd
-	9pfhuZ8tpn8bxoTvBbF2Elyt3QVgeL4M9Mio0vdHFNgV5e6GwHgwDwskYk3VMHzx
-	unBmZ1M86doY6BavsmY7IR6sdi6diwkPk47J2OPBNQysv1vhU3L/9SmYB3yy/Z57
-	L6OIjF0ufVsncYPiqW8WnZIRhIJynHv8s4TPA=
+	:content-type; s=sasl; bh=DgeZfUrL3PtWuG+senmMHkRz/wc=; b=OpxAmH
+	apB9C5FRWQ4RVkdsOTldR5W/UwH7UnRM4UAnKQU2iUW3GLpDFic1GSSSqQK3AO91
+	YDwn/NBPOHjccF/ae3Fffj6iBy3wqiWSjxC+XeHCxqm2rcBm8yQWVuxoE2BGb0Ss
+	aKDcIMw8n8slOAF6wUCGuOef9VItx4EUNY9qc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nUEoFsU7WQPrn3yTdZ5gyoygFWVswOmY
-	bwFPUxA7zJc+HO31/5+Azemj2Wzj2BaqGLNHnMvhAiZOPlfo7LwSEOEkoifYuGRD
-	IrcfFZv0l5VlVoq270daNqc8SuNHgks3acfMBoGzD88vNMslbQNYK/BAphCu8OVB
-	eXkPPOjQCkE=
+	:content-type; q=dns; s=sasl; b=uTkuCmxWY4BAqhQsSMdqoagA5nmG0TY/
+	NHMPzynb5Aau/dA5nO9Nl7eHsRHSr+T2N+Ng9D7lnhPqbwki1eEeEMyWfDY3Ig+N
+	GSZABbo57NRtKvPlJ/jBXPvXsWkNWjDHEOZ51aa9IbprE0zx58le1cQoQTViVdB6
+	mGcC0b1+DD0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1590CB88C;
-	Thu,  3 Jan 2013 10:23:02 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20C2DBB8D;
+	Thu,  3 Jan 2013 10:34:56 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 86F50B88B; Thu,  3 Jan 2013
- 10:23:01 -0500 (EST)
-In-Reply-To: <CALWbr2xx0beca_LUHO45pGMZ4Y0jZ9-iMWq8WBO6PmW==Ysw=A@mail.gmail.com> (Antoine
- Pelisse's message of "Thu, 3 Jan 2013 08:47:56 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E58EBB8B; Thu,  3 Jan 2013
+ 10:34:55 -0500 (EST)
+In-Reply-To: <20130103083712.GC32377@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 3 Jan 2013 03:37:12 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 763DFB8A-55B9-11E2-8A4E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1FC21C12-55BB-11E2-8656-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212590>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> Doesn't Python come with a standard subprocess module that lets you
->> spawn external programs safely, similar to the way Perl's list form
->> open(), e.g. "open($fh, "-|", 'git', @args)", works?
-
-... and of course a more boring "system('git', $subcmd, @args)", as well.
-
-> You mean something like this:
+> On Tue, Jan 01, 2013 at 02:24:46PM -0800, Junio C Hamano wrote:
 >
->   p1 = subprocess.Popen([backend.command()], stdout=subprocess.PIPE)
->   subprocess.Popen(["git", "fast-import", "--quiet"] + gitopts,
-> cwd=outdir, stdin=p1.stdout)
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > So I think we need to update twoway_merge to recognize unmerged entries,
+>> > which gives us two options:
+>> >
+>> >   1. Reject the merge.
+>> >
+>> >   2. Throw away the current unmerged entry in favor of the "new" entry
+>> >      (when old and new are the same, of course; otherwise we would
+>> >      reject).
+>> >
+>> > I think (2) is the right thing.
+>> 
+>> As "--reset" in "read-tree --reset -u A B" is a way to say "we know
+>> we are based on A and we want to go to B no matter what", I agree we
+>> should not reject the merge.
+>> 
+>> With -m instead of --reset, I am not sure what the right semantics
+>> should be, though.
 >
-> Assuming gitopts is a list rather than a string. (care must be taken
-> with backend.command() also)
+> Good point; I was just thinking about the --reset case.
+>
+> With "-m", though, we could in theory carry over the unmerged entries
+> (again, assuming that "old" and "new" are the same; otherwise it is an
+> obvious reject). But those entries would be confused with any new
+> unmerged entries we create. It seems we already protect against this,
+> though: "read-tree -m" will not run at all if you have unmerged entries.
+>
+> Likewise, "checkout" seems to have similar protections.
+>
+> So I think it may be a non-issue.
 
-Yes.
+Yeah.  Also earlier in the thread you mentioned three-way case, but
+I do not think we ever would want --reset with three trees, so I
+think that too is a non-issue for the same reason.
 
-I vaguely recall that the subprocess module once used to be one
-portability issue but that was between Python 2.3 and 2.4 or some
-ancient history, and it should no longer be relevant.
+I would still feel safer if we expressed the expectation of
+the callee in the code, perhaps like this in the two-way case:
+
+	if (current->ce_flags & CE_CONFLICTED) {
+        	if (!o->reset) {
+                	... either die or fail ...
+		} else {
+                	... your fix ...
+		}
+	}
