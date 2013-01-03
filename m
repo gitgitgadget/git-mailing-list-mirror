@@ -1,103 +1,93 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [RFH] NetBSD 6?
-Date: Thu, 03 Jan 2013 20:28:43 +0100
-Message-ID: <50E5DBEB.9080009@gmail.com>
-References: <7vd2xn18p5.fsf@alter.siamese.dyndns.org> <rmipq1numzj.fsf@fnord.ir.bbn.com> <7vd2xnypt6.fsf@alter.siamese.dyndns.org> <rmi8v8av05d.fsf@fnord.ir.bbn.com> <7vvcbew895.fsf@alter.siamese.dyndns.org> <rmiobh6rujt.fsf@fnord.ir.bbn.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] two-way read-tree can write null sha1s into index
+Date: Thu, 3 Jan 2013 15:23:43 -0500
+Message-ID: <20130103202343.GA4632@sigill.intra.peff.net>
+References: <20120728150132.GA25042@sigill.intra.peff.net>
+ <20120728150524.GB25269@sigill.intra.peff.net>
+ <20121229100130.GA31497@elie.Belkin>
+ <20121229102707.GA26730@sigill.intra.peff.net>
+ <20121229103430.GG18903@elie.Belkin>
+ <20121229110541.GA1408@sigill.intra.peff.net>
+ <20121229205154.GA21058@sigill.intra.peff.net>
+ <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+ <20130103083712.GC32377@sigill.intra.peff.net>
+ <7vehi2xote.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Greg Troxel <gdt@ir.bbn.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 20:29:13 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 21:24:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqqTX-0006Kl-JH
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 20:29:11 +0100
+	id 1TqrKg-0007Dw-1S
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 21:24:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753843Ab3ACT2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 14:28:52 -0500
-Received: from mail-bk0-f41.google.com ([209.85.214.41]:34373 "EHLO
-	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753708Ab3ACT2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 14:28:50 -0500
-Received: by mail-bk0-f41.google.com with SMTP id jg9so6820478bkc.14
-        for <git@vger.kernel.org>; Thu, 03 Jan 2013 11:28:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=d6DutT91mH7XZoaZYfecBZwbEF9bH9Bivucf6eL3+Is=;
-        b=blWxaeVE4AAeeQ11smKlB8s24NR3CxZ7xNai6xi5lIRyi3b5WUD6hGuLyCnC3lMy1o
-         N7wRZrqNmksjWzfWfFOd88hnxaJr5nExp+DeuMvgYPoG7yP/eZ2nHXBKmCyk9jTpe4xv
-         koBI9wCaypOIwBKLdReZQp3KvAE07sZTRA1+YZXPY6haWvPRptFmgmfY9CSSxScLO6oX
-         0TDmmlokWpN9n9FJQRobOt4TsK002alhfKEnZmQ6TaxRIlqNtw2rWULLY7xDngRwcCsv
-         ey4y/kJJuTGrq75Ln/+PtJcq0OuModoG9FvDNP9/jZiuWBWG50zt4BZ3qqClJa2anlNU
-         ZBdA==
-X-Received: by 10.204.148.195 with SMTP id q3mr24050672bkv.122.1357241329007;
-        Thu, 03 Jan 2013 11:28:49 -0800 (PST)
-Received: from [192.168.178.21] (host137-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.137])
-        by mx.google.com with ESMTPS id i20sm35000267bkw.5.2013.01.03.11.28.45
-        (version=SSLv3 cipher=OTHER);
-        Thu, 03 Jan 2013 11:28:48 -0800 (PST)
-In-Reply-To: <rmiobh6rujt.fsf@fnord.ir.bbn.com>
+	id S1753728Ab3ACUXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2013 15:23:47 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42279 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753544Ab3ACUXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 15:23:46 -0500
+Received: (qmail 10124 invoked by uid 107); 3 Jan 2013 20:24:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 03 Jan 2013 15:24:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jan 2013 15:23:43 -0500
+Content-Disposition: inline
+In-Reply-To: <7vehi2xote.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212605>
 
-On 01/03/2013 07:27 PM, Greg Troxel wrote:
+On Thu, Jan 03, 2013 at 07:34:53AM -0800, Junio C Hamano wrote:
+
+> > Good point; I was just thinking about the --reset case.
+> >
+> > With "-m", though, we could in theory carry over the unmerged entries
+> > (again, assuming that "old" and "new" are the same; otherwise it is an
+> > obvious reject). But those entries would be confused with any new
+> > unmerged entries we create. It seems we already protect against this,
+> > though: "read-tree -m" will not run at all if you have unmerged entries.
+> >
+> > Likewise, "checkout" seems to have similar protections.
+> >
+> > So I think it may be a non-issue.
 > 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Yeah.  Also earlier in the thread you mentioned three-way case, but
+> I do not think we ever would want --reset with three trees, so I
+> think that too is a non-issue for the same reason.
+
+Yeah, agreed; we should always reject in the three-way case. I would
+worry more that it has a bug where something is _not_ rejected, and we
+end up putting a bogus null sha1 entry into the index (which is the
+actual problem with twoway_merge). IOW, if we have the bogus sha1 in the
+index (because we marked it with CE_CONFLICTED), and the two sides and
+the common ancestor are all the same, would we blindly carry through the
+bogus conflicted entry (which we would prefer, because it has the
+up-to-date stat information)?
+
+Or are you suggesting that the three-way case should always be protected
+by checking that there are no unmerged entries before we start it? That
+seems sane to me, but I haven't confirmed that that is the case.
+
+> I would still feel safer if we expressed the expectation of
+> the callee in the code, perhaps like this in the two-way case:
 > 
->> I forgot to mention that we also ship configure (and keep track of
->> configure.ac) so that optionally people can let autoconf machinery
->> to create config.mak.autogen to be included at the same place as
->> handcrafted config.mak in their build process.  I do not offhand
->> know if we do "for p in python python2.6 python2.7; do ..." kind of
->> thing, though.
-> 
-> pkgsrc uses the configure method, but it seems not to output a
-> PYTHON_PATH.  It looks like automake's python.m4 is not used by git's
-> configure.ac.
->
-That is not surprising, since Git build system doesn't use Automake :-)
+> 	if (current->ce_flags & CE_CONFLICTED) {
+>         	if (!o->reset) {
+>                 	... either die or fail ...
+> 		} else {
+>                 	... your fix ...
+> 		}
+> 	}
 
-In addition, it's worth nothing that Automake's python support (both
-in its m4 and make components) is intended as an help to install python
-*modules* from Autotools-based packages; using it for mere stand-alone
-scripts would be overkill.
+Agreed. I looked at that, but it seemed like it was going to involve
+repeating a lot of the "are the two trees the same" logic. Let me see if
+I can refactor it to avoid that.
 
-In the case of Git, an adapted version of something like this might
-be enough:
-
-  AC_CHECK_PROGS([PYTHON], [python python2.7 python2.6 python2.5])
-  if test -z "$PYTHON"; then
-    AC_MSG_WARNING([python not found])
-  fi
-
-  $PYTHON -c 'check-not-py3k' || AC_MSG_WARNING([Python 3 is not supported])
-  $PYTHON -c 'check-its-version' || AC_MSG_WARNING([python is too old])
-
-(Automake itself uses, in its own build system, a similar idiom to
-look for a Perl interpreter at configure runtime).
-
-Not my itch so far, but I will happily review a patch if anyone is
-willing to write it.
-
-> But pkgsrc passes PYTHON_PATH in the environment to make,
-> so it works out currently.
-> 
->> It refers to the type of the second parameter to iconv(); OLD_ICONV
->> makes it take "const char *", as opposed to "char *", the latter of
->> which matches
->>
->>   http://pubs.opengroup.org/onlinepubs/9699919799/functions/iconv.html
-> 
-> Thanks - I now see our extra const and am looking into it.
-
-Regards,
-  Stefano
+-Peff
