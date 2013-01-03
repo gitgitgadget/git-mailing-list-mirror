@@ -1,72 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace git-cvsimport with a rewrite that fixes major
- bugs.
-Date: Wed, 02 Jan 2013 23:08:47 -0800
-Message-ID: <7vmwwqyc8w.fsf@alter.siamese.dyndns.org>
-References: <20130101172645.GA5506@thyrsus.com>
- <CAEUsAPYwinmbDkSVu71WJRgUjLfBeNdKDFt6O1f8-Ti9evn6Hw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] tests: turn on test-lint by default
+Date: Thu, 3 Jan 2013 02:17:51 -0500
+Message-ID: <20130103071751.GA32377@sigill.intra.peff.net>
+References: <201301012240.10722.tboegi@web.de>
+ <20130102094635.GD9328@sigill.intra.peff.net>
+ <50E4BF58.4090808@web.de>
+ <20130102232239.GA27952@sigill.intra.peff.net>
+ <50E4C9B5.8070308@web.de>
+ <7vlicbyvc2.fsf@alter.siamese.dyndns.org>
+ <50E4CF7E.9090302@web.de>
+ <7vhamzyqev.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: esr@thyrsus.com, git@vger.kernel.org
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 08:09:14 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 08:18:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TqevP-0002Gi-IA
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 08:09:11 +0100
+	id 1Tqf4D-00067z-6P
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jan 2013 08:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162Ab3ACHIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 02:08:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64661 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751625Ab3ACHIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 02:08:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5164889C7;
-	Thu,  3 Jan 2013 02:08:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nE9LDZSWI+WTjBPTd7hjHwrv2yI=; b=rf7rFZ
-	H7BJp8ifIcfa+LNBb5fN9eh3dTn1TbtQuSEGH+dYs8vFWi7ZVqz/KyL8iOFF/nLL
-	pBR8DrO/deVuy+8PKUtwxepMkXxjSJ8RkTa7TOZGHid5OgemhiJIaVaLz1FhudLG
-	prPYd32PHxB+DtyYoH2V98eKBAxhMeOOs9nbA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l30wa1TqfufKLVNgzO5LVTeM08ie+PeI
-	MEPAL2ANgmyUDnHOnv2ZUoTOfrNWgal/q0ZysZCsxXs2EIvwErZkQrxC31hxTu9t
-	nkcBcxZfBJvp18KclJPHBj9wHZ7ITwdbH9vnBdrPyRxt1ne7sbIiLBtqFGb7PaTM
-	6GW5d5Bk8B0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 424D589C6;
-	Thu,  3 Jan 2013 02:08:49 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA55989C4; Thu,  3 Jan 2013
- 02:08:48 -0500 (EST)
-In-Reply-To: <CAEUsAPYwinmbDkSVu71WJRgUjLfBeNdKDFt6O1f8-Ti9evn6Hw@mail.gmail.com> (Chris
- Rorvick's message of "Thu, 3 Jan 2013 00:34:52 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6BCD195A-5574-11E2-B31A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752852Ab3ACHR6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jan 2013 02:17:58 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41823 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751422Ab3ACHR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2013 02:17:57 -0500
+Received: (qmail 4397 invoked by uid 107); 3 Jan 2013 07:19:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 03 Jan 2013 02:19:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jan 2013 02:17:51 -0500
+Content-Disposition: inline
+In-Reply-To: <7vhamzyqev.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212572>
 
-Chris Rorvick <chris@rorvick.com> writes:
+On Wed, Jan 02, 2013 at 06:02:48PM -0800, Junio C Hamano wrote:
 
-> outdir needs to be quoted in the formatted string, i.e.:
->
->   "%s | (cd '%s' >/dev/null ..."
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+> > When the dust has settled, we can either enable the check always,
+> > or mention "make test-lint-shell-syntax" in the Documentation.
+>=20
+> In the longer term, I'm pretty much in favor of enabling all the
+> checks that are cheap by default, as that would help people catch
+> easy mistakes while preparing their patches.  People do not tend to
+> enable any check if it were optional.
 
-The issue is real, but I am afraid that the above is not sufficient
-because outdir can contain single quotes.  I think other places that
-call out to external processes share the same issue of being careless
-about quoting in general.
+That is fine with me, and I always intended that we turn the lint on by
+default at some point (I'm not really sure why we didn't -- looking at
+the list archives, I think I did not push it because it seemed like
+nobody was really that interested).
 
-Doesn't Python come with a standard subprocess module that lets you
-spawn external programs safely, similar to the way Perl's list form
-open(), e.g. "open($fh, "-|", 'git', @args)", works?
+Certainly the two existing checks are cheap and do not produce false
+positives, and should be safe to turn on. Like this:
+
+-- >8 --
+Subject: [PATCH] tests: turn on test-lint by default
+
+The test Makefile knows about a few "lint" checks for common
+errors. However, they are not enabled as part of "make test"
+by default, which means that many people do not bother
+running them. Since they are both quick to run and accurate
+(i.e., no false positives), there should be no harm in
+turning them on and helping submitters catch errors earlier.
+
+We could just set:
+
+  TEST_LINT =3D test-lint
+
+to enable all tests. But that would be unnecessarily
+annoying later on if we add slower or less accurate tests
+that should not be part of the default. Instead, we name the
+tests individually.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/Makefile b/t/Makefile
+index 3025418..5c6de81 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -13,6 +13,7 @@ DEFAULT_TEST_TARGET ?=3D test
+ RM ?=3D rm -f
+ PROVE ?=3D prove
+ DEFAULT_TEST_TARGET ?=3D test
++TEST_LINT ?=3D test-lint-duplicates test-lint-executable
+=20
+ # Shell quote;
+ SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
+--=20
+1.8.1.rc3.4.gf3a2f57
+
+
+
+
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
