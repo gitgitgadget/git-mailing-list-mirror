@@ -1,92 +1,118 @@
-From: Jason Holden <jason.k.holden.swdev@gmail.com>
-Subject: [PATCH] SubmittingPatches: Document how to request a patch review tag
-Date: Fri,  4 Jan 2013 15:58:36 -0500
-Message-ID: <1357333116-6971-1-git-send-email-jason.k.holden.swdev@gmail.com>
-References: <7vy5gb33f9.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Jason Holden <jason.k.holden.swdev@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 04 21:59:30 2013
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: [BUG] git submodule update is not fail safe
+Date: Fri, 04 Jan 2013 21:53:25 +0100
+Message-ID: <50E74145.4020701@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 04 21:59:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrEMO-0006an-6W
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 21:59:24 +0100
+	id 1TrEMW-0006eJ-NZ
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 21:59:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754788Ab3ADU7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 15:59:04 -0500
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:61420 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754733Ab3ADU7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 15:59:03 -0500
-Received: by mail-qc0-f179.google.com with SMTP id b14so8923686qcs.24
-        for <git@vger.kernel.org>; Fri, 04 Jan 2013 12:59:01 -0800 (PST)
+	id S1754831Ab3ADU7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 15:59:08 -0500
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:57517 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754733Ab3ADU7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 15:59:05 -0500
+Received: by mail-wg0-f51.google.com with SMTP id gg4so7959970wgb.30
+        for <git@vger.kernel.org>; Fri, 04 Jan 2013 12:59:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=b+GFNhHY46ccFfKVuk1iNrvcydcJORH1PmajYSpNdyo=;
-        b=YkYW3uFOFWUo0Dg6TYI0qmw7CvgCK7N/k1Cb3dKDif3zipcaT6WQpz4S8tN/244ri3
-         C/MhPQamcRK3/AqDClDyn5LkKJk63gIMlsSG1Fys57ged/O89YtDnJAt2O4Vl4vv6zKH
-         QNzYe7NRAy7x7S6fSMN3hgafzSVsaNG+TfQi/0MJ4KudVe2ukUVseikilcuiq/RRjU/N
-         mRljPm3HSqHC9tc8ixjeWNJ/TjSTuGH5fyuG+4gneKyRkspRqTOgvgiMWHh/wm1c9VkK
-         WUqD6d+2W/6QyhUuebe/9K2CgloQpnUY162FMx6r1tqB/5fLJ/P2E+4BP9a0Q6PBOBmZ
-         An/w==
-X-Received: by 10.49.120.225 with SMTP id lf1mr21823112qeb.14.1357333141647;
-        Fri, 04 Jan 2013 12:59:01 -0800 (PST)
-Received: from rowblue.hsd1.nh.comcast.net (c-75-69-185-21.hsd1.nh.comcast.net. [75.69.185.21])
-        by mx.google.com with ESMTPS id gv5sm16511042qab.11.2013.01.04.12.59.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 Jan 2013 12:59:00 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc3.28.g0ab5d1f
-In-Reply-To: <7vy5gb33f9.fsf@alter.siamese.dyndns.org>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=LuM0k6yH77obdWshcXCTF+PYlMcgj1pCl7ZuaNgr24s=;
+        b=dzHKWBTSDBIe3zXHSXHreWO3sL4i3eJ5DxOHRoxX31hhJWDxQQs/8Z3nUzJJQhZNSN
+         2XF+edVqjX726BK211Xd+Cz+nXkltLoerztCZREIGmBAbUU9m6pzsx8Ib/bKznaTRfia
+         /IhkfCf+3qMzq5kL/+nIVKAuIlPtFt6pqXzPr+6J5G/6licO+B6YWesKNWP3bZh5RGS+
+         bt0WbNz9xWmLvcHRwoTcFC4+5hqfeFq6FrbNVSGmchKwhGwsx1o2sOdQChr5o3XAvgUz
+         TQoddahT62ULQFFt+bLrW1KQTy6PS3IexWJc0xbV3kGfI5hN6zzcP/t3ZAEHX+uQjSgn
+         Bf4Q==
+X-Received: by 10.194.76.165 with SMTP id l5mr85627634wjw.14.1357332819598;
+        Fri, 04 Jan 2013 12:53:39 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.204.244])
+        by mx.google.com with ESMTPS id i2sm682464wiw.3.2013.01.04.12.53.35
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 04 Jan 2013 12:53:38 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212639>
 
-Document the preferred way a developer should request to have their
-Acked-by/Tested-by/Reviewed-by tag to a patch series under discussion
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Signed-off-by: Jason Holden <jason.k.holden.swdev@gmail.com>
----
-Junio,
-  I was ready to add my Reviewed-by to this patch series, but I wasn't sure if
-I should email just you the patch author (to cut down on overall list traffic)
-or both you and the list.  If all reviewed-by/acked-by/tested-by traffic 
-should go via the email list I think this patch would be helpful, as I 
-wasn't quite sure how wide of a distribution list to use for my 
-"Reviewed-by" email.
+Hi.
 
-A very similiar question was asked previously in:
-http://thread.gmane.org/gmane.comp.version-control.git/185564/focus=185570
+My network connection at times is rather unstable, so I can experience
+all sort of network problems.
 
-This will apply on top of your last tweak to SubmittingPatches
+Today I tried to clone the qemu repository, and then to update all
+submodules.
 
-Please add my reviewed-by to the rest of the patches in this series.
+I'm using git from a recent master (790c83 - 14 December).
 
--Jason
+This is what happened:
 
- Documentation/SubmittingPatches | 5 +++++
- 1 file changed, 5 insertions(+)
+$ git submodule update --init pixman
+Submodule 'pixman' (git://anongit.freedesktop.org/pixman) registered for
+path 'pixman'
+Cloning into 'pixman'...
+fatal: Unable to look up anongit.freedesktop.org (port 9418) (Name or
+service not known)
+Clone of 'git://anongit.freedesktop.org/pixman' into submodule path
+'pixman' failed
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index f6276ff..80001c9 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -268,6 +268,11 @@ If you like, you can put extra tags at the end:
- 4. "Tested-by:" is used to indicate that the person applied the patch
-    and found it to have the desired effect.
- 
-+If you are a reviewer and wish to add your Acked-by/Reviewed-by/Tested-by tag
-+to a patch series under discussion (after having reviewed it or tested it
-+of course!), reply to the author of the patch series, cc'ing the git mailing
-+list.
-+
- You can also create your own tag or use one that's in common usage
- such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
- 
--- 
-1.8.1.rc3.28.g0ab5d1f
+
+$ git submodule update --init
+Submodule 'roms/SLOF' (git://git.qemu.org/SLOF.git) registered for path
+'roms/SLOF'
+Submodule 'roms/ipxe' (git://git.qemu.org/ipxe.git) registered for path
+'roms/ipxe'
+Submodule 'roms/openbios' (git://git.qemu.org/openbios.git) registered
+for path 'roms/openbios'
+Submodule 'roms/qemu-palcode' (git://repo.or.cz/qemu-palcode.git)
+registered for path 'roms/qemu-palcode'
+Submodule 'roms/seabios' (git://git.qemu.org/seabios.git/) registered
+for path 'roms/seabios'
+Submodule 'roms/sgabios' (git://git.qemu.org/sgabios.git) registered for
+path 'roms/sgabios'
+Submodule 'roms/vgabios' (git://git.qemu.org/vgabios.git/) registered
+for path 'roms/vgabios'
+fatal: unable to connect to anongit.freedesktop.org:
+anongit.freedesktop.org[0: 131.252.210.161]: errno=Connection timed out
+
+Unable to fetch in submodule path 'pixman'
+
+
+$ git submodule update --init
+fatal: Needed a single revision
+Unable to find current revision in submodule path 'pixman'
+
+
+The problem is easy to solve: manually remove the pixman directory;
+however IMHO git submodule update should not fail this way since it may
+confuse the user.
+
+I'm sorry for not sending a patch.
+
+
+
+Regards   Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDnQUUACgkQscQJ24LbaUSgVACglJjFxB51VINOCe9Z39/XEEUH
+6+QAnAwdQerBSjVSS1/3eNXSBfnR0yba
+=eOJT
+-----END PGP SIGNATURE-----
