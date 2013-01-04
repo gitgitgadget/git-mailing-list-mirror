@@ -1,93 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Fri, 04 Jan 2013 14:20:52 -0800
-Message-ID: <7vsj6gsi7v.fsf@alter.siamese.dyndns.org>
-References: <20130104124756.GA402@sigill.intra.peff.net>
+From: rupert THURNER <rupert.thurner@gmail.com>
+Subject: Re: git.wiki.kernel.org spam ...
+Date: Sat, 5 Jan 2013 00:19:25 +0100
+Message-ID: <CAJs9aZ_eL1jR=GqxUEy3vEWbMz6kEYOHb7pZkZWFh6yXXSx-Jg@mail.gmail.com>
+References: <CAJs9aZ_Nu9PzYYLc55Lr8E+UefohK+pSUbF5i8Lu4V_gr2KHPw@mail.gmail.com>
+ <alpine.DEB.1.00.1212311806080.32206@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 04 23:21:22 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 05 00:20:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrFdb-0003RW-CO
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 23:21:15 +0100
+	id 1TrGYY-00042m-Pq
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 00:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755366Ab3ADWU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 17:20:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47270 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755357Ab3ADWUz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 17:20:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AAFCB0A6;
-	Fri,  4 Jan 2013 17:20:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5i6WfTxavR6x0RsWZ8CbzqZNn1o=; b=IynO49
-	hjMKMctJbwqSp81rlNb+fXs8H0YzpNvKd6UGf7nZiRlC3x2r4pDjBEYaNTbCXD49
-	t07YOMAVLfS112U4WXCYGio6GlMcyvEeo2QQqnAM75EV2JeyZ879PnaH6IPdMeNm
-	jbB2o0xFdOvBIqvhcW7TWZruL7E2BEJ1Wl6LA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=putJqRjSZHAOROcE5eajclS9DIt2oVQx
-	lg9XpjSakLP2l9NPmukKK2sVvHCSQL1nrLwsat1sOOPegStpdyWF7lh1VJdoNzX7
-	adQmcL8snzmpk+B8GntN2KqmGemHqFYtLuGzvTlrv64hakWKJ7x+p9dPttZpelbD
-	/BEPUW2o2Eg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C462B0A5;
-	Fri,  4 Jan 2013 17:20:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B740B0A1; Fri,  4 Jan 2013
- 17:20:53 -0500 (EST)
-In-Reply-To: <20130104124756.GA402@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 4 Jan 2013 07:47:56 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 01068FEE-56BD-11E2-9CAB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755375Ab3ADXTs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jan 2013 18:19:48 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:45007 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754749Ab3ADXTr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Jan 2013 18:19:47 -0500
+Received: by mail-ie0-f172.google.com with SMTP id c13so20134509ieb.17
+        for <git@vger.kernel.org>; Fri, 04 Jan 2013 15:19:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=pi+oFhWuFpftTJWx/U3xzHyPTgnpR4h9MIqVv3HTwlk=;
+        b=xIetS8or+qoS6BYg+iS/JA2hYjx0rHmexDDDCP1nvzh8uCPjUKdcCUQxuiz8SYP6Ed
+         BCPJ4vRhRLTk+fze2fbbSnOLoTmWoPFWch9Jie0Nst3PStpfu435JaUJtciIVOTU7AVM
+         rpI1IyTTnaosIDLW/ZBY2Jg0PFb0VYm4tRZH+5YCSAidWsHjtzWXtX53P4Am5fHQfT29
+         0+pDQycfISVUNIJvDL4uA2crZ8R7S+XcoC3NSUDGvsPe9dwP3FkGY0dO2Cn/lOgzqFNj
+         VhEsD8lgA3cjg3wglBXNokfXnguDx1XSVA9PoX+y5eQkEw9Ih6H4n8MTPoCjKFSQnYid
+         T+Hw==
+X-Received: by 10.50.1.169 with SMTP id 9mr28488ign.101.1357341585489; Fri, 04
+ Jan 2013 15:19:45 -0800 (PST)
+Received: by 10.64.52.104 with HTTP; Fri, 4 Jan 2013 15:19:25 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1212311806080.32206@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212651>
 
-Jeff King <peff@peff.net> writes:
-
-> I have two reservations with this patch:
+2012/12/31 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi Rupert,
 >
->   1. We are ignoring SIGPIPE all the time. For an alias that is calling
->      "log", that is fine. But if pack-objects dies on the server side,
->      seeing that it died from SIGPIPE is useful data, and we are
->      squelching that. Maybe callers of run-command should have to pass
->      an "ignore SIGPIPE" flag?
+> On Sat, 29 Dec 2012, rupert THURNER wrote:
+>
+>> ich hab gesehen, du bist ober-meister des kernle.org git wikis. da
+>> gibt es ganz sch=C3=B6n viel neue user und spam derzeit, zb:
+>> https://git.wiki.kernel.org/index.php?title=3DUser_talk:Bridgetevans=
+0521&redirect=3Dno
+>>
+>> m=C3=B6chtest du das erzeugen von user accounts erschweren, wie zb h=
+ier:
+>> http://kiwix.org/index.php/Special:UserLogin?type=3Dsignup&returnto=3D=
+Main_Page/en
+>>
+>> falls du noch leute als admin haben willst, ich melde mich freiwilli=
+g,
+>> ThurnerRupert ist mein account.
+>
+> Since my trustworthiness was questioned, I have stopped completely wi=
+th
+> the maintenance of the Wiki.
+>
+> The mailing list (Cc:ed) may have additional comments.
 
-What should this do:
+there are 3 admins:
+* https://git.wiki.kernel.org/index.php/Special:Contributions/KorgWikiS=
+ysop,
+last contribution january 2010
+* https://git.wiki.kernel.org/index.php/Special:Contributions/Warthog9,
+last contribution august 2010
+* https://git.wiki.kernel.org/index.php/Special:Contributions/Dscho,
+last contribution august 2010
 
-    GIT_PAGER='head -n 1' git -p -c alias.o='!cat longfile' o
+and you were (by far) the most active. this leaves me a little
+confused. who would be then be responsible? who would be responsible
+for upgrading / installing anything at the wiki?
 
-Should it behave just like
-
-    cat longfile | head -n 1
-
-or should it behave differently?
-
-I am having a feeling that whatever external command given as the
-value of alias.$cmd should choose what error status it wants to be
-reported.
-
->   2. The die_errno in handle_alias is definitely wrong. Even if we want
->      to print a message for signal death, showing errno is bogus unless
->      the return value was -1. But is it the right thing to just pass the
->      negative value straight to exit()? It works, but it is depending on
->      the fact that (unsigned char)(ret & 0xff) behaves in a certain way
->      (i.e., that we are on a twos-complement platform, and -13 becomes
->      141).
-
-Isn't that what POSIX.1 guarantees us, though?
-
-    The value of status may be 0, EXIT_SUCCESS, EXIT_FAILURE, or any
-    other value, though only the least significant 8 bits (that is,
-    status & 0377) shall be available to a waiting parent process.
+rupert.
