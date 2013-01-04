@@ -1,118 +1,112 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: [BUG] git submodule update is not fail safe
-Date: Fri, 04 Jan 2013 21:53:25 +0100
-Message-ID: <50E74145.4020701@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 11/19] dir.c: use a single struct exclude_list per
+ source of excludes
+Date: Fri, 04 Jan 2013 13:03:59 -0800
+Message-ID: <7v1ue0veww.fsf@alter.siamese.dyndns.org>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+ <1356575558-2674-12-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 04 21:59:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Fri Jan 04 22:04:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrEMW-0006eJ-NZ
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 21:59:33 +0100
+	id 1TrERN-0002q6-TI
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 22:04:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754831Ab3ADU7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 15:59:08 -0500
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:57517 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754733Ab3ADU7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 15:59:05 -0500
-Received: by mail-wg0-f51.google.com with SMTP id gg4so7959970wgb.30
-        for <git@vger.kernel.org>; Fri, 04 Jan 2013 12:59:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=LuM0k6yH77obdWshcXCTF+PYlMcgj1pCl7ZuaNgr24s=;
-        b=dzHKWBTSDBIe3zXHSXHreWO3sL4i3eJ5DxOHRoxX31hhJWDxQQs/8Z3nUzJJQhZNSN
-         2XF+edVqjX726BK211Xd+Cz+nXkltLoerztCZREIGmBAbUU9m6pzsx8Ib/bKznaTRfia
-         /IhkfCf+3qMzq5kL/+nIVKAuIlPtFt6pqXzPr+6J5G/6licO+B6YWesKNWP3bZh5RGS+
-         bt0WbNz9xWmLvcHRwoTcFC4+5hqfeFq6FrbNVSGmchKwhGwsx1o2sOdQChr5o3XAvgUz
-         TQoddahT62ULQFFt+bLrW1KQTy6PS3IexWJc0xbV3kGfI5hN6zzcP/t3ZAEHX+uQjSgn
-         Bf4Q==
-X-Received: by 10.194.76.165 with SMTP id l5mr85627634wjw.14.1357332819598;
-        Fri, 04 Jan 2013 12:53:39 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.204.244])
-        by mx.google.com with ESMTPS id i2sm682464wiw.3.2013.01.04.12.53.35
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 04 Jan 2013 12:53:38 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-X-Enigmail-Version: 1.0.1
+	id S1754944Ab3ADVEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 16:04:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60376 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755240Ab3ADVED (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 16:04:03 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A896CA964;
+	Fri,  4 Jan 2013 16:04:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5QDcShlhPaaU8Irw7P2Hp5TwKmg=; b=LvMEhF
+	wJKeKXVAAA4MZInyW+6ZRkBG3zQZ9K+AYL4I1rzB04o6pwX/3CP9wFW96grY+0S1
+	XMR6cFv1vJpqByTDaaSkmuZAIPXkGihREpUyU7ZjZS6Jk0BlGIUG8TwER1Nun+DE
+	nzg7+BTrnWTaupCKDkm9ap7upwA35vBKDLaBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yf5vwzqIaxkqWCExWEaf79ghV+4P9lIN
+	LeXUkVJyPEwtLSiYah/6IXHBlyBxQkPFOWJ2YzniVYoDHtRIQYp3meQy/+lHXuxv
+	mJ7Fxb1iil51v+IR1JkCgZfd2cvAdtaw5OI29WkEC5/d/Xrb2ZAyr3NsXB2J+NXc
+	tL4b7xIlG7E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 929BEA962;
+	Fri,  4 Jan 2013 16:04:02 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E24CEA95F; Fri,  4 Jan 2013
+ 16:04:01 -0500 (EST)
+In-Reply-To: <1356575558-2674-12-git-send-email-git@adamspiers.org> (Adam
+ Spiers's message of "Thu, 27 Dec 2012 02:32:30 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 43FCC62A-56B2-11E2-8FB5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212640>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Adam Spiers <git@adamspiers.org> writes:
 
-Hi.
+> diff --git a/builtin/clean.c b/builtin/clean.c
+> index 0c7b3d0..bd18b88 100644
+> --- a/builtin/clean.c
+> +++ b/builtin/clean.c
+> @@ -97,9 +97,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>  	if (!ignored)
+>  		setup_standard_excludes(&dir);
+>  
+> +	add_exclude_list(&dir, EXC_CMDL);
+>  	for (i = 0; i < exclude_list.nr; i++)
+>  		add_exclude(exclude_list.items[i].string, "", 0,
+> -			    &dir.exclude_list[EXC_CMDL]);
+> +			    &dir.exclude_list_groups[EXC_CMDL].ary[0]);
 
-My network connection at times is rather unstable, so I can experience
-all sort of network problems.
+This looks somewhat ugly for two reasons.
 
-Today I tried to clone the qemu repository, and then to update all
-submodules.
+ * The abstraction add_exclude() offers to its callers is just to
+   let them add one pattern to the list of patterns for the kind
+   (here, EXC_CMDL); why should they care about .ary[0] part?  Are
+   there cases any sane caller (not the implementation of the
+   exclude_list_group machinery e.g. add_excludes_from_... function)
+   may want to call it with .ary[1]?  I do not think of any.
+   Shouldn't the public API function add_exclude() take a pointer to
+   the list group itself?
 
-I'm using git from a recent master (790c83 - 14 December).
+ * When naming an array of things, we tend to prefer naming it
 
-This is what happened:
+     type thing[count]
 
-$ git submodule update --init pixman
-Submodule 'pixman' (git://anongit.freedesktop.org/pixman) registered for
-path 'pixman'
-Cloning into 'pixman'...
-fatal: Unable to look up anongit.freedesktop.org (port 9418) (Name or
-service not known)
-Clone of 'git://anongit.freedesktop.org/pixman' into submodule path
-'pixman' failed
+   so that the second element can be called "thing[2]" and not
+   "things[2]".  dir.exclude_list_group[EXC_CMDL] reads beter.
 
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index ef7f99a..c448e06 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -420,10 +420,10 @@ static int option_parse_z(const struct option *opt,
+>  static int option_parse_exclude(const struct option *opt,
+>  				const char *arg, int unset)
+>  {
+> -	struct exclude_list *list = opt->value;
+> +	struct exclude_list_group *group = opt->value;
+>  
+>  	exc_given = 1;
+> -	add_exclude(arg, "", 0, list);
+> +	add_exclude(arg, "", 0, &group->ary[0]);
 
-$ git submodule update --init
-Submodule 'roms/SLOF' (git://git.qemu.org/SLOF.git) registered for path
-'roms/SLOF'
-Submodule 'roms/ipxe' (git://git.qemu.org/ipxe.git) registered for path
-'roms/ipxe'
-Submodule 'roms/openbios' (git://git.qemu.org/openbios.git) registered
-for path 'roms/openbios'
-Submodule 'roms/qemu-palcode' (git://repo.or.cz/qemu-palcode.git)
-registered for path 'roms/qemu-palcode'
-Submodule 'roms/seabios' (git://git.qemu.org/seabios.git/) registered
-for path 'roms/seabios'
-Submodule 'roms/sgabios' (git://git.qemu.org/sgabios.git) registered for
-path 'roms/sgabios'
-Submodule 'roms/vgabios' (git://git.qemu.org/vgabios.git/) registered
-for path 'roms/vgabios'
-fatal: unable to connect to anongit.freedesktop.org:
-anongit.freedesktop.org[0: 131.252.210.161]: errno=Connection timed out
+This is another example where the caller would wish to be able to say
 
-Unable to fetch in submodule path 'pixman'
+	add_exclude(arg, "", 0, group);
 
-
-$ git submodule update --init
-fatal: Needed a single revision
-Unable to find current revision in submodule path 'pixman'
-
-
-The problem is easy to solve: manually remove the pixman directory;
-however IMHO git submodule update should not fail this way since it may
-confuse the user.
-
-I'm sorry for not sending a patch.
-
-
-
-Regards   Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlDnQUUACgkQscQJ24LbaUSgVACglJjFxB51VINOCe9Z39/XEEUH
-6+QAnAwdQerBSjVSS1/3eNXSBfnR0yba
-=eOJT
------END PGP SIGNATURE-----
+instead.
