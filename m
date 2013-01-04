@@ -1,92 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] format-patch: give --reroll-count a short synonym -v
-Date: Thu, 03 Jan 2013 17:28:53 -0800
-Message-ID: <7vip7dviqy.fsf@alter.siamese.dyndns.org>
-References: <1357166525-12188-1-git-send-email-gitster@pobox.com>
- <1357166525-12188-2-git-send-email-gitster@pobox.com>
- <A6A2DEC8F88743B88AA03DC5BD8547B7@PhilipOakley>
- <7vpq1lvmtz.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH] avoid SIGPIPE warnings for aliases
+Date: Fri, 4 Jan 2013 07:47:56 -0500
+Message-ID: <20130104124756.GA402@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Jan 04 02:29:19 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Bart Trojanowski <bart@jukie.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 04 13:48:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tqw63-0001UO-EX
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 02:29:19 +0100
+	id 1Tr6hj-00027m-EW
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 13:48:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754492Ab3ADB27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2013 20:28:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62592 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754467Ab3ADB26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2013 20:28:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F812A22D;
-	Thu,  3 Jan 2013 20:28:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h6REcvpiSfcHcb9jWRg0LSKuKbE=; b=HLfl6f
-	HLWKAEEKY/TK20EzGhg7buTszAzz3rePY/mvVnY+G85FdQEiBR0c98YmP7asVmzI
-	HvNhnhvcolpo3ltAHvdPRNXPAYd6cd0qg//pHCZpjOCuMb0cX9Acqv2MpkgxeBP0
-	lNaHDVD8Y6428uCpNZzm5UL0UkQOAUXriX1B8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j0Y4C4B/EJeimxr5axaPBNCHfeeQuUJt
-	8tSaKkmHjAaHjVGvSnXveX0c6Dv3JxNr1EwZa2bICz3x0uMH2hQQeXNjgmvZjnzq
-	luAo9BZH2dmmKkYInLk+kB9S2a/HW/35N2iTaxEazK7SyrG9KCtk1pjFHRL+1x63
-	qn4UScT+e4U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60D82A223;
-	Thu,  3 Jan 2013 20:28:57 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFAB2A221; Thu,  3 Jan 2013
- 20:28:56 -0500 (EST)
-In-Reply-To: <7vpq1lvmtz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 03 Jan 2013 16:00:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BA5DEF4-560E-11E2-B78B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753837Ab3ADMsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 07:48:09 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42845 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753469Ab3ADMsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 07:48:08 -0500
+Received: (qmail 17864 invoked by uid 107); 4 Jan 2013 12:49:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 Jan 2013 07:49:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Jan 2013 07:47:56 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212630>
 
-Junio C Hamano <gitster@pobox.com> writes:
+When git executes an alias that specifies an external
+command, it will complain if the alias dies due to a signal.
+This is usually a good thing, as signal deaths are
+unexpected. However, SIGPIPE is not unexpected for many
+commands which produce a lot of output; it is intended that
+the user closing the pager would kill them them via SIGPIPE.
 
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->>> +test_expect_success 'reroll count (-v)' '
->>> + rm -fr patches &&
->>> + git format-patch -o patches --cover-letter -v 4 master..side >list
->>> &&
->>
->> Shouldn't this be using the sticked form -v4 as described in the
->> commit message and gitcli?
->
-> I personally do not care too deeply either way.
+As a result, the user might see annoying messages in a
+scenario like this:
 
-Actually, I do care. And in this case both should work.
+  $ cat ~/.gitconfig
+  [alias]
+  lgbase = log --some-options
+  lg = !git lgbase --more-options
+  lg2 = !git lgbase --other-options
 
-    Separating argument from the option
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    You can write the mandatory option parameter to an option as a separate
-    word on the command line.  That means that all the following uses work:
+  $ git lg -p
+  [user hits 'q' to exit pager]
+  error: git lgbase --more-options died of signal 13
+  fatal: While expanding alias 'lg': 'git lgbase --more-options': Success
 
-    ----------------------------
-    $ git foo --long-opt=Arg
-    $ git foo --long-opt Arg
-    $ git foo -oArg
-    $ git foo -o Arg
-    ----------------------------
+Many users won't see this, because we execute the external
+command with the shell, and a POSIX shell will silently
+rewrite the signal-death exit code into 128+signal, and we
+will treat it like a normal exit code. However, this does
+not always happen:
 
-As "reroll-count" must always be followed by nth (in other words, it
-is not optional), the following does not apply.
+  1. If the sub-command does not have shell metacharacters,
+     we will skip the shell and exec it directly, getting
+     the signal code.
 
-    However, this is *NOT* allowed for switches with an optional value, where the
-    'sticked' form must be used:
+  2. Some shells do not do this rewriting; for example,
+     setting SHELL_PATH set to zsh will reveal this problem.
+
+This patch squelches the message, and let's git exit
+silently (with the same exit code that a shell would use in
+case of a signal).
+
+The first line of the message comes from run-command's
+wait_or_whine. To silence that message, we remain quiet
+anytime we see SIGPIPE.
+
+The second line comes from handle_alias itself. It calls
+die_errno whenever run_command returns a negative value.
+However, only -1 indicates a syscall error where errno has
+something useful (note that it says the useless "success"
+above). Instead, we treat negative returns from run_command
+(except for -1) as a normal code to be passed to exit.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I have two reservations with this patch:
+
+  1. We are ignoring SIGPIPE all the time. For an alias that is calling
+     "log", that is fine. But if pack-objects dies on the server side,
+     seeing that it died from SIGPIPE is useful data, and we are
+     squelching that. Maybe callers of run-command should have to pass
+     an "ignore SIGPIPE" flag?
+
+  2. The die_errno in handle_alias is definitely wrong. Even if we want
+     to print a message for signal death, showing errno is bogus unless
+     the return value was -1. But is it the right thing to just pass the
+     negative value straight to exit()? It works, but it is depending on
+     the fact that (unsigned char)(ret & 0xff) behaves in a certain way
+     (i.e., that we are on a twos-complement platform, and -13 becomes
+     141). That is not strictly portable, but it is probably fine in
+     practice. I'd worry more about exit() doing something weird on
+     Windows.
+
+ git.c         | 2 +-
+ run-command.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git.c b/git.c
+index d33f9b3..07edb8a 100644
+--- a/git.c
++++ b/git.c
+@@ -175,7 +175,7 @@ static int handle_alias(int *argcp, const char ***argv)
+ 			alias_argv[argc] = NULL;
+ 
+ 			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
+-			if (ret >= 0)   /* normal exit */
++			if (ret != -1)  /* normal exit */
+ 				exit(ret);
+ 
+ 			die_errno("While expanding alias '%s': '%s'",
+diff --git a/run-command.c b/run-command.c
+index 757f263..01a4c9b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -242,7 +242,7 @@ static int wait_or_whine(pid_t pid, const char *argv0)
+ 		error("waitpid is confused (%s)", argv0);
+ 	} else if (WIFSIGNALED(status)) {
+ 		code = WTERMSIG(status);
+-		if (code != SIGINT && code != SIGQUIT)
++		if (code != SIGINT && code != SIGQUIT && code != SIGPIPE)
+ 			error("%s died of signal %d", argv0, code);
+ 		/*
+ 		 * This return value is chosen so that code & 0xff
+-- 
+1.8.1.rc1.16.g6d46841
