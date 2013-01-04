@@ -1,89 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Fri, 4 Jan 2013 16:25:34 -0500
-Message-ID: <20130104212534.GA2304@sigill.intra.peff.net>
-References: <20130104124756.GA402@sigill.intra.peff.net>
- <50E70976.5040001@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Lockless Refs?
+Date: Fri, 04 Jan 2013 13:28:32 -0800
+Message-ID: <7vip7ctz7j.fsf@alter.siamese.dyndns.org>
+References: <20121221080449.GA21741@sigill.intra.peff.net>
+ <201212271611.52203.mfick@codeaurora.org>
+ <201212310330.53835.mfick@codeaurora.org>
+ <201301031652.44982.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jan 04 22:25:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Shawn Pearce <sop@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Fri Jan 04 22:28:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrEm3-00079p-KQ
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 22:25:55 +0100
+	id 1TrEox-0000tb-CI
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 22:28:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028Ab3ADVZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 16:25:36 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43171 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754519Ab3ADVZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 16:25:36 -0500
-Received: (qmail 20607 invoked by uid 107); 4 Jan 2013 21:26:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 Jan 2013 16:26:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Jan 2013 16:25:34 -0500
-Content-Disposition: inline
-In-Reply-To: <50E70976.5040001@kdbg.org>
+	id S1755240Ab3ADV2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 16:28:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44710 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754934Ab3ADV2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 16:28:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F45AB5CB;
+	Fri,  4 Jan 2013 16:28:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1fzrM4QqBYMkQ1hkaozqEWNt4b4=; b=DQarHr
+	KXOqLx0HN9HNb0xIiYCt1TPcLvPTKFC6K93LMMuMn4xNFs99yfjhgbcrwILmt+TB
+	HzVekBJVjRPy8GNoDN7HcFu4DBWKakduucZhvYiYy2XPw13ZsSZ19dxEeZ25Xb+m
+	Yx/AuKbM/Tk1Gu+dt9Y84L7yatuLpTNiGVaEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vy99LeVSnaGXt7lwerdqnUxNZZF1hYL8
+	sPj7uEor/w9Zz+JIDDl9In0+0PAVEpnrWMmltaQsr7ALXAhPourhAqSwmFr4VjHp
+	ykcpeytl7otp/KGU6NV9fMqR1R7YKlSWE5UVu0Vo5CWhKUyc4SIz+LuIebkjF1Ro
+	KR5T5MfVLsg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F6F1B5CA;
+	Fri,  4 Jan 2013 16:28:34 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EC3CB5C9; Fri,  4 Jan 2013
+ 16:28:33 -0500 (EST)
+In-Reply-To: <201301031652.44982.mfick@codeaurora.org> (Martin Fick's message
+ of "Thu, 3 Jan 2013 16:52:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B1201B96-56B5-11E2-B28F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212644>
 
-On Fri, Jan 04, 2013 at 05:55:18PM +0100, Johannes Sixt wrote:
+Martin Fick <mfick@codeaurora.org> writes:
 
-> Am 04.01.2013 13:47, schrieb Jeff King:
-> > I have two reservations with this patch:
-> > 
-> >   1. We are ignoring SIGPIPE all the time. For an alias that is calling
-> >      "log", that is fine. But if pack-objects dies on the server side,
-> >      seeing that it died from SIGPIPE is useful data, and we are
-> >      squelching that. Maybe callers of run-command should have to pass
-> >      an "ignore SIGPIPE" flag?
-> 
-> I am of two minds. On the one hand, losing useful debugging information
-> is not something we should do lightly. On the other hand, the message is
-> really noise most of the time, even on servers: when pack-objects dies
-> on the server side, it is most likely due to a connection that breaks
-> (voluntarily or involuntarily) half-way during a transfer, and is
-> presumably a frequent event, and as such not worth noting most of the time.
+> Any thoughts on this idea?  Is it flawed?  I am trying to 
+> write it up in a more formal generalized manner and was 
+> hoping to get at least one "it seems sane" before I do.
 
-Yeah. I'd mostly be worried about a case where pack-objects prints
-nothing (because it dies due to pipe), and then the outer process is not
-sufficiently verbose (it just says something like "pack-objects died
-abnormally", and the user is left scratching their head. I.e., it _is_
-uninteresting, but because we are too silent, the user does not even
-know it is uninteresting.
+The general impression I have been getting was that this isn't even
+worth the effort and the resulting complexity of the code, given
+Peff's observations earlier in the thread that ref update conflicts
+and leftover locks are reasonably rare in practice.  But perhaps I
+has been mis-reading the discussion.
 
-Pack-objects is already careful to check all of its writes. I really
-think it would be fine to just ignore SIGPIPE, and then it would produce
-a useful error message on EPIPE. The downside is that if we accidentally
-have an unchecked call, we won't notice the error (we'll probably notice
-it later, but we might continue uselessly spewing data in the meantime).
-Perhaps we should catch SIGPIPE in such programs and print an error
-message.
+I also have this suspicion that if you really want to shoot for
+multi-repository transactions in an massively scaled repository
+hosting environment, you would rather want to not rely on hacks
+based on filesystem semantics, but instead want to RPC with a
+dedicated "ref management service" that knows the transaction
+semantics you want, but that could become a much larger change.
 
-> >   2. The die_errno in handle_alias is definitely wrong. Even if we want
-> >      to print a message for signal death, showing errno is bogus unless
-> >      the return value was -1. But is it the right thing to just pass the
-> >      negative value straight to exit()? It works, but it is depending on
-> >      the fact that (unsigned char)(ret & 0xff) behaves in a certain way
-> >      (i.e., that we are on a twos-complement platform, and -13 becomes
-> >      141). That is not strictly portable, but it is probably fine in
-> >      practice. I'd worry more about exit() doing something weird on
-> >      Windows.
-> 
-> It did something weird on Windows until we added this line to
-> compat/mingw.h:
-> 
-> #define exit(code) exit((code) & 0xff)
-
-Ah, makes sense. I think that hunk of my patch is probably good, then.
-
--Peff
+I dunno.
