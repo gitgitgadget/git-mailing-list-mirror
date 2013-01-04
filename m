@@ -1,73 +1,112 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: git.wiki.kernel.org spam ...
-Date: Fri, 4 Jan 2013 18:47:59 -0500
-Message-ID: <20130104234759.GC6501@thunk.org>
-References: <CAJs9aZ_Nu9PzYYLc55Lr8E+UefohK+pSUbF5i8Lu4V_gr2KHPw@mail.gmail.com>
- <alpine.DEB.1.00.1212311806080.32206@s15462909.onlinehome-server.info>
- <CAJs9aZ_eL1jR=GqxUEy3vEWbMz6kEYOHb7pZkZWFh6yXXSx-Jg@mail.gmail.com>
- <alpine.DEB.1.00.1301050022000.32206@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: Display the date of a tag in a human friendly way.
+Date: Fri, 04 Jan 2013 15:50:35 -0800
+Message-ID: <7vhamwse2c.fsf@alter.siamese.dyndns.org>
+References: <1357314431-32710-1-git-send-email-wildfire@progsoc.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: rupert THURNER <rupert.thurner@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 05 00:48:46 2013
+Cc: git@vger.kernel.org, Anand Kumria <wildfire@progsoc.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Jan 05 00:50:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrGzx-0005DP-GZ
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 00:48:25 +0100
+	id 1TrH2Q-0006vB-1t
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 00:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755243Ab3ADXsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 18:48:06 -0500
-Received: from li9-11.members.linode.com ([67.18.176.11]:41784 "EHLO
-	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754749Ab3ADXsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 18:48:04 -0500
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1TrGzY-00057B-T8; Fri, 04 Jan 2013 23:48:00 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id A1C6C240F70; Fri,  4 Jan 2013 18:47:59 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.1301050022000.32206@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1755344Ab3ADXuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 18:50:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36985 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754749Ab3ADXui (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 18:50:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 102DCB87A;
+	Fri,  4 Jan 2013 18:50:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Kcm0fHqKBiJOa4AA4NSEoUHOp6Y=; b=dne/mD
+	Vli9Widp0yByHKiiHpXH/dOWSvDnNuiGIdxmubhI3cq2+fdM6qibmgSpARMbrOeD
+	BSpEyyEM8Fhjc9YMf1MxofZ7o3ZpTbXaftYJXPPq4Y4s9vGYCodJV11TnJemeBMg
+	2gBgdjk6psU2s9iLJh5nDW/hSNpYazRC3Ul3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ax3q1/Y8Y/RIMbXgbe7LgRl33N+dfUtB
+	ZgqB9r+O8xdia87QS6q553Kn9cJ0ZaxCrZvX+lm+ZqrYNG+QTJyMYBm3gjD2Bws1
+	W/Sjd8n3x56RnNHG0ttEnxd5+HiULm1leNpakc8mwJ6rM0vJVyOfABQsydIto4rg
+	/K3ffYXoq5k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01A72B879;
+	Fri,  4 Jan 2013 18:50:38 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A622B878; Fri,  4 Jan 2013
+ 18:50:37 -0500 (EST)
+In-Reply-To: <1357314431-32710-1-git-send-email-wildfire@progsoc.org> (Anand
+ Kumria's message of "Fri, 4 Jan 2013 15:47:11 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 89BC6DE8-56C9-11E2-9CC5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212656>
 
-On Sat, Jan 05, 2013 at 12:27:12AM +0100, Johannes Schindelin wrote:
-> 
-> I was. John Hawley trusted me when I asked for admin privileges to keep
-> the spam at bay, but a very vocal voice on the mailing list tried to
-> discredit my work, and in the wake of the ensuing mailing list thread I
-> got the impression that that feeling was universal, so I abided and
-> stopped.
-> 
-> > this leaves me a little confused. who would be then be responsible? who
-> > would be responsible for upgrading / installing anything at the wiki?
-> 
-> That would be John Hawley.
+Anand Kumria <wildfire@progsoc.org> writes:
 
-John is one of the Linux Foundation staff members that are responsible
-for the system administration of wiki.kernel.org (and kernel.org, and
-bugzilla.kernel.org, etc.)  They are *not* responsible for the
-contents of the *.wiki.kernel.org; someone from the project has to be
-the wiki maintainer.
+> By selecting a tag within gitk you can display information about it.
+> This information is output by using the command
+>
+>  'git cat-file tag <tagid>'
+>
+> This outputs the *raw* information from the tag, amongst which is the
+> time - in seconds since the epoch. As useful as that value is, I find it
+> a lot easier to read and process time which it is something like:
+>
+>  "Mon Dec 31 14:26:11 2012 -0800"
+>
+> This change will modify the display of tags in gitk like so:
+>
+>   @@ -1,7 +1,7 @@
+>    object 5d417842efeafb6e109db7574196901c4e95d273
+>    type commit
+>    tag v1.8.1
+>   -tagger Junio C Hamano <gitster@pobox.com> 1356992771 -0800
+>   +tagger Junio C Hamano <gitster@pobox.com> Mon Dec 31 14:26:11 2012 -0800
+>
+>    Git 1.8.1
+>    -----BEGIN PGP SIGNATURE-----
+>
+> Signed-off-by: Anand Kumria <wildfire@progsoc.org>
+> ---
 
-(Note: the *.wiki.kernel.org infrastructure was originally set up at
-my request, and the first such hosted wiki was ext4.wiki.kernel.org;
-the second was rt.wiki.kernel.org, for which I was also the primary
-wiki administrator initially.  I'm confident the policy on this hasn't
-changed since those early days because LF sysadmins (e.g., John and
-Konstantin) do *not* have time to police the various wikis for
-spam....)
+Sounds like a sensible thing to do but I didn't check how else
+(other than purely for displaying) this string is used.
 
-	      	    	      	 - Ted
+Paul, the patch is not made against your tree, so if you choose to
+take it you would need to strip the leading directory at the top.
+
+Thanks.
+
+PS. I haven't received a pull request from you for a while; are
+there accumulated changes I should be pulling in before -rc0 of the
+next release we are working on?
+
+>  gitk-git/gitk |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index d93bd99..aae1c58 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -10675,7 +10675,7 @@ proc showtag {tag isnew} {
+>      set linknum 0
+>      if {![info exists cached_tagcontent($tag)]} {
+>  	catch {
+> -           set cached_tagcontent($tag) [exec git cat-file tag $tag]
+> +           set cached_tagcontent($tag) [exec git cat-file -p $tag]
+>  	}
+>      }
+>      if {[info exists cached_tagcontent($tag)]} {
