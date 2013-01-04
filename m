@@ -1,71 +1,77 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Fri, 04 Jan 2013 17:55:18 +0100
-Message-ID: <50E70976.5040001@kdbg.org>
-References: <20130104124756.GA402@sigill.intra.peff.net>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: What's cooking in git.git (Jan 2013, #02; Thu, 3)
+Date: Fri, 4 Jan 2013 17:23:37 +0000
+Message-ID: <CAOkDyE-f-8XZAzWrQgh_DG=fZctqBFXqpog-FSDU_yeXfwWTwA@mail.gmail.com>
+References: <7vmwwqvzy4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 04 17:55:44 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 18:24:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrAYY-0005OH-Nv
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 17:55:43 +0100
+	id 1TrAzu-0008Ck-PN
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jan 2013 18:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754968Ab3ADQzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 11:55:24 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:9036 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754984Ab3ADQzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 11:55:23 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id B2A67A7EB2;
-	Fri,  4 Jan 2013 17:55:19 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id A6C6219F45B;
-	Fri,  4 Jan 2013 17:55:18 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130104124756.GA402@sigill.intra.peff.net>
+	id S1755121Ab3ADRXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 12:23:40 -0500
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:54766 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754952Ab3ADRXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 12:23:38 -0500
+Received: by mail-wg0-f53.google.com with SMTP id fn15so154861wgb.20
+        for <git@vger.kernel.org>; Fri, 04 Jan 2013 09:23:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Ny1vuRb5rhAWN0DUx8ZXJumcA25B/QdrNSOpJP2cMe8=;
+        b=G1LjiXFRSsITazTdxCmSSU1be2QRoaoL/xkDldzyFX2od8u3OBhCNtcTVF5O1abBMC
+         coN2NSvrGUCZf6/zE/V8TWe21oLn+gpXEkmjF4J5whYfolCbIsJ9PeSMvQyjSLb+rO62
+         sokY1iEwiNM8XB3zQ/NivWBPBYsRdasZMbirfeD5JepIfRX9pKXFGimQ7C/+Lm1mwl1B
+         o+72qt3siGx8CSu4OTT5iyw3lYXkS1r78cRcP0N+BRmf3BWRyMSxs/fh1qul9hrO7hPx
+         Yx3BdFfMRd8RssQv7T9bZ4J9ddJy3zI7RHNSBBc4OR++UMSNwR3+TEU4WEZFYIG9z4hA
+         N+RA==
+Received: by 10.194.88.98 with SMTP id bf2mr85272220wjb.49.1357320217289; Fri,
+ 04 Jan 2013 09:23:37 -0800 (PST)
+Received: by 10.194.84.97 with HTTP; Fri, 4 Jan 2013 09:23:37 -0800 (PST)
+In-Reply-To: <7vmwwqvzy4.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: IndNKQUQney9bXHJCUX56qb7dZ4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212633>
 
-Am 04.01.2013 13:47, schrieb Jeff King:
-> I have two reservations with this patch:
-> 
->   1. We are ignoring SIGPIPE all the time. For an alias that is calling
->      "log", that is fine. But if pack-objects dies on the server side,
->      seeing that it died from SIGPIPE is useful data, and we are
->      squelching that. Maybe callers of run-command should have to pass
->      an "ignore SIGPIPE" flag?
+On Thu, Jan 3, 2013 at 7:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> * as/check-ignore (2012-12-28) 19 commits
+>  - Add git-check-ignore sub-command
+>  - setup.c: document get_pathspec()
+>  - pathspec.c: extract new validate_path() for reuse
+>  - pathspec.c: move reusable code from builtin/add.c
+>  - add.c: remove unused argument from validate_pathspec()
+>  - add.c: refactor treat_gitlinks()
+>  - dir.c: provide clear_directory() for reclaiming dir_struct memory
+>  - dir.c: keep track of where patterns came from
+>  - dir.c: use a single struct exclude_list per source of excludes
+>  - dir.c: rename free_excludes() to clear_exclude_list()
+>  - dir.c: refactor is_path_excluded()
+>  - dir.c: refactor is_excluded()
+>  - dir.c: refactor is_excluded_from_list()
+>  - dir.c: rename excluded() to is_excluded()
+>  - dir.c: rename excluded_from_list() to is_excluded_from_list()
+>  - dir.c: rename path_excluded() to is_path_excluded()
+>  - dir.c: rename cryptic 'which' variable to more consistent name
+>  - Improve documentation and comments regarding directory traversal API
+>  - api-directory-listing.txt: update to match code
+>
+>  Rerolled.  The early parts looked mostly fine; we may want to split
+>  this into two topics and have the early half graduate sooner.
 
-I am of two minds. On the one hand, losing useful debugging information
-is not something we should do lightly. On the other hand, the message is
-really noise most of the time, even on servers: when pack-objects dies
-on the server side, it is most likely due to a connection that breaks
-(voluntarily or involuntarily) half-way during a transfer, and is
-presumably a frequent event, and as such not worth noting most of the time.
-
->   2. The die_errno in handle_alias is definitely wrong. Even if we want
->      to print a message for signal death, showing errno is bogus unless
->      the return value was -1. But is it the right thing to just pass the
->      negative value straight to exit()? It works, but it is depending on
->      the fact that (unsigned char)(ret & 0xff) behaves in a certain way
->      (i.e., that we are on a twos-complement platform, and -13 becomes
->      141). That is not strictly portable, but it is probably fine in
->      practice. I'd worry more about exit() doing something weird on
->      Windows.
-
-It did something weird on Windows until we added this line to
-compat/mingw.h:
-
-#define exit(code) exit((code) & 0xff)
-
--- Hannes
+Sounds good to me.  As already mentioned, I have the v4 series ready
+and it addresses all issues already voiced in v3, but I have postponed
+submitting it as per your request.  Please let me know when and how to
+proceed, thanks!
