@@ -1,87 +1,73 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] status: report ignored yet tracked directories
-Date: Sat,  5 Jan 2013 21:42:43 +0100
-Message-ID: <1357418563-6626-1-git-send-email-apelisse@gmail.com>
-References: <20130105112432.GA14666@sigill.intra.peff.net>
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: <tboegi@web.de>, <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 05 21:51:24 2013
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: [Feature request] make git buildable from a separate directory
+Date: Sat, 05 Jan 2013 21:52:05 +0100
+Message-ID: <50E89275.6080408@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 05 21:53:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trai3-0001bd-Lz
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:51:16 +0100
+	id 1Trak5-0003Gj-He
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755858Ab3AEUuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 15:50:52 -0500
-Received: from mail-we0-f179.google.com ([74.125.82.179]:55456 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755850Ab3AEUuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 15:50:50 -0500
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Jan 2013 15:50:50 EST
-Received: by mail-we0-f179.google.com with SMTP id r6so8719812wey.24
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 12:50:49 -0800 (PST)
+	id S1755864Ab3AEUxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 15:53:01 -0500
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:33959 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755839Ab3AEUxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 15:53:00 -0500
+Received: by mail-ee0-f54.google.com with SMTP id c13so8869901eek.13
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 12:52:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=ityLbDSlw8iLW22XXqGBeKzeQb0/HwBWeq/2Sud4ye0=;
-        b=Tuuz/bE+XN6ZGu8a+eK1pUIBYGJbKFxu3QQjfkDZjaqtBCe8YbiUX60YOvO4/wJQ/o
-         G4E+woVtsHErcoKlzeyqN6Grk1773iTSHXrBVx2yz/A883m5hpPYjjjB8oI079BDWuCT
-         StjYh2PMFx3rGy9w4jTclb3Z031DawjIRsfgCr4fRRcCUOSBy6j1JxKLY85QJi7gg73x
-         TlVVCs12aMMKaZ0XLkXSRC3Yy6U3J17EI4WTmuDoLaMbOeQoWtX3XOGCaokjelVJ+oSe
-         1tFgOqng960KMI7CVcYWTRmXdsKkX/kGivmHBa17XiXfuk2qDqmapdwzGBIum8sisN3l
-         KyuA==
-X-Received: by 10.194.89.167 with SMTP id bp7mr88824091wjb.0.1357418618858;
-        Sat, 05 Jan 2013 12:43:38 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id eo10sm5452330wib.9.2013.01.05.12.43.37
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=Ww612JEhvRvsPnJXFBfKyQDuBSq67Lqx8uBA4yfN5Y0=;
+        b=M+xJTJbFS22dPpwQhwpfboO7UggsPPt90qlFl7zKbSd+t+8+t5rkR5F2qlywmKVF14
+         1L2ktiXR4gwhEU7LuywStcihxbdYwUc8/wU2UVfl1kJZr8uGiKkflzcygaQg8zHYD9Yd
+         /4QNfmBnTVY7dqMT7dbsohKnqQ/bl33F8a0YaslUEosGXz1skJ9WlMle/KFFP8JfKeuw
+         hWfTbGbNbVbXd1RX8vcW2GGRhIwKMvZLqw10s7zBXiTGIOcXjGiTlHhuu+t+IqytKBnp
+         QzcuMIH+Pi9h+LnwrWnkEVKdUDnwHQora8EW2kF5y06C0ajOtLL9f+3Oa2xLf/FD1+E9
+         fxCQ==
+X-Received: by 10.14.223.200 with SMTP id v48mr154434837eep.24.1357419178773;
+        Sat, 05 Jan 2013 12:52:58 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.204.244])
+        by mx.google.com with ESMTPS id e2sm119751757eeo.8.2013.01.05.12.52.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 12:43:37 -0800 (PST)
-X-Mailer: git-send-email 1.7.12.4.3.g2036a08.dirty
-In-Reply-To: <20130105112432.GA14666@sigill.intra.peff.net>
+        Sat, 05 Jan 2013 12:52:57 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212714>
 
-Tracked directories (i.e. directories containing tracked files) that
-are ignored must be reported as ignored if they contain untracked files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Currently, tracked files or directories can't be reported untracked or ignored.
-Remove that constraint when searching ignored files.
+Hi.
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
-Torsten, Jeff,
+Many C projects I have seen (based on autoconf, but not always - like
+Nginx) allow the project to be build in a separate directory, in order
+to avoid to pollute the working directory with compiled files.
 
-Can you please test this patch and tell me if this is better ? (t7061 is now
-successful with core.ignorecase=true)
+Unfortunately this seems to not be possible with Git.
+The Makefile seems quite complex to me, so I'm not sure to be able to
+change it to do what I want, without breaking it.
 
-This patch applies on top of ap/status-ignored-in-ignored-directory (but
- should also apply cleanly on top of next for testing purpose).
 
-Thanks,
+Thanks  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
- dir.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/dir.c b/dir.c
-index 9b80348..eefa8ab 100644
---- a/dir.c
-+++ b/dir.c
-@@ -672,7 +672,8 @@ static struct dir_entry *dir_entry_new(const char *pathname, int len)
-
- static struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len)
- {
--	if (cache_name_exists(pathname, len, ignore_case))
-+	if (!(dir->flags & DIR_SHOW_IGNORED) &&
-+	    cache_name_exists(pathname, len, ignore_case))
- 		return NULL;
-
- 	ALLOC_GROW(dir->entries, dir->nr+1, dir->alloc);
---
-1.7.12.4.2.geb8c5b8.dirty
+iEYEARECAAYFAlDoknUACgkQscQJ24LbaUTw/QCdHbphkU3Mepo98D07yLaj3YyF
+5I4Anii94QDHsC1zm2Jp1hy2X/JFa/NE
+=vV1z
+-----END PGP SIGNATURE-----
