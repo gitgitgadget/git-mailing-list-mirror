@@ -1,112 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: Display the date of a tag in a human friendly way.
-Date: Fri, 04 Jan 2013 15:50:35 -0800
-Message-ID: <7vhamwse2c.fsf@alter.siamese.dyndns.org>
-References: <1357314431-32710-1-git-send-email-wildfire@progsoc.org>
+From: David Michael <fedora.dm0@gmail.com>
+Subject: [BUG/PATCH] setup: Copy an environment variable to avoid overwrites
+Date: Fri, 4 Jan 2013 19:35:14 -0500
+Message-ID: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Anand Kumria <wildfire@progsoc.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Jan 05 00:50:59 2013
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 01:42:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrH2Q-0006vB-1t
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 00:50:58 +0100
+	id 1TrHqX-0005ls-Ul
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 01:42:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755344Ab3ADXuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 18:50:39 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36985 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754749Ab3ADXui (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 18:50:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 102DCB87A;
-	Fri,  4 Jan 2013 18:50:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Kcm0fHqKBiJOa4AA4NSEoUHOp6Y=; b=dne/mD
-	Vli9Widp0yByHKiiHpXH/dOWSvDnNuiGIdxmubhI3cq2+fdM6qibmgSpARMbrOeD
-	BSpEyyEM8Fhjc9YMf1MxofZ7o3ZpTbXaftYJXPPq4Y4s9vGYCodJV11TnJemeBMg
-	2gBgdjk6psU2s9iLJh5nDW/hSNpYazRC3Ul3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ax3q1/Y8Y/RIMbXgbe7LgRl33N+dfUtB
-	ZgqB9r+O8xdia87QS6q553Kn9cJ0ZaxCrZvX+lm+ZqrYNG+QTJyMYBm3gjD2Bws1
-	W/Sjd8n3x56RnNHG0ttEnxd5+HiULm1leNpakc8mwJ6rM0vJVyOfABQsydIto4rg
-	/K3ffYXoq5k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01A72B879;
-	Fri,  4 Jan 2013 18:50:38 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A622B878; Fri,  4 Jan 2013
- 18:50:37 -0500 (EST)
-In-Reply-To: <1357314431-32710-1-git-send-email-wildfire@progsoc.org> (Anand
- Kumria's message of "Fri, 4 Jan 2013 15:47:11 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 89BC6DE8-56C9-11E2-9CC5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755394Ab3AEAm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 19:42:27 -0500
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:40489 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754963Ab3AEAm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 19:42:26 -0500
+Received: by mail-vc0-f176.google.com with SMTP id fo13so17071724vcb.35
+        for <git@vger.kernel.org>; Fri, 04 Jan 2013 16:42:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=mRpt8RQMAuXvzj52k7L24xM7goU4vAkhbNUm/9eMsqg=;
+        b=flyojiJfPH4lwctQCisQ3VymkXb6gyOBw6KHxF+RgB6OjpxBL7T22mZjr4e9xcVVFu
+         s9fQi4BBiyiUFLW0DvzdQN6fyoX68oKT9idubabZwI3iJJ9os9AZwLqrYbXuAdokkKMD
+         /jLSOyPBOy52++vGOma7wb78TMqq3eaozrnqBn1H01DLqI/x1J+KtpJKJuSJLo1TDSrP
+         R1k/OjPged5PFLIs4HZao7Fh8MxgkSK2ybgY0q3TdkGkBoeHX0wGncTp4puobYVuGfNS
+         VsSJ7OeMoTxKFSwHrptkt7l2TXBloH3DjHwMpHpvd8lVOQS5zwtnX+Ow20bxYI+MjUGB
+         z/qA==
+Received: by 10.52.33.228 with SMTP id u4mr68163650vdi.4.1357346114687; Fri,
+ 04 Jan 2013 16:35:14 -0800 (PST)
+Received: by 10.58.85.138 with HTTP; Fri, 4 Jan 2013 16:35:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212657>
 
-Anand Kumria <wildfire@progsoc.org> writes:
+It is possible for this pointer of the GIT_DIR environment variable to
+survive unduplicated until further getenv calls are made.  The standards
+allow for subsequent calls of getenv to overwrite the string located at
+its returned pointer, and this can result in broken git operations on
+certain platforms.
 
-> By selecting a tag within gitk you can display information about it.
-> This information is output by using the command
->
->  'git cat-file tag <tagid>'
->
-> This outputs the *raw* information from the tag, amongst which is the
-> time - in seconds since the epoch. As useful as that value is, I find it
-> a lot easier to read and process time which it is something like:
->
->  "Mon Dec 31 14:26:11 2012 -0800"
->
-> This change will modify the display of tags in gitk like so:
->
->   @@ -1,7 +1,7 @@
->    object 5d417842efeafb6e109db7574196901c4e95d273
->    type commit
->    tag v1.8.1
->   -tagger Junio C Hamano <gitster@pobox.com> 1356992771 -0800
->   +tagger Junio C Hamano <gitster@pobox.com> Mon Dec 31 14:26:11 2012 -0800
->
->    Git 1.8.1
->    -----BEGIN PGP SIGNATURE-----
->
-> Signed-off-by: Anand Kumria <wildfire@progsoc.org>
-> ---
+Signed-off-by: David Michael <fedora.dm0@gmail.com>
+---
 
-Sounds like a sensible thing to do but I didn't check how else
-(other than purely for displaying) this string is used.
+I have encountered an issue with consecutive calls to getenv
+overwriting earlier values.  Most notably, it prevents a plain "git
+clone" from working.
 
-Paul, the patch is not made against your tree, so if you choose to
-take it you would need to strip the leading directory at the top.
+Long story short: This value of GIT_DIR gets passed around setup.c
+until it reaches check_repository_format_gently.  This function calls
+git_config_early, which eventually runs getenv("HOME").  When it
+returns back to check_repository_format_gently, the gitdir variable
+contains my home directory path.  The end result is that I wind up
+with ~/objects/ etc. and a failed repository clone.  (Simply adding a
+bare getenv("GIT_DIR") afterwards to reset the pointer also corrects
+the problem.)
+
+Since other platforms are apparently working, yet this getenv behavior
+is supported by the standards, I am left wondering if this could be a
+symptom of something else being broken on my platform (z/OS).  Can
+anyone more familiar with this part of git identify any condition that
+obviously should not be occurring?
 
 Thanks.
 
-PS. I haven't received a pull request from you for a while; are
-there accumulated changes I should be pulling in before -rc0 of the
-next release we are working on?
+ setup.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
->  gitk-git/gitk |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index d93bd99..aae1c58 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -10675,7 +10675,7 @@ proc showtag {tag isnew} {
->      set linknum 0
->      if {![info exists cached_tagcontent($tag)]} {
->  	catch {
-> -           set cached_tagcontent($tag) [exec git cat-file tag $tag]
-> +           set cached_tagcontent($tag) [exec git cat-file -p $tag]
->  	}
->      }
->      if {[info exists cached_tagcontent($tag)]} {
+diff --git a/setup.c b/setup.c
+index f108c4b..64fb160 100644
+--- a/setup.c
++++ b/setup.c
+@@ -675,8 +675,12 @@ static const char
+*setup_git_directory_gently_1(int *nongit_ok)
+      * validation.
+      */
+     gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
+-    if (gitdirenv)
+-        return setup_explicit_git_dir(gitdirenv, cwd, len, nongit_ok);
++    if (gitdirenv) {
++        gitdirenv = xstrdup(gitdirenv);
++        ret = setup_explicit_git_dir(gitdirenv, cwd, len, nongit_ok);
++        free(gitdirenv);
++        return ret;
++    }
+
+     if (env_ceiling_dirs) {
+         string_list_split(&ceiling_dirs, env_ceiling_dirs, PATH_SEP, -1);
+--
+1.7.11.7
