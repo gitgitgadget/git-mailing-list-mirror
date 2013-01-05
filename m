@@ -1,133 +1,138 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] clone: support atomic operation with --separate-git-dir
-Date: Sat, 05 Jan 2013 21:17:04 +0100
-Message-ID: <50E88A40.9010904@web.de>
-References: <50E74145.4020701@gmail.com> <7vzk0osjli.fsf@alter.siamese.dyndns.org> <50E83224.2070701@web.de> <50E83DAE.1080500@web.de>
+From: Marc Khouzam <marc.khouzam@ericsson.com>
+Subject: RE: [PATCH v4] git-completion.bash: add support for path completion
+Date: Sat, 5 Jan 2013 20:23:39 +0000
+Message-ID: <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se>
+References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com>
+ <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se>
+ <7vobh4sffw.fsf@alter.siamese.dyndns.org>,<7vehi0qh4x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	"W. Trevor King" <wking@drexel.edu>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 21:17:32 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"szeder@ira.uka.de" <szeder@ira.uka.de>,
+	"felipe.contreras@gmail.com" <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Manlio Perillo <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 21:24:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TraBP-0001yR-Iz
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:17:31 +0100
+	id 1TraIB-0000TL-Mp
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755867Ab3AEURN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 15:17:13 -0500
-Received: from mout.web.de ([212.227.17.11]:64747 "EHLO mout.web.de"
+	id S1755867Ab3AEUXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 15:23:52 -0500
+Received: from imr3.ericy.com ([198.24.6.13]:43723 "EHLO imr3.ericy.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755843Ab3AEURL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 15:17:11 -0500
-Received: from [192.168.178.41] ([91.3.188.151]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0LudLU-1Srx7E2PVA-0100eO; Sat, 05 Jan 2013 21:17:08
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <50E83DAE.1080500@web.de>
-X-Enigmail-Version: 1.4.6
-X-Provags-ID: V02:K0:9fw0cKjh6oBkcpV3WDujgk1Bk8kWOCugNT1ssrYxK2Z
- igN4ninkV+8bcY1P4epdhWiuJ4EKidlMUXOi407jycZGauC3iy
- y3q3zLjEisojxvPb8yEHuCuWrVCoUNld585pjhVUOP7ICJfws1
- HQPv5Hr3xSCx62IfVakBrOEKLOXBpq6HsPMHbDg5HqJNVpWzDj
- U++5SuLaugJg0Km5an49w==
+	id S1755847Ab3AEUXv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jan 2013 15:23:51 -0500
+Received: from EUSAAHC003.ericsson.se ([147.117.188.81])
+	by imr3.ericy.com (8.13.8/8.13.8) with ESMTP id r05KNfHM017706
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Sat, 5 Jan 2013 14:23:41 -0600
+Received: from EUSAAMB103.ericsson.se ([147.117.188.120]) by
+ EUSAAHC003.ericsson.se ([147.117.188.81]) with mapi id 14.02.0318.004; Sat, 5
+ Jan 2013 15:23:40 -0500
+Thread-Topic: [PATCH v4] git-completion.bash: add support for path completion
+Thread-Index: AQHN35v9HSsVlTwzCk6LZCvwjOeDYpg5wPLQgAAkJX6AAHcaLIAA48SG
+In-Reply-To: <7vehi0qh4x.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-CA, en-US
+Content-Language: en-CA
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [147.117.188.135]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212711>
-
-Since b57fb80a7d (init, clone: support --separate-git-dir for .git file)
-git clone supports the --separate-git-dir option to create the git dir
-outside the work tree. But when that option is used, the git dir won't be
-deleted in case the clone fails like it would be without this option. This
-makes clone lose its atomicity as in case of a failure a partly set up git
-dir is left behind. A real world example where this leads to problems is
-when "git submodule update" fails to clone a submodule and later calls to
-"git submodule update" stumble over the partially set up git dir and try
-to revive the submodule from there, which then fails with a not very user
-friendly error message.
-
-Fix that by updating the junk_git_dir variable (used to remember if and
-what git dir should be removed in case of failure) to the new value given
-with the --seperate-git-dir option. Also add a test for this to t5600 (and
-while at it fix the former last test to not cd into a directory to test
-for its existence but use "test -d" instead).
-
-Reported-by: Manlio Perillo <manlio.perillo@gmail.com>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212712>
 
 
-Am 05.01.2013 15:50, schrieb Jens Lehmann:
-> Am 05.01.2013 15:01, schrieb Jens Lehmann:
->> The reason seems to be that clone leaves a partial initialized .git
->> directory in case of connection problems. The next time submodule
->> update runs it tries to revive the submodule from .git/modules/<name>
->> but fails as there are no objects in it.
->>
->> This looks like a bug in clone to me, as it takes precautions to clean
->> up if something goes wrong but doesn't do that in this case. But while
->> glancing over the code I didn't find out what goes wrong here.
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> I dug a bit deeper here and found the reason: In remove_junk() of
-> builtin/clone.c the junk_git_dir points to the gitfile in the
-> submodules work tree, not the .git/modules/<name> directory where
-> clone was told to put the git directory. Will see if I can come up
-> with a patch soonish ...
+>>  Marc Khouzam <marc.khouzam@ericsson.com> writes:
+>>
+>>> I've been playing with it but I'm not getting the expected
+>>> behavior when I cd to a sub-directory.
+>>
+>> Thanks for testing.  Manlio?
+> 
+> Can you try the attached patch?
 
-And this fixes it for me. Manlio, it'd be great if you could test
-this patch (but please not only remove .git/modules/<name> but also
-the submodule work tree before doing that).
+Thanks for this, it improves the situation dramatically.
+I did further testing with your patch and found some less obvious
+issues.  I didn't debug the script myself as I'm not that familiar with
+it either, but I think the testcases below should help Manlio or
+someone else look into some regressions.
 
+1- Using .. or . breaks completion when after the '/':
+> cd git/contrib
+> git rm ../contrib/completion/<tab>
+../contrib/completion/ion.bash  ../contrib/completion/ion.tcsh  ../contrib/completion/ion.zsh   ../contrib/completion/sh
+It looks like the space taken by the path where we are located, eats up the same number of characters from the file name, e.g.,
+   ../contrib/completion/ion.bash
+   ../contrib/git-completion.bash
 
- builtin/clone.c               |  4 +++-
- t/t5600-clone-fail-cleanup.sh | 12 +++++++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+2- Maybe related to problem 1.  Using .. breaks completion in other ways:
+> cd git/contrib
+> git rm ../con<tab>
+../config.c       ../config.mak.in  ../configure.ac   ../connect.c      ../connected.c    ../connected.h    ../convert.c      ../convert.h
+Notice that 'contrib' is not proposed.
+Don't be fooled by the fact that
+> git rm ../cont<tab>
+will complete to 
+> git rm ../contrib
+as it is only because the completion script returned nothing, and bash file-completion 
+kicked-in instead (it fooled me :)).
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ec2f75b..8d23a62 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -771,8 +771,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		die(_("could not create leading directories of '%s'"), git_dir);
+3- Also probably related to problems 1 and 2.  Using absolute paths behaves wierdly and 
+worse than before:
+git rm /home/marc/git/git/con<tab>
+will give
+git rm /home/marc/git/git/config-
+although there is the 'contrib' dir that should be shown, amongst others.
+Seems like the same problem as above with 'git rm ../con<tab>'
 
- 	set_git_dir_init(git_dir, real_git_dir, 0);
--	if (real_git_dir)
-+	if (real_git_dir) {
- 		git_dir = real_git_dir;
-+		junk_git_dir = real_git_dir;
-+	}
+In my opinion, the above three cases are regressions.
 
- 	if (0 <= option_verbosity) {
- 		if (option_bare)
-diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup.sh
-index ee06d28..4435693 100755
---- a/t/t5600-clone-fail-cleanup.sh
-+++ b/t/t5600-clone-fail-cleanup.sh
-@@ -37,6 +37,16 @@ test_expect_success \
+4- Completion choices include their entire path, which is not what bash does by default.  For example:
+> cd git/contrib
+> ls completion/git-<tab>
+git-completion.bash  git-completion.tcsh  git-completion.zsh   git-prompt.sh
+but
+> git rm completion/git-<tab>
+completion/git-completion.bash  completion/git-completion.tcsh  completion/git-completion.zsh   completion/git-prompt.sh
+notice the extra 'completion/' before each completion.  This can get pretty large when completing with 
+many directory prefixes.  The current tcsh completion has the same problem which I couldn't fix.  However, I am 
+not sure if it can be fixed for bash.
 
- test_expect_success \
-     'successful clone must leave the directory' \
--    'cd bar'
-+    'test -d bar'
-+
-+test_expect_success 'failed clone --separate-git-dir should not leave any directories' '
-+	mkdir foo/.git/objects.bak/ &&
-+	mv foo/.git/objects/* foo/.git/objects.bak/ &&
-+	test_must_fail git clone --separate-git-dir gitdir foo worktree &&
-+	test_must_fail test -e gitdir &&
-+	test_must_fail test -e worktree &&
-+	mv foo/.git/objects.bak/* foo/.git/objects/ &&
-+	rmdir foo/.git/objects.bak
-+'
+I personally don't think this is regression, just an slight annoyance.
 
- test_done
--- 
-1.8.1.81.gb1e9864
+5- With this feature git-completion.bash will return directories as completions.  This is something
+git-completion.tcsh is not handling very well.  I will post a patch to fix that.
+
+Below are two suggestions that are in line with this effort but that are not regressions.
+
+A) It would be nice if 
+git commit -a <TAB>
+also completed with untracked files
+
+B) Now that, for example, 'git rm' completion is smart about path completion 
+it would be nice to somehow not trigger bash default file completion
+when 'git rm' does not report any completions.  
+
+For example, if I have a file called zz.tar.gz (which is an ignored file) 
+and I do 'git rm <tab>', I will get the proper list of files that can be
+removed by git, excluding zz.tar.gz.  But if I complete
+'git rm zz.tar.<tab>' then the completion script will return nothing,
+since git cannot remove that ignored file, but we will then fall-back
+to the bash default completion, which will complete the file to zz.tar.gz.
+
+Although there are some issues, I think this feature will greatly benefit the user
+and is worth the time needed to fix.
+
+Thanks!
+
+Marc
