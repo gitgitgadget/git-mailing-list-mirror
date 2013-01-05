@@ -1,69 +1,136 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: Re: [PATCH] Add getenv.so for catching invalid getenv() use via
- LD_PRELOAD
-Date: Sat, 5 Jan 2013 02:39:00 -0800
-Message-ID: <20130105103900.GA4200@ftbfs.org>
-References: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
- <1357376146-7155-1-git-send-email-pclouds@gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: t7061: comments and one failure
+Date: Sat, 05 Jan 2013 12:07:24 +0100
+Message-ID: <50E8096C.7000501@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	David Michael <fedora.dm0@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 11:39:42 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: apelisse@gmail.com, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 05 12:07:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrRAD-0005wk-SQ
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 11:39:42 +0100
+	id 1TrRbO-0006uJ-PK
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 12:07:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573Ab3AEKjT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2013 05:39:19 -0500
-Received: from zoom.lafn.org ([108.92.93.123]:30503 "EHLO zoom.lafn.org"
+	id S1755575Ab3AELH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 06:07:28 -0500
+Received: from mout.web.de ([212.227.17.11]:53284 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755564Ab3AEKjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 05:39:18 -0500
-Received: from yeeloong.ftbfs.org (pool-108-23-63-172.lsanca.fios.verizon.net [108.23.63.172])
-	(authenticated bits=0)
-	by zoom.lafn.org (8.14.3/8.14.2) with ESMTP id r05AdCN5080764;
-	Sat, 5 Jan 2013 02:39:12 -0800 (PST)
-	(envelope-from kraai@ftbfs.org)
-Received: from kraai by yeeloong.ftbfs.org with local (Exim 4.80)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1TrR9Y-00025G-Ry; Sat, 05 Jan 2013 02:39:01 -0800
-Mail-Followup-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	David Michael <fedora.dm0@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <1357376146-7155-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Virus-Scanned: clamav-milter 0.97 at zoom.lafn.org
-X-Virus-Status: Clean
+	id S1755470Ab3AELH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 06:07:26 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0MA5v3-1TgkD71l1t-00BSWe; Sat, 05 Jan 2013 12:07:24
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+X-Provags-ID: V02:K0:ivzEUP+wdLDMfhgwTqY4X2wQ0Wm8kGqhBAzubaNidQi
+ fL+vb3HNF+bZBl90hNPwWVcdu+21vz6AEfIzJheedPmwgfj+OA
+ glh6lyhwOg7nZ2AyfPQCpMDTP5Cai07g0lFXk+06g2rdjgGBdE
+ TO/un1hsfv63jehCBYw+sKuhhodaUO93VyMbnCyP7wqNQ77Wu+
+ Lblhs1gQkvUyfS00RbGqQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212685>
 
-On Sat, Jan 05, 2013 at 03:55:46PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->  Perhaps this will help the getenv bug hunting (I assume we do the
->  hunting on Linux platform only). So far it catches this and is stuck
->  at getenv in git_pager().
+Hej,
+TC 9 is failing (Mac OS X 10.6),
+==========================
+expecting success: 
+        >tracked/uncommitted &&
+        git status --porcelain --ignored >actual &&
+        test_cmp expected actual
 
-It seems like a static analysis tool might be able to detect these
-problems.  Is there a way to do so using sparse?
+--- expected    2013-01-05 11:01:00.000000000 +0000
++++ actual      2013-01-05 11:01:00.000000000 +0000
+@@ -1,4 +1,3 @@
+ ?? .gitignore
+ ?? actual
+ ?? expected
+-!! tracked/
+not ok 9 - status ignored tracked directory and uncommitted file with --ignore
+#       
+#               >tracked/uncommitted &&
+#               git status --porcelain --ignored >actual &&
+#               test_cmp expected actual
+#       
+=======================
+I haven't been able to dig further into this,
+(I can volonteer to do some more debugging).
+Looking into the code, there are 2 questions:
 
-> +		n =3D backtrace(buffer, 100);
-> +		symbols =3D backtrace_symbols(buffer, n);
-> +		if (symbols) {
-> +			for (i =3D 0;i < n; i++)
+1) echo "ignored" >.gitignore &&
+  We don't need the quoting of a simple string which does not have space in it.
+2)  : >untracked/ignored &&
+Do we need the colon here?
 
-s/;i/; i/
+Would it make sence to do the following:
 
---=20
-Matt Kraai
-https://ftbfs.org/kraai
+
+diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+index 0da1214..761a2e7 100755
+--- a/t/t7061-wtstatus-ignore.sh
++++ b/t/t7061-wtstatus-ignore.sh
+@@ -12,10 +12,10 @@ cat >expected <<\EOF
+ EOF
+ 
+ test_expect_success 'status untracked directory with --ignored' '
+-	echo "ignored" >.gitignore &&
++	echo ignored >.gitignore &&
+ 	mkdir untracked &&
+-	: >untracked/ignored &&
+-	: >untracked/uncommitted &&
++	>untracked/ignored &&
++	>untracked/uncommitted &&
+ 	git status --porcelain --ignored >actual &&
+ 	test_cmp expected actual
+ '
+@@ -43,7 +43,7 @@ EOF
+ test_expect_success 'status ignored directory with --ignore' '
+ 	rm -rf untracked &&
+ 	mkdir ignored &&
+-	: >ignored/uncommitted &&
++	>ignored/uncommitted &&
+ 	git status --porcelain --ignored >actual &&
+ 	test_cmp expected actual
+ '
+@@ -71,8 +71,8 @@ test_expect_success 'status untracked directory with ignored files with --ignore
+ 	rm -rf ignored &&
+ 	mkdir untracked-ignored &&
+ 	mkdir untracked-ignored/test &&
+-	: >untracked-ignored/ignored &&
+-	: >untracked-ignored/test/ignored &&
++	>untracked-ignored/ignored &&
++	>untracked-ignored/test/ignored &&
+ 	git status --porcelain --ignored >actual &&
+ 	test_cmp expected actual
+ '
+@@ -99,10 +99,10 @@ EOF
+ test_expect_success 'status ignored tracked directory with --ignore' '
+ 	rm -rf untracked-ignored &&
+ 	mkdir tracked &&
+-	: >tracked/committed &&
++	>tracked/committed &&
+ 	git add tracked/committed &&
+ 	git commit -m. &&
+-	echo "tracked" >.gitignore &&
++	echo tracked >.gitignore &&
+ 	git status --porcelain --ignored >actual &&
+ 	test_cmp expected actual
+ '
+@@ -126,7 +126,7 @@ cat >expected <<\EOF
+ EOF
+ 
+ test_expect_success 'status ignored tracked directory and uncommitted file with --ignore' '
+-	: >tracked/uncommitted &&
++	>tracked/uncommitted &&
+ 	git status --porcelain --ignored >actual &&
+ 	test_cmp expected actual
+ '
+
+
+/Torsten
