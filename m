@@ -1,76 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [BUG/PATCH] setup: Copy an environment variable to avoid overwrites
-Date: Sat, 5 Jan 2013 09:45:40 +0700
-Message-ID: <CACsJy8BeuV8esGTWsQiT_G9pZE28s5KJxH6+dzdhioLgmSiNVg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG/PATCH] setup: Copy an environment variable to avoid
+ overwrites
+Date: Fri, 04 Jan 2013 20:32:10 -0800
+Message-ID: <7vobh4qmgl.fsf@alter.siamese.dyndns.org>
 References: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
+ <7vsj6gqvhc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
 To: David Michael <fedora.dm0@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 03:46:51 2013
+X-From: git-owner@vger.kernel.org Sat Jan 05 05:32:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrJmb-0000cS-CZ
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 03:46:49 +0100
+	id 1TrLQy-0000Zy-GD
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 05:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755725Ab3AECq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2013 21:46:28 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:36556 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755648Ab3AECqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2013 21:46:12 -0500
-Received: by mail-ob0-f176.google.com with SMTP id un3so15016445obb.7
-        for <git@vger.kernel.org>; Fri, 04 Jan 2013 18:46:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=M1AtXZxzYwGfwAt+SbNTQcDuStV65agueclyIzNZ5H0=;
-        b=UzL64fUVN5sVBODHDl8fijjNURW7R0QCQWDwhzKyP2xqO+v1PpL/rV6XxioQJpmODT
-         6NDvOf9B6ofhnP2eJVwi1HvwwlHF3pPvemFZBZPTSuEAJDm3Wuq7Ttv2raJ/scRFU/Hs
-         kKqHaRUFXYUT5zQxDGmO/AGEU1OKB9gxRc75prrikDg0AHzyD3e4r9Uz/i9bLKjSwSVn
-         hUvk8P3d0R/nyjOZTBZAnfvLnsuXdVktQ4fdF+BCUMLIyqjPdv3nXg3fzPoW2g7nUNtC
-         dv+qmAtgZIS+iyOd3yfq6M/Fkrkt+zjb7vTj+a6j8u7Jt4tuS9cfaK9DZWGq6lsjZDFX
-         D5Cg==
-Received: by 10.182.109.101 with SMTP id hr5mr39869666obb.84.1357353971684;
- Fri, 04 Jan 2013 18:46:11 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Fri, 4 Jan 2013 18:45:40 -0800 (PST)
-In-Reply-To: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
+	id S1755054Ab3AEEcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2013 23:32:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51804 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754944Ab3AEEcN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2013 23:32:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1EB3A3D5;
+	Fri,  4 Jan 2013 23:32:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QP2UhVxaMkz3K8iW9OYJ1A08j8Y=; b=Qi1Mbe
+	oEtoEeT8OLdTYdJ9VD6OGV8i/QEWOGzS5r2vtO29AWenC8ofF2JW3OOxBFkseUFA
+	/VT4P74dLlWwTsHEBXkz2oFWVzLBH4ESuRaHZjAbIaNfg1AoNiWQX+swi4Z9zrM+
+	0osvnjOLXuME0v9YWrBEKqLkkxWINfxGY+PVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lbs8wkyHJOLGQRCQpElSW+AorkvHCW6t
+	f9xmdvcUD7NzTQVJA112K4agLlQcC1eGihJBf/MMJ2MtNk3Dnil51kuGgHNoKGMb
+	dVLuHUYqbMN0DCjnC6ObDE4xc5EZL06CykTjLDRyn1FnWUT+xhnDfuRbQ3diAPDF
+	Tn9dgnYPQks=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D454FA3D4;
+	Fri,  4 Jan 2013 23:32:12 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51963A3D3; Fri,  4 Jan 2013
+ 23:32:12 -0500 (EST)
+In-Reply-To: <7vsj6gqvhc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 04 Jan 2013 17:17:19 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DFEB4654-56F0-11E2-91EB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212661>
 
-On Sat, Jan 5, 2013 at 7:35 AM, David Michael <fedora.dm0@gmail.com> wrote:
-> -    if (gitdirenv)
-> -        return setup_explicit_git_dir(gitdirenv, cwd, len, nongit_ok);
-> +    if (gitdirenv) {
-> +        gitdirenv = xstrdup(gitdirenv);
-> +        ret = setup_explicit_git_dir(gitdirenv, cwd, len, nongit_ok);
-> +        free(gitdirenv);
-> +        return ret;
-> +    }
+Junio C Hamano <gitster@pobox.com> writes:
 
-Maybe we could all this into a wrapper? If getenv() here has a
-problem, many other places may have the same problem too. This
-simplifies the change. But one has to check that getenv() must not be
-used in threaded code.
+> ...  So even if the standard allowed the
+> returned value to be volatile across calls to getenv(3),...
+> ...
+> In fact,
+>
+>     http://pubs.opengroup.org/onlinepubs/9699919799/functions/getenv.html
+>
+> says that only ...
 
-char *git_getenv(const char *env)
-{
-   static int bufno;
-   static char *buf[4];
-   bufno = (bufno + 1) % 4;
-   free(buf[bufno]);
-   buf[bufno] = xstrdup(getenv(env));
-   return buf[bufno];
-}
-#define getenv(x) git_getenv(x)
+Apparently I wasn't even reading what I was quoting carefully
+enough.  The above does include getenv() as one of the functions
+that are allowed to invalidate earlier return values.
 
--- 
-Duy
+Sorry about that.  I'll go back to bed (I am a bit under the weather
+and OOO today).  The conclusion in my original message is still
+valid.
+
+> Having said that, we do have codepaths to update a handful of
+> environment variables ourselves (GIT_DIR is among them), so I think
+> your patch is a good safety measure in general.
