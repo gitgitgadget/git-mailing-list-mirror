@@ -1,78 +1,126 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Add getenv.so for catching invalid getenv() use via LD_PRELOAD
-Date: Sat, 5 Jan 2013 18:37:54 +0700
-Message-ID: <CACsJy8A-Q8uDC0fJzspU8khCtWnMgmz66L2G9hLmsRYFYLaumw@mail.gmail.com>
-References: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
- <1357376146-7155-1-git-send-email-pclouds@gmail.com> <20130105103900.GA4200@ftbfs.org>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [BUG] git submodule update is not fail safe
+Date: Sat, 05 Jan 2013 14:52:01 +0100
+Message-ID: <50E83001.9000505@gmail.com>
+References: <50E74145.4020701@gmail.com> <7vzk0osjli.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	David Michael <fedora.dm0@gmail.com>
-To: Matt Kraai <kraai@ftbfs.org>
-X-From: git-owner@vger.kernel.org Sat Jan 05 12:38:45 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
+	"W. Trevor King" <wking@drexel.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 14:52:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrS5M-0002Gz-VD
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 12:38:45 +0100
+	id 1TrUAx-0001aM-UA
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 14:52:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751465Ab3AELi0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2013 06:38:26 -0500
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:54439 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751094Ab3AELiZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jan 2013 06:38:25 -0500
-Received: by mail-oa0-f48.google.com with SMTP id h2so15535914oag.7
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 03:38:24 -0800 (PST)
+	id S1755506Ab3AENwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 08:52:17 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:60051 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755686Ab3AENwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 08:52:16 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so8312191wey.33
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 05:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=w8PETSzIhuM28yQbvuunXK64MT7C8TYMzh3IpGaIm0c=;
-        b=RdPVpb7nexPkEGxA2gCzGgS8P5rqkaRjqAVBALlk1tc9dRZtdchf/XnK1Dao8Hf+B0
-         E9uybH7MQlaSR775m/o+PlDiwpOL4PUeHwzL83fYFIXejGtT+H79LFMd0p/Wrkkx1W/c
-         z9DGkxvt3WNQ7ZQRGR2Fmh4LWQk5rw7IJ2b+3KH/KXouezLzLUebyjgwdozGD2UEqmBC
-         hMqZ6wyvNfFqfGuANOnN/yuVKIua0ZiNvV4CYMsDZ2UBHcnx/WzsfIP+qIrsgtJeqKuo
-         aBqcKdoJ11cQF056qSqZpbOq0S2qrhJP2Ih01y5tJ8b+1gi0TXdHw56+k+VfGGu2mYS5
-         iEzw==
-Received: by 10.60.8.134 with SMTP id r6mr30149616oea.53.1357385904502; Sat,
- 05 Jan 2013 03:38:24 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Sat, 5 Jan 2013 03:37:54 -0800 (PST)
-In-Reply-To: <20130105103900.GA4200@ftbfs.org>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=qkR2UhGC4j29GzzhnPw1QtJCgjEsOWxsa7IRr7Q0PvY=;
+        b=RBgOjCgu049RiX58yOGEnwLvGlQnQUmlVnT7tx294EP/3fBwENZ89SQhPuC/zkCFxC
+         L5bPMA2kaY4Z5g4DtuK3nWIbP8Ewu2/LLek93ZYeaqTBRn//UWBY2vw98GWdXU8SDdGK
+         lI4YduL1WC93qasgf8xJb8WjTR8adAJyNLoB80xeBlzCOAyrXvxd5DALtcaCRGLL6iOO
+         CFtxj0iKNb6uXbQ2kIy9GqwLqaK5L4Ys2lIn8TNAsSYMkGJAQUJSq4X0FhTUr9iEwLCt
+         uMEO7GpICiBLjNzAAd5U1YzM3mmq6NGSklye2nwpfzHEEoJMPax7E83f8BAKCG7CFALJ
+         gCRw==
+X-Received: by 10.194.121.74 with SMTP id li10mr77427453wjb.5.1357393934748;
+        Sat, 05 Jan 2013 05:52:14 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.204.244])
+        by mx.google.com with ESMTPS id p2sm3791761wic.7.2013.01.05.05.52.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 05 Jan 2013 05:52:13 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <7vzk0osjli.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212689>
 
-On Sat, Jan 5, 2013 at 5:39 PM, Matt Kraai <kraai@ftbfs.org> wrote:
-> On Sat, Jan 05, 2013 at 03:55:46PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
->>  Perhaps this will help the getenv bug hunting (I assume we do the
->>  hunting on Linux platform only). So far it catches this and is stuc=
-k
->>  at getenv in git_pager().
->
-> It seems like a static analysis tool might be able to detect these
-> problems.  Is there a way to do so using sparse?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That was my first thought. But this may involve flow analysis and I
-don't think sparse is up to it. ccc-analyzer is still pretty basic.
-And between static analysis and runtime check, I prefer the latter as
-it's more reliable as long as you have a good coverage test.
+Il 04/01/2013 22:51, Junio C Hamano ha scritto:
+> Manlio Perillo <manlio.perillo@gmail.com> writes:
+> 
+>> $ git submodule update --init
+>> ...
+>> Submodule 'roms/vgabios' (git://git.qemu.org/vgabios.git/) registered
+>> for path 'roms/vgabios'
+>> fatal: unable to connect to anongit.freedesktop.org:
+>> anongit.freedesktop.org[0: 131.252.210.161]: errno=Connection timed out
+>>
+>> Unable to fetch in submodule path 'pixman'
+>>
+>> $ git submodule update --init
+>> fatal: Needed a single revision
+>> Unable to find current revision in submodule path 'pixman'
+>>
+>> The problem is easy to solve: manually remove the pixman directory;
+>> however IMHO git submodule update should not fail this way since it may
+>> confuse the user.
+> 
+> Sounds like a reasonable observation.  Jens, Heiko, comments?
 
->
->> +             n =3D backtrace(buffer, 100);
->> +             symbols =3D backtrace_symbols(buffer, n);
->> +             if (symbols) {
->> +                     for (i =3D 0;i < n; i++)
->
-> s/;i/; i/
+I have found another, related problem.
 
-Thanks. I will fix it later if people actually want this.
---=20
-Duy
+Today I tried to update qemu submodules again, however the command
+failed with an "obscure" error message:
+
+$ git submodule update pixman
+fatal: Needed a single revision
+Unable to find current revision in submodule path 'pixman'
+
+
+The pixman submodule is the one that I failed to update in the very begin.
+The problem is not with the pixman or qemu repository: if I clone again
+qemu (with the --recursive option), all is ok.
+
+The problem is with the private working copy (in .git/modules/pixman)
+being corrupted:
+
+$git log
+fatal: bad default revision 'HEAD'.
+
+The HEAD file contains "ref: refs/heads/master", but the refs/heads
+directory is empty.
+
+
+By the way: since git submodule is a porcelain command, IMHO it should
+not show to the user these low level error message; at least it should
+give more details.
+As an example, in this case it could say something like:
+
+  the local module "pixmap" seems to be corrupted.
+  Run xxx to remove the module and yyy to create it again.
+
+The ideal solution is, for submodule update, to never leave an
+incomplete directory; that is: the update command should be atomic.
+
+
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDoMAEACgkQscQJ24LbaUQVugCggdl36Hx5JIW/hd1SVXWv+ths
+zpYAnR+93BfDLaFhXEiaQvu/TickmDA0
+=2Mnw
+-----END PGP SIGNATURE-----
