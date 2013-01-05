@@ -1,62 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] fix compilation with NO_PTHREADS
-Date: Sat, 5 Jan 2013 09:52:29 -0500
-Message-ID: <20130105145229.GA25112@sigill.intra.peff.net>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: cvsps, parsecvs, svn2git and the CVS exporter mess
+Date: Sat, 5 Jan 2013 10:11:07 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20130105151106.GA1938@thyrsus.com>
+References: <20121222173649.04C5B44119@snark.thyrsus.com>
+ <50E5A5CF.2070009@alum.mit.edu>
+ <20130103205301.GD26201@thyrsus.com>
+ <1E7F9F86-F040-42E4-98C4-152B8CCE47CE@quendi.de>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 15:52:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Yann Dirson <ydirson@free.fr>, Heiko Voigt <hvoigt@hvoigt.net>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Bart Massey <bart@cs.pdx.edu>,
+	Keith Packard <keithp@keithp.com>,
+	David Mansfield <david@cobite.com>, git@vger.kernel.org
+To: Max Horn <postbox@quendi.de>
+X-From: git-owner@vger.kernel.org Sat Jan 05 16:11:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrV7E-0002I2-2h
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 15:52:52 +0100
+	id 1TrVPI-0001TI-Q2
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 16:11:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755792Ab3AEOwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 09:52:33 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44373 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755739Ab3AEOwc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 09:52:32 -0500
-Received: (qmail 27666 invoked by uid 107); 5 Jan 2013 14:53:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 05 Jan 2013 09:53:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Jan 2013 09:52:29 -0500
+	id S1755750Ab3AEPLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 10:11:13 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:53759
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755574Ab3AEPLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 10:11:12 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 567554044B; Sat,  5 Jan 2013 10:11:07 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <1E7F9F86-F040-42E4-98C4-152B8CCE47CE@quendi.de>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212698>
 
-Commit 1327452 cleaned up an unused parameter from
-wait_or_whine, but forgot to update a caller that is inside
-"#ifdef NO_PTHREADS".
+Max Horn <postbox@quendi.de>:
+> Hm, you snipped this part of Michael's mail:
+> 
+> >> However, if that is a
+> >> problem, it is possible to configure cvs2git to write the blobs inline
+> >> with the rest of the dumpfile (this mode is supported because "hg
+> >> fast-import" doesn't support detached blobs).
+> 
+> I would call "hg fast-import" a main potential customer, given that there "cvs2hg" is another part of the cvs2svn suite. So I can't quite see how you can come to your conclusion above...
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I happened to notice this while looking at the sigpipe topic. I guess
-not many people are building with NO_PTHREADS these days.
+Perhaps I was unclear.  I consider the interface design error to
+be not in the fact that all the blobs are written first or detached,
+but rather that the implementation detail of the two separate journal
+files is ever exposed.
 
- run-command.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/run-command.c b/run-command.c
-index cfb7274..0471219 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -725,7 +725,7 @@ int finish_async(struct async *async)
- int finish_async(struct async *async)
- {
- #ifdef NO_PTHREADS
--	return wait_or_whine(async->pid, "child process", 0);
-+	return wait_or_whine(async->pid, "child process");
- #else
- 	void *ret = (void *)(intptr_t)(-1);
+I understand why the storage of intermediate results was done this
+way, in order to decrease the tool's working set during the run, but
+finishing by automatically concatenating the results and streaming
+them to stdout would surely have been the right thing here.
  
+The downstream cost of letting the journalling implementation be
+exposed, instead, can be seen in this snippet from the new git-cvsimport
+I've been working on:
+
+    def command(self):
+        "Emit the command implied by all previous options."
+        return "(cvs2git --username=git-cvsimport --quiet --quiet --blobfile={0} --dumpfile={1} {2} {3} && cat {0} {1} && rm {0} {1})".format(tempfile.mkstemp()[1], tempfile.mkstemp()[1], self.opts, self.modulepath)
+
+According to the documentation, every caller of csv2git must go
+through analogous contortions!  This is not the Unix way; if Unix
+design principles had been minimally applied, that second line would
+just read like this:
+
+     return "cvs2git --username=git-cvsimport --quiet --quiet"
+
+If Unix design principles had been thoroughly applied, the "--quiet
+--quiet" part would be unnecessary too - well-behaved Unix commands
+*default* to being completely quiet unless either (a) they have an
+exceptional condition to report, or (b) their expected running time is
+so long that tasteful silence would leave users in doubt that they're
+working.
+
+(And yes, I do think violating these principles is a lapse of taste when
+git tools do it, too.)
+
+Michael Haggerty wants me to trust that cvs2git's analysis stage has
+been fixed, but I must say that is a more difficult leap of faith when
+two of the most visible things about it are still (a) a conspicuous
+instance of interface misdesign, and (b) documentation that is careless and
+incomplete.
 -- 
-1.8.1.rc1.16.g6d46841
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
