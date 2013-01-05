@@ -1,99 +1,103 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH] clone: support atomic operation with --separate-git-dir
-Date: Sat, 05 Jan 2013 22:20:30 +0100
-Message-ID: <50E8991E.4090605@gmail.com>
-References: <50E74145.4020701@gmail.com> <7vzk0osjli.fsf@alter.siamese.dyndns.org> <50E83224.2070701@web.de> <50E83DAE.1080500@web.de> <50E88A40.9010904@web.de>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: Suggested improvements to the git-p4 documentation
+ (branch-related)
+Date: Sat, 5 Jan 2013 16:25:17 -0500
+Message-ID: <20130105212517.GA30315@padd.com>
+References: <CAFXk4bqt_pMVDtVKF-JiQuGbSpy2+_rGOg5RTTE+0pNKFcZh3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
-	"W. Trevor King" <wking@drexel.edu>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sat Jan 05 22:21:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Olivier Delalleau <shish@keba.be>
+X-From: git-owner@vger.kernel.org Sat Jan 05 22:25:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrbAl-0002pd-Sl
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 22:20:56 +0100
+	id 1TrbFM-0006wu-IQ
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 22:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755881Ab3AEVUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 16:20:37 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:51727 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755851Ab3AEVUg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 16:20:36 -0500
-Received: by mail-we0-f174.google.com with SMTP id x10so8648787wey.19
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 13:20:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=gmf9FbKXjXuWX4+WBiEyNu7eaYekrH7ntIPRYPOD+Dk=;
-        b=wxZ6jCL2WP9knwGDqemdpqZ82eRKjIGHGhLKqxKyDFjKCpev/jbHWB47WUK5gxVMv5
-         MOm5+j9dLA1lKEBTRC4D4j7HW5flAhQoi6dshSBocZWDfd6PhQ/fuvwQanX15+3FYvSb
-         Ulp4297CY3cuAx2BUZIh1yttHmZspGK4W337LIB1LJhHXqOTn+EExjJ3/qsQMAriZhNV
-         E1Rh1hSwxTSoLRSrXqILv+5PIdhzvsA8fz3Yu9cCV7NNabkGh7spAl8OwqdH7gaMphHJ
-         AivtR0hkxJUOcztTGziyeRqf8pkFNAA2WHOjLx8ha+3DjNtIZPhSBQ4bQDk8VySwXFBb
-         agDw==
-X-Received: by 10.194.121.74 with SMTP id li10mr78502096wjb.5.1357420834784;
-        Sat, 05 Jan 2013 13:20:34 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.204.244])
-        by mx.google.com with ESMTPS id bd6sm5027014wib.10.2013.01.05.13.20.32
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 05 Jan 2013 13:20:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <50E88A40.9010904@web.de>
-X-Enigmail-Version: 1.0.1
+	id S1755891Ab3AEVZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 16:25:22 -0500
+Received: from honk.padd.com ([74.3.171.149]:46509 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755851Ab3AEVZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 16:25:20 -0500
+Received: from arf.padd.com (unknown [50.55.142.135])
+	by honk.padd.com (Postfix) with ESMTPSA id A98905AED;
+	Sat,  5 Jan 2013 13:25:19 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 386D428EAA; Sat,  5 Jan 2013 16:25:17 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAFXk4bqt_pMVDtVKF-JiQuGbSpy2+_rGOg5RTTE+0pNKFcZh3w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212716>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+shish@keba.be wrote on Thu, 03 Jan 2013 15:58 -0500:
+> While struggling to get git-p4 to work properly with branches, I
+> thought the documentation on http://git-scm.com/docs/git-p4 could use
+> some improvements:
 
-Il 05/01/2013 21:17, Jens Lehmann ha scritto:
-> Since b57fb80a7d (init, clone: support --separate-git-dir for .git file)
-> git clone supports the --separate-git-dir option to create the git dir
-> outside the work tree. But when that option is used, the git dir won't be
-> deleted in case the clone fails like it would be without this option. This
-> makes clone lose its atomicity as in case of a failure a partly set up git
-> dir is left behind. A real world example where this leads to problems is
-> when "git submodule update" fails to clone a submodule and later calls to
-> "git submodule update" stumble over the partially set up git dir and try
-> to revive the submodule from there, which then fails with a not very user
-> friendly error message.
+Thanks, I definitely appreciate the constructive comments here.
+
+> 1. At the end of the "Branch detection" section, the following
+> commands are provided (for when you want to explicitly provide branch
+> mappings to git-p4):
 > 
-> Fix that by updating the junk_git_dir variable (used to remember if and
-> what git dir should be removed in case of failure) to the new value given
-> with the --seperate-git-dir option. Also add a test for this to t5600 (and
-> while at it fix the former last test to not cd into a directory to test
-> for its existence but use "test -d" instead).
+> git config git-p4.branchList main:branch1
+> git p4 clone --detect-branches //depot@all
 > 
-> Reported-by: Manlio Perillo <manlio.perillo@gmail.com>
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
-> [...]
-> And this fixes it for me. Manlio, it'd be great if you could test
-> this patch (but please not only remove .git/modules/<name> but also
-> the submodule work tree before doing that).
+> The second command should end with a dot (".") because the first
+> command only works if you are already in a git-initialized folder.
+> Thus I would also suggest to add "git init" as first command to type.
+
+That is confusing.  I'll make it this:
+
+    git init depot
+    cd depot
+    git config git-p4.branchList main:branch1
+    git p4 clone --detect-branches //depot@all .
+
+> 2. Even though having a "main" branch is standard in Perforce, it
+> would be worth mentioning what happens when you don't: there is a
+> message "Could not detect main branch. No checkout/master branch
+> created" output by the "git p4 clone" command. However, it will still
+> work if you manually set the master branch ("git checkout -b master
+> remotes/p4/my_custom_main_branch").
+
+This feels like a bug to me, and indeed I had an old patch series
+that planned to fix it.  Let me knock that into shape, instead of
+changing the documentation.  It will automatically do the
+checkout step you did.
+
+> 3. I don't know what I missed for that one, but I haven't been able to
+> get the example for the --branch option to work. It says that after
+> "git init", we can import a p4 branch with:
 > 
+> git p4 sync --branch=refs/remotes/p4/proj2 //depot/proj2
+> 
+> However, after doing this, followed by "git checkout -b proj2
+> remotes/p4/proj2", I am unable to properly use "git p4 sync" or "git
+> p4 submit" from this branch, as git complains about a missing
+> refs/remotes/p4/master.
 
-I can confirm that the patch solves the problem I reported.
+Yes, also annoying.  I have a failing test case for this, but
+haven't fixed it yet.  The idea is that "git p4 sync --branch=proj2"
+will sync refs/remotes/p4/proj2.  If there is no p4/master, and
+you don't specify --branch, it will fail with a more useful error
+message.
+
+For submit, there is code that walks from your current branch
+back in history until it finds a commit on a known p4 remote
+branch.  This is sort of like the merge-base calculation in git,
+but restricted to a linear history.  I haven't tested that
+recently, but will add a test and fix it if needed too.
 
 
-Thanks   Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Please do feel welcome to to rearrange or expand the
+documentation so it makes more sense, if you are so inspired.
 
-iEYEARECAAYFAlDomR4ACgkQscQJ24LbaUQszACfV42L9Xcy+mme6RY/vY+K2H4T
-QDAAoIIupUSjwv6qUgzUMQV1aNplrWJD
-=uN3W
------END PGP SIGNATURE-----
+		-- Pete
