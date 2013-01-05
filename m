@@ -1,7 +1,7 @@
 From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH 09/10] log: grep author/committer using mailmap
-Date: Sat,  5 Jan 2013 22:26:45 +0100
-Message-ID: <1357421206-5014-10-git-send-email-apelisse@gmail.com>
+Subject: [PATCH 06/10] pretty: use mailmap to display username and email
+Date: Sat,  5 Jan 2013 22:26:42 +0100
+Message-ID: <1357421206-5014-7-git-send-email-apelisse@gmail.com>
 References: <1357421206-5014-1-git-send-email-apelisse@gmail.com>
 Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,172 +11,143 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrbHb-0000ix-Mc
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 22:28:00 +0100
+	id 1TrbHY-0000ix-Ur
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 22:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755938Ab3AEV1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 16:27:40 -0500
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:64945 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755917Ab3AEV1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 16:27:24 -0500
-Received: by mail-wg0-f46.google.com with SMTP id dr13so8297169wgb.25
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 13:27:23 -0800 (PST)
+	id S1755925Ab3AEV1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 16:27:25 -0500
+Received: from mail-we0-f171.google.com ([74.125.82.171]:62843 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755912Ab3AEV1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 16:27:20 -0500
+Received: by mail-we0-f171.google.com with SMTP id u3so8901540wey.30
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 13:27:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=8y4QoccKim70vu2GSR8E8eT66Za+zPXZvH1Fcn6hxjg=;
-        b=I0tIlY905tkrA/YZE/8azw9o75DTcz+xQ4uQ46O5GoKpIzAiEnxDiQbTX1ICN7XKoQ
-         cGvrXWqrAyjellVR5jfrQGErBMT9rWPrDDNSmhL2ipGSyfCAo+ihxM7dqMmH1xK/vPxB
-         GFH7ZR5QQE+yUAGeFsGY1hTCks/ii8OQSTWEoXDwcXUHz9IjNaKqt3fb5K6w0L1vyGVw
-         l8KjXqakSk3y98cRW3QXwZgq17V0VUz3Kf6E+xQIRoZ+jkNovbE9SUEqLj+uqQ16DEEF
-         UcLbyNAiy8r4/LlX6EJ28SUAhF1Ca+csnMd3AgeaLZk+DSrPZRgCXa38apKjPuGAGZxD
-         rAZQ==
-X-Received: by 10.194.21.70 with SMTP id t6mr89501040wje.42.1357421243107;
-        Sat, 05 Jan 2013 13:27:23 -0800 (PST)
+        bh=9zBRw+cWfAx36P0NI5EXPnrnUw+LDtSaHS1XRuyDNxk=;
+        b=TgjDGdDRrbykI0xygbRUBCBRF8kJMvrW+Yiy7x2gz+r4oPdpsMXmbRuKnP+CVhRw10
+         jRdTJIFigr2dp1n0STF/M2ENrYrIX308weC6KRXRRB9tNvja36l+v0ff5AvlQysiDzo4
+         YoHnLZTHsbRXyZXnAxsONKxdTma5CAyDioftYookG4xrzaC0XvZVdo6acK+s9KhFppcI
+         DfngmjJNi9OtCq7Cw90OZuAT6+HBFtGMT3eO1r8RwXzO0if6B8Qi+jzKQhoE865pYbuS
+         yoZQgnC37lCYB6covwv5GWhqyU0PFtSnJ66pqWuQiszrEwzwyZUk41EHNNWvedtw6kgd
+         zv1w==
+X-Received: by 10.194.76.7 with SMTP id g7mr10691509wjw.50.1357421239118;
+        Sat, 05 Jan 2013 13:27:19 -0800 (PST)
 Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id t17sm5623711wiv.6.2013.01.05.13.27.21
+        by mx.google.com with ESMTPS id t17sm5623711wiv.6.2013.01.05.13.27.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 13:27:22 -0800 (PST)
+        Sat, 05 Jan 2013 13:27:18 -0800 (PST)
 X-Mailer: git-send-email 1.8.1.rc1.15.g5ddde70
 In-Reply-To: <1357421206-5014-1-git-send-email-apelisse@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212722>
 
-Currently you can use mailmap to display log authors and committers
-but you can't use the mailmap to find commits with mapped values.
-
-This commit allows you to run:
-
-    git log --use-mailmap --author mapped_name_or_email
-    git log --use-mailmap --committer mapped_name_or_email
-
-Of course it only works if the --use-mailmap option is used.
-
-The new name and email are copied only when necessary.
+Use the mailmap information to display the correct
+username and email address in all log commands.
 
 Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
 ---
- revision.c         | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- t/t4203-mailmap.sh | 18 ++++++++++++++++++
- 2 files changed, 72 insertions(+)
+ pretty.c | 58 +++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 37 insertions(+), 21 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 95d21e6..2cce85a 100644
---- a/revision.c
-+++ b/revision.c
-@@ -13,6 +13,7 @@
- #include "decorate.h"
- #include "log-tree.h"
- #include "string-list.h"
-+#include "mailmap.h"
+diff --git a/pretty.c b/pretty.c
+index dffcade..622275c 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -387,9 +387,13 @@ void pp_user_info(const struct pretty_print_context *pp,
+ 		  const char *what, struct strbuf *sb,
+ 		  const char *line, const char *encoding)
+ {
++	struct strbuf name;
++	struct strbuf mail;
+ 	struct ident_split ident;
+-	int linelen, namelen;
++	int linelen;
+ 	char *line_end, *date;
++	const char *mailbuf, *namebuf;
++	size_t namelen, maillen;
+ 	int max_length = 78; /* per rfc2822 */
+ 	unsigned long time;
+ 	int tz;
+@@ -408,42 +412,54 @@ void pp_user_info(const struct pretty_print_context *pp,
+ 	if (split_ident_line(&ident, line, linelen))
+ 		return;
  
- volatile show_early_output_fn_t show_early_output;
- 
-@@ -2219,6 +2220,51 @@ static int rewrite_parents(struct rev_info *revs, struct commit *commit)
- 	return 0;
- }
- 
-+static int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap)
-+{
-+	char *person, *endp;
-+	size_t len, namelen, maillen;
-+	const char *name;
-+	const char *mail;
-+	struct ident_split ident;
+-	namelen = ident.mail_end - ident.name_begin + 1;
 +
-+	person = strstr(buf->buf, what);
-+	if (!person)
-+		return 0;
-+
-+	person += strlen(what);
-+	endp = strchr(person, '\n');
-+	if (!endp)
-+		return 0;
-+
-+	len = endp - person;
-+
-+	if (split_ident_line(&ident, person, len))
-+		return 0;
-+
-+	mail = ident.mail_begin;
++	mailbuf = ident.mail_begin;
 +	maillen = ident.mail_end - ident.mail_begin;
-+	name = ident.name_begin;
++	namebuf = ident.name_begin;
 +	namelen = ident.name_end - ident.name_begin;
 +
-+	if (map_user(mailmap, &mail, &maillen, &name, &namelen)) {
-+		struct strbuf namemail = STRBUF_INIT;
++	if (pp->mailmap)
++		map_user(pp->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
 +
-+		strbuf_addf(&namemail, "%.*s <%.*s>",
-+			    (int)namelen, name, (int)maillen, mail);
++	strbuf_init(&mail, 0);
++	strbuf_init(&name, 0);
 +
-+		strbuf_splice(buf, ident.name_begin - buf->buf,
-+			      ident.mail_end - ident.name_begin + 1,
-+			      namemail.buf, namemail.len);
++	strbuf_add(&mail, mailbuf, maillen);
++	strbuf_add(&name, namebuf, namelen);
 +
-+		strbuf_release(&namemail);
-+
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- static int commit_match(struct commit *commit, struct rev_info *opt)
- {
- 	int retval;
-@@ -2237,6 +2283,14 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
- 	if (buf.len)
- 		strbuf_addstr(&buf, commit->buffer);
++	namelen = name.len + mail.len + 3; /* ' ' + '<' + '>' */
+ 	time = strtoul(ident.date_begin, &date, 10);
+ 	tz = strtol(date, NULL, 10);
  
-+	if (opt->mailmap) {
-+		if (!buf.len)
-+			strbuf_addstr(&buf, commit->buffer);
+ 	if (pp->fmt == CMIT_FMT_EMAIL) {
+-		int display_name_length;
+-
+-		display_name_length = ident.name_end - ident.name_begin;
+-
+ 		strbuf_addstr(sb, "From: ");
+-		if (needs_rfc2047_encoding(line, display_name_length, RFC2047_ADDRESS)) {
+-			add_rfc2047(sb, line, display_name_length,
+-						encoding, RFC2047_ADDRESS);
++		if (needs_rfc2047_encoding(name.buf, name.len, RFC2047_ADDRESS)) {
++			add_rfc2047(sb, name.buf, name.len,
++				    encoding, RFC2047_ADDRESS);
+ 			max_length = 76; /* per rfc2047 */
+-		} else if (needs_rfc822_quoting(line, display_name_length)) {
++		} else if (needs_rfc822_quoting(name.buf, name.len)) {
+ 			struct strbuf quoted = STRBUF_INIT;
+-			add_rfc822_quoted(&quoted, line, display_name_length);
++			add_rfc822_quoted(&quoted, name.buf, name.len);
+ 			strbuf_add_wrapped_bytes(sb, quoted.buf, quoted.len,
+ 							-6, 1, max_length);
+ 			strbuf_release(&quoted);
+ 		} else {
+-			strbuf_add_wrapped_bytes(sb, line, display_name_length,
+-							-6, 1, max_length);
++			strbuf_add_wrapped_bytes(sb, name.buf, name.len,
++						 -6, 1, max_length);
+ 		}
+-		if (namelen - display_name_length + last_line_length(sb) > max_length) {
++		if (namelen - name.len + last_line_length(sb) > max_length)
+ 			strbuf_addch(sb, '\n');
+-			if (!isspace(ident.name_end[0]))
+-				strbuf_addch(sb, ' ');
+-		}
+-		strbuf_add(sb, ident.name_end, namelen - display_name_length);
+-		strbuf_addch(sb, '\n');
 +
-+		commit_rewrite_person(&buf, "\nauthor ", opt->mailmap);
-+		commit_rewrite_person(&buf, "\ncommitter ", opt->mailmap);
-+	}
++		strbuf_addf(sb, " <%s>\n", mail.buf);
+ 	} else {
+-		strbuf_addf(sb, "%s: %.*s%.*s\n", what,
++		strbuf_addf(sb, "%s: %.*s%s <%s>\n", what,
+ 			      (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0,
+-			      "    ", namelen, line);
++			      "    ", name.buf, mail.buf);
+ 	}
 +
- 	/* Append "fake" message parts as needed */
- 	if (opt->show_notes) {
- 		if (!buf.len)
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index db043dc..e16187f 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -248,11 +248,29 @@ Author: Other Author <other@author.xx>
- Author: Some Dude <some@dude.xx>
- Author: A U Thor <author@example.com>
- EOF
++	strbuf_release(&mail);
++	strbuf_release(&name);
 +
- test_expect_success 'Log output with --use-mailmap' '
- 	git log --use-mailmap | grep Author >actual &&
- 	test_cmp expect actual
- '
- 
-+cat >expect <<\EOF
-+Author: Santa Claus <santa.claus@northpole.xx>
-+Author: Santa Claus <santa.claus@northpole.xx>
-+EOF
-+
-+test_expect_success 'Grep author with --use-mailmap' '
-+	git log --use-mailmap --author Santa | grep Author >actual &&
-+	test_cmp expect actual
-+'
-+
-+>expect
-+
-+test_expect_success 'Only grep replaced author with --use-mailmap' '
-+	git log --use-mailmap --author "<cto@coompany.xx>" >actual &&
-+	test_cmp expect actual
-+'
-+
- # git blame
- cat >expect <<\EOF
- ^OBJI (A U Thor     DATE 1) one
+ 	switch (pp->fmt) {
+ 	case CMIT_FMT_MEDIUM:
+ 		strbuf_addf(sb, "Date:   %s\n", show_date(time, tz, pp->date_mode));
 -- 
 1.7.12.4.3.g2036a08.dirty
