@@ -1,89 +1,178 @@
-From: Max Horn <postbox@quendi.de>
-Subject: Re: cvsps, parsecvs, svn2git and the CVS exporter mess
-Date: Sat, 5 Jan 2013 09:27:38 +0100
-Message-ID: <1E7F9F86-F040-42E4-98C4-152B8CCE47CE@quendi.de>
-References: <20121222173649.04C5B44119@snark.thyrsus.com> <50E5A5CF.2070009@alum.mit.edu> <20130103205301.GD26201@thyrsus.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Yann Dirson <ydirson@free.fr>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Bart Massey <bart@cs.pdx.edu>,
-	Keith Packard <keithp@keithp.com>,
-	David Mansfield <david@cobite.com>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Sat Jan 05 09:32:03 2013
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Add getenv.so for catching invalid getenv() use via LD_PRELOAD
+Date: Sat,  5 Jan 2013 15:55:46 +0700
+Message-ID: <1357376146-7155-1-git-send-email-pclouds@gmail.com>
+References: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Michael <fedora.dm0@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 05 09:57:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrPAg-0004A7-65
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 09:32:02 +0100
+	id 1TrPY6-0007Vu-6p
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 09:56:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846Ab3AEI1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 03:27:51 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:55805 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754753Ab3AEI1u convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 5 Jan 2013 03:27:50 -0500
-Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=zanovar.fritz.box); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TrP6R-0002cu-LE; Sat, 05 Jan 2013 09:27:39 +0100
-In-Reply-To: <20130103205301.GD26201@thyrsus.com>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;postbox@quendi.de;1357374469;92e719ed;
+	id S1755323Ab3AEIzz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2013 03:55:55 -0500
+Received: from mail-da0-f48.google.com ([209.85.210.48]:39045 "EHLO
+	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755176Ab3AEIzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 03:55:53 -0500
+Received: by mail-da0-f48.google.com with SMTP id k18so7936070dae.7
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 00:55:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=9/uFM0mzKOVhoIfWYYmZf6vfZFVosuWLQ1yD/YIrRas=;
+        b=vfJTaQte1qh1XsDNUwMRmba+y1IuuGr0NjVVN1J4vzXsTN+fMnVQ3EQq816a5QnOw+
+         z2fc3p8Ue2JrtWccsMhxHVEHIn6dB9z9/RZe+EvAtdkY7FRW4Vbkh1Lj9x/1cR/u7P+n
+         +TQkDlsiyj57+sKo/jRVtUI1lrKS/DfobDfI71XyyGTovDN6RF3KurhiZwTEGYheY3+V
+         qmDWFI35mnxj2/GfogpOuX/wlJka+O66tw+ojyfYaeRy54dT4QeDlIgttbnICeI+630r
+         Ez6f60AE+V8W+gCdZ90XBpDuPCrgWoih3wZtgN6d26IBE+u/Mb2d/eaVTUsJJYCBHRSm
+         X8fQ==
+X-Received: by 10.68.247.134 with SMTP id ye6mr169254680pbc.69.1357376152180;
+        Sat, 05 Jan 2013 00:55:52 -0800 (PST)
+Received: from lanh ([115.74.34.31])
+        by mx.google.com with ESMTPS id sk1sm33778194pbc.0.2013.01.05.00.55.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 05 Jan 2013 00:55:50 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 05 Jan 2013 15:55:54 +0700
+X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
+In-Reply-To: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212683>
 
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Perhaps this will help the getenv bug hunting (I assume we do the
+ hunting on Linux platform only). So far it catches this and is stuck
+ at getenv in git_pager().
 
-On 03.01.2013, at 21:53, Eric S. Raymond wrote:
+  diff --git a/exec_cmd.c b/exec_cmd.c
+  index 125fa6f..d8be5ce 100644
+  --- a/exec_cmd.c
+  +++ b/exec_cmd.c
+  @@ -97,7 +97,7 @@ static void add_path(struct strbuf *out, const char=
+ *path)
+  =20
+   void setup_path(void)
+   {
+  -       const char *old_path =3D getenv("PATH");
+  +       char *old_path =3D xstrdup(getenv("PATH"));
+          struct strbuf new_path =3D STRBUF_INIT;
+  =20
+          add_path(&new_path, git_exec_path());
+  @@ -110,6 +110,7 @@ void setup_path(void)
+  =20
+          setenv("PATH", new_path.buf, 1);
+  =20
+  +       free(old_path);
+          strbuf_release(&new_path);
+   }
 
-> Michael Haggerty <mhagger@alum.mit.edu>:
->> There are two good reasons that the output is written to two separate files:
-> 
-> Those are good reasons to write to a pair of tempfiles, and I was able
-> to deduce in advance most of what your explanation would be from the
-> bare fact that you did it that way.
-> 
-> They are *not* good reasons for having an interface that exposes this
-> implementation detail to the caller - that choice I consider a failure
-> of interface-design judgment.  But I know how to fix this in a simple and
-> backward-compatible way, and will do so when I have time to write you
-> a patch.  Next week or the week after, most likely.
-> 
-> Also, the cvs2git manual page is still rather half-baked and careless,
-> with several fossil references to cvs2svn that shouldn't be there and
-> obviously incomplete feature coverage. Fixing these bugs is also on my
-> to-do list for sometime this month.
-> 
-> I'd be willing to put in this work anyway, but it still in the back of
-> my mind that if cvs2git wins the test-suite competition I might
-> officially end-of-life both cvsps and parsecvs.  One of the features
-> of the new git-cvsimport is direct support for using cvs2git as a
-> conversion engine.
-> 
->> A potentially bigger problem is that if you want to handle such
->> blob/dump output, you have to deal with git-fast-import format's "blob"
->> command as opposed to only handling inline blobs.
-> 
-> Not a problem.  All of the main potential consumers for this output,
-> including reposurgeon, handle the blob command just fine.
+ contrib/getenv/Makefile |  2 ++
+ contrib/getenv/getenv.c | 67 +++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 2 files changed, 69 insertions(+)
+ create mode 100644 contrib/getenv/Makefile
+ create mode 100644 contrib/getenv/getenv.c
 
-Hm, you snipped this part of Michael's mail:
-
->> However, if that is a
->> problem, it is possible to configure cvs2git to write the blobs inline
->> with the rest of the dumpfile (this mode is supported because "hg
->> fast-import" doesn't support detached blobs).
-
-I would call "hg fast-import" a main potential customer, given that there "cvs2hg" is another part of the cvs2svn suite. So I can't quite see how you can come to your conclusion above...
-
-
-
-Cheers,
-Max
+diff --git a/contrib/getenv/Makefile b/contrib/getenv/Makefile
+new file mode 100644
+index 0000000..4881b85
+--- /dev/null
++++ b/contrib/getenv/Makefile
+@@ -0,0 +1,2 @@
++getenv.so: getenv.c
++	$(CC) -g -shared -fPIC -ldl -o $@ $<
+diff --git a/contrib/getenv/getenv.c b/contrib/getenv/getenv.c
+new file mode 100644
+index 0000000..e351e10
+--- /dev/null
++++ b/contrib/getenv/getenv.c
+@@ -0,0 +1,67 @@
++#include <gnu/lib-names.h>
++#include <sys/mman.h>
++#include <dlfcn.h>
++#include <execinfo.h>
++#include <stdlib.h>
++#include <string.h>
++#include <stdio.h>
++
++/* Global symbols for easy access from gdb */
++static char *getenv_current;
++static char *getenv_prev;
++
++/*
++ * Intercept standard getenv() via LD_PRELOAD. The return value is
++ * made inaccessible by the next getenv() call. This helps catch
++ * places that ignore the statement "The string pointed to may be
++ * overwritten by a subsequent call to getenv()" [1].
++ *
++ * The backtrace is appended after the env string, which may be
++ * helpful to identify where this getenv() is called in a core dump.
++ *
++ * [1] http://pubs.opengroup.org/onlinepubs/9699919799/functions/geten=
+v.html
++ */
++char *getenv(const char *name)
++{
++	static char *(*libc_getenv)(const char*);
++	char *value;
++
++	if (!libc_getenv) {
++		void *libc =3D dlopen(LIBC_SO, RTLD_LAZY);
++		libc_getenv =3D dlsym(libc, "getenv");
++	}
++	if (getenv_current) {
++		mprotect(getenv_current, strlen(getenv_current) + 1, PROT_NONE);
++		getenv_prev =3D getenv_current;
++		getenv_current =3D NULL;
++	}
++
++	value =3D libc_getenv(name);
++	if (value) {
++		int len =3D strlen(value) + 1;
++		int backtrace_len =3D 0;
++		void *buffer[100];
++		char **symbols;
++		int i, n;
++
++		n =3D backtrace(buffer, 100);
++		symbols =3D backtrace_symbols(buffer, n);
++		if (symbols) {
++			for (i =3D 0;i < n; i++)
++				backtrace_len +=3D strlen(symbols[i]) + 1; /* \n */
++			backtrace_len++; /* NULL */
++		}
++
++		getenv_current =3D mmap(NULL, len + backtrace_len, PROT_READ | PROT_=
+WRITE,
++				   MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
++		memcpy(getenv_current, value, len);
++		value =3D getenv_current;
++
++		if (symbols) {
++			char *p =3D getenv_current + len;
++			for (i =3D 0; i < n; i++)
++				p +=3D sprintf(p, "%s\n", symbols[i]);
++		}
++	}
++	return value;
++}
+--=20
+1.8.0.rc2.23.g1fb49df
