@@ -1,71 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [LHF] making t5000 "tar xf" tests more lenient
-Date: Sat, 05 Jan 2013 12:11:39 -0800
-Message-ID: <7vsj6fpeys.fsf@alter.siamese.dyndns.org>
-References: <7vwqw7mb09.fsf@alter.siamese.dyndns.org>
- <50E8722B.8010408@lsrfire.ath.cx>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] clone: support atomic operation with --separate-git-dir
+Date: Sat, 05 Jan 2013 21:17:04 +0100
+Message-ID: <50E88A40.9010904@web.de>
+References: <50E74145.4020701@gmail.com> <7vzk0osjli.fsf@alter.siamese.dyndns.org> <50E83224.2070701@web.de> <50E83DAE.1080500@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Jan 05 21:12:03 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	"W. Trevor King" <wking@drexel.edu>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 21:17:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tra66-00059k-Lk
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:12:02 +0100
+	id 1TraBP-0001yR-Iz
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:17:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755854Ab3AEULn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2013 15:11:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35017 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755843Ab3AEULm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jan 2013 15:11:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30EC3BD01;
-	Sat,  5 Jan 2013 15:11:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=WaOHwfQtZEQ9
-	Qw51oYC0DPsJQzw=; b=ea7QgwaKl8GpNU61LcH6C2TvmKMoxdhP9h8OjvtH8sDe
-	fNbYsAU0AHadO4Ovwl2NaQSo5ZTvWlffIoMSOPaviWGV057PdN0BpiaWah0i28OI
-	pGRLijfDO7GrNR6qXdGITW7S0sjz/yGA6GmaL9suYr2i6+GzjpKFZ0kUTQ+GHiY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ufDR4H
-	a+H1gjFIZGMVxQplCq9rsimNDefV5ZJOqz12J1LV0SHytiSn5A/OxA1jQkXguaod
-	rmHX7z8XmUgTP+7RHUAcwT/Ql8TEu6oVApDEoizsMypH5mNRT9/PZB2bFlQGv5M3
-	jna/YL8celCdy4+PJQLKngJViAfNlBI0Z8990=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20735BD00;
-	Sat,  5 Jan 2013 15:11:41 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9750CBCFF; Sat,  5 Jan 2013
- 15:11:40 -0500 (EST)
-In-Reply-To: <50E8722B.8010408@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sat, 05 Jan 2013 19:34:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E09153C-5774-11E2-97B1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755867Ab3AEURN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 15:17:13 -0500
+Received: from mout.web.de ([212.227.17.11]:64747 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755843Ab3AEURL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 15:17:11 -0500
+Received: from [192.168.178.41] ([91.3.188.151]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0LudLU-1Srx7E2PVA-0100eO; Sat, 05 Jan 2013 21:17:08
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <50E83DAE.1080500@web.de>
+X-Enigmail-Version: 1.4.6
+X-Provags-ID: V02:K0:9fw0cKjh6oBkcpV3WDujgk1Bk8kWOCugNT1ssrYxK2Z
+ igN4ninkV+8bcY1P4epdhWiuJ4EKidlMUXOi407jycZGauC3iy
+ y3q3zLjEisojxvPb8yEHuCuWrVCoUNld585pjhVUOP7ICJfws1
+ HQPv5Hr3xSCx62IfVakBrOEKLOXBpq6HsPMHbDg5HqJNVpWzDj
+ U++5SuLaugJg0Km5an49w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212711>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Since b57fb80a7d (init, clone: support --separate-git-dir for .git file)
+git clone supports the --separate-git-dir option to create the git dir
+outside the work tree. But when that option is used, the git dir won't be
+deleted in case the clone fails like it would be without this option. This
+makes clone lose its atomicity as in case of a failure a partly set up git
+dir is left behind. A real world example where this leads to problems is
+when "git submodule update" fails to clone a submodule and later calls to
+"git submodule update" stumble over the partially set up git dir and try
+to revive the submodule from there, which then fails with a not very user
+friendly error message.
 
-> Anyway, I don't think the pax headers are to blame here.
+Fix that by updating the junk_git_dir variable (used to remember if and
+what git dir should be removed in case of failure) to the new value given
+with the --seperate-git-dir option. Also add a test for this to t5600 (and
+while at it fix the former last test to not cd into a directory to test
+for its existence but use "test -d" instead).
 
-Hmph, I am reasonably sure I saw a test that created an archive from
-a commit (hence with pax header), asked platform tar to either list
-the contents or actually extracted to the filesystem, and tried to
-ensure nothing but the paths in the repository existed in the
-archive.  When the platform tar implementation treated the pax
-header as an extra file, such a test sees something not in the
-repository and fails.
+Reported-by: Manlio Perillo <manlio.perillo@gmail.com>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-This was on (and I am still on) NetBSD 6.0 not 6.0.1, by the way.
+
+Am 05.01.2013 15:50, schrieb Jens Lehmann:
+> Am 05.01.2013 15:01, schrieb Jens Lehmann:
+>> The reason seems to be that clone leaves a partial initialized .git
+>> directory in case of connection problems. The next time submodule
+>> update runs it tries to revive the submodule from .git/modules/<name>
+>> but fails as there are no objects in it.
+>>
+>> This looks like a bug in clone to me, as it takes precautions to clean
+>> up if something goes wrong but doesn't do that in this case. But while
+>> glancing over the code I didn't find out what goes wrong here.
+> 
+> I dug a bit deeper here and found the reason: In remove_junk() of
+> builtin/clone.c the junk_git_dir points to the gitfile in the
+> submodules work tree, not the .git/modules/<name> directory where
+> clone was told to put the git directory. Will see if I can come up
+> with a patch soonish ...
+
+And this fixes it for me. Manlio, it'd be great if you could test
+this patch (but please not only remove .git/modules/<name> but also
+the submodule work tree before doing that).
+
+
+ builtin/clone.c               |  4 +++-
+ t/t5600-clone-fail-cleanup.sh | 12 +++++++++++-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index ec2f75b..8d23a62 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -771,8 +771,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		die(_("could not create leading directories of '%s'"), git_dir);
+
+ 	set_git_dir_init(git_dir, real_git_dir, 0);
+-	if (real_git_dir)
++	if (real_git_dir) {
+ 		git_dir = real_git_dir;
++		junk_git_dir = real_git_dir;
++	}
+
+ 	if (0 <= option_verbosity) {
+ 		if (option_bare)
+diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup.sh
+index ee06d28..4435693 100755
+--- a/t/t5600-clone-fail-cleanup.sh
++++ b/t/t5600-clone-fail-cleanup.sh
+@@ -37,6 +37,16 @@ test_expect_success \
+
+ test_expect_success \
+     'successful clone must leave the directory' \
+-    'cd bar'
++    'test -d bar'
++
++test_expect_success 'failed clone --separate-git-dir should not leave any directories' '
++	mkdir foo/.git/objects.bak/ &&
++	mv foo/.git/objects/* foo/.git/objects.bak/ &&
++	test_must_fail git clone --separate-git-dir gitdir foo worktree &&
++	test_must_fail test -e gitdir &&
++	test_must_fail test -e worktree &&
++	mv foo/.git/objects.bak/* foo/.git/objects/ &&
++	rmdir foo/.git/objects.bak
++'
+
+ test_done
+-- 
+1.8.1.81.gb1e9864
