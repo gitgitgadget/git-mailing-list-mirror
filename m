@@ -1,116 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] run-command: encode signal death as a positive integer
-Date: Sat, 5 Jan 2013 14:19:09 -0800
-Message-ID: <20130105221909.GA3247@elie.Belkin>
-References: <20130104124756.GA402@sigill.intra.peff.net>
- <7vsj6gsi7v.fsf@alter.siamese.dyndns.org>
- <20130105140316.GA7272@sigill.intra.peff.net>
- <20130105144949.GA24479@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/10] list_lookup: create case and length search
+Date: Sat, 05 Jan 2013 14:39:18 -0800
+Message-ID: <7vmwwnp84p.fsf@alter.siamese.dyndns.org>
+References: <1357421206-5014-1-git-send-email-apelisse@gmail.com>
+ <1357421206-5014-2-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 05 23:19:45 2013
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 23:41:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trc5b-0006sU-06
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 23:19:39 +0100
+	id 1TrcQk-000327-Hn
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 23:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755916Ab3AEWTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 17:19:19 -0500
-Received: from mail-da0-f45.google.com ([209.85.210.45]:64520 "EHLO
-	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755898Ab3AEWTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 17:19:18 -0500
-Received: by mail-da0-f45.google.com with SMTP id w4so8030382dam.18
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 14:19:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=kZuByQBnu6iGNi+KKoDqlRE8/K2E61VK1KkT0X/tfk4=;
-        b=yV/gls9Zgwnl6jjwUP+ZDf2wduQlClDQuP2lmbHr27wXCUQrKmdsZGOfTMgeBhrwES
-         ld+7xM9InriJ31ijy8lln/w+4arnL0zZZnlUbE+9N5LF7dKDkSF1Ta5Ev9LtcWc4psap
-         q+kNvPj/z/ite8iMFBzbgNRGkViRECKq+SYpSxSHFNrImERKYdWiVDn5/1yfz6You1ZZ
-         TNTjn/q71KJdh0Camn26jDblf7Vycho1fV8A6kEG488PozgFc/CtoRLm3+MRw5fcTwB6
-         Fh04u0GyJPwsOWs7GKyiwCn5rnR6veDT3AvB8P6iC58mtzULEF3xZrAEmZhhu+swJqto
-         7uOQ==
-X-Received: by 10.66.82.35 with SMTP id f3mr164886627pay.49.1357424357976;
-        Sat, 05 Jan 2013 14:19:17 -0800 (PST)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id sb3sm34683220pbc.44.2013.01.05.14.19.15
-        (version=SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 14:19:16 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130105144949.GA24479@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1755899Ab3AEWjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 17:39:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34361 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755865Ab3AEWjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 17:39:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBAF9A83B;
+	Sat,  5 Jan 2013 17:39:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2nz/TAcg1w5u8ECPM0TRij9tgfY=; b=klLL6H
+	7mrXkiDpsXy29COFf472IikK+1tO5UzQzJvV4tD2MoNQ/h2t572GxG3mjaCtSDKI
+	R8CBOZrCFLqFrROStumPJaDhO6c7YIQlGC4XpGDCgB7CoypvCCLLffjsnfOkJ6bP
+	BjRuMXCDgGdfxkr7iZxbCq9yr34+bVs3VNigo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ToTNacdGDBVwvO5DS0TuwDj86JwEZoAk
+	76a8npUZPwo9CvaevCys90cp2bo/UTQKx0D2PwjGLoXthkDEKyYMSeHc7jJ3sqGm
+	MeO4z/EFOXNmxUZrvFFrdKbB0NVdLhHCLO2rRSW2vHx/m09F0Djgxf7hvqDGfwxn
+	JjuEmSULyrE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD6C6A83A;
+	Sat,  5 Jan 2013 17:39:20 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30A66A838; Sat,  5 Jan 2013
+ 17:39:20 -0500 (EST)
+In-Reply-To: <1357421206-5014-2-git-send-email-apelisse@gmail.com> (Antoine
+ Pelisse's message of "Sat, 5 Jan 2013 22:26:37 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BEC1ACB4-5788-11E2-900A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212731>
 
-Hi,
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-Jeff King wrote:
+> Create a new function to look-up a string in a string_list, but:
+>  - add a new parameter to ignore case differences
+>  - add a length parameter to search for a substring
+>
+> The idea is to avoid several copies (lowering a string before searching
+> it when we just want to ignore case), or copying a substring of a bigger
+> string to search it in the string_list
+>
+> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+> ---
 
-> When a sub-command dies due to a signal, we encode the
-> signal number into the numeric exit status as "signal -
-> 128".
-[...]
-> So we have a negative value inside the code, but once it
-> passes across an exit() barrier, it looks positive (and any
-> code we receive from a sub-shell will have the positive
-> form).
-[...]
-> Unfortunately, this means that when the "use_shell" option
-> is set, we need to be on the lookout for _both_ forms.
-[...]
->             for the callers that do care, we can make life
-> slightly easier by just using the consistent positive form.
+I did not read beyond the log message and the function signature of
+the updated get_entry_index(), but it strikes me insane to build a
+sorted list using case sensitive full string comarison and then to
+look for an element in that list using a different comparison
+criteria (e.g. case insensitive comparison) and to expect the
+bisection search to still work.  Shouldn't the codepath that builds
+the string-list be sorting the list in case insensitive way from the
+beginning if this were to work correctly?
 
-Makes perfect sense.
+It seems to suggest to me that this "are the keys case sensitive?"
+bit belongs to the entire struct string_list structure as its
+property (similar to the way "do the keys need to be strdup'ed?"
+bit), not something you would flip per invocation basis of the
+lookup function.
 
->  Documentation/technical/api-run-command.txt | 6 ++----
->  editor.c                                    | 2 +-
->  run-command.c                               | 2 +-
->  3 files changed, 4 insertions(+), 6 deletions(-)
+Also isn't size_t an unsigned type?  What does it even mean to pass
+"-1" to it, and propagate it down to strncmp()?
 
-t/test-terminal.perl imitates the same logic.  It doesn't check for
-anything other than whether the exit status is 0, but maybe it would
-be worth squashing in the below as a futureproofing measure
-nonetheless.
-
-Aside from the launch_editor bugfix, the only observable effects of
-the above patch I can find are some changed error messages:
-
-	error: external filter cat failed -126
-	-> error: external filter cat failed 130
-
-	warning: svnrdump, returned -126
-	-> warning: svnrdump, returned 130
-
-Those messages are equally senseless before and after the patch, so
-for what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
-
-diff --git i/t/test-terminal.perl w/t/test-terminal.perl
-index 10172aee..1fb373f2 100755
---- i/t/test-terminal.perl
-+++ w/t/test-terminal.perl
-@@ -31,7 +31,7 @@ sub finish_child {
- 	} elsif ($? & 127) {
- 		my $code = $? & 127;
- 		warn "died of signal $code";
--		return $code - 128;
-+		return $code + 128;
- 	} else {
- 		return $? >> 8;
- 	}
+If you have a list sorted by a key, and if you want to query it with
+a partial prefix of a possibly valid key, I think you shouldn't have
+to add the "length search" at all. The existing look up function
+would return the location in the list that short key would have been
+inserted, which would come before the first entry that your short
+key is a prefix of, so the caller can iterate the list from there to
+find all entries.  In other words, if existing list has "aaa",
+"bba", and "bbc", and you want to grab entries that begin with "bb",
+you can ask for "bb" to the loop up function, which would say "the
+key does not exist in the list, but it would be inserted before this
+'bba' entry".  Then you can discover that "bba" and "bbc" both
+matches the shortened key you have, no?
