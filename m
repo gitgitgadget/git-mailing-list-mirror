@@ -1,189 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Sat, 5 Jan 2013 09:03:16 -0500
-Message-ID: <20130105140316.GA7272@sigill.intra.peff.net>
-References: <20130104124756.GA402@sigill.intra.peff.net>
- <7vsj6gsi7v.fsf@alter.siamese.dyndns.org>
+From: Anand Kumria <wildfire@progsoc.org>
+Subject: Re: [PATCH] gitk: Display the date of a tag in a human friendly way.
+Date: Sat, 5 Jan 2013 14:05:00 +0000
+Message-ID: <CAM1C4Gm_ea8DgrVhnp_MHmqaF6pyDe98EDA_BPkjvc8M5AO6FQ@mail.gmail.com>
+References: <1357314431-32710-1-git-send-email-wildfire@progsoc.org> <7vhamwse2c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 15:03:42 2013
+X-From: git-owner@vger.kernel.org Sat Jan 05 15:05:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrULc-0002c7-2D
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 15:03:40 +0100
+	id 1TrUNk-0004Yu-U4
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 15:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713Ab3AEODV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 09:03:21 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44318 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751158Ab3AEODT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 09:03:19 -0500
-Received: (qmail 27243 invoked by uid 107); 5 Jan 2013 14:04:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 05 Jan 2013 09:04:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Jan 2013 09:03:16 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsj6gsi7v.fsf@alter.siamese.dyndns.org>
+	id S1755745Ab3AEOFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 09:05:34 -0500
+Received: from mail-ea0-f177.google.com ([209.85.215.177]:59477 "EHLO
+	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755556Ab3AEOFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 09:05:33 -0500
+Received: by mail-ea0-f177.google.com with SMTP id c10so7040279eaa.22
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 06:05:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=ZP5FSvVmVw5RYWeZXjABRM04utACcRAXoeJ3t/c2fsw=;
+        b=rc0JDL0gpGoUojF0EjUu2fqWmCCqBkX5mgUrvJ2I2EDW0szyD/w2+Chun24A8n675Y
+         Y73gZ5F4ZdtGdb5o4o+OvZxImX9gbqiCyZmwEhQWUiEVQ/aLuDxZvVb7Ft2bAwqKx7zz
+         +cLm/MsYVm79Z2m+Y495HWdF0ZCKMyJDfGgwGYPyxS+4P4kKgFkuT4zYXCpu+NlEXQPl
+         ZgJSKt3zGhVdf9Ttk/vVZlbV+8uWIY1fsVxMIcxIR3DJ3zAVib59e+dfgABX5pteyG1E
+         RgAdiQ8R7tKZ9/hoGQ3M4y6OdZKrHF7eOrUxbxGwrCemJinoLAOTiyTtJSw1ZQEfdM0c
+         YVgA==
+Received: by 10.14.174.198 with SMTP id x46mr152249389eel.23.1357394731950;
+ Sat, 05 Jan 2013 06:05:31 -0800 (PST)
+Received: by 10.14.2.65 with HTTP; Sat, 5 Jan 2013 06:05:00 -0800 (PST)
+In-Reply-To: <7vhamwse2c.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: YeaIdi33AtkWn3jfiY_0sBwil6Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212692>
 
-On Fri, Jan 04, 2013 at 02:20:52PM -0800, Junio C Hamano wrote:
+Hi Junio,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I have two reservations with this patch:
-> >
-> >   1. We are ignoring SIGPIPE all the time. For an alias that is calling
-> >      "log", that is fine. But if pack-objects dies on the server side,
-> >      seeing that it died from SIGPIPE is useful data, and we are
-> >      squelching that. Maybe callers of run-command should have to pass
-> >      an "ignore SIGPIPE" flag?
-> 
-> What should this do:
-> 
->     GIT_PAGER='head -n 1' git -p -c alias.o='!cat longfile' o
-> 
-> Should it behave just like
-> 
->     cat longfile | head -n 1
-> 
-> or should it behave differently?
+On 4 January 2013 23:50, Junio C Hamano <gitster@pobox.com> wrote:
+> Anand Kumria <wildfire@progsoc.org> writes:
+>
+>> By selecting a tag within gitk you can display information about it.
+>> This information is output by using the command
+>>
+>>  'git cat-file tag <tagid>'
+>>
+>> This outputs the *raw* information from the tag, amongst which is the
+>> time - in seconds since the epoch. As useful as that value is, I find it
+>> a lot easier to read and process time which it is something like:
+>>
+>>  "Mon Dec 31 14:26:11 2012 -0800"
+>>
+>> This change will modify the display of tags in gitk like so:
+>>
+>>   @@ -1,7 +1,7 @@
+>>    object 5d417842efeafb6e109db7574196901c4e95d273
+>>    type commit
+>>    tag v1.8.1
+>>   -tagger Junio C Hamano <gitster@pobox.com> 1356992771 -0800
+>>   +tagger Junio C Hamano <gitster@pobox.com> Mon Dec 31 14:26:11 2012 -0800
+>>
+>>    Git 1.8.1
+>>    -----BEGIN PGP SIGNATURE-----
+>>
+>> Signed-off-by: Anand Kumria <wildfire@progsoc.org>
+>> ---
+>
+> Sounds like a sensible thing to do but I didn't check how else
+> (other than purely for displaying) this string is used.
 
-With respect to error messages, I'd think they should behave the same.
-But they don't necessarily. The latter does not print any message at
-all. But consider this version of the former:
+As far as I can tell it is only used for display (cached_tagcontent in
+gitk) purposes.
 
-  $ cat foo
-  #!/bin/sh
-  exec cat longfile
+> Paul, the patch is not made against your tree, so if you choose to
+> take it you would need to strip the leading directory at the top.
 
-  $ git -c alias.o='!./foo' o | head -n 1
-  error: ./foo died of signal 13
-  fatal: While expanding alias 'o': './foo': Success
+Sorry, I didn't know that gitk had been split back out (and
+Documentation/gitk.txt still mentions it is part of the git suite).
 
-So why don't we see that message more often? There are two reasons.
-
-One reason is that we piped it ourselves here. When git pipes to the
-pager, it sends stderr along the same channel. So even if you did:
-
-  GIT_PAGER='head -n 1' git -p -c alias.o='!./foo' o
-
-git writes the error, but it goes to the pager, which has already ended
-(since that is what caused the SIGPIPE in the first place). But imagine
-that your sub-command is actually invoking git itself, and it is the
-sub-git which starts the pager. Meaning the outer git wrapper's stderr
-is _not_ redirected. Like this:
-
-  $ cat foo
-  #!/bin/sh
-  exec git log -p
-
-  $ GIT_PAGER='head -n 1' git -c alias.o='!./foo' o
-  error: ./foo died of signal 13
-  fatal: While expanding alias 'o': './foo': Success
-
-The second reason is that most shells will "eat" the SIGPIPE exit
-status, and convert it into a high, positive error code. You can see
-that effect here:
-
-  $ GIT_PAGER='head -n 1' git log -p
-  $ echo $?
-  141
-
-And since we execute aliases via the shell, we end up seeing the
-converted exit code (141) instead of the signal death. _Unless_ we
-optimize out the shell call (which is why we see it by putting the
-command inside "./foo", which git executes directly, but not when we
-give the literal "cat longfile", which git will feed to the shell).
-
-Or at least that's _one_ way to see it. Another way is to use a shell
-that does not do such conversion. Setting SHELL_PATH to zsh seems to do
-so, and I think that is how Bart ran into it (my patch is a followup to
-a Google+ posting he made).
-
-> I am having a feeling that whatever external command given as the
-> value of alias.$cmd should choose what error status it wants to be
-> reported.
-
-I suppose. It means that our "do not run the shell if there are no
-meta-characters" optimization is leaky, since the exit code behaves
-differently depending on whether we run the shell (and depending on your
-exact shell). One solution would be to fix that leakiness, and if
-use_shell is in effect for run-command, to convert a signal death into
-the value that the shell would otherwise give us.
-
-In fact, I really wonder if this code from wait_or_whine is actually
-correct:
-
-  code = WTERMSIG(status);
-  /*
-   * This return value is chosen so that code & 0xff
-   * mimics the exit code that a POSIX shell would report for
-   * a program that died from this signal.
-   */
-  code -= 128;
-
-If we get signal 13, we end up with -115, because "code" is signed. When
-the lower 8 bits are taken, and then converted into an unsigned value,
-we get 141: the shell value.
-
-But do we really want to return a negative value here? Should this
-instead be:
-
-  code += 128
-
-which yields the same code when fed to exit, but internally looks like
-the shell version to us? So we get a consistent result whether the shell
-was actually used or not.
-
-That makes more sense to me, and would mean that whether we converted
-the signal number or whether it was done by a subshell, it looks the
-same to us. Callers which care about signals (e.g., the recent changes
-to launch_editor to detect SIGINT) would have to be adjusted. But I
-think it fixes an obscure bug there. Right now launch_editor is actually
-checking the whether the _shell_ died from a signal, and will fail to
-notice when an editor invoked by the shell is killed by those signals
-(this would be pretty rare, though, because typically SIGINT is
-delivered to the shell as well as the editor).
-
-This would also fix the code in handle_alias. It looks for a negative
-return code from run_command as the sign that there was an internal
-error running the command, and that errno would be valid. But right now
-a negative return can also come from signal death.
-
-> >   2. The die_errno in handle_alias is definitely wrong. Even if we want
-> >      to print a message for signal death, showing errno is bogus unless
-> >      the return value was -1. But is it the right thing to just pass the
-> >      negative value straight to exit()? It works, but it is depending on
-> >      the fact that (unsigned char)(ret & 0xff) behaves in a certain way
-> >      (i.e., that we are on a twos-complement platform, and -13 becomes
-> >      141).
-> 
-> Isn't that what POSIX.1 guarantees us, though?
-> 
->     The value of status may be 0, EXIT_SUCCESS, EXIT_FAILURE, or any
->     other value, though only the least significant 8 bits (that is,
->     status & 0377) shall be available to a waiting parent process.
-
-Sort of. I was worried about:
-
-  1. Not-quite-POSIX platforms (i.e., Windows). But JSixt has said that
-     is fine, because we already have a compatibility wrapper which
-     masks off only the low byte.
-
-  2. We are relying on the specifics of how a negative value is treated
-     by exit(). The cast I gave above is guaranteed to work in standard
-     C, but we do not know the implementation details of exit(). Still,
-     I think that is being overly paranoid. Any sane implementation will
-     do what we expect.
-
--Peff
+Regards,
+Anand
