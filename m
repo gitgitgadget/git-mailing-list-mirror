@@ -1,123 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 11/19] dir.c: use a single struct exclude_list per
- source of excludes
-Date: Fri, 04 Jan 2013 23:54:34 -0800
-Message-ID: <7v623cqd39.fsf@alter.siamese.dyndns.org>
-References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
- <1356575558-2674-12-git-send-email-git@adamspiers.org>
- <7v1ue0veww.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
+From: Max Horn <postbox@quendi.de>
+Subject: Re: cvsps, parsecvs, svn2git and the CVS exporter mess
+Date: Sat, 5 Jan 2013 09:27:38 +0100
+Message-ID: <1E7F9F86-F040-42E4-98C4-152B8CCE47CE@quendi.de>
+References: <20121222173649.04C5B44119@snark.thyrsus.com> <50E5A5CF.2070009@alum.mit.edu> <20130103205301.GD26201@thyrsus.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Sat Jan 05 08:57:11 2013
+Content-Transfer-Encoding: 8BIT
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Yann Dirson <ydirson@free.fr>, Heiko Voigt <hvoigt@hvoigt.net>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Bart Massey <bart@cs.pdx.edu>,
+	Keith Packard <keithp@keithp.com>,
+	David Mansfield <david@cobite.com>, git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Sat Jan 05 09:32:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrOct-0006cv-A3
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 08:57:07 +0100
+	id 1TrPAg-0004A7-65
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 09:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754753Ab3AEHyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 02:54:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51154 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751208Ab3AEHyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 02:54:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 465CB82B3;
-	Sat,  5 Jan 2013 02:54:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dFbqZYUEqpntl3tipLp8DL5w6Cw=; b=bFR2fC
-	f/jGGGlun2ujKMGXqlOSD6GDp5ppUKiz4DDKR+8hfs8JUxK03T8uCo37uun06cJB
-	m/715dF0qse0qczD6YGhq/sBHTQ5LbePgXWMVDLUSHjPfnFqTdN5I5xCn+2NOJ3G
-	OaeXiFX6lEZqoN2LVupQnj27f95VNYlJuDObQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QPK/ImS7C0yGLCP5qLd5u8n+dcTPmWBd
-	FWXjL2WLkFN8a4AyJ+c/YMP4ZzSvK+XznwxNU2iE/6Mgb9V5KdGPmBrxqgMDtjcB
-	h8QfrgqlMXAgZrH31Vr3vcbbWiZ722DvLk04PZ6rENNnfHQOqZDX9+Z+Z0Oh/vRJ
-	pXZaJQiqDcc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3908282B1;
-	Sat,  5 Jan 2013 02:54:51 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D609B82AC; Sat,  5 Jan 2013
- 02:54:48 -0500 (EST)
-In-Reply-To: <7v1ue0veww.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 04 Jan 2013 13:03:59 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2DC881C2-570D-11E2-8134-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754846Ab3AEI1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 03:27:51 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:55805 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754753Ab3AEI1u convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 5 Jan 2013 03:27:50 -0500
+Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1TrP6R-0002cu-LE; Sat, 05 Jan 2013 09:27:39 +0100
+In-Reply-To: <20130103205301.GD26201@thyrsus.com>
+X-Mailer: Apple Mail (2.1283)
+X-bounce-key: webpack.hosteurope.de;postbox@quendi.de;1357374469;92e719ed;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212682>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Adam Spiers <git@adamspiers.org> writes:
->
->> diff --git a/builtin/clean.c b/builtin/clean.c
->> index 0c7b3d0..bd18b88 100644
->> --- a/builtin/clean.c
->> +++ b/builtin/clean.c
->> @@ -97,9 +97,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->>  	if (!ignored)
->>  		setup_standard_excludes(&dir);
->>  
->> +	add_exclude_list(&dir, EXC_CMDL);
->>  	for (i = 0; i < exclude_list.nr; i++)
->>  		add_exclude(exclude_list.items[i].string, "", 0,
->> -			    &dir.exclude_list[EXC_CMDL]);
->> +			    &dir.exclude_list_groups[EXC_CMDL].ary[0]);
->
-> This looks somewhat ugly for two reasons.
->
->  * The abstraction add_exclude() offers to its callers is just to
->    let them add one pattern to the list of patterns for the kind
->    (here, EXC_CMDL); why should they care about .ary[0] part?  Are
->    there cases any sane caller (not the implementation of the
->    exclude_list_group machinery e.g. add_excludes_from_... function)
->    may want to call it with .ary[1]?  I do not think of any.
->    Shouldn't the public API function add_exclude() take a pointer to
->    the list group itself?
->
->  * When naming an array of things, we tend to prefer naming it
->
->      type thing[count]
->
->    so that the second element can be called "thing[2]" and not
->    "things[2]".  dir.exclude_list_group[EXC_CMDL] reads better.
+On 03.01.2013, at 21:53, Eric S. Raymond wrote:
 
-Also, "ary[]" is a bad name, even as an implementation detail, for
-two reasons: it is naming it after its type (being an "array") not
-after what it is (if it holds the patterns from the same information
-source, e.g. file, togeter, "src" might be a better name), and it
-uses rather unusual abbreviation (I haven't seen "array" shortened
-to "ary" anywhere else).
+> Michael Haggerty <mhagger@alum.mit.edu>:
+>> There are two good reasons that the output is written to two separate files:
+> 
+> Those are good reasons to write to a pair of tempfiles, and I was able
+> to deduce in advance most of what your explanation would be from the
+> bare fact that you did it that way.
+> 
+> They are *not* good reasons for having an interface that exposes this
+> implementation detail to the caller - that choice I consider a failure
+> of interface-design judgment.  But I know how to fix this in a simple and
+> backward-compatible way, and will do so when I have time to write you
+> a patch.  Next week or the week after, most likely.
+> 
+> Also, the cvs2git manual page is still rather half-baked and careless,
+> with several fossil references to cvs2svn that shouldn't be there and
+> obviously incomplete feature coverage. Fixing these bugs is also on my
+> to-do list for sometime this month.
+> 
+> I'd be willing to put in this work anyway, but it still in the back of
+> my mind that if cvs2git wins the test-suite competition I might
+> officially end-of-life both cvsps and parsecvs.  One of the features
+> of the new git-cvsimport is direct support for using cvs2git as a
+> conversion engine.
+> 
+>> A potentially bigger problem is that if you want to handle such
+>> blob/dump output, you have to deal with git-fast-import format's "blob"
+>> command as opposed to only handling inline blobs.
+> 
+> Not a problem.  All of the main potential consumers for this output,
+> including reposurgeon, handle the blob command just fine.
 
->
->> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
->> index ef7f99a..c448e06 100644
->> --- a/builtin/ls-files.c
->> +++ b/builtin/ls-files.c
->> @@ -420,10 +420,10 @@ static int option_parse_z(const struct option *opt,
->>  static int option_parse_exclude(const struct option *opt,
->>  				const char *arg, int unset)
->>  {
->> -	struct exclude_list *list = opt->value;
->> +	struct exclude_list_group *group = opt->value;
->>  
->>  	exc_given = 1;
->> -	add_exclude(arg, "", 0, list);
->> +	add_exclude(arg, "", 0, &group->ary[0]);
->
-> This is another example where the caller would wish to be able to say
->
-> 	add_exclude(arg, "", 0, group);
->
-> instead.
+Hm, you snipped this part of Michael's mail:
+
+>> However, if that is a
+>> problem, it is possible to configure cvs2git to write the blobs inline
+>> with the rest of the dumpfile (this mode is supported because "hg
+>> fast-import" doesn't support detached blobs).
+
+I would call "hg fast-import" a main potential customer, given that there "cvs2hg" is another part of the cvs2svn suite. So I can't quite see how you can come to your conclusion above...
+
+
+
+Cheers,
+Max
