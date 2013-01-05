@@ -1,90 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] status: report ignored yet tracked directories
-Date: Sat, 5 Jan 2013 18:03:03 -0500
-Message-ID: <20130105230303.GA5195@sigill.intra.peff.net>
-References: <20130105112432.GA14666@sigill.intra.peff.net>
- <1357418563-6626-1-git-send-email-apelisse@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Alphabetize the fast-import options, following a
+ suggestion on the list.
+Date: Sat, 5 Jan 2013 15:11:51 -0800
+Message-ID: <20130105231151.GD3247@elie.Belkin>
+References: <20130105164415.39B144044B@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: tboegi@web.de, git@vger.kernel.org
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 00:03:29 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Michael Barr <b@rr-dav.id.au>,
+	Pete Wyckoff <pw@padd.com>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 00:12:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trclz-0007ad-JT
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 00:03:27 +0100
+	id 1TrcuW-0007cw-P4
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 00:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755935Ab3AEXDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 18:03:07 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44789 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755898Ab3AEXDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 18:03:06 -0500
-Received: (qmail 30209 invoked by uid 107); 5 Jan 2013 23:04:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 05 Jan 2013 18:04:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Jan 2013 18:03:03 -0500
+	id S1755934Ab3AEXL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 18:11:57 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:47352 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755898Ab3AEXL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 18:11:56 -0500
+Received: by mail-pa0-f51.google.com with SMTP id fb11so10003627pad.10
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 15:11:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=lPy/n4UkndJAcmoCDmDXsASeoSLdtt90rRDFECxwKHk=;
+        b=t7BJRA4624cbji0hn3ifjZhxJBWYhwbSZcKZL1obeEuE/mZ1IjQKSHwQNRWc2h095y
+         SdgRX2OPRMM/MwGX4UNJBAch6cWR6gOKkIlI5S99t5OuYLv3ZQ5hd/XqwobbO90BSKS5
+         dxT8xZQH2ixQR/JObyBH5qiw65gsKinW2uonAQvATJl1ALqU0o7R3DqV+e+PUl4FItqp
+         h3lDwKuje7JmpKO1QWoh0EkGALzQpyAwtc/nhWFzHgmF66L9yLPzAaskeTxAW+I8+6oJ
+         YAzjxE2xefqz/aGE3dJEcgOexsVd7ErvpO6y3OQAf+ulXkvDQ0AHj7FJsUBvIWa5tKr3
+         xlpw==
+X-Received: by 10.68.217.200 with SMTP id pa8mr4125920pbc.42.1357427515828;
+        Sat, 05 Jan 2013 15:11:55 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id jv1sm29454064pbc.36.2013.01.05.15.11.53
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Jan 2013 15:11:54 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1357418563-6626-1-git-send-email-apelisse@gmail.com>
+In-Reply-To: <20130105164415.39B144044B@snark.thyrsus.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212737>
 
-On Sat, Jan 05, 2013 at 09:42:43PM +0100, Antoine Pelisse wrote:
+Eric S. Raymond wrote:
 
-> Tracked directories (i.e. directories containing tracked files) that
-> are ignored must be reported as ignored if they contain untracked files.
-> 
-> Currently, tracked files or directories can't be reported untracked or ignored.
-> Remove that constraint when searching ignored files.
-> 
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
 > ---
 
-I was expecting to see some explanation of the user-visible bug here. In
-other words, what does this fix, and why does the bug only happen when
-core.ignorecase is set.
+Missing sign-off.  Depending on when you prefer to add the sign-off, something
+like
 
-Looking at your fix and remembering how the index hashing works, I think
-the answer is that:
+	echo '[alias] c = commit --signoff' >>~/.gitconfig
 
-  1. This bug only affects directories, because they are the only thing
-     that can be simultaneously "ignored and untracked" and "tracked"
-     (i.e., they have entries of both, and we are using
-     DIR_SHOW_OTHER_DIRECTORIES).
+or
 
-  2. When core.ignorecase is false, the index name hash contains only
-     the file entries, and cache_name_exists returns an exact match. So
-     it doesn't matter if we make an extra check when adding the
-     directory via dir_add_name; we know that it will not be there, and
-     the final check is a no-op.
+	echo '[alias] f = format-patch --signoff' >>~/.gitconfig
 
-  3. When core.ignorecase is true, we also store directory entries in
-     the index name hash, and this extra check is harmful; the entry
-     does not really exist in the index, and we still need to add it.
+might be useful for the future, assuming you already look over what
+you are sending out in a mail client to avoid mistakes.
 
-But that makes me wonder. In the ignorecase=false case, I claimed that
-the check in dir_add_name is a no-op for mixed tracked/ignored
-directories. But it is presumably not a no-op for other cases. Your
-patch only turns it off when DIR_SHOW_IGNORED is set. But is it possible
-for us to have DIR_SHOW_IGNORED set, _and_ to pass in a path that exists
-in the index as a regular file?
+> Documentation/git-fast-import.txt | 94 +++++++++++++++++++--------------------
+> 1 file changed, 45 insertions(+), 49 deletions(-)
 
-I think in the normal file case, we'd expect treat_path to just tell us
-that it is handled, and we would not ever call dir_add_name in the first
-place. But what if we have an index entry for a file, but the working
-tree now contains a directory?
+My knee-jerk response was "If the options are currently organized logically,
+wouldn't it be more appropriate to add a sub-heading for each group of options
+and alphabetize only within the subgroups?"
 
-I _think_ we still do not hit this code path in that instance, because
-we will end up in treat_directory, and we will end up checking
-directory_exists_in_index. And I cannot get it to misbehave in practice.
-So I think your fix is correct, but the exact how and why is a bit
-subtle.
+But in fact the current options list doesn't seem to be well organized at all.
+What do you think would be a logical way to group these?
 
--Peff
+ Features of input syntax
+
+	--date-format
+	--done
+
+ Verbosity
+
+	--quiet
+	--stats
+
+ Marks handling (checkpoint/restore)
+
+	--import-marks
+	--import-marks-if-exists
+	--export-marks
+	--relative-marks
+
+ Semantics of execution
+
+	--dry-run
+	--force
+	--cat-blob-fd
+	--export-pack-edges
+
+ Tuning
+
+	--active-branches
+	--max-pack-size
+	--big-file-threshold
+	--depth
