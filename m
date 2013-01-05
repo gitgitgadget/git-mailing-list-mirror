@@ -1,115 +1,116 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH 07/10] log: add --use-mailmap option
-Date: Sat,  5 Jan 2013 22:26:43 +0100
-Message-ID: <1357421206-5014-8-git-send-email-apelisse@gmail.com>
-References: <1357421206-5014-1-git-send-email-apelisse@gmail.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 22:35:45 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] run-command: encode signal death as a positive integer
+Date: Sat, 5 Jan 2013 14:19:09 -0800
+Message-ID: <20130105221909.GA3247@elie.Belkin>
+References: <20130104124756.GA402@sigill.intra.peff.net>
+ <7vsj6gsi7v.fsf@alter.siamese.dyndns.org>
+ <20130105140316.GA7272@sigill.intra.peff.net>
+ <20130105144949.GA24479@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 05 23:19:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrbP5-0007nb-2u
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 22:35:43 +0100
+	id 1Trc5b-0006sU-06
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 23:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755878Ab3AEVfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 16:35:21 -0500
-Received: from mail-we0-f180.google.com ([74.125.82.180]:63136 "EHLO
-	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755851Ab3AEVfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 16:35:20 -0500
-Received: by mail-we0-f180.google.com with SMTP id t57so8481568wey.39
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 13:35:18 -0800 (PST)
+	id S1755916Ab3AEWTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 17:19:19 -0500
+Received: from mail-da0-f45.google.com ([209.85.210.45]:64520 "EHLO
+	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755898Ab3AEWTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 17:19:18 -0500
+Received: by mail-da0-f45.google.com with SMTP id w4so8030382dam.18
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 14:19:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=0cBNkzm8vodYXgTb3nmwXZMC6z3S5uNn+GKSIc1EZGU=;
-        b=xMvFrJDs+4N5am2hmBfp/D0qTlfzZFm/fDZdcA1BtGhEJB4LD9Fq4YYM1uZvS9jXzs
-         PyKztw+kjtzUM0DGNmC/VkmVuC0EjM8rGibMgcPwLvwSnkyvc4sYXMzgH9I+ljFVM8o+
-         7KEMZT1R7ar2XX4v6fQPGkJhYoYwd33n5faMh+7hrySlq32+1aylNdHhmFg7sI5ZdyVs
-         4N7HPxjJf50NBkPbFxpviSVlm03DnXjwlznSBWe7ndaIZtFoYhymBsTqoxLfKCMquTU1
-         ml9nMB1rZ0/KtUe1fSf9MB8TJoT8sOzVpNUCxYyd7u9ksKWQ8Oket/ZvI4TkzM9gD21p
-         IrpQ==
-X-Received: by 10.180.72.232 with SMTP id g8mr3255211wiv.0.1357421240573;
-        Sat, 05 Jan 2013 13:27:20 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id t17sm5623711wiv.6.2013.01.05.13.27.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 13:27:19 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc1.15.g5ddde70
-In-Reply-To: <1357421206-5014-1-git-send-email-apelisse@gmail.com>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=kZuByQBnu6iGNi+KKoDqlRE8/K2E61VK1KkT0X/tfk4=;
+        b=yV/gls9Zgwnl6jjwUP+ZDf2wduQlClDQuP2lmbHr27wXCUQrKmdsZGOfTMgeBhrwES
+         ld+7xM9InriJ31ijy8lln/w+4arnL0zZZnlUbE+9N5LF7dKDkSF1Ta5Ev9LtcWc4psap
+         q+kNvPj/z/ite8iMFBzbgNRGkViRECKq+SYpSxSHFNrImERKYdWiVDn5/1yfz6You1ZZ
+         TNTjn/q71KJdh0Camn26jDblf7Vycho1fV8A6kEG488PozgFc/CtoRLm3+MRw5fcTwB6
+         Fh04u0GyJPwsOWs7GKyiwCn5rnR6veDT3AvB8P6iC58mtzULEF3xZrAEmZhhu+swJqto
+         7uOQ==
+X-Received: by 10.66.82.35 with SMTP id f3mr164886627pay.49.1357424357976;
+        Sat, 05 Jan 2013 14:19:17 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id sb3sm34683220pbc.44.2013.01.05.14.19.15
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Jan 2013 14:19:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20130105144949.GA24479@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212730>
 
-Add the --use-mailmap option to log commands. It allows
-to display names from mailmap file when displaying logs,
-whatever the format used.
+Hi,
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- Documentation/git-log.txt | 5 +++++
- builtin/log.c             | 9 ++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+Jeff King wrote:
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 585dac4..a99be97 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -47,6 +47,11 @@ OPTIONS
- 	Print out the ref name given on the command line by which each
- 	commit was reached.
- 
-+--use-mailmap::
-+	Use mailmap file to map author and committer names and email
-+	to canonical real names and email addresses. See
-+	linkgit:git-shortlog[1].
-+
- --full-diff::
- 	Without this flag, "git log -p <path>..." shows commits that
- 	touch the specified paths, and diffs about the same specified
-diff --git a/builtin/log.c b/builtin/log.c
-index e7b7db1..d2bd8ce 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -22,6 +22,7 @@
- #include "branch.h"
- #include "streaming.h"
- #include "version.h"
-+#include "mailmap.h"
- 
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
-@@ -94,11 +95,12 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			 struct rev_info *rev, struct setup_revision_opt *opt)
- {
- 	struct userformat_want w;
--	int quiet = 0, source = 0;
-+	int quiet = 0, source = 0, mailmap = 0;
- 
- 	const struct option builtin_log_options[] = {
- 		OPT_BOOLEAN(0, "quiet", &quiet, N_("suppress diff output")),
- 		OPT_BOOLEAN(0, "source", &source, N_("show source")),
-+		OPT_BOOLEAN(0, "use-mailmap", &mailmap, N_("Use mail map file")),
- 		{ OPTION_CALLBACK, 0, "decorate", NULL, NULL, N_("decorate options"),
- 		  PARSE_OPT_OPTARG, decorate_callback},
- 		OPT_END()
-@@ -136,6 +138,11 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 	if (source)
- 		rev->show_source = 1;
- 
-+	if (mailmap) {
-+		rev->mailmap = xcalloc(1, sizeof(struct string_list));
-+		read_mailmap(rev->mailmap, NULL);
-+	}
-+
- 	if (rev->pretty_given && rev->commit_format == CMIT_FMT_RAW) {
- 		/*
- 		 * "log --pretty=raw" is special; ignore UI oriented
--- 
-1.7.12.4.3.g2036a08.dirty
+> When a sub-command dies due to a signal, we encode the
+> signal number into the numeric exit status as "signal -
+> 128".
+[...]
+> So we have a negative value inside the code, but once it
+> passes across an exit() barrier, it looks positive (and any
+> code we receive from a sub-shell will have the positive
+> form).
+[...]
+> Unfortunately, this means that when the "use_shell" option
+> is set, we need to be on the lookout for _both_ forms.
+[...]
+>             for the callers that do care, we can make life
+> slightly easier by just using the consistent positive form.
+
+Makes perfect sense.
+
+>  Documentation/technical/api-run-command.txt | 6 ++----
+>  editor.c                                    | 2 +-
+>  run-command.c                               | 2 +-
+>  3 files changed, 4 insertions(+), 6 deletions(-)
+
+t/test-terminal.perl imitates the same logic.  It doesn't check for
+anything other than whether the exit status is 0, but maybe it would
+be worth squashing in the below as a futureproofing measure
+nonetheless.
+
+Aside from the launch_editor bugfix, the only observable effects of
+the above patch I can find are some changed error messages:
+
+	error: external filter cat failed -126
+	-> error: external filter cat failed 130
+
+	warning: svnrdump, returned -126
+	-> warning: svnrdump, returned 130
+
+Those messages are equally senseless before and after the patch, so
+for what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+diff --git i/t/test-terminal.perl w/t/test-terminal.perl
+index 10172aee..1fb373f2 100755
+--- i/t/test-terminal.perl
++++ w/t/test-terminal.perl
+@@ -31,7 +31,7 @@ sub finish_child {
+ 	} elsif ($? & 127) {
+ 		my $code = $? & 127;
+ 		warn "died of signal $code";
+-		return $code - 128;
++		return $code + 128;
+ 	} else {
+ 		return $? >> 8;
+ 	}
