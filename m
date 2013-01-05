@@ -1,156 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git-completion.bash: add support for path completion
-Date: Fri, 04 Jan 2013 22:27:10 -0800
-Message-ID: <7vehi0qh4x.fsf@alter.siamese.dyndns.org>
-References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com>
- <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se>
- <7vobh4sffw.fsf@alter.siamese.dyndns.org>
+Subject: Re: [BUG/PATCH] setup: Copy an environment variable to avoid
+ overwrites
+Date: Fri, 04 Jan 2013 22:47:42 -0800
+Message-ID: <7va9soqg6p.fsf@alter.siamese.dyndns.org>
+References: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
+ <CACsJy8BeuV8esGTWsQiT_G9pZE28s5KJxH6+dzdhioLgmSiNVg@mail.gmail.com>
+ <7vk3rsqm6u.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CZe=qyzmG_1vdLYp07OvkDAU4wYc8MN3et7WBVmMhJOQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, szeder@ira.uka.de, felipe.contreras@gmail.com
-To: Marc Khouzam <marc.khouzam@ericsson.com>,
-	Manlio Perillo <manlio.perillo@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 07:27:34 2013
+Cc: David Michael <fedora.dm0@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 07:48:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrNED-0002kc-Il
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 07:27:33 +0100
+	id 1TrNY5-00061V-Kv
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 07:48:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924Ab3AEG1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 01:27:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43690 "EHLO
+	id S1753092Ab3AEGrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 01:47:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53749 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753136Ab3AEG1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 01:27:13 -0500
+	id S1751021Ab3AEGrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 01:47:45 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E91B5828E;
-	Sat,  5 Jan 2013 01:27:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCC188AFB;
+	Sat,  5 Jan 2013 01:47:44 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=52ffuM3D7/T5UDzYeEZVsXUV3pA=; b=DQqBrt
-	K7OFnysHAjtUyFPwicYgzinh4zExuaryXIRzfhfv6YRLHmNQyi+MkehhZ951mkYK
-	GBbu22H+OgeWeWx/TTboisACKIUhr7K4FKPcLMxxqdtS6Rb2R3tZleb40/r/zx9E
-	Q0pot+wZGLq2eUFO89h4wMs3edt91v6xOJ0+Q=
+	:content-type; s=sasl; bh=uFkhGeoIBo4riycPOIUYx3pldI0=; b=bhYLKi
+	R8zUEfToycs0Vqw27A2BOqLQyt1yMylxGHU7sj50cqj3SFPH2WLvq89aR0/QKwXl
+	ci8kCfu/Yi3kkQEFuenjOheyz26Fum2bDZF2sCQqXcRL1HDFflChSQvn5Rchmn+f
+	gJ13UtyU9l0AaYigcbP1f5abdp61lRJKhaq64=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FPB3ki6wTFHwc3g3ucJFDKKD7wP2hbSP
-	iztJn4SXaxvwhWjMFtQOJ4uJtI6HnlQ3Z5NhVQeCXrGJsqHgGl3vHuHRv4zkkLsv
-	gAaJp055Z9IZJXqaJzIYMxZKpK/K0Qx0mYZrkkxXb0Q9qfginfF4o8hEOKHSbmxY
-	mWVVNIXELHw=
+	:content-type; q=dns; s=sasl; b=F+9ohmgAgVXwyT945eqenmvELQULnUAc
+	1N3lXvDnBAN2wZ9UP75a7EDqCceyrh3j7ejWgnNiaKe3jOUQ449WXq6W03zmVSQG
+	adGlexxKdBq6gOB3HRz/InMbCum15f+2kBsgVi5M/F0Ua53HuPueZdB5j8rjGFZ4
+	7F9Hx6j8nuk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA0E4828D;
-	Sat,  5 Jan 2013 01:27:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE4B08AFA;
+	Sat,  5 Jan 2013 01:47:44 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1810E828C; Sat,  5 Jan 2013
- 01:27:11 -0500 (EST)
-In-Reply-To: <7vobh4sffw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 04 Jan 2013 15:20:51 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 272408AF8; Sat,  5 Jan 2013
+ 01:47:44 -0500 (EST)
+In-Reply-To: <CACsJy8CZe=qyzmG_1vdLYp07OvkDAU4wYc8MN3et7WBVmMhJOQ@mail.gmail.com> (Duy
+ Nguyen's message of "Sat, 5 Jan 2013 13:24:19 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F07FED84-5700-11E2-AE4F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CEDD9124-5703-11E2-B691-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212666>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Marc Khouzam <marc.khouzam@ericsson.com> writes:
+> On Sat, Jan 5, 2013 at 11:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I personally do not think a wrapper with limited slots is a healthy
+>> direction to go.  Most places we use getenv() do not let the return
+>> value live across their scope, and those that do should explicitly
+>> copy the value away.  It's between validating that there is _no_ *env()
+>> calls in the codepath between a getenv() call and the use of its
+>> return value, and validating that there is at most 4 such calls there.
+>> The former is much easier to verify and maintain, I think.
 >
->> I've been playing with it but I'm not getting the expected 
->> behavior when I cd to a sub-directory.
->
-> Thanks for testing.  Manlio?
+> I did not look carefully and was scared of 143 getenv calls. But with
+> about 4 calls, yes it's best to do without the wrapper.
 
-Can you try the attached patch?
+Just to make sure you did not misunderstand, the 4 (four) in my
+message is not about "4 calls among 143 are unsafe".
 
-As I am not familiar with the completion machinery, take this with a
-large grain of salt.  Here is my explanation of what is going on in
-this "how about this" fixup:
+It was referring to the number of rotating slots your patch defined,
+which means
 
- * Giving --git-dir from the command line (or GIT_DIR environment)
-   without specifying GIT_WORK_TREE is to signal Git that you are at
-   the top of the working tree.  "git ls-files" will then show the
-   full tree even outside the real $cwd because you are lying to
-   Git.
+	val = getenv("FOO");
+        ... random other code ...
+        use(val)
 
- * "git diff-index" could be told to show only the $cwd and its
-   subdirectory with the "--relative" option, but it alone is not
-   sufficient if you throw --git-dir at it; again, you end up lying
-   that you are at the top.
+is safe only if random other code makes less than 4 getenv() calls.
 
- * As far as I can tell, there is no reason you would want to pass
-   "--git-dir" to these invocations of ls-files and diff-index.  If
-   the previous call to "__gitdir" could figure out where it is, the
-   command should be able to figure it out the same way.
-   
-There seem to be millions of other existing "git --git-dir=$there"
-in this script.  As I already said, I am not familiar with the
-completion machinery, and I do not know what they are for in the
-first place.  Perhaps people put them there for a reason, but I do
-not know what that reason is.
-
-I think the ones for "for-each-ref", "config" and "stash" should be
-harmless.  They are commands that do not care about the working
-tree.
-
-There is one given to "ls-tree" used in __git_complete_revlist_file;
-I do not know if this was intended, what it is for, and if that is
-working as intended, though.
-
-I've been CC'ing two people who touched this script rather heavily,
-are expected to know the completion machinery, and should be able to
-help polishing this topic and moving it forward.  Perhaps one of
-them can shed light on this.
-
--- >8 --
-Subject: completion: do not pass harmful "--git-dir=$there"
-
-The recently added __git_index_files and __git_diff_index_files
-helper functions invoke "ls-files" and "diff_index" while explicitly
-passing "--git-dir=$there", to tell them that the invocation is done
-at the top of the working tree, which may not be the case when the
-user is in a subdirectory.  Remove the harmful use of this option,
-
-Tell "diff-index" to show only the paths in the $cwd and show them
-relative to the $cwd by passing "--relative". The "ls-files" does
-not need this, as that is already its default mode of operation.
-
----
- contrib/completion/git-completion.bash | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c8c6464..f4bd548 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -267,9 +267,9 @@ __git_index_files ()
- 
- 	if [ -d "$dir" ]; then
- 		# NOTE: $1 is not quoted in order to support multiple options
--		git --git-dir="$dir" ls-files --exclude-standard $1 ${2+"$2"} 2>/dev/null |
--			__git_index_file_list_filter ${2+"$2"} |
--			uniq
-+		git ls-files --exclude-standard $1 ${2+"$2"} 2>/dev/null |
-+		__git_index_file_list_filter ${2+"$2"} |
-+		uniq
- 	fi
- }
- 
-@@ -284,9 +284,9 @@ __git_diff_index_files ()
- 	local dir="$(__gitdir)"
- 
- 	if [ -d "$dir" ]; then
--		git --git-dir="$dir" diff-index --name-only "$1" 2>/dev/null |
--			__git_index_file_list_filter ${2+"$2"} |
--			uniq
-+		git diff-index --name-only --relative "$1" 2>/dev/null |
-+		__git_index_file_list_filter ${2+"$2"} |
-+		uniq
- 	fi
- }
- 
+I didn't verify all of the call sites. It needs to be done with or
+without your wrapper patch. Without your wrapper, the validation
+needs to make sure "random other code" above does not make any getenv()
+call.  With your wrapper, the validation needs to make sure "random
+other code" above does not make more than 4 such calls.  My point
+was that the effort needed for both are about the same, so your
+wrapper does not buy us much.
