@@ -1,178 +1,71 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] run-command: encode signal death as a positive integer
-Date: Sat, 05 Jan 2013 20:50:57 +0100
-Message-ID: <50E88421.9030605@kdbg.org>
-References: <20130104124756.GA402@sigill.intra.peff.net> <7vsj6gsi7v.fsf@alter.siamese.dyndns.org> <20130105140316.GA7272@sigill.intra.peff.net> <20130105144949.GA24479@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [LHF] making t5000 "tar xf" tests more lenient
+Date: Sat, 05 Jan 2013 12:11:39 -0800
+Message-ID: <7vsj6fpeys.fsf@alter.siamese.dyndns.org>
+References: <7vwqw7mb09.fsf@alter.siamese.dyndns.org>
+ <50E8722B.8010408@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bart Trojanowski <bart@jukie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 05 20:51:24 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Jan 05 21:12:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrZm7-00038F-B9
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 20:51:23 +0100
+	id 1Tra66-00059k-Lk
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:12:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755893Ab3AETvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 14:51:04 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:5901 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755867Ab3AETvC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 14:51:02 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id D16A81000F;
-	Sat,  5 Jan 2013 20:50:58 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id D464119F45D;
-	Sat,  5 Jan 2013 20:50:57 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130105144949.GA24479@sigill.intra.peff.net>
+	id S1755854Ab3AEULn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2013 15:11:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35017 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755843Ab3AEULm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jan 2013 15:11:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30EC3BD01;
+	Sat,  5 Jan 2013 15:11:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WaOHwfQtZEQ9
+	Qw51oYC0DPsJQzw=; b=ea7QgwaKl8GpNU61LcH6C2TvmKMoxdhP9h8OjvtH8sDe
+	fNbYsAU0AHadO4Ovwl2NaQSo5ZTvWlffIoMSOPaviWGV057PdN0BpiaWah0i28OI
+	pGRLijfDO7GrNR6qXdGITW7S0sjz/yGA6GmaL9suYr2i6+GzjpKFZ0kUTQ+GHiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ufDR4H
+	a+H1gjFIZGMVxQplCq9rsimNDefV5ZJOqz12J1LV0SHytiSn5A/OxA1jQkXguaod
+	rmHX7z8XmUgTP+7RHUAcwT/Ql8TEu6oVApDEoizsMypH5mNRT9/PZB2bFlQGv5M3
+	jna/YL8celCdy4+PJQLKngJViAfNlBI0Z8990=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20735BD00;
+	Sat,  5 Jan 2013 15:11:41 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9750CBCFF; Sat,  5 Jan 2013
+ 15:11:40 -0500 (EST)
+In-Reply-To: <50E8722B.8010408@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sat, 05 Jan 2013 19:34:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E09153C-5774-11E2-97B1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212710>
 
-Am 05.01.2013 15:49, schrieb Jeff King:
-> On Sat, Jan 05, 2013 at 09:03:16AM -0500, Jeff King wrote:
-> 
->> In fact, I really wonder if this code from wait_or_whine is actually
->> correct:
->>
->>   code = WTERMSIG(status);
->>   /*
->>    * This return value is chosen so that code & 0xff
->>    * mimics the exit code that a POSIX shell would report for
->>    * a program that died from this signal.
->>    */
->>   code -= 128;
-> 
-> After looking at it some more, it is correct, but I think we could make
-> life slightly easier for callers. See the patch below.  I've tried to
-> re-state the somewhat rambling argument from my previous email;
-> hopefully it makes sense.
-> 
-> -- >8 --
-> Subject: [PATCH] run-command: encode signal death as a positive integer
-> 
-> When a sub-command dies due to a signal, we encode the
-> signal number into the numeric exit status as "signal -
-> 128". This is easy to identify (versus a regular positive
-> error code), and when cast to an unsigned integer (e.g., by
-> feeding it to exit), matches what a POSIX shell would return
-> when reporting a signal death in $? or through its own exit
-> code.
-> 
-> So we have a negative value inside the code, but once it
-> passes across an exit() barrier, it looks positive (and any
-> code we receive from a sub-shell will have the positive
-> form). E.g., death by SIGPIPE (signal 13) will look like
-> -115 to us in inside git, but will end up as 141 when we
-> call exit() with it. And a program killed by SIGPIPE but run
-> via the shell will come to us with an exit code of 141.
-> 
-> Unfortunately, this means that when the "use_shell" option
-> is set, we need to be on the lookout for _both_ forms. We
-> might or might not have actually invoked the shell (because
-> we optimize out some useless shell calls). If we didn't invoke
-> the shell, we will will see the sub-process's signal death
-> directly, and run-command converts it into a negative value.
-> But if we did invoke the shell, we will see the shell's
-> 128+signal exit status. To be thorough, we would need to
-> check both, or cast the value to an unsigned char (after
-> checking that it is not -1, which is a magic error value).
-> 
-> Fortunately, most callsites do not care at all whether the
-> exit was from a code or from a signal; they merely check for
-> a non-zero status, and sometimes propagate the error via
-> exit(). But for the callers that do care, we can make life
-> slightly easier by just using the consistent positive form.
-> 
-> This actually fixes two minor bugs:
-> 
->   1. In launch_editor, we check whether the editor died from
->      SIGINT or SIGQUIT. But we checked only the negative
->      form, meaning that we would fail to notice a signal
->      death exit code which was propagated through the shell.
-> 
->   2. In handle_alias, we assume that a negative return value
->      from run_command means that errno tells us something
->      interesting (like a fork failure, or ENOENT).
->      Otherwise, we simply propagate the exit code. Negative
->      signal death codes confuse us, and we print a useless
->      "unable to run alias 'foo': Success" message. By
->      encoding signal deaths using the positive form, the
->      existing code just propagates it as it would a normal
->      non-zero exit code.
-> 
-> The downside is that callers of run_command can no longer
-> differentiate between a signal received directly by the
-> sub-process, and one propagated. However, no caller
-> currently cares, and since we already optimize out some
-> calls to the shell under the hood, that distinction is not
-> something that should be relied upon by callers.
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-The idea was initially to regard death by signal as an internal error.
-But since (1) there are no callers that are really interested in the
-difference and (2) we get it wrong in the shell case anyway, this change
-makes total sense.
+> Anyway, I don't think the pax headers are to blame here.
 
-Acked-by: Johannes Sixt <j6t@kdbg.org>
+Hmph, I am reasonably sure I saw a test that created an archive from
+a commit (hence with pax header), asked platform tar to either list
+the contents or actually extracted to the filesystem, and tried to
+ensure nothing but the paths in the repository existed in the
+archive.  When the platform tar implementation treated the pax
+header as an extra file, such a test sees something not in the
+repository and fails.
 
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/technical/api-run-command.txt | 6 ++----
->  editor.c                                    | 2 +-
->  run-command.c                               | 2 +-
->  3 files changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
-> index f18b4f4..5d7d7f2 100644
-> --- a/Documentation/technical/api-run-command.txt
-> +++ b/Documentation/technical/api-run-command.txt
-> @@ -55,10 +55,8 @@ The functions above do the following:
->    non-zero.
->  
->  . If the program terminated due to a signal, then the return value is the
-> -  signal number - 128, ie. it is negative and so indicates an unusual
-> -  condition; a diagnostic is printed. This return value can be passed to
-> -  exit(2), which will report the same code to the parent process that a
-> -  POSIX shell's $? would report for a program that died from the signal.
-> +  signal number + 128, ie. the same value that a POSIX shell's $? would
-> +  report.  A diagnostic is printed.
->  
->  
->  `start_async`::
-> diff --git a/editor.c b/editor.c
-> index 065a7ab..27bdecd 100644
-> --- a/editor.c
-> +++ b/editor.c
-> @@ -51,7 +51,7 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
->  		sigchain_push(SIGINT, SIG_IGN);
->  		sigchain_push(SIGQUIT, SIG_IGN);
->  		ret = finish_command(&p);
-> -		sig = ret + 128;
-> +		sig = ret - 128;
->  		sigchain_pop(SIGINT);
->  		sigchain_pop(SIGQUIT);
->  		if (sig == SIGINT || sig == SIGQUIT)
-> diff --git a/run-command.c b/run-command.c
-> index 757f263..cfb7274 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -249,7 +249,7 @@ static int wait_or_whine(pid_t pid, const char *argv0)
->  		 * mimics the exit code that a POSIX shell would report for
->  		 * a program that died from this signal.
->  		 */
-> -		code -= 128;
-> +		code += 128;
->  	} else if (WIFEXITED(status)) {
->  		code = WEXITSTATUS(status);
->  		/*
-> 
+This was on (and I am still on) NetBSD 6.0 not 6.0.1, by the way.
