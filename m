@@ -1,73 +1,99 @@
 From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: [Feature request] make git buildable from a separate directory
-Date: Sat, 05 Jan 2013 21:52:05 +0100
-Message-ID: <50E89275.6080408@gmail.com>
+Subject: Re: [PATCH] clone: support atomic operation with --separate-git-dir
+Date: Sat, 05 Jan 2013 22:20:30 +0100
+Message-ID: <50E8991E.4090605@gmail.com>
+References: <50E74145.4020701@gmail.com> <7vzk0osjli.fsf@alter.siamese.dyndns.org> <50E83224.2070701@web.de> <50E83DAE.1080500@web.de> <50E88A40.9010904@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 05 21:53:22 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
+	"W. Trevor King" <wking@drexel.edu>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Jan 05 22:21:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trak5-0003Gj-He
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 21:53:21 +0100
+	id 1TrbAl-0002pd-Sl
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jan 2013 22:20:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755864Ab3AEUxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2013 15:53:01 -0500
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:33959 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755839Ab3AEUxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2013 15:53:00 -0500
-Received: by mail-ee0-f54.google.com with SMTP id c13so8869901eek.13
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 12:52:59 -0800 (PST)
+	id S1755881Ab3AEVUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2013 16:20:37 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:51727 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755851Ab3AEVUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2013 16:20:36 -0500
+Received: by mail-we0-f174.google.com with SMTP id x10so8648787wey.19
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 13:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=Ww612JEhvRvsPnJXFBfKyQDuBSq67Lqx8uBA4yfN5Y0=;
-        b=M+xJTJbFS22dPpwQhwpfboO7UggsPPt90qlFl7zKbSd+t+8+t5rkR5F2qlywmKVF14
-         1L2ktiXR4gwhEU7LuywStcihxbdYwUc8/wU2UVfl1kJZr8uGiKkflzcygaQg8zHYD9Yd
-         /4QNfmBnTVY7dqMT7dbsohKnqQ/bl33F8a0YaslUEosGXz1skJ9WlMle/KFFP8JfKeuw
-         hWfTbGbNbVbXd1RX8vcW2GGRhIwKMvZLqw10s7zBXiTGIOcXjGiTlHhuu+t+IqytKBnp
-         QzcuMIH+Pi9h+LnwrWnkEVKdUDnwHQora8EW2kF5y06C0ajOtLL9f+3Oa2xLf/FD1+E9
-         fxCQ==
-X-Received: by 10.14.223.200 with SMTP id v48mr154434837eep.24.1357419178773;
-        Sat, 05 Jan 2013 12:52:58 -0800 (PST)
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=gmf9FbKXjXuWX4+WBiEyNu7eaYekrH7ntIPRYPOD+Dk=;
+        b=wxZ6jCL2WP9knwGDqemdpqZ82eRKjIGHGhLKqxKyDFjKCpev/jbHWB47WUK5gxVMv5
+         MOm5+j9dLA1lKEBTRC4D4j7HW5flAhQoi6dshSBocZWDfd6PhQ/fuvwQanX15+3FYvSb
+         Ulp4297CY3cuAx2BUZIh1yttHmZspGK4W337LIB1LJhHXqOTn+EExjJ3/qsQMAriZhNV
+         E1Rh1hSwxTSoLRSrXqILv+5PIdhzvsA8fz3Yu9cCV7NNabkGh7spAl8OwqdH7gaMphHJ
+         AivtR0hkxJUOcztTGziyeRqf8pkFNAA2WHOjLx8ha+3DjNtIZPhSBQ4bQDk8VySwXFBb
+         agDw==
+X-Received: by 10.194.121.74 with SMTP id li10mr78502096wjb.5.1357420834784;
+        Sat, 05 Jan 2013 13:20:34 -0800 (PST)
 Received: from [192.168.0.3] ([151.70.204.244])
-        by mx.google.com with ESMTPS id e2sm119751757eeo.8.2013.01.05.12.52.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 12:52:57 -0800 (PST)
+        by mx.google.com with ESMTPS id bd6sm5027014wib.10.2013.01.05.13.20.32
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 05 Jan 2013 13:20:33 -0800 (PST)
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <50E88A40.9010904@web.de>
 X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212715>
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi.
+Il 05/01/2013 21:17, Jens Lehmann ha scritto:
+> Since b57fb80a7d (init, clone: support --separate-git-dir for .git file)
+> git clone supports the --separate-git-dir option to create the git dir
+> outside the work tree. But when that option is used, the git dir won't be
+> deleted in case the clone fails like it would be without this option. This
+> makes clone lose its atomicity as in case of a failure a partly set up git
+> dir is left behind. A real world example where this leads to problems is
+> when "git submodule update" fails to clone a submodule and later calls to
+> "git submodule update" stumble over the partially set up git dir and try
+> to revive the submodule from there, which then fails with a not very user
+> friendly error message.
+> 
+> Fix that by updating the junk_git_dir variable (used to remember if and
+> what git dir should be removed in case of failure) to the new value given
+> with the --seperate-git-dir option. Also add a test for this to t5600 (and
+> while at it fix the former last test to not cd into a directory to test
+> for its existence but use "test -d" instead).
+> 
+> Reported-by: Manlio Perillo <manlio.perillo@gmail.com>
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
+> [...]
+> And this fixes it for me. Manlio, it'd be great if you could test
+> this patch (but please not only remove .git/modules/<name> but also
+> the submodule work tree before doing that).
+> 
 
-Many C projects I have seen (based on autoconf, but not always - like
-Nginx) allow the project to be build in a separate directory, in order
-to avoid to pollute the working directory with compiled files.
-
-Unfortunately this seems to not be possible with Git.
-The Makefile seems quite complex to me, so I'm not sure to be able to
-change it to do what I want, without breaking it.
+I can confirm that the patch solves the problem I reported.
 
 
-Thanks  Manlio
+Thanks   Manlio
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iEYEARECAAYFAlDoknUACgkQscQJ24LbaUTw/QCdHbphkU3Mepo98D07yLaj3YyF
-5I4Anii94QDHsC1zm2Jp1hy2X/JFa/NE
-=vV1z
+iEYEARECAAYFAlDomR4ACgkQscQJ24LbaUQszACfV42L9Xcy+mme6RY/vY+K2H4T
+QDAAoIIupUSjwv6qUgzUMQV1aNplrWJD
+=uN3W
 -----END PGP SIGNATURE-----
