@@ -1,124 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] run-command: encode signal death as a positive integer
-Date: Sat, 05 Jan 2013 23:05:54 -0800
-Message-ID: <7v38yepz8t.fsf@alter.siamese.dyndns.org>
-References: <20130104124756.GA402@sigill.intra.peff.net>
- <7vsj6gsi7v.fsf@alter.siamese.dyndns.org>
- <20130105140316.GA7272@sigill.intra.peff.net>
- <20130105144949.GA24479@sigill.intra.peff.net>
+Subject: Re: [PATCH] Alphabetize the fast-import options, following a
+ suggestion on the list.
+Date: Sat, 05 Jan 2013 23:12:25 -0800
+Message-ID: <7vy5g6okdi.fsf@alter.siamese.dyndns.org>
+References: <20130105164415.39B144044B@snark.thyrsus.com>
+ <20130105231151.GD3247@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Bart Trojanowski <bart@jukie.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 06 08:06:28 2013
+Cc: "Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org,
+	David Michael Barr <b@rr-dav.id.au>,
+	Pete Wyckoff <pw@padd.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 08:17:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrkJM-0006D3-Pu
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 08:06:25 +0100
+	id 1TrkUP-0008H9-0A
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 08:17:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004Ab3AFHF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 02:05:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46912 "EHLO
+	id S1750881Ab3AFHM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 02:12:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49379 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858Ab3AFHF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 02:05:57 -0500
+	id S1750780Ab3AFHM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 02:12:27 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D374E748A;
-	Sun,  6 Jan 2013 02:05:56 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9466A76A1;
+	Sun,  6 Jan 2013 02:12:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wD4GbONzxF2HmYp5IAgd7swvCN4=; b=XX9st2
-	CI3IUcKhGrJBbXhnqgjS5dEf6pZupnVTj+k6J4yh/ce9k9a7eud8B96+hwox562a
-	6n9lpTbEJvXbbD6orh7/e0zp7nzxjkXHiyPUmrjGh2pZK2Wz3JhrU2yNrx+UIub1
-	CIgomz+0UUjq9awBYTkerea8cR01b7NNRST7w=
+	:content-type; s=sasl; bh=/U6zw38xX3ca8Wida/ZNLqhWoFE=; b=P1FC3b
+	zQvI7AZ31EQvUpHHTrJFpQvoM5gIfz4o+riMK5OrXIgsvF43VndLI3CRbfoXwOw/
+	I9TFlpLhxFDHDnMKMQu9dE25MxBUa1ghcY2k7N+lwHNnt1ZMqrSRHNRzkw8waRp6
+	r6yjtITYiJxHPDt/IqMnNVKaOnFhUiIAFKV3A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vAe/kExyZUldV5tQIX0BNMEclfisSMT8
-	TJj/RtKv8c+crDHpJzxNZHfauWj17JuGjwhuVfO90pi90DIHotG2n0BYCuWxo3+X
-	rFlFd9oVRrQUho3bf7S1SwfLoAkHo47V8WtdjP3DvtIdNh3jxETXh2NcTeiW5fFH
-	FX9MiFJ0GTo=
+	:content-type; q=dns; s=sasl; b=cEeV2oKYo6ukRzNdgb9FxL3q8wxSI2Nl
+	mTD1R9GZemnpOMro1b31AnIrglHaVUOSJok2x+6VHKk9eVhEfpDoXKI54NEYmFBd
+	etB02WkZ5fmiNhoKmZugEXb/pY78itv2xKaJaixKLHy0W15PXLqmzjKxXRK0BzLp
+	9eepqfFj30w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5D107489;
-	Sun,  6 Jan 2013 02:05:56 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8720676A0;
+	Sun,  6 Jan 2013 02:12:27 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28A947488; Sun,  6 Jan 2013
- 02:05:56 -0500 (EST)
-In-Reply-To: <20130105144949.GA24479@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 5 Jan 2013 09:49:49 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13946769F; Sun,  6 Jan 2013
+ 02:12:26 -0500 (EST)
+In-Reply-To: <20130105231151.GD3247@elie.Belkin> (Jonathan Nieder's message
+ of "Sat, 5 Jan 2013 15:11:51 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 842A3746-57CF-11E2-9E51-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6D2AFE8A-57D0-11E2-AF59-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212782>
 
-Jeff King <peff@peff.net> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On Sat, Jan 05, 2013 at 09:03:16AM -0500, Jeff King wrote:
-> ...
-> The downside is that callers of run_command can no longer
-> differentiate between a signal received directly by the
-> sub-process, and one propagated. However, no caller
-> currently cares, and since we already optimize out some
-> calls to the shell under the hood, that distinction is not
-> something that should be relied upon by callers.
+> My knee-jerk response was "If the options are currently organized logically,
+> wouldn't it be more appropriate to add a sub-heading for each group of options
+> and alphabetize only within the subgroups?"
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-
-Very nicely explained.  Thanks.
-
->  Documentation/technical/api-run-command.txt | 6 ++----
->  editor.c                                    | 2 +-
->  run-command.c                               | 2 +-
->  3 files changed, 4 insertions(+), 6 deletions(-)
+> But in fact the current options list doesn't seem to be well organized at all.
+> What do you think would be a logical way to group these?
 >
-> diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
-> index f18b4f4..5d7d7f2 100644
-> --- a/Documentation/technical/api-run-command.txt
-> +++ b/Documentation/technical/api-run-command.txt
-> @@ -55,10 +55,8 @@ The functions above do the following:
->    non-zero.
->  
->  . If the program terminated due to a signal, then the return value is the
-> -  signal number - 128, ie. it is negative and so indicates an unusual
-> -  condition; a diagnostic is printed. This return value can be passed to
-> -  exit(2), which will report the same code to the parent process that a
-> -  POSIX shell's $? would report for a program that died from the signal.
-> +  signal number + 128, ie. the same value that a POSIX shell's $? would
-> +  report.  A diagnostic is printed.
->  
->  
->  `start_async`::
-> diff --git a/editor.c b/editor.c
-> index 065a7ab..27bdecd 100644
-> --- a/editor.c
-> +++ b/editor.c
-> @@ -51,7 +51,7 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
->  		sigchain_push(SIGINT, SIG_IGN);
->  		sigchain_push(SIGQUIT, SIG_IGN);
->  		ret = finish_command(&p);
-> -		sig = ret + 128;
-> +		sig = ret - 128;
->  		sigchain_pop(SIGINT);
->  		sigchain_pop(SIGQUIT);
->  		if (sig == SIGINT || sig == SIGQUIT)
-> diff --git a/run-command.c b/run-command.c
-> index 757f263..cfb7274 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -249,7 +249,7 @@ static int wait_or_whine(pid_t pid, const char *argv0)
->  		 * mimics the exit code that a POSIX shell would report for
->  		 * a program that died from this signal.
->  		 */
-> -		code -= 128;
-> +		code += 128;
->  	} else if (WIFEXITED(status)) {
->  		code = WEXITSTATUS(status);
->  		/*
+>  Features of input syntax
+>
+> 	--date-format
+> 	--done
+>
+>  Verbosity
+>
+> 	--quiet
+> 	--stats
+>
+>  Marks handling (checkpoint/restore)
+>
+> 	--import-marks
+> 	--import-marks-if-exists
+> 	--export-marks
+> 	--relative-marks
+>
+>  Semantics of execution
+>
+> 	--dry-run
+> 	--force
+> 	--cat-blob-fd
+> 	--export-pack-edges
+>
+>  Tuning
+>
+> 	--active-branches
+> 	--max-pack-size
+> 	--big-file-threshold
+> 	--depth
+
+Sounds sensible.
