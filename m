@@ -1,179 +1,117 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Sun, 6 Jan 2013 16:33:58 -0500
-Organization: PD Inc
-Message-ID: <D527CF72B81E4F70B390334EC04EA0E8@black>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9E822.4020709@gmail.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 06 Jan 2013 16:34:32 -0500
+Message-ID: <50E9EDE8.6090200@gmail.com>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9E3C5.4070104@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 22:34:27 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	Eric Blake <eblake@redhat.com>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 06 22:34:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrxrO-0006Aj-4i
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:34:26 +0100
+	id 1Trxrq-0006hs-A9
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:34:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126Ab3AFVeG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 16:34:06 -0500
-Received: from projects.pdinc.us ([67.90.184.26]:53524 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753004Ab3AFVeF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2013 16:34:05 -0500
-Received: from black (nsa1.pdinc.us [67.90.184.2])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id r06LXjpK029066
-	for <git@vger.kernel.org>; Sun, 6 Jan 2013 16:33:45 -0500
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <50E9E822.4020709@gmail.com>
-Thread-Index: Ac3sUi9hOit53UigQq+3UuDQ0doeRwAArZrQ
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S1753085Ab3AFVeg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 16:34:36 -0500
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:60627 "EHLO
+	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753004Ab3AFVee (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 16:34:34 -0500
+Received: by mail-qc0-f173.google.com with SMTP id b12so11237401qca.18
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 13:34:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=45EALwqJPRS/DYDCaNEItrhxZl8NWKWuNlBrLowMPDk=;
+        b=w2fAlJbpkaj+3VGYdgpZ6iF9+M3xU7m2nEiolspLJ4PntlrkMZ+SCtQP7NTsIbEbjv
+         apm42oo3IdoQFYhFBGQXPxoJiu5dAhkREx7wFHp8TzH/ds6pBBMPLH7VQGzHXjWT0sUV
+         FsPA6N7XnjPQ+9FEmvw0WdS1hZy+qQUoZxYpjf5e1QY/5nKsEIW2pi6Fs0ySsL3Fmc6p
+         ZsDhUCKhVvPI6dLyT+ayZNNJ/xxcsKzZoT7o2T+AZ3VibEVGAb7LjZit5TyMEAI3pEqz
+         rUurC1bMiEjBCpFAfrJtSpva3OSR815s+h/SafE25DmEBNaVd6nYQi5fwZg2RM/S8W2m
+         v8aQ==
+X-Received: by 10.224.71.20 with SMTP id f20mr36617979qaj.71.1357508074046;
+        Sun, 06 Jan 2013 13:34:34 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-102-236.washdc.fios.verizon.net. [173.79.102.236])
+        by mx.google.com with ESMTPS id f5sm19574047qac.5.2013.01.06.13.34.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 06 Jan 2013 13:34:33 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <50E9E3C5.4070104@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212844>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org=20
-> [mailto:git-owner@vger.kernel.org] On Behalf Of Mark Levedahl
-> Sent: Sunday, January 06, 2013 16:10
-> To: Junio C Hamano
-> Cc: Jonathan Nieder; Torsten B=F6gershausen; Stephen & Linda=20
-> Smith; Jason Pyeron; git@vger.kernel.org; Eric Blake
-> Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
->=20
-> On 01/06/2013 02:54 PM, Junio C Hamano wrote:
-> > Jonathan Nieder <jrnieder@gmail.com> writes:
-> >
-> >> Mark Levedahl wrote:
-> >>
-> >>>                                                          =20
-> However,=20
-> >>> the newer win32api is provided only for the current=20
-> cygwin release=20
-> >>> series, which can be reliably identified by having dll version=20
-> >>> 1.7.x, while the older frozen releases (dll versions 1.6.x from=20
-> >>> redhat, 1.5.x open source) still have the older api as no=20
-> updates are being made for the legacy version(s).
-> >> Ah.  That makes sense, thanks.
-> >>
-> >> (For the future, if we wanted to diagnose an out-of-date=20
-> win32api and=20
-> >> print a helpful message, I guess cygcheck would be the command to=20
-> >> use.)
-> > Hmph, so we might see somebody who cares about Cygwin to=20
-> come up with=20
-> > a solution based on cygcheck (not on uname) to update this part,=20
-> > perhaps on top of Peff's "split default settings based on=20
-> uname into=20
-> > separate file" patch?
-> >
-> > If I understood what Mark and Torsten wrote correctly, you=20
-> will have=20
-> > the new win32api if you install 1.7.17 (or newer) from=20
-> scratch, but if=20
-> > you are on older 1.7.x then you can update the win32api part as a=20
-> > package update (as opposed to the whole-system upgrade).  A=20
-> test based=20
-> > on "uname -r" cannot notice that an older 1.7.x (say 1.7.14)=20
-> > installation has a newer win32api because the user updated=20
-> it from the=20
-> > package (hence the user should not define CYGWIN_V15_WIN32API).
-> >
-> > Am I on the same page as you guys, or am I still behind?
-> >
-> > In the meantime, perhaps we would need something like this?
-> >
-> >
-> > diff --git a/Makefile b/Makefile
-> > index 8e225ca..b45b06d 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -281,6 +281,9 @@ all::
-> >   #
-> >   # Define NO_REGEX if you have no or inferior regex=20
-> support in your C library.
-> >   #
-> > +# Define CYGWIN_V15_WIN32API if your Cygwin uses win32api=20
-> dll older=20
-> > +than # 1.7.x (this typically is true on Cygwin older than 1.7.17) =
-#
-> >   # Define HAVE_DEV_TTY if your system can open /dev/tty to=20
-> interact with the
-> >   # user.
-> >   #
-> >
-> Looking at a current setup.ini, the obsolete win32 api is a=20
-> single package "w32api" with last version 3.17-2, and is now=20
-> replaced by the new win32 api is in two packages,=20
-> "w32api-headers" + "w32api-runtime", both at version=20
-> 3.0b_svn5496-1. If setup.exe updated an older installation of=20
-> w32api, the old package is not deleted, but replaced by a=20
-> special "empty" package with (as of today) version 9999-1.=20
-> Note that all of this could change at any time. Also, note=20
-> that the new w32api packages have version numbers that are=20
-> lower than the older obsoleted version.
-
-I would not rely on that information as it is not designed to convey th=
-e
-information the git build needs.
-
->=20
-> Running "cygcheck -c w32api w32api-headers w32api-runtime" on=20
-> one machine gives
->=20
-> Cygwin Package Information
-> Package              Version            Status
-> w32api               9999-1             OK
-> w32api-headers       3.0b_svn5496-1     OK
-> w32api-runtime       3.0b_svn5496-1     OK
->=20
-> So now, what do folks propose checking for?
-> a) w32api is installed? Nope - the package is not "removed",=20
-> it was updated to a special empty version to delete its=20
-> former contents, but a new fresh installation won't have this.
-> b) w32api-headers is installed? Nope - what happens on the=20
-> next repackaging?
-> c) w32api version is 9999-1? Maybe, but that number could change.
-> etc.
-
-This is what is typically done in a configure script by test compiling.
-
->=20
-> There is no documented, reliable, future-proof, method of=20
-> determining the installed w32api version on Cygwin. There are=20
-> many things that can be done that will work frequently,=20
-> except when they won't. I really think the only sane thing is=20
-> to follow the guidance of the Cygwin
-> developers: the only supported configuration is that which=20
-> the current setup.exe produces, and in the case of problems,=20
-> if the installation is not up to date then updating is the=20
-> first required action.
->=20
-> So, in the makefile, you might add:
->=20
-> +# Define CYGWIN_V15_WIN32API if you are using Cygwin v1.7.x=20
-> but are not=20
-> +# using the current w32api packages. But, the recommended=20
-> approach is=20
-> +to # update your installation if compilation errors occur.
-> +#
-
-
---
--=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D=
--=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D=
--=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-
-This message is copyright PD Inc, subject to license 20080407P00.
-
+On 01/06/2013 03:51 PM, Torsten B=F6gershausen wrote:
+> Hm, I haven't understood the connection between the dll (cygwin1.dll=20
+> ?) which is used in runtime, and the header files which are used when=
 =20
+> compiling. Are they updated at the same time when updating from 1.7.1=
+6=20
+> to 1.7.17 ? Until I updated my cygwin 1.7 (following Marks=20
+> recommendation) this did the trick for me: +ifeq ($(shell grep mingw=20
+> /usr/include/w32api/winsock2.h />/dev/null 2>/dev/null && echo y),y) =
++=20
+> CYGWIN_V15_WIN32API=3DYesPlease +endif As an alternative, would this =
+be=20
+> easier to read?
+>> +# Define CYGWIN_V15_WIN32API for Cygwin versions up to 1.7.16
+>
+>
+
+The cygwin distribution has a very large number of packages, each with=20
+its own unique version number and update rhythm, just as in any linux=20
+distro. There is no "cygwin version", just a version for each individua=
+l=20
+package. So, "Cygwin version 1.7.16" is really nonsensical: there is=20
+only cygwin.dll version 1.7.16.  What folks are noticing is a=20
+coincidence in the time when the cygwin dll package updated and when th=
+e=20
+old w32api was obsoleted. uname -r reports the cygwin dll version, not=20
+the version of any other package. Note that the cygwin api is "stable",=
+=20
+meaning a package compiled against the 1.7.1 dll will still run against=
+=20
+the current one: updating the cygwin dll does not require other package=
+s=20
+to update.
+
+The only hard linkage here is that the Cygwin developers are maintainin=
+g=20
+a legacy cygwin version (v1.5.x) as the newer dll series (v.1.7.x)=20
+dropped support for all Windows versions predating (I think) WinXP. So,=
+=20
+someone on an old Windows version must use the legacy cygwin version=20
+which has not been updated since the first v1.7 dll was released, nor=20
+are there any plans by the developers to ever update the v1.5 packages.=
+=20
+Cygwin 1.5 lives in a separate distribution repository, with packages=20
+frozen in time as of the last updates prior to going to v1.7 (packages=20
+compiled against v1.7 will not run on v.1.5).
+
+So, encountering a v1.5.x dll is a guarantee of using the older w32api=20
+shared with the mingw project, rather than the current one now=20
+maintained by the mingw64 project. However, a cygwin with any v1.7.x dl=
+l=20
+could in theory have either w32api installed, or in theory yet another=20
+newer one we don't know about yet. Unless and until the w32api=20
+establishes a version number (independent of the Windows API version),=20
+we have nothing reliable to use.
+
+Therefore, if using the v1.7 series, *update*
+
+Mark
