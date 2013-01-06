@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 16/21] checkout: convert read_tree_some to take struct pathspec
-Date: Sun,  6 Jan 2013 13:21:03 +0700
-Message-ID: <1357453268-12543-17-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 17/21] Convert report_path_error to take struct pathspec
+Date: Sun,  6 Jan 2013 13:21:04 +0700
+Message-ID: <1357453268-12543-18-git-send-email-pclouds@gmail.com>
 References: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,127 +10,202 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 06 07:23:04 2013
+X-From: git-owner@vger.kernel.org Sun Jan 06 07:23:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrjdO-0000Rl-2l
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 07:23:02 +0100
+	id 1TrjdU-0000ab-59
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 07:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481Ab3AFGWm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 01:22:42 -0500
-Received: from mail-da0-f54.google.com ([209.85.210.54]:42993 "EHLO
-	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346Ab3AFGWl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 01:22:41 -0500
-Received: by mail-da0-f54.google.com with SMTP id n2so8109670dad.13
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 22:22:41 -0800 (PST)
+	id S1751493Ab3AFGWs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 01:22:48 -0500
+Received: from mail-da0-f51.google.com ([209.85.210.51]:64356 "EHLO
+	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346Ab3AFGWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 01:22:47 -0500
+Received: by mail-da0-f51.google.com with SMTP id i30so8180094dad.10
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 22:22:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=blHDIW+qZ6nN4HBiblp28fftz/0aIs2RAaZZ0HrbtsA=;
-        b=CiFnaky6a7SfULiJegk0P4v7I3UyWK1vAuaOvZzTPJtM+efl78t0EkneyO52y/Fb48
-         6v5OPj/V0wF0GnIaBjlz8AAf+Y7KXtsvq6IZWdjJfdcI3osZq950bEwSzOX2B0JvzcI2
-         Pr1rzLoVX+V0gKC7mugPvIJXCxsBpXOKedWom7XYa4BaGSfUf3wNy1U3OrHbgFWzOpag
-         Z1CLMHNw3y9GmJZ7fBi27AvJ+BHJ/E+aXlyJRaCYJq9S7zsJnE1h7F+nP7uTmjwJQpfr
-         3TM0BU8NiP2IozUDdrZd6Udzu/dG2fBoCTdZKZiznlB20Gh1ePZrVQdw/E9Qt7j0eh8o
-         xzsw==
-X-Received: by 10.68.235.71 with SMTP id uk7mr177163438pbc.10.1357453361064;
-        Sat, 05 Jan 2013 22:22:41 -0800 (PST)
+        bh=GB0MqJQdLYAKi86PDVDFoNrWXxfvhNoEGiUmLL2ieE0=;
+        b=0lNc5SZQt1tL0wMGb6+LrO1RFZM0VnQhxvUN1RCI6PTitybcrIfF54AU5VAr8nLAc7
+         OzIaW8UNp6MJETiM4ph3qpT6DIBvvcriAS+AJDR+V1GYT05hfoglLF00gtAXi5JZDn6a
+         Z092sCPRiFJtqKY9eOFBe/zg13cfkWSOwJJZpWMmKLiCiBG9am14pp1tVONGyUL0X2Hp
+         e52aQUsPYQHlBtopKHQSSaXCXyne6JXDq5rbQ4uBhI5x7kTv4ItKgOvVK0es3VWN7+Gm
+         wNxRHVsV8V34cQeZYQLTOYYBTqzpTEETnen6LMW4lXGN6TM9hw/iDTlmz7TEO7RFwx67
+         bk/w==
+X-Received: by 10.69.0.40 with SMTP id av8mr176801657pbd.117.1357453366508;
+        Sat, 05 Jan 2013 22:22:46 -0800 (PST)
 Received: from lanh ([115.74.34.31])
-        by mx.google.com with ESMTPS id rq7sm35284898pbc.69.2013.01.05.22.22.38
+        by mx.google.com with ESMTPS id is6sm35286614pbc.55.2013.01.05.22.22.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 22:22:40 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 06 Jan 2013 13:22:50 +0700
+        Sat, 05 Jan 2013 22:22:45 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 06 Jan 2013 13:22:56 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212771>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c | 9 +++------
- tree.c             | 4 ++--
- tree.h             | 2 +-
- 3 files changed, 6 insertions(+), 9 deletions(-)
+ builtin/checkout.c |  2 +-
+ builtin/commit.c   | 14 ++++++--------
+ builtin/ls-files.c | 14 ++++++++------
+ cache.h            |  2 +-
+ 4 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index aa399d6..a7ddb35 100644
+index a7ddb35..648768e 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -82,12 +82,9 @@ static int update_some(const unsigned char *sha1, co=
-nst char *base, int baselen,
- 	return 0;
- }
-=20
--static int read_tree_some(struct tree *tree, const char **pathspec)
-+static int read_tree_some(struct tree *tree, const struct pathspec *pa=
-thspec)
- {
--	struct pathspec ps;
--	init_pathspec(&ps, pathspec);
--	read_tree_recursive(tree, "", 0, 0, &ps, update_some, NULL);
--	free_pathspec(&ps);
-+	read_tree_recursive(tree, "", 0, 0, pathspec, update_some, NULL);
-=20
- 	/* update the index with the given tree's info
- 	 * for all args, expanding wildcards, and exit
-@@ -265,7 +262,7 @@ static int checkout_paths(const struct checkout_opt=
+@@ -273,7 +273,7 @@ static int checkout_paths(const struct checkout_opt=
 s *opts,
- 		return error(_("corrupt index file"));
+ 		match_pathspec_depth(&opts->pathspec, ce->name, ce_namelen(ce), 0, p=
+s_matched);
+ 	}
 =20
- 	if (opts->source_tree)
--		read_tree_some(opts->source_tree, opts->pathspec.raw);
-+		read_tree_some(opts->source_tree, &opts->pathspec);
+-	if (report_path_error(ps_matched, opts->pathspec.raw, opts->prefix))
++	if (report_path_error(ps_matched, &opts->pathspec, opts->prefix))
+ 		return 1;
 =20
- 	ps_matched =3D xcalloc(1, opts->pathspec.nr);
+ 	/* "checkout -m path" to recreate conflicted state */
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 7b5f123..71c5afb 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -181,20 +181,18 @@ static int commit_index_files(void)
+  * and return the paths that match the given pattern in list.
+  */
+ static int list_paths(struct string_list *list, const char *with_tree,
+-		      const char *prefix, const char **pattern)
++		      const char *prefix, const struct pathspec *pattern)
+ {
+ 	int i;
+ 	char *m;
 =20
-diff --git a/tree.c b/tree.c
-index 62fed63..ff72f67 100644
---- a/tree.c
-+++ b/tree.c
-@@ -47,7 +47,7 @@ static int read_one_entry_quick(const unsigned char *=
-sha1, const char *base, int
+-	if (!pattern)
++	if (!pattern->nr)
+ 		return 0;
+=20
+-	for (i =3D 0; pattern[i]; i++)
+-		;
+-	m =3D xcalloc(1, i);
++	m =3D xcalloc(1, pattern->nr);
+=20
+ 	if (with_tree) {
+-		char *max_prefix =3D common_prefix(pattern);
++		char *max_prefix =3D common_prefix(pattern->raw);
+ 		overlay_tree_on_cache(with_tree, max_prefix ? max_prefix : prefix);
+ 		free(max_prefix);
+ 	}
+@@ -205,7 +203,7 @@ static int list_paths(struct string_list *list, con=
+st char *with_tree,
+=20
+ 		if (ce->ce_flags & CE_UPDATE)
+ 			continue;
+-		if (!match_pathspec(pattern, ce->name, ce_namelen(ce), 0, m))
++		if (!match_pathspec_depth(pattern, ce->name, ce_namelen(ce), 0, m))
+ 			continue;
+ 		item =3D string_list_insert(list, ce->name);
+ 		if (ce_skip_worktree(ce))
+@@ -396,7 +394,7 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix,
+=20
+ 	memset(&partial, 0, sizeof(partial));
+ 	partial.strdup_strings =3D 1;
+-	if (list_paths(&partial, !current_head ? NULL : "HEAD", prefix, paths=
+pec.raw))
++	if (list_paths(&partial, !current_head ? NULL : "HEAD", prefix, &path=
+spec))
+ 		exit(1);
+=20
+ 	discard_cache();
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 9336abd..be6e05d 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -349,7 +349,9 @@ void overlay_tree_on_cache(const char *tree_name, c=
+onst char *prefix)
+ 	}
  }
 =20
- static int read_tree_1(struct tree *tree, struct strbuf *base,
--		       int stage, struct pathspec *pathspec,
-+		       int stage, const struct pathspec *pathspec,
- 		       read_tree_fn_t fn, void *context)
+-int report_path_error(const char *ps_matched, const char **pathspec, c=
+onst char *prefix)
++int report_path_error(const char *ps_matched,
++		      const struct pathspec *pathspec,
++		      const char *prefix)
  {
- 	struct tree_desc desc;
-@@ -116,7 +116,7 @@ static int read_tree_1(struct tree *tree, struct st=
-rbuf *base,
-=20
- int read_tree_recursive(struct tree *tree,
- 			const char *base, int baselen,
--			int stage, struct pathspec *pathspec,
-+			int stage, const struct pathspec *pathspec,
- 			read_tree_fn_t fn, void *context)
- {
+ 	/*
+ 	 * Make sure all pathspec matched; otherwise it is an error.
+@@ -357,7 +359,7 @@ int report_path_error(const char *ps_matched, const=
+ char **pathspec, const char
  	struct strbuf sb =3D STRBUF_INIT;
-diff --git a/tree.h b/tree.h
-index 69bcb5e..9dc90ba 100644
---- a/tree.h
-+++ b/tree.h
-@@ -25,7 +25,7 @@ typedef int (*read_tree_fn_t)(const unsigned char *, =
-const char *, int, const ch
+ 	const char *name;
+ 	int num, errors =3D 0;
+-	for (num =3D 0; pathspec[num]; num++) {
++	for (num =3D 0; num < pathspec->nr; num++) {
+ 		int other, found_dup;
 =20
- extern int read_tree_recursive(struct tree *tree,
- 			       const char *base, int baselen,
--			       int stage, struct pathspec *pathspec,
-+			       int stage, const struct pathspec *pathspec,
- 			       read_tree_fn_t fn, void *context);
+ 		if (ps_matched[num])
+@@ -367,11 +369,11 @@ int report_path_error(const char *ps_matched, con=
+st char **pathspec, const char
+ 		 * twice.  Do not barf on such a mistake.
+ 		 */
+ 		for (found_dup =3D other =3D 0;
+-		     !found_dup && pathspec[other];
++		     !found_dup && pathspec->raw[other];
+ 		     other++) {
+ 			if (other =3D=3D num || !ps_matched[other])
+ 				continue;
+-			if (!strcmp(pathspec[other], pathspec[num]))
++			if (!strcmp(pathspec->raw[other], pathspec->raw[num]))
+ 				/*
+ 				 * Ok, we have a match already.
+ 				 */
+@@ -380,7 +382,7 @@ int report_path_error(const char *ps_matched, const=
+ char **pathspec, const char
+ 		if (found_dup)
+ 			continue;
 =20
- extern int read_tree(struct tree *tree, int stage, struct pathspec *pa=
-thspec);
+-		name =3D quote_path_relative(pathspec[num], -1, &sb, prefix);
++		name =3D quote_path_relative(pathspec->raw[num], -1, &sb, prefix);
+ 		error("pathspec '%s' did not match any file(s) known to git.",
+ 		      name);
+ 		errors++;
+@@ -572,7 +574,7 @@ int cmd_ls_files(int argc, const char **argv, const=
+ char *cmd_prefix)
+=20
+ 	if (ps_matched) {
+ 		int bad;
+-		bad =3D report_path_error(ps_matched, pathspec.raw, prefix);
++		bad =3D report_path_error(ps_matched, &pathspec, prefix);
+ 		if (bad)
+ 			fprintf(stderr, "Did you forget to 'git add'?\n");
+=20
+diff --git a/cache.h b/cache.h
+index 7871cd1..3c34ef5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1258,7 +1258,7 @@ extern int ws_blank_line(const char *line, int le=
+n, unsigned ws_rule);
+ #define ws_tab_width(rule)     ((rule) & WS_TAB_WIDTH_MASK)
+=20
+ /* ls-files */
+-int report_path_error(const char *ps_matched, const char **pathspec, c=
+onst char *prefix);
++int report_path_error(const char *ps_matched, const struct pathspec *p=
+athspec, const char *prefix);
+ void overlay_tree_on_cache(const char *tree_name, const char *prefix);
+=20
+ char *alias_lookup(const char *alias);
 --=20
 1.8.0.rc2.23.g1fb49df
