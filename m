@@ -1,58 +1,364 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs: manpage XML depends on asciidoc.conf
-Date: Sun, 06 Jan 2013 15:19:43 -0800
-Message-ID: <7vtxqtlx0w.fsf@alter.siamese.dyndns.org>
-References: <20130105160017.GD6440@serenity.lan>
- <20130105232800.GF3247@elie.Belkin> <7vbod2pzxd.fsf@alter.siamese.dyndns.org>
- <20130106120153.GB22081@elie.Belkin> <20130106123326.GF6440@serenity.lan>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Sergey Vlasov <vsu@altlinux.ru>,
-	Thomas Ackermann <th.acker66@arcor.de>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Jan 07 00:20:13 2013
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: [PATCH v4] git-clean: Display more accurate delete messages
+Date: Mon,  7 Jan 2013 10:16:59 +1100
+Message-ID: <1357514219-16102-1-git-send-email-zoltan.klinger@gmail.com>
+Cc: Zoltan Klinger <zoltan.klinger@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 07 00:29:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrzVd-0006hw-Bi
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 00:20:05 +0100
+	id 1Trzew-000800-JT
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 00:29:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292Ab3AFXTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 18:19:47 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47075 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753228Ab3AFXTq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 18:19:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B98E3AAD7;
-	Sun,  6 Jan 2013 18:19:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=bHLiQWQJnxREWyApbs3T
-	3Crt5/MrsLNNRA6OCRxIDzbcsyIfe57Xm3Bz8Btbyr/9LrrX10BJNkXxMlEWDI+b
-	6idBTUN4GV4Uvmyfzh7rdzBBw6Ku1aUvLxcNmSe3N4gcDIkEXsKdMzTRVm31eHCI
-	gzQeBe96QIpL3xvuFlfDfOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=H/+dy3SfedaR1YEQcxch4SUneq6/Siuq9kOoXH6pDOGagr
-	yLjJ2eaa3j7y8U5lg8aajh+/XvnA/JUyozVLLKa2maOInLlLFGh9KglH5t3U9UO4
-	jgv0ss9UZ3vkjjI2W/HErw5Zl+7wvgznib3fVmWYU7wqkcxzzGCXmYJnloBg8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9661AAD6;
-	Sun,  6 Jan 2013 18:19:45 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 26658AAD3; Sun,  6 Jan 2013
- 18:19:45 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E92C288-5857-11E2-AA7C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753299Ab3AFX3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 18:29:19 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:37603 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753228Ab3AFX3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 18:29:17 -0500
+Received: by mail-pa0-f52.google.com with SMTP id fb1so10257276pad.11
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 15:29:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=xue+3uVi1gyD0zPmzQj0MmAic09RE9fCK12HOn1kFyM=;
+        b=urWOJeYJ+yK7V8AJkBvABsxQ/czUHlBF5zLiHhE9b4EQabcxA4PLxqdUaMr/0/HtEA
+         OTPleoBOuDtSTNHhbk3Kb7UV7VPTZoGOhtXe1Z2LEdLWAbeU9gsPhq0C//CsBdlat5lo
+         tg3P4EhJZuPom0yFUxo8CPDS0guJ4knPXAbhAKQrsOPld/dfYAKJI+O1XuHLTIane0um
+         bc/elW7uAGB/MwEm48r07qXiUaqUYOo275CxAHUUmbAI50uWWK0e5iaMt1MPv33cT0qu
+         qfscOuYVnNXAvmQsbfwmUU2UnfuKTHcoA+lDMnyqVtMvnMnoje4epHDjQAZ+33f6ghrO
+         pOjA==
+X-Received: by 10.66.79.66 with SMTP id h2mr173336850pax.31.1357514956713;
+        Sun, 06 Jan 2013 15:29:16 -0800 (PST)
+Received: from localhost.localdomain (082.016.dsl.syd.iprimus.net.au. [210.50.54.82])
+        by mx.google.com with ESMTPS id rk6sm36458908pbc.20.2013.01.06.15.29.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 06 Jan 2013 15:29:16 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212859>
 
-Thanks.
+(1) Only print out the names of the files and directories that got
+    actually deleted.
+(2) Show warning message for ignored untracked git repositories
+
+Consider the following repo layout:
+
+  test.git/
+    |-- tracked_dir/
+    |     |-- some_tracked_file
+    |     |-- some_untracked_file
+    |-- tracked_file
+    |-- untracked_file
+    |-- untracked_foo/
+    |     |-- bar/
+    |     |     |-- bar.txt
+    |     |-- emptydir/
+    |     |-- frotz.git/
+    |           |-- frotz.tx
+    |-- untracked_some.git/
+          |-- some.txt
+
+Suppose the user issues 'git clean -fd' from the test.git directory.
+
+When -d option is used and untracked directory 'foo' contains a
+subdirectory 'frotz.git' that is managed by a different git repository
+therefore it will not be removed.
+
+  $ git clean -fd
+  Removing tracked_dir/some_untracked_file
+  Removing untracked_file
+  Removing untracked_foo/
+  Removing untracked_some.git/
+
+The message displayed to the user is slightly misleading. The foo/
+directory has not been removed because of foo/frotz.git still exists.
+On the other hand the subdirectories 'bar' and 'emptydir' have been
+deleted but they're not mentioned anywhere. Also, untracked_some.git
+has not been removed either.
+
+This behaviour is the result of the way the deletion of untracked
+directories are reported. In the current implementation they are
+deleted recursively but only the name of the top most directory is
+printed out. The calling function does not know about any
+subdirectories that could not be removed during the recursion.
+
+Improve the way the deleted directories are reported back to
+the user:
+  (1) Create a recursive delete function 'remove_dirs' in builtin/clean.c
+      to run in both dry_run and delete modes with the delete logic as
+      follows:
+        (a) Check if the current directory to be deleted is an untracked
+            git repository. If it is and --force --force option is not set
+            do not touch this directory, print ignore message, set dir_gone
+            flag to false for the caller and return.
+        (b) Otherwise for each item in current directory:
+              (i)   If current directory cannot be accessed, print warning,
+                    set dir_gone flag to false and return.
+              (ii)  If the item is a subdirectory recurse into it,
+                    check for the returned value of the dir_gone flag.
+                    If the subdirectory is gone, add the name of the deleted
+                    directory to a list of successfully removed items 'dels'.
+                    Else set the dir_gone flag as the current directory
+                    cannot be removed because we have at least one subdirectory
+                    hanging around.
+              (iii) If it is a file try to remove it. If success add the
+                    file name to the 'dels' list, else print error and set
+                    dir_gone flag to false.
+        (c) After we finished deleting all items in the current directory and
+            the dir_gone flag is still true, remove the directory itself.
+            If failed set the dir_gone flag to false.
+
+        (d) If the current directory cannot be deleted because the dir_gone flag
+            has been set to false, print out all the successfully deleted items
+            for this directory from the 'dels' list.
+        (e) We're done with the current directory, return.
+
+  (2) Modify the cmd_clean() function to:
+        (a) call the recursive delete function 'remove_dirs()' for each
+            topmost directory it wants to remove
+        (b) check for the returned value of dir_gone flag. If it's true
+            print the name of the directory as being removed.
+
+Consider the output of the improved version:
+
+  $ git clean -fd
+  Removing tracked_dir/some_untracked_file
+  Removing untracked_file
+  warning: ignoring untracked git repository untracked_foo/frotz.git
+  Removing untracked_foo/bar
+  Removing untracked_foo/emptydir
+  warning: ignoring untracked git repository untracked_some.git/
+
+Now it displays only the file and directory names that got actually
+deleted and shows warnings about ignored untracked git repositories.
+
+Reported-by: Soren Brinkmann <soren.brinkmann@xilinx.com>
+
+Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
+---
+ builtin/clean.c |  158 +++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 129 insertions(+), 29 deletions(-)
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 69c1cda..1714546 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -10,6 +10,7 @@
+ #include "cache.h"
+ #include "dir.h"
+ #include "parse-options.h"
++#include "refs.h"
+ #include "string-list.h"
+ #include "quote.h"
+ 
+@@ -20,6 +21,12 @@ static const char *const builtin_clean_usage[] = {
+ 	NULL
+ };
+ 
++static const char *msg_remove = N_("Removing %s\n");
++static const char *msg_would_remove = N_("Would remove %s\n");
++static const char *msg_would_ignore_git_dir = N_("Would ignore untracked git repository %s\n");
++static const char *msg_warn_ignore_git_dir = N_("ignoring untracked git repository %s");
++static const char *msg_warn_remove_failed = N_("failed to remove %s");
++
+ static int git_clean_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "clean.requireforce"))
+@@ -34,11 +41,116 @@ static int exclude_cb(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
++static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
++		int dry_run, int quiet, int *dir_gone)
++{
++	DIR *dir;
++	struct strbuf quoted = STRBUF_INIT;
++	struct dirent *e;
++	int res = 0, ret = 0, gone = 1, original_len = path->len, len, i;
++	unsigned char submodule_head[20];
++	struct string_list dels = STRING_LIST_INIT_DUP;
++
++	*dir_gone = 1;
++
++	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
++	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
++		if (dry_run && !quiet) {
++			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++			printf(_(msg_would_ignore_git_dir), quoted.buf);
++		} else if (!dry_run) {
++			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++			warning(_(msg_warn_ignore_git_dir), quoted.buf);
++		}
++
++		*dir_gone = 0;
++		return 0;
++	}
++
++	dir = opendir(path->buf);
++	if (!dir) {
++		/* an empty dir could be removed even if it is unreadble */
++		res = dry_run ? 0 : rmdir(path->buf);
++		if (res) {
++			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++			warning(_(msg_warn_remove_failed), quoted.buf);
++			*dir_gone = 0;
++		}
++		return res;
++	}
++
++	if (path->buf[original_len - 1] != '/')
++		strbuf_addch(path, '/');
++
++	len = path->len;
++	while ((e = readdir(dir)) != NULL) {
++		struct stat st;
++		if (is_dot_or_dotdot(e->d_name))
++			continue;
++
++		strbuf_setlen(path, len);
++		strbuf_addstr(path, e->d_name);
++		if (lstat(path->buf, &st))
++			; /* fall thru */
++		else if (S_ISDIR(st.st_mode)) {
++			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
++				ret = 1;
++			if (gone) {
++				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++				string_list_append(&dels, quoted.buf);
++			}
++			else
++				*dir_gone = 0;
++			continue;
++		} else {
++			res = dry_run ? 0 : unlink(path->buf);
++			if (!res) {
++				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++				string_list_append(&dels, quoted.buf);
++			}
++			else {
++				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++				warning(_(msg_warn_remove_failed), quoted.buf);
++				*dir_gone = 0;
++				ret = 1;
++			}
++			continue;
++		}
++
++		/* path too long, stat fails, or non-directory still exists */
++		*dir_gone = 0;
++		ret = 1;
++		break;
++	}
++	closedir(dir);
++
++	strbuf_setlen(path, original_len);
++
++	if (*dir_gone) {
++		res = dry_run ? 0 : rmdir(path->buf);
++		if (!res)
++			*dir_gone = 1;
++		else {
++			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
++			warning(_(msg_warn_remove_failed), quoted.buf);
++			*dir_gone = 0;
++			ret = 1;
++		}
++	}
++
++	if (!*dir_gone && !quiet) {
++		for (i = 0; i < dels.nr; i++)
++			printf(dry_run ?  _(msg_would_remove) : _(msg_remove), dels.items[i].string);
++	}
++	string_list_clear(&dels, 0);
++	return ret;
++}
++
+ int cmd_clean(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
+-	int show_only = 0, remove_directories = 0, quiet = 0, ignored = 0;
+-	int ignored_only = 0, config_set = 0, errors = 0;
++	int i, res;
++	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
++	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
+ 	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
+ 	struct strbuf directory = STRBUF_INIT;
+ 	struct dir_struct dir;
+@@ -49,7 +161,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	char *seen = NULL;
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("do not print names of files removed")),
+-		OPT__DRY_RUN(&show_only, N_("dry run")),
++		OPT__DRY_RUN(&dry_run, N_("dry run")),
+ 		OPT__FORCE(&force, N_("force")),
+ 		OPT_BOOLEAN('d', NULL, &remove_directories,
+ 				N_("remove whole directories")),
+@@ -77,7 +189,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (ignored && ignored_only)
+ 		die(_("-x and -X cannot be used together"));
+ 
+-	if (!show_only && !force) {
++	if (!dry_run && !force) {
+ 		if (config_set)
+ 			die(_("clean.requireForce set to true and neither -n nor -f given; "
+ 				  "refusing to clean"));
+@@ -149,38 +261,26 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
+ 		if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addstr(&directory, ent->name);
+-			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
+-			if (show_only && (remove_directories ||
+-			    (matches == MATCHED_EXACTLY))) {
+-				printf(_("Would remove %s\n"), qname);
+-			} else if (remove_directories ||
+-				   (matches == MATCHED_EXACTLY)) {
+-				if (!quiet)
+-					printf(_("Removing %s\n"), qname);
+-				if (remove_dir_recursively(&directory,
+-							   rm_flags) != 0) {
+-					warning(_("failed to remove %s"), qname);
++			if (remove_directories || (matches == MATCHED_EXACTLY)) {
++				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
+ 					errors++;
++				if (gone && !quiet) {
++					qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
++					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+ 				}
+-			} else if (show_only) {
+-				printf(_("Would not remove %s\n"), qname);
+-			} else {
+-				printf(_("Not removing %s\n"), qname);
+ 			}
+ 			strbuf_reset(&directory);
+ 		} else {
+ 			if (pathspec && !matches)
+ 				continue;
+-			qname = quote_path_relative(ent->name, -1, &buf, prefix);
+-			if (show_only) {
+-				printf(_("Would remove %s\n"), qname);
+-				continue;
+-			} else if (!quiet) {
+-				printf(_("Removing %s\n"), qname);
+-			}
+-			if (unlink(ent->name) != 0) {
+-				warning(_("failed to remove %s"), qname);
++			res = dry_run ? 0 : unlink(ent->name);
++			if (res) {
++				qname = quote_path_relative(ent->name, -1, &buf, prefix);
++				warning(_(msg_warn_remove_failed), qname);
+ 				errors++;
++			} else if (!quiet) {
++				qname = quote_path_relative(ent->name, -1, &buf, prefix);
++				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+ 			}
+ 		}
+ 	}
+-- 
+1.7.9.5
