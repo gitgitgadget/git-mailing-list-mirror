@@ -1,101 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Alphabetize the fast-import options, following a
- suggestion on the list.
-Date: Sat, 05 Jan 2013 23:12:25 -0800
-Message-ID: <7vy5g6okdi.fsf@alter.siamese.dyndns.org>
-References: <20130105164415.39B144044B@snark.thyrsus.com>
- <20130105231151.GD3247@elie.Belkin>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 06 Jan 2013 08:23:33 +0100
+Message-ID: <50E92675.4010907@web.de>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org,
-	David Michael Barr <b@rr-dav.id.au>,
-	Pete Wyckoff <pw@padd.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 08:17:51 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jason Pyeron <jpyeron@pdinc.us>
+X-From: git-owner@vger.kernel.org Sun Jan 06 08:23:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrkUP-0008H9-0A
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 08:17:49 +0100
+	id 1TrkaJ-0005Zf-VX
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 08:23:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881Ab3AFHM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 02:12:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49379 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750780Ab3AFHM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 02:12:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9466A76A1;
-	Sun,  6 Jan 2013 02:12:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/U6zw38xX3ca8Wida/ZNLqhWoFE=; b=P1FC3b
-	zQvI7AZ31EQvUpHHTrJFpQvoM5gIfz4o+riMK5OrXIgsvF43VndLI3CRbfoXwOw/
-	I9TFlpLhxFDHDnMKMQu9dE25MxBUa1ghcY2k7N+lwHNnt1ZMqrSRHNRzkw8waRp6
-	r6yjtITYiJxHPDt/IqMnNVKaOnFhUiIAFKV3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cEeV2oKYo6ukRzNdgb9FxL3q8wxSI2Nl
-	mTD1R9GZemnpOMro1b31AnIrglHaVUOSJok2x+6VHKk9eVhEfpDoXKI54NEYmFBd
-	etB02WkZ5fmiNhoKmZugEXb/pY78itv2xKaJaixKLHy0W15PXLqmzjKxXRK0BzLp
-	9eepqfFj30w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8720676A0;
-	Sun,  6 Jan 2013 02:12:27 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13946769F; Sun,  6 Jan 2013
- 02:12:26 -0500 (EST)
-In-Reply-To: <20130105231151.GD3247@elie.Belkin> (Jonathan Nieder's message
- of "Sat, 5 Jan 2013 15:11:51 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D2AFE8A-57D0-11E2-AF59-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751056Ab3AFHXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 02:23:36 -0500
+Received: from mout.web.de ([212.227.15.3]:64421 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750974Ab3AFHXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 02:23:35 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0M4Hqd-1T1QyU2uzj-00riRV; Sun, 06 Jan 2013 08:23:33
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <BB541ECCD3F04E479F06CA491DDB598D@black>
+X-Provags-ID: V02:K0:mAlu1El24m+ESn9Mi3n+MS0OO8FSCDOJYSp9Hua+pb9
+ EMZq4LWm5MR1wrO1esEZlRG3TFPiIuCJPEXTLmJBj8s0Buv8N8
+ 5wis/Qja9ZBbrRUcoT4MFJx2udY9es13peHQ6tQuM/WgufoMpm
+ pqicbDi2niMP7H6I4pw/8jmCwBXuFnmQn/o58UMidMDqPEBYg3
+ rFX3pPo8SqUs6tcMzHWlQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212783>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 06.01.13 07:29, Jason Pyeron wrote:
+>> -----Original Message-----
+>> From: Stephen & Linda Smith 
+>> Sent: Sunday, January 06, 2013 1:21
+>>
+>>> Was it the commit before
+>>> 9fca6cffc05321445b59c91e8f8d308f41588b53 that compiles or was it 
+>>> 9fca6cffc05321445b59c91e8f8d308f41588b53 that compiled? I 
+>> am doing a 
+>>> cygwin update presently to look at it.
+>>
+>> Since the email earlier today, I had blown away the 
+>> directory.   I just now 
+>> did the following
+>>
+>> git clone https://github.com/git/git.git git-src && cd 
+>> git-src && make all
+>> ...   The make errored out as before
+>>
+> 
+> No error for me.
+> 
+>> git co 9fca6c && make all
+>> ...   The make errored out as before
+> 
+> No error for me.
+> 
+>>
+>> git co 9fca6c^  && make all
+>> ... and this compiles to completion
+>>
+>> CYGWIN_NT-5.1 WINXPMACHINE 1.7.14(0.260/5/3) 2012-04-24 17:22 
+>> i686 Cygwin
+> 
+> This is old, do you have the luxury of updating it?
+> 
+>>
+>> What else can I do to test this out (I will get a current 
+>> cygwin tomorrow to use in a test).
+> 
+> I would also check to see if your devel packages are up to date too.
 
-> My knee-jerk response was "If the options are currently organized logically,
-> wouldn't it be more appropriate to add a sub-heading for each group of options
-> and alphabetize only within the subgroups?"
->
-> But in fact the current options list doesn't seem to be well organized at all.
-> What do you think would be a logical way to group these?
->
->  Features of input syntax
->
-> 	--date-format
-> 	--done
->
->  Verbosity
->
-> 	--quiet
-> 	--stats
->
->  Marks handling (checkpoint/restore)
->
-> 	--import-marks
-> 	--import-marks-if-exists
-> 	--export-marks
-> 	--relative-marks
->
->  Semantics of execution
->
-> 	--dry-run
-> 	--force
-> 	--cat-blob-fd
-> 	--export-pack-edges
->
->  Tuning
->
-> 	--active-branches
-> 	--max-pack-size
-> 	--big-file-threshold
-> 	--depth
+You can either upgrade to cygwin 1.17 or higher.
+Or, if that is really not possible (because you are sitting on a production machine,
+where no changes are allowed),
 
-Sounds sensible.
+You can enable this in Makefile: 
+CYGWIN_V15_WIN32API = YesPlease
+
+HTH
+/Torsten
