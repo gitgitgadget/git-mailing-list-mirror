@@ -1,112 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH jk/pathspec-literal] t6130-pathspec-noglob: Windows
- does not allow a file named "f*"
-Date: Sun, 06 Jan 2013 15:07:43 +0100
-Message-ID: <50E9852F.2060005@kdbg.org>
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 06 Jan 2013 07:09:24 -0700
+Message-ID: <2339898.c8oKya4a2t@thunderbird>
+References: <2491041.bQ51Qu8HcA@thunderbird> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Git Mailing List <git@vger.kernel.org>,
- msysGit <msysgit@googlegroups.com>
-To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBCJYV6HBKQIK3CVGQ4CRUBFRY7NZU@googlegroups.com Sun Jan 06 15:08:00 2013
-Return-path: <msysgit+bncBCJYV6HBKQIK3CVGQ4CRUBFRY7NZU@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f63.google.com ([74.125.82.63])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Jason Pyeron <jpyeron@pdinc.us>,
+	Eric Blake <eblake@redhat.com>, git@vger.kernel.org,
+	Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: ischis2@cox.net
+X-From: git-owner@vger.kernel.org Sun Jan 06 15:09:20 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIK3CVGQ4CRUBFRY7NZU@googlegroups.com>)
-	id 1TrqtJ-0005G0-WF
-	for gcvm-msysgit@m.gmane.org; Sun, 06 Jan 2013 15:07:58 +0100
-Received: by mail-wg0-f63.google.com with SMTP id dq12sf7740100wgb.8
-        for <gcvm-msysgit@m.gmane.org>; Sun, 06 Jan 2013 06:07:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:x-received:received-spf
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
-        bh=+NdWmm5v1sXj/5tao6WMg/HVKZmNUK2Rh7EAZhRHpZw=;
-        b=BpdIXKxmZID7wliuH2ZmdIzJ1yRH1tgADuGUBL7xsQ1iHIx90N6CM6F+N8ZqCKH/jR
-         +iKQfaDK00zSdf13ZK6Dp3P6dQXJS5OLdMnbxGH4uzy23D5vuNVLT1gKzZUjKm2D/K10
-         UPf/1RuMUPBMZHA2GOdfg/Gev7nUCH6InwZjF5FLXbtTLyQ4/wF0dIP71ECXHROQ8lLP
-         8VGrcO6Kag9l9eA9Y2N1hGiy6XH3xQ2WChYIc/Ap7IPbdYdhjopFowclqUEKolhmQclD
-         yoTl2A/ZYiuLElwmQXaP17sgW/b42+c4vBBAujf+An5jhj7gRzEQKkk8oG9u5s3IMm46
-      
-X-Received: by 10.180.89.241 with SMTP id br17mr672315wib.4.1357481262499;
-        Sun, 06 Jan 2013 06:07:42 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.75.72 with SMTP id a8ls657554wiw.17.canary; Sun, 06 Jan
- 2013 06:07:41 -0800 (PST)
-X-Received: by 10.14.224.201 with SMTP id x49mr73165200eep.5.1357481261429;
-        Sun, 06 Jan 2013 06:07:41 -0800 (PST)
-X-Received: by 10.14.224.201 with SMTP id x49mr73165197eep.5.1357481261417;
-        Sun, 06 Jan 2013 06:07:41 -0800 (PST)
-Received: from bsmtp.bon.at (bsmtp1.bon.at. [213.33.87.15])
-        by gmr-mx.google.com with ESMTP id z44si20979225een.0.2013.01.06.06.07.41;
-        Sun, 06 Jan 2013 06:07:41 -0800 (PST)
-Received-SPF: neutral (google.com: 213.33.87.15 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=213.33.87.15;
-Received: from [192.168.0.207] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id B2767130047;
-	Sun,  6 Jan 2013 15:07:40 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
- 213.33.87.15 is neither permitted nor denied by best guess record for domain
- of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212803>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TrquY-0006OM-F0
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 15:09:14 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755985Ab3AFOIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 09:08:54 -0500
+Received: from fed1rmfepo201.cox.net ([68.230.241.146]:39429 "EHLO
+	fed1rmfepo201.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755929Ab3AFOIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 09:08:53 -0500
+Received: from fed1rmimpo110 ([68.230.241.159]) by fed1rmfepo201.cox.net
+          (InterMail vM.8.01.04.00 201-2260-137-20101110) with ESMTP
+          id <20130106140852.WFQZ19285.fed1rmfepo201.cox.net@fed1rmimpo110>
+          for <git@vger.kernel.org>; Sun, 6 Jan 2013 09:08:52 -0500
+Received: from thunderbird ([24.251.82.172])
+	by fed1rmimpo110 with cox
+	id ke8s1k00D3j4oj401e8sjw; Sun, 06 Jan 2013 09:08:52 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020203.50E98574.0076,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=d8F3OGfE c=1 sm=1
+ a=+a/fVzVtFbLp+jmGrq7Gkg==:17 a=HhTkiSSM8msA:10 a=e0l_DMu7-BoA:10
+ a=G8Uczd0VNMoA:10 a=kj9zAlcOel0A:10 a=kviXuzpPAAAA:8 a=fF2DVJrTF3UA:10
+ a=OR6XOmeiMEfmZnhQEd0A:9 a=CjuIK1q_8ugA:10 a=+a/fVzVtFbLp+jmGrq7Gkg==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id 34EAF14093C;
+	Sun,  6 Jan 2013 07:09:25 -0700 (MST)
+User-Agent: KMail/4.9.3 (Linux/3.5.0-21-generic; KDE/4.9.3; x86_64; ; )
+In-Reply-To: <20130106120917.GC22081@elie.Belkin>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212804>
 
-Windows disallows file names that contain a star. Arrange the test setup
-to insert the file name "f*" in the repository without the corresponding
-file in the worktree.
+On Sunday, January 06, 2013 04:09:17 AM Jonathan Nieder wrote:
+> Mark Levedahl wrote:
+> >                                                          However, the
+> >                                                          newer
+> > 
+> > win32api is provided only for the current cygwin release series, which can
+> > be reliably identified by having dll version 1.7.x, while the older frozen
+> > releases (dll versions 1.6.x from redhat, 1.5.x open source) still have
+> > the
+> > older api as no updates are being made for the legacy version(s).
+> 
+> Ah.  That makes sense, thanks.
+> 
+> (For the future, if we wanted to diagnose an out-of-date win32api and
+> print a helpful message, I guess cygcheck would be the command to use.)
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t6130-pathspec-noglob.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/t/t6130-pathspec-noglob.sh b/t/t6130-pathspec-noglob.sh
-index bb5e710..39ef619 100755
---- a/t/t6130-pathspec-noglob.sh
-+++ b/t/t6130-pathspec-noglob.sh
-@@ -6,7 +6,13 @@ test_description='test globbing (and noglob) of pathspec limiting'
- test_expect_success 'create commits with glob characters' '
- 	test_commit unrelated bar &&
- 	test_commit vanilla foo &&
--	test_commit star "f*" &&
-+	# insert file "f*" in the commit, but in a way that avoids
-+	# the name "f*" in the worktree, because it is not allowed
-+	# on Windows (the tests below do not depend on the presence
-+	# of the file in the worktree)
-+	git update-index --add --cacheinfo 100644 "$(git rev-parse HEAD:foo)" "f*" &&
-+	test_tick &&
-+	git commit -m star &&
- 	test_commit bracket "f[o][o]"
- '
- 
--- 
-1.8.1.1672.g5e2a3d4.dirty
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Thank you for the information.   I will update my cygwin installation.
