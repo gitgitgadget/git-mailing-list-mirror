@@ -1,122 +1,91 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] clone: forbid --bare --separate-git-dir <dir>
-Date: Sun,  6 Jan 2013 16:47:50 +0700
-Message-ID: <1357465670-32766-1-git-send-email-pclouds@gmail.com>
-References: <20130106091642.GA10956@elie.Belkin>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 6 Jan 2013 01:57:57 -0800
+Message-ID: <20130106095757.GC10956@elie.Belkin>
+References: <2491041.bQ51Qu8HcA@thunderbird>
+ <1890551.8jTmplCF6O@thunderbird>
+ <BB541ECCD3F04E479F06CA491DDB598D@black>
+ <50E92675.4010907@web.de>
+ <20130106093211.GB10956@elie.Belkin>
+ <50E946EB.1000709@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	"W. Trevor King" <wking@drexel.edu>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Jonathan Niedier <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 10:48:13 2013
+Cc: Stephen & Linda Smith <ischis2@cox.net>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Eric Blake <eblake@redhat.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 06 10:58:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trmpv-0001CC-LV
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 10:48:11 +0100
+	id 1Trmzp-0003kb-DX
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 10:58:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712Ab3AFJrt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 04:47:49 -0500
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:61226 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752189Ab3AFJrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 04:47:47 -0500
-Received: by mail-pb0-f41.google.com with SMTP id xa7so10029712pbc.0
-        for <git@vger.kernel.org>; Sun, 06 Jan 2013 01:47:47 -0800 (PST)
+	id S1755264Ab3AFJ6F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 04:58:05 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:49862 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753147Ab3AFJ6E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2013 04:58:04 -0500
+Received: by mail-pa0-f49.google.com with SMTP id bi1so10082403pad.8
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 01:58:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=6OT57tw0A4GRe+rjF+e1YO1RnlgXGAiGjMxN720qeUw=;
-        b=mq9eVECSR3wptphb1xHTqkM/uql46wtb2RZaFZitHl2WB/uh2LijUfk2WpTc+wjOfO
-         9xW+5fPWWQGf06Jd3Az65LnlMQFlQB75QUqWyO31h0b2dCdozYrRx/0VGj+VJheCUNXs
-         RAwLhvMCFW9vUp3qo4WAnrMTrOe8oRowJ5Z9TagesgSMeAblZq3DGBw82ahHLxjj3976
-         PVNv3dte9yhjCBAsZ1FvQBm1BmnWrt6Bi1xRLK4bWCd2MiEG3069Ee9w0foXpOAd0Xwq
-         EUHBwj1vdLj2RXUlnODTMTujk49g38qAE2cZFV9O3I1CKgTT8U8MVJfkGsG0k7lHRqgr
-         QVFQ==
-X-Received: by 10.68.197.71 with SMTP id is7mr176691278pbc.79.1357465667134;
-        Sun, 06 Jan 2013 01:47:47 -0800 (PST)
-Received: from lanh ([115.74.34.31])
-        by mx.google.com with ESMTPS id i1sm36581246pav.35.2013.01.06.01.47.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Jan 2013 01:47:46 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 06 Jan 2013 16:47:54 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <20130106091642.GA10956@elie.Belkin>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=woTHsTtK79TaKy/codwKJRCMPcbnpTHuBthzuSOGT2s=;
+        b=RL0JtoO+UhudlyUYHeqi1WFWBtjZv3xCQXiyGQzdeOrF7XOnsyUhYLOHRaiVadWXby
+         WY1GSU+q8G/vWpqENW+BKFB08AmV57EQ+jA11V25JCCwzRxrj0Ygzj9SUPfE9srRiTA4
+         H35IVDhDUvERoeDsc8xzupoeYT/eTy9hjblkxnIVq+PMNyL026CKmC6zwgBg6esiQic8
+         8mmScjwDAlMnKYn+iIA/UcC001mm3SWjr8gJ8WwooZgoXM3mnWpmtF5WGCmLt+ImCmqQ
+         cLkkMJvZVtdwNw09JpPgHK9L+gktSWHpk1ZspTDHmduisMPwHvow7NlKFNiZFUG0p61I
+         cnfw==
+X-Received: by 10.68.137.131 with SMTP id qi3mr176633937pbb.114.1357466283006;
+        Sun, 06 Jan 2013 01:58:03 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id wh8sm35553973pbc.75.2013.01.06.01.58.00
+        (version=SSLv3 cipher=OTHER);
+        Sun, 06 Jan 2013 01:58:01 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <50E946EB.1000709@web.de>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212791>
 
---separate-git-dir was added to clone with the repository away from
-standard position <worktree>/.git. It does not make sense to use it
-without creating working directory.
+Torsten B=C3=B6gershausen wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Sun, Jan 6, 2013 at 4:16 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
- > Duy Nguyen wrote:
- >
- >>                                                               And
- >> because junk_work_tree is not set up for --bare, I guess we still n=
-eed
- >> to fix "--bare --separate-git-dir" case, or forbid it because i'm n=
-ot
- >> sure if that case makes sense at all.
- >
- > Forbidding it makes sense to me.  If some day we want a git command =
-to
- > create a .git file, I don't think it should be spelled as "git clone
- > --bare --separate-git-dir <repo>".
+> The short version:
+> Cygwin versions  1.7.1 up to 1.7.16 use the same header files as cygw=
+in 1.5
+[...]
+> I don't know if we want to improve the Makefile to enable=20
+> CYGWIN_V15_WIN32API =3D YesPlease=20
+> for cygwin versions 1.7.1 .. 1.7.16 (which are outdated)
 
- That command does not work because --separate-git-dir requires an
- argument in addition to <repo>, which is taken as the target repo.
- Still it's hard to find a use case for
+Confusing.  Sounds like the condition in 380a4d92 (Update cygwin.c for
+new mingw-64 win32 api headers, 2012-11-11) was too strict and the
+Makefile should say something like
 
- git clone --bare --separate-git-dir <real-repo> <symlink-repo>
-=20
- > In the meantime,
- >
- >         printf '%s\n' 'gitdir: /path/to/repo' >repo.git
- >
- > works fine.
+	# Cygwin versions up to 1.7.16 used the same headers
+	# as Cygwin 1.5.
+	ifeq ($(shell expr "$(uname_R)" : '1\.7\.[0-9]$$'),5)
+		CYGWIN_V15_WIN32API =3D YesPlease
+	endif
+	ifeq ($(shell expr "$(uname_R)" : '1\.7\.1[0-6]$$'),6)
+		CYGWIN_V15_WIN32API =3D YesPlease
+	endif
 
- Yeah. A separate clone operation following by that printf should be
- clearer.
+	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
+		CYGWIN_V15_WIN32API =3D YesPlease
+		...
+	endif
 
-
- builtin/clone.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ec2f75b..360e430 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -704,6 +704,12 @@ int cmd_clone(int argc, const char **argv, const c=
-har *prefix)
- 		if (option_origin)
- 			die(_("--bare and --origin %s options are incompatible."),
- 			    option_origin);
-+		if (real_git_dir)
-+			/*
-+			 * If you lift this restriction, remember to
-+			 * clean .git in this case in remove_junk_on_signal
-+			 */
-+			die(_("--bare and --separate-git-dir are incompatible."));
- 		option_no_checkout =3D 1;
- 	}
-=20
---=20
-1.8.0.rc2.23.g1fb49df
+Is that right?
