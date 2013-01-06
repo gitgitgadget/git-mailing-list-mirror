@@ -1,100 +1,122 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Sun, 06 Jan 2013 10:42:03 +0100
-Message-ID: <50E946EB.1000709@web.de>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] clone: forbid --bare --separate-git-dir <dir>
+Date: Sun,  6 Jan 2013 16:47:50 +0700
+Message-ID: <1357465670-32766-1-git-send-email-pclouds@gmail.com>
+References: <20130106091642.GA10956@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Stephen & Linda Smith <ischis2@cox.net>,
-	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	Mark Levedahl <mlevedahl@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 10:42:33 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	"W. Trevor King" <wking@drexel.edu>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Jonathan Niedier <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 10:48:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrmkR-0003j3-67
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 10:42:31 +0100
+	id 1Trmpv-0001CC-LV
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 10:48:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752660Ab3AFJmL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 04:42:11 -0500
-Received: from mout.web.de ([212.227.15.4]:51270 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752189Ab3AFJmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 04:42:10 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LfAbI-1TCBWN32z2-00oe4f; Sun, 06 Jan 2013 10:42:03
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130106093211.GB10956@elie.Belkin>
-X-Provags-ID: V02:K0:RBsPhlXShQWWe8kf2/v2InS/6x1TXJlJUuk4WbRXmG7
- WSmu8uLdCAy+bmk/wQbfBgIfWqiBB+dUspkPhBwDOdO4DeHKTw
- Ihh3HjIlR+DZ+Kfy3+/IsfmFsbcY8cSr/EUS7PkjcNyLOBkiSi
- Pd+1nAGZ+LURx3AbWtxUCrMRvslIurDXh5sZ7SgxHCHkBrpfwC
- RaSYAkAseQZNvqunM+SuQ==
+	id S1752712Ab3AFJrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 04:47:49 -0500
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:61226 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752189Ab3AFJrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 04:47:47 -0500
+Received: by mail-pb0-f41.google.com with SMTP id xa7so10029712pbc.0
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 01:47:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=6OT57tw0A4GRe+rjF+e1YO1RnlgXGAiGjMxN720qeUw=;
+        b=mq9eVECSR3wptphb1xHTqkM/uql46wtb2RZaFZitHl2WB/uh2LijUfk2WpTc+wjOfO
+         9xW+5fPWWQGf06Jd3Az65LnlMQFlQB75QUqWyO31h0b2dCdozYrRx/0VGj+VJheCUNXs
+         RAwLhvMCFW9vUp3qo4WAnrMTrOe8oRowJ5Z9TagesgSMeAblZq3DGBw82ahHLxjj3976
+         PVNv3dte9yhjCBAsZ1FvQBm1BmnWrt6Bi1xRLK4bWCd2MiEG3069Ee9w0foXpOAd0Xwq
+         EUHBwj1vdLj2RXUlnODTMTujk49g38qAE2cZFV9O3I1CKgTT8U8MVJfkGsG0k7lHRqgr
+         QVFQ==
+X-Received: by 10.68.197.71 with SMTP id is7mr176691278pbc.79.1357465667134;
+        Sun, 06 Jan 2013 01:47:47 -0800 (PST)
+Received: from lanh ([115.74.34.31])
+        by mx.google.com with ESMTPS id i1sm36581246pav.35.2013.01.06.01.47.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 06 Jan 2013 01:47:46 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 06 Jan 2013 16:47:54 +0700
+X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
+In-Reply-To: <20130106091642.GA10956@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212790>
 
-On 06.01.13 10:32, Jonathan Nieder wrote:
-> Hi,
->=20
-> Torsten B=C3=B6gershausen wrote:
->>> Stephen & Linda Smith wrote:
->=20
->>>> git co 9fca6c && make all
->>>> ...   The make errored out as before
-> [...]
->>>> git co 9fca6c^  && make all
->>>> ... and this compiles to completion
->>>>
->>>> CYGWIN_NT-5.1 WINXPMACHINE 1.7.14(0.260/5/3) 2012-04-24 17:22=20
->>>> i686 Cygwin
-> [...]
->> You can either upgrade to cygwin 1.17 or higher.
->> Or, if that is really not possible (because you are sitting on a pro=
-duction machine,
->> where no changes are allowed),
->>
->> You can enable this in Makefile:=20
->> CYGWIN_V15_WIN32API =3D YesPlease
->=20
-> What I don't understand is why commit 9fca6c would have had any
-> effect at all.  Since 1.7.14 doesn't match /^1\.[1-6]\./, wouldn't
-> the setting to avoid including <sys/stat.h> and <sys/errno.h> be
-> unset both before and after that commit?
->=20
-> Stephen, what is the content of your config.mak?
->=20
-> Curious,
-> Jonathan
-The short version:
-Cygwin versions  1.7.1 up to 1.7.16 use the same header files as cygwin=
- 1.5
+--separate-git-dir was added to clone with the repository away from
+standard position <worktree>/.git. It does not make sense to use it
+without creating working directory.
 
-The change in cygwin came in in 1.7.17,=20
-(and from that version of cygwin we need commit 9fca6c to compile git)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Sun, Jan 6, 2013 at 4:16 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+ > Duy Nguyen wrote:
+ >
+ >>                                                               And
+ >> because junk_work_tree is not set up for --bare, I guess we still n=
+eed
+ >> to fix "--bare --separate-git-dir" case, or forbid it because i'm n=
+ot
+ >> sure if that case makes sense at all.
+ >
+ > Forbidding it makes sense to me.  If some day we want a git command =
+to
+ > create a .git file, I don't think it should be spelled as "git clone
+ > --bare --separate-git-dir <repo>".
 
-Currently we can not compile git under cygwin 1.7.1 .. 1.7.16 :-(
-As "everybody" running cygwin 1.7 seems to update to the latest,
+ That command does not work because --separate-git-dir requires an
+ argument in addition to <repo>, which is taken as the target repo.
+ Still it's hard to find a use case for
 
-I don't know if we want to improve the Makefile to enable=20
-CYGWIN_V15_WIN32API =3D YesPlease=20
-for cygwin versions 1.7.1 .. 1.7.16 (which are outdated)
-
-/Torsten
-
-
-
-
+ git clone --bare --separate-git-dir <real-repo> <symlink-repo>
 =20
+ > In the meantime,
+ >
+ >         printf '%s\n' 'gitdir: /path/to/repo' >repo.git
+ >
+ > works fine.
+
+ Yeah. A separate clone operation following by that printf should be
+ clearer.
 
 
-http://git.661346.n2.nabble.com/PATCH-Rename-V15-MINGW-HEADERS-into-CYG=
-WIN-OLD-WINSOCK-HEADERS-td7571449.html
+ builtin/clone.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index ec2f75b..360e430 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -704,6 +704,12 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 		if (option_origin)
+ 			die(_("--bare and --origin %s options are incompatible."),
+ 			    option_origin);
++		if (real_git_dir)
++			/*
++			 * If you lift this restriction, remember to
++			 * clean .git in this case in remove_junk_on_signal
++			 */
++			die(_("--bare and --separate-git-dir are incompatible."));
+ 		option_no_checkout =3D 1;
+ 	}
+=20
+--=20
+1.8.0.rc2.23.g1fb49df
