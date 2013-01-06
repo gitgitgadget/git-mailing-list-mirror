@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 15/21] Convert unmerge_cache to take struct pathspec
-Date: Sun,  6 Jan 2013 13:21:02 +0700
-Message-ID: <1357453268-12543-16-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 16/21] checkout: convert read_tree_some to take struct pathspec
+Date: Sun,  6 Jan 2013 13:21:03 +0700
+Message-ID: <1357453268-12543-17-git-send-email-pclouds@gmail.com>
 References: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,126 +10,127 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 06 07:22:57 2013
+X-From: git-owner@vger.kernel.org Sun Jan 06 07:23:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrjdJ-0000Nz-7r
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 07:22:57 +0100
+	id 1TrjdO-0000Rl-2l
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 07:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451Ab3AFGWh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 01:22:37 -0500
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:49073 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080Ab3AFGWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 01:22:36 -0500
-Received: by mail-pb0-f44.google.com with SMTP id uo1so9985855pbc.17
-        for <git@vger.kernel.org>; Sat, 05 Jan 2013 22:22:35 -0800 (PST)
+	id S1751481Ab3AFGWm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 01:22:42 -0500
+Received: from mail-da0-f54.google.com ([209.85.210.54]:42993 "EHLO
+	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346Ab3AFGWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 01:22:41 -0500
+Received: by mail-da0-f54.google.com with SMTP id n2so8109670dad.13
+        for <git@vger.kernel.org>; Sat, 05 Jan 2013 22:22:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=ty2QY5zxab1HFc096gp+UOUvEj2TgWsL2KvNL/X90PU=;
-        b=dseCzlZw9jujbd2VMcX+FXBKidN5Z0lzibkf/idA9ODfV9GBt+Z+1st74cIeCD+B+F
-         fR0x3CxhJXSdlFc+HcjGvuiBjtBj8Kf+NRxJvY5aAeWP0CpnU+ICT8/OyZsd4Ns+guVH
-         V5vmjdeORg4NZNAzluMqgTqua3dD5lBMi6CpHkjXHsEiGNjgqTfLVxR6vFsDMbFGPOeZ
-         KA0XbayUopdX4C/DwFYIVn+BDZAAFgU18ERlpGgXS/c5oVOKxULoG4qoIueNrRu8BdUG
-         nmspS4IrqBG52b4UZOF4xa+Vy7REiDoTgv3fQHqFtxddCvq9YTLUSDYP8AEmOxDtd9D1
-         GIBw==
-X-Received: by 10.66.82.230 with SMTP id l6mr167912149pay.12.1357453355651;
-        Sat, 05 Jan 2013 22:22:35 -0800 (PST)
+        bh=blHDIW+qZ6nN4HBiblp28fftz/0aIs2RAaZZ0HrbtsA=;
+        b=CiFnaky6a7SfULiJegk0P4v7I3UyWK1vAuaOvZzTPJtM+efl78t0EkneyO52y/Fb48
+         6v5OPj/V0wF0GnIaBjlz8AAf+Y7KXtsvq6IZWdjJfdcI3osZq950bEwSzOX2B0JvzcI2
+         Pr1rzLoVX+V0gKC7mugPvIJXCxsBpXOKedWom7XYa4BaGSfUf3wNy1U3OrHbgFWzOpag
+         Z1CLMHNw3y9GmJZ7fBi27AvJ+BHJ/E+aXlyJRaCYJq9S7zsJnE1h7F+nP7uTmjwJQpfr
+         3TM0BU8NiP2IozUDdrZd6Udzu/dG2fBoCTdZKZiznlB20Gh1ePZrVQdw/E9Qt7j0eh8o
+         xzsw==
+X-Received: by 10.68.235.71 with SMTP id uk7mr177163438pbc.10.1357453361064;
+        Sat, 05 Jan 2013 22:22:41 -0800 (PST)
 Received: from lanh ([115.74.34.31])
-        by mx.google.com with ESMTPS id pl10sm35285165pbc.60.2013.01.05.22.22.32
+        by mx.google.com with ESMTPS id rq7sm35284898pbc.69.2013.01.05.22.22.38
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2013 22:22:35 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 06 Jan 2013 13:22:45 +0700
+        Sat, 05 Jan 2013 22:22:40 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 06 Jan 2013 13:22:50 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212770>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c | 2 +-
- rerere.c           | 2 +-
- resolve-undo.c     | 4 ++--
- resolve-undo.h     | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ builtin/checkout.c | 9 +++------
+ tree.c             | 4 ++--
+ tree.h             | 2 +-
+ 3 files changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 00910dc..aa399d6 100644
+index aa399d6..a7ddb35 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -281,7 +281,7 @@ static int checkout_paths(const struct checkout_opt=
-s *opts,
-=20
- 	/* "checkout -m path" to recreate conflicted state */
- 	if (opts->merge)
--		unmerge_cache(opts->pathspec.raw);
-+		unmerge_cache(&opts->pathspec);
-=20
- 	/* Any unmerged paths? */
- 	for (pos =3D 0; pos < active_nr; pos++) {
-diff --git a/rerere.c b/rerere.c
-index f8ddf85..9d149fa 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -666,7 +666,7 @@ int rerere_forget(struct pathspec *pathspec)
-=20
- 	fd =3D setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
-=20
--	unmerge_cache(pathspec->raw);
-+	unmerge_cache(pathspec);
- 	find_conflict(&conflict);
- 	for (i =3D 0; i < conflict.nr; i++) {
- 		struct string_list_item *it =3D &conflict.items[i];
-diff --git a/resolve-undo.c b/resolve-undo.c
-index 72b4612..1bfece2 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -156,7 +156,7 @@ int unmerge_index_entry_at(struct index_state *ista=
-te, int pos)
- 	return unmerge_index_entry_at(istate, pos);
+@@ -82,12 +82,9 @@ static int update_some(const unsigned char *sha1, co=
+nst char *base, int baselen,
+ 	return 0;
  }
 =20
--void unmerge_index(struct index_state *istate, const char **pathspec)
-+void unmerge_index(struct index_state *istate, const struct pathspec *=
-pathspec)
+-static int read_tree_some(struct tree *tree, const char **pathspec)
++static int read_tree_some(struct tree *tree, const struct pathspec *pa=
+thspec)
  {
- 	int i;
+-	struct pathspec ps;
+-	init_pathspec(&ps, pathspec);
+-	read_tree_recursive(tree, "", 0, 0, &ps, update_some, NULL);
+-	free_pathspec(&ps);
++	read_tree_recursive(tree, "", 0, 0, pathspec, update_some, NULL);
 =20
-@@ -165,7 +165,7 @@ void unmerge_index(struct index_state *istate, cons=
-t char **pathspec)
+ 	/* update the index with the given tree's info
+ 	 * for all args, expanding wildcards, and exit
+@@ -265,7 +262,7 @@ static int checkout_paths(const struct checkout_opt=
+s *opts,
+ 		return error(_("corrupt index file"));
 =20
- 	for (i =3D 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce =3D istate->cache[i];
--		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, NULL))
-+		if (!match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, NUL=
-L))
- 			continue;
- 		i =3D unmerge_index_entry_at(istate, i);
- 	}
-diff --git a/resolve-undo.h b/resolve-undo.h
-index 8458769..81e8803 100644
---- a/resolve-undo.h
-+++ b/resolve-undo.h
-@@ -11,6 +11,6 @@ extern void resolve_undo_write(struct strbuf *, struc=
-t string_list *);
- extern struct string_list *resolve_undo_read(const char *, unsigned lo=
-ng);
- extern void resolve_undo_clear_index(struct index_state *);
- extern int unmerge_index_entry_at(struct index_state *, int);
--extern void unmerge_index(struct index_state *, const char **);
-+extern void unmerge_index(struct index_state *, const struct pathspec =
-*);
+ 	if (opts->source_tree)
+-		read_tree_some(opts->source_tree, opts->pathspec.raw);
++		read_tree_some(opts->source_tree, &opts->pathspec);
 =20
- #endif
+ 	ps_matched =3D xcalloc(1, opts->pathspec.nr);
+=20
+diff --git a/tree.c b/tree.c
+index 62fed63..ff72f67 100644
+--- a/tree.c
++++ b/tree.c
+@@ -47,7 +47,7 @@ static int read_one_entry_quick(const unsigned char *=
+sha1, const char *base, int
+ }
+=20
+ static int read_tree_1(struct tree *tree, struct strbuf *base,
+-		       int stage, struct pathspec *pathspec,
++		       int stage, const struct pathspec *pathspec,
+ 		       read_tree_fn_t fn, void *context)
+ {
+ 	struct tree_desc desc;
+@@ -116,7 +116,7 @@ static int read_tree_1(struct tree *tree, struct st=
+rbuf *base,
+=20
+ int read_tree_recursive(struct tree *tree,
+ 			const char *base, int baselen,
+-			int stage, struct pathspec *pathspec,
++			int stage, const struct pathspec *pathspec,
+ 			read_tree_fn_t fn, void *context)
+ {
+ 	struct strbuf sb =3D STRBUF_INIT;
+diff --git a/tree.h b/tree.h
+index 69bcb5e..9dc90ba 100644
+--- a/tree.h
++++ b/tree.h
+@@ -25,7 +25,7 @@ typedef int (*read_tree_fn_t)(const unsigned char *, =
+const char *, int, const ch
+=20
+ extern int read_tree_recursive(struct tree *tree,
+ 			       const char *base, int baselen,
+-			       int stage, struct pathspec *pathspec,
++			       int stage, const struct pathspec *pathspec,
+ 			       read_tree_fn_t fn, void *context);
+=20
+ extern int read_tree(struct tree *tree, int stage, struct pathspec *pa=
+thspec);
 --=20
 1.8.0.rc2.23.g1fb49df
