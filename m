@@ -1,117 +1,105 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 4/4] t5002: check if unzip supports symlinks
-Date: Sun, 06 Jan 2013 18:59:39 +0100
-Message-ID: <50E9BB8B.9020101@lsrfire.ath.cx>
-References: <7vwqw7mb09.fsf@alter.siamese.dyndns.org> <50E9B82D.50005@lsrfire.ath.cx>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH v4] git-completion.bash: add support for path completion
+Date: Sun, 06 Jan 2013 19:00:21 +0100
+Message-ID: <50E9BBB5.3000707@gmail.com>
+References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com> <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se> <7vobh4sffw.fsf@alter.siamese.dyndns.org> <7vehi0qh4x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 19:00:11 2013
+Cc: Marc Khouzam <marc.khouzam@ericsson.com>, git@vger.kernel.org,
+	szeder@ira.uka.de, felipe.contreras@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 19:00:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TruW0-0006Bi-Sq
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 19:00:09 +0100
+	id 1TruWo-00078T-CT
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 19:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756093Ab3AFR7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 12:59:43 -0500
-Received: from india601.server4you.de ([85.25.151.105]:37109 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756069Ab3AFR7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 12:59:42 -0500
-Received: from [192.168.2.105] (p579BE5C2.dip.t-dialin.net [87.155.229.194])
-	by india601.server4you.de (Postfix) with ESMTPSA id 0478E81;
-	Sun,  6 Jan 2013 18:59:40 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <50E9B82D.50005@lsrfire.ath.cx>
+	id S1756097Ab3AFSAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 13:00:39 -0500
+Received: from mail-we0-f175.google.com ([74.125.82.175]:52866 "EHLO
+	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756069Ab3AFSAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 13:00:38 -0500
+Received: by mail-we0-f175.google.com with SMTP id z53so9396254wey.34
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 10:00:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=FbON0NATA3ehx9nMjqxLgO22Nq7GO82qNPy18oQHdGw=;
+        b=ebCyVv3l8SO6l3QFiprQYLjXCaSSByI1AbsTbekVCcYK2rlUOVWKk+ogRYgXjEdWb2
+         PX0SZOtPxNUQNrDkPgMdhkbSqRTKfspQyRjLU/qMwacl07kjh6348nZrI5JkXlL/rrPj
+         1kqvapZGwlY3IgB+mZZP3MjPZsb+fmAIvo1nTfJICNYbQfBqznyItH0LoT2w5eHcNeFT
+         vJ4CrtomM6EBNttKicT1Um2z86RnTMaxnlLWqr/9XxsUxJUk2VQzd2tMw0yElQH/cZoR
+         vn16/bGViq+O47sEvHrWde0tBXUtBQ5WBg/wup9FdxbK6xBAM6u2xyfeC6E8Ld7ghkGS
+         zJIg==
+X-Received: by 10.194.78.207 with SMTP id d15mr92099232wjx.52.1357495236773;
+        Sun, 06 Jan 2013 10:00:36 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.204.244])
+        by mx.google.com with ESMTPS id fv2sm8503738wib.4.2013.01.06.10.00.32
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 06 Jan 2013 10:00:35 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <7vehi0qh4x.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212831>
 
-Only add a symlink to the repository if both the filesystem and
-unzip support symlinks.  To check the latter, add a ZIP file
-containing a symlink, created like this with InfoZIP zip 3.0:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-	$ echo sample text >textfile
-	$ ln -s textfile symlink
-	$ zip -y infozip-symlinks.zip textfile symlink
+Il 05/01/2013 07:27, Junio C Hamano ha scritto:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Marc Khouzam <marc.khouzam@ericsson.com> writes:
+>>
+>>> I've been playing with it but I'm not getting the expected 
+>>> behavior when I cd to a sub-directory.
+>>
+>> Thanks for testing.  Manlio?
+> 
+> Can you try the attached patch?
+> 
 
-If we can extract it successfully, we add a symlink to the test
-repository for git archive --format=zip, or otherwise skip that
-step.  Users can see the skipped test and perhaps run it again
-with a different unzip version.
+Thanks, it seems to fix the problem.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- t/t5002-archive-zip.sh       |  26 +++++++++++++++++++-------
- t/t5002/infozip-symlinks.zip | Bin 0 -> 328 bytes
- 2 files changed, 19 insertions(+), 7 deletions(-)
- create mode 100644 t/t5002/infozip-symlinks.zip
+> As I am not familiar with the completion machinery, take this with a
+> large grain of salt.  Here is my explanation of what is going on in
+> this "how about this" fixup:
+> 
+>  * Giving --git-dir from the command line (or GIT_DIR environment)
+>    without specifying GIT_WORK_TREE is to signal Git that you are at
+>    the top of the working tree.  "git ls-files" will then show the
+>    full tree even outside the real $cwd because you are lying to
+>    Git.
+> 
 
-diff --git a/t/t5002-archive-zip.sh b/t/t5002-archive-zip.sh
-index ac9c6d4..d35aa24 100755
---- a/t/t5002-archive-zip.sh
-+++ b/t/t5002-archive-zip.sh
-@@ -12,6 +12,15 @@ test_lazy_prereq UNZIP '
- 	test $? -ne 127
- '
- 
-+test_lazy_prereq UNZIP_SYMLINKS '
-+	(
-+		mkdir unzip-symlinks &&
-+		cd unzip-symlinks &&
-+		"$GIT_UNZIP" "$TEST_DIRECTORY"/t5002/infozip-symlinks.zip &&
-+		test -h symlink
-+	)
-+'
-+
- check_zip() {
- 	zipfile=$1.zip
- 	listfile=$1.lst
-@@ -40,15 +49,18 @@ test_expect_success \
-      cp /bin/sh a/bin &&
-      printf "A\$Format:%s\$O" "$SUBSTFORMAT" >a/substfile1 &&
-      printf "A not substituted O" >a/substfile2 &&
--     if test_have_prereq SYMLINKS; then
--	ln -s a a/l1
--     else
--	printf %s a > a/l1
--     fi &&
-      (p=long_path_to_a_file && cd a &&
-       for depth in 1 2 3 4 5; do mkdir $p && cd $p; done &&
--      echo text >file_with_long_path) &&
--     (cd a && find .) | sort >a.lst'
-+      echo text >file_with_long_path)
-+'
-+
-+test_expect_success SYMLINKS,UNZIP_SYMLINKS 'add symlink' '
-+	ln -s a a/symlink_to_a
-+'
-+
-+test_expect_success 'prepare file list' '
-+	(cd a && find .) | sort >a.lst
-+'
- 
- test_expect_success \
-     'add ignored file' \
-diff --git a/t/t5002/infozip-symlinks.zip b/t/t5002/infozip-symlinks.zip
-new file mode 100644
-index 0000000000000000000000000000000000000000..065728c631cf1f7ab20a045a83abc3e08455eeba
-GIT binary patch
-literal 328
-zcmWIWW@h1H0D(ty)tzkeJdg4K*&xipAj43ST2YdgnUfkC!pXp_F7Y}5gi9;985mh!
-zFf%Z)qyW_wC*~I9q$+@vas|Lmdj&M@9kbsh4zNiK4D3MDiYs$-GV`**hM5Bm0%0`6
-zU={{=Gcw6B<8qh;&`<^jMj&3&2x7r>g@&*~oQY;CvT2wOgO~;~=j}p2APILS&@e1c
-U4De=U11V+#!r4H2I*7vn0CeC%rvLx|
+I was not aware of this, and blindly copied the code from the other
+existing functions.
+However the other completion functions never have to deal with paths in
+the working directory.
 
-literal 0
-HcmV?d00001
 
--- 
-1.7.12
+I have applied the patch to my local branch.
+
+
+> [...]
+
+
+Regards   Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDpu7UACgkQscQJ24LbaUSmUACgl+OKUyvpp183kFZGmBpOfqm1
+yqEAnjxcqmZYvWSeIpOo6cNFl/dnMH76
+=oE/+
+-----END PGP SIGNATURE-----
