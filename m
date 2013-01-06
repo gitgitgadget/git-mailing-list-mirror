@@ -1,121 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] api-allocation-growing.txt: encourage better variable
- naming
-Date: Sun, 06 Jan 2013 12:29:33 -0800
-Message-ID: <7v38yenjgy.fsf@alter.siamese.dyndns.org>
-References: <20130106152716.GB2396@pacific.linksys.moosehall>
- <1357486505-21357-1-git-send-email-git@adamspiers.org>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: Re: [PATCH] Remove the suggestion to use parsecvs, which is
+ currently broken.
+Date: Sun, 6 Jan 2013 15:32:52 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20130106203252.GA9377@thyrsus.com>
+References: <20121228162025.8565E4413A@snark.thyrsus.com>
+ <20121228230149.GA3575@book-mint>
+ <20121229044200.GA16086@thyrsus.com>
+ <20130106163420.GA3378@book-mint>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 21:29:58 2013
+Cc: git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sun Jan 06 21:33:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trwqy-0007Md-ER
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 21:29:56 +0100
+	id 1TrwuA-0002Hf-Eu
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 21:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482Ab3AFU3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 15:29:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39178 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752142Ab3AFU3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 15:29:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FC41AE28;
-	Sun,  6 Jan 2013 15:29:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WlQrIMf47VBXygy9D22AOliATdo=; b=Szq5lm
-	28nR3ab/NlZMFUgoKAKgkIG7IR0AyHCv1ZsxYnJMKvDoshGnDWPIz7/pBhndMYYU
-	Pqoj2kq6QSNbyzO5FU1tN3ZOcvNMrMKTV2TYSkVqolVnmg8T23ntiTZ4MH+pCKDX
-	LlDCf4bYdb81f04K/Ygy5/1V9BAWBKROY/DOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZV730eKJygZrT/pHWh4EjCqsQL/TCTMh
-	ArAX2wwSLfUgMk8o2jJA8bdfJ57lp3x4XcnJZJ7NrtayEqcrcHJrCF2TwCRr8lz2
-	2pWyZBpBBqZO20WBp8MuzjLZ5jk0uxRrUeapc8tB4MPEaozzNODAp71naB/XZ6Q3
-	uLa0vFyGIAU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E659AE26;
-	Sun,  6 Jan 2013 15:29:36 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5A8DAE25; Sun,  6 Jan 2013
- 15:29:35 -0500 (EST)
-In-Reply-To: <1357486505-21357-1-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Sun, 6 Jan 2013 15:35:05 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C94FBC40-583F-11E2-ABF1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752950Ab3AFUcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 15:32:55 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:37068
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752142Ab3AFUcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 15:32:54 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id C42954044B; Sun,  6 Jan 2013 15:32:52 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130106163420.GA3378@book-mint>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212838>
 
-Adam Spiers <git@adamspiers.org> writes:
+Heiko Voigt <hvoigt@hvoigt.net>:
+> > I'm parsecvs's maintainer now.  It's not in good shape; there is at
+> > least one other known showstopper besides the build issue.  I would
+> > strongly prefer to direct peoples' attention away from it until I
+> > have time to fix it and cut a release.  This is not a distant 
+> > prospect - two or three weeks out, maybe.
+> 
+> So for this short amount of time you want to change gits documentation?
 
-> The documentation for the ALLOC_GROW API implicitly encouraged
-> developers to use "ary" as the variable name for the array which is
-> dynamically grown.  However "ary" is an unusual abbreviation hardly
-> used anywhere else in the source tree, and it is also better to name
-> variables based on their contents not on their type.
+Yes.  We should not direct people to a tool that plain doesn't work.  
 
-Sounds good.  To follow "not type but contents", a further rewrite
-with s/array/item/ is even better, no?
+I'll fix parsecvs as soon as I can.  Once I do, I will add support to the
+new git-cvsimport to use parsecvs as a conversion engine, alongside
+cvsps and cvs2git.
 
-I can obviously squash it in without resending, if you agree, or you
-can point out why item[] is not a good idea and array[] is better.
+You may not have seen the first version of that patch, so I'll 
+explain. The new git-cvsimport can use multiple conversion engines;
+each one is expressed as a Python class that knows how to convert
+git-cvsimport options to engine options, and how to generate a
+command that ships an import stream to standard output.  There's
+an -e option that selects an engine.
 
->
-> Signed-off-by: Adam Spiers <git@adamspiers.org>
-> ---
->  Documentation/technical/api-allocation-growing.txt | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
-> index 43dbe09..3894815 100644
-> --- a/Documentation/technical/api-allocation-growing.txt
-> +++ b/Documentation/technical/api-allocation-growing.txt
-> @@ -5,7 +5,9 @@ Dynamically growing an array using realloc() is error prone and boring.
->  
->  Define your array with:
->  
-> -* a pointer (`ary`) that points at the array, initialized to `NULL`;
-> +* a pointer (`array`) that points at the array, initialized to `NULL`
-> +  (although please name the variable based on its contents, not on its
-> +  type);
->  
->  * an integer variable (`alloc`) that keeps track of how big the current
->    allocation is, initialized to `0`;
-> @@ -13,22 +15,22 @@ Define your array with:
->  * another integer variable (`nr`) to keep track of how many elements the
->    array currently has, initialized to `0`.
->  
-> -Then before adding `n`th element to the array, call `ALLOC_GROW(ary, n,
-> +Then before adding `n`th element to the array, call `ALLOC_GROW(array, n,
->  alloc)`.  This ensures that the array can hold at least `n` elements by
->  calling `realloc(3)` and adjusting `alloc` variable.
->  
->  ------------
-> -sometype *ary;
-> +sometype *array;
->  size_t nr;
->  size_t alloc
->  
->  for (i = 0; i < nr; i++)
-> -	if (we like ary[i] already)
-> +	if (we like array[i] already)
->  		return;
->  
->  /* we did not like any existing one, so add one */
-> -ALLOC_GROW(ary, nr + 1, alloc);
-> -ary[nr++] = value you like;
-> +ALLOC_GROW(array, nr + 1, alloc);
-> +array[nr++] = value you like;
->  ------------
->  
->  You are responsible for updating the `nr` variable.
+Currently there are two such classes, one for cvsps and one for cvs2git.
+cvsps is the default.  When parsecvs is working, it will be the work of
+a few minutes to add a parsecvs class.
+
+The architectural goal here is to make it easy for users of
+git-cvsimport to be able to experiment with different engines to
+get the best possible conversion, without having to fuss with 
+details of the engine invocation.
+
+> Is this hint causing you trouble? Are there many people asking for
+> support because of that?
+
+No.  But as a matter of principle I am against having documentation
+tell pretty lies, even temporarily. It's bad craftsmanship and bad
+faith to do that.
+ 
+> There is no README so I am not sure how the tests are supposed to be
+> build in general. Due to the lack of documentation its probably easier
+> for you Eric to port my tests.
+
+At the present state of things, I agree.  I have been so busy fighting other
+aspects of this problem that I have not yet had time to separate the
+test suite from the cvsps code and document it properly.
+
+> The structure of my tests is quite simple:
+> 
+> 	t/  - All the tests
+> 	t/cvsroot - A cvs module per test
+> 	t/t[0-9]{4}*/expect - The expected cvsps output
+> 
+> You can copy the cvs repository modules and convert the expected cvsps
+> output to whatever output you want to test against. It the found
+> changeset ordering that is interesting.
+
+Noted.  I have a copy and will port them.
+
+> The fix was never clean and AFAIR the reason behind that was that the
+> breakage in commit ordering is not easy to fix in cvsps.
+
+Understood. But it's better than no fix at all.
+
+>                                                           That and
+> because there are other working tools out there was the reason why I
+> stopped working on fixing cvsps.
+
+Once I have all three tools working and can run them against a common
+test suite, several interesting possibilities will open up.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
