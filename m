@@ -1,131 +1,101 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] status: report ignored yet tracked directories
-Date: Sun, 6 Jan 2013 17:40:46 +0100
-Message-ID: <CALWbr2yRQai2Z08G2qFbA3AvsgivR-8kQ64SZ4pEktyrf+ZXiQ@mail.gmail.com>
-References: <20130105112432.GA14666@sigill.intra.peff.net>
-	<1357418563-6626-1-git-send-email-apelisse@gmail.com>
-	<20130105230303.GA5195@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 06 17:41:12 2013
+From: Adam Spiers <git@adamspiers.org>
+Subject: [PATCH v4 00/11] new git check-ignore sub-command
+Date: Sun,  6 Jan 2013 16:58:02 +0000
+Message-ID: <1357491493-11619-1-git-send-email-git@adamspiers.org>
+References: <20130106161758.GC2396@pacific.linksys.moosehall>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 06 17:58:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrtHX-0005ci-JN
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 17:41:07 +0100
+	id 1TrtYY-0007mE-0r
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 17:58:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756064Ab3AFQkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 11:40:49 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:36623 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756050Ab3AFQkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 11:40:47 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e53so9130406eek.33
-        for <git@vger.kernel.org>; Sun, 06 Jan 2013 08:40:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8l5se3YQ4lxNWW9POHFO2LBM9PM90tWZTa1U9IcQYAs=;
-        b=NoxhkvBHUNxur1s/FoQZlQVl60XxLtFKNMh3GBD3ia5poGF/G+1DIp1hUbVc54w7kr
-         /D6NHnrI/geDPugs1GFdPNzD8pIndPCfoPl2xLF0i5FvUD0R+OaG5gJgMdGzkmSCSg3+
-         gEj5fFALKy1SBEwa4ky0hFbWAXPcesgo0Kjof9gdXgRQr3Ife5s3vNVzFgmFeCAjG8F7
-         B507lAP6q+AbcdUlf+qKPEDV335ox+CVcLxWUZmS9fAypyuNrgCh0ZNn+zPjA70sD6WQ
-         hIEI4BnnqRqpWGXH0NjeNs1Dyiz8SjULDsBMDHlsWoUUcx2uoP2tjBM4ZNEDKJ9ypgz8
-         KiBw==
-Received: by 10.14.1.195 with SMTP id 43mr160895653eed.31.1357490446501; Sun,
- 06 Jan 2013 08:40:46 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Sun, 6 Jan 2013 08:40:46 -0800 (PST)
-In-Reply-To: <20130105230303.GA5195@sigill.intra.peff.net>
+	id S1756078Ab3AFQ6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 11:58:18 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:45593 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756067Ab3AFQ6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 11:58:17 -0500
+Received: from localhost (f.4.d.7.f.d.e.f.f.f.3.7.3.0.a.1.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:1a03:73ff:fedf:7d4f])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 3FEC42E5D3
+	for <git@vger.kernel.org>; Sun,  6 Jan 2013 16:58:14 +0000 (GMT)
+X-Mailer: git-send-email 1.7.11.7.33.gb8feba5
+In-Reply-To: <20130106161758.GC2396@pacific.linksys.moosehall>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212814>
 
-On Sun, Jan 6, 2013 at 12:03 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jan 05, 2013 at 09:42:43PM +0100, Antoine Pelisse wrote:
->
->> Tracked directories (i.e. directories containing tracked files) that
->> are ignored must be reported as ignored if they contain untracked files.
->>
->> Currently, tracked files or directories can't be reported untracked or ignored.
->> Remove that constraint when searching ignored files.
->>
->> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
->> ---
->
-> I was expecting to see some explanation of the user-visible bug here. In
-> other words, what does this fix, and why does the bug only happen when
-> core.ignorecase is set.
+This is the v4 re-roll of the check-ignore series, which is based on
+Junio's as/dir-c-cleanup topic branch f6198812 (dir.c: rename
+free_excludes() to clear_exclude_list(), 2012-12-27).  As previously
+discussed, the earlier parts of the v3 series seem to be complete and
+are progressing to 'next'.
 
-I spent a couple of hours trying to understand that issue, and even if
-I ended-up with pretty much the same points as you do below, I was not
-confident enough to phrase it like you just did.
+Since v3, I addressed the issue of newly public functions with
+unacceptably vague or generic names via the following steps:
 
-> Looking at your fix and remembering how the index hashing works, I think
-> the answer is that:
->
->   1. This bug only affects directories, because they are the only thing
->      that can be simultaneously "ignored and untracked" and "tracked"
->      (i.e., they have entries of both, and we are using
->      DIR_SHOW_OTHER_DIRECTORIES).
->
->   2. When core.ignorecase is false, the index name hash contains only
->      the file entries, and cache_name_exists returns an exact match. So
->      it doesn't matter if we make an extra check when adding the
->      directory via dir_add_name; we know that it will not be there, and
->      the final check is a no-op.
->
->   3. When core.ignorecase is true, we also store directory entries in
->      the index name hash, and this extra check is harmful; the entry
->      does not really exist in the index, and we still need to add it.
+  - eliminated extraction from add.c to pathspec.c of two functions
+    which did not need to be public (validate_pathspec() and
+    treat_gitlinks())
 
-Yes, because of this couple of lines I guess (name-hash.c, hash_index_entry()):
+  - edited the series history to create separate commits for
+    extraction of reusable code from treat_gitlinks() and
+    validate_pathspec() into more carefully named public functions
 
-  if (ignore_case)
-    hash_index_entry_directories(istate, ce);
+This should make reviewing easier.
 
-> But that makes me wonder. In the ignorecase=false case, I claimed that
-> the check in dir_add_name is a no-op for mixed tracked/ignored
-> directories. But it is presumably not a no-op for other cases. Your
-> patch only turns it off when DIR_SHOW_IGNORED is set. But is it possible
-> for us to have DIR_SHOW_IGNORED set, _and_ to pass in a path that exists
-> in the index as a regular file?
+I will summarise the changes in the revised patches since v3 in
+between the "---" divider and the diffstat of each individual patch.
 
-I don't think so, because of the optimization I added in my previous
-patch, in treat_file():
+This series is also available via the check-ignore-v4 tag in:
 
-  /*
-   * Optimization:
-   * Don't spend time on indexed files, they won't be
-   * added to the list anyway
-   */
-  struct cache_entry *ce = index_name_exists(&the_index,
-    path->buf, path->len, ignore_case);
+    git://github.com/aspiers/git.git
 
-It's no longer an optimization but a required step, I will update the comment.
+Adam Spiers (11):
+  dir.c: use a single struct exclude_list per source of excludes
+  dir.c: keep track of where patterns came from
+  dir.c: provide clear_directory() for reclaiming dir_struct memory
+  dir.c: improve docs for match_pathspec() and match_pathspec_depth()
+  add.c: remove unused argument from validate_pathspec()
+  add.c: move pathspec matchers into new pathspec.c for reuse
+  pathspec.c: rename newly public functions for clarity
+  add.c: extract check_path_for_gitlink() from treat_gitlinks() for
+    reuse
+  add.c: extract new die_if_path_beyond_symlink() for reuse
+  setup.c: document get_pathspec()
+  add git-check-ignore sub-command
 
-> I think in the normal file case, we'd expect treat_path to just tell us
-> that it is handled, and we would not ever call dir_add_name in the first
-> place. But what if we have an index entry for a file, but the working
-> tree now contains a directory?
+ .gitignore                                        |   1 +
+ Documentation/git-check-ignore.txt                |  89 +++
+ Documentation/gitignore.txt                       |   6 +-
+ Documentation/technical/api-directory-listing.txt |  14 +-
+ Makefile                                          |   3 +
+ builtin.h                                         |   1 +
+ builtin/add.c                                     |  78 +--
+ builtin/check-ignore.c                            | 173 ++++++
+ builtin/clean.c                                   |   3 +-
+ builtin/ls-files.c                                |   9 +-
+ command-list.txt                                  |   1 +
+ contrib/completion/git-completion.bash            |   1 +
+ dir.c                                             | 152 ++++--
+ dir.h                                             |  62 ++-
+ git.c                                             |   1 +
+ pathspec.c                                        | 101 ++++
+ pathspec.h                                        |   9 +
+ setup.c                                           |  19 +
+ t/t0008-ignores.sh                                | 632 ++++++++++++++++++++++
+ unpack-trees.c                                    |   2 +-
+ 20 files changed, 1240 insertions(+), 117 deletions(-)
+ create mode 100644 Documentation/git-check-ignore.txt
+ create mode 100644 builtin/check-ignore.c
+ create mode 100644 pathspec.c
+ create mode 100644 pathspec.h
+ create mode 100755 t/t0008-ignores.sh
 
-The directory is treated as any other untracked directory (it never
-matches indexed file because of the trailing /).
-
-> I _think_ we still do not hit this code path in that instance, because
-> we will end up in treat_directory, and we will end up checking
-> directory_exists_in_index. And I cannot get it to misbehave in practice.
-> So I think your fix is correct, but the exact how and why is a bit
-> subtle.
-
-Thanks a lot for the help, I will try to come up with a better commit
-message now.
-
-> -Peff
+-- 
+1.7.11.7.33.gb8feba5
