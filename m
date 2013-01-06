@@ -1,84 +1,74 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: [PATCH] Alphabetize the fast-import options, following a
- suggestion on the list.
-Date: Sun, 6 Jan 2013 00:13:09 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20130106051309.GB2303@thyrsus.com>
-References: <20130105164415.39B144044B@snark.thyrsus.com>
- <20130105231151.GD3247@elie.Belkin>
-Reply-To: esr@thyrsus.com
+From: Jeff King <peff@peff.net>
+Subject: Re: Trying to understand the web dav details
+Date: Sun, 6 Jan 2013 00:38:07 -0500
+Message-ID: <20130106053807.GA8551@sigill.intra.peff.net>
+References: <151C51E6FBD848739A43A2C17D78DD68@black>
+ <20130106041942.GB4879@sigill.intra.peff.net>
+ <871B6C10EBEFE342A772D1159D1320853A011871@umechphj.easf.csd.disa.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <b@rr-dav.id.au>,
-	Pete Wyckoff <pw@padd.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 06:14:52 2013
+Content-Type: text/plain; charset=utf-8
+Cc: 'git' <git@vger.kernel.org>
+To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+X-From: git-owner@vger.kernel.org Sun Jan 06 06:38:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TriZG-0003mC-Uk
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 06:14:43 +0100
+	id 1TriwS-0000Jk-RN
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 06:38:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750736Ab3AFFNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 00:13:17 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:59307
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750717Ab3AFFNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 00:13:16 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 9AECC4044B; Sun,  6 Jan 2013 00:13:09 -0500 (EST)
+	id S1750907Ab3AFFiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 00:38:10 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44959 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750819Ab3AFFiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 00:38:09 -0500
+Received: (qmail 32504 invoked by uid 107); 6 Jan 2013 05:39:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 06 Jan 2013 00:39:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jan 2013 00:38:07 -0500
 Content-Disposition: inline
-In-Reply-To: <20130105231151.GD3247@elie.Belkin>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <871B6C10EBEFE342A772D1159D1320853A011871@umechphj.easf.csd.disa.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212752>
 
-Jonathan Nieder <jrnieder@gmail.com>:
-> But in fact the current options list doesn't seem to be well organized at all.
+On Sun, Jan 06, 2013 at 04:49:57AM +0000, Pyeron, Jason J CTR (US) wrote:
 
-I agree.
+> > > How does the ?service=xxxx get translated in to the action
+> > > performed on the web server?
+> > 
+> > If you are using the git-http-backend CGI, it will interpret the
+> > service
+> 
+> No, using plain jane http and webdav. This server is not "allowed" to
+> use cgi processes.
 
-> What do you think would be a logical way to group these?
-> 
->  Features of input syntax
-> 
-> 	--date-format
-> 	--done
-> 
->  Verbosity
-> 
-> 	--quiet
-> 	--stats
-> 
->  Marks handling (checkpoint/restore)
-> 
-> 	--import-marks
-> 	--import-marks-if-exists
-> 	--export-marks
-> 	--relative-marks
-> 
->  Semantics of execution
-> 
-> 	--dry-run
-> 	--force
-> 	--cat-blob-fd
-> 	--export-pack-edges
-> 
->  Tuning
-> 
-> 	--active-branches
-> 	--max-pack-size
-> 	--big-file-threshold
-> 	--depth
+Then the service parameter should be ignored by your webserver, and it
+should just serve the info/refs file from the repository on the
+filesystem. And you are stuck using WebDAV for push.
 
-That would work as well or better than any other organization I can
-think of.  Um, which is significant because my work on surgery tools
-and exporters means I've had to consult this page a *lot*.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+> > GET /git/project-x/info/refs HTTP/1.1
+> [...]
+> * The requested URL returned error: 404 Not Found
+
+Does the info/refs file exist in the project-x repository?
+
+> fatal: https://server/git/project-x/info/refs not found: did you run git update-server-info on the server?
+
+Did you?
+
+If you can't run any git programs on the server at all (and it sounds
+like that may be the case), you'll need to run it locally before putting
+the repository data on the server.
+
+Once you have WebDAV set up for pushing, it will update the info/refs
+file for each push. But if you are initially seeding the server with
+rsync or a tarfile, you'll want to make sure it has an up-to-date
+info/refs file.
+
+-Peff
