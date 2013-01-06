@@ -1,109 +1,249 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Sun, 06 Jan 2013 17:16:34 -0500
-Message-ID: <50E9F7C2.1000603@gmail.com>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v3 11/19] dir.c: use a single struct exclude_list per
+ source of excludes
+Date: Sun, 6 Jan 2013 22:53:11 +0000
+Message-ID: <20130106225311.GB6552@pacific.linksys.moosehall>
+References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
+ <1356575558-2674-12-git-send-email-git@adamspiers.org>
+ <7v1ue0veww.fsf@alter.siamese.dyndns.org>
+ <20130106152039.GA2396@pacific.linksys.moosehall>
+ <7v7gnqnjn7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6ge?= =?ISO-8859-1?Q?rshausen?= 
-	<tboegi@web.de>, Stephen & Linda Smith <ischis2@cox.net>,
-	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	Eric Blake <eblake@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 23:16:57 2013
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 06 23:53:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TryWW-00089K-O6
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 23:16:57 +0100
+	id 1Trz5x-0004CN-Mx
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 23:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221Ab3AFWQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 17:16:38 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:39755 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753139Ab3AFWQg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 17:16:36 -0500
-Received: by mail-qc0-f173.google.com with SMTP id b12so11200485qca.4
-        for <git@vger.kernel.org>; Sun, 06 Jan 2013 14:16:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=8nPhTMa/SRBKw7IprWbcuAdfG3qz9I9gMwU3ssaPs0Y=;
-        b=a4YdL5Gj32+vBHnfDMp1qi+btvI5HyiSUgZ3sOQ+dgBa43G5F2kFPyXA1tQEYffFH/
-         Of9903eRAJP6k0zbvs/nlj0kBle3Dh5yNrICw/Nk3VJflywa9P6fnvpXRBZGrSFR7TxN
-         Sar4i8y17hz/CpgoivzVf1/QdmnYOkmmygMmlfq35pWy6eVCzhplB69UskHQXPS6f5OC
-         /KI7adjyFOrGXQE+1AcShuGNGXdEEVaHWhi6ps1WtoYcQZc8Y41gPRoYZhRYTdprQlxy
-         g9Zz1mHHfGGeCR+lXX58UM1yams4rb0QM7cepP9W4JRDs4afwL0GfaDbdd7Qa38TQ2EU
-         BnOg==
-X-Received: by 10.49.95.166 with SMTP id dl6mr48123266qeb.33.1357510596152;
-        Sun, 06 Jan 2013 14:16:36 -0800 (PST)
-Received: from mark-laptop.lan (pool-173-79-102-236.washdc.fios.verizon.net. [173.79.102.236])
-        by mx.google.com with ESMTPS id hn9sm18406741qab.8.2013.01.06.14.16.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Jan 2013 14:16:35 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vfw2enl2l.fsf@alter.siamese.dyndns.org>
+	id S1753268Ab3AFWxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 17:53:15 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:46024 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab3AFWxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 17:53:13 -0500
+Received: from localhost (f.4.d.7.f.d.e.f.f.f.3.7.3.0.a.1.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:1a03:73ff:fedf:7d4f])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id CC3552E5D3
+	for <git@vger.kernel.org>; Sun,  6 Jan 2013 22:53:11 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7v7gnqnjn7.fsf@alter.siamese.dyndns.org>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212852>
 
-On 01/06/2013 02:54 PM, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> Mark Levedahl wrote:
->>
->>>                                                           However, the newer
->>> win32api is provided only for the current cygwin release series, which can
->>> be reliably identified by having dll version 1.7.x, while the older frozen
->>> releases (dll versions 1.6.x from redhat, 1.5.x open source) still have the
->>> older api as no updates are being made for the legacy version(s).
->> Ah.  That makes sense, thanks.
->>
->> (For the future, if we wanted to diagnose an out-of-date win32api and
->> print a helpful message, I guess cygcheck would be the command to use.)
-> Hmph, so we might see somebody who cares about Cygwin to come up
-> with a solution based on cygcheck (not on uname) to update this
-> part, perhaps on top of Peff's "split default settings based on
-> uname into separate file" patch?
->
-> If I understood what Mark and Torsten wrote correctly, you will have
-> the new win32api if you install 1.7.17 (or newer) from scratch, but
-> if you are on older 1.7.x then you can update the win32api part as a
-> package update (as opposed to the whole-system upgrade).  A test
-> based on "uname -r" cannot notice that an older 1.7.x (say 1.7.14)
-> installation has a newer win32api because the user updated it from
-> the package (hence the user should not define CYGWIN_V15_WIN32API).
->
-> Am I on the same page as you guys, or am I still behind?
->
-> In the meantime, perhaps we would need something like this?
+On Sun, Jan 06, 2013 at 12:25:48PM -0800, Junio C Hamano wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+> 
+> > On Fri, Jan 04, 2013 at 01:03:59PM -0800, Junio C Hamano wrote:
+> >> Adam Spiers <git@adamspiers.org> writes:
+> >> 
+> >> > diff --git a/builtin/clean.c b/builtin/clean.c
+> >> > index 0c7b3d0..bd18b88 100644
+> >> > --- a/builtin/clean.c
+> >> > +++ b/builtin/clean.c
+> >> > @@ -97,9 +97,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+> >> >  	if (!ignored)
+> >> >  		setup_standard_excludes(&dir);
+> >> >  
+> >> > +	add_exclude_list(&dir, EXC_CMDL);
+> >> >  	for (i = 0; i < exclude_list.nr; i++)
+> >> >  		add_exclude(exclude_list.items[i].string, "", 0,
+> >> > -			    &dir.exclude_list[EXC_CMDL]);
+> >> > +			    &dir.exclude_list_groups[EXC_CMDL].ary[0]);
+> >> 
+> >> This looks somewhat ugly for two reasons.
+> >> 
+> >>  * The abstraction add_exclude() offers to its callers is just to
+> >>    let them add one pattern to the list of patterns for the kind
+> >>    (here, EXC_CMDL); why should they care about .ary[0] part?
+> >
+> > Because the caller has to decide which exclude list the new exclude
+> > should be added to; that is how it has been for a long time, and I am
+> > not proposing we change that.
+> 
+> Unless I was mistaken, I never objected to the EXC_CMDL, etc
+> appearing in the text of the calling site of add_exclude().
+> 
+> The objection was about the .ary[0] bit.  From the point of view of
+> a caller of the API, it:
+> 
+>     - calls add_exclude_list() to declare "I now start adding new
+>       patterns that come from a new source of patterns"; then
+> 
+>     - calls add_exclude() repeatedly to add the patterns that come
+>       from that source.
+> 
+> no?
 
-It's perhaps worth noting how we got into this mess. The problems have 
-their root in
+Correct.
 
-     adbc0b6b6e57c11ca49779d01f549260a920a97d
+> Why does the latter has to keep repeating "Here is the new
+> pattern for the EXC_CMDL group; it comes from the latest source I
+> earlier declared, by the way", instead of just "Here is the new
+> pattern for the EXC_CMDL group"?
 
-Cygwin's entire goal is a completely POSIX compliant environment running 
-under Windows. The above commit circumvents some of Cygwin's API 
-regarding stat/fstat to make things perhaps a bit faster, and definitely 
-not POSIX compliant (The commit message is wrong, the commit definitely 
-breaks POSIX compliance). That code is also what will not compile on 
-different w32api versions. It is curious: the Cygwin  mailing list has 
-been absolutely silent since the w32api change was introduced last 
-summer, this is the only piece of code I am aware of that was broken by 
-the new headers, and of course the purpose of this code is to circumvent 
-the Cygwin API (and by extension, Cygwin project goals).
+Mainly because there is no guarantee that such a group exists.
 
-So, perhaps a better path forward is to disable / remove the above code 
-by default. (Those wanting a native Win32 git should just use the native 
-Win32 git).
+unpack_trees() has:
 
-Mark
+	if (add_excludes_from_file_to_list(git_path("info/sparse-checkout"), "", 0, &el, 0) < 0)
+
+so if you change the signature of add_exclude() to require an
+exclude_list_group, then there is no way to implement
+add_excludes_from_file_to_list().
+
+Even if you could, you still haven't reduced the number of parameters
+add_exclude() requires, so I'm dubious of the benefits of this
+"simplification".
+
+> >>    Are
+> >>    there cases any sane caller (not the implementation of the
+> >>    exclude_list_group machinery e.g. add_excludes_from_... function)
+> >>    may want to call it with .ary[1]?
+> >
+> > Effectively yes, although it is not written like ".ary[1]".  For
+> > example prep_exclude() calls add_excludes_from_file_to_list() for each
+> > new .gitignore file
+> 
+> That is part of the "implementation of the machinery".  If the API
+> for the outside callers are to call add_exclude_list() to declare
+> that patterns added by subsequent calls to add_exclude() are from
+> one new source of the patterns (e.g. .gitignore file in a new
+> directory level), and then call add_exclude() to add each pattern,
+> then the callers to add_exclude() shouldn't have to care about the
+> implementation detail that individual sources in exclude_list_group
+> is implemented as an array in that sructure, and the latest ones
+> should go to its ->array[0].
+
+That's a valid point.  However, the ary[0] part which assumes external
+knowledge of the internal implementation can trivially be avoided by
+squashing this patch onto the commit we are discussing:
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index dd89737..6e21ca6 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -45,6 +45,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	static const char **pathspec;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
++	struct exclude_list *el;
+ 	const char *qname;
+ 	char *seen = NULL;
+ 	struct option options[] = {
+@@ -97,10 +98,9 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (!ignored)
+ 		setup_standard_excludes(&dir);
+ 
+-	add_exclude_list(&dir, EXC_CMDL);
++	el = add_exclude_list(&dir, EXC_CMDL);
+ 	for (i = 0; i < exclude_list.nr; i++)
+-		add_exclude(exclude_list.items[i].string, "", 0,
+-			    &dir.exclude_list_group[EXC_CMDL].el[0]);
++		add_exclude(exclude_list.items[i].string, "", 0, el);
+ 
+ 	pathspec = get_pathspec(prefix, argv);
+
+
+and by adopting the same approach for ls-files.c:
+
+ 
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 0ca9d8e..0406adc 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -420,10 +420,11 @@ static int option_parse_z(const struct option *opt,
+ static int option_parse_exclude(const struct option *opt,
+ 				const char *arg, int unset)
+ {
+-	struct exclude_list_group *group = opt->value;
++	struct string_list *exclude_list = opt->value;
+ 
+ 	exc_given = 1;
+-	add_exclude(arg, "", 0, &group->el[0]);
++	string_list_append(exclude_list, arg);
++	fprintf(stderr, "append %s\n", arg);
+ 
+ 	return 0;
+ }
+@@ -452,9 +453,11 @@ static int option_parse_exclude_standard(const struct option *opt,
+ 
+ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ {
+-	int require_work_tree = 0, show_tag = 0;
++	int require_work_tree = 0, show_tag = 0, i;
+ 	const char *max_prefix;
+ 	struct dir_struct dir;
++	struct exclude_list *el;
++	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
+ 	struct option builtin_ls_files_options[] = {
+ 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
+ 			"paths are separated with NUL character",
+@@ -489,7 +492,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		OPT_BOOLEAN(0, "resolve-undo", &show_resolve_undo,
+ 			    "show resolve-undo information"),
+ 		{ OPTION_CALLBACK, 'x', "exclude",
+-			&dir.exclude_list_group[EXC_CMDL], "pattern",
++			&exclude_list, "pattern",
+ 			"skip files matching pattern",
+ 			0, option_parse_exclude },
+ 		{ OPTION_CALLBACK, 'X', "exclude-from", &dir, "file",
+@@ -524,9 +527,13 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	if (read_cache() < 0)
+ 		die("index file corrupt");
+ 
+-	add_exclude_list(&dir, EXC_CMDL);
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+ 			ls_files_usage, 0);
++	el = add_exclude_list(&dir, EXC_CMDL);
++	for (i = 0; i < exclude_list.nr; i++) {
++		fprintf(stderr, "adding exclude: %s\n", exclude_list.items[i].string);
++		add_exclude(exclude_list.items[i].string, "", 0, el);
++	}
+ 	if (show_tag || show_valid_bit) {
+ 		tag_cached = "H ";
+ 		tag_unmerged = "M ";
+
+> The implementation of the machinery may find it more convenient if
+> they can add one or more "sources" to an exclude_list_group before
+> starting to add patterns to ->array[0] or ->array[1] or ->array[2],
+> and a finer grained internal API that lets the caller pass an
+> instance of "struct exclude_list" regardless of where in an
+> exclude_list_group's ary[] that instance sits may be necessary to do
+> so.
+> 
+> But that does not mean other existing callers has to be aware of
+> such inner detail.  If the implementation of the machinery needs a
+> helper function that adds an element to any struct exclude_list, not
+> necessarily the one at the tip of an exclude_list_group, we can
+> still do that by having the bulk of the logic in the internal, finer
+> grained helper, say, add_pattern_to_exclude_list(), and keep the
+> external API simpler by making it a thin wrapper around it, perhaps
+> like:
+> 
+>    static void add_pattern_to_exclude_list(const char *pattern,
+>    		    const char *base, int baselen,
+>                     struct exclude_list *el);
+> 
+>    void add_exclude(const char *pattern,
+>    		    const char *base, int baselen,
+>                     struct exclude_list_group *group) {
+> 	add_pattern_to_exclude_list(pattern, base, baselen, &group->ary[0]);
+
+Presumably you mean
+
+	add_pattern_to_exclude_list(pattern, base, baselen,
+				    &group->ary[group->nr - 1]);
+
+(although at your request, I already renamed 'ary' to 'el').
+
+I have made a genuine attempt to implement your suggestion, but due to
+the unpack_trees() case stated above, I don't see how it can be done.
