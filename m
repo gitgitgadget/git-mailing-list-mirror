@@ -1,118 +1,251 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v4 04/11] dir.c: improve docs for match_pathspec() and match_pathspec_depth()
-Date: Sun,  6 Jan 2013 16:58:06 +0000
-Message-ID: <1357491493-11619-5-git-send-email-git@adamspiers.org>
+Subject: [PATCH v4 02/11] dir.c: keep track of where patterns came from
+Date: Sun,  6 Jan 2013 16:58:04 +0000
+Message-ID: <1357491493-11619-3-git-send-email-git@adamspiers.org>
 References: <20130106161758.GC2396@pacific.linksys.moosehall>
  <1357491493-11619-1-git-send-email-git@adamspiers.org>
 To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 17:58:45 2013
+X-From: git-owner@vger.kernel.org Sun Jan 06 17:58:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrtYY-0007mE-Gc
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 17:58:42 +0100
+	id 1TrtYZ-0007mE-Gt
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 17:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756088Ab3AFQ6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 11:58:19 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:45596 "EHLO
+	id S1756103Ab3AFQ6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 11:58:21 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:45594 "EHLO
 	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756067Ab3AFQ6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 11:58:18 -0500
+	with ESMTP id S1756053Ab3AFQ6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 11:58:17 -0500
 Received: from localhost (f.4.d.7.f.d.e.f.f.f.3.7.3.0.a.1.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:1a03:73ff:fedf:7d4f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 9167D2E5D3
-	for <git@vger.kernel.org>; Sun,  6 Jan 2013 16:58:17 +0000 (GMT)
+	by coral.adamspiers.org (Postfix) with ESMTPSA id D91132E65E
+	for <git@vger.kernel.org>; Sun,  6 Jan 2013 16:58:15 +0000 (GMT)
 X-Mailer: git-send-email 1.7.11.7.33.gb8feba5
 In-Reply-To: <1357491493-11619-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212816>
 
-Fix a grammatical issue in the description of these functions, and
-make it more obvious how and why seen[] can be reused across multiple
-invocations.
+For exclude patterns read in from files, the filename is stored in the
+exclude list, and the originating line number is stored in the
+individual exclude (counting starting at 1).
+
+For exclude patterns provided on the command line, a string describing
+the source of the patterns is stored in the exclude list, and the
+sequence number assigned to each exclude pattern is negative, with
+counting starting at -1.  So for example the 2nd pattern provided via
+--exclude would be numbered -2.  This allows any future consumers of
+that data to easily distinguish between exclude patterns from files
+vs. from the CLI.
 
 Signed-off-by: Adam Spiers <git@adamspiers.org>
 ---
- dir.c | 38 ++++++++++++++++++++++++++------------
- dir.h |  6 ++++++
- 2 files changed, 32 insertions(+), 12 deletions(-)
+ builtin/clean.c    |  4 ++--
+ builtin/ls-files.c |  5 +++--
+ dir.c              | 26 ++++++++++++++++++++------
+ dir.h              | 21 +++++++++++++++++++--
+ 4 files changed, 44 insertions(+), 12 deletions(-)
 
+diff --git a/builtin/clean.c b/builtin/clean.c
+index dd89737..b098288 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -97,10 +97,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (!ignored)
+ 		setup_standard_excludes(&dir);
+ 
+-	add_exclude_list(&dir, EXC_CMDL);
++	add_exclude_list(&dir, EXC_CMDL, "--exclude option");
+ 	for (i = 0; i < exclude_list.nr; i++)
+ 		add_exclude(exclude_list.items[i].string, "", 0,
+-			    &dir.exclude_list_group[EXC_CMDL].el[0]);
++			    &dir.exclude_list_group[EXC_CMDL].el[0], -(i+1));
+ 
+ 	pathspec = get_pathspec(prefix, argv);
+ 
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 0ca9d8e..fa9ccb8 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -35,6 +35,7 @@ static int error_unmatch;
+ static char *ps_matched;
+ static const char *with_tree;
+ static int exc_given;
++static int exclude_args;
+ 
+ static const char *tag_cached = "";
+ static const char *tag_unmerged = "";
+@@ -423,7 +424,7 @@ static int option_parse_exclude(const struct option *opt,
+ 	struct exclude_list_group *group = opt->value;
+ 
+ 	exc_given = 1;
+-	add_exclude(arg, "", 0, &group->el[0]);
++	add_exclude(arg, "", 0, &group->el[0], --exclude_args);
+ 
+ 	return 0;
+ }
+@@ -524,7 +525,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	if (read_cache() < 0)
+ 		die("index file corrupt");
+ 
+-	add_exclude_list(&dir, EXC_CMDL);
++	add_exclude_list(&dir, EXC_CMDL, "--exclude option");
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+ 			ls_files_usage, 0);
+ 	if (show_tag || show_valid_bit) {
 diff --git a/dir.c b/dir.c
-index 46f362e..547b83f 100644
+index 3a15cb9..d3f462b 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -167,12 +167,19 @@ static int match_one(const char *match, const char *name, int namelen)
+@@ -349,7 +349,7 @@ void parse_exclude_pattern(const char **pattern,
  }
  
- /*
-- * Given a name and a list of pathspecs, see if the name matches
-- * any of the pathspecs.  The caller is also interested in seeing
-- * all pathspec matches some names it calls this function with
-- * (otherwise the user could have mistyped the unmatched pathspec),
-- * and a mark is left in seen[] array for pathspec element that
-- * actually matched anything.
-+ * Given a name and a list of pathspecs, returns the nature of the
-+ * closest (i.e. most specific) match of the name to any of the
-+ * pathspecs.
-+ *
-+ * The caller typically calls this multiple times with the same
-+ * pathspec and seen[] array but with different name/namelen
-+ * (e.g. entries from the index) and is interested in seeing if and
-+ * how each pathspec matches all the names it calls this function
-+ * with.  A mark is left in the seen[] array for each pathspec element
-+ * indicating the closest type of match that element achieved, so if
-+ * seen[n] remains zero after multiple invocations, that means the nth
-+ * pathspec did not match any names, which could indicate that the
-+ * user mistyped the nth pathspec.
-  */
- int match_pathspec(const char **pathspec, const char *name, int namelen,
- 		int prefix, char *seen)
-@@ -239,12 +246,19 @@ static int match_pathspec_item(const struct pathspec_item *item, int prefix,
+ void add_exclude(const char *string, const char *base,
+-		 int baselen, struct exclude_list *el)
++		 int baselen, struct exclude_list *el, int srcpos)
+ {
+ 	struct exclude *x;
+ 	int patternlen;
+@@ -373,8 +373,10 @@ void add_exclude(const char *string, const char *base,
+ 	x->base = base;
+ 	x->baselen = baselen;
+ 	x->flags = flags;
++	x->srcpos = srcpos;
+ 	ALLOC_GROW(el->excludes, el->nr + 1, el->alloc);
+ 	el->excludes[el->nr++] = x;
++	x->el = el;
  }
  
- /*
-- * Given a name and a list of pathspecs, see if the name matches
-- * any of the pathspecs.  The caller is also interested in seeing
-- * all pathspec matches some names it calls this function with
-- * (otherwise the user could have mistyped the unmatched pathspec),
-- * and a mark is left in seen[] array for pathspec element that
-- * actually matched anything.
-+ * Given a name and a list of pathspecs, returns the nature of the
-+ * closest (i.e. most specific) match of the name to any of the
-+ * pathspecs.
-+ *
-+ * The caller typically calls this multiple times with the same
-+ * pathspec and seen[] array but with different name/namelen
-+ * (e.g. entries from the index) and is interested in seeing if and
-+ * how each pathspec matches all the names it calls this function
-+ * with.  A mark is left in the seen[] array for each pathspec element
-+ * indicating the closest type of match that element achieved, so if
-+ * seen[n] remains zero after multiple invocations, that means the nth
-+ * pathspec did not match any names, which could indicate that the
-+ * user mistyped the nth pathspec.
-  */
- int match_pathspec_depth(const struct pathspec *ps,
- 			 const char *name, int namelen,
+ static void *read_skip_worktree_file_from_index(const char *path, size_t *size)
+@@ -425,7 +427,7 @@ int add_excludes_from_file_to_list(const char *fname,
+ 				   int check_index)
+ {
+ 	struct stat st;
+-	int fd, i;
++	int fd, i, lineno = 1;
+ 	size_t size = 0;
+ 	char *buf, *entry;
+ 
+@@ -467,15 +469,17 @@ int add_excludes_from_file_to_list(const char *fname,
+ 		if (buf[i] == '\n') {
+ 			if (entry != buf + i && entry[0] != '#') {
+ 				buf[i - (i && buf[i-1] == '\r')] = 0;
+-				add_exclude(entry, base, baselen, el);
++				add_exclude(entry, base, baselen, el, lineno);
+ 			}
++			lineno++;
+ 			entry = buf + i + 1;
+ 		}
+ 	}
+ 	return 0;
+ }
+ 
+-struct exclude_list *add_exclude_list(struct dir_struct *dir, int group_type)
++struct exclude_list *add_exclude_list(struct dir_struct *dir,
++				      int group_type, const char *src)
+ {
+ 	struct exclude_list *el;
+ 	struct exclude_list_group *group;
+@@ -484,6 +488,7 @@ struct exclude_list *add_exclude_list(struct dir_struct *dir, int group_type)
+ 	ALLOC_GROW(group->el, group->nr + 1, group->alloc);
+ 	el = &group->el[group->nr++];
+ 	memset(el, 0, sizeof(*el));
++	el->src = src;
+ 	return el;
+ }
+ 
+@@ -493,7 +498,7 @@ struct exclude_list *add_exclude_list(struct dir_struct *dir, int group_type)
+ void add_excludes_from_file(struct dir_struct *dir, const char *fname)
+ {
+ 	struct exclude_list *el;
+-	el = add_exclude_list(dir, EXC_FILE);
++	el = add_exclude_list(dir, EXC_FILE, fname);
+ 	if (add_excludes_from_file_to_list(fname, "", 0, el, 0) < 0)
+ 		die("cannot use %s as an exclude file", fname);
+ }
+@@ -524,6 +529,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 			break;
+ 		el = &group->el[dir->exclude_stack->exclude_ix];
+ 		dir->exclude_stack = stk->prev;
++		free((char *)el->src); /* see strdup() below */
+ 		clear_exclude_list(el);
+ 		free(stk);
+ 		group->nr--;
+@@ -550,7 +556,15 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 		memcpy(dir->basebuf + current, base + current,
+ 		       stk->baselen - current);
+ 		strcpy(dir->basebuf + stk->baselen, dir->exclude_per_dir);
+-		el = add_exclude_list(dir, EXC_DIRS);
++		/*
++		 * dir->basebuf gets reused by the traversal, but we
++		 * need fname to remain unchanged to ensure the src
++		 * member of each struct exclude correctly
++		 * back-references its source file.  Other invocations
++		 * of add_exclude_list provide stable strings, so we
++		 * strdup() and free() here in the caller.
++		 */
++		el = add_exclude_list(dir, EXC_DIRS, strdup(dir->basebuf));
+ 		stk->exclude_ix = group->nr - 1;
+ 		add_excludes_from_file_to_list(dir->basebuf,
+ 					       dir->basebuf, stk->baselen,
 diff --git a/dir.h b/dir.h
-index dd42a3a..136e838 100644
+index c4d88db..64c410e 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -116,6 +116,12 @@ struct dir_struct {
- 	char basebuf[PATH_MAX];
+@@ -25,16 +25,32 @@ struct dir_entry {
+ struct exclude_list {
+ 	int nr;
+ 	int alloc;
++
+ 	/* remember pointer to exclude file contents so we can free() */
+ 	char *filebuf;
+ 
++	/* origin of list, e.g. path to filename, or descriptive string */
++	const char *src;
++
+ 	struct exclude {
++		/*
++		 * This allows callers of last_exclude_matching() etc.
++		 * to determine the origin of the matching pattern.
++		 */
++		struct exclude_list *el;
++
+ 		const char *pattern;
+ 		int patternlen;
+ 		int nowildcardlen;
+ 		const char *base;
+ 		int baselen;
+ 		int flags;
++
++		/*
++		 * Counting starts from 1 for line numbers in ignore files,
++		 * and from -1 decrementing for patterns from CLI args.
++		 */
++		int srcpos;
+ 	} **excludes;
  };
  
-+/*
-+ * The ordering of these constants is significant, with
-+ * higher-numbered match types signifying "closer" (i.e. more
-+ * specific) matches which will override lower-numbered match types
-+ * when populating the seen[] array.
-+ */
- #define MATCHED_RECURSIVELY 1
- #define MATCHED_FNMATCH 2
- #define MATCHED_EXACTLY 3
+@@ -144,13 +160,14 @@ extern struct exclude *last_exclude_matching_path(struct path_exclude_check *, c
+ extern int is_path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
+ 
+ 
+-extern struct exclude_list *add_exclude_list(struct dir_struct *dir, int group_type);
++extern struct exclude_list *add_exclude_list(struct dir_struct *dir,
++					     int group_type, const char *src);
+ extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
+ 					  struct exclude_list *el, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
+ extern void parse_exclude_pattern(const char **string, int *patternlen, int *flags, int *nowildcardlen);
+ extern void add_exclude(const char *string, const char *base,
+-			int baselen, struct exclude_list *el);
++			int baselen, struct exclude_list *el, int srcpos);
+ extern void clear_exclude_list(struct exclude_list *el);
+ extern int file_exists(const char *);
+ 
 -- 
 1.7.11.7.33.gb8feba5
