@@ -1,84 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/21] "struct pathspec" conversion
-Date: Sun, 06 Jan 2013 13:45:06 -0800
-Message-ID: <7vpq1im1el.fsf@alter.siamese.dyndns.org>
-References: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 6 Jan 2013 16:46:17 -0500
+Organization: PD Inc
+Message-ID: <BFCB094090C6444F8C951211FF795561@black>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9E822.4020709@gmail.com> <7vtxqum1u9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 22:45:37 2013
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 06 22:46:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Try2B-00017T-3X
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:45:35 +0100
+	id 1Try3B-0002FE-3m
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138Ab3AFVpK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 16:45:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38423 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753018Ab3AFVpJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2013 16:45:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A518DA5F9;
-	Sun,  6 Jan 2013 16:45:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VN2j0pu58n/Q
-	Vf9XSVWZdSzkg/Y=; b=SpA3i4wnJ1ACpe/lio+QOsHVzd1kRpDWhoUU+J5lpWkL
-	Gut/R7Xpgw6fspR7TEEpXsYidN4Ztq4eSzh9h/i5Mi35ZjzOTH8Di24fmRtlFywv
-	RK+ScoMM42YBXnKggq2+/SB8ZOkNVYqSa3OBIGrHyD8DJkk7dQ4s+BQPcLMpBfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eU7Svp
-	NR7eZ6E0xKVvTyRn5eVO/fVIk3wKNzaHDjB673ptKvWV2+AuGWFv/ENXhvEvmMWY
-	vgV+IYxZDwTJamohFtmaz734f+M425Rf0QuCbAexcsQoHTEW6vTH7T2k1Lz5B6/u
-	4HpZFf91jHqiiMcIdBnP4E88jAPfMnATtAx4Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96CFFA5F8;
-	Sun,  6 Jan 2013 16:45:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F28A9A5F6; Sun,  6 Jan 2013
- 16:45:07 -0500 (EST)
-In-Reply-To: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 6 Jan
- 2013 13:20:47 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 56B431BA-584A-11E2-9FFD-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752989Ab3AFVqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 16:46:18 -0500
+Received: from projects.pdinc.us ([67.90.184.26]:53603 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753018Ab3AFVqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 16:46:17 -0500
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id r06Ljuo5029148
+	for <git@vger.kernel.org>; Sun, 6 Jan 2013 16:45:56 -0500
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <7vtxqum1u9.fsf@alter.siamese.dyndns.org>
+Thread-Index: Ac3sVccUi6J5wzEqRzCy3Q49BBFlEQAASP6g
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212847>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Sunday, January 06, 2013 16:36
+> 
+> Thanks; so perhaps you can give me an OK to forge your S-o-b 
+> to the following?
 
-> This is another step towards the pathspec unification. This series
-> introduces a get_pathspec() alternative: parse_pathspec(). The new
-> function intializes struct pathspec directly. Many builtin commands
-> (except mv) are converted to use this function. As a result, struct
-> pathspec is used from the start for many commands.
->
-> The next step would be dealing with pathspec manipulation code blocks
-> that use "raw" field, init_pathspec or get_pathspec(). add.c, dir.c,
-> rm.c and mv.c are hot places. And perhaps move pathspec code from
-> dir.c and setup.c to pathspec.c after as/check-ignore enters "master"=
-=2E
->
-> This series shares a patch (the first one) with nd/pathspec-wildcard.=
- I
-> put the patch in the series to avoid dependency.
->
-> This series also disables wildcards in the prefix part, but it's only
-> effective in combination with nd/pathspec-wildcard. And of course it'=
-s
-> not fully effective until all "raw" use is eliminated.
+I am personally fine with it, because cygwin is used by developers not
+production systems and I expect my developers to upgrade their environment for
+security fixes, etc.
+If I ever had a situation where I am using git, in production, on cygwin, where
+I could not upgrade I would effort to make a compile test based patch to the
+make file to accommodate the issue.
 
-Yay!
+> 
+> -- >8 --
+> From: Mark Levedahl <mlevedahl@gmail.com>
+> Date: Sun, 6 Jan 2013 11:56:33 -0800
+> Subject: [PATCH] Makefile: add comment on CYGWIN_V15_WIN32API
+> 
+> There is no documented, reliable, and future-proof method to 
+> determine the installed w32api version on Cygwin. There are 
+> many things that can be done that will work frequently, 
+> except when they won't.
+> 
+> The only sane thing is to follow the guidance of the Cygwin
+> developers: the only supported configuration is that which 
+> the current setup.exe produces, and in the case of problems, 
+> if the installation is not up to date then updating is the 
+> first required action.
+> 
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> ---
+>  Makefile | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/Makefile b/Makefile
+> index 4d47af5..52e298a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -273,6 +273,10 @@ all::
+>  #
+>  # Define NO_REGEX if you have no or inferior regex support 
+> in your C library.
+>  #
+> +# Define CYGWIN_V15_WIN32API if you are using Cygwin v1.7.x 
+> but are not 
+> +# using the current w32api packages. The recommended 
+> approach, however, 
+> +# is to update your installation if compilation errors occur.
+> +#
+>  # Define HAVE_DEV_TTY if your system can open /dev/tty to 
+> interact with the  # user.
+>  #
+> --
+> 1.8.1.302.g0f4eaa7
 
-Thanks, looking forward to reading it through.
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
+
+ 
