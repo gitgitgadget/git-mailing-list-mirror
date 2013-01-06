@@ -1,103 +1,131 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH] Remove the suggestion to use parsecvs, which is
- currently broken.
-Date: Sun, 6 Jan 2013 17:34:20 +0100
-Message-ID: <20130106163420.GA3378@book-mint>
-References: <20121228162025.8565E4413A@snark.thyrsus.com>
- <20121228230149.GA3575@book-mint>
- <20121229044200.GA16086@thyrsus.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] status: report ignored yet tracked directories
+Date: Sun, 6 Jan 2013 17:40:46 +0100
+Message-ID: <CALWbr2yRQai2Z08G2qFbA3AvsgivR-8kQ64SZ4pEktyrf+ZXiQ@mail.gmail.com>
+References: <20130105112432.GA14666@sigill.intra.peff.net>
+	<1357418563-6626-1-git-send-email-apelisse@gmail.com>
+	<20130105230303.GA5195@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 17:36:15 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 06 17:41:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrtCn-0000Mo-6r
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 17:36:13 +0100
+	id 1TrtHX-0005ci-JN
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 17:41:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756051Ab3AFQfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 11:35:54 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.24]:40510 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756034Ab3AFQfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 11:35:53 -0500
-Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1TrtAy-0001QA-NC; Sun, 06 Jan 2013 17:34:20 +0100
-Content-Disposition: inline
-In-Reply-To: <20121229044200.GA16086@thyrsus.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1756064Ab3AFQkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 11:40:49 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:36623 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756050Ab3AFQkr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 11:40:47 -0500
+Received: by mail-ee0-f46.google.com with SMTP id e53so9130406eek.33
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 08:40:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8l5se3YQ4lxNWW9POHFO2LBM9PM90tWZTa1U9IcQYAs=;
+        b=NoxhkvBHUNxur1s/FoQZlQVl60XxLtFKNMh3GBD3ia5poGF/G+1DIp1hUbVc54w7kr
+         /D6NHnrI/geDPugs1GFdPNzD8pIndPCfoPl2xLF0i5FvUD0R+OaG5gJgMdGzkmSCSg3+
+         gEj5fFALKy1SBEwa4ky0hFbWAXPcesgo0Kjof9gdXgRQr3Ife5s3vNVzFgmFeCAjG8F7
+         B507lAP6q+AbcdUlf+qKPEDV335ox+CVcLxWUZmS9fAypyuNrgCh0ZNn+zPjA70sD6WQ
+         hIEI4BnnqRqpWGXH0NjeNs1Dyiz8SjULDsBMDHlsWoUUcx2uoP2tjBM4ZNEDKJ9ypgz8
+         KiBw==
+Received: by 10.14.1.195 with SMTP id 43mr160895653eed.31.1357490446501; Sun,
+ 06 Jan 2013 08:40:46 -0800 (PST)
+Received: by 10.14.187.6 with HTTP; Sun, 6 Jan 2013 08:40:46 -0800 (PST)
+In-Reply-To: <20130105230303.GA5195@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212813>
 
-Hi,
+On Sun, Jan 6, 2013 at 12:03 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Jan 05, 2013 at 09:42:43PM +0100, Antoine Pelisse wrote:
+>
+>> Tracked directories (i.e. directories containing tracked files) that
+>> are ignored must be reported as ignored if they contain untracked files.
+>>
+>> Currently, tracked files or directories can't be reported untracked or ignored.
+>> Remove that constraint when searching ignored files.
+>>
+>> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+>> ---
+>
+> I was expecting to see some explanation of the user-visible bug here. In
+> other words, what does this fix, and why does the bug only happen when
+> core.ignorecase is set.
 
-On Fri, Dec 28, 2012 at 11:42:00PM -0500, Eric S. Raymond wrote:
-> Heiko Voigt <hvoigt@hvoigt.net>:
-> > Maybe you could add that information to the parsecvs compile
-> > instructions? I think just because it takes some effort to compile does
-> > not justify to remove this useful pointer here. When I was converting a
-> > legacy cvs repository this pointer would have helped me a lot.
-> 
-> I'm parsecvs's maintainer now.  It's not in good shape; there is at
-> least one other known showstopper besides the build issue.  I would
-> strongly prefer to direct peoples' attention away from it until I
-> have time to fix it and cut a release.  This is not a distant 
-> prospect - two or three weeks out, maybe.
+I spent a couple of hours trying to understand that issue, and even if
+I ended-up with pretty much the same points as you do below, I was not
+confident enough to phrase it like you just did.
 
-So for this short amount of time you want to change gits documentation?
-Is this hint causing you trouble? Are there many people asking for
-support because of that?
+> Looking at your fix and remembering how the index hashing works, I think
+> the answer is that:
+>
+>   1. This bug only affects directories, because they are the only thing
+>      that can be simultaneously "ignored and untracked" and "tracked"
+>      (i.e., they have entries of both, and we are using
+>      DIR_SHOW_OTHER_DIRECTORIES).
+>
+>   2. When core.ignorecase is false, the index name hash contains only
+>      the file entries, and cache_name_exists returns an exact match. So
+>      it doesn't matter if we make an extra check when adding the
+>      directory via dir_add_name; we know that it will not be there, and
+>      the final check is a no-op.
+>
+>   3. When core.ignorecase is true, we also store directory entries in
+>      the index name hash, and this extra check is harmful; the entry
+>      does not really exist in the index, and we still need to add it.
 
-Even if it takes some effort to get parsecvs running I would like to
-keep the hint to a good and proven cvs importer.
+Yes, because of this couple of lines I guess (name-hash.c, hash_index_entry()):
 
-> The priority that is between me and fixing parsecvs is getting (a)
-> cvsps and git-cvsimport to a non-broken state, and (b) having a sound
-> test suite in place so I *know* it's in a non-broken state. As previously
-> discussed, I will then apply that test suite to parsecvs.
-> 
-> Heiko, you can speed up the process by (a) adapting your tests for
-> the new cvsps test code,
+  if (ignore_case)
+    hash_index_entry_directories(istate, ce);
 
-I had a quick glance at your testsuite. After building cvsps with
-	make
-and cd'ing into test I got a lot of error messages some saying that
-cvsps was not found when issuing
-	make
-there. It would be great if do not need to install cvsps into my path
-just for running the testsuite. 
+> But that makes me wonder. In the ignorecase=false case, I claimed that
+> the check in dir_add_name is a no-op for mixed tracked/ignored
+> directories. But it is presumably not a no-op for other cases. Your
+> patch only turns it off when DIR_SHOW_IGNORED is set. But is it possible
+> for us to have DIR_SHOW_IGNORED set, _and_ to pass in a path that exists
+> in the index as a regular file?
 
-There is no README so I am not sure how the tests are supposed to be
-build in general. Due to the lack of documentation its probably easier
-for you Eric to port my tests.
+I don't think so, because of the optimization I added in my previous
+patch, in treat_file():
 
-The structure of my tests is quite simple:
+  /*
+   * Optimization:
+   * Don't spend time on indexed files, they won't be
+   * added to the list anyway
+   */
+  struct cache_entry *ce = index_name_exists(&the_index,
+    path->buf, path->len, ignore_case);
 
-	t/  - All the tests
-	t/cvsroot - A cvs module per test
-	t/t[0-9]{4}*/expect - The expected cvsps output
+It's no longer an optimization but a required step, I will update the comment.
 
-You can copy the cvs repository modules and convert the expected cvsps
-output to whatever output you want to test against. It the found
-changeset ordering that is interesting.
+> I think in the normal file case, we'd expect treat_path to just tell us
+> that it is handled, and we would not ever call dir_add_name in the first
+> place. But what if we have an index entry for a file, but the working
+> tree now contains a directory?
 
-> and (b) merging the fix you wrote so cvsps
-> would pass the t9603 test.  
+The directory is treated as any other untracked directory (it never
+matches indexed file because of the trailing /).
 
-The fix was never clean and AFAIR the reason behind that was that the
-breakage in commit ordering is not easy to fix in cvsps. That and
-because there are other working tools out there was the reason why I
-stopped working on fixing cvsps.
+> I _think_ we still do not hit this code path in that instance, because
+> we will end up in treat_directory, and we will end up checking
+> directory_exists_in_index. And I cannot get it to misbehave in practice.
+> So I think your fix is correct, but the exact how and why is a bit
+> subtle.
 
-Cheers Heiko
+Thanks a lot for the help, I will try to come up with a better commit
+message now.
+
+> -Peff
