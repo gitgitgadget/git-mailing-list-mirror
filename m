@@ -1,99 +1,75 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v3 02/19] Improve documentation and comments regarding
- directory traversal API
-Date: Sun, 6 Jan 2013 12:02:01 +0000
-Message-ID: <20130106120201.GH28089@pacific.linksys.moosehall>
-References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
- <1356575558-2674-3-git-send-email-git@adamspiers.org>
- <7vobh8aans.fsf@alter.siamese.dyndns.org>
- <CAOkDyE_DX8iAAd5ubJaQ_guPQ-PSz4-sFETZoRf7JRTrH6Qcpw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 6 Jan 2013 04:09:17 -0800
+Message-ID: <20130106120917.GC22081@elie.Belkin>
+References: <2491041.bQ51Qu8HcA@thunderbird>
+ <1890551.8jTmplCF6O@thunderbird>
+ <BB541ECCD3F04E479F06CA491DDB598D@black>
+ <50E92675.4010907@web.de>
+ <20130106093211.GB10956@elie.Belkin>
+ <50E946EB.1000709@web.de>
+ <20130106095757.GC10956@elie.Belkin>
+ <50E9647F.4090209@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 13:02:31 2013
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	Eric Blake <eblake@redhat.com>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 13:09:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trovn-0007hb-T7
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 13:02:24 +0100
+	id 1Trp2s-0006RP-VV
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 13:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755929Ab3AFMCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 07:02:06 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:45182 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755806Ab3AFMCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 07:02:03 -0500
-Received: from localhost (f.4.d.7.f.d.e.f.f.f.3.7.3.0.a.1.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:1a03:73ff:fedf:7d4f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 99DF22E5D3
-	for <git@vger.kernel.org>; Sun,  6 Jan 2013 12:02:01 +0000 (GMT)
+	id S1751997Ab3AFMJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 07:09:24 -0500
+Received: from mail-da0-f50.google.com ([209.85.210.50]:42540 "EHLO
+	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823Ab3AFMJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 07:09:23 -0500
+Received: by mail-da0-f50.google.com with SMTP id h15so8236490dan.9
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 04:09:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=QMLQKphCUEjY/ZIAb4oagT/M3BRSiDzYc0WNs0LNnjQ=;
+        b=AkW4YbQT6RQF8N5yo6g3iDpaebwJanngnkF5kybdsHg+FELBq2DKZfa6t9xmVxsKSA
+         foppAW9msUXg6NArHPENnymM/ftTbZFj4G+sv9OSjompAkYtJJzCBmV+J4lRAxEX5Lnq
+         ZVXRLBiYZaubqQbRAk4pFlEK757c7s04ItqLI7EdqgIWuzG+gd6OXu9/gKAQn9ThJ/U/
+         Tf4v4O2ucFABHfQAqhD8Z8hcnBwLHyM/hIMmuzkMZ1cG8mPFhszB8GlZtW/SedroHxS/
+         Ht+lJw9dmynGaHm6ZSuvPr75Fon124Q6rtI5OcyXsJti9QSSONavonk5kBgHyuz/5v6H
+         gCPw==
+X-Received: by 10.66.86.71 with SMTP id n7mr169304922paz.77.1357474162992;
+        Sun, 06 Jan 2013 04:09:22 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id jv1sm30424452pbc.36.2013.01.06.04.09.20
+        (version=SSLv3 cipher=OTHER);
+        Sun, 06 Jan 2013 04:09:21 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CAOkDyE_DX8iAAd5ubJaQ_guPQ-PSz4-sFETZoRf7JRTrH6Qcpw@mail.gmail.com>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <50E9647F.4090209@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212797>
 
-On Wed, Jan 02, 2013 at 12:54:19PM +0000, Adam Spiers wrote:
-> On Tue, Jan 1, 2013 at 8:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Adam Spiers <git@adamspiers.org> writes:
-> >> diff --git a/dir.c b/dir.c
-> >> index ee8e711..89e27a6 100644
-> >> --- a/dir.c
-> >> +++ b/dir.c
-> >> @@ -2,6 +2,8 @@
-> >>   * This handles recursive filename detection with exclude
-> >>   * files, index knowledge etc..
-> >>   *
-> >> + * See Documentation/technical/api-directory-listing.txt
-> >> + *
-> >>   * Copyright (C) Linus Torvalds, 2005-2006
-> >>   *            Junio Hamano, 2005-2006
-> >>   */
-> >> @@ -476,6 +478,10 @@ void add_excludes_from_file(struct dir_struct *dir, const char *fname)
-> >>               die("cannot use %s as an exclude file", fname);
-> >>  }
-> >>
-> >> +/*
-> >> + * Loads the per-directory exclude list for the substring of base
-> >> + * which has a char length of baselen.
-> >> + */
-> >>  static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
-> >>  {
-> >>       struct exclude_list *el;
-> >> @@ -486,7 +492,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
-> >>           (baselen + strlen(dir->exclude_per_dir) >= PATH_MAX))
-> >>               return; /* too long a path -- ignore */
-> >>
-> >> -     /* Pop the ones that are not the prefix of the path being checked. */
-> >> +     /* Pop the directories that are not the prefix of the path being checked. */
-> >
-> > The "one" does not refer to a "directory", but to an "exclude-list".
-> 
-> No, if that was the case, it would mean that multiple exclude lists
-> would be popped, but that is not the case here (prior to v4).
+Mark Levedahl wrote:
 
-Sorry, I meant prior to v3 11/19.
+>                                                          However, the newer
+> win32api is provided only for the current cygwin release series, which can
+> be reliably identified by having dll version 1.7.x, while the older frozen
+> releases (dll versions 1.6.x from redhat, 1.5.x open source) still have the
+> older api as no updates are being made for the legacy version(s).
 
-> >         Pop the ones that are not for parent directories of the path
-> >         being checked
-> 
-> Better would be:
-> 
->     Pop the entries within the EXCL_DIRS exclude list which originate
->     from directories not in the prefix of the path being checked.
-> 
-> although as previously stated, the v4 series I have been holding off
-> from submitting (in order not to distract you from a maint release)
-> actually changes this behaviour so EXCL_DIRS becomes an exclude_group of
-> multiple exclude_lists, one per directory.  So in v4, multiple
-> exclude_lists *will* be popped.  I'll tweak the comment in v4 to make
-> this clear.
+Ah.  That makes sense, thanks.
 
-Again, I got confused and forgot that I already included the switch to
-exclude_list_groups as v3 11/19.  But since the patch being discussed
-here is v3 02/19 which precedes it, everything I said still applies.
+(For the future, if we wanted to diagnose an out-of-date win32api and
+print a helpful message, I guess cygcheck would be the command to use.)
