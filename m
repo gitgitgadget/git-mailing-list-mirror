@@ -1,129 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] api-allocation-growing.txt: encourage better variable
- naming
-Date: Sun, 06 Jan 2013 12:58:54 -0800
-Message-ID: <7vy5g6m3jl.fsf@alter.siamese.dyndns.org>
-References: <20130106152716.GB2396@pacific.linksys.moosehall>
- <1357486505-21357-1-git-send-email-git@adamspiers.org>
- <7v38yenjgy.fsf@alter.siamese.dyndns.org>
- <20130106205207.GA6552@pacific.linksys.moosehall>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 06 Jan 2013 16:09:54 -0500
+Message-ID: <50E9E822.4020709@gmail.com>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 21:59:20 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?ISO-8859-1?Q?Torsten_B=F6ge?= =?ISO-8859-1?Q?rshausen?= 
+	<tboegi@web.de>, Stephen & Linda Smith <ischis2@cox.net>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	Eric Blake <eblake@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 22:10:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TrxJP-0003y3-FM
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 21:59:19 +0100
+	id 1TrxU7-0006i2-7I
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:10:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753166Ab3AFU67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 15:58:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51090 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753085Ab3AFU66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 15:58:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77595B6D1;
-	Sun,  6 Jan 2013 15:58:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1SkTsCataUfmxEJqq6HasgRLfYg=; b=Ql0UA6
-	IGQTIsMYCAUq1NeN375e+wYbeUry7ApANi99zYWcSeoYDXxSfkBLI5uIhcc5sUcA
-	2CTqeE2H7R6I7ePdOhNzYIC/wRK8vox2fsNsE1q0WFKB4y6sCjfpAE6VH4CM6A/m
-	ayTmJIkxbgHFefZYqCe7PEUPFR0VkAXIPge34=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bdHhal1K4GfpoevtNetUo4XclYFTAyve
-	fuHtkJMhxmB+dqaNbf+GIwInKjnTva8vymvuTV/mxeFAUnE7Ix4zhxc1+5DQLYtD
-	bWXj4HKfj2JNOBTihJIVOmvscqLsmKaJgOLg3yOFKdh3Qpl0lYjKlyZrnohqa5eT
-	v+ovNE8Gwfw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68813B6D0;
-	Sun,  6 Jan 2013 15:58:57 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1806B6CE; Sun,  6 Jan 2013
- 15:58:56 -0500 (EST)
-In-Reply-To: <20130106205207.GA6552@pacific.linksys.moosehall> (Adam Spiers's
- message of "Sun, 6 Jan 2013 20:52:08 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E2F06EE8-5843-11E2-97DC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752989Ab3AFVJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 16:09:58 -0500
+Received: from mail-vb0-f44.google.com ([209.85.212.44]:35496 "EHLO
+	mail-vb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482Ab3AFVJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 16:09:56 -0500
+Received: by mail-vb0-f44.google.com with SMTP id fc26so18940228vbb.3
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 13:09:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=29+FlBXbQorIBItr1NDY9hXVe7dzhYjRKViPsbw0Baw=;
+        b=xOvTpenBxPYevy9eZP0jFUjwFYxxxfMIktoovqzon8OlxPP6MXgMgQxj2amIMMjz9L
+         Dftd1whwDlnLLgelpJESThw9oz2Z05YqfY9yoxZ/cuX8uep6JcS8QEronfx/Lvs2fOf3
+         dIiCie4Znz9T/XTQ9U4aAotWt0o1PUC3bsiUsp+J1rxo5bPEjmYrhTJyR0OwEyK9Frd6
+         pISLtjcthZNWCLQmg3xJPuedCznlqWm5donnr3JXLbF6jv+ixtOWZCxEbekIVtKPDFqP
+         NhwSwVBeUPf95lIm+aNufSiPy9LdiaV2TU3fU55McW+YCdKK6lm16odx2+paOYIjw2lV
+         gH8g==
+X-Received: by 10.58.187.84 with SMTP id fq20mr83573482vec.25.1357506595979;
+        Sun, 06 Jan 2013 13:09:55 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-102-236.washdc.fios.verizon.net. [173.79.102.236])
+        by mx.google.com with ESMTPS id p10sm50634312vdh.4.2013.01.06.13.09.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 06 Jan 2013 13:09:55 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vfw2enl2l.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212842>
 
-Adam Spiers <git@adamspiers.org> writes:
-
->> Sounds good.  To follow "not type but contents", a further rewrite
->> with s/array/item/ is even better, no?
+On 01/06/2013 02:54 PM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> I agree.
+>> Mark Levedahl wrote:
+>>
+>>>                                                           However, the newer
+>>> win32api is provided only for the current cygwin release series, which can
+>>> be reliably identified by having dll version 1.7.x, while the older frozen
+>>> releases (dll versions 1.6.x from redhat, 1.5.x open source) still have the
+>>> older api as no updates are being made for the legacy version(s).
+>> Ah.  That makes sense, thanks.
+>>
+>> (For the future, if we wanted to diagnose an out-of-date win32api and
+>> print a helpful message, I guess cygcheck would be the command to use.)
+> Hmph, so we might see somebody who cares about Cygwin to come up
+> with a solution based on cygcheck (not on uname) to update this
+> part, perhaps on top of Peff's "split default settings based on
+> uname into separate file" patch?
+>
+> If I understood what Mark and Torsten wrote correctly, you will have
+> the new win32api if you install 1.7.17 (or newer) from scratch, but
+> if you are on older 1.7.x then you can update the win32api part as a
+> package update (as opposed to the whole-system upgrade).  A test
+> based on "uname -r" cannot notice that an older 1.7.x (say 1.7.14)
+> installation has a newer win32api because the user updated it from
+> the package (hence the user should not define CYGWIN_V15_WIN32API).
+>
+> Am I on the same page as you guys, or am I still behind?
+>
+> In the meantime, perhaps we would need something like this?
+>
+>
+> diff --git a/Makefile b/Makefile
+> index 8e225ca..b45b06d 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -281,6 +281,9 @@ all::
+>   #
+>   # Define NO_REGEX if you have no or inferior regex support in your C library.
+>   #
+> +# Define CYGWIN_V15_WIN32API if your Cygwin uses win32api dll older than
+> +# 1.7.x (this typically is true on Cygwin older than 1.7.17)
+> +#
+>   # Define HAVE_DEV_TTY if your system can open /dev/tty to interact with the
+>   # user.
+>   #
+>
+Looking at a current setup.ini, the obsolete win32 api is a single 
+package "w32api" with last version 3.17-2, and is now replaced by the 
+new win32 api is in two packages, "w32api-headers" + "w32api-runtime", 
+both at version 3.0b_svn5496-1. If setup.exe updated an older 
+installation of w32api, the old package is not deleted, but replaced by 
+a special "empty" package with (as of today) version 9999-1. Note that 
+all of this could change at any time. Also, note that the new w32api 
+packages have version numbers that are lower than the older obsoleted 
+version.
 
-Thanks for a quick response; let's do this then.
+Running "cygcheck -c w32api w32api-headers w32api-runtime" on one 
+machine gives
 
--- >8 --
-From: Adam Spiers <git@adamspiers.org>
+Cygwin Package Information
+Package              Version            Status
+w32api               9999-1             OK
+w32api-headers       3.0b_svn5496-1     OK
+w32api-runtime       3.0b_svn5496-1     OK
 
-The documentation for the ALLOC_GROW API implicitly encouraged
-developers to use "ary" as the variable name for the array which is
-dynamically grown.  However "ary" is an unusual abbreviation hardly
-used anywhere else in the source tree, and it is also better to name
-variables based on their contents not on their type.
+So now, what do folks propose checking for?
+a) w32api is installed? Nope - the package is not "removed", it was 
+updated to a special empty version to delete its former contents, but a 
+new fresh installation won't have this.
+b) w32api-headers is installed? Nope - what happens on the next repackaging?
+c) w32api version is 9999-1? Maybe, but that number could change.
+etc.
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/api-allocation-growing.txt | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+There is no documented, reliable, future-proof, method of determining 
+the installed w32api version on Cygwin. There are many things that can 
+be done that will work frequently, except when they won't. I really 
+think the only sane thing is to follow the guidance of the Cygwin 
+developers: the only supported configuration is that which the current 
+setup.exe produces, and in the case of problems, if the installation is 
+not up to date then updating is the first required action.
 
-diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
-index 43dbe09..542946b 100644
---- a/Documentation/technical/api-allocation-growing.txt
-+++ b/Documentation/technical/api-allocation-growing.txt
-@@ -5,7 +5,9 @@ Dynamically growing an array using realloc() is error prone and boring.
- 
- Define your array with:
- 
--* a pointer (`ary`) that points at the array, initialized to `NULL`;
-+* a pointer (`item`) that points at the array, initialized to `NULL`
-+  (although please name the variable based on its contents, not on its
-+  type);
- 
- * an integer variable (`alloc`) that keeps track of how big the current
-   allocation is, initialized to `0`;
-@@ -13,22 +15,22 @@ Define your array with:
- * another integer variable (`nr`) to keep track of how many elements the
-   array currently has, initialized to `0`.
- 
--Then before adding `n`th element to the array, call `ALLOC_GROW(ary, n,
-+Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
- alloc)`.  This ensures that the array can hold at least `n` elements by
- calling `realloc(3)` and adjusting `alloc` variable.
- 
- ------------
--sometype *ary;
-+sometype *item;
- size_t nr;
- size_t alloc
- 
- for (i = 0; i < nr; i++)
--	if (we like ary[i] already)
-+	if (we like item[i] already)
- 		return;
- 
- /* we did not like any existing one, so add one */
--ALLOC_GROW(ary, nr + 1, alloc);
--ary[nr++] = value you like;
-+ALLOC_GROW(item, nr + 1, alloc);
-+item[nr++] = value you like;
- ------------
- 
- You are responsible for updating the `nr` variable.
--- 
-1.8.1.302.g0f4eaa7
+So, in the makefile, you might add:
+
++# Define CYGWIN_V15_WIN32API if you are using Cygwin v1.7.x but are not
++# using the current w32api packages. But, the recommended approach is to
++# update your installation if compilation errors occur.
++#
+
+Mark
