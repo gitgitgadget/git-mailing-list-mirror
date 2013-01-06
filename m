@@ -1,117 +1,106 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Sun, 06 Jan 2013 16:34:32 -0500
-Message-ID: <50E9EDE8.6090200@gmail.com>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9E3C5.4070104@web.de>
+Date: Sun, 06 Jan 2013 13:35:42 -0800
+Message-ID: <7vtxqum1u9.fsf@alter.siamese.dyndns.org>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird>
+ <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de>
+ <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de>
+ <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com>
+ <20130106120917.GC22081@elie.Belkin>
+ <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9E822.4020709@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen & Linda Smith <ischis2@cox.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gersha?= =?utf-8?Q?usen?= 
+	<tboegi@web.de>, Stephen & Linda Smith <ischis2@cox.net>,
 	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
 	Eric Blake <eblake@redhat.com>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 06 22:34:58 2013
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 22:36:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trxrq-0006hs-A9
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:34:54 +0100
+	id 1Trxsy-0007yt-QF
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 22:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085Ab3AFVeg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 16:34:36 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:60627 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753004Ab3AFVee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 16:34:34 -0500
-Received: by mail-qc0-f173.google.com with SMTP id b12so11237401qca.18
-        for <git@vger.kernel.org>; Sun, 06 Jan 2013 13:34:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=45EALwqJPRS/DYDCaNEItrhxZl8NWKWuNlBrLowMPDk=;
-        b=w2fAlJbpkaj+3VGYdgpZ6iF9+M3xU7m2nEiolspLJ4PntlrkMZ+SCtQP7NTsIbEbjv
-         apm42oo3IdoQFYhFBGQXPxoJiu5dAhkREx7wFHp8TzH/ds6pBBMPLH7VQGzHXjWT0sUV
-         FsPA6N7XnjPQ+9FEmvw0WdS1hZy+qQUoZxYpjf5e1QY/5nKsEIW2pi6Fs0ySsL3Fmc6p
-         ZsDhUCKhVvPI6dLyT+ayZNNJ/xxcsKzZoT7o2T+AZ3VibEVGAb7LjZit5TyMEAI3pEqz
-         rUurC1bMiEjBCpFAfrJtSpva3OSR815s+h/SafE25DmEBNaVd6nYQi5fwZg2RM/S8W2m
-         v8aQ==
-X-Received: by 10.224.71.20 with SMTP id f20mr36617979qaj.71.1357508074046;
-        Sun, 06 Jan 2013 13:34:34 -0800 (PST)
-Received: from mark-laptop.lan (pool-173-79-102-236.washdc.fios.verizon.net. [173.79.102.236])
-        by mx.google.com with ESMTPS id f5sm19574047qac.5.2013.01.06.13.34.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Jan 2013 13:34:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <50E9E3C5.4070104@web.de>
+	id S1753115Ab3AFVfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 16:35:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33949 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753004Ab3AFVfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 16:35:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8744AA221;
+	Sun,  6 Jan 2013 16:35:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zoelYoyssJ/Spx/inheErXn9qI0=; b=q4HXE/
+	4vAzy3CI7Tyc8swOco6vJ1X0ovB5DRnjodOiaox4ebkeiW/YNyd2DadIPXuJBpOH
+	ShJs1zr8n/ryrV6kDyChSetZoQgzBGRf39cBCke7BqwfQkJZaIXvW3mdul1r5f6x
+	dEB+C6fmo5x7tVUVfktIUfRWaLYHurnxNextE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A9LyH/CpwQiDTODxW+F16o7UImVWY19k
+	OdACpgzB3FrPRq7kw1k7qHT7eOcFs8ri5v1KJnilgVY/JAVRA8MfnBY7SGKS+jsB
+	DW0DBFFqKleNLOx0LbcyEHJK04R3Hf8WP1Ky69KbOu/5MEVC7KdHoKbLZSxGz0vC
+	diaxyer/GPs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77D97A220;
+	Sun,  6 Jan 2013 16:35:44 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D9B6CA21F; Sun,  6 Jan 2013
+ 16:35:43 -0500 (EST)
+In-Reply-To: <50E9E822.4020709@gmail.com> (Mark Levedahl's message of "Sun,
+ 06 Jan 2013 16:09:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 067E4AA6-5849-11E2-8B8A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212845>
 
-On 01/06/2013 03:51 PM, Torsten B=F6gershausen wrote:
-> Hm, I haven't understood the connection between the dll (cygwin1.dll=20
-> ?) which is used in runtime, and the header files which are used when=
-=20
-> compiling. Are they updated at the same time when updating from 1.7.1=
-6=20
-> to 1.7.17 ? Until I updated my cygwin 1.7 (following Marks=20
-> recommendation) this did the trick for me: +ifeq ($(shell grep mingw=20
-> /usr/include/w32api/winsock2.h />/dev/null 2>/dev/null && echo y),y) =
-+=20
-> CYGWIN_V15_WIN32API=3DYesPlease +endif As an alternative, would this =
-be=20
-> easier to read?
->> +# Define CYGWIN_V15_WIN32API for Cygwin versions up to 1.7.16
->
->
+Thanks; so perhaps you can give me an OK to forge your S-o-b to the
+following?
 
-The cygwin distribution has a very large number of packages, each with=20
-its own unique version number and update rhythm, just as in any linux=20
-distro. There is no "cygwin version", just a version for each individua=
-l=20
-package. So, "Cygwin version 1.7.16" is really nonsensical: there is=20
-only cygwin.dll version 1.7.16.  What folks are noticing is a=20
-coincidence in the time when the cygwin dll package updated and when th=
-e=20
-old w32api was obsoleted. uname -r reports the cygwin dll version, not=20
-the version of any other package. Note that the cygwin api is "stable",=
-=20
-meaning a package compiled against the 1.7.1 dll will still run against=
-=20
-the current one: updating the cygwin dll does not require other package=
-s=20
-to update.
+-- >8 --
+From: Mark Levedahl <mlevedahl@gmail.com>
+Date: Sun, 6 Jan 2013 11:56:33 -0800
+Subject: [PATCH] Makefile: add comment on CYGWIN_V15_WIN32API
 
-The only hard linkage here is that the Cygwin developers are maintainin=
-g=20
-a legacy cygwin version (v1.5.x) as the newer dll series (v.1.7.x)=20
-dropped support for all Windows versions predating (I think) WinXP. So,=
-=20
-someone on an old Windows version must use the legacy cygwin version=20
-which has not been updated since the first v1.7 dll was released, nor=20
-are there any plans by the developers to ever update the v1.5 packages.=
-=20
-Cygwin 1.5 lives in a separate distribution repository, with packages=20
-frozen in time as of the last updates prior to going to v1.7 (packages=20
-compiled against v1.7 will not run on v.1.5).
+There is no documented, reliable, and future-proof method to
+determine the installed w32api version on Cygwin. There are many
+things that can be done that will work frequently, except when they
+won't.
 
-So, encountering a v1.5.x dll is a guarantee of using the older w32api=20
-shared with the mingw project, rather than the current one now=20
-maintained by the mingw64 project. However, a cygwin with any v1.7.x dl=
-l=20
-could in theory have either w32api installed, or in theory yet another=20
-newer one we don't know about yet. Unless and until the w32api=20
-establishes a version number (independent of the Windows API version),=20
-we have nothing reliable to use.
+The only sane thing is to follow the guidance of the Cygwin
+developers: the only supported configuration is that which the
+current setup.exe produces, and in the case of problems, if the
+installation is not up to date then updating is the first required
+action.
 
-Therefore, if using the v1.7 series, *update*
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Mark
+diff --git a/Makefile b/Makefile
+index 4d47af5..52e298a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -273,6 +273,10 @@ all::
+ #
+ # Define NO_REGEX if you have no or inferior regex support in your C library.
+ #
++# Define CYGWIN_V15_WIN32API if you are using Cygwin v1.7.x but are not
++# using the current w32api packages. The recommended approach, however,
++# is to update your installation if compilation errors occur.
++#
+ # Define HAVE_DEV_TTY if your system can open /dev/tty to interact with the
+ # user.
+ #
+-- 
+1.8.1.302.g0f4eaa7
