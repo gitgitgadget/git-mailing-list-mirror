@@ -1,91 +1,93 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Sun, 6 Jan 2013 01:57:57 -0800
-Message-ID: <20130106095757.GC10956@elie.Belkin>
-References: <2491041.bQ51Qu8HcA@thunderbird>
- <1890551.8jTmplCF6O@thunderbird>
- <BB541ECCD3F04E479F06CA491DDB598D@black>
- <50E92675.4010907@web.de>
- <20130106093211.GB10956@elie.Belkin>
- <50E946EB.1000709@web.de>
+Subject: Re: [PATCH] clone: forbid --bare --separate-git-dir <dir>
+Date: Sun, 6 Jan 2013 02:19:48 -0800
+Message-ID: <20130106101948.GD10956@elie.Belkin>
+References: <20130106091642.GA10956@elie.Belkin>
+ <1357465670-32766-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen & Linda Smith <ischis2@cox.net>,
-	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Eric Blake <eblake@redhat.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 06 10:58:29 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	"W. Trevor King" <wking@drexel.edu>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 11:20:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trmzp-0003kb-DX
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 10:58:25 +0100
+	id 1TrnL5-0000X5-3W
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 11:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755264Ab3AFJ6F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 04:58:05 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:49862 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147Ab3AFJ6E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2013 04:58:04 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so10082403pad.8
-        for <git@vger.kernel.org>; Sun, 06 Jan 2013 01:58:03 -0800 (PST)
+	id S1755234Ab3AFKT7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2013 05:19:59 -0500
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:40383 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754778Ab3AFKT5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2013 05:19:57 -0500
+Received: by mail-pb0-f51.google.com with SMTP id ro12so9995830pbb.24
+        for <git@vger.kernel.org>; Sun, 06 Jan 2013 02:19:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=woTHsTtK79TaKy/codwKJRCMPcbnpTHuBthzuSOGT2s=;
-        b=RL0JtoO+UhudlyUYHeqi1WFWBtjZv3xCQXiyGQzdeOrF7XOnsyUhYLOHRaiVadWXby
-         WY1GSU+q8G/vWpqENW+BKFB08AmV57EQ+jA11V25JCCwzRxrj0Ygzj9SUPfE9srRiTA4
-         H35IVDhDUvERoeDsc8xzupoeYT/eTy9hjblkxnIVq+PMNyL026CKmC6zwgBg6esiQic8
-         8mmScjwDAlMnKYn+iIA/UcC001mm3SWjr8gJ8WwooZgoXM3mnWpmtF5WGCmLt+ImCmqQ
-         cLkkMJvZVtdwNw09JpPgHK9L+gktSWHpk1ZspTDHmduisMPwHvow7NlKFNiZFUG0p61I
-         cnfw==
-X-Received: by 10.68.137.131 with SMTP id qi3mr176633937pbb.114.1357466283006;
-        Sun, 06 Jan 2013 01:58:03 -0800 (PST)
+        bh=rbSFqgeBoygTFBWFSGNkp5+dRIUw9m7FZ2DKv+8k9tk=;
+        b=DhH2apswQvoaX5Z8peH6ZiWWp9PVvrO6BhJTas4RfIeX/2glPq5Bw7q5ScmVuBtVrd
+         kFD2kt8AAr2ufVN3jF29JdtpNG0+Rp7jROxIdsPNZx8mL9+u3c66uq2/KV3c1IKDbNf9
+         W+2puM4AAxpFtvHKgkfzxF4wUueyNPCfjhsFgSNAyLieNWwEiZT78nuB/CES+67Q6GNI
+         jtSbIJl14ID0f3RewI6k9RG9vSmNWgRx/TtPcCxWEs+GOLsNqKA55Aeu9+YSB9KWetpq
+         hupxnlnh4y+QzQbiLIUbcyUGMP0eLA7y5jnR8O4K7ObHR79xfHRocK5LKqkHy7NUuT0c
+         7p5w==
+X-Received: by 10.66.80.202 with SMTP id t10mr168482818pax.81.1357467597329;
+        Sun, 06 Jan 2013 02:19:57 -0800 (PST)
 Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id wh8sm35553973pbc.75.2013.01.06.01.58.00
+        by mx.google.com with ESMTPS id o1sm36636670paw.0.2013.01.06.02.19.52
         (version=SSLv3 cipher=OTHER);
-        Sun, 06 Jan 2013 01:58:01 -0800 (PST)
+        Sun, 06 Jan 2013 02:19:54 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <50E946EB.1000709@web.de>
+In-Reply-To: <1357465670-32766-1-git-send-email-pclouds@gmail.com>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212792>
 
-Torsten B=C3=B6gershausen wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> The short version:
-> Cygwin versions  1.7.1 up to 1.7.16 use the same header files as cygw=
-in 1.5
-[...]
-> I don't know if we want to improve the Makefile to enable=20
-> CYGWIN_V15_WIN32API =3D YesPlease=20
-> for cygwin versions 1.7.1 .. 1.7.16 (which are outdated)
+> --separate-git-dir was added to clone with the repository away from
+> standard position <worktree>/.git. It does not make sense to use it
+> without creating working directory.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-Confusing.  Sounds like the condition in 380a4d92 (Update cygwin.c for
-new mingw-64 win32 api headers, 2012-11-11) was too strict and the
-Makefile should say something like
+The patch correctly implements the above.  The description leaves out
+detail.  I'd say something like
 
-	# Cygwin versions up to 1.7.16 used the same headers
-	# as Cygwin 1.5.
-	ifeq ($(shell expr "$(uname_R)" : '1\.7\.[0-9]$$'),5)
-		CYGWIN_V15_WIN32API =3D YesPlease
-	endif
-	ifeq ($(shell expr "$(uname_R)" : '1\.7\.1[0-6]$$'),6)
-		CYGWIN_V15_WIN32API =3D YesPlease
-	endif
+	The --separate-git-dir option was introduced to make it simple
+	to put the git directory somewhere outside the worktree, for
+	example when cloning a repository for use as a submodule.
 
-	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
-		CYGWIN_V15_WIN32API =3D YesPlease
-		...
-	endif
+	It was not intended for use when creating a bare repository.
+	In that case there is no worktree and it is more natural to
+	directly clone the repository and create a .git file as
+	separate steps:
 
-Is that right?
+		git clone --bare /path/to/repo.git bar.git
+		printf 'gitdir: bar.git\n' >foo.git
+
+	Unfortunately we forgot to forbid the --bare
+	--separate-git-dir combination.  In practice, we know no one
+	could be using --bare with --separate-git-dir because it is
+	broken in the following way: <explanation here>.  So it is
+	safe to make good on our mistake and forbid the combination,
+	making the command easier to explain.
+
+I don't know what would go in the <explanation here> blank above,
+though.  Is it possible that some people are relying on this option
+combination?
