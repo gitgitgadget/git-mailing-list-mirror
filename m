@@ -1,249 +1,106 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v3 11/19] dir.c: use a single struct exclude_list per
- source of excludes
-Date: Sun, 6 Jan 2013 22:53:11 +0000
-Message-ID: <20130106225311.GB6552@pacific.linksys.moosehall>
-References: <1356575558-2674-1-git-send-email-git@adamspiers.org>
- <1356575558-2674-12-git-send-email-git@adamspiers.org>
- <7v1ue0veww.fsf@alter.siamese.dyndns.org>
- <20130106152039.GA2396@pacific.linksys.moosehall>
- <7v7gnqnjn7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 04/10] mailmap: simplify map_user() interface
+Date: Sun, 06 Jan 2013 14:56:28 -0800
+Message-ID: <7vehhxnco3.fsf@alter.siamese.dyndns.org>
+References: <1357421206-5014-1-git-send-email-apelisse@gmail.com>
+ <1357421206-5014-5-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 06 23:53:44 2013
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 23:56:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Trz5x-0004CN-Mx
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 23:53:34 +0100
+	id 1Trz99-0007dE-3C
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jan 2013 23:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753268Ab3AFWxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 17:53:15 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:46024 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753258Ab3AFWxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 17:53:13 -0500
-Received: from localhost (f.4.d.7.f.d.e.f.f.f.3.7.3.0.a.1.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:1a03:73ff:fedf:7d4f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id CC3552E5D3
-	for <git@vger.kernel.org>; Sun,  6 Jan 2013 22:53:11 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7v7gnqnjn7.fsf@alter.siamese.dyndns.org>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753268Ab3AFW4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 17:56:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36739 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753255Ab3AFW4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 17:56:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C76AA25F;
+	Sun,  6 Jan 2013 17:56:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ryne+nOuSA5Y1jpOTdgaqpE8Mwo=; b=FVEiOu
+	PTABOITvRkXw5AaroOf9XhC9L/ntANYUVvOKyE+kzpK+tZW5opUHqX4zr91oMo1m
+	uCH8JfeA70K1hluaopngZUb+iAXX6t3IqrHWgmtvOVrWqHxSpIWAOjOg2ktnfXh+
+	HnSMn4J7/1MCTQ3C0xeiHtr3Vj7pmNL0YV9O8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NZ1u051SLEaZCrQeDQbujAHMkWoWPea+
+	xLRZfcfqjSsEfdeHxi64nHkEEdqyLBs1l3v1GIOWTROKot7lEqdDT95rXzwGjehb
+	N2sv38YFOtz6aoUIqpHKR+x+RM4ZEiDR1oMw9fm7U46QWAJrt6XE5KPCtjC3Gmfe
+	YQwibj5W9QI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48E69A25E;
+	Sun,  6 Jan 2013 17:56:30 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCE9CA25C; Sun,  6 Jan 2013
+ 17:56:29 -0500 (EST)
+In-Reply-To: <1357421206-5014-5-git-send-email-apelisse@gmail.com> (Antoine
+ Pelisse's message of "Sat, 5 Jan 2013 22:26:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4EE20070-5854-11E2-A4F3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212853>
 
-On Sun, Jan 06, 2013 at 12:25:48PM -0800, Junio C Hamano wrote:
-> Adam Spiers <git@adamspiers.org> writes:
-> 
-> > On Fri, Jan 04, 2013 at 01:03:59PM -0800, Junio C Hamano wrote:
-> >> Adam Spiers <git@adamspiers.org> writes:
-> >> 
-> >> > diff --git a/builtin/clean.c b/builtin/clean.c
-> >> > index 0c7b3d0..bd18b88 100644
-> >> > --- a/builtin/clean.c
-> >> > +++ b/builtin/clean.c
-> >> > @@ -97,9 +97,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
-> >> >  	if (!ignored)
-> >> >  		setup_standard_excludes(&dir);
-> >> >  
-> >> > +	add_exclude_list(&dir, EXC_CMDL);
-> >> >  	for (i = 0; i < exclude_list.nr; i++)
-> >> >  		add_exclude(exclude_list.items[i].string, "", 0,
-> >> > -			    &dir.exclude_list[EXC_CMDL]);
-> >> > +			    &dir.exclude_list_groups[EXC_CMDL].ary[0]);
-> >> 
-> >> This looks somewhat ugly for two reasons.
-> >> 
-> >>  * The abstraction add_exclude() offers to its callers is just to
-> >>    let them add one pattern to the list of patterns for the kind
-> >>    (here, EXC_CMDL); why should they care about .ary[0] part?
-> >
-> > Because the caller has to decide which exclude list the new exclude
-> > should be added to; that is how it has been for a long time, and I am
-> > not proposing we change that.
-> 
-> Unless I was mistaken, I never objected to the EXC_CMDL, etc
-> appearing in the text of the calling site of add_exclude().
-> 
-> The objection was about the .ary[0] bit.  From the point of view of
-> a caller of the API, it:
-> 
->     - calls add_exclude_list() to declare "I now start adding new
->       patterns that come from a new source of patterns"; then
-> 
->     - calls add_exclude() repeatedly to add the patterns that come
->       from that source.
-> 
-> no?
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-Correct.
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index dd4aff9..86450e3 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> ...
+> @@ -1356,51 +1356,61 @@ static void get_ac_line(const char *inbuf, const char *what,
+>  		len = strlen(tmp);
+>  	else
+>  		len = endp - tmp;
+>  
+>  	if (split_ident_line(&ident, tmp, len)) {
+>  	error_out:
+>  		/* Ugh */
+> +		tmp = "(unknown)";
+> +		strbuf_addstr(name, tmp);
+> +		strbuf_addstr(mail, tmp);
+> +		strbuf_addstr(tz, tmp);
+>  		*time = 0;
+>  		return;
+>  	}
+>  
+>  	namelen = ident.name_end - ident.name_begin;
+> +	tmpname = ident.name_begin;
+>  
+> +	maillen = ident.mail_end - ident.mail_begin;
+> +	tmpmail = ident.mail_begin;
+>  
+>  	*time = strtoul(ident.date_begin, NULL, 10);
+>  
+> +	len = ident.tz_end - ident.tz_begin;
+> +	strbuf_add(tz, ident.tz_begin, len);
+>  
+>  	/*
+>  	 * Now, convert both name and e-mail using mailmap
+>  	 */
+> +	map_user(&mailmap, &tmpmail, &maillen,
+> +		 &tmpname, &namelen);
 
-> Why does the latter has to keep repeating "Here is the new
-> pattern for the EXC_CMDL group; it comes from the latest source I
-> earlier declared, by the way", instead of just "Here is the new
-> pattern for the EXC_CMDL group"?
+I like the general simplification this change gives us, but do we
+still want to name these variables "tmp"-something?  At least to me,
+it makes it look like the variable holds a pointer to a piece of
+memory that was temporarily allocated.  Calling it "mail_begin" or
+something might be less confusing.
 
-Mainly because there is no guarantee that such a group exists.
-
-unpack_trees() has:
-
-	if (add_excludes_from_file_to_list(git_path("info/sparse-checkout"), "", 0, &el, 0) < 0)
-
-so if you change the signature of add_exclude() to require an
-exclude_list_group, then there is no way to implement
-add_excludes_from_file_to_list().
-
-Even if you could, you still haven't reduced the number of parameters
-add_exclude() requires, so I'm dubious of the benefits of this
-"simplification".
-
-> >>    Are
-> >>    there cases any sane caller (not the implementation of the
-> >>    exclude_list_group machinery e.g. add_excludes_from_... function)
-> >>    may want to call it with .ary[1]?
-> >
-> > Effectively yes, although it is not written like ".ary[1]".  For
-> > example prep_exclude() calls add_excludes_from_file_to_list() for each
-> > new .gitignore file
-> 
-> That is part of the "implementation of the machinery".  If the API
-> for the outside callers are to call add_exclude_list() to declare
-> that patterns added by subsequent calls to add_exclude() are from
-> one new source of the patterns (e.g. .gitignore file in a new
-> directory level), and then call add_exclude() to add each pattern,
-> then the callers to add_exclude() shouldn't have to care about the
-> implementation detail that individual sources in exclude_list_group
-> is implemented as an array in that sructure, and the latest ones
-> should go to its ->array[0].
-
-That's a valid point.  However, the ary[0] part which assumes external
-knowledge of the internal implementation can trivially be avoided by
-squashing this patch onto the commit we are discussing:
-
-diff --git a/builtin/clean.c b/builtin/clean.c
-index dd89737..6e21ca6 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -45,6 +45,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	static const char **pathspec;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
-+	struct exclude_list *el;
- 	const char *qname;
- 	char *seen = NULL;
- 	struct option options[] = {
-@@ -97,10 +98,9 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	if (!ignored)
- 		setup_standard_excludes(&dir);
- 
--	add_exclude_list(&dir, EXC_CMDL);
-+	el = add_exclude_list(&dir, EXC_CMDL);
- 	for (i = 0; i < exclude_list.nr; i++)
--		add_exclude(exclude_list.items[i].string, "", 0,
--			    &dir.exclude_list_group[EXC_CMDL].el[0]);
-+		add_exclude(exclude_list.items[i].string, "", 0, el);
- 
- 	pathspec = get_pathspec(prefix, argv);
-
-
-and by adopting the same approach for ls-files.c:
-
- 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 0ca9d8e..0406adc 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -420,10 +420,11 @@ static int option_parse_z(const struct option *opt,
- static int option_parse_exclude(const struct option *opt,
- 				const char *arg, int unset)
- {
--	struct exclude_list_group *group = opt->value;
-+	struct string_list *exclude_list = opt->value;
- 
- 	exc_given = 1;
--	add_exclude(arg, "", 0, &group->el[0]);
-+	string_list_append(exclude_list, arg);
-+	fprintf(stderr, "append %s\n", arg);
- 
- 	return 0;
- }
-@@ -452,9 +453,11 @@ static int option_parse_exclude_standard(const struct option *opt,
- 
- int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- {
--	int require_work_tree = 0, show_tag = 0;
-+	int require_work_tree = 0, show_tag = 0, i;
- 	const char *max_prefix;
- 	struct dir_struct dir;
-+	struct exclude_list *el;
-+	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
- 	struct option builtin_ls_files_options[] = {
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
- 			"paths are separated with NUL character",
-@@ -489,7 +492,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		OPT_BOOLEAN(0, "resolve-undo", &show_resolve_undo,
- 			    "show resolve-undo information"),
- 		{ OPTION_CALLBACK, 'x', "exclude",
--			&dir.exclude_list_group[EXC_CMDL], "pattern",
-+			&exclude_list, "pattern",
- 			"skip files matching pattern",
- 			0, option_parse_exclude },
- 		{ OPTION_CALLBACK, 'X', "exclude-from", &dir, "file",
-@@ -524,9 +527,13 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	if (read_cache() < 0)
- 		die("index file corrupt");
- 
--	add_exclude_list(&dir, EXC_CMDL);
- 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
- 			ls_files_usage, 0);
-+	el = add_exclude_list(&dir, EXC_CMDL);
-+	for (i = 0; i < exclude_list.nr; i++) {
-+		fprintf(stderr, "adding exclude: %s\n", exclude_list.items[i].string);
-+		add_exclude(exclude_list.items[i].string, "", 0, el);
-+	}
- 	if (show_tag || show_valid_bit) {
- 		tag_cached = "H ";
- 		tag_unmerged = "M ";
-
-> The implementation of the machinery may find it more convenient if
-> they can add one or more "sources" to an exclude_list_group before
-> starting to add patterns to ->array[0] or ->array[1] or ->array[2],
-> and a finer grained internal API that lets the caller pass an
-> instance of "struct exclude_list" regardless of where in an
-> exclude_list_group's ary[] that instance sits may be necessary to do
-> so.
-> 
-> But that does not mean other existing callers has to be aware of
-> such inner detail.  If the implementation of the machinery needs a
-> helper function that adds an element to any struct exclude_list, not
-> necessarily the one at the tip of an exclude_list_group, we can
-> still do that by having the bulk of the logic in the internal, finer
-> grained helper, say, add_pattern_to_exclude_list(), and keep the
-> external API simpler by making it a thin wrapper around it, perhaps
-> like:
-> 
->    static void add_pattern_to_exclude_list(const char *pattern,
->    		    const char *base, int baselen,
->                     struct exclude_list *el);
-> 
->    void add_exclude(const char *pattern,
->    		    const char *base, int baselen,
->                     struct exclude_list_group *group) {
-> 	add_pattern_to_exclude_list(pattern, base, baselen, &group->ary[0]);
-
-Presumably you mean
-
-	add_pattern_to_exclude_list(pattern, base, baselen,
-				    &group->ary[group->nr - 1]);
-
-(although at your request, I already renamed 'ary' to 'el').
-
-I have made a genuine attempt to implement your suggestion, but due to
-the unpack_trees() case stated above, I don't see how it can be done.
+The changes to pretty.c (pp_user_info) and shortlog.c
+(insert_one_record) calls these variables mailbuf and namebuf,
+so perhaps these are better names?
