@@ -1,85 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Moving (renaming) submodules, recipe/script
-Date: Mon, 07 Jan 2013 08:08:49 -0800
-Message-ID: <7vlic5j7qm.fsf@alter.siamese.dyndns.org>
-References: <20130107003603.GA25698@odin.tremily.us>
- <20130107013952.GE3823@elie.Belkin> <50EA7269.1080006@web.de>
- <7vwqvpjv2n.fsf@alter.siamese.dyndns.org> <50EA84E9.9030702@web.de>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 1/4] t0024, t5000: clear variable UNZIP, use GIT_UNZIP
+ instead
+Date: Mon, 07 Jan 2013 17:25:39 +0100
+Message-ID: <50EAF703.7070806@lsrfire.ath.cx>
+References: <7vwqw7mb09.fsf@alter.siamese.dyndns.org> <50E9B82D.50005@lsrfire.ath.cx> <50E9B8CD.2010209@lsrfire.ath.cx> <20130107051609.GB27909@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
-	Peter Collingbourne <peter@pcc.me.uk>, mbranchaud@xiplink.com,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jan 07 17:09:28 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 17:26:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsFGF-0003x6-9N
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 17:09:15 +0100
+	id 1TsFWi-000350-II
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 17:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753560Ab3AGQIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 11:08:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48774 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753317Ab3AGQIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 11:08:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2A80A6A5;
-	Mon,  7 Jan 2013 11:08:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uEvqfxy6QJPkJobswuQxkAcvnVk=; b=JQBqua
-	o/iBVsrSZjmfBfMiI4kIE4H4X7RKKKrFdSucv0RaNe+srRSFgktyMlGQNPOshmcT
-	krarZCSAdqbHhhCW9gQmBS64sogTcKFmTDy+//oZ/r4jcbuEgEG/hPqO020O/46j
-	l5bYwAQ6HIG+x91/HJlqljy1r5SMt15lF96Xk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wpbLA4VLFL4Fnek+8F5CSEAxgoM6a3DT
-	Z22jJaIigniJ6gyKVFCDz4n4QbSHULi/yjZ98FQrQQIlJTh6XUTA02/Ny3wz/AXb
-	8Izzkuugk48kxcpqTwfq2bBsowPlyI9pHyocF0oQ+msAoSJfGZk6BgPKlyWytnlU
-	WXdgx1hKJpo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4208A6A3;
-	Mon,  7 Jan 2013 11:08:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48303A69E; Mon,  7 Jan 2013
- 11:08:52 -0500 (EST)
-In-Reply-To: <50EA84E9.9030702@web.de> (Jens Lehmann's message of "Mon, 07
- Jan 2013 09:18:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 877ADCFA-58E4-11E2-B277-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751536Ab3AGQZv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 11:25:51 -0500
+Received: from india601.server4you.de ([85.25.151.105]:37170 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751039Ab3AGQZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 11:25:49 -0500
+Received: from [192.168.2.105] (p579BE5C2.dip.t-dialin.net [87.155.229.194])
+	by india601.server4you.de (Postfix) with ESMTPSA id 8EC09B4;
+	Mon,  7 Jan 2013 17:25:47 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20130107051609.GB27909@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212901>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Am 07.01.2013 06:16, schrieb Jonathan Nieder:
+> Ren=C3=A9 Scharfe wrote:
+>
+>> InfoZIP's unzip takes default parameters from the environment variab=
+le
+>> UNZIP.  Unset it in the test library and use GIT_UNZIP for specifyin=
+g
+>> alternate versions of the unzip command instead.
+>>
+>> t0024 wasn't even using variable for the actual extraction.  t5000
+>> was, but when setting it to InfoZIP's unzip it would try to extract
+>> from itself (because it treats the contents of $UNZIP as parameters)=
+,
+>> which failed of course.
+>
+> That would only happen if the UNZIP variable was already exported,
+> right?
 
-> Right, and me thinks that would warrant a --force option for deinit
-> to do that even if the submodule contains local changes (which would
-> make deinit fail otherwise).
+We don't want any parameters a user may have been specified influence=20
+the test.  I'm not sure if someone actually sets that variable for that=
+=20
+purpose, though.
 
-Probably.
+My main use case is running individual test scripts with an alternative=
+=20
+unzip binary, and with the patch this works as expected:
 
-> Additionally Michael and Marc spoke up
-> that they would rather have a --all option to deinit all initialized
-> submodules and "git submodule deinit" without any arguments should
-> just produce a usage message. As I saw no voices against it that'll
-> be part of the next iteration too.
+	$ cd t
+	$ GIT_UNZIP=3D/usr/pkg/bin/unzip ./t5000-tar-tree.sh
 
-Yeah, I forgot about that possible surprise of deiniting everything
-under the sun by default.
+> The patch makes sense and takes care of all uses of ${UNZIP} I can
+> find, and it even makes the quoting consistent so a person can put
+> their copy of unzip under "/Program Files".  For what it's worth,
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-I am not sure if "--all" is a good way forward, though.
+Thanks!
 
-Can you defeat it with "git submodule deinit ./--all" or something
-to limit the target only to one submodule whose unfortunate location
-is named as such?  If you have such a support, I have this suspicion
-that you already get a short and explicit way to say "everything
-under the current directory" with "git submodule deinit ." for free.
+Ren=C3=A9
