@@ -1,113 +1,101 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Moving (renaming) submodules, recipe/script
-Date: Mon, 07 Jan 2013 07:59:53 +0100
-Message-ID: <50EA7269.1080006@web.de>
-References: <20130107003603.GA25698@odin.tremily.us> <20130107013952.GE3823@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 06 Jan 2013 23:29:03 -0800
+Message-ID: <7v1udxladc.fsf@alter.siamese.dyndns.org>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird>
+ <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de>
+ <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de>
+ <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com>
+ <20130106120917.GC22081@elie.Belkin>
+ <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com>
+ <FBDECCA565D94DF9838DD81FE2E2543A@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
-	Peter Collingbourne <peter@pcc.me.uk>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 08:00:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Jason Pyeron <jpyeron@pdinc.us>, Eric Blake <eblake@redhat.com>
+To: "Jason Pyeron" <jpyeron@pdinc.us>
+X-From: git-owner@vger.kernel.org Mon Jan 07 08:29:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ts6hC-0007T8-VY
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 08:00:31 +0100
+	id 1Ts79S-0001Sv-C9
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 08:29:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305Ab3AGHAL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 02:00:11 -0500
-Received: from mout.web.de ([212.227.17.12]:61722 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751068Ab3AGHAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 02:00:09 -0500
-Received: from [192.168.178.41] ([91.3.169.250]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0Md4V8-1TZt2z15c2-00INA9; Mon, 07 Jan 2013 08:00:00
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130107013952.GE3823@elie.Belkin>
-X-Enigmail-Version: 1.4.6
-X-Provags-ID: V02:K0:ZkLcPPwdfBDcRHrrYmXSmMg+cPhlp/x+M+7GEubptkD
- XbEUHftVVafJMBf6o959aWOLJlcAlg1JNjPJfGtwZNUVC9zXhN
- Hzs51QbMlUkZomDD1yxsRj6H/aVBlE4r1SCcpYKa7M4L9MPk+r
- iHE805TmPilOfGDmZklmDIEhdvxoNyvP9SG6foWVMfsmcz8Tvl
- pUkUwK7/pK3l6VXov69Wg==
+	id S1751674Ab3AGH3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 02:29:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55796 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751399Ab3AGH3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 02:29:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A13ACA767;
+	Mon,  7 Jan 2013 02:29:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/UBi1eAtMRWobDWKz0GQwCHSQmo=; b=PWxibU
+	KY27/Ul3e47zKPjbUjEDv1RK+CC0ubT9Xj1OErOzOLgDgizqGI1hOAEYS4wLmR/T
+	dJdH+Ml4A1ee5B/TMKMRaiQppEWlkulitwjlH++BXrOX6tFCbwmA2v4TEp/k5Ach
+	ph5QE/fgDoB0J8eEFsfJQIS5QGAOQwTQKR2EQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tqrUMSwqjOKISXK/tVgyrYabZxqiJONw
+	nr6kVJC4eolBvwFUttAUkx9E/W1um8dZU+9yaP3G01RmyH0ugtHmJeCOmQNe4iNK
+	eK7gK7NEHmR7LPKeHiY9gP5qpeQS/H2Z2w4659ePIJRW1+pKoIpn1bcz0pSQOb9r
+	UTH4bVmK7o0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FA89A766;
+	Mon,  7 Jan 2013 02:29:08 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B8B6BA763; Mon,  7 Jan 2013
+ 02:29:04 -0500 (EST)
+In-Reply-To: <FBDECCA565D94DF9838DD81FE2E2543A@black> (Jason Pyeron's message
+ of "Mon, 7 Jan 2013 00:37:14 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EA3E67BA-589B-11E2-AF69-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212881>
 
-Am 07.01.2013 02:39, schrieb Jonathan Nieder:
-> (just cc-ing Jens and Peter, who might be interested)
+"Jason Pyeron" <jpyeron@pdinc.us> writes:
 
-I=B4m currently working on teaching mv to move submodules and intend
-to send those patches to the list after finishing submodule deinit.
-Please see
-  https://github.com/jlehmann/git-submod-enhancements/commits/mv-submod=
-ules
-for the current state of this series.
+[administrivia: please never cull CC list when you respond to a
+message on this list without a good reason]
 
-> W. Trevor King wrote:
->=20
->> Today I had to move my first submodule, and I discovered that Git's
->> support for this is pretty limited.  There have been a few patch
->> series attempting to address this [1,2], but none of them seems to
->> have pushed through into master (although I can't put my finger on a
->> reason for why).  There are also some SO postings discussing this
->> [3,4].  It would be nice if `git mv` worked out of the box on
->> submodules.  Failing that, there could be a `git submodule mv` comma=
-nd
->> that casts the appropriate spell.  Failing that, there could be a
->> recipe in Documentation/git-submodule.txt.  Here's the best I could
->> come up with for a `git-submodule-mv.sh`:
->>
->>   #!/bin/sh
->>   # usage: git-submodule-mv.sh OLD NEW
->>   OLD=3D$(realpath --relative-to . "$1")
->>   NEW=3D$(realpath --relative-to . "$2")
->>   SHA=3D$(git ls-files -s "$OLD" | sed 's|^[0-9]* \([0-9a-f]*\) .*|\=
-1|')
->>   NAME=3D$(git config -f .gitmodules --get-regexp 'submodule\..*\.pa=
-th' "$OLD" |
->>     sed -e 's|^submodule.||' -e "s|.path $OLD\$||")
->>   GITDIR=3D$(realpath --relative-to "$NEW" .git/modules/"$NAME")
->>   git config -f .gitmodules submodule."$NAME".path "$NEW"
->>   git config -f .git/modules/"$NAME"/config core.worktree "../../../=
-$NEW"
->>   git rm --cached "$OLD"
->>   mv "$OLD" "$NEW"
->>   echo "gitdir: $GITDIR" > "$NEW/.git"
->>   git update-index --add --cacheinfo 160000 "$SHA" "$NEW"
->>
->> This only works from the repository root directory, and I'm sure mak=
-es
->> a number of poor assumptions (e.g. old-style submodules that don't u=
-se
->> `gitdir` links are not supported).  It does work for some simple tes=
-t
->> cases.  The tricky parts (e.g. path -> name conversion) are already
->> worked out more robustly git-submodule.sh, so adding a new cmd_mv
->> shouldn't be very difficult.
->>
->> Could something like this live somewhere in Git, or are we waiting f=
-or
->> a more integrated solution?
->>
->> Cheers,
->> Trevor
->>
->> [1]: http://thread.gmane.org/gmane.comp.version-control.git/88720
->> [2]: http://thread.gmane.org/gmane.comp.version-control.git/143250
->> [4]: http://stackoverflow.com/questions/4323558/moving-submodules-wi=
-th-git
->> [3]: http://stackoverflow.com/questions/4604486/how-do-i-move-an-exi=
-sting-git-submodule-within-a-git-repository
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+>> circumvent the Cygwin API (and by extension, Cygwin project goals).
+>> 
+>> So, perhaps a better path forward is to disable / remove the 
+>> above code by default. (Those wanting a native Win32 git 
+>> should just use the native
+>> Win32 git).
+>
+> Or a make option...
+
+It already is a runtime option, isn't it?
+
+I do not have much stake in this personally, but IIRC, the (l)stat
+workaround was back then found to make Cygwin version from "unusably
+slow" to "slow but torelable", as our POSIX-y codebase assumes that
+lstat is fairly efficient, which Cygwin cannot satisify because it
+has call many win32 calls to collect bits that we do not even look
+at, in order to give faithful emulation.  It does place extra
+maintenance burden (e.g. conditional compilation depending on the
+header file the particular version of Cygwin installation the user
+has at hand) on us, but as long as it works, the ugly hack is fairly
+isolated and I do not see a reason to unconditionally rip it out,
+especially if the reasoning behind such move is on "All programs
+that run in Cygwin environment has to be POSIX only and must not use
+Win32 API directly, even in a controlled way."
+
+It is a completely different matter if the direct win32 calls we
+make, bypassing (l)stat emulation, somehow change the internal state
+of win32 resources Cygwin controls and violates the invariants
+Cygwin API implemenation expects, breaking later calls to it.  I
+do not know that is the case here, but I doubt it.
