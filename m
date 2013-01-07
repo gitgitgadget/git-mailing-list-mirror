@@ -1,74 +1,85 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: Re: [PATCH] Add getenv.so for catching invalid getenv() use via LD_PRELOAD
-Date: Mon, 7 Jan 2013 10:45:46 -0500
-Message-ID: <CAEvUa7nLKv3R5DcqCe6zJsxgENS2YkNRSzeYk3WT_TjCJsFdnQ@mail.gmail.com>
-References: <CAEvUa7niTJVfp8_kuWs50kvhfZ59F-yAuAmeOXEduHXOq-tRFA@mail.gmail.com>
-	<1357376146-7155-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Moving (renaming) submodules, recipe/script
+Date: Mon, 07 Jan 2013 08:08:49 -0800
+Message-ID: <7vlic5j7qm.fsf@alter.siamese.dyndns.org>
+References: <20130107003603.GA25698@odin.tremily.us>
+ <20130107013952.GE3823@elie.Belkin> <50EA7269.1080006@web.de>
+ <7vwqvpjv2n.fsf@alter.siamese.dyndns.org> <50EA84E9.9030702@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 16:46:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Peter Collingbourne <peter@pcc.me.uk>, mbranchaud@xiplink.com,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jan 07 17:09:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsEtw-0002Iq-MD
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 16:46:13 +0100
+	id 1TsFGF-0003x6-9N
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 17:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753489Ab3AGPps convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 10:45:48 -0500
-Received: from mail-vb0-f42.google.com ([209.85.212.42]:50040 "EHLO
-	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753338Ab3AGPpr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 10:45:47 -0500
-Received: by mail-vb0-f42.google.com with SMTP id fa15so19582560vbb.1
-        for <git@vger.kernel.org>; Mon, 07 Jan 2013 07:45:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SEAp6TMbKmAteNvcKRni0bnSLy3Mxb474DCGSz5rRQA=;
-        b=R0bNHARQqVAqDNgSXeopOt6S3LUVRFSdkfW7kva4FKe5/7dFQgFQpAOtMlhA4vO6nA
-         liHToRbPsii8Mfe58FODhVUfe3t64ztT+6DF7EZ2FwApDuJH0X+WYQynxJFBLw/CirTD
-         72KLROS/JJeJNyClVes8IR3ZfueEq4ihwItaKUIBfFgQQF8RGCLtpLa+BEkEcGXxjD8m
-         Ubals4VZUFjDpcKJlqRovPoX6+4TxHqUwUW7hAnEVKryRr0iul565lPzWqopjNkunW2T
-         q6WMSEarJKXpTBIW9ckrQU3Eolif49dytVdBTPt1N04ycFcGYtMJn11EAlpc8goGr1SC
-         VyyA==
-Received: by 10.52.19.20 with SMTP id a20mr74554432vde.26.1357573546345; Mon,
- 07 Jan 2013 07:45:46 -0800 (PST)
-Received: by 10.58.85.138 with HTTP; Mon, 7 Jan 2013 07:45:46 -0800 (PST)
-In-Reply-To: <1357376146-7155-1-git-send-email-pclouds@gmail.com>
+	id S1753560Ab3AGQIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 11:08:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48774 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753317Ab3AGQIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 11:08:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2A80A6A5;
+	Mon,  7 Jan 2013 11:08:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uEvqfxy6QJPkJobswuQxkAcvnVk=; b=JQBqua
+	o/iBVsrSZjmfBfMiI4kIE4H4X7RKKKrFdSucv0RaNe+srRSFgktyMlGQNPOshmcT
+	krarZCSAdqbHhhCW9gQmBS64sogTcKFmTDy+//oZ/r4jcbuEgEG/hPqO020O/46j
+	l5bYwAQ6HIG+x91/HJlqljy1r5SMt15lF96Xk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wpbLA4VLFL4Fnek+8F5CSEAxgoM6a3DT
+	Z22jJaIigniJ6gyKVFCDz4n4QbSHULi/yjZ98FQrQQIlJTh6XUTA02/Ny3wz/AXb
+	8Izzkuugk48kxcpqTwfq2bBsowPlyI9pHyocF0oQ+msAoSJfGZk6BgPKlyWytnlU
+	WXdgx1hKJpo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4208A6A3;
+	Mon,  7 Jan 2013 11:08:52 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48303A69E; Mon,  7 Jan 2013
+ 11:08:52 -0500 (EST)
+In-Reply-To: <50EA84E9.9030702@web.de> (Jens Lehmann's message of "Mon, 07
+ Jan 2013 09:18:49 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 877ADCFA-58E4-11E2-B277-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212900>
 
-Hi,
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-On Sat, Jan 5, 2013 at 3:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
->  Perhaps this will help the getenv bug hunting (I assume we do the
->  hunting on Linux platform only). So far it catches this and is stuck
->  at getenv in git_pager().
+> Right, and me thinks that would warrant a --force option for deinit
+> to do that even if the submodule contains local changes (which would
+> make deinit fail otherwise).
 
-=46or the record: I have been testing a macro pointing getenv at an
-alternate implementation for the purpose of my port.  This alternate
-function will return a unique pointer for each variable, as opposed to
-using the same static buffer.  IBM considers this function a
-proprietary z/OS extension (whereas the other is labelled as
-conforming to half a dozen standards), but it seems to be more in-line
-with the behavior git expects.
+Probably.
 
-So I agree this patch is useful for reaching strict conformance to the
-published specs, but I think we can go back to assuming no known
-platforms are broken and unusable because of this.
+> Additionally Michael and Marc spoke up
+> that they would rather have a --all option to deinit all initialized
+> submodules and "git submodule deinit" without any arguments should
+> just produce a usage message. As I saw no voices against it that'll
+> be part of the next iteration too.
 
-Thanks.
+Yeah, I forgot about that possible surprise of deiniting everything
+under the sun by default.
 
-David
+I am not sure if "--all" is a good way forward, though.
+
+Can you defeat it with "git submodule deinit ./--all" or something
+to limit the target only to one submodule whose unfortunate location
+is named as such?  If you have such a support, I have this suspicion
+that you already get a short and explicit way to say "everything
+under the current directory" with "git submodule deinit ." for free.
