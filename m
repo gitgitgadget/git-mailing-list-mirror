@@ -1,71 +1,97 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Moving (renaming) submodules, recipe/script
-Date: Mon, 07 Jan 2013 09:18:49 +0100
-Message-ID: <50EA84E9.9030702@web.de>
-References: <20130107003603.GA25698@odin.tremily.us> <20130107013952.GE3823@elie.Belkin> <50EA7269.1080006@web.de> <7vwqvpjv2n.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] status: report ignored yet tracked directories
+Date: Mon, 7 Jan 2013 03:33:18 -0500
+Message-ID: <20130107083318.GA18052@sigill.intra.peff.net>
+References: <20130105112432.GA14666@sigill.intra.peff.net>
+ <1357418563-6626-1-git-send-email-apelisse@gmail.com>
+ <20130105230303.GA5195@sigill.intra.peff.net>
+ <CALWbr2yRQai2Z08G2qFbA3AvsgivR-8kQ64SZ4pEktyrf+ZXiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
-	Peter Collingbourne <peter@pcc.me.uk>, mbranchaud@xiplink.com,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 09:19:25 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 09:33:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ts7vY-0007fH-Lo
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 09:19:25 +0100
+	id 1Ts89P-0005Ra-MR
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 09:33:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab3AGITE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 03:19:04 -0500
-Received: from mout.web.de ([212.227.15.3]:50956 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753066Ab3AGITC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 03:19:02 -0500
-Received: from [192.168.178.41] ([91.3.169.250]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LgpYk-1TEzTW0ymc-00o5K2; Mon, 07 Jan 2013 09:18:53
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vwqvpjv2n.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.6
-X-Provags-ID: V02:K0:f8qN862YtbsAy8e4maFI5jQcF8WkwDcJdg5OL4cPWQ9
- 9pzCcSoZVTc5m94f1fuHiGcAXNzAZrYpczWDByfs4gI35Tijbp
- ty2LpFSEuR6C6phJRbV/EZTal/nIuYe0/o6JSCCD5b0IA5NKzz
- Gtwek823tCYorPtfxvFmXphZcMpL//W/pm1jaiml4cLfvFbQDE
- KCXQ6JTgCF4mqDwZu7xbg==
+	id S1753762Ab3AGIdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 03:33:23 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46034 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751798Ab3AGIdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 03:33:22 -0500
+Received: (qmail 8162 invoked by uid 107); 7 Jan 2013 08:34:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Jan 2013 03:34:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Jan 2013 03:33:18 -0500
+Content-Disposition: inline
+In-Reply-To: <CALWbr2yRQai2Z08G2qFbA3AvsgivR-8kQ64SZ4pEktyrf+ZXiQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212885>
 
-Am 07.01.2013 08:44, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Am 07.01.2013 02:39, schrieb Jonathan Nieder:
->>> (just cc-ing Jens and Peter, who might be interested)
->>
->> I´m currently working on teaching mv to move submodules and intend
->> to send those patches to the list after finishing submodule deinit.
-> 
-> Thanks for a heads-up.
-> 
-> As a couple of recent "What's cooking" message has stated, I'll
-> shortly kick jl/submodule-deinit topic out of 'next' back to 'pu',
-> so please make an update a replacement, not an incremental.  If I
-> recall the discussion correctly, I think we agreed that deinit
-> should clear the slate, which means the submodule working tree
-> should be removed and made into an empty directory without ".git" in
-> it, and the last round we saw on the list didn't do that.
+On Sun, Jan 06, 2013 at 05:40:46PM +0100, Antoine Pelisse wrote:
 
-Right, and me thinks that would warrant a --force option for deinit
-to do that even if the submodule contains local changes (which would
-make deinit fail otherwise). Additionally Michael and Marc spoke up
-that they would rather have a --all option to deinit all initialized
-submodules and "git submodule deinit" without any arguments should
-just produce a usage message. As I saw no voices against it that'll
-be part of the next iteration too.
+> > Looking at your fix and remembering how the index hashing works, I think
+> > the answer is that:
+> >
+> >   1. This bug only affects directories, because they are the only thing
+> >      that can be simultaneously "ignored and untracked" and "tracked"
+> >      (i.e., they have entries of both, and we are using
+> >      DIR_SHOW_OTHER_DIRECTORIES).
+> >
+> >   2. When core.ignorecase is false, the index name hash contains only
+> >      the file entries, and cache_name_exists returns an exact match. So
+> >      it doesn't matter if we make an extra check when adding the
+> >      directory via dir_add_name; we know that it will not be there, and
+> >      the final check is a no-op.
+> >
+> >   3. When core.ignorecase is true, we also store directory entries in
+> >      the index name hash, and this extra check is harmful; the entry
+> >      does not really exist in the index, and we still need to add it.
+> 
+> Yes, because of this couple of lines I guess (name-hash.c, hash_index_entry()):
+> 
+>   if (ignore_case)
+>     hash_index_entry_directories(istate, ce);
+
+Exactly. I couldn't remember at first why this was the case, but after
+reading 5102c61 (Add case insensitivity support for directories when
+using git status, 2010-10-03) again, I think it is because we cannot do
+a partial-name lookup via the hash (i.e., the hash for "foo/" and
+"foo/bar" have no relation to each other). Not related to your patch,
+obviously, but it was the missing piece for me to understand why the
+code was doing what it does.
+
+> > I think in the normal file case, we'd expect treat_path to just tell us
+> > that it is handled, and we would not ever call dir_add_name in the first
+> > place. But what if we have an index entry for a file, but the working
+> > tree now contains a directory?
+> 
+> The directory is treated as any other untracked directory (it never
+> matches indexed file because of the trailing /).
+
+Ah, right. That makes sense.
+
+> > I _think_ we still do not hit this code path in that instance, because
+> > we will end up in treat_directory, and we will end up checking
+> > directory_exists_in_index. And I cannot get it to misbehave in practice.
+> > So I think your fix is correct, but the exact how and why is a bit
+> > subtle.
+> 
+> Thanks a lot for the help, I will try to come up with a better commit
+> message now.
+
+Thanks. I think the patch is right, but the reasoning is just a bit
+subtle.
+
+-Peff
