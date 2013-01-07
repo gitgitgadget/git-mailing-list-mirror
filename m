@@ -1,131 +1,113 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Mon, 7 Jan 2013 00:37:14 -0500
-Organization: PD Inc
-Message-ID: <FBDECCA565D94DF9838DD81FE2E2543A@black>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Moving (renaming) submodules, recipe/script
+Date: Mon, 07 Jan 2013 07:59:53 +0100
+Message-ID: <50EA7269.1080006@web.de>
+References: <20130107003603.GA25698@odin.tremily.us> <20130107013952.GE3823@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 07 06:37:43 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Peter Collingbourne <peter@pcc.me.uk>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 08:00:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ts5Oz-0002hU-V9
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 06:37:38 +0100
+	id 1Ts6hC-0007T8-VY
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 08:00:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751018Ab3AGFhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 00:37:16 -0500
-Received: from projects.pdinc.us ([67.90.184.26]:56186 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750865Ab3AGFhP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 00:37:15 -0500
-Received: from black (nsa1.pdinc.us [67.90.184.2])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id r075argb031249
-	for <git@vger.kernel.org>; Mon, 7 Jan 2013 00:36:53 -0500
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <50E9F7C2.1000603@gmail.com>
-Thread-Index: Ac3sW3rMCask9AKSScSE82TTn10I2QAPTiOQ
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S1751305Ab3AGHAL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 02:00:11 -0500
+Received: from mout.web.de ([212.227.17.12]:61722 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751068Ab3AGHAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 02:00:09 -0500
+Received: from [192.168.178.41] ([91.3.169.250]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0Md4V8-1TZt2z15c2-00INA9; Mon, 07 Jan 2013 08:00:00
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <20130107013952.GE3823@elie.Belkin>
+X-Enigmail-Version: 1.4.6
+X-Provags-ID: V02:K0:ZkLcPPwdfBDcRHrrYmXSmMg+cPhlp/x+M+7GEubptkD
+ XbEUHftVVafJMBf6o959aWOLJlcAlg1JNjPJfGtwZNUVC9zXhN
+ Hzs51QbMlUkZomDD1yxsRj6H/aVBlE4r1SCcpYKa7M4L9MPk+r
+ iHE805TmPilOfGDmZklmDIEhdvxoNyvP9SG6foWVMfsmcz8Tvl
+ pUkUwK7/pK3l6VXov69Wg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212880>
 
-> -----Original Message-----
-> From: Mark Levedahl
-> Sent: Sunday, January 06, 2013 17:17
-> 
-> On 01/06/2013 02:54 PM, Junio C Hamano wrote:
-> > Jonathan Nieder <jrnieder@gmail.com> writes:
-> >
-> >> Mark Levedahl wrote:
-> >>
-> >>>                                                           
-> However, 
-> >>> the newer win32api is provided only for the current 
-> cygwin release 
-> >>> series, which can be reliably identified by having dll version 
-> >>> 1.7.x, while the older frozen releases (dll versions 1.6.x from 
-> >>> redhat, 1.5.x open source) still have the older api as no 
-> updates are being made for the legacy version(s).
-> >> Ah.  That makes sense, thanks.
-> >>
-> >> (For the future, if we wanted to diagnose an out-of-date 
-> win32api and 
-> >> print a helpful message, I guess cygcheck would be the command to 
-> >> use.)
-> > Hmph, so we might see somebody who cares about Cygwin to 
-> come up with 
-> > a solution based on cygcheck (not on uname) to update this part, 
-> > perhaps on top of Peff's "split default settings based on 
-> uname into 
-> > separate file" patch?
-> >
-> > If I understood what Mark and Torsten wrote correctly, you 
-> will have 
-> > the new win32api if you install 1.7.17 (or newer) from 
-> scratch, but if 
-> > you are on older 1.7.x then you can update the win32api part as a 
-> > package update (as opposed to the whole-system upgrade).  A 
-> test based 
-> > on "uname -r" cannot notice that an older 1.7.x (say 1.7.14) 
-> > installation has a newer win32api because the user updated 
-> it from the 
-> > package (hence the user should not define CYGWIN_V15_WIN32API).
-> >
-> > Am I on the same page as you guys, or am I still behind?
-> >
-> > In the meantime, perhaps we would need something like this?
-> 
-> It's perhaps worth noting how we got into this mess. The 
-> problems have their root in
-> 
->      adbc0b6b6e57c11ca49779d01f549260a920a97d
-> 
-> Cygwin's entire goal is a completely POSIX compliant 
-> environment running under Windows. The above commit 
-> circumvents some of Cygwin's API regarding stat/fstat to make 
-> things perhaps a bit faster, and definitely not POSIX 
+Am 07.01.2013 02:39, schrieb Jonathan Nieder:
+> (just cc-ing Jens and Peter, who might be interested)
 
-Ug!
+I=B4m currently working on teaching mv to move submodules and intend
+to send those patches to the list after finishing submodule deinit.
+Please see
+  https://github.com/jlehmann/git-submod-enhancements/commits/mv-submod=
+ules
+for the current state of this series.
 
-> compliant (The commit message is wrong, the commit definitely 
-> breaks POSIX compliance). That code is also what will not 
-> compile on different w32api versions. It is curious: the 
-> Cygwin  mailing list has been absolutely silent since the 
-> w32api change was introduced last summer, this is the only 
-> piece of code I am aware of that was broken by the new 
-> headers, and of course the purpose of this code is to 
-
-Um, going out on a limb here, but those headers are used internally as "cygwin"
-apps are most likely to now know about those headers.
-
-> circumvent the Cygwin API (and by extension, Cygwin project goals).
-> 
-> So, perhaps a better path forward is to disable / remove the 
-> above code by default. (Those wanting a native Win32 git 
-> should just use the native
-> Win32 git).
-
-Or a make option...
-
-
-
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00.
-
- 
+> W. Trevor King wrote:
+>=20
+>> Today I had to move my first submodule, and I discovered that Git's
+>> support for this is pretty limited.  There have been a few patch
+>> series attempting to address this [1,2], but none of them seems to
+>> have pushed through into master (although I can't put my finger on a
+>> reason for why).  There are also some SO postings discussing this
+>> [3,4].  It would be nice if `git mv` worked out of the box on
+>> submodules.  Failing that, there could be a `git submodule mv` comma=
+nd
+>> that casts the appropriate spell.  Failing that, there could be a
+>> recipe in Documentation/git-submodule.txt.  Here's the best I could
+>> come up with for a `git-submodule-mv.sh`:
+>>
+>>   #!/bin/sh
+>>   # usage: git-submodule-mv.sh OLD NEW
+>>   OLD=3D$(realpath --relative-to . "$1")
+>>   NEW=3D$(realpath --relative-to . "$2")
+>>   SHA=3D$(git ls-files -s "$OLD" | sed 's|^[0-9]* \([0-9a-f]*\) .*|\=
+1|')
+>>   NAME=3D$(git config -f .gitmodules --get-regexp 'submodule\..*\.pa=
+th' "$OLD" |
+>>     sed -e 's|^submodule.||' -e "s|.path $OLD\$||")
+>>   GITDIR=3D$(realpath --relative-to "$NEW" .git/modules/"$NAME")
+>>   git config -f .gitmodules submodule."$NAME".path "$NEW"
+>>   git config -f .git/modules/"$NAME"/config core.worktree "../../../=
+$NEW"
+>>   git rm --cached "$OLD"
+>>   mv "$OLD" "$NEW"
+>>   echo "gitdir: $GITDIR" > "$NEW/.git"
+>>   git update-index --add --cacheinfo 160000 "$SHA" "$NEW"
+>>
+>> This only works from the repository root directory, and I'm sure mak=
+es
+>> a number of poor assumptions (e.g. old-style submodules that don't u=
+se
+>> `gitdir` links are not supported).  It does work for some simple tes=
+t
+>> cases.  The tricky parts (e.g. path -> name conversion) are already
+>> worked out more robustly git-submodule.sh, so adding a new cmd_mv
+>> shouldn't be very difficult.
+>>
+>> Could something like this live somewhere in Git, or are we waiting f=
+or
+>> a more integrated solution?
+>>
+>> Cheers,
+>> Trevor
+>>
+>> [1]: http://thread.gmane.org/gmane.comp.version-control.git/88720
+>> [2]: http://thread.gmane.org/gmane.comp.version-control.git/143250
+>> [4]: http://stackoverflow.com/questions/4323558/moving-submodules-wi=
+th-git
+>> [3]: http://stackoverflow.com/questions/4604486/how-do-i-move-an-exi=
+sting-git-submodule-within-a-git-repository
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
