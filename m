@@ -1,97 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] status: report ignored yet tracked directories
-Date: Mon, 7 Jan 2013 03:33:18 -0500
-Message-ID: <20130107083318.GA18052@sigill.intra.peff.net>
-References: <20130105112432.GA14666@sigill.intra.peff.net>
- <1357418563-6626-1-git-send-email-apelisse@gmail.com>
- <20130105230303.GA5195@sigill.intra.peff.net>
- <CALWbr2yRQai2Z08G2qFbA3AvsgivR-8kQ64SZ4pEktyrf+ZXiQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/4] t0024, t5000: use test_lazy_prereq for UNZIP
+Date: Mon, 7 Jan 2013 00:45:10 -0800
+Message-ID: <20130107084509.GH27909@elie.Belkin>
+References: <7vwqw7mb09.fsf@alter.siamese.dyndns.org>
+ <50E9B82D.50005@lsrfire.ath.cx>
+ <50E9B90C.2060200@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 09:33:44 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Jan 07 09:45:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ts89P-0005Ra-MR
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 09:33:44 +0100
+	id 1Ts8Kw-0000OY-D9
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 09:45:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762Ab3AGIdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 03:33:23 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46034 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751798Ab3AGIdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 03:33:22 -0500
-Received: (qmail 8162 invoked by uid 107); 7 Jan 2013 08:34:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Jan 2013 03:34:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Jan 2013 03:33:18 -0500
+	id S1753744Ab3AGIpQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 03:45:16 -0500
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:65489 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753590Ab3AGIpP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 03:45:15 -0500
+Received: by mail-pb0-f45.google.com with SMTP id mc8so10475272pbc.32
+        for <git@vger.kernel.org>; Mon, 07 Jan 2013 00:45:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=M/CAWiAT5trPbA95D0lHPzkEZSfVzhOYXu0VGOYIO2E=;
+        b=he9TvQkhVCxgwnG7691oqCJ4FEBZ/4XUDM6DKRpZnsXEAQjdjdP85lSLDj962q2tyA
+         nWjUba/VJbPIboz0EWU5z0Wer7xMAvxpNLNh3DuOuj38MA3AY5/YOlYWda8MUVvlDrRq
+         umS3LYzeeGKvDmwn4KwdNMDXM/rHeoaAb9/hb9JlQ1NDsdH/c7Uiqy34xMrt0V2xazwh
+         qqK5QfAUnpq2CJzSV07x/Lilto6rUlUBVMNu9vCTK+T6Ty1zRiaBrxaSA8rsxFxsh56a
+         DlOkBqQt0eL1BdrOMyd5aV/pbE50RAzGxvX4wQvI0vgZ/0gc+W/x+njoC1rNp0/pjFQn
+         poaA==
+X-Received: by 10.68.135.98 with SMTP id pr2mr18720635pbb.101.1357548314940;
+        Mon, 07 Jan 2013 00:45:14 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id oj5sm37272798pbb.47.2013.01.07.00.45.12
+        (version=SSLv3 cipher=OTHER);
+        Mon, 07 Jan 2013 00:45:13 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CALWbr2yRQai2Z08G2qFbA3AvsgivR-8kQ64SZ4pEktyrf+ZXiQ@mail.gmail.com>
+In-Reply-To: <50E9B90C.2060200@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212886>
 
-On Sun, Jan 06, 2013 at 05:40:46PM +0100, Antoine Pelisse wrote:
+Ren=C3=A9 Scharfe wrote:
 
-> > Looking at your fix and remembering how the index hashing works, I think
-> > the answer is that:
-> >
-> >   1. This bug only affects directories, because they are the only thing
-> >      that can be simultaneously "ignored and untracked" and "tracked"
-> >      (i.e., they have entries of both, and we are using
-> >      DIR_SHOW_OTHER_DIRECTORIES).
-> >
-> >   2. When core.ignorecase is false, the index name hash contains only
-> >      the file entries, and cache_name_exists returns an exact match. So
-> >      it doesn't matter if we make an extra check when adding the
-> >      directory via dir_add_name; we know that it will not be there, and
-> >      the final check is a no-op.
-> >
-> >   3. When core.ignorecase is true, we also store directory entries in
-> >      the index name hash, and this extra check is harmful; the entry
-> >      does not really exist in the index, and we still need to add it.
-> 
-> Yes, because of this couple of lines I guess (name-hash.c, hash_index_entry()):
-> 
->   if (ignore_case)
->     hash_index_entry_directories(istate, ce);
+> --- a/t/t0024-crlf-archive.sh
+> +++ b/t/t0024-crlf-archive.sh
+> @@ -5,6 +5,11 @@ test_description=3D'respect crlf in git archive'
+>  . ./test-lib.sh
+>  GIT_UNZIP=3D${GIT_UNZIP:-unzip}
+> =20
+> +test_lazy_prereq UNZIP '
+> +	"$GIT_UNZIP" -v >/dev/null 2>&1
+> +	test $? -ne 127
 
-Exactly. I couldn't remember at first why this was the case, but after
-reading 5102c61 (Add case insensitivity support for directories when
-using git status, 2010-10-03) again, I think it is because we cannot do
-a partial-name lookup via the hash (i.e., the hash for "foo/" and
-"foo/bar" have no relation to each other). Not related to your patch,
-obviously, but it was the missing piece for me to understand why the
-code was doing what it does.
+Micronit: now that this is part of a test, there is no more need to
+silence its output.  The "unzip -v" output could be useful to people
+debugging with "t0024-crlf-archive.sh -v -i".
 
-> > I think in the normal file case, we'd expect treat_path to just tell us
-> > that it is handled, and we would not ever call dir_add_name in the first
-> > place. But what if we have an index entry for a file, but the working
-> > tree now contains a directory?
-> 
-> The directory is treated as any other untracked directory (it never
-> matches indexed file because of the trailing /).
-
-Ah, right. That makes sense.
-
-> > I _think_ we still do not hit this code path in that instance, because
-> > we will end up in treat_directory, and we will end up checking
-> > directory_exists_in_index. And I cannot get it to misbehave in practice.
-> > So I think your fix is correct, but the exact how and why is a bit
-> > subtle.
-> 
-> Thanks a lot for the help, I will try to come up with a better commit
-> message now.
-
-Thanks. I think the patch is right, but the reasoning is just a bit
-subtle.
-
--Peff
+With or without that change, this is a nice cleanup and obviously
+correct, so
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
