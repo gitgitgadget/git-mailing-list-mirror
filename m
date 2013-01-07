@@ -1,154 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] status: always report ignored tracked directories
-Date: Mon, 07 Jan 2013 11:06:20 -0800
-Message-ID: <7vip78izir.fsf@alter.siamese.dyndns.org>
-References: <20130105230303.GA5195@sigill.intra.peff.net>
- <1357510179-22852-1-git-send-email-apelisse@gmail.com>
+From: Marc Khouzam <marc.khouzam@ericsson.com>
+Subject: [PATCH] Prevent space after directories in tcsh completion
+Date: Mon, 7 Jan 2013 19:07:10 +0000
+Message-ID: <E59706EF8DB1D147B15BECA3322E4BDC06997E@eusaamb103.ericsson.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, tboegi@web.de, git@vger.kernel.org
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 20:06:50 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'felipe.contreras@gmail.com'" <felipe.contreras@gmail.com>,
+	"'szeder@ira.uka.de'" <szeder@ira.uka.de>
+To: "'git@vger.kernel.org'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 07 20:07:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsI21-0004lm-FN
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 20:06:45 +0100
+	id 1TsI32-00067g-4o
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 20:07:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755070Ab3AGTGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 14:06:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43580 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753250Ab3AGTGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 14:06:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B318AF0B;
-	Mon,  7 Jan 2013 14:06:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P5yTjnEnvYKAe/yjQFyVhN15OEw=; b=LtgGgb
-	FmAfZ+PL50OyrZ4B/XyRa5oH4BhOC7kXXXAw7yEub8A6jeGuUXUdD8/P+eW5r/gh
-	yOLfWlWv1UGXgDS7D0H1ztcR0NUwsua+y24YvlHoKy38+VBXZAs6kHrkV0fPcaAc
-	opj938pYbMrZwD6r4CAsMjjwyuTuUuxdpcTPw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cJHp9/uS+UBo/tiRGgx9i17W5zSpwxZc
-	ixN7hDaezUF48LMas1KLpv/2v3Kth1iy5z3z7fzBsw2PRAb2DQW8q9wA+0oEv2NU
-	lRXh+lIysCNDeblNB4Esn36N8ZjVGV7PmvA8IEbNkRp1pjrQJtqyc01/UX6mhjwO
-	Wp9sW3hNUZM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0805AF0A;
-	Mon,  7 Jan 2013 14:06:22 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A9C2AF09; Mon,  7 Jan 2013
- 14:06:22 -0500 (EST)
-In-Reply-To: <1357510179-22852-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Sun, 6 Jan 2013 23:09:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5349688E-58FD-11E2-A8DF-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755132Ab3AGTH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 14:07:29 -0500
+Received: from imr4.ericy.com ([198.24.6.9]:57135 "EHLO imr4.ericy.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755100Ab3AGTH2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 14:07:28 -0500
+Received: from EUSAAHC001.ericsson.se ([147.117.188.75])
+	by imr4.ericy.com (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id r07JLefW015871;
+	Mon, 7 Jan 2013 13:21:41 -0600
+Received: from EUSAAMB103.ericsson.se ([147.117.188.120]) by
+ EUSAAHC001.ericsson.se ([147.117.188.75]) with mapi id 14.02.0318.004; Mon, 7
+ Jan 2013 14:07:11 -0500
+Thread-Topic: [PATCH] Prevent space after directories in tcsh completion
+Thread-Index: Ac3tCjHJO/pRxRuMS+qOOXNfptcVng==
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [147.117.188.134]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212914>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+If git-completion.bash returns a single directory as a completion,
+tcsh will automatically add a space after it, which is not what the
+user wants.
 
-First, thanks for working on this.
+This commit prevents tcsh from doing this.
 
-The explanation is a bit confusing, especially for people like me,
-as it does not make it clear that there are two kinds of "paths in
-the index".  Files can be added to the index ("git add" and then
-shown via "ls-files") and these are what we usually call "files in
-the index".  But there is a separate "name hash" that keeps track of
-"paths the index knows about" in play, and that is what is discussed
-in the description.
+Also, a check is added to make sure the tcsh version used is recent
+enough to allow completion to work as expected.
 
-> Tracked directories (i.e. directories containing tracked files)
-> that are ignored must be reported as ignored if they contain
-> untracked files.
->
-> Currently, files in the index can't be reported as ignored and are
-> automatically dropped from the list:
+Signed-off-by: Marc Khouzam <marc.khouzam@ericsson.com>
+---
 
-"file in the index" will never be ignored, period.  Some paths the
-index knows about, namely, directory names in name hash, may need to
-be reported as ignored.
+This update is meant to have tcsh completion work better if the
+feature "git-completion.bash: add support for path completion"
+is accepted.
+See http://www.mail-archive.com/git@vger.kernel.org/msg14137.html
+This commit does not depend on that other feature though and can
+be applied right away.
 
-It is not clear what "list" the above "dropped from the list" refers
-to.  The list of paths that becomes the result of "status"?
+Furthermore, based on feedback I received, some users are running
+versions of tcsh that are over 5 years old and don't provide the
+proper support for this script.  I've added a check to let the user
+know of such (sad) situation nicely.
 
->  - When core.ignorecase is false, directories (which are not directly
->  tracked) are not listed as part of the index, and the directory can be
->  shown as ignored.
->
->  - When core.ignorecase is true on the other hand, directories are
->  reported as part of the index, and the directory is dropped, thus not
->  displayed as ignored.
->
-> Fix that behavior by allowing indexed file to be added when looking for
-> ignored files.
->
->  - Ignored tracked and untracked directories are treated the same way
->  when looking for ignored files, so we should not care about their index
->  status.
->  - Files are dismissed by treat_file() if they belong to the
->  index, so that step would have been a no-op anyway.
+Thanks
 
-Here is my attempt...
+Marc
 
-    When enumerating paths that are ignored, paths the index knows
-    about are not included in the result.  The "index knows about"
-    check is done by consulting the name hash, not the actual
-    contents of the index:
+ contrib/completion/git-completion.tcsh | 33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
-     - When core.ignorecase is false, directory names are not in the
-       name hash, and ignored ones are shown as ignored (directories
-       can never be tracked anyway).
-
-     - When core.ignorecase is true, however, the name hash keeps
-       track of the names of directories, in order to detect
-       additions of the paths under different cases.  This causes
-       ignored directories to be mistakenly excluded when
-       enumerating ignored paths.
-
-    Stop excluding directories that are in the name hash when
-    looking for ignored files in dir_add_name(); the names that are
-    actually in the index are excluded much earlier in the callchain
-    in treat_file(), so this fix will not make them mistakenly
-    identified as ignored.
-
-    Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-    Reviewed-by: Jeff King <peff@peff.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-diff --git a/dir.c b/dir.c
-index 9b80348..f836590 100644
---- a/dir.c
-+++ b/dir.c
-@@ -672,7 +672,8 @@ static struct dir_entry *dir_entry_new(const char *pathname, int len)
+diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
+index 8aafb63..3e3889f 100644
+--- a/contrib/completion/git-completion.tcsh
++++ b/contrib/completion/git-completion.tcsh
+@@ -13,6 +13,7 @@
+ #
+ # To use this completion script:
+ #
++#    0) You need tcsh 6.16.00 or newer.
+ #    1) Copy both this file and the bash completion script to ${HOME}.
+ #       You _must_ use the name ${HOME}/.git-completion.bash for the
+ #       bash script.
+@@ -24,6 +25,15 @@
+ #        set autolist=ambiguous
+ #       It will tell tcsh to list the possible completion choices.
  
- static struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len)
- {
--	if (cache_name_exists(pathname, len, ignore_case))
-+	if (!(dir->flags & DIR_SHOW_IGNORED) &&
-+	    cache_name_exists(pathname, len, ignore_case))
- 		return NULL;
++set __git_tcsh_completion_version = `\echo ${tcsh} | \sed 's/\./ /g'`
++if ( ${__git_tcsh_completion_version[1]} < 6 || \
++     ( ${__git_tcsh_completion_version[1]} == 6 && \
++       ${__git_tcsh_completion_version[2]} < 16 ) ) then
++	echo "git-completion.tcsh: Your version of tcsh is too old, you need version 6.16.00 or newer.  Git completion will not work."
++	exit
++endif
++unset __git_tcsh_completion_version
++
+ set __git_tcsh_completion_original_script = ${HOME}/.git-completion.bash
+ set __git_tcsh_completion_script = ${HOME}/.git-completion.tcsh.bash
  
- 	ALLOC_GROW(dir->entries, dir->nr+1, dir->alloc);
-@@ -877,11 +878,7 @@ static int treat_file(struct dir_struct *dir, struct strbuf *path, int exclude,
- 	if (exclude)
- 		exclude_file = !(dir->flags & DIR_SHOW_IGNORED);
- 	else if (dir->flags & DIR_SHOW_IGNORED) {
--		/*
--		 * Optimization:
--		 * Don't spend time on indexed files, they won't be
--		 * added to the list anyway
--		 */
-+		/* Always exclude indexed files */
- 		struct cache_entry *ce = index_name_exists(&the_index,
- 		    path->buf, path->len, ignore_case);
+@@ -64,9 +74,7 @@ fi
+ _\${1}
  
+ IFS=\$'\n'
+-if [ \${#COMPREPLY[*]} -gt 0 ]; then
+-	echo "\${COMPREPLY[*]}" | sort | uniq
+-else
++if [ \${#COMPREPLY[*]} -eq 0 ]; then
+ 	# No completions suggested.  In this case, we want tcsh to perform
+ 	# standard file completion.  However, there does not seem to be way
+ 	# to tell tcsh to do that.  To help the user, we try to simulate
+@@ -85,19 +93,20 @@ else
+ 		# We don't support ~ expansion: too tricky.
+ 		if [ "\${TO_COMPLETE:0:1}" != "~" ]; then
+ 			# Use ls so as to add the '/' at the end of directories.
+-			RESULT=(\`ls -dp \${TO_COMPLETE}* 2> /dev/null\`)
+-			echo \${RESULT[*]}
+-
+-			# If there is a single completion and it is a directory,
+-			# we output it a second time to trick tcsh into not adding a space
+-			# after it.
+-			if [ \${#RESULT[*]} -eq 1 ] && [ "\${RESULT[0]: -1}" == "/" ]; then
+-				echo \${RESULT[*]}
+-			fi
++			COMPREPLY=(\`ls -dp \${TO_COMPLETE}* 2> /dev/null\`)
+ 		fi
+ 	fi
+ fi
+ 
++# tcsh does not automatically remove duplicates, so we do it ourselves
++echo "\${COMPREPLY[*]}" | sort | uniq
++
++# If there is a single completion and it is a directory, we output it
++# a second time to trick tcsh into not adding a space after it.
++if [ \${#COMPREPLY[*]} -eq 1 ] && [ "\${COMPREPLY[0]: -1}" == "/" ]; then
++	echo "\${COMPREPLY[*]}"
++fi
++
+ EOF
+ 
+ # Don't need this variable anymore, so don't pollute the users environment
+-- 
+1.8.1.367.g8e14972.dirty
