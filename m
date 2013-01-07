@@ -1,89 +1,82 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH v4] git-completion.bash: add support for path completion
-Date: Mon, 07 Jan 2013 14:43:22 +0100
-Message-ID: <50EAD0FA.4050401@gmail.com>
-References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com> <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se> <7vobh4sffw.fsf@alter.siamese.dyndns.org>,<7vehi0qh4x.fsf@alter.siamese.dyndns.org> <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] two-way read-tree can write null sha1s into index
+Date: Mon, 7 Jan 2013 08:46:54 -0500
+Message-ID: <20130107134654.GA22692@sigill.intra.peff.net>
+References: <20121229103430.GG18903@elie.Belkin>
+ <20121229110541.GA1408@sigill.intra.peff.net>
+ <20121229205154.GA21058@sigill.intra.peff.net>
+ <7vvcbg7d8x.fsf@alter.siamese.dyndns.org>
+ <20130103083712.GC32377@sigill.intra.peff.net>
+ <7vehi2xote.fsf@alter.siamese.dyndns.org>
+ <20130103202343.GA4632@sigill.intra.peff.net>
+ <7vip7evwdo.fsf@alter.siamese.dyndns.org>
+ <20130103203606.GA8188@sigill.intra.peff.net>
+ <7vzk0pvqvu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"szeder@ira.uka.de" <szeder@ira.uka.de>,
-	"felipe.contreras@gmail.com" <felipe.contreras@gmail.com>
-To: Marc Khouzam <marc.khouzam@ericsson.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 14:46:00 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 14:47:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsD1Z-0005zM-MU
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 14:45:58 +0100
+	id 1TsD30-0007hZ-LN
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 14:47:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532Ab3AGNpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 08:45:38 -0500
-Received: from mail-we0-f179.google.com ([74.125.82.179]:45744 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753605Ab3AGNph (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 08:45:37 -0500
-Received: by mail-we0-f179.google.com with SMTP id r6so10219853wey.10
-        for <git@vger.kernel.org>; Mon, 07 Jan 2013 05:45:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=gTohQgd7g7ig6b+nbYspMwESww4tB2g4SasFn5GhbYs=;
-        b=OWHCr58oUUK83CyF0FdEgoqS7OkH7bYsEk8kD1THi2m5djyK6PJFHKChDoe7kn+cIZ
-         n3KpJRpw+8OlqqjiO5qN4orWTOEKckHf87pAitaqGAYD4YSllagGaSobNI7Zw+bA1pmo
-         WiAMaAznVNLbWG6tKd7rlTgobMsCgPhnodsOUwHDuuiZdkjXTPACDZU1e4qhGjWgbxU4
-         oX/abOXiBT8XCmBxWimGvNyBQRtcqzQRLSdPm3A2XI3udNpSY/8SsTh+8oBLEx7x50z0
-         U+mjmGoR+9dI8mqQgB//bvOiKh5k6iv/Zn4GpTkVTe6HwZYbSJ9n+LXXWXt9yzAKwfoL
-         OTpQ==
-X-Received: by 10.180.103.136 with SMTP id fw8mr9236961wib.27.1357566336314;
-        Mon, 07 Jan 2013 05:45:36 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.204.244])
-        by mx.google.com with ESMTPS id hg17sm12261130wib.1.2013.01.07.05.45.33
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 07 Jan 2013 05:45:35 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se>
-X-Enigmail-Version: 1.0.1
+	id S1754610Ab3AGNrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 08:47:06 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46292 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753823Ab3AGNrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 08:47:05 -0500
+Received: (qmail 10161 invoked by uid 107); 7 Jan 2013 13:48:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Jan 2013 08:48:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Jan 2013 08:46:54 -0500
+Content-Disposition: inline
+In-Reply-To: <7vzk0pvqvu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212894>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jan 03, 2013 at 02:33:09PM -0800, Junio C Hamano wrote:
 
-Il 05/01/2013 21:23, Marc Khouzam ha scritto:
-> [...]
-> Below are two suggestions that are in line with this effort but that are not regressions.
+> Jeff King <peff@peff.net> writes:
 > 
-> A) It would be nice if 
-> git commit -a <TAB>
-> also completed with untracked files
+> > Oh, I agree it's insane to try to carry through unmerged entries. I'm
+> > just concerned that not all code paths are careful enough to check.
 > 
+> I would actually be surprised if some code path do assume somebody
+> might give them an index with conflicting entries in it and guard
+> against it.  We have been coding under the "index must exactly match
+> the second tree when three-way unpack_trees() begin" requirement
+> since day one.  An conflicted entry will appear as "index and HEAD
+> not matching" and will cause reject_merge() early in threeway_merge()
+> anyway, no?
 
-$ git commit -a foo
-fatal: Paths with -a does not make sense.
+Hmm. There is code in threeway_merge to handle a few cases:
 
-So
-  git commit -a <TAB>
+        /*
+         * We start with cases where the index is allowed to match
+         * something other than the head: #14(ALT) and #2ALT, where it
+         * is permitted to match the result instead.
+         */
+        /* #14, #14ALT, #2ALT */
+        if (remote && !df_conflict_head && head_match && !remote_match) {
+                if (index && !same(index, remote) && !same(index, head))
+                        return o->gently ? -1 : reject_merge(index, o);
+                return merged_entry(remote, index, o);
+        }
 
-should not suggest untracked files; instead it should suggest nothing.
+but I do not think we have to worry, because we know that the index will
+never match remote, either (and merged_entry has already been taught to
+be wary of the conflicted bit, anyway). I'm not entirely clear on how
+that would get triggered if all of the callers avoid operating on a
+modified index.
 
-> [...]
-
-
-Regards  Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlDq0PoACgkQscQJ24LbaUSTNwCfWt7a1Tdg9u5sd6B3FXCEFj1/
-sBwAoIv4B2y4MUQgLNafY2PTWx4giSfD
-=tb3O
------END PGP SIGNATURE-----
+-Peff
