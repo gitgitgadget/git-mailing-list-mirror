@@ -1,86 +1,91 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH 1/4] test: Add target test-lint-shell-syntax
-Date: Mon, 07 Jan 2013 18:43:04 +0100
-Message-ID: <50EB0928.3090901@web.de>
-References: <201301012240.10722.tboegi@web.de> <20130102094635.GD9328@sigill.intra.peff.net> <7vtxqzyw0g.fsf@alter.siamese.dyndns.org> <7vpq1nyvp1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] status: always report ignored tracked directories
+Date: Mon, 07 Jan 2013 09:50:40 -0800
+Message-ID: <7v4niskhlb.fsf@alter.siamese.dyndns.org>
+References: <20130105230303.GA5195@sigill.intra.peff.net>
+ <1357510179-22852-1-git-send-email-apelisse@gmail.com>
+ <50EB0409.1090307@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 18:43:48 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Jan 07 18:51:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsGjh-0004tr-2T
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 18:43:45 +0100
+	id 1TsGqm-0006Id-QN
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 18:51:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145Ab3AGRnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 12:43:19 -0500
-Received: from mout.web.de ([212.227.15.4]:59529 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754131Ab3AGRnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 12:43:17 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0MRl5x-1TPUOH23A1-00Tcex; Mon, 07 Jan 2013 18:43:05
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vpq1nyvp1.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:c3wPoyS7y9VAYSxgffPG8Q8QMNaiuzj3Ot9seOsJsmg
- 2TmWsDTA9xFJJwUp5gJU0+xvElP9GiQJujMzf6qASk3xjyZsII
- s0QkDHVOKIC8kL5jvlPZkF4OZmpBfJV1ZekFBM+llFtvufNhKF
- RoerCmc+Mem2tysz77Nn9FEybeWso7GWsLyx4hr8jMd6X2r90d
- KW/qjKp/7irDUDIxcMAng==
+	id S1754192Ab3AGRup convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 12:50:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41613 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751878Ab3AGRuo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 12:50:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D3A6B2BF;
+	Mon,  7 Jan 2013 12:50:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=TiN9DY2LfixW
+	MlYmdmte17VGJVs=; b=Bvhdgxhb3qww+wQC56MkHVujJ2qIVIYryyjsXkMO0gEc
+	4NVBcdB/qwJNwhb97swXVavJyY/FGiQTfErK/8TtbMDbfhHGYOqu3brJkWqgcDAq
+	msfMZorGhdPqUw8AX/XrI2YYjpLuIeHHLLmXrgd8xw26sYtXr4QGy8/QqNqMmrs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=c561nI
+	Jv0LZCMUeSdg7XUVPpM76deoqiAahepHWBAbQC0mv/NRhmoqlHcOQT3OYNAHA86c
+	rteaWXZfY8FHmGxvfsyIi1ADNNyixlU4mCmgVN00aTABkmR+UqKi8nNUVaigwOmK
+	Ytgpsm9YmBRUT7Do6v2OUVFIuVJulhcjERvW4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DDCAB2BD;
+	Mon,  7 Jan 2013 12:50:43 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88014B2BA; Mon,  7 Jan 2013
+ 12:50:42 -0500 (EST)
+In-Reply-To: <50EB0409.1090307@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of "Mon, 07 Jan 2013 18:21:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C176DF40-58F2-11E2-9AD6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212907>
 
-On 03.01.13 01:08, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> I would actually not add this to TEST_LINT by default, especially
->> when "duplicates" and "executable" that are much simpler and less
->> likely to hit false positives are not on by default.
->>
->> At least, a change to add this to TEST_LINT by default must wait to
->> be merged to any integration branch until all the fix-up topics that
->> this test triggers in the current codebase graduate to the branch.
->>
->>>> +test-lint-shell-syntax:
->>>> +	$(PERL_PATH) check-non-portable-shell.pl $(T)
->>>
->>> This is wrong if $(PERL_PATH) contains spaces, no?
->>
->> You are correct; "harness" thing in the same Makefile gets this
->> wrong, too.  I think the right invocation is:
->>
->> 	@'$(PERL_PATH_SQ)' check-non-portable.shell.pl $(T)
->>
->> although I do not offhand know if that symbol is already exported by
->> the top-level Makefile.
-> 
-> I'll tentatively queue this instead.  The log message has also been
-> cleaned up a bit.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Sorry for late answer, but there is a problem (both linux and Mac OS X) :-(
-$ make test-lint does not do shel syntax check, neither
-$ make test-lint-shell-syntax
+> The bad news: the patch does not apply.
 
-In the Makefile the the line 
-	@'$(PERL_PATH_SQ)' check-non-portable-shell.pl $(T)
-doesn't seem to anything (?)
+Huh, isn't this already queued as 22ccf86 (status: always report
+ignored tracked directories, 2013-01-06)?
 
-Replacing @'$(PERL_PATH_SQ)' with $(PERL_PATH) gives the following,
-expected result: (a very long line starting like this:)
+> The good news: t7061 passes on pu,
+> and dir.c seems to be changes as needed:
+>
+> commit 1f4e17c6c9833f17dc6bbf045f8a8d6378dcb417
+> Merge: dee1fa4 cc37e5b
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date: Sun Jan 6 23:46:29 2013 -0800
+>
+> Merge branch 'nd/parse-pathspec' into pu
+>
+> which comes from Duy:
+>
+> commit cc37e5bf18ca11d9a884bddfebcdff61df3e6279
+> Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+> Date: Sun Jan 6 13:21:08 2013 +0700
+>
+> Convert more init_pathspec() to parse_pathspec()
 
-$ make test-lint-shell-syntax
-/usr/bin/perl check-non-portable-shell.pl t0000-basic.sh ......
-
-confused...
-/Torsten
+Yes, it needs conflict resolution with other topics in flight, but
+the thing to test is to see if the result of merging 22ccf86 into
+the 'master' branch does what we want; the newer topic is still in
+flux and we know it will be rerolled before it gets into testable
+shape.
