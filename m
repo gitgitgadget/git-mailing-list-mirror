@@ -1,92 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] Use %B for Split Subject/Body
-Date: Mon, 07 Jan 2013 08:53:35 -0800
-Message-ID: <7v8v85j5o0.fsf@alter.siamese.dyndns.org>
-References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
- <1357012655-24974-2-git-send-email-greened@obbligato.org>
- <7vtxr1bg4g.fsf@alter.siamese.dyndns.org>
- <CAPYzjrT_8g26y-QrYvbQYoySWskGdn15jCX60rz04wQFQ2ikVw@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2] status: always report ignored tracked directories
+Date: Mon, 07 Jan 2013 18:21:13 +0100
+Message-ID: <50EB0409.1090307@web.de>
+References: <20130105230303.GA5195@sigill.intra.peff.net> <1357510179-22852-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
-To: =?utf-8?Q?=E9=83=91=E6=96=87=E8=BE=89=28Techlive_Zheng=29?= 
-	<techlivezheng@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 17:54:02 2013
+Cc: Jeff King <peff@peff.net>, tboegi@web.de, git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 18:21:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsFxX-0005JL-GE
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 17:53:59 +0100
+	id 1TsGOS-0000YL-7T
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 18:21:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944Ab3AGQxk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 11:53:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42297 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753907Ab3AGQxj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 11:53:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 911E7BAF1;
-	Mon,  7 Jan 2013 11:53:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=238zldblGkaB
-	csqvc32l40Lcgmc=; b=dI/dawKdcqyOLGMsiig2ajk8SkfQDV3K0bDiN36sRwhm
-	MAe+iruhsfh/mymkrhCTbZ1RD41YjkNbZcN/jAovAZzUXbHraSNi0ItbbBpQUy1L
-	8hlwBDIqUlmMu1GRrziUXj6TRRcmnDGokTxFHnlFr/u/Pk2mZu+B5sFrKQNjch8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LptK/7
-	qR0QT9aaVtj9qcEp2XgjDLMg7RCIl/4MKX2J7yQ0c/qrfU4NV9DUq52qqVb00ap3
-	MGK67ZzNpz/UwUVs45X33Ti28VvUejh3jg7StCUAZptneGeDK9tUU8HaZalxNz2O
-	HVMt0fBkRdMWmn8QQUM7qnsQ4sUzreeTe/uwM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B073BAF0;
-	Mon,  7 Jan 2013 11:53:38 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF90ABAEF; Mon,  7 Jan 2013
- 11:53:37 -0500 (EST)
-In-Reply-To: <CAPYzjrT_8g26y-QrYvbQYoySWskGdn15jCX60rz04wQFQ2ikVw@mail.gmail.com>
- (=?utf-8?B?IumDkeaWh+i+iShUZWNobGl2ZQ==?= Zheng)"'s message of "Mon, 7 Jan
- 2013 23:18:02 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C82DD878-58EA-11E2-9C89-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751502Ab3AGRV0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 12:21:26 -0500
+Received: from mout.web.de ([212.227.17.11]:56850 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754644Ab3AGRVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 12:21:25 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0MTPit-1TSF5U1jJX-00SZHd; Mon, 07 Jan 2013 18:21:12
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <1357510179-22852-1-git-send-email-apelisse@gmail.com>
+X-Provags-ID: V02:K0:pEh3pWEbefcbhMUNjyss6SPbGLTXhoxGTBY/ndMcpYc
+ L8+TLHN5a4APkdIYGri3+rDB2I5XEWOhRdaLhgFeCpjnGyqUw5
+ WjPRi9i3xoGC8ua8YcFPIPzubxtOuGfkyGAMJpwFGl9Q2w8jMP
+ 2sj9PmBh8375K2ZyhxbB5CSTYqPEQAejo3kaDkpUK7Uc5vTP1g
+ x3SFIo4SdHkb4DzdOsWhA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212905>
 
-"=E9=83=91=E6=96=87=E8=BE=89(Techlive Zheng)"  <techlivezheng@gmail.com=
-> writes:
+On 06.01.13 23:09, Antoine Pelisse wrote:
+[snip]
+> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+> ---
+>  dir.c | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 9b80348..f836590 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -672,7 +672,8 @@ static struct dir_entry *dir_entry_new(const char=
+ *pathname, int len)
+>
+>  static struct dir_entry *dir_add_name(struct dir_struct *dir, const =
+char *pathname, int len)
+>  {
+> -	if (cache_name_exists(pathname, len, ignore_case))
+> +	if (!(dir->flags & DIR_SHOW_IGNORED) &&
+> +	    cache_name_exists(pathname, len, ignore_case))
+>  		return NULL;
+>
+>  	ALLOC_GROW(dir->entries, dir->nr+1, dir->alloc);
+> @@ -877,11 +878,7 @@ static int treat_file(struct dir_struct *dir, st=
+ruct strbuf *path, int exclude,
+>  	if (exclude)
+>  		exclude_file =3D !(dir->flags & DIR_SHOW_IGNORED);
+>  	else if (dir->flags & DIR_SHOW_IGNORED) {
+> -		/*
+> -		 * Optimization:
+> -		 * Don't spend time on indexed files, they won't be
+> -		 * added to the list anyway
+> -		 */
+> +		/* Always exclude indexed files */
+>  		struct cache_entry *ce =3D index_name_exists(&the_index,
+>  		    path->buf, path->len, ignore_case);
+>
+> --
+> 1.7.12.4.3.g90f5e2d
+>
+The bad news: the patch does not apply.
+The good news: t7061 passes on pu,
+and dir.c seems to be changes as needed:
 
-> Though, this patch defintely should be merged, becuase no one expects
-> his commit message be altered durging the splitting process.
+commit 1f4e17c6c9833f17dc6bbf045f8a8d6378dcb417
+Merge: dee1fa4 cc37e5b
+Author: Junio C Hamano <gitster@pobox.com>
+Date: Sun Jan 6 23:46:29 2013 -0800
 
-Are you saying that after double-checking what was posted?  It said
-something like this below, which does not look like 'definitely
-should be' to me.
+Merge branch 'nd/parse-pathspec' into pu
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtr=
-ee.sh
-index 920c664..f2b6d4a 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -296,7 +296,12 @@ copy_commit()
- 	# We're going to set some environment vars here, so
- 	# do it in a subshell to get rid of them safely later
- 	debug copy_commit "{$1}" "{$2}" "{$3}"
-+	# Use %B rather than %s%n%n%b to handle the special case of a
-+	# commit that only has a subject line.  We don't want to
-+	# introduce a newline after the subject, causing generation of
-+	# a new hash.
- 	git log -1 --pretty=3Dformat:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%s%n%n%b'=
- "$1" |
-+#	git log -1 --pretty=3Dformat:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%B' "$1"=
- |
- 	(
- 		read GIT_AUTHOR_NAME
- 		read GIT_AUTHOR_EMAIL
+which comes from Duy:
+
+commit cc37e5bf18ca11d9a884bddfebcdff61df3e6279
+Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Date: Sun Jan 6 13:21:08 2013 +0700
+
+Convert more init_pathspec() to parse_pathspec()
