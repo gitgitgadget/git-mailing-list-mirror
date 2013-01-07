@@ -1,129 +1,92 @@
-From: Olivier Delalleau <shish@keba.be>
-Subject: Re: Suggested improvements to the git-p4 documentation (branch-related)
-Date: Sun, 6 Jan 2013 21:00:42 -0500
-Message-ID: <CAFXk4bp0MBNxOD7w1zn7peN-ufWmV=DthMdHmjmj+Sci4MGneg@mail.gmail.com>
-References: <CAFXk4bqt_pMVDtVKF-JiQuGbSpy2+_rGOg5RTTE+0pNKFcZh3w@mail.gmail.com>
-	<20130105212517.GA30315@padd.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 03:01:05 2013
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Subject: [PATCH] git-send-email: treat field names as case-independent
+Date: Sun,  6 Jan 2013 20:34:58 -0500
+Message-ID: <1357522498-8086-1-git-send-email-nickolai@csail.mit.edu>
+Cc: Nickolai Zeldovich <nickolai@csail.mit.edu>, git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jan 07 03:04:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ts21Q-0003Bc-UB
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 03:01:05 +0100
+	id 1Ts24l-0006tR-M1
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 03:04:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400Ab3AGCAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2013 21:00:45 -0500
-Received: from mail-la0-f52.google.com ([209.85.215.52]:45085 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753214Ab3AGCAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2013 21:00:44 -0500
-Received: by mail-la0-f52.google.com with SMTP id fq12so14168071lab.11
-        for <git@vger.kernel.org>; Sun, 06 Jan 2013 18:00:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=WdNimdDVQ8AZYGKY9kOPuovzm1UXSIKXaePvBT+6uMs=;
-        b=BwQXhng9qfbWTUKoAhcu8KmANGPiM16ZLZ0tMR7VOqndGq3e3/hTQVont31LP/X44W
-         OaSjB5a7947QJGUbHEt3FP5r2HNudHesyUYGq8lm5nQ0M2D/xcbcZlvAmYYyOCvk+OSg
-         BCOhDkVGj28pR4CRPkDnVdcVGmgKANefHlsAKZYWgIbNfqEswsC6JTlFIyq1CDehTvnM
-         y+7iyx5tpHNhQvjj7uTVlGuMSw/TjRlwqSJtRhHyDUFp0LJKL3+ATjU63ImJCoK2qNRq
-         qMG4izFAEqYJqF6h0weHSUIIfs4DbMGNSrlQMpgy0upySB2FRixae2zOeKto7XgSJdOz
-         0VVQ==
-Received: by 10.112.45.232 with SMTP id q8mr24483159lbm.23.1357524042700; Sun,
- 06 Jan 2013 18:00:42 -0800 (PST)
-Received: by 10.152.131.10 with HTTP; Sun, 6 Jan 2013 18:00:42 -0800 (PST)
-In-Reply-To: <20130105212517.GA30315@padd.com>
-X-Google-Sender-Auth: 2uJwO8aSP1izASWGvJ_kSeH-J3Q
+	id S1753378Ab3AGCEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2013 21:04:12 -0500
+Received: from outgoing.csail.mit.edu ([128.30.2.149]:44638 "EHLO
+	outgoing.csail.mit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269Ab3AGCEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2013 21:04:10 -0500
+X-Greylist: delayed 1740 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Jan 2013 21:04:10 EST
+Received: from c-71-232-26-90.hsd1.ma.comcast.net ([71.232.26.90] helo=sahara)
+	by outgoing.csail.mit.edu with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <nickolai@csail.mit.edu>)
+	id 1Ts1cG-0004u9-Uw; Sun, 06 Jan 2013 20:35:05 -0500
+Received: from nickolai by sahara with local (Exim 4.80)
+	(envelope-from <nickolai@csail.mit.edu>)
+	id 1Ts1cq-00027G-Jb; Sun, 06 Jan 2013 20:35:40 -0500
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212866>
 
-2013/1/5 Pete Wyckoff <pw@padd.com>:
-> shish@keba.be wrote on Thu, 03 Jan 2013 15:58 -0500:
->> While struggling to get git-p4 to work properly with branches, I
->> thought the documentation on http://git-scm.com/docs/git-p4 could use
->> some improvements:
->
-> Thanks, I definitely appreciate the constructive comments here.
->
->> 1. At the end of the "Branch detection" section, the following
->> commands are provided (for when you want to explicitly provide branch
->> mappings to git-p4):
->>
->> git config git-p4.branchList main:branch1
->> git p4 clone --detect-branches //depot@all
->>
->> The second command should end with a dot (".") because the first
->> command only works if you are already in a git-initialized folder.
->> Thus I would also suggest to add "git init" as first command to type.
->
-> That is confusing.  I'll make it this:
->
->     git init depot
->     cd depot
->     git config git-p4.branchList main:branch1
->     git p4 clone --detect-branches //depot@all .
+Field names like To:, Cc:, etc should be treated as case-independent;
+use a case-insensitive regexp to match them as such.  Previously,
+git-send-email would send email messages with a lowercase "cc:" line in
+the body without actually sending a copy of the message to that address.
 
-Sounds good, thanks.
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+---
+ git-send-email.perl |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
->
->> 2. Even though having a "main" branch is standard in Perforce, it
->> would be worth mentioning what happens when you don't: there is a
->> message "Could not detect main branch. No checkout/master branch
->> created" output by the "git p4 clone" command. However, it will still
->> work if you manually set the master branch ("git checkout -b master
->> remotes/p4/my_custom_main_branch").
->
-> This feels like a bug to me, and indeed I had an old patch series
-> that planned to fix it.  Let me knock that into shape, instead of
-> changing the documentation.  It will automatically do the
-> checkout step you did.
-
-Sounds good as well.
-
->
->> 3. I don't know what I missed for that one, but I haven't been able to
->> get the example for the --branch option to work. It says that after
->> "git init", we can import a p4 branch with:
->>
->> git p4 sync --branch=refs/remotes/p4/proj2 //depot/proj2
->>
->> However, after doing this, followed by "git checkout -b proj2
->> remotes/p4/proj2", I am unable to properly use "git p4 sync" or "git
->> p4 submit" from this branch, as git complains about a missing
->> refs/remotes/p4/master.
->
-> Yes, also annoying.  I have a failing test case for this, but
-> haven't fixed it yet.  The idea is that "git p4 sync --branch=proj2"
-> will sync refs/remotes/p4/proj2.  If there is no p4/master, and
-> you don't specify --branch, it will fail with a more useful error
-> message.
-
-Good too!
-
-> For submit, there is code that walks from your current branch
-> back in history until it finds a commit on a known p4 remote
-> branch.  This is sort of like the merge-base calculation in git,
-> but restricted to a linear history.  I haven't tested that
-> recently, but will add a test and fix it if needed too.
->
->
-> Please do feel welcome to to rearrange or expand the
-> documentation so it makes more sense, if you are so inspired.
-
-I'm afraid I'm not familiar enough with git documentation to dig into
-it myself, but anyway that's about what I had for now. I'll send more
-comments to the mailing list if I have more suggestions in the future.
-
-Thanks for a great tool! :)
-
--=- Olivier
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 94c7f76..be809e5 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1285,10 +1285,10 @@ foreach my $t (@files) {
+ 		}
+ 
+ 		if (defined $input_format && $input_format eq 'mbox') {
+-			if (/^Subject:\s+(.*)$/) {
++			if (/^Subject:\s+(.*)$/i) {
+ 				$subject = $1;
+ 			}
+-			elsif (/^From:\s+(.*)$/) {
++			elsif (/^From:\s+(.*)$/i) {
+ 				($author, $author_encoding) = unquote_rfc2047($1);
+ 				next if $suppress_cc{'author'};
+ 				next if $suppress_cc{'self'} and $author eq $sender;
+@@ -1296,14 +1296,14 @@ foreach my $t (@files) {
+ 					$1, $_) unless $quiet;
+ 				push @cc, $1;
+ 			}
+-			elsif (/^To:\s+(.*)$/) {
++			elsif (/^To:\s+(.*)$/i) {
+ 				foreach my $addr (parse_address_line($1)) {
+ 					printf("(mbox) Adding to: %s from line '%s'\n",
+ 						$addr, $_) unless $quiet;
+ 					push @to, $addr;
+ 				}
+ 			}
+-			elsif (/^Cc:\s+(.*)$/) {
++			elsif (/^Cc:\s+(.*)$/i) {
+ 				foreach my $addr (parse_address_line($1)) {
+ 					if (unquote_rfc2047($addr) eq $sender) {
+ 						next if ($suppress_cc{'self'});
+@@ -1325,7 +1325,7 @@ foreach my $t (@files) {
+ 			elsif (/^Message-Id: (.*)/i) {
+ 				$message_id = $1;
+ 			}
+-			elsif (!/^Date:\s/ && /^[-A-Za-z]+:\s+\S/) {
++			elsif (!/^Date:\s/i && /^[-A-Za-z]+:\s+\S/) {
+ 				push @xh, $_;
+ 			}
+ 
+-- 
+1.7.10.4
