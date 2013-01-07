@@ -1,96 +1,93 @@
-From: =?UTF-8?B?6YOR5paH6L6JKFRlY2hsaXZlIFpoZW5nKQ==?= 
-	<techlivezheng@gmail.com>
-Subject: Re: [PATCH 1/8] Use %B for Split Subject/Body
-Date: Mon, 7 Jan 2013 23:00:00 +0800
-Message-ID: <CAPYzjrRzXqgYRQZ429iVv-HPA_gatoE+H0ofyebYAEBmYoQ71w@mail.gmail.com>
-References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
- <1357012655-24974-2-git-send-email-greened@obbligato.org> <7vtxr1bg4g.fsf@alter.siamese.dyndns.org>
- <CAPYzjrTqmzuWoDg+zvLxwB7g6J4J2wbBqpL+UbHKRHcbjA4HrA@mail.gmail.com>
+From: Marc Khouzam <marc.khouzam@ericsson.com>
+Subject: RE: [PATCH v4] git-completion.bash: add support for path completion
+Date: Mon, 7 Jan 2013 15:26:26 +0000
+Message-ID: <E59706EF8DB1D147B15BECA3322E4BDC068EE8@eusaamb103.ericsson.se>
+References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com>
+ <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se>
+ <7vobh4sffw.fsf@alter.siamese.dyndns.org>,<7vehi0qh4x.fsf@alter.siamese.dyndns.org>
+ <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se>
+ <50EAD0FA.4050401@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: greened@obbligato.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 07 16:01:05 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'git@vger.kernel.org'" <git@vger.kernel.org>,
+	"'szeder@ira.uka.de'" <szeder@ira.uka.de>,
+	"'felipe.contreras@gmail.com'" <felipe.contreras@gmail.com>
+To: "'Manlio Perillo'" <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 16:27:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsECF-0004JW-AT
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 16:01:03 +0100
+	id 1TsEbT-0002HO-4g
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jan 2013 16:27:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607Ab3AGPAn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2013 10:00:43 -0500
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:39103 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751469Ab3AGPAm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 10:00:42 -0500
-Received: by mail-vc0-f171.google.com with SMTP id n11so19417810vch.2
-        for <git@vger.kernel.org>; Mon, 07 Jan 2013 07:00:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=U4AC7O4RA+Z2t7NqhzRCxepCVQ67Yt6p5q08VwnHeAY=;
-        b=y1ou3Dl03Ba1jTZx3CZVuxJv/10jbfbOAdaoe/mD1Vm+fPDPC4BQSckjxTFyJtvl54
-         XuDOVrFgYmwNEzkRE/SDPqCbonEMugmEsYqlf4GjOEym3ZqzbaUMvhqeMDamp/xlAD//
-         xPiYrsEI0ZE30iJcLftiW+xa3Jx3jxB/c/NONTfrnJs7JRKSZDhYdvNhVQTjX9fkYy7x
-         J9dEqu92DRXUy6qO0z0kKWY4kRpQ5F003zNdi8K5chkTjW0NvLrHKM0+q/48aO5CsnEs
-         ilUebbIAzBH/rF0KSti2pcl/IZGYHe2VLtQaO1CLdAFZ2tqNrhQeeaZ2TM4NTn8Cdetg
-         XAHQ==
-Received: by 10.52.16.17 with SMTP id b17mr72326297vdd.86.1357570841063; Mon,
- 07 Jan 2013 07:00:41 -0800 (PST)
-Received: by 10.58.106.48 with HTTP; Mon, 7 Jan 2013 07:00:00 -0800 (PST)
-In-Reply-To: <CAPYzjrTqmzuWoDg+zvLxwB7g6J4J2wbBqpL+UbHKRHcbjA4HrA@mail.gmail.com>
+	id S1753040Ab3AGP0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 10:26:45 -0500
+Received: from imr4.ericy.com ([198.24.6.9]:57483 "EHLO imr4.ericy.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751387Ab3AGP0o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jan 2013 10:26:44 -0500
+Received: from EUSAAHC005.ericsson.se ([147.117.188.87])
+	by imr4.ericy.com (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id r07FeuxR004076;
+	Mon, 7 Jan 2013 09:40:57 -0600
+Received: from EUSAAMB103.ericsson.se ([147.117.188.120]) by
+ EUSAAHC005.ericsson.se ([147.117.188.87]) with mapi id 14.02.0318.004; Mon, 7
+ Jan 2013 10:26:26 -0500
+Thread-Topic: [PATCH v4] git-completion.bash: add support for path completion
+Thread-Index: AQHN35v9HSsVlTwzCk6LZCvwjOeDYpg5wPLQgAAkJX6AAHcaLIAA48SGgAMOjwD//8ifIA==
+In-Reply-To: <50EAD0FA.4050401@gmail.com>
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [147.117.188.134]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212896>
 
- 2013/1/1 Junio C Hamano <gitster@pobox.com>:
-> "David A. Greene" <greened@obbligato.org> writes:
->
->> From: Techlive Zheng <techlivezheng@gmail.com>
->>
->> Use %B to format the commit message and body to avoid an extra newli=
-ne
->> if a commit only has a subject line.
->
-> Is this an unconditional improvement, or is it generally an
-> improvement but for some users it may be a regression?  I am
-> guessing it is the former but am just making sure.
->
->> Author:    Techlive Zheng <techlivezheng@gmail.com>
->>
->> Signed-off-by: David A. Greene <greened@obbligato.org>
->
-> Please don't do "Author: " which does not add anything new.  That is
-> what "From: " is for.  Instead it needs to be a sign-off.
->
-> Also, is that a real name, I have to wonder?
->
-Hmm, sorry about the confusing.
 
-I am a Chinese, I coined that first name a couple years ago when I
-decided to have a unique name across the web. My real name is "=E9=83=91=
-=E6=96=87=E8=BE=89" in
-Chinese=EF=BC=8Ctranslate to English by its pronucation is "Wenhui
-Zheng"=EF=BC=8Cwhich means "Zheng" is acturally my real last name. The =
-first
-name "Wenhui" does not have any meaning in English, so I coined it by
-"Tech" + "Live", which I interprate it as "Technological Living",
-thus, "Techlive Zheng" is the name I am currently using online.
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Manlio Perillo
+> Sent: Monday, January 07, 2013 8:43 AM
+> To: Marc Khouzam
+> Cc: Junio C Hamano; git@vger.kernel.org; szeder@ira.uka.de; 
+> felipe.contreras@gmail.com
+> Subject: Re: [PATCH v4] git-completion.bash: add support for 
+> path completion
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Il 05/01/2013 21:23, Marc Khouzam ha scritto:
+> > [...]
+> > Below are two suggestions that are in line with this effort 
+> but that are not regressions.
+> > 
+> > A) It would be nice if 
+> > git commit -a <TAB>
+> > also completed with untracked files
+> > 
+> 
+> $ git commit -a foo
+> fatal: Paths with -a does not make sense.
+> 
+> So
+>   git commit -a <TAB>
+> 
+> should not suggest untracked files; instead it should suggest nothing.
 
-Here are some links:
+You are right, I was confused.
 
-* Let the code talks. https://github.com/techlivezheng
-* I cross the great GFW to use twitter. https://twitter.com/techlivezhe=
-ng
-* Also search "Techlive Zheng" in Google, the result should be unique t=
-o me.
+git commit --all <TAB>
 
-So, no doubt, I am a real person, just with kind of an uncommon name.
+should also suggest nothing then.
 
->> Thanks.
+Thanks
+
+Marc
