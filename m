@@ -1,107 +1,69 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v2 00/10] reroll of ap/log-mailmap
-Date: Tue, 8 Jan 2013 08:27:24 +0100
-Message-ID: <CALWbr2w8z2iVx2PxM2sn3yDQzB5rTXc4EuZD9GCKSCofHzEzLQ@mail.gmail.com>
-References: <1357603821-8647-1-git-send-email-gitster@pobox.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] git clone depth of 0 not possible.
+Date: Tue, 8 Jan 2013 14:33:40 +0700
+Message-ID: <CACsJy8B0ftDDagTpO4wh-LsBOBy+BhwhV=H-68U246Lq4=Ssfw@mail.gmail.com>
+References: <1357581996-17505-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 08:27:52 2013
+Cc: schlotter@users.sourceforge.net, gitster@pobox.com,
+	Ralf.Wildenhues@gmx.de, git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 08:34:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsTbD-0006PL-N0
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 08:27:52 +0100
+	id 1TsThf-0006Hm-Jm
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 08:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251Ab3AHH11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 02:27:27 -0500
-Received: from mail-ee0-f53.google.com ([74.125.83.53]:41455 "EHLO
-	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab3AHH10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 02:27:26 -0500
-Received: by mail-ee0-f53.google.com with SMTP id e52so42772eek.12
-        for <git@vger.kernel.org>; Mon, 07 Jan 2013 23:27:25 -0800 (PST)
+	id S1752172Ab3AHHeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 02:34:12 -0500
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:38680 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093Ab3AHHeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 02:34:11 -0500
+Received: by mail-oa0-f45.google.com with SMTP id i18so80598oag.4
+        for <git@vger.kernel.org>; Mon, 07 Jan 2013 23:34:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=m0EKsS+w/VkNF0VxfgjYGzypcvrsY5ztVRn8bLxcuME=;
-        b=lAB0WE9t3ZxTYDcNX8Tgix4hq7kQM8PhLa6rZiSvbYfMJMHI3L0g8NE5eF4kjpXXvz
-         ol0rmjD9eSFydJAlF1yKrHtvK1Rzpam3aHYZF6bx5wlFiDiXNnMoWe/+RDjJ4R1x2wVj
-         5YEbTdMpDqhD0RifmETUTFY5Gx9iITrxn6Bd2G6FllUlZVHXdPGW3EDjWqdtIzKoB34i
-         BOEvTGSOyT5awgrkUHPGmI520DBATqcW1Rz0bnuX4S6c2Q/+tSRF3myYCZ1LJ3hWvzNU
-         9wdk+T+qxSsKpycuYCKE7zyfsrESIowrCm9A71NOgF0b81euUqvE2lDUniV3TfefVe6b
-         MPdw==
-Received: by 10.14.208.137 with SMTP id q9mr171130740eeo.28.1357630045024;
- Mon, 07 Jan 2013 23:27:25 -0800 (PST)
-Received: by 10.14.187.6 with HTTP; Mon, 7 Jan 2013 23:27:24 -0800 (PST)
-In-Reply-To: <1357603821-8647-1-git-send-email-gitster@pobox.com>
+        bh=xfaP1X2FSQQZ3l4u3r99jqAQ64ebDKIUf9zfvxizHCA=;
+        b=fKGIdz/wpY1HiOlYNd2USshl/CdEXAudo83lyy8+wXZHW5Oyifvl1bEASjdmQtWMaQ
+         LOqm2Qwxam0Emg8KAnRR2eQch3VO+B5GJCKDj/Oz4nKmc1Oi2bD8gKgeWXIwBf40u2Pp
+         aZbABlHhSB5jJ3BhEpu/+heemxSclpFRVbhAAja6IvbYm03V8qYiQ/syWOIZpfWXLDqT
+         c+TwyHDgwp2BCTE8iudg9VNtbTVqrus89lzqjerdGZK+exkvknP/JmDYb4vF/SoPmhvH
+         cwg7kGTXTNjjvhEVwI0rK3WoBZwysEP8OUMKXrW72EWmce3BZTWSKbWSUBgkeefZ2Vqe
+         ZHTA==
+Received: by 10.60.22.164 with SMTP id e4mr35075541oef.87.1357630450950; Mon,
+ 07 Jan 2013 23:34:10 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Mon, 7 Jan 2013 23:33:40 -0800 (PST)
+In-Reply-To: <1357581996-17505-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212939>
 
-On Tue, Jan 8, 2013 at 1:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> This is a reroll of the previous series Antoine posted on Saturday.
-
-Thanks a lot for the reroll Junio
-
-> A new patch "string-list: allow case-insensitive string list"
-> teaches the string-list API that some string lists can be sorted
-> case insensitively (actually, you can feed any custom two string
-> comparison functions).
+On Tue, Jan 8, 2013 at 1:06 AM, Stefan Beller
+<stefanbeller@googlemail.com> wrote:
+> Currently it is not possible to have a shallow depth of
+> just 0, i.e. only one commit in that repository after cloning.
+> The minimum number of commits is 2, caused by depth=1.
 >
-> The string_list_lookup_extended() function introduced by the
-> previous series has been discarded.  Instead, the third patch
-> "mailmap: remove email copy and length limitation" introduces a
-> helper function that takes a <char *, size_t> key that is not NUL
-> terminated to look for a matching item in a string list, and uses
-> that to update map_user() function, together with the fourth
-> patch "mailmap: simplify map_user() interface".
+> I had no good idea how to add this behavior to git clone as
+> the depth variable in git_transport_options struct (file transport.h)
+> uses value 0 for another meaning, so it would have need changes at
+> all places, where the transport options depth is being used
+> (e.g. fetch)
 >
-> All other patches are unmodified from Antoine's series (modulo
-> wording tweaks here and there).
->
-> Antoine Pelisse (9):
->   Use split_ident_line to parse author and committer
->   mailmap: remove email copy and length limitation
->   mailmap: simplify map_user() interface
->   mailmap: add mailmap structure to rev_info and pp
->   pretty: use mailmap to display username and email
->   log: add --use-mailmap option
->   test: add test for --use-mailmap option
->   log: grep author/committer using mailmap
->   log: add log.mailmap configuration option
->
-> Junio C Hamano (1):
->   string-list: allow case-insensitive string list
+> So I documented the current behavior, see attached patch.
 
-I think this one is missing (and I forgot to reroll it before):
-log --use-mailmap: optimize for cases without --author/--committer search
-
->
->  Documentation/config.txt  |   4 +
->  Documentation/git-log.txt |   5 ++
->  builtin/blame.c           | 183 ++++++++++++++++++++++------------------------
->  builtin/log.c             |  16 +++-
->  builtin/shortlog.c        |  54 ++++----------
->  commit.h                  |   1 +
->  log-tree.c                |   1 +
->  mailmap.c                 |  94 +++++++++++++++---------
->  mailmap.h                 |   4 +-
->  pretty.c                  | 114 ++++++++++++++++-------------
->  revision.c                |  54 ++++++++++++++
->  revision.h                |   1 +
->  string-list.c             |  17 ++++-
->  string-list.h             |   4 +
->  t/t4203-mailmap.sh        |  56 ++++++++++++++
->  15 files changed, 379 insertions(+), 229 deletions(-)
-
-Have you been able to measure a speed increase due to less copies ?
-
-Thanks,
-Antoine
+If we choose not to do the off-by-one topic Junio suggested elsewhere
+in the same thread, I think this document patch should be turned into
+code instead. Just reject --depth=0 with an explanation. Users who are
+hit by this will be caught without the need to read through the
+document.
+-- 
+Duy
