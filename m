@@ -1,71 +1,83 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH 2/8] Add --unannotate
-Date: Tue, 08 Jan 2013 04:42:45 -0600
-Message-ID: <878v84lzve.fsf@waller.obbligato.org>
-References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
-	<1357012655-24974-3-git-send-email-greened@obbligato.org>
-	<7v623ga8vs.fsf@alter.siamese.dyndns.org>
-	<87sj6kfsbz.fsf@waller.obbligato.org>
-	<7va9ss77bu.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] upload-pack: only accept commits from "shallow" line
+Date: Tue,  8 Jan 2013 18:32:36 +0700
+Message-ID: <1357644756-18205-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, James Nylen <jnylen@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 11:43:49 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 12:31:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsWep-0002qy-NL
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 11:43:48 +0100
+	id 1TsXPM-0004bG-N5
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 12:31:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933Ab3AHKn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 05:43:26 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:51726 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755918Ab3AHKnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 05:43:24 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1TsWm1-0003lO-Hc; Tue, 08 Jan 2013 04:51:13 -0600
-In-Reply-To: <7va9ss77bu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 01 Jan 2013 16:32:37 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: > greened@obbligato.org
-    writes: > >> In the meantime, will you apply the patch or do you prefer a
-    new design? > > The --unannotate option will become a baggage you will have
-    to keep > working until the end of time, if we applied it. I think it is
-   not > too uch a baggage, so it probably is OK. [...] 
- Content analysis details:   (-2.9 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_T 
+	id S1756189Ab3AHLbc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2013 06:31:32 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:42655 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756114Ab3AHLbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 06:31:31 -0500
+Received: by mail-pa0-f48.google.com with SMTP id fa1so281708pad.21
+        for <git@vger.kernel.org>; Tue, 08 Jan 2013 03:31:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=hUjEegRYsr2ITcJB9qLN6Bi+9qP0wGupoDLcKJyPn1o=;
+        b=ZmNFroHMeL1m1VYKUR22cH+boEdrI+KSIqogywpvwtQU6guRPWNyw6bzRZ3hu4/n4b
+         Uw0L+oimd39k0o9fCHS5/s2Ga/d7a4cWxjMUukqSxrsOkLxsRQGQpR1MPqTej1u5fOG4
+         ZksjxKmV2p995NCw02D2BbSGriEFTzs4PYhq2OSkYL0jVvchMXO/XKOzUywB0+cdsa/z
+         pMpBSPx/Y4U9iebNdOMu7848zC3xcRkGvy/Ne6Y7JrNDppQLptqQyxOoNw89Hpps4REz
+         3j+JJq79tIgteYtr9gY9gFOuCNoi+RQR7z4/tihbcIiT6JBpX76f7sqO1gLVG5WFN4VM
+         WUCg==
+X-Received: by 10.68.232.101 with SMTP id tn5mr199112629pbc.125.1357644691492;
+        Tue, 08 Jan 2013 03:31:31 -0800 (PST)
+Received: from tre ([115.74.46.148])
+        by mx.google.com with ESMTPS id kp4sm39487607pbc.52.2013.01.08.03.31.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 Jan 2013 03:31:30 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Tue, 08 Jan 2013 18:32:49 +0700
+X-Mailer: git-send-email 1.8.0.rc0.19.g7bbb31d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212953>
 
-Junio C Hamano <gitster@pobox.com> writes:
+We only allow cuts at commits, not arbitrary objects. upload-pack will
+fail eventually in register_shallow if a non-commit is given with a
+generic error "Object %s is a %s, not a commit". Check it early and
+give a more accurate error.
 
-> greened@obbligato.org writes:
->
->> In the meantime, will you apply the patch or do you prefer a new design?
->
-> The --unannotate option will become a baggage you will have to keep
-> working until the end of time, if we applied it.  I think it is not
-> too uch a baggage, so it probably is OK.
+This should never show up in an ordinary session. It's for buggy
+clients, or when the user manually edits .git/shallow.
 
-Ok.  I think it's worth applying since people find it useful.  It's not
-very complicated.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ upload-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-                       -David
+diff --git a/upload-pack.c b/upload-pack.c
+index 6142421..95d8313 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -603,6 +603,8 @@ static void receive_needs(void)
+ 			object =3D parse_object(sha1);
+ 			if (!object)
+ 				die("did not find object for %s", line);
++			if (object->type !=3D OBJ_COMMIT)
++				die("invalid shallow object %s", sha1_to_hex(sha1));
+ 			object->flags |=3D CLIENT_SHALLOW;
+ 			add_object_array(object, NULL, &shallows);
+ 			continue;
+--=20
+1.8.0.rc0.19.g7bbb31d
