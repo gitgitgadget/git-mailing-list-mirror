@@ -1,73 +1,83 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Mon, 07 Jan 2013 22:12:53 -0500
-Message-ID: <50EB8EB5.6080204@gmail.com>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?wqA=?= <porpen+git@gmail.com>
+Subject: Re: git.wiki.kernel.org spam ...
+Date: Tue, 8 Jan 2013 03:39:06 +0000
+Message-ID: <CAANzHtQ5bwBTiWZ=3Ctbdo52UUcfon-V-naBB3BxDn6iQXF_Xg@mail.gmail.com>
+References: <CAJs9aZ_Nu9PzYYLc55Lr8E+UefohK+pSUbF5i8Lu4V_gr2KHPw@mail.gmail.com>
+	<alpine.DEB.1.00.1212311806080.32206@s15462909.onlinehome-server.info>
+	<CAJs9aZ_eL1jR=GqxUEy3vEWbMz6kEYOHb7pZkZWFh6yXXSx-Jg@mail.gmail.com>
+	<alpine.DEB.1.00.1301050022000.32206@s15462909.onlinehome-server.info>
+	<20130104234759.GC6501@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Stephen & Linda Smith <ischis2@cox.net>,
-	Eric Blake <eblake@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 04:13:19 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "Theodore Ts'o" <tytso@mit.edu>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 08 04:39:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsPcr-0008W0-1N
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 04:13:17 +0100
+	id 1TsQ2D-0007pY-PJ
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 04:39:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019Ab3AHDM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 22:12:57 -0500
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:33050 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750785Ab3AHDM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 22:12:56 -0500
-Received: by mail-qc0-f176.google.com with SMTP id n41so13455571qco.21
-        for <git@vger.kernel.org>; Mon, 07 Jan 2013 19:12:55 -0800 (PST)
+	id S1753169Ab3AHDjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 22:39:09 -0500
+Received: from mail-bk0-f54.google.com ([209.85.214.54]:36472 "EHLO
+	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129Ab3AHDjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 22:39:08 -0500
+Received: by mail-bk0-f54.google.com with SMTP id je9so8833588bkc.41
+        for <git@vger.kernel.org>; Mon, 07 Jan 2013 19:39:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=69dSrhBEm2LaSLqV1YgSiX7mFyuSyJpkTiraYtpzV9c=;
-        b=yxPUNdg1e/VxTRTKk8Iu1dHTTQDB43A/gt3NG7EReN8L25YUd5cuOmv/sRpVqS+y4b
-         Ea4YONuYZHdQXhwweDm/pmfvucvIuvM2I6l9W92/yjULbkI7+6VBh1RP0tpUTriF8n4Q
-         E1nXyVy2o6hz7+1c+4Fu6SxhzL3l9laypwZqtkP/TyoFKUOZAzDyPcmEbc/D4rgqIybJ
-         tqa3+CG/b85fh/LOk/WAKq6Uc76C7ameKkQarByihVN5MHW2dBp8qGzke+92Y/DN2Xsq
-         NxlaydPx9onRFKy+rCBFg03TBf2zcD5F93FaFhDmNCl5tefWIb/1KK1eMaEbDgRKzaKW
-         iyQA==
-X-Received: by 10.49.29.135 with SMTP id k7mr53172024qeh.39.1357614775506;
-        Mon, 07 Jan 2013 19:12:55 -0800 (PST)
-Received: from mark-laptop.lan (pool-173-79-102-236.washdc.fios.verizon.net. [173.79.102.236])
-        by mx.google.com with ESMTPS id e12sm21065623qad.1.2013.01.07.19.12.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 07 Jan 2013 19:12:54 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7v1udxladc.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=EmkE2y/K7qVALNo6SY8MsQkbpKELDYhTONvmECOP7yI=;
+        b=dyhFGyaMPbBxBljW7dSXnL+/khLklNaJoquQMMZUS7H444BPicHMfOrX0soC+RITVG
+         KywtI6p5LkCahqASkDSbzYQzxrWP7qewVp4XEhHvWrik+RsVvj+c8l1oIl5k7toB7p3v
+         7QgJHp/v2sTklfaNdVw24X6uGz/FPgTMY8sTTAsjoeVwRrCYAdrqKnstpJNdaHiPsK86
+         6wvqRwLUw5iXhQ0S4bZLPbzYPlQft/nmI+059EqywXIM8sT1GQVRmAVwUoUw/toFe43Y
+         cla9Poht4DpNViTfsTuoY1PYlCOxGpDVK7O7ZhkjgfvLq+Qvc4xaCTnqQ0bNlGthOUPh
+         laGQ==
+Received: by 10.204.149.88 with SMTP id s24mr31949761bkv.14.1357616346871;
+ Mon, 07 Jan 2013 19:39:06 -0800 (PST)
+Received: by 10.205.39.9 with HTTP; Mon, 7 Jan 2013 19:39:06 -0800 (PST)
+In-Reply-To: <20130104234759.GC6501@thunk.org>
+X-Google-Sender-Auth: jZNtY4JsvYloAGEiN7sQhT3Zl-0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212933>
 
-On 01/07/2013 02:29 AM, Junio C Hamano wrote:
->
-> I do not have much stake in this personally, but IIRC, the (l)stat
-> workaround was back then found to make Cygwin version from "unusably
-> slow" to "slow but torelable", as our POSIX-y codebase assumes that
-> lstat is fairly efficient, which Cygwin cannot satisify because it
-> has call many win32 calls to collect bits that we do not even look
-> at, in order to give faithful emulation.  It does place extra
-> maintenance burden
-The maintenance burden is the only issue here, and I just wanted to 
-point out the origin. I never enable that run-time option, the small 
-gain in speed cannot compensate the loss of cross-platform operations 
-for my uses. Actually, my git usage is mostly on Linux, but it seems 99% 
-of my maintenance time is on the cygwin side that I almost never use. Sigh.
+On 4 January 2013 23:47, Theodore Ts'o <tytso@mit.edu> wrote:
+> On Sat, Jan 05, 2013 at 12:27:12AM +0100, Johannes Schindelin wrote:
 
-Mark
+>> I was. John Hawley trusted me when I asked for admin privileges to keep
+>> the spam at bay, but a very vocal voice on the mailing list tried to
+>> discredit my work, and in the wake of the ensuing mailing list thread I
+>> got the impression that that feeling was universal, so I abided and
+>> stopped.
+
+> changed since those early days because LF sysadmins (e.g., John and
+> Konstantin) do *not* have time to police the various wikis for
+> spam....)
+
+Based on the proliferation of new users listed in some "recent
+changes" pages, the account registration step needs a captcha test.
+Perhaps some other limits too..  one new account per ip per day or
+whatever.. (edu domains excepted perhaps)  :)
+(the explosion of users seem to have started back in mid 2010 or so.)
+
+No human could keep up with unrestricted automated spamming from the
+internet that isn't filtered in any way.  Human efforts to remove the
+spam will always result in a false positive from time to time and is
+simple mistake to make.  Automated efforts to remove spam will
+DEFINATELY result in false positives too.. but you won't find a
+computer that graciously says "sorry about that" when it happens.
+
+IMHO.. a big thanks to Johannes for keeping the beasts at bay, I'm
+sure it would have been MUCH worse with nobody cleaning the mess up.
+
+Cheers!
+-phil
