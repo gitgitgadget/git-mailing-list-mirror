@@ -1,124 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] clone: forbid --bare --separate-git-dir <dir>
-Date: Tue, 08 Jan 2013 18:15:41 +0100
-Message-ID: <50EC543D.5090100@web.de>
-References: <20130106091642.GA10956@elie.Belkin> <1357465670-32766-1-git-send-email-pclouds@gmail.com> <20130106101948.GD10956@elie.Belkin> <20130108141650.GA18637@lanh>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: Understanding When to Use Branches
+Date: Tue, 8 Jan 2013 21:08:00 +0400
+Message-ID: <20130108210800.c10104667727c8c9c4d2324d@domain007.com>
+References: <50EC232D.90009@yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	"W. Trevor King" <wking@drexel.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 18:17:23 2013
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: gw1500 <wtriker.ffe@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 18:24:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tscnb-0008Ha-33
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 18:17:15 +0100
+	id 1Tscu7-00080k-2D
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 18:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756693Ab3AHRQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 12:16:55 -0500
-Received: from mout.web.de ([212.227.17.11]:63264 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756668Ab3AHRQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 12:16:54 -0500
-Received: from [192.168.178.41] ([91.3.170.228]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0LnS4I-1TLCh1422w-00hTLb; Tue, 08 Jan 2013 18:15:42
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130108141650.GA18637@lanh>
-X-Enigmail-Version: 1.4.6
-X-Provags-ID: V02:K0:eGL5vEKVkGT7UbFpYxMzcRAe/gY/bxi1xhRdRkaSKGj
- YHuAyWBGCfnOPAWNisbIpVDbaS8K8C58liQwd+YGj0uMi33qwR
- WTIMFDtryGoB6we7UFBmif17oUieB+UdhV9BnJv6QhVZr1HKGi
- +GgHjho/uW8NY302d8Yqw4FMl8e0Jz2lRVLmsojYFo+5JsnIT5
- EPeWmpD5zCe7qQDCb+LRw==
+	id S1756723Ab3AHRXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 12:23:39 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:41769 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756346Ab3AHRXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 12:23:39 -0500
+X-Greylist: delayed 934 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2013 12:23:38 EST
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r08H80GE029009;
+	Tue, 8 Jan 2013 21:08:01 +0400
+In-Reply-To: <50EC232D.90009@yahoo.com>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212978>
 
-Am 08.01.2013 15:16, schrieb Duy Nguyen:
-> On Sun, Jan 06, 2013 at 02:19:48AM -0800, Jonathan Nieder wrote:
->> 	Unfortunately we forgot to forbid the --bare
->> 	--separate-git-dir combination.  In practice, we know no one
->> 	could be using --bare with --separate-git-dir because it is
->> 	broken in the following way: <explanation here>.  So it is
->> 	safe to make good on our mistake and forbid the combination,
->> 	making the command easier to explain.
->>
->> I don't know what would go in the <explanation here> blank above,
->> though.  Is it possible that some people are relying on this option
->> combination?
-> 
-> I can't say it's broken in what way. Maybe it's easier to just support
-> this case, it's not much work anyway. Jens, maybe squash this to your
-> original patch?
+On Tue, 08 Jan 2013 08:46:21 -0500
+gw1500 <wtriker.ffe@gmail.com> wrote:
 
-I'd be fine with that, though my gut feeling is that this should
-be a patch of its own (My patch handles the git dir, your's handles
-a work tree issue). But I don't care much either way, what do others
-think?
+> As a git noobie I am beginning get get my head around git's version
+> control philosophy. I am now trying to understand the purposes of
+> branches or rather when to use them. In my case I have a Java
+> application under version control with git. I am planning to port it
+> into a mobile app. Is that an appropriate use of branches or should it
+> be created as a new repository? What is the relationship between the
+> same source code in different branches? Do changes to code in one
+> branch get ported to another branch somehow or do all changes then
+> have to be made twice? The documentation tells how to branch but not
+> the general philosophy behind it from a best practices standpoint.
+> Thanks in advance for any insight.
 
-> -- 8< --
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 8d23a62..c8b09ad 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -375,6 +375,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
->  
->  static const char *junk_work_tree;
->  static const char *junk_git_dir;
-> +static const char *junk_git_file;
->  static pid_t junk_pid;
->  
->  static void remove_junk(void)
-> @@ -392,6 +393,8 @@ static void remove_junk(void)
->  		remove_dir_recursively(&sb, 0);
->  		strbuf_reset(&sb);
->  	}
-> +	if (junk_git_file)
-> +		unlink(junk_git_file);
->  }
->  
->  static void remove_junk_on_signal(int signo)
-> @@ -772,6 +775,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  
->  	set_git_dir_init(git_dir, real_git_dir, 0);
->  	if (real_git_dir) {
-> +		if (option_bare)
-> +			junk_git_file = git_dir;
->  		git_dir = real_git_dir;
->  		junk_git_dir = real_git_dir;
->  	}
-> diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup.sh
-> index 4435693..231bc8a 100755
-> --- a/t/t5600-clone-fail-cleanup.sh
-> +++ b/t/t5600-clone-fail-cleanup.sh
-> @@ -49,4 +49,14 @@ test_expect_success 'failed clone --separate-git-dir should not leave any direct
->  	rmdir foo/.git/objects.bak
->  '
->  
-> +test_expect_success 'failed clone --separate-git-dir --bare should not leave any directories' '
-> +	mkdir foo/.git/objects.bak/ &&
-> +	mv foo/.git/objects/* foo/.git/objects.bak/ &&
-> +	test_must_fail git clone --bare --separate-git-dir gitdir foo baaar &&
-> +	test_must_fail test -e gitdir &&
-> +	test_must_fail test -e baaar &&
-> +	mv foo/.git/objects.bak/* foo/.git/objects/ &&
-> +	rmdir foo/.git/objects.bak
-> +'
-> +
->  test_done
-> -- 8< --
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Supposedly you should start with the chapter on branching in
+The Book [1] and then read two classic blog posts [2, 3] describing two
+different branching models.  The branching models described there are
+not the only two possible models to use with Git, but they are different
+enough to give you a good overview of possibilities.
+Note that mere googling for "git branching model" would yield a fair
+number of blog posts on people's pet branching models; these two
+documents just appear to be more "classic" than others.
+
+If you have difficulty to even grasping the concept of branches and [1]
+feeld hard to digest, try first reading "The Git Parable" [4] which, I
+think, is the friendliest possible introduction to the basics of DVCS,
+branching included.
+
+1. http://git-scm.com/book/en/Git-Branching
+2. http://nvie.com/posts/a-successful-git-branching-model/
+3. http://scottchacon.com/2011/08/31/github-flow.html
+4. http://tom.preston-werner.com/2009/05/19/the-git-parable.html
