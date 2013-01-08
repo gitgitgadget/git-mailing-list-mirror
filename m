@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 02/10] Use split_ident_line to parse author and committer
-Date: Mon,  7 Jan 2013 16:10:13 -0800
-Message-ID: <1357603821-8647-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 03/10] mailmap: remove email copy and length limitation
+Date: Mon,  7 Jan 2013 16:10:14 -0800
+Message-ID: <1357603821-8647-4-git-send-email-gitster@pobox.com>
 References: <1357603821-8647-1-git-send-email-gitster@pobox.com>
 Cc: Antoine Pelisse <apelisse@gmail.com>
 To: git@vger.kernel.org
@@ -11,271 +11,190 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsMmR-0006Eh-UM
+	id 1TsMmS-0006Eh-IM
 	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 01:11:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756165Ab3AHAKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2013 19:10:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50232 "EHLO
+	id S1756164Ab3AHAKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2013 19:10:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50254 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756160Ab3AHAK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2013 19:10:29 -0500
+	id S1754756Ab3AHAKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2013 19:10:31 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78C10B7A7;
-	Mon,  7 Jan 2013 19:10:28 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D50C5B7AA;
+	Mon,  7 Jan 2013 19:10:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Ezki
-	XxiIy/JXLnSOsqzSpQTEby8=; b=TXXm2HnnEj7TXJC9I+K5nAc3So4gUQCG0Tof
-	piTFpBxHJludIyxoRecNtQqV2DbwhRUM3KXPA5TzPVHesSIIT8Q25NyrWhfG4vpQ
-	dGsgYiUWcvjjD5jocZCD6/JUS9J7Opx+UWuXtmpm7p7q4dhDUeBrgK2McgHiOE9B
-	+Dq7ms4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=xifL
+	1Kjl34dJ7gwJRS2oaHwr97Q=; b=Z4THoVMwI5EPll2pMjc0TeS1HBBGJoHwYZ0z
+	VPKDPyJRaM5JJwbLmxncvj0UecmaojnT2X918635/meVPDl+YmtibAVIROZER1SA
+	YpmAZbNuF8FDJFezBRAtCurPhHpC4jgFaQh/cRv8MvK357aJSAoEYCjZWrCd2Sg4
+	VR2qaME=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	V0CGEcIji8uHfLf0y6/ZIa2x6wIoQCsx6tTdVCbgWVKJqk6fmzeZc92vmb1O7b13
-	HgEO0WdYurvMQEIMgaqT+k9kqaZSWk8jxkxXDYod1je2mIMwhUr9M7A0PT40XpTp
-	+kCji7voUnDYOH/ddFfdZMZUY+ZW7SCqK4jZumJ52HI=
+	ULz5TcZbfMRIOeEr51erVZyFSvLj/b7siztywt/NCAibmROE4SDCWdgULQ7nEqxl
+	GZ0ZUqQNiuR76qaoeejsLd+Sxv0Ik4o7GbICU8mH5NYWzMqLS75CHftjLDtoh6O6
+	0v2dzL0ePE2qy8sVGRlwDYO7TUWhuQdnWrd+jw+WFgs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B6FCB7A5;
-	Mon,  7 Jan 2013 19:10:28 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C755BB7A9;
+	Mon,  7 Jan 2013 19:10:30 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73C90B7A3; Mon,  7 Jan 2013
- 19:10:27 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8B5AB7A8; Mon,  7 Jan 2013
+ 19:10:29 -0500 (EST)
 X-Mailer: git-send-email 1.8.1.304.gf036638
 In-Reply-To: <1357603821-8647-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: CE554F78-5927-11E2-BAAC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CFBB4868-5927-11E2-B117-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212924>
 
-From: Antoine Pelisse <apelisse@gmail.com>
+In map_user(), we have email pointer that points at the beginning of
+an e-mail address, but the buffer is not terminated with a NUL after
+the e-mail address.  It typically has ">" after the address, and it
+could have even more if it comes from author/committer line in a
+commit object.  Or it may not have ">" after it.
 
-Currently blame.c::get_acline(), pretty.c::pp_user_info() and
-shortlog.c::insert_one_record() are parsing author name, email, time
-and tz themselves.
+We used to copy the e-mail address proper into a temporary buffer
+before asking the string-list API to find the e-mail address in the
+mailmap, because string_list_lookup() function only takes a NUL
+terminated full string.
 
-Use ident.c::split_ident_line() for better code reuse.
+Introduce a helper function lookup_prefix that takes the email
+pointer and the length, and finds a matching entry in the string
+list used for the mailmap, by doing the following:
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+ - First ask string_list_find_insert_index() where in its sorted
+   list the e-mail address we have (including the possible trailing
+   junk ">...") would be inserted.
+
+ - It could find an exact match (e.g. we had a clean e-mail address
+   without any trailing junk).  We can return the item in that case.
+
+ - Or it could return the index of an item that sorts after the
+   e-mail address we have.
+
+ - If we did not find an exact match against a clean e-mail address,
+   then the record we are looking for in the mailmap has to exist
+   before the index returned by the function (i.e. "email>junk"
+   always sorts later than "email").  Iterate, starting from that
+   index, down the map->items[] array until we find the exact record
+   we are looking for, or we see a record with a key that definitely
+   sorts earlier than the e-mail we are looking for (i.e. when we
+   are looking for "email" in "email>junk", a record in the mailmap
+   that begins with "emaik" strictly sorts before "email", if such a
+   key existed in the mailmap).
+
+This, together with the earlier enhancement to support
+case-insensitive sorting, allow us to remove an extra copy of email
+buffer to downcase it.
+
+A part of this is based on Antoine Pelisse's previous work.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/blame.c    | 59 +++++++++++++++++++-----------------------------------
- builtin/shortlog.c | 36 +++++++++------------------------
- pretty.c           | 35 +++++++++++++++++++-------------
- 3 files changed, 52 insertions(+), 78 deletions(-)
+ mailmap.c | 61 +++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 45 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index cfae569..dd4aff9 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1343,8 +1343,9 @@ static void get_ac_line(const char *inbuf, const char *what,
- 			int mail_len, char *mail,
- 			unsigned long *time, const char **tz)
+diff --git a/mailmap.c b/mailmap.c
+index ea4b471..1a0b769 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -174,6 +174,7 @@ static int read_single_mailmap(struct string_list *map, const char *filename, ch
+ int read_mailmap(struct string_list *map, char **repo_abbrev)
  {
--	int len, tzlen, maillen;
--	char *tmp, *endp, *timepos, *mailpos;
-+	struct ident_split ident;
-+	int len, tzlen, maillen, namelen;
-+	char *tmp, *endp, *mailpos;
+ 	map->strdup_strings = 1;
++	map->cmp = strcasecmp;
+ 	/* each failure returns 1, so >1 means both calls failed */
+ 	return read_single_mailmap(map, ".mailmap", repo_abbrev) +
+ 	       read_single_mailmap(map, git_mailmap_file, repo_abbrev) > 1;
+@@ -187,14 +188,50 @@ void clear_mailmap(struct string_list *map)
+ 	debug_mm("mailmap: cleared\n");
+ }
  
- 	tmp = strstr(inbuf, what);
- 	if (!tmp)
-@@ -1355,7 +1356,10 @@ static void get_ac_line(const char *inbuf, const char *what,
- 		len = strlen(tmp);
- 	else
- 		len = endp - tmp;
--	if (person_len <= len) {
-+	if (person_len <= len)
-+		goto error_out;
-+
-+	if (split_ident_line(&ident, tmp, len)) {
- 	error_out:
- 		/* Ugh */
- 		*tz = "(unknown)";
-@@ -1364,47 +1368,26 @@ static void get_ac_line(const char *inbuf, const char *what,
- 		*time = 0;
- 		return;
- 	}
--	memcpy(person, tmp, len);
- 
--	tmp = person;
--	tmp += len;
--	*tmp = 0;
--	while (person < tmp && *tmp != ' ')
--		tmp--;
--	if (tmp <= person)
--		goto error_out;
--	*tz = tmp+1;
--	tzlen = (person+len)-(tmp+1);
-+	namelen = ident.name_end - ident.name_begin;
-+	memcpy(person, ident.name_begin, namelen);
-+	person[namelen] = 0;
- 
--	*tmp = 0;
--	while (person < tmp && *tmp != ' ')
--		tmp--;
--	if (tmp <= person)
--		goto error_out;
--	*time = strtoul(tmp, NULL, 10);
--	timepos = tmp;
-+	maillen = ident.mail_end - ident.mail_begin + 2;
-+	memcpy(mail, ident.mail_begin - 1, maillen);
-+	mail[maillen] = 0;
- 
--	*tmp = 0;
--	while (person < tmp && !(*tmp == ' ' && tmp[1] == '<'))
--		tmp--;
--	if (tmp <= person)
--		return;
--	mailpos = tmp + 1;
--	*tmp = 0;
--	maillen = timepos - tmp;
--	memcpy(mail, mailpos, maillen);
-+	*time = strtoul(ident.date_begin, NULL, 10);
- 
--	if (!mailmap.nr)
--		return;
-+	tzlen = ident.tz_end - ident.tz_begin;
- 
--	/*
--	 * mailmap expansion may make the name longer.
--	 * make room by pushing stuff down.
--	 */
--	tmp = person + person_len - (tzlen + 1);
--	memmove(tmp, *tz, tzlen);
-+	/* Place tz at the end of person */
-+	*tz = tmp = person + person_len - (tzlen + 1);
-+	memcpy(tmp, ident.tz_begin, tzlen);
- 	tmp[tzlen] = 0;
--	*tz = tmp;
-+
-+	if (!mailmap.nr)
-+		return;
- 
- 	/*
- 	 * Now, convert both name and e-mail using mailmap
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index b316cf3..03c6cd7 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -40,40 +40,24 @@ static void insert_one_record(struct shortlog *log,
- 	char emailbuf[1024];
- 	size_t len;
- 	const char *eol;
--	const char *boemail, *eoemail;
- 	struct strbuf subject = STRBUF_INIT;
-+	struct ident_split ident;
- 
--	boemail = strchr(author, '<');
--	if (!boemail)
--		return;
--	eoemail = strchr(boemail, '>');
--	if (!eoemail)
-+	if (split_ident_line(&ident, author, strlen(author)))
- 		return;
- 
- 	/* copy author name to namebuf, to support matching on both name and email */
--	memcpy(namebuf, author, boemail - author);
--	len = boemail - author;
--	while (len > 0 && isspace(namebuf[len-1]))
--		len--;
-+	len = ident.name_end - ident.name_begin;
-+	memcpy(namebuf, ident.name_begin, len);
- 	namebuf[len] = 0;
- 
- 	/* copy email name to emailbuf, to allow email replacement as well */
--	memcpy(emailbuf, boemail+1, eoemail - boemail);
--	emailbuf[eoemail - boemail - 1] = 0;
--
--	if (!map_user(&log->mailmap, emailbuf, sizeof(emailbuf), namebuf, sizeof(namebuf))) {
--		while (author < boemail && isspace(*author))
--			author++;
--		for (len = 0;
--		     len < sizeof(namebuf) - 1 && author + len < boemail;
--		     len++)
--			namebuf[len] = author[len];
--		while (0 < len && isspace(namebuf[len-1]))
--			len--;
--		namebuf[len] = '\0';
--	}
--	else
--		len = strlen(namebuf);
-+	len = ident.mail_end - ident.mail_begin;
-+	memcpy(emailbuf, ident.mail_begin, len);
-+	emailbuf[len] = 0;
-+
-+	map_user(&log->mailmap, emailbuf, sizeof(emailbuf), namebuf, sizeof(namebuf));
-+	len = strlen(namebuf);
- 
- 	if (log->email) {
- 		size_t room = sizeof(namebuf) - len - 1;
-diff --git a/pretty.c b/pretty.c
-index 5bdc2e7..350d1df 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -387,29 +387,36 @@ void pp_user_info(const struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
- {
-+	struct ident_split ident;
-+	int linelen, namelen;
-+	char *line_end, *date;
- 	int max_length = 78; /* per rfc2822 */
--	char *date;
--	int namelen;
- 	unsigned long time;
- 	int tz;
- 
- 	if (pp->fmt == CMIT_FMT_ONELINE)
- 		return;
--	date = strchr(line, '>');
--	if (!date)
-+
-+	line_end = strchr(line, '\n');
-+	if (!line_end) {
-+		line_end = strchr(line, '\0');
-+		if (!line_end)
-+			return;
++static struct string_list_item *lookup_prefix(struct string_list *map,
++					      const char *string, size_t len)
++{
++	int i = string_list_find_insert_index(map, string, 1);
++	if (i < 0) {
++		/* exact match */
++		i = -1 - i;
++		/* does it match exactly? */
++		if (!map->items[i].string[len])
++			return &map->items[i];
 +	}
 +
-+	linelen = ++line_end - line;
-+	if (split_ident_line(&ident, line, linelen))
- 		return;
--	namelen = ++date - line;
--	time = strtoul(date, &date, 10);
++	/*
++	 * i is at the exact match to an overlong key, or
++	 * location the possibly overlong key would be inserted,
++	 * which must be after the real location of the key.
++	 */
++	while (0 <= --i && i < map->nr) {
++		int cmp = strncasecmp(map->items[i].string, string, len);
++		if (cmp < 0)
++			/*
++			 * "i" points at a key definitely below the prefix;
++			 * the map does not have string[0:len] in it.
++			 */
++			break;
++		else if (!cmp && !map->items[i].string[len])
++			/* found it */
++			return &map->items[i];
++		/*
++		 * otherwise, the string at "i" may be string[0:len]
++		 * followed by a string that sorts later than string[len:];
++		 * keep trying.
++		 */
++	}
++	return NULL;
++}
 +
-+	namelen = ident.mail_end - ident.name_begin + 1;
-+	time = strtoul(ident.date_begin, &date, 10);
- 	tz = strtol(date, NULL, 10);
+ int map_user(struct string_list *map,
+ 	     char *email, int maxlen_email, char *name, int maxlen_name)
+ {
+ 	char *end_of_email;
+ 	struct string_list_item *item;
+ 	struct mailmap_entry *me;
+-	char buf[1024], *mailbuf;
+-	int i;
++	size_t maillen;
  
- 	if (pp->fmt == CMIT_FMT_EMAIL) {
--		char *name_tail = strchr(line, '<');
- 		int display_name_length;
--		if (!name_tail)
--			return;
--		while (line < name_tail && isspace(name_tail[-1]))
--			name_tail--;
--		display_name_length = name_tail - line;
+ 	/* figure out space requirement for email */
+ 	end_of_email = strchr(email, '>');
+@@ -204,18 +241,12 @@ int map_user(struct string_list *map,
+ 		if (!end_of_email)
+ 			return 0;
+ 	}
+-	if (end_of_email - email + 1 < sizeof(buf))
+-		mailbuf = buf;
+-	else
+-		mailbuf = xmalloc(end_of_email - email + 1);
+-
+-	/* downcase the email address */
+-	for (i = 0; i < end_of_email - email; i++)
+-		mailbuf[i] = tolower(email[i]);
+-	mailbuf[i] = 0;
+-
+-	debug_mm("map_user: map '%s' <%s>\n", name, mailbuf);
+-	item = string_list_lookup(map, mailbuf);
 +
-+		display_name_length = ident.name_end - ident.name_begin;
++	maillen = end_of_email - email;
 +
- 		strbuf_addstr(sb, "From: ");
- 		if (needs_rfc2047_encoding(line, display_name_length, RFC2047_ADDRESS)) {
- 			add_rfc2047(sb, line, display_name_length,
-@@ -427,10 +434,10 @@ void pp_user_info(const struct pretty_print_context *pp,
++	debug_mm("map_user: map '%s' <%.*s>\n", name, maillen, email);
++
++	item = lookup_prefix(map, email, maillen);
+ 	if (item != NULL) {
+ 		me = (struct mailmap_entry *)item->util;
+ 		if (me->namemap.nr) {
+@@ -226,8 +257,6 @@ int map_user(struct string_list *map,
+ 				item = subitem;
  		}
- 		if (namelen - display_name_length + last_line_length(sb) > max_length) {
- 			strbuf_addch(sb, '\n');
--			if (!isspace(name_tail[0]))
-+			if (!isspace(ident.name_end[0]))
- 				strbuf_addch(sb, ' ');
- 		}
--		strbuf_add(sb, name_tail, namelen - display_name_length);
-+		strbuf_add(sb, ident.name_end, namelen - display_name_length);
- 		strbuf_addch(sb, '\n');
- 	} else {
- 		strbuf_addf(sb, "%s: %.*s%.*s\n", what,
+ 	}
+-	if (mailbuf != buf)
+-		free(mailbuf);
+ 	if (item != NULL) {
+ 		struct mailmap_info *mi = (struct mailmap_info *)item->util;
+ 		if (mi->name == NULL && (mi->email == NULL || maxlen_email == 0)) {
 -- 
 1.8.1.304.gf036638
