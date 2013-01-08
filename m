@@ -1,140 +1,102 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] commit: make default of "cleanup" option configurable
-Date: Tue,  8 Jan 2013 21:16:16 +0100
-Message-ID: <1357676176-30019-1-git-send-email-ralf.thielow@gmail.com>
-Cc: gitster@pobox.com, Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 21:16:48 2013
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] t1402: work around shell quoting issue on NetBSD
+Date: Tue, 08 Jan 2013 21:23:01 +0100
+Message-ID: <50EC8025.8000707@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 08 21:23:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsfbH-0001je-RI
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 21:16:44 +0100
+	id 1Tsfhv-0001m4-AY
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 21:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751031Ab3AHUQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 15:16:24 -0500
-Received: from mail-bk0-f53.google.com ([209.85.214.53]:62809 "EHLO
-	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab3AHUQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 15:16:23 -0500
-Received: by mail-bk0-f53.google.com with SMTP id j5so505980bkw.40
-        for <git@vger.kernel.org>; Tue, 08 Jan 2013 12:16:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=9IMR9MKYPkDakKExYl0NvHJ2omOgCbRZ6AeJnuHY2Pk=;
-        b=H2aExIaNP0U+i76GLUVgjnK356db2/+mv9mlG+TaYRFU6EaEqSDM5CWh8Tktp3c/Qe
-         brNEHFg5W7ysh1m8e4tq25/1gDmAyFgwAo2Ug1qqUcmLLuyxgIuXCJqRMbza4GyPP7g2
-         PieRC8LSD2BFMNUUu5RJ7f8XJlpsm9M3tfinU60ZrPJBPXrlLu6y0vkioBQMywN2Lg9s
-         ef2W7JiJo3cCw8H5/G5EYr8HxPlrd/VVKkEdahzZ5aAlQcS1SrBN6RUv16XazhwHva9O
-         hauQhgZGswhbr1Av9phwg2NDeEQUG2Jj5Z9ImaV92OplHoo/AeNPaGFz3Zst3mh7gqJG
-         kV8A==
-X-Received: by 10.204.157.152 with SMTP id b24mr32246525bkx.92.1357676182678;
-        Tue, 08 Jan 2013 12:16:22 -0800 (PST)
-Received: from localhost.localdomain (dslb-094-222-138-000.pools.arcor-ip.net. [94.222.138.0])
-        by mx.google.com with ESMTPS id d16sm46773342bkw.2.2013.01.08.12.16.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 08 Jan 2013 12:16:22 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.165.gd94bd4e.dirty
+	id S1751296Ab3AHUXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 15:23:16 -0500
+Received: from india601.server4you.de ([85.25.151.105]:37211 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751031Ab3AHUXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 15:23:15 -0500
+Received: from [192.168.2.105] (p4FFDA953.dip.t-dialin.net [79.253.169.83])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1901E81;
+	Tue,  8 Jan 2013 21:23:13 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213003>
 
-The default of the "cleanup" option in "git commit"
-is not configurable. Users who don't want to use the
-default have to pass this option on every commit since
-there's no way to configure it. This commit introduces
-a new config option "commit.cleanup" which can be used
-to change the default of the "cleanup" option in
-"git commit".
+The test fails for me on NetBSD 6.0.1 and reports:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+	ok 1 - ref name '' is invalid
+	ok 2 - ref name '/' is invalid
+	ok 3 - ref name '/' is invalid with options --allow-onelevel
+	ok 4 - ref name '/' is invalid with options --normalize
+	error: bug in the test script: not 2 or 3 parameters to test-expect-success
+
+The alleged bug is in this line:
+
+	invalid_ref NOT_MINGW '/' '--allow-onelevel --normalize'
+
+invalid_ref() constructs a test case description using its last argument,
+but the shell seems to split it up into two pieces if it contains a
+space.  Minimal test case:
+
+	# on NetBSD with /bin/sh
+	$ a() { echo $#-$1-$2; }
+	$ t="x"; a "${t:+$t}"
+	1-x-
+	$ t="x y"; a "${t:+$t}"
+	2-x-y
+	$ t="x y"; a "${t:+x y}"
+	1-x y-
+
+	# and with bash
+	$ t="x y"; a "${t:+$t}"
+	1-x y-
+	$ t="x y"; a "${t:+x y}"
+	1-x y-
+
+This may be a bug in the shell, but here's a simple workaround: Construct
+the description string first and store it in a variable, and then use
+that to call test_expect_success().
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- Documentation/config.txt |  4 ++++
- builtin/commit.c         | 29 ++++++++++++++++++-----------
- 2 files changed, 22 insertions(+), 11 deletions(-)
+ t/t1402-check-ref-format.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 53c4ca1..3f76cd1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -917,6 +917,10 @@ column.tag::
- 	Specify whether to output tag listing in `git tag` in columns.
- 	See `column.ui` for details.
- 
-+commit.cleanup::
-+	This setting overrides the default of the `--cleanup` option in
-+	`git commit`. See linkgit:git-commit[1] for details.
-+
- commit.status::
- 	A boolean to enable/disable inclusion of status information in the
- 	commit message template when using an editor to prepare the commit
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d6dd3df..42acde7 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -103,7 +103,7 @@ static enum {
- 	CLEANUP_NONE,
- 	CLEANUP_ALL
- } cleanup_mode;
--static char *cleanup_arg;
-+const static char *cleanup_arg;
- 
- static enum commit_whence whence;
- static int use_editor = 1, include_status = 1;
-@@ -966,6 +966,20 @@ static const char *read_commit_message(const char *name)
- 	return out;
+diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+index 1ae4d87..1a5a5f3 100755
+--- a/t/t1402-check-ref-format.sh
++++ b/t/t1402-check-ref-format.sh
+@@ -11,7 +11,8 @@ valid_ref() {
+ 		prereq=$1
+ 		shift
+ 	esac
+-	test_expect_success $prereq "ref name '$1' is valid${2:+ with options $2}" "
++	desc="ref name '$1' is valid${2:+ with options $2}"
++	test_expect_success $prereq "$desc" "
+ 		git check-ref-format $2 '$1'
+ 	"
  }
- 
-+static void parse_cleanup_arg()
-+{
-+	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
-+		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
-+	else if (!strcmp(cleanup_arg, "verbatim"))
-+		cleanup_mode = CLEANUP_NONE;
-+	else if (!strcmp(cleanup_arg, "whitespace"))
-+		cleanup_mode = CLEANUP_SPACE;
-+	else if (!strcmp(cleanup_arg, "strip"))
-+		cleanup_mode = CLEANUP_ALL;
-+	else
-+		die(_("Invalid cleanup mode %s"), cleanup_arg);
-+}
-+
- static int parse_and_validate_options(int argc, const char *argv[],
- 				      const struct option *options,
- 				      const char * const usage[],
-@@ -1044,18 +1058,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		only_include_assumed = _("Clever... amending the last one with dirty index.");
- 	if (argc > 0 && !also && !only)
- 		only_include_assumed = _("Explicit paths specified without -i nor -o; assuming --only paths...");
--	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
--		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
--	else if (!strcmp(cleanup_arg, "verbatim"))
--		cleanup_mode = CLEANUP_NONE;
--	else if (!strcmp(cleanup_arg, "whitespace"))
--		cleanup_mode = CLEANUP_SPACE;
--	else if (!strcmp(cleanup_arg, "strip"))
--		cleanup_mode = CLEANUP_ALL;
--	else
--		die(_("Invalid cleanup mode %s"), cleanup_arg);
- 
- 	handle_untracked_files_arg(s);
-+	parse_cleanup_arg();
- 
- 	if (all && argc > 0)
- 		die(_("Paths with -a does not make sense."));
-@@ -1320,6 +1325,8 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		include_status = git_config_bool(k, v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.cleanup"))
-+		return git_config_string(&cleanup_arg, k, v);
- 
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
+@@ -22,7 +23,8 @@ invalid_ref() {
+ 		prereq=$1
+ 		shift
+ 	esac
+-	test_expect_success $prereq "ref name '$1' is invalid${2:+ with options $2}" "
++	desc="ref name '$1' is invalid${2:+ with options $2}"
++	test_expect_success $prereq "$desc" "
+ 		test_must_fail git check-ref-format $2 '$1'
+ 	"
+ }
 -- 
-1.8.1.165.gd94bd4e.dirty
+1.7.12
