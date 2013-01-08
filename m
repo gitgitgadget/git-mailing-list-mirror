@@ -1,165 +1,90 @@
-From: =?ISO-8859-2?Q?Pavel_Posp=ED=B9il?= <pospispa@gmail.com>
-Subject: troublesome branch name in remote repo causes .git/config
- inconsistency in cloned repo
-Date: Tue, 8 Jan 2013 19:30:58 +0100
-Message-ID: <CADDfn-L_VWk5Rkn_P8aTf3pwBcbbYT=PZTrG=pFvJpNjgRg-5A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/7] contrib/subtree: Add --unannotate
+Date: Tue, 08 Jan 2013 10:45:17 -0800
+Message-ID: <7vehhvecoy.fsf@alter.siamese.dyndns.org>
+References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
+ <1357646997-28675-4-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 19:36:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, James Nylen <jnylen@gmail.com>
+To: "David A. Greene" <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Tue Jan 08 19:45:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tse2R-0005ns-FU
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:36:39 +0100
+	id 1TseBC-000060-Oz
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756849Ab3AHSgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 13:36:19 -0500
-Received: from mail-la0-f54.google.com ([209.85.215.54]:57952 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756734Ab3AHSgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 13:36:17 -0500
-Received: by mail-la0-f54.google.com with SMTP id fp12so817999lab.41
-        for <git@vger.kernel.org>; Tue, 08 Jan 2013 10:36:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=aytqsVXMFMHYVFxVxwfLsAgY5d7NlpNxRNOk2SiwnXs=;
-        b=JpXzZG54FBpK8FE0v3cKiNdesWgdNVpynYXte/X11qutvQOaIteHhHleZN9UsHBXeg
-         xj4hommfZzxmGQ2yjEfkzhjrCCENAW3arEyEDeGP+KfKYZFAri/XeQReJ1tLYusoFc/J
-         FhkPrEs//ixppVrovp+CGWpLZb+chJTsnTph8H8SLRSG9eXBHuKiUzWjZOK3ufR+ziJb
-         sc9hyVMcUEJQWxW8O+ufDYOLEDlfwipdWL/cTZnyNSpC1Ir7p3jq2yLE7jOjxGDAUGTG
-         8vRcE5zbBmPiZ/dqAna+ha9SYVIqhzCTwHUCyg6aA3NTX7rqk3fU1W+WMvWkzaTHka1Q
-         rbig==
-Received: by 10.152.47.75 with SMTP id b11mr61519040lan.14.1357669858384; Tue,
- 08 Jan 2013 10:30:58 -0800 (PST)
-Received: by 10.112.137.232 with HTTP; Tue, 8 Jan 2013 10:30:58 -0800 (PST)
+	id S1756684Ab3AHSpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 13:45:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61553 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756752Ab3AHSpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 13:45:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27BCCAA25;
+	Tue,  8 Jan 2013 13:45:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4z82y8j+x5DLGsmzvx0Yushiha0=; b=fkqqgI
+	1Za2mnczo+y5gBa6p/9LtHgx+MrAmIVJlLOiF9BedAlKELHRSltzdzGvvGZPeVw9
+	BHxQpRjYLy+ZJlKu1PbtLPEZaGqTKztgKCveek21Rk0X5J8hJyAGpuen2FO0C9KD
+	7d7eMEsIG3JB4AHI1Fn/C4P1MAT+FjpGrzzZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ofX6Fm/9os1LPnQdzK3uoJYtNN0ZZ4lN
+	glR+IxgtwfnF3fOOG6eHXyoC9ZRNEEPjPFIGA3olRr4UsceNDU2D+QoeQFnJ5YTC
+	JNrFbx6M15/JddfVH/YPsImzAp5d4y9DR4aC6l3f95LAZZZbdSo4nkDfQKxMSx9Q
+	YMNQznrYd/4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C856AA23;
+	Tue,  8 Jan 2013 13:45:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8033AAA22; Tue,  8 Jan 2013
+ 13:45:18 -0500 (EST)
+In-Reply-To: <1357646997-28675-4-git-send-email-greened@obbligato.org> (David
+ A. Greene's message of "Tue, 8 Jan 2013 06:09:53 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8C8199AC-59C3-11E2-8F86-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212994>
 
-Hi,
-I think I came across a bug. I use git version 1.7.10.4 on Ubuntu
-12.10. I haven't tried to find out if it's a known bug.
+"David A. Greene" <greened@obbligato.org> writes:
 
-Reproduction scenario:
-1. create a git repo:
-$ mkdir -p tmp/bezdek
-$ cd tmp/bezdek/
-$ echo "*.swp" > .gitignore
-$ git init
-$ git add .
-$ git commit -m "Initial commit"
+> diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
+> index c5bce41..75aa690 100644
+> --- a/contrib/subtree/git-subtree.txt
+> +++ b/contrib/subtree/git-subtree.txt
+> @@ -198,6 +198,21 @@ OPTIONS FOR split
+>  	git subtree tries to make it work anyway, particularly
+>  	if you use --rejoin, but it may not always be effective.
+>  
+> +--unannotate=<annotation>::
+> +	This option is only valid for the split command.
+> +
+> +	When generating synthetic history, try to remove the prefix
+> +	<annotation> from each commit message (using bash's "strip
+> +	shortest match from beginning" command, which supports
+> +	globbing).  This makes sense if you format library commits
+> +	like "library: Change something or other" when you're working
+> +	in your project's repository, but you want to remove this
+> +	prefix when pushing back to the library's upstream repository.
+> +	(In this case --unannotate='*: ' would work well.)
+> +	
+> +	Like --annotate,  you need to use the same <annotation>
+> +	whenever you split, or you may run into problems.
 
-2. clone the "remote" repo:
-$ cd ../..
-$ mkdir -p tmp/cloned
-$ git clone ../bezdek/
+I think this paragraph inherits existing breakage from the beginning
+of time, but I do not think the above will format the second and
+subsequent paragraphs correctly.
 
-3. create the troublesome branch in the "remote" repo
-$ cd ../bezdek
-$ git checkout -b
-MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
-$ echo "*.bak" >> .gitignore
-$ git add .
-$ git commit -m "Some changes"
+I've applied all seven patches in the series with minor fix-ups, and
+will merge it to 'pu'.
 
-4. pull and checkout to the
-MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
-branch in the cloned repo
-$ cd ../cloned/bezdek
-$ cat .git/config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[remote "origin"]
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        url = /home/pospispa/tmp/tmp/cloned/../bezdek/
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
-$ git pull
-remote: Counting objects: 5, done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking objects:  33% (1/3)
-Unpacking objects:  66% (2/3)
-Unpacking objects: 100% (3/3)
-Unpacking objects: 100% (3/3), done.
-From /home/pospispa/tmp/tmp/cloned/../bezdek
- * [new branch]
-MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
--> origin/MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
-Already up-to-date.
-$ cat .git/config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[remote "origin"]
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        url = /home/pospispa/tmp/tmp/cloned/../bezdek/
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
-$ git checkout MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
-fatal: bad config file line 12 in .git/config
-$ cat .git/config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[remote "origin"]
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        url = /home/pospispa/tmp/tmp/cloned/../bezdek/
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
-[branch "MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek"]
-        remote = origin
-
-I think that the problem may be with the branch name length. I think
-that git branch allows to created branches with very long names,
-however, such long name are not allowed in .git/config or the git
-checkout <very-long-remote-branch-name> has some problems with it.
-
-I recovered from this problem in this way:
-1. deleted last two lines in tmp/cloned/bezdek/.git/config file and
-deleted index and working tree
-$ git reset HEAD *
-$ git checkout -- *
-2. renamed the troublesome branch in "remote" repo:
-$ cd ../../bezdek
-$ git branch -m
-MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
-MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
-3. pull from "remote" to cloned again
-$ cd ../cloned/bezdek
-$ git pull
-From /home/pospispa/tmp/tmp/cloned/../bezdek
- * [new branch]
-MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek ->
-origin/MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
-Already up-to-date.
-$ git branch -r
-  origin/HEAD -> origin/master
-  origin/MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
-  origin/MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
-  origin/master
-$ git checkout MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
-Branch MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
-set up to track remote branch
-MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
-from origin.
-Switched to a new branch
-'MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek'
-
-Best regards,
-Pavel Pospisil
+Thanks.
