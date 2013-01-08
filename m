@@ -1,116 +1,85 @@
-From: =?UTF-8?B?6YOR5paH6L6JKFRlY2hsaXZlIFpoZW5nKQ==?= 
-	<techlivezheng@gmail.com>
-Subject: Re: [PATCH 2/7] contrib/subtree: Use %B for Split Subject/Body
-Date: Wed, 9 Jan 2013 07:21:27 +0800
-Message-ID: <CAPYzjrQ1ngfOwBuzq+Da1Ynd18Vwt8=LCyu2yhE6dX8vivwReg@mail.gmail.com>
-References: <1357646997-28675-1-git-send-email-greened@obbligato.org> <1357646997-28675-3-git-send-email-greened@obbligato.org>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: Enabling scissors by default?
+Date: Tue, 08 Jan 2013 18:25:22 -0500
+Message-ID: <50ECAAE2.2020507@ubuntu.com>
+References: <50EC92C6.7090509@ubuntu.com> <7vvcb7b8lc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Wed Jan 09 00:22:34 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 00:25:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsiV4-0007sI-1Y
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 00:22:30 +0100
+	id 1TsiYE-0003Hi-Tr
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 00:25:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754305Ab3AHXWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 18:22:09 -0500
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:56946 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752112Ab3AHXWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 18:22:08 -0500
-Received: by mail-vc0-f178.google.com with SMTP id l6so1008591vcl.9
-        for <git@vger.kernel.org>; Tue, 08 Jan 2013 15:22:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=w8hWPiMDbe8/7XZD3iLeNjTdJbwA0GyruSKVvWnT/oM=;
-        b=yHH1SH8WAJf0YDuEHUPh7FUm7TKpdnXfWCkgpagXfoiImJ7bTNW8r1K01VdZAjWXgq
-         SmKgA1Nsgyp0hjYwTndO+iyzjAg2pJiQ/ZZUwvkRXHn4Hyzzrt3rE+oejp4hadsy3mue
-         6VWeAwIMUDyT3bvaX4OqM++j9x3SXuTzxpK46eL85ZrIeaz5lapOAg/u/RZjiHmNJRDT
-         Lm8ZADWhkXTrU15XHTSfQf99G+qnUtJP7N7rskEBnwoCjNSTqH4vhZqNEjgEG1rbx5io
-         00GV6xXTjCw2iPlXIYShX9Jv42ASsjsNWmRnlu/J0K2f4bHuU/ouMxsjj2t5d6vi9aBb
-         ErAg==
-Received: by 10.220.115.20 with SMTP id g20mr88237737vcq.31.1357687327717;
- Tue, 08 Jan 2013 15:22:07 -0800 (PST)
-Received: by 10.58.106.48 with HTTP; Tue, 8 Jan 2013 15:21:27 -0800 (PST)
-In-Reply-To: <1357646997-28675-3-git-send-email-greened@obbligato.org>
+	id S1754305Ab3AHXZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 18:25:25 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:39588 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754192Ab3AHXZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 18:25:24 -0500
+X-Authority-Analysis: v=2.0 cv=VZd1zSV9 c=1 sm=0 a=C56BoFkcj+OI1kjAe8jE5A==:17 a=MtVMNMWb1ewA:10 a=uBsBa1gr-CYA:10 a=mJ8kdMDUam4A:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=fxJcL_dCAAAA:8 a=ehUGrGVIPMEA:10 a=QfKxxUxMAAAA:8 a=F38jllyfqJlT2L5tvJoA:9 a=wPNLvfGTeEIA:10 a=C56BoFkcj+OI1kjAe8jE5A==:117
+X-Cloudmark-Score: 0
+X-Authenticated-User: 
+X-Originating-IP: 142.196.87.46
+Received: from [142.196.87.46] ([142.196.87.46:51017] helo=[192.168.1.10])
+	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id CC/6C-05345-2EAACE05; Tue, 08 Jan 2013 23:25:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vvcb7b8lc.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213014>
 
-2013/1/8 David A. Greene <greened@obbligato.org>:
-> From: Techlive Zheng <techlivezheng@gmail.com>
->
-> Use %B to format the commit message and body to avoid an extra newline
-> if a commit only has a subject line.
->
-> Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
->
-> Signed-off-by: David A. Greene <greened@obbligato.org>
-> ---
->  contrib/subtree/git-subtree.sh     |    6 +++++-
->  contrib/subtree/t/t7900-subtree.sh |   15 +++++++++++++++
->  2 files changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 920c664..5341b36 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -296,7 +296,11 @@ copy_commit()
->         # We're going to set some environment vars here, so
->         # do it in a subshell to get rid of them safely later
->         debug copy_commit "{$1}" "{$2}" "{$3}"
-> -       git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%s%n%n%b' "$1" |
-> +       # Use %B rather than %s%n%n%b to handle the special case of a
-> +       # commit that only has a subject line.  We don't want to
-> +       # introduce a newline after the subject, causing generation of
-> +       # a new hash.
-> +       git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%B' "$1" |
->         (
->                 read GIT_AUTHOR_NAME
->                 read GIT_AUTHOR_EMAIL
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 6cf9fb9..3f17f55 100755
-> --- a/contrib/subtree/t/t7900-subtree.sh
-> +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -74,6 +74,10 @@ test_expect_success 'add sub1' '
->          git branch -m master subproj
->  '
->
-> +# Save this hash for testing later.
-> +
-> +subdir_hash=`git rev-parse HEAD`
-> +
->  test_expect_success 'add sub2' '
->          create sub2 &&
->          git commit -m "sub2" &&
-> @@ -211,6 +215,17 @@ test_expect_success 'check split with --branch' '
->          check_equal ''"$(git rev-parse splitbr1)"'' "$spl1"
->  '
->
-> +test_expect_success 'check hash of split' '
-> +        spl1=$(git subtree split --prefix subdir) &&
-> +        undo &&
-> +        git subtree split --prefix subdir --branch splitbr1test &&
-> +        check_equal ''"$(git rev-parse splitbr1test)"'' "$spl1"
-> +        git checkout splitbr1test &&
-> +        new_hash=$(git rev-parse HEAD~2) &&
-> +        git checkout mainline &&
-> +        check_equal ''"$new_hash"'' "$subdir_hash"
-> +'
-> +
-This test is not test the correct thing, I am currently working on it.
->  test_expect_success 'check split with --branch for an existing branch' '
->          spl1=''"$(git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
->          undo &&
-> --
-> 1.7.10.4
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 01/08/2013 05:42 PM, Junio C Hamano wrote:
+> It is very easy to miss misidentification of scissors line; as a 
+> dangerous, potentially information losing option, I do not think
+> it should be on by default.
+
+I suppose if it only requires one instance of >8 or <8 and one -, it
+might be *slightly* dangerous, but if it required a slightly longer
+minimum line length, it would be pretty darn unlikely to get triggered
+by accident, and of course, is easily disabled.
+
+> Another reason (and this is the original one) why it is not
+> enabled is to discourage the contributors from overusing scissors
+> -- >8 -- line.  If you always have to write too much stuff before
+> the proper explanation of your patch, so that the integrator has to
+> use -c option all the time, you are explaining your patches wrong.
+
+I often see patches being tweaked in response to feedback and
+resubmitted, usually with a description of what has changed since the
+previous version.  Such descriptions don't need to be in the change
+log when it is finally applied and seem a perfect use of scissors.
+
+Usually such version to version descriptions are put in a cover
+letter, but if you are only submitting a single patch instead of an
+entire series, using a cover letter seems silly when you could just
+put the comments in one email and clearly mark them as not needing to
+go into the final changelog.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJQ7KriAAoJEJrBOlT6nu755UkIALIT3T5yHH5i+0HOrXLlXzQR
++S2jJfFZ8Kcc+kleiEJ3uLFVGTLMpRyjJFKceOuB4/TdJFUivrYJHWJxcKmW8WzK
+BJKZOjt/jv9r8Qt/AB7KA45S7awfQnOWkg6KQlJa1IM0nUPbo4upgMlWar9l7vjz
+Hkr7geuHY4fsVUJ7R0rYPcT3pue8ywsT4a9o/ocstfXmC05IrLKQtzO4TuvfiaTb
+yBG+rAPKz36zfxCN5NyKExZO6v/LnCKym/PH4a6wYIeTUz1EvuaPy5lQOo6ORQ4h
+xbSyBRDPN4yiVgNXfSQmGKwd9XPqs6h8Z0q3X5mGZyOXurw0JFRJlJ3v8hHIvqg=
+=Rn7z
+-----END PGP SIGNATURE-----
