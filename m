@@ -1,75 +1,65 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] git clone depth of 0 not possible.
-Date: Tue, 8 Jan 2013 14:38:27 +0700
-Message-ID: <CACsJy8D9+KHT=YfU0+rPCbs+AwxQOpfKzPChDhk8d-MMkRzZug@mail.gmail.com>
-References: <1357581996-17505-1-git-send-email-stefanbeller@googlemail.com>
- <20130108062811.GA3131@elie.Belkin> <7vip78go6b.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/10] reroll of ap/log-mailmap
+Date: Mon, 07 Jan 2013 23:39:10 -0800
+Message-ID: <7v4nisgm3l.fsf@alter.siamese.dyndns.org>
+References: <1357603821-8647-1-git-send-email-gitster@pobox.com>
+ <CALWbr2w8z2iVx2PxM2sn3yDQzB5rTXc4EuZD9GCKSCofHzEzLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 08:39:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 08:39:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsTmH-00034V-Gc
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 08:39:17 +0100
+	id 1TsTmW-0003NS-Jd
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 08:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753358Ab3AHHi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 02:38:58 -0500
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:64056 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093Ab3AHHi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 02:38:57 -0500
-Received: by mail-oa0-f41.google.com with SMTP id k14so85615oag.14
-        for <git@vger.kernel.org>; Mon, 07 Jan 2013 23:38:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=AZ3/4780i0OHp80r1Aq9Xzl5pcVKRMWa1ealT/oiJQQ=;
-        b=aNgi1zG3g6B5x8AflOAABjqDrpqnhI+1vgdricFyNe4DcApfPq8kIM+bbAHXPVc28e
-         xv5o59wzWvsvNqaZ2oHUT6TGGZJ0n1cBUdxCYhZ5k1EIMZPHvYxATMxLus0LWc1C7ZxI
-         biH9qF8BxSJEDdPdFA4kpkI+2dsVyaYI+wJ7UI1A0m0QH0ZbkbHZv4Bfg+9PT5rj8vUp
-         CnAQUdr4iiPif1xg3X3ilCKEhmI6sIgN8QaEbnNFa3hT8GSv40Wu3V2lXbfLf+5FBxNP
-         4TUTZiU213l+DjyeMweWoGR0NHZR4xEOVUXviN+90iMfI1SNFKn2WRBzWo0JtKPCUV9s
-         /G6g==
-Received: by 10.60.22.164 with SMTP id e4mr35080445oef.87.1357630737413; Mon,
- 07 Jan 2013 23:38:57 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Mon, 7 Jan 2013 23:38:27 -0800 (PST)
-In-Reply-To: <7vip78go6b.fsf@alter.siamese.dyndns.org>
+	id S1753907Ab3AHHjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 02:39:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51649 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753626Ab3AHHjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 02:39:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BAAE6A16;
+	Tue,  8 Jan 2013 02:39:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3F0eiqgEEHxbEGCh068ZDwGTXCE=; b=G3gma7
+	SiCCvI/eBaQiFeNIw8kSFVPqC4mH3uoja5/vo7I2FlEfTItqjePdiY3mXt3f53fD
+	lZJ4Iw7Vz7O8qesEUwnMcshg/1GQ9bs/UOclwYH6LDrO1YFbbULCl9tEFXRqYDr8
+	fA+/uYawASjFgP825bpAtVG/63jOfgGWtIHR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qzVuW748zhr9q35DR2j9P4AVlJROJWTL
+	5NFqHi2TRP5LL/4qp6ezqcafKvOGTjGS9ZS1EMaInaaCrMTCCjc+YbHZSIrhMTQn
+	Yew2jyzuR4EHL3k7DQFGxbHxMEeXH/+hW6ilc2g9Qp6Tt8erIZMcaj+VFTcgYfcS
+	hDPx/9u805E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D1B36A15;
+	Tue,  8 Jan 2013 02:39:12 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CDDC6A14; Tue,  8 Jan 2013
+ 02:39:11 -0500 (EST)
+In-Reply-To: <CALWbr2w8z2iVx2PxM2sn3yDQzB5rTXc4EuZD9GCKSCofHzEzLQ@mail.gmail.com> (Antoine
+ Pelisse's message of "Tue, 8 Jan 2013 08:27:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7EA1A898-5966-11E2-B9A0-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212943>
 
-On Tue, Jan 8, 2013 at 1:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Sounds buggy.  Would anything break if we were to make --depth=1 mean
->> "1 deep, including the tip commit"?
->
-> As long as we do not change the meaning of the "shallow" count going
-> over the wire (i.e. the number we receive from the user will be
-> fudged, so that user's "depth 1" that used to mean "the tip and one
-> behind it" is expressed as "depth 2" at the end-user level, and we
-> send over the wire the number that corresponded to the old "depth
-> 1"), I do not think anything will break, and then --depth=0 may
-> magically start meaning "only the tip; its immediate parents will
-> not be transferred and recorded as the shallow boundary in the
-> receiving repository".
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-I'd rather we reserve 0 for unlimited fetch, something we haven't done
-so far [1]. And because "unlimited clone" with --depth does not make
-sense, --depth=0 should be rejected by git-clone.
+> Have you been able to measure a speed increase due to less copies ?
 
-[1] If we don't want to break the protocol, we could make depth
-0xffffffff a special value as "unlimited" for newer git. Older git
-works most of the time, until some project exceeds 4G commit depth
-history.
--- 
-Duy
+No.
+
+This topic was not strictly my itch, but I did the rewrite because I
+couldn't stand staring at that *_extended() function ;-)
