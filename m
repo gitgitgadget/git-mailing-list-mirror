@@ -1,141 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/7] contrib/subtree: Use %B for Split Subject/Body
-Date: Tue, 08 Jan 2013 10:29:57 -0800
-Message-ID: <7vmwwjedei.fsf@alter.siamese.dyndns.org>
-References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
- <1357646997-28675-3-git-send-email-greened@obbligato.org>
+From: =?ISO-8859-2?Q?Pavel_Posp=ED=B9il?= <pospispa@gmail.com>
+Subject: troublesome branch name in remote repo causes .git/config
+ inconsistency in cloned repo
+Date: Tue, 8 Jan 2013 19:30:58 +0100
+Message-ID: <CADDfn-L_VWk5Rkn_P8aTf3pwBcbbYT=PZTrG=pFvJpNjgRg-5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Techlive Zheng <techlivezheng@gmail.com>
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Tue Jan 08 19:30:30 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 19:36:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsdwN-0006HD-3h
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:30:23 +0100
+	id 1Tse2R-0005ns-FU
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:36:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756816Ab3AHSaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 13:30:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50079 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756605Ab3AHSaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 13:30:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4FF2A230;
-	Tue,  8 Jan 2013 13:29:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+ZVKDp2eaQYrP2ta+AVF16A5xbY=; b=n2uiNQ
-	/S5YiKnzvYCJWogkYnh1Od7dosCn4OLvuA95v54DLWlebbHcop3iIGhzsPz1iVNC
-	H4mExEuPQpUHGnC114IVv0REOG+0pXpbDIVww3H48H+NGzzG9M1OWfGHFkyVyb8t
-	udY6pwMFBKVTjc/6IqT42x4c9wYpAIZqHmjmI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CD56tLm4gBYXU8iW3fC9aJq5Wz7kBIm2
-	v7GZBfzzu1yWbX4NRCzupiqbxFgRBURkVQgPqxqyF0LqdrRPbsO8C0hVdL8As9JT
-	jTAGuiPDZPDf2dlyKSMGL5aU6tZnmYO/yKsWCzM6eIO2kZcjB4cSt6JSmlHRJDmC
-	Ag4NLJ9U/FI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8969A22F;
-	Tue,  8 Jan 2013 13:29:59 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 022C7A22E; Tue,  8 Jan 2013
- 13:29:58 -0500 (EST)
-In-Reply-To: <1357646997-28675-3-git-send-email-greened@obbligato.org> (David
- A. Greene's message of "Tue, 8 Jan 2013 06:09:52 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 686E7C80-59C1-11E2-829F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756849Ab3AHSgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 13:36:19 -0500
+Received: from mail-la0-f54.google.com ([209.85.215.54]:57952 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756734Ab3AHSgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 13:36:17 -0500
+Received: by mail-la0-f54.google.com with SMTP id fp12so817999lab.41
+        for <git@vger.kernel.org>; Tue, 08 Jan 2013 10:36:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=aytqsVXMFMHYVFxVxwfLsAgY5d7NlpNxRNOk2SiwnXs=;
+        b=JpXzZG54FBpK8FE0v3cKiNdesWgdNVpynYXte/X11qutvQOaIteHhHleZN9UsHBXeg
+         xj4hommfZzxmGQ2yjEfkzhjrCCENAW3arEyEDeGP+KfKYZFAri/XeQReJ1tLYusoFc/J
+         FhkPrEs//ixppVrovp+CGWpLZb+chJTsnTph8H8SLRSG9eXBHuKiUzWjZOK3ufR+ziJb
+         sc9hyVMcUEJQWxW8O+ufDYOLEDlfwipdWL/cTZnyNSpC1Ir7p3jq2yLE7jOjxGDAUGTG
+         8vRcE5zbBmPiZ/dqAna+ha9SYVIqhzCTwHUCyg6aA3NTX7rqk3fU1W+WMvWkzaTHka1Q
+         rbig==
+Received: by 10.152.47.75 with SMTP id b11mr61519040lan.14.1357669858384; Tue,
+ 08 Jan 2013 10:30:58 -0800 (PST)
+Received: by 10.112.137.232 with HTTP; Tue, 8 Jan 2013 10:30:58 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212993>
 
-"David A. Greene" <greened@obbligato.org> writes:
+Hi,
+I think I came across a bug. I use git version 1.7.10.4 on Ubuntu
+12.10. I haven't tried to find out if it's a known bug.
 
-> From: Techlive Zheng <techlivezheng@gmail.com>
->
-> Use %B to format the commit message and body to avoid an extra newline
-> if a commit only has a subject line.
->
-> Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
->
-> Signed-off-by: David A. Greene <greened@obbligato.org>
-> ---
+Reproduction scenario:
+1. create a git repo:
+$ mkdir -p tmp/bezdek
+$ cd tmp/bezdek/
+$ echo "*.swp" > .gitignore
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
 
-This time (only), I'll try to fix them up at my end, but please
-check your toolchain, find out where the extra blank line between
-S-o-b: lines we see above come from, and fix that, so that I won't
-have to do so again.
+2. clone the "remote" repo:
+$ cd ../..
+$ mkdir -p tmp/cloned
+$ git clone ../bezdek/
 
->  contrib/subtree/git-subtree.sh     |    6 +++++-
->  contrib/subtree/t/t7900-subtree.sh |   15 +++++++++++++++
->  2 files changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 920c664..5341b36 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -296,7 +296,11 @@ copy_commit()
->  	# We're going to set some environment vars here, so
->  	# do it in a subshell to get rid of them safely later
->  	debug copy_commit "{$1}" "{$2}" "{$3}"
-> -	git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%s%n%n%b' "$1" |
-> +	# Use %B rather than %s%n%n%b to handle the special case of a
-> +	# commit that only has a subject line.  We don't want to
-> +	# introduce a newline after the subject, causing generation of
-> +	# a new hash.
-> +	git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%B' "$1" |
+3. create the troublesome branch in the "remote" repo
+$ cd ../bezdek
+$ git checkout -b
+MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+$ echo "*.bak" >> .gitignore
+$ git add .
+$ git commit -m "Some changes"
 
-The new format template is fine, but I do not think the comment
-should be there.  It does not give any useful information to people
-who are reading the end result of applying this patch and is useful
-only in the context of comparing the old and new templates, iow, it
-belongs to the commit log message.
+4. pull and checkout to the
+MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+branch in the cloned repo
+$ cd ../cloned/bezdek
+$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = /home/pospispa/tmp/tmp/cloned/../bezdek/
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+$ git pull
+remote: Counting objects: 5, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects:  33% (1/3)
+Unpacking objects:  66% (2/3)
+Unpacking objects: 100% (3/3)
+Unpacking objects: 100% (3/3), done.
+From /home/pospispa/tmp/tmp/cloned/../bezdek
+ * [new branch]
+MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+-> origin/MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+Already up-to-date.
+$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = /home/pospispa/tmp/tmp/cloned/../bezdek/
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+$ git checkout MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+fatal: bad config file line 12 in .git/config
+$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = /home/pospispa/tmp/tmp/cloned/../bezdek/
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+[branch "MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek"]
+        remote = origin
 
->  	(
->  		read GIT_AUTHOR_NAME
->  		read GIT_AUTHOR_EMAIL
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 6cf9fb9..3f17f55 100755
-> --- a/contrib/subtree/t/t7900-subtree.sh
-> +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -74,6 +74,10 @@ test_expect_success 'add sub1' '
->          git branch -m master subproj
->  '
->  
-> +# Save this hash for testing later.
-> +
-> +subdir_hash=`git rev-parse HEAD`
-> +
->  test_expect_success 'add sub2' '
->          create sub2 &&
->          git commit -m "sub2" &&
-> @@ -211,6 +215,17 @@ test_expect_success 'check split with --branch' '
->          check_equal ''"$(git rev-parse splitbr1)"'' "$spl1"
->  '
->  
-> +test_expect_success 'check hash of split' '
-> +        spl1=$(git subtree split --prefix subdir) &&
-> +        undo &&
-> +        git subtree split --prefix subdir --branch splitbr1test &&
-> +        check_equal ''"$(git rev-parse splitbr1test)"'' "$spl1"
+I think that the problem may be with the branch name length. I think
+that git branch allows to created branches with very long names,
+however, such long name are not allowed in .git/config or the git
+checkout <very-long-remote-branch-name> has some problems with it.
 
-We'd need to clean up these no-op '' from this, but not doing so in
-this patch is perfectly fine (and is even preferred).
+I recovered from this problem in this way:
+1. deleted last two lines in tmp/cloned/bezdek/.git/config file and
+deleted index and working tree
+$ git reset HEAD *
+$ git checkout -- *
+2. renamed the troublesome branch in "remote" repo:
+$ cd ../../bezdek
+$ git branch -m
+MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
+3. pull from "remote" to cloned again
+$ cd ../cloned/bezdek
+$ git pull
+From /home/pospispa/tmp/tmp/cloned/../bezdek
+ * [new branch]
+MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek ->
+origin/MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
+Already up-to-date.
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/MCRD0106586-CR00023206-Configuration-management-of-MCO-shall-be-integrated-with-AMS-2.0-current-cm-config.xml-file-from-Peter-Bezdek
+  origin/MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
+  origin/master
+$ git checkout MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
+Branch MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
+set up to track remote branch
+MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek
+from origin.
+Switched to a new branch
+'MCRD0106586-CR00023206-current-cm-config.xml-file-from-Peter-Bezdek'
 
-> +        git checkout splitbr1test &&
-> +        new_hash=$(git rev-parse HEAD~2) &&
-> +        git checkout mainline &&
-> +        check_equal ''"$new_hash"'' "$subdir_hash"
-> +'
-> +
->  test_expect_success 'check split with --branch for an existing branch' '
->          spl1=''"$(git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
->          undo &&
-
-Thanks.
+Best regards,
+Pavel Pospisil
