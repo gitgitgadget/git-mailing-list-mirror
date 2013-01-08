@@ -1,78 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1402: work around shell quoting issue on NetBSD
-Date: Tue, 08 Jan 2013 13:37:37 -0800
-Message-ID: <7vboczcq5a.fsf@alter.siamese.dyndns.org>
-References: <50EC8025.8000707@lsrfire.ath.cx>
- <7vr4lvcstt.fsf@alter.siamese.dyndns.org> <50EC8BE7.2010508@lsrfire.ath.cx>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Enabling scissors by default?
+Date: Tue, 08 Jan 2013 16:42:30 -0500
+Message-ID: <50EC92C6.7090509@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git discussion list <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Adam Spiers <git@adamspiers.org>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Jan 08 22:38:24 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 22:43:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsgsF-00008F-Aq
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 22:38:19 +0100
+	id 1Tsgwg-0005hw-VF
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 22:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754229Ab3AHVhl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2013 16:37:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56934 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753229Ab3AHVhj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jan 2013 16:37:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 548C4BA7A;
-	Tue,  8 Jan 2013 16:37:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=rTn7/y/TTPUR
-	AIV7MpFgZUQ5lJY=; b=oibesuzVe9lsVIySvM8tS4tCEp/wi2vnp2XLZL9kBC4D
-	UY7cnB7vsQQl6mBjomToLB1gQi2Xag4wSVI0QLorX2OCB/XuVUMfDx+EkR9ugywG
-	IVZmlOJ+i3v5kcoDHTqhpAI2gEIxCBqJCVdcHlBKjxHagXFhGrFRmmAJqSuj+nk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=barVi4
-	B3wWN6TQS8W3g0cqpOEMXEZq3N8TaK8SyRbgXPhh6z6Kcv/n9CQNLrqkdCMCIdQT
-	9PXLLoo8JSG+CAdsQkd9d7VLpEvC+8tDMu99xgrzChVOYR/OEYpuyJGPVKvruEh/
-	gs4l0PStSqy3iElK/GlyWqdxzQ2W6tYNlLRQ4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 480DBBA79;
-	Tue,  8 Jan 2013 16:37:39 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9067BA78; Tue,  8 Jan 2013
- 16:37:38 -0500 (EST)
-In-Reply-To: <50EC8BE7.2010508@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue, 08 Jan 2013 22:13:11 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9FD29214-59DB-11E2-8DFA-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753412Ab3AHVmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 16:42:33 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:42330 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751586Ab3AHVmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 16:42:32 -0500
+X-Authority-Analysis: v=2.0 cv=VZd1zSV9 c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=Qsx_du5GiBkA:10 a=PJtIR_1cTkwA:10 a=7h0-D26dXtYA:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=fxJcL_dCAAAA:8 a=EfLa-qcitT0A:10 a=QfKxxUxMAAAA:8 a=8Oxw-FJDfYSlFLrqOloA:9 a=wPNLvfGTeEIA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
+X-Cloudmark-Score: 0
+X-Authenticated-User: 
+X-Originating-IP: 67.78.168.186
+Received: from [67.78.168.186] ([67.78.168.186:64243] helo=[10.1.1.235])
+	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id 00/DF-05345-6C29CE05; Tue, 08 Jan 2013 21:42:31 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/17.0 Thunderbird/17.0
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213008>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> A quick check shows that subtests 64-68 and 89-93 of t0008 fail for m=
-e
-> on Debian (10 in total) and subtests 64 and 89 fail on NetBSD (2 in
-> total).  Unlike t1402 they don't report "bug in the test script".
->
-> t0008 only uses ${:+} substitution on variables that don't contain
-> spaces.  With the test changed to store the description in a variable
-> first I still get the same 2 failures.
->
-> There must be something else going on here.  The different results ar=
-e
-> interesting, especially the higher number of failures on Debian.
+I was wondering why am's scissors option is not enabled by default.
+It seems a very handy feature, but I'm reluctant to use it when
+sending patches because the recipient has to notice the scissors and
+remember to pass --scissors to git am.
 
-I forgot to mention that some of them seem to be broken under dash
-but pass under bash.
+Could this be made the default?
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJQ7JLGAAoJEJrBOlT6nu75iDYIANFiiH50RlL9WKEfaoybeA5K
+ZLodBze1TcAYIx2/ad6qY+XCoq98+nVXTkv2IAleDiNlfeIhKD24UTWNCysT8p1J
+5KeFfR4paxLJLJKkmSL5s3DJbyjLlJWcxD7vGku6F4k35NmY3VYR4rJ/CVv0YRrs
+p4nNG/EXWBo3/ngiL9QS4E65N0CfcOOjn48RQUmk1DGXSFNHP4L1KuJ4dA9cs9BC
+5KmNwh5X6OOal0Lf+ezbxzvoGMwQmhBAxx3t8JQR3E22dLQlUq7stlPl5LDd+Cis
+XWfNk3B4NuFTum9LqWnM5TN89WCCFh4/pskdRd5ONF51G0jbuF/hBFbwU05qL/4=
+=Qd94
+-----END PGP SIGNATURE-----
