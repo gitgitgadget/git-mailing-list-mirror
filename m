@@ -1,96 +1,102 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH v4] git-completion.bash: add support for path completion
-Date: Tue, 08 Jan 2013 19:28:40 +0100
-Message-ID: <50EC6558.6080608@gmail.com>
-References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com> <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se> <7vobh4sffw.fsf@alter.siamese.dyndns.org> <7vehi0qh4x.fsf@alter.siamese.dyndns.org> <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se> <50EC5D41.6030209@gmail.com> <20130108180518.GO6440@serenity.lan>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: submodule name and path
+Date: Tue, 08 Jan 2013 13:29:14 -0500
+Message-ID: <20130108182914.GH4662@odin.tremily.us>
+References: <CAHtLG6TuHtk2P3w70-vUVGkdrv7R3VWyMzkGA4sr=G8xiSuEjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marc Khouzam <marc.khouzam@ericsson.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"szeder@ira.uka.de" <szeder@ira.uka.de>,
-	"felipe.contreras@gmail.com" <felipe.contreras@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 08 19:29:31 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="2xeD/fx0+7k8I/QN"
+Cc: git@vger.kernel.org
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 19:29:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsdvX-0005AI-2P
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:29:31 +0100
+	id 1Tsdvr-0005aY-N5
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:29:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756882Ab3AHS3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 13:29:10 -0500
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:46688 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756641Ab3AHS3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 13:29:09 -0500
-Received: by mail-wg0-f42.google.com with SMTP id dr1so749465wgb.1
-        for <git@vger.kernel.org>; Tue, 08 Jan 2013 10:29:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=pAO3MictO/ay5EZCt3vxgaWrwCYqVgxRWqwMgAOFlyU=;
-        b=aQgPxHFNl/E8sLykXKNcPAj4AuMksV3Jyw7nRapTZLjYXkRUnSrrcd6FIxDJBMZg4y
-         fP+fQziYKcf782DrKXHTMdF6jEXG/2kcO0yL0qhD8qRZtDZ9+/IMuYBVbEjefkn4BZbU
-         GqaFWz47ISGqtQp4iKW9IPbhVLuv1GubEaRBWF0y01ifgYsOEfd5NeLIkBhbh5tLhBxQ
-         iVzp8JsCf/G5X6uebnuDJSV6vvpG8foX8UoBezko34T2BHOypQl4nYVHGIbh27tfXaRc
-         /ehILyEyIkdfa1BmiHzUxMkpIiCj3/EYH/pBNezbsOmDxah+pvJU03NzUJawZ0YI3YOq
-         Walw==
-X-Received: by 10.194.172.228 with SMTP id bf4mr11635579wjc.38.1357669747513;
-        Tue, 08 Jan 2013 10:29:07 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.216.223])
-        by mx.google.com with ESMTPS id i2sm202472wiw.3.2013.01.08.10.29.03
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 08 Jan 2013 10:29:06 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <20130108180518.GO6440@serenity.lan>
-X-Enigmail-Version: 1.0.1
+	id S1756884Ab3AHS3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 13:29:32 -0500
+Received: from vms173019pub.verizon.net ([206.46.173.19]:60734 "EHLO
+	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756641Ab3AHS3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 13:29:31 -0500
+Received: from odin.tremily.us ([unknown] [72.68.82.220])
+ by vms173019.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MGB00K13KOQ0V50@vms173019.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 08 Jan 2013 12:29:16 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 594EE77F51A; Tue,
+ 08 Jan 2013 13:29:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1357669754; bh=YUSx+3NfGb5EBaRUUXzSynjtiiKfk6GHVAaJdWA4DdY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XHEtRc1eVvQOsYpgqvdgjxirzkk9B6tsmvwSSIONbLKgSeH3dFkU+362jehw2s81m
+ Z2y3TTbV33lReYgQbgwUNU5AWK63ahI5Dd4i7AqqVBFMRBRTR/L52DGrIduyqVzDon
+ Nka9LbavYhFWYqwPaIpeDaVpLkEa7Kt3fjL1KweM=
+Content-disposition: inline
+In-reply-to: <CAHtLG6TuHtk2P3w70-vUVGkdrv7R3VWyMzkGA4sr=G8xiSuEjA@mail.gmail.com>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212990>
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Il 08/01/2013 19:05, John Keeping ha scritto:
-> [...]
->>
->> After some searching, I found how this is supposed to be done.
->> It is possible to use the -o filenames option to tell Bash completion
->> that "the compspec generates filenames, so it can perform any
->> filename-specific processing".
->>
->> Unfortunately this option must be passed to the complete builtin
->> command, and we can not do this, since the comspec not always contains
->> filenames.
-> 
-> You should also be able to pass it to 'compopt' during completion in
-> order to change the behaviour for only the current completion.
-> 
-
-Thanks, compopt is what I wanted.
-
-I was reading an old Bash manual (for Bash 3.1), and compopt is only
-available starting from Bash 4.0.
-
-I will do some test, being careful to not break the code for Bash < 4.0
-and the other supported shells.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212991>
 
 
+--2xeD/fx0+7k8I/QN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Regards  Manlio
+On Wed, Jan 09, 2013 at 02:17:42AM +0800, =E4=B9=99=E9=85=B8=E9=8B=B0 wrote:
+> In doc, "submodule name" is not clearly mentioned?
+> What is the purpose of "submodule name"?
+> Must be same as "submodule path"?
+> "submodule path" can be repeated, while "submodule name" unique?
+
+The submodule name starts out the same as the submodule path, but the
+name stays constant through submodule moves, replacements, etc.  The
+constant name is useful because out-of-tree configuration (e.g. stuff
+in .git/config and .git/modules/) won't have to adjust to submodule
+renames (except for core.worktree in .git/modules/*/config).
+
+See:
+
+http://article.gmane.org/gmane.comp.version-control.git/49621
+http://article.gmane.org/gmane.comp.version-control.git/206659
+
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--2xeD/fx0+7k8I/QN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-iEYEARECAAYFAlDsZVgACgkQscQJ24LbaUQlAACdGbhOuGICCYFwkRTPJla+3JGT
-EcQAoINEGvdwtOz1QFbAA4FqoI3c7VSa
-=5Oqw
+iQIcBAEBAgAGBQJQ7GV4AAoJEEUbTsx0l5OMQ3UP/RoG7ivhnxoG6cwqFP6L47bU
+PGgk+mrLJtmSg/jC4dsYSHLd8MYAkmR3t6fUOozWEoiptIXE2ZuykHE8Fi7Z1gz4
+9uqSsW5F9MH/+vD2hRFruwlhc91xlrxsYHhEHZiww5+6FQKWHrwL3P2esFqg2GrG
+1entZ2y0fSTuZiyolL80ha7/q6KIh6bW/Z3YFpjp5VjIsR1dFqv1QESNp+utCN98
+lHktYs3x14Kpj7vxUauncac6b3CCpPLtR4g6u+bidVCuNSN4koOy1EFIGAgfhvk0
+N/EaEHwqq54rEJ6wlayXTAVsMi8hPTyiYq8ISaouAn8Jw5rP5uRI7PWuKixve+9/
+ofFuIeb3+EfuZOlkbSmZYaM+CXw++jz0hmiWbpUgnyymfVLJH8hC+VNdpEMHwild
+B1GxkcQICRYO0hn1S/5yQkghZlU4fciGMhqTmxrVjwUiY2KW9klOjO31j7847DUW
+w6ly2FcYlu/t6mK/rdveAOoqaPmGKU2uZJn2R/W9QiJkiJLXB2o83yTb4B5PR4rI
+JUFpaNqActGM/CVQdugYfBqmiQ8J5GQOW+gq0K+qwJ4igleF8MY9nTRekqi44Y6v
+nt4yq6D2IdxyAP5oG0a4pJk59A/TG4dAJb6BbsoTMVdOSNNpHW/13PRT+tmZBAcD
+uQbVC5OvPwWW17E4MbX1
+=nAmh
 -----END PGP SIGNATURE-----
+
+--2xeD/fx0+7k8I/QN--
