@@ -1,70 +1,101 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: Understanding When to Use Branches
-Date: Tue, 8 Jan 2013 21:08:00 +0400
-Message-ID: <20130108210800.c10104667727c8c9c4d2324d@domain007.com>
-References: <50EC232D.90009@yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git clone depth of 0 not possible.
+Date: Tue, 08 Jan 2013 09:24:16 -0800
+Message-ID: <7vk3rnfv0f.fsf@alter.siamese.dyndns.org>
+References: <1357581996-17505-1-git-send-email-stefanbeller@googlemail.com>
+ <20130108062811.GA3131@elie.Belkin> <7vip78go6b.fsf@alter.siamese.dyndns.org>
+ <7vd2xggm8a.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BJ3eBv-wjq=eTzR4SeEXW2MF5k1w5SFRt7fWRU4vKb_Q@mail.gmail.com>
+ <50EC2DE5.2050704@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: gw1500 <wtriker.ffe@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 18:24:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
+	git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 18:24:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tscu7-00080k-2D
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 18:23:59 +0100
+	id 1Tscum-0000RR-8B
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 18:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756723Ab3AHRXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 12:23:39 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:41769 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756346Ab3AHRXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 12:23:39 -0500
-X-Greylist: delayed 934 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2013 12:23:38 EST
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r08H80GE029009;
-	Tue, 8 Jan 2013 21:08:01 +0400
-In-Reply-To: <50EC232D.90009@yahoo.com>
-X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1756728Ab3AHRYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 12:24:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36213 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756346Ab3AHRYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 12:24:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20F8ABEAB;
+	Tue,  8 Jan 2013 12:24:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w8Hder1x61yz64dXT5Km3GgAgFg=; b=Tc2Ygw
+	fZrpp4lWl8FmwjmUYRoiyu0K4xhJWTklkGoZdym6F5EW/B+ixk1FQ1GfakTCS0Rp
+	1yzgsazOODtbMiQxpRQBcoP1Cd1QkyY6+Xo0qE9zIzpYi8SfQMLNIVq0j34nZCKi
+	oz1aBIJAdG6TuPJbLiuixaVsSc6/Duip1EP6w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KaLRzgsmdSbiWalS20GITbw7D5BX6ULH
+	LL8zzKMNst9K6TC73OuvMZeXAd7uKvOlN/t+C4zgrKhPRutQ4x908A/AVq1N4CFo
+	WFaCHNzcYwQ4yTvj+R7IBg16dMlJjGBsTlzQjUgkDxCx8Efqvk+05G5+bjsbCxMS
+	Qb/M0yulveA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16D4EBEAA;
+	Tue,  8 Jan 2013 12:24:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A16CBEA9; Tue,  8 Jan 2013
+ 12:24:18 -0500 (EST)
+In-Reply-To: <50EC2DE5.2050704@googlemail.com> (Stefan Beller's message of
+ "Tue, 08 Jan 2013 15:32:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3BB4AE52-59B8-11E2-9B03-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212979>
 
-On Tue, 08 Jan 2013 08:46:21 -0500
-gw1500 <wtriker.ffe@gmail.com> wrote:
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-> As a git noobie I am beginning get get my head around git's version
-> control philosophy. I am now trying to understand the purposes of
-> branches or rather when to use them. In my case I have a Java
-> application under version control with git. I am planning to port it
-> into a mobile app. Is that an appropriate use of branches or should it
-> be created as a new repository? What is the relationship between the
-> same source code in different branches? Do changes to code in one
-> branch get ported to another branch somehow or do all changes then
-> have to be made twice? The documentation tells how to branch but not
-> the general philosophy behind it from a best practices standpoint.
-> Thanks in advance for any insight.
+> On 01/08/2013 03:28 PM, Duy Nguyen wrote:
+>> On Tue, Jan 8, 2013 at 2:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Speaking of --depth, I think in Git 2.0 we should fix the semantics
+>>> of "deepening" done with "git fetch".
+>> 
+>> Speaking of 2.0, we should support depth per ref. Well we don't have
+>> to wait until 2.0 because we could just add shallow2 extension to the
+>> pack protocol. We should also apply depth to new refs when fetching
+>> them the first time.
+>
+> Would this mean I could do something along?
+> $ git clone --since v1.8.0 git://github.com/gitster/git.git
+>
+> So tags would be allowed as anchors?
 
-Supposedly you should start with the chapter on branching in
-The Book [1] and then read two classic blog posts [2, 3] describing two
-different branching models.  The branching models described there are
-not the only two possible models to use with Git, but they are different
-enough to give you a good overview of possibilities.
-Note that mere googling for "git branching model" would yield a fair
-number of blog posts on people's pet branching models; these two
-documents just appear to be more "classic" than others.
+As the end-user facing UI, I think it would be much easier to use
+for users who want to get only the recent part of history that is
+relevant to their development if you allowed them to ask "starting
+from this one, I do not care anything older than that" with such an
+interface.  The current "count how many more generations you want"
+interface is crazy in that it forces you to count what you have not
+even seen; I suspect the only reason it was done in such a hacky
+manner was implementation expediency.
 
-If you have difficulty to even grasping the concept of branches and [1]
-feeld hard to digest, try first reading "The Git Parable" [4] which, I
-think, is the friendliest possible introduction to the basics of DVCS,
-branching included.
+At the syntax level, however, I do not think we can use --since
+there, because the keyword has a very different meaning already.
 
-1. http://git-scm.com/book/en/Git-Branching
-2. http://nvie.com/posts/a-successful-git-branching-model/
-3. http://scottchacon.com/2011/08/31/github-flow.html
-4. http://tom.preston-werner.com/2009/05/19/the-git-parable.html
+I personally do not think "depth per ref" deserves "it would be nice
+to support in 2.0", let alone "2.0 *should* support", label.  Some
+may find it an interesting mental exercise to think about corner
+cases it will introduce and have to deal with (e.g. you ask 100 from
+master and 2 from maint, but maint is behind master by less than
+100---what should happen?), but I do not particularly see any
+practical use cases, and I highly doubt that there is much value in
+bringing in extra complexity such a "feature" requires to do it
+right.
