@@ -1,85 +1,97 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: Enabling scissors by default?
-Date: Tue, 08 Jan 2013 18:25:22 -0500
-Message-ID: <50ECAAE2.2020507@ubuntu.com>
-References: <50EC92C6.7090509@ubuntu.com> <7vvcb7b8lc.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] clone: forbid --bare --separate-git-dir <dir>
+Date: Wed, 9 Jan 2013 06:34:21 +0700
+Message-ID: <CACsJy8B=h04QAeb0D-PWvT=0n_+QfW27NuUg3KEFUN3C4MOJVQ@mail.gmail.com>
+References: <20130106091642.GA10956@elie.Belkin> <1357465670-32766-1-git-send-email-pclouds@gmail.com>
+ <20130106101948.GD10956@elie.Belkin> <20130108141650.GA18637@lanh>
+ <50EC543D.5090100@web.de> <7v4nirfu1p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	"W. Trevor King" <wking@drexel.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 00:25:52 2013
+X-From: git-owner@vger.kernel.org Wed Jan 09 00:35:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsiYE-0003Hi-Tr
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 00:25:47 +0100
+	id 1TsihN-0005yq-4O
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 00:35:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754305Ab3AHXZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 18:25:25 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:39588 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754192Ab3AHXZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 18:25:24 -0500
-X-Authority-Analysis: v=2.0 cv=VZd1zSV9 c=1 sm=0 a=C56BoFkcj+OI1kjAe8jE5A==:17 a=MtVMNMWb1ewA:10 a=uBsBa1gr-CYA:10 a=mJ8kdMDUam4A:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=fxJcL_dCAAAA:8 a=ehUGrGVIPMEA:10 a=QfKxxUxMAAAA:8 a=F38jllyfqJlT2L5tvJoA:9 a=wPNLvfGTeEIA:10 a=C56BoFkcj+OI1kjAe8jE5A==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 142.196.87.46
-Received: from [142.196.87.46] ([142.196.87.46:51017] helo=[192.168.1.10])
-	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id CC/6C-05345-2EAACE05; Tue, 08 Jan 2013 23:25:23 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vvcb7b8lc.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.6
+	id S1755013Ab3AHXex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 18:34:53 -0500
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:45050 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751481Ab3AHXew (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 18:34:52 -0500
+Received: by mail-ob0-f174.google.com with SMTP id ta14so1540631obb.33
+        for <git@vger.kernel.org>; Tue, 08 Jan 2013 15:34:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QlhILZgP2Nlol/L4Dybv49hJuI4KTzTzMekI95xFIME=;
+        b=tpb0501vYXZ/05TXVE2FCfpK9Mo5UEL80LZSMi1/+lBkzcIegc6XjV9gab9gyFyatH
+         gu+4+KmF9bEKT+Hz2Ljnx7oznih8phQKvkY3WsFdgHj3bXKHlSIpXluLjL0Gb5rn5DBD
+         mOJnEqBWAEbTqtkcrloOtAYyfBvrBnf3OA8L0QlujssZkQRcpXfiagSfN7/pe3m9OIn2
+         suLmEMw9KjzTbX7eIwydPOgOYBdQNv1XyyfeVUGtR9AfznIBypfN5F+I50Ht8x2FAvkL
+         S7YTBRZYn92IS2dQoI6cxttZ9LdBc/hPvi8bZV4/7iqrZE7K4ljBU5aRzCAgrnnXuCfW
+         Dzug==
+Received: by 10.182.164.103 with SMTP id yp7mr46447524obb.74.1357688091954;
+ Tue, 08 Jan 2013 15:34:51 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Tue, 8 Jan 2013 15:34:21 -0800 (PST)
+In-Reply-To: <7v4nirfu1p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213015>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jan 9, 2013 at 12:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>
+>> Am 08.01.2013 15:16, schrieb Duy Nguyen:
+>>> On Sun, Jan 06, 2013 at 02:19:48AM -0800, Jonathan Nieder wrote:
+>>>>     Unfortunately we forgot to forbid the --bare
+>>>>     --separate-git-dir combination.  In practice, we know no one
+>>>>     could be using --bare with --separate-git-dir because it is
+>>>>     broken in the following way: <explanation here>.  So it is
+>>>>     safe to make good on our mistake and forbid the combination,
+>>>>     making the command easier to explain.
+>>>>
+>>>> I don't know what would go in the <explanation here> blank above,
+>>>> though.  Is it possible that some people are relying on this option
+>>>> combination?
+>>>
+>>> I can't say it's broken in what way. Maybe it's easier to just support
+>>> this case, it's not much work anyway. Jens, maybe squash this to your
+>>> original patch?
+>>
+>> I'd be fine with that, though my gut feeling is that this should
+>> be a patch of its own (My patch handles the git dir, your's handles
+>> a work tree issue).
+>
+> I agree that these are totally unrelated issues.
+>
+> After all, Jonathan's suggestion to forbid it was because the
+> combination does not make sense and does not have practical uses,
+> and forbidding it would make the command easier to explain than
+> leaving it accepted from the command line.  If you choose to go in
+> the opposite direction and make "clone --bare --separate-git-dir" do
+> something useful, it should be explained very well in the
+> documentation part of the patch why such a combination is a good
+> idea, and in what situation the behaviour is useful and the user may
+> want to consider using it, I think.
 
-On 01/08/2013 05:42 PM, Junio C Hamano wrote:
-> It is very easy to miss misidentification of scissors line; as a 
-> dangerous, potentially information losing option, I do not think
-> it should be on by default.
-
-I suppose if it only requires one instance of >8 or <8 and one -, it
-might be *slightly* dangerous, but if it required a slightly longer
-minimum line length, it would be pretty darn unlikely to get triggered
-by accident, and of course, is easily disabled.
-
-> Another reason (and this is the original one) why it is not
-> enabled is to discourage the contributors from overusing scissors
-> -- >8 -- line.  If you always have to write too much stuff before
-> the proper explanation of your patch, so that the integrator has to
-> use -c option all the time, you are explaining your patches wrong.
-
-I often see patches being tweaked in response to feedback and
-resubmitted, usually with a description of what has changed since the
-previous version.  Such descriptions don't need to be in the change
-log when it is finally applied and seem a perfect use of scissors.
-
-Usually such version to version descriptions are put in a cover
-letter, but if you are only submitting a single patch instead of an
-entire series, using a cover letter seems silly when you could just
-put the comments in one email and clearly mark them as not needing to
-go into the final changelog.
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJQ7KriAAoJEJrBOlT6nu755UkIALIT3T5yHH5i+0HOrXLlXzQR
-+S2jJfFZ8Kcc+kleiEJ3uLFVGTLMpRyjJFKceOuB4/TdJFUivrYJHWJxcKmW8WzK
-BJKZOjt/jv9r8Qt/AB7KA45S7awfQnOWkg6KQlJa1IM0nUPbo4upgMlWar9l7vjz
-Hkr7geuHY4fsVUJ7R0rYPcT3pue8ywsT4a9o/ocstfXmC05IrLKQtzO4TuvfiaTb
-yBG+rAPKz36zfxCN5NyKExZO6v/LnCKym/PH4a6wYIeTUz1EvuaPy5lQOo6ORQ4h
-xbSyBRDPN4yiVgNXfSQmGKwd9XPqs6h8Z0q3X5mGZyOXurw0JFRJlJ3v8hHIvqg=
-=Rn7z
------END PGP SIGNATURE-----
+It is more like postponing the usefulness evaluation of the
+combination until later (maybe someone will come up with an actual use
+case). As of now, --separate-git-dir --bare is a valid combination.
+Jens' patch fixes one case but leave the other case broken, which is
+why I think it should be in one patch. It's rather ducking head in the
+sand than actually declaring that the combination is useful.
+-- 
+Duy
