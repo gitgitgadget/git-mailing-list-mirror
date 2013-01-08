@@ -1,110 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git clone depth of 0 not possible.
-Date: Tue, 08 Jan 2013 00:19:51 -0800
-Message-ID: <7vobh0f5nc.fsf@alter.siamese.dyndns.org>
-References: <1357581996-17505-1-git-send-email-stefanbeller@googlemail.com>
- <20130108062811.GA3131@elie.Belkin> <7vip78go6b.fsf@alter.siamese.dyndns.org>
- <7vd2xggm8a.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org
+Subject: Re: [PATCH 1/8] Use %B for Split Subject/Body
+Date: Tue, 08 Jan 2013 04:40:23 -0600
+Message-ID: <87d2xglzzc.fsf@waller.obbligato.org>
+References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
+	<1357012655-24974-2-git-send-email-greened@obbligato.org>
+	<7va9ssa94l.fsf@alter.siamese.dyndns.org>
+	<87wqvwfsfm.fsf@waller.obbligato.org>
+	<7vehi477er.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 09:21:26 2013
+Cc: git@vger.kernel.org, Techlive Zheng <techlivezheng@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 11:41:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsUR1-0006Uo-CH
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 09:21:23 +0100
+	id 1TsWcc-00005t-N9
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 11:41:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804Ab3AHIVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 03:21:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39268 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754398Ab3AHITy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 03:19:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5FA67FCD;
-	Tue,  8 Jan 2013 03:19:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IPXb4C3z6nluBag079Szwl7ikWM=; b=YJ9+HN
-	Uijg975VCw5OPFRvsljpJdip4ixM4w+IwlUqEmwY84E7e7TH/bm5H6IeWJcfnbou
-	nnklf+963tBwRqWmlRu3BKIa0egIdH8L3p35GX0riEKGvFBz9RrpUQh5vkqsI3n9
-	LoVLgEaTSX82UOxkWcITE2mor8VF5F5YsUKGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GEbG3wYbnET1BvRXnfr3xFpRpzVeEPPQ
-	yGBc76Rjt9/xuAU0vAGa1jplp9B/dsPPdgVWJr4yIrl17ojTyyUtug/R+3IEjf16
-	dALaa185rz8XALpPs6MSfAbtVQB4jhepyOo8zHht7T3ZLs5KX8fX42F8tlax4bnj
-	rGirEQLTE88=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8462B7FC9;
-	Tue,  8 Jan 2013 03:19:53 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE0197FB9; Tue,  8 Jan 2013
- 03:19:52 -0500 (EST)
-In-Reply-To: <7vd2xggm8a.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 07 Jan 2013 23:36:21 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D7F066C-596C-11E2-AE06-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755860Ab3AHKlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 05:41:09 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:51720 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755707Ab3AHKlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 05:41:07 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <greened@obbligato.org>)
+	id 1TsWjl-0003l4-8n; Tue, 08 Jan 2013 04:48:54 -0600
+In-Reply-To: <7vehi477er.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 01 Jan 2013 16:30:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Junio C Hamano <gitster@pobox.com> writes: > The question
+   was about the lossage of the blank line, which does not > seem to be related
+    to what this patch wants to do. Ah, missed that. [...] 
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+ -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212951>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> I think we need a protocol update to fix this; instead of sending
-> "Now I want your tips and N commits behind it, please update my
-> shallow bottom accordingly", which creates the above by giving you Z
-> and 3 generations back and updates your cut-off point to W, the
-> receiving end should be able to ask "I have a shallow history that
-> cuts off at these commits. I want to get the history leading up to
-> your tips, and also deepen the history further back from my current
-> cut-off points by N commits", so that you would instead end up with
-> something like this:
+> The question was about the lossage of the blank line, which does not
+> seem to be related to what this patch wants to do.
+
+Ah, missed that.
+
+>>>> -# 25
+>>>> +#25
+>>>
+>>> Why the lossage of a SP?
+>>
+>> I think this got fixed later in the series.
 >
->  (you)
->      o---o---o---A---B---C---D---E---F---...---W---X---Y---Z
+> That is not a good excuse to introduce breakages in the first place, no?
+
+Oh, I agree.  I wasn't making excuses.  :)
+
+>>> It may make sense to lose these "# num" that will have to be touched
+>>> every time somebody inserts new test pieces in the middle, as a
+>>> preparatory step before any of these patches, by the way.  That will
+>>> reduce noise in the patches for real changes.
+>>
+>> Yeah, I know, but it makes it really easy to find a test when something
+>> goes wrong.
 >
-> That is, truly "deepen my history by 3".  We could call that "git
-> fetch --deepen=3" or something.
+> That is what "tXXXX-*.sh -i" is for, isn't it?
 
-I take that back.  If you start from
+Oh, I didn't know about that!
 
->  (upstream)
->   ---o---o---o---A---B
->
->  (you)
->                  A---B
-
-and you are interested in peeking the history a bit deeper, you
-should be able to ask "I have a shallow history that cuts off at
-these commits. I want my history deepened by N commits.  I do not
-care where your current tips are, by the way." with
-
-    git fetch --deepen=3 
-
-and end up with
-
->  (you)
->      o---o---o---A---B
-
-without getting the new history leading to the updated tip at the
-upstream.  If you want the new history leading to the updated tip,
-you can just say:
-
-    git fetch
-
-without any --depth nor --deepen option to end up with:
-
->  (you)
->                  A---B---C---D---E---F---...---W---X---Y---Z
-
-instead.
+                        -David
