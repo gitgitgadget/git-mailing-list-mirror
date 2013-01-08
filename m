@@ -1,94 +1,97 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH] remote-hg: Fix biridectionality -> bidirectionality typos
-Date: Tue, 08 Jan 2013 12:50:01 -0500
-Message-ID: <20130108175001.GG4662@odin.tremily.us>
-References: <1351995218-19889-1-git-send-email-felipe.contreras@gmail.com>
- <1351995218-19889-8-git-send-email-felipe.contreras@gmail.com>
- <20121128202320.GA22522@odin.tremily.us>
- <20130108154737.GA4662@odin.tremily.us>
- <7vboczfunc.fsf@alter.siamese.dyndns.org>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH v4] git-completion.bash: add support for path completion
+Date: Tue, 08 Jan 2013 18:54:09 +0100
+Message-ID: <50EC5D41.6030209@gmail.com>
+References: <1356108872-5881-1-git-send-email-manlio.perillo@gmail.com> <E59706EF8DB1D147B15BECA3322E4BDC0672D1@eusaamb103.ericsson.se> <7vobh4sffw.fsf@alter.siamese.dyndns.org>,<7vehi0qh4x.fsf@alter.siamese.dyndns.org> <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=LZFKeWUZP29EKQNE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 18:50:31 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"szeder@ira.uka.de" <szeder@ira.uka.de>,
+	"felipe.contreras@gmail.com" <felipe.contreras@gmail.com>
+To: Marc Khouzam <marc.khouzam@ericsson.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 18:54:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsdJj-0007Lf-VY
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 18:50:28 +0100
+	id 1TsdNr-0004HE-Oq
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 18:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756819Ab3AHRuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 12:50:05 -0500
-Received: from vms173007pub.verizon.net ([206.46.173.7]:17620 "EHLO
-	vms173007pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756485Ab3AHRuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 12:50:04 -0500
-Received: from odin.tremily.us ([unknown] [72.68.82.220])
- by vms173007.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MGB0068IIVDOI10@vms173007.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 08 Jan 2013 11:50:03 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 49E2377F48E; Tue,
- 08 Jan 2013 12:50:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1357667401; bh=OAW5aCUt66HZPE+uVUr8eZ720mNiiA4mkok5xQuvd4o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=l7BL8X4ieAtDBwbF78AD072/uH5HKKKOFjlmxweAqCTWY+us7DHDMYcY1pK3Gw8ML
- S3vwUUwYbtDejX7HHUMmfV0x1gdLnY2w65WWNFN3BSJLvloD2mSezq3ptThxMml4E4
- gq5m50vZbs42SGj+OsSApOoWoyJ2n19WLncBYiXM=
-Content-disposition: inline
-In-reply-to: <7vboczfunc.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756848Ab3AHRyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 12:54:23 -0500
+Received: from mail-bk0-f47.google.com ([209.85.214.47]:54719 "EHLO
+	mail-bk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756589Ab3AHRyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 12:54:22 -0500
+Received: by mail-bk0-f47.google.com with SMTP id j4so420246bkw.6
+        for <git@vger.kernel.org>; Tue, 08 Jan 2013 09:54:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=obGGtCCA2g8VU7KX2hKH33LugPaeMAIQaPuVYv/pRh8=;
+        b=kLasUW4bvKg5vS7YuOtIlhSXYi73LOms6iuVC2I83IolnDJINS/WJa8vasu/mLLPuh
+         WFoWfmlmD4oHNJWGrEJIFjdkMKDsM3vUcR+2J5r9wFIFeRtJ0fc8EpK0yW1qTeObmJlW
+         wRD4RN7aZx7eZGXpNZZFwmMPztpvL98Hhmwclf/+bxkBYSFeLL7qUxOlLkRasjj2LPRs
+         pytY1lf6JYGZMnMJbLBwswZN4gZcVYxTNVF9Tsu87MqJN0d4InB9QgrbN25M9M+26ezi
+         FrbDQoVpk658Xp2j0Rs9P/ooQ6Pb6FjMNyZ22S+1E321ZxIljFj7tZyVpRavHDslTp88
+         g4ew==
+X-Received: by 10.205.120.3 with SMTP id fw3mr32942110bkc.40.1357667661683;
+        Tue, 08 Jan 2013 09:54:21 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.216.223])
+        by mx.google.com with ESMTPS id m20sm46299759bkw.4.2013.01.08.09.54.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 Jan 2013 09:54:20 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <E59706EF8DB1D147B15BECA3322E4BDC0681FA@eusaamb103.ericsson.se>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212986>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Il 05/01/2013 21:23, Marc Khouzam ha scritto:
+> [...]
+> 4- Completion choices include their entire path, which is not what bash does by default.  For example:
+>> cd git/contrib
+>> ls completion/git-<tab>
+> git-completion.bash  git-completion.tcsh  git-completion.zsh   git-prompt.sh
+> but
+>> git rm completion/git-<tab>
+> completion/git-completion.bash  completion/git-completion.tcsh  completion/git-completion.zsh   completion/git-prompt.sh
+> notice the extra 'completion/' before each completion.  This can get pretty large when completing with 
+> many directory prefixes.  The current tcsh completion has the same problem which I couldn't fix.  However, I am 
+> not sure if it can be fixed for bash.
+> 
+> I personally don't think this is regression, just an slight annoyance.
+> 
+
+After some searching, I found how this is supposed to be done.
+It is possible to use the -o filenames option to tell Bash completion
+that "the compspec generates filenames, so it can perform any
+filename-specific processing".
+
+Unfortunately this option must be passed to the complete builtin
+command, and we can not do this, since the comspec not always contains
+filenames.
+
+> [...]
 
 
---LZFKeWUZP29EKQNE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Tue, Jan 08, 2013 at 09:32:07AM -0800, Junio C Hamano wrote:
-> Thanks; didn't Documentation/SubmittingPatches ask you not to do PGP
-> multipart but send patches in plain text?
-
-Gah.  I need to tell myself to reread that every time I send a patch
-:p.
-
---LZFKeWUZP29EKQNE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
+Regards  Manlio
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQ7FxIAAoJEEUbTsx0l5OM+c4P/3o9x0ERsTQLokrGgHJvlJ7h
-nyAc0n1W8HnifF7Eji3mB0Jmf63f8N0yR6iqAAPV0srmwc/JpPfs6cdFLjlzfC5u
-WdsfwEcquGhZRAVFKGwQVGCMDzDCsxtYpq7SMU0b5TMg2Fuh+wFnQvHn2sGYIzxy
-3jMgrFnsqJlelLTg1Z+lmCohQ8o0c6TAKJnK08tfWc+f+RqJvkah3FIxNlCSZdNX
-esqmTpP+SaqurrGkjBXSS57MODfkMJj16FhftDpCx+ujv4ZAlgkBg1p7Qviifegm
-M33h+VdCdo6FY1RbuhXJmwiIeRm9HdkBk4TSoqYYxUAAzuOF1qmGTOW0X1Q1eg7Q
-kOGqSKGvwu9SqLSUlAUQ3cSedVZTvGnkyfbyekRUulsyj1LFxRRnv+oYTf25OMPc
-ZMv+m4csSWubdbfahKOpZASoiSJFg85NUUoFO1NOVmjjXCz8ejNtGVkMDWlWQweq
-xJCWTWSyzvuokAHeJW9JCYb6yZeRDS/k7Hn5hjf1q0G17Z0B+AsZ2qxUNB3qmR29
-d1zxMRdn4P/Q6cMh0OLhkniiPUrUoNlbN6Ykra+NLAeLjtCUVqiQNsLs3EH0sFES
-QcMffyJod9W6dWNWew/Pi6qcDJ/vSC8nf/3sM29AVUC4hzpsB//tawnHNwSiEwOc
-+8WTBrSEhBGt6pHTgX/s
-=YcdD
+iEYEARECAAYFAlDsXUEACgkQscQJ24LbaURMlgCdEyeSRTRktKtGuDxq4HX1meWt
+IV4AmwS6wasCip+1u4vS2FwG8AlXXB7r
+=pN8F
 -----END PGP SIGNATURE-----
-
---LZFKeWUZP29EKQNE--
