@@ -1,95 +1,65 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: [RFH] NetBSD 6?
-Date: Tue, 08 Jan 2013 13:53:08 -0500
-Message-ID: <rmiobgz4icr.fsf@fnord.ir.bbn.com>
-References: <7vd2xn18p5.fsf@alter.siamese.dyndns.org>
-	<rmipq1numzj.fsf@fnord.ir.bbn.com>
-	<7vd2xnypt6.fsf@alter.siamese.dyndns.org>
-	<rmi8v8av05d.fsf@fnord.ir.bbn.com>
-	<7vvcbew895.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: troublesome branch name in remote repo causes .git/config
+ inconsistency in cloned repo
+Date: Tue, 08 Jan 2013 10:59:39 -0800
+Message-ID: <7v38ybec10.fsf@alter.siamese.dyndns.org>
+References: <CADDfn-L_VWk5Rkn_P8aTf3pwBcbbYT=PZTrG=pFvJpNjgRg-5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 19:53:35 2013
+To: Pavel =?utf-8?B?UG9zcMOtxaFpbA==?= <pospispa@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 20:00:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TseIk-0001E8-8d
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 19:53:30 +0100
+	id 1TseP3-0000m1-SB
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jan 2013 20:00:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756940Ab3AHSxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 13:53:10 -0500
-Received: from fnord.ir.bbn.com ([192.1.100.210]:55603 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756641Ab3AHSxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 13:53:09 -0500
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id B2C25AE89; Tue,  8 Jan 2013 13:53:08 -0500 (EST)
-OpenPGP: id=32611E25
-X-Hashcash: 1:20:130108:git@vger.kernel.org::IOk9Bi98dD7XXNhn:0000000000000000000000000000000000000000000GtI
-X-Hashcash: 1:20:130108:gitster@pobox.com::IOk9Bi98dD7XXNhn:00000000000000000000000000000000000000000000317X
-In-Reply-To: <7vvcbew895.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 03 Jan 2013 08:17:58 -0800")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
+	id S1757192Ab3AHS7m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2013 13:59:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39367 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757171Ab3AHS7l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jan 2013 13:59:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C28EB266;
+	Tue,  8 Jan 2013 13:59:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=lEBX2pFh3LXt
+	tO+pCJKyoDkk+gs=; b=ZtixiUAoJpg9IXRudcNm4AsTB6o7ELDYnY8SdiOdg2Ig
+	i8MeJhFRZI3IgRdVTHZtXLXpEGz+rfj3abHS/8hncW19F5MfOgW4fRKao8qZe7ZV
+	genVopPLs4n9CD/RTb+Vy6j7J/XmbbHofa8x+S2yHpWjzRbTX98rqppFlgLWlKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cDL95C
+	LTC8+0CAHODuiGVNtTRpoK/CWO3hNwqcD1AYgfKjRu6c0r75BtvsqKB9VtH2KlNW
+	MQGodkxQd4Eqph6brX84iHSayEroQALox4p6AakEqMzQ6i2vU6XTYF8tFyyQBk9o
+	5lyBnVNa8rj3Ug2toW/6tXU/U4bIqJf/w/KUs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41566B265;
+	Tue,  8 Jan 2013 13:59:41 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B52BAB263; Tue,  8 Jan 2013
+ 13:59:40 -0500 (EST)
+In-Reply-To: <CADDfn-L_VWk5Rkn_P8aTf3pwBcbbYT=PZTrG=pFvJpNjgRg-5A@mail.gmail.com> ("Pavel
+ =?utf-8?B?UG9zcMOtxaFpbCIncw==?= message of "Tue, 8 Jan 2013 19:30:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8E6D48FE-59C5-11E2-A485-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/212997>
 
---=-=-=
-Content-Type: text/plain
+Pavel Posp=C3=AD=C5=A1il <pospispa@gmail.com> writes:
 
+> I think that the problem may be with the branch name length. I think
+> that git branch allows to created branches with very long names,
+> however, such long name are not allowed in .git/config ...
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->>  [OLD_ICONV]
-
-> It refers to the type of the second parameter to iconv(); OLD_ICONV
-> makes it take "const char *", as opposed to "char *", the latter of
-> which matches
->
->   http://pubs.opengroup.org/onlinepubs/9699919799/functions/iconv.html
-
-I just wanted to follow up on this.  It turns out that the old POSIX
-standard was buggy (header file and function spec were different), and
-they resolved it in favor of non-const.  NetBSD followed the const way,
-and just now documented that with links to the standards email archives.
-
-Interestingly, GNU iconv 1.14 seems to define it as const also:
-
-  https://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.14/iconv.3.html
-
-(which matches man/iconv.3 in the tarball).
-
-When I build libiconv-1.14, it produces a .h with const.  But it has a
-configure test to check if there is a host include file with const, and
-puts the const in the built header file or not to match!
-In include/iconv.h.in, there is:
-
-  extern size_t iconv (iconv_t cd,
-      @ICONV_CONST@ char* * inbuf, size_t *inbytesleft,
-       char* * outbuf, size_t *outbytesleft);
-
-Someday, it would be nice to have the configure test not fail an iconv
-implementation just because of the const, unless the presence of const
-is causing a real problem.  But I can understand that no one thinks
-that's important enough to get around to.
-
-
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (NetBSD)
-
-iEYEARECAAYFAlDsaxQACgkQ+vesoDJhHiUqHQCgi17AS9+sXBPS0q3YcvTSMcDd
-DRsAn1ktpF2ZFMSR+RvlLuVrB+pirBkF
-=nvEl
------END PGP SIGNATURE-----
---=-=-=--
+I think we lifted this limit back in 1.8.0.1 timeframe.
