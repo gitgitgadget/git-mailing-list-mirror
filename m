@@ -1,140 +1,135 @@
 From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH 10/19] reset --keep: only write index file once
-Date: Wed,  9 Jan 2013 00:16:07 -0800
-Message-ID: <1357719376-16406-11-git-send-email-martinvonz@gmail.com>
+Subject: [PATCH 01/19] reset $pathspec: no need to discard index
+Date: Wed,  9 Jan 2013 00:15:58 -0800
+Message-ID: <1357719376-16406-2-git-send-email-martinvonz@gmail.com>
 References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 09 09:21:51 2013
+X-From: git-owner@vger.kernel.org Wed Jan 09 09:22:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tsquz-0007JY-ET
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 09:21:49 +0100
+	id 1Tsqvl-0008Iw-1E
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 09:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757358Ab3AIIRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 03:17:24 -0500
-Received: from mail-ye0-f202.google.com ([209.85.213.202]:38359 "EHLO
-	mail-ye0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757324Ab3AIIRG (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1757355Ab3AIIRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 03:17:23 -0500
+Received: from mail-we0-f202.google.com ([74.125.82.202]:60565 "EHLO
+	mail-we0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757340Ab3AIIRG (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 9 Jan 2013 03:17:06 -0500
-Received: by mail-ye0-f202.google.com with SMTP id r9so191223yen.1
+Received: by mail-we0-f202.google.com with SMTP id t57so91463wey.3
         for <git@vger.kernel.org>; Wed, 09 Jan 2013 00:17:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:x-gm-message-state;
-        bh=wXJAaDUXUyvHWK6iuBF1GoPjl3FrbXyaS9Ln+LjqrX0=;
-        b=eNX1JO4TQbECN4S2Pr7iVp8k8QBdHWIVFSON4+Lyzn3oeiMHFobFDg+ANT75kZy0sk
-         n3bmSLXriX9d09MzsBN6VGdrVO/lLfLCvTY3A6svQrCICUpjniPLNTGiiNxuaqgC4+Yv
-         N0F8oAZcG9hIt82KmJNdJkhcQc/PkttnE++g2npXy+8a8Mph3QcweoVLuVz0t/aLzNe2
-         afPLfcQIPQ3ihGcFzShIJesL6APHL2jb55Crz4vwgkyFykVXk4Ushd1lTixMNMjKDgnv
-         x0oeiaIdo9WsRxdYc9anuk+uzI1oe0zqNa7OootD3e27qrWGiJJv4lpMaWdAA5ASPhTQ
-         DIpA==
-X-Received: by 10.236.59.8 with SMTP id r8mr36975498yhc.8.1357719424798;
+        bh=dgPL0sQmubnit8I01xnHjNsaOckY8rUGhI7WVgWj3ms=;
+        b=IyxUS5PSA7jz6DNCb+xKBhDFtydLl/lNpLcMCXivLAzvXk7JthfHVmq/kTJuTVw1AN
+         PTV+GPttMMRMRiP5o0Jil080nHv9yj+0ElEcK9k6ht+zoe06z3Hwv7qC0p4Eu2kGKRNT
+         YQGDvLUW1ovGvvCsd5mclaubZfuNdpBNqioXnRT2KAQeIzpDcwKZbjWm1QJYjWRQCtw5
+         mzGjS9FAQN+aUdFUnjb/ZYqZBZxnZuDAX2wV4Kqz//cm6k05Bz+tJUI719zRQTchcIng
+         vYq4vdUWdNgsRFuRzyAsiyuM04+YR3jNfyYZryQJlEIpqMS1piMJ29zbZB7qfuWyIiRV
+         CZVA==
+X-Received: by 10.14.205.194 with SMTP id j42mr83812735eeo.2.1357719424825;
         Wed, 09 Jan 2013 00:17:04 -0800 (PST)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id p19si5739581yhi.1.2013.01.09.00.17.04
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id z44si25287493een.0.2013.01.09.00.17.04
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
         Wed, 09 Jan 2013 00:17:04 -0800 (PST)
 Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id AE848820050;
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 5FC38200059;
 	Wed,  9 Jan 2013 00:17:04 -0800 (PST)
 Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 3EF5C102FD2; Wed,  9 Jan 2013 00:17:04 -0800 (PST)
+	id BD8BE102B64; Wed,  9 Jan 2013 00:17:03 -0800 (PST)
 X-Mailer: git-send-email 1.8.1.rc3.331.g1ef2165
 In-Reply-To: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQmP+b5gdn5AyNR1tJS4iZdcxJJaMVDI5NjviN9rkKMg9DNW/PpmwYa4P91cXhMFALhHyFBseirHRhdo8Cmy+vLxjf+eAUuLEAmSXSHWZ99lHIizjdxrC1NVVedDm/VARgjqEhKFT0EySJKA5IEaduYq16TwbzIV4rRboXuUN2CPF/e6hMcIhWhOlBfksvRAG41QDLCH
+X-Gm-Message-State: ALoCoQkw8Q6HLtzIs+sLbSYFRHmejfCY9JoNQsGBCObGnYUV7mgdKwWVIdO8A3daI5jZAVM8zwx6NwLd628jqrEgB5vygha03AukFMzkeeBfmW1txlTv9y+QbtXY2rRT9KhbuFLWaw+cJlfgp+o8Hm+b0j6fXvbiV6Jy/ix7nlx7IVq+iR7WesIS4YNjyDL4vphlWZ/eoHJc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213039>
 
-"git reset --keep" calls reset_index_file() twice, first doing a
-two-way merge to the target revision, updating the index and worktree,
-and then resetting the index. After each call, we write the index
-file.
+Since 34110cd (Make 'unpack_trees()' have a separate source and
+destination index, 2008-03-06), the index no longer gets clobbered by
+do_diff_cache() and we can remove the code for discarding and
+re-reading it.
 
-In the unlikely event that the second call to reset_index_file()
-fails, the index will have been merged to the target revision, but
-HEAD will not be updated, leaving the user with a dirty index.
+There are two paths to update_index_refresh() from cmd_reset(), but on
+both paths, either read_cache() or read_cache_unmerged() will have
+been called, so the call to read_cache() in this method is redundant
+(although practically free).
 
-By moving the locking, writing and committing out of
-reset_index_file() and into the caller, we can avoid writing the index
-twice, thereby making the sure we don't end up in the half-way reset
-state. As a bonus, we speed up "git reset --keep" a little on the
-linux-2.6 repo (best of five, warm cache):
+This speeds up "git reset -- ." a little on the linux-2.6 repo (best
+of five, warm cache):
 
         Before      After
-real    0m0.315s    0m0.296s
-user    0m0.290s    0m0.280s
-sys     0m0.020s    0m0.010s
+real    0m0.093s    0m0.080s
+user    0m0.040s    0m0.020s
+sys     0m0.050s    0m0.050s
 ---
- builtin/reset.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ builtin/reset.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/builtin/reset.c b/builtin/reset.c
-index 05ccfd4..8e5d097 100644
+index 915cc9f..8cc7c72 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -38,14 +38,12 @@ static inline int is_merge(void)
- 	return !access(git_path("MERGE_HEAD"), F_OK);
- }
+@@ -126,9 +126,6 @@ static int update_index_refresh(int fd, struct lock_file *index_lock, int flags)
+ 		fd = hold_locked_index(index_lock, 1);
+ 	}
  
--static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet)
-+static int reset_index(const unsigned char *sha1, int reset_type, int quiet)
+-	if (read_cache() < 0)
+-		return error(_("Could not read index"));
+-
+ 	result = refresh_index(&the_index, (flags), NULL, NULL,
+ 			       _("Unstaged changes after reset:")) ? 1 : 0;
+ 	if (write_cache(fd, active_cache, active_nr) ||
+@@ -141,12 +138,6 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 		struct diff_options *opt, void *data)
  {
- 	int nr = 1;
--	int newfd;
- 	struct tree_desc desc[2];
- 	struct tree *tree;
- 	struct unpack_trees_options opts;
--	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
- 
- 	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = 1;
-@@ -67,8 +65,6 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 		opts.reset = 1;
- 	}
- 
--	newfd = hold_locked_index(lock, 1);
+ 	int i;
+-	int *discard_flag = data;
 -
- 	read_cache_unmerged();
+-	/* do_diff_cache() mangled the index */
+-	discard_cache();
+-	*discard_flag = 1;
+-	read_cache();
  
- 	if (reset_type == KEEP) {
-@@ -91,10 +87,6 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 		prime_cache_tree(&active_cache_tree, tree);
- 	}
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filespec *one = q->queue[i]->one;
+@@ -179,17 +170,15 @@ static int read_from_tree(const char *prefix, const char **argv,
+ 		unsigned char *tree_sha1, int refresh_flags)
+ {
+ 	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+-	int index_fd, index_was_discarded = 0;
++	int index_fd;
+ 	struct diff_options opt;
  
--	if (write_cache(newfd, active_cache, active_nr) ||
--	    commit_locked_index(lock))
--		return error(_("Could not write new index file."));
--
- 	return 0;
+ 	memset(&opt, 0, sizeof(opt));
+ 	diff_tree_setup_paths(get_pathspec(prefix, (const char **)argv), &opt);
+ 	opt.output_format = DIFF_FORMAT_CALLBACK;
+ 	opt.format_callback = update_index_from_diff;
+-	opt.format_callback_data = &index_was_discarded;
+ 
+ 	index_fd = hold_locked_index(lock, 1);
+-	index_was_discarded = 0;
+ 	read_cache();
+ 	if (do_diff_cache(tree_sha1, &opt))
+ 		return 1;
+@@ -197,9 +186,6 @@ static int read_from_tree(const char *prefix, const char **argv,
+ 	diff_flush(&opt);
+ 	diff_tree_release_paths(&opt);
+ 
+-	if (!index_was_discarded)
+-		/* The index is still clobbered from do_diff_cache() */
+-		discard_cache();
+ 	return update_index_refresh(index_fd, lock, refresh_flags);
  }
  
-@@ -340,9 +332,16 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		die_if_unmerged_cache(reset_type);
- 
- 	if (reset_type != SOFT) {
--		int err = reset_index_file(sha1, reset_type, quiet);
-+		struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
-+		int newfd = hold_locked_index(lock, 1);
-+		int err = reset_index(sha1, reset_type, quiet);
- 		if (reset_type == KEEP && !err)
--			err = reset_index_file(sha1, MIXED, quiet);
-+			err = reset_index(sha1, MIXED, quiet);
-+		if (!err &&
-+		    (write_cache(newfd, active_cache, active_nr) ||
-+		     commit_locked_index(lock))) {
-+			err = error(_("Could not write new index file."));
-+		}
- 		if (err)
- 			die(_("Could not reset index file to revision '%s'."), rev);
- 	}
 -- 
 1.8.1.rc3.331.g1ef2165
