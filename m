@@ -1,90 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: forbid --bare --separate-git-dir <dir>
-Date: Tue, 08 Jan 2013 15:42:06 -0800
-Message-ID: <7vmwwjb5td.fsf@alter.siamese.dyndns.org>
-References: <20130106091642.GA10956@elie.Belkin>
- <1357465670-32766-1-git-send-email-pclouds@gmail.com>
- <20130106101948.GD10956@elie.Belkin> <20130108141650.GA18637@lanh>
- <50EC543D.5090100@web.de> <7v4nirfu1p.fsf@alter.siamese.dyndns.org>
- <CACsJy8B=h04QAeb0D-PWvT=0n_+QfW27NuUg3KEFUN3C4MOJVQ@mail.gmail.com>
+Subject: Re: [PATCH 2/7] contrib/subtree: Use %B for Split Subject/Body
+Date: Tue, 08 Jan 2013 16:41:11 -0800
+Message-ID: <7vzk0j9oig.fsf@alter.siamese.dyndns.org>
+References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
+ <1357646997-28675-3-git-send-email-greened@obbligato.org>
+ <CAPYzjrQ1ngfOwBuzq+Da1Ynd18Vwt8=LCyu2yhE6dX8vivwReg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	"W. Trevor King" <wking@drexel.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 00:42:55 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
+To: =?utf-8?Q?=E9=83=91=E6=96=87=E8=BE=89=28Techlive_Zheng=29?= 
+	<techlivezheng@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 01:41:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tsiol-0006iY-71
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 00:42:51 +0100
+	id 1Tsjjb-0000f7-SX
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 01:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757173Ab3AHXmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 18:42:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33074 "EHLO
+	id S1755203Ab3AIAlP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2013 19:41:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47503 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756937Ab3AHXmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 18:42:08 -0500
+	id S1752551Ab3AIAlP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jan 2013 19:41:15 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97F61B006;
-	Tue,  8 Jan 2013 18:42:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 473FAA171;
+	Tue,  8 Jan 2013 19:41:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lDQbmebvk50SR6cQFqxWGepHxKw=; b=hresGE
-	LknioaP6T+MVg29cnp//NqR2SfaWwKCX39B2YA9Q8TzPVxkXbFcHnUROkDZgD1Fk
-	3XHRhZF4qYREaYs2DPHpduIs7LgywEymGF6yEArodUiz2Rf2rHiMp5Qgfg8/gqSH
-	hbxS54agIoKJ7CwyMhy8R9GW+VtEmT/uoXKg4=
+	:content-type:content-transfer-encoding; s=sasl; bh=dX6VYsEiXJ40
+	qK+xxfKhi5e2DFw=; b=v0Ob5iLXy/M1gDEFHCV4+DjC1/8WBbwPjQupmcvCvWQK
+	Ank0dXyJIPIskRqSxTPV2+drr0NXPqMoHifnKyt7mDj+NT49hHsaiPwDdpIbnf46
+	+YL3S2BMoyFhzTzkDOcWYhbb96e2gVKQJ08uqVEyeTZsU6i3EaLCgN3bF3phRZE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b+OBmW+zG/ur8WEXLaWeCdvIkyYP039Q
-	wvm5wzC2fLbP4+5XP/NJ5oAnn9lZUkjU5u8GajLxsUditH1UC9nLo/7WhTWjYbKv
-	I4hQ0Q5UPnrjysmMPWAQiofIMnxCWW57tBRCBqyjR/ct71DR+nKWzzUgyFX1bjDq
-	ESYCLiAkFmk=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=V6ZC79
+	lCTrs2s8Jr68XIbfVFKpKO1d9mHM5x8TCR6oiGJE71iyZkAw03OAiJNIvhirIdLp
+	Y4ncy/eXgyYykhWEMa59Xa4qcGdvwuGGEuWr60pL9gKmLHMLcixfVDl7OUTOooAy
+	pmt6ilAFOcVf6eKKOxLgZprYxYUaZtBUyFwIU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C517B005;
-	Tue,  8 Jan 2013 18:42:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 371E8A170;
+	Tue,  8 Jan 2013 19:41:14 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BE81B004; Tue,  8 Jan 2013
- 18:42:08 -0500 (EST)
-In-Reply-To: <CACsJy8B=h04QAeb0D-PWvT=0n_+QfW27NuUg3KEFUN3C4MOJVQ@mail.gmail.com> (Duy
- Nguyen's message of "Wed, 9 Jan 2013 06:34:21 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6397A164; Tue,  8 Jan 2013
+ 19:41:13 -0500 (EST)
+In-Reply-To: <CAPYzjrQ1ngfOwBuzq+Da1Ynd18Vwt8=LCyu2yhE6dX8vivwReg@mail.gmail.com>
+ (=?utf-8?B?IumDkeaWh+i+iShUZWNobGl2ZQ==?= Zheng)"'s message of "Wed, 9 Jan
+ 2013 07:21:27 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 03DC496A-59ED-11E2-AA4F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 452BF20A-59F5-11E2-80EA-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213018>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+"=E9=83=91=E6=96=87=E8=BE=89(Techlive Zheng)"  <techlivezheng@gmail.com=
+> writes:
 
->> After all, Jonathan's suggestion to forbid it was because the
->> combination does not make sense and does not have practical uses,
->> and forbidding it would make the command easier to explain than
->> leaving it accepted from the command line.  If you choose to go in
->> the opposite direction and make "clone --bare --separate-git-dir" do
->> something useful, it should be explained very well in the
->> documentation part of the patch why such a combination is a good
->> idea, and in what situation the behaviour is useful and the user may
->> want to consider using it, I think.
->
-> It is more like postponing the usefulness evaluation of the
-> combination until later (maybe someone will come up with an actual use
-> case). As of now, --separate-git-dir --bare is a valid combination.
-> Jens' patch fixes one case but leave the other case broken, which is
-> why I think it should be in one patch. It's rather ducking head in the
-> sand than actually declaring that the combination is useful.
+>> +test_expect_success 'check hash of split' '
+>> +        spl1=3D$(git subtree split --prefix subdir) &&
+>> +        undo &&
+>> +        git subtree split --prefix subdir --branch splitbr1test &&
+>> +        check_equal ''"$(git rev-parse splitbr1test)"'' "$spl1"
+>> +        git checkout splitbr1test &&
+>> +        new_hash=3D$(git rev-parse HEAD~2) &&
+>> +        git checkout mainline &&
+>> +        check_equal ''"$new_hash"'' "$subdir_hash"
+>> +'
+>> +
+> This test is not test the correct thing, I am currently working on it=
+=2E
 
-When a user comes and asks how "git clone --bare --separate-git-dir"
-is meant to be used, you are saying that your answer will be "Eh, it
-does something random that I cannot explain, and I cannot even
-suggest a good use case for it, but somebody may find it useful."?
+Will keep the topic branch out of 'next' for now.
 
-If we get rid of it, we do not have to explain what such a useless
-combination would/should do, no?
+David, how would you like to handle a reroll of this piece?
