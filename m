@@ -1,87 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: On --depth=funny value
-Date: Tue, 08 Jan 2013 21:19:05 -0800
-Message-ID: <7vr4lv7x2u.fsf@alter.siamese.dyndns.org>
-References: <1357632422-5686-1-git-send-email-stefanbeller@googlemail.com>
- <CACsJy8BLLTWd+cTBj1jNW=ODPy7=Kg4-TPUdZ82YCE-0RQpMZA@mail.gmail.com>
- <7vy5g383sy.fsf_-_@alter.siamese.dyndns.org>
- <CACsJy8CA-a0=HqTY9heJBhPO4M5jyLk=tf253rRKCRuTWz5teg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] commit: make default of "cleanup" option configurable
+Date: Tue, 8 Jan 2013 23:29:52 -0800
+Message-ID: <20130109072952.GC6503@elie.Belkin>
+References: <1357676176-30019-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
-	git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 06:19:31 2013
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 08:30:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tso4Y-0006M5-OG
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 06:19:31 +0100
+	id 1Tsq7E-0005hV-B5
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 08:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024Ab3AIFTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 00:19:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39569 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750817Ab3AIFTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 00:19:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F0F8715F;
-	Wed,  9 Jan 2013 00:19:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9IsCne+/B1pZOrsSqu5e/dX1KOg=; b=RIYOSJ
-	mUx8ki2Xmkok2QPWiZftja+kiaaLyfTO4BAzdXDwnpOURGBBrgXbymggCuJkxsd6
-	/QgP0ehS0kqfmYAn22zzBokhMIlXBgkBbO0u9pixPxgJo6LW36ZK4OExVvWGZZD3
-	ptLrWhDwcwAGVVFw9JjkOk8WVZWya3G3ZYAgo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IFhd0melbxyJXYyZghQ3Tjr+rOeFZjxv
-	6mj4jnjI1Ph7A9LvlS5M2AcZmlRnXFXXdEkuQuGvHRReABdwgyH4wgQS6SWNzfYg
-	Q8WAfDF9ydRiWfqP7FJvUZbhHEZKNEjyky+9g2UKwalpKp1+NBlDq9bZZyiV/W0y
-	HfqhAvyKaDg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 645FD715E;
-	Wed,  9 Jan 2013 00:19:07 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC3B87153; Wed,  9 Jan 2013
- 00:19:06 -0500 (EST)
-In-Reply-To: <CACsJy8CA-a0=HqTY9heJBhPO4M5jyLk=tf253rRKCRuTWz5teg@mail.gmail.com> (Duy
- Nguyen's message of "Wed, 9 Jan 2013 11:18:30 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1733E1CE-5A1C-11E2-B57B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757197Ab3AIHaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 02:30:02 -0500
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:62228 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750767Ab3AIHaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 02:30:00 -0500
+Received: by mail-pa0-f41.google.com with SMTP id bj3so857567pad.0
+        for <git@vger.kernel.org>; Tue, 08 Jan 2013 23:30:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pudQTtrfUm62Krxv7vxkOHQLAf90ncLZkos1bTbgVEs=;
+        b=WWXPCLHjZ10xtwoPsvFkCGr+pYgEAifN2I13QRYskQ2OKLtZnerHGGSsiDMLsJzOYd
+         tFh3erITSJeKMqPH+DG62EgcmCSMP1HiAPJHMKzKIpa/KucLxkqHR3dei/zxNV/L47My
+         KpoLOJ9s78dmx+V32pyCcY199dhkPigqtGYcT0K2cyXuxueUsiK+N2bsiAyuTSyocaNZ
+         wsnrqerQrwuLIs7jauuxB60cYlvMVqlyv7CZmFL/+uATn2QZcUyTG7v9SsortyMmHKAc
+         6e6bX7tGTPrybxpixIb+FvT3wVa1PDOLGgE/3NPKeaCHdYK3GQiPyYGrCSIhUUifMyfi
+         0EQg==
+X-Received: by 10.68.143.100 with SMTP id sd4mr197921125pbb.107.1357716598486;
+        Tue, 08 Jan 2013 23:29:58 -0800 (PST)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id oi2sm41135413pbb.62.2013.01.08.23.29.55
+        (version=SSLv3 cipher=OTHER);
+        Tue, 08 Jan 2013 23:29:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1357676176-30019-1-git-send-email-ralf.thielow@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213029>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi,
 
-> On Wed, Jan 9, 2013 at 9:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->>  * We would like to update "clone --depth=1" to end up with a tip
->>    only repository, but let's not to touch "git fetch" (and "git
->>    clone") and make them send 0 over the wire when the command line
->>    tells them to use "--depth=1" (i.e. let's not do the "off-by-one"
->>    thing).
->
-> You can't anyway. Depth 0 on the wire is considered invalid by upload-pack.
+Ralf Thielow wrote:
 
-Yes, that is a good point that we say "if (0 < opt->depth) do the
-shallow thing" everywhere, so 0 is spcial in that sense.
+> The default of the "cleanup" option in "git commit"
+> is not configurable. Users who don't want to use the
+> default have to pass this option on every commit since
+> there's no way to configure it.
 
-Which suggests that if we wanted to, we could update the fetch side
-to do the off-by-one thing against the current upload-pack when the
-given depth is two or more, and still send 1 when depth=1.  When
-talking with an updated upload-pack that advertises exact-shallow
-protocol extension, it can disable that off-by-one for all values of
-depth.  That way, the updated client gets history of wrong depth
-only for --depth=1 when talking with the current upload-pack; all
-other cases, it will get history of correct depth.
+Could you give an example?  I'm trying to get a sense of whether these
+habitual --cleanup= passers would use --cleanup=verbatim or
+--cleanup=strip.
 
-Hmm?
+I'm a bit worried that a setting like 'commit.cleanup = strip' would
+be likely to break scripts.  Yes, scripts using "git commit" instead
+of commit-tree while caring about detailed semantics are asking for
+trouble, but I'm worried about importers, for example, which are
+sometimes written by new git users.  Some scripts might assume that
+"git commit" preserves the entire change description from their source
+data, even when some lines happen to start by listing the ways the
+author is #1.
+
+I don't think that necessarily rules out this change, but:
+
+ 1. We need more of an explanation of the purpose than "this lets
+    people type less".  What workflow does setting this option fit
+    into?
+
+ 2. I would prefer to see a little thought about whether it's possible
+    to avoid silently impacting scripts.  E.g., depending on the
+    answer to (1), maybe supporting "verbatim" but not "strip" would be
+    ok?  Or alternatively, maybe a search of public code repositories
+    would reveal that new git users tend to write their importers in a
+    way that this doesn't break.
+
+As a side effect, the information gathered to answer (1) and (2) could
+have the potential to make the user-level documentation more useful,
+by adding context to the description of the configuration item.
+
+[...]
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -103,7 +103,7 @@ static enum {
+>  	CLEANUP_NONE,
+>  	CLEANUP_ALL
+>  } cleanup_mode;
+> -static char *cleanup_arg;
+> +const static char *cleanup_arg;
+
+Style nit: storage class comes first, then the type.  Otherwise the
+typename "const char *" is split up.
+
+Hope that helps,
+Jonathan
