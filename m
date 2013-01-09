@@ -1,67 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 1/2] git-fast-import(1): combine documentation of
- --[no-]relative-marks
-Date: Wed, 9 Jan 2013 13:42:46 -0800
-Message-ID: <20130109214246.GA21054@google.com>
-References: <cover.1357760256.git.john@keeping.me.uk>
- <cf4a4a10c1de73491048e8283582bdbf8c79c75e.1357760256.git.john@keeping.me.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
+Date: Wed, 09 Jan 2013 13:49:41 -0800
+Message-ID: <7vehhu3u2y.fsf@alter.siamese.dyndns.org>
+References: <20130104124756.GA402@sigill.intra.peff.net>
+ <7vr4lu3wx7.fsf@alter.siamese.dyndns.org>
+ <20130109205116.GA24605@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org,
-	David Michael Barr <b@rr-dav.id.au>,
-	Pete Wyckoff <pw@padd.com>, Thomas Rast <trast@student.ethz.ch>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jan 09 22:43:32 2013
+Cc: git@vger.kernel.org, Bart Trojanowski <bart@jukie.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 09 22:50:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tt3Qp-0002WB-Jr
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 22:43:31 +0100
+	id 1Tt3XB-00006p-E1
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 22:50:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933221Ab3AIVnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 16:43:06 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:61341 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933157Ab3AIVnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 16:43:02 -0500
-Received: by mail-pb0-f53.google.com with SMTP id jt11so1202389pbb.12
-        for <git@vger.kernel.org>; Wed, 09 Jan 2013 13:43:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=TLewbb0Sh7bhMgeWs3N4hSf16EuIYEjUhNZNYfvRbZg=;
-        b=Nkxayly1Buns9Ow03wPdBbYrhIu4OwCbycDm6r2ocQNbFYhlJciYu884MQ3LJqxASb
-         KLrdxHdBW0WDcGLNGDOYi4vKkYKtgJQIcQ0JTp6BW0oukJWDg8OvfW8LgfLqAXk1PXtJ
-         NcODrVca+Ty26HeaE5fFZTD5tiO8dVLkcj3WXlNHIwMR+4g3B4VSiawlQm0ph+dfMNvm
-         qt1ineEa92KiBbyjQw33vMLYHSdi24vWGQ3uDGs7O7mSwkJKaTNDSegmr3loHaiOIP4k
-         8yp8pkf5Gew5tVGLFOUN0p34OXOOnUh/mvbI7mheNpHagB0YxHfOQ+3vpv5DcMyqWQrm
-         2Zgg==
-X-Received: by 10.68.211.42 with SMTP id mz10mr215251036pbc.100.1357767781491;
-        Wed, 09 Jan 2013 13:43:01 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id gj1sm42267085pbc.11.2013.01.09.13.42.51
-        (version=SSLv3 cipher=OTHER);
-        Wed, 09 Jan 2013 13:43:00 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <cf4a4a10c1de73491048e8283582bdbf8c79c75e.1357760256.git.john@keeping.me.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933088Ab3AIVtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 16:49:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49555 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932894Ab3AIVto (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 16:49:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC01AAA12;
+	Wed,  9 Jan 2013 16:49:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gPxn1KefHCcam3/hTW0uLoCxqHM=; b=Crl5NW
+	DupGerxQFuGIku1v5A41P27rg7lmcINWCmDKyaVr10196n50W6PP+7GHRU6Kab2V
+	bGdDhGO6bqaenjKrYdkpxwILNno4eeBIkIE9qODruOP44+ASIQQQJqwO+8zuUDvA
+	cDuagrUS3KXQ1Cy1JgX/HVH2enBBylGp6is4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wKFw8lVHXex1ApGNUXg1tDbgixrkd9sM
+	i1L6GfvOrtnsmj5i3M/Pt10UGCMMGB2CGFpOzpOlT5udircEnHrmwkarXRi+1Ijv
+	W+FYYLbX1NfUuwQaycHSDXw4TzDIVCr6SnEJXwcCzo55a2/+auUkF9d7zWqjodcS
+	WHmuCU2T80k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E1C4AA11;
+	Wed,  9 Jan 2013 16:49:43 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B45CAA10; Wed,  9 Jan 2013
+ 16:49:43 -0500 (EST)
+In-Reply-To: <20130109205116.GA24605@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 9 Jan 2013 15:51:16 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 79ED82AE-5AA6-11E2-A3C0-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213108>
 
-John Keeping wrote:
+Jeff King <peff@peff.net> writes:
 
-> The descriptions of '--relative-marks' and '--no-relative-marks' make
-> more sense when read together instead of as two independent options.
-> Combine them into a single description block.
+> But we still say "error: ... died of signal 13", because that comes from
+> inside wait_or_whine. So it is a separate issue whether or not
+> wait_or_whine should be silent on SIGPIPE (we already are on SIGINT and
+> SIGQUIT, as of some recent patches).
+>
+> The upside is that it is noise in this case that we would no longer see.
+> The downside is that we may be losing a clue when debugging server
+> problems, which do not expect to die from SIGPIPE.  Should it be an
+> optional run-command flag?
 
-Yep, this is easier to read.  Thanks.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Do we know if we are upstream of a pager that reads from us through
+a pipe (I think we should, especially in a case where we are the one
+who processed the "git -p $alias" option)?  Is there any other case
+where we would want to ignore child's death by SIGPIPE?  If the
+answers are yes and no, then perhaps we can ask pager_in_use() to
+decide this?
