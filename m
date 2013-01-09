@@ -1,108 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking (interim report)
-Date: Tue, 08 Jan 2013 16:53:19 -0800
-Message-ID: <7vtxqr9ny8.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] add warning for depth=0 in git clone.
+Date: Wed, 9 Jan 2013 07:57:43 +0700
+Message-ID: <CACsJy8BLLTWd+cTBj1jNW=ODPy7=Kg4-TPUdZ82YCE-0RQpMZA@mail.gmail.com>
+References: <1357632422-5686-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 09 01:53:45 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
+	git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 01:58:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TsjvL-0005bO-1I
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 01:53:43 +0100
+	id 1Tsk02-0002xq-Dg
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 01:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755748Ab3AIAxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2013 19:53:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62117 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753754Ab3AIAxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2013 19:53:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFFF7B0FE;
-	Tue,  8 Jan 2013 19:53:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=d
-	lJ2hwlIGLDh31sn5jSu7PT7h9Y=; b=r3Evq+YO7riavJ+BNEdf+CL71Xdk6oe48
-	OL20f/rsBI9jwcH+9uGLLRFmb+6v5dxS6KFYj5oMZucL5NT9zhvaN515koE8Xk3Q
-	OTwzb7lRPCc9MnX9hlEl+9pzWdUQXxfx1/8FaM+kAMo3sNo84padyQB00jORQOFP
-	MGTS88G08Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Uig
-	nN+uKT8MVQem6Ix5c8WHdH6OzaZBDaRmaJvGJ3mGA61ACjhVnmDfEZfEfqU73xPS
-	mgNk9oNUtzj4I5ncLShprLqcHhqmskZiYXjlfQnIfxM2kpmM/6n1QdSmpiKbxBRI
-	7oX+SNmQaG185PMFnT2mP4/FAjnUfOMaWonB3MLA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C46A4B0FD;
-	Tue,  8 Jan 2013 19:53:21 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BBA8B0F8; Tue,  8 Jan 2013
- 19:53:21 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F6C0F7BC-59F6-11E2-B6E1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755306Ab3AIA6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2013 19:58:14 -0500
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:38008 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754790Ab3AIA6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2013 19:58:14 -0500
+Received: by mail-ob0-f173.google.com with SMTP id xn12so1620224obc.4
+        for <git@vger.kernel.org>; Tue, 08 Jan 2013 16:58:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=L9xfyYCafvc62oUF16NUykntXm1XjNRyG3sm07vaTuA=;
+        b=1HQfm9X4f2S6mLcUkzSCQ8IfmFBzbLncXXR6VPx5iXpOJ5V1xpcoOlxiCKDTHQt89o
+         8MW6/yVmjx7KFNXNsyqGFcZOI/QCcjjpk2qOKBQbfLkTRCa51l9gHPowdPR7v8hkqxED
+         FuB4lASm+qTCv/w2dDhy5WY7YZxtLoeLN0NUZF5g14g16pygVBlhZphUBS3bgj8zplDq
+         onBJ623eqSYI0QwMzhaHG6Qh84iUaYJ+RUXryyzmKFczy/5Cg9pNEUrVQFoPIq+uiMqR
+         36LPTxJauPJi7O94Xisv+L9SrvXPzJaUkDvwLkNrraiFV8tdQgICwbz9Co11+02cZpwn
+         28CQ==
+Received: by 10.60.29.66 with SMTP id i2mr36970135oeh.2.1357693093589; Tue, 08
+ Jan 2013 16:58:13 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Tue, 8 Jan 2013 16:57:43 -0800 (PST)
+In-Reply-To: <1357632422-5686-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213020>
 
-I'll do the next issue of "What's cooking" after tomorrow's
-integration cycle, but here are the highlights.
+On Tue, Jan 8, 2013 at 3:07 PM, Stefan Beller
+<stefanbeller@googlemail.com> wrote:
+> ---
+>  builtin/clone.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index ec2f75b..5e91c1e 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -818,6 +818,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>         remote = remote_get(option_origin);
+>         transport = transport_get(remote, remote->url[0]);
+>
+> +       if (option_depth && transport->smart_options->depth < 1)
+> +               die(_("--depth less or equal 0 makes no sense; read manpage."));
+> +
 
-The following topics that have already graduated to the 'master'
-branch have been merged to the 'maint' branch (see the last "What's
-cooking" for details of individual topics):
+Isn't this too early for the check? The following code is
 
-    ms/subtree-fixlets
-    ss/nedmalloc-compilation
-    jc/maint-fnmatch-old-style-definition
-    jc/test-portability
-    jc/maint-fbsd-sh-ifs-workaround
-    jc/mkstemp-more-careful-error-reporting
-    jc/test-cvs-no-init-in-existing-dir
-    jc/maint-test-portability
+>         if (!is_local) {
+>                 if (!transport->get_refs_list || !transport->fetch)
+>                         die(_("Don't know how to clone %s"), transport->url);
 
-In addition, the following two patches have been directly applied to
-the 'maint' branch:
+		transport_set_option(transport, TRANS_OPT_KEEP, "yes");
 
-    t1402: work around shell quoting issue on NetBSD
-    remote-hg: Fix biridectionality -> bidirectionality typos
+		if (option_depth)
+			transport_set_option(transport, TRANS_OPT_DEPTH,
+					     option_depth);
 
-We will have other bugfix topics merged to 'maint' and hopefully can
-tag v1.8.1.1 sometime next week.
 
-The following topics that have been cooking on 'next' have been
-merged to the 'master' branch:
-
-    kb/maint-bundle-doc
-    as/test-name-alias-uniquely
-    ta/remove-stale-translated-tut
-    tb/test-t9810-no-sed-i
-    tb/test-t9020-no-which
-    jk/maint-fast-import-doc-dedup-done
-    jk/pathspec-literal
-
-Most of these will later be merged to 'maint'.
-
-These topics have been merged to the 'next' branch:
-
-    rs/zip-with-uncompressed-size-in-the-header
-    rs/zip-tests
-    jn/xml-depends-on-asciidoc-conf
-    jc/comment-cygwin-win32api-in-makefile
-    as/api-allocation-doc
-    jk/unify-exit-code-by-receiving-signal
-    rs/leave-base-name-in-name-field-of-tar
-    jl/interrupt-clone-remove-separate-git-dir
-    jc/merge-blobs
-    mo/cvs-server-updates
-    as/dir-c-cleanup
-    jk/config-uname
-
-Also several new topics are parked in 'pu' and I think they are all
-ready for 'next'.
-
-Thanks.
+where transport_set_option() calls set_git_option() to initialize
+transport->smart_options->depth. A check should be done after this
+point.
+-- 
+Duy
