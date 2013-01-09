@@ -1,67 +1,170 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: make default of "cleanup" option configurable
-Date: Wed, 09 Jan 2013 07:40:30 -0800
-Message-ID: <7vlic28ivl.fsf@alter.siamese.dyndns.org>
-References: <1357676176-30019-1-git-send-email-ralf.thielow@gmail.com>
- <20130109072952.GC6503@elie.Belkin>
- <CAN0XMO+t2gu9UKJFVXAxt91-hUUhMqqmMoop88KYp0vo3x6c_g@mail.gmail.com>
+From: Alexander Gallego <gallego.alexx@gmail.com>
+Subject: git branch case insensitivity (Possible bug)
+Date: Wed, 9 Jan 2013 10:46:34 -0500
+Message-ID: <CAL+iW28LdnNiho4KksLX_S_-+bKX+77GPJ0zqQfkz4JpBJRskw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 16:41:02 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 09 16:47:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tsxlv-00036g-JC
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 16:40:55 +0100
+	id 1Tsxs5-0000yT-4i
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 16:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086Ab3AIPke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 10:40:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33142 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932073Ab3AIPkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 10:40:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06E0FBA9E;
-	Wed,  9 Jan 2013 10:40:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KBQ05Ygs2iwqS08PZa9dVfkfRnU=; b=igGhNs
-	Id+ZBRDizELAi+pr+oceHAHv5zY+o0nxXX82fDkBDlh3RZoXOLBpZRGcbpdQlwrw
-	JyioZWiZcW4LVwE4dllcts6TpeJ7BNYfEQP2Ap9gg9FYmnQROfVaCAgpQA//5OJM
-	sahQikEx5Sc1GPpTkNhqtuyvSVjUupgHLvc7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LbvGIVscX8nc+LiTDVGJ0xVHQYCiQ08E
-	gTB1+MbolhNCs6XJyZIJnsiKmqbZl8nNzMWfm1qFcSg8SRzhFjX3oGOfq1IWD99c
-	o80arh3I4ELps24IVHD1DUsXpj2xZg5XcZvwceg8nwMIX/+UGuofCqM6FFMvp6aZ
-	/aLr1Wq3a7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF401BA9D;
-	Wed,  9 Jan 2013 10:40:32 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62F45BA9B; Wed,  9 Jan 2013
- 10:40:32 -0500 (EST)
-In-Reply-To: <CAN0XMO+t2gu9UKJFVXAxt91-hUUhMqqmMoop88KYp0vo3x6c_g@mail.gmail.com> (Ralf
- Thielow's message of "Wed, 9 Jan 2013 09:16:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7139EA6-5A72-11E2-82E5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758024Ab3AIPq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 10:46:57 -0500
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:41113 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758010Ab3AIPq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 10:46:56 -0500
+Received: by mail-wi0-f179.google.com with SMTP id o1so608623wic.0
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 07:46:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=n3KGr7aLNEGpMU1s7v4BdztVlL98Z/WkmYsGJ2CioJ0=;
+        b=TdqJ+J3tmxv2Naf2WzXxhGmNKcUaxTKRFd41rfEjMW0B0JjiudYQ3k3EO6L35XXTdQ
+         8zP5PNDsiW6Aq3p2KQRCeAjgJcHef2exFPQhKrhQNNUHyhZlvu2+BGSsGyjEUQv7DDX/
+         UNZ99Iv3FPqI5g4iTvepNu4Ffy1Lhbf6L074ZLFsXWOmMV68NhSzMQMtLjD6MH02t429
+         iNtXQKWcXakfH++R9nuHvS4YBjH4Vp5F+6zIUBSFaejADm2A/O/BggCTymvuxUECwoMQ
+         E3SsNpj/EeM3qnbJ/QMYIjZU9ZPTCRCXY6ay+ho1iYyGS/uw5B0+qjT38bO+CmJYDz9j
+         1DBA==
+Received: by 10.180.90.106 with SMTP id bv10mr4037137wib.12.1357746415462;
+ Wed, 09 Jan 2013 07:46:55 -0800 (PST)
+Received: by 10.194.242.69 with HTTP; Wed, 9 Jan 2013 07:46:34 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213062>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Hello,
 
-> When a user uses a script/importer which expects that the "default" option
-> is used without setting it explicitly, and then the user changes the default,
-> isn't it the users fault if that would break things?
+Here is a pastebin where I've reproduced the steps on a clean git repo.
 
-Not necessarily.  There are many people who use scripts written by
-others, without knowing how they work.  You could blame that the
-script is broken, but not the poor user of that script.
+http://pastebin.com/0vQZEat0
+
+
+
+Brief description of the problem:
+
+
+
+1.Basically one creates a local branch call it 'imp_fix' (branch off
+master --> this doesn't matter)
+2.One does work, commit, etc
+3.One rebases imp_fix with master via: (inside imp_fix) git rebase master
+4.One checks out master via: git checkout master
+5.One merges an incorrect name "imp_Fix" (notice the capital F)
+6.The expected output is that git would say, silly you --> that branch
+does not exist.
+7. Instead it merges (what I think is incorrectly) imp_fix.
+
+
+Kindly let me know if I can provide more details.
+
+
+
+
+
+
+For your convenience here is the paste:
+
+agallego@agallego-macpro.local] /tmp
+$ git clone git@bitbucket.org/agallego/gitbug
+Cloning into 'gitbug'...
+warning: You appear to have cloned an empty repository.
+
+[agallego@agallego-macpro.local] /tmp
+$ cd gitbug
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ ls
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ echo "Trying to reproduce a bug" > README
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ ls
+README
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git add .
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git commit -am "adding readme"
+[master (root-commit) 0bfd62a] adding readme
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 README
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 230 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+remote: bb/acl: agallego is allowed. accepted payload.
+To git@bitbucket.org:agallego/gitbug
+ * [new branch]      master -> master
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git checkout imp_fix
+error: pathspec 'imp_fix' did not match any file(s) known to git.
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git branch imp_fix
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git checkout imp_fix
+Switched to branch 'imp_fix'
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ echo "imp_fix" >> README
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git commit -am "step 2, create an imp_fix branch and then merge"
+[imp_fix 178c8f3] step 2, create an imp_fix branch and then merge
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ ls
+README
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git rebase master
+Current branch imp_fix is up to date.
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git checkout master
+Switched to branch 'master'
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git merge imp_Fix
+Merge made by the 'recursive' strategy.
+ README |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+[agallego@agallego-macpro.local] /tmp/gitbug
+$ git push origin master
+Counting objects: 6, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 392 bytes, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: bb/acl: agallego is allowed. accepted payload.
+To git@bitbucket.org:agallego/gitbug
+   0bfd62a..f99f8a1  master -> master
+
+
+
+
+
+
+Sincerely,
+Alexander Gallego
+
+---*---
+------*
+*  *  *
