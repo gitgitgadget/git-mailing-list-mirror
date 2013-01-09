@@ -1,114 +1,87 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Failure and unhelpful error message from 'rebase --preserve-merges'
-Date: Wed, 09 Jan 2013 08:19:40 -0500
-Message-ID: <50ED6E6C.5020400@cisco.com>
-References: <50ED63CB.7060108@cisco.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: On --depth=funny value
+Date: Wed, 9 Jan 2013 21:12:01 +0700
+Message-ID: <CACsJy8B4SFs5gbrD6vKvpcrv-tyUo+aZAvq=VmVFM1Bsiggu4w@mail.gmail.com>
+References: <1357632422-5686-1-git-send-email-stefanbeller@googlemail.com>
+ <CACsJy8BLLTWd+cTBj1jNW=ODPy7=Kg4-TPUdZ82YCE-0RQpMZA@mail.gmail.com>
+ <7vy5g383sy.fsf_-_@alter.siamese.dyndns.org> <CACsJy8CA-a0=HqTY9heJBhPO4M5jyLk=tf253rRKCRuTWz5teg@mail.gmail.com>
+ <7vr4lv7x2u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Neil Horman <nhorman@tuxdriver.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 09 14:29:34 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <stefanbeller@googlemail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 15:12:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tsvik-0008VF-Lq
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 14:29:30 +0100
+	id 1TswOl-0000DY-3a
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 15:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757803Ab3AIN3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 08:29:10 -0500
-Received: from rcdn-iport-2.cisco.com ([173.37.86.73]:65172 "EHLO
-	rcdn-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757694Ab3AIN3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 08:29:09 -0500
-X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jan 2013 08:29:09 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=2067; q=dns/txt; s=iport;
-  t=1357738149; x=1358947749;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=mU/mcSdyjAj6pMsJuZgUSPANnn8Gpt5pxGFmxM+sWlM=;
-  b=URS7XKUINNP8edl5Jg26h1HMLCroekxluM5AlGWlbdoX2WkpkQqkt7fL
-   ZyN1RXTF3z53nyCvIT7FaQfQiXgYJozvWOssvTUlYPv9ucb6FTax/1vcw
-   I4t12j46GKxe5ETauVknudk3yj7dokeDjS50kOPDTMCZCOwvZitNkMbzl
-   o=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlwIAGpt7VCtJV2c/2dsb2JhbABEg0e2N4NTFnOCHwEBBHgBECwWDwkDAgECAUUGDQEHAQGIE7V6kRADiGGNK4Vril6DEg
-X-IronPort-AV: E=Sophos;i="4.84,436,1355097600"; 
-   d="scan'208";a="160465824"
-Received: from rcdn-core-5.cisco.com ([173.37.93.156])
-  by rcdn-iport-2.cisco.com with ESMTP; 09 Jan 2013 13:19:41 +0000
-Received: from [10.117.80.101] (rtp-hordp-8914.cisco.com [10.117.80.101])
-	by rcdn-core-5.cisco.com (8.14.5/8.14.5) with ESMTP id r09DJfGp001439;
-	Wed, 9 Jan 2013 13:19:41 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <50ED63CB.7060108@cisco.com>
-X-Enigmail-Version: 1.4.6
-X-TagToolbar-Keys: D20130109081940893
-X-Forwarded-Message-Id: <50ED63CB.7060108@cisco.com>
+	id S1757926Ab3AIOMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 09:12:34 -0500
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:62521 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757922Ab3AIOMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 09:12:33 -0500
+Received: by mail-oa0-f52.google.com with SMTP id o6so1001809oag.39
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 06:12:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ep6qdol0hdwIWrT7VkG5xjcHpKjSsx5YAjhIz6/mWrg=;
+        b=SeMgJw1YuG/OuyQ/YUmObSuGF9kVN9wBXGSKH5PGWl2102KXF/zcxSJfmQQ4u8aJRw
+         bEzWADEe4ezjonVLhdvc2Kz4lrIPoenpEx27U8LGXJyENtOE0hpniN44pjSHAOWoMibn
+         ABWsARZyv+craav8OpeLm/f+M5ONp11Dgd/gvdfa4dmU9VHrvlzaTNF4FncsnHl7VoKc
+         KlFMRpdJnBVbH2plWdTCfNExE05F9LyjGNTkHbhfQmrZm60jS9+t8O+Le8T+I9Id1JNe
+         oBmobQ+88tQtFxj4VgMmFlUzwpHWDh3t8bvKW3p3sH+3APFyBiGKzN4XvrMkVqyQIJ58
+         7EYA==
+Received: by 10.182.159.5 with SMTP id wy5mr47802530obb.31.1357740751855; Wed,
+ 09 Jan 2013 06:12:31 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Wed, 9 Jan 2013 06:12:01 -0800 (PST)
+In-Reply-To: <7vr4lv7x2u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213058>
 
-Since 90e1818f9a  (git-rebase: add keep_empty flag, 2012-04-20)
-'git rebase --preserve-merges' fails in a case where it used to
-succeed, and it does so with an unhelpful error message.
+On Wed, Jan 9, 2013 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Wed, Jan 9, 2013 at 9:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> ...
+>>>  * We would like to update "clone --depth=1" to end up with a tip
+>>>    only repository, but let's not to touch "git fetch" (and "git
+>>>    clone") and make them send 0 over the wire when the command line
+>>>    tells them to use "--depth=1" (i.e. let's not do the "off-by-one"
+>>>    thing).
+>>
+>> You can't anyway. Depth 0 on the wire is considered invalid by upload-pack.
+>
+> Yes, that is a good point that we say "if (0 < opt->depth) do the
+> shallow thing" everywhere, so 0 is spcial in that sense.
+>
+> Which suggests that if we wanted to, we could update the fetch side
+> to do the off-by-one thing against the current upload-pack when the
+> given depth is two or more, and still send 1 when depth=1.  When
+> talking with an updated upload-pack that advertises exact-shallow
+> protocol extension, it can disable that off-by-one for all values of
+> depth.  That way, the updated client gets history of wrong depth
+> only for --depth=1 when talking with the current upload-pack; all
+> other cases, it will get history of correct depth.
+>
+> Hmm?
 
-   $ git rebase --preserve-merges master
-   error: Commit 452524... is a merge but no -m option was given.
-   fatal: cherry-pick failed
-   Could not pick 452524f925aecd0439ae5728fca3887292114dd7
-
-I also tried rebase with '-m'
-   $ git rebase --preserve-merges -m master
-but that also failed.
-
-The same commands worked fine for these same commits in v1.7.9
-
->From 90e1818f9a I figured out that the rebase-interactive
-machinery had dropped one of my merges. I normally would not
-notice this when using 'git rebase -p' since it does not invoke $EDITOR
-by default; but I can see it if I use this:
-
-   git -c sequence.editor=cat rebase -p master
-
-With that I see my list of commits, including these:
-
-  ...
-  pick 184ec4d WIP: DHCP datastore reporting
-  # pick 16ca56c Merge ptss into sock-threads
-  pick 06aea55 WIP: More work normalizing config handlers
-  ...
-  pick 452524f Merge branch 'ptss' into sock-threads
-  ...
-  #
-  # Note that empty commits are commented out
-
-The failure points to the 2nd merge commit, but it is not the merge
-commit which was commented out. It is a later merge between the same two
-branches. I'm not sure how this is related, yet.
-
-But I now know I can work around the problem with this:
-
-    git rebase --keep-empty -p master
-
-I see three problems here, but I don't have any time to go fix them
-myself right now.
-
- 1. 'rebase -p' should default to --keep-empty since the user will not
-    be given the opportunity to edit the list to uncomment the missing
-    commits.
-
- 2. 'rebase --interactive -p' should not drop empty merge commits.
-
- 3. rebase should not die with a cryptic cherry-pick error message,
-    although I am not sure what useful thing it could say in this
-    particular case. Maybe there are other conditions which will cause
-    this same failure even if 1 and 2 are fixed.
-
-Phil
+I haven't checked because frankly I have never run JGit, but are we
+sure this off-by-one thing applies to JGit server as well? So far I'm
+only aware of three sever implementations: C Git, JGit and Dulwich.
+The last one does not support shallow extension so it's out of
+question.
+-- 
+Duy
