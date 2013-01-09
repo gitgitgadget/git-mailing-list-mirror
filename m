@@ -1,99 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] commit: make default of "cleanup" option configurable
-Date: Wed, 9 Jan 2013 00:28:58 -0800
-Message-ID: <20130109082858.GG6503@elie.Belkin>
-References: <1357676176-30019-1-git-send-email-ralf.thielow@gmail.com>
- <20130109072952.GC6503@elie.Belkin>
- <CAN0XMO+t2gu9UKJFVXAxt91-hUUhMqqmMoop88KYp0vo3x6c_g@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Proposal for git stash rename
+Date: Wed, 09 Jan 2013 09:38:16 +0100
+Message-ID: <50ED2C78.1030300@alum.mit.edu>
+References: <20100620093142.GF24805@occam.hewgill.net> <AANLkTimjEksHI4nlefqmNzdNiseVyMQcw312g2AHFQDZ@mail.gmail.com> <20100620111112.GH24805@occam.hewgill.net> <loom.20130104T192132-16@post.gmane.org> <7vbod4tynt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 09:39:01 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Micheil Smith <micheil@brandedcode.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 09:42:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tsr2M-0003lp-Ic
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 09:29:26 +0100
+	id 1TsrBJ-0006Aw-SL
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 09:38:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757315Ab3AII3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 03:29:05 -0500
-Received: from mail-da0-f42.google.com ([209.85.210.42]:52552 "EHLO
-	mail-da0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757246Ab3AII3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 03:29:04 -0500
-Received: by mail-da0-f42.google.com with SMTP id z17so633367dal.1
-        for <git@vger.kernel.org>; Wed, 09 Jan 2013 00:29:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=+sFPTHBBlitH2FVGqZ1pO/+UB0Woq8spaKjc82wiRmc=;
-        b=WfiT89C1OVINZqhPs2Y0fGkXycWoKNakfIUC5DRS3a08RJgZg6+4TreS8lycXRK+Hs
-         vIQbj8ktBj16Da9l2Z4NGmpp8YqFgfrmmv67svRudfYSlSkhvRaB5G8vvs9wY2tWcEXd
-         TuE32zZgFKwhs08EJpwNFAyVELf91XvyM0W4vPeHQru8ZeDTpeUejUdFAcGpREhzTOQN
-         ot6OiqmrLW9h10koR1T/gLqTV5R0NxV9crFUO8Fj5Eky+hWLOzhGo2JufmE9bEM08oPY
-         LGGyhL+3d/qedFTP+sDkz/8AcNU4WisEyXDxQQt9v6lyAbxsNdrGqDtAX7xaH+yVV7Da
-         Dq5w==
-X-Received: by 10.68.235.200 with SMTP id uo8mr16488150pbc.29.1357720143238;
-        Wed, 09 Jan 2013 00:29:03 -0800 (PST)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id vk5sm41231267pbc.34.2013.01.09.00.29.01
-        (version=SSLv3 cipher=OTHER);
-        Wed, 09 Jan 2013 00:29:02 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAN0XMO+t2gu9UKJFVXAxt91-hUUhMqqmMoop88KYp0vo3x6c_g@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1757314Ab3AIIiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 03:38:21 -0500
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:63102 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750817Ab3AIIiU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jan 2013 03:38:20 -0500
+X-AuditID: 1207440c-b7f196d0000008bc-0d-50ed2c7c9022
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 26.44.02236.C7C2DE05; Wed,  9 Jan 2013 03:38:20 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r098cH2s031964
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 9 Jan 2013 03:38:19 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vbod4tynt.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqFuj8zbAoO0lh0XXlW4mi4beK8wW
+	3xrPMDowe1xbupPN4+IlZY/Pm+QCmKO4bZISS8qCM9Pz9O0SuDOWbXQseMZe8fbSHMYGxoVs
+	XYycHBICJhIPD65nhLDFJC7cWw8WFxK4zCjxtU+xi5ELyD7GJLFr/1RWkASvgLbE3IdbwIpY
+	BFQlXk68xAJiswnoSizqaWYCsUUFAiQWLznHDlEvKHFy5hOwGhEBNYmJbYfAbGYBB4kbU1eC
+	zRQW0JJYcH09C8Tiz4wST6cFg9icAmYSk988Y4Wo15F41/eAGcKWl9j+dg7zBEaBWUhWzEJS
+	NgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuoZ6uZkleqkppZsYIYHLs4Px2zqZQ4wC
+	HIxKPLxWM98ECLEmlhVX5h5ilORgUhLl3av5NkCILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO9d
+	b6By3pTEyqrUonyYlDQHi5I4r+oSdT8hgfTEktTs1NSC1CKYrAwHh5IE7wZtoKGCRanpqRVp
+	mTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoDiNLwZGKkiKB2ivE0g7b3FBYi5QFKL1FKMux62G
+	m08ZhVjy8vNSpcR520GKBECKMkrz4FbA0tQrRnGgj4V5PUGqeIApDm7SK6AlTEBL5kwFea64
+	JBEhJdXAOLFfi8P0wNmTWcuqVt0qyIk7HSb8wGYP90vLybNTa1hl+Es3llmvsLl2q8rPfPu5
+	goB+ht+BGl/rec01dh2Scby65dkE5fU/pGIPeD2Y0JK08dR54Y+nGv5f+DXF6m2r 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213052>
 
-Ralf Thielow wrote:
+On 01/04/2013 10:40 PM, Junio C Hamano wrote:
+> Micheil Smith <micheil@brandedcode.com> writes:
+> 
+>>> This patch implements a "git stash rename" using a new
+>>> "git reflog update" command that updates the message associated
+>>> with a reflog entry.
+>> ...
+>> I note that this proposal is now two years old. A work in progress patch was 
+>> requested, however, after one was given this thread ended. I'm also finding 
+>> a need for this feature;
+> 
+> The whole point of reflog is that it is a mechanism to let users to
+> go safely back to the previous state, by using a file that is pretty
+> much append-only.  It feels that a mechanism to "rewrite" one goes
+> completely against that principle, at least to me.
 
-> It's actually my own usecase :). The bugtracker I'm using is able
-> to create relationships between issues and related commits. It
-> expects that a part of the commit message contains the issue number
-> in format "#<issueId>". So I need to use a cleanup mode different
-> from "default" to keep the commentary. The mode I'd use is "whitespace",
-> "verbatim" is also possible.
+The implementation of "git stash" itself seems to violate your
+principle, by storing its branches-that-are-not-branches within a
+mutable reflog.
 
-Hm, so "whitespace-when-editing" would be the ideal setting.
+Just an observation...
 
-Would it be confusing if the '[commit] cleanup' setting only took
-effect when launching an editor (and not with -F, -C, or -m)?  My
-first impression is that I'd like that behavior better, even though
-it's harder to explain.
+Michael
 
-[...]
-> When a user uses a script/importer which expects that the "default" option
-> is used without setting it explicitly, and then the user changes the default,
-> isn't it the users fault if that would break things?
-
-Consider the following series of events.
-
- 1. My friend writes an importer that uses the "git commit" command.
-    I like it and start using it.
-
- 2. Another friend writes a blog post about the '[commit] cleanup'
-    setting.  I like it and start using it.
-
- 3. I try to use the importer again.
-
- 4. Years later, I notice the commit messages are corrupted in the
-    imported history.
-
-It's hard to assign blame.  I guess it's my fault. ;)
-
-[...]
-> I'll add a sentence of my bugtracker example to it. I think many developers
-> are using such a tool, so it'd makes sense.
-
-Thanks, sounds good.
-
-Regards,
-Jonathan
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
