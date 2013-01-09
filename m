@@ -1,87 +1,63 @@
 From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: On --depth=funny value
-Date: Wed, 9 Jan 2013 21:12:01 +0700
-Message-ID: <CACsJy8B4SFs5gbrD6vKvpcrv-tyUo+aZAvq=VmVFM1Bsiggu4w@mail.gmail.com>
+Date: Wed, 9 Jan 2013 21:59:56 +0700
+Message-ID: <CACsJy8Cp-2gRhdU+V8H7+FeWZXfptJLbzw1swxdks61fO+73NQ@mail.gmail.com>
 References: <1357632422-5686-1-git-send-email-stefanbeller@googlemail.com>
- <CACsJy8BLLTWd+cTBj1jNW=ODPy7=Kg4-TPUdZ82YCE-0RQpMZA@mail.gmail.com>
- <7vy5g383sy.fsf_-_@alter.siamese.dyndns.org> <CACsJy8CA-a0=HqTY9heJBhPO4M5jyLk=tf253rRKCRuTWz5teg@mail.gmail.com>
- <7vr4lv7x2u.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BLLTWd+cTBj1jNW=ODPy7=Kg4-TPUdZ82YCE-0RQpMZA@mail.gmail.com> <7vy5g383sy.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 15:12:55 2013
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 16:00:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TswOl-0000DY-3a
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 15:12:55 +0100
+	id 1Tsx95-0004aW-FH
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jan 2013 16:00:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757926Ab3AIOMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 09:12:34 -0500
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:62521 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757922Ab3AIOMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 09:12:33 -0500
-Received: by mail-oa0-f52.google.com with SMTP id o6so1001809oag.39
-        for <git@vger.kernel.org>; Wed, 09 Jan 2013 06:12:32 -0800 (PST)
+	id S1757972Ab3AIPA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 10:00:27 -0500
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:63805 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756339Ab3AIPA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 10:00:26 -0500
+Received: by mail-oa0-f48.google.com with SMTP id h2so1076183oag.21
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 07:00:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Ep6qdol0hdwIWrT7VkG5xjcHpKjSsx5YAjhIz6/mWrg=;
-        b=SeMgJw1YuG/OuyQ/YUmObSuGF9kVN9wBXGSKH5PGWl2102KXF/zcxSJfmQQ4u8aJRw
-         bEzWADEe4ezjonVLhdvc2Kz4lrIPoenpEx27U8LGXJyENtOE0hpniN44pjSHAOWoMibn
-         ABWsARZyv+craav8OpeLm/f+M5ONp11Dgd/gvdfa4dmU9VHrvlzaTNF4FncsnHl7VoKc
-         KlFMRpdJnBVbH2plWdTCfNExE05F9LyjGNTkHbhfQmrZm60jS9+t8O+Le8T+I9Id1JNe
-         oBmobQ+88tQtFxj4VgMmFlUzwpHWDh3t8bvKW3p3sH+3APFyBiGKzN4XvrMkVqyQIJ58
-         7EYA==
-Received: by 10.182.159.5 with SMTP id wy5mr47802530obb.31.1357740751855; Wed,
- 09 Jan 2013 06:12:31 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Wed, 9 Jan 2013 06:12:01 -0800 (PST)
-In-Reply-To: <7vr4lv7x2u.fsf@alter.siamese.dyndns.org>
+        bh=a+JEiGpUgWTuPqGwL5XAwtymlGZbU3wELJW0c12xuYc=;
+        b=yvOwJ4sr/diak0x4+LM1W28rAaGdxRDnnnp+VuYu0EMB7VY8F61eDL50HPQOSOWbE2
+         Ox6z6UaXFgjMDbUJxHu7r+YAcTEHAR9tKWCSg6RF6F8EMVHmdj+h2slwHTSnNRoNoczu
+         3oXyv7I6te/7qlG9FT0yjon1AOmz1T+ocyE+u/gJgRxidCcYYmz8k3SvkMoOnswgNpkf
+         yzxlTQUHDJxNzYhKDk86nwm33gmge8/eru4IyBveCItPgCcKPSa3A7W2ODeNNYthY4H7
+         MlCKwMJnU2ebur7z0k8KhHAJR/+7ANOAmcBCIIL9QMjxnM4tHcvMIIPN4cINsqLLZGwT
+         ootQ==
+Received: by 10.60.8.131 with SMTP id r3mr38101161oea.14.1357743626477; Wed,
+ 09 Jan 2013 07:00:26 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Wed, 9 Jan 2013 06:59:56 -0800 (PST)
+In-Reply-To: <7vy5g383sy.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213059>
 
-On Wed, Jan 9, 2013 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Wed, Jan 9, 2013 at 9:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->>>  * We would like to update "clone --depth=1" to end up with a tip
->>>    only repository, but let's not to touch "git fetch" (and "git
->>>    clone") and make them send 0 over the wire when the command line
->>>    tells them to use "--depth=1" (i.e. let's not do the "off-by-one"
->>>    thing).
->>
->> You can't anyway. Depth 0 on the wire is considered invalid by upload-pack.
->
-> Yes, that is a good point that we say "if (0 < opt->depth) do the
-> shallow thing" everywhere, so 0 is spcial in that sense.
->
-> Which suggests that if we wanted to, we could update the fetch side
-> to do the off-by-one thing against the current upload-pack when the
-> given depth is two or more, and still send 1 when depth=1.  When
-> talking with an updated upload-pack that advertises exact-shallow
-> protocol extension, it can disable that off-by-one for all values of
-> depth.  That way, the updated client gets history of wrong depth
-> only for --depth=1 when talking with the current upload-pack; all
-> other cases, it will get history of correct depth.
->
-> Hmm?
+On Wed, Jan 9, 2013 at 9:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  * Make "git fetch" and "git clone" die() when zero or negative
+>    number is given with --depth=$N, for the following reasons:
+>    ...
 
-I haven't checked because frankly I have never run JGit, but are we
-sure this off-by-one thing applies to JGit server as well? So far I'm
-only aware of three sever implementations: C Git, JGit and Dulwich.
-The last one does not support shallow extension so it's out of
-question.
+For Stefan when you update the patch. If "git fetch --depth=0" is
+considered invalid too as Junio outlined, then the proper place for
+the check is transport.c:set_git_option(), not clone.c. It already
+catches --depth=random-string. Adding "depth < 1" check should be
+trivial. You may want to update builtin/fetch-pack.c too because it
+does not share this code.
 -- 
 Duy
