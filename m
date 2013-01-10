@@ -1,87 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Wed, 9 Jan 2013 16:18:44 -0800
-Message-ID: <20130110001844.GC21054@google.com>
-References: <20130104124756.GA402@sigill.intra.peff.net>
- <7vr4lu3wx7.fsf@alter.siamese.dyndns.org>
- <20130109205116.GA24605@sigill.intra.peff.net>
- <7vehhu3u2y.fsf@alter.siamese.dyndns.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH] t0008: avoid brace expansion
+Date: Thu, 10 Jan 2013 00:22:58 +0000
+Message-ID: <CAOkDyE_gSn488N9q1_PD40s+B9sRY32qMXddoC3fNUFD1jtbhQ@mail.gmail.com>
+References: <50EC8025.8000707@lsrfire.ath.cx>
+	<7vr4lvcstt.fsf@alter.siamese.dyndns.org>
+	<50EC8BE7.2010508@lsrfire.ath.cx>
+	<7vboczcq5a.fsf@alter.siamese.dyndns.org>
+	<50EE01F8.1070109@lsrfire.ath.cx>
+	<CAOkDyE_EuuV04KxkkLuHMV+VbDWsDMN1q3YShLtKaimaXH40Sg@mail.gmail.com>
+	<7vsj693n6o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Bart Trojanowski <bart@jukie.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	git discussion list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 01:19:12 2013
+X-From: git-owner@vger.kernel.org Thu Jan 10 01:23:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tt5rS-0001oX-H4
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 01:19:10 +0100
+	id 1Tt5vV-0005AT-OS
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 01:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932358Ab3AJASu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 19:18:50 -0500
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:38481 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932206Ab3AJASt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 19:18:49 -0500
-Received: by mail-pb0-f44.google.com with SMTP id uo1so1273680pbc.17
-        for <git@vger.kernel.org>; Wed, 09 Jan 2013 16:18:49 -0800 (PST)
+	id S932370Ab3AJAXA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2013 19:23:00 -0500
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:41658 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932330Ab3AJAW7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jan 2013 19:22:59 -0500
+Received: by mail-wi0-f173.google.com with SMTP id hn17so906478wib.12
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 16:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=aC2sxDC6mPTLLVafNGr1BXXE+9gcsQuj/X8S+WwA78c=;
-        b=mIU0jH8r0aTQ1AGO3+HmH9exeyw0CwbC4w8grLPWm1tzV+KPbNXcSA1bDaABmLO7J2
-         FYa8H9D1XNGqVZlOLcrtWhhtvcH5ZLEYigucEgEAymc4FozLQlKvvEuomwYzS+1Ug6LJ
-         gSlTpIiL2/FTe57OoRyIXNtTA5cF54/h9SML+7BIAe+Bv7YdXKDKteMlZAyNgY2eUZHs
-         D49K236cIJMhpP/otzmrA9BdhmFjKXbNCnOd5ndkRNd1SKebBRn7yD+QDiIeYAXUkBe1
-         YXb62M1G5glOZHj9AhqogJAMq3+CzkdyHSwq8EH5y6bzT+/0Geb9AFGAi2betPtKXAR2
-         elpg==
-X-Received: by 10.66.88.164 with SMTP id bh4mr52375803pab.41.1357777129076;
-        Wed, 09 Jan 2013 16:18:49 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id ug6sm42470614pbc.4.2013.01.09.16.18.46
-        (version=SSLv3 cipher=OTHER);
-        Wed, 09 Jan 2013 16:18:47 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vehhu3u2y.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NTkm5o9/+G5+jCouWVoulfhhdlIDYamT1eDbYnqS+4Y=;
+        b=lIh3xKNWIHsQkmDys9aSbdjxRY7RdbD2AJYCZ68emlRMu4jnsW//VfcDlbPmZkVCVE
+         Os3tDWcw/ItYu54J714j8+y92kSIrNsPoCcguGMEDduUbO3HJ2l5M/s/iYYQNV9byr91
+         nWVtGiQRnFCN3df5E0Fb9yCUMHGfJywtcimZO4mfgKMcI48KOF+FMzD6YDnsCuUBLzLy
+         vRIWAu0o+KJXGy6tPtDus49n+MIjLo6LfOHcgg4SqMun6v3UIjtXibsmADl9fUP6Rtbl
+         JtFHm+Ei3yDmiQm9kGbBnYoIZRKcH9G4gsS9/VmBN2KxNHFT9x4fkqnzFurXbSCyPAEH
+         go8w==
+Received: by 10.194.236.68 with SMTP id us4mr111979111wjc.11.1357777378462;
+ Wed, 09 Jan 2013 16:22:58 -0800 (PST)
+Received: by 10.194.84.97 with HTTP; Wed, 9 Jan 2013 16:22:58 -0800 (PST)
+In-Reply-To: <7vsj693n6o.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: nyPUlnW397SIxAlRjJeKswP62Co
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213116>
 
-Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-
->> But we still say "error: ... died of signal 13", because that comes from
->> inside wait_or_whine. So it is a separate issue whether or not
->> wait_or_whine should be silent on SIGPIPE (we already are on SIGINT and
->> SIGQUIT, as of some recent patches).
->>
->> The upside is that it is noise in this case that we would no longer see.
->> The downside is that we may be losing a clue when debugging server
->> problems, which do not expect to die from SIGPIPE.  Should it be an
->> optional run-command flag?
+On Thu, Jan 10, 2013 at 12:18 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Adam Spiers <git@adamspiers.org> writes:
 >
-> Do we know if we are upstream of a pager that reads from us through
-> a pipe (I think we should, especially in a case where we are the one
-> who processed the "git -p $alias" option)?  Is there any other case
-> where we would want to ignore child's death by SIGPIPE?
+>> On Wed, Jan 9, 2013 at 11:49 PM, Ren=E9 Scharfe
+>> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>> Brace expansion is not required by POSIX and not supported by dash =
+nor
+>>> NetBSD's sh.  Explicitly list all combinations instead.
+>>
+>> Good catch, thanks!
+>
+> Yeah; thanks.
+>
+> It would also be nice to avoid touch while we are at it, by the way.
 
-When we die early by SIGPIPE because output was piped to "head", I
-still think the early end of output is not notable enough to complain
-about.
-
-I'm not sure whether there are SIGPIPE instances we really don't want
-to be silent about, though.  I suspect not. ;-)
-
-Compare <http://thread.gmane.org/gmane.comp.version-control.git/2062>,
-<http://thread.gmane.org/gmane.comp.version-control.git/48469/focus=48665>.
-
-Thanks,
-Jonathan
+Noted.
