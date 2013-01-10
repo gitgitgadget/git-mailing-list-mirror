@@ -1,74 +1,100 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH] t0008: avoid brace expansion
-Date: Thu, 10 Jan 2013 00:22:58 +0000
-Message-ID: <CAOkDyE_gSn488N9q1_PD40s+B9sRY32qMXddoC3fNUFD1jtbhQ@mail.gmail.com>
-References: <50EC8025.8000707@lsrfire.ath.cx>
-	<7vr4lvcstt.fsf@alter.siamese.dyndns.org>
-	<50EC8BE7.2010508@lsrfire.ath.cx>
-	<7vboczcq5a.fsf@alter.siamese.dyndns.org>
-	<50EE01F8.1070109@lsrfire.ath.cx>
-	<CAOkDyE_EuuV04KxkkLuHMV+VbDWsDMN1q3YShLtKaimaXH40Sg@mail.gmail.com>
-	<7vsj693n6o.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
+Date: Wed, 09 Jan 2013 16:39:03 -0800
+Message-ID: <7vobgx3m8o.fsf@alter.siamese.dyndns.org>
+References: <20130104124756.GA402@sigill.intra.peff.net>
+ <7vr4lu3wx7.fsf@alter.siamese.dyndns.org>
+ <20130109205116.GA24605@sigill.intra.peff.net>
+ <7vehhu3u2y.fsf@alter.siamese.dyndns.org> <20130110001844.GC21054@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git discussion list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 01:23:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Bart Trojanowski <bart@jukie.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 01:39:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tt5vV-0005AT-OS
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 01:23:22 +0100
+	id 1Tt6B6-0000uY-8T
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 01:39:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932370Ab3AJAXA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2013 19:23:00 -0500
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:41658 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932330Ab3AJAW7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jan 2013 19:22:59 -0500
-Received: by mail-wi0-f173.google.com with SMTP id hn17so906478wib.12
-        for <git@vger.kernel.org>; Wed, 09 Jan 2013 16:22:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NTkm5o9/+G5+jCouWVoulfhhdlIDYamT1eDbYnqS+4Y=;
-        b=lIh3xKNWIHsQkmDys9aSbdjxRY7RdbD2AJYCZ68emlRMu4jnsW//VfcDlbPmZkVCVE
-         Os3tDWcw/ItYu54J714j8+y92kSIrNsPoCcguGMEDduUbO3HJ2l5M/s/iYYQNV9byr91
-         nWVtGiQRnFCN3df5E0Fb9yCUMHGfJywtcimZO4mfgKMcI48KOF+FMzD6YDnsCuUBLzLy
-         vRIWAu0o+KJXGy6tPtDus49n+MIjLo6LfOHcgg4SqMun6v3UIjtXibsmADl9fUP6Rtbl
-         JtFHm+Ei3yDmiQm9kGbBnYoIZRKcH9G4gsS9/VmBN2KxNHFT9x4fkqnzFurXbSCyPAEH
-         go8w==
-Received: by 10.194.236.68 with SMTP id us4mr111979111wjc.11.1357777378462;
- Wed, 09 Jan 2013 16:22:58 -0800 (PST)
-Received: by 10.194.84.97 with HTTP; Wed, 9 Jan 2013 16:22:58 -0800 (PST)
-In-Reply-To: <7vsj693n6o.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: nyPUlnW397SIxAlRjJeKswP62Co
+	id S932348Ab3AJAjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 19:39:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51049 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932224Ab3AJAjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 19:39:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6520EAF87;
+	Wed,  9 Jan 2013 19:39:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9TRkAgOe8tBpgpkAJKHogQ0SK78=; b=le+CU2
+	wy9n90ZtJvumR8OukYw1yX01MsIh9ZyvmMLgAjBLqLSPb4sRkm+Z8pFsrz8nIBgW
+	jATMMatSVK7UVmJSuYbDDcPBSKJ2kvZQXfneV+7ORu2PL5LtRA3LuiQYdS/6Bx8w
+	I0g4CVBnzQKc03C/6rQPYlEhuAOoH/3gCWxDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LTUDsDfUQsK9eaxr/8H0H9gcQRsCymAj
+	BBKWl42u4rmRhhhvXhTRZOBmHc4P0nh8ngh/TdHbQAPpsbRB152t6Noe+8bsTOli
+	Oq1e5zghiGSdZzRZ5na4zc+1/TlyzHlGHh1bFI+JLZ8qIlDqRJ3Dcyd6NUaGKmiG
+	BRSBRppKihM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55DBAAF86;
+	Wed,  9 Jan 2013 19:39:05 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC944AF85; Wed,  9 Jan 2013
+ 19:39:04 -0500 (EST)
+In-Reply-To: <20130110001844.GC21054@google.com> (Jonathan Nieder's message
+ of "Wed, 9 Jan 2013 16:18:44 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 22B5989C-5ABE-11E2-9612-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213117>
 
-On Thu, Jan 10, 2013 at 12:18 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Adam Spiers <git@adamspiers.org> writes:
->
->> On Wed, Jan 9, 2013 at 11:49 PM, Ren=E9 Scharfe
->> <rene.scharfe@lsrfire.ath.cx> wrote:
->>> Brace expansion is not required by POSIX and not supported by dash =
-nor
->>> NetBSD's sh.  Explicitly list all combinations instead.
->>
->> Good catch, thanks!
->
-> Yeah; thanks.
->
-> It would also be nice to avoid touch while we are at it, by the way.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Noted.
+> I'm not sure whether there are SIGPIPE instances we really don't want
+> to be silent about, though.  I suspect not. ;-)
+>
+> Compare <http://thread.gmane.org/gmane.comp.version-control.git/2062>,
+> <http://thread.gmane.org/gmane.comp.version-control.git/48469/focus=48665>.
+
+Yeah, thanks for the pointer to 48665.  Quoting from there:
+
+    So EPIPE really _is_ special: because when you write to a pipe,
+    there's no guarantee that you'll get it at all, so whenever you get
+    an EPIPE you should ask yourself:
+
+     - what would I have done if the data had fit in the 64kB kernel
+       buffer?
+
+     - should I really return a different error message or complain just 
+       because I just happened to notice that the reader went away
+       _this_ 
+       time, even if I might not notice it next time?
+
+    In other words, the "exit(0)" is actually _more_ consistent than
+    "exit(1)", because exiting with an error message or with an error
+    return is going to depend on luck and timing.
+
+and I think I still agree with the analysis and conclusion:
+
+    So what _should_ you do for EPIPE?
+
+    Here's what EPIPE _really_ means:
+
+     - you might as well consider the write a success, but the
+       reader isn't actually interested, so rather than go on, you
+       might as well stop early.
+
+    Notice how I very carefull avoided the word "error" anywhere.
+    Because it's really not an error. The reader already got
+    everything it wanted. So EPIPE should generally be seen as an
+    "early success" rather than as a "failure".
