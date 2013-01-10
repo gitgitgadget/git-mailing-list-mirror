@@ -1,292 +1,153 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCHv3] commit: make default of "cleanup" option configurable
-Date: Thu, 10 Jan 2013 18:45:59 +0100
-Message-ID: <1357839959-18193-1-git-send-email-ralf.thielow@gmail.com>
-References: <1357760209-3407-1-git-send-email-ralf.thielow@gmail.com>
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-To: gitster@pobox.com, jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jan 10 18:46:36 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t7400 broken on pu (Mac OS X)
+Date: Thu, 10 Jan 2013 09:58:31 -0800
+Message-ID: <7v38y83ooo.fsf@alter.siamese.dyndns.org>
+References: <50EDBA37.30205@web.de>
+ <20130110062838.GA11634@duynguyen-vnpc.dek-tpc.internal>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 18:58:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtMD2-0002gS-MQ
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 18:46:33 +0100
+	id 1TtMP1-0005qt-2J
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 18:58:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238Ab3AJRqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 12:46:11 -0500
-Received: from mail-bk0-f41.google.com ([209.85.214.41]:35437 "EHLO
-	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690Ab3AJRqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 12:46:09 -0500
-Received: by mail-bk0-f41.google.com with SMTP id jg9so479062bkc.28
-        for <git@vger.kernel.org>; Thu, 10 Jan 2013 09:46:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=W6LuSq/51DdNBNzHddde83zttpsrG+BykIp46YeobjU=;
-        b=TMcAgotuTq8kGiGVXpG1atZYKUxqw08zTFccz1FEw20uetXfWXJ4cXrUxcZlzkjD4J
-         ADG+Zwvpv4yBWlawR825CVPYjgd8CMj83X0agCVb6+wI4yLgOYEGPtFv33A42TA70Dtn
-         wo8at5wt6y6UHBaRvzqnEehYvROLeTBzYLeN08x40glDEFsGEvjJeKuS0nyG1fhRiXmY
-         K9f+whJi8GDlCQu9ldKngJHI5QFz4AHPeKR55X9VAulUjsfmlUDefMp6O4es2QQqX5RD
-         xrSU7vNV/9c5ktDdk02Wwv9KbQ6xlMTsZF9vxmgbyLH6tl1X+w8GBR0nn9jaKunKH+Uj
-         Gblw==
-X-Received: by 10.204.7.92 with SMTP id c28mr34803582bkc.86.1357839967951;
-        Thu, 10 Jan 2013 09:46:07 -0800 (PST)
-Received: from localhost.localdomain (dslb-094-222-138-000.pools.arcor-ip.net. [94.222.138.0])
-        by mx.google.com with ESMTPS id z5sm2150665bkv.11.2013.01.10.09.46.06
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 10 Jan 2013 09:46:07 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.227.g44fe835
-In-Reply-To: <1357760209-3407-1-git-send-email-ralf.thielow@gmail.com>
+	id S1755488Ab3AJR6f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jan 2013 12:58:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34747 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753530Ab3AJR6e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2013 12:58:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20696A15D;
+	Thu, 10 Jan 2013 12:58:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=1Bioh+5lsvTo
+	7NKsSsabV+V4ZYU=; b=j4Doe6OHqPS8wTBgikLhLaJXQ9O/YjGwWm71VOK/TMcu
+	PHvfHrAu2/3Ril+CF0LsjZvOgRVGKLoKWnSXZG07fsnwQz6SyMSqKAHnKmIZwfSl
+	/+B9oonSipMGf5j0yd/9c/fgaY10dUZetm0mGDNXyJf0kr8OsWPoCaZSGMeNTYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xcZvjl
+	v0tUtrsrymoCI+SmE28bBgeL+iLtcGIeQA/KKX+diwJ/Kz/M2LlfBLpQFyjprGtR
+	7+0pi8V5VWC7BxMlFQsvRU/mhddawdfHuTQrFLKbiA+YR6GYvzUW6gkolWovrRpU
+	BtqzL5xMY+2fMwev5zodauY10m8DxaX35CDk0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14E58A15C;
+	Thu, 10 Jan 2013 12:58:34 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 557F8A15B; Thu, 10 Jan 2013
+ 12:58:33 -0500 (EST)
+In-Reply-To: <20130110062838.GA11634@duynguyen-vnpc.dek-tpc.internal> (Duy
+ Nguyen's message of "Thu, 10 Jan 2013 13:28:38 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59513F32-5B4F-11E2-BCB1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213145>
 
-The default of the "cleanup" option in "git commit"
-is not configurable. Users who don't want to use the
-default have to pass this option on every commit since
-there's no way to configure it. This commit introduces
-a new config option "commit.cleanup" which can be used
-to change the default of the "cleanup" option in
-"git commit".
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
-changes in v3:
-- remove extra blank line in builtin/commit.c
-- add newline at end of t/t7500/add-content-and-comment
-- improve documentation of commit.cleanup configuration variable
-as Junio suggested (makes a lot of sense)
+> On Wed, Jan 09, 2013 at 07:43:03PM +0100, Torsten B=C3=B6gershausen w=
+rote:
+>> The current pu fails on Mac OS, case insensitive FS.
+>>=20
+>>=20
+>> Bisecting points out
+>> commit 3f28e4fafc046284657945798d71c57608bee479
+>> [snip]
+>> Date:   Sun Jan 6 13:21:07 2013 +0700
+>>=20
+>>     Convert add_files_to_cache to take struct pathspec
+>>=20
+>
+> I can reproduce it by setting core.ignorecase to true. There is a bug
+> that I overlooked. Can you verify if this throw-away patch fixes it
+> for you? A proper fix will be in the reroll later.
 
-Thanks
+I can see why it is wrong to let pathspec.raw be rewritten without
+making matching change to the containing pathspec, but I find it
+strange why it matters only on case-insensitive codepath.
 
- Documentation/config.txt        |  9 +++++
- Documentation/git-commit.txt    |  4 +-
- builtin/commit.c                |  4 +-
- t/t7500/add-content-and-comment |  5 +++
- t/t7502-commit.sh               | 84 +++++++++++++++++++++++++++++++++++++----
- 5 files changed, 97 insertions(+), 9 deletions(-)
- create mode 100755 t/t7500/add-content-and-comment
+I agree with the "Hack" comment that the canonicalization should be
+done at a higher level upfront.  Then ls-files does not need its own
+strip_trailing_slash_from_submodules(), and check_path_for_gitlink()
+can (and should---the callers of "check_anything" would not expect
+the function to change things) stop rewriting its parameter.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 53c4ca1..c92a308 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -917,6 +917,15 @@ column.tag::
- 	Specify whether to output tag listing in `git tag` in columns.
- 	See `column.ui` for details.
- 
-+commit.cleanup::
-+	This setting overrides the default of the `--cleanup` option in
-+	`git commit`. See linkgit:git-commit[1] for details. Changing the
-+	default can be useful when you always want to keep lines that begin
-+	with comment character `#` in your log message, in which case you
-+	would do `git config commit.cleanup whitespace` (note that you will
-+	have to remove the help lines that begin with `#` in the commit log
-+	template yourself, if you do this).
-+
- commit.status::
- 	A boolean to enable/disable inclusion of status information in the
- 	commit message template when using an editor to prepare the commit
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 7bdb039..41b27da 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -179,7 +179,9 @@ OPTIONS
- 	only if the message is to be edited. Otherwise only whitespace
- 	removed. The 'verbatim' mode does not change message at all,
- 	'whitespace' removes just leading/trailing whitespace lines
--	and 'strip' removes both whitespace and commentary.
-+	and 'strip' removes both whitespace and commentary. The default
-+	can be changed by the 'commit.cleanup' configuration variable
-+	(see linkgit:git-config[1]).
- 
- -e::
- --edit::
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d6dd3df..7c2a3d4 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -103,7 +103,7 @@ static enum {
- 	CLEANUP_NONE,
- 	CLEANUP_ALL
- } cleanup_mode;
--static char *cleanup_arg;
-+static const char *cleanup_arg;
- 
- static enum commit_whence whence;
- static int use_editor = 1, include_status = 1;
-@@ -1320,6 +1320,8 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		include_status = git_config_bool(k, v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.cleanup"))
-+		return git_config_string(&cleanup_arg, k, v);
- 
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
-diff --git a/t/t7500/add-content-and-comment b/t/t7500/add-content-and-comment
-new file mode 100755
-index 0000000..c4dccff
---- /dev/null
-+++ b/t/t7500/add-content-and-comment
-@@ -0,0 +1,5 @@
-+#!/bin/sh
-+echo "commit message" >> "$1"
-+echo "# comment" >> "$1"
-+exit 0
-+
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 1a5cb69..b1c7648 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -4,6 +4,15 @@ test_description='git commit porcelain-ish'
- 
- . ./test-lib.sh
- 
-+commit_msg_is () {
-+	expect=commit_msg_is.expect
-+	actual=commit_msg_is.actual
-+
-+	printf "%s" "$(git log --pretty=format:%s%b -1)" >$actual &&
-+	printf "%s" "$1" >$expect &&
-+	test_i18ncmp $expect $actual
-+}
-+
- # Arguments: [<prefix] [<commit message>] [<commit options>]
- check_summary_oneline() {
- 	test_tick &&
-@@ -168,7 +177,7 @@ test_expect_success 'verbose respects diff config' '
- 	git config --unset color.diff
- '
- 
--test_expect_success 'cleanup commit messages (verbatim,-t)' '
-+test_expect_success 'cleanup commit messages (verbatim option,-t)' '
- 
- 	echo >>negative &&
- 	{ echo;echo "# text";echo; } >expect &&
-@@ -178,7 +187,7 @@ test_expect_success 'cleanup commit messages (verbatim,-t)' '
- 
- '
- 
--test_expect_success 'cleanup commit messages (verbatim,-F)' '
-+test_expect_success 'cleanup commit messages (verbatim option,-F)' '
- 
- 	echo >>negative &&
- 	git commit --cleanup=verbatim -F expect -a &&
-@@ -187,7 +196,7 @@ test_expect_success 'cleanup commit messages (verbatim,-F)' '
- 
- '
- 
--test_expect_success 'cleanup commit messages (verbatim,-m)' '
-+test_expect_success 'cleanup commit messages (verbatim option,-m)' '
- 
- 	echo >>negative &&
- 	git commit --cleanup=verbatim -m "$(cat expect)" -a &&
-@@ -196,7 +205,7 @@ test_expect_success 'cleanup commit messages (verbatim,-m)' '
- 
- '
- 
--test_expect_success 'cleanup commit messages (whitespace,-F)' '
-+test_expect_success 'cleanup commit messages (whitespace option,-F)' '
- 
- 	echo >>negative &&
- 	{ echo;echo "# text";echo; } >text &&
-@@ -207,7 +216,7 @@ test_expect_success 'cleanup commit messages (whitespace,-F)' '
- 
- '
- 
--test_expect_success 'cleanup commit messages (strip,-F)' '
-+test_expect_success 'cleanup commit messages (strip option,-F)' '
- 
- 	echo >>negative &&
- 	{ echo;echo "# text";echo sample;echo; } >text &&
-@@ -218,7 +227,7 @@ test_expect_success 'cleanup commit messages (strip,-F)' '
- 
- '
- 
--test_expect_success 'cleanup commit messages (strip,-F,-e)' '
-+test_expect_success 'cleanup commit messages (strip option,-F,-e)' '
- 
- 	echo >>negative &&
- 	{ echo;echo sample;echo; } >text &&
-@@ -231,10 +240,71 @@ echo "sample
- # Please enter the commit message for your changes. Lines starting
- # with '#' will be ignored, and an empty message aborts the commit." >expect
- 
--test_expect_success 'cleanup commit messages (strip,-F,-e): output' '
-+test_expect_success 'cleanup commit messages (strip option,-F,-e): output' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'cleanup commit message (fail on invalid cleanup mode option)' '
-+	test_must_fail git commit --cleanup=non-existent
-+'
-+
-+test_expect_success 'cleanup commit message (fail on invalid cleanup mode configuration)' '
-+	test_must_fail git -c commit.cleanup=non-existent commit
-+'
-+
-+test_expect_success 'cleanup commit message (no config and no option uses default)' '
-+	echo content >>file &&
-+	git add file &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
-+	git commit --no-status &&
-+	commit_msg_is "commit message"
-+'
-+
-+test_expect_success 'cleanup commit message (option overrides default)' '
-+	echo content >>file &&
-+	git add file &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
-+	git commit --cleanup=whitespace --no-status &&
-+	commit_msg_is "commit message # comment"
-+'
-+
-+test_expect_success 'cleanup commit message (config overrides default)' '
-+	echo content >>file &&
-+	git add file &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
-+	git -c commit.cleanup=whitespace commit --no-status &&
-+	commit_msg_is "commit message # comment"
-+'
-+
-+test_expect_success 'cleanup commit message (option overrides config)' '
-+	echo content >>file &&
-+	git add file &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
-+	git -c commit.cleanup=whitespace commit --cleanup=default &&
-+	commit_msg_is "commit message"
-+'
-+
-+test_expect_success 'cleanup commit message (default, -m)' '
-+	echo content >>file &&
-+	git add file &&
-+	git commit -m "message #comment " &&
-+	commit_msg_is "message #comment"
-+'
-+
-+test_expect_success 'cleanup commit message (whitespace option, -m)' '
-+	echo content >>file &&
-+	git add file &&
-+	git commit --cleanup=whitespace --no-status -m "message #comment " &&
-+	commit_msg_is "message #comment"
-+'
-+
-+test_expect_success 'cleanup commit message (whitespace config, -m)' '
-+	echo content >>file &&
-+	git add file &&
-+	git -c commit.cleanup=whitespace commit --no-status -m "message #comment " &&
-+	commit_msg_is "message #comment"
-+'
-+
- test_expect_success 'message shows author when it is not equal to committer' '
- 	echo >>negative &&
- 	git commit -e -m "sample" -a &&
--- 
-1.8.1.227.g44fe835
+Thanks for a quick response.
+
+> -- 8< --
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 641037f..61cb8bd 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -155,12 +155,13 @@ static char *prune_directory(struct dir_struct =
+*dir, const char **pathspec, int
+>  	return seen;
+>  }
+> =20
+> -static void treat_gitlinks(const char **pathspec)
+> +static int treat_gitlinks(const char **pathspec)
+>  {
+>  	int i;
+> +	int modified =3D 0;
+> =20
+>  	if (!pathspec || !*pathspec)
+> -		return;
+> +		return modified;
+> =20
+>  	for (i =3D 0; i < active_nr; i++) {
+>  		struct cache_entry *ce =3D active_cache[i];
+> @@ -171,15 +172,17 @@ static void treat_gitlinks(const char **pathspe=
+c)
+>  				if (len2 <=3D len || pathspec[j][len] !=3D '/' ||
+>  				    memcmp(ce->name, pathspec[j], len))
+>  					continue;
+> -				if (len2 =3D=3D len + 1)
+> +				if (len2 =3D=3D len + 1) {
+>  					/* strip trailing slash */
+>  					pathspec[j] =3D xstrndup(ce->name, len);
+> -				else
+> +					modified =3D 1;
+> +				} else
+>  					die (_("Path '%s' is in submodule '%.*s'"),
+>  						pathspec[j], len, ce->name);
+>  			}
+>  		}
+>  	}
+> +	return modified;
+>  }
+> =20
+>  static void refresh(int verbose, const struct pathspec *pathspec)
+> @@ -418,7 +421,16 @@ int cmd_add(int argc, const char **argv, const c=
+har *prefix)
+> =20
+>  	if (read_cache() < 0)
+>  		die(_("index file corrupt"));
+> -	treat_gitlinks(pathspec.raw);
+> +	if (treat_gitlinks(pathspec.raw))
+> +		/*
+> +		 * HACK: treat_gitlinks strips the trailing slashes
+> +		 * out of submodule entries but it only affects
+> +		 * raw[]. Everything in pathspec.items is not touched.
+> +		 * Re-init it to propagate the change. Long term, this
+> +		 * function should be moved to pathspec.c and update
+> +		 * everything in a consistent way.
+> +		 */
+> +		init_pathspec(&pathspec, pathspec.raw);
+> =20
+>  	if (add_new_files) {
+>  		int baselen;
+> -- 8< --
