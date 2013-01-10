@@ -1,133 +1,87 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: t7400 broken on pu (Mac OS X)
-Date: Thu, 10 Jan 2013 13:28:38 +0700
-Message-ID: <20130110062838.GA11634@duynguyen-vnpc.dek-tpc.internal>
-References: <50EDBA37.30205@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/4] t5002: check if unzip supports symlinks
+Date: Wed, 9 Jan 2013 23:36:29 -0800
+Message-ID: <20130110073629.GC5121@elie.Belkin>
+References: <7vwqw7mb09.fsf@alter.siamese.dyndns.org>
+ <50E9B82D.50005@lsrfire.ath.cx>
+ <50E9BB8B.9020101@lsrfire.ath.cx>
+ <20130107085206.GI27909@elie.Belkin>
+ <50EAFCD7.9090008@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 10 07:29:20 2013
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Jan 10 08:36:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtBdd-0005AY-NF
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 07:29:18 +0100
+	id 1TtCh6-0007vm-Do
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 08:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260Ab3AJG25 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jan 2013 01:28:57 -0500
-Received: from mail-da0-f45.google.com ([209.85.210.45]:41034 "EHLO
-	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785Ab3AJG24 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 01:28:56 -0500
-Received: by mail-da0-f45.google.com with SMTP id w4so101260dam.18
-        for <git@vger.kernel.org>; Wed, 09 Jan 2013 22:28:56 -0800 (PST)
+	id S932388Ab3AJHgg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jan 2013 02:36:36 -0500
+Received: from mail-da0-f43.google.com ([209.85.210.43]:43065 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932254Ab3AJHgg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2013 02:36:36 -0500
+Received: by mail-da0-f43.google.com with SMTP id u36so124028dak.30
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 23:36:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=x57MDITYW3XsfhNxyx8I6KVOZBlWeZyhfMuK4D9Agpg=;
-        b=eMrCC+NaWfmZVwaAdIgOsJgtiMu12FnFsusLI8Znj71dzJw4Y9V8f3TMyD4BmHXubh
-         ff9l7AtCjpacc87nDCaZiQGp0R8ijI3DPkWolwrY7+6C6eR67OOldAv0Pk1xT1oFxxwA
-         AT+08r9Z7hEUrzrPbmpcs2qDmXYsNYnnc7GmOoc+cd4hpMYwkq+vcySyDdYohUcX0Vga
-         JWusfUJVtje4jd0UCxVnE98frICUjUhTfvjFO16B115GndXIABfGuugLXUXtUXbAUkAT
-         cfUc+dnKMtb6Hckxs0r5mKelUhxjKjCGamzCqoj9MztQXinQWPpomH6rr1IUP1gsbSAi
-         cV6w==
-X-Received: by 10.68.134.130 with SMTP id pk2mr215665888pbb.31.1357799336387;
-        Wed, 09 Jan 2013 22:28:56 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id c2sm538372pay.34.2013.01.09.22.28.52
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 09 Jan 2013 22:28:55 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 10 Jan 2013 13:28:38 +0700
+        bh=H3MWpASDisvtZ38KWQCezHP0wFJgctqfiKUJL7QyTUM=;
+        b=PG4sXAgpk6QQCeGW3LTwWjEdW9RPgCgzpVx5X9y9jp/b8mRPJQe3+O+7nitfffNF+R
+         l3XTXaTBPuib1WM/vmqhkQx0cow0EDRWWt4f9an+VajlRvA6oMGbzPuME3fOZhcElvOl
+         OUXcvlJfRYY8vasETZ0Jsl2QCyLUuf/y9XHo3e7T9Y/p7OZFTd4TKSeuxBIjHWQDD5JI
+         qpVq/kwPtZUHDKr3Z47Vn1teeYHeWj76DIz7Onaq31moMNqVMO1BSIUIaHmIjs7Z8pzy
+         frCBMM/HevWVJcOeBgld8Le1CW7Zl6FklRXJNELEqYmRus/h8zbfnXl/fF8WSU6xSabm
+         hk4Q==
+X-Received: by 10.66.73.225 with SMTP id o1mr197075630pav.70.1357803395640;
+        Wed, 09 Jan 2013 23:36:35 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id i1sm620258pav.35.2013.01.09.23.36.33
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 09 Jan 2013 23:36:34 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <50EDBA37.30205@web.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <50EAFCD7.9090008@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213127>
 
-On Wed, Jan 09, 2013 at 07:43:03PM +0100, Torsten B=F6gershausen wrote:
-> The current pu fails on Mac OS, case insensitive FS.
->=20
->=20
-> Bisecting points out
-> commit 3f28e4fafc046284657945798d71c57608bee479
-> [snip]
-> Date:   Sun Jan 6 13:21:07 2013 +0700
->=20
->     Convert add_files_to_cache to take struct pathspec
->=20
+Ren=C3=A9 Scharfe wrote:
+> Am 07.01.2013 09:52, schrieb Jonathan Nieder:
 
-I can reproduce it by setting core.ignorecase to true. There is a bug
-that I overlooked. Can you verify if this throw-away patch fixes it
-for you? A proper fix will be in the reroll later.
+>> Hm.  Do some implementations of "unzip" not support symlinks, or is
+>> the problem that some systems build Info-ZIP without the SYMLINKS
+>> option?
+>
+> The unzip supplied with NetBSD 6.0.1, which is based on libarchive, d=
+oesn't
+> support symlinks.  It creates a file with the link target path as its=
+ only
+> content for such entries.
 
--- 8< --
-diff --git a/builtin/add.c b/builtin/add.c
-index 641037f..61cb8bd 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -155,12 +155,13 @@ static char *prune_directory(struct dir_struct *d=
-ir, const char **pathspec, int
- 	return seen;
- }
-=20
--static void treat_gitlinks(const char **pathspec)
-+static int treat_gitlinks(const char **pathspec)
- {
- 	int i;
-+	int modified =3D 0;
-=20
- 	if (!pathspec || !*pathspec)
--		return;
-+		return modified;
-=20
- 	for (i =3D 0; i < active_nr; i++) {
- 		struct cache_entry *ce =3D active_cache[i];
-@@ -171,15 +172,17 @@ static void treat_gitlinks(const char **pathspec)
- 				if (len2 <=3D len || pathspec[j][len] !=3D '/' ||
- 				    memcmp(ce->name, pathspec[j], len))
- 					continue;
--				if (len2 =3D=3D len + 1)
-+				if (len2 =3D=3D len + 1) {
- 					/* strip trailing slash */
- 					pathspec[j] =3D xstrndup(ce->name, len);
--				else
-+					modified =3D 1;
-+				} else
- 					die (_("Path '%s' is in submodule '%.*s'"),
- 						pathspec[j], len, ce->name);
- 			}
- 		}
- 	}
-+	return modified;
- }
-=20
- static void refresh(int verbose, const struct pathspec *pathspec)
-@@ -418,7 +421,16 @@ int cmd_add(int argc, const char **argv, const cha=
-r *prefix)
-=20
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
--	treat_gitlinks(pathspec.raw);
-+	if (treat_gitlinks(pathspec.raw))
-+		/*
-+		 * HACK: treat_gitlinks strips the trailing slashes
-+		 * out of submodule entries but it only affects
-+		 * raw[]. Everything in pathspec.items is not touched.
-+		 * Re-init it to propagate the change. Long term, this
-+		 * function should be moved to pathspec.c and update
-+		 * everything in a consistent way.
-+		 */
-+		init_pathspec(&pathspec, pathspec.raw);
-=20
- 	if (add_new_files) {
- 		int baselen;
--- 8< --
+Ok, that makes sense.  A quick search finds
+<https://code.google.com/p/libarchive/issues/detail?id=3D104>, which if
+I understand correctly was fixed in libarchive 3.0.2.  NetBSD 6 uses a
+patched 2.8.4.
+
+[...]
+> For the test script there is no difference: If we don't have a tool t=
+o
+> verify symlinks in archives, we better skip that part.
+
+Yeah, I just wanted to see if there were other parts of the world that
+needed fixing while at it.  Thanks for explaining.
+
+Ciao,
+Jonathan
