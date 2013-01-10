@@ -1,300 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git-clean: Display more accurate delete messages
-Date: Wed, 09 Jan 2013 18:56:10 -0800
-Message-ID: <7vk3rl3fw5.fsf@alter.siamese.dyndns.org>
-References: <1357514219-16102-1-git-send-email-zoltan.klinger@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: t7400 broken on pu (Mac OS X)
+Date: Thu, 10 Jan 2013 13:28:38 +0700
+Message-ID: <20130110062838.GA11634@duynguyen-vnpc.dek-tpc.internal>
+References: <50EDBA37.30205@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Zoltan Klinger <zoltan.klinger@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 03:56:41 2013
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jan 10 07:29:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tt8Jo-0003uH-7R
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 03:56:36 +0100
+	id 1TtBdd-0005AY-NF
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 07:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758171Ab3AJC4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 21:56:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50037 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758150Ab3AJC4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 21:56:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23C65BFF1;
-	Wed,  9 Jan 2013 21:56:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=638H5XGaYAV+p/qVKPpr/PeTLWg=; b=gKEcgp
-	V1VE1Q+ndESsyvAKp7/YkT0Jt5j+/8/Tqh7DljPMfONwM8zjft37PB/FKY2ID74L
-	jf2BXm7FPEbAYoXOIeu79mWmdoRxsamURoQ/7QcmstaJEwwW1HQwOhEf+nOzPOmW
-	FDSvWckQBFR3jRxynuvT3tcjAKEpO/U+YqDhI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yGYf4uW2dSjlgoRkMuuvJzZXso5GyJB/
-	oMmETSRVVilryzxNyLnkhSa5wmZbMi1da/DHm49ALIWorNXDJ08Zwp0bH7ZoMNir
-	JroWEBRCSN8rTSIfSGOmqoEkJbSigrxop0Q1xgxxv450x06b0vS7bKasoxuekX5Z
-	suKOC2qvXbk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1879DBFF0;
-	Wed,  9 Jan 2013 21:56:13 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14916BFED; Wed,  9 Jan 2013
- 21:56:11 -0500 (EST)
-In-Reply-To: <1357514219-16102-1-git-send-email-zoltan.klinger@gmail.com>
- (Zoltan Klinger's message of "Mon, 7 Jan 2013 10:16:59 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A9BB6EE-5AD1-11E2-9534-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752260Ab3AJG25 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jan 2013 01:28:57 -0500
+Received: from mail-da0-f45.google.com ([209.85.210.45]:41034 "EHLO
+	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785Ab3AJG24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2013 01:28:56 -0500
+Received: by mail-da0-f45.google.com with SMTP id w4so101260dam.18
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 22:28:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=x57MDITYW3XsfhNxyx8I6KVOZBlWeZyhfMuK4D9Agpg=;
+        b=eMrCC+NaWfmZVwaAdIgOsJgtiMu12FnFsusLI8Znj71dzJw4Y9V8f3TMyD4BmHXubh
+         ff9l7AtCjpacc87nDCaZiQGp0R8ijI3DPkWolwrY7+6C6eR67OOldAv0Pk1xT1oFxxwA
+         AT+08r9Z7hEUrzrPbmpcs2qDmXYsNYnnc7GmOoc+cd4hpMYwkq+vcySyDdYohUcX0Vga
+         JWusfUJVtje4jd0UCxVnE98frICUjUhTfvjFO16B115GndXIABfGuugLXUXtUXbAUkAT
+         cfUc+dnKMtb6Hckxs0r5mKelUhxjKjCGamzCqoj9MztQXinQWPpomH6rr1IUP1gsbSAi
+         cV6w==
+X-Received: by 10.68.134.130 with SMTP id pk2mr215665888pbb.31.1357799336387;
+        Wed, 09 Jan 2013 22:28:56 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id c2sm538372pay.34.2013.01.09.22.28.52
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 09 Jan 2013 22:28:55 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 10 Jan 2013 13:28:38 +0700
+Content-Disposition: inline
+In-Reply-To: <50EDBA37.30205@web.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213123>
 
-Zoltan Klinger <zoltan.klinger@gmail.com> writes:
+On Wed, Jan 09, 2013 at 07:43:03PM +0100, Torsten B=F6gershausen wrote:
+> The current pu fails on Mac OS, case insensitive FS.
+>=20
+>=20
+> Bisecting points out
+> commit 3f28e4fafc046284657945798d71c57608bee479
+> [snip]
+> Date:   Sun Jan 6 13:21:07 2013 +0700
+>=20
+>     Convert add_files_to_cache to take struct pathspec
+>=20
 
-> Consider the output of the improved version:
->
->   $ git clean -fd
->   Removing tracked_dir/some_untracked_file
->   Removing untracked_file
->   warning: ignoring untracked git repository untracked_foo/frotz.git
->   Removing untracked_foo/bar
->   Removing untracked_foo/emptydir
->   warning: ignoring untracked git repository untracked_some.git/
->
-> Now it displays only the file and directory names that got actually
-> deleted and shows warnings about ignored untracked git repositories.
->
-> Reported-by: Soren Brinkmann <soren.brinkmann@xilinx.com>
->
-> Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
-> ---
+I can reproduce it by setting core.ignorecase to true. There is a bug
+that I overlooked. Can you verify if this throw-away patch fixes it
+for you? A proper fix will be in the reroll later.
 
-I think the code before this patch used to say "Would not remove"
-and "Not removing" in certain cases to report the paths that the
-command decided not to remove, but after this patch these two
-messages no longer appear in the patch.
-
-Is it expected, are we losing information, or...?
-
->  builtin/clean.c |  158 +++++++++++++++++++++++++++++++++++++++++++++----------
->  1 file changed, 129 insertions(+), 29 deletions(-)
->
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index 69c1cda..1714546 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -10,6 +10,7 @@
->  #include "cache.h"
->  #include "dir.h"
->  #include "parse-options.h"
-> +#include "refs.h"
->  #include "string-list.h"
->  #include "quote.h"
->  
-> @@ -20,6 +21,12 @@ static const char *const builtin_clean_usage[] = {
->  	NULL
->  };
->  
-> +static const char *msg_remove = N_("Removing %s\n");
-> +static const char *msg_would_remove = N_("Would remove %s\n");
-> +static const char *msg_would_ignore_git_dir = N_("Would ignore untracked git repository %s\n");
-> +static const char *msg_warn_ignore_git_dir = N_("ignoring untracked git repository %s");
-> +static const char *msg_warn_remove_failed = N_("failed to remove %s");
-> +
->  static int git_clean_config(const char *var, const char *value, void *cb)
->  {
->  	if (!strcmp(var, "clean.requireforce"))
-> @@ -34,11 +41,116 @@ static int exclude_cb(const struct option *opt, const char *arg, int unset)
->  	return 0;
->  }
->  
-> +static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
-> +		int dry_run, int quiet, int *dir_gone)
-> +{
-> +	DIR *dir;
-> +	struct strbuf quoted = STRBUF_INIT;
-> +	struct dirent *e;
-> +	int res = 0, ret = 0, gone = 1, original_len = path->len, len, i;
-> +	unsigned char submodule_head[20];
-> +	struct string_list dels = STRING_LIST_INIT_DUP;
-> +
-> +	*dir_gone = 1;
-> +
-> +	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
-> +	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
-> +		if (dry_run && !quiet) {
-> +			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +			printf(_(msg_would_ignore_git_dir), quoted.buf);
-> +		} else if (!dry_run) {
-> +			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +			warning(_(msg_warn_ignore_git_dir), quoted.buf);
-> +		}
-> +
-> +		*dir_gone = 0;
-> +		return 0;
-> +	}
-> +
-> +	dir = opendir(path->buf);
-> +	if (!dir) {
-> +		/* an empty dir could be removed even if it is unreadble */
-> +		res = dry_run ? 0 : rmdir(path->buf);
-> +		if (res) {
-> +			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +			warning(_(msg_warn_remove_failed), quoted.buf);
-> +			*dir_gone = 0;
-> +		}
-> +		return res;
-> +	}
-> +
-> +	if (path->buf[original_len - 1] != '/')
-> +		strbuf_addch(path, '/');
-> +
-> +	len = path->len;
-> +	while ((e = readdir(dir)) != NULL) {
-> +		struct stat st;
-> +		if (is_dot_or_dotdot(e->d_name))
-> +			continue;
-> +
-> +		strbuf_setlen(path, len);
-> +		strbuf_addstr(path, e->d_name);
-> +		if (lstat(path->buf, &st))
-> +			; /* fall thru */
-> +		else if (S_ISDIR(st.st_mode)) {
-> +			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
-> +				ret = 1;
-> +			if (gone) {
-> +				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +				string_list_append(&dels, quoted.buf);
-> +			}
-> +			else
-> +				*dir_gone = 0;
-> +			continue;
-> +		} else {
-> +			res = dry_run ? 0 : unlink(path->buf);
-> +			if (!res) {
-> +				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +				string_list_append(&dels, quoted.buf);
-> +			}
-> +			else {
-> +				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +				warning(_(msg_warn_remove_failed), quoted.buf);
-> +				*dir_gone = 0;
-> +				ret = 1;
-> +			}
-> +			continue;
-> +		}
-> +
-> +		/* path too long, stat fails, or non-directory still exists */
-> +		*dir_gone = 0;
-> +		ret = 1;
-> +		break;
-> +	}
-> +	closedir(dir);
-> +
-> +	strbuf_setlen(path, original_len);
-> +
-> +	if (*dir_gone) {
-> +		res = dry_run ? 0 : rmdir(path->buf);
-> +		if (!res)
-> +			*dir_gone = 1;
-> +		else {
-> +			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-> +			warning(_(msg_warn_remove_failed), quoted.buf);
-> +			*dir_gone = 0;
-> +			ret = 1;
-> +		}
-> +	}
-> +
-> +	if (!*dir_gone && !quiet) {
-> +		for (i = 0; i < dels.nr; i++)
-> +			printf(dry_run ?  _(msg_would_remove) : _(msg_remove), dels.items[i].string);
-> +	}
-> +	string_list_clear(&dels, 0);
-> +	return ret;
-> +}
-> +
->  int cmd_clean(int argc, const char **argv, const char *prefix)
->  {
-> -	int i;
-> -	int show_only = 0, remove_directories = 0, quiet = 0, ignored = 0;
-> -	int ignored_only = 0, config_set = 0, errors = 0;
-> +	int i, res;
-> +	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
-> +	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
->  	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
->  	struct strbuf directory = STRBUF_INIT;
->  	struct dir_struct dir;
-> @@ -49,7 +161,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->  	char *seen = NULL;
->  	struct option options[] = {
->  		OPT__QUIET(&quiet, N_("do not print names of files removed")),
-> -		OPT__DRY_RUN(&show_only, N_("dry run")),
-> +		OPT__DRY_RUN(&dry_run, N_("dry run")),
->  		OPT__FORCE(&force, N_("force")),
->  		OPT_BOOLEAN('d', NULL, &remove_directories,
->  				N_("remove whole directories")),
-> @@ -77,7 +189,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->  	if (ignored && ignored_only)
->  		die(_("-x and -X cannot be used together"));
->  
-> -	if (!show_only && !force) {
-> +	if (!dry_run && !force) {
->  		if (config_set)
->  			die(_("clean.requireForce set to true and neither -n nor -f given; "
->  				  "refusing to clean"));
-> @@ -149,38 +261,26 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->  
->  		if (S_ISDIR(st.st_mode)) {
->  			strbuf_addstr(&directory, ent->name);
-> -			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-> -			if (show_only && (remove_directories ||
-> -			    (matches == MATCHED_EXACTLY))) {
-> -				printf(_("Would remove %s\n"), qname);
-> -			} else if (remove_directories ||
-> -				   (matches == MATCHED_EXACTLY)) {
-> -				if (!quiet)
-> -					printf(_("Removing %s\n"), qname);
-> -				if (remove_dir_recursively(&directory,
-> -							   rm_flags) != 0) {
-> -					warning(_("failed to remove %s"), qname);
-> +			if (remove_directories || (matches == MATCHED_EXACTLY)) {
-> +				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
->  					errors++;
-> +				if (gone && !quiet) {
-> +					qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-> +					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
->  				}
-> -			} else if (show_only) {
-> -				printf(_("Would not remove %s\n"), qname);
-> -			} else {
-> -				printf(_("Not removing %s\n"), qname);
->  			}
->  			strbuf_reset(&directory);
->  		} else {
->  			if (pathspec && !matches)
->  				continue;
-> -			qname = quote_path_relative(ent->name, -1, &buf, prefix);
-> -			if (show_only) {
-> -				printf(_("Would remove %s\n"), qname);
-> -				continue;
-> -			} else if (!quiet) {
-> -				printf(_("Removing %s\n"), qname);
-> -			}
-> -			if (unlink(ent->name) != 0) {
-> -				warning(_("failed to remove %s"), qname);
-> +			res = dry_run ? 0 : unlink(ent->name);
-> +			if (res) {
-> +				qname = quote_path_relative(ent->name, -1, &buf, prefix);
-> +				warning(_(msg_warn_remove_failed), qname);
->  				errors++;
-> +			} else if (!quiet) {
-> +				qname = quote_path_relative(ent->name, -1, &buf, prefix);
-> +				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
->  			}
->  		}
->  	}
+-- 8< --
+diff --git a/builtin/add.c b/builtin/add.c
+index 641037f..61cb8bd 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -155,12 +155,13 @@ static char *prune_directory(struct dir_struct *d=
+ir, const char **pathspec, int
+ 	return seen;
+ }
+=20
+-static void treat_gitlinks(const char **pathspec)
++static int treat_gitlinks(const char **pathspec)
+ {
+ 	int i;
++	int modified =3D 0;
+=20
+ 	if (!pathspec || !*pathspec)
+-		return;
++		return modified;
+=20
+ 	for (i =3D 0; i < active_nr; i++) {
+ 		struct cache_entry *ce =3D active_cache[i];
+@@ -171,15 +172,17 @@ static void treat_gitlinks(const char **pathspec)
+ 				if (len2 <=3D len || pathspec[j][len] !=3D '/' ||
+ 				    memcmp(ce->name, pathspec[j], len))
+ 					continue;
+-				if (len2 =3D=3D len + 1)
++				if (len2 =3D=3D len + 1) {
+ 					/* strip trailing slash */
+ 					pathspec[j] =3D xstrndup(ce->name, len);
+-				else
++					modified =3D 1;
++				} else
+ 					die (_("Path '%s' is in submodule '%.*s'"),
+ 						pathspec[j], len, ce->name);
+ 			}
+ 		}
+ 	}
++	return modified;
+ }
+=20
+ static void refresh(int verbose, const struct pathspec *pathspec)
+@@ -418,7 +421,16 @@ int cmd_add(int argc, const char **argv, const cha=
+r *prefix)
+=20
+ 	if (read_cache() < 0)
+ 		die(_("index file corrupt"));
+-	treat_gitlinks(pathspec.raw);
++	if (treat_gitlinks(pathspec.raw))
++		/*
++		 * HACK: treat_gitlinks strips the trailing slashes
++		 * out of submodule entries but it only affects
++		 * raw[]. Everything in pathspec.items is not touched.
++		 * Re-init it to propagate the change. Long term, this
++		 * function should be moved to pathspec.c and update
++		 * everything in a consistent way.
++		 */
++		init_pathspec(&pathspec, pathspec.raw);
+=20
+ 	if (add_new_files) {
+ 		int baselen;
+-- 8< --
