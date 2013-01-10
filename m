@@ -1,69 +1,120 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 03/19] reset.c: pass pathspec around instead of (prefix,
- argv) pair
-Date: Thu, 10 Jan 2013 18:05:24 +0700
-Message-ID: <CACsJy8Apu1BJ2t+vpbzpQ4Wni==Azzmp99a+TmBzR3h8qpx=8g@mail.gmail.com>
-References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
- <1357719376-16406-4-git-send-email-martinvonz@gmail.com> <7vy5g25f9b.fsf@alter.siamese.dyndns.org>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: about vim contrib support
+Date: Thu, 10 Jan 2013 12:17:31 +0100
+Message-ID: <50EEA34B.7070102@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 12:06:16 2013
+Content-Type: multipart/mixed;
+ boundary="------------030400030200050008090504"
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 10 12:18:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtFxg-0001M6-7e
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 12:06:16 +0100
+	id 1TtG98-0003Jg-F1
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 12:18:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769Ab3AJLF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 06:05:56 -0500
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:48253 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753683Ab3AJLFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 06:05:55 -0500
-Received: by mail-ob0-f173.google.com with SMTP id xn12so399566obc.18
-        for <git@vger.kernel.org>; Thu, 10 Jan 2013 03:05:54 -0800 (PST)
+	id S1753877Ab3AJLRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2013 06:17:46 -0500
+Received: from mail-bk0-f43.google.com ([209.85.214.43]:36302 "EHLO
+	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751847Ab3AJLRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2013 06:17:45 -0500
+Received: by mail-bk0-f43.google.com with SMTP id jf20so219352bkc.30
+        for <git@vger.kernel.org>; Thu, 10 Jan 2013 03:17:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ThGFEOjpWSmZiYFy68PmXdkcgCAXrJA8HgRmzk25hwY=;
-        b=sLVBSxo/EiZQr1/cKYBWKSdOW3IKTchwANAeNRP+jbE3fqlQPlHS3IjQS62jkDQKlH
-         V50aPQv1JQBkNpFLnk/g4lV/+Wez5uRO165V5GoALfS46gPLP2eLgKNfO9r7o2svXK4V
-         6zCQuFVzsvPy0bCn/+IFK22afgf6LvloxdnHuHrw5U8kV8zjMI+pojfs8SJ5ZQoIY1md
-         IHmDjGfKLKQDbpbcXQmI+uSnijr3tTxkDkSe3kiDm9VHo/aIdPFi5wIqpCu82KGCzsXU
-         FsJuyS6eLclkhJKsUiQ14Zw1fDkGz8LzLTfWGEG+UOgPdB9Nxf1MlhssCu74Y3/pWefS
-         1paA==
-Received: by 10.182.159.5 with SMTP id wy5mr50385144obb.31.1357815954556; Thu,
- 10 Jan 2013 03:05:54 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Thu, 10 Jan 2013 03:05:24 -0800 (PST)
-In-Reply-To: <7vy5g25f9b.fsf@alter.siamese.dyndns.org>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type;
+        bh=bjim8TAQjjkXkwQHYVQtNGMWyFBNsx/vQgzLw+zZAPA=;
+        b=wi8yvudR7iJypIL12CvZ9M6BWHoCidwytD5CDIeMGh4LOkZSJiQ4Z3jgNxN7AHViW4
+         1iwp5JdQAzctQUz66+IWwfl4KpmESEgK21ylNkz8D/sdvUIzO/dSiZv4HKjEgQQ8QSJQ
+         Ry59JWz9BFNjyy+dYmrmMitdR08GEVxE/ruiEQBd/f8MdZktKIjDKs0jiX/lwP/KJQtI
+         st3htuxrbM459qNBW9SZwEHl35hVYA1m1l2TFoMCAigDPQULRXbuZD2nmFYOBUeqa3C7
+         9AP36QiK7IQJ/tvVA/onQnm3duWmr/0alhRL1YpCcJHPCkbAxkMB3k9eWZHT+NyT9943
+         rb5g==
+X-Received: by 10.204.129.214 with SMTP id p22mr34475751bks.47.1357816663198;
+        Thu, 10 Jan 2013 03:17:43 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.196.34])
+        by mx.google.com with ESMTPS id i20sm893680bkw.5.2013.01.10.03.17.41
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 10 Jan 2013 03:17:42 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213134>
 
-On Thu, Jan 10, 2013 at 2:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martinvonz@gmail.com> writes:
->
->> We use the path arguments in two places in reset.c: in
->> interactive_reset() and read_from_tree(). Both of these call
->> get_pathspec(), so we pass the (prefix, arv) pair to both
->> functions. Move the call to get_pathspec() out of these methods, for
->> two reasons: 1) One argument is simpler than two. 2) It lets us use
->> the (arguably clearer) "if (pathspec)" in place of "if (i < argc)".
->> ---
->> If I understand correctly, this should be rebased on top of
->> nd/parse-pathspec. Please let me know.
->
-> Yeah, this will conflict with the get_pathspec-to-parse_pathspec
-> conversion Duy has been working on.
+This is a multi-part message in MIME format.
+--------------030400030200050008090504
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Or I could hold off nd/parse-pathspec if this series has a better
-chance of graduation first. Decision?
--- 
-Duy
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi.
+
+In the contrib/vim/README file there are instructions about how to setup
+git support with Vim builtin git syntax files.
+
+However these instructions seems to be redundant, since the system
+filetype.vim file already have the autocmd rules.
+
+The only issue I found is with:
+
+autocmd BufNewFile,BufRead .msg.[0-9]*
+	\ if getline(1) =~ '^From.*# This line is ignored.$' |
+	\   setf gitsendemail |
+	\ endif
+
+It should be:
+
+autocmd BufNewFile,BufRead [0-9]*.patch
+
+IMHO it should contain some other checks, to make sure it is a patch
+generated by git format-patch, and not, as an example, a plain patch or
+a Mercurial patch.
+
+
+By the way: I don't understand the purpose of gitsendemail syntax.
+On my system it does not highlight the diff.
+
+I have implemented an alternate gitpatch syntax file, attached.
+What I would like to get, is to syntax highligth the commit subject
+message, but I'm not a Vim expert.
+
+
+Regards   Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDuo0sACgkQscQJ24LbaUTZMQCgm7QRylhxc5v4i4tHBfUXCl8o
+36IAn3t72o/+5R/x1TF7r9mu85z6wY25
+=b2l0
+-----END PGP SIGNATURE-----
+
+--------------030400030200050008090504
+Content-Type: text/plain;
+ name="gitpatch.vim"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="gitpatch.vim"
+
+IiBWaW0gc3ludGF4IGZpbGUKIiBMYW5ndWFnZToJCWdpdCBmb3JtYXQtcGF0Y2ggbWVzc2Fn
+ZQoiIE1haW50YWluZXI6CU1hbmxpbyBQZXJpbGxvCiIgRmlsZW5hbWVzOglbMC05XSoucGF0
+Y2ggKGZpcnN0IGxpbmUgaXMgIkZyb20gLi4uICMgVGhpcyBsaW5lIGlzIGlnbm9yZWQuIikK
+IiBMYXN0IENoYW5nZToJMjAxNCBHZW4gMTAKCmlmIGV4aXN0cygiYjpjdXJyZW50X3N5bnRh
+eCIpCiAgICBmaW5pc2gKZW5kaWYKCnN5biBjYXNlIG1hdGNoCgpzeW4gbWF0Y2ggICBnaXRz
+ZW5kZW1haWxDb21tZW50ICJcJV5Gcm9tLiojLioiCnN5biBtYXRjaCAgIGdpdHNlbmRlbWFp
+bENvbW1lbnQgIl5HSVQ6LioiCgppZiBoYXMoInNwZWxsIikKICAgIHN5biBzcGVsbCB0b3Bs
+ZXZlbAplbmRpZgoKc3luIGluY2x1ZGUgQGdpdGNvbW1pdE1lc3NhZ2Ugc3ludGF4L2dpdGNv
+bW1pdC52aW0Kc3luIHJlZ2lvbiBnaXRjb21taXRNZXNzYWdlIHN0YXJ0PS9eU3ViamVjdDog
+XEA9LyBlbmQ9L14kfF4jXEA9LyBjb250YWlucz1AZ2l0Y29tbWl0TWVzc2FnZQoKaGkgZGVm
+IGxpbmsgZ2l0c2VuZGVtYWlsQ29tbWVudCBDb21tZW50CgpsZXQgYjpjdXJyZW50X3N5bnRh
+eCA9ICJnaXRwYXRjaCIK
+--------------030400030200050008090504--
