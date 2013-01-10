@@ -1,65 +1,65 @@
-From: Peter Eisentraut <peter@eisentraut.org>
-Subject: [PATCH] git-commit-tree(1): correct description of defaults
-Date: Thu, 10 Jan 2013 07:29:58 -0500
-Message-ID: <1357820998.10754.6.camel@vanquo.pezone.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: about vim contrib support
+Date: Thu, 10 Jan 2013 08:36:19 -0500
+Message-ID: <20130110133619.GA19232@sigill.intra.peff.net>
+References: <50EEA34B.7070102@gmail.com>
+ <20130110113958.GA17137@sigill.intra.peff.net>
+ <50EEAB36.6060508@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jan 10 13:36:46 2013
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Manlio Perillo <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 14:36:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtHND-0000FU-Jg
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 13:36:43 +0100
+	id 1TtIJQ-0004l7-AJ
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 14:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754244Ab3AJMgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 07:36:24 -0500
-Received: from eisentraut.org ([85.214.91.16]:39215 "EHLO gattler.pezone.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753002Ab3AJMgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 07:36:23 -0500
-X-Greylist: delayed 381 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Jan 2013 07:36:23 EST
-Received: from [192.168.1.15] (pool-108-52-108-60.phlapa.fios.verizon.net [108.52.108.60])
-	by gattler.pezone.net (Postfix) with ESMTPSA id E49F25A83EB;
-	Thu, 10 Jan 2013 12:29:59 +0000 (UTC)
-X-Mailer: Evolution 3.4.4-1 
+	id S1753205Ab3AJNgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2013 08:36:24 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53665 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753119Ab3AJNgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2013 08:36:23 -0500
+Received: (qmail 8453 invoked by uid 107); 10 Jan 2013 13:37:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Jan 2013 08:37:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Jan 2013 08:36:19 -0500
+Content-Disposition: inline
+In-Reply-To: <50EEAB36.6060508@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213142>
 
-The old phrasing indicated that the EMAIL environment variable takes
-precedence over the user.email configuration setting, but it is the
-other way around.
+On Thu, Jan 10, 2013 at 12:51:18PM +0100, Manlio Perillo wrote:
 
-Signed-off-by: Peter Eisentraut <peter@eisentraut.org>
----
- Documentation/git-commit-tree.txt |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> .patch files are handled by diff highlight.
+> What I would like to do is to use gitcommit syntax highlight, in order
+> to also enable commit subject message hightlight.
 
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 6d5a04c..a221169 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -72,13 +72,13 @@ if set:
- 	GIT_COMMITTER_NAME
- 	GIT_COMMITTER_EMAIL
- 	GIT_COMMITTER_DATE
--	EMAIL
- 
- (nb "<", ">" and "\n"s are stripped)
- 
- In case (some of) these environment variables are not set, the information
- is taken from the configuration items user.name and user.email, or, if not
--present, system user name and the hostname used for outgoing mail (taken
-+present, the environment variable EMAIL, or, if that is not set,
-+system user name and the hostname used for outgoing mail (taken
- from `/etc/mailname` and falling back to the fully qualified hostname when
- that file does not exist).
- 
--- 
-1.7.10.4
+Using the regular gitcommit highlighter would not make sense, as it is
+intended for the message templates seen when making a commit. Whereas
+format-patch .patch files have the headers as email headers.
+
+You can load the mail header highlighting on top of diff highlighting
+like this (which only triggers for patches that look like emails):
+
+  au FileType diff
+    \ if getline(1) =~ '^From ' |
+    \   unlet b:current_syntax |
+    \   runtime! syntax/mail.vim |
+    \ endif
+
+But maybe there is something else that you wanted to highlight. It's not
+clear to me what you want from gitcommit's highlighting. Is it the
+"complain about long lines" highlighting? I think that you'd have to
+pull out of the gitcommit.vim and execute manually (and you'd have to
+tweak the regex to take into account the "Subject: [PATCH] bits).
+
+-Peff
