@@ -1,73 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/19] reset: don't allow "git reset -- $pathspec" in
- bare repo
-Date: Thu, 10 Jan 2013 10:04:17 -0800
-Message-ID: <7vvcb429um.fsf@alter.siamese.dyndns.org>
-References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
- <1357719376-16406-5-git-send-email-martinvonz@gmail.com>
- <7vtxqq5f0g.fsf@alter.siamese.dyndns.org>
- <CANiSa6gK+RqovV+NKWgV57hz-p_O085HN7WCg9qvQAD-Ynpfjw@mail.gmail.com>
+Subject: Re: [PATCH] git-commit-tree(1): correct description of defaults
+Date: Thu, 10 Jan 2013 10:33:59 -0800
+Message-ID: <7vr4ls28h4.fsf@alter.siamese.dyndns.org>
+References: <1357820998.10754.6.camel@vanquo.pezone.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 19:04:44 2013
+Cc: git@vger.kernel.org
+To: Peter Eisentraut <peter@eisentraut.org>
+X-From: git-owner@vger.kernel.org Thu Jan 10 19:34:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtMUc-0002wZ-Tl
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 19:04:43 +0100
+	id 1TtMxS-0005UQ-UK
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 19:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755600Ab3AJSEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 13:04:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37380 "EHLO
+	id S1754638Ab3AJSeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2013 13:34:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36304 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755511Ab3AJSET (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 13:04:19 -0500
+	id S1753744Ab3AJSeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2013 13:34:09 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31BDDA35D;
-	Thu, 10 Jan 2013 13:04:19 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAC01B2D3;
+	Thu, 10 Jan 2013 13:34:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NmLEOIM0eeZhMZbaJtR+Ubh7tR0=; b=yCZYJb
-	VYNwjYYEDdfuRIH/lRIaE+LmLo0N6RpL82LRKybiRHbd7Px/PMUk8w0EZCD4chok
-	ylqDfHnf123wkE2VE+DuoE0b9MBuq5KhWkUN5AZw5/3oC9npFf2umPGYf6ZjSCu3
-	9eT5V9B6x0NQxNB9AS7/Q8F4zJHxAXnrIVsTg=
+	:content-type; s=sasl; bh=5gkfA9/XQ2EHp7J0WM2jGMttDSE=; b=Sttxup
+	pTjLCvPMsW6S4Appsq3dEK46RFl/qn7YNcmbEF6/aWDMkiiY/OxGfc2Eifb+ZgkA
+	w7ljLrUFHThWtASzxp6OS97zpJO3w9E128KRhEPOF4tf/T4bcgY9/YcHT0LhjCgK
+	uuF0f+ObJxhHp/Ro/8ePoCS2y7vk9pWlgM1xk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=otfxAKbpJvVC1qUPG/QMGI729o5EcPL/
-	PW+QsQXYKZmvOBvHTL5pLJFv5j7D4Ii7IqB/sflruebFXsHgm1mglAQIR+W3Do46
-	gtBhZtpF8867c+TkmJiwtUzFV6ctE66PPwnY92b074x5JfGe5iapzBTB+fIcpFFr
-	VlbONJCX4Ec=
+	:content-type; q=dns; s=sasl; b=q2R5O9kLfNSvL+m+UMkI7QjZ89COmg+W
+	Y0r5Z6l5YYlGZHMBhXWsWiXDRG2aaGqTsAiDT8/sNf0bx1w3BXK5AQt6RLufS3yz
+	n9Xyc81RrgwIeilDFvZ18V2ydpSNplvB2MRcUx/1OBvSH4Qw1Y+XPjwiXFEOwqjC
+	iGFJzagl+oU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26AEFA35C;
-	Thu, 10 Jan 2013 13:04:19 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D49A0B2CD;
+	Thu, 10 Jan 2013 13:34:07 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9916FA35B; Thu, 10 Jan 2013
- 13:04:18 -0500 (EST)
-In-Reply-To: <CANiSa6gK+RqovV+NKWgV57hz-p_O085HN7WCg9qvQAD-Ynpfjw@mail.gmail.com> (Martin
- von Zweigbergk's message of "Thu, 10 Jan 2013 00:24:10 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3EDFB2C0; Thu, 10 Jan 2013
+ 13:34:02 -0500 (EST)
+In-Reply-To: <1357820998.10754.6.camel@vanquo.pezone.net> (Peter Eisentraut's
+ message of "Thu, 10 Jan 2013 07:29:58 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 271E3C26-5B50-11E2-A6B6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 50F8A4CE-5B54-11E2-9DEA-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213147>
 
-Martin von Zweigbergk <martinvonz@gmail.com> writes:
+Peter Eisentraut <peter@eisentraut.org> writes:
 
->     ... Fix by moving
->     the branching point after the check.
+> The old phrasing indicated that the EMAIL environment variable takes
+> precedence over the user.email configuration setting, but it is the
+> other way around.
+>
+> Signed-off-by: Peter Eisentraut <peter@eisentraut.org>
+> ---
 
-OK, that is what I missed.  We have an existing check for mixed
-reset, which was originally meant to handle case without any
-pathspec but can use the same error condition (i.e. type is mixed
-and repository is bare) and error message (i.e. no mixed reset in
-a bare repository).  "reset with pathspec" was done before that
-check kicked in.
+It could be argued that the observed behaviour is a bug, by the way.
 
-Thanks for clarification (and sorry for the noise).
+If we followed the normal "command line options trump environment
+variables that in turn trump config variables that in turn trump
+whatever the default values we compute using cues from the system"
+precedence order, EMAIL ought to come between the more specific
+GIT_{AUTHOR,COMMITTER}_EMAIL environment variables and the
+user.email configuration variable.
+
+But reading the value of EMAIL can also be seen as part of the
+"using cues from the system" (it often is set in equivalents of
+"$HOME/.profile" by equivalents of "adduser") step, and the original
+motivation to add user.email indeed was to allow users to override
+EMAIL (or the name we grab from the system) without having to set
+the GIT_COMMITTER_EMAIL environment variable.
+
+So the current behaviour is correct, and the patch is a good
+(belated ;-) update to the documentation.
+
+Will apply.  Thanks.
+
+>  Documentation/git-commit-tree.txt |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
+> index 6d5a04c..a221169 100644
+> --- a/Documentation/git-commit-tree.txt
+> +++ b/Documentation/git-commit-tree.txt
+> @@ -72,13 +72,13 @@ if set:
+>  	GIT_COMMITTER_NAME
+>  	GIT_COMMITTER_EMAIL
+>  	GIT_COMMITTER_DATE
+> -	EMAIL
+>  
+>  (nb "<", ">" and "\n"s are stripped)
+>  
+>  In case (some of) these environment variables are not set, the information
+>  is taken from the configuration items user.name and user.email, or, if not
+> -present, system user name and the hostname used for outgoing mail (taken
+> +present, the environment variable EMAIL, or, if that is not set,
+> +system user name and the hostname used for outgoing mail (taken
+>  from `/etc/mailname` and falling back to the fully qualified hostname when
+>  that file does not exist).
