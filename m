@@ -1,88 +1,67 @@
-From: bryanlarsen <bryan@larsen.st>
-Subject: Re: bugreport: stgit cannot export empty patch
-Date: Thu, 10 Jan 2013 15:16:57 -0800 (PST)
-Message-ID: <1357859817532-7574691.post@n2.nabble.com>
-References: <CAPk5vtzpUHgL_dfJLJHgKsaNPZodx1jbTRQpRdoj01RRPRoBfg@mail.gmail.com> <xmqqboll2nl0.fsf@junio.mtv.corp.google.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH 02/21] Add parse_pathspec() that converts cmdline args to
+ struct pathspec
+Date: Thu, 10 Jan 2013 15:26:25 -0800
+Message-ID: <CANiSa6iUqZ7E9NWgMfR3bUxZoyhjO2Jz+Z=yjs9vkfmbit7SOg@mail.gmail.com>
+References: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
+	<1357453268-12543-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 00:17:24 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 00:26:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtRN8-0002hK-Eg
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 00:17:18 +0100
+	id 1TtRWI-00026n-1t
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 00:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754419Ab3AJXQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 18:16:58 -0500
-Received: from 216-139-250-139.aus.us.siteprotect.com ([216.139.250.139]:34149
-	"EHLO joe.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754012Ab3AJXQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 18:16:58 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by joe.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <bryan@larsen.st>)
-	id 1TtRMn-00078Y-HZ
-	for git@vger.kernel.org; Thu, 10 Jan 2013 15:16:57 -0800
-In-Reply-To: <xmqqboll2nl0.fsf@junio.mtv.corp.google.com>
+	id S1753946Ab3AJX00 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jan 2013 18:26:26 -0500
+Received: from mail-ia0-f169.google.com ([209.85.210.169]:46433 "EHLO
+	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339Ab3AJX0Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2013 18:26:25 -0500
+Received: by mail-ia0-f169.google.com with SMTP id r4so1055045iaj.28
+        for <git@vger.kernel.org>; Thu, 10 Jan 2013 15:26:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=A1VConVi6vdBarOLcSstePEposEQW1IY6YYqjU1rJ+o=;
+        b=Dw8HnQU96yH/32tN+Jo5PlMZhbeVDd5oaWkUIG7sbek0ZJwftLJZ2IDpiR6p53o3HO
+         z+7HcrlqUyogobMXBzFHIDqIOTCzOCubGWvIUWGOfaQ4Sn1X57uzgE87xRMPbMBuhNN/
+         K15HjCGhcnIOfxTF80bUWrfoss/TlE2/5J2ErKFMwYSIGZ/3ZV6xkuR7pJZofyKwdpF0
+         TqbbZESq55iXPQieVBtqucnP9znRS9rGjFrGvs8hM7/GaD2neAIhkRSlK0qkt2EjdcUG
+         27h95Zes+gNRUNNbL4dA54ikacDppV6WiooQ2D/85WFOrUXzmiaKCG5GghEg3HTO2ZEx
+         pS6g==
+Received: by 10.43.17.199 with SMTP id qd7mr52082182icb.52.1357860385455; Thu,
+ 10 Jan 2013 15:26:25 -0800 (PST)
+Received: by 10.64.86.68 with HTTP; Thu, 10 Jan 2013 15:26:25 -0800 (PST)
+In-Reply-To: <1357453268-12543-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213162>
 
-Junio C Hamano writes:
-
-> Stepan Koltsov &lt;stepan.koltsov@&gt; writes:
->> stgit fails to export empty patches:
->>
->> % stg new empty-patch -m 'asasas'
->> Now at patch "empty-patch"
->> % stg export empty-patch
->> Checking for changes in the working directory ... done
->> fatal: unrecognized input
->> stg export: git failed with code 128
->> zsh: exit 2     stg export empty-patch
->>
->> % stg --version
->> Stacked GIT 0.16-3-g67cf
->> git version 1.7.9.1
->> Python version 2.7.1 (r271:86832, Jul 31 2011, 19:30:53)
->> [GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
-
-> I don't use (or read the sources to) StGIT, but isn't the whole point of
-> "stg export" to "convert your StGIT patches into patch files"?  For an
-> empty commit, what is an appropriate output?  IOW, is it reasonable to
-> have an empty commit in your history if you are planning to "stg export"
-> it?
-
-Here's another example where the functionality is useful: 
-https://github.com/Hobo/agility-gitorial-patches is used to build
-http://cookbook.hobocentral.net/tutorials/agility
-
-Each commit/patch becomes a step in the tutorial.  Some tutorial steps don't
-have any code attached to them.
-
-In the past, an export of an empty commit would yield a patch where the last
-three lines were
-
-> ---
->  0 files changed, 0 insertions(+), 0 deletions(-)
+On Sat, Jan 5, 2013 at 10:20 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> +
+> +       /* No arguments, no prefix -> no pathspec */
+> +       if (!entry && !prefix)
+> +               return;
 >
+> +       /* No arguments with prefix -> prefix pathspec */
 
-The latest version of stgit along with git v1.6 eliminates the error.  A
-bisection identifies cc64b318f26c9e176c4f07b1a459a86e7a04c4eb as the source
-of the problem.
-
-Thanks,
-Bryan
-
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/bugreport-stgit-cannot-export-empty-patch-tp7559494p7574691.html
-Sent from the git mailing list archive at Nabble.com.
+When working with the old get_pathspec(), I remember wondering if a
+flag switching between "no argument -> prefix pathspec" and "no
+argument -> no pathspec" would be worthwhile. I think e.g. 'add' and
+'clean' would use the former , while 'reset' and 'commit' would use
+the latter. Since you're now changing all the callers of
+get_pathspec(), it seems like the perfect time to ask this question.
+What do you think?
