@@ -1,100 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Wed, 09 Jan 2013 16:39:03 -0800
-Message-ID: <7vobgx3m8o.fsf@alter.siamese.dyndns.org>
-References: <20130104124756.GA402@sigill.intra.peff.net>
- <7vr4lu3wx7.fsf@alter.siamese.dyndns.org>
- <20130109205116.GA24605@sigill.intra.peff.net>
- <7vehhu3u2y.fsf@alter.siamese.dyndns.org> <20130110001844.GC21054@google.com>
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: Re: [PATCH v4] git-clean: Display more accurate delete messages
+Date: Thu, 10 Jan 2013 12:01:00 +1100
+Message-ID: <CAKJhZwRxkR=W8a3tmnL7P_BgpYzdHRYMEFsCp+QLcpO8Bz4YaQ@mail.gmail.com>
+References: <1357514219-16102-1-git-send-email-zoltan.klinger@gmail.com>
+	<20130106234022.GB3823@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Bart Trojanowski <bart@jukie.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Soren Brinkmann <soren.brinkmann@xilinx.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Peter Collingbourne <peter@pcc.me.uk>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 01:39:31 2013
+X-From: git-owner@vger.kernel.org Thu Jan 10 02:01:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tt6B6-0000uY-8T
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 01:39:28 +0100
+	id 1Tt6WJ-0000jC-MS
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jan 2013 02:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348Ab3AJAjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2013 19:39:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51049 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932224Ab3AJAjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2013 19:39:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6520EAF87;
-	Wed,  9 Jan 2013 19:39:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9TRkAgOe8tBpgpkAJKHogQ0SK78=; b=le+CU2
-	wy9n90ZtJvumR8OukYw1yX01MsIh9ZyvmMLgAjBLqLSPb4sRkm+Z8pFsrz8nIBgW
-	jATMMatSVK7UVmJSuYbDDcPBSKJ2kvZQXfneV+7ORu2PL5LtRA3LuiQYdS/6Bx8w
-	I0g4CVBnzQKc03C/6rQPYlEhuAOoH/3gCWxDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LTUDsDfUQsK9eaxr/8H0H9gcQRsCymAj
-	BBKWl42u4rmRhhhvXhTRZOBmHc4P0nh8ngh/TdHbQAPpsbRB152t6Noe+8bsTOli
-	Oq1e5zghiGSdZzRZ5na4zc+1/TlyzHlGHh1bFI+JLZ8qIlDqRJ3Dcyd6NUaGKmiG
-	BRSBRppKihM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55DBAAF86;
-	Wed,  9 Jan 2013 19:39:05 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC944AF85; Wed,  9 Jan 2013
- 19:39:04 -0500 (EST)
-In-Reply-To: <20130110001844.GC21054@google.com> (Jonathan Nieder's message
- of "Wed, 9 Jan 2013 16:18:44 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 22B5989C-5ABE-11E2-9612-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932438Ab3AJBBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2013 20:01:03 -0500
+Received: from mail-la0-f51.google.com ([209.85.215.51]:63430 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932323Ab3AJBBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2013 20:01:01 -0500
+Received: by mail-la0-f51.google.com with SMTP id fj20so820lab.38
+        for <git@vger.kernel.org>; Wed, 09 Jan 2013 17:01:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xlpm3ci2n37IdpSli/uStmToq/ICroNHH2vST7mulhc=;
+        b=Xxk1pcM5NnDtbj1nKoE7VD1NfJ0j5kW4CvDgni2Ifm6V4uEfCM/rDum5b5S7j2KCpM
+         EstCwwggaRFCuyhebpKHCI/zlamOvs+HBBtrB1amgVYZY3IrJAluXVRaij1jsCvGTnBO
+         V+l5PgZIX1Tcu5xxRQIoqzi7zIHd95Le18Fx2tQtNMsonQtUvrWAjUd+YubAdQ2P542t
+         nmwMo1EcxjshrHAmr22Fdyx1QsNnqnf+ckRJNkfLUo4KDehfch2AKozWNUAfZKlRe/gK
+         6HsC6WU55l3q3rzpm8qRitCbxkvPucXM1SQvHAIq5YAeZukWhVU2acQAqirNIkGQd5rE
+         JuQg==
+Received: by 10.152.123.77 with SMTP id ly13mr11632356lab.4.1357779660109;
+ Wed, 09 Jan 2013 17:01:00 -0800 (PST)
+Received: by 10.112.80.98 with HTTP; Wed, 9 Jan 2013 17:01:00 -0800 (PST)
+In-Reply-To: <20130106234022.GB3823@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213118>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> I'm not sure whether there are SIGPIPE instances we really don't want
-> to be silent about, though.  I suspect not. ;-)
+> I wonder whether it's possible to make the output more consistent,
+> as in:
 >
-> Compare <http://thread.gmane.org/gmane.comp.version-control.git/2062>,
-> <http://thread.gmane.org/gmane.comp.version-control.git/48469/focus=48665>.
+>     Removing tracked_dir/some_untracked_file
+>     Removing untracked_file
+>     Skipping repository untracked_foo/frotz.git
+>     Removing untracked_foo/bar
+>     Removing untracked_foo/emptydir
+>     Skipping repository untracked_some.git
+>
+> or similar.  What do you think?
 
-Yeah, thanks for the pointer to 48665.  Quoting from there:
-
-    So EPIPE really _is_ special: because when you write to a pipe,
-    there's no guarantee that you'll get it at all, so whenever you get
-    an EPIPE you should ask yourself:
-
-     - what would I have done if the data had fit in the 64kB kernel
-       buffer?
-
-     - should I really return a different error message or complain just 
-       because I just happened to notice that the reader went away
-       _this_ 
-       time, even if I might not notice it next time?
-
-    In other words, the "exit(0)" is actually _more_ consistent than
-    "exit(1)", because exiting with an error message or with an error
-    return is going to depend on luck and timing.
-
-and I think I still agree with the analysis and conclusion:
-
-    So what _should_ you do for EPIPE?
-
-    Here's what EPIPE _really_ means:
-
-     - you might as well consider the write a success, but the
-       reader isn't actually interested, so rather than go on, you
-       might as well stop early.
-
-    Notice how I very carefull avoided the word "error" anywhere.
-    Because it's really not an error. The reader already got
-    everything it wanted. So EPIPE should generally be seen as an
-    "early success" rather than as a "failure".
+Agree, the output looks much neater printed like that. I am going to
+update the patch unless someone feels strongly against the proposed
+output.
