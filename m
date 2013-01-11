@@ -1,132 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] git-completion.bash: add support for path completion
-Date: Fri, 11 Jan 2013 14:02:53 -0800
-Message-ID: <7v8v7zbcoi.fsf@alter.siamese.dyndns.org>
-References: <1357930123-26310-1-git-send-email-manlio.perillo@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, szeder@ira.uka.de, felipe.contreras@gmail.com,
-	peff@peff.net
-To: Manlio Perillo <manlio.perillo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 23:03:23 2013
+Subject: [PATCH] format_commit_message(): simplify calls to logmsg_reencode()
+Date: Fri, 11 Jan 2013 14:15:09 -0800
+Message-ID: <1357942509-21431-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 11 23:15:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttmh3-0006J7-E6
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 23:03:17 +0100
+	id 1Ttmsw-0007Yu-Fl
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 23:15:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754979Ab3AKWC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 17:02:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35029 "EHLO
+	id S1755763Ab3AKWPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 17:15:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43948 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754804Ab3AKWC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 17:02:56 -0500
+	id S1754443Ab3AKWPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 17:15:11 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0759AA930;
-	Fri, 11 Jan 2013 17:02:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kgoP29ilC46cpFVxX86cS6Vp5KM=; b=gC5hfx
-	jfa1mIEMIdh/9RXlUR2HBWPR4ssOPfL0E2xC5zK2FCdU5QfNm/uOxvfrGZLGh4/u
-	fPt/EZhCbAkoqvb1rOagTb61KzmovAnVZS9RjbO0I1q6VkPj3ktj8cBkhsHR7QSt
-	zloKbboFgIxoEYi9RYm2qFiuY9yGEBOZK5PDg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YesviXw0tAEwx0yt+gnBtmve0gw08uhS
-	K8axZJjpB+7tnb2VIdxt/3PQu2TRzYB0wEn88V4BZuSvb09mWU+j7kaqtJd3d58k
-	4eJEA+VC512wdNzI/+64T/9SvdBvOyUBlU+e2UPcvuk9NzlFB/uqzdkLuj7pRVW+
-	+sQU8km2fUg=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17A7EB227
+	for <git@vger.kernel.org>; Fri, 11 Jan 2013 17:15:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=IWAw+Mpa79vYP9MeoUzfwJANajU
+	=; b=suoFJvkpK65MBzw52PdGWPQOTrzHgkWxw7t96IVV99RDb7Pf9qeEHUsLbgE
+	YPgS+9+GvOoqapnGJRT7MjGerDBoXKIvkhh2J7xta3P1apJA+DIuugM8eQOhYqIg
+	cQLKe8y76C+APyT7AxA82U4/wptiMA+AVyQSbbpmzJ3vsX/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=HlutZFSo1DidsF+E0sTQ8r6lD2vgf
+	VU5070YJ7LRq2bn6NFKR26YnmOiHJzk99PeuBm7BA4+VZxtc2A3C/nXKVy13Wewe
+	HyEEYAy4hhcbfbDkSsIDDeywPQQjH25DMmR1oaWT9EgRCO/fxfHA+PWBH5Sco+Ee
+	9KDdr7Pk98JMTE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E720FA92F;
-	Fri, 11 Jan 2013 17:02:55 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A17CB226
+	for <git@vger.kernel.org>; Fri, 11 Jan 2013 17:15:11 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ABF5A92C; Fri, 11 Jan 2013
- 17:02:55 -0500 (EST)
-In-Reply-To: <1357930123-26310-1-git-send-email-manlio.perillo@gmail.com>
- (Manlio Perillo's message of "Fri, 11 Jan 2013 19:48:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A6D20B60-5C3A-11E2-A7B8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 873F4B224 for
+ <git@vger.kernel.org>; Fri, 11 Jan 2013 17:15:10 -0500 (EST)
+X-Mailer: git-send-email 1.8.1.407.g91cb4ac
+X-Pobox-Relay-ID: 5D2DA30A-5C3C-11E2-B4F3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213248>
 
-Manlio Perillo <manlio.perillo@gmail.com> writes:
+All the other callers of logmsg_reencode() pass return value of
+get_commit_output_encoding() or get_log_output_encoding().  Teach
+the function to optionally take NULL as a synonym to "" aka "no
+conversion requested" so that we can simplify the only remaining
+calling site.
 
-> +# Process path list returned by "ls-files" and "diff-index --name-only"
-> +# commands, in order to list only file names relative to a specified
-> +# directory, and append a slash to directory names.
-> +__git_index_file_list_filter ()
-> +{
-> +	# Default to Bash >= 4.x
-> +	__git_index_file_list_filter_bash
-> +}
-> +
-> +# Execute git ls-files, returning paths relative to the directory
-> +# specified in the first argument, and using the options specified in
-> +# the second argument.
-> +__git_ls_files_helper ()
-> +{
-> +	# NOTE: $2 is not quoted in order to support multiple options
-> +	cd "$1" && git ls-files --exclude-standard $2
-> +} 2>/dev/null
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ pretty.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-I think this redirection is correct but a bit tricky; it is in
-effect during the execution of the { block } (in other words, it is
-not about squelching errors during the function definition).
-
--- >8 --
-#!/bin/sh
-cat >t.sh <<\EOF &&
-echo I am "$1"
-t () { echo "Goes to stdout"; echo >&2 "Goes to stderr"; } 2>/dev/null
-t
-for sh in bash dash ksh zsh
-do
-	$sh t.sh $sh
-done
--- 8< --
-
-Bash does (so do dash and real AT&T ksh) grok this correctly, but
-zsh does not seem to (I tried zsh 4.3.10 and 4.3.17; also zsh
-pretending to be ksh gets this wrong as well).  Not that what ksh
-does matters, as it won't be dot-sourcing bash completion script.
-
-It however may affect zsh, which does seem to dot-source this file.
-Perhaps zsh completion may have to be rewritten in a similar way as
-tcsh completion is done (i.e. does not dot-source this file but ask
-bash to do the heavy-lifting).
-
-This function seems to be always called in an subshell (e.g. as an
-upstream of a pipeline), so the "cd" may be harmless, but don't you
-need to disable CDPATH while doing this?
-
-> +# Execute git diff-index, returning paths relative to the directory
-> +# specified in the first argument, and using the tree object id
-> +# specified in the second argument.
-> +__git_diff_index_helper ()
-> +{
-> +	cd "$1" && git diff-index --name-only --relative "$2"
-> +} 2>/dev/null
-
-Ditto.
-
-> @@ -722,6 +875,43 @@ __git_has_doubledash ()
->  	return 1
->  }
->  
-> +# Try to count non option arguments passed on the command line for the
-> +# specified git command.
-> +# When options are used, it is necessary to use the special -- option to
-> +# tell the implementation were non option arguments begin.
-> +# XXX this can not be improved, since options can appear everywhere, as
-> +# an example:
-> +#	git mv x -n y
-
-If that is the case, it is a bug in the command line parser, I
-think.  We should reject it, and the command line completer
-certainly should not encourage it.
+diff --git a/pretty.c b/pretty.c
+index e87fe9f..732e2a2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -500,7 +500,7 @@ char *logmsg_reencode(const struct commit *commit,
+ 	char *encoding;
+ 	char *out;
+ 
+-	if (!*output_encoding)
++	if (!output_encoding || !*output_encoding)
+ 		return NULL;
+ 	encoding = get_header(commit, "encoding");
+ 	use_encoding = encoding ? encoding : utf8;
+@@ -1184,23 +1184,15 @@ void format_commit_message(const struct commit *commit,
+ 			   const struct pretty_print_context *pretty_ctx)
+ {
+ 	struct format_commit_context context;
+-	static const char utf8[] = "UTF-8";
+ 	const char *output_enc = pretty_ctx->output_encoding;
+ 
+ 	memset(&context, 0, sizeof(context));
+ 	context.commit = commit;
+ 	context.pretty_ctx = pretty_ctx;
+ 	context.wrap_start = sb->len;
+-	context.message = commit->buffer;
+-	if (output_enc) {
+-		char *enc = get_header(commit, "encoding");
+-		if (strcmp(enc ? enc : utf8, output_enc)) {
+-			context.message = logmsg_reencode(commit, output_enc);
+-			if (!context.message)
+-				context.message = commit->buffer;
+-		}
+-		free(enc);
+-	}
++	context.message = logmsg_reencode(commit, output_enc);
++	if (!context.message)
++		context.message = commit->buffer;
+ 
+ 	strbuf_expand(sb, format, format_commit_item, &context);
+ 	rewrap_message_tail(sb, &context, 0, 0, 0);
+-- 
+1.8.1.407.g91cb4ac
