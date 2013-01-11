@@ -1,67 +1,95 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [PATCH 02/21] Add parse_pathspec() that converts cmdline args to
- struct pathspec
-Date: Thu, 10 Jan 2013 15:26:25 -0800
-Message-ID: <CANiSa6iUqZ7E9NWgMfR3bUxZoyhjO2Jz+Z=yjs9vkfmbit7SOg@mail.gmail.com>
-References: <1357453268-12543-1-git-send-email-pclouds@gmail.com>
-	<1357453268-12543-3-git-send-email-pclouds@gmail.com>
+From: Tim Chase <git@tim.thechases.com>
+Subject: [PATCH] minor diff between gitweb docs and actual template for $GIT/description
+Date: Thu, 10 Jan 2013 18:33:12 -0600
+Message-ID: <50EF5DC8.1000500@tim.thechases.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 00:26:47 2013
+Content-Type: multipart/mixed;
+ boundary="------------070806000202010903070703"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 11 02:09:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtRWI-00026n-1t
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 00:26:46 +0100
+	id 1TtT7j-0001mP-G5
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 02:09:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab3AJX00 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jan 2013 18:26:26 -0500
-Received: from mail-ia0-f169.google.com ([209.85.210.169]:46433 "EHLO
-	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339Ab3AJX0Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2013 18:26:25 -0500
-Received: by mail-ia0-f169.google.com with SMTP id r4so1055045iaj.28
-        for <git@vger.kernel.org>; Thu, 10 Jan 2013 15:26:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=A1VConVi6vdBarOLcSstePEposEQW1IY6YYqjU1rJ+o=;
-        b=Dw8HnQU96yH/32tN+Jo5PlMZhbeVDd5oaWkUIG7sbek0ZJwftLJZ2IDpiR6p53o3HO
-         z+7HcrlqUyogobMXBzFHIDqIOTCzOCubGWvIUWGOfaQ4Sn1X57uzgE87xRMPbMBuhNN/
-         K15HjCGhcnIOfxTF80bUWrfoss/TlE2/5J2ErKFMwYSIGZ/3ZV6xkuR7pJZofyKwdpF0
-         TqbbZESq55iXPQieVBtqucnP9znRS9rGjFrGvs8hM7/GaD2neAIhkRSlK0qkt2EjdcUG
-         27h95Zes+gNRUNNbL4dA54ikacDppV6WiooQ2D/85WFOrUXzmiaKCG5GghEg3HTO2ZEx
-         pS6g==
-Received: by 10.43.17.199 with SMTP id qd7mr52082182icb.52.1357860385455; Thu,
- 10 Jan 2013 15:26:25 -0800 (PST)
-Received: by 10.64.86.68 with HTTP; Thu, 10 Jan 2013 15:26:25 -0800 (PST)
-In-Reply-To: <1357453268-12543-3-git-send-email-pclouds@gmail.com>
+	id S1753427Ab3AKBJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2013 20:09:10 -0500
+Received: from boston.accountservergroup.com ([50.22.11.22]:38367 "EHLO
+	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752841Ab3AKBJJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2013 20:09:09 -0500
+X-Greylist: delayed 2230 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Jan 2013 20:09:09 EST
+Received: from adsl-68-90-202-221.dsl.rcsntx.swbell.net ([68.90.202.221]:41697 helo=[192.168.1.12])
+	by boston.accountservergroup.com with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
+	(Exim 4.80)
+	(envelope-from <git@tim.thechases.com>)
+	id 1TtSXO-0004gw-4z
+	for git@vger.kernel.org; Thu, 10 Jan 2013 18:31:58 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tim.thechases.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213163>
 
-On Sat, Jan 5, 2013 at 10:20 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> +
-> +       /* No arguments, no prefix -> no pathspec */
-> +       if (!entry && !prefix)
-> +               return;
->
-> +       /* No arguments with prefix -> prefix pathspec */
+This is a multi-part message in MIME format.
+--------------070806000202010903070703
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-When working with the old get_pathspec(), I remember wondering if a
-flag switching between "no argument -> prefix pathspec" and "no
-argument -> no pathspec" would be worthwhile. I think e.g. 'add' and
-'clean' would use the former , while 'reset' and 'commit' would use
-the latter. Since you're now changing all the callers of
-get_pathspec(), it seems like the perfect time to ask this question.
-What do you think?
+The documentation for gitweb gives one description of the default 
+content for the $GIT/description, the description template has other 
+text.  One of these two patches should be applied to bring them into 
+order (applying both would just reverse the problem).  Or, both 
+could be changed to the same new text.
+
+-tkc
+(not subscribed to the actual git ML, just git-users@googlegroups.com)
+
+
+
+--------------070806000202010903070703
+Content-Type: text/plain; charset=us-ascii;
+ name="git_change_gitweb.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="git_change_gitweb.diff"
+
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 168e8bf..7c4cb69 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -227,7 +227,7 @@ description (or `gitweb.description`)::
+ 	repository).  Plain text file; HTML will be escaped.  By default set to
+ +
+ -------------------------------------------------------------------------------
+-Unnamed repository; edit this file to name it for gitweb.
++Unnamed repository; edit this file 'description' to name the repository.
+ -------------------------------------------------------------------------------
+ +
+ from the template during repository creation, usually installed in
+
+--------------070806000202010903070703
+Content-Type: text/plain; charset=us-ascii;
+ name="git_change_template.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="git_change_template.diff"
+
+diff --git a/templates/this--description b/templates/this--description
+index 498b267..c6f25e8 100644
+--- a/templates/this--description
++++ b/templates/this--description
+@@ -1 +1 @@
+-Unnamed repository; edit this file 'description' to name the repository.
++Unnamed repository; edit this file to name it for gitweb.
+
+--------------070806000202010903070703--
