@@ -1,82 +1,74 @@
-From: Herry Wang <tech.herry@gmail.com>
-Subject: [BUG]:Git doesn't work with Sock5 proxy on MAC
-Date: Fri, 11 Jan 2013 12:22:45 -0800
-Message-ID: <CAHNFYON4rqs2Pu+qFoWjszH-eReLZKqzsFuZQebh2qVTcxN+_Q@mail.gmail.com>
+From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
+Subject: Re: git send-email should not allow 'y' for in-reply-to
+Date: Fri, 11 Jan 2013 20:13:57 +0000
+Message-ID: <A0DB01D693D8EF439496BC8B037A0AEF322039A7@xmb-rcd-x15.cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 21:23:06 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 11 21:25:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttl86-0000RK-8W
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 21:23:06 +0100
+	id 1TtlAE-0002Es-Pd
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 21:25:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754315Ab3AKUWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 15:22:46 -0500
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:56743 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753552Ab3AKUWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 15:22:46 -0500
-Received: by mail-qa0-f53.google.com with SMTP id a19so142101qad.5
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 12:22:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=wgqYKtjhQQgz34acBEVUF0Oz+8+IsK8kgr1+ceTASiA=;
-        b=C+t/qFpFGrNrfo/6aXGEwlSjLI7mQC+JUmZBJP6oY5EnyJ7IEtQronxvrEipJLcgYp
-         Ciz67ZApmal3tzGJEBVLnNe9o9elxkK+gAeRSbxCJLL3VaggxKzERCeL+IfHHgSyDOZc
-         fJKWtSvUOVPmymfB1e2rYDnJhL3eMJ6OwQb4NJKe45Kbpg8OGfczwU3U9+WnsfDNNHea
-         EmQiCRMwQaUw//x+WjJG3Sv1kzLXJWH55mrhub4BXyz88HJc7e/+WqIsVRe2WTrSGXvI
-         78DY+YTKnCvWygAqFBva0B+nfnVMHZv0iiuKsezh2d1+VsYer08fqJY31bjQFzNKTL+Q
-         vV3w==
-Received: by 10.49.2.35 with SMTP id 3mr72227046qer.36.1357935765595; Fri, 11
- Jan 2013 12:22:45 -0800 (PST)
-Received: by 10.49.121.197 with HTTP; Fri, 11 Jan 2013 12:22:45 -0800 (PST)
+	id S1754409Ab3AKUY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 15:24:59 -0500
+Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:21153 "EHLO
+	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753552Ab3AKUY6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jan 2013 15:24:58 -0500
+X-Greylist: delayed 649 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Jan 2013 15:24:58 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=687; q=dns/txt; s=iport;
+  t=1357935898; x=1359145498;
+  h=from:to:subject:date:message-id:
+   content-transfer-encoding:mime-version;
+  bh=dANx03nHkuickgXpQdTGdyugmsB1Hcb+EJNoLWmBfwI=;
+  b=Irm3rC3gONe1jIBVIuxEPYGlIuzZjrW+lbnro19c40IJ0zQHOBP4sMJp
+   XNJrqAsDYnIdbeZ5Lpa7oEPgOgSisyJn34/aS+zLG6/sSLuWbbbM1a77q
+   45JRf8ecjIn8s4wuA3X6rbO27UvS2bLUeKSmVBVVwxCCBcl2VSws9aicg
+   k=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AkQFAF9y8FCtJV2d/2dsb2JhbABEhXK4EBZzgh4BAQEEOlEBCBgKFEImAQQTCBKHfgGXIp8WjG6DV2EDplSCdYFvNQ
+X-IronPort-AV: E=Sophos;i="4.84,453,1355097600"; 
+   d="scan'208";a="158520040"
+Received: from rcdn-core-6.cisco.com ([173.37.93.157])
+  by rcdn-iport-9.cisco.com with ESMTP; 11 Jan 2013 20:13:59 +0000
+Received: from xhc-rcd-x01.cisco.com (xhc-rcd-x01.cisco.com [173.37.183.75])
+	by rcdn-core-6.cisco.com (8.14.5/8.14.5) with ESMTP id r0BKDxlE015407
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 11 Jan 2013 20:13:59 GMT
+Received: from xmb-rcd-x15.cisco.com ([169.254.5.248]) by
+ xhc-rcd-x01.cisco.com ([173.37.183.75]) with mapi id 14.02.0318.004; Fri, 11
+ Jan 2013 14:13:58 -0600
+Thread-Topic: git send-email should not allow 'y' for in-reply-to
+Thread-Index: Ac3wOC7tNZkcC6jpT4OkjYlm77CfXQ==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [171.71.137.42]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213242>
 
-On Thu, Jan 10, 2013 at 9:51 PM, Herry Wang <tech.herry@gmail.com> wrote:
->
-> OS:
->
-> Darwin ... 11.4.2 Darwin Kernel Version 11.4.2: Thu Aug 23 16:25:48 PDT
-> 2012; root:xnu-1699.32.7~1/RELEASE_X86_64 x86_64
->
-> Git: version: (via homebrew)
->
->  git --version
-> git version 1.8.0
->
-> curl version:
->
-> curl --version
-> curl 7.28.1 (x86_64-apple-darwin11.4.2)
->
->
-> git clone http://herry@stash.somesite/a.git
-> Cloning into 'a'...
-> error: Empty reply from server while accessing
-> ....git/info/refs?service=git-upload-pack
-> fatal: HTTP request failed
->
-> i tried export http_proxy=socks5://ip:port, all_proxy=socks5://, neither
-> of them works.
-> I also configure socks proxy in ~/.curlrc,  git is not working well.
-> However, curl is doing well with curlrc config.
-> From the trace, looks like git is just put the http request via proxy
-> host. But according with socks protocol, it should have some headers.
->
->
-> Interesting thing is, http_proxy way is working perfectly on my Ubuntu
-> enviroment.
->
->
-> Thanks
-> Herry
->
+"Jeff King" <peff@peff.net> wrote in message news:<20130111185417.GA12852@sigill.intra.peff.net>...
+> On Fri, Jan 11, 2013 at 10:43:39AM -0800, Hilco Wijbenga wrote:
+> 
+> 
+> > How about "What Message-ID to use as In-Reply-To for the first email?"
+> > or "Provide the Message-ID to use as In-Reply-To for the first
+> > email:".
+> 
+> seem fine to me. Maybe somebody who has been confused by it can offer
+> more. At any rate, patches welcome.
+
+Suggestion: "Message-ID to use as In-Reply-To for the first email:".
+
+Simple and unlikely to generate a "y" or "n" response.  Putting "Message-ID" first makes it more obvious what data is being asked for by this prompt.
