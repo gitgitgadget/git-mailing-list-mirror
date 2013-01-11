@@ -1,86 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-completion.bash: Silence not a valid object errors
-Date: Fri, 11 Jan 2013 08:45:17 -0800
-Message-ID: <7v6233d5ya.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.2.02.1301110304220.26739@antec>
+From: Jeff King <peff@peff.net>
+Subject: Re: git send-email should not allow 'y' for in-reply-to
+Date: Fri, 11 Jan 2013 11:47:30 -0500
+Message-ID: <20130111164730.GA7921@sigill.intra.peff.net>
+References: <y>
+ <1357885869-20815-1-git-send-email-cyliu@suse.com>
+ <50EFD066.60501@redhat.com>
+ <50F0402A.1000108@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dylan Smith <dylan.ah.smith@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 17:45:42 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, libvir-list@redhat.com
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 17:47:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tthjh-0005ku-9F
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 17:45:41 +0100
+	id 1Tthlp-0007Z5-PE
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 17:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206Ab3AKQpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 11:45:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62156 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755096Ab3AKQpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 11:45:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8A7DBEC8;
-	Fri, 11 Jan 2013 11:45:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QMnjIdVKsl6UwCLNpibdlzVSVOM=; b=A8MdnW
-	rk1uu0VunNflAT/MtfIf8SGKkH/H6NGkyqz9HS8cbl6kHohr+p1jhDcqyhYGm+jU
-	/IWkw3A7c+rvHbV7WG/kGxgJ/g8Z7+MuS8AVubw5LrEP6i5t+QoUbGP/6JysMoJy
-	1huk5V74kgmv8YnQbvE9s52arJaShnhmj7Eco=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AhG/BehevksO+tkLC/Nxm5Xu1Fgz0gUI
-	LqQrhIEbVvHpiJKL4+81Lj53SsJEH8ESb8npyt+x71yszWXAMWneQqLErgvbwUM6
-	pAdPt/P/vHceaI7nXWT2Igy4+l9FYmJ68xFP4FKbwirf0MWE/IMqbah7AE8ZVXCl
-	a1iwNfdySUI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D88DBEC6;
-	Fri, 11 Jan 2013 11:45:19 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33F12BEC5; Fri, 11 Jan 2013
- 11:45:19 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.02.1301110304220.26739@antec> (Dylan Smith's
- message of "Fri, 11 Jan 2013 03:06:22 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 489EC258-5C0E-11E2-9D7A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753666Ab3AKQrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 11:47:33 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57427 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753324Ab3AKQrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 11:47:33 -0500
+Received: (qmail 20883 invoked by uid 107); 11 Jan 2013 16:48:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Jan 2013 11:48:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jan 2013 11:47:30 -0500
+Content-Disposition: inline
+In-Reply-To: <50F0402A.1000108@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213226>
 
-Dylan Smith <dylan.ah.smith@gmail.com> writes:
+On Fri, Jan 11, 2013 at 09:39:06AM -0700, Eric Blake wrote:
 
-> Trying to complete the command
->
->   git show master:./file
->
-> would cause a "Not a valid object name" error to be output on standard
-> error. Silence the error so it won't appear on the command line.
->
-> Signed-off-by: Dylan Smith <dylan.ah.smith@gmail.com>
-> ---
+> > Please don't answer "y" when git send email shows the following prompt:
+> > 
+> > "Message-ID to be used as In-Reply-To for the first email?"
+> > 
+> > you should respond with a message ID there. Unfortunately we have a
+> > growing thread that contains submissions with this mistake.
+> 
+> Anyone willing to patch upstream 'git send-email' to reject a simple 'y'
+> rather than blindly sending a bad messageID for the in-reply-to field,
+> to help future users avoid this mistake?  Obviously, it won't help until
+> the patch eventually percolates into distros, so it would be a few more
+> months before we see the benefits, but down the road it will prevent
+> confusing threads.
 
-Looks obviously correct.  Thanks.
+What version of git? Commit 51bbccf is in v1.7.12.1 and higher, and
+says:
 
->  contrib/completion/git-completion.bash |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 0b77eb1..d4c7bfe 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -397,7 +397,7 @@ __git_complete_revlist_file ()
->  		*)   pfx="$ref:$pfx" ;;
->  		esac
->  
-> -		__gitcomp_nl "$(git --git-dir="$(__gitdir)" ls-tree "$ls" \
-> +		__gitcomp_nl "$(git --git-dir="$(__gitdir)" ls-tree "$ls" 2>/dev/null \
->  				| sed '/^100... blob /{
->  				           s,^.*	,,
->  				           s,$, ,
+  $ git show 51bbccf
+  commit 51bbccfd1b4a9e2807413022c56ab05c835164fb
+  Author: Junio C Hamano <gitster@pobox.com>
+  Date:   Tue Aug 14 15:15:53 2012 -0700
+
+  send-email: validate & reconfirm interactive responses
+
+  People answer 'y' to "Who should the emails appear to be from?"  and
+  'n' to "Message-ID to be used as In-Reply-To for the first email?"
+  for some unknown reason.  While it is possible that your local
+  username really is "y" and you are sending the mail to your local
+  colleagues, it is possible, and some might even say it is likely,
+  that it is a user error.
+
+  Fortunately, our interactive prompter already has input validation
+  mechanism built-in.  Enhance it so that we can optionally reconfirm
+  and allow the user to pass an input that does not validate, and
+  "softly" require input to the sender, in-reply-to, and recipient to
+  contain "@" and "." in this order, which would catch most cases of
+  mistakes.
+
+-Peff
