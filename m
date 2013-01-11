@@ -1,10 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 2/3] upload-pack: fix off-by-one depth calculation in shallow clone
-Date: Fri, 11 Jan 2013 16:05:47 +0700
-Message-ID: <1357895148-30909-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 1/3] fetch: add --unshallow for turning shallow repo into complete one
+Date: Fri, 11 Jan 2013 16:05:46 +0700
+Message-ID: <1357895148-30909-1-git-send-email-pclouds@gmail.com>
 References: <1357875005-21956-1-git-send-email-pclouds@gmail.com>
- <1357895148-30909-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -15,171 +14,258 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 10:06:16 2013
+X-From: git-owner@vger.kernel.org Fri Jan 11 10:06:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtaZ5-0000aQ-LI
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 10:06:16 +0100
+	id 1TtaYy-0000ZI-NH
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 10:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754821Ab3AKJFx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 04:05:53 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:62870 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754429Ab3AKJFu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 04:05:50 -0500
-Received: by mail-pa0-f54.google.com with SMTP id bi5so909873pad.41
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 01:05:50 -0800 (PST)
+	id S1754385Ab3AKJFq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 04:05:46 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:41650 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753245Ab3AKJFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 04:05:43 -0500
+Received: by mail-pa0-f42.google.com with SMTP id rl6so907565pac.15
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 01:05:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=yP24+LJPsqr+5X5rKX7/yZcBmsC7LKA7W1QizgrMveQ=;
-        b=QfwJZyH36Ms/O+TiUjGrZlmdqIOyH7MRqX8J4qlNEnT9J810AoTe+kaucGBe8i8BWQ
-         ObMH+tvcfn6/7yntCsyUCn5U2XMvaSlK2K2BB5uPr2ckBdMrBF9PmStx5GLtLpTkiomA
-         5Uip+JPZ+UZkEJ/lvVQERX5icKfiCbMYaIrlvbnjusQuHmb33Y3alYKCqUb6MT7YtIFc
-         Bd1RTso5Ix03yQk4h+xBMpsXp2RM/m1YIx6HPyrg7k2OYJP3rPvNmT0E8zIL5lWlQDbd
-         no4qXDDx6RKsLq7d3mgIQlaQZO4K9Bx3cNd1Q8QS8TC2zoWVKddp/g9Liol/GYNmCpwq
-         qAvg==
-X-Received: by 10.66.81.166 with SMTP id b6mr204909782pay.7.1357895150021;
-        Fri, 11 Jan 2013 01:05:50 -0800 (PST)
+        bh=AKsUpYHZyhqfw1ZKnPnFvdrd0CAc6lETNPxLU+tQHGo=;
+        b=ehadPySvmkvJDpA+qq3j7om+jp6yGkosPlvy8jrHc0loWJsvemS80yynLXe/gKIexR
+         gVKbSsUYz70W4KhtPrrYKidEfiiZb3SH+cBmvPXrEJbfnOTG9CeqltcBtjOmfBZF2i1B
+         WvT1iJZNFWLKyrWyxKjddxB0YAh/EkfAnkYJR8RCfK8j8L95K0u3iffSvBA+HKF+w7tB
+         ClMqWF3Ojy8Bq7kb/NlDFk/yH2qm2cFZP2dO8hBGpNNR5x2W5fZhBOPc5qdaQGpNNT8V
+         RZ8DejUOsdwCsTGJdRQXJu+K2/L664EGrFbnciz4kiS4aiFkO9sIsjpSItMIvijSJthU
+         1CUQ==
+X-Received: by 10.66.79.134 with SMTP id j6mr183515108pax.11.1357895143242;
+        Fri, 11 Jan 2013 01:05:43 -0800 (PST)
 Received: from lanh ([115.74.46.148])
-        by mx.google.com with ESMTPS id x6sm2743592pav.29.2013.01.11.01.05.46
+        by mx.google.com with ESMTPS id ou3sm2448656pbb.46.2013.01.11.01.05.38
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 01:05:49 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 16:06:03 +0700
+        Fri, 11 Jan 2013 01:05:42 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 16:05:50 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1357895148-30909-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1357875005-21956-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213186>
 
-get_shallow_commits() is used to determine the cut points at a given
-depth (i.e. the number of commits in a chain that the user likes to
-get). However we count current depth up to the commit "commit" but we
-do the cutting at its parents (i.e. current depth + 1). This makes
-upload-pack always return one commit more than requested. This patch
-fixes it.
+The user can do --depth=3D2147483647 (*) for restoring complete repo
+now. But it's hard to remember. Any other numbers larger than the
+longest commit chain in the repository would also do, but some
+guessing may be involved. Make easy-to-remember --unshallow an alias
+for --depth=3D2147483647.
+
+Make upload-pack recognize this special number as infinite depth. The
+effect is essentially the same as before, except that upload-pack is
+more efficient because it does not have to traverse to the bottom
+anymore.
+
+The chance of a user actually wanting exactly 2147483647 commits
+depth, not infinite, on a repository with a history that long, is
+probably too small to consider. The client can learn to add or
+subtract one commit to avoid the special treatment when that actually
+happens.
+
+(*) This is the largest positive number a 32-bit signed integer can
+    contain. JGit and older C Git store depth as "int" so both are OK
+    with this number. Dulwich does not support shallow clone.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Fixed the && command chain in t5500.
+ On Fri, Jan 11, 2013 at 10:55 AM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+ > I think "no shallow" makes sense in a much more important way than
+ > "infinite depth", and this patch is a good idea for a reason
+ > entirely different from the justification your log message makes ;-)
+ > [snip]
+ > Calling the option "--no-shallow" (or even better, "--unshallow",
+ > meaning "make it a repository that is no longer shallow") makes it
+ > crystal clear that the option is about wiping away the shallowness.
+ > Of course, the result has to contain an untruncted history, but that
+ > is a mere side effect and an implementation detail from the end
+ > user's point of view.
 
- shallow.c             |  8 +++++++-
- t/t5500-fetch-pack.sh | 25 +++++++++++++++++++------
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ Very well said. --unshallow it is.
 
-diff --git a/shallow.c b/shallow.c
-index a0363de..6be915f 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -72,8 +72,14 @@ struct commit_list *get_shallow_commits(struct objec=
-t_array *heads, int depth,
- 		}
- 		if (parse_commit(commit))
- 			die("invalid commit");
--		commit->object.flags |=3D not_shallow_flag;
- 		cur_depth++;
-+		if (cur_depth >=3D depth) {
-+			commit_list_insert(commit, &result);
-+			commit->object.flags |=3D shallow_flag;
-+			commit =3D NULL;
-+			continue;
+ Documentation/fetch-options.txt     |  4 ++++
+ Documentation/git-fetch-pack.txt    |  2 ++
+ Documentation/technical/shallow.txt |  3 +++
+ builtin/fetch.c                     | 17 ++++++++++++++++-
+ commit.h                            |  3 +++
+ t/t5500-fetch-pack.sh               | 20 ++++++++++++++++++++
+ upload-pack.c                       | 13 ++++++++++---
+ 7 files changed, 58 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-opti=
+ons.txt
+index 6e98bdf..8a0449c 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -13,6 +13,10 @@
+ 	to the specified number of commits from the tip of each remote
+ 	branch history. Tags for the deepened commits are not fetched.
+=20
++--unshallow::
++	Convert a shallow repository to a complete one, removing all
++	the limitations imposed by shallow repositories.
++
+ ifndef::git-pull[]
+ --dry-run::
+ 	Show what would be done, without making any changes.
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch=
+-pack.txt
+index 8c75120..b81e90d 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -84,6 +84,8 @@ be in a separate packet, and the list must end with a=
+ flush packet.
+=20
+ --depth=3D<n>::
+ 	Limit fetching to ancestor-chains not longer than n.
++	'git-upload-pack' treats the special depth 2147483647 as
++	infinite even if there is an ancestor-chain that long.
+=20
+ --no-progress::
+ 	Do not show the progress.
+diff --git a/Documentation/technical/shallow.txt b/Documentation/techni=
+cal/shallow.txt
+index 0502a54..ea2f69f 100644
+--- a/Documentation/technical/shallow.txt
++++ b/Documentation/technical/shallow.txt
+@@ -53,3 +53,6 @@ It also writes an appropriate $GIT_DIR/shallow.
+ You can deepen a shallow repository with "git-fetch --depth 20
+ repo branch", which will fetch branch from repo, but stop at depth
+ 20, updating $GIT_DIR/shallow.
++
++The special depth 2147483647 (or 0x7fffffff, the largest positive
++number a signed 32-bit integer can contain) means infinite depth.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 4b5a898..2b15ced 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -32,7 +32,7 @@ enum {
+=20
+ static int all, append, dry_run, force, keep, multiple, prune, update_=
+head_ok, verbosity;
+ static int progress =3D -1, recurse_submodules =3D RECURSE_SUBMODULES_=
+DEFAULT;
+-static int tags =3D TAGS_DEFAULT;
++static int tags =3D TAGS_DEFAULT, unshallow;
+ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla =3D STRBUF_INIT;
+@@ -82,6 +82,9 @@ static struct option builtin_fetch_options[] =3D {
+ 	OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
+ 	OPT_STRING(0, "depth", &depth, N_("depth"),
+ 		   N_("deepen history of shallow clone")),
++	{ OPTION_SET_INT, 0, "unshallow", &unshallow, NULL,
++		   N_("convert to a complete repository"),
++		   PARSE_OPT_NONEG | PARSE_OPT_NOARG, NULL, 1 },
+ 	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
+ 		   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
+ 	{ OPTION_STRING, 0, "recurse-submodules-default",
+@@ -970,6 +973,18 @@ int cmd_fetch(int argc, const char **argv, const c=
+har *prefix)
+ 	argc =3D parse_options(argc, argv, prefix,
+ 			     builtin_fetch_options, builtin_fetch_usage, 0);
+=20
++	if (unshallow) {
++		if (depth)
++			die(_("--depth and --unshallow cannot be used together"));
++		else if (!is_repository_shallow())
++			die(_("--unshallow on a complete repository does not make sense"));
++		else {
++			static char inf_depth[12];
++			sprintf(inf_depth, "%d", INFINITE_DEPTH);
++			depth =3D inf_depth;
 +		}
-+		commit->object.flags |=3D not_shallow_flag;
- 		for (p =3D commit->parents, commit =3D NULL; p; p =3D p->next) {
- 			if (!p->item->util) {
- 				int *pointer =3D xmalloc(sizeof(int));
++	}
++
+ 	if (recurse_submodules !=3D RECURSE_SUBMODULES_OFF) {
+ 		if (recurse_submodules_default) {
+ 			int arg =3D parse_fetch_recurse_submodules_arg("--recurse-submodule=
+s-default", recurse_submodules_default);
+diff --git a/commit.h b/commit.h
+index 0f469e5..fbde106 100644
+--- a/commit.h
++++ b/commit.h
+@@ -162,6 +162,9 @@ extern struct commit_list *get_merge_bases(struct c=
+ommit *rev1, struct commit *r
+ extern struct commit_list *get_merge_bases_many(struct commit *one, in=
+t n, struct commit **twos, int cleanup);
+ extern struct commit_list *get_octopus_merge_bases(struct commit_list =
+*in);
+=20
++/* largest postive number a signed 32-bit integer can contain */
++#define INFINITE_DEPTH 0x7fffffff
++
+ extern int register_shallow(const unsigned char *sha1);
+ extern int unregister_shallow(const unsigned char *sha1);
+ extern int for_each_commit_graft(each_commit_graft_fn, void *);
 diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 426027e..354d32c 100755
+index 6322e8a..426027e 100755
 --- a/t/t5500-fetch-pack.sh
 +++ b/t/t5500-fetch-pack.sh
-@@ -130,16 +130,25 @@ test_expect_success 'single given branch clone' '
- 	test_must_fail git --git-dir=3Dbranch-a/.git rev-parse origin/B
+@@ -264,6 +264,26 @@ test_expect_success 'clone shallow object count' '
+ 	grep "^count: 52" count.shallow
  '
 =20
-+test_expect_success 'clone shallow depth 1' '
-+	git clone --no-single-branch --depth 1 "file://$(pwd)/." shallow0 &&
-+	test "`git --git-dir=3Dshallow0/.git rev-list --count HEAD`" =3D 1
++test_expect_success 'fetch --no-shallow on full repo' '
++	test_must_fail git fetch --noshallow
 +'
 +
- test_expect_success 'clone shallow' '
- 	git clone --no-single-branch --depth 2 "file://$(pwd)/." shallow
- '
-=20
-+test_expect_success 'clone shallow depth count' '
-+	test "`git --git-dir=3Dshallow/.git rev-list --count HEAD`" =3D 2
++test_expect_success 'fetch --depth --no-shallow' '
++	(
++		cd shallow &&
++		test_must_fail git fetch --depth=3D1 --noshallow
++	)
 +'
 +
- test_expect_success 'clone shallow object count' '
- 	(
- 		cd shallow &&
- 		git count-objects -v
- 	) > count.shallow &&
--	grep "^in-pack: 18" count.shallow
-+	grep "^in-pack: 12" count.shallow
- '
-=20
- test_expect_success 'clone shallow object count (part 2)' '
-@@ -256,12 +265,16 @@ test_expect_success 'additional simple shallow de=
-epenings' '
- 	)
- '
-=20
-+test_expect_success 'clone shallow depth count' '
-+	test "`git --git-dir=3Dshallow/.git rev-list --count HEAD`" =3D 11
++test_expect_success 'turn shallow to complete repository' '
++	(
++		cd shallow &&
++		git fetch --unshallow &&
++		! test -f .git/shallow &&
++		git fsck --full
++	)
 +'
 +
- test_expect_success 'clone shallow object count' '
- 	(
- 		cd shallow &&
- 		git count-objects -v
- 	) > count.shallow &&
--	grep "^count: 52" count.shallow
-+	grep "^count: 55" count.shallow
+ test_expect_success 'clone shallow without --no-single-branch' '
+ 	git clone --depth 1 "file://$(pwd)/." shallow2
  '
-=20
- test_expect_success 'fetch --no-shallow on full repo' '
-@@ -293,7 +306,7 @@ test_expect_success 'clone shallow object count' '
- 		cd shallow2 &&
- 		git count-objects -v
- 	) > count.shallow2 &&
--	grep "^in-pack: 6" count.shallow2
-+	grep "^in-pack: 3" count.shallow2
- '
-=20
- test_expect_success 'clone shallow with --branch' '
-@@ -301,7 +314,7 @@ test_expect_success 'clone shallow with --branch' '
- '
-=20
- test_expect_success 'clone shallow object count' '
--	echo "in-pack: 6" > count3.expected &&
-+	echo "in-pack: 3" > count3.expected &&
- 	GIT_DIR=3Dshallow3/.git git count-objects -v |
- 		grep "^in-pack" > count3.actual &&
- 	test_cmp count3.expected count3.actual
-@@ -330,7 +343,7 @@ EOF
- 	GIT_DIR=3Dshallow6/.git git tag -l >taglist.actual &&
- 	test_cmp taglist.expected taglist.actual &&
-=20
--	echo "in-pack: 7" > count6.expected &&
-+	echo "in-pack: 4" > count6.expected &&
- 	GIT_DIR=3Dshallow6/.git git count-objects -v |
- 		grep "^in-pack" > count6.actual &&
- 	test_cmp count6.expected count6.actual
-@@ -345,7 +358,7 @@ EOF
- 	GIT_DIR=3Dshallow7/.git git tag -l >taglist.actual &&
- 	test_cmp taglist.expected taglist.actual &&
-=20
--	echo "in-pack: 7" > count7.expected &&
-+	echo "in-pack: 4" > count7.expected &&
- 	GIT_DIR=3Dshallow7/.git git count-objects -v |
- 		grep "^in-pack" > count7.actual &&
- 	test_cmp count7.expected count7.actual
+diff --git a/upload-pack.c b/upload-pack.c
+index 6142421..88f0029 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -670,10 +670,17 @@ static void receive_needs(void)
+ 	if (depth =3D=3D 0 && shallows.nr =3D=3D 0)
+ 		return;
+ 	if (depth > 0) {
+-		struct commit_list *result, *backup;
++		struct commit_list *result =3D NULL, *backup =3D NULL;
+ 		int i;
+-		backup =3D result =3D get_shallow_commits(&want_obj, depth,
+-			SHALLOW, NOT_SHALLOW);
++		if (depth =3D=3D INFINITE_DEPTH)
++			for (i =3D 0; i < shallows.nr; i++) {
++				struct object *object =3D shallows.objects[i].item;
++				object->flags |=3D NOT_SHALLOW;
++			}
++		else
++			backup =3D result =3D
++				get_shallow_commits(&want_obj, depth,
++						    SHALLOW, NOT_SHALLOW);
+ 		while (result) {
+ 			struct object *object =3D &result->item->object;
+ 			if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
 --=20
 1.8.0.rc2.23.g1fb49df
