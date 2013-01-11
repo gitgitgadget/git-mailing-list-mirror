@@ -1,76 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Turning a complete repository to a shallow one
-Date: Thu, 10 Jan 2013 20:53:01 -0800
-Message-ID: <7vk3rkcocy.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8Bv+AfDbttFdJ5a0PaoMrMtv1seda7VqLpfdevR4BMj4A@mail.gmail.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH 09/19] reset.c: replace switch by if-else
+Date: Thu, 10 Jan 2013 22:35:47 -0800
+Message-ID: <CANiSa6gz-DBv+2gUDPdhgmeYdHg3-OVO80a7NvdLn4vYRyKEnA@mail.gmail.com>
+References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
+	<1357719376-16406-10-git-send-email-martinvonz@gmail.com>
+	<7vhamq5e1v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 05:53:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 07:36:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtWcS-0006Dz-P2
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 05:53:29 +0100
+	id 1TtYDq-0000m1-AS
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 07:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035Ab3AKExF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 23:53:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44183 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753400Ab3AKExD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 23:53:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C3C8A7E2;
-	Thu, 10 Jan 2013 23:53:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4YcohXbvux7/l/aGxTGFi5JzWUc=; b=r5Al5H
-	uJXj2pwuteMuyUaeCQ6jptkIudnjMTJuGMqbxaHZsa2ZxPKeKCEDd1NZj0c+SyAr
-	SlhHKfIc9a0WB1DFOHzX3S/Tl2WH5LmFCbrZkWMM+4x+nU8Mol54N3dlxGYl3OBL
-	RlHM9Vhb4zHvIE6+HnDT1iyL/iwy/yZpZkit4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XP9rT0aXCc61D9Zb/2FdzU42dmGZiSZ9
-	CcYXG1JvUWVxZ4F6xfgtK+HfKZnwlUwVEGJB7eJvomkG6EYYg+fh0RWr0u2IF99r
-	oVLFGlkadbwrp3yo/b8X9ZQzTEmAwoM1feJwrSUNk3E1wyatCPUFBN+egDn6LS4D
-	z3KNkntKF6c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4050AA7E1;
-	Thu, 10 Jan 2013 23:53:03 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD4DFA7E0; Thu, 10 Jan 2013
- 23:53:02 -0500 (EST)
-In-Reply-To: <CACsJy8Bv+AfDbttFdJ5a0PaoMrMtv1seda7VqLpfdevR4BMj4A@mail.gmail.com> (Duy
- Nguyen's message of "Fri, 11 Jan 2013 11:40:03 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C7AE0068-5BAA-11E2-A170-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753208Ab3AKGfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 01:35:50 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:40849 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522Ab3AKGft (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 01:35:49 -0500
+Received: by mail-ie0-f180.google.com with SMTP id c10so1882851ieb.39
+        for <git@vger.kernel.org>; Thu, 10 Jan 2013 22:35:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SJCy8GyEeez4pXjV0fZsBr58J+fziD6G6AuRo24QR/E=;
+        b=SW/Ou/r2G/BbUyAQbQS2JQLJYnVffF827UmkcFM7yA1qM3vUXg+9GftPsr1xpbm2Bz
+         kihTAW/LZSjfuJZY/VL45C+XGjnCIRiniuMa7YoKB0dIZGEQH/BAHT3SbT2+qJ5Ilr5X
+         Vx5xwRQo8QLgHuW7uofi3bKSHngStqVE4CK+T5JmAgKeNq26PkuJFr8UIjT7kKGSf2++
+         2A3MnQP0rMVNXfaiAggqK+KXyMdiWjKkiY3XaR68JG/G0j2LT54nVgFR0RgGIEqzKoyd
+         APXBrEogsMmKRgIyqhD4IJJsEyPUEjg3NGHE7eQi21dplDISi1c2B4HZhvY7K6yeElfw
+         nqZQ==
+Received: by 10.50.42.169 with SMTP id p9mr8114172igl.17.1357886148007; Thu,
+ 10 Jan 2013 22:35:48 -0800 (PST)
+Received: by 10.64.86.68 with HTTP; Thu, 10 Jan 2013 22:35:47 -0800 (PST)
+In-Reply-To: <7vhamq5e1v.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213181>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> Apparently we could do it:
+On Wed, Jan 9, 2013 at 11:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martinvonz@gmail.com> writes:
 >
-> git clone --single-branch git.git
-> cd git
-> git tag -l|xargs git tag -d
-> git fetch --depth=1 origin master
-> git repack -ad
+>> ---
+>>  builtin/reset.c | 13 +++----------
+>>  1 file changed, 3 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> index 42d1563..05ccfd4 100644
+>> --- a/builtin/reset.c
+>> +++ b/builtin/reset.c
+>> @@ -351,18 +351,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>>        * saving the previous head in ORIG_HEAD before. */
+>>       update_ref_status = update_refs(rev, sha1);
+>>
+>> -     switch (reset_type) {
+>> -     case HARD:
+>> -             if (!update_ref_status && !quiet)
+>> -                     print_new_head_line(commit);
+>> -             break;
+>> -     case SOFT: /* Nothing else to do. */
+>> -             break;
+>> -     case MIXED: /* Report what has not been updated. */
+>> +     if (reset_type == HARD && !update_ref_status && !quiet)
+>> +             print_new_head_line(commit);
+>> +     else if (reset_type == MIXED) /* Report what has not been updated. */
+>>               update_index_refresh(0, NULL,
+>>                               quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN);
+>> -             break;
+>> -     }
+>
+> Justification?
 
-I may have been unclear in the earlier message, but this is one of
-the reasons why I think "fetch --depth" is misadvertised (it says
-"deepen the history", when the real thing it does is to truncate to
-the new depth counting from the updated tip), and misdesigned (it
-forces the user to guess what the new depth should be).  It should
-be advertised correctly, as a way to reset its depth starting from
-the current history (and of course --depth=1 is truncates).
+Clairvoyance -- the HARD case will soon be the only non-empty case.
+It's also missing KEEP and MERGE (but the empty SOFT block is there).
 
-We should introduce a separate "fetch --deepen" that does what
-normal people would want (see my earlier message with ASCII art).
+I'll update the message. I will also move the patch a little later in
+the series, closer to where it will be useful.
