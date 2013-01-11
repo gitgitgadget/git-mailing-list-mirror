@@ -1,89 +1,81 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 3/3] fetch: elaborate --depth action
-Date: Fri, 11 Jan 2013 16:05:48 +0700
-Message-ID: <1357895148-30909-3-git-send-email-pclouds@gmail.com>
-References: <1357875005-21956-1-git-send-email-pclouds@gmail.com>
- <1357895148-30909-1-git-send-email-pclouds@gmail.com>
+From: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+Subject: Re: git checkout bug on Win7 x64
+Date: Fri, 11 Jan 2013 13:54:59 +0400
+Message-ID: <20130111135459.8f3d10614ca052045b2982f2@domain007.com>
+References: <CAJ52sWnm23pLibG24PZm0UB=_tk7JahNx0c53E1udJG4D3yvvQ@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 10:06:28 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Ishayahu Lastov <meoc-it-JGs/UdohzUI@public.gmane.org>
+X-From: git-users+bncBCWKX34CSUCBB5WCX6DQKGQEUOA2XII-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Jan 11 10:55:22 2013
+Return-path: <git-users+bncBCWKX34CSUCBB5WCX6DQKGQEUOA2XII-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-la0-f58.google.com ([209.85.215.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtaZB-0000lh-9g
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 10:06:21 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755375Ab3AKJF6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 04:05:58 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:59025 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754429Ab3AKJF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 04:05:57 -0500
-Received: by mail-pa0-f50.google.com with SMTP id hz10so900949pad.37
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 01:05:57 -0800 (PST)
+	(envelope-from <git-users+bncBCWKX34CSUCBB5WCX6DQKGQEUOA2XII-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1TtbKa-00086h-Ir
+	for gcggu-git-users@m.gmane.org; Fri, 11 Jan 2013 10:55:20 +0100
+Received: by mail-la0-f58.google.com with SMTP id ej20sf502190lab.23
+        for <gcggu-git-users@m.gmane.org>; Fri, 11 Jan 2013 01:55:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=DKfx7mQT79BqdSfs/8us3bzWrsR3pHAdPtk8dirEofM=;
-        b=F0MlptzlJ5wF+ymNL4ICMzd9+/ULSAEukUuYH7xk9j5NX3YeF3jDHB/7SQKQL/AVKq
-         XTcBMG8NJ9AlyRoCzrUVlHX97aFcP3cCyQ/8Q7OmiFOT8uq7ulxvY2MdlPdB34LQ7YqX
-         kjKGIcYKG83qHzybUDX+okTiLdy5y027uX1zMyvdcmHJbkQ51eJkOrpQdU1AeaXCd2Fg
-         NeW9TmwJ/RVXspW9LZaJkC1iOaCuVtoekuzSfI4UZNx6VTkvs5M0L8ptbpbGvqwqqNt6
-         kSaByJE4lOk8VTcQk+n7ZQijbrvIWbNxBGbXJYGKci4hHugHwVniFvozXgGQFUUH3B9h
-         pblg==
-X-Received: by 10.68.235.2 with SMTP id ui2mr226071641pbc.163.1357895157040;
-        Fri, 11 Jan 2013 01:05:57 -0800 (PST)
-Received: from lanh ([115.74.46.148])
-        by mx.google.com with ESMTPS id pm8sm2451973pbb.29.2013.01.11.01.05.52
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 01:05:56 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 16:06:10 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1357895148-30909-1-git-send-email-pclouds@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213187>
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:x-received:received-spf:date:from
+         :to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:x-original-sender:x-original-authentication-results
+         :reply-to:precedence:mailing-list:list-id:x-google-group-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=Lm8CmvAruEMG5dvJpwW54lb3ntwjFC1zrT90wZllFks=;
+        b=KKg430dN3vZwn9OhLnAuXIdx1WWQPQrxRqiHMqYeBkwvPHqz8W2PFAI8gbehq7XZ/c
+         rDyFC/sP+cxzpjvji3LiV3f/Iq/W9rCS123Mz0LKpK40vGPb1I0b6e9GobgcOxJDxYNS
+         B8FgHRff7mas9CVUJjzMPFARxVxQ19Rj0Qrs+OqrJzH2Eg8/KYk5eJ+hprDsbgFIofNi
+         yc9sO6NQjb7VIrxPHVNPXuFJDC5uXQ0TsSCuF4ze+/tlPGBxakHT6wwN1Yt1YpRxLOZ1
+         GAs3EfV6QNWvhoxrTYZ8vcPvRaVLYFQK2L 
+X-Received: by 10.180.99.231 with SMTP id et7mr2020619wib.8.1357898104399;
+        Fri, 11 Jan 2013 01:55:04 -0800 (PST)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.180.88.2 with SMTP id bc2ls132086wib.40.canary; Fri, 11 Jan
+ 2013 01:55:02 -0800 (PST)
+X-Received: by 10.204.128.201 with SMTP id l9mr3973505bks.8.1357898102189;
+        Fri, 11 Jan 2013 01:55:02 -0800 (PST)
+X-Received: by 10.204.128.201 with SMTP id l9mr3973504bks.8.1357898102169;
+        Fri, 11 Jan 2013 01:55:02 -0800 (PST)
+Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
+        by gmr-mx.google.com with ESMTPS id e21si377847bkv.2.2013.01.11.01.55.01
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 11 Jan 2013 01:55:02 -0800 (PST)
+Received-SPF: neutral (google.com: 84.204.203.130 is neither permitted nor denied by best guess record for domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) client-ip=84.204.203.130;
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r0B9t0DY003289;
+	Fri, 11 Jan 2013 13:55:01 +0400
+In-Reply-To: <CAJ52sWnm23pLibG24PZm0UB=_tk7JahNx0c53E1udJG4D3yvvQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
+X-Original-Sender: flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 84.204.203.130 is neither permitted nor denied by best guess
+ record for domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) smtp.mail=flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en-US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en-US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en-US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213188>
 
---depth is explained as deepen, but the way it's applied, it can
-shorten the history as well. Keen users may have noticed the
-implication by the phrase "the specified number of commits from the
-tip of each remote branch". Put "shorten" in the description to make
-it clearer.
+On Fri, 11 Jan 2013 11:30:01 +0400
+Ishayahu Lastov <meoc-it-JGs/UdohzUI@public.gmane.org> wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/fetch-options.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[...]
+> As I understand after last "git checkout" in "git status" I should see
+> that I gave no changes. It looks like an bug, isn't it?
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-opti=
-ons.txt
-index 8a0449c..fb92b02 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -8,7 +8,7 @@
- 	option old data in `.git/FETCH_HEAD` will be overwritten.
-=20
- --depth=3D<depth>::
--	Deepen the history of a 'shallow' repository created by
-+	Deepen or shorten the history of a 'shallow' repository created by
- 	`git clone` with `--depth=3D<depth>` option (see linkgit:git-clone[1]=
-)
- 	to the specified number of commits from the tip of each remote
- 	branch history. Tags for the deepened commits are not fetched.
---=20
-1.8.0.rc2.23.g1fb49df
+Looks like an EOL-conversion problem rather typical to Windows, see
+http://stackoverflow.com/a/2016426/720999
+
+-- 
