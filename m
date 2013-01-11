@@ -1,101 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] format_commit_message(): simplify calls to logmsg_reencode()
-Date: Fri, 11 Jan 2013 14:15:09 -0800
-Message-ID: <1357942509-21431-1-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH] format_commit_message(): simplify calls to
+ logmsg_reencode()
+Date: Fri, 11 Jan 2013 14:15:30 -0800
+Message-ID: <7v38y7bc3h.fsf@alter.siamese.dyndns.org>
+References: <1357942509-21431-1-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 23:15:34 2013
+X-From: git-owner@vger.kernel.org Fri Jan 11 23:15:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttmsw-0007Yu-Fl
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 23:15:34 +0100
+	id 1TtmtF-0007nO-9c
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 23:15:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755763Ab3AKWPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 17:15:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43948 "EHLO
+	id S1755426Ab3AKWPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 17:15:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44215 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754443Ab3AKWPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 17:15:11 -0500
+	id S1754539Ab3AKWPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 17:15:33 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17A7EB227
-	for <git@vger.kernel.org>; Fri, 11 Jan 2013 17:15:11 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD198B253;
+	Fri, 11 Jan 2013 17:15:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id; s=sasl; bh=IWAw+Mpa79vYP9MeoUzfwJANajU
-	=; b=suoFJvkpK65MBzw52PdGWPQOTrzHgkWxw7t96IVV99RDb7Pf9qeEHUsLbgE
-	YPgS+9+GvOoqapnGJRT7MjGerDBoXKIvkhh2J7xta3P1apJA+DIuugM8eQOhYqIg
-	cQLKe8y76C+APyT7AxA82U4/wptiMA+AVyQSbbpmzJ3vsX/s=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bgso1T1CPGR0H/LsImaOOiys4qo=; b=slugGr
+	q9z5X38cG7hT/6QxpDDUOn4imNr3IznW1R7tmuLR8o9lPXhJuX8Qm8/58PWGjejY
+	2DlzdHfft6fo4ICCYxSBcXXHPvbAXE98xqnc9Y9sCj9cqJAuUN3r7uXJplr2Ja5a
+	fBSvSDcSlxUB9j43WJo4fOtDCMaShSSNvuVBY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id; q=dns; s=sasl; b=HlutZFSo1DidsF+E0sTQ8r6lD2vgf
-	VU5070YJ7LRq2bn6NFKR26YnmOiHJzk99PeuBm7BA4+VZxtc2A3C/nXKVy13Wewe
-	HyEEYAy4hhcbfbDkSsIDDeywPQQjH25DMmR1oaWT9EgRCO/fxfHA+PWBH5Sco+Ee
-	9KDdr7Pk98JMTE=
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cmiCmtwnCmXX8fruy57RDZk5RoDvuVtz
+	pkav9oObUaFYg4pRaqxOhGbULZPhsWAmWydSx6jBhBAsdWLIKNPiLweWsVW4W8gz
+	EVEJUr4ua+L/sLcpoRwuWZ4iEJlpxRE44RPvbKIogTseZjXl0dYWae4mAMpRwkdA
+	PS3q8V55ySQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A17CB226
-	for <git@vger.kernel.org>; Fri, 11 Jan 2013 17:15:11 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A17E6B252;
+	Fri, 11 Jan 2013 17:15:32 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 873F4B224 for
- <git@vger.kernel.org>; Fri, 11 Jan 2013 17:15:10 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.407.g91cb4ac
-X-Pobox-Relay-ID: 5D2DA30A-5C3C-11E2-B4F3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E1F8B251; Fri, 11 Jan 2013
+ 17:15:32 -0500 (EST)
+In-Reply-To: <1357942509-21431-1-git-send-email-gitster@pobox.com> (Junio C.
+ Hamano's message of "Fri, 11 Jan 2013 14:15:09 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6A090AEC-5C3C-11E2-BCA7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213249>
 
-All the other callers of logmsg_reencode() pass return value of
-get_commit_output_encoding() or get_log_output_encoding().  Teach
-the function to optionally take NULL as a synonym to "" aka "no
-conversion requested" so that we can simplify the only remaining
-calling site.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- pretty.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
-
-diff --git a/pretty.c b/pretty.c
-index e87fe9f..732e2a2 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -500,7 +500,7 @@ char *logmsg_reencode(const struct commit *commit,
- 	char *encoding;
- 	char *out;
- 
--	if (!*output_encoding)
-+	if (!output_encoding || !*output_encoding)
- 		return NULL;
- 	encoding = get_header(commit, "encoding");
- 	use_encoding = encoding ? encoding : utf8;
-@@ -1184,23 +1184,15 @@ void format_commit_message(const struct commit *commit,
- 			   const struct pretty_print_context *pretty_ctx)
- {
- 	struct format_commit_context context;
--	static const char utf8[] = "UTF-8";
- 	const char *output_enc = pretty_ctx->output_encoding;
- 
- 	memset(&context, 0, sizeof(context));
- 	context.commit = commit;
- 	context.pretty_ctx = pretty_ctx;
- 	context.wrap_start = sb->len;
--	context.message = commit->buffer;
--	if (output_enc) {
--		char *enc = get_header(commit, "encoding");
--		if (strcmp(enc ? enc : utf8, output_enc)) {
--			context.message = logmsg_reencode(commit, output_enc);
--			if (!context.message)
--				context.message = commit->buffer;
--		}
--		free(enc);
--	}
-+	context.message = logmsg_reencode(commit, output_enc);
-+	if (!context.message)
-+		context.message = commit->buffer;
- 
- 	strbuf_expand(sb, format, format_commit_item, &context);
- 	rewrap_message_tail(sb, &context, 0, 0, 0);
--- 
-1.8.1.407.g91cb4ac
+Please disregard this...
