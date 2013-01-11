@@ -1,81 +1,59 @@
-From: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
-Subject: Re: git checkout bug on Win7 x64
-Date: Fri, 11 Jan 2013 13:54:59 +0400
-Message-ID: <20130111135459.8f3d10614ca052045b2982f2@domain007.com>
-References: <CAJ52sWnm23pLibG24PZm0UB=_tk7JahNx0c53E1udJG4D3yvvQ@mail.gmail.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: t7400 broken on pu (Mac OS X)
+Date: Fri, 11 Jan 2013 18:03:47 +0700
+Message-ID: <CACsJy8C4GQVQzwP3K1N_vP25MHkaJ4-oAbwrpfqEsqKHO4UXsQ@mail.gmail.com>
+References: <50EDBA37.30205@web.de> <20130110062838.GA11634@duynguyen-vnpc.dek-tpc.internal>
+ <7v38y83ooo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Ishayahu Lastov <meoc-it-JGs/UdohzUI@public.gmane.org>
-X-From: git-users+bncBCWKX34CSUCBB5WCX6DQKGQEUOA2XII-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Jan 11 10:55:22 2013
-Return-path: <git-users+bncBCWKX34CSUCBB5WCX6DQKGQEUOA2XII-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-la0-f58.google.com ([209.85.215.58])
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 12:04:39 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncBCWKX34CSUCBB5WCX6DQKGQEUOA2XII-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1TtbKa-00086h-Ir
-	for gcggu-git-users@m.gmane.org; Fri, 11 Jan 2013 10:55:20 +0100
-Received: by mail-la0-f58.google.com with SMTP id ej20sf502190lab.23
-        for <gcggu-git-users@m.gmane.org>; Fri, 11 Jan 2013 01:55:04 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TtcPe-00009d-JF
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:04:38 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754863Ab3AKLES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 06:04:18 -0500
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:43797 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394Ab3AKLER (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 06:04:17 -0500
+Received: by mail-ob0-f172.google.com with SMTP id za17so1603180obc.17
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:04:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:x-received:received-spf:date:from
-         :to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:x-original-sender:x-original-authentication-results
-         :reply-to:precedence:mailing-list:list-id:x-google-group-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=Lm8CmvAruEMG5dvJpwW54lb3ntwjFC1zrT90wZllFks=;
-        b=KKg430dN3vZwn9OhLnAuXIdx1WWQPQrxRqiHMqYeBkwvPHqz8W2PFAI8gbehq7XZ/c
-         rDyFC/sP+cxzpjvji3LiV3f/Iq/W9rCS123Mz0LKpK40vGPb1I0b6e9GobgcOxJDxYNS
-         B8FgHRff7mas9CVUJjzMPFARxVxQ19Rj0Qrs+OqrJzH2Eg8/KYk5eJ+hprDsbgFIofNi
-         yc9sO6NQjb7VIrxPHVNPXuFJDC5uXQ0TsSCuF4ze+/tlPGBxakHT6wwN1Yt1YpRxLOZ1
-         GAs3EfV6QNWvhoxrTYZ8vcPvRaVLYFQK2L 
-X-Received: by 10.180.99.231 with SMTP id et7mr2020619wib.8.1357898104399;
-        Fri, 11 Jan 2013 01:55:04 -0800 (PST)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.180.88.2 with SMTP id bc2ls132086wib.40.canary; Fri, 11 Jan
- 2013 01:55:02 -0800 (PST)
-X-Received: by 10.204.128.201 with SMTP id l9mr3973505bks.8.1357898102189;
-        Fri, 11 Jan 2013 01:55:02 -0800 (PST)
-X-Received: by 10.204.128.201 with SMTP id l9mr3973504bks.8.1357898102169;
-        Fri, 11 Jan 2013 01:55:02 -0800 (PST)
-Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
-        by gmr-mx.google.com with ESMTPS id e21si377847bkv.2.2013.01.11.01.55.01
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 01:55:02 -0800 (PST)
-Received-SPF: neutral (google.com: 84.204.203.130 is neither permitted nor denied by best guess record for domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) client-ip=84.204.203.130;
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r0B9t0DY003289;
-	Fri, 11 Jan 2013 13:55:01 +0400
-In-Reply-To: <CAJ52sWnm23pLibG24PZm0UB=_tk7JahNx0c53E1udJG4D3yvvQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
-X-Original-Sender: flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 84.204.203.130 is neither permitted nor denied by best guess
- record for domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) smtp.mail=flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en-US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en-US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en-US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213188>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Im1qz5NZJKw2qK1g/i2qToHBwmWTO1ZDTH+o0AnqH1k=;
+        b=Ky6zLYif1D0h7omgqYaaDEx5xYeo5IeQQCPWoZD3aSxt60y8n6Ou0X4t8NbAvxsDx6
+         zwzeurV469YRTJ0n7NXaRu4zGcyuSA8EPzXBTpHjTbquWM7Mmo1rLYemYrqs1OrA8vT3
+         UXVWG/oeSSVFf8nVMA9LWOAOHq0fgQLBoKSdIwcVfLhxhvI136eTLmGUYI/m/CVsliIS
+         fMbPlWydmpj3WIRjBwgqaZpQCgF+43t0mYjFXuBHyjyFC+RCpJVuyIHoqR4B293OUNxa
+         G3HV6CgMB4tKFb2nCIxmBXpEh4LxH1L6BFAuL4VXIrNxRAbnVf+DtNW16X45eAiv017d
+         et7w==
+Received: by 10.182.18.133 with SMTP id w5mr55453733obd.64.1357902257294; Fri,
+ 11 Jan 2013 03:04:17 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Fri, 11 Jan 2013 03:03:47 -0800 (PST)
+In-Reply-To: <7v38y83ooo.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213189>
 
-On Fri, 11 Jan 2013 11:30:01 +0400
-Ishayahu Lastov <meoc-it-JGs/UdohzUI@public.gmane.org> wrote:
+On Fri, Jan 11, 2013 at 12:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I can see why it is wrong to let pathspec.raw be rewritten without
+> making matching change to the containing pathspec, but I find it
+> strange why it matters only on case-insensitive codepath.
 
-[...]
-> As I understand after last "git checkout" in "git status" I should see
-> that I gave no changes. It looks like an bug, isn't it?
-
-Looks like an EOL-conversion problem rather typical to Windows, see
-http://stackoverflow.com/a/2016426/720999
-
+Yeah, I don't get it either. I can see that core.ignorecase exercises
+some more code, but still fail to see the link. I should get to the
+bottom of this and write some tests to for core.ignorecase-only code.
 -- 
+Duy
