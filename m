@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 12/21] add: convert to use parse_pathspec
-Date: Fri, 11 Jan 2013 18:21:06 +0700
-Message-ID: <1357903275-16804-13-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 13/21] Convert read_cache_preload() to take struct pathspec
+Date: Fri, 11 Jan 2013 18:21:07 +0700
+Message-ID: <1357903275-16804-14-git-send-email-pclouds@gmail.com>
 References: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,288 +11,264 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 12:22:40 2013
+X-From: git-owner@vger.kernel.org Fri Jan 11 12:22:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttch5-0007On-5w
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:22:39 +0100
+	id 1TtchA-0007Uu-UP
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753617Ab3AKLWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 06:22:19 -0500
-Received: from mail-da0-f41.google.com ([209.85.210.41]:52133 "EHLO
-	mail-da0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753169Ab3AKLWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 06:22:18 -0500
-Received: by mail-da0-f41.google.com with SMTP id e20so738549dak.28
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:22:17 -0800 (PST)
+	id S1751594Ab3AKLWZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 06:22:25 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:45321 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750800Ab3AKLWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 06:22:24 -0500
+Received: by mail-pa0-f47.google.com with SMTP id fa10so966381pad.6
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:22:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=7H6EFfyRs0bjbjd4kzPoIrCnw5wRRmNtDpDwSTI+ySk=;
-        b=MwXJ6Anbjqth/gvNG/GcfggpEY1QveGpZmUNp4rLoedUfnElw+OT4qzzKA92xPeEZs
-         gmKHFBomCdqfT9ekVsSLWvL9oBb+pRIs7pvKhL2N4M88gKtCegy+hH9Ymcgjsh+GUfDt
-         IRdUBeap/3AaMYQ9bcCIYyESowk5ZUBmaGxYA6Inlqz+V6wXrvdX72uIL2SXxQiF9L8E
-         vXCQCqdUhM8cjRBqjdy0oeAFbwBBcVdWzQbkmAsoCj19lsHbmAKpZAZARhDWD6p8dCWo
-         crecbXEXq0I6Y72DbS8g1Lr1WBlqPwzHUAuASv1gZG8MFceDRq/KZb+dAq3MjQfIrVZs
-         6cIQ==
-X-Received: by 10.68.131.73 with SMTP id ok9mr229884099pbb.83.1357903337832;
-        Fri, 11 Jan 2013 03:22:17 -0800 (PST)
+        bh=n9oJO5bwsrAMA5kU7U2B4BPQpumTmbHDpBg4vync4xE=;
+        b=tlJxVCGaXEW4buC4SeX7/XFRQ3o1Lj6BKDMxHx1rnzstJhqTfQdmNwzOmSQji4yMCA
+         p1dXdnE+p/CwoB44/Zzt5n+r62OV6pTzAvsTpBWCYbJZIz5wfbCV8MTEfsKFg0nu4kn9
+         KKLsivJzLO9fThd9OZ+L3QIfIbLn5AePK4bXBqRgoYnqyskfYH15KEe7DyDD+3jLu0XX
+         BZjEvHZEmPf4eeNl3kdMRyYgOTAjux/1oydo29u3Hm4bC7y/3YTAw8IOBcl5VWjyi+jP
+         6vXE4NTJbSM1sLMGQBXpQwqJTcM9G+g5FaMvkQYHCUvo7GTOh5rHp90NC+NszcVcHtXV
+         il2g==
+X-Received: by 10.68.136.132 with SMTP id qa4mr58813257pbb.166.1357903343981;
+        Fri, 11 Jan 2013 03:22:23 -0800 (PST)
 Received: from lanh ([115.74.46.148])
-        by mx.google.com with ESMTPS id ti9sm2641420pbc.16.2013.01.11.03.22.14
+        by mx.google.com with ESMTPS id kp4sm2635234pbc.52.2013.01.11.03.22.20
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 03:22:17 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 18:22:27 +0700
+        Fri, 11 Jan 2013 03:22:23 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 18:22:38 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213206>
 
-treat_gitlinks() modifies pathspec and is moved to dir.c, close to
-other pathspec code. It'll be removed later when parse_pathspec()
-learns to take over its job. Note that treat_gitlinks() and
-strip_trailing_slash_from_submodules() do not perform exactly the same
-thing. But that does not matter for now.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/add.c | 84 ++++++++++++++++++++-------------------------------=
---------
- cache.h       |  1 +
- dir.c         | 32 +++++++++++++++++++++++
- 3 files changed, 61 insertions(+), 56 deletions(-)
+ builtin/checkout.c   |  2 +-
+ builtin/commit.c     |  4 ++--
+ builtin/diff-files.c |  2 +-
+ builtin/diff-index.c |  2 +-
+ builtin/diff.c       |  4 ++--
+ cache.h              |  4 +++-
+ preload-index.c      | 20 +++++++++++---------
+ 7 files changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index e664100..c8592fe 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -153,33 +153,6 @@ static char *prune_directory(struct dir_struct *di=
-r, const char **pathspec, int
- 	return seen;
- }
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index da25298..00910dc 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -261,7 +261,7 @@ static int checkout_paths(const struct checkout_opt=
+s *opts,
+ 	lock_file =3D xcalloc(1, sizeof(struct lock_file));
 =20
--static void treat_gitlinks(const char **pathspec)
--{
--	int i;
--
--	if (!pathspec || !*pathspec)
--		return;
--
--	for (i =3D 0; i < active_nr; i++) {
--		struct cache_entry *ce =3D active_cache[i];
--		if (S_ISGITLINK(ce->ce_mode)) {
--			int len =3D ce_namelen(ce), j;
--			for (j =3D 0; pathspec[j]; j++) {
--				int len2 =3D strlen(pathspec[j]);
--				if (len2 <=3D len || pathspec[j][len] !=3D '/' ||
--				    memcmp(ce->name, pathspec[j], len))
--					continue;
--				if (len2 =3D=3D len + 1)
--					/* strip trailing slash */
--					pathspec[j] =3D xstrndup(ce->name, len);
--				else
--					die (_("Path '%s' is in submodule '%.*s'"),
--						pathspec[j], len, ce->name);
--			}
--		}
--	}
--}
--
- static void refresh(int verbose, const char **pathspec)
- {
- 	char *seen;
-@@ -197,21 +170,18 @@ static void refresh(int verbose, const char **pat=
-hspec)
-         free(seen);
- }
+ 	newfd =3D hold_locked_index(lock_file, 1);
+-	if (read_cache_preload(opts->pathspec.raw) < 0)
++	if (read_cache_preload(&opts->pathspec) < 0)
+ 		return error(_("corrupt index file"));
 =20
--static const char **validate_pathspec(int argc, const char **argv, con=
-st char *prefix)
-+static void validate_pathspec(const char **pathspec, const char *prefi=
-x)
- {
--	const char **pathspec =3D get_pathspec(prefix, argv);
--
--	if (pathspec) {
--		const char **p;
--		for (p =3D pathspec; *p; p++) {
--			if (has_symlink_leading_path(*p, strlen(*p))) {
--				int len =3D prefix ? strlen(prefix) : 0;
--				die(_("'%s' is beyond a symbolic link"), *p + len);
--			}
-+	const char **p;
-+	if (!pathspec)
-+		return;
-+
-+	for (p =3D pathspec; *p; p++) {
-+		if (has_symlink_leading_path(*p, strlen(*p))) {
-+			int len =3D prefix ? strlen(prefix) : 0;
-+			die(_("'%s' is beyond a symbolic link"), *p + len);
- 		}
- 	}
--
--	return pathspec;
- }
+ 	if (opts->source_tree)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 196dfab..069d853 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -287,7 +287,7 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix,
+ 		       PATHSPEC_EMPTY_MATCH_ALL,
+ 		       prefix, argv);
 =20
- int run_add_interactive(const char *revision, const char *patch_mode,
-@@ -248,7 +218,8 @@ int interactive_add(int argc, const char **argv, co=
-nst char *prefix, int patch)
- 	const char **pathspec =3D NULL;
-=20
- 	if (argc) {
--		pathspec =3D validate_pathspec(argc, argv, prefix);
-+		pathspec =3D get_pathspec(prefix, argv);
-+		validate_pathspec(pathspec, prefix);
- 		if (!pathspec)
- 			return -1;
- 	}
-@@ -367,7 +338,7 @@ int cmd_add(int argc, const char **argv, const char=
- *prefix)
- {
- 	int exit_status =3D 0;
- 	int newfd;
--	const char **pathspec;
-+	struct pathspec pathspec;
- 	struct dir_struct dir;
- 	int flags;
- 	int add_new_files;
-@@ -415,11 +386,12 @@ int cmd_add(int argc, const char **argv, const ch=
-ar *prefix)
- 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
- 		return 0;
- 	}
--	pathspec =3D validate_pathspec(argc, argv, prefix);
-+	parse_pathspec(&pathspec, PATHSPEC_FROMTOP, 0, prefix, argv);
-+	validate_pathspec(pathspec.raw, prefix);
-=20
- 	if (read_cache() < 0)
+-	if (read_cache_preload(pathspec.raw) < 0)
++	if (read_cache_preload(&pathspec) < 0)
  		die(_("index file corrupt"));
--	treat_gitlinks(pathspec);
-+	treat_gitlinks(&pathspec);
 =20
- 	if (add_new_files) {
- 		int baselen;
-@@ -432,33 +404,33 @@ int cmd_add(int argc, const char **argv, const ch=
-ar *prefix)
- 		}
+ 	if (interactive) {
+@@ -1209,7 +1209,7 @@ int cmd_status(int argc, const char **argv, const=
+ char *prefix)
+ 		       PATHSPEC_EMPTY_MATCH_ALL,
+ 		       prefix, argv);
 =20
- 		/* This picks up the paths that are not tracked */
--		baselen =3D fill_directory(&dir, pathspec);
--		if (pathspec)
--			seen =3D prune_directory(&dir, pathspec, baselen);
-+		baselen =3D fill_directory(&dir, pathspec.raw);
-+		if (pathspec.nr)
-+			seen =3D prune_directory(&dir, pathspec.raw, baselen);
+-	read_cache_preload(s.pathspec.raw);
++	read_cache_preload(&s.pathspec);
+ 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, s.pathspec.=
+raw, NULL, NULL);
+=20
+ 	fd =3D hold_locked_index(&index_lock, 0);
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 46085f8..9200069 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -61,7 +61,7 @@ int cmd_diff_files(int argc, const char **argv, const=
+ char *prefix)
+ 	    (rev.diffopt.output_format & DIFF_FORMAT_PATCH))
+ 		rev.combine_merges =3D rev.dense_combined_merges =3D 1;
+=20
+-	if (read_cache_preload(rev.diffopt.pathspec.raw) < 0) {
++	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
+ 		perror("read_cache_preload");
+ 		return -1;
  	}
-=20
- 	if (refresh_only) {
--		refresh(verbose, pathspec);
-+		refresh(verbose, pathspec.raw);
- 		goto finish;
- 	}
-=20
--	if (pathspec) {
-+	if (pathspec.nr) {
- 		int i;
- 		struct path_exclude_check check;
-=20
- 		path_exclude_check_init(&check, &dir);
- 		if (!seen)
--			seen =3D find_used_pathspec(pathspec);
--		for (i =3D 0; pathspec[i]; i++) {
--			if (!seen[i] && pathspec[i][0]
--			    && !file_exists(pathspec[i])) {
-+			seen =3D find_used_pathspec(pathspec.raw);
-+		for (i =3D 0; pathspec.raw[i]; i++) {
-+			if (!seen[i] && pathspec.raw[i][0]
-+			    && !file_exists(pathspec.raw[i])) {
- 				if (ignore_missing) {
- 					int dtype =3D DT_UNKNOWN;
--					if (path_excluded(&check, pathspec[i], -1, &dtype))
--						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
-+					if (path_excluded(&check, pathspec.raw[i], -1, &dtype))
-+						dir_add_ignored(&dir, pathspec.raw[i], strlen(pathspec.raw[i]));
- 				} else
- 					die(_("pathspec '%s' did not match any files"),
--					    pathspec[i]);
-+					    pathspec.raw[i]);
- 			}
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 1c737f7..ce15b23 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -43,7 +43,7 @@ int cmd_diff_index(int argc, const char **argv, const=
+ char *prefix)
+ 		usage(diff_cache_usage);
+ 	if (!cached) {
+ 		setup_work_tree();
+-		if (read_cache_preload(rev.diffopt.pathspec.raw) < 0) {
++		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
+ 			perror("read_cache_preload");
+ 			return -1;
  		}
- 		free(seen);
-@@ -467,7 +439,7 @@ int cmd_add(int argc, const char **argv, const char=
- *prefix)
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 8c2af6c..62bdc4d 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -140,7 +140,7 @@ static int builtin_diff_index(struct rev_info *revs=
+,
+ 		usage(builtin_diff_usage);
+ 	if (!cached) {
+ 		setup_work_tree();
+-		if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
++		if (read_cache_preload(&revs->diffopt.pathspec) < 0) {
+ 			perror("read_cache_preload");
+ 			return -1;
+ 		}
+@@ -240,7 +240,7 @@ static int builtin_diff_files(struct rev_info *revs=
+, int argc, const char **argv
+ 		revs->combine_merges =3D revs->dense_combined_merges =3D 1;
 =20
- 	plug_bulk_checkin();
-=20
--	exit_status |=3D add_files_to_cache(prefix, pathspec, flags);
-+	exit_status |=3D add_files_to_cache(prefix, pathspec.raw, flags);
-=20
- 	if (add_new_files)
- 		exit_status |=3D add_files(&dir, flags);
+ 	setup_work_tree();
+-	if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
++	if (read_cache_preload(&revs->diffopt.pathspec) < 0) {
+ 		perror("read_cache_preload");
+ 		return -1;
+ 	}
 diff --git a/cache.h b/cache.h
-index 62eefb1..af96376 100644
+index af96376..c594ded 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -497,6 +497,7 @@ extern void parse_pathspec(struct pathspec *pathspe=
-c, unsigned magic,
- 			   unsigned flags, const char *prefix,
- 			   const char **args);
- void strip_trailing_slash_from_submodules(struct pathspec *pathspec);
-+void treat_gitlinks(struct pathspec *pathspec);
- extern void free_pathspec(struct pathspec *);
- extern int ce_path_match(const struct cache_entry *ce, const struct pa=
-thspec *pathspec);
+@@ -182,6 +182,8 @@ struct cache_entry {
+ #error "CE_EXTENDED_FLAGS out of range"
+ #endif
 =20
-diff --git a/dir.c b/dir.c
-index 4be3ca1..4d1f71c 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1460,6 +1460,38 @@ void strip_trailing_slash_from_submodules(struct=
- pathspec *pathspec)
- 	}
++struct pathspec;
++
+ /*
+  * Copy the sha1 and stat state of a cache entry from one to
+  * another. But we never change the name, or the hash state!
+@@ -433,7 +435,7 @@ extern int init_db(const char *template_dir, unsign=
+ed int flags);
+=20
+ /* Initialize and use the cache information */
+ extern int read_index(struct index_state *);
+-extern int read_index_preload(struct index_state *, const char **paths=
+pec);
++extern int read_index_preload(struct index_state *, const struct paths=
+pec *pathspec);
+ extern int read_index_from(struct index_state *, const char *path);
+ extern int is_index_unborn(struct index_state *);
+ extern int read_index_unmerged(struct index_state *);
+diff --git a/preload-index.c b/preload-index.c
+index 49cb08d..91f27f7 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -4,7 +4,8 @@
+ #include "cache.h"
+=20
+ #ifdef NO_PTHREADS
+-static void preload_index(struct index_state *index, const char **path=
+spec)
++static void preload_index(struct index_state *index,
++			  const struct pathspec *pathspec)
+ {
+ 	; /* nothing */
+ }
+@@ -24,7 +25,7 @@ static void preload_index(struct index_state *index, =
+const char **pathspec)
+ struct thread_data {
+ 	pthread_t pthread;
+ 	struct index_state *index;
+-	const char **pathspec;
++	struct pathspec pathspec;
+ 	int offset, nr;
+ };
+=20
+@@ -35,9 +36,7 @@ static void *preload_thread(void *_data)
+ 	struct index_state *index =3D p->index;
+ 	struct cache_entry **cep =3D index->cache + p->offset;
+ 	struct cache_def cache;
+-	struct pathspec pathspec;
+=20
+-	init_pathspec(&pathspec, p->pathspec);
+ 	memset(&cache, 0, sizeof(cache));
+ 	nr =3D p->nr;
+ 	if (nr + p->offset > index->cache_nr)
+@@ -53,7 +52,7 @@ static void *preload_thread(void *_data)
+ 			continue;
+ 		if (ce_uptodate(ce))
+ 			continue;
+-		if (!ce_path_match(ce, &pathspec))
++		if (!ce_path_match(ce, &p->pathspec))
+ 			continue;
+ 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(c=
+e)))
+ 			continue;
+@@ -63,11 +62,11 @@ static void *preload_thread(void *_data)
+ 			continue;
+ 		ce_mark_uptodate(ce);
+ 	} while (--nr > 0);
+-	free_pathspec(&pathspec);
+ 	return NULL;
  }
 =20
-+void treat_gitlinks(struct pathspec *pathspec)
-+{
-+	int i;
-+
-+	for (i =3D 0; i < active_nr; i++) {
-+		struct cache_entry *ce =3D active_cache[i];
-+		int len =3D ce_namelen(ce), j;
-+
-+		if (!S_ISGITLINK(ce->ce_mode))
-+			continue;
-+
-+		for (j =3D 0; j < pathspec->nr; j++) {
-+			int len2 =3D strlen(pathspec->raw[j]);
-+			if (len2 <=3D len || pathspec->raw[j][len] !=3D '/' ||
-+			    memcmp(ce->name, pathspec->raw[j], len))
-+				continue;
-+			if (len2 =3D=3D len + 1) {
-+				/* strip trailing slash */
-+				char *path =3D xstrndup(ce->name, len);
-+				pathspec->raw[j] =3D path;
-+				pathspec->items[j].match =3D path;
-+				pathspec->items[j].len =3D len;
-+				pathspec->items[j].nowildcard_len =3D simple_length(path);
-+			} else
-+				die (_("Path '%s' is in submodule '%.*s'"),
-+				     pathspec->raw[j], len, ce->name);
-+		}
-+	}
-+}
-+
-+
-+
- void free_pathspec(struct pathspec *pathspec)
+-static void preload_index(struct index_state *index, const char **path=
+spec)
++static void preload_index(struct index_state *index,
++			  const struct pathspec *pathspec)
  {
- 	free(pathspec->items);
+ 	int threads, i, work, offset;
+ 	struct thread_data data[MAX_PARALLEL];
+@@ -82,10 +81,12 @@ static void preload_index(struct index_state *index=
+, const char **pathspec)
+ 		threads =3D MAX_PARALLEL;
+ 	offset =3D 0;
+ 	work =3D DIV_ROUND_UP(index->cache_nr, threads);
++	memset(&data, 0, sizeof(data));
+ 	for (i =3D 0; i < threads; i++) {
+ 		struct thread_data *p =3D data+i;
+ 		p->index =3D index;
+-		p->pathspec =3D pathspec;
++		if (pathspec)
++			p->pathspec =3D *pathspec;
+ 		p->offset =3D offset;
+ 		p->nr =3D work;
+ 		offset +=3D work;
+@@ -100,7 +101,8 @@ static void preload_index(struct index_state *index=
+, const char **pathspec)
+ }
+ #endif
+=20
+-int read_index_preload(struct index_state *index, const char **pathspe=
+c)
++int read_index_preload(struct index_state *index,
++		       const struct pathspec *pathspec)
+ {
+ 	int retval =3D read_index(index);
+=20
 --=20
 1.8.0.rc2.23.g1fb49df
