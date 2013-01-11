@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 17/21] Convert refresh_index to take struct pathspec
-Date: Fri, 11 Jan 2013 18:21:11 +0700
-Message-ID: <1357903275-16804-18-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 18/21] Convert {read,fill}_directory to take struct pathspec
+Date: Fri, 11 Jan 2013 18:21:12 +0700
+Message-ID: <1357903275-16804-19-git-send-email-pclouds@gmail.com>
 References: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,175 +11,211 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 12:23:14 2013
+X-From: git-owner@vger.kernel.org Fri Jan 11 12:23:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtchX-0007ul-R0
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:23:08 +0100
+	id 1Ttchd-0007wc-Pp
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131Ab3AKLWs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 06:22:48 -0500
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:34644 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753579Ab3AKLWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 06:22:47 -0500
-Received: by mail-pb0-f51.google.com with SMTP id ro12so900882pbb.38
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:22:47 -0800 (PST)
+	id S1754239Ab3AKLWy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 06:22:54 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:47071 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753579Ab3AKLWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 06:22:53 -0500
+Received: by mail-pa0-f42.google.com with SMTP id rl6so971297pac.29
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=AYv+rdBdRxGXkiZtDJLdnDkEdFqF71b3/vzB+8KaqhM=;
-        b=ppk/EEYQSargmzYQv2oWhgy/VAojAt39HqkOUa5BvnpSgLZ1ISfTFtWlB19+mtsnbQ
-         7MFnBF9s+2wOk9Xam/bM0XxyMKcDhsZ/lDNQncg40UWy930lHFvsR4dNL8EnqIxQ04gV
-         XzJ/oBHDA0L7ATLxJU1CvIXSyjPIV/KDKXsb1XxbBUFqSd426mj7/zoBpy76jibfjGWp
-         9PgBkNdfYtRJZg3dPL2Dz2Esmk3o/f3n2HV+xITBUKs6xa6zGhpV8/+r3Phkf3sTX/f8
-         KRgh8oBKccsd/VFSIsI9ChSgZf848WvOKyCRVI1cp9vKy9MtqFrJX/Q4tZPJHyXb/hru
-         IGug==
-X-Received: by 10.68.233.99 with SMTP id tv3mr45636569pbc.64.1357903367143;
-        Fri, 11 Jan 2013 03:22:47 -0800 (PST)
+        bh=OZDnqMrOrV/vWPeBTomua240GGdKxMX6z5RnpMwt+1s=;
+        b=O+IbSwmHWrDcS91vNHuGxtNm0Hr13HJQWIdj12bbHpqZXSLVhGDbQ6TsxRFcuw7Wty
+         2+RHbubvsRVffVNjrQOV/T0zGF1uoYH+tLmCVakyV1xZY1OvRAfOSO1x+LKWak8+tuim
+         gMr5VT+XhM2oqOuuci73exMBi19aET/tiVDct9S1Bkm6lxXMNXIZtVYE/p+Z+nqL9vc4
+         uDer+h4jXmtLpjsAC9PFOvckVePgSDiDBogj5xrqYvPZkgvDhT4BT3vI9wfzc3+egHLW
+         I4ZV/LjRElw8jduoELSzcYep6NMgkafVcHG9eVZ2W0ZIO2n/Aoy4gIg0u3L09bQilWzH
+         YcQQ==
+X-Received: by 10.66.83.136 with SMTP id q8mr206267749pay.83.1357903372937;
+        Fri, 11 Jan 2013 03:22:52 -0800 (PST)
 Received: from lanh ([115.74.46.148])
-        by mx.google.com with ESMTPS id ov4sm2636970pbb.45.2013.01.11.03.22.44
+        by mx.google.com with ESMTPS id j9sm2955797paw.2.2013.01.11.03.22.50
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 03:22:46 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 18:23:01 +0700
+        Fri, 11 Jan 2013 03:22:52 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 18:23:07 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213211>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/add.c    | 14 ++++++--------
- builtin/commit.c |  2 +-
- builtin/rm.c     |  2 +-
- cache.h          |  2 +-
- read-cache.c     |  5 +++--
- 5 files changed, 12 insertions(+), 13 deletions(-)
+ builtin/add.c      |  2 +-
+ builtin/clean.c    |  2 +-
+ builtin/grep.c     |  2 +-
+ builtin/ls-files.c |  2 +-
+ dir.c              | 10 +++++-----
+ dir.h              |  4 ++--
+ wt-status.c        |  4 ++--
+ 7 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/add.c b/builtin/add.c
-index c8592fe..4e2b603 100644
+index 4e2b603..0295cef 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -153,19 +153,17 @@ static char *prune_directory(struct dir_struct *d=
-ir, const char **pathspec, int
- 	return seen;
- }
-=20
--static void refresh(int verbose, const char **pathspec)
-+static void refresh(int verbose, const struct pathspec *pathspec)
- {
- 	char *seen;
--	int i, specs;
-+	int i;
-=20
--	for (specs =3D 0; pathspec[specs];  specs++)
--		/* nothing */;
--	seen =3D xcalloc(specs, 1);
-+	seen =3D xcalloc(pathspec->nr, 1);
- 	refresh_index(&the_index, verbose ? REFRESH_IN_PORCELAIN : REFRESH_QU=
-IET,
- 		      pathspec, seen, _("Unstaged changes after refreshing the index=
-:"));
--	for (i =3D 0; i < specs; i++) {
-+	for (i =3D 0; i < pathspec->nr; i++) {
- 		if (!seen[i])
--			die(_("pathspec '%s' did not match any files"), pathspec[i]);
-+			die(_("pathspec '%s' did not match any files"), pathspec->raw[i]);
- 	}
-         free(seen);
- }
-@@ -410,7 +408,7 @@ int cmd_add(int argc, const char **argv, const char=
+@@ -402,7 +402,7 @@ int cmd_add(int argc, const char **argv, const char=
  *prefix)
+ 		}
+=20
+ 		/* This picks up the paths that are not tracked */
+-		baselen =3D fill_directory(&dir, pathspec.raw);
++		baselen =3D fill_directory(&dir, &pathspec);
+ 		if (pathspec.nr)
+ 			seen =3D prune_directory(&dir, pathspec.raw, baselen);
  	}
-=20
- 	if (refresh_only) {
--		refresh(verbose, pathspec.raw);
-+		refresh(verbose, &pathspec);
- 		goto finish;
- 	}
-=20
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 8777c19..2fe6054 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1208,7 +1208,7 @@ int cmd_status(int argc, const char **argv, const=
- char *prefix)
- 		       prefix, argv);
-=20
- 	read_cache_preload(&s.pathspec);
--	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, s.pathspec.=
-raw, NULL, NULL);
-+	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &s.pathspec=
-, NULL, NULL);
-=20
- 	fd =3D hold_locked_index(&index_lock, 0);
- 	if (0 <=3D fd)
-diff --git a/builtin/rm.c b/builtin/rm.c
-index d719d95..b5edde8 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -250,7 +250,7 @@ int cmd_rm(int argc, const char **argv, const char =
-*prefix)
- 	}
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 788ad8c..41c8cad 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -103,7 +103,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
 =20
  	parse_pathspec(&pathspec, PATHSPEC_FROMTOP, 0, prefix, argv);
--	refresh_index(&the_index, REFRESH_QUIET, pathspec.raw, NULL, NULL);
-+	refresh_index(&the_index, REFRESH_QUIET, &pathspec, NULL, NULL);
 =20
- 	seen =3D NULL;
- 	seen =3D xcalloc(pathspec.nr, 1);
-diff --git a/cache.h b/cache.h
-index 40eaa04..32298ba 100644
---- a/cache.h
-+++ b/cache.h
-@@ -515,7 +515,7 @@ extern void fill_stat_cache_info(struct cache_entry=
- *ce, struct stat *st);
- #define REFRESH_IGNORE_MISSING	0x0008	/* ignore non-existent */
- #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
- #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "need=
-s update" */
--extern int refresh_index(struct index_state *, unsigned int flags, con=
-st char **pathspec, char *seen, const char *header_msg);
-+extern int refresh_index(struct index_state *, unsigned int flags, con=
-st struct pathspec *pathspec, char *seen, const char *header_msg);
+-	fill_directory(&dir, pathspec.raw);
++	fill_directory(&dir, &pathspec);
 =20
- struct lock_file {
- 	struct lock_file *next;
-diff --git a/read-cache.c b/read-cache.c
-index fda78bc..dec2ba6 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1093,7 +1093,8 @@ static void show_file(const char * fmt, const cha=
-r * name, int in_porcelain,
- 	printf(fmt, name);
+ 	if (pathspec.nr)
+ 		seen =3D xmalloc(pathspec.nr);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 705f9ff..f370bad 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -522,7 +522,7 @@ static int grep_directory(struct grep_opt *opt, con=
+st struct pathspec *pathspec,
+ 	if (exc_std)
+ 		setup_standard_excludes(&dir);
+=20
+-	fill_directory(&dir, pathspec->raw);
++	fill_directory(&dir, pathspec);
+ 	for (i =3D 0; i < dir.nr; i++) {
+ 		const char *name =3D dir.entries[i]->name;
+ 		int namelen =3D strlen(name);
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index be6e05d..7bb637b 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -216,7 +216,7 @@ static void show_files(struct dir_struct *dir)
+=20
+ 	/* For cached/deleted files we don't need to even do the readdir */
+ 	if (show_others || show_killed) {
+-		fill_directory(dir, pathspec.raw);
++		fill_directory(dir, &pathspec);
+ 		if (show_others)
+ 			show_other_files(dir);
+ 		if (show_killed)
+diff --git a/dir.c b/dir.c
+index 4d1f71c..eb52913 100644
+--- a/dir.c
++++ b/dir.c
+@@ -72,7 +72,7 @@ char *common_prefix(const char **pathspec)
+ 	return len ? xmemdupz(*pathspec, len) : NULL;
  }
 =20
--int refresh_index(struct index_state *istate, unsigned int flags, cons=
-t char **pathspec,
-+int refresh_index(struct index_state *istate, unsigned int flags,
-+		  const struct pathspec *pathspec,
- 		  char *seen, const char *header_msg)
+-int fill_directory(struct dir_struct *dir, const char **pathspec)
++int fill_directory(struct dir_struct *dir, const struct pathspec *path=
+spec)
  {
- 	int i;
-@@ -1128,7 +1129,7 @@ int refresh_index(struct index_state *istate, uns=
-igned int flags, const char **p
- 			continue;
+ 	size_t len;
 =20
- 		if (pathspec &&
--		    !match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen))
-+		    !match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, see=
-n))
- 			filtered =3D 1;
+@@ -80,10 +80,10 @@ int fill_directory(struct dir_struct *dir, const ch=
+ar **pathspec)
+ 	 * Calculate common prefix for the pathspec, and
+ 	 * use that to optimize the directory walk
+ 	 */
+-	len =3D common_prefix_len(pathspec);
++	len =3D common_prefix_len(pathspec->raw);
 =20
- 		if (ce_stage(ce)) {
+ 	/* Read the directory and prune it */
+-	read_directory(dir, pathspec ? *pathspec : "", len, pathspec);
++	read_directory(dir, pathspec->nr ? pathspec->raw[0] : "", len, pathsp=
+ec);
+ 	return len;
+ }
+=20
+@@ -1211,14 +1211,14 @@ static int treat_leading_path(struct dir_struct=
+ *dir,
+ 	return rc;
+ }
+=20
+-int read_directory(struct dir_struct *dir, const char *path, int len, =
+const char **pathspec)
++int read_directory(struct dir_struct *dir, const char *path, int len, =
+const struct pathspec *pathspec)
+ {
+ 	struct path_simplify *simplify;
+=20
+ 	if (has_symlink_leading_path(path, len))
+ 		return dir->nr;
+=20
+-	simplify =3D create_simplify(pathspec);
++	simplify =3D create_simplify(pathspec ? pathspec->raw : NULL);
+ 	if (!len || treat_leading_path(dir, path, len, simplify))
+ 		read_directory_recursive(dir, path, len, 0, simplify);
+ 	free_simplify(simplify);
+diff --git a/dir.h b/dir.h
+index 1d4888b..b51d2e9 100644
+--- a/dir.h
++++ b/dir.h
+@@ -74,8 +74,8 @@ extern int match_pathspec_depth(const struct pathspec=
+ *pathspec,
+ 				int prefix, char *seen);
+ extern int within_depth(const char *name, int namelen, int depth, int =
+max_depth);
+=20
+-extern int fill_directory(struct dir_struct *dir, const char **pathspe=
+c);
+-extern int read_directory(struct dir_struct *, const char *path, int l=
+en, const char **pathspec);
++extern int fill_directory(struct dir_struct *dir, const struct pathspe=
+c *pathspec);
++extern int read_directory(struct dir_struct *, const char *path, int l=
+en, const struct pathspec *pathspec);
+=20
+ extern int excluded_from_list(const char *pathname, int pathlen, const=
+ char *basename,
+ 			      int *dtype, struct exclude_list *el);
+diff --git a/wt-status.c b/wt-status.c
+index 13e6aba..2e1a62b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -502,7 +502,7 @@ static void wt_status_collect_untracked(struct wt_s=
+tatus *s)
+ 			DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+ 	setup_standard_excludes(&dir);
+=20
+-	fill_directory(&dir, s->pathspec.raw);
++	fill_directory(&dir, &s->pathspec);
+ 	for (i =3D 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent =3D dir.entries[i];
+ 		if (cache_name_is_other(ent->name, ent->len) &&
+@@ -514,7 +514,7 @@ static void wt_status_collect_untracked(struct wt_s=
+tatus *s)
+ 	if (s->show_ignored_files) {
+ 		dir.nr =3D 0;
+ 		dir.flags =3D DIR_SHOW_IGNORED | DIR_SHOW_OTHER_DIRECTORIES;
+-		fill_directory(&dir, s->pathspec.raw);
++		fill_directory(&dir, &s->pathspec);
+ 		for (i =3D 0; i < dir.nr; i++) {
+ 			struct dir_entry *ent =3D dir.entries[i];
+ 			if (cache_name_is_other(ent->name, ent->len) &&
 --=20
 1.8.0.rc2.23.g1fb49df
