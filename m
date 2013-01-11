@@ -1,59 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-archive fails against smart-http repos
-Date: Fri, 11 Jan 2013 15:58:49 -0500
-Message-ID: <20130111205849.GA17810@sigill.intra.peff.net>
-References: <6014ED12-17F9-4D57-927F-6AFCD8A51C9D@apple.com>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH] git-completion.bash: Silence not a valid object errors
+Date: Fri, 11 Jan 2013 22:12:00 +0100
+Message-ID: <50F08020.2010701@gmail.com>
+References: <alpine.DEB.2.02.1301110304220.26739@antec>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Bruce Lysik <blysik@apple.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 21:59:14 2013
+To: Dylan Smith <dylan.ah.smith@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 22:12:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttlh2-0004gL-ET
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 21:59:12 +0100
+	id 1Ttlu3-0007FN-57
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 22:12:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377Ab3AKU6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 15:58:52 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57797 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755232Ab3AKU6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 15:58:51 -0500
-Received: (qmail 24477 invoked by uid 107); 11 Jan 2013 21:00:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Jan 2013 16:00:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jan 2013 15:58:49 -0500
-Content-Disposition: inline
-In-Reply-To: <6014ED12-17F9-4D57-927F-6AFCD8A51C9D@apple.com>
+	id S1753970Ab3AKVMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 16:12:19 -0500
+Received: from mail-ee0-f42.google.com ([74.125.83.42]:54797 "EHLO
+	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753326Ab3AKVMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 16:12:18 -0500
+Received: by mail-ee0-f42.google.com with SMTP id b47so661413eek.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 13:12:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=q3r7zOhJfwPVnRLdGL0Jw03WAj9Wf6fJBpshvXCfOp0=;
+        b=ed/zRZp2FZfKz+vichWn6nLcI6mebaAIiLKnuV2689rzBWHKEhS9hnOThrnpw3moWZ
+         kdnQFTNPhTSZQPe9WPQzObu8XUp5j5uXQXEGQUNWTD9KWERhrZl8DwsT9Xgv8sKfaiyd
+         2cbxAbp/uDWM5YJ9Gw/ImfH/wP6LccOWGipcJPL1nbxKWG72dyzGh/WnZEGkswbxQzfD
+         68EHcm8d1/AZ8BcN//PQRaFMz3yO/95PtXhWiav2sYD0iEvZEx16BvT+QsNo8GlJB82d
+         B7lxD76/LFe5oiOhXeGWb2E1yOoC/zXmUuXZbx/rW5iV4pbKXBwuYshlboeT+1Pu+/zz
+         fhrA==
+X-Received: by 10.14.177.1 with SMTP id c1mr203505787eem.8.1357938737235;
+        Fri, 11 Jan 2013 13:12:17 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.220.147])
+        by mx.google.com with ESMTPS id z8sm10035428eeo.11.2013.01.11.13.12.10
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 11 Jan 2013 13:12:15 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <alpine.DEB.2.02.1301110304220.26739@antec>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213244>
 
-On Wed, Jan 09, 2013 at 10:52:48AM -0800, Bruce Lysik wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Trying to run git-archive fails against smart-http based repos.  Example:
+Il 11/01/2013 09:06, Dylan Smith ha scritto:
+> Trying to complete the command
 > 
-> $ git archive --verbose --format=zip --remote=http://code.toofishes.net/git/dan/initscripts.git
-> fatal: Operation not supported by protocol.
-> Unexpected end of command stream
+>   git show master:./file
 > 
-> This problem was brought up against my internal repos as well.
+> would cause a "Not a valid object name" error to be output on standard
+> error. Silence the error so it won't appear on the command line.
+> 
 
-Right. Neither the client nor server for the http transport knows how to
-handle the "git-upload-archive" service (as opposed to the regular
-"git-upload-pack" or "git-receive-pack" services). I don't think there's
-anything technical standing in the way; it is has simply never been
-implemented.
+I reported the problem a few weeks ago; thanks.
 
-Currently, you can do remote git-archive only locally, via ssh, or over
-git:// (but then only if the server side has explicitly enabled it).
+> [...]
 
-Patches welcome.
 
--Peff
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDwgCAACgkQscQJ24LbaUTAxgCfZbB8X8IaTZAcT8iTs1XIILBJ
+72MAn2zlh3xbRa/wjq1WyA2yOiAlaCr7
+=dMN7
+-----END PGP SIGNATURE-----
