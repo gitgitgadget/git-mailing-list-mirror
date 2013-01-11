@@ -1,51 +1,48 @@
 From: Ishayahu Lastov <meoc-it@mail.ru>
-Subject: Fwd: git checkout doesn't work?
-Date: Fri, 11 Jan 2013 10:46:29 +0400
-Message-ID: <CAJ52sWkf+ZkLUdLw1ornVt5E2af3w1YSqhkOajTWxvTPKvkAJg@mail.gmail.com>
-References: <CAJ52sWkhQDhaZxjp4vxdwSX8HGYMqaXW=gZ-d6atUDKSjHg=yw@mail.gmail.com>
+Subject: git checkout bug on Win7 x64
+Date: Fri, 11 Jan 2013 11:30:01 +0400
+Message-ID: <CAJ52sWnm23pLibG24PZm0UB=_tk7JahNx0c53E1udJG4D3yvvQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 07:47:11 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 11 08:36:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtYOU-0000tA-WD
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 07:47:11 +0100
+	id 1TtZ9h-00053p-Sx
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 08:35:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541Ab3AKGqv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 01:46:51 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:56743 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753110Ab3AKGqu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jan 2013 01:46:50 -0500
-Received: by mail-lb0-f179.google.com with SMTP id gm13so1082939lbb.38
-        for <git@vger.kernel.org>; Thu, 10 Jan 2013 22:46:49 -0800 (PST)
+	id S1753746Ab3AKHfi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 02:35:38 -0500
+Received: from mail-la0-f44.google.com ([209.85.215.44]:44454 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753401Ab3AKHfh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jan 2013 02:35:37 -0500
+Received: by mail-la0-f44.google.com with SMTP id fr10so1479815lab.31
+        for <git@vger.kernel.org>; Thu, 10 Jan 2013 23:35:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
         bh=PGHPYcV/tQpaggb7a1EwqvX/GrXTXcnhr9Hi2Aq4i34=;
-        b=B8npa4AbhhCBewl62ijsclzcgoz5mHcnLU+2b7KWkamPLeUKbGm/k2cvOJVRrFweKs
-         N0oHWC4vBZ0jLYZ8YOAFFf+WA6bjC7t7zJazONZUbXXAkUrLsYtqVN8moYRlSu4yvFxV
-         il/1KDjY3H3Qq3sUV6XUuWJJSbYkt5cmcqEu7/wTNXCHe1AQNOJWZWU4GR26NKpjGAfe
-         u6lBKVxnmY6yKEsPaRXm8JTdAhgw4A/G1mLopow0CFZjcwwe/fccr0h8HIamwo88Xj+i
-         +laMZlGTQK26gPdfgEhsUUau846o9z7AUe4Wco1Ba+Vj1ZFUcLlsGvXV3WZDGGgSJuxz
-         UTSQ==
-Received: by 10.152.112.36 with SMTP id in4mr72023443lab.35.1357886809090;
- Thu, 10 Jan 2013 22:46:49 -0800 (PST)
-Received: by 10.114.77.138 with HTTP; Thu, 10 Jan 2013 22:46:29 -0800 (PST)
-In-Reply-To: <CAJ52sWkhQDhaZxjp4vxdwSX8HGYMqaXW=gZ-d6atUDKSjHg=yw@mail.gmail.com>
-X-Google-Sender-Auth: YF1TYpIVKAOIhyg3wYi8rg_Tric
+        b=xxFuKVg63VHgYOAoZy1mMKXulu/ZTfZmSAix0fF/5hNTYpsZxsACQkJRmYX78T/6XR
+         1AYlTXAvRh9uS3UvvXS9zCQ4SUXtpRt4d0Q7yhUXBOKxg+qGAzr82LxopEvQr6pEDVgb
+         yt+hZVtTcZVUi7K0z8lNPGvPLGj3mhagBwe+lb/zv8Nqah4WXOt9MqtF1lUcsFgwhc1q
+         oyf8gz/rDAdBhUnYkD9fMd0Z5rTJsQRVGXSZnX0JqP4IUml6dhSPebGvqX7hGOrRS5ZO
+         81/a2rp0krZmBngckyCUpkovlro08SrPbn9TFbbdzqxe/82rCaAJ8leiI+5ADXniu3qH
+         1muQ==
+Received: by 10.112.50.138 with SMTP id c10mr30580054lbo.104.1357889421442;
+ Thu, 10 Jan 2013 23:30:21 -0800 (PST)
+Received: by 10.114.77.138 with HTTP; Thu, 10 Jan 2013 23:30:01 -0800 (PST)
+X-Google-Sender-Auth: E9tTC1FUHAeBbW4vFBshfl1so4k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213183>
 
 This is my session on Win7 x64:
 Microsoft Windows [Version 6.1.7601]
