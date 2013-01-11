@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 00/21] nd/parse-pathspec reroll
-Date: Fri, 11 Jan 2013 18:20:54 +0700
-Message-ID: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 01/21] pathspec: save the non-wildcard length part
+Date: Fri, 11 Jan 2013 18:20:55 +0700
+Message-ID: <1357903275-16804-2-git-send-email-pclouds@gmail.com>
+References: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -16,122 +17,149 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttcg2-0006NZ-7A
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:21:34 +0100
+	id 1Ttcg2-0006NZ-N0
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 12:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339Ab3AKLVF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 06:21:05 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:50336 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800Ab3AKLVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 06:21:02 -0500
-Received: by mail-pb0-f54.google.com with SMTP id wz12so910661pbc.41
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:21:02 -0800 (PST)
+	id S1752192Ab3AKLVL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2013 06:21:11 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:64857 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751432Ab3AKLVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 06:21:09 -0500
+Received: by mail-pa0-f43.google.com with SMTP id fb10so968551pad.16
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 03:21:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=wEPJdd/IyknkOhMWVutX57PW6I7RAHJzw/CwxGyflpQ=;
-        b=UzAesq2OKGLSL7x7pG/BzmcgYaTds/tFEUETnK7lvrHDHGY2WQgyQPDHvOK6R8LNSY
-         YfY5Z6iCeJdSznmse7kqenMtL148Gv1XZxGyTu2HAORg8Ubn6JRtkDaq6FfuKKQlowNR
-         Sv1IZWWrkTVOT3sFTn0JCe6BpKC9R+yZUUao5sc4vh9EvL1fo1DqC7kDrG7Ek+zw54k8
-         OA8jpYxT8Q4e1ypOf+MQ2InytFwZ55Hm8EQOUV32I1UXVzjLqwk++MiEPiSLN6ihPSfu
-         /pKjuWlX159bKGRmZx5nt5sKv8NLompjLPOyqtTffa5h8swU3VAkXuZb5LTrSJR8C0Xe
-         ZDHw==
-X-Received: by 10.68.117.145 with SMTP id ke17mr30970802pbb.52.1357903262409;
-        Fri, 11 Jan 2013 03:21:02 -0800 (PST)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=z0zCVWMvlXjiMwZaD+bSGICK1DJmzpvl55KXPFtL3tQ=;
+        b=rM5XY/lOkNp+b4mESsrQgfuRuMUFyu2HUlqOOVICRnK1p0w5kFIkG2Uo4zfDz3PVOz
+         M1EGOY1Wu6dKfdLmK/Vv7z/lgoXMPDpTM/rKQLRAzPOB4fB7R0YowOAd8SVjx5/nGY3+
+         J5R2SjqP54KWVOmKPj9cZw2UD5UKOerAQD1LlBdkPBL1cSZ/TjTYevG0tujjMRIq49Ck
+         jCa0qUc1AqI7HfBu9mxUO3r8Af9dAkTAD4VLJIywiT6ArRUR2UpNMIW9nbHuKqcGowSK
+         C0jxyhE8Qrffcj8i+ZGfQDb4vJqfbEIJ0oprKt9KHM5q9NzrIuUQPJZnuvE/Dl/r42md
+         7FxQ==
+X-Received: by 10.68.229.169 with SMTP id sr9mr19233371pbc.120.1357903268721;
+        Fri, 11 Jan 2013 03:21:08 -0800 (PST)
 Received: from lanh ([115.74.46.148])
-        by mx.google.com with ESMTPS id n10sm2941919pav.18.2013.01.11.03.20.59
+        by mx.google.com with ESMTPS id qh4sm2641017pbb.9.2013.01.11.03.21.05
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 03:21:01 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 18:21:16 +0700
+        Fri, 11 Jan 2013 03:21:07 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 11 Jan 2013 18:21:23 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
+In-Reply-To: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213194>
 
-Changes:
+We mark pathspec with wildcards with the field use_wildcard. We
+could do better by saving the length of the non-wildcard part, which
+can be used for optimizations such as f9f6e2c (exclude: do strcmp as
+much as possible before fnmatch - 2012-06-07).
 
-- The incorrect patch 'pathspec: make sure the prefix part is
-  wildcard-clean' is removed. I want to keep this series simple.
-  Complex pathspec manipulation will have its own series later.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/ls-files.c | 2 +-
+ builtin/ls-tree.c  | 2 +-
+ cache.h            | 2 +-
+ dir.c              | 6 +++---
+ tree-walk.c        | 4 ++--
+ 5 files changed, 8 insertions(+), 8 deletions(-)
 
-- Fix t7400.38 failure when core.ignorecase is on. We should exercise
-  core.ignorecase codepath more in the test suite, but that should be
-  in a separate series.
-
-- parse_pathspec() learns PATHSPEC_EMPTY_MATCH_ALL flag to support
-  "no pathspec means match everything", which is used by some commands
-  like commit/status
-
-- rename 'raw' to '_raw' to catch new access sites
-
-I also checked if we still have similar faults to t7400.38 (modifying
-pathspec directly leading to inconsistencies) and I think we're safe.
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (21):
-  pathspec: save the non-wildcard length part
-  Add parse_pathspec() that converts cmdline args to struct pathspec
-  Export parse_pathspec() and convert some get_pathspec() calls
-  clean: convert to use parse_pathspec
-  commit: convert to use parse_pathspec
-  status: convert to use parse_pathspec
-  rerere: convert to use parse_pathspec
-  checkout: convert to use parse_pathspec
-  rm: convert to use parse_pathspec
-  ls-files: convert to use parse_pathspec
-  archive: convert to use parse_pathspec
-  add: convert to use parse_pathspec
-  Convert read_cache_preload() to take struct pathspec
-  Convert unmerge_cache to take struct pathspec
-  checkout: convert read_tree_some to take struct pathspec
-  Convert report_path_error to take struct pathspec
-  Convert refresh_index to take struct pathspec
-  Convert {read,fill}_directory to take struct pathspec
-  Convert add_files_to_cache to take struct pathspec
-  Convert more init_pathspec() to parse_pathspec()
-  Rename field "raw" to "_raw" in struct pathspec
-
- archive.c              |  12 +++---
- archive.h              |   2 +-
- builtin/add.c          | 102 ++++++++++++++++++-----------------------=
---------
- builtin/checkout.c     |  37 ++++++++----------
- builtin/clean.c        |  20 +++++-----
- builtin/commit.c       |  39 +++++++++----------
- builtin/diff-files.c   |   2 +-
- builtin/diff-index.c   |   2 +-
- builtin/diff.c         |   4 +-
- builtin/grep.c         |   6 +--
- builtin/log.c          |   2 +-
- builtin/ls-files.c     |  64 +++++++++++--------------------
- builtin/ls-tree.c      |   6 +--
- builtin/rerere.c       |   6 +--
- builtin/rm.c           |  16 ++++----
- builtin/update-index.c |   3 +-
- cache.h                |  25 +++++++++---
- diff-lib.c             |   2 +-
- dir.c                  |  72 +++++++++++++++++++++++++++++-----
- dir.h                  |   5 ++-
- merge-recursive.c      |   2 +-
- preload-index.c        |  20 +++++-----
- read-cache.c           |   5 ++-
- rerere.c               |   6 +--
- rerere.h               |   4 +-
- resolve-undo.c         |   4 +-
- resolve-undo.h         |   2 +-
- revision.c             |   8 ++--
- setup.c                | 102 +++++++++++++++++++++++++++++++++++++----=
---------
- tree-diff.c            |   8 ++--
- tree-walk.c            |   4 +-
- tree.c                 |   4 +-
- tree.h                 |   2 +-
- wt-status.c            |  17 ++++-----
- wt-status.h            |   2 +-
- 35 files changed, 339 insertions(+), 278 deletions(-)
-
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index b5434af..4a9ee69 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -337,7 +337,7 @@ void overlay_tree_on_cache(const char *tree_name, c=
+onst char *prefix)
+ 		matchbuf[0] =3D prefix;
+ 		matchbuf[1] =3D NULL;
+ 		init_pathspec(&pathspec, matchbuf);
+-		pathspec.items[0].use_wildcard =3D 0;
++		pathspec.items[0].nowildcard_len =3D pathspec.items[0].len;
+ 	} else
+ 		init_pathspec(&pathspec, NULL);
+ 	if (read_tree(tree, 1, &pathspec))
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 235c17c..fb76e38 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -168,7 +168,7 @@ int cmd_ls_tree(int argc, const char **argv, const =
+char *prefix)
+=20
+ 	init_pathspec(&pathspec, get_pathspec(prefix, argv + 1));
+ 	for (i =3D 0; i < pathspec.nr; i++)
+-		pathspec.items[i].use_wildcard =3D 0;
++		pathspec.items[i].nowildcard_len =3D pathspec.items[i].len;
+ 	pathspec.has_wildcard =3D 0;
+ 	tree =3D parse_tree_indirect(sha1);
+ 	if (!tree)
+diff --git a/cache.h b/cache.h
+index 2b192d2..9304d91 100644
+--- a/cache.h
++++ b/cache.h
+@@ -482,7 +482,7 @@ struct pathspec {
+ 	struct pathspec_item {
+ 		const char *match;
+ 		int len;
+-		unsigned int use_wildcard:1;
++		int nowildcard_len;
+ 	} *items;
+ };
+=20
+diff --git a/dir.c b/dir.c
+index 5a83aa7..c391d46 100644
+--- a/dir.c
++++ b/dir.c
+@@ -230,7 +230,7 @@ static int match_pathspec_item(const struct pathspe=
+c_item *item, int prefix,
+ 			return MATCHED_RECURSIVELY;
+ 	}
+=20
+-	if (item->use_wildcard && !fnmatch(match, name, 0))
++	if (item->nowildcard_len < item->len && !fnmatch(match, name, 0))
+ 		return MATCHED_FNMATCH;
+=20
+ 	return 0;
+@@ -1429,8 +1429,8 @@ int init_pathspec(struct pathspec *pathspec, cons=
+t char **paths)
+=20
+ 		item->match =3D path;
+ 		item->len =3D strlen(path);
+-		item->use_wildcard =3D !no_wildcard(path);
+-		if (item->use_wildcard)
++		item->nowildcard_len =3D simple_length(path);
++		if (item->nowildcard_len < item->len)
+ 			pathspec->has_wildcard =3D 1;
+ 	}
+=20
+diff --git a/tree-walk.c b/tree-walk.c
+index 3f54c02..af871c5 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -626,7 +626,7 @@ enum interesting tree_entry_interesting(const struc=
+t name_entry *entry,
+ 					&never_interesting))
+ 				return entry_interesting;
+=20
+-			if (item->use_wildcard) {
++			if (item->nowildcard_len < item->len) {
+ 				if (!fnmatch(match + baselen, entry->path, 0))
+ 					return entry_interesting;
+=20
+@@ -642,7 +642,7 @@ enum interesting tree_entry_interesting(const struc=
+t name_entry *entry,
+ 		}
+=20
+ match_wildcards:
+-		if (!item->use_wildcard)
++		if (item->nowildcard_len =3D=3D item->len)
+ 			continue;
+=20
+ 		/*
 --=20
 1.8.0.rc2.23.g1fb49df
