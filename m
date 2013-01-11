@@ -1,62 +1,76 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Turning a complete repository to a shallow one
-Date: Fri, 11 Jan 2013 11:40:03 +0700
-Message-ID: <CACsJy8Bv+AfDbttFdJ5a0PaoMrMtv1seda7VqLpfdevR4BMj4A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Turning a complete repository to a shallow one
+Date: Thu, 10 Jan 2013 20:53:01 -0800
+Message-ID: <7vk3rkcocy.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8Bv+AfDbttFdJ5a0PaoMrMtv1seda7VqLpfdevR4BMj4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 05:40:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 05:53:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtWQJ-0005To-4w
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 05:40:55 +0100
+	id 1TtWcS-0006Dz-P2
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jan 2013 05:53:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733Ab3AKEkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2013 23:40:35 -0500
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:61291 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422Ab3AKEke (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2013 23:40:34 -0500
-Received: by mail-ob0-f177.google.com with SMTP id uo13so1344396obb.8
-        for <git@vger.kernel.org>; Thu, 10 Jan 2013 20:40:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=TOGKPQw85cytClFLwQi5TicM5C6Q/fGR12xoREnPvIA=;
-        b=tHtGN0VAfjVtYHVUu/uNS4NUxq/wWIAS9ShiVrPQwEuSP61bIlkgGwfF41Ez6Wnlaf
-         79PIsW+DqKfrinQr5lRqmRFawIBZiHRfKfKX6MEXDDTPm8EN87Xs/i+CWaodqPe/Rzmq
-         hFFb467T5t9xlyARhr5saVK/BSTT6HZ7WOkHiOYFg1WfRY6+zdFQES9LDU/oCu02HFkm
-         5kF/1wer64E5T7ILHXKirEGDdimtEnvTFmM0C4uTZUkdtay3n/DvbAeieum2iozaInhg
-         +1d3IPTZUrAzCP59nTrkyKm82KILLxWD0JGHJavn+RbLzMhJ0LbwWOxV0pWy5WRey7O8
-         a+lA==
-Received: by 10.60.8.134 with SMTP id r6mr42664782oea.53.1357879233878; Thu,
- 10 Jan 2013 20:40:33 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Thu, 10 Jan 2013 20:40:03 -0800 (PST)
+	id S1754035Ab3AKExF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2013 23:53:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44183 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753400Ab3AKExD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2013 23:53:03 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C3C8A7E2;
+	Thu, 10 Jan 2013 23:53:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4YcohXbvux7/l/aGxTGFi5JzWUc=; b=r5Al5H
+	uJXj2pwuteMuyUaeCQ6jptkIudnjMTJuGMqbxaHZsa2ZxPKeKCEDd1NZj0c+SyAr
+	SlhHKfIc9a0WB1DFOHzX3S/Tl2WH5LmFCbrZkWMM+4x+nU8Mol54N3dlxGYl3OBL
+	RlHM9Vhb4zHvIE6+HnDT1iyL/iwy/yZpZkit4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XP9rT0aXCc61D9Zb/2FdzU42dmGZiSZ9
+	CcYXG1JvUWVxZ4F6xfgtK+HfKZnwlUwVEGJB7eJvomkG6EYYg+fh0RWr0u2IF99r
+	oVLFGlkadbwrp3yo/b8X9ZQzTEmAwoM1feJwrSUNk3E1wyatCPUFBN+egDn6LS4D
+	z3KNkntKF6c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4050AA7E1;
+	Thu, 10 Jan 2013 23:53:03 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD4DFA7E0; Thu, 10 Jan 2013
+ 23:53:02 -0500 (EST)
+In-Reply-To: <CACsJy8Bv+AfDbttFdJ5a0PaoMrMtv1seda7VqLpfdevR4BMj4A@mail.gmail.com> (Duy
+ Nguyen's message of "Fri, 11 Jan 2013 11:40:03 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7AE0068-5BAA-11E2-A170-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213180>
 
-Apparently we could do it:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-git clone --single-branch git.git
-cd git
-git tag -l|xargs git tag -d
-git fetch --depth=1 origin master
-git repack -ad
+> Apparently we could do it:
+>
+> git clone --single-branch git.git
+> cd git
+> git tag -l|xargs git tag -d
+> git fetch --depth=1 origin master
+> git repack -ad
 
-Now the repository becomes shallow and all of history is _lost_. It is
-a feature for those who wants to reduce disk usage, but it's also a
-gun to shoot at your feet. I'm tempted to ban this case. If I want to
-reduce disk usage, I should be forced to shallow clone it first, then
-remove the original repository. I still have a complete repository if
-I change my mind. And "rm -rf git" is alarming enough for me to think
-it twice before executing.
+I may have been unclear in the earlier message, but this is one of
+the reasons why I think "fetch --depth" is misadvertised (it says
+"deepen the history", when the real thing it does is to truncate to
+the new depth counting from the updated tip), and misdesigned (it
+forces the user to guess what the new depth should be).  It should
+be advertised correctly, as a way to reset its depth starting from
+the current history (and of course --depth=1 is truncates).
 
-Comments?
--- 
-Duy
+We should introduce a separate "fetch --deepen" that does what
+normal people would want (see my earlier message with ASCII art).
