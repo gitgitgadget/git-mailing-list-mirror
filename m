@@ -1,88 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Chris Rorvick <chris@rorvick.com>
 Subject: Re: [PATCH v2 0/3] fixup remaining cvsimport tests
-Date: Fri, 11 Jan 2013 22:36:01 -0800
-Message-ID: <7vr4lq9acu.fsf@alter.siamese.dyndns.org>
+Date: Sat, 12 Jan 2013 01:01:34 -0600
+Message-ID: <CAEUsAPYx3DtUg6sV0PRYjqY8Ss-dwGKoQX7Q7xNKBgGO_KvbeQ@mail.gmail.com>
 References: <1357971703-28513-1-git-send-email-chris@rorvick.com>
+	<7vr4lq9acu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 07:36:30 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 08:01:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttuhh-0004Ch-QC
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 07:36:30 +0100
+	id 1Ttv6K-0004fk-IX
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 08:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717Ab3ALGgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 01:36:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54455 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751364Ab3ALGgF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 01:36:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D2B08847;
-	Sat, 12 Jan 2013 01:36:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VNMb1NHJVtq+aaWHSB2uU6b7iys=; b=bywngH
-	gUPruK15rkTBaHj/w9QWvSGzmi/sGrKMdCH8ldvhRZkdMv5rsUrkY4BE+mnnpKh5
-	VWvgO2zEFCQkxyarTHQ5kJ8eyceWTcrb/gBqkNzOMSbEalIOm8ZDrReWlqRXJu2v
-	6Eq/Hzz6bBSZ/wVQhc4lAyUdRlqOAkMZ1tous=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JGmT3YfwiYE4EEjfElb9rceCQuYaQXb1
-	+vSJLCPEoP+MkiCoIvebP/2VzzCb0Ybgt66CNOA0ITU9Rh1+dUyKi1lP9ooLb/I1
-	So+wXMzRyyuvvaaQWVBxknyWpwD+h2X9e2b4TKLyQMeJ9evqQRje0bd33wBSTszK
-	u1CE49eVsB0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 423868846;
-	Sat, 12 Jan 2013 01:36:04 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D9928844; Sat, 12 Jan 2013
- 01:36:03 -0500 (EST)
-In-Reply-To: <1357971703-28513-1-git-send-email-chris@rorvick.com> (Chris
- Rorvick's message of "Sat, 12 Jan 2013 00:21:40 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5637B23E-5C82-11E2-A8C7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752201Ab3ALHBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 02:01:36 -0500
+Received: from mail-la0-f48.google.com ([209.85.215.48]:33203 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485Ab3ALHBf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 02:01:35 -0500
+Received: by mail-la0-f48.google.com with SMTP id ej20so2402476lab.7
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 23:01:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=mSw4RSB73VBwBSGIjk5RriLyXi5tAvZLg/7bGBIqpyc=;
+        b=QxKAQdLlJTygk7Gkd9AkHrqMnr0BSiYbE52aokAxkJlIyAQtDUEmmHfW2nZw0Ogbk4
+         4IyIMiWI407jZHDlasmHjFrJ9+KB3iXMQ3b5fhCLKt3uHS6Ad7WBu1QwD2btYdmfu5Lz
+         4cvrMGQk5rlBX9WNtiPHFcO57vIyd/5qxmoK1fIdAYZ6wYM5uAhWFnesj2VHN35FEpSJ
+         g3BSQAqrVgEAClalR23unXWdf9vk0ck8uJL2l92KnpMo2S4FjgEJLu9h/sJuLzVSPIyU
+         uB3APuaGgydCMY7BbQbu4qZFm3Pw3T/9jbSbyCfoa5MjMZcL1/3e9rgo+f9Lhc1hn8Kg
+         rgcQ==
+Received: by 10.152.114.42 with SMTP id jd10mr13282149lab.31.1357974094158;
+ Fri, 11 Jan 2013 23:01:34 -0800 (PST)
+Received: by 10.114.94.228 with HTTP; Fri, 11 Jan 2013 23:01:34 -0800 (PST)
+In-Reply-To: <7vr4lq9acu.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: q8E7m--CHi0HjqaaenlrAYMdMQA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213273>
 
-Chris Rorvick <chris@rorvick.com> writes:
+On Sat, Jan 12, 2013 at 12:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I too noticed the droppage of "-a" support, which may not be a big
+> deal (people can drop it from their script, run cvsimport and they
+> can drop newer commits from the resulting Git history to emulate the
+> old behaviour without "-a" that attempted to find a quiescent point
+> if they really want to and suspect that the upstream CVS repository
+> was not quiescent during the import).
 
-> Reroll w/ sign-off.
->
-> Chris Rorvick (3):
->   t/lib-cvs.sh: allow cvsps version 3.x.
->   t9600: fixup for new cvsimport
->   t9604: fixup for new cvsimport
->
->  t/lib-cvs.sh                    |  2 +-
->  t/t9600-cvsimport.sh            | 10 ++++------
->  t/t9604-cvsimport-timestamps.sh |  5 ++---
->  3 files changed, 7 insertions(+), 10 deletions(-)
+Is there any value to -a when fuzz is exposed (-z)?  I mean this is a
+functional sense.  I think there is a lot of value to maintaining the
+interfaces of both cvsimport and cvsps where possible.
 
-Thanks.
+> Likewise for "-x".  You said "no longer can be told" and that is
+> technically true, but it is more like "no longer need to be told, as
+> stale cache cannot get in the way", so it is probably not a big
+> deal, either, for people to drop it from their script.
 
-I too noticed the droppage of "-a" support, which may not be a big
-deal (people can drop it from their script, run cvsimport and they
-can drop newer commits from the resulting Git history to emulate the
-old behaviour without "-a" that attempted to find a quiescent point
-if they really want to and suspect that the upstream CVS repository
-was not quiescent during the import).
-
-Likewise for "-x".  You said "no longer can be told" and that is
-technically true, but it is more like "no longer need to be told, as
-stale cache cannot get in the way", so it is probably not a big
-deal, either, for people to drop it from their script.
-
-About the changed behaviour regarding "origin", I suspect that it is
-a change for the better, but we would probably need documentation
-updates to cover it (and deleted options and (mis)features) before
-this topic graduates.
+:-)  I originally wrote "need" and then changed it to be clearer on
+why it was being removed.
