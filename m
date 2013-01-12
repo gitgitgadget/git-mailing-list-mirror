@@ -1,92 +1,96 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: git-completion.bash should not add a space after a ref
-Date: Sat, 12 Jan 2013 19:35:59 +0100
-Message-ID: <50F1AD0F.7080503@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 12 19:36:30 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 0/8] Initial support for Python 3
+Date: Sat, 12 Jan 2013 19:23:38 +0000
+Message-ID: <cover.1358018078.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>,
+	"Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 20:24:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu5wS-0007tT-Cm
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 19:36:28 +0100
+	id 1Tu6h7-0000wo-1F
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 20:24:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753931Ab3ALSgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 13:36:07 -0500
-Received: from mail-bk0-f52.google.com ([209.85.214.52]:51002 "EHLO
-	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753402Ab3ALSgF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 13:36:05 -0500
-Received: by mail-bk0-f52.google.com with SMTP id w5so1364799bku.25
-        for <git@vger.kernel.org>; Sat, 12 Jan 2013 10:36:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:x-enigmail-version:content-type:content-transfer-encoding;
-        bh=KkDMn8GSyABZ93Trt3CN0KYER9sLtNccZwhIZeTECoM=;
-        b=seaazsPSyt8GITaBuoOYrI3NQe7Vl1RUvWwFUpcSCY9hSAb8BdKBv5muKaU1rp+lg5
-         yii7UWcRQ8U6t0YeyH4Qo8pAQ7F8DprtMspspxWjMbmNwiioef6tomC802FNRlVu9pRu
-         hnxC0BaMWnK8Cht4aYYLYb8qPyzzdHZRPWmMFU4JKdgN6xmdXXxjJ/FemKJ30sWK7HrV
-         8PuAlVpOWHDnJ36l9kfcmSky29p3II8xslF4A4j9I4Xo8IfM0Ql2bvhFJwJ9z/Sj4X6f
-         bOyMRYl4iFtht9Wy4jOq3+AZCTDm9meBWhWzXQhflCoGZUvizO1VwSaxx1Z9jdiU00UQ
-         GPNw==
-X-Received: by 10.204.154.202 with SMTP id p10mr37667939bkw.29.1358015763315;
-        Sat, 12 Jan 2013 10:36:03 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.213.78])
-        by mx.google.com with ESMTPS id 18sm6638916bkv.0.2013.01.12.10.36.01
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Jan 2013 10:36:02 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-X-Enigmail-Version: 1.0.1
+	id S1754152Ab3ALTYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 14:24:12 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:43714 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754139Ab3ALTYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 14:24:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 54292606565;
+	Sat, 12 Jan 2013 19:24:10 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=unavailable
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hyarmHl4OrLE; Sat, 12 Jan 2013 19:24:10 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 08BF96064CE;
+	Sat, 12 Jan 2013 19:24:10 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id F3614161E556;
+	Sat, 12 Jan 2013 19:24:09 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5NDfnSje3kQn; Sat, 12 Jan 2013 19:24:09 +0000 (GMT)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id CD593161E1F3;
+	Sat, 12 Jan 2013 19:24:01 +0000 (GMT)
+X-Mailer: git-send-email 1.8.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213301>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I started having a look to see how much work would be needed to make Git
+work with Python 3 and the answer is mostly not much.  The exception is
+git-p4.py which is hit hard by the distinction between byte strings and
+unicode strings, particularly because the Python output mode of p4
+targets Python 2.
 
-Hi.
+I don't know if it's worthwhile to actually apply these but here they
+are in case anyone's interested.
 
-This is not really a bug, but a small usability problem.
+Having said that, the changes are minimal and involve either wrapping
+parentheses around arguments to print or being a bit more explicit about
+how we expect byte strings to be decoded to unicode.
 
-When completing a reference, Bash will add a space after the reference name.
+With these patches all tests pass with python3 except t98* (git-p4), but
+there are a couple of topics in-flight which will affect that
+(fc/remote-testgit-feature-done and er/replace-cvsimport).
 
-As an example in:
+John Keeping (8):
+  git_remote_helpers: Allow building with Python 3
+  git_remote_helpers: fix input when running under Python 3
+  git_remote_helpers: Force rebuild if python version changes
+  git_remote_helpers: Use 2to3 if building with Python 3
+  svn-fe: allow svnrdump_sim.py to run with Python 3
+  git-remote-testpy: hash bytes explicitly
+  git-remote-testpy: don't do unbuffered text I/O
+  git-remote-testpy: call print as a function
 
-    $git show master<TAB>
+ contrib/svn-fe/svnrdump_sim.py     |  4 ++--
+ git-remote-testpy.py               | 40 +++++++++++++++++++-------------------
+ git_remote_helpers/.gitignore      |  1 +
+ git_remote_helpers/Makefile        | 10 ++++++++--
+ git_remote_helpers/git/importer.py |  2 +-
+ git_remote_helpers/setup.py        | 10 ++++++++++
+ 6 files changed, 42 insertions(+), 25 deletions(-)
 
-The problem is that an user may want to show a tree or blog object from
-master:
-
-    $git show master:git.c
-
-
-A possible solution is to define a new __gitcomp_nospace function and
-use it where appropriate.
-
-Probably the __gitcomp_nospace should be used when git_complete_file is
-called, and __gitcomp_nl should be used when __git_complete_revlist  is
-called, but I'm not sure.
-
-P.S.:
-it seems that __gitcomp_nl is **never** called with 4 arguments.
-
-
-
-Regards  Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlDxrQ8ACgkQscQJ24LbaURHmACfRXoM+uEVDgFUtZFzUcPC5oSZ
-FGsAnAxQf+SN7GrNljxU1io4IuayHmed
-=JRVU
------END PGP SIGNATURE-----
+-- 
+1.8.1
