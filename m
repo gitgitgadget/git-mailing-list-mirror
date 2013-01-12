@@ -1,122 +1,152 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
-Date: Sat, 12 Jan 2013 10:47:20 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20130112154719.GA3270@thyrsus.com>
-References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
- <7v62339du4.fsf@alter.siamese.dyndns.org>
-Reply-To: esr@thyrsus.com
+From: Michal Privoznik <mprivozn@redhat.com>
+Subject: [PATCH 2/3] config: Introduce diff.algorithm variable
+Date: Sat, 12 Jan 2013 17:02:14 +0100
+Message-ID: <72370b372a56cc5bfaa9741eae62eae2854964b2.1358006339.git.mprivozn@redhat.com>
+References: <cover.1358006339.git.mprivozn@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 16:48:03 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: peff@peff.net, trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 17:03:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu3JM-0008Np-G8
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 16:47:56 +0100
+	id 1Tu3Yk-0003LY-4F
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 17:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541Ab3ALPre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 10:47:34 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:46719
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009Ab3ALPrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 10:47:33 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 36B294065F; Sat, 12 Jan 2013 10:47:20 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v62339du4.fsf@alter.siamese.dyndns.org>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753608Ab3ALQCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 11:02:48 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:64849 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752009Ab3ALQCr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 11:02:47 -0500
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0CG2Tqw023688
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 12 Jan 2013 11:02:30 -0500
+Received: from bart.redhat.com (vpn-225-209.phx2.redhat.com [10.3.225.209])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r0CG2MMD005316;
+	Sat, 12 Jan 2013 11:02:28 -0500
+In-Reply-To: <cover.1358006339.git.mprivozn@redhat.com>
+In-Reply-To: <cover.1358006339.git.mprivozn@redhat.com>
+References: <cover.1358006339.git.mprivozn@redhat.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213290>
 
-Junio C Hamano <gitster@pobox.com>:
-> And here is what I got:
+Some users or projects prefer different algorithms over others, e.g.
+patience over myers or similar. However, specifying appropriate
+argument every time diff is to be used is impractical. Moreover,
+creating an alias doesn't play nicely with other tools based on diff
+(git-show for instance). Hence, a configuration variable which is able
+to set specific algorithm is needed. For now, these four values are
+accepted: 'myers' (which has the same effect as not setting the config
+variable at all), 'minimal', 'patience' and 'histogram'.
 
-Hm. In my version of these tests, I only have one regression from the
-old combo (in the pathological tags test, t9602).  You're seeing more
-breakage than that, obviously.
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ Documentation/diff-config.txt          | 17 +++++++++++++++++
+ contrib/completion/git-completion.bash |  1 +
+ diff.c                                 | 23 +++++++++++++++++++++++
+ 3 files changed, 41 insertions(+)
 
-> A funny thing was that without cvsps-3.7 on $PATH (which means I am
-> getting distro packaged cvsps 2.1), I got identical errors.
-
-That suggests that something in your test setup has gone bad and is
-introducing spurious errors. Which would be consistent with the above.
-
->                                                     Looking
-> at the log message, it seems that you meant to remove t960[123], so
-> perhaps the patch simply forgot to remove 9601 and 9602?
-
-Yes.
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 4314ad0..be31276 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -155,3 +155,20 @@ diff.tool::
+ 	"kompare".  Any other value is treated as a custom diff tool,
+ 	and there must be a corresponding `difftool.<tool>.cmd`
+ 	option.
++
++diff.algorithm::
++	Choose a diff algorithm.  The variants are as follows:
+++
++--
++`myers`;;
++	The basic greedy diff algorithm.
++`minimal`;;
++	Spend extra time to make sure the smallest possible diff is
++	produced.
++`patience`;;
++	Use "patience diff" algorithm when generating patches.
++`histogram`;;
++	This algorithm extends the patience algorithm to "support
++	low-occurrence common elements".
++--
+++
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 383518c..33e25dc 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1839,6 +1839,7 @@ _git_config ()
+ 		diff.suppressBlankEmpty
+ 		diff.tool
+ 		diff.wordRegex
++		diff.algorithm
+ 		difftool.
+ 		difftool.prompt
+ 		fetch.recurseSubmodules
+diff --git a/diff.c b/diff.c
+index 732d4c2..ddae5c4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -36,6 +36,7 @@ static int diff_no_prefix;
+ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
++static long diff_algorithm = 0;
  
-> As neither test runs "git cvsimport" with -o/-m/-M options, ideally
-> we should be able to pass them with and without having cvsps-3.x.
-> Not passing them without cvsps-3.x would mean that the fallback mode
-> of rewritten cvsimport is not working as expected. Not passing them
-> with cvsps-3.x may mean the tests were expecting a wrong conversion
-> result, or they uncover bugs in the replacement cvsimport.
-
-That's possible, but seems unlikely.  Because the new cvsimport is
-such a thin wrapper around the conversion engine, bugs in it should
-lead to obvious crashes or failure to run the engine rather than the 
-sort of conversion error the t960* tests are designed to check.  Really
-all it does is assemble options to pass to the conversion engines.
-
-My test strategy is aimed at the engine, not the wrapper. I took the
-repos from t960*  and wrote a small Python framework to check the same 
-assertions as the git-tree tests do, but using the engine.  For example,
-here's how my t9602 looks:
-
-import os, cvspstest
-
-cc = cvspstest.ConvertComparison("t9602", "module")
-cc.cmp_branch_tree("test of branch", "master", True)
-cc.cmp_branch_tree("test of branch", "vendorbranch", True)
-cc.cmp_branch_tree("test of branch", "B_FROM_INITIALS", False)
-cc.cmp_branch_tree("test of branch", "B_FROM_INITIALS_BUT_ONE", False)
-cc.cmp_branch_tree("test of branch", "B_MIXED", False)
-cc.cmp_branch_tree("test of branch", "B_SPLIT", True)
-cc.cmp_branch_tree("test of tag", "vendortag", False)
-# This is the only test new cvsps fails that old git-cvsimport passed.
-cc.cmp_branch_tree("test of tag", "T_ALL_INITIAL_FILES", True)
-cc.cmp_branch_tree("test of tag", "T_ALL_INITIAL_FILES_BUT_ONE", False)
-cc.cmp_branch_tree("test of tag", "T_MIXED", False)
-cc.cleanup()
+ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+@@ -143,6 +144,20 @@ static int git_config_rename(const char *var, const char *value)
+ 	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
+ }
  
-> t9600 fails with "-a is no longer supported", even without having
-> cvsps-3.x on the $PATH (i.e. attempting to use the fallback).  I
-> wonder if this is an option the updated cvsimport would want to
-> simply ignore?
-
-Probably.  But I don't think you should keep these tests in the git tree.
-That wasn't a great idea even when you were supporting just one engine;
-with two (and soon three) it's going to be just silly.  Let sanity-checking
-the engines be *my* problem, since I have to do it anyway.
-
-(I'm working towards the generalized test suite as fast as I can.  First
-results probably in four days or so.)
-
-> It is a way to tell the old cvsps/cvsimport to disable its
-> heuristics to ignore commits made within the last 10 minutes (this
-> is done in the hope of waiting for the per-file nature of CVS
-> commits to stabilize, IIUC); the user tells the command that he
-> knows that the CVS repository is now quiescent and it is safe to
-> import the whole thing.
-
-Yes, that's just what -a is supposed to do.  But is should be
-irrelevant for testing - in the test framework CVS is running locally, 
-so there's no network lag.
-
-> So... does this mean that we now set the minimum required version of
-> Python to 2.7?  I dunno.
-
-That would be bad, IMO.  I'll put backporting to 2.6 high on my to-do list.
++static long parse_algorithm_value(const char *value)
++{
++	if (!value || !strcasecmp(value, "myers"))
++		return 0;
++	else if (!strcasecmp(value, "minimal"))
++		return XDF_NEED_MINIMAL;
++	else if (!strcasecmp(value, "patience"))
++		return XDF_PATIENCE_DIFF;
++	else if (!strcasecmp(value, "histogram"))
++		return XDF_HISTOGRAM_DIFF;
++	else
++		return -1;
++}
++
+ /*
+  * These are to give UI layer defaults.
+  * The core-level commands such as git-diff-files should
+@@ -196,6 +211,13 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "diff.algorithm")) {
++		diff_algorithm = parse_algorithm_value(value);
++		if (diff_algorithm < 0)
++			return -1;
++		return 0;
++	}
++
+ 	if (git_color_config(var, value, cb) < 0)
+ 		return -1;
+ 
+@@ -3213,6 +3235,7 @@ void diff_setup(struct diff_options *options)
+ 	options->add_remove = diff_addremove;
+ 	options->use_color = diff_use_color_default;
+ 	options->detect_rename = diff_detect_rename_default;
++	options->xdl_opts |= diff_algorithm;
+ 
+ 	if (diff_no_prefix) {
+ 		options->a_prefix = options->b_prefix = "";
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.8.0.2
