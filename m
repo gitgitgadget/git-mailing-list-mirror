@@ -1,171 +1,309 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
-Date: Fri, 11 Jan 2013 21:20:51 -0800
-Message-ID: <7v62339du4.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH] t/t960[123]: remove leftover scripts
+Date: Fri, 11 Jan 2013 21:38:39 -0800
+Message-ID: <7v1udr9d0g.fsf_-_@alter.siamese.dyndns.org>
 References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
+ <7v62339du4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Chris Rorvick <chris@rorvick.com>
 To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 06:21:16 2013
+X-From: git-owner@vger.kernel.org Sat Jan 12 06:39:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TttWt-0004Gi-DH
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 06:21:15 +0100
+	id 1TttoD-00085z-RY
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 06:39:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570Ab3ALFUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 00:20:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56252 "EHLO
+	id S1751676Ab3ALFin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 00:38:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65367 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751604Ab3ALFUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 00:20:54 -0500
+	id S1751604Ab3ALFim (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 00:38:42 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39CA466DF;
-	Sat, 12 Jan 2013 00:20:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2736706A;
+	Sat, 12 Jan 2013 00:38:41 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bcwEZtNgI0NsqXYNr2CKkT7Wi7E=; b=YgHv+3
-	GxeE32g/5c98hevCos/EjWmJoMSeDEp7+XlbXCs/A8AgdWee/o5ltD0CdgLuEpQN
-	XX0ntoLMqG9llw+FodVXnPUDj1JuPhITIRGtwhRV/XRxFifsmudMFWWRCswyE8Ic
-	+EzEVt9dbeQNvgFBR0dAJ97hpF2ltTmgYfw9k=
+	:content-type; s=sasl; bh=/JPhFtO4TJpIB/lXRldE1JJJOMA=; b=pACT3T
+	a+rtCRKKVXv6RcaGfjjjNeuFF/VDxeMFd15oW+We6zhPvE+Fp1nkDHFw8ezoAwy4
+	JwgzrALDUozmAo8jwydKg3MxZTiWkyWrkNRS9sx0uNz8Whw14w6QLxUa+EQFcuAH
+	ql0mx1nWTctD75+L4hkB3K5DIb/X0YudiJgko=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y7C+2pGsAQSz/qPSJthKIgkMGDy4FlY5
-	Y5+P7+O6YshEVwI2QGhanE5ovtzwByJ5qd0GzrZyAC+UPzzam7Zdfwnei9QV11Sf
-	hlQRP1LTZ8crjBjUNeOeDkaln2x4VxmAdSuBAd6u7F+gifpEcwdRmvxDEKgHpzWj
-	8C6MpN1E+Gw=
+	:content-type; q=dns; s=sasl; b=qPagqFvVFlahJlQ4wF54UbDA0+y31l2W
+	P52WfXhvOh67WDDOYqss4DiDm55qntLP1O6Ynv/M+jy6RFXVMDFz7XHrSh2rwlNR
+	ib9AQG0pBvt6Ovc9GrNUW/QkHLY7LSk2NK5yENIFAfz/8Ojhy1+A55GalWL35WzZ
+	w7zO+HD/J+s=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E22F66DE;
-	Sat, 12 Jan 2013 00:20:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7AD57069;
+	Sat, 12 Jan 2013 00:38:41 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93F1566DD; Sat, 12 Jan 2013
- 00:20:52 -0500 (EST)
-In-Reply-To: <1357875152-19899-1-git-send-email-gitster@pobox.com> (Junio C.
- Hamano's message of "Thu, 10 Jan 2013 19:32:32 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2D3A7067; Sat, 12 Jan 2013
+ 00:38:40 -0500 (EST)
+In-Reply-To: <7v62339du4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 11 Jan 2013 21:20:51 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D56D9E3E-5C77-11E2-ADF3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 523CE7D8-5C7A-11E2-A5B2-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213262>
 
-I cloned git://gitorious.org/cvsps/cvsps.git and installed cvsps-3.7
-at c2ce6cc (More fun with test loads, sigh.  Timezones suck.,
-2013-01-09) earlier on my $PATH, and tried to run t96xx series with
-this patch applied on top of Git 1.8.1.
+The rewrite patch was supposed to remove these scripts, but somehow
+we ended up removing only the supporting files for them but not the
+test script themselves.  Remove them for real.
 
-The first thing I noticed was that all the tests were skipped.
-A patch to t/lib-cvs.sh might be sufficient, 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * I'll queue this on top of your patch together with a few fix-up
+   patches from Chris Rorvick.  This may have been caused by your
+   private patch e-mail mangled somewhere between us before I resent
+   your patch, or perhaps you simply may have forgot to remove them,
+   but at this point I do not really care where these deletions were
+   lost---the only thing I care about is to make sure that you
+   _meant_ to remove them in your patch (i.e. if you didn't mean to,
+   then I am further breaking the tests in a way you did not intend
+   to), so I'd appreciate either "Yup, these three files should be
+   removed", or "No, they should stay; removal of their supporting
+   data is no longer needed" from you (I and this patch expect the
+   former, of course).
 
---------------------- >8 -------------------------
-diff --git a/t/lib-cvs.sh b/t/lib-cvs.sh
-index 44263ad..423953f 100644
---- a/t/lib-cvs.sh
-+++ b/t/lib-cvs.sh
-@@ -17,6 +17,8 @@ cvsps_version=`cvsps -h 2>&1 | sed -ne 's/cvsps version //p'`
- case "$cvsps_version" in
- 2.1 | 2.2*)
- 	;;
-+3.*)
-+	;;
- '')
- 	skip_all='skipping cvsimport tests, cvsps not found'
- 	test_done
---------------------- 8< -------------------------
+   By the way, Chris, we'll need your Sign-off on the three paches
+   (t/lib-cvs.sh fix to allow cvsps v3, t9600 fix and t9604 fix).
 
-but I didn't check more than "now it seems not to skip them".
-And here is what I got:
+ t/t9601-cvsimport-vendor-branch.sh | 85 --------------------------------------
+ t/t9602-cvsimport-branches-tags.sh | 78 ----------------------------------
+ t/t9603-cvsimport-patchsets.sh     | 39 -----------------
+ 3 files changed, 202 deletions(-)
+ delete mode 100755 t/t9601-cvsimport-vendor-branch.sh
+ delete mode 100755 t/t9602-cvsimport-branches-tags.sh
+ delete mode 100755 t/t9603-cvsimport-patchsets.sh
 
---------------------- >8 -------------------------
-Test Summary Report
--------------------
-t9600-cvsimport.sh              (Wstat: 256 Tests: 15 Failed: 9)
-  Failed tests:  4-6, 8-9, 11-13, 15
-  Non-zero exit status: 1
-t9601-cvsimport-vendor-branch.sh (Wstat: 256 Tests: 9 Failed: 8)
-  Failed tests:  1-4, 6-9
-  Non-zero exit status: 1
-t9602-cvsimport-branches-tags.sh (Wstat: 256 Tests: 11 Failed: 5)
-  Failed tests:  1-3, 7, 9
-  Non-zero exit status: 1
-t9604-cvsimport-timestamps.sh   (Wstat: 256 Tests: 2 Failed: 2)
-  Failed tests:  1-2
-  Non-zero exit status: 1
-Files=5, Tests=38,  5 wallclock secs ( 0.05 usr  0.01 sys +  0.49
-  cusr  0.16 csys =  0.71 CPU)
-Result: FAIL
---------------------- 8< -------------------------
-
-A funny thing was that without cvsps-3.7 on $PATH (which means I am
-getting distro packaged cvsps 2.1), I got identical errors.  Looking
-at the log message, it seems that you meant to remove t960[123], so
-perhaps the patch simply forgot to remove 9601 and 9602?
-
-As neither test runs "git cvsimport" with -o/-m/-M options, ideally
-we should be able to pass them with and without having cvsps-3.x.
-Not passing them without cvsps-3.x would mean that the fallback mode
-of rewritten cvsimport is not working as expected. Not passing them
-with cvsps-3.x may mean the tests were expecting a wrong conversion
-result, or they uncover bugs in the replacement cvsimport.
-
-t9600 fails with "-a is no longer supported", even without having
-cvsps-3.x on the $PATH (i.e. attempting to use the fallback).  I
-wonder if this is an option the updated cvsimport would want to
-simply ignore?
-
-It is a way to tell the old cvsps/cvsimport to disable its
-heuristics to ignore commits made within the last 10 minutes (this
-is done in the hope of waiting for the per-file nature of CVS
-commits to stabilize, IIUC); the user tells the command that he
-knows that the CVS repository is now quiescent and it is safe to
-import the whole thing.
-
-If the updated cvsps can identify the changeset more reliably and it
-no longer needs "-a" option, it may be more helpful to the users to
-migrate their script if it allowed, warned and then ignored the
-option.  It certainly would help sharing of this test script between
-runs that use the old and new cvsps as backends.
-
-t9601 (after resurrecting the t/t9601/cvsroot directory) fails in an
-interesting way.
-
---------------------- >8 -------------------------
-$ sh t9601-cvsimport-vendor-branch.sh -i -v
-Initialized empty Git repository in /git/git.build/t/trash directory.t9601-cvsimport-vendor-branch/.git/
-expecting success:
-
-        git cvsimport -C module-git module
-
-Traceback (most recent call last):
-  File "/git/git.build/git-cvsimport", line 262, in <module>
-    subprocess.check_output("cvsps -V 2>/dev/null", shell=True)
-AttributeError: 'module' object has no attribute 'check_output'
-not ok - 1 import a module with a vendor branch
---------------------- 8< -------------------------
-
-Apparently, the copy of "subprocess.py" I have does not give us the
-check_output thing:
-
---------------------- >8 -------------------------
-$ python
-Python 2.6.6 (r266:84292, Dec 26 2010, 22:31:48)
-[GCC 4.4.5] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
->>> import subprocess
->>> dir(subprocess)
-['CalledProcessError', 'MAXFD', 'PIPE', 'Popen', 'STDOUT', '__all__', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '_active', '_cleanup', '_demo_posix', '_demo_windows', '_eintr_retry_call', 'call', 'check_call', 'errno', 'fcntl', 'gc', 'list2cmdline', 'mswindows', 'os', 'pickle', 'select', 'signal', 'sys', 'traceback', 'types']
---------------------- 8< -------------------------
-
-The story is the same for t9602 and t9603 (again after resurrecting
-the necessary files).
-
-http://docs.python.org/2/library/subprocess.html tells me that
-check_output has first become available in 2.7.
-
-So... does this mean that we now set the minimum required version of
-Python to 2.7?  I dunno.
+diff --git a/t/t9601-cvsimport-vendor-branch.sh b/t/t9601-cvsimport-vendor-branch.sh
+deleted file mode 100755
+index 827d39f..0000000
+--- a/t/t9601-cvsimport-vendor-branch.sh
++++ /dev/null
+@@ -1,85 +0,0 @@
+-#!/bin/sh
+-
+-# Description of the files in the repository:
+-#
+-#    imported-once.txt:
+-#
+-#       Imported once.  1.1 and 1.1.1.1 should be identical.
+-#
+-#    imported-twice.txt:
+-#
+-#       Imported twice.  HEAD should reflect the contents of the
+-#       second import (i.e., have the same contents as 1.1.1.2).
+-#
+-#    imported-modified.txt:
+-#
+-#       Imported, then modified on HEAD.  HEAD should reflect the
+-#       modification.
+-#
+-#    imported-modified-imported.txt:
+-#
+-#       Imported, then modified on HEAD, then imported again.
+-#
+-#    added-imported.txt,v:
+-#
+-#       Added with 'cvs add' to create 1.1, then imported with
+-#       completely different contents to create 1.1.1.1, therefore the
+-#       vendor branch was never the default branch.
+-#
+-#    imported-anonymously.txt:
+-#
+-#       Like imported-twice.txt, but with a vendor branch whose branch
+-#       tag has been removed.
+-
+-test_description='git cvsimport handling of vendor branches'
+-. ./lib-cvs.sh
+-
+-setup_cvs_test_repository t9601
+-
+-test_expect_success PERL 'import a module with a vendor branch' '
+-
+-	git cvsimport -C module-git module
+-
+-'
+-
+-test_expect_success PERL 'check HEAD out of cvs repository' 'test_cvs_co master'
+-
+-test_expect_success PERL 'check master out of git repository' 'test_git_co master'
+-
+-test_expect_success PERL 'check a file that was imported once' '
+-
+-	test_cmp_branch_file master imported-once.txt
+-
+-'
+-
+-test_expect_failure PERL 'check a file that was imported twice' '
+-
+-	test_cmp_branch_file master imported-twice.txt
+-
+-'
+-
+-test_expect_success PERL 'check a file that was imported then modified on HEAD' '
+-
+-	test_cmp_branch_file master imported-modified.txt
+-
+-'
+-
+-test_expect_success PERL 'check a file that was imported, modified, then imported again' '
+-
+-	test_cmp_branch_file master imported-modified-imported.txt
+-
+-'
+-
+-test_expect_success PERL 'check a file that was added to HEAD then imported' '
+-
+-	test_cmp_branch_file master added-imported.txt
+-
+-'
+-
+-test_expect_success PERL 'a vendor branch whose tag has been removed' '
+-
+-	test_cmp_branch_file master imported-anonymously.txt
+-
+-'
+-
+-test_done
+diff --git a/t/t9602-cvsimport-branches-tags.sh b/t/t9602-cvsimport-branches-tags.sh
+deleted file mode 100755
+index e1db323..0000000
+--- a/t/t9602-cvsimport-branches-tags.sh
++++ /dev/null
+@@ -1,78 +0,0 @@
+-#!/bin/sh
+-
+-# A description of the repository used for this test can be found in
+-# t9602/README.
+-
+-test_description='git cvsimport handling of branches and tags'
+-. ./lib-cvs.sh
+-
+-setup_cvs_test_repository t9602
+-
+-test_expect_success PERL 'import module' '
+-
+-	git cvsimport -C module-git module
+-
+-'
+-
+-test_expect_success PERL 'test branch master' '
+-
+-	test_cmp_branch_tree master
+-
+-'
+-
+-test_expect_success PERL 'test branch vendorbranch' '
+-
+-	test_cmp_branch_tree vendorbranch
+-
+-'
+-
+-test_expect_failure PERL 'test branch B_FROM_INITIALS' '
+-
+-	test_cmp_branch_tree B_FROM_INITIALS
+-
+-'
+-
+-test_expect_failure PERL 'test branch B_FROM_INITIALS_BUT_ONE' '
+-
+-	test_cmp_branch_tree B_FROM_INITIALS_BUT_ONE
+-
+-'
+-
+-test_expect_failure PERL 'test branch B_MIXED' '
+-
+-	test_cmp_branch_tree B_MIXED
+-
+-'
+-
+-test_expect_success PERL 'test branch B_SPLIT' '
+-
+-	test_cmp_branch_tree B_SPLIT
+-
+-'
+-
+-test_expect_failure PERL 'test tag vendortag' '
+-
+-	test_cmp_branch_tree vendortag
+-
+-'
+-
+-test_expect_success PERL 'test tag T_ALL_INITIAL_FILES' '
+-
+-	test_cmp_branch_tree T_ALL_INITIAL_FILES
+-
+-'
+-
+-test_expect_failure PERL 'test tag T_ALL_INITIAL_FILES_BUT_ONE' '
+-
+-	test_cmp_branch_tree T_ALL_INITIAL_FILES_BUT_ONE
+-
+-'
+-
+-test_expect_failure PERL 'test tag T_MIXED' '
+-
+-	test_cmp_branch_tree T_MIXED
+-
+-'
+-
+-
+-test_done
+diff --git a/t/t9603-cvsimport-patchsets.sh b/t/t9603-cvsimport-patchsets.sh
+deleted file mode 100755
+index 52034c8..0000000
+--- a/t/t9603-cvsimport-patchsets.sh
++++ /dev/null
+@@ -1,39 +0,0 @@
+-#!/bin/sh
+-
+-# Structure of the test cvs repository
+-#
+-# Message   File:Content         Commit Time
+-# Rev 1     a: 1.1               2009-02-21 19:11:43 +0100
+-# Rev 2     a: 1.2    b: 1.1     2009-02-21 19:11:14 +0100
+-# Rev 3               b: 1.2     2009-02-21 19:11:43 +0100
+-#
+-# As you can see the commit of Rev 3 has the same time as
+-# Rev 1 this leads to a broken import because of a cvsps
+-# bug.
+-
+-test_description='git cvsimport testing for correct patchset estimation'
+-. ./lib-cvs.sh
+-
+-setup_cvs_test_repository t9603
+-
+-test_expect_failure 'import with criss cross times on revisions' '
+-
+-    git cvsimport -p"-x" -C module-git module &&
+-    (cd module-git &&
+-        git log --pretty=format:%s > ../actual-master &&
+-        git log A~2..A --pretty="format:%s %ad" -- > ../actual-A &&
+-        echo "" >> ../actual-master &&
+-	echo "" >> ../actual-A
+-    ) &&
+-    echo "Rev 4
+-Rev 3
+-Rev 2
+-Rev 1" > expect-master &&
+-    test_cmp actual-master expect-master &&
+-
+-    echo "Rev 5 Branch A Wed Mar 11 19:09:10 2009 +0000
+-Rev 4 Branch A Wed Mar 11 19:03:52 2009 +0000" > expect-A &&
+-    test_cmp actual-A expect-A
+-'
+-
+-test_done
+-- 
+1.8.1.421.g6236851
