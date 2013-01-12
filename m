@@ -1,285 +1,103 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: [PATCH v2] t9605: test for cvsps commit ordering bug
-Date: Fri, 11 Jan 2013 22:39:16 -0600
-Message-ID: <1357965556-25761-1-git-send-email-chris@rorvick.com>
-Cc: "Eric S. Raymond" <esr@thyrsus.com>,
-	Chris Rorvick <chris@rorvick.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 12 05:40:51 2013
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
+Date: Sat, 12 Jan 2013 00:04:31 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20130112050431.GA31727@thyrsus.com>
+References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
+ <7va9sfd6lk.fsf@alter.siamese.dyndns.org>
+ <20130111185818.GA30398@thyrsus.com>
+ <7vmwwfbjv3.fsf@alter.siamese.dyndns.org>
+Reply-To: esr@thyrsus.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 06:05:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttstm-0001cB-4p
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 05:40:50 +0100
+	id 1TttHF-0001Ne-AK
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 06:05:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755388Ab3ALEk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 23:40:29 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:33551 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754991Ab3ALEk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 23:40:27 -0500
-Received: by mail-ie0-f182.google.com with SMTP id s9so3204970iec.27
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 20:40:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=kKIrJsMwNAD5rRfWTZLhKvbE1pwT1rPwHcHYozyle3k=;
-        b=a+vt6M319sbU0Of8iGahXvQDUF6aRgJAYns8THsgXyX6nLYsQzsobdIsEeXPZqguuA
-         FsEALXwduHNxgyObpulhsHDm31zrkT6WC0JdAH3m11CuSmK+UkFoZgPWjcKQW1CTfz16
-         QfDzkyC9jjQbjHzZpd/hKDY1e93x0245cdv+9n2V3iDHXIysYUTdTMM2NXvTQxySaku8
-         HniToPBq/L8NoPfN27Xx2G2BTeCYHfK/GQrmLFanFA8QJMBcyHToge0DvsgHp1AGZ9hv
-         cTA5OL/ksg0cQw4fyl4WFhD/el5F082/WwN2qIdFKwlE4Tei+5RFTq4pC5g1JI7yHSng
-         ZlaA==
-X-Received: by 10.50.150.144 with SMTP id ui16mr1148401igb.68.1357965626836;
-        Fri, 11 Jan 2013 20:40:26 -0800 (PST)
-Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
-        by mx.google.com with ESMTPS id eu3sm1270459igc.7.2013.01.11.20.40.25
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 11 Jan 2013 20:40:26 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.rc3.335.g88a67d6
+	id S1751401Ab3ALFEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 00:04:45 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:43847
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295Ab3ALFEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 00:04:44 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id F04F44065F; Sat, 12 Jan 2013 00:04:31 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vmwwfbjv3.fsf@alter.siamese.dyndns.org>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213260>
 
-Import of a trivial CVS repository fails due to a cvsps bug.  Given the
-following series of commits:
+Junio C Hamano <gitster@pobox.com>:
+> Yeah, it is OK to _discourage_ its use, but to me it looks like that
+> the above is a fairly subjective policy decision, not something I
+> should let you impose on the users of the old cvsimport, which you
+> do not seem to even treat as your users.
 
-    timestamp             a    b    c   message
-    -------------------  ---  ---  ---  -------
-    2012/12/12 21:09:39  1.1            changes are done
-    2012/12/12 21:09:44            1.1  changes
-    2012/12/12 21:09:46            1.2  changes
-    2012/12/12 21:09:50       1.1  1.3  changes are done
+Er.  You still don't seem to grasp the fundamentals of this
+situation. I'm not imposing any damn thing on the users.  What's
+imposing is the fact that cvsps-2.x and the Perl cvsimport are both
+individually and collectively *broken right now*, and within a few
+months the Perl git-cvsimport is going to cease even pretending to
+work.  I'm trying to *fix that problem* as best I can, fixing it
+required two radical rewrites, and criticizing me for not emulating
+every last detail and misfeature immediately is every bit as pointless
+and annoying as arguing about the fabric on the deck chairs while the
+ship is sinking.
 
-cvsps mangles the commit ordering (edited for brevity):
+To put it bluntly, you should be grateful to be getting back any
+functionality at all - because the alternative is that the Perl
+git-cvsimport will hang out in your tree as a dead piece of cruft.
+Your choice is between making it easy for me replace it with minimum
+disruption now and hoping for someone else to replace it months from
+now after you've had a bunch of unhappy users bitching at you.
 
-    ---------------------
-    PatchSet 1
-    Date: 2012/12/12 15:09:39
-    Log:
-    changes are done
+So let me be more direct.  I think the -M and -m options are
+sufficiently bad ideas that I am *not willing* to put in the quite
+large amount of effort that would be required to implement them in cvsps
+or parsecvs.  That would be a bad use of my time.
 
-    Members:
-    	a:INITIAL->1.1
-    	b:INITIAL->1.1
-    	c:1.2->1.3
+This is not the case with -o; that might be a good idea if I
+understood it. This is also not like the 2.x fallback; I thought that
+was a bad idea (because it would be better for users that the
+combination break in an obvious way than continue breaking in a silent
+one), but it was a small enough effort that I was willing to do it
+anyway to keep the git maintainer happy. The effort to fix the quoting
+bugs is even easier for me to justify; they are actual bugs.
 
-    ---------------------
-    PatchSet 2
-    Date: 2012/12/12 15:09:44
-    Log:
-    changes
+Those are my engineering judgments; go ahead and call them
+"subjective" if you like, but neither the facts nor my judgment will
+change on that account.
 
-    Members:
-    	c:INITIAL->1.1
+> The "major" in my sentence was from your description (the bugs you
+> fixed), and not about the new ones you still have in this draft.  I
+> did not mean to say that you are trading fixes to "major" bugs with
+> different "major" bugs.
 
-    ---------------------
-    PatchSet 3
-    Date: 2012/12/12 15:09:46
-    Log:
-    changes
+OK, thank you.  In the future I will try to bear in mind that English
+is not your primary language when I evaluate statements that seems a bit
+offensive.
 
-    Members:
-    	c:1.1->1.2
+So what's your next bid? Note that you can't increase my friction and
+hassle costs much more before I give up and let you deal with the
+consequences without me. I want to do the right thing, but I have
+more other projects clamoring for my attention than you could easily
+guess.  I need to get git-cvsimport *finished* and off my hands -
+I may already have given it more time than I really should have.
 
-This is seen in cvsps versions 2.x and up through at least 3.7.
-
-Signed-off-by: Chris Rorvick <chris@rorvick.com>
----
-
-It actually does fail without the "&& false" at the end.  :-P  Sorry for
-the noise.
-
- t/t9605-cvsimport-commit-order.sh  | 24 +++++++++++++++
- t/t9605/cvsroot/.gitattributes     |  1 +
- t/t9605/cvsroot/CVSROOT/.gitignore |  2 ++
- t/t9605/cvsroot/module/a,v         | 24 +++++++++++++++
- t/t9605/cvsroot/module/b,v         | 24 +++++++++++++++
- t/t9605/cvsroot/module/c,v         | 62 ++++++++++++++++++++++++++++++++++++++
- 6 files changed, 137 insertions(+)
- create mode 100755 t/t9605-cvsimport-commit-order.sh
- create mode 100644 t/t9605/cvsroot/.gitattributes
- create mode 100644 t/t9605/cvsroot/CVSROOT/.gitignore
- create mode 100644 t/t9605/cvsroot/module/a,v
- create mode 100644 t/t9605/cvsroot/module/b,v
- create mode 100644 t/t9605/cvsroot/module/c,v
-
-diff --git a/t/t9605-cvsimport-commit-order.sh b/t/t9605-cvsimport-commit-order.sh
-new file mode 100755
-index 0000000..86aafd1
---- /dev/null
-+++ b/t/t9605-cvsimport-commit-order.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+
-+test_description='git cvsimport commit order'
-+. ./lib-cvs.sh
-+
-+setup_cvs_test_repository t9605
-+
-+test_expect_success 'checkout with CVS' '
-+
-+	echo CVSROOT=$CVSROOT &&
-+	cvs checkout -d module-cvs module
-+'
-+
-+test_expect_failure 'import into git (commit order mangled)' '
-+
-+	git cvsimport -R -a -p"-x" -C module-git module &&
-+	(
-+		cd module-git &&
-+		git merge origin
-+	) &&
-+	test_cmp module-cvs/c module-git/c
-+'
-+
-+test_done
-diff --git a/t/t9605/cvsroot/.gitattributes b/t/t9605/cvsroot/.gitattributes
-new file mode 100644
-index 0000000..562b12e
---- /dev/null
-+++ b/t/t9605/cvsroot/.gitattributes
-@@ -0,0 +1 @@
-+* -whitespace
-diff --git a/t/t9605/cvsroot/CVSROOT/.gitignore b/t/t9605/cvsroot/CVSROOT/.gitignore
-new file mode 100644
-index 0000000..3bb9b34
---- /dev/null
-+++ b/t/t9605/cvsroot/CVSROOT/.gitignore
-@@ -0,0 +1,2 @@
-+history
-+val-tags
-diff --git a/t/t9605/cvsroot/module/a,v b/t/t9605/cvsroot/module/a,v
-new file mode 100644
-index 0000000..6455911
---- /dev/null
-+++ b/t/t9605/cvsroot/module/a,v
-@@ -0,0 +1,24 @@
-+head	1.1;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.1
-+date	2012.12.12.21.09.39;	author tester;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.1
-+log
-+@changes are done
-+@
-+text
-+@file a
-+@
-diff --git a/t/t9605/cvsroot/module/b,v b/t/t9605/cvsroot/module/b,v
-new file mode 100644
-index 0000000..55545c8
---- /dev/null
-+++ b/t/t9605/cvsroot/module/b,v
-@@ -0,0 +1,24 @@
-+head	1.1;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.1
-+date	2012.12.12.21.09.50;	author tester;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.1
-+log
-+@changes are done
-+@
-+text
-+@file b
-+@
-diff --git a/t/t9605/cvsroot/module/c,v b/t/t9605/cvsroot/module/c,v
-new file mode 100644
-index 0000000..d3eac77
---- /dev/null
-+++ b/t/t9605/cvsroot/module/c,v
-@@ -0,0 +1,62 @@
-+head	1.3;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.3
-+date	2012.12.12.21.09.50;	author tester;	state Exp;
-+branches;
-+next	1.2;
-+
-+1.2
-+date	2012.12.12.21.09.46;	author tester;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2012.12.12.21.09.44;	author tester;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.3
-+log
-+@changes are done
-+@
-+text
-+@file c
-+line two
-+line three
-+line four
-+line five
-+@
-+
-+
-+1.2
-+log
-+@changes
-+@
-+text
-+@d2 4
-+a5 4
-+line 2
-+line 3
-+line 4
-+line 5
-+@
-+
-+
-+1.1
-+log
-+@changes
-+@
-+text
-+@d2 4
-+@
-+
+So give me your minimum list of deliverables before you'll merge,
+please, and then stick to it.  I assume fixes for the quoting bugs
+will be on that list.
 -- 
-1.8.1.rc3.335.g88a67d6
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
