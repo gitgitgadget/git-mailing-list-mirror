@@ -1,76 +1,65 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
-Date: Sat, 12 Jan 2013 11:11:05 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20130112161105.GB3270@thyrsus.com>
-References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
- <50F17DB0.2050802@alum.mit.edu>
-Reply-To: esr@thyrsus.com
+From: Michal Privoznik <mprivozn@redhat.com>
+Subject: [PATCH 1/3] git-completion.bash: Autocomplete --minimal and --histogram for git-diff
+Date: Sat, 12 Jan 2013 17:02:13 +0100
+Message-ID: <362b9aec3329d669d910dd4081e12c21ea552b2f.1358006339.git.mprivozn@redhat.com>
+References: <cover.1358006339.git.mprivozn@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Chris Rorvick <chris@rorvick.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Jan 12 17:16:35 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: peff@peff.net, trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 17:27:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu3l2-00043C-Kh
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 17:16:32 +0100
+	id 1Tu3vc-0003kK-Hl
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 17:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555Ab3ALQLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 11:11:19 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:46865
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009Ab3ALQLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 11:11:18 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 9BC694065F; Sat, 12 Jan 2013 11:11:05 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <50F17DB0.2050802@alum.mit.edu>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753585Ab3ALQ1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 11:27:01 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:64214 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753270Ab3ALQ1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 11:27:00 -0500
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0CGQoE4000476
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 12 Jan 2013 11:26:52 -0500
+Received: from bart.redhat.com (vpn-225-209.phx2.redhat.com [10.3.225.209])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r0CG2MMC005316;
+	Sat, 12 Jan 2013 11:02:26 -0500
+In-Reply-To: <cover.1358006339.git.mprivozn@redhat.com>
+In-Reply-To: <cover.1358006339.git.mprivozn@redhat.com>
+References: <cover.1358006339.git.mprivozn@redhat.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213293>
 
-Michael Haggerty <mhagger@alum.mit.edu>:
-> Otherwise, how do we know that cvsps currently works with git-cvsimport?
-> (OK, you claim that it does, but in the next breath you admit that
-> there is a new failure in "one pathological tagging case".)  How can we
-> understand its strengths/weaknesses?  How can we gain confidence that it
-> works on different platforms?  How will we find out if a future versions
-> of cvsps stops working (e.g., because of a breakage or a
-> non-backwards-compatible change)?
+Even though --patience was already there, we missed --minimal and
+--histogram for some reason.
 
-You can't.  But in practice the git crew was going to lose that
-capability anyway simply because the new wrapper will support three
-engines rather than just one.  It's not practical for the git tests to
-handle that many variant external dependencies.
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-However, there is a solution.
-
-The solution is for git to test that the wrapper is *generating the
-expected commands*.  So what the git tree ends up with is conditional
-assurance; the wrapper will do the right thing if the engine it calls
-is working correctly.  I think that's really all the git-tree tests
-can hope for.
-
-Michael, the engines are my problem and yours - it's *our*
-responsibility to develop a (hopefully shared) test suite to verify
-that they convert repos correctly.  I'm working my end as fast as I can;
-I hope to have the test suite factored out of cvsps and ready to check 
-multiple engines by around Wednesday.  I still need to convert t9604,
-too.
-
-I have parsecvs working since yesterday, so we really are up to three
-engines.
-
-I have two minor features I need to merge into parsecvs before 
-I can start on splitting out the test suite.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a4c48e1..383518c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1031,7 +1031,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+ 			--inter-hunk-context=
+-			--patience
++			--patience --histogram --minimal
+ 			--raw
+ 			--dirstat --dirstat= --dirstat-by-file
+ 			--dirstat-by-file= --cumulative
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.8.0.2
