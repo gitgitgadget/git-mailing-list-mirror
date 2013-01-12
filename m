@@ -1,56 +1,73 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: Suggestion: add option in git-p4 to preserve user in Git
- repository
-Date: Sat, 12 Jan 2013 11:38:38 -0500
-Message-ID: <20130112163838.GA28722@padd.com>
-References: <CAFXk4bpQo26sAfHkE5_VLi_UkZcgsYvwYNH8byZjuXs=EAhu+A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
+Date: Sat, 12 Jan 2013 10:16:33 -0800
+Message-ID: <20130112181633.GB4624@elie.Belkin>
+References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
+ <50F17DB0.2050802@alum.mit.edu>
+ <20130112161105.GB3270@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Olivier Delalleau <shish@keba.be>
-X-From: git-owner@vger.kernel.org Sat Jan 12 17:39:14 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Chris Rorvick <chris@rorvick.com>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 19:17:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu46p-0004d2-Qg
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 17:39:04 +0100
+	id 1Tu5dc-0002BS-Ad
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 19:17:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753844Ab3ALQin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 11:38:43 -0500
-Received: from honk.padd.com ([74.3.171.149]:40926 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753736Ab3ALQin (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 11:38:43 -0500
-Received: from arf.padd.com (50-52-235-227.drr01.drhm.nc.frontiernet.net [50.52.235.227])
-	by honk.padd.com (Postfix) with ESMTPSA id 6169E2F3F;
-	Sat, 12 Jan 2013 08:38:42 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 9767627CDB; Sat, 12 Jan 2013 11:38:38 -0500 (EST)
+	id S1753920Ab3ALSQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 13:16:40 -0500
+Received: from mail-da0-f52.google.com ([209.85.210.52]:38192 "EHLO
+	mail-da0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797Ab3ALSQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 13:16:39 -0500
+Received: by mail-da0-f52.google.com with SMTP id f10so1226275dak.25
+        for <git@vger.kernel.org>; Sat, 12 Jan 2013 10:16:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=AF1B9Io7jUJ3Yx/5EC54YwwQA5QMQ3gyXpKIpDfx2eY=;
+        b=zaGb0AMmTR4Q36OIzD8LAr0gDzFIzWVu26AapO69w0qKaFc1WqV1NmZjg1wW7mw9ZJ
+         y1jJm18rUbU/o4HdRIgJlQaV9dqXMKiWuRvkVPhsc327U7/S3wLPMQsH6AjpQpRfT9kc
+         318WfIbED6nPUYm6qrBAO0trNt4iaNwNjyLkXUtRiATjALQfEJLc48DeV0A0kqgiLtna
+         N2lRuJWKoYsCUr1yUyGikkap8FHWdu1QFs2K8lAVL8dBN57GSeBkKN9st+RjSptQfDSN
+         4n3PTsQB5zFzrp1DqvKGkuTx/f1XaSuVR2J2QOmTcY3mP7d7VDaYqjkAzbWAdLudXWJC
+         kXKQ==
+X-Received: by 10.66.90.72 with SMTP id bu8mr217695640pab.69.1358014599233;
+        Sat, 12 Jan 2013 10:16:39 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id k4sm5361034paz.26.2013.01.12.10.16.36
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 12 Jan 2013 10:16:37 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CAFXk4bpQo26sAfHkE5_VLi_UkZcgsYvwYNH8byZjuXs=EAhu+A@mail.gmail.com>
+In-Reply-To: <20130112161105.GB3270@thyrsus.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213297>
 
-shish@keba.be wrote on Thu, 10 Jan 2013 22:38 -0500:
-> I'm in a situation where I don't have P4 admin rights to use the
-> --preserve-user option of git-p4. However, I would like to keep user
-> information in the associated Git branch.
-> 
-> Would it be possible to add an option for this?
+Hi Eric,
 
-The --preserve-user option is used to submit somebody else's work
-from git to p4.  It does "p4 change -f" to edit the author of the
-change after it has been submitted to p4.  P4 requires admin
-privileges to do that.
+Eric S. Raymond wrote:
 
-Changes that are imported _from_ p4 to git do have the correct
-author information.
+>             But in practice the git crew was going to lose that
+> capability anyway simply because the new wrapper will support three
+> engines rather than just one.  It's not practical for the git tests to
+> handle that many variant external dependencies.
 
-Can you explain a bit more what you're looking for?
+See the git-blame/git-annotate tests for an example of how the
+testsuite handles "variations on a theme".
 
-		-- Pete
+It works fine.
+
+Hope that helps,
+Jonathan
