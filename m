@@ -1,59 +1,62 @@
-From: Michal Privoznik <mprivozn@redhat.com>
-Subject: [PATCH 0/3] Rework git-diff algorithm selection
-Date: Sat, 12 Jan 2013 17:02:12 +0100
-Message-ID: <cover.1358006339.git.mprivozn@redhat.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2013, #05; Fri, 11)
+Date: Sat, 12 Jan 2013 23:25:45 +0700
+Message-ID: <CACsJy8CRbkLAD7LtoE_6FA_zW4YTW6Nb0mJU3ejqbu5URTrU1Q@mail.gmail.com>
+References: <7vip739su3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: peff@peff.net, trast@student.ethz.ch
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 12 17:27:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 17:27:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu3vd-0003kK-30
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 17:27:29 +0100
+	id 1Tu3vc-0003kK-1T
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 17:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753850Ab3ALQ1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 11:27:02 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:4561 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753633Ab3ALQ1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 11:27:00 -0500
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0CGQoE2000476
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sat, 12 Jan 2013 11:26:52 -0500
-Received: from bart.redhat.com (vpn-225-209.phx2.redhat.com [10.3.225.209])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r0CG2MMB005316;
-	Sat, 12 Jan 2013 11:02:24 -0500
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1753769Ab3ALQ0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 11:26:17 -0500
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:37510 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753687Ab3ALQ0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 11:26:16 -0500
+Received: by mail-ob0-f178.google.com with SMTP id eh20so2648644obb.23
+        for <git@vger.kernel.org>; Sat, 12 Jan 2013 08:26:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=J9QoIQ9awyWfau6u9lT6xnkHC6ASOPvWbodN1SZB1fM=;
+        b=uy2vDBwIR5FAKUxQea6gIdmAub0WV047bSStW2TLKFSzXce9Ioh73KpybHt+dgUj7D
+         AQGMf+h+X2kh60uFhLm3moH7PeCo6udCWaiRctNslzH1nO9vSrMlQ6IBwM7VLxlys5Q9
+         1w6abgQumI7PWci06VVDelpHMcNENBjoVJTIIPKA3i0wjVRTG8rqh1ZicJprnCVGHl2o
+         CVlMAgGn6TWdEtK6yUPXJUu3rQVlylwZ+P/gVr6BJAQMINHpxnyLYCL6QHNzxQmSg141
+         eHemkXN2x2A/lvIh9nShr2y5Xp+w3+4KnUlcM//BWy7TB/eEYjYiN/ZYzI9PoEVEAWas
+         vvVg==
+Received: by 10.60.8.134 with SMTP id r6mr46633081oea.53.1358007975275; Sat,
+ 12 Jan 2013 08:26:15 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Sat, 12 Jan 2013 08:25:45 -0800 (PST)
+In-Reply-To: <7vip739su3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213295>
 
-It's been a while I was trying to get this in. Recently, I realized how
-important this is.
+On Sat, Jan 12, 2013 at 6:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/parse-pathspec (2013-01-11) 20 commits
+>
+>  Uses the parsed pathspec structure in more places where we used to
+>  use the raw "array of strings" pathspec.
+>
+>  Unfortunately, this conflicts a couple of topics in flight. I tried
+>  to be careful while resolving conflicts, though.
 
-Please keep me CC'ed as I am not subscribed to the list.
-
-Michal Privoznik (3):
-  git-completion.bash: Autocomplete --minimal and --histogram for
-    git-diff
-  config: Introduce diff.algorithm variable
-  diff: Introduce --diff-algorithm command line option
-
- Documentation/diff-config.txt          | 17 +++++++++++++++++
- Documentation/diff-options.txt         | 22 ++++++++++++++++++++++
- contrib/completion/git-completion.bash | 14 +++++++++++++-
- diff.c                                 | 33 +++++++++++++++++++++++++++++++++
- diff.h                                 |  2 ++
- merge-recursive.c                      |  6 ++++++
- 6 files changed, 93 insertions(+), 1 deletion(-)
-
+parse_pathspec has not picked up init_pathspec changes from
+jk/pathspec-literal and nd/pathspec-wildcard (already in master) so
+--literal-pathspecs is probably broken in 'pu' after a lot of
+init_pathspec -> parse_pathspec conversion.
 -- 
-1.8.0.2
+Duy
