@@ -1,102 +1,291 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git send-email should not allow 'y' for in-reply-to
-Date: Fri, 11 Jan 2013 18:56:06 -0800
-Message-ID: <7vd2xb9kjd.fsf@alter.siamese.dyndns.org>
-References: <A0DB01D693D8EF439496BC8B037A0AEF322039A7@xmb-rcd-x15.cisco.com>
- <20130111212325.GA18193@sigill.intra.peff.net>
- <CALWbr2xasF1y9j3G=-fQ9Wwg41Ymv=MMsWoqyuhweDov9KpRvg@mail.gmail.com>
- <7vy5fz9xdl.fsf@alter.siamese.dyndns.org>
- <CALWbr2wtAzz7yWb_Z_V0LFt5ddZcRSs7_rea2w=ghdC847mEyQ@mail.gmail.com>
- <7vmwwf9sx9.fsf@alter.siamese.dyndns.org> <50F0B643.20201@optusnet.com.au>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Antoine Pelisse <apelisse@gmail.com>, Jeff King <peff@peff.net>,
-	"Matt Seitz \(matseitz\)" <matseitz@cisco.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>
-To: Ben Aveling <bena.001@optusnet.com.au>
-X-From: git-owner@vger.kernel.org Sat Jan 12 03:56:33 2013
+From: Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH] t9605: test for cvsps commit ordering bug
+Date: Fri, 11 Jan 2013 22:13:53 -0600
+Message-ID: <1357964033-24659-1-git-send-email-chris@rorvick.com>
+Cc: "Eric S. Raymond" <esr@thyrsus.com>,
+	Chris Rorvick <chris@rorvick.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 05:15:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TtrGp-0001Bd-Rc
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 03:56:32 +0100
+	id 1TtsVY-0008Ty-Ap
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 05:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475Ab3ALC4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2013 21:56:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44438 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754985Ab3ALC4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2013 21:56:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 421D0AF38;
-	Fri, 11 Jan 2013 21:56:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yMCGKJdbsXukgWly9jnsvouFl6s=; b=L618fJ
-	ZwqPgm/6VHfWMK1r4NrE82nI/IuSV4DsURlZ6yFUoZw7Kjhs6o7hxAdz8cYpz38L
-	+6YPE0CiRClONLznw131s3T+3iSCwmfnLgbhZ8R3nhem+fScCCf1qWTD5afiw1IX
-	fhhFMzzbsnQbqZg8Uooe5It2IHkmwa61710y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o2qkL8qsQxk04U+1hoSGI3pk56Y8j2eS
-	EPGtCp/zjer8rOny1kwRhqNFVZM4MD9P1uHI7kL0PDKMX/cOE9X4ifwf/DsJHBR9
-	QWIc2IkhU+TyvqxUifA2Mv7Qon7gr9PV9TEh2N9ooweBR4ueBvgVdc9Y8HtZnz82
-	NFYTkUU1bHw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34A56AF34;
-	Fri, 11 Jan 2013 21:56:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3855AF1A; Fri, 11 Jan 2013
- 21:56:07 -0500 (EST)
-In-Reply-To: <50F0B643.20201@optusnet.com.au> (Ben Aveling's message of "Sat,
- 12 Jan 2013 12:02:59 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9CDAF2BA-5C63-11E2-B48F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754327Ab3ALEPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2013 23:15:22 -0500
+Received: from mail-ia0-f170.google.com ([209.85.210.170]:51833 "EHLO
+	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753744Ab3ALEPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2013 23:15:21 -0500
+Received: by mail-ia0-f170.google.com with SMTP id k20so2090138iak.29
+        for <git@vger.kernel.org>; Fri, 11 Jan 2013 20:15:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=fjwUtkVru1OT/A22XZQKDuPek3xa2eXOakT0pdrAvbE=;
+        b=NvrIxh7fg1417DvdYlhqXFZPt466ipGF0oBkRlwFDhoQHrKXTqEJdLPsry07kzfyxd
+         R2vOn+mlVb8vCJ1pHZkf9s+9LDf2gJ5HZJpm7Hxr7ckU+JMvlQkjDmRRLsIRybBFWR4E
+         x1ZSogmwOrqIscU/ggprhL3Xorn9zwXjfxlm5Km2FrAdF4cSYiF/BQDC8YGfUPQpMND0
+         BpKwyx6isJK5CYxFmLZD7zeOzO53aIsilh6aVoQzds0fcdkWiXPwqtEeQm6pN8iHOBji
+         qGmLNiyztuQJ8/eQpfw9LoHxelSUa6/IOx2QCeJ8sUHKuA8CKVKYLdme9ikmFnWYhLek
+         bdnQ==
+X-Received: by 10.50.16.210 with SMTP id i18mr1178004igd.53.1357964120503;
+        Fri, 11 Jan 2013 20:15:20 -0800 (PST)
+Received: from marlin.localdomain (adsl-70-131-98-170.dsl.emhril.sbcglobal.net. [70.131.98.170])
+        by mx.google.com with ESMTPS id k5sm1329346igq.9.2013.01.11.20.15.17
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 11 Jan 2013 20:15:18 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.rc3.335.g88a67d6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213258>
 
-Ben Aveling <bena.001@optusnet.com.au> writes:
+Import of a trivial CVS repository fails due to a cvsps bug.  Given the
+following series of commits:
 
-> On 12/01/2013 10:54 AM, Junio C Hamano wrote:
->> Antoine Pelisse <apelisse@gmail.com> writes:
->>
->>> I would simply go for:
->>>
->>>    What Message-ID are you replying to (if any)?
->>>
->>> If I don't know what to answer, I would definitely not say y/yes/n/no,
->>> but press enter directly.
->> Sounds sensible (even though technically you reply to a message
->> that has that message ID, and not to a message ID ;-)).
->>
->> Any better phrasing from others?  If not, I'd say we adopt this
->> text.
->
-> I guess it depends on how much we mind if people accidentally miss the
-> message ID.
->
-> If we don't mind much, we could say something like:
->
->   What Message-ID are you replying to [Default=None]?
->
->
-> If we are concerned that when a Message-ID exists, it should be
-> provided, we could split to 2 questions:
->
->   Are you replying to an existing Message [Y/n]?
->
-> And then, if the answer is Y,
->
->   What Message-ID are you replying to?
+    timestamp             a    b    c   message
+    -------------------  ---  ---  ---  -------
+    2012/12/12 21:09:39  1.1            changes are done
+    2012/12/12 21:09:44            1.1  changes
+    2012/12/12 21:09:46            1.2  changes
+    2012/12/12 21:09:50       1.1  1.3  changes are done
 
-Eewww.  Now we come back to full circles.
+cvsps mangles the commit ordering (edited for brevity):
 
-It sometimes helps to follow the in-reply-to chain to see what has
-already been said in the thread, I guess ;-)
+    ---------------------
+    PatchSet 1
+    Date: 2012/12/12 15:09:39
+    Log:
+    changes are done
+
+    Members:
+    	a:INITIAL->1.1
+    	b:INITIAL->1.1
+    	c:1.2->1.3
+
+    ---------------------
+    PatchSet 2
+    Date: 2012/12/12 15:09:44
+    Log:
+    changes
+
+    Members:
+    	c:INITIAL->1.1
+
+    ---------------------
+    PatchSet 3
+    Date: 2012/12/12 15:09:46
+    Log:
+    changes
+
+    Members:
+    	c:1.1->1.2
+
+This is seen in cvsps versions 2.x and up through at least 3.7.
+
+Signed-off-by: Chris Rorvick <chris@rorvick.com>
+---
+
+Ran into this recently.  No branching and no "criss cross" timestamps,
+just lazy commit messages.  And it magically backed out a bug fix.
+
+This applies on top of master.  With minor modifications I've tested it
+with Eric's latest code and confirmed the bug still exists.
+
+Chris
+
+ t/t9605-cvsimport-commit-order.sh  | 25 +++++++++++++++
+ t/t9605/cvsroot/.gitattributes     |  1 +
+ t/t9605/cvsroot/CVSROOT/.gitignore |  2 ++
+ t/t9605/cvsroot/module/a,v         | 24 +++++++++++++++
+ t/t9605/cvsroot/module/b,v         | 24 +++++++++++++++
+ t/t9605/cvsroot/module/c,v         | 62 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 138 insertions(+)
+ create mode 100755 t/t9605-cvsimport-commit-order.sh
+ create mode 100644 t/t9605/cvsroot/.gitattributes
+ create mode 100644 t/t9605/cvsroot/CVSROOT/.gitignore
+ create mode 100644 t/t9605/cvsroot/module/a,v
+ create mode 100644 t/t9605/cvsroot/module/b,v
+ create mode 100644 t/t9605/cvsroot/module/c,v
+
+diff --git a/t/t9605-cvsimport-commit-order.sh b/t/t9605-cvsimport-commit-order.sh
+new file mode 100755
+index 0000000..ab4042e
+--- /dev/null
++++ b/t/t9605-cvsimport-commit-order.sh
+@@ -0,0 +1,25 @@
++#!/bin/sh
++
++test_description='git cvsimport commit order'
++. ./lib-cvs.sh
++
++setup_cvs_test_repository t9605
++
++test_expect_success 'checkout with CVS' '
++
++	echo CVSROOT=$CVSROOT &&
++	cvs checkout -d module-cvs module
++'
++
++test_expect_failure 'import into git (commit order mangled)' '
++
++	git cvsimport -R -a -p"-x" -C module-git module &&
++	(
++		cd module-git &&
++		git merge origin
++	) &&
++	test_cmp module-cvs/c module-git/c &&
++false
++'
++
++test_done
+diff --git a/t/t9605/cvsroot/.gitattributes b/t/t9605/cvsroot/.gitattributes
+new file mode 100644
+index 0000000..562b12e
+--- /dev/null
++++ b/t/t9605/cvsroot/.gitattributes
+@@ -0,0 +1 @@
++* -whitespace
+diff --git a/t/t9605/cvsroot/CVSROOT/.gitignore b/t/t9605/cvsroot/CVSROOT/.gitignore
+new file mode 100644
+index 0000000..3bb9b34
+--- /dev/null
++++ b/t/t9605/cvsroot/CVSROOT/.gitignore
+@@ -0,0 +1,2 @@
++history
++val-tags
+diff --git a/t/t9605/cvsroot/module/a,v b/t/t9605/cvsroot/module/a,v
+new file mode 100644
+index 0000000..6455911
+--- /dev/null
++++ b/t/t9605/cvsroot/module/a,v
+@@ -0,0 +1,24 @@
++head	1.1;
++access;
++symbols;
++locks; strict;
++comment	@# @;
++
++
++1.1
++date	2012.12.12.21.09.39;	author tester;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.1
++log
++@changes are done
++@
++text
++@file a
++@
+diff --git a/t/t9605/cvsroot/module/b,v b/t/t9605/cvsroot/module/b,v
+new file mode 100644
+index 0000000..55545c8
+--- /dev/null
++++ b/t/t9605/cvsroot/module/b,v
+@@ -0,0 +1,24 @@
++head	1.1;
++access;
++symbols;
++locks; strict;
++comment	@# @;
++
++
++1.1
++date	2012.12.12.21.09.50;	author tester;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.1
++log
++@changes are done
++@
++text
++@file b
++@
+diff --git a/t/t9605/cvsroot/module/c,v b/t/t9605/cvsroot/module/c,v
+new file mode 100644
+index 0000000..d3eac77
+--- /dev/null
++++ b/t/t9605/cvsroot/module/c,v
+@@ -0,0 +1,62 @@
++head	1.3;
++access;
++symbols;
++locks; strict;
++comment	@# @;
++
++
++1.3
++date	2012.12.12.21.09.50;	author tester;	state Exp;
++branches;
++next	1.2;
++
++1.2
++date	2012.12.12.21.09.46;	author tester;	state Exp;
++branches;
++next	1.1;
++
++1.1
++date	2012.12.12.21.09.44;	author tester;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.3
++log
++@changes are done
++@
++text
++@file c
++line two
++line three
++line four
++line five
++@
++
++
++1.2
++log
++@changes
++@
++text
++@d2 4
++a5 4
++line 2
++line 3
++line 4
++line 5
++@
++
++
++1.1
++log
++@changes
++@
++text
++@d2 4
++@
++
+-- 
+1.8.1.rc3.335.g88a67d6
