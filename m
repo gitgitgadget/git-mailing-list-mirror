@@ -1,89 +1,80 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [PATCH v2 05/21] commit: convert to use parse_pathspec
-Date: Sat, 12 Jan 2013 14:54:04 -0800
-Message-ID: <CANiSa6hSgYcGAYCfWu5wkQyaKF9R2SME2LmJ-Qt+uvpBQU2qBw@mail.gmail.com>
-References: <1357903275-16804-1-git-send-email-pclouds@gmail.com>
-	<1357903275-16804-6-git-send-email-pclouds@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: Suggestion: add option in git-p4 to preserve user in Git
+ repository
+Date: Sat, 12 Jan 2013 17:56:40 -0500
+Message-ID: <20130112225640.GA23079@padd.com>
+References: <CAFXk4bpQo26sAfHkE5_VLi_UkZcgsYvwYNH8byZjuXs=EAhu+A@mail.gmail.com>
+ <20130112163838.GA28722@padd.com>
+ <CAFXk4bpM8X3k=iwRjM9kvm4XbZyKS+hTCiVbHOjH3jK6MkkBSg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 23:54:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Olivier Delalleau <shish@keba.be>
+X-From: git-owner@vger.kernel.org Sat Jan 12 23:57:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu9yA-0001ah-70
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 23:54:30 +0100
+	id 1TuA0f-0003UF-Dv
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 23:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489Ab3ALWyG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2013 17:54:06 -0500
-Received: from mail-ia0-f180.google.com ([209.85.210.180]:54631 "EHLO
-	mail-ia0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754403Ab3ALWyF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2013 17:54:05 -0500
-Received: by mail-ia0-f180.google.com with SMTP id f27so1197934iae.39
-        for <git@vger.kernel.org>; Sat, 12 Jan 2013 14:54:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HQEeagXkX5tcmVG1Wx50HMdM5WtdDtQeoI53CY/yxx0=;
-        b=KwIKhOHYFdmNyrAl/pm0YQLsqm+/HGRXnb4vHIaGrq4gS1vnR3LuA9IOBwgA9i9hWZ
-         4BZjsMUQdSUy1AXz7mJ1HauelwVXg5NCidlGUTzE0AsOqQjoGjYkJ25Geif34oexKxlq
-         KOmBAhkxESx8APT8KyUQFs853eL7o7/A6mRn7A2gCe3Dg2DSQPxAdWdXBECnB1XEWIVe
-         gD4akfZjxSA26shOQMWWFdU8EAp/Qm88UpGhgpe1LKMN6Ga5/+3LAH/19KNHWcAY99F9
-         PjuowNdqwjQ1eZ1le8CeAcGeNIgTXqGoqSS3uIWWgfG9yaFUDyY/Gxcbp66pD2VLaK0O
-         f2/A==
-Received: by 10.50.42.169 with SMTP id p9mr3132520igl.17.1358031244468; Sat,
- 12 Jan 2013 14:54:04 -0800 (PST)
-Received: by 10.64.86.68 with HTTP; Sat, 12 Jan 2013 14:54:04 -0800 (PST)
-In-Reply-To: <1357903275-16804-6-git-send-email-pclouds@gmail.com>
+	id S1754408Ab3ALW4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 17:56:45 -0500
+Received: from honk.padd.com ([74.3.171.149]:49511 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754302Ab3ALW4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 17:56:45 -0500
+Received: from arf.padd.com (50-52-235-227.drr01.drhm.nc.frontiernet.net [50.52.235.227])
+	by honk.padd.com (Postfix) with ESMTPSA id 4D1372F3F;
+	Sat, 12 Jan 2013 14:56:44 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id BA63B27CDB; Sat, 12 Jan 2013 17:56:40 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAFXk4bpM8X3k=iwRjM9kvm4XbZyKS+hTCiVbHOjH3jK6MkkBSg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213313>
 
-On Fri, Jan 11, 2013 at 3:20 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
->
-> diff --git a/cache.h b/cache.h
-> index e52365d..a3c316f 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -476,6 +476,9 @@ extern int ie_modified(const struct index_state *=
-, struct cache_entry *, struct
->  /* Pathspec magic */
->  #define PATHSPEC_FROMTOP    (1<<0)
->
-> +/* Pathspec flags */
-> +#define PATHSPEC_EMPTY_MATCH_ALL (1<<0) /* No args means match every=
-thing */
-> +
->  struct pathspec {
->         const char **raw; /* get_pathspec() result, not freed by free=
-_pathspec() */
->         int nr;
-> diff --git a/setup.c b/setup.c
-> index 6e960b9..a26b6c0 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -280,6 +280,9 @@ void parse_pathspec(struct pathspec *pathspec,
->         if (!entry && !prefix)
->                 return;
->
-> +       if (!*argv && (flags & PATHSPEC_EMPTY_MATCH_ALL))
-> +               return;
-> +
->         /* No arguments with prefix -> prefix pathspec */
->         if (!entry) {
->                 static const char *raw[2];
+shish@keba.be wrote on Sat, 12 Jan 2013 14:44 -0500:
+> 2013/1/12 Pete Wyckoff <pw@padd.com>:
+> > shish@keba.be wrote on Thu, 10 Jan 2013 22:38 -0500:
+> >> I'm in a situation where I don't have P4 admin rights to use the
+> >> --preserve-user option of git-p4. However, I would like to keep user
+> >> information in the associated Git branch.
+> >>
+> >> Would it be possible to add an option for this?
+> >
+> > The --preserve-user option is used to submit somebody else's work
+> > from git to p4.  It does "p4 change -f" to edit the author of the
+> > change after it has been submitted to p4.  P4 requires admin
+> > privileges to do that.
+> >
+> > Changes that are imported _from_ p4 to git do have the correct
+> > author information.
+> >
+> > Can you explain a bit more what you're looking for?
+> 
+> Sorry I wasn't clear enough. When "git p4 submit" submits changes from
+> Git to P4, it also edits the Git history and replaces the Git commits'
+> authors by the information from the Perforce account submitting the
+> changes. The advantage is that both the P4 and Git repositories share
+> the same author information, but in my case I would like to keep in
+> the Git repository the original authors (because the P4 account I'm
+> using to submit to P4 is shared by all Git users).
 
-I was surprised not to find these two hunks in 02/21. If they were
-there, you wouldn't have to explain in the log message of that patch
-that "flags" is for future-proofing. Also, "*argv" is written "entry"
-in the surrounding conditions.
+Ah, I see what you're looking for now.  It's certainly possible
+to keep a mapping in the git side to remember who really wrote
+each change that went into p4, but there's nothing set up to do
+that now.  And it would be a fair amount of work, with many
+little details.
+
+You could put the true name in the commit message, like
+we do signed-off-by messages: "Author: Real Coder <rc@my.com>".
+That would keep the proper attribution, but not work with "git
+log --author", e.g.; you'd have to use "--grep='Real Coder'"
+instead.
+
+		-- Pete
