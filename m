@@ -1,90 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
-Date: Sat, 12 Jan 2013 10:26:49 -0800
-Message-ID: <20130112182649.GC4624@elie.Belkin>
-References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
- <50F17DB0.2050802@alum.mit.edu>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: git-completion.bash should not add a space after a ref
+Date: Sat, 12 Jan 2013 19:35:59 +0100
+Message-ID: <50F1AD0F.7080503@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eric S. Raymond" <esr@thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Chris Rorvick <chris@rorvick.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Jan 12 19:31:04 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 12 19:36:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu5rC-00046m-Ka
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 19:31:02 +0100
+	id 1Tu5wS-0007tT-Cm
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 19:36:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822Ab3ALS0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 13:26:55 -0500
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:47133 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753402Ab3ALS0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 13:26:55 -0500
-Received: by mail-pb0-f51.google.com with SMTP id ro12so1483967pbb.38
-        for <git@vger.kernel.org>; Sat, 12 Jan 2013 10:26:54 -0800 (PST)
+	id S1753931Ab3ALSgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 13:36:07 -0500
+Received: from mail-bk0-f52.google.com ([209.85.214.52]:51002 "EHLO
+	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753402Ab3ALSgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 13:36:05 -0500
+Received: by mail-bk0-f52.google.com with SMTP id w5so1364799bku.25
+        for <git@vger.kernel.org>; Sat, 12 Jan 2013 10:36:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=RGkV6Mhgn9FGkjAX9X2qhSAZLxcWYs79Svgqx/UgkEo=;
-        b=bBRLcVcmISm4TXbfSSFujpi8T7cakhxdToXo6Z8B3ZBsOYNK6tQIqdhk3V+V7RPOrB
-         okLa9T+jvaeDzBd0Vn1kiTzseJfvRsN3M3WmkFVZZY1Mzc+R9jeCDJVp9GqAdx0p1Rl6
-         6Vejb6IpUhTL6LFBXXSmHf6gzz5qfw0Z9A24XE8hINVmqUTnImH9rf/QSPeXsJHAEvgq
-         GBwwAiVQbm7Ubnx8lHaYZdiGQH6RaM9+r/9hFjBp+W9kEv1Q8euFpylpg4bBpneDO7mf
-         BhzWMz62dc56s/ZhICtWdmaSha+cVJcoSph7TM8ipfbT8OFeKS7duXFyNRRrCcRD55IY
-         TuYA==
-X-Received: by 10.66.74.197 with SMTP id w5mr204584494pav.60.1358015214540;
-        Sat, 12 Jan 2013 10:26:54 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id o5sm5385781pay.5.2013.01.12.10.26.52
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Jan 2013 10:26:53 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <50F17DB0.2050802@alum.mit.edu>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:x-enigmail-version:content-type:content-transfer-encoding;
+        bh=KkDMn8GSyABZ93Trt3CN0KYER9sLtNccZwhIZeTECoM=;
+        b=seaazsPSyt8GITaBuoOYrI3NQe7Vl1RUvWwFUpcSCY9hSAb8BdKBv5muKaU1rp+lg5
+         yii7UWcRQ8U6t0YeyH4Qo8pAQ7F8DprtMspspxWjMbmNwiioef6tomC802FNRlVu9pRu
+         hnxC0BaMWnK8Cht4aYYLYb8qPyzzdHZRPWmMFU4JKdgN6xmdXXxjJ/FemKJ30sWK7HrV
+         8PuAlVpOWHDnJ36l9kfcmSky29p3II8xslF4A4j9I4Xo8IfM0Ql2bvhFJwJ9z/Sj4X6f
+         bOyMRYl4iFtht9Wy4jOq3+AZCTDm9meBWhWzXQhflCoGZUvizO1VwSaxx1Z9jdiU00UQ
+         GPNw==
+X-Received: by 10.204.154.202 with SMTP id p10mr37667939bkw.29.1358015763315;
+        Sat, 12 Jan 2013 10:36:03 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.213.78])
+        by mx.google.com with ESMTPS id 18sm6638916bkv.0.2013.01.12.10.36.01
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 12 Jan 2013 10:36:02 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213300>
 
-Michael Haggerty wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Regarding your claim that "within a few months the Perl git-cvsimport is
-> going to cease even pretending to work": It might be that the old
-> git-cvsimport will stop working *for people who upgrade to cvsps 3.x*.
-> But it is not realistic to expect people to synchronize their git and
-> cvsps version upgrades.  It is even quite possible that this or that
-> Linux distribution will package incompatible versions of the two packages.
+Hi.
 
-Moreover, I feel an obligation to point the following out:
+This is not really a bug, but a small usability problem.
 
-In a hypothetical world where cvsps 3.x simply breaks "git cvsimport"
-it is likely that some distributions would just stick to the existing
-cvsps and not upgrade to 3.x.  Maybe that's a wrong choice, but that's
-a choice some would make.  An even more likely outcome in that
-hypothetical world is that they would ship it renamed to something
-like "cvsps3" alongside the existing cvsps.  Or they could rename the
-old version to "cvsps2".  If we were the last holdout, we could even
-bundle it as compat/cvsps.
+When completing a reference, Bash will add a space after the reference name.
 
-So please do not act as though the cvsps upgrade is a crisis that we
-need to break ourselves for at threat of no longer working at all.
-The threat doesn't hold water.
+As an example in:
 
-Luckily you have already written patches to make "git cvsimport" work
-with cvsps 3.x, and through your work you are making a better
-argument: "The new cvsimport + cvsps will work better, at least for
-some users, than the old tool."
+    $git show master<TAB>
 
-Just don't pretend you have the power to force a change for a less
-sensible reason than that!
+The problem is that an user may want to show a tree or blog object from
+master:
 
-Hope that helps,
-Jonathan
+    $git show master:git.c
+
+
+A possible solution is to define a new __gitcomp_nospace function and
+use it where appropriate.
+
+Probably the __gitcomp_nospace should be used when git_complete_file is
+called, and __gitcomp_nl should be used when __git_complete_revlist  is
+called, but I'm not sure.
+
+P.S.:
+it seems that __gitcomp_nl is **never** called with 4 arguments.
+
+
+
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlDxrQ8ACgkQscQJ24LbaURHmACfRXoM+uEVDgFUtZFzUcPC5oSZ
+FGsAnAxQf+SN7GrNljxU1io4IuayHmed
+=JRVU
+-----END PGP SIGNATURE-----
