@@ -1,99 +1,122 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] t/lib-cvs: cvsimport no longer works without Python >=
- 2.7
-Date: Sat, 12 Jan 2013 16:27:36 +0100
-Message-ID: <50F180E8.8010907@alum.mit.edu>
-References: <1357875152-19899-1-git-send-email-gitster@pobox.com> <7v62339du4.fsf@alter.siamese.dyndns.org> <7vip72iykx.fsf_-_@alter.siamese.dyndns.org>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
+Date: Sat, 12 Jan 2013 10:47:20 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20130112154719.GA3270@thyrsus.com>
+References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
+ <7v62339du4.fsf@alter.siamese.dyndns.org>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 16:28:04 2013
+X-From: git-owner@vger.kernel.org Sat Jan 12 16:48:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu305-0002bH-FW
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 16:28:01 +0100
+	id 1Tu3JM-0008Np-G8
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 16:47:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762Ab3ALP1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 10:27:41 -0500
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:61344 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753513Ab3ALP1k (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2013 10:27:40 -0500
-X-AuditID: 1207440d-b7f306d0000008b7-b9-50f180ebba5d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 25.E8.02231.BE081F05; Sat, 12 Jan 2013 10:27:39 -0500 (EST)
-Received: from [192.168.69.140] (p57A24728.dip.t-dialin.net [87.162.71.40])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0CFRbDp004109
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 12 Jan 2013 10:27:38 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7vip72iykx.fsf_-_@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqPu64WOAwacmIYurW3wsuq50M1k0
-	9F5hdmD2uHhJ2WPZ104Wj8+b5AKYo7htkhJLyoIz0/P07RK4M6Ye2slYcJWn4snpr+wNjJO4
-	uhg5OSQETCR69s1hg7DFJC7cWw9kc3EICVxmlFjQdZsJwjnNJHF/6iywKl4BbYlzr++wgtgs
-	AqoS968eA7PZBHQlFvU0M4HYogIBEouXnGOHqBeUODnzCQuILSKgJjGx7RCYzSxgI/GsvQHI
-	5uAQFgiU6JxUBrFrBqPEnGXrwOZwClhKvJm5jRWiXkfiXd8DZghbXmL72znMExgFZiFZMQtJ
-	2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWmlG5ihIQu7w7G/+tkDjEK
-	cDAq8fCeCvgQIMSaWFZcmXuIUZKDSUmUt6nuY4AQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd4f
-	JUA53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IE74Z6oEbBotT01Iq0
-	zJwShDQTByfIcC4pkeLUvJTUosTSkox4UKzGFwOjFSTFA7T3Pkg7b3FBYi5QFKL1FKMux/bf
-	7c8ZhVjy8vNSpcR5L4MUCYAUZZTmwa2AJapXjOJAHwvz7gSp4gEmObhJr4CWMAEtOXvhPciS
-	kkSElFQDo56Q/q/7FWczYxoO8T/Kk/nLPVXe0zT/w56M92za/Vu2GX9Y5C30YYJOvuC28EU+
-	p0//47cy9LR15WKI1znF9E8xLezDueefjnzmdrhYrGHKL2FmmvlKw0RotpazzvFy 
+	id S1753541Ab3ALPre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 10:47:34 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:46719
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009Ab3ALPrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 10:47:33 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 36B294065F; Sat, 12 Jan 2013 10:47:20 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v62339du4.fsf@alter.siamese.dyndns.org>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213289>
 
-I have the feeling I'm only seeing one side of this conversation...
+Junio C Hamano <gitster@pobox.com>:
+> And here is what I got:
 
-On 01/12/2013 09:40 AM, Junio C Hamano wrote:
-> The new cvsimport requires at least Python 2.7 to work; do not fail
-> the cvsimport tests on platforms without one.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  Junio C Hamano <gitster@pobox.com> writes:
-> 
->  > http://docs.python.org/2/library/subprocess.html tells me that
->  > check_output has first become available in 2.7.
->  >
->  > So... does this mean that we now set the minimum required version of
->  > Python to 2.7?  I dunno.
+Hm. In my version of these tests, I only have one regression from the
+old combo (in the pathological tags test, t9602).  You're seeing more
+breakage than that, obviously.
 
-It would be unfortunate to set the minimum Python version to 2.7 if "git
-cvsimport" is considered an integral part of git.
+> A funny thing was that without cvsps-3.7 on $PATH (which means I am
+> getting distro packaged cvsps 2.1), I got identical errors.
 
->  Even if we were to rip out the fallback code that uses the 2.7-only
->  subprocess.check_output() on "cvsps -V", the function is also used
->  for doing the real work interacting with cvsps-3.x, so I think this
->  patch will be necessary.  Unless new cvsimport is tweaked not to
->  use the method, that is.
-> 
->  A suggestion for a better alternative is of course very much
->  appreciated.
+That suggests that something in your test setup has gone bad and is
+introducing spurious errors. Which would be consistent with the above.
 
-If the only reason to require Python 2.7 is subprocess.check_output(),
-it would be easy to reimplement it (it is only 12 lines of
-straightforward code, plus a few lines to define the exception type
-CalledProcessError).  According to [1], the Python license is
-GPL-compatible; therefore these lines could even be copied into
-git-cvsimport.
+>                                                     Looking
+> at the log message, it seems that you meant to remove t960[123], so
+> perhaps the patch simply forgot to remove 9601 and 9602?
 
-Michael
+Yes.
+ 
+> As neither test runs "git cvsimport" with -o/-m/-M options, ideally
+> we should be able to pass them with and without having cvsps-3.x.
+> Not passing them without cvsps-3.x would mean that the fallback mode
+> of rewritten cvsimport is not working as expected. Not passing them
+> with cvsps-3.x may mean the tests were expecting a wrong conversion
+> result, or they uncover bugs in the replacement cvsimport.
 
-[1] http://www.gnu.org/licenses/license-list.html#Python
+That's possible, but seems unlikely.  Because the new cvsimport is
+such a thin wrapper around the conversion engine, bugs in it should
+lead to obvious crashes or failure to run the engine rather than the 
+sort of conversion error the t960* tests are designed to check.  Really
+all it does is assemble options to pass to the conversion engines.
 
+My test strategy is aimed at the engine, not the wrapper. I took the
+repos from t960*  and wrote a small Python framework to check the same 
+assertions as the git-tree tests do, but using the engine.  For example,
+here's how my t9602 looks:
+
+import os, cvspstest
+
+cc = cvspstest.ConvertComparison("t9602", "module")
+cc.cmp_branch_tree("test of branch", "master", True)
+cc.cmp_branch_tree("test of branch", "vendorbranch", True)
+cc.cmp_branch_tree("test of branch", "B_FROM_INITIALS", False)
+cc.cmp_branch_tree("test of branch", "B_FROM_INITIALS_BUT_ONE", False)
+cc.cmp_branch_tree("test of branch", "B_MIXED", False)
+cc.cmp_branch_tree("test of branch", "B_SPLIT", True)
+cc.cmp_branch_tree("test of tag", "vendortag", False)
+# This is the only test new cvsps fails that old git-cvsimport passed.
+cc.cmp_branch_tree("test of tag", "T_ALL_INITIAL_FILES", True)
+cc.cmp_branch_tree("test of tag", "T_ALL_INITIAL_FILES_BUT_ONE", False)
+cc.cmp_branch_tree("test of tag", "T_MIXED", False)
+cc.cleanup()
+ 
+> t9600 fails with "-a is no longer supported", even without having
+> cvsps-3.x on the $PATH (i.e. attempting to use the fallback).  I
+> wonder if this is an option the updated cvsimport would want to
+> simply ignore?
+
+Probably.  But I don't think you should keep these tests in the git tree.
+That wasn't a great idea even when you were supporting just one engine;
+with two (and soon three) it's going to be just silly.  Let sanity-checking
+the engines be *my* problem, since I have to do it anyway.
+
+(I'm working towards the generalized test suite as fast as I can.  First
+results probably in four days or so.)
+
+> It is a way to tell the old cvsps/cvsimport to disable its
+> heuristics to ignore commits made within the last 10 minutes (this
+> is done in the hope of waiting for the per-file nature of CVS
+> commits to stabilize, IIUC); the user tells the command that he
+> knows that the CVS repository is now quiescent and it is safe to
+> import the whole thing.
+
+Yes, that's just what -a is supposed to do.  But is should be
+irrelevant for testing - in the test framework CVS is running locally, 
+so there's no network lag.
+
+> So... does this mean that we now set the minimum required version of
+> Python to 2.7?  I dunno.
+
+That would be bad, IMO.  I'll put backporting to 2.6 high on my to-do list.
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
