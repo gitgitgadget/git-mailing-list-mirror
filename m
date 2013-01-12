@@ -1,68 +1,147 @@
-From: Chris Rorvick <chris@rorvick.com>
-Subject: Re: [PATCH v2 0/3] fixup remaining cvsimport tests
-Date: Sat, 12 Jan 2013 01:01:34 -0600
-Message-ID: <CAEUsAPYx3DtUg6sV0PRYjqY8Ss-dwGKoQX7Q7xNKBgGO_KvbeQ@mail.gmail.com>
-References: <1357971703-28513-1-git-send-email-chris@rorvick.com>
-	<7vr4lq9acu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Possible bug in `remote set-url --add --push`
+Date: Fri, 11 Jan 2013 23:10:36 -0800
+Message-ID: <7vliby98r7.fsf@alter.siamese.dyndns.org>
+References: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 08:01:57 2013
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: Jardel Weyrich <jweyrich@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 08:11:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ttv6K-0004fk-IX
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 08:01:56 +0100
+	id 1TtvF7-0002N6-BR
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 08:11:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201Ab3ALHBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 02:01:36 -0500
-Received: from mail-la0-f48.google.com ([209.85.215.48]:33203 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751485Ab3ALHBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 02:01:35 -0500
-Received: by mail-la0-f48.google.com with SMTP id ej20so2402476lab.7
-        for <git@vger.kernel.org>; Fri, 11 Jan 2013 23:01:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=mSw4RSB73VBwBSGIjk5RriLyXi5tAvZLg/7bGBIqpyc=;
-        b=QxKAQdLlJTygk7Gkd9AkHrqMnr0BSiYbE52aokAxkJlIyAQtDUEmmHfW2nZw0Ogbk4
-         4IyIMiWI407jZHDlasmHjFrJ9+KB3iXMQ3b5fhCLKt3uHS6Ad7WBu1QwD2btYdmfu5Lz
-         4cvrMGQk5rlBX9WNtiPHFcO57vIyd/5qxmoK1fIdAYZ6wYM5uAhWFnesj2VHN35FEpSJ
-         g3BSQAqrVgEAClalR23unXWdf9vk0ck8uJL2l92KnpMo2S4FjgEJLu9h/sJuLzVSPIyU
-         uB3APuaGgydCMY7BbQbu4qZFm3Pw3T/9jbSbyCfoa5MjMZcL1/3e9rgo+f9Lhc1hn8Kg
-         rgcQ==
-Received: by 10.152.114.42 with SMTP id jd10mr13282149lab.31.1357974094158;
- Fri, 11 Jan 2013 23:01:34 -0800 (PST)
-Received: by 10.114.94.228 with HTTP; Fri, 11 Jan 2013 23:01:34 -0800 (PST)
-In-Reply-To: <7vr4lq9acu.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: q8E7m--CHi0HjqaaenlrAYMdMQA
+	id S1752192Ab3ALHKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 02:10:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36156 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751582Ab3ALHKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 02:10:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83EF7968E;
+	Sat, 12 Jan 2013 02:10:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3tCdXNlZ9KF5Q/U1EUfcemTyhq4=; b=YyrO2q
+	pmP8cNYhg5CLsf018aaQGXn5dGIDK2NO8dlKxZMmYY5/c5iRSBRukLUcAUmRwwov
+	Bp14XVHnMmSx7UCudfDuR35aSuxB3Ic2qjCfhZgd3XaUbcHP75ZHR744Os4HOuh+
+	qqZUeWujcXu2/34VPoGqDHrqNC7v56UXsk9gk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lLps27wCvtc6sMxSwue6LU1AGBJY5HIK
+	ldAMMqttDOlhrUwcHgPl1rUI1+j3QARLJbE2f+Z4eI05dK3PwpqQe6mVETXs2vF5
+	cY3N7U/i3jiCR0/1gww/1tOTb+9WI5Vi7oNZk1qUjwjnbLFURCWKSgAeHH6i3hmY
+	voHRmiDloRk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7894B968C;
+	Sat, 12 Jan 2013 02:10:38 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1E099687; Sat, 12 Jan 2013
+ 02:10:37 -0500 (EST)
+In-Reply-To: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com> (Jardel
+ Weyrich's message of "Sat, 12 Jan 2013 03:44:25 -0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2A95951A-5C87-11E2-8E2C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213274>
 
-On Sat, Jan 12, 2013 at 12:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I too noticed the droppage of "-a" support, which may not be a big
-> deal (people can drop it from their script, run cvsimport and they
-> can drop newer commits from the resulting Git history to emulate the
-> old behaviour without "-a" that attempted to find a quiescent point
-> if they really want to and suspect that the upstream CVS repository
-> was not quiescent during the import).
+Jardel Weyrich <jweyrich@gmail.com> writes:
 
-Is there any value to -a when fuzz is exposed (-z)?  I mean this is a
-functional sense.  I think there is a lot of value to maintaining the
-interfaces of both cvsimport and cvsps where possible.
+> I believe `remote set-url --add --push` has a bug. Performed tests
+> with v1.8.0.1 and v1.8.1 (Mac OS X).
+>
+> Quoting the relevant part of the documentation:
+>
+>> set-url
+>>     Changes URL remote points to. Sets first URL remote points to matching regex <oldurl> (first URL if no <oldurl> is given) to <newurl>. If <oldurl> doesn’t match any URL, error occurs and nothing is changed.
+>>
+>>     With --push, push URLs are manipulated instead of fetch URLs.
+>>     With --add, instead of changing some URL, new URL is added.
+>>     With --delete, instead of changing some URL, all URLs matching regex <url> are deleted. Trying to delete all non-push URLs is an error.
+>
+> Here are some steps to reproduce:
+>
+> 1. Show the remote URLs
+>
+> jweyrich@pharao:test_clone1 [* master]$ git remote -v
+> origin  /Volumes/sandbox/test (fetch)
+> origin  /Volumes/sandbox/test (push)
+>
+> 2. Add a new push URL for origin
+>
+> jweyrich@pharao:test_clone1 [* master]$ git remote set-url --add --push origin \
+>     /Volumes/sandbox/test_clone2
+>
+> 3. Check what happened
+>
+> jweyrich@pharao:test_clone1 [* master]$ git remote -v
+> origin  /Volumes/sandbox/test (fetch)
+> origin  /Volumes/sandbox/test_clone2 (push)
 
-> Likewise for "-x".  You said "no longer can be told" and that is
-> technically true, but it is more like "no longer need to be told, as
-> stale cache cannot get in the way", so it is probably not a big
-> deal, either, for people to drop it from their script.
+The original pushurl was replaced with the additional one, instead
+of being left and the new one getting added.  That looks certainly
+wrong.
 
-:-)  I originally wrote "need" and then changed it to be clearer on
-why it was being removed.
+However, the result of applying the attached patch (either to
+v1.7.12 or v1.8.1) still passes the test and I do not think it is
+doing anything differently from what you described above.
+
+What do you get from
+
+	git config -l | grep '^remote\.origin'
+
+in steps 1. and 3. in your procedure?  This question is trying to
+tell if your bug is in "git remote -v" or in "git remote set-url".
+
+-- >8 --
+From 0f6cbc67db926e97707ae732b02e790b4604508e Mon Sep 17 00:00:00 2001
+From: Junio C Hamano <gitster@pobox.com>
+Date: Fri, 11 Jan 2013 23:04:16 -0800
+Subject: [PATCH] t5505: adding one pushurl from jweyrich
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5505-remote.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index c03ffdd..b31c5bb 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -901,6 +901,25 @@ test_expect_success 'remote set-url --push --add aaa' '
+ 	cmp expect actual
+ '
+ 
++test_expect_success 'remote set-url --push --add' '
++	git config remote.jweyrich.url /Volumes/sandbox/test &&
++	git config remote.jweyrich.pushurl /Volumes/sandbox/test &&
++	git config remote.jweyrich.fetch "refs/heads/*:refs/remotes/jweyrich/*" &&
++
++	added=/Volumes/sandbox/test_clone2 &&
++	{
++		git config -l | grep "^remote\.jweyrich\." &&
++		echo "remote.jweyrich.pushurl=$added"
++	} | sort >expect &&
++
++	git remote set-url --add --push jweyrich "$added" &&
++	git config -l | grep "^remote\.jweyrich\." | sort >actual &&
++
++	test_cmp expect actual &&
++
++	git remote -v | grep "^jweyrich" # this is just for debugging
++'
++
+ test_expect_success 'remote set-url --push bar aaa' '
+ 	git remote set-url --push someremote bar aaa &&
+ 	echo foo >expect &&
+-- 
+1.8.1.421.g6236851
