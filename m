@@ -1,113 +1,140 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: missing objects -- prevention
-Date: Sat, 12 Jan 2013 08:13:58 -0500
-Message-ID: <20130112131358.GB21875@sigill.intra.peff.net>
-References: <CAMK1S_jpofLRO02XTYryOP98g7rnrJXs7Mh2zvi=SoVUAs0dUw@mail.gmail.com>
- <20130111164202.GB5219@sigill.intra.peff.net>
- <CAMK1S_jN7=Antz-5D7yf0KV8m-YEy93tZP_zziTXPDzbdyjUrw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 14:14:27 2013
+From: Modestas Vainius <modestas@vainius.eu>
+Subject: [PATCH] Support FTP-over-SSL/TLS for regular FTP
+Date: Sat, 12 Jan 2013 15:59:52 +0200
+Message-ID: <1357999192-877-1-git-send-email-modestas@vainius.eu>
+Cc: Modestas Vainius <modestas@vainius.eu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 15:22:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tu0un-00086B-7A
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 14:14:25 +0100
+	id 1Tu1yV-0005jC-PV
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jan 2013 15:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753173Ab3ALNOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 08:14:04 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58874 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752812Ab3ALNOC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 08:14:02 -0500
-Received: (qmail 30099 invoked by uid 107); 12 Jan 2013 13:15:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 12 Jan 2013 08:15:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jan 2013 08:13:58 -0500
-Content-Disposition: inline
-In-Reply-To: <CAMK1S_jN7=Antz-5D7yf0KV8m-YEy93tZP_zziTXPDzbdyjUrw@mail.gmail.com>
+	id S1753573Ab3ALOV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 09:21:59 -0500
+Received: from smtp-q8.skynet.lt ([212.122.94.187]:56890 "EHLO
+	smtp-q3.skynet.lt" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753456Ab3ALOV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 09:21:58 -0500
+X-Greylist: delayed 1310 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Jan 2013 09:21:58 EST
+Received: from nd1.smtpcl1.5ci.lt (nd1.smtpcl1.5ci.lt [212.122.94.182])
+	by smtp-q3.skynet.lt (Postfix) with ESMTP id 9D52561E5CC;
+	Sat, 12 Jan 2013 15:59:54 +0200 (EET)
+Received: from [127.0.0.1] (helo=localhost)
+	by nd1.smtpcl1.5ci.lt with esmtp (Exim 4.77)
+	(envelope-from <modestas@vainius.eu>)
+	id 1Tu1ct-0005kT-R5; Sat, 12 Jan 2013 15:59:59 +0200
+X-Spam-Flag: NO
+X-Spam-Score: 1.274
+X-Spam-Level: *
+X-Spam-Status: No, score=1.274 required=8 tests=[RDNS_NONE=1.274]
+	autolearn=disabled
+Received: from nd1.smtpcl1.5ci.lt ([127.0.0.1])
+	by localhost (nd1.smtpcl1.5ci.lt [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gZxECdYLo1Vt; Sat, 12 Jan 2013 15:59:54 +0200 (EET)
+Received: from [84.240.22.131] (helo=mdxdesktop.lan.vainius.eu)
+	by nd1.smtpcl1.5ci.lt with esmtp (Exim 4.77)
+	(envelope-from <modestas@vainius.eu>)
+	id 1Tu1co-0005kC-7d; Sat, 12 Jan 2013 15:59:54 +0200
+Received: from modax by mdxdesktop.lan.vainius.eu with local (Exim 4.80)
+	(envelope-from <modestas@vainius.eu>)
+	id 1Tu1ct-0000Ek-8D; Sat, 12 Jan 2013 15:59:59 +0200
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213282>
 
-On Sat, Jan 12, 2013 at 06:39:52AM +0530, Sitaram Chamarty wrote:
+Add a boolean http.sslTry option which allows to enable AUTH SSL/TLS and
+encrypted data transfers when connecting via regular FTP protocol.
 
-> >   1. The repo has a ref R pointing at commit X.
-> >
-> >   2. A user starts a push to another ref, Q, of commit Y that builds on
-> >      X. Git advertises ref R, so the sender knows they do not need to
-> >      send X, but only Y. The user then proceeds to send the packfile
-> >      (which might take a very long time).
-> >
-> >   3. Meanwhile, another user deletes ref R. X becomes unreferenced.
-> 
-> The gitolite logs show that no deletion of refs has happened.
+Default is false since it might trigger certificate verification errors on
+misconfigured servers.
 
-To be pedantic, step 3 could also be rewinding R to a commit before X.
-Anything that causes X to become unreferenced.
+Signed-off-by: Modestas Vainius <modestas@vainius.eu>
+---
+ Documentation/config.txt |    8 ++++++++
+ http.c                   |   10 ++++++++++
+ http.h                   |    9 +++++++++
+ 3 files changed, 27 insertions(+)
 
-> > There is a race with simultaneously deleting and packing refs. It
-> > doesn't cause object db corruption, but it will cause refs to "rewind"
-> > back to their packed versions. I have seen that one in practice (though
-> > relatively rare). I fixed it in b3f1280, which is not yet in any
-> > released version.
-> 
-> This is for the packed-refs file right?  And it could result in a ref
-> getting deleted right?
-
-Yes, if the ref was not previously packed, it could result in the ref
-being deleted entirely.
-
-> I said above that the gitolite logs say no ref was deleted.  What if
-> the ref "deletion" happened because of this race, making the rest of
-> your 4-step scenario above possible?
-
-It's possible. I do want to highlight how unlikely it is, though.
-
-> > up in the middle, or fsck rejects the pack). We have historically left
-> 
-> fsck... you mean if I had 'receive.fsckObjects' true, right?  I don't.
->  Should I?  Would it help this overall situation?  As I understand it,
-> thats only about the internals of each object to check corruption, and
-> cannot detect a *missing* object on the local object store.
-
-Right, I meant if you have receive.fsckObjects on. It won't help this
-situation at all, as we already do a connectivity check separate from
-the fsck. But I do recommend it in general, just because it helps catch
-bad objects before they gets disseminated to a wider audience (at which
-point it is often infeasible to rewind history). And it has found git
-bugs (e.g., null sha1s in tree entries).
-
-> > At GitHub, we've taken to just cleaning them up aggressively (I think
-> > after an hour), though I am tempted to put in an optional signal/atexit
-> 
-> OK; I'll do the same then.  I suppose a cron job is the best way; I
-> didn't find any config for expiring these files.
-
-If you run "git prune --expire=1.hour.ago", it should prune stale
-tmp_pack_* files more than an hour old. But you may not be comfortable
-with such a short expiration for the objects themselves. :)
-
-> Thanks again for your help.  I'm going to treat it (for now) as a
-> disk/fs error after hearing from you about the other possibility I
-> mentioned above, although I find it hard to believe one repo can be
-> hit buy *two* races occurring together!
-
-Yeah, the race seems pretty unlikely (though it could be just the one
-race with a rewind). As I said, I haven't actually ever seen it in
-practice. In my experience, though, disk/fs issues do not manifest as
-just missing objects, but as corrupted packfiles (e.g., the packfile
-directory entry ends up pointing to the wrong inode, which is easy to
-see because the inode's content is actually a reflog). And then of
-course with the packfile unreadable, you have missing objects. But YMMV,
-depending on the fs and what's happened to the machine to cause the fs
-problem.
-
--Peff
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d5809e0..1abd161 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1406,6 +1406,14 @@ http.sslCAPath::
+ 	with when fetching or pushing over HTTPS. Can be overridden
+ 	by the 'GIT_SSL_CAPATH' environment variable.
+ 
++http.sslTry::
++	Attempt to use AUTH SSL/TLS and encrypted data transfers
++	when connecting via regular FTP protocol. This might be needed
++	if the FTP server requires it for security reasons or you wish
++	to connect securely whenever remote FTP server supports it.
++	Default is false since it might trigger certificate verification
++	errors on misconfigured servers.
++
+ http.maxRequests::
+ 	How many HTTP requests to launch in parallel. Can be overridden
+ 	by the 'GIT_HTTP_MAX_REQUESTS' environment variable. Default is 5.
+diff --git a/http.c b/http.c
+index 44f3525..d49a3d4 100644
+--- a/http.c
++++ b/http.c
+@@ -30,6 +30,7 @@ static CURL *curl_default;
+ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+ static int curl_ssl_verify = -1;
++static int curl_ssl_try;
+ static const char *ssl_cert;
+ #if LIBCURL_VERSION_NUM >= 0x070903
+ static const char *ssl_key;
+@@ -162,6 +163,10 @@ static int http_options(const char *var, const char *value, void *cb)
+ 			ssl_cert_password_required = 1;
+ 		return 0;
+ 	}
++	if (!strcmp("http.ssltry", var)) {
++		curl_ssl_try = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp("http.minsessions", var)) {
+ 		min_curl_sessions = git_config_int(var, value);
+ #ifndef USE_CURL_MULTI
+@@ -306,6 +311,11 @@ static CURL *get_curl_handle(void)
+ 	if (curl_ftp_no_epsv)
+ 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+ 
++#ifdef CURLOPT_USE_SSL
++    if (curl_ssl_try)
++		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
++#endif
++
+ 	if (curl_http_proxy) {
+ 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+ 		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+diff --git a/http.h b/http.h
+index 0a80d30..f861662 100644
+--- a/http.h
++++ b/http.h
+@@ -42,6 +42,15 @@
+ #define NO_CURL_IOCTL
+ #endif
+ 
++/*
++ * CURLOPT_USE_SSL was known as CURLOPT_FTP_SSL up to 7.16.4,
++ * and the constants were known as CURLFTPSSL_*
++*/
++#if !defined(CURLOPT_USE_SSL) && defined(CURLOPT_FTP_SSL)
++#define CURLOPT_USE_SSL CURLOPT_FTP_SSL
++#define CURLUSESSL_TRY CURLFTPSSL_TRY
++#endif
++
+ struct slot_results {
+ 	CURLcode curl_result;
+ 	long http_code;
+-- 
+1.7.10.4
