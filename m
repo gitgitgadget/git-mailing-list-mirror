@@ -1,102 +1,103 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
-Date: Sun, 13 Jan 2013 11:25:57 +0100
-Message-ID: <50F28BB5.9080607@web.de>
-References: <201301120650.46479.tboegi@web.de> <7vvcb37xfe.fsf@alter.siamese.dyndns.org>
+From: =?windows-1251?B?0fLu6ffuINHr5e/27uI=?= 
+	<stoycho.sleptsov@gmail.com>
+Subject: git list files
+Date: Sun, 13 Jan 2013 14:05:45 +0200
+Message-ID: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 11:39:19 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 13 13:06:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuKy9-0004dw-PN
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 11:39:14 +0100
+	id 1TuMKF-0006Vw-I3
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204Ab3AMK0B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 05:26:01 -0500
-Received: from mout.web.de ([212.227.17.12]:56535 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754197Ab3AMK0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 05:26:00 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MAdol-1TnTvp10bz-00Bx5Z; Sun, 13 Jan 2013 11:25:58
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <7vvcb37xfe.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:UV014b81mA9lh3IBSNGKG05IqcYhP7Ih9+bLPgHGeLb
- IkOSplXjx7F89QZgNPLeEM7Ag4Nal6jxYN0fhuqi8EIn4YtPc9
- sj1tcAF/UZ7UbgACSysiLIYIqq7cqa/N/uEdcTyTe3Lkv2XVTK
- IvQ8LR1oJCONEBa1af2z/1Y7cBmB6E8X+weyqrwb5ocACYq0Q1
- e145Z566QAD6whbNU0SHg==
+	id S1754641Ab3AMMFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 07:05:47 -0500
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:33834 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754635Ab3AMMFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:05:46 -0500
+Received: by mail-lb0-f178.google.com with SMTP id l5so2322052lbo.9
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:05:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=CNKSDzasg//dyPIpemeKoqfIDx/MXN1agTy4nAr6JLY=;
+        b=I4BvquP/eULZ+0+RstyfNWOHa1Sl1ghXsxiSrFIattJwVmjqXwTvhrEzd8uaMf6LL4
+         fidPClfW+d34FsLaz+yzyuBiP71858ZueowemPDe+UTiaORQwDT/B5Nmn1e6HovPaF7h
+         210sME48c7E1YKcP/yBDPXaHh35wD0jbb3RIUYWvksvnVozoq3Z3cndescJGqy6i9f9K
+         GvTwwFrjdQ3G9BoATBZOqcLvCyfbWmYXmEELVcS3EGer+XNuVLdoZ/jItVxErLsTLL7y
+         0/ElFS4379hRSON/FkhXkf0K+m37Zok/mgPgHQOwpIkUo6fMG+7pX8WUkPmv/Kl0utG2
+         lCww==
+Received: by 10.112.86.232 with SMTP id s8mr33706991lbz.86.1358078745096; Sun,
+ 13 Jan 2013 04:05:45 -0800 (PST)
+Received: by 10.112.60.36 with HTTP; Sun, 13 Jan 2013 04:05:45 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213337>
 
-On 12.01.13 07:00, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> The test Makefile has a default set of lint tests which are run
->> as part of "make test".
->>
->> The macro TEST_LINT defaults to "test-lint-duplicates test-lint-exec=
-utable".
->>
->> Add test-lint-shell-syntax here, to detect non-portable shell syntax=
- early.
->>
->> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->> ---
->=20
-> As I said already, I do not want to do this yet without further
-> reduction of false positives.
-Which reinds me that the expression fishing for "which" is really poor.
+Hi,
 
-How about something like the following:
+I was searching for some git- command to provide me a list of files
+(in a git directory), same as ls,
+but showing information from the last commit of the file instead.
 
--- >8 --
-Subject: [PATCH] Reduce false positive in check-non-portable-shell.pl
+lets, say the equivalent of the $ls -d b* within git.git root directory
+would look like:
 
-check-non-portable-shell.pl is using simple regular expressions to
-find illegal shell syntax.
-Improve the expressions and reduce the chance for false positves:
+----------------
+98746061 jrnieder 2010-08-12 17:11 Standardize-do-.-while-0-style   base85.c
+c43cb386 pclouds  2012-10-26 22:53 Move-estimate_bisect_steps-to-li bisect.c
+efc7df45 pclouds  2012-10-26 22:53 Move-print_commit_list-to-libgit bisect.h
+837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla blob.c
+837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla blob.h
+ebcfa444 gitster  2012-07-23 20:56 Merge-branch-jn-block-sha1       block-sha1
+d53a3503 pclouds  2012-06-07 19:05 Remove-i18n-legos-in-notifying-n branch.c
+f9a482e6 peff     2012-03-26 19:51 checkout-suppress-tracking-messa branch.h
+c566ea13 gitster  2013-01-11 18:34 Merge-branch-jc-merge-blobs      builtin
+cf6c52fc gitster  2013-01-10 13:46 Merge-branch-jc-maint-fmt-merge- builtin.h
+568508e7 gitster  2011-10-28 14:48 bulk-checkin-replace-fast-import
+bulk-checkin.c
+568508e7 gitster  2011-10-28 14:48 bulk-checkin-replace-fast-import
+bulk-checkin.h
+8c3710fd gitster  2012-06-04 11:51 tweak-bundle-verify-of-a-complet bundle.c
+b76c561a gitster  2011-10-21 16:04 Merge-branch-jc-unseekable-bundl bundle.h
+----------------
 
-"sed -i" must be followed by 1..n whitespace and 1 non whitespace
-"declare" must be followed by 1..n whitespace and 1 non whitespace
-"echo -n" must be followed by 1..n whitespace and 1 non whitespace
-"which" must be followed by 1..n whitespace, a string, "end of line"
+(pretty the same idea as what we see in github when reviewing a
+repository under the "Files" tab.)
 
+Unfortunately I couldn't find any suitable.
 
+As suggested at http://git-scm.com/community I asked my question at
+the "Git user mailing list on Google Groups which is a nice place for
+beginners to ask about anything",
+and one of the valuable answers was:
 
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell=
-=2Epl
-index 8b5a71d..7151dd6 100755
---- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -16,10 +16,10 @@ sub err {
-=20
- while (<>) {
- 	chomp;
--	/^\s*sed\s+-i/ and err 'sed -i is not portable';
--	/^\s*echo\s+-n/ and err 'echo -n is not portable (please use printf)'=
-;
--	/^\s*declare\s+/ and err 'arrays/declare not portable';
--	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)=
-';
-+	/^\s*sed\s+-i\s+\S/ and err 'sed -i is not portable';
-+	/^\s*echo\s+-n\s+\S/ and err 'echo -n is not portable (please use pri=
-ntf)';
-+	/^\s*declare\s+\S/ and err 'arrays/declare not portable';
-+	/^\s*[^#]\s*which\s+[-a-zA-Z0-9]+$/ and err 'which is not portable (p=
-lease use type)';
- 	/test\s+[^=3D]*=3D=3D/ and err '"test a =3D=3D b" is not portable (pl=
-ease use =3D)';
- 	# this resets our $. for each file
- 	close ARGV if eof;
+"Also I wouldn't hesitate to ask this question on the main Git list as
+this question appears to be hard-core enough to warrant assisting of
+someone knowledgeable about Git internals."
+
+So here I am...
+
+So is there such a command, or I have to build my own script, starting
+from, lets say git-rev-list in addition with some diff?
+
+At the beginning I was hoping that $git rev-list HEAD --no-walk
+--all-match -- <paths> + some git status --porcelain could do the job
+for me,
+but seems git rev-list, same as git log stops at the first found
+matching commit, without to take care that there are still more files
+unsatisfied in the list...
+
+isn't it supposed to satisfy all the files in the list when
+--all-match -- <paths> are given?
+
+Thank you in advance,
+Blind.
