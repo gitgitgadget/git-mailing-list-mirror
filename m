@@ -1,72 +1,118 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git list files
-Date: Sun, 13 Jan 2013 14:28:00 +0100
-Message-ID: <vpqhaml9pr3.fsf@grenoble-inp.fr>
-References: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/8] git_remote_helpers: fix input when running under
+ Python 3
+Date: Sun, 13 Jan 2013 16:17:24 +0000
+Message-ID: <20130113161724.GK4574@serenity.lan>
+References: <cover.1358018078.git.john@keeping.me.uk>
+ <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
+ <50F2296F.8030909@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?0KHRgtC+0LnRh9C+INCh0LvQtdC/0YbQvtCy?= 
-	<stoycho.sleptsov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 14:28:28 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jan 13 17:18:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuNbv-0006an-MB
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 14:28:28 +0100
+	id 1TuQFx-0004er-RC
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 17:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755094Ab3AMN2H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 08:28:07 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:52890 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755082Ab3AMN2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 08:28:06 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r0DDFsBC024375
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 13 Jan 2013 14:15:54 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TuNbU-0005Te-OI; Sun, 13 Jan 2013 14:28:00 +0100
-In-Reply-To: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
-	(=?utf-8?B?ItCh0YLQvtC50YfQviDQodC70LXQv9GG0L7QsiIncw==?= message of "Sun,
- 13 Jan 2013 14:05:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 13 Jan 2013 14:15:55 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r0DDFsBC024375
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1358687756.61048@Hk2E+0YitIbWgTMskWLMxw
+	id S1755179Ab3AMQRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 11:17:38 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:44475 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755061Ab3AMQRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 11:17:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 9F75ECDA5D1;
+	Sun, 13 Jan 2013 16:17:36 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1bIDHCciUDIU; Sun, 13 Jan 2013 16:17:34 +0000 (GMT)
+Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
+	by jackal.aluminati.org (Postfix) with ESMTP id C9519CDA57C;
+	Sun, 13 Jan 2013 16:17:34 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by aardwolf.aluminati.org (Postfix) with ESMTP id 98CAD276DFB;
+	Sun, 13 Jan 2013 16:17:34 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from aardwolf.aluminati.org ([127.0.0.1])
+	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5E63NpErJvRb; Sun, 13 Jan 2013 16:17:34 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by aardwolf.aluminati.org (Postfix) with ESMTPSA id 075CD330872;
+	Sun, 13 Jan 2013 16:17:26 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <50F2296F.8030909@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213384>
 
-=D0=A1=D1=82=D0=BE=D0=B9=D1=87=D0=BE =D0=A1=D0=BB=D0=B5=D0=BF=D1=86=D0=BE=
-=D0=B2 <stoycho.sleptsov@gmail.com> writes:
+On Sun, Jan 13, 2013 at 04:26:39AM +0100, Michael Haggerty wrote:
+> On 01/12/2013 08:23 PM, John Keeping wrote:
+>> Although 2to3 will fix most issues in Python 2 code to make it run under
+>> Python 3, it does not handle the new strict separation between byte
+>> strings and unicode strings.  There is one instance in
+>> git_remote_helpers where we are caught by this.
+>> 
+>> Fix it by explicitly decoding the incoming byte string into a unicode
+>> string.  In this instance, use the locale under which the application is
+>> running.
+>> 
+>> Signed-off-by: John Keeping <john@keeping.me.uk>
+>> ---
+>>  git_remote_helpers/git/importer.py | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+>> index e28cc8f..6814003 100644
+>> --- a/git_remote_helpers/git/importer.py
+>> +++ b/git_remote_helpers/git/importer.py
+>> @@ -20,7 +20,7 @@ class GitImporter(object):
+>>          """Returns a dictionary with refs.
+>>          """
+>>          args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
+>> -        lines = check_output(args).strip().split('\n')
+>> +        lines = check_output(args).decode().strip().split('\n')
+>>          refs = {}
+>>          for line in lines:
+>>              value, name = line.split(' ')
+>> 
+> 
+> Won't this change cause an exception if the branch names are not all
+> valid strings in the current locale's encoding?  I don't see how this
+> assumption is justified (e.g., see git-check-ref-format(1) for the rules
+> governing reference names).
 
-> Hi,
->
-> I was searching for some git- command to provide me a list of files
-> (in a git directory), same as ls,
-> but showing information from the last commit of the file instead.
->
-> lets, say the equivalent of the $ls -d b* within git.git root directo=
-ry
-> would look like:
+Yes it will.  The problem is that for Python 3 we need to decode the
+byte string into a unicode string, which means we need to know what
+encoding it is.
 
-git ls-tree HEAD
+I don't think we can just say "git-for-each-ref will print refs in
+UTF-8" since AFAIK git doesn't care what encoding the refs are in - I
+suspect that's determined by the filesystem which in the end probably
+maps to whatever bytes the shell fed git when the ref was created.
 
-?
+That's why I chose the current locale in this case.  I'm hoping someone
+here will correct me if we can do better, but I don't see any way of
+avoiding choosing some encoding here if we want to support Python 3
+(which I think we will, even if we don't right now).
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+John
