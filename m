@@ -1,89 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git list files
-Date: Sun, 13 Jan 2013 09:56:02 -0800
-Message-ID: <20130113175602.GD5973@elie.Belkin>
-References: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 13 Jan 2013 13:58:32 -0500
+Message-ID: <50F303D8.20709@gmail.com>
+References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org> <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?utf-8?B?0KHRgtC+0LnRh9C+INCh0LvQtdC/0YbQvtCy?= 
-	<stoycho.sleptsov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 18:56:44 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Eric Blake <eblake@redhat.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 13 19:59:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuRnS-0007C3-Su
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 18:56:39 +0100
+	id 1TuSll-0001ZS-LC
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 19:58:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755335Ab3AMR4P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 12:56:15 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:40195 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755208Ab3AMR4L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Jan 2013 12:56:11 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so1834709pad.36
-        for <git@vger.kernel.org>; Sun, 13 Jan 2013 09:56:11 -0800 (PST)
+	id S1755557Ab3AMS6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 13:58:37 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:41098 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755345Ab3AMS6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 13:58:37 -0500
+Received: by mail-qa0-f53.google.com with SMTP id a19so979270qad.19
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 10:58:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=hDtsL4589uq27zMmvNIWtbxONj7G8dMTyoS7ZCzUQRs=;
-        b=GImLpbl8+G/OLS934V7xMF0T6Kpmjsm9+8OEZLW1PMNWCnkKJKLZsnmi5yPn1iA82F
-         dSzF/uTT/lOfThhJNMTkfG705LHEhJp+hMn0n6/qbGjqyUgowfsBsM6BZwuauYE5UZMK
-         74NntOomN3AtXW+2SZPeKPpxZ1ipvnJgI/KglTZAcg3awB8+0QLV8Eve/jz52JlqcIkL
-         pUvslj7l3V+nv+FHzVjguIiCKYocYUREUMfWgn+1vfJobdRxMMBGAcM+22uB2SnrN4oQ
-         NT650yoooLWCI/dcV2wCFKx6m7x6I61c4KTH2s0MoFyseX5W9XDri+sTNBP4oafUV+1N
-         gzSQ==
-X-Received: by 10.68.135.99 with SMTP id pr3mr250146786pbb.151.1358099771050;
-        Sun, 13 Jan 2013 09:56:11 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id s5sm7126333pay.31.2013.01.13.09.56.04
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 13 Jan 2013 09:56:09 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Kf/ehziVIecvO1Yf7CBOUPptgH8Doc1PZwRtpKQXp+s=;
+        b=cKzRqGPLVKth/NDZmX75T0JTEHmW8KGFdQgVgIA04QjfOQuica6rNhSnDNTvWx5yfl
+         /4KGOaxIZ4Or1Clh0wmgGgrcVUnMivQrwGAWqFf5afkIhQZlyK7jlmfl5IkpLWzJJMiE
+         xB1N4Nl8yM0preOE0Lv/cLnFcZQqBhXW4CpgufudUHaDsPy3Ed7x7I6DHb5JgIL8t6tt
+         SYHGDvWpSfLaICQBn5fzxAAFAVl8E7uzLK3HKOpI4XSJBR/TsG40aVORuC+jhbW3guZA
+         MbDr/uafCtAAsOGIO7Pipn/zGwQA/1z4TEqFySi3/8/lQJ/X2JpHpsCBGaQ8Lq6RYe3U
+         2Sbw==
+X-Received: by 10.229.75.200 with SMTP id z8mr16686382qcj.85.1358103516185;
+        Sun, 13 Jan 2013 10:58:36 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-109-151.washdc.fios.verizon.net. [173.79.109.151])
+        by mx.google.com with ESMTPS id j20sm8261974qaj.16.2013.01.13.10.58.33
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 13 Jan 2013 10:58:34 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213395>
 
-Hi,
-
-=D0=A1=D1=82=D0=BE=D0=B9=D1=87=D0=BE =D0=A1=D0=BB=D0=B5=D0=BF=D1=86=D0=BE=
-=D0=B2 wrote:
-
-> lets, say the equivalent of the $ls -d b* within git.git root directo=
-ry
-> would look like:
+On 01/11/2013 03:17 PM, Alex Riesen wrote:
+> On Fri, Jan 11, 2013 at 9:08 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
+>> This short discussion on GitHub (file git-compat-util.h) might be relevant:
+>>
+>> https://github.com/msysgit/git/commit/435bdf8c7ffa493f8f6f2e8f329f8cc22db16ce6#commitcomment-2407194
+>>
+>> The change suggested there (to remove an inclusion of windows.h in
+>> git-compat-util.h) might simplify the solution a little. Might even
+>> remove the need for auto-configuration in Makefile (worked for me).
+> Just to be clear, the change is this:
 >
-> ----------------
-> 98746061 jrnieder 2010-08-12 17:11 Standardize-do-.-while-0-style   b=
-ase85.c
-> c43cb386 pclouds  2012-10-26 22:53 Move-estimate_bisect_steps-to-li b=
-isect.c
-> efc7df45 pclouds  2012-10-26 22:53 Move-print_commit_list-to-libgit b=
-isect.h
-> 837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla b=
-lob.c
-> 837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla b=
-lob.h
-> ebcfa444 gitster  2012-07-23 20:56 Merge-branch-jn-block-sha1       b=
-lock-sha1
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 4a1979f..780a919 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -85,12 +85,6 @@
+>   #define _NETBSD_SOURCE 1
+>   #define _SGI_SOURCE 1
+>
+> -#ifdef WIN32 /* Both MinGW and MSVC */
+> -#define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
+> -#include <winsock2.h>
+> -#include <windows.h>
+> -#endif
+> -
+>   #include <unistd.h>
+>   #include <stdio.h>
+>   #include <sys/stat.h>
+>
+That change alone seems fine, no apparent change building on current 
+cygwin. However, with that change the build still fails if 
+CYGWIN_V15_WIN32API is defined, so unless someone can show the 
+compilation works on cygwin1.5 WITHOUT defining CYGWIN_V15_WIN32API this 
+change does not help. I do not have an older installation available, so 
+cannot test. Frankly, assuming you can compile with that macro defined, 
+I would suggest leaving well enough alone - an unsupported configuration 
+is unsupported :^)
 
-You might like Peff's or Jakub's tree blame script.  The newest version
-I can find is
-
- http://thread.gmane.org/gmane.comp.version-control.git/168323
-
-If you use it, let us know how it goes.
-
-Thanks for some food for thought,
-Jonathan
+Mark
