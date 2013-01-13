@@ -1,115 +1,89 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 3/8] git_remote_helpers: Force rebuild if python version
- changes
-Date: Sun, 13 Jan 2013 17:52:38 +0000
-Message-ID: <20130113175238.GO4574@serenity.lan>
-References: <cover.1358018078.git.john@keeping.me.uk>
- <89f55d20da9a4c0a8490f95107cbf5d04219d0fb.1358018078.git.john@keeping.me.uk>
- <20130112233044.GB23079@padd.com>
- <20130113162605.GL4574@serenity.lan>
- <20130113171402.GA1307@padd.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git list files
+Date: Sun, 13 Jan 2013 09:56:02 -0800
+Message-ID: <20130113175602.GD5973@elie.Belkin>
+References: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 18:53:19 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: =?utf-8?B?0KHRgtC+0LnRh9C+INCh0LvQtdC/0YbQvtCy?= 
+	<stoycho.sleptsov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 13 18:56:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuRk7-0003uN-MK
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 18:53:11 +0100
+	id 1TuRnS-0007C3-Su
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 18:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756113Ab3AMRwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2013 12:52:51 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:52861 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755426Ab3AMRwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 12:52:49 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 5F49B22ED7;
-	Sun, 13 Jan 2013 17:52:49 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZvA1iADPxKmg; Sun, 13 Jan 2013 17:52:48 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id 8FFD622E9E;
-	Sun, 13 Jan 2013 17:52:48 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 78EFD161E550;
-	Sun, 13 Jan 2013 17:52:48 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZIiJY+tJ9ner; Sun, 13 Jan 2013 17:52:48 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id F2F41161E547;
-	Sun, 13 Jan 2013 17:52:40 +0000 (GMT)
+	id S1755335Ab3AMR4P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 12:56:15 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:40195 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755208Ab3AMR4L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Jan 2013 12:56:11 -0500
+Received: by mail-pa0-f49.google.com with SMTP id bi1so1834709pad.36
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 09:56:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=hDtsL4589uq27zMmvNIWtbxONj7G8dMTyoS7ZCzUQRs=;
+        b=GImLpbl8+G/OLS934V7xMF0T6Kpmjsm9+8OEZLW1PMNWCnkKJKLZsnmi5yPn1iA82F
+         dSzF/uTT/lOfThhJNMTkfG705LHEhJp+hMn0n6/qbGjqyUgowfsBsM6BZwuauYE5UZMK
+         74NntOomN3AtXW+2SZPeKPpxZ1ipvnJgI/KglTZAcg3awB8+0QLV8Eve/jz52JlqcIkL
+         pUvslj7l3V+nv+FHzVjguIiCKYocYUREUMfWgn+1vfJobdRxMMBGAcM+22uB2SnrN4oQ
+         NT650yoooLWCI/dcV2wCFKx6m7x6I61c4KTH2s0MoFyseX5W9XDri+sTNBP4oafUV+1N
+         gzSQ==
+X-Received: by 10.68.135.99 with SMTP id pr3mr250146786pbb.151.1358099771050;
+        Sun, 13 Jan 2013 09:56:11 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id s5sm7126333pay.31.2013.01.13.09.56.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 13 Jan 2013 09:56:09 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20130113171402.GA1307@padd.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213394>
 
-On Sun, Jan 13, 2013 at 12:14:02PM -0500, Pete Wyckoff wrote:
-> john@keeping.me.uk wrote on Sun, 13 Jan 2013 16:26 +0000:
->> On Sat, Jan 12, 2013 at 06:30:44PM -0500, Pete Wyckoff wrote:
->> > john@keeping.me.uk wrote on Sat, 12 Jan 2013 19:23 +0000:
->> >> When different version of python are used to build via distutils, the
->> >> behaviour can change.  Detect changes in version and pass --force in
->> >> this case.
->> >[..]
->> >> diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
->> >[..]
->> >> +py_version=$(shell $(PYTHON_PATH) -c \
->> >> +	'import sys; print("%i.%i" % sys.version_info[:2])')
->> >> +
->> >>  all: $(pysetupfile)
->> >> -	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
->> >> +	$(QUIET)test "$$(cat GIT-PYTHON_VERSION 2>/dev/null)" = "$(py_version)" || \
->> >> +	flags=--force; \
->> >> +	$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build $$flags
->> >> +	$(QUIET)echo "$(py_version)" >GIT-PYTHON_VERSION
->> > 
->> > Can you depend on ../GIT-PYTHON-VARS instead?  It comes from
->> > 96a4647 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
->> > It doesn't check version, just path, but hopefully that's good
->> > enough.  I'm imagining a rule that would do "clean" if
->> > ../GIT-PYTHON-VARS changed, then build without --force.
->> 
->> I was trying to keep the git_remote_helpers directory self contained.  I
->> can't see how to depend on ../GIT-PYTHON-VARS in a way that is as simple
->> as this and keeps "make -C git_remote_helpers" working in a clean tree.
->> 
->> Am I missing something obvious here?
-> 
-> Not if it wants to stay self-contained; you're right.
-> 
-> I'm not thrilled with how git_remote_helpers/Makefile always
-> runs setup.py, and always generates PYLIBDIR, and now always
-> invokes python a third time to see if its version changed.
+Hi,
 
-I don't think PYLIBDIR will be calculated unless it's used ('=' not
-':=' means its a deferred variable).
+=D0=A1=D1=82=D0=BE=D0=B9=D1=87=D0=BE =D0=A1=D0=BB=D0=B5=D0=BF=D1=86=D0=BE=
+=D0=B2 wrote:
 
-I wonder if the version check should move into setup.py - it would be
-just as easy to check the file there and massage sys.args, although
-possibly not as neat.
+> lets, say the equivalent of the $ls -d b* within git.git root directo=
+ry
+> would look like:
+>
+> ----------------
+> 98746061 jrnieder 2010-08-12 17:11 Standardize-do-.-while-0-style   b=
+ase85.c
+> c43cb386 pclouds  2012-10-26 22:53 Move-estimate_bisect_steps-to-li b=
+isect.c
+> efc7df45 pclouds  2012-10-26 22:53 Move-print_commit_list-to-libgit b=
+isect.h
+> 837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla b=
+lob.c
+> 837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla b=
+lob.h
+> ebcfa444 gitster  2012-07-23 20:56 Merge-branch-jn-block-sha1       b=
+lock-sha1
 
+You might like Peff's or Jakub's tree blame script.  The newest version
+I can find is
 
-John
+ http://thread.gmane.org/gmane.comp.version-control.git/168323
+
+If you use it, let us know how it goes.
+
+Thanks for some food for thought,
+Jonathan
