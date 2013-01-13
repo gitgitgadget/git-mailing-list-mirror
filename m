@@ -1,129 +1,118 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH/WIP 01/10] pathspec: allow to use alternate char for quoting long magic mnemonic
-Date: Sun, 13 Jan 2013 19:49:30 +0700
-Message-ID: <1358081379-17752-2-git-send-email-pclouds@gmail.com>
-References: <1358081379-17752-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH/WIP 00/10] Fancy pathspec stuff
+Date: Sun, 13 Jan 2013 19:49:29 +0700
+Message-ID: <1358081379-17752-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 13 13:49:59 2013
+X-From: git-owner@vger.kernel.org Sun Jan 13 13:50:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuN0h-0000jJ-87
+	id 1TuN0g-0000jJ-PB
 	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:49:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846Ab3AMMte convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:49:34 -0500
-Received: from mail-da0-f48.google.com ([209.85.210.48]:33464 "EHLO
-	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754761Ab3AMMtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 07:49:33 -0500
-Received: by mail-da0-f48.google.com with SMTP id k18so1419460dae.35
-        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:49:33 -0800 (PST)
+	id S1754807Ab3AMMt1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:49:27 -0500
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:51197 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754761Ab3AMMt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:49:27 -0500
+Received: by mail-pb0-f42.google.com with SMTP id rp2so1703218pbb.15
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:49:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=F7L7lLM//1PNYg+wYUz+UjR+2wKUqvrFWJ6+LNrW6Y4=;
-        b=bqkOGTs/H0etJl6/uhGaXazwGJ+aRouHRN2CqkiSEjo9BdlJ2JWTCDMyzf5uyoSlyY
-         +h315BQJT9dYIHKWOwb4JuTF1Ku7h289xOAbbT9EbPplEEOULi5+wJF8D9Uat+rRLzf9
-         vrQKXeKv2KFRJM3Trhx/WZJlLorBZAV1fUdkPdm5nXCsNraV+l9o8QMst5NvDzWIOwT/
-         fztpE3M1ZHylWXs+7HrttwK7mHDqM93d1HbTRmJiEAZwsxrcZYR+jEPlWw0RrVFgLKpi
-         1/hYwnmdPRyfEFPgfBY7SfkKcMppr7VOypFXoFG6wRNucYt98W+S6HfEHKC+5ksEiV2f
-         NjCw==
-X-Received: by 10.68.212.200 with SMTP id nm8mr249449779pbc.4.1358081373464;
-        Sun, 13 Jan 2013 04:49:33 -0800 (PST)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=qd24pAqk54KYO8lAdVbvOwU2TmT3XLaTfV4lLbnXBsI=;
+        b=Tk6RaKdP3ofFlj27YWasPDNefQKhoBJXTMM8KVYhv1rc3YVv/to7CA9TN6Ea879aKo
+         6i0T9RRdZxgPm5/TfGwTyJyjeJ6zhhmH5DqV9atOCZE6NbkV09Og2v0KXCQRoq4qmB2J
+         d8f0S2i7BGm1p8arw7hfGMtrOn874dMIujuvKluF0zx7bINN8EnfoIsaFuRYwkR6PrfJ
+         zj6T21P1659xa6byOuDRXBPCvHHdKcnqRa+AF35cuPa5fFNhiNRPbXyyreeehBrdJxOY
+         Ff3RYyIQuhwIL5ZEovzhVgC82IlHy3hbUnaMVKVh5t53UmixTX6ANYJZQlxWiaWSZ0xz
+         b/bw==
+X-Received: by 10.66.82.162 with SMTP id j2mr223407061pay.13.1358081366590;
+        Sun, 13 Jan 2013 04:49:26 -0800 (PST)
 Received: from lanh ([115.74.52.72])
-        by mx.google.com with ESMTPS id x2sm6777885paw.8.2013.01.13.04.49.30
+        by mx.google.com with ESMTPS id th10sm3354201pbc.76.2013.01.13.04.49.23
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 13 Jan 2013 04:49:32 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:49:47 +0700
+        Sun, 13 Jan 2013 04:49:25 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:49:40 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
-In-Reply-To: <1358081379-17752-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213373>
 
-Currently use parentheses, e.g. ":(icase,literal)path", but they do
-not play well with unix shells because they have special meaning and
-we need to quote them. Allow an alternate syntax ":q/icase,literal/path=
-".
+I wanted to see how new pathspec feature can be implemented after
+nd/parse-pathspec, mainly to see if nd/parse-pathspec needs fixing.
+It's nowhere near 'pu' quality but may be interesting for some people.
 
-Similar to ed's s/// syntax, '/' can be replaced with anything. If the
-opening quote has a closing counterpart, e.g. () [] <> {}, then it'll
-be quoted as such.
+It does:
 
-It may even be a good thing to kill ':(...)' syntax, which can easily
-be replaced with ':q(...)'. It's unlikely that anybody is used to it
-yet.
+- introduce :q/.../ syntax in addition to :(...), which always
+  requires quoting in bash
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- setup.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+- separate prefix part from the rest of pathspec, allowing it to be
+  treated differently (e.g. prefix is matched exactly regardless
+  pathspec magic)
 
-diff --git a/setup.c b/setup.c
-index 69ca047..9db6093 100644
---- a/setup.c
-+++ b/setup.c
-@@ -196,14 +196,32 @@ static unsigned prefix_pathspec(struct pathspec_i=
-tem *item,
-=20
- 	if (elt[0] !=3D ':') {
- 		; /* nothing to do */
--	} else if (elt[1] =3D=3D '(') {
-+	} else if (elt[1] =3D=3D '(' || elt[1] =3D=3D 'q') {
- 		/* longhand */
- 		const char *nextat;
--		for (copyfrom =3D elt + 2;
--		     *copyfrom && *copyfrom !=3D ')';
-+		char close =3D ')';
-+		char sep[3] =3D ",)";
-+		if (elt[1] =3D=3D '(')
-+			copyfrom =3D elt + 2;
-+		else {
-+			copyfrom =3D elt + 3;
-+			switch (elt[2]) {
-+			case '(': close =3D ')'; break;
-+			case '[': close =3D ']'; break;
-+			case '{': close =3D '}'; break;
-+			case '<': close =3D '>'; break;
-+			case '\0':
-+				die("Invalid pathspec '%s'", elt);
-+			default:
-+				close =3D elt[2];
-+			}
-+			sep[1] =3D close;
-+		}
-+		for (;
-+		     *copyfrom && *copyfrom !=3D close;
- 		     copyfrom =3D nextat) {
--			size_t len =3D strcspn(copyfrom, ",)");
--			if (copyfrom[len] =3D=3D ')')
-+			size_t len =3D strcspn(copyfrom, sep);
-+			if (copyfrom[len] =3D=3D close)
- 				nextat =3D copyfrom + len;
- 			else
- 				nextat =3D copyfrom + len + 1;
-@@ -219,7 +237,7 @@ static unsigned prefix_pathspec(struct pathspec_ite=
-m *item,
- 				die("Invalid pathspec magic '%.*s' in '%s'",
- 				    (int) len, copyfrom, elt);
- 		}
--		if (*copyfrom =3D=3D ')')
-+		if (*copyfrom =3D=3D close)
- 			copyfrom++;
- 	} else {
- 		/* shorthand */
+- implement :(glob) using wildmatch (i.e. incompatible with the
+  wildcards that current pathspec uses)
+
+- implement :(icase) -- with bugs
+
+- implement :(literal), similar to --literal-pathspecs
+
+That's all my spam for today.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
+  pathspec: allow to use alternate char for quoting long magic mnemonic
+  parse_pathspec: make sure the prefix part is wildcard-free
+  pathspec: support :(literal) syntax for noglob pathspec
+  parse_pathspec: save prefix information
+  pathspec: prepare for :(glob)path syntax
+  Enable :(glob)path syntax for a lot of commands
+  parse_pathspec: accept :(icase)path syntax
+  common_prefix/read_directory: treat PATHSPEC_ICASE like wildcards
+  pathspec: support icase in match_pathspec_depth and
+    tree_entry_interesting
+  Enable ls-files and ls-tree for testing PATHSPEC_ICASE
+
+ archive.c                  |  4 ++-
+ builtin/add.c              | 19 +++++++++++---
+ builtin/checkout.c         |  6 ++++-
+ builtin/clean.c            |  6 ++++-
+ builtin/commit.c           | 10 +++++--
+ builtin/diff.c             |  2 +-
+ builtin/grep.c             |  6 ++++-
+ builtin/ls-files.c         |  6 ++++-
+ builtin/ls-tree.c          |  7 ++++-
+ builtin/rerere.c           |  6 ++++-
+ builtin/reset.c            |  6 ++++-
+ builtin/rm.c               |  6 ++++-
+ builtin/update-index.c     |  6 ++++-
+ cache.h                    | 23 +++++++++++++++-
+ dir.c                      | 60 ++++++++++++++++++++++++++++----------=
+----
+ dir.h                      |  8 +++---
+ path.c                     | 15 ++++++++++-
+ revision.c                 |  7 +++--
+ setup.c                    | 65 +++++++++++++++++++++++++++++++++-----=
+--------
+ t/t6130-pathspec-noglob.sh | 18 +++++++++++++
+ t/t6131-pathspec-prefix.sh | 47 +++++++++++++++++++++++++++++++++
+ tree-diff.c                |  2 +-
+ tree-walk.c                | 39 +++++++++++++++++-----------
+ 23 files changed, 295 insertions(+), 79 deletions(-)
+ create mode 100755 t/t6131-pathspec-prefix.sh
+
 --=20
 1.8.0.rc2.23.g1fb49df
