@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH/WIP 05/10] pathspec: prepare for :(glob)path syntax
-Date: Sun, 13 Jan 2013 19:49:34 +0700
-Message-ID: <1358081379-17752-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH/WIP 06/10] Enable :(glob)path syntax for a lot of commands
+Date: Sun, 13 Jan 2013 19:49:35 +0700
+Message-ID: <1358081379-17752-7-git-send-email-pclouds@gmail.com>
 References: <1358081379-17752-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,265 +10,269 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 13 13:50:29 2013
+X-From: git-owner@vger.kernel.org Sun Jan 13 13:50:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuN1A-00015g-Nm
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:50:29 +0100
+	id 1TuN1H-0001Bq-3f
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:50:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754876Ab3AMMuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:50:07 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:49406 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754793Ab3AMMuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 07:50:05 -0500
-Received: by mail-pa0-f52.google.com with SMTP id fb1so1758062pad.25
-        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:50:05 -0800 (PST)
+	id S1754886Ab3AMMuN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:50:13 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:46754 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754793Ab3AMMuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:50:11 -0500
+Received: by mail-pa0-f43.google.com with SMTP id fb10so1767719pad.16
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=231JroXvbeNHgKOQOxaLu4vQA9qlmdMgaj5FdAl+NjM=;
-        b=kconXwwssAtDu15Bv+SsD5bRjMA//CNCjmkMsL9ZvnUi8b4Wu4NcYx+480RCuUw95A
-         QASGSzruHSMhmSShDbobqNFjThWjdy5BSyAJXdjU5RQRZEMweSyp1CLw8491QfdPeZfe
-         qUM3X/8hghGuTlxKFeCMQm4Srehd6NA+JVEBuHW8hNQ8O0X59pJawNv1H66niNZ5VCa5
-         IUgmXJ5c6huCRWTfS+LqYW9qkCUKTILlqAILYYyHhLyYLvQupDy3ubCmUFtsCGTOgewz
-         tPJA8q/edoOMhLjd3z560ubNEVplz5/IrbqpsAFjcqEHDNI5TH3T9ym4M4G719WuALwv
-         nAEA==
-X-Received: by 10.68.247.39 with SMTP id yb7mr248885172pbc.15.1358081405189;
-        Sun, 13 Jan 2013 04:50:05 -0800 (PST)
+        bh=38lKw37QqRJWSNl35lh9dk33ulINyXj2QYDuH/mUkjQ=;
+        b=cOk44xUKqiSQBE4Jn2g9bkTRSOPnmPxo6246nhMvOvtUE+mQPJ5BkrtLfoxbuv2+/Q
+         +b7LAEFtHjWZnrnAlCyKFZNPWr/5D2ryLRqSh8t9F9U8HknKmLX37lWR80ejn00dXs8q
+         Am1g2T+w3nwvT1Ys8T6504ojksCFU9xlGktodNkCzm2vfb8wJHKk1C5aGy7w37s54CrY
+         qzMjOL6ScwV3N4zjo+2tAUlz14uFPBYDKCGiWrTiP66Puf7AMNHtu/ra8W8TVk74nEPf
+         nbfkASQf/P2SItsqaXUoGCIWGnjT2lZ/2yZZmIfF0gDPzkCwFbUm7KMGXQEVyY3KiPMt
+         GZbg==
+X-Received: by 10.68.212.200 with SMTP id nm8mr249453285pbc.4.1358081411368;
+        Sun, 13 Jan 2013 04:50:11 -0800 (PST)
 Received: from lanh ([115.74.52.72])
-        by mx.google.com with ESMTPS id s7sm6779288paz.7.2013.01.13.04.50.01
+        by mx.google.com with ESMTPS id rs7sm6310795pbc.2.2013.01.13.04.50.08
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 13 Jan 2013 04:50:04 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:50:14 +0700
+        Sun, 13 Jan 2013 04:50:10 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:50:26 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1358081379-17752-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213378>
 
-:(glob)path differs from path that it uses wildmatch with
-=46NM_PATHNAME while plain "path" uses fnmatch without FNM_PATHNAME.
-
-git_fnmatch() was probably ill-designed. It was intended to cover
-other use of fnmatch besides pathspec. But so far it's only used by
-pathspec code.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/add.c |  9 +++++++--
- cache.h       |  1 +
- dir.c         | 34 ++++++++++++++++++++++------------
- dir.h         |  8 +++-----
- setup.c       |  1 +
- tree-walk.c   | 11 ++++++-----
- 6 files changed, 40 insertions(+), 24 deletions(-)
+ builtin/add.c          | 4 +++-
+ builtin/checkout.c     | 4 +++-
+ builtin/clean.c        | 4 +++-
+ builtin/commit.c       | 8 ++++++--
+ builtin/grep.c         | 4 +++-
+ builtin/ls-files.c     | 4 +++-
+ builtin/ls-tree.c      | 4 +++-
+ builtin/rerere.c       | 4 +++-
+ builtin/reset.c        | 4 +++-
+ builtin/rm.c           | 4 +++-
+ builtin/update-index.c | 4 +++-
+ revision.c             | 4 +++-
+ 12 files changed, 39 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/add.c b/builtin/add.c
-index d09a07a..1b99e2b 100644
+index 1b99e2b..a3ffa9d 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -416,11 +416,16 @@ int cmd_add(int argc, const char **argv, const ch=
-ar *prefix)
- 		/*
- 		 * file_exists() assumes exact match
- 		 */
--		GUARD_PATHSPEC(&pathspec, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
-+		GUARD_PATHSPEC(&pathspec,
-+			       PATHSPEC_FROMTOP |
-+			       PATHSPEC_LITERAL |
-+			       PATHSPEC_GLOB);
-=20
- 		for (i =3D 0; i < pathspec.nr; i++) {
- 			const char *path =3D pathspec.items[i].match;
--			if (!seen[i] && !file_exists(path)) {
-+			if (!seen[i] &&
-+			    ((pathspec.items[i].magic & PATHSPEC_GLOB) ||
-+			     !file_exists(path))) {
- 				if (ignore_missing) {
- 					int dtype =3D DT_UNKNOWN;
- 					if (is_path_excluded(&check, path, -1, &dtype))
-diff --git a/cache.h b/cache.h
-index fb54876..9c27f18 100644
---- a/cache.h
-+++ b/cache.h
-@@ -479,6 +479,7 @@ extern int ie_modified(const struct index_state *, =
-struct cache_entry *, struct
- /* Pathspec magic */
- #define PATHSPEC_FROMTOP    (1<<0)
- #define PATHSPEC_LITERAL    (1<<1)
-+#define PATHSPEC_GLOB       (1<<2)
-=20
- #define PATHSPEC_ONESTAR 1	/* the pathspec pattern sastisfies GFNM_ONE=
-STAR */
-=20
-diff --git a/dir.c b/dir.c
-index 63d07cd..760b776 100644
---- a/dir.c
-+++ b/dir.c
-@@ -37,26 +37,28 @@ int fnmatch_icase(const char *pattern, const char *=
-string, int flags)
- 	return fnmatch(pattern, string, flags | (ignore_case ? FNM_CASEFOLD :=
- 0));
- }
-=20
--inline int git_fnmatch(const char *pattern, const char *string,
--		       int flags, int prefix)
-+inline int git_fnmatch(const struct pathspec_item *item,
-+		       const char *pattern, const char *string,
-+		       int prefix)
- {
--	int fnm_flags =3D 0;
--	if (flags & GFNM_PATHNAME)
--		fnm_flags |=3D FNM_PATHNAME;
- 	if (prefix > 0) {
- 		if (strncmp(pattern, string, prefix))
- 			return FNM_NOMATCH;
- 		pattern +=3D prefix;
- 		string +=3D prefix;
- 	}
--	if (flags & GFNM_ONESTAR) {
-+	if (item->flags & PATHSPEC_ONESTAR) {
- 		int pattern_len =3D strlen(++pattern);
- 		int string_len =3D strlen(string);
- 		return string_len < pattern_len ||
- 		       strcmp(pattern,
- 			      string + string_len - pattern_len);
- 	}
--	return fnmatch(pattern, string, fnm_flags);
-+	if (item->magic & PATHSPEC_GLOB)
-+		return wildmatch(pattern, string, 0);
-+	else
-+		/* wildmatch has not learned no FNM_PATHNAME mode yet */
-+		return fnmatch(pattern, string, 0);
- }
-=20
- static size_t common_prefix_len(const struct pathspec *pathspec)
-@@ -64,7 +66,10 @@ static size_t common_prefix_len(const struct pathspe=
-c *pathspec)
- 	int n;
- 	size_t max =3D 0;
-=20
--	GUARD_PATHSPEC(pathspec, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
-+	GUARD_PATHSPEC(pathspec,
-+		       PATHSPEC_FROMTOP |
-+		       PATHSPEC_LITERAL |
-+		       PATHSPEC_GLOB);
-=20
- 	for (n =3D 0; n < pathspec->nr; n++) {
- 		size_t i =3D 0, len =3D 0;
-@@ -159,8 +164,7 @@ static int match_pathspec_item(const struct pathspe=
-c_item *item, int prefix,
- 	}
-=20
- 	if (item->nowildcard_len < item->len &&
--	    !git_fnmatch(match, name,
--			 item->flags & PATHSPEC_ONESTAR ? GFNM_ONESTAR : 0,
-+	    !git_fnmatch(item, match, name,
- 			 item->nowildcard_len - prefix))
- 		return MATCHED_FNMATCH;
-=20
-@@ -181,7 +185,10 @@ int match_pathspec_depth(const struct pathspec *ps=
-,
- {
- 	int i, retval =3D 0;
-=20
--	GUARD_PATHSPEC(ps, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
-+	GUARD_PATHSPEC(ps,
-+		       PATHSPEC_FROMTOP |
-+		       PATHSPEC_LITERAL |
-+		       PATHSPEC_GLOB);
-=20
- 	if (!ps->nr) {
- 		if (!ps->recursive || ps->max_depth =3D=3D -1)
-@@ -1230,7 +1237,10 @@ int read_directory(struct dir_struct *dir, const=
- char *path, int len, const stru
- 	 * Check out create_simplify()
+@@ -379,7 +379,9 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+ 	 * below before enabling new magic.
  	 */
- 	if (pathspec)
--		GUARD_PATHSPEC(pathspec, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
-+		GUARD_PATHSPEC(pathspec,
-+			       PATHSPEC_FROMTOP |
-+			       PATHSPEC_LITERAL |
-+			       PATHSPEC_GLOB);
-=20
- 	if (has_symlink_leading_path(path, len))
- 		return dir->nr;
-diff --git a/dir.h b/dir.h
-index a03af80..b6da4b7 100644
---- a/dir.h
-+++ b/dir.h
-@@ -168,10 +168,8 @@ extern int fnmatch_icase(const char *pattern, cons=
-t char *string, int flags);
- /*
-  * The prefix part of pattern must not contains wildcards.
-  */
--#define GFNM_PATHNAME 1		/* similar to FNM_PATHNAME */
--#define GFNM_ONESTAR  2		/* there is only _one_ wildcard, a star */
--
--extern int git_fnmatch(const char *pattern, const char *string,
--		       int flags, int prefix);
-+extern int git_fnmatch(const struct pathspec_item *item,
-+		       const char *pattern, const char *string,
-+		       int prefix);
-=20
- #endif
-diff --git a/setup.c b/setup.c
-index c4af05e..b3e146d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -170,6 +170,7 @@ static struct pathspec_magic {
- } pathspec_magic[] =3D {
- 	{ PATHSPEC_FROMTOP, '/', "top" },
- 	{ PATHSPEC_LITERAL,   0, "literal" },
-+	{ PATHSPEC_GLOB,   '\0', "glob" },
- };
-=20
- /*
-diff --git a/tree-walk.c b/tree-walk.c
-index d4ed51f..1679ce7 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -635,7 +635,10 @@ enum interesting tree_entry_interesting(const stru=
-ct name_entry *entry,
- 	enum interesting never_interesting =3D ps->has_wildcard ?
- 		entry_not_interesting : all_entries_not_interesting;
-=20
--	GUARD_PATHSPEC(ps, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
-+	GUARD_PATHSPEC(ps,
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
 +		       PATHSPEC_FROMTOP |
 +		       PATHSPEC_LITERAL |
-+		       PATHSPEC_GLOB);
++		       PATHSPEC_GLOB,
+ 		       PATHSPEC_SYMLINK_LEADING_PATH |
+ 		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE,
+ 		       prefix, argv);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 90f4a01..cb5d548 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1113,7 +1113,9 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+ 		 * lifted for new magic when opts.patch_mode =3D=3D 0.
+ 		 */
+ 		parse_pathspec(&opts.pathspec,
+-			       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++			       PATHSPEC_FROMTOP |
++			       PATHSPEC_LITERAL |
++			       (opts.patch_mode ? PATHSPEC_GLOB : 0),
+ 			       0, prefix, argv);
 =20
- 	if (!ps->nr) {
- 		if (!ps->recursive || ps->max_depth =3D=3D -1)
-@@ -677,8 +680,7 @@ enum interesting tree_entry_interesting(const struc=
-t name_entry *entry,
- 				return entry_interesting;
+ 		if (!opts.pathspec.nr)
+diff --git a/builtin/clean.c b/builtin/clean.c
+index b4ffa2b..f675d5a 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -101,7 +101,9 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 			    &dir.exclude_list[EXC_CMDL]);
 =20
- 			if (item->nowildcard_len < item->len) {
--				if (!git_fnmatch(match + baselen, entry->path,
--						 item->flags & PATHSPEC_ONESTAR ? GFNM_ONESTAR : 0,
-+				if (!git_fnmatch(item, match + baselen, entry->path,
- 						 item->nowildcard_len - baselen))
- 					return entry_interesting;
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       0, prefix, argv);
 =20
-@@ -719,8 +721,7 @@ match_wildcards:
+ 	fill_directory(&dir, &pathspec);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 433fdb9..743a3ea 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -282,7 +282,9 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix,
+ 	if (is_status)
+ 		refresh_flags |=3D REFRESH_UNMERGED;
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       PATHSPEC_EMPTY_MATCH_ALL,
+ 		       prefix, argv);
 =20
- 		strbuf_add(base, entry->path, pathlen);
+@@ -1205,7 +1207,9 @@ int cmd_status(int argc, const char **argv, const=
+ char *prefix)
+ 	if (show_ignored_in_status)
+ 		s.show_ignored_files =3D 1;
+ 	parse_pathspec(&s.pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       PATHSPEC_EMPTY_MATCH_ALL,
+ 		       prefix, argv);
 =20
--		if (!git_fnmatch(match, base->buf + base_offset,
--				 item->flags & PATHSPEC_ONESTAR ? GFNM_ONESTAR : 0,
-+		if (!git_fnmatch(item, match, base->buf + base_offset,
- 				 item->nowildcard_len)) {
- 			strbuf_setlen(base, base_offset + baselen);
- 			return entry_interesting;
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 4d8e82c..9f1b029 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -857,7 +857,9 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 	}
+=20
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       0, prefix, argv + i);
+ 	pathspec.max_depth =3D opt.max_depth;
+ 	pathspec.recursive =3D 1;
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 1cbd211..feb4220 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -536,7 +536,9 @@ int cmd_ls_files(int argc, const char **argv, const=
+ char *cmd_prefix)
+ 		setup_work_tree();
+=20
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+ 		       prefix, argv);
+=20
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 4764683..25d0590 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -173,7 +173,9 @@ int cmd_ls_tree(int argc, const char **argv, const =
+char *prefix)
+ 	 * match_pathspec_depth() or tree_entry_interesting()
+ 	 */
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       0, prefix, argv + 1);
+ 	for (i =3D 0; i < pathspec.nr; i++)
+ 		pathspec.items[i].nowildcard_len =3D pathspec.items[i].len;
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 779fc77..d64d010 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -72,7 +72,9 @@ int cmd_rerere(int argc, const char **argv, const cha=
+r *prefix)
+ 		if (argc < 2)
+ 			warning("'git rerere forget' without paths is deprecated");
+ 		parse_pathspec(&pathspec,
+-			       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++			       PATHSPEC_FROMTOP |
++			       PATHSPEC_LITERAL |
++			       PATHSPEC_GLOB,
+ 			       0, prefix, argv + 1);
+ 		return rerere_forget(&pathspec);
+ 	}
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 69ce164..f71af9c 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -184,7 +184,9 @@ static int read_from_tree(const char *prefix, const=
+ char **argv,
+=20
+ 	memset(&opt, 0, sizeof(opt));
+ 	parse_pathspec(&opt.pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       0, prefix, argv);
+ 	opt.output_format =3D DIFF_FORMAT_CALLBACK;
+ 	opt.format_callback =3D update_index_from_diff;
+diff --git a/builtin/rm.c b/builtin/rm.c
+index d46f1aa..ff0fd5b 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -250,7 +250,9 @@ int cmd_rm(int argc, const char **argv, const char =
+*prefix)
+ 	}
+=20
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       0, prefix, argv);
+ 	refresh_index(&the_index, REFRESH_QUIET, &pathspec, NULL, NULL);
+=20
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 1dd6178..c456e1b 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -549,7 +549,9 @@ static int do_reupdate(int ac, const char **av,
+ 	struct pathspec pathspec;
+=20
+ 	parse_pathspec(&pathspec,
+-		       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++		       PATHSPEC_FROMTOP |
++		       PATHSPEC_LITERAL |
++		       PATHSPEC_GLOB,
+ 		       0, prefix, av + 1);
+=20
+ 	if (read_ref("HEAD", head_sha1))
+diff --git a/revision.c b/revision.c
+index 079955f..5ac480b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1852,7 +1852,9 @@ int setup_revisions(int argc, const char **argv, =
+struct rev_info *revs, struct s
+ 		ALLOC_GROW(prune_data.path, prune_data.nr+1, prune_data.alloc);
+ 		prune_data.path[prune_data.nr++] =3D NULL;
+ 		parse_pathspec(&revs->prune_data,
+-			       PATHSPEC_FROMTOP | PATHSPEC_LITERAL,
++			       PATHSPEC_FROMTOP |
++			       PATHSPEC_LITERAL |
++			       PATHSPEC_GLOB,
+ 			       0, revs->prefix, prune_data.path);
+ 	}
+=20
 --=20
 1.8.0.rc2.23.g1fb49df
