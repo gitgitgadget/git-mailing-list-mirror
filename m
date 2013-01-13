@@ -1,98 +1,93 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 3/8] git_remote_helpers: Force rebuild if python version
- changes
-Date: Sun, 13 Jan 2013 16:26:05 +0000
-Message-ID: <20130113162605.GL4574@serenity.lan>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 0/8] Initial support for Python 3
+Date: Sun, 13 Jan 2013 11:40:45 -0500
+Message-ID: <20130113164045.GA30371@padd.com>
 References: <cover.1358018078.git.john@keeping.me.uk>
- <89f55d20da9a4c0a8490f95107cbf5d04219d0fb.1358018078.git.john@keeping.me.uk>
- <20130112233044.GB23079@padd.com>
+ <20130112234304.GC23079@padd.com>
+ <20130113004129.GH4574@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 17:26:39 2013
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sebastian Morr <sebastian@morr.cc>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Jan 13 17:41:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuQOM-0003is-UF
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 17:26:39 +0100
+	id 1TuQcP-0007no-FY
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 17:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322Ab3AMQ0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2013 11:26:18 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:45855 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755261Ab3AMQ0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 11:26:17 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 916C122E9E;
-	Sun, 13 Jan 2013 16:26:16 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ifB5H73RH-g7; Sun, 13 Jan 2013 16:26:16 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id AEA4722ED7;
-	Sun, 13 Jan 2013 16:26:15 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 9D0DA161E554;
-	Sun, 13 Jan 2013 16:26:15 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id END8Bv7Ursnf; Sun, 13 Jan 2013 16:26:15 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id D835F161E559;
-	Sun, 13 Jan 2013 16:26:07 +0000 (GMT)
+	id S1755385Ab3AMQkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 11:40:49 -0500
+Received: from honk.padd.com ([74.3.171.149]:44652 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755090Ab3AMQkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 11:40:49 -0500
+Received: from arf.padd.com (50-52-235-227.drr01.drhm.nc.frontiernet.net [50.52.235.227])
+	by honk.padd.com (Postfix) with ESMTPSA id DBE742F3F;
+	Sun, 13 Jan 2013 08:40:47 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 3078A28EBE; Sun, 13 Jan 2013 11:40:45 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20130112233044.GB23079@padd.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20130113004129.GH4574@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213386>
 
-On Sat, Jan 12, 2013 at 06:30:44PM -0500, Pete Wyckoff wrote:
-> john@keeping.me.uk wrote on Sat, 12 Jan 2013 19:23 +0000:
->> When different version of python are used to build via distutils, the
->> behaviour can change.  Detect changes in version and pass --force in
->> this case.
->[..]
->> diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
->[..]
->> +py_version=$(shell $(PYTHON_PATH) -c \
->> +	'import sys; print("%i.%i" % sys.version_info[:2])')
->> +
->>  all: $(pysetupfile)
->> -	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
->> +	$(QUIET)test "$$(cat GIT-PYTHON_VERSION 2>/dev/null)" = "$(py_version)" || \
->> +	flags=--force; \
->> +	$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build $$flags
->> +	$(QUIET)echo "$(py_version)" >GIT-PYTHON_VERSION
+john@keeping.me.uk wrote on Sun, 13 Jan 2013 00:41 +0000:
+> On Sat, Jan 12, 2013 at 06:43:04PM -0500, Pete Wyckoff wrote:
+> > Can you give me some hints about the byte/unicode string issues
+> > in git-p4.py?  There's really only one place that does:
+> > 
+> >     p4 = subprocess.Popen("p4 -G ...")
+> >     marshal.load(p4.stdout)
+> > 
+> > If that's the only issue, this might not be too paniful.
 > 
-> Can you depend on ../GIT-PYTHON-VARS instead?  It comes from
-> 96a4647 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
-> It doesn't check version, just path, but hopefully that's good
-> enough.  I'm imagining a rule that would do "clean" if
-> ../GIT-PYTHON-VARS changed, then build without --force.
+> The problem is that what gets loaded there is a dictionary (encoded by
+> p4) that maps byte strings to byte strings, so all of the accesses to
+> that dictionary need to either:
+> 
+>    1) explicitly call encode() on a string constant
+> or 2) use a byte string constant with a "b" prefix
+> 
+> Or we could re-write the dictionary once, which handles the keys... but
+> some of the values are also used as strings and we can't handle that as
+> a one-off conversion since in other places we really do want the byte
+> string (think content of binary files).
+> 
+> Basically a thorough audit of all access to variables that come from p4
+> would be needed, with explicit decode()s for authors, dates, etc.
 
-I was trying to keep the git_remote_helpers directory self contained.  I
-can't see how to depend on ../GIT-PYTHON-VARS in a way that is as simple
-as this and keeps "make -C git_remote_helpers" working in a clean tree.
+Your auto-conversion snippet in the follow-up mail would work
+fine for most keys and values.  A few perforce docs and some
+playing around convince me that it is mostly utf-8, except for
+file data for particular types.
 
-Am I missing something obvious here?
+I'd still rather handle each command separately, and think about
+the conversions, to do it right in the long run.
 
+> > I hesitated to take Sebastian's changes due to the huge number of
+> > print() lines, but maybe a 2to3 approach would make that aspect
+> > of python3 support not too onerous.
+> 
+> I think we'd want to change to print() eventually and having a single
+> codebase for 2 and 3 would be nicer for development, but I think we need
+> to be able to say "no one is using Python 2.5 or earlier" before we can
+> do that and I'm not sure we're there yet.  From where we are at the
+> moment I think 2to3 is a good answer, particularly where we're already
+> using distutils to generate a release image.
 
-John
+Agreed.  The 2to3 diff is large but straightforward.  But these
+p4 -G interface errors require a lot of thought and work.  I'm
+not too eager to work on this yet.
+
+Thanks.
+
+		-- Pete
