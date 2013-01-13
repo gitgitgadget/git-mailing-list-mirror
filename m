@@ -1,62 +1,98 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: How to setup bash completion for alias of git command
-Date: Sun, 13 Jan 2013 11:13:18 +0800
-Message-ID: <CACSwcnRs3vxm0L4XrD0mUvgmQfz=qQH1yT7fX9kBwODiWcuxzQ@mail.gmail.com>
-References: <CACSwcnQu8Rx83mcGYR6NGzEhoreNR6DfiK876LF7pa9PGm30JA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 2/8] git_remote_helpers: fix input when running under
+ Python 3
+Date: Sun, 13 Jan 2013 04:26:39 +0100
+Message-ID: <50F2296F.8030909@alum.mit.edu>
+References: <cover.1358018078.git.john@keeping.me.uk> <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 13 04:21:59 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Jan 13 04:28:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuE90-0003OX-AR
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 04:21:58 +0100
+	id 1TuEFN-00082K-Ga
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 04:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448Ab3AMDTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 22:19:34 -0500
-Received: from mail-ia0-f176.google.com ([209.85.210.176]:55856 "EHLO
-	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754239Ab3AMDTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2013 22:19:34 -0500
-Received: by mail-ia0-f176.google.com with SMTP id y26so2679905iab.35
-        for <git@vger.kernel.org>; Sat, 12 Jan 2013 19:19:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=eeKLwR5eqg4V0TwA1EPOKoT4Qm29lZde2kHw62v0yy8=;
-        b=ZV0P5jh0QyQWBzDqTmOz7dwHPK5Io0M0E+YNDsDs+0KdEfuP+V0q0tbIrjUwAONB4P
-         Kl7gmmEh8Y20J5UBI6warqD48QsJ3L+jBcl8LAt02kdxQqL8TEm/rBQOhbK2jS2svx+e
-         tctbifl2B1QSCFjvc2p2Xkz5McDonrbjhoI2NRsE5L4iqWbe+cUOtWaMmnITczamODfr
-         0VU7fTYKUw9S4zzhLxrBcq6MFl372R08xTvkYnV67gLYnQD2eg8aMhBiMznJTIgnvHzp
-         8UK+r9Tu25FqbjNe0gvmMMVo+us8P1EandqD4wLPDRPH2eFGOCG8MhivaGXn8RpE3J4T
-         1uuQ==
-Received: by 10.42.49.15 with SMTP id u15mr47895852icf.6.1358046798385; Sat,
- 12 Jan 2013 19:13:18 -0800 (PST)
-Received: by 10.231.133.10 with HTTP; Sat, 12 Jan 2013 19:13:18 -0800 (PST)
-In-Reply-To: <CACSwcnQu8Rx83mcGYR6NGzEhoreNR6DfiK876LF7pa9PGm30JA@mail.gmail.com>
+	id S1754489Ab3AMD0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 22:26:44 -0500
+Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:59952 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754239Ab3AMD0o (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2013 22:26:44 -0500
+X-AuditID: 12074413-b7f786d0000008bb-54-50f229739a96
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id EF.79.02235.37922F05; Sat, 12 Jan 2013 22:26:43 -0500 (EST)
+Received: from [192.168.69.140] (p57A25D0F.dip.t-dialin.net [87.162.93.15])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0D3Qe0m001684
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 12 Jan 2013 22:26:42 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqFus+SnAoH+upMXVLT4WBx/nWXRd
+	6WayuHF+F6vF/BtnGR1YPXbOusvucfbRA2aPZV87WTw+b5ILYInitklKLCkLzkzP07dL4M74
+	vOMQa8F+noq1P04yNTC+4exi5OSQEDCRaHpwlgnCFpO4cG89WxcjF4eQwGVGicnTZjJCOKeZ
+	JDqWfGYHqeIV0JaYePgXG4jNIqAqMetOI1g3m4CuxKKeZjBbVCBAYvGSc1D1ghInZz5hAbFF
+	gOqnfboBFmcWWMYo0XrLAsQWFgiReD5nC9SyJkaJS8uvs3YxcnBwCkRKXDvuCVGvI/Gu7wEz
+	hC0vsf3tHOYJjAKzkKyYhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0
+	UlNKNzFCAlt4B+Ouk3KHGAU4GJV4eGe9+BggxJpYVlyZe4hRkoNJSZSXU+NTgBBfUn5KZUZi
+	cUZ8UWlOavEhRgkOZiUR3hJuoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxW
+	hoNDSYK3DmSoYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChW44uB0QqS4gHaqwPS
+	zltckJgLFIVoPcWoy7H9d/tzRiGWvPy8VClx3hiQIgGQoozSPLgVsDT2ilEc6GNhXj2QKh5g
+	CoSb9ApoCRPQkrMX3oMsKUlESEk1MDoXS284GdDVkpu1U6nAgSMpcur9rTPPP5bmu3SjesFG
+	p1v+gWdfvmBbslX2QvKdWz9O8jyX5DsVV/XMU6r+C0969e3rH942st/6KH51wYeT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213329>
 
-On Sat, Jan 12, 2013 at 10:30 PM, Ping Yin <pkufranky@gmail.com> wrote:
-> Following setup works for me  in ubuntu (10.04,11.04) for a long time
->
-> alias gtlg='git log'
-> complete -o default -o nospace -F _git_log gtlg
->
-> However, in debian (testing, wheezy), it doesn't work
->
-> $ gtlg or<TAB>
-> gtlg or-bash: [: 1: unary operator expected
-> -bash: [: 1: unary operator expected
->
+On 01/12/2013 08:23 PM, John Keeping wrote:
+> Although 2to3 will fix most issues in Python 2 code to make it run under
+> Python 3, it does not handle the new strict separation between byte
+> strings and unicode strings.  There is one instance in
+> git_remote_helpers where we are caught by this.
+> 
+> Fix it by explicitly decoding the incoming byte string into a unicode
+> string.  In this instance, use the locale under which the application is
+> running.
+> 
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  git_remote_helpers/git/importer.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+> index e28cc8f..6814003 100644
+> --- a/git_remote_helpers/git/importer.py
+> +++ b/git_remote_helpers/git/importer.py
+> @@ -20,7 +20,7 @@ class GitImporter(object):
+>          """Returns a dictionary with refs.
+>          """
+>          args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
+> -        lines = check_output(args).strip().split('\n')
+> +        lines = check_output(args).decode().strip().split('\n')
+>          refs = {}
+>          for line in lines:
+>              value, name = line.split(' ')
+> 
 
-with newest git version built with next branch, the same problem remains.
+Won't this change cause an exception if the branch names are not all
+valid strings in the current locale's encoding?  I don't see how this
+assumption is justified (e.g., see git-check-ref-format(1) for the rules
+governing reference names).
 
-Ping Yin
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
