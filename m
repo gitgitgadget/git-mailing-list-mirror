@@ -1,98 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 2/8] git_remote_helpers: fix input when running under
- Python 3
-Date: Sun, 13 Jan 2013 04:26:39 +0100
-Message-ID: <50F2296F.8030909@alum.mit.edu>
-References: <cover.1358018078.git.john@keeping.me.uk> <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
+From: Olivier Delalleau <shish@keba.be>
+Subject: Re: Suggestion: add option in git-p4 to preserve user in Git repository
+Date: Sat, 12 Jan 2013 23:56:06 -0500
+Message-ID: <CAFXk4bp3RRkmEvubvYVRv795-92zn2tMrFJX61CcUQfyG6xB8g@mail.gmail.com>
+References: <CAFXk4bpQo26sAfHkE5_VLi_UkZcgsYvwYNH8byZjuXs=EAhu+A@mail.gmail.com>
+	<20130112163838.GA28722@padd.com>
+	<CAFXk4bpM8X3k=iwRjM9kvm4XbZyKS+hTCiVbHOjH3jK6MkkBSg@mail.gmail.com>
+	<20130112225640.GA23079@padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Jan 13 04:28:34 2013
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Jan 13 05:56:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuEFN-00082K-Ga
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 04:28:33 +0100
+	id 1TuFcZ-0004Xz-7y
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 05:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489Ab3AMD0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2013 22:26:44 -0500
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:59952 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754239Ab3AMD0o (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2013 22:26:44 -0500
-X-AuditID: 12074413-b7f786d0000008bb-54-50f229739a96
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id EF.79.02235.37922F05; Sat, 12 Jan 2013 22:26:43 -0500 (EST)
-Received: from [192.168.69.140] (p57A25D0F.dip.t-dialin.net [87.162.93.15])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0D3Qe0m001684
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 12 Jan 2013 22:26:42 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqFus+SnAoH+upMXVLT4WBx/nWXRd
-	6WayuHF+F6vF/BtnGR1YPXbOusvucfbRA2aPZV87WTw+b5ILYInitklKLCkLzkzP07dL4M74
-	vOMQa8F+noq1P04yNTC+4exi5OSQEDCRaHpwlgnCFpO4cG89WxcjF4eQwGVGicnTZjJCOKeZ
-	JDqWfGYHqeIV0JaYePgXG4jNIqAqMetOI1g3m4CuxKKeZjBbVCBAYvGSc1D1ghInZz5hAbFF
-	gOqnfboBFmcWWMYo0XrLAsQWFgiReD5nC9SyJkaJS8uvs3YxcnBwCkRKXDvuCVGvI/Gu7wEz
-	hC0vsf3tHOYJjAKzkKyYhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0
-	UlNKNzFCAlt4B+Ouk3KHGAU4GJV4eGe9+BggxJpYVlyZe4hRkoNJSZSXU+NTgBBfUn5KZUZi
-	cUZ8UWlOavEhRgkOZiUR3hJuoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxW
-	hoNDSYK3DmSoYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChW44uB0QqS4gHaqwPS
-	zltckJgLFIVoPcWoy7H9d/tzRiGWvPy8VClx3hiQIgGQoozSPLgVsDT2ilEc6GNhXj2QKh5g
-	CoSb9ApoCRPQkrMX3oMsKUlESEk1MDoXS284GdDVkpu1U6nAgSMpcur9rTPPP5bmu3SjesFG
-	p1v+gWdfvmBbslX2QvKdWz9O8jyX5DsVV/XMU6r+C0969e3rH942st/6KH51wYeT 
+	id S1754784Ab3AME4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2013 23:56:08 -0500
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:45727 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754637Ab3AME4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2013 23:56:07 -0500
+Received: by mail-oa0-f49.google.com with SMTP id l10so3016693oag.22
+        for <git@vger.kernel.org>; Sat, 12 Jan 2013 20:56:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=NUqGlXqPkxUQk4uFCGJ0ohb3qu8NPLO03Wlnr0rf3+0=;
+        b=DxN6/EaoBs3Ump3PLbJO3Y3JfrdBMASj3GyBRwngOcLW4WdRtQJbTcZibJ4hjfTKj+
+         V4xqp8mz+0vHaDry0GOEXEsFb7lV7UWVGH0ZGqrqibvsJ+lqNa6jjgJKhg66YflQQSHI
+         Ef9PXPWee6IeJdPTk4i6K1GI5if+P8ZsqSfGGvlyXajheMCEblVPv3EVaBfRf/2VTXDy
+         287E9euI/5XjimVxWLf5eMmURg8+4sqD7Y1XF/UIyEGiKAqU4XCdLdVmrs5vxX4iWAXq
+         bM5mrE0XP2dAFiFDgKwQ/8tXDVUGnnaQhyzN5jXx3Kjv9msgAk2GZl7gWZ4LB/8uHoKN
+         toyg==
+Received: by 10.182.216.38 with SMTP id on6mr5990208obc.65.1358052966712; Sat,
+ 12 Jan 2013 20:56:06 -0800 (PST)
+Received: by 10.76.28.69 with HTTP; Sat, 12 Jan 2013 20:56:06 -0800 (PST)
+In-Reply-To: <20130112225640.GA23079@padd.com>
+X-Google-Sender-Auth: dr3WJf3E-Yt5c0TN8vlLAoM96Dc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213330>
 
-On 01/12/2013 08:23 PM, John Keeping wrote:
-> Although 2to3 will fix most issues in Python 2 code to make it run under
-> Python 3, it does not handle the new strict separation between byte
-> strings and unicode strings.  There is one instance in
-> git_remote_helpers where we are caught by this.
-> 
-> Fix it by explicitly decoding the incoming byte string into a unicode
-> string.  In this instance, use the locale under which the application is
-> running.
-> 
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
->  git_remote_helpers/git/importer.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
-> index e28cc8f..6814003 100644
-> --- a/git_remote_helpers/git/importer.py
-> +++ b/git_remote_helpers/git/importer.py
-> @@ -20,7 +20,7 @@ class GitImporter(object):
->          """Returns a dictionary with refs.
->          """
->          args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
-> -        lines = check_output(args).strip().split('\n')
-> +        lines = check_output(args).decode().strip().split('\n')
->          refs = {}
->          for line in lines:
->              value, name = line.split(' ')
-> 
+2013/1/12 Pete Wyckoff <pw@padd.com>:
+> shish@keba.be wrote on Sat, 12 Jan 2013 14:44 -0500:
+>> 2013/1/12 Pete Wyckoff <pw@padd.com>:
+>> > shish@keba.be wrote on Thu, 10 Jan 2013 22:38 -0500:
+>> >> I'm in a situation where I don't have P4 admin rights to use the
+>> >> --preserve-user option of git-p4. However, I would like to keep user
+>> >> information in the associated Git branch.
+>> >>
+>> >> Would it be possible to add an option for this?
+>> >
+>> > The --preserve-user option is used to submit somebody else's work
+>> > from git to p4.  It does "p4 change -f" to edit the author of the
+>> > change after it has been submitted to p4.  P4 requires admin
+>> > privileges to do that.
+>> >
+>> > Changes that are imported _from_ p4 to git do have the correct
+>> > author information.
+>> >
+>> > Can you explain a bit more what you're looking for?
+>>
+>> Sorry I wasn't clear enough. When "git p4 submit" submits changes from
+>> Git to P4, it also edits the Git history and replaces the Git commits'
+>> authors by the information from the Perforce account submitting the
+>> changes. The advantage is that both the P4 and Git repositories share
+>> the same author information, but in my case I would like to keep in
+>> the Git repository the original authors (because the P4 account I'm
+>> using to submit to P4 is shared by all Git users).
+>
+> Ah, I see what you're looking for now.  It's certainly possible
+> to keep a mapping in the git side to remember who really wrote
+> each change that went into p4, but there's nothing set up to do
+> that now.  And it would be a fair amount of work, with many
+> little details.
+>
+> You could put the true name in the commit message, like
+> we do signed-off-by messages: "Author: Real Coder <rc@my.com>".
+> That would keep the proper attribution, but not work with "git
+> log --author", e.g.; you'd have to use "--grep='Real Coder'"
+> instead.
 
-Won't this change cause an exception if the branch names are not all
-valid strings in the current locale's encoding?  I don't see how this
-assumption is justified (e.g., see git-check-ref-format(1) for the rules
-governing reference names).
+Ok, thanks. I actually manage to hack my way around it, restoring the
+author information with "git filter-branch" and overriding the remote
+p4 tracking branch with "git update-ref". Did some limited testing and
+it seems to work -- hopefully I won't have nasty surprises down the
+road ;)
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-=- Olivier
