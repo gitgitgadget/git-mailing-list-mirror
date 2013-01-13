@@ -1,33 +1,33 @@
 From: Aaron Schrab <aaron@schrab.com>
-Subject: [PATCH v2 1/3] hooks: Add function to check if a hook exists
-Date: Sun, 13 Jan 2013 00:17:02 -0500
-Message-ID: <1358054224-7710-2-git-send-email-aaron@schrab.com>
+Subject: [PATCH v2 2/3] push: Add support for pre-push hooks
+Date: Sun, 13 Jan 2013 00:17:03 -0500
+Message-ID: <1358054224-7710-3-git-send-email-aaron@schrab.com>
 References: <1358054224-7710-1-git-send-email-aaron@schrab.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 13 06:18:26 2013
+X-From: git-owner@vger.kernel.org Sun Jan 13 06:18:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuFxf-0003DG-7C
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 06:18:23 +0100
+	id 1TuFyA-0003db-0q
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 06:18:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045Ab3AMFRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2013 00:17:55 -0500
-Received: from pug.qqx.org ([50.116.43.67]:36677 "EHLO pug.qqx.org"
+	id S1750988Ab3AMFSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 00:18:33 -0500
+Received: from pug.qqx.org ([50.116.43.67]:36689 "EHLO pug.qqx.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750956Ab3AMFRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 00:17:55 -0500
+	id S1750746Ab3AMFSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 00:18:33 -0500
 Received: from zim.qqx.org (cpe-107-015-024-243.nc.res.rr.com [107.15.24.243])
-	by pug.qqx.org (Postfix) with ESMTPSA id A6F331D2D7
-	for <git@vger.kernel.org>; Sun, 13 Jan 2013 00:17:54 -0500 (EST)
+	by pug.qqx.org (Postfix) with ESMTPSA id 769141D0C0
+	for <git@vger.kernel.org>; Sun, 13 Jan 2013 00:18:32 -0500 (EST)
 Received: from ats (uid 1000)
 	(envelope-from aaron@schrab.com)
 	id 401f0
 	by zim.qqx.org (DragonFly Mail Agent);
-	Sun, 13 Jan 2013 00:17:54 -0500
+	Sun, 13 Jan 2013 00:18:31 -0500
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1358054224-7710-1-git-send-email-aaron@schrab.com>
 In-Reply-To: <1356735452-21667-1-git-send-email-aaron@schrab.com>
@@ -36,200 +36,310 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213333>
 
-Create find_hook() function to determine if a given hook exists and is
-executable.  If it is, the path to the script will be returned,
-otherwise NULL is returned.
+Add support for a pre-push hook which can be used to determine if the
+set of refs to be pushed is suitable for the target repository.  The
+hook is run with two arguments specifying the name and location of the
+destination repository.
 
-This encapsulates the tests that are used to check for the existence of
-a hook in one place, making it easier to modify those checks if that is
-found to be necessary.  This also makes it simple for places that can
-use a hook to check if a hook exists before doing, possibly lengthy,
-setup work which would be pointless if no such hook is present.
+Information about what is to be pushed is provided by sending lines of
+the following form to the hook's standard input:
 
-The returned value is left as a static value from get_pathname() rather
-than a duplicate because it is anticipated that the return value will
-either be used as a boolean, immediately added to an argv_array list
-which would result in it being duplicated at that point, or used to
-actually run the command without much intervening work.  Callers which
-need to hold onto the returned value for a longer time are expected to
-duplicate the return value themselves.
+  <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
+
+If the hook exits with a non-zero status, the push will be aborted.
+
+This will allow the script to determine if the push is acceptable based
+on the target repository and branch(es), the commits which are to be
+pushed, and even the source branches in some cases.
 
 Signed-off-by: Aaron Schrab <aaron@schrab.com>
 ---
- builtin/commit.c       |  6 ++----
- builtin/receive-pack.c | 25 +++++++++++--------------
- run-command.c          | 15 +++++++++++++--
- run-command.h          |  1 +
- 4 files changed, 27 insertions(+), 20 deletions(-)
+ Documentation/githooks.txt |  29 ++++++++++
+ builtin/push.c             |   1 +
+ t/t5571-pre-push-hook.sh   | 129 +++++++++++++++++++++++++++++++++++++++++++++
+ transport.c                |  60 +++++++++++++++++++++
+ transport.h                |   1 +
+ 5 files changed, 220 insertions(+)
+ create mode 100755 t/t5571-pre-push-hook.sh
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d6dd3df..65d08d2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1327,8 +1327,6 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 	return git_status_config(k, v, s);
- }
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index b9003fe..d839233 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -176,6 +176,35 @@ save and restore any form of metadata associated with the working tree
+ (eg: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
+ for an example of how to do this.
  
--static const char post_rewrite_hook[] = "hooks/post-rewrite";
--
- static int run_rewrite_hook(const unsigned char *oldsha1,
- 			    const unsigned char *newsha1)
- {
-@@ -1339,10 +1337,10 @@ static int run_rewrite_hook(const unsigned char *oldsha1,
- 	int code;
- 	size_t n;
- 
--	if (access(git_path(post_rewrite_hook), X_OK) < 0)
-+	argv[0] = find_hook("post-rewrite");
-+	if (!argv[0])
- 		return 0;
- 
--	argv[0] = git_path(post_rewrite_hook);
- 	argv[1] = "amend";
- 	argv[2] = NULL;
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ff781fe..e8878de 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -182,9 +182,6 @@ struct command {
- 	char ref_name[FLEX_ARRAY]; /* more */
- };
- 
--static const char pre_receive_hook[] = "hooks/pre-receive";
--static const char post_receive_hook[] = "hooks/post-receive";
--
- static void rp_error(const char *err, ...) __attribute__((format (printf, 1, 2)));
- static void rp_warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
- 
-@@ -242,10 +239,10 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed, void *feed_sta
- 	const char *argv[2];
- 	int code;
- 
--	if (access(hook_name, X_OK) < 0)
-+	argv[0] = find_hook(hook_name);
-+	if (!argv[0])
- 		return 0;
- 
--	argv[0] = hook_name;
- 	argv[1] = NULL;
- 
- 	memset(&proc, 0, sizeof(proc));
-@@ -331,15 +328,14 @@ static int run_receive_hook(struct command *commands, const char *hook_name,
- 
- static int run_update_hook(struct command *cmd)
- {
--	static const char update_hook[] = "hooks/update";
- 	const char *argv[5];
- 	struct child_process proc;
- 	int code;
- 
--	if (access(update_hook, X_OK) < 0)
-+	argv[0] = find_hook("update");
-+	if (!argv[0])
- 		return 0;
- 
--	argv[0] = update_hook;
- 	argv[1] = cmd->ref_name;
- 	argv[2] = sha1_to_hex(cmd->old_sha1);
- 	argv[3] = sha1_to_hex(cmd->new_sha1);
-@@ -532,24 +528,25 @@ static const char *update(struct command *cmd)
- 	}
- }
- 
--static char update_post_hook[] = "hooks/post-update";
--
- static void run_update_post_hook(struct command *commands)
- {
- 	struct command *cmd;
- 	int argc;
- 	const char **argv;
- 	struct child_process proc;
-+	char *hook;
- 
-+	hook = find_hook("post-update");
- 	for (argc = 0, cmd = commands; cmd; cmd = cmd->next) {
- 		if (cmd->error_string || cmd->did_not_exist)
- 			continue;
- 		argc++;
- 	}
--	if (!argc || access(update_post_hook, X_OK) < 0)
-+	if (!argc || !hook)
- 		return;
++pre-push
++~~~~~~~~
 +
- 	argv = xmalloc(sizeof(*argv) * (2 + argc));
--	argv[0] = update_post_hook;
-+	argv[0] = hook;
++This hook is called by 'git push' and can be used to prevent a push from taking
++place.  The hook is called with two parameters which provide the name and
++location of the destination remote, if a named remote is not being used both
++values will be the same.
++
++Information about what is to be pushed is provided on the hook's standard
++input with lines of the form:
++
++  <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
++
++For instance, if the command +git push origin master:foreign+ were run the
++hook would receive a line like the following:
++
++  refs/heads/master 67890 refs/heads/foreign 12345
++
++although the full, 40-character SHA1s would be supplied.  If the foreign ref
++does not yet exist the `<remote SHA1>` will be 40 `0`.  If a ref is to be
++deleted, the `<local ref>` will be supplied as `(delete)` and the `<local
++SHA1>` will be 40 `0`.  If the local commit was specified by something other
++than a name which could be expanded (such as `HEAD~`, or a SHA1) it will be
++supplied as it was originally given.
++
++If this hook exits with a non-zero status, 'git push' will abort without
++pushing anything.  Information about why the push is rejected may be sent
++to the user by writing to standard error.
++
+ [[pre-receive]]
+ pre-receive
+ ~~~~~~~~~~~
+diff --git a/builtin/push.c b/builtin/push.c
+index 8491e43..b158028 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -407,6 +407,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
+ 		OPT_BIT(0, "prune", &flags, N_("prune locally removed refs"),
+ 			TRANSPORT_PUSH_PRUNE),
++		OPT_BIT(0, "no-verify", &flags, N_("bypass pre-push hook"), TRANSPORT_PUSH_NO_HOOK),
+ 		OPT_END()
+ 	};
  
- 	for (argc = 1, cmd = commands; cmd; cmd = cmd->next) {
- 		char *p;
-@@ -704,7 +701,7 @@ static void execute_commands(struct command *commands, const char *unpacker_erro
- 				       0, &cmd))
- 		set_connectivity_errors(commands);
- 
--	if (run_receive_hook(commands, pre_receive_hook, 0)) {
-+	if (run_receive_hook(commands, "pre-receive", 0)) {
- 		for (cmd = commands; cmd; cmd = cmd->next) {
- 			if (!cmd->error_string)
- 				cmd->error_string = "pre-receive hook declined";
-@@ -994,7 +991,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 			unlink_or_warn(pack_lockfile);
- 		if (report_status)
- 			report(commands, unpack_status);
--		run_receive_hook(commands, post_receive_hook, 1);
-+		run_receive_hook(commands, "post-receive", 1);
- 		run_update_post_hook(commands);
- 		if (auto_gc) {
- 			const char *argv_gc_auto[] = {
-diff --git a/run-command.c b/run-command.c
-index 0471219..12d4ddb 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -735,6 +735,15 @@ int finish_async(struct async *async)
- #endif
+diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
+new file mode 100755
+index 0000000..d68fed7
+--- /dev/null
++++ b/t/t5571-pre-push-hook.sh
+@@ -0,0 +1,129 @@
++#!/bin/sh
++
++test_description='check pre-push hooks'
++. ./test-lib.sh
++
++# Setup hook that always succeeds
++HOOKDIR="$(git rev-parse --git-dir)/hooks"
++HOOK="$HOOKDIR/pre-push"
++mkdir -p "$HOOKDIR"
++write_script "$HOOK" <<EOF
++exit 0
++EOF
++
++test_expect_success 'setup' '
++	git config push.default upstream &&
++	git init --bare repo1 &&
++	git remote add parent1 repo1 &&
++	test_commit one &&
++	git push parent1 HEAD:foreign
++'
++write_script "$HOOK" <<EOF
++exit 1
++EOF
++
++COMMIT1="$(git rev-parse HEAD)"
++export COMMIT1
++
++test_expect_success 'push with failing hook' '
++	test_commit two &&
++	test_must_fail git push parent1 HEAD
++'
++
++test_expect_success '--no-verify bypasses hook' '
++	git push --no-verify parent1 HEAD
++'
++
++COMMIT2="$(git rev-parse HEAD)"
++export COMMIT2
++
++write_script "$HOOK" <<'EOF'
++echo "$1" >actual
++echo "$2" >>actual
++cat >>actual
++EOF
++
++cat >expected <<EOF
++parent1
++repo1
++refs/heads/master $COMMIT2 refs/heads/foreign $COMMIT1
++EOF
++
++test_expect_success 'push with hook' '
++	git push parent1 master:foreign &&
++	diff expected actual
++'
++
++test_expect_success 'add a branch' '
++	git checkout -b other parent1/foreign &&
++	test_commit three
++'
++
++COMMIT3="$(git rev-parse HEAD)"
++export COMMIT3
++
++cat >expected <<EOF
++parent1
++repo1
++refs/heads/other $COMMIT3 refs/heads/foreign $COMMIT2
++EOF
++
++test_expect_success 'push to default' '
++	git push &&
++	diff expected actual
++'
++
++cat >expected <<EOF
++parent1
++repo1
++refs/tags/one $COMMIT1 refs/tags/tag1 $_z40
++HEAD~ $COMMIT2 refs/heads/prev $_z40
++EOF
++
++test_expect_success 'push non-branches' '
++	git push parent1 one:tag1 HEAD~:refs/heads/prev &&
++	diff expected actual
++'
++
++cat >expected <<EOF
++parent1
++repo1
++(delete) $_z40 refs/heads/prev $COMMIT2
++EOF
++
++test_expect_success 'push delete' '
++	git push parent1 :prev &&
++	diff expected actual
++'
++
++cat >expected <<EOF
++repo1
++repo1
++HEAD $COMMIT3 refs/heads/other $_z40
++EOF
++
++test_expect_success 'push to URL' '
++	git push repo1 HEAD &&
++	diff expected actual
++'
++
++# Test that filling pipe buffers doesn't cause failure
++# Too slow to leave enabled for general use
++if false
++then
++	printf 'parent1\nrepo1\n' >expected
++	nr=1000
++	while test $nr -lt 2000
++	do
++		nr=$(( $nr + 1 ))
++		git branch b/$nr $COMMIT3
++		echo "refs/heads/b/$nr $COMMIT3 refs/heads/b/$nr $_z40" >>expected
++	done
++
++	test_expect_success 'push many refs' '
++		git push parent1 "refs/heads/b/*:refs/heads/b/*" &&
++		diff expected actual
++	'
++fi
++
++test_done
+diff --git a/transport.c b/transport.c
+index 2673d27..0750a5f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1034,6 +1034,62 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ 	die("Aborting.");
  }
  
-+char *find_hook(const char *name)
++static int run_pre_push_hook(struct transport *transport,
++			     struct ref *remote_refs)
 +{
-+	char *path = git_path("hooks/%s", name);
-+	if (access(path, X_OK) < 0)
-+		path = NULL;
++	int ret = 0, x;
++	struct ref *r;
++	struct child_process proc;
++	struct strbuf buf;
++	const char *argv[4];
 +
-+	return path;
++	if (!(argv[0] = find_hook("pre-push")))
++		return 0;
++
++	argv[1] = transport->remote->name;
++	argv[2] = transport->url;
++	argv[3] = NULL;
++
++	memset(&proc, 0, sizeof(proc));
++	proc.argv = argv;
++	proc.in = -1;
++
++	if (start_command(&proc)) {
++		finish_command(&proc);
++		return -1;
++	}
++
++	strbuf_init(&buf, 256);
++
++	for (r = remote_refs; r; r = r->next) {
++		if (!r->peer_ref) continue;
++		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
++		if (r->status == REF_STATUS_UPTODATE) continue;
++
++		strbuf_reset(&buf);
++		strbuf_addf( &buf, "%s %s %s %s\n",
++			 r->peer_ref->name, sha1_to_hex(r->new_sha1),
++			 r->name, sha1_to_hex(r->old_sha1));
++
++		if (write_in_full(proc.in, buf.buf, buf.len) != buf.len) {
++			ret = -1;
++			break;
++		}
++	}
++
++	strbuf_release(&buf);
++
++	x = close(proc.in);
++	if (!ret)
++		ret = x;
++
++	x = finish_command(&proc);
++	if (!ret)
++		ret = x;
++
++	return ret;
 +}
 +
- int run_hook(const char *index_file, const char *name, ...)
- {
- 	struct child_process hook;
-@@ -744,11 +753,13 @@ int run_hook(const char *index_file, const char *name, ...)
- 	va_list args;
- 	int ret;
+ int transport_push(struct transport *transport,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   unsigned int *reject_reasons)
+@@ -1074,6 +1130,10 @@ int transport_push(struct transport *transport,
+ 			flags & TRANSPORT_PUSH_MIRROR,
+ 			flags & TRANSPORT_PUSH_FORCE);
  
--	if (access(git_path("hooks/%s", name), X_OK) < 0)
-+	p = find_hook(name);
-+	if (!p)
- 		return 0;
- 
-+	argv_array_push(&argv, p);
++		if (!(flags & TRANSPORT_PUSH_NO_HOOK))
++			if (run_pre_push_hook(transport, remote_refs))
++				return -1;
 +
- 	va_start(args, name);
--	argv_array_push(&argv, git_path("hooks/%s", name));
- 	while ((p = va_arg(args, const char *)))
- 		argv_array_push(&argv, p);
- 	va_end(args);
-diff --git a/run-command.h b/run-command.h
-index 850c638..221ce33 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -45,6 +45,7 @@ int start_command(struct child_process *);
- int finish_command(struct child_process *);
- int run_command(struct child_process *);
+ 		if ((flags & TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND) && !is_bare_repository()) {
+ 			struct ref *ref = remote_refs;
+ 			for (; ref; ref = ref->next)
+diff --git a/transport.h b/transport.h
+index bfd2df5..ac5a9f5 100644
+--- a/transport.h
++++ b/transport.h
+@@ -104,6 +104,7 @@ struct transport {
+ #define TRANSPORT_RECURSE_SUBMODULES_CHECK 64
+ #define TRANSPORT_PUSH_PRUNE 128
+ #define TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND 256
++#define TRANSPORT_PUSH_NO_HOOK 512
  
-+extern char *find_hook(const char *name);
- extern int run_hook(const char *index_file, const char *name, ...);
- 
- #define RUN_COMMAND_NO_STDIN 1
+ #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
+ #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
 -- 
 1.8.1.340.g425b78d
