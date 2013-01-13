@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 25/31] Convert add_files_to_cache to take struct pathspec
-Date: Sun, 13 Jan 2013 19:35:33 +0700
-Message-ID: <1358080539-17436-26-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 24/31] Convert {read,fill}_directory to take struct pathspec
+Date: Sun, 13 Jan 2013 19:35:32 +0700
+Message-ID: <1358080539-17436-25-git-send-email-pclouds@gmail.com>
 References: <1358080539-17436-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,114 +17,211 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuMq2-0008D4-Pg
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:38:59 +0100
+	id 1TuMpw-000890-Ii
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:38:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755166Ab3AMMii convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:38:38 -0500
-Received: from mail-da0-f48.google.com ([209.85.210.48]:61726 "EHLO
-	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754807Ab3AMMih (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 07:38:37 -0500
-Received: by mail-da0-f48.google.com with SMTP id k18so1431559dae.7
-        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:38:37 -0800 (PST)
+	id S1755194Ab3AMMic convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:38:32 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:39717 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755185Ab3AMMib (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:38:31 -0500
+Received: by mail-pa0-f43.google.com with SMTP id fb10so1755054pad.2
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:38:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=RV0Sp8d0zraoRVIlnHSusrS2d+dg/Coc6ojmCcY3cIk=;
-        b=WqlqC/idpqCoqoiDHNTO9fQRvYhKrAV8BI4DMLxZi4yqVbVRSQOV8AI9a9uN3JdhuB
-         NVwf+wLwRThSkVUofPkhDqSD45KW+sYBr5EZOAkqIZMgrxZPTJux5WkpCSlB+RSWFLIq
-         F7YeXX4HKpBf7vDv7FLVSkjiZ9V1iE639yxezURTzzrq24NC8lc7MS3cKxuqsVDvxXgs
-         TRud7id8bqtoLYqA4Va1GiTuKfY9f0P1+MnKL2ah0skMpJbm8sGRG7Xd1KPXm00gJEY0
-         iyTx+PHoGuU9HQk37G2JkGuRv3f1J2S8+ro27/uVxQaBcYJx0069dPptc5GQjx8YnU0v
-         MPug==
-X-Received: by 10.68.243.105 with SMTP id wx9mr71203400pbc.74.1358080717523;
-        Sun, 13 Jan 2013 04:38:37 -0800 (PST)
+        bh=OKmRBDzmu/oUyFoadxhRfya2Gk5Whq55JLg8mzscU2k=;
+        b=Ob6VCMCWbrQLzffvNT39FAPS0QCVVt8VFKSx5x69A1JFhBSH+PD0xSIb90YGAd/j7+
+         /khSwWEziKPeqUxHL3mMlQJH4pIvlRz8CF2yhTnP5poabAQbXLPWJTo7t4xcseJW2HsQ
+         u6toClKujbrOmCWrq8xS0SvYs7F3ioBzaqnOYHhgCWSFjRjdcy3bhg9crr7VimZ26Fem
+         P8PWuj4o5qNsvfkFnG82ZZ+MVC0bDuq/BegusyLsNiJmUPxssPtsHrqhXZ9JhfY2XDG1
+         fBBMAOScXIsXMha3pS3cMg70IJvV0pdyvzMY5jVz4Jp9mW49Qr5C+KX7rjxpJWxSdT4v
+         qgCw==
+X-Received: by 10.68.204.103 with SMTP id kx7mr246961115pbc.33.1358080711061;
+        Sun, 13 Jan 2013 04:38:31 -0800 (PST)
 Received: from lanh ([115.74.52.72])
-        by mx.google.com with ESMTPS id x6sm2428373paw.0.2013.01.13.04.38.34
+        by mx.google.com with ESMTPS id ir4sm6290658pbc.41.2013.01.13.04.38.27
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 13 Jan 2013 04:38:36 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:38:52 +0700
+        Sun, 13 Jan 2013 04:38:30 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:38:45 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1358080539-17436-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213365>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/add.c    | 8 +++++---
- builtin/commit.c | 2 +-
- cache.h          | 2 +-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ builtin/add.c      |  2 +-
+ builtin/clean.c    |  2 +-
+ builtin/grep.c     |  2 +-
+ builtin/ls-files.c |  2 +-
+ dir.c              | 16 +++++++++++-----
+ dir.h              |  4 ++--
+ wt-status.c        |  4 ++--
+ 7 files changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/add.c b/builtin/add.c
-index dcea98f..89ae67d 100644
+index 7069b77..dcea98f 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -80,13 +80,15 @@ static void update_callback(struct diff_queue_struc=
-t *q,
+@@ -397,7 +397,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+ 		}
+=20
+ 		/* This picks up the paths that are not tracked */
+-		baselen =3D fill_directory(&dir, pathspec.raw);
++		baselen =3D fill_directory(&dir, &pathspec);
+ 		if (pathspec.nr)
+ 			seen =3D prune_directory(&dir, pathspec.raw, baselen);
  	}
+diff --git a/builtin/clean.c b/builtin/clean.c
+index fb0fe9a..1d8ff5f 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -102,7 +102,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 	parse_pathspec(&pathspec, PATHSPEC_FROMTOP, 0, prefix, argv);
+=20
+-	fill_directory(&dir, pathspec.raw);
++	fill_directory(&dir, &pathspec);
+=20
+ 	for (i =3D 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent =3D dir.entries[i];
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 705f9ff..f370bad 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -522,7 +522,7 @@ static int grep_directory(struct grep_opt *opt, con=
+st struct pathspec *pathspec,
+ 	if (exc_std)
+ 		setup_standard_excludes(&dir);
+=20
+-	fill_directory(&dir, pathspec->raw);
++	fill_directory(&dir, pathspec);
+ 	for (i =3D 0; i < dir.nr; i++) {
+ 		const char *name =3D dir.entries[i]->name;
+ 		int namelen =3D strlen(name);
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 4bf3238..9655cc5 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -216,7 +216,7 @@ static void show_files(struct dir_struct *dir)
+=20
+ 	/* For cached/deleted files we don't need to even do the readdir */
+ 	if (show_others || show_killed) {
+-		fill_directory(dir, pathspec.raw);
++		fill_directory(dir, &pathspec);
+ 		if (show_others)
+ 			show_other_files(dir);
+ 		if (show_killed)
+diff --git a/dir.c b/dir.c
+index 37280c8..6657b02 100644
+--- a/dir.c
++++ b/dir.c
+@@ -98,7 +98,7 @@ char *common_prefix(const char **pathspec)
+ 	return len ? xmemdupz(*pathspec, len) : NULL;
  }
 =20
--int add_files_to_cache(const char *prefix, const char **pathspec, int =
-flags)
-+int add_files_to_cache(const char *prefix,
-+		       const struct pathspec *pathspec, int flags)
+-int fill_directory(struct dir_struct *dir, const char **pathspec)
++int fill_directory(struct dir_struct *dir, const struct pathspec *path=
+spec)
  {
- 	struct update_callback_data data;
- 	struct rev_info rev;
- 	init_revisions(&rev, prefix);
- 	setup_revisions(0, NULL, &rev, NULL);
--	init_pathspec(&rev.prune_data, pathspec);
-+	if (pathspec)
-+		copy_pathspec(&rev.prune_data, pathspec);
- 	rev.diffopt.output_format =3D DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback =3D update_callback;
- 	data.flags =3D flags;
-@@ -438,7 +440,7 @@ int cmd_add(int argc, const char **argv, const char=
- *prefix)
+ 	size_t len;
 =20
- 	plug_bulk_checkin();
-=20
--	exit_status |=3D add_files_to_cache(prefix, pathspec.raw, flags);
-+	exit_status |=3D add_files_to_cache(prefix, &pathspec, flags);
-=20
- 	if (add_new_files)
- 		exit_status |=3D add_files(&dir, flags);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2fe6054..d79613d 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -329,7 +329,7 @@ static char *prepare_index(int argc, const char **a=
-rgv, const char *prefix,
+@@ -106,10 +106,10 @@ int fill_directory(struct dir_struct *dir, const =
+char **pathspec)
+ 	 * Calculate common prefix for the pathspec, and
+ 	 * use that to optimize the directory walk
  	 */
- 	if (all || (also && pathspec.nr)) {
- 		fd =3D hold_locked_index(&index_lock, 1);
--		add_files_to_cache(also ? prefix : NULL, pathspec.raw, 0);
-+		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
- 		refresh_cache_or_die(refresh_flags);
- 		update_main_cache_tree(WRITE_TREE_SILENT);
- 		if (write_cache(fd, active_cache, active_nr) ||
-diff --git a/cache.h b/cache.h
-index 803cfeb..f7afb19 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1255,7 +1255,7 @@ void packet_trace_identity(const char *prog);
-  * return 0 if success, 1 - if addition of a file failed and
-  * ADD_FILES_IGNORE_ERRORS was specified in flags
-  */
--int add_files_to_cache(const char *prefix, const char **pathspec, int =
-flags);
-+int add_files_to_cache(const char *prefix, const struct pathspec *path=
-spec, int flags);
+-	len =3D common_prefix_len(pathspec);
++	len =3D common_prefix_len(pathspec->raw);
 =20
- /* diff.c */
- extern int diff_auto_refresh_index;
+ 	/* Read the directory and prune it */
+-	read_directory(dir, pathspec ? *pathspec : "", len, pathspec);
++	read_directory(dir, pathspec->nr ? pathspec->raw[0] : "", len, pathsp=
+ec);
+ 	return len;
+ }
+=20
+@@ -1323,14 +1323,20 @@ static int treat_leading_path(struct dir_struct=
+ *dir,
+ 	return rc;
+ }
+=20
+-int read_directory(struct dir_struct *dir, const char *path, int len, =
+const char **pathspec)
++int read_directory(struct dir_struct *dir, const char *path, int len, =
+const struct pathspec *pathspec)
+ {
+ 	struct path_simplify *simplify;
+=20
++	/*
++	 * Check out create_simplify()
++	 */
++	if (pathspec)
++		GUARD_PATHSPEC(pathspec, PATHSPEC_FROMTOP);
++
+ 	if (has_symlink_leading_path(path, len))
+ 		return dir->nr;
+=20
+-	simplify =3D create_simplify(pathspec);
++	simplify =3D create_simplify(pathspec ? pathspec->raw : NULL);
+ 	if (!len || treat_leading_path(dir, path, len, simplify))
+ 		read_directory_recursive(dir, path, len, 0, simplify);
+ 	free_simplify(simplify);
+diff --git a/dir.h b/dir.h
+index 0cf5ccf..36bb4dd 100644
+--- a/dir.h
++++ b/dir.h
+@@ -97,8 +97,8 @@ extern int match_pathspec_depth(const struct pathspec=
+ *pathspec,
+ 				int prefix, char *seen);
+ extern int within_depth(const char *name, int namelen, int depth, int =
+max_depth);
+=20
+-extern int fill_directory(struct dir_struct *dir, const char **pathspe=
+c);
+-extern int read_directory(struct dir_struct *, const char *path, int l=
+en, const char **pathspec);
++extern int fill_directory(struct dir_struct *dir, const struct pathspe=
+c *pathspec);
++extern int read_directory(struct dir_struct *, const char *path, int l=
+en, const struct pathspec *pathspec);
+=20
+ extern int is_excluded_from_list(const char *pathname, int pathlen, co=
+nst char *basename,
+ 				 int *dtype, struct exclude_list *el);
+diff --git a/wt-status.c b/wt-status.c
+index 76edadc..c5b979e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -502,7 +502,7 @@ static void wt_status_collect_untracked(struct wt_s=
+tatus *s)
+ 			DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+ 	setup_standard_excludes(&dir);
+=20
+-	fill_directory(&dir, s->pathspec.raw);
++	fill_directory(&dir, &s->pathspec);
+ 	for (i =3D 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent =3D dir.entries[i];
+ 		if (cache_name_is_other(ent->name, ent->len) &&
+@@ -514,7 +514,7 @@ static void wt_status_collect_untracked(struct wt_s=
+tatus *s)
+ 	if (s->show_ignored_files) {
+ 		dir.nr =3D 0;
+ 		dir.flags =3D DIR_SHOW_IGNORED | DIR_SHOW_OTHER_DIRECTORIES;
+-		fill_directory(&dir, s->pathspec.raw);
++		fill_directory(&dir, &s->pathspec);
+ 		for (i =3D 0; i < dir.nr; i++) {
+ 			struct dir_entry *ent =3D dir.entries[i];
+ 			if (cache_name_is_other(ent->name, ent->len) &&
 --=20
 1.8.0.rc2.23.g1fb49df
