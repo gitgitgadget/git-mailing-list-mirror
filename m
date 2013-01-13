@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 06/31] Guard against new pathspec magic in pathspec matching code
-Date: Sun, 13 Jan 2013 19:35:14 +0700
-Message-ID: <1358080539-17436-7-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 07/31] clean: convert to use parse_pathspec
+Date: Sun, 13 Jan 2013 19:35:15 +0700
+Message-ID: <1358080539-17436-8-git-send-email-pclouds@gmail.com>
 References: <1358080539-17436-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,168 +11,106 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 13 13:36:38 2013
+X-From: git-owner@vger.kernel.org Sun Jan 13 13:36:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuMnj-00066K-Lv
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:36:35 +0100
+	id 1TuMnq-00069I-RE
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:36:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755020Ab3AMMgP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:36:15 -0500
-Received: from mail-da0-f47.google.com ([209.85.210.47]:35148 "EHLO
-	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754979Ab3AMMgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 07:36:15 -0500
-Received: by mail-da0-f47.google.com with SMTP id s35so1417397dak.34
-        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:36:14 -0800 (PST)
+	id S1755001Ab3AMMgX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 07:36:23 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:55162 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755022Ab3AMMgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:36:22 -0500
+Received: by mail-pb0-f53.google.com with SMTP id jt11so1691674pbb.12
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:36:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=thY+vS8qB02vas9TONbpAFVZ7/5K3x0e5+PpF9cOH+8=;
-        b=rU7SSXMEB5kwuCeiaj+yC5t5R3gnpCmAR2T4ziZ8Mv5lCN5BIg4lHfFIJVwX/1TDuo
-         MiAHXUd/71O8/nHq9YkDgGSS9nUAGxu4HBETrNrREM7QqaG9EJxTQY3krhfgQdQC8Ral
-         5Rwh5Q+idnt5Ygew1UBdwMIl5TLwO5Pg35JLh9EVQmBchaWahiz5yBi5baEKPGZdag+8
-         Nxyiq00cK7RxbEBHOjixMMWjCH6zZ1pMvIouR2kAAXSexAOYvC/IgraV0YPSlG21G+4t
-         BAsgHjbx8Vunh0juetnrihbd4mw7sDw9umMEz+9rebfBvXRtwypxII29MIGrLr3Qp1T6
-         zfLQ==
-X-Received: by 10.66.79.97 with SMTP id i1mr41929668pax.47.1358080574407;
-        Sun, 13 Jan 2013 04:36:14 -0800 (PST)
+        bh=vY466Wag6w7uAIa/txfuTVa02s7VMGLwFpWSwfiEmCo=;
+        b=kVWn97yvesK9C2uDi25+VftxqdkUBu6921+u4qMuDbLqNXHuBzuA612M1SURsIjKcX
+         0Q4Kd9KJ1vGhj8Y7Y5KW8ZhMuUT6Z1u3cdMUz8ghqSGmChkoIMjLDO76WWOAKxDUpGql
+         5ZLOoWgnd98BQEbkMg1FIGnbZG7BkhpI5LpacpC21aUAENaXwnFQDKEmCihuquF3nmQk
+         W8RCjuYhb32y+1uaDawfExihtfNSfF1vE1czFRqBR4qkPAv50Z+4X3Hho7KaS2P6ARvP
+         fiYiW+WDmvIGA6jiZ13jS1EwDtttg6XYl7JON5vyooP3+lYCL7X21J5fvA0VdupsamNh
+         iz/g==
+X-Received: by 10.68.238.165 with SMTP id vl5mr247570163pbc.0.1358080582044;
+        Sun, 13 Jan 2013 04:36:22 -0800 (PST)
 Received: from lanh ([115.74.52.72])
-        by mx.google.com with ESMTPS id d8sm6753763pax.23.2013.01.13.04.36.11
+        by mx.google.com with ESMTPS id wg3sm6290206pbc.28.2013.01.13.04.36.18
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 13 Jan 2013 04:36:13 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:36:23 +0700
+        Sun, 13 Jan 2013 04:36:21 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jan 2013 19:36:35 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1358080539-17436-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213347>
 
-GUARD_PATHSPEC() marks pathspec-sensitive code (basically anything in
-'struct pathspec' except fields "nr" and "original"). GUARD_PATHSPEC()
-is not supposed to fail. The steps for a new pathspec magic or
-optimization would be:
-
- - update parse_pathspec, add extra information to struct pathspec
-
- - grep GUARD_PATHSPEC() and update all relevant code (or note those
-   that won't work with your new stuff). Update GUARD_PATHSPEC mask
-   accordingly.
-
- - update parse_pathspec calls to allow new magic. Make sure
-   parse_pathspec() catches unsupported syntax early, not until
-   GUARD_PATHSPEC catches it.
-
- - add tests to verify supported/unsupported commands both work as
-   expected.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/diff.c |  2 ++
- cache.h        |  7 +++++++
- dir.c          |  2 ++
- tree-diff.c    | 19 +++++++++++++++++++
- tree-walk.c    |  2 ++
- 5 files changed, 32 insertions(+)
+ builtin/clean.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 8c2af6c..d237e0a 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -371,6 +371,8 @@ int cmd_diff(int argc, const char **argv, const cha=
-r *prefix)
- 		die(_("unhandled object '%s' given."), name);
- 	}
- 	if (rev.prune_data.nr) {
-+		/* builtin_diff_b_f() */
-+		GUARD_PATHSPEC(&rev.prune_data, PATHSPEC_FROMTOP);
- 		if (!path)
- 			path =3D rev.prune_data.items[0].match;
- 		paths +=3D rev.prune_data.nr;
-diff --git a/cache.h b/cache.h
-index 858c7e4..1f51423 100644
---- a/cache.h
-+++ b/cache.h
-@@ -496,6 +496,13 @@ struct pathspec {
- 	} *items;
- };
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 4cdabe0..fb0fe9a 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -42,7 +42,7 @@ int cmd_clean(int argc, const char **argv, const char=
+ *prefix)
+ 	int rm_flags =3D REMOVE_DIR_KEEP_NESTED_GIT;
+ 	struct strbuf directory =3D STRBUF_INIT;
+ 	struct dir_struct dir;
+-	static const char **pathspec;
++	struct pathspec pathspec;
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	struct string_list exclude_list =3D STRING_LIST_INIT_NODUP;
+ 	const char *qname;
+@@ -100,9 +100,9 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 		add_exclude(exclude_list.items[i].string, "", 0,
+ 			    &dir.exclude_list[EXC_CMDL]);
 =20
-+#define GUARD_PATHSPEC(ps, mask) \
-+	do { \
-+		if ((ps)->magic & ~(mask))	       \
-+			die("BUG:%s:%d: unsupported magic %x",	\
-+			    __FILE__, __LINE__, (ps)->magic & ~(mask)); \
-+	} while (0)
-+
- extern int init_pathspec(struct pathspec *, const char **);
- extern void parse_pathspec(struct pathspec *pathspec, unsigned magic_m=
-ask,
- 			   unsigned flags, const char *prefix,
-diff --git a/dir.c b/dir.c
-index beb7532..37280c8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -282,6 +282,8 @@ int match_pathspec_depth(const struct pathspec *ps,
- {
- 	int i, retval =3D 0;
+-	pathspec =3D get_pathspec(prefix, argv);
++	parse_pathspec(&pathspec, PATHSPEC_FROMTOP, 0, prefix, argv);
 =20
-+	GUARD_PATHSPEC(ps, PATHSPEC_FROMTOP);
-+
- 	if (!ps->nr) {
- 		if (!ps->recursive || ps->max_depth =3D=3D -1)
- 			return MATCHED_RECURSIVELY;
-diff --git a/tree-diff.c b/tree-diff.c
-index ba01563..68a9e7c 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -199,6 +199,25 @@ static void try_to_follow_renames(struct tree_desc=
- *t1, struct tree_desc *t2, co
- 	const char *paths[1];
- 	int i;
+-	fill_directory(&dir, pathspec);
++	fill_directory(&dir, pathspec.raw);
 =20
-+	/*
-+	 * follow-rename code is very specific, we need exactly one
-+	 * path. Magic that matches more than one path is not
-+	 * supported.
-+	 */
-+	GUARD_PATHSPEC(&opt->pathspec, PATHSPEC_FROMTOP);
-+#if 0
-+	/*
-+	 * We should reject wildcards as well. Unfortunately we
-+	 * haven't got a reliable way to detect that 'foo\*bar' in
-+	 * fact has no wildcards. nowildcard_len is merely a hint for
-+	 * optimization. Let it slip for now until wildmatch is taught
-+	 * about dry-run mode and returns wildcard info.
-+	 */
-+	if (opt->pathspec.has_wildcard)
-+		die("BUG:%s:%d: wildcards are not supported",
-+		    __FILE__, __LINE__);
-+#endif
-+
- 	/* Remove the file creation entry from the diff queue, and remember i=
-t */
- 	choice =3D q->queue[0];
- 	q->nr =3D 0;
-diff --git a/tree-walk.c b/tree-walk.c
-index 6e30ef9..dd03750 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -635,6 +635,8 @@ enum interesting tree_entry_interesting(const struc=
-t name_entry *entry,
- 	enum interesting never_interesting =3D ps->has_wildcard ?
- 		entry_not_interesting : all_entries_not_interesting;
+ 	for (i =3D 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent =3D dir.entries[i];
+@@ -137,9 +137,9 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 		if (lstat(ent->name, &st))
+ 			continue;
 =20
-+	GUARD_PATHSPEC(ps, PATHSPEC_FROMTOP);
-+
- 	if (!ps->nr) {
- 		if (!ps->recursive || ps->max_depth =3D=3D -1)
- 			return all_entries_interesting;
+-		if (pathspec)
+-			matches =3D match_pathspec(pathspec, ent->name, len,
+-						 0, NULL);
++		if (pathspec.nr)
++			matches =3D match_pathspec_depth(&pathspec, ent->name,
++						       len, 0, NULL);
+=20
+ 		if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addstr(&directory, ent->name);
+@@ -163,7 +163,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 			}
+ 			strbuf_reset(&directory);
+ 		} else {
+-			if (pathspec && !matches)
++			if (pathspec.nr && !matches)
+ 				continue;
+ 			qname =3D quote_path_relative(ent->name, -1, &buf, prefix);
+ 			if (show_only) {
 --=20
 1.8.0.rc2.23.g1fb49df
