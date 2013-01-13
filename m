@@ -1,103 +1,78 @@
-From: =?windows-1251?B?0fLu6ffuINHr5e/27uI=?= 
-	<stoycho.sleptsov@gmail.com>
-Subject: git list files
-Date: Sun, 13 Jan 2013 14:05:45 +0200
-Message-ID: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: missing objects -- prevention
+Date: Sun, 13 Jan 2013 07:30:36 -0500
+Message-ID: <20130113123036.GA498@sigill.intra.peff.net>
+References: <CAMK1S_jpofLRO02XTYryOP98g7rnrJXs7Mh2zvi=SoVUAs0dUw@mail.gmail.com>
+ <20130111164202.GB5219@sigill.intra.peff.net>
+ <CAMK1S_jN7=Antz-5D7yf0KV8m-YEy93tZP_zziTXPDzbdyjUrw@mail.gmail.com>
+ <20130112131358.GB21875@sigill.intra.peff.net>
+ <CAMK1S_iKARYqi_Dv90og0No7NN=WxFg+ixmRvnkvfdrcOi1r=Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 13 13:06:08 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 13 13:31:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuMKF-0006Vw-I3
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:06:07 +0100
+	id 1TuMiS-00026p-LA
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:31:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754641Ab3AMMFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2013 07:05:47 -0500
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:33834 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754635Ab3AMMFq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 07:05:46 -0500
-Received: by mail-lb0-f178.google.com with SMTP id l5so2322052lbo.9
-        for <git@vger.kernel.org>; Sun, 13 Jan 2013 04:05:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=CNKSDzasg//dyPIpemeKoqfIDx/MXN1agTy4nAr6JLY=;
-        b=I4BvquP/eULZ+0+RstyfNWOHa1Sl1ghXsxiSrFIattJwVmjqXwTvhrEzd8uaMf6LL4
-         fidPClfW+d34FsLaz+yzyuBiP71858ZueowemPDe+UTiaORQwDT/B5Nmn1e6HovPaF7h
-         210sME48c7E1YKcP/yBDPXaHh35wD0jbb3RIUYWvksvnVozoq3Z3cndescJGqy6i9f9K
-         GvTwwFrjdQ3G9BoATBZOqcLvCyfbWmYXmEELVcS3EGer+XNuVLdoZ/jItVxErLsTLL7y
-         0/ElFS4379hRSON/FkhXkf0K+m37Zok/mgPgHQOwpIkUo6fMG+7pX8WUkPmv/Kl0utG2
-         lCww==
-Received: by 10.112.86.232 with SMTP id s8mr33706991lbz.86.1358078745096; Sun,
- 13 Jan 2013 04:05:45 -0800 (PST)
-Received: by 10.112.60.36 with HTTP; Sun, 13 Jan 2013 04:05:45 -0800 (PST)
+	id S1754893Ab3AMMas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 07:30:48 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59908 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754886Ab3AMMar (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:30:47 -0500
+Received: (qmail 7656 invoked by uid 107); 13 Jan 2013 12:32:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 13 Jan 2013 07:32:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Jan 2013 07:30:36 -0500
+Content-Disposition: inline
+In-Reply-To: <CAMK1S_iKARYqi_Dv90og0No7NN=WxFg+ixmRvnkvfdrcOi1r=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213338>
 
-Hi,
+On Sun, Jan 13, 2013 at 06:26:53AM +0530, Sitaram Chamarty wrote:
 
-I was searching for some git- command to provide me a list of files
-(in a git directory), same as ls,
-but showing information from the last commit of the file instead.
+> > Right, I meant if you have receive.fsckObjects on. It won't help this
+> > situation at all, as we already do a connectivity check separate from
+> > the fsck. But I do recommend it in general, just because it helps catch
+> > bad objects before they gets disseminated to a wider audience (at which
+> > point it is often infeasible to rewind history). And it has found git
+> > bugs (e.g., null sha1s in tree entries).
+> 
+> I will add this.  Any idea if there's a significant performance hit?
 
-lets, say the equivalent of the $ls -d b* within git.git root directory
-would look like:
+Not usually; we are already resolving all of the sent deltas as a
+precaution, anyway. I do notice after a push to GitHub there is
+sometimes a second or two of pause from the server before the push
+status is shown. But I haven't narrowed it down to fsck (versus
+connectivity check, versus our post-receive hook).
 
-----------------
-98746061 jrnieder 2010-08-12 17:11 Standardize-do-.-while-0-style   base85.c
-c43cb386 pclouds  2012-10-26 22:53 Move-estimate_bisect_steps-to-li bisect.c
-efc7df45 pclouds  2012-10-26 22:53 Move-print_commit_list-to-libgit bisect.h
-837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla blob.c
-837d395a barkalow 2010-01-18 13:06 Replace-parse_blob-with-an-expla blob.h
-ebcfa444 gitster  2012-07-23 20:56 Merge-branch-jn-block-sha1       block-sha1
-d53a3503 pclouds  2012-06-07 19:05 Remove-i18n-legos-in-notifying-n branch.c
-f9a482e6 peff     2012-03-26 19:51 checkout-suppress-tracking-messa branch.h
-c566ea13 gitster  2013-01-11 18:34 Merge-branch-jc-merge-blobs      builtin
-cf6c52fc gitster  2013-01-10 13:46 Merge-branch-jc-maint-fmt-merge- builtin.h
-568508e7 gitster  2011-10-28 14:48 bulk-checkin-replace-fast-import
-bulk-checkin.c
-568508e7 gitster  2011-10-28 14:48 bulk-checkin-replace-fast-import
-bulk-checkin.h
-8c3710fd gitster  2012-06-04 11:51 tweak-bundle-verify-of-a-complet bundle.c
-b76c561a gitster  2011-10-21 16:04 Merge-branch-jc-unseekable-bundl bundle.h
-----------------
+So you may want to keep an eye on the effects (and if you have numbers,
+please share :) ).
 
-(pretty the same idea as what we see in github when reviewing a
-repository under the "Files" tab.)
+> That's always the hard part.  System admins (at the Unix level) insist
+> there's nothing wrong and no disk errors and so on...  that is why I
+> was interested in network errors causing problems and so on.
 
-Unfortunately I couldn't find any suitable.
+Yeah, I feel bad saying "well, this repo is totally corrupted, but it
+couldn't possibly be git's fault, because that's not what its failure
+modes look like". But luckily our Ops people are very understanding, and
+most of the problems I have seen have turned out to be fs corruption
+after all (the pack-refs things is the big exception).
 
-As suggested at http://git-scm.com/community I asked my question at
-the "Git user mailing list on Google Groups which is a nice place for
-beginners to ask about anything",
-and one of the valuable answers was:
+> Thanks once again for your patient replies!
 
-"Also I wouldn't hesitate to ask this question on the main Git list as
-this question appears to be hard-core enough to warrant assisting of
-someone knowledgeable about Git internals."
+No problem. There aren't many people dealing with large-scale
+server-side issues, so it's something that doesn't come up much on the
+list. I'm happy to talk about it.
 
-So here I am...
-
-So is there such a command, or I have to build my own script, starting
-from, lets say git-rev-list in addition with some diff?
-
-At the beginning I was hoping that $git rev-list HEAD --no-walk
---all-match -- <paths> + some git status --porcelain could do the job
-for me,
-but seems git rev-list, same as git log stops at the first found
-matching commit, without to take care that there are still more files
-unsatisfied in the list...
-
-isn't it supposed to satisfy all the files in the list when
---all-match -- <paths> are given?
-
-Thank you in advance,
-Blind.
+-Peff
