@@ -1,87 +1,81 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] t/lib-cvs: cvsimport no longer works without Python >=
- 2.7
-Date: Sun, 13 Jan 2013 17:17:20 +0000
-Message-ID: <20130113171720.GM4574@serenity.lan>
-References: <1357875152-19899-1-git-send-email-gitster@pobox.com>
- <7v62339du4.fsf@alter.siamese.dyndns.org>
- <7vip72iykx.fsf_-_@alter.siamese.dyndns.org>
- <50F180E8.8010907@alum.mit.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
+Date: Sun, 13 Jan 2013 09:32:07 -0800
+Message-ID: <20130113173207.GC5973@elie.Belkin>
+References: <201301120650.46479.tboegi@web.de>
+ <7vvcb37xfe.fsf@alter.siamese.dyndns.org>
+ <50F28BB5.9080607@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jan 13 18:17:51 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 13 18:32:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuRBv-0006Mx-1p
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 18:17:51 +0100
+	id 1TuRQA-00028i-8Y
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 18:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754207Ab3AMRRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2013 12:17:30 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:53997 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753538Ab3AMRR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 12:17:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id C23AB60653C;
-	Sun, 13 Jan 2013 17:17:28 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sX92EgqTqXty; Sun, 13 Jan 2013 17:17:28 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 675B060652F;
-	Sun, 13 Jan 2013 17:17:28 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 50047161E4FB;
-	Sun, 13 Jan 2013 17:17:28 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UY-o9wZTgAoe; Sun, 13 Jan 2013 17:17:28 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 641CA161E266;
-	Sun, 13 Jan 2013 17:17:21 +0000 (GMT)
+	id S1751678Ab3AMRcO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jan 2013 12:32:14 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34690 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375Ab3AMRcN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Jan 2013 12:32:13 -0500
+Received: by mail-pa0-f47.google.com with SMTP id fa10so1820870pad.6
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 09:32:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Um/zOPuiebom+Qhe5LoAxShuhDiBbrfHlivNxUFs01g=;
+        b=yl1CrIlP282YkoYETK0Vd5FP0Hubjcp/zY+bdNH5mZ/EP8sHvqnMVa12vUeReT1EQE
+         Qe5WU5/QvXmImPMu5v7CLMtWgX05wlHEKjI5V9s9ctzwD7MzDTpf51n1KVqrFtTzTUAX
+         gRZCJ2Ja0MgK0aYHoVRHGF4X3XTJifLbEVo2mSGBoUNDZ4pqq013IUQP4DEfCKfVqpvx
+         w/NPCPtE7IEWgNEgzChq2HmRfRNUw3cD1hgQXTrg56HgZiGdLc/7JicSZLBEYbvTx4F3
+         LxxP7NXqd4O5rY32cwl5GTU0aIjcHbYB8aVfpyYa+fcO0xaKkNFkrWFou8svoPYCWPoI
+         htEQ==
+X-Received: by 10.66.86.101 with SMTP id o5mr225370906paz.15.1358098332969;
+        Sun, 13 Jan 2013 09:32:12 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id ov4sm6620094pbb.45.2013.01.13.09.32.10
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 13 Jan 2013 09:32:11 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <50F180E8.8010907@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <50F28BB5.9080607@web.de>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213390>
 
-On Sat, Jan 12, 2013 at 04:27:36PM +0100, Michael Haggerty wrote:
->>  Even if we were to rip out the fallback code that uses the 2.7-only
->>  subprocess.check_output() on "cvsps -V", the function is also used
->>  for doing the real work interacting with cvsps-3.x, so I think this
->>  patch will be necessary.  Unless new cvsimport is tweaked not to
->>  use the method, that is.
->> 
->>  A suggestion for a better alternative is of course very much
->>  appreciated.
-> 
-> If the only reason to require Python 2.7 is subprocess.check_output(),
-> it would be easy to reimplement it (it is only 12 lines of
-> straightforward code, plus a few lines to define the exception type
-> CalledProcessError).  According to [1], the Python license is
-> GPL-compatible; therefore these lines could even be copied into
-> git-cvsimport.
+Hi,
 
-Note that this has already be done in git_remote_helpers.util.  Is there
-any reason not to just reference that?
+Torsten B=C3=B6gershausen wrote:
 
+> -	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use typ=
+e)';
+> +	/^\s*[^#]\s*which\s+[-a-zA-Z0-9]+$/ and err 'which is not portable =
+(please use type)';
 
-John
+Hmm.  Neither the old version nor the new one matches what seem to
+be typical uses of 'which', based on a quick code search:
+
+	if which sl >/dev/null 2>&1
+	then
+		sl -l
+		...
+	fi
+
+or
+
+	if test -x "$(which sl 2>/dev/null)"
+	then
+		sl -l
+		...
+	fi
