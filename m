@@ -1,78 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: missing objects -- prevention
-Date: Sun, 13 Jan 2013 07:30:36 -0500
-Message-ID: <20130113123036.GA498@sigill.intra.peff.net>
-References: <CAMK1S_jpofLRO02XTYryOP98g7rnrJXs7Mh2zvi=SoVUAs0dUw@mail.gmail.com>
- <20130111164202.GB5219@sigill.intra.peff.net>
- <CAMK1S_jN7=Antz-5D7yf0KV8m-YEy93tZP_zziTXPDzbdyjUrw@mail.gmail.com>
- <20130112131358.GB21875@sigill.intra.peff.net>
- <CAMK1S_iKARYqi_Dv90og0No7NN=WxFg+ixmRvnkvfdrcOi1r=Q@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/8] Initial support for Python 3
+Date: Sun, 13 Jan 2013 12:34:04 +0000
+Message-ID: <20130113123404.GJ4574@serenity.lan>
+References: <cover.1358018078.git.john@keeping.me.uk>
+ <20130112234304.GC23079@padd.com>
+ <20130113004129.GH4574@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 13:31:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sebastian Morr <sebastian@morr.cc>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Jan 13 13:34:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuMiS-00026p-LA
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:31:08 +0100
+	id 1TuMlp-0004Xc-WB
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jan 2013 13:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893Ab3AMMas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2013 07:30:48 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59908 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754886Ab3AMMar (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2013 07:30:47 -0500
-Received: (qmail 7656 invoked by uid 107); 13 Jan 2013 12:32:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 13 Jan 2013 07:32:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Jan 2013 07:30:36 -0500
+	id S1754793Ab3AMMeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2013 07:34:18 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:35446 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754722Ab3AMMeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2013 07:34:17 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id A2D55198002;
+	Sun, 13 Jan 2013 12:34:16 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CXfNcWFOIgah; Sun, 13 Jan 2013 12:34:16 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id B6477198001;
+	Sun, 13 Jan 2013 12:34:15 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id A84BF161E551;
+	Sun, 13 Jan 2013 12:34:15 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id L+HiEAeXYK+9; Sun, 13 Jan 2013 12:34:15 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id B125A161E327;
+	Sun, 13 Jan 2013 12:34:06 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <CAMK1S_iKARYqi_Dv90og0No7NN=WxFg+ixmRvnkvfdrcOi1r=Q@mail.gmail.com>
+In-Reply-To: <20130113004129.GH4574@serenity.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213339>
 
-On Sun, Jan 13, 2013 at 06:26:53AM +0530, Sitaram Chamarty wrote:
-
-> > Right, I meant if you have receive.fsckObjects on. It won't help this
-> > situation at all, as we already do a connectivity check separate from
-> > the fsck. But I do recommend it in general, just because it helps catch
-> > bad objects before they gets disseminated to a wider audience (at which
-> > point it is often infeasible to rewind history). And it has found git
-> > bugs (e.g., null sha1s in tree entries).
+On Sun, Jan 13, 2013 at 12:41:30AM +0000, John Keeping wrote:
+> On Sat, Jan 12, 2013 at 06:43:04PM -0500, Pete Wyckoff wrote:
+>> Can you give me some hints about the byte/unicode string issues
+>> in git-p4.py?  There's really only one place that does:
+>> 
+>>     p4 = subprocess.Popen("p4 -G ...")
+>>     marshal.load(p4.stdout)
+>> 
+>> If that's the only issue, this might not be too paniful.
 > 
-> I will add this.  Any idea if there's a significant performance hit?
+> The problem is that what gets loaded there is a dictionary (encoded by
+> p4) that maps byte strings to byte strings, so all of the accesses to
+> that dictionary need to either:
+> 
+>    1) explicitly call encode() on a string constant
+> or 2) use a byte string constant with a "b" prefix
+> 
+> Or we could re-write the dictionary once, which handles the keys... but
+> some of the values are also used as strings and we can't handle that as
+> a one-off conversion since in other places we really do want the byte
+> string (think content of binary files).
+> 
+> Basically a thorough audit of all access to variables that come from p4
+> would be needed, with explicit decode()s for authors, dates, etc.
 
-Not usually; we are already resolving all of the sent deltas as a
-precaution, anyway. I do notice after a push to GitHub there is
-sometimes a second or two of pause from the server before the push
-status is shown. But I haven't narrowed it down to fsck (versus
-connectivity check, versus our post-receive hook).
+Having thought about this a bit more, another possibility would be to
+apply this transformation once using something like this (completely
+untested, I haven't looked up the keys of interest):
 
-So you may want to keep an eye on the effects (and if you have numbers,
-please share :) ).
+-- >8 --
 
-> That's always the hard part.  System admins (at the Unix level) insist
-> there's nothing wrong and no disk errors and so on...  that is why I
-> was interested in network errors causing problems and so on.
+def _noop(s):
+    return s
 
-Yeah, I feel bad saying "well, this repo is totally corrupted, but it
-couldn't possibly be git's fault, because that's not what its failure
-modes look like". But luckily our Ops people are very understanding, and
-most of the problems I have seen have turned out to be fs corruption
-after all (the pack-refs things is the big exception).
+def _decode(s):
+    return s.decode('utf-8')
 
-> Thanks once again for your patient replies!
+CONVERSION_MAP = {
+    'user': _decode,
+    'data': _decode
+}
 
-No problem. There aren't many people dealing with large-scale
-server-side issues, so it's something that doesn't come up much on the
-list. I'm happy to talk about it.
+d = marshal.load(p4.stdout)
+retval = {}
+for k, v in d.items():
+    key = k.decode('utf-8')
+    retval[key] = CONVERSION_MAP.get(key, _noop)(v)
+return retval
 
--Peff
+-- 8< --
+
+Obviously this isn't ideal but without p4 gaining a Python 3 output mode
+I suspect this would be the best we could do.
+
+
+John
