@@ -1,99 +1,96 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Error:non-monotonic index after failed recursive "sed" command
-Date: Mon, 14 Jan 2013 13:21:38 +0100
-Message-ID: <50F3F852.8060800@viscovery.net>
-References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] archive-tar: fix sanity check in config parsing
+Date: Mon, 14 Jan 2013 04:44:24 -0800
+Message-ID: <20130114124424.GA14129@sigill.intra.peff.net>
+References: <50F2F1E9.1040700@lsrfire.ath.cx>
+ <20130113200044.GA3979@sigill.intra.peff.net>
+ <kd0evl$ac0$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: George Karpenkov <george@metaworld.ru>
-X-From: git-owner@vger.kernel.org Mon Jan 14 13:22:07 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Mon Jan 14 13:45:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tuj3C-0000kD-1y
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:22:02 +0100
+	id 1TujPQ-0001wO-JR
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755533Ab3ANMVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 07:21:42 -0500
-Received: from so.liwest.at ([212.33.55.24]:9509 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755464Ab3ANMVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 07:21:41 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Tuj2p-0003fs-0y; Mon, 14 Jan 2013 13:21:39 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id BF0201660F;
-	Mon, 14 Jan 2013 13:21:38 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1756505Ab3ANMoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 07:44:37 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:61000 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756438Ab3ANMog (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 07:44:36 -0500
+Received: (qmail 18972 invoked by uid 107); 14 Jan 2013 12:45:52 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jan 2013 07:45:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2013 04:44:25 -0800
+Content-Disposition: inline
+In-Reply-To: <kd0evl$ac0$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213486>
 
-Am 1/14/2013 12:40, schrieb George Karpenkov:
-> I've managed to corrupt my very valuable repository with a recursive
-> sed which went wrong.
-> I wanted to convert all tabs to spaces with the following command:
+On Mon, Jan 14, 2013 at 09:17:57AM +0100, Joachim Schmitz wrote:
+
+> >For the curious, the original version of the patch[1] read:
+> >
+> >+       if (prefixcmp(var, "tarfilter."))
+> >+               return 0;
+> >+       dot = strrchr(var, '.');
+> >+       if (dot == var + 9)
+> >+               return 0;
+> >
+> >and when I shortened the config section to "tar" in a re-roll of the
+> >series, I missed the corresponding change to the offset.
 > 
-> find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
-> 
-> I think that has changed not only the files in the repo, but the data
-> files in .git directory itself. As a result, my index became
-> corrupted, and almost every single command dies:
-> 
->> git log
-> error: non-monotonic index
-> ..git/objects/pack/pack-314b1944adebea645526b6724b2044c1313241f5.idx
-> error: non-monotonic index
-> ..git/objects/pack/pack-75c95b0defe1968b61e4f4e1ab7040d35110bfdc.idx
-> ....
-> error: non-monotonic index
-> ..git/objects/pack/pack-3da0da48d05140b55f4af1cf87c55a2d7898bdd5.idx
-> fatal: bad object HEAD
-> 
-> Output for git fsck is even worse:
-> 
->> git fsck
-> error: non-monotonic index
-> ..git/objects/pack/pack-434f8445672a92f123accffce651bdb693bd8fcb.idx
-> ....
-> error: non-monotonic index
-> ..git/objects/pack/pack-0c9d5ae4e2b46dd78dace7533adf6cdfe10326ef.idx
-> error: non-monotonic index
-> ..git/objects/pack/pack-e8bd5c7f85e96e7e548a62954a8f7c7f223ba9e0.idx
-> Segmentation fault (core dumped)
-> 
-> Any advice? I've lost about 2 weeks worth of work.
-> Is there anything better I can try to do other then trying to
-> reconstruct the data manually from git blobs?
+> Wouldn't it then be better ti use strlen("tar") rather than a 3? Or
+> at least a comment?
 
-First things first: MAKE A COPY OF THE CURRENT STATE of the repository,
-including the worktree, so that you have something to go back to if things
-get worse later. (At the very least, we want to debug the segfault that we
-see above.)
+Then you are relying on the two strings being the same, rather than the
+string and the length being the same. If you wanted to DRY it up, it
+would look like:
 
-So far that's all I can say about your case. Everything that follows is
-just a shot in the dark, and others may have better ideas. Also, look
-here:
-https://github.com/gitster/git/blob/master/Documentation/howto/recover-corrupted-blob-object.txt
+diff --git a/archive-tar.c b/archive-tar.c
+index d1cce46..a7c0690 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -332,15 +332,17 @@ static int tar_filter_config(const char *var, const char *value, void *data)
+ 	const char *type;
+ 	int namelen;
+ 
+-	if (prefixcmp(var, "tar."))
++#define SECTION "tar"
++	if (prefixcmp(var, SECTION "."))
+ 		return 0;
+ 	dot = strrchr(var, '.');
+-	if (dot == var + 9)
++	if (dot == var + strlen(SECTION))
+ 		return 0;
+ 
+-	name = var + 4;
++	name = var + strlen(SECTION) + 1;
+ 	namelen = dot - name;
+ 	type = dot + 1;
++#undef SECTION
+ 
+ 	ar = find_tar_filter(name, namelen);
+ 	if (!ar) {
 
-You can remove the *.idx files, because they do not carry essential
-information. Now try git fsck; git repack.
 
-Try the reverse edit:
+(of course there are other variants where you do not use a macro, but
+then you need to manually check for the "." after the prefixcmp call).
+I dunno. It is technically more robust in that the offsets are computed,
+but I think it is a little harder to read. Of course, I wrote the
+original so I am probably not a good judge.
 
- find .git -name '*.*' -exec sed -i 's/    /\t/g' {} \;
+We could also potentially encapsulate it in a function. I think the diff
+code has a very similar block.
 
-Remove .git/index; it can be reconstructed (of course, assuming you
-started all this with a clean index; if not, you lose the staged changes).
-
--- Hannes
+-Peff
