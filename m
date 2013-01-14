@@ -1,106 +1,100 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH v2] Make git selectively and conditionally ignore
- certain stat fields
-Date: Tue, 15 Jan 2013 00:43:34 +0100 (CET)
-Message-ID: <1815551092.2039693.1358207014937.JavaMail.root@dewire.com>
-References: <7vmwwb8m25.fsf@alter.siamese.dyndns.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Error:non-monotonic index after failed recursive "sed" command
+Date: Mon, 14 Jan 2013 23:45:17 -0000
+Organization: OPDS
+Message-ID: <B10A5C9F770D48C9958F240D59B1A400@PhilipOakley>
+References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com> <50F3F852.8060800@viscovery.net> <7v622zbn3s.fsf@alter.siamese.dyndns.org> <vpqobgrpoh7.fsf@grenoble-inp.fr> <CAMoGvRKMwP_JBvNNWoN=m9AX3MP9xVgBUwxELHtry_-8Um8WKQ@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, j sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 00:44:01 2013
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>, "git" <git@vger.kernel.org>
+To: "George Karpenkov" <george@metaworld.ru>,
+	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jan 15 00:45:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tuth8-0008FU-1d
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 00:43:58 +0100
+	id 1Tutif-00011s-K8
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 00:45:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757241Ab3ANXnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 18:43:37 -0500
-Received: from zimbra.dewire.com ([83.140.172.131]:34620 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757089Ab3ANXnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 18:43:37 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 49C37826D8;
-	Tue, 15 Jan 2013 00:43:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id E+puGanBKQWZ; Tue, 15 Jan 2013 00:43:35 +0100 (CET)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id 0087A82688;
-	Tue, 15 Jan 2013 00:43:34 +0100 (CET)
-In-Reply-To: <7vmwwb8m25.fsf@alter.siamese.dyndns.org>
-X-Originating-IP: [213.67.12.15]
-X-Mailer: Zimbra 7.2.0_GA_2681 (ZimbraWebClient - FF3.0 (Mac)/7.2.0_GA_2681)
+	id S1757074Ab3ANXpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 18:45:09 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:54203 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755800Ab3ANXpI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 18:45:08 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AhAFAGuA9FBcHIm8/2dsb2JhbABEFothrk2DNhdzghkFAQEEAQgBAS4eAQEhCwIDBQIBAxUBAgklFAEEGgYHFwYBEggCAQIDAYgCCrVnjlKBe2EDiCyFUZNIhQ+CaA2BZiQ
+X-IronPort-AV: E=Sophos;i="4.84,468,1355097600"; 
+   d="scan'208";a="415710560"
+Received: from host-92-28-137-188.as13285.net (HELO PhilipOakley) ([92.28.137.188])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 14 Jan 2013 23:45:06 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213544>
 
-
-
------ Ursprungligt meddelande -----
-> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
-> 
-> > diff --git a/read-cache.c b/read-cache.c
-> > index fda78bc..f7fe15d 100644
-> > --- a/read-cache.c
-> > +++ b/read-cache.c
-> > @@ -197,8 +197,9 @@ static int ce_match_stat_basic(struct
-> > cache_entry *ce, struct stat *st)
-> >  	}
-> >  	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
-> >  		changed |= MTIME_CHANGED;
-> > -	if (trust_ctime && ce->ce_ctime.sec != (unsigned
-> > int)st->st_ctime)
-> > -		changed |= CTIME_CHANGED;
-> > +	if ((trust_ctime ||
-> > ((check_nonzero_stat&CHECK_NONZERO_STAT_CTIME) &&
-> > ce->ce_ctime.sec)))
-> 
-> One SP is required on each side of a binary operator; please have
-> one after check_nonzero_stat and after the & after it.
-> 
-> I wonder if we should lose the trust_ctime variable and use this
-> check_nonzero_stat bitset exclusively, provided that this were a
-> good direction to go?
-
-Semantically they're somewhat different. My flags are for ignoring
-a value when it's not used as indicated by the value zero, while
-trustctime is for ignoring untrustworthy, non-zero, values.
-
->From 1ce4790bf5e:
-    A new configuration variable 'core.trustctime' is introduced to
-    allow ignoring st_ctime information when checking if paths
-    in the working tree has changed, because there are situations where
-    it produces too much false positives.  Like when file system crawlers
-    keep changing it when scanning and using the ctime for marking scanned
-    files.
-
-(your second mail)
->Also I am getting these:
+From: "George Karpenkov" <george@metaworld.ru>
+Sent: Monday, January 14, 2013 10:57 PM
+> Thanks everyone!
 >
->config.c: In function 'git_default_core_config':
->config.c:571: error: passing argument 1 of 'git_config_string' from incompatible pointer type
->config.c:540: note: expected 'const char **' but argument is of type 'char **'
->config.c:573: error: passing argument 1 of 'strtok' discards qualifiers from pointer target type
+> Progress so far:
+>
+> After executing reverse sed command:
+> find .git -name '*.*' -exec sed -i 's/    /\t/g' {} \;
 
-Different compilers have different defaults. I'm on OS X (mountain lion), or am I missing
-something? I do get a warning. Am I allowed to modify the value, like strtok does? Seems I
-missed the opportunity to use the copy rather then the original value.
+Have you counted how many substitutions there are in the pack file(s). 
+It may be sufficiently small that you can  simply try all the possible 
+combinations of fwd and reverse substitutions. Even if it takes a few 
+days the computer won't get bored ;-)
 
-Another thing that I noticed, is that I probably wanto to be able to filter on the precision
-of timestamps. Again, this i JGit-related. Current JGit has milliseconds precision (max), whereas
-Git has down to nanosecond precision in timestamps. Newer JGits may get nanoseconds timestamps too,
-but on current Linux versions JGit gets only integral seconds regardless of file system. 
-
-Would the names, milli, micro, nano be good for ignoring the tail when zero, or n1..n9 (obviously
-n2 would be ok too). nN = ignore all but first N nsec digits if they are zero)?
-
--- robin
+>
+> And trying to switch the branch I get:
+>
+>> git checkout X
+>
+> error: failed to read object 51a980792f26875d00acb79a19f043420f542cfa
+> at offset 41433013 from
+> .git/objects/pack/pack-8d629235ee9fec9c6683d42e3edb21a1b0f6e027.pack
+> fatal: packed object 51a980792f26875d00acb79a19f043420f542cfa (stored
+> in .git/objects/pack/pack-
+> 8d629235ee9fec9c6683d42e3edb21a1b0f6e027.pack) is corrupt
+>
+> So the actual .pack file is corrupt, unfortunately.
+>
+> On Tue, Jan 15, 2013 at 6:13 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Everybody seems to be getting an impression that .idx is the only
+>>> thing that got corrupt.  Where does that come from?
+>>
+>> It's the only thing that appear in the error message. This does not
+>> imply that it is the only corrupt thing, but gives a little hope that 
+>> it
+>> may still be the case.
+>>
+>> Actually, I thought the "read-only" protection should have protected
+>> files in object/ directory, but a little testing shows that "sed -i"
+>> gladly accepts to modify read-only files (technically, it does not
+>> modify it, but creates a temporary file with the new content, and 
+>> then
+>> renames it to the new location). So, the hope that pack files are
+>> uncorrupted is rather thin unfortunately.
+>>
+>> --
+>> Matthieu Moy
+>> http://www-verimag.imag.fr/~moy/
+> --
