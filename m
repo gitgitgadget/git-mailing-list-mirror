@@ -1,72 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/3] pre-push hook support
-Date: Mon, 14 Jan 2013 09:42:34 -0800
-Message-ID: <7vk3rfek51.fsf@alter.siamese.dyndns.org>
-References: <1356735452-21667-1-git-send-email-aaron@schrab.com>
- <1358054224-7710-1-git-send-email-aaron@schrab.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCH] rebase --preserve-merges keeps empty merge commits
+Date: Mon, 14 Jan 2013 12:50:17 -0500
+Message-ID: <50F44559.6040102@cisco.com>
+References: <1358023561-26773-1-git-send-email-hordp@cisco.com> <vpqpq17zwdl.fsf@grenoble-inp.fr> <7vwqvfele2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Aaron Schrab <aaron@schrab.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 18:42:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	phil.hord@gmail.com, Neil Horman <nhorman@tuxdriver.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 18:50:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tuo3l-0008RN-Dy
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:42:57 +0100
+	id 1TuoBF-00077u-Ew
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:50:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757642Ab3ANRmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 12:42:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35280 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756748Ab3ANRmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 12:42:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 091A0CB19;
-	Mon, 14 Jan 2013 12:42:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V/tlXBkti76/aI7Q510/7K+uM50=; b=bZWrOH
-	xfeNrY+zzTbk3NCWM1p/1SS8tdxUqAyRB8HJgKyQl76eHZyabPmgWhhx4Ur5CbVD
-	f6xqE5X4SsDRFb0QNUKcAZUG5j40O5ZyeEpJMcCMsWieu8b2WJhc7KnTyo/ERD9Y
-	CbB293SyB5y2P1B3fI9xNO1R5kV3Iw3Ht0wsc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=prPricIoj5rmPkrL9/nEQSVCaY5Fg+2Q
-	JdZCjD0BIhC0t8/vOTeLb2eofSLyTXLVf50j4xtEjyRhrkZOqS/Gw5Ql/YO85++x
-	l1Scg6wQBdbBBbSg3DBJPjYhmN1/bLeaMWooqaXFuZgV6EK2/3qaqpSL2GeHRIau
-	gLLaV1qFl6Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0E99CB18;
-	Mon, 14 Jan 2013 12:42:35 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F372CB15; Mon, 14 Jan 2013
- 12:42:35 -0500 (EST)
-In-Reply-To: <1358054224-7710-1-git-send-email-aaron@schrab.com> (Aaron
- Schrab's message of "Sun, 13 Jan 2013 00:17:01 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C805092A-5E71-11E2-8D9A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757540Ab3ANRuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 12:50:20 -0500
+Received: from rcdn-iport-2.cisco.com ([173.37.86.73]:59003 "EHLO
+	rcdn-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756297Ab3ANRuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 12:50:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=718; q=dns/txt; s=iport;
+  t=1358185819; x=1359395419;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=UztU302BWGV5MnR9zGuWEBtrLWy0Bp486f0vZHDXvLA=;
+  b=PKPCBKRPQXW0r5vHV6llaZDQ439gQDzFf/83TCZrzOO02+E6dD7pZa2q
+   GtBl9WmXVgXI12DFcgwhk98ZU8GBfTQCOpTDJbsdIhQsXKC14Hk7qx8i8
+   JN5VfEslAWuNIRt13/rZOKpzlXBlgzHl1kRGhLouCdtbGodZU/0D0mG29
+   o=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AsgGAEVE9FCtJV2a/2dsb2JhbABEgy6CRbRRgzUWc4IeAQEBBHgBEAsXAQkWDwkDAgECAT0IBg0BBQIBAYgVtHWRLgOIYY0qhWuKXoMT
+X-IronPort-AV: E=Sophos;i="4.84,468,1355097600"; 
+   d="scan'208";a="162213669"
+Received: from rcdn-core-3.cisco.com ([173.37.93.154])
+  by rcdn-iport-2.cisco.com with ESMTP; 14 Jan 2013 17:50:18 +0000
+Received: from [10.117.80.101] (rtp-hordp-8914.cisco.com [10.117.80.101])
+	by rcdn-core-3.cisco.com (8.14.5/8.14.5) with ESMTP id r0EHoHbV012415;
+	Mon, 14 Jan 2013 17:50:17 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <7vwqvfele2.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5
+X-TagToolbar-Keys: D20130114125017216
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213507>
 
-Aaron Schrab <aaron@schrab.com> writes:
 
-> Main changes since the initial version:
+Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
->  * The first patch converts the existing hook callers to use the new
->    find_hook() function.
->  * Information about what is to be pushed is now sent over a pipe rather
->    than passed as command-line parameters.
+>> Phil Hord <hordp@cisco.com> writes:
+>>
+>>> Subject: [PATCH] rebase --preserve-merges keeps empty merge commits
+>> I would rephrase it as
+>>
+>>   rebase --preserve-merges: keep empty merge commits
+>>
+>> we usually give orders in commit messages, not state facts (it's not
+>> clear from the existing subject line whether keeping merge commit is the
+>> new behavior or a bug that the commit tries to fix).
+> Thanks for giving a concise rationale on our use of imperative mood.
 >
-> Aaron Schrab (3):
->   hooks: Add function to check if a hook exists
->   push: Add support for pre-push hooks
->   Add sample pre-push hook script
+> Phil, I think you meant to and forgot to sign-off; here is what I'll
+> queue.
+>
+> Thanks.
+>
 
-Getting much nicer.  Thanks.
+Looks good.  Thanks for the help.
+
+Phil
