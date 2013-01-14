@@ -1,72 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Error:non-monotonic index after failed recursive "sed" command
-Date: Mon, 14 Jan 2013 20:13:24 +0100
-Message-ID: <vpqobgrpoh7.fsf@grenoble-inp.fr>
-References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
-	<50F3F852.8060800@viscovery.net>
-	<7v622zbn3s.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] builtin/reset.c: Fix a sparse warning
+Date: Mon, 14 Jan 2013 19:28:59 +0000
+Message-ID: <50F45C7B.9030608@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	George Karpenkov <george@metaworld.ru>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 20:13:59 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: martinvonz@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jan 14 20:31:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TupTr-00066c-2b
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 20:13:59 +0100
+	id 1TupkT-0004Bj-ET
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 20:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757294Ab3ANTNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 14:13:38 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:54978 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757156Ab3ANTNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 14:13:38 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r0EJ1Etl006530
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jan 2013 20:01:14 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TupTI-0006HS-FZ; Mon, 14 Jan 2013 20:13:24 +0100
-In-Reply-To: <7v622zbn3s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 14 Jan 2013 11:06:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 14 Jan 2013 20:01:14 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r0EJ1Etl006530
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1358794876.69126@0g9v5JGPdjH8bXMssCpqSg
+	id S1758418Ab3ANTas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 14:30:48 -0500
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:49916 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755277Ab3ANTas (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 14:30:48 -0500
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id D952AA64431;
+	Mon, 14 Jan 2013 19:30:45 +0000 (GMT)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 31DFCA643AC;	Mon, 14 Jan 2013 19:30:45 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;	Mon, 14 Jan 2013 19:30:44 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213520>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Everybody seems to be getting an impression that .idx is the only
-> thing that got corrupt.  Where does that come from?
+In particular, sparse issues an "symbol not declared. Should it be
+static?" warning for the 'parse_args' function. Since this function
+does not require greater than file visibility, we suppress this
+warning by simply adding the static modifier to it's decalaration.
 
-It's the only thing that appear in the error message. This does not
-imply that it is the only corrupt thing, but gives a little hope that it
-may still be the case.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Actually, I thought the "read-only" protection should have protected
-files in object/ directory, but a little testing shows that "sed -i"
-gladly accepts to modify read-only files (technically, it does not
-modify it, but creates a temporary file with the new content, and then
-renames it to the new location). So, the hope that pack files are
-uncorrupted is rather thin unfortunately.
+Hi Martin,
 
+When you re-roll your "reset" patches (branch 'mz/reset-misc'), could
+you please squash this into commit b24b3654 ("reset.c: extract function
+for parsing arguments", 09-01-2013). Note that this patch is on top of
+the pu branch (@75ea4ed3), which includes Junio's style fix patch
+(commit 9f45c39f, "[SQUASH???] style fix", 10-01-2013).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ builtin/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/reset.c b/builtin/reset.c
+index a37044e..c69f9da 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -171,7 +171,7 @@ static void die_if_unmerged_cache(int reset_type)
+ 
+ }
+ 
+-const char **parse_args(int argc, const char **argv, const char *prefix, const char **rev_ret)
++static const char **parse_args(int argc, const char **argv, const char *prefix, const char **rev_ret)
+ {
+ 	const char *rev = "HEAD";
+ 	unsigned char unused[20];
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.1
