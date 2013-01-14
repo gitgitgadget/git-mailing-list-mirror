@@ -1,81 +1,109 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH] rebase --preserve-merges keeps empty merge commits
-Date: Mon, 14 Jan 2013 12:50:17 -0500
-Message-ID: <50F44559.6040102@cisco.com>
-References: <1358023561-26773-1-git-send-email-hordp@cisco.com> <vpqpq17zwdl.fsf@grenoble-inp.fr> <7vwqvfele2.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] t0050: mark TC merge (case change) as success
+Date: Mon, 14 Jan 2013 18:53:34 +0100
+Message-ID: <50F4461E.3060408@web.de>
+References: <201301132138.37154.tboegi@web.de> <7v7gnghdj2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	phil.hord@gmail.com, Neil Horman <nhorman@tuxdriver.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org, prohaska@zib.de
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 18:50:46 2013
+X-From: git-owner@vger.kernel.org Mon Jan 14 18:54:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuoBF-00077u-Ew
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:50:41 +0100
+	id 1TuoEY-0001jb-Py
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:54:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757540Ab3ANRuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 12:50:20 -0500
-Received: from rcdn-iport-2.cisco.com ([173.37.86.73]:59003 "EHLO
-	rcdn-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756297Ab3ANRuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 12:50:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=718; q=dns/txt; s=iport;
-  t=1358185819; x=1359395419;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=UztU302BWGV5MnR9zGuWEBtrLWy0Bp486f0vZHDXvLA=;
-  b=PKPCBKRPQXW0r5vHV6llaZDQ439gQDzFf/83TCZrzOO02+E6dD7pZa2q
-   GtBl9WmXVgXI12DFcgwhk98ZU8GBfTQCOpTDJbsdIhQsXKC14Hk7qx8i8
-   JN5VfEslAWuNIRt13/rZOKpzlXBlgzHl1kRGhLouCdtbGodZU/0D0mG29
-   o=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AsgGAEVE9FCtJV2a/2dsb2JhbABEgy6CRbRRgzUWc4IeAQEBBHgBEAsXAQkWDwkDAgECAT0IBg0BBQIBAYgVtHWRLgOIYY0qhWuKXoMT
-X-IronPort-AV: E=Sophos;i="4.84,468,1355097600"; 
-   d="scan'208";a="162213669"
-Received: from rcdn-core-3.cisco.com ([173.37.93.154])
-  by rcdn-iport-2.cisco.com with ESMTP; 14 Jan 2013 17:50:18 +0000
-Received: from [10.117.80.101] (rtp-hordp-8914.cisco.com [10.117.80.101])
-	by rcdn-core-3.cisco.com (8.14.5/8.14.5) with ESMTP id r0EHoHbV012415;
-	Mon, 14 Jan 2013 17:50:17 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <7vwqvfele2.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5
-X-TagToolbar-Keys: D20130114125017216
+	id S1758001Ab3ANRxp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2013 12:53:45 -0500
+Received: from mout.web.de ([212.227.17.12]:60167 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757974Ab3ANRxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 12:53:43 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M5fhI-1T1uLf0ifw-00y8p3; Mon, 14 Jan 2013 18:53:35
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7v7gnghdj2.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:ZTBFFCBe+esw+YpHdZH280qLxG3G+RfqprEK0ocEa2s
+ L94+UMyJHU4fTnFvP7aGsi0n7tsBqXmB8pFpoe3ZURpQZRSZMZ
+ 9wvcgW3+7TVvNeKDF/+aPIJBpTALlGMENczLI4ttHKXRWYULhn
+ Zr0Sd0yvyKExRZrjYp0+GUOgkV9msdfIRxsFvtdijZITWYl6i2
+ AbvEivCqVhz0eQDiFvz8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213508>
 
-
-Junio C Hamano wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Phil Hord <hordp@cisco.com> writes:
+On 14.01.13 00:24, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> The test "merge (case change)" passes on a case ignoring file system
 >>
->>> Subject: [PATCH] rebase --preserve-merges keeps empty merge commits
->> I would rephrase it as
+>> Use test_expect_success to remove the "known breakage vanished"
 >>
->>   rebase --preserve-merges: keep empty merge commits
->>
->> we usually give orders in commit messages, not state facts (it's not
->> clear from the existing subject line whether keeping merge commit is the
->> new behavior or a bug that the commit tries to fix).
-> Thanks for giving a concise rationale on our use of imperative mood.
->
-> Phil, I think you meant to and forgot to sign-off; here is what I'll
-> queue.
->
-> Thanks.
->
+>> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>> ---
+>=20
+> Interesting.  When did this change?  Do you happen to have a
+> bisection? =20
+This seems to be the commit:
 
-Looks good.  Thanks for the help.
+commit 6aad47dec7a72bb36c64afb6c43f4dbcaa49e7f9
+Merge: e13067a 0047dd2
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri May 23 16:05:52 2008 -0700
 
-Phil
+    Merge branch 'sp/ignorecase'
+   =20
+    * sp/ignorecase:
+      t0050: Fix merge test on case sensitive file systems
+      t0050: Add test for case insensitive add
+      t0050: Set core.ignorecase case to activate case insensitivity
+      t0050: Test autodetect core.ignorecase
+      git-init: autodetect core.ignorecase
+
+Which comes from here:
+
+commit 0047dd2fd1fc1980913901c5fa098357482c2842
+Author: Steffen Prohaska <prohaska@zib.de>
+Date:   Thu May 15 07:19:54 2008 +0200
+
+    t0050: Fix merge test on case sensitive file systems
+   =20
+    On a case sensitive filesystem, "git reset --hard" might refuse to
+    overwrite a file whose name differs only by case, even if
+    core.ignorecase is set.  It is not clear which circumstances cause =
+this
+    behavior.  This commit simply works around the problem by removing
+    the case changing file before running "git reset --hard".
+   =20
+    Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+>Or did the test pass from the very beginning?
+Hm, reading the commit, it seems as if the "root problem" still exist:
+git reset --hard does not change the case of an existing file
+
+What is the exist behvior?
+
+
+
+My feeling is that the test as such deserves some more improvements,
+the result of the merge is not checked, files are empty so that
+the content is not checked.
+
+Another improvement:
+Running under Linux gives:
+not ok 6 - add (with different case) # TODO known breakage
+(and running under mingw failes)
+=20
+Please stay tuned for more updates, thanks for reviewing.
+/Torsten
