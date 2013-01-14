@@ -1,82 +1,79 @@
-From: George Karpenkov <george@metaworld.ru>
-Subject: Error:non-monotonic index after failed recursive "sed" command
-Date: Mon, 14 Jan 2013 22:40:31 +1100
-Message-ID: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Error:non-monotonic index after failed recursive "sed" command
+Date: Mon, 14 Jan 2013 13:06:16 +0100
+Message-ID: <vpq38y42clj.fsf@grenoble-inp.fr>
+References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 14 12:46:56 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: George Karpenkov <george@metaworld.ru>
+X-From: git-owner@vger.kernel.org Mon Jan 14 13:06:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuiV9-0004Ok-NU
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 12:46:52 +0100
+	id 1TuioO-0004v1-6Z
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756504Ab3ANLqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 06:46:32 -0500
-Received: from mail-la0-f46.google.com ([209.85.215.46]:53788 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752905Ab3ANLqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 06:46:31 -0500
-Received: by mail-la0-f46.google.com with SMTP id fq13so3736988lab.19
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 03:46:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type;
-        bh=ny3JruUP9iZENVdyHtTb/6K4VrqfKIN3VBOV3Z7aNJk=;
-        b=lpqwxU5yUDpRjevLqL5aMwjkTteRmaUgrLIJS37bw1jkmGn1JUOZ1etPXlZrAb84DQ
-         l+63ud2fDt3A5EZPTSMnyV6XK+qRrPT7lEZBrI4FIKleMCCmtpfbHOplSevwoshP7G/R
-         j31btq/Gk+Mi2IEgD5JPnwkKG5jCYxKSia9JBEvztj1kTzqb4uHAuN143XjLRcnguyTO
-         lpNavryqgNhQUt34U2axdnJBJ+h8nj4iG/N+HOUnoy/+/ho311odXrVRncj7bhr3Xj8o
-         RcC5IzWG5BJdu05Tl2g4qvGOFmZeOmTI3GibZ/RN1a7cJc1B6iLWodLS5k1bBBcCZoFF
-         UqvQ==
-Received: by 10.112.98.134 with SMTP id ei6mr34573258lbb.62.1358163652164;
- Mon, 14 Jan 2013 03:40:52 -0800 (PST)
-Received: by 10.112.59.1 with HTTP; Mon, 14 Jan 2013 03:40:31 -0800 (PST)
-X-Google-Sender-Auth: v97vJ7hZqAZLyO9LiAXn044sifk
+	id S1756120Ab3ANMGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 07:06:24 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:43113 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756103Ab3ANMGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 07:06:23 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0EBtf5Q020708
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 14 Jan 2013 12:55:41 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Tuinw-0004AZ-E1; Mon, 14 Jan 2013 13:06:16 +0100
+In-Reply-To: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
+	(George Karpenkov's message of "Mon, 14 Jan 2013 22:40:31 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 14 Jan 2013 12:55:42 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r0EBtf5Q020708
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1358769343.78604@bciutgqOWvJaQx1JRgD40g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213483>
 
-Hi All,
+George Karpenkov <george@metaworld.ru> writes:
 
-I've managed to corrupt my very valuable repository with a recursive
-sed which went wrong.
-I wanted to convert all tabs to spaces with the following command:
+> Hi All,
+>
+> I've managed to corrupt my very valuable repository with a recursive
+> sed which went wrong.
+> I wanted to convert all tabs to spaces with the following command:
+>
+> find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
 
-find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
+Clearly, this is a dangerous command as it impacts .git/. However, Git
+partially protects you from this kind of error, since object files and
+pack files are read-only by default.
 
-I think that has changed not only the files in the repo, but the data
-files in .git directory itself. As a result, my index became
-corrupted, and almost every single command dies:
+My obvious first advice is: make backups of your corrupted repository.
+Yes, I said backup_s_, better safe than sorry.
 
-> git log
-error: non-monotonic index
-.git/objects/pack/pack-314b1944adebea645526b6724b2044c1313241f5.idx
-error: non-monotonic index
-.git/objects/pack/pack-75c95b0defe1968b61e4f4e1ab7040d35110bfdc.idx
-...
-error: non-monotonic index
-.git/objects/pack/pack-3da0da48d05140b55f4af1cf87c55a2d7898bdd5.idx
-fatal: bad object HEAD
+Then, the errors you get are in *.idx files, which are basically index
+for pack files, for quicker access. You can try removing these files,
+and then running "git index-pack" on each pack file, like
 
-Output for git fsck is even worse:
+$ rm .git/objects/pack/pack-*.idx
+$ git index-pack .git/objects/pack/pack-4745076928ca4df932a3727b8cc25e83574560bb.pack                        
+4745076928ca4df932a3727b8cc25e83574560bb                                                              
+$ git index-pack .git/objects/pack/pack-c74a6514f653d0269cdcdf9c1c102d326706bbda.pack
+c74a6514f653d0269cdcdf9c1c102d326706bbda
 
-> git fsck
-error: non-monotonic index
-.git/objects/pack/pack-434f8445672a92f123accffce651bdb693bd8fcb.idx
-...
-error: non-monotonic index
-.git/objects/pack/pack-0c9d5ae4e2b46dd78dace7533adf6cdfe10326ef.idx
-error: non-monotonic index
-.git/objects/pack/pack-e8bd5c7f85e96e7e548a62954a8f7c7f223ba9e0.idx
-Segmentation fault (core dumped)
-
-Any advice? I've lost about 2 weeks worth of work.
-Is there anything better I can try to do other then trying to
-reconstruct the data manually from git blobs?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
