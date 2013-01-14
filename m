@@ -1,199 +1,73 @@
-From: Michal Privoznik <mprivozn@redhat.com>
-Subject: [PATCH v2 3/3] diff: Introduce --diff-algorithm command line option
-Date: Mon, 14 Jan 2013 20:58:11 +0100
-Message-ID: <1b9015bb45f2ece54dae7baee3cbcdc54b9c7ee9.1358193364.git.mprivozn@redhat.com>
-References: <cover.1358193364.git.mprivozn@redhat.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Announcing git-reparent
+Date: Mon, 14 Jan 2013 21:08:58 +0100
+Message-ID: <m21udnzfvp.fsf@igel.home>
+References: <CAHREChhnf44CprHnS=z9KO5aOkfDPSG6Xb2GU=Kvaz38eTgbUg@mail.gmail.com>
+	<20130114071608.GL3125@elie.Belkin>
+	<CAA01Csoh24ppo37fzptzZKvFrzGQyhz-0eDTQsP8tZiTRQ2YwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: gitster@pobox.com, peff@peff.net, trast@student.ethz.ch
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 14 20:58:59 2013
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Mark Lodato <lodatom@gmail.com>, git list <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 21:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuqBK-00037x-C6
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 20:58:54 +0100
+	id 1TuqLa-0003FE-30
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 21:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758451Ab3ANT6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 14:58:30 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:9160 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757663Ab3ANT6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 14:58:25 -0500
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0EJwKnc017720
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 14 Jan 2013 14:58:20 -0500
-Received: from bart.brq.redhat.com (dhcp-27-249.brq.redhat.com [10.34.27.249])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id r0EJwDVo009934;
-	Mon, 14 Jan 2013 14:58:19 -0500
-In-Reply-To: <cover.1358193364.git.mprivozn@redhat.com>
-In-Reply-To: <cover.1358193364.git.mprivozn@redhat.com>
-References: <cover.1358193364.git.mprivozn@redhat.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1757657Ab3ANUJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 15:09:08 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:55658 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757102Ab3ANUJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 15:09:06 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3YlQk71QT3z3hhv5;
+	Mon, 14 Jan 2013 21:09:03 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3YlQk71GvTzbbfw;
+	Mon, 14 Jan 2013 21:09:03 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id 1__IE7tuhD1A; Mon, 14 Jan 2013 21:08:47 +0100 (CET)
+X-Auth-Info: vMiXdjwh+/wsjdYVx/XveNyUkr1HwuiiJMIIwK7Fpyc=
+Received: from igel.home (ppp-88-217-111-218.dynamic.mnet-online.de [88.217.111.218])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon, 14 Jan 2013 21:08:59 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id EE1D711200A; Mon, 14 Jan 2013 21:08:58 +0100 (CET)
+X-Yow: Loni Anderson's hair should be LEGALIZED!!
+In-Reply-To: <CAA01Csoh24ppo37fzptzZKvFrzGQyhz-0eDTQsP8tZiTRQ2YwA@mail.gmail.com>
+	(Piotr Krukowiecki's message of "Mon, 14 Jan 2013 09:03:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213528>
 
-Since command line options have higher priority than config file
-variables and taking previous commit into account, we need a way
-how to specify myers algorithm on command line. However,
-inventing `--myers` is not the right answer. We need far more
-general option, and that is `--diff-algorithm`.
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
----
- Documentation/diff-options.txt         | 23 +++++++++++++++++++++++
- contrib/completion/git-completion.bash | 11 +++++++++++
- diff.c                                 | 12 +++++++++++-
- diff.h                                 |  2 ++
- merge-recursive.c                      |  9 +++++++++
- 5 files changed, 56 insertions(+), 1 deletion(-)
+> Just wondering, is the result different than something like
+>
+> git checkout commit_to_reparent
+> cp -r * ../snapshot/
+> git reset --hard new_parent
+> rm -r *
+> cp -r ../snapshot/* .
+> git add -A
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 39f2c50..01b97b3 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -55,6 +55,29 @@ endif::git-format-patch[]
- --histogram::
- 	Generate a diff using the "histogram diff" algorithm.
- 
-+--diff-algorithm={patience|minimal|histogram|myers}::
-+	Choose a diff algorithm. The variants are as follows:
-++
-+--
-+`myers`;;
-+	The basic greedy diff algorithm.
-+`minimal`;;
-+	Spend extra time to make sure the smallest possible diff is
-+	produced.
-+`patience`;;
-+	Use "patience diff" algorithm when generating patches.
-+`histogram`;;
-+	This algorithm extends the patience algorithm to "support
-+	low-occurrence common elements".
-+--
-++
-+For instance, if you configured diff.algorithm variable to a
-+non-default value and want to use the default one, then you
-+have to use `--diff-algorithm=myers` option.
-+
-+You should prefer this option over the `--minimal`, `--patience` and
-+`--histogram` which are kept just for backwards compatibility.
-+
- --stat[=<width>[,<name-width>[,<count>]]]::
- 	Generate a diffstat. By default, as much space as necessary
- 	will be used for the filename part, and the rest for the graph
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 33e25dc..d592cf9 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1021,6 +1021,8 @@ _git_describe ()
- 	__gitcomp_nl "$(__git_refs)"
- }
- 
-+__git_diff_algorithms="myers minimal patience histogram"
-+
- __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--patch-with-stat --name-only --name-status --color
- 			--no-color --color-words --no-renames --check
-@@ -1035,6 +1037,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--raw
- 			--dirstat --dirstat= --dirstat-by-file
- 			--dirstat-by-file= --cumulative
-+			--diff-algorithm=
- "
- 
- _git_diff ()
-@@ -1042,6 +1045,10 @@ _git_diff ()
- 	__git_has_doubledash && return
- 
- 	case "$cur" in
-+	--diff-algorithm=*)
-+		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "--cached --staged --pickaxe-all --pickaxe-regex
- 			--base --ours --theirs --no-index
-@@ -2114,6 +2121,10 @@ _git_show ()
- 			" "" "${cur#*=}"
- 		return
- 		;;
-+	--diff-algorithm=*)
-+		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "--pretty= --format= --abbrev-commit --oneline
- 			$__git_diff_common_options
-diff --git a/diff.c b/diff.c
-index e9a7e4d..3e021d5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -144,7 +144,7 @@ static int git_config_rename(const char *var, const char *value)
- 	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
- }
- 
--static long parse_algorithm_value(const char *value)
-+long parse_algorithm_value(const char *value)
- {
- 	if (!value || !strcasecmp(value, "myers"))
- 		return 0;
-@@ -3633,6 +3633,16 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
- 	else if (!strcmp(arg, "--histogram"))
- 		options->xdl_opts = DIFF_WITH_ALG(options, HISTOGRAM_DIFF);
-+	else if (!prefixcmp(arg, "--diff-algorithm=")) {
-+		long value = parse_algorithm_value(arg+17);
-+		if (value < 0)
-+			return error("option diff-algorithm accepts \"myers\", "
-+				     "\"minimal\", \"patience\" and \"histogram\"");
-+		/* clear out previous settings */
-+		DIFF_XDL_CLR(options, NEED_MINIMAL);
-+		options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+		options->xdl_opts |= value;
-+	}
- 
- 	/* flags options */
- 	else if (!strcmp(arg, "--binary")) {
-diff --git a/diff.h b/diff.h
-index a47bae4..54c2590 100644
---- a/diff.h
-+++ b/diff.h
-@@ -333,6 +333,8 @@ extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
- 
- extern int parse_rename_score(const char **cp_p);
- 
-+extern long parse_algorithm_value(const char *value);
-+
- extern int print_stat_summary(FILE *fp, int files,
- 			      int insertions, int deletions);
- extern void setup_diff_pager(struct diff_options *);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 33ba5dc..ea9dbd3 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2068,6 +2068,15 @@ int parse_merge_opt(struct merge_options *o, const char *s)
- 		o->xdl_opts = DIFF_WITH_ALG(o, PATIENCE_DIFF);
- 	else if (!strcmp(s, "histogram"))
- 		o->xdl_opts = DIFF_WITH_ALG(o, HISTOGRAM_DIFF);
-+	else if (!strcmp(s, "diff-algorithm=")) {
-+		long value = parse_algorithm_value(s+15);
-+		if (value < 0)
-+			return -1;
-+		/* clear out previous settings */
-+		DIFF_XDL_CLR(o, NEED_MINIMAL);
-+		o->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+		o->xdl_opts |= value;
-+	}
- 	else if (!strcmp(s, "ignore-space-change"))
- 		o->xdl_opts |= XDF_IGNORE_WHITESPACE_CHANGE;
- 	else if (!strcmp(s, "ignore-all-space"))
+I think you are looking for "git reset --soft new_parent", which keeps
+both the index and the working tree intact.
+
+Andreas.
+
 -- 
-1.8.0.2
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
