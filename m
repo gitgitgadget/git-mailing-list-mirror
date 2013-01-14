@@ -1,136 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/6] cvsimport: introduce a version-switch wrapper
-Date: Sun, 13 Jan 2013 23:25:48 -0800
-Message-ID: <1358148351-31552-4-git-send-email-gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 0/6] A smoother transition plan for cvsimport
+Date: Sun, 13 Jan 2013 23:47:41 -0800
+Message-ID: <20130114074741.GM3125@elie.Belkin>
 References: <7v8v7wiv3a.fsf@alter.siamese.dyndns.org>
  <1358148351-31552-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 14 08:26:43 2013
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 08:48:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TueRK-0002iO-BO
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 08:26:38 +0100
+	id 1Tuem7-0004gF-Ay
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 08:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755871Ab3ANH0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 02:26:04 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61279 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755495Ab3ANH0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 02:26:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBFAAB8B3
-	for <git@vger.kernel.org>; Mon, 14 Jan 2013 02:25:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=AQGf
-	+9BEJPTwRlar2ve9LXtt+20=; b=fqsANCWgjbu7mch7wkqKJhxNY/14Mf+G8plg
-	jrh3kPY0Kr6XI1L1EtK7TT5fJrRX2mwN+jKzv1/WjJOlZyrCFfYXbpwDQ145r8H7
-	LIDFPZQzms9403RhgYDmOqCqWcnseL94rHiQoieD78R1M/ZcR4fBiauZeWsclTOH
-	a9dx6yk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=nge6qb
-	DRiWwO/NrvOwhUxsvDf+Vekpx/HlYj0W14b1bkDqqO3L9trEerSQeqvwz3MffjK8
-	+TlQBLPRzDv3e0xC/SpKjfrQ5tTsBak8EARMRZFdtZe0KXMQ1bj9c2zkYZT18OY7
-	pyQn9MCiL9+S/lyjomf2Y7lTX6rQI44EoF2hw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1634B8B2
-	for <git@vger.kernel.org>; Mon, 14 Jan 2013 02:25:59 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3479FB8AF for
- <git@vger.kernel.org>; Mon, 14 Jan 2013 02:25:59 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.421.g6236851
+	id S1755903Ab3ANHrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 02:47:47 -0500
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:39888 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755533Ab3ANHrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 02:47:47 -0500
+Received: by mail-pb0-f47.google.com with SMTP id un1so2012905pbc.20
+        for <git@vger.kernel.org>; Sun, 13 Jan 2013 23:47:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=PR0CIHDLIIS1DDRiX0yB43IgYZRupN9a2ePmjzo3p6g=;
+        b=eBl0wlWONBGQeLr+Geg4SXLW+Fp7O5y/dA/HgjCJQcHWNigqsuNtfFptQl/lzz4n+1
+         Ye92HGEz5V3Eq9v98d4kdccOEVtNKbas5kXSfAEUZmA5VmmVXNerJZQQ9Dj3hCcHE+9n
+         6g6qWETfZOSXfd09eOxXrpwOsk+pvwOkgid3BhdyLb1JAaCpnGPZpEsrZmDPnh2ZUY9X
+         8lCmDHlq2nXZPkJHtEVYuApAkBjeffy3zE3wS0baSLAeTg+YdeXqX9U+CfmIcZwtqYgv
+         b83l4YtDHvS2TLah3KL2gx5OaKQKtvRiVEyylQ8bHCroFn748j5wHPQldjL3/1JRbdM2
+         53eA==
+X-Received: by 10.68.143.162 with SMTP id sf2mr251456127pbb.137.1358149666454;
+        Sun, 13 Jan 2013 23:47:46 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id pl10sm7754384pbc.60.2013.01.13.23.47.44
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 13 Jan 2013 23:47:45 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <1358148351-31552-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: A48AB23E-5E1B-11E2-8F7B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213466>
 
-In preparation to have both old and new cvsimport during the
-transition period, rename the cvsimport script to cvsimport-2
-and introduce a small wrapper that we can later change it to
-allow users to run either frontend (with their corresponding
-cvsps backends).
+Junio C Hamano wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- .gitignore                                 | 1 +
- Makefile                                   | 9 ++++++++-
- git-cvsimport.perl => git-cvsimport-2.perl | 0
- git-cvsimport.sh                           | 5 +++++
- 4 files changed, 14 insertions(+), 1 deletion(-)
- rename git-cvsimport.perl => git-cvsimport-2.perl (100%)
- create mode 100755 git-cvsimport.sh
+> Junio C Hamano (6):
+>   Makefile: add description on PERL/PYTHON_PATH
+>   cvsimport: allow setting a custom cvsps (2.x) program name
+>   cvsimport: introduce a version-switch wrapper
+>   cvsimport: start adding cvsps 3.x support
+>   cvsimport: make tests reusable for cvsimport-3
+>   cvsimport-3: add a sample test
 
-diff --git a/.gitignore b/.gitignore
-index aa258a6..8cb799c 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -40,6 +40,7 @@
- /git-credential-store
- /git-cvsexportcommit
- /git-cvsimport
-+/git-cvsimport-2
- /git-cvsserver
- /git-daemon
- /git-diff
-diff --git a/Makefile b/Makefile
-index dd2a024..f3113a9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -253,6 +253,9 @@ all::
- #
- # Define NO_PYTHON if you do not want Python scripts or libraries at all.
- #
-+# Define CVSPS2_PATH if you cannot invoke cvsps (version 2.x) as "cvsps"
-+# using your $PATH; if you do not have any, define CVSPS2_PATH=NoThanks.
-+#
- # Define NO_TCLTK if you do not want Tcl/Tk GUI.
- #
- # The TCL_PATH variable governs the location of the Tcl interpreter
-@@ -440,6 +443,7 @@ unexport CDPATH
- 
- SCRIPT_SH += git-am.sh
- SCRIPT_SH += git-bisect.sh
-+SCRIPT_SH += git-cvsimport.sh
- SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
- SCRIPT_SH += git-lost-found.sh
-@@ -468,12 +472,15 @@ SCRIPT_PERL += git-add--interactive.perl
- SCRIPT_PERL += git-difftool.perl
- SCRIPT_PERL += git-archimport.perl
- SCRIPT_PERL += git-cvsexportcommit.perl
--SCRIPT_PERL += git-cvsimport.perl
-+ifneq ($(CVSPS2_PATH),NoThanks)
-+SCRIPT_PERL += git-cvsimport-2.perl
-+endif
- SCRIPT_PERL += git-cvsserver.perl
- SCRIPT_PERL += git-relink.perl
- SCRIPT_PERL += git-send-email.perl
- SCRIPT_PERL += git-svn.perl
- 
-+SCRIPT_PYTHON += git-p4.py
- SCRIPT_PYTHON += git-remote-testpy.py
- SCRIPT_PYTHON += git-p4.py
- 
-diff --git a/git-cvsimport.perl b/git-cvsimport-2.perl
-similarity index 100%
-rename from git-cvsimport.perl
-rename to git-cvsimport-2.perl
-diff --git a/git-cvsimport.sh b/git-cvsimport.sh
-new file mode 100755
-index 0000000..71ba11d
---- /dev/null
-+++ b/git-cvsimport.sh
-@@ -0,0 +1,5 @@
-+#!/bin/sh
-+
-+GIT_CVSPS_VERSION=2
-+
-+exec git cvsimport-$GIT_CVSPS_VERSION "$@"
--- 
-1.8.1.421.g6236851
+Looks very sane.
