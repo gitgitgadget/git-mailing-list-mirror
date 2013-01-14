@@ -1,133 +1,139 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/6] convert some config callbacks to match_config_key
-Date: Mon, 14 Jan 2013 07:03:22 -0800
-Message-ID: <20130114150322.GC16828@sigill.intra.peff.net>
+Subject: [PATCH 4/6] userdiff: drop parse_driver function
+Date: Mon, 14 Jan 2013 07:04:14 -0800
+Message-ID: <20130114150414.GD16828@sigill.intra.peff.net>
 References: <20130114145845.GA16497@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Joachim Schmitz <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Mon Jan 14 16:03:51 2013
+X-From: git-owner@vger.kernel.org Mon Jan 14 16:04:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TulZj-0006lC-3k
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 16:03:47 +0100
+	id 1TulaZ-0007Zt-4L
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 16:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756239Ab3ANPD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 10:03:27 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:32909 "EHLO
+	id S1756247Ab3ANPES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 10:04:18 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:32914 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755903Ab3ANPD0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 10:03:26 -0500
-Received: (qmail 19874 invoked by uid 107); 14 Jan 2013 15:04:42 -0000
+	id S1755512Ab3ANPES (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 10:04:18 -0500
+Received: (qmail 19921 invoked by uid 107); 14 Jan 2013 15:05:34 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jan 2013 10:04:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2013 07:03:22 -0800
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jan 2013 10:05:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2013 07:04:14 -0800
 Content-Disposition: inline
 In-Reply-To: <20130114145845.GA16497@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213494>
 
-This is easier to read and avoids magic offset constants
-which need to be in sync with the section-name we provide.
+When we parse userdiff config, we generally assume that
+
+  diff.name.key
+
+will affect the "key" value of the "name" driver. However,
+without checking the key, we conflict with the ancient
+"diff.color.*" namespace. The current code is careful not to
+even create a driver struct if we do not see a key that is
+known by the diff-driver code.
+
+However, this carefulness is unnecessary; the default driver
+with no keys set behaves exactly the same as having no
+driver at all. We can simply set up the driver struct as
+soon as we see we have a config key that looks like a
+driver. This makes the code a bit more readable.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- convert.c  |  6 +-----
- ll-merge.c |  6 +-----
- userdiff.c | 13 +++----------
- 3 files changed, 5 insertions(+), 20 deletions(-)
+This is not strictly related to the series, but I noticed it as a
+cleanup while doing the previous patch.
 
-diff --git a/convert.c b/convert.c
-index 6602155..e3ecb30 100644
---- a/convert.c
-+++ b/convert.c
-@@ -465,10 +465,8 @@ static int read_convert_config(const char *var, const char *value, void *cb)
- 	 * External conversion drivers are configured using
- 	 * "filter.<name>.variable".
- 	 */
--	if (prefixcmp(var, "filter.") || (ep = strrchr(var, '.')) == var + 6)
-+	if (match_config_key(var, "filter", &name, &namelen, &ep) < 0 || !name)
- 		return 0;
--	name = var + 7;
--	namelen = ep - name;
- 	for (drv = user_convert; drv; drv = drv->next)
- 		if (!strncmp(drv->name, name, namelen) && !drv->name[namelen])
- 			break;
-@@ -479,8 +477,6 @@ static int read_convert_config(const char *var, const char *value, void *cb)
- 		user_convert_tail = &(drv->next);
- 	}
- 
--	ep++;
--
- 	/*
- 	 * filter.<name>.smudge and filter.<name>.clean specifies
- 	 * the command line:
-diff --git a/ll-merge.c b/ll-merge.c
-index acea33b..d4c4ff6 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -236,15 +236,13 @@ static int read_merge_config(const char *var, const char *value, void *cb)
- 	 * especially, we do not want to look at variables such as
- 	 * "merge.summary", "merge.tool", and "merge.verbosity".
- 	 */
--	if (prefixcmp(var, "merge.") || (ep = strrchr(var, '.')) == var + 5)
-+	if (match_config_key(var, "merge", &name, &namelen, &ep) < 0 || !name)
- 		return 0;
- 
- 	/*
- 	 * Find existing one as we might be processing merge.<name>.var2
- 	 * after seeing merge.<name>.var1.
- 	 */
--	name = var + 6;
--	namelen = ep - name;
- 	for (fn = ll_user_merge; fn; fn = fn->next)
- 		if (!strncmp(fn->name, name, namelen) && !fn->name[namelen])
- 			break;
-@@ -256,8 +254,6 @@ static int read_merge_config(const char *var, const char *value, void *cb)
- 		ll_user_merge_tail = &(fn->next);
- 	}
- 
--	ep++;
--
- 	if (!strcmp("name", ep)) {
- 		if (!value)
- 			return error("%s: lacks value", var);
+ userdiff.c | 50 +++++++++++++++++++++-----------------------------
+ 1 file changed, 21 insertions(+), 29 deletions(-)
+
 diff --git a/userdiff.c b/userdiff.c
-index ed958ef..1a6a0fa 100644
+index 1a6a0fa..c6cdec4 100644
 --- a/userdiff.c
 +++ b/userdiff.c
-@@ -188,20 +188,13 @@ static struct userdiff_driver *parse_driver(const char *var,
- 		const char *value, const char *type)
+@@ -184,28 +184,6 @@ static struct userdiff_driver *userdiff_find_by_namelen(const char *k, int len)
+ 	return NULL;
+ }
+ 
+-static struct userdiff_driver *parse_driver(const char *var,
+-		const char *value, const char *type)
+-{
+-	struct userdiff_driver *drv;
+-	const char *name, *key;
+-	int namelen;
+-
+-	if (match_config_key(var, "diff", &name, &namelen, &key) < 0 ||
+-	    strcmp(type, key))
+-		return NULL;
+-
+-	drv = userdiff_find_by_namelen(name, namelen);
+-	if (!drv) {
+-		ALLOC_GROW(drivers, ndrivers+1, drivers_alloc);
+-		drv = &drivers[ndrivers++];
+-		memset(drv, 0, sizeof(*drv));
+-		drv->name = xmemdupz(name, namelen);
+-		drv->binary = -1;
+-	}
+-	return drv;
+-}
+-
+ static int parse_funcname(struct userdiff_funcname *f, const char *k,
+ 		const char *v, int cflags)
+ {
+@@ -233,20 +211,34 @@ int userdiff_config(const char *k, const char *v)
+ int userdiff_config(const char *k, const char *v)
  {
  	struct userdiff_driver *drv;
--	const char *dot;
--	const char *name;
-+	const char *name, *key;
- 	int namelen;
++	const char *name, *type;
++	int namelen;
++
++	if (match_config_key(k, "diff", &name, &namelen, &type) || !name)
++		return 0;
++
++	drv = userdiff_find_by_namelen(name, namelen);
++	if (!drv) {
++		ALLOC_GROW(drivers, ndrivers+1, drivers_alloc);
++		drv = &drivers[ndrivers++];
++		memset(drv, 0, sizeof(*drv));
++		drv->name = xmemdupz(name, namelen);
++		drv->binary = -1;
++	}
  
--	if (prefixcmp(var, "diff."))
--		return NULL;
--	dot = strrchr(var, '.');
--	if (dot == var + 4)
--		return NULL;
--	if (strcmp(type, dot+1))
-+	if (match_config_key(var, "diff", &name, &namelen, &key) < 0 ||
-+	    strcmp(type, key))
- 		return NULL;
+-	if ((drv = parse_driver(k, v, "funcname")))
++	if (!strcmp(type, "funcname"))
+ 		return parse_funcname(&drv->funcname, k, v, 0);
+-	if ((drv = parse_driver(k, v, "xfuncname")))
++	if (!strcmp(type, "xfuncname"))
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+-	if ((drv = parse_driver(k, v, "binary")))
++	if (!strcmp(type, "binary"))
+ 		return parse_tristate(&drv->binary, k, v);
+-	if ((drv = parse_driver(k, v, "command")))
++	if (!strcmp(type, "command"))
+ 		return git_config_string(&drv->external, k, v);
+-	if ((drv = parse_driver(k, v, "textconv")))
++	if (!strcmp(type, "textconv"))
+ 		return git_config_string(&drv->textconv, k, v);
+-	if ((drv = parse_driver(k, v, "cachetextconv")))
++	if (!strcmp(type, "cachetextconv"))
+ 		return parse_bool(&drv->textconv_want_cache, k, v);
+-	if ((drv = parse_driver(k, v, "wordregex")))
++	if (!strcmp(type, "wordregex"))
+ 		return git_config_string(&drv->word_regex, k, v);
  
--	name = var + 5;
--	namelen = dot - name;
- 	drv = userdiff_find_by_namelen(name, namelen);
- 	if (!drv) {
- 		ALLOC_GROW(drivers, ndrivers+1, drivers_alloc);
+ 	return 0;
 -- 
 1.8.1.rc1.10.g7d71f7b
