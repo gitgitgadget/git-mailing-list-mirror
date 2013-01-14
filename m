@@ -1,113 +1,116 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 3/6] convert some config callbacks to match_config_key
-Date: Mon, 14 Jan 2013 08:55:28 -0800
-Message-ID: <20130114165527.GB3121@elie.Belkin>
+Date: Mon, 14 Jan 2013 09:06:10 -0800
+Message-ID: <20130114170610.GB22098@sigill.intra.peff.net>
 References: <20130114145845.GA16497@sigill.intra.peff.net>
  <20130114150322.GC16828@sigill.intra.peff.net>
+ <20130114165527.GB3121@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Joachim Schmitz <jojo@schmitz-digital.de>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 14 17:55:55 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 18:06:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TunKE-0006or-Jm
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 17:55:54 +0100
+	id 1TunUe-0001pC-Oe
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:06:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756970Ab3ANQze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 11:55:34 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:51375 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756876Ab3ANQzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 11:55:33 -0500
-Received: by mail-pb0-f53.google.com with SMTP id jt11so2252933pbb.40
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 08:55:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=yKuQB7L2rdT3upy+mvoR9lnkFYL7Ahy2xZDG6nSQ4dU=;
-        b=a+78JLgPEDU9IC9EuL19GnKZC1wl9rsER6Ec+C1da/nbBVC8CI2WgkjLR1uGz+O+vs
-         VJlmfWB4cNey8KFe4hhyZLFSff3lF28NzkCd0YCR25XjV9lsC52VW2SVzM7OUWBixgpd
-         l8Y266975KTomCuW6ssDujl2VOK/hb/AJzYlAMm2ve9fB27nFHPg5bQm0qkeHpj1g1tv
-         p2WZOBzONuNbDAJ+54mYhp57PBr9Vc8mYFE1UapSRJvdbmmaaFEm7Jk8xQodSAx+neCe
-         0TrOcpCiHt1BIl3M7MNpn80L7lEuozfuPN4Ev8t/6lME62Eocx5ehZ4Smxat7fc0ziKY
-         lR0g==
-X-Received: by 10.66.76.37 with SMTP id h5mr233095819paw.33.1358182532974;
-        Mon, 14 Jan 2013 08:55:32 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id bi8sm9048882pab.15.2013.01.14.08.55.30
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Jan 2013 08:55:31 -0800 (PST)
+	id S1757602Ab3ANRGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 12:06:18 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33041 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757601Ab3ANRGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 12:06:14 -0500
+Received: (qmail 21312 invoked by uid 107); 14 Jan 2013 17:07:30 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jan 2013 12:07:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2013 09:06:10 -0800
 Content-Disposition: inline
-In-Reply-To: <20130114150322.GC16828@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <20130114165527.GB3121@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213501>
 
-Jeff King wrote:
+On Mon, Jan 14, 2013 at 08:55:28AM -0800, Jonathan Nieder wrote:
 
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -465,10 +465,8 @@ static int read_convert_config(const char *var, const char *value, void *cb)
->  	 * External conversion drivers are configured using
->  	 * "filter.<name>.variable".
->  	 */
-> -	if (prefixcmp(var, "filter.") || (ep = strrchr(var, '.')) == var + 6)
-> +	if (match_config_key(var, "filter", &name, &namelen, &ep) < 0 || !name)
->  		return 0;
+> Jeff King wrote:
+> 
+> > --- a/convert.c
+> > +++ b/convert.c
+> > @@ -465,10 +465,8 @@ static int read_convert_config(const char *var, const char *value, void *cb)
+> >  	 * External conversion drivers are configured using
+> >  	 * "filter.<name>.variable".
+> >  	 */
+> > -	if (prefixcmp(var, "filter.") || (ep = strrchr(var, '.')) == var + 6)
+> > +	if (match_config_key(var, "filter", &name, &namelen, &ep) < 0 || !name)
+> >  		return 0;
+> 
+> Hm, I actually find the preimage more readable here.
 
-Hm, I actually find the preimage more readable here.
+The big thing to me is getting rid of the manual "6" there, which is bad
+for maintainability (it must match the length of "filter", and there is
+no compile-time verification).
 
-I like the idea of having a function to do this, though.  Here are a
-couple of ideas for making the meaning obvious again for people like
-me:
+> Rename match_config_key() to something like parse_config_key()?
+> match_ makes it sound like its main purpose is to match it against a
+> pattern, but really it is more about decomposing into constituent
+> parts.
 
-Rename match_config_key() to something like parse_config_key()?
-match_ makes it sound like its main purpose is to match it against a
-pattern, but really it is more about decomposing into constituent
-parts.
+There is already a git_config_parse_key, but it does something else. I
+wanted to avoid confusion there. And I was trying to indicate that this
+was not just about parsing, but also about matching the section.
+Basically I was trying to encapsulate the current technique and have as
+little code change as possible. But maybe:
 
-Rename ep to something like 'key' or 'filtertype'?  Without the
-explicit string processing, it is not obvious what ep is the end of.
+  struct config_key k;
+  parse_config_key(&k, var);
+  if (strcmp(k.section, "filter") || k.subsection))
+          return 0;
 
-[...]
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -188,20 +188,13 @@ static struct userdiff_driver *parse_driver(const char *var,
->  		const char *value, const char *type)
->  {
->  	struct userdiff_driver *drv;
-> -	const char *dot;
-> -	const char *name;
-> +	const char *name, *key;
->  	int namelen;
->  
-> -	if (prefixcmp(var, "diff."))
-> -		return NULL;
-> -	dot = strrchr(var, '.');
-> -	if (dot == var + 4)
-> -		return NULL;
-> -	if (strcmp(type, dot+1))
-> +	if (match_config_key(var, "diff", &name, &namelen, &key) < 0 ||
-> +	    strcmp(type, key))
->  		return NULL;
->  
-> -	name = var + 5;
-> -	namelen = dot - name;
->  	drv = userdiff_find_by_namelen(name, namelen);
+would be a better start (or having git_config do the first two lines
+itself before triggering the callback).
 
-What happens in the !name case?  (Honest question --- I haven't checked.)
+> Rename ep to something like 'key' or 'filtertype'?  Without the
+> explicit string processing, it is not obvious what ep is the end of.
 
-Generally I like the cleanup.  Thanks for tasteful patch.
+Ah, so that is what "ep" stands for. I was thinking it is a terrible
+variable name, but I was trying to keep the patch minimal.
 
-Jonathan
+> > -	if (prefixcmp(var, "diff."))
+> > -		return NULL;
+> > -	dot = strrchr(var, '.');
+> > -	if (dot == var + 4)
+> > -		return NULL;
+> > -	if (strcmp(type, dot+1))
+> > +	if (match_config_key(var, "diff", &name, &namelen, &key) < 0 ||
+> > +	    strcmp(type, key))
+> >  		return NULL;
+> >  
+> > -	name = var + 5;
+> > -	namelen = dot - name;
+> >  	drv = userdiff_find_by_namelen(name, namelen);
+> 
+> What happens in the !name case?  (Honest question --- I haven't checked.)
+
+Segfault, I expect. Thanks for catching.
+
+I actually wrote this correctly once, coupled with patch 4, but screwed
+it up when teasing it apart into two patches. It should be:
+
+  if (match_config_key(var, "diff", &name, &namelen, &key) < 0 ||
+      !name ||
+      strcmp(type, key))
+          return NULL;
+
+Patch 4 replaces this with correct code (as it moves it into
+userdiff_config).
+
+-Peff
