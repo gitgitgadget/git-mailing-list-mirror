@@ -1,123 +1,361 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 01/14] imap-send.c: remove msg_data::flags, which was
- always zero
-Date: Mon, 14 Jan 2013 10:10:02 +0100
-Message-ID: <50F3CB6A.40203@alum.mit.edu>
-References: <1358141566-26081-1-git-send-email-mhagger@alum.mit.edu> <1358141566-26081-2-git-send-email-mhagger@alum.mit.edu> <20130114055721.GD3125@elie.Belkin>
+From: Nikolay Frantsev <nikolay@frantsev.ru>
+Subject: [BUG] Bug in git stash
+Date: Mon, 14 Jan 2013 11:18:19 +0200
+Message-ID: <CAOJsraHfKRoK1G8tA2ROUH6qt-q0kG6WesZr5enOeeqFF_AC=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 10:10:38 2013
+Content-Type: multipart/mixed; boundary=047d7b66f73dad230404d33c2243
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 14 10:19:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tug3r-0001JA-ET
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 10:10:31 +0100
+	id 1TugCT-0000lO-Rq
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 10:19:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756079Ab3ANJKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 04:10:09 -0500
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:50789 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755659Ab3ANJKH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 04:10:07 -0500
-X-AuditID: 12074412-b7f216d0000008e3-b8-50f3cb6d06b2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 27.F8.02275.D6BC3F05; Mon, 14 Jan 2013 04:10:05 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0E9A3Vi002138
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 14 Jan 2013 04:10:04 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <20130114055721.GD3125@elie.Belkin>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqJt7+nOAQfcDS4uuK91MFg29V5gt
-	3t5cwmjxo6WH2YHFY+esu+wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xuQJfxkL
-	OgUrWq97NTB28nYxcnJICJhIHJ/Qww5hi0lcuLeerYuRi0NI4DKjxPnHP5khnONMEhsXdDKC
-	VPEKaEocfrOYGcRmEVCVOHDvDlicTUBXYlFPMxOILSoQILF4yTl2iHpBiZMzn7CA2CICGhLP
-	P31jA7GZBeIlNk2eADZHWCBcYtGrtewQyxYySjTe+ATWwClgIDGz7Q8LRIOOxLu+B8wQtrzE
-	9rdzmCcwCsxCsmMWkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI108vNLNFLTSnd
-	xAgJaKEdjOtPyh1iFOBgVOLh3VjyOUCINbGsuDL3EKMkB5OSKG/GSaAQX1J+SmVGYnFGfFFp
-	TmrxIUYJDmYlEd7QOqAcb0piZVVqUT5MSpqDRUmc9+didT8hgfTEktTs1NSC1CKYrAwHh5IE
-	b+QpoEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UKzGFwOjFSTFA7S3BKSdt7gg
-	MRcoCtF6ilGXY/vv9ueMQix5+XmpUuK8tSBFAiBFGaV5cCtg6esVozjQx8K8vSBVPMDUBzfp
-	FdASJqAlm/aCLSlJREhJNTBu9Vr9RqPx2sO9XFNEje4FX/fXPqHZ5FnzK0EqofzxqrDsOaEf
-	mZ0V1VKPt2lHtn6dt15O5tBZWy+XHccn3/66RzeT6+Gh0tNeYZ++HxObraEutL/g 
+	id S1756194Ab3ANJTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 04:19:03 -0500
+Received: from mail-ea0-f176.google.com ([209.85.215.176]:33559 "EHLO
+	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755810Ab3ANJTB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 04:19:01 -0500
+Received: by mail-ea0-f176.google.com with SMTP id n12so1615540eaa.21
+        for <git@vger.kernel.org>; Mon, 14 Jan 2013 01:19:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :x-gm-message-state;
+        bh=lmnMuhgAeXazAUCQ1KTB/XChoR5H0xEtZOx1J29A66A=;
+        b=h/MbzCv5TxOpXfXk+77wYjZEHx02CnPV4c4bsFrNLcf49bCM/OG7UAJQHLFcxE88DN
+         WnLbELKOb+0/Grn0RC8TOiY4pWuqekpUNtWPOham2W4SNB2TyrRetssSYPBIuub5m/Dc
+         759v8KBL13tnNFlHzgcbPVMG7JJHpV+oDKxlOeA5emInLVQBdt5he77yEC+NOo21qpVb
+         w1gkr9SIWpbF2AuL+0kINtcuH2sFQr6/E6b1QRcBSVCwyG+Hsmah4txDDUAiJiLoPPMr
+         lmxeP0gwSrMc5kPnt2CSNctvotX/1MVYyrI3l49eZND49cTV5Wha9qr6i9DC8OEb51y8
+         6VlA==
+Received: by 10.14.0.3 with SMTP id 3mr228114724eea.16.1358155140112; Mon, 14
+ Jan 2013 01:19:00 -0800 (PST)
+Received: by 10.223.83.143 with HTTP; Mon, 14 Jan 2013 01:18:19 -0800 (PST)
+X-Gm-Message-State: ALoCoQm9SdmuFo9bGpyLp/RwVtixu0iKVehp9/Ob/wbltSeDt1mF6Kp/h4C6cp4KQdBSASOWhOC5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213476>
 
-On 01/14/2013 06:57 AM, Jonathan Nieder wrote:
-> Michael Haggerty wrote:
-> 
->> This removes the need for function imap_make_flags(), so delete it,
->> too.
-> [...]
->> --- a/imap-send.c
->> +++ b/imap-send.c
-> [...]
->>  	box = gctx->name;
->>  	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
->>  	cb.create = 0;
->> -	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\" %s", prefix, box, flagstr);
->> +	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\"", prefix, box);
-> 
-> Before this change, the command is
-> 
-> 	"APPEND" SP mailbox SP "{" msglen "}" CRLF
-> 
-> .  After this change, it leaves out the space before the brace.  If I
-> understand RFC3501 correctly, the space is required.  Intentional?
+--047d7b66f73dad230404d33c2243
+Content-Type: text/plain; charset=UTF-8
 
-No, not intentional.  I simply didn't follow far enough how the string
-was used and mistakenly thought it was an entire command.  Thanks for
-finding and fixing this.
+Hi, I found very strange bug in git stash. Testcase attached to this mail.
 
-(It probably would be less error-prone if v_issue_imap_cmd() would be
-responsible for adding the extra space in the second branch of the
-following if statement:
+1. I have a test repo with two modified files and one new file with
+content witch added to commit (see repo in attached file):
 
-    if (!cmd->cb.data)
-            bufl = nfsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag,
-cmd->cmd);
-    else
-            bufl = nfsnprintf(buf, sizeof(buf), "%d %s{%d%s}\r\n",
-                              cmd->tag, cmd->cmd, cmd->cb.dlen,
-                              CAP(LITERALPLUS) ? "+" : "");
+nikolay@localhost:~/Desktop/git-stash_bug/bug$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   3
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   1
+#	modified:   2
+#
 
-but that's a design choice that was already in the original version and
-I don't care enough to change it.)
+2. Stashing two modified files into stash named one:
 
-> With the below squashed in,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> 
-> diff --git i/imap-send.c w/imap-send.c
-> index 451d5027..f1c8f5a5 100644
-> --- i/imap-send.c
-> +++ w/imap-send.c
-> @@ -1296,7 +1296,7 @@ static int imap_store_msg(struct store *gctx, struct msg_data *msg)
->  	box = gctx->name;
->  	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
->  	cb.create = 0;
-> -	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\"", prefix, box);
-> +	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
->  	imap->caps = imap->rcaps;
->  	if (ret != DRV_OK)
->  		return ret;
-> 
+nikolay@localhost:~/Desktop/git-stash_bug/bug$ git stash save --keep-index one
+Saved working directory and index state On master: one
+HEAD is now at 7e495f9 files added
 
-ACK.
+3. Checking status, files stashed successfully:
 
-Michael
+nikolay@localhost:~/Desktop/git-stash_bug/bug$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   3
+#
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+4. Stashing one added to commit file into stash named zero:
+
+nikolay@localhost:~/Desktop/git-stash_bug/bug$ git stash save zero
+Saved working directory and index state On master: zero
+HEAD is now at 7e495f9 files added
+
+5. Checking status, files stashed successfully:
+
+nikolay@localhost:~/Desktop/git-stash_bug/bug$ git status
+# On branch master
+nothing to commit, working directory clean
+
+6. Trying to unstash first stashed changes (on step 2), there a bug:
+
+nikolay@localhost:~/Desktop/git-stash_bug/bug$ git stash pop stash@{1}
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   3
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   1
+#	modified:   2
+#
+Dropped stash@{1} (7926ab7285753c179a368a3a7e8ebfb0f39d0437)
+
+Why there a new empty file named 3?
+
+I'm using git 1.8.1, same problem confirmed on git 1.7.12.4.
+
+--
+Nikolay Frantsev
+Homepage: http://frantsev.ru/
+
+--047d7b66f73dad230404d33c2243
+Content-Type: application/zip; name="git-stash_bug.zip"
+Content-Disposition: attachment; filename="git-stash_bug.zip"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_hbxei5qp0
+
+UEsDBBQDAAAAAORWLkIAAAAAAAAAAAAAAAAEAAAAYnVnL1BLAwQUAwAACADDVi5CrgIjCVkAAACR
+AAAABgAAAGJ1Zy5zaH3KQQqAIBBG4f2cYqK1SDfoKlk/KYEjjkoU3b1FtIt2H7zXd9aFaNUTzQu7
+uloiRWEj3JCdKIjWUFjLVKq+VM86NbAxG5BMiAt2loif9UCW75wkPRrP4aIbUEsDBBQDAAAAAORW
+LkIAAAAAAAAAAAAAAAAJAAAAYnVnLy5naXQvUEsDBBQDAAAIABONK0KZq/93xwAAACsBAAAXAAAA
+YnVnLy5naXQvQ09NTUlUX0VESVRNU0ddT0tqAzEMXTeneGQWaaExtMtQuumqUGivoLEV22DLxdYQ
+cvtqQighC4Gkp/fRMRceoBA4bCb8FKbBYFHu0MTwrdasqDwGRcaxdZzb0uETSeTh8JXF+EOpa5Zo
+EqesCbtpZ00pmBk5SuscnkESrMD1V8//ijS3ruPGy5nGt2DuJD6h0rAom8mWn5I1U7meXVYflxTG
+bmZ0BZTDwSDgcRmMbcyKXrHfe/KJA97Wh9+dc9uVtchQS/G0qj0In7CiBwAvd/OrXfwBUEsDBAoD
+AAAAAAKNK0IraXOnFwAAABcAAAANAAAAYnVnLy5naXQvSEVBRHJlZjogcmVmcy9oZWFkcy9tYXN0
+ZXIKUEsDBAoDAAAAANqOK0JUSGV0KQAAACkAAAASAAAAYnVnLy5naXQvT1JJR19IRUFEN2U0OTVm
+OTY5ODNhMTQyNzE1NDgzOThhNzg4OWFlYmI5YWFmYjg4MApQSwMEFAMAAAAAAo0rQgAAAAAAAAAA
+AAAAABIAAABidWcvLmdpdC9icmFuY2hlcy9QSwMEFAMAAAgAAo0rQjc1AMFPAAAAXAAAAA8AAABi
+dWcvLmdpdC9jb25maWc1ysENgCAMBdAzTOEILuAkxkOVYkiKJb/FxO3Fg8eXvPVQ8BYDuKkVVzxZ
+UclvhhW9pmWaY8hFuGriIUfnGHbCh0xiQ6IniYBzb4mc7W8vUEsDBBQDAAAIAAKNK0I3iwcfPwAA
+AEkAAAAUAAAAYnVnLy5naXQvZGVzY3JpcHRpb24LzctLzE1NUShKLcgvzizJL6q0VkhNySxRKMnI
+LFZIy8xJVVBPSS1OLsosKMnMz1NXKMlXAOkAyqciadLjAgBQSwMEFAMAAAAA5FYuQgAAAAAAAAAA
+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
+lwIAUEsDBAoDAAAAACJWLkJtcRLxLgIAAC4CAABIAAAAYnVnLy5naXQvb2JqZWN0cy9wYWNrL3Bh
+Y2stZDdhZTk2NWY2YTkwNzY3MjdmMGJkMWQ1ZDcxNTJkZTZiNjg3ZGFlZC5wYWNrUEFDSwAAAAIA
+AAAHmxJ42qWOPWoDMRBGe51i+oDRz6ykCSGkShkXOcGMdkQWZ7VGlg2+vbdwTpD2432PN7oqOJ0r
++hQQU/YlenYzimLSOUSJVcRbtMLRnLlrG5AUaaoUKQd2+9FNmANlTjkTqwgxV8nZ/vHVliBlx8kp
+SQipeOeteJnmmFQZURhjIcPX8bN1+FpO2y/f4fsAn53buOgN3s59ufEQbqeP+hwP/foOLkyJ3B7j
+4cV6a03Z1nUZQ//rMccGK1920StsTc0DS7xbK+8CgER42lvNNJFpQtzEvj7VzLyU1AqF/DyF3MTi
+ktQiKwXzVBNL0zRLhbTMnNRihcSUlNQULgCcMxBImAx42qXMOw4CIRAA0J5TTG+ygQFcSIyxsrTx
+BAMMkewHw7KbeHsbb2D7itcbM2RtddAGg9VuxHgmqySit2iyUz6azDLZqIKgvb9qg0eZ6kwfeA5w
+b7T2jQ+4vFs5qAdap1v+4dD2KyhtR6+c0wgniVKKWJel9M7/PiKXmTeglDiJL2EpPnWnBXjaMzQw
+MDMxUTBkuMAy8W9d9LZfGkfFF+w22rGVLXiuryFE0ojh2dxHszddvObs3a25rjzqxqEnPcEToZLG
+WCUBHWMmwDJ42jPkAgAAbgA8MHjaAwAAAAABqgN42jM0MDAzMVEwZHg299HsTRevOXt3a64rj7px
+6ElP8ERDiKQRVkkA33wbEqrFbf2s4ZoSmeozUE+GJoECocWzUEsDBBQDAAAIACFWLkLqgi6tbwAA
+AIkAAAAUAAAAYnVnLy5naXQvcGFja2VkLXJlZnMly00KwyAQBtC9pxC6LtH4MzO9zaifWNpCiEKv
+X0re/t3sofV1P9Gn/T7XeNgDeKNZQ4iSumThoD7u5FPkIKzELIpSRLUXZmf/dxvQNrePzoXTSBQK
+maQEBQXPLpPfewRACXBFa69IsV11Lp3D/ABQSwMEFAMAAAAA5FYuQgAAAAAAAAAAAAAAAA4AAABi
+dWcvLmdpdC9yZWZzL1BLAwQUAwAAAAAhVi5CAAAAAAAAAAAAAAAAFAAAAGJ1Zy8uZ2l0L3JlZnMv
+aGVhZHMvUEsDBAoDAAAAANqOK0InjyODKQAAACkAAAATAAAAYnVnLy5naXQvcmVmcy9zdGFzaDk0
+OTczNjc5YjNhZTczMTgwNjcxMmY0ZWVlNzVlZTBiYWNmY2U1NGQKUEsDBBQDAAAAAAKNK0IAAAAA
+AAAAAAAAAAATAAAAYnVnLy5naXQvcmVmcy90YWdzL1BLAwQKAwAAAADajitCU/xRZwIAAAACAAAA
+BQAAAGJ1Zy8xMQpQSwMECgMAAAAA2o4rQpCvfEwCAAAAAgAAAAUAAABidWcvMjIKUEsDBAoDAAAA
+ANqOK0IAAAAAAAAAAAAAAAAFAAAAYnVnLzNQSwECPwMUAwAAAADkVi5CAAAAAAAAAAAAAAAABAAA
+AAAAAAAAABCA7UEAAAAAYnVnL1BLAQI/AxQDAAAIAMNWLkKuAiMJWQAAAJEAAAAGAAAAAAAAAAAA
+IICkgSIAAABidWcuc2hQSwECPwMUAwAAAADkVi5CAAAAAAAAAAAAAAAACQAAAAAAAAAAABCA7UGf
+AAAAYnVnLy5naXQvUEsBAj8DFAMAAAgAE40rQpmr/3fHAAAAKwEAABcAAAAAAAAAAAAggKSBxgAA
+AGJ1Zy8uZ2l0L0NPTU1JVF9FRElUTVNHUEsBAj8DCgMAAAAAAo0rQitpc6cXAAAAFwAAAA0AAAAA
+AAAAAAAggKSBwgEAAGJ1Zy8uZ2l0L0hFQURQSwECPwMKAwAAAADajitCVEhldCkAAAApAAAAEgAA
+AAAAAAAAACCApIEEAgAAYnVnLy5naXQvT1JJR19IRUFEUEsBAj8DFAMAAAAAAo0rQgAAAAAAAAAA
+AAAAABIAAAAAAAAAAAAQgO1BXQIAAGJ1Zy8uZ2l0L2JyYW5jaGVzL1BLAQI/AxQDAAAIAAKNK0I3
+NQDBTwAAAFwAAAAPAAAAAAAAAAAAIICkgY0CAABidWcvLmdpdC9jb25maWdQSwECPwMUAwAACAAC
+jStCN4sHHz8AAABJAAAAFAAAAAAAAAAAACCApIEJAwAAYnVnLy5naXQvZGVzY3JpcHRpb25QSwEC
+PwMUAwAAAADkVi5CAAAAAAAAAAAAAAAADwAAAAAAAAAAABCA7UF6AwAAYnVnLy5naXQvaG9va3Mv
+UEsBAj8DFAMAAAgAAo0rQmD3kVgHAQAAxAEAACQAAAAAAAAAAAAggO2BpwMAAGJ1Zy8uZ2l0L2hv
+b2tzL2FwcGx5cGF0Y2gtbXNnLnNhbXBsZVBLAQI/AxQDAAAIAAKNK0Lp+MoQ8gEAAIADAAAgAAAA
+AAAAAAAAIIDtgfAEAABidWcvLmdpdC9ob29rcy9jb21taXQtbXNnLnNhbXBsZVBLAQI/AxQDAAAI
+AAKNK0KaDPfAiQAAAL0AAAAhAAAAAAAAAAAAIIDtgSAHAABidWcvLmdpdC9ob29rcy9wb3N0LXVw
+ZGF0ZS5zYW1wbGVQSwECPwMUAwAACAACjStCHCVbOfsAAACOAQAAJAAAAAAAAAAAACCA7YHoBwAA
+YnVnLy5naXQvaG9va3MvcHJlLWFwcGx5cGF0Y2guc2FtcGxlUEsBAj8DFAMAAAgAAo0rQu0fcNmR
+AwAAqAYAACAAAAAAAAAAAAAggO2BJQkAAGJ1Zy8uZ2l0L2hvb2tzL3ByZS1jb21taXQuc2FtcGxl
+UEsBAj8DFAMAAAgAAo0rQizfLpeqBwAAVxMAACAAAAAAAAAAAAAggO2B9AwAAGJ1Zy8uZ2l0L2hv
+b2tzL3ByZS1yZWJhc2Uuc2FtcGxlUEsBAj8DFAMAAAgAAo0rQhcCvb6PAgAA1wQAACgAAAAAAAAA
+AAAggO2B3BQAAGJ1Zy8uZ2l0L2hvb2tzL3ByZXBhcmUtY29tbWl0LW1zZy5zYW1wbGVQSwECPwMU
+AwAACAACjStCFVK8rWQEAAAbDgAAHAAAAAAAAAAAACCA7YGxFwAAYnVnLy5naXQvaG9va3MvdXBk
+YXRlLnNhbXBsZVBLAQI/AxQDAAAIACJWLkKkRXKmcwAAAO4AAAAOAAAAAAAAAAAAIICkgU8cAABi
+dWcvLmdpdC9pbmRleFBLAQI/AxQDAAAAAORWLkIAAAAAAAAAAAAAAAAOAAAAAAAAAAAAEIDtQe4c
+AABidWcvLmdpdC9pbmZvL1BLAQI/AxQDAAAIAAKNK0J3Pc0hrQAAAPAAAAAVAAAAAAAAAAAAIICk
+gRodAABidWcvLmdpdC9pbmZvL2V4Y2x1ZGVQSwECPwMUAwAACAAiVi5CFeL5i1cAAABvAAAAEgAA
+AAAAAAAAACCApIH6HQAAYnVnLy5naXQvaW5mby9yZWZzUEsBAj8DFAMAAAAA5FYuQgAAAAAAAAAA
+AAAAAA4AAAAAAAAAAAAQgO1BgR4AAGJ1Zy8uZ2l0L2xvZ3MvUEsBAj8DFAMAAAgAIVYuQjBfTOV9
+AAAArgAAABIAAAAAAAAAAAAggKSBrR4AAGJ1Zy8uZ2l0L2xvZ3MvSEVBRFBLAQI/AxQDAAAAAORW
+LkIAAAAAAAAAAAAAAAATAAAAAAAAAAAAEIDtQVofAABidWcvLmdpdC9sb2dzL3JlZnMvUEsBAj8D
+FAMAAAAA5FYuQgAAAAAAAAAAAAAAABkAAAAAAAAAAAAQgO1Bix8AAGJ1Zy8uZ2l0L2xvZ3MvcmVm
+cy9oZWFkcy9QSwECPwMUAwAACAAhVi5CMF9M5X0AAACuAAAAHwAAAAAAAAAAACCApIHCHwAAYnVn
+Ly5naXQvbG9ncy9yZWZzL2hlYWRzL21hc3RlclBLAQI/AxQDAAAIACFWLkKpP0GhcgAAAJ8AAAAY
+AAAAAAAAAAAAIICkgXwgAABidWcvLmdpdC9sb2dzL3JlZnMvc3Rhc2hQSwECPwMUAwAAAADkVi5C
+AAAAAAAAAAAAAAAAEQAAAAAAAAAAABCA7UEkIQAAYnVnLy5naXQvb2JqZWN0cy9QSwECPwMUAwAA
+AADkVi5CAAAAAAAAAAAAAAAAFgAAAAAAAAAAABCA7UFTIQAAYnVnLy5naXQvb2JqZWN0cy9pbmZv
+L1BLAQI/AwoDAAAAACJWLkJW/Up3NgAAADYAAAAbAAAAAAAAAAAAIICkgYchAABidWcvLmdpdC9v
+YmplY3RzL2luZm8vcGFja3NQSwECPwMUAwAAAADkVi5CAAAAAAAAAAAAAAAAFgAAAAAAAAAAABCA
+7UH2IQAAYnVnLy5naXQvb2JqZWN0cy9wYWNrL1BLAQI/AxQDAAAIACJWLkJs//ZFFAEAAPQEAABH
+AAAAAAAAAAAAIYAkgSoiAABidWcvLmdpdC9vYmplY3RzL3BhY2svcGFjay1kN2FlOTY1ZjZhOTA3
+NjcyN2YwYmQxZDVkNzE1MmRlNmI2ODdkYWVkLmlkeFBLAQI/AwoDAAAAACJWLkJtcRLxLgIAAC4C
+AABIAAAAAAAAAAAAIYAkgaMjAABidWcvLmdpdC9vYmplY3RzL3BhY2svcGFjay1kN2FlOTY1ZjZh
+OTA3NjcyN2YwYmQxZDVkNzE1MmRlNmI2ODdkYWVkLnBhY2tQSwECPwMUAwAACAAhVi5C6oIurW8A
+AACJAAAAFAAAAAAAAAAAACCApIE3JgAAYnVnLy5naXQvcGFja2VkLXJlZnNQSwECPwMUAwAAAADk
+Vi5CAAAAAAAAAAAAAAAADgAAAAAAAAAAABCA7UHYJgAAYnVnLy5naXQvcmVmcy9QSwECPwMUAwAA
+AAAhVi5CAAAAAAAAAAAAAAAAFAAAAAAAAAAAABCA7UEEJwAAYnVnLy5naXQvcmVmcy9oZWFkcy9Q
+SwECPwMKAwAAAADajitCJ48jgykAAAApAAAAEwAAAAAAAAAAACCApIE2JwAAYnVnLy5naXQvcmVm
+cy9zdGFzaFBLAQI/AxQDAAAAAAKNK0IAAAAAAAAAAAAAAAATAAAAAAAAAAAAEIDtQZAnAABidWcv
+LmdpdC9yZWZzL3RhZ3MvUEsBAj8DCgMAAAAA2o4rQlP8UWcCAAAAAgAAAAUAAAAAAAAAAAAggKSB
+wScAAGJ1Zy8xUEsBAj8DCgMAAAAA2o4rQpCvfEwCAAAAAgAAAAUAAAAAAAAAAAAggKSB5icAAGJ1
+Zy8yUEsBAj8DCgMAAAAA2o4rQgAAAAAAAAAAAAAAAAUAAAAAAAAAAAAggKSBCygAAGJ1Zy8zUEsF
+BgAAAAAqACoAPgsAAC4oAAAAAA==
+--047d7b66f73dad230404d33c2243--
