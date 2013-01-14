@@ -1,109 +1,233 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] t0050: mark TC merge (case change) as success
-Date: Mon, 14 Jan 2013 18:53:34 +0100
-Message-ID: <50F4461E.3060408@web.de>
-References: <201301132138.37154.tboegi@web.de> <7v7gnghdj2.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/6] convert some config callbacks to match_config_key
+Date: Mon, 14 Jan 2013 10:05:51 -0800
+Message-ID: <20130114180550.GA12961@sigill.intra.peff.net>
+References: <20130114145845.GA16497@sigill.intra.peff.net>
+ <20130114150322.GC16828@sigill.intra.peff.net>
+ <20130114165527.GB3121@elie.Belkin>
+ <20130114170610.GB22098@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org, prohaska@zib.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 18:54:07 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Joachim Schmitz <jojo@schmitz-digital.de>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 19:06:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuoEY-0001jb-Py
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:54:07 +0100
+	id 1TuoQJ-0004LR-Re
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 19:06:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758001Ab3ANRxp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2013 12:53:45 -0500
-Received: from mout.web.de ([212.227.17.12]:60167 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757974Ab3ANRxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 12:53:43 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0M5fhI-1T1uLf0ifw-00y8p3; Mon, 14 Jan 2013 18:53:35
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <7v7gnghdj2.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:ZTBFFCBe+esw+YpHdZH280qLxG3G+RfqprEK0ocEa2s
- L94+UMyJHU4fTnFvP7aGsi0n7tsBqXmB8pFpoe3ZURpQZRSZMZ
- 9wvcgW3+7TVvNeKDF/+aPIJBpTALlGMENczLI4ttHKXRWYULhn
- Zr0Sd0yvyKExRZrjYp0+GUOgkV9msdfIRxsFvtdijZITWYl6i2
- AbvEivCqVhz0eQDiFvz8g==
+	id S1756716Ab3ANSFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 13:05:55 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33093 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756216Ab3ANSFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 13:05:54 -0500
+Received: (qmail 21918 invoked by uid 107); 14 Jan 2013 18:07:10 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jan 2013 13:07:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2013 10:05:51 -0800
+Content-Disposition: inline
+In-Reply-To: <20130114170610.GB22098@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213509>
 
-On 14.01.13 00:24, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> The test "merge (case change)" passes on a case ignoring file system
->>
->> Use test_expect_success to remove the "known breakage vanished"
->>
->> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->> ---
->=20
-> Interesting.  When did this change?  Do you happen to have a
-> bisection? =20
-This seems to be the commit:
+On Mon, Jan 14, 2013 at 09:06:10AM -0800, Jeff King wrote:
 
-commit 6aad47dec7a72bb36c64afb6c43f4dbcaa49e7f9
-Merge: e13067a 0047dd2
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Fri May 23 16:05:52 2008 -0700
+>   struct config_key k;
+>   parse_config_key(&k, var);
+>   if (strcmp(k.section, "filter") || k.subsection))
+>           return 0;
+> 
+> would be a better start (or having git_config do the first two lines
+> itself before triggering the callback).
 
-    Merge branch 'sp/ignorecase'
-   =20
-    * sp/ignorecase:
-      t0050: Fix merge test on case sensitive file systems
-      t0050: Add test for case insensitive add
-      t0050: Set core.ignorecase case to activate case insensitivity
-      t0050: Test autodetect core.ignorecase
-      git-init: autodetect core.ignorecase
+Here's what that looks like, along with the cleanups in submodule.c that
+are made possible by it.
 
-Which comes from here:
+I "cheat" a little and use a static buffer when parsing the config key,
+so that the caller does not have to deal with freeing it. It makes using
+the parser literally as simple as the lines above, but it does mean it
+isn't re-entrant (and worse, it has to be invoked from a config
+callback, since the static buffer is tied to the config file stack).
 
-commit 0047dd2fd1fc1980913901c5fa098357482c2842
-Author: Steffen Prohaska <prohaska@zib.de>
-Date:   Thu May 15 07:19:54 2008 +0200
+None of that is a problem for the use here, but it is not a
+generally-callable function. For that reason, it might make more sense
+to have the config parser just provide the config_key, and not have a
+public function at all. The downside to that is that we have to update
+the function signature of all of the config callbacks.
 
-    t0050: Fix merge test on case sensitive file systems
-   =20
-    On a case sensitive filesystem, "git reset --hard" might refuse to
-    overwrite a file whose name differs only by case, even if
-    core.ignorecase is set.  It is not clear which circumstances cause =
-this
-    behavior.  This commit simply works around the problem by removing
-    the case changing file before running "git reset --hard".
-   =20
-    Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ cache.h     |  7 ++++++
+ config.c    | 35 ++++++++++++++++++++++++++++++
+ submodule.c | 41 ++++++++++++++---------------------
+ 3 files changed, 58 insertions(+), 25 deletions(-)
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
->Or did the test pass from the very beginning?
-Hm, reading the commit, it seems as if the "root problem" still exist:
-git reset --hard does not change the case of an existing file
-
-What is the exist behvior?
-
-
-
-My feeling is that the test as such deserves some more improvements,
-the result of the merge is not checked, files are empty so that
-the content is not checked.
-
-Another improvement:
-Running under Linux gives:
-not ok 6 - add (with different case) # TODO known breakage
-(and running under mingw failes)
-=20
-Please stay tuned for more updates, thanks for reviewing.
-/Torsten
+diff --git a/cache.h b/cache.h
+index c257953..df756e6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1119,6 +1119,13 @@ extern int update_server_info(int);
+ #define CONFIG_INVALID_PATTERN 6
+ #define CONFIG_GENERIC_ERROR 7
+ 
++struct config_key {
++	const char *section;
++	const char *subsection;
++	const char *key;
++};
++void config_key_parse(struct config_key *, const char *);
++
+ typedef int (*config_fn_t)(const char *, const char *, void *);
+ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
+diff --git a/config.c b/config.c
+index 7b444b6..7b8df3e 100644
+--- a/config.c
++++ b/config.c
+@@ -18,6 +18,7 @@ typedef struct config_file {
+ 	int eof;
+ 	struct strbuf value;
+ 	struct strbuf var;
++	struct strbuf key_parse_buf;
+ } config_file;
+ 
+ static config_file *cf;
+@@ -899,6 +900,7 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ 		top.eof = 0;
+ 		strbuf_init(&top.value, 1024);
+ 		strbuf_init(&top.var, 1024);
++		strbuf_init(&top.key_parse_buf, 1024);
+ 		cf = &top;
+ 
+ 		ret = git_parse_file(fn, data);
+@@ -906,6 +908,7 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ 		/* pop config-file parsing state stack */
+ 		strbuf_release(&top.value);
+ 		strbuf_release(&top.var);
++		strbuf_release(&top.key_parse_buf);
+ 		cf = top.prev;
+ 
+ 		fclose(f);
+@@ -1667,3 +1670,35 @@ int config_error_nonbool(const char *var)
+ {
+ 	return error("Missing value for '%s'", var);
+ }
++
++void config_key_parse(struct config_key *key, const char *var)
++{
++	/*
++	 * We want to use a static buffer so the caller does not have to worry
++	 * about memory ownership. But since config parsing can happen
++	 * recursively, we must use storage from the stack of config files.
++	 */
++	struct strbuf *sb = &cf->key_parse_buf;
++	char *dot;
++	char *rdot;
++
++	strbuf_reset(sb);
++	strbuf_addstr(sb, var);
++
++	dot = strchr(sb->buf, '.');
++	rdot = strrchr(sb->buf, '.');
++	/* Should never happen because our keys come from git_parse_file. */
++	if (!dot)
++		die("BUG: config_key_parse was fed a bogus key");
++	key->section = sb->buf;
++	*dot = '\0';
++	key->key = rdot + 1;
++
++	if (rdot == dot)
++		key->subsection = NULL;
++	else {
++		*rdot = '\0';
++		key->subsection = dot + 1;
++	}
++
++}
+diff --git a/submodule.c b/submodule.c
+index 2f55436..4894718 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -11,9 +11,9 @@
+ #include "sha1-array.h"
+ #include "argv-array.h"
+ 
+-static struct string_list config_name_for_path;
+-static struct string_list config_fetch_recurse_submodules_for_name;
+-static struct string_list config_ignore_for_name;
++static struct string_list config_name_for_path = STRING_LIST_INIT_DUP;
++static struct string_list config_fetch_recurse_submodules_for_name = STRING_LIST_INIT_DUP;
++static struct string_list config_ignore_for_name = STRING_LIST_INIT_DUP;
+ static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
+ static struct string_list changed_submodule_paths;
+ static int initialized_fetch_ref_tips;
+@@ -126,47 +126,38 @@ int parse_submodule_config_option(const char *var, const char *value)
+ 
+ int parse_submodule_config_option(const char *var, const char *value)
+ {
+-	int len;
++	struct config_key key;
+ 	struct string_list_item *config;
+-	struct strbuf submodname = STRBUF_INIT;
+ 
+-	var += 10;		/* Skip "submodule." */
++	config_key_parse(&key, var);
++	if (strcmp(key.section, "submodule") || !key.subsection)
++		return 0;
+ 
+-	len = strlen(var);
+-	if ((len > 5) && !strcmp(var + len - 5, ".path")) {
+-		strbuf_add(&submodname, var, len - 5);
++	if (!strcmp(key.key, "path")) {
+ 		config = unsorted_string_list_lookup(&config_name_for_path, value);
+ 		if (config)
+ 			free(config->util);
+ 		else
+-			config = string_list_append(&config_name_for_path, xstrdup(value));
+-		config->util = strbuf_detach(&submodname, NULL);
+-		strbuf_release(&submodname);
+-	} else if ((len > 23) && !strcmp(var + len - 23, ".fetchrecursesubmodules")) {
+-		strbuf_add(&submodname, var, len - 23);
+-		config = unsorted_string_list_lookup(&config_fetch_recurse_submodules_for_name, submodname.buf);
++			config = string_list_append(&config_name_for_path, value);
++		config->util = xstrdup(key.subsection);
++	} else if (!strcmp(key.key, "fetchrecursesubmodules")) {
++		config = unsorted_string_list_lookup(&config_fetch_recurse_submodules_for_name, key.subsection);
+ 		if (!config)
+-			config = string_list_append(&config_fetch_recurse_submodules_for_name,
+-						    strbuf_detach(&submodname, NULL));
++			config = string_list_append(&config_fetch_recurse_submodules_for_name, key.subsection);
+ 		config->util = (void *)(intptr_t)parse_fetch_recurse_submodules_arg(var, value);
+-		strbuf_release(&submodname);
+-	} else if ((len > 7) && !strcmp(var + len - 7, ".ignore")) {
++	} else if (!strcmp(key.key, "ignore")) {
+ 		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+ 		    strcmp(value, "all") && strcmp(value, "none")) {
+ 			warning("Invalid parameter \"%s\" for config option \"submodule.%s.ignore\"", value, var);
+ 			return 0;
+ 		}
+ 
+-		strbuf_add(&submodname, var, len - 7);
+-		config = unsorted_string_list_lookup(&config_ignore_for_name, submodname.buf);
++		config = unsorted_string_list_lookup(&config_ignore_for_name, key.subsection);
+ 		if (config)
+ 			free(config->util);
+ 		else
+-			config = string_list_append(&config_ignore_for_name,
+-						    strbuf_detach(&submodname, NULL));
+-		strbuf_release(&submodname);
++			config = string_list_append(&config_ignore_for_name, key.subsection);
+ 		config->util = xstrdup(value);
+-		return 0;
+ 	}
+ 	return 0;
+ }
