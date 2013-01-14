@@ -1,107 +1,157 @@
-From: =?windows-1251?B?0fLu6ffuINHr5e/27uI=?= 
-	<stoycho.sleptsov@gmail.com>
-Subject: Re: git list files
-Date: Mon, 14 Jan 2013 19:20:04 +0200
-Message-ID: <CAGL0X-p2D90aNTzAHLoz0xnU3AAR-vUEPDAoRkyd9k+8_Kc0Vg@mail.gmail.com>
-References: <CAGL0X-rfrwtbtdN7O0=iMhVRYv1m0_czW8zmgT5QA3irkaeu5Q@mail.gmail.com>
-	<20130113175602.GD5973@elie.Belkin>
-	<20130113201027.GA4436@sigill.intra.peff.net>
-	<20130114070832.GA4820@elie.Belkin>
-	<20130114152836.GA18370@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] push: Add support for pre-push hooks
+Date: Mon, 14 Jan 2013 09:39:24 -0800
+Message-ID: <7vsj63ekab.fsf@alter.siamese.dyndns.org>
+References: <1358054224-7710-1-git-send-email-aaron@schrab.com>
+ <1356735452-21667-1-git-send-email-aaron@schrab.com>
+ <1358054224-7710-3-git-send-email-aaron@schrab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 14 18:20:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Aaron Schrab <aaron@schrab.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 18:40:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tuni1-0005w3-Gj
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:20:29 +0100
+	id 1Tuo0v-0005mX-8o
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 18:40:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756953Ab3ANRUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 12:20:07 -0500
-Received: from mail-la0-f52.google.com ([209.85.215.52]:60521 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756202Ab3ANRUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 12:20:06 -0500
-Received: by mail-la0-f52.google.com with SMTP id fq12so4062475lab.25
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 09:20:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5QrKiydmzR5NzIQnM/YDCImC1txoKuDerLcQP9MIaPk=;
-        b=Vl9YTTrkgrYWkwH3zpKK0H2ucRNQDSEZp63OXbJ5a/K0+USQkSrY8jfkX+fMv3FuwM
-         nl8LxdqwN9kG6pomrdfYLT+hOr3D7u9lNOqpijI/IQbNVELLwuvSdk0vYCZ+ijuVydrs
-         Ce8NRfx2nsrcxf/w6CytkKKO6S5Vk1IBwtJxdrn+AOu3OjkcB2G3OpebfLJerEJBeyq7
-         5Rw98bOnsSwKyxy+uV2IPvARGRCE692aY7sgd+rrDKzpW1hvdtV9i2iPRpZxB/ZFAh2S
-         qsLBVSqEUd1rJHGREOBcIDZUOiYFf8v6MHD5QMWPgYip1ppp6SXuzB36LuLMiRd5bGZ8
-         fbrQ==
-Received: by 10.112.82.166 with SMTP id j6mr35411674lby.25.1358184004222; Mon,
- 14 Jan 2013 09:20:04 -0800 (PST)
-Received: by 10.112.60.36 with HTTP; Mon, 14 Jan 2013 09:20:04 -0800 (PST)
-In-Reply-To: <20130114152836.GA18370@sigill.intra.peff.net>
+	id S1757535Ab3ANRjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 12:39:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65078 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757005Ab3ANRj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 12:39:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BF4BC835;
+	Mon, 14 Jan 2013 12:39:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MHvJA9wo4HwHjHEywWyJt1y9+7s=; b=U8cOCF
+	r4sjodXFc9X3p0xiW/13Jq9wFaTsEy7D4eQuMIiAmx/uMjJkx15oOxNJkAjB9/j8
+	qgz2xG2yjvLf6uSJ+nHWOd0vQMvsKuo38SNUFlVw/Avz7l4gGMr+zvnx/le7hCDw
+	/H9zqB+E1LebXj4CmUlNhyHiZZ2mpUSYPOln8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EqN7ipC3xZJegoDcdLj90nUAjgJJMCLK
+	NiEaHzphLS1rnl4yqtd1UB5KYThLqMhchVksN0wBtImM1EYoiguRSwafgBzXwXtd
+	LJ41Iy4HiSklzzA97YKVFZU9laVP1AfRJjpHeeSNeSRT0V0nS/L151vlP0StqFW2
+	lhU3Q/epo24=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B68BC834;
+	Mon, 14 Jan 2013 12:39:26 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A821EC82E; Mon, 14 Jan 2013
+ 12:39:25 -0500 (EST)
+In-Reply-To: <1358054224-7710-3-git-send-email-aaron@schrab.com> (Aaron
+ Schrab's message of "Sun, 13 Jan 2013 00:17:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 56E9208C-5E71-11E2-895E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213504>
 
-I went through your initial thread about blame-tree,
-and it is really very very (+very) close to answer my question.
+Aaron Schrab <aaron@schrab.com> writes:
 
-Thanks for writing it,
-if it comes one day to git, I will use it.
-
-As for:
-'I guess people's eyes and brains are trained by the old school "file
-boundaries matter" way of thinking'
--- Junio C Hamano
-at http://thread.gmane.org/gmane.comp.version-control.git/168323;
-http://article.gmane.org/gmane.comp.version-control.git/168333
-
-I think it's not the case, Mr. Hamano.
-
->From my point of view, it is just to have a quick picture of "what
-came from where in this current directory",
-which is a normal reaction of human beings, I think.
-
-Speaking of which I can't help thinking that this feature could be
-provided by $git rev-list (HEAD) --no-walk -- <paths>, just don't stop
-at first commit,
-but at first commit for each of the paths.
-
-Or maybe diff could have an option to not compare against a specific point,
-but actually do his job and go downstears and find where the
-_diff_erence for _each_ path happened finally.
-
-(... applicable for $git status -l (--list) --porcelain ... but thats
-a whim, sorry.)
-
-Anyway,
-thank you all for your time, it was a real pleasure for me,
-Blind.
-
-2013/1/14 Jeff King <peff@peff.net>:
-> On Sun, Jan 13, 2013 at 11:08:32PM -0800, Jonathan Nieder wrote:
+> Add support for a pre-push hook which can be used to determine if the
+> set of refs to be pushed is suitable for the target repository.  The
+> hook is run with two arguments specifying the name and location of the
+> destination repository.
 >
->> Jeff King wrote:
->>
->> > As far as I recall, that script works. However, I have a pure-C
->> > blame-tree implementation that is much faster, which may also be of
->> > interest. I need to clean up and put a few finishing touches on it to
->> > send it to the list, but it has been in production at GitHub for a few
->> > months. You can find it here:
->> >
->> >   git://github.com/peff/git jk/blame-tree
->>
->> Oh, neat.  Would that make sense as an item in
->> <https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools>?
+> Information about what is to be pushed is provided by sending lines of
+> the following form to the hook's standard input:
 >
-> I'd rather finish cleaning it up and actually get it merged. It's on my
-> todo list.
+>   <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
 >
-> -Peff
+> If the hook exits with a non-zero status, the push will be aborted.
+>
+> This will allow the script to determine if the push is acceptable based
+> on the target repository and branch(es), the commits which are to be
+> pushed, and even the source branches in some cases.
+>
+> Signed-off-by: Aaron Schrab <aaron@schrab.com>
+> ---
+>  Documentation/githooks.txt |  29 ++++++++++
+>  builtin/push.c             |   1 +
+>  t/t5571-pre-push-hook.sh   | 129 +++++++++++++++++++++++++++++++++++++++++++++
+>  transport.c                |  60 +++++++++++++++++++++
+>  transport.h                |   1 +
+>  5 files changed, 220 insertions(+)
+>  create mode 100755 t/t5571-pre-push-hook.sh
+>
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index b9003fe..d839233 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -176,6 +176,35 @@ save and restore any form of metadata associated with the working tree
+>  (eg: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
+>  for an example of how to do this.
+>  
+> +pre-push
+> +~~~~~~~~
+> +
+> +This hook is called by 'git push' and can be used to prevent a push from taking
+> +place.  The hook is called with two parameters which provide the name and
+> +location of the destination remote, if a named remote is not being used both
+> +values will be the same.
+> +
+> +Information about what is to be pushed is provided on the hook's standard
+> +input with lines of the form:
+> +
+> +  <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
+> +
+> +For instance, if the command +git push origin master:foreign+ were run the
+
+Just being curious, but why use +monospace text+ here?  Most of the
+new text use `monospace text literally` instead in this patch.
+
+> +hook would receive a line like the following:
+> +
+> +  refs/heads/master 67890 refs/heads/foreign 12345
+> +
+> +although the full, 40-character SHA1s would be supplied.
+
+Perhaps ellipses are called for here?
+
+    refs/heads/master 67890... refs/heads/foreign 12345...
+
+ (the above abbreviates full 40-hexdigits for illustration purposes only)
+
+> +If the foreign ref
+> +does not yet exist the `<remote SHA1>` will be 40 `0`.  If a ref is to be
+> +deleted, the `<local ref>` will be supplied as `(delete)` and the `<local
+> +SHA1>` will be 40 `0`.  If the local commit was specified by something other
+> +than a name which could be expanded (such as `HEAD~`, or a SHA1) it will be
+> +supplied as it was originally given.
+> +
+> +If this hook exits with a non-zero status, 'git push' will abort without
+> +pushing anything.  Information about why the push is rejected may be sent
+> +to the user by writing to standard error.
+
+s/standard error/& of the hook/; perhaps?  It is unclear who does
+the writing and it can be misunderstood that git-push will write to
+standard error upon seeing your hook that silently exits.
+
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 8491e43..b158028 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -407,6 +407,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
+>  		OPT_BIT(0, "prune", &flags, N_("prune locally removed refs"),
+>  			TRANSPORT_PUSH_PRUNE),
+> +		OPT_BIT(0, "no-verify", &flags, N_("bypass pre-push hook"), TRANSPORT_PUSH_NO_HOOK),
+>  		OPT_END()
+>  	};
+
+So to countermand this, you have to say --no-no-verify?  Wouldn't it
+be more natural to introduce a --verify option that turns the bit
+on, which automatically gives you --no-verify to turn it off?  A
+bit in a flag word can be initialized to true before the flag word
+is given to the parse_options() machinery to make the field default
+to true, no?
