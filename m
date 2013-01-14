@@ -1,87 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Error:non-monotonic index after failed recursive "sed" command
-Date: Mon, 14 Jan 2013 12:12:47 +0000
-Message-ID: <20130114121247.GS4574@serenity.lan>
+Date: Mon, 14 Jan 2013 13:21:38 +0100
+Message-ID: <50F3F852.8060800@viscovery.net>
 References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
- <vpq38y42clj.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: George Karpenkov <george@metaworld.ru>, git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jan 14 13:13:19 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: George Karpenkov <george@metaworld.ru>
+X-From: git-owner@vger.kernel.org Mon Jan 14 13:22:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tuiuj-000205-Pq
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:13:18 +0100
+	id 1Tuj3C-0000kD-1y
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:22:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756241Ab3ANMM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 07:12:58 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:38694 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755732Ab3ANMM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 07:12:56 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id B425F19800B;
-	Mon, 14 Jan 2013 12:12:55 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UmEXEgpADeQy; Mon, 14 Jan 2013 12:12:55 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 1B062198028;
-	Mon, 14 Jan 2013 12:12:54 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id B7F46161E554;
-	Mon, 14 Jan 2013 12:12:54 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KJWz41FAhiv2; Mon, 14 Jan 2013 12:12:54 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id F27A7161E574;
-	Mon, 14 Jan 2013 12:12:49 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <vpq38y42clj.fsf@grenoble-inp.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755533Ab3ANMVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 07:21:42 -0500
+Received: from so.liwest.at ([212.33.55.24]:9509 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755464Ab3ANMVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 07:21:41 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Tuj2p-0003fs-0y; Mon, 14 Jan 2013 13:21:39 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id BF0201660F;
+	Mon, 14 Jan 2013 13:21:38 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213485>
 
-On Mon, Jan 14, 2013 at 01:06:16PM +0100, Matthieu Moy wrote:
-> George Karpenkov <george@metaworld.ru> writes:
->> I've managed to corrupt my very valuable repository with a recursive
->> sed which went wrong.
->> I wanted to convert all tabs to spaces with the following command:
->>
->> find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
+Am 1/14/2013 12:40, schrieb George Karpenkov:
+> I've managed to corrupt my very valuable repository with a recursive
+> sed which went wrong.
+> I wanted to convert all tabs to spaces with the following command:
 > 
-> Clearly, this is a dangerous command as it impacts .git/. However, Git
-> partially protects you from this kind of error, since object files and
-> pack files are read-only by default.
+> find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
 > 
-> My obvious first advice is: make backups of your corrupted repository.
-> Yes, I said backup_s_, better safe than sorry.
+> I think that has changed not only the files in the repo, but the data
+> files in .git directory itself. As a result, my index became
+> corrupted, and almost every single command dies:
+> 
+>> git log
+> error: non-monotonic index
+> ..git/objects/pack/pack-314b1944adebea645526b6724b2044c1313241f5.idx
+> error: non-monotonic index
+> ..git/objects/pack/pack-75c95b0defe1968b61e4f4e1ab7040d35110bfdc.idx
+> ....
+> error: non-monotonic index
+> ..git/objects/pack/pack-3da0da48d05140b55f4af1cf87c55a2d7898bdd5.idx
+> fatal: bad object HEAD
+> 
+> Output for git fsck is even worse:
+> 
+>> git fsck
+> error: non-monotonic index
+> ..git/objects/pack/pack-434f8445672a92f123accffce651bdb693bd8fcb.idx
+> ....
+> error: non-monotonic index
+> ..git/objects/pack/pack-0c9d5ae4e2b46dd78dace7533adf6cdfe10326ef.idx
+> error: non-monotonic index
+> ..git/objects/pack/pack-e8bd5c7f85e96e7e548a62954a8f7c7f223ba9e0.idx
+> Segmentation fault (core dumped)
+> 
+> Any advice? I've lost about 2 weeks worth of work.
+> Is there anything better I can try to do other then trying to
+> reconstruct the data manually from git blobs?
 
-Having backed up the corrupt state, another option is to just try
-running the reverse command:
+First things first: MAKE A COPY OF THE CURRENT STATE of the repository,
+including the worktree, so that you have something to go back to if things
+get worse later. (At the very least, we want to debug the segfault that we
+see above.)
 
-find .git -name '*.*' -exec sed -i 's/    /\t/g' {} \;
+So far that's all I can say about your case. Everything that follows is
+just a shot in the dark, and others may have better ideas. Also, look
+here:
+https://github.com/gitster/git/blob/master/Documentation/howto/recover-corrupted-blob-object.txt
 
-I had a quick grep over some pack indices here and '    ' doesn't occur
-in any of mine whereas '\t' is very common so you may find that the only
-'    ' sequences are the ones you introduced.
+You can remove the *.idx files, because they do not carry essential
+information. Now try git fsck; git repack.
 
+Try the reverse edit:
 
-John
+ find .git -name '*.*' -exec sed -i 's/    /\t/g' {} \;
+
+Remove .git/index; it can be reconstructed (of course, assuming you
+started all this with a clean index; if not, you lose the staged changes).
+
+-- Hannes
