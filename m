@@ -1,88 +1,152 @@
-From: =?utf-8?Q?R=C3=A9mi_Vanicat?= <vanicat@debian.org>
-Subject: Re: Ediff interactive add
-Date: Mon, 14 Jan 2013 20:57:49 +0100
-Message-ID: <87fw23wn9e.fsf@debian.org>
-References: <50EEEE53.7070804@mpp.mpg.de>
-	<CAJcAo8sNgdDg_6qRaZmmpLQMXuB22+Mm+q=uDgxoxJErBuNzNg@mail.gmail.com>
-	<50EFF882.5010206@mpp.mpg.de>
+From: Michal Privoznik <mprivozn@redhat.com>
+Subject: [PATCH v2 2/3] config: Introduce diff.algorithm variable
+Date: Mon, 14 Jan 2013 20:58:10 +0100
+Message-ID: <f76708fc2a1dc33f3f9c67688ef5709302b56cbb.1358193364.git.mprivozn@redhat.com>
+References: <cover.1358193364.git.mprivozn@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 14 20:58:17 2013
+Content-Transfer-Encoding: 8bit
+Cc: gitster@pobox.com, peff@peff.net, trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 14 20:58:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuqAh-0002Z7-RU
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 20:58:16 +0100
+	id 1TuqBC-0002yZ-K6
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 20:58:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757978Ab3ANT5y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2013 14:57:54 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:55706 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757719Ab3ANT5x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 14:57:53 -0500
-Received: by mail-wi0-f178.google.com with SMTP id hn3so1576282wib.11
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 11:57:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=+NVwBcxvhE4Vt98YJpgQTIENpr1h13lfypmeAf4L8gc=;
-        b=S0K3xWvau/ad1fU2ULLpZG21d3UXTIiThG1arHz7hFy0a8G0+liejzegh/y04zmhw4
-         UfhqjU0NfJCrqF8B6POTBcq+MfTX+8Jz51ZQnU1trZ9P9xUZhfEfzJ3dpdKqkDqWR0vF
-         zO6xzGJ+WgEgamv4MTNV5mGzQFeOa5qgM0d4JdK44d5/M++nsSgJKdkfcbWiTNMg3rEZ
-         AS1vY9tqOTzP6yEeERmwY8MUtfLauHfYVNlis/NrGHdLjoMd9HpG9ayPb0RLfT7XiVd1
-         ZYh51yp3GAzttugF/Unv31gTHr6t+yuhcP7/rmo7QG8TdWFFm87PsepCd8k9gbNNJMka
-         m5sA==
-X-Received: by 10.180.86.36 with SMTP id m4mr14632179wiz.5.1358193472468;
-        Mon, 14 Jan 2013 11:57:52 -0800 (PST)
-Received: from corbeau (2a02-8425-0ad3-2b00-0224-8cff-fe37-c361.rev.sfr.net. [2a02:8425:ad3:2b00:224:8cff:fe37:c361])
-        by mx.google.com with ESMTPS id w5sm191317wif.11.2013.01.14.11.57.50
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 14 Jan 2013 11:57:51 -0800 (PST)
-In-Reply-To: <50EFF882.5010206@mpp.mpg.de> (Frederik Beaujean's message of
-	"Fri, 11 Jan 2013 12:33:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1757984Ab3ANT60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 14:58:26 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:37882 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756861Ab3ANT6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 14:58:25 -0500
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0EJwI45028650
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 14 Jan 2013 14:58:18 -0500
+Received: from bart.brq.redhat.com (dhcp-27-249.brq.redhat.com [10.34.27.249])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id r0EJwDVn009934;
+	Mon, 14 Jan 2013 14:58:17 -0500
+In-Reply-To: <cover.1358193364.git.mprivozn@redhat.com>
+In-Reply-To: <cover.1358193364.git.mprivozn@redhat.com>
+References: <cover.1358193364.git.mprivozn@redhat.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213524>
 
-=46rederik Beaujean <beaujean-rVlqnlWY17WELgA04lAiVw@public.gmane.org>
-writes:
+Some users or projects prefer different algorithms over others, e.g.
+patience over myers or similar. However, specifying appropriate
+argument every time diff is to be used is impractical. Moreover,
+creating an alias doesn't play nicely with other tools based on diff
+(git-show for instance). Hence, a configuration variable which is able
+to set specific algorithm is needed. For now, these four values are
+accepted: 'myers' (which has the same effect as not setting the config
+variable at all), 'minimal', 'patience' and 'histogram'.
 
-> On 13-01-11 01:47 AM, Samuel Wales wrote:
->> I have more on this, but if possible it would be best to make ediff =
-do
->> that natively.  I don't know if that's possible.
-> Thanks for your prompt replies. The reason I looked for this feature
-> is that it is available in the package git-emacs. There I can choose
-> Git -=20
-> Add to index - Select changes in current file. Then ediff starts, and
-> I can modify the buffer named <index>:FILENAME at will.
-> After I answer 'y' to 'Quit this Ediff session?',  another question c=
-omes up
-> 'Add changes to the git index? (y or n)'. With 'y' I see the message
-> Saving file /tmp/git-emacs-tmp6991oXZ...'
->
-> So I guess all it takes is saving a temporary file and adding its
-> content to the index. Given my lack of experience in lisp programming=
-,
-> I don't know how hard it actually is to implement in magit,
-> though. But a quick look into the source code of git-emacs revealed
-> this function
->
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ Documentation/diff-config.txt          | 17 +++++++++++++++++
+ contrib/completion/git-completion.bash |  1 +
+ diff.c                                 | 23 +++++++++++++++++++++++
+ 3 files changed, 41 insertions(+)
 
-[...]
-
-> I would be very happy if this became available in magit.
-
-Could you test what has just been pushed in master, it should do it.
-
---=20
-R=C3=A9mi Vanicat
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 4314ad0..be31276 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -155,3 +155,20 @@ diff.tool::
+ 	"kompare".  Any other value is treated as a custom diff tool,
+ 	and there must be a corresponding `difftool.<tool>.cmd`
+ 	option.
++
++diff.algorithm::
++	Choose a diff algorithm.  The variants are as follows:
+++
++--
++`myers`;;
++	The basic greedy diff algorithm.
++`minimal`;;
++	Spend extra time to make sure the smallest possible diff is
++	produced.
++`patience`;;
++	Use "patience diff" algorithm when generating patches.
++`histogram`;;
++	This algorithm extends the patience algorithm to "support
++	low-occurrence common elements".
++--
+++
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 383518c..33e25dc 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1839,6 +1839,7 @@ _git_config ()
+ 		diff.suppressBlankEmpty
+ 		diff.tool
+ 		diff.wordRegex
++		diff.algorithm
+ 		difftool.
+ 		difftool.prompt
+ 		fetch.recurseSubmodules
+diff --git a/diff.c b/diff.c
+index 732d4c2..e9a7e4d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -36,6 +36,7 @@ static int diff_no_prefix;
+ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
++static long diff_algorithm;
+ 
+ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+@@ -143,6 +144,20 @@ static int git_config_rename(const char *var, const char *value)
+ 	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
+ }
+ 
++static long parse_algorithm_value(const char *value)
++{
++	if (!value || !strcasecmp(value, "myers"))
++		return 0;
++	else if (!strcasecmp(value, "minimal"))
++		return XDF_NEED_MINIMAL;
++	else if (!strcasecmp(value, "patience"))
++		return XDF_PATIENCE_DIFF;
++	else if (!strcasecmp(value, "histogram"))
++		return XDF_HISTOGRAM_DIFF;
++	else
++		return -1;
++}
++
+ /*
+  * These are to give UI layer defaults.
+  * The core-level commands such as git-diff-files should
+@@ -196,6 +211,13 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "diff.algorithm")) {
++		diff_algorithm = parse_algorithm_value(value);
++		if (diff_algorithm < 0)
++			return -1;
++		return 0;
++	}
++
+ 	if (git_color_config(var, value, cb) < 0)
+ 		return -1;
+ 
+@@ -3213,6 +3235,7 @@ void diff_setup(struct diff_options *options)
+ 	options->add_remove = diff_addremove;
+ 	options->use_color = diff_use_color_default;
+ 	options->detect_rename = diff_detect_rename_default;
++	options->xdl_opts |= diff_algorithm;
+ 
+ 	if (diff_no_prefix) {
+ 		options->a_prefix = options->b_prefix = "";
+-- 
+1.8.0.2
