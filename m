@@ -1,79 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: Error:non-monotonic index after failed recursive "sed" command
-Date: Mon, 14 Jan 2013 13:06:16 +0100
-Message-ID: <vpq38y42clj.fsf@grenoble-inp.fr>
+Date: Mon, 14 Jan 2013 12:12:47 +0000
+Message-ID: <20130114121247.GS4574@serenity.lan>
 References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
+ <vpq38y42clj.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: George Karpenkov <george@metaworld.ru>
-X-From: git-owner@vger.kernel.org Mon Jan 14 13:06:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: George Karpenkov <george@metaworld.ru>, git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jan 14 13:13:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuioO-0004v1-6Z
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:06:44 +0100
+	id 1Tuiuj-000205-Pq
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 13:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756120Ab3ANMGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 07:06:24 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:43113 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756103Ab3ANMGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 07:06:23 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0EBtf5Q020708
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jan 2013 12:55:41 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Tuinw-0004AZ-E1; Mon, 14 Jan 2013 13:06:16 +0100
-In-Reply-To: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
-	(George Karpenkov's message of "Mon, 14 Jan 2013 22:40:31 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 14 Jan 2013 12:55:42 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r0EBtf5Q020708
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1358769343.78604@bciutgqOWvJaQx1JRgD40g
+	id S1756241Ab3ANMM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 07:12:58 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:38694 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755732Ab3ANMM4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 07:12:56 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id B425F19800B;
+	Mon, 14 Jan 2013 12:12:55 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id UmEXEgpADeQy; Mon, 14 Jan 2013 12:12:55 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 1B062198028;
+	Mon, 14 Jan 2013 12:12:54 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id B7F46161E554;
+	Mon, 14 Jan 2013 12:12:54 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KJWz41FAhiv2; Mon, 14 Jan 2013 12:12:54 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id F27A7161E574;
+	Mon, 14 Jan 2013 12:12:49 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <vpq38y42clj.fsf@grenoble-inp.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213484>
 
-George Karpenkov <george@metaworld.ru> writes:
+On Mon, Jan 14, 2013 at 01:06:16PM +0100, Matthieu Moy wrote:
+> George Karpenkov <george@metaworld.ru> writes:
+>> I've managed to corrupt my very valuable repository with a recursive
+>> sed which went wrong.
+>> I wanted to convert all tabs to spaces with the following command:
+>>
+>> find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
+> 
+> Clearly, this is a dangerous command as it impacts .git/. However, Git
+> partially protects you from this kind of error, since object files and
+> pack files are read-only by default.
+> 
+> My obvious first advice is: make backups of your corrupted repository.
+> Yes, I said backup_s_, better safe than sorry.
 
-> Hi All,
->
-> I've managed to corrupt my very valuable repository with a recursive
-> sed which went wrong.
-> I wanted to convert all tabs to spaces with the following command:
->
-> find ./ -name '*.*' -exec sed -i 's/\t/    /g' {} \;
+Having backed up the corrupt state, another option is to just try
+running the reverse command:
 
-Clearly, this is a dangerous command as it impacts .git/. However, Git
-partially protects you from this kind of error, since object files and
-pack files are read-only by default.
+find .git -name '*.*' -exec sed -i 's/    /\t/g' {} \;
 
-My obvious first advice is: make backups of your corrupted repository.
-Yes, I said backup_s_, better safe than sorry.
+I had a quick grep over some pack indices here and '    ' doesn't occur
+in any of mine whereas '\t' is very common so you may find that the only
+'    ' sequences are the ones you introduced.
 
-Then, the errors you get are in *.idx files, which are basically index
-for pack files, for quicker access. You can try removing these files,
-and then running "git index-pack" on each pack file, like
 
-$ rm .git/objects/pack/pack-*.idx
-$ git index-pack .git/objects/pack/pack-4745076928ca4df932a3727b8cc25e83574560bb.pack                        
-4745076928ca4df932a3727b8cc25e83574560bb                                                              
-$ git index-pack .git/objects/pack/pack-c74a6514f653d0269cdcdf9c1c102d326706bbda.pack
-c74a6514f653d0269cdcdf9c1c102d326706bbda
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+John
