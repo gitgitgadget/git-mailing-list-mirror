@@ -1,82 +1,123 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] cvsimport: rewrite to use cvsps 3.x to fix major bugs
-Date: Mon, 14 Jan 2013 06:12:54 +0100
-Message-ID: <50F393D6.2010603@alum.mit.edu>
-References: <1357875152-19899-1-git-send-email-gitster@pobox.com> <50F17DB0.2050802@alum.mit.edu> <20130112182649.GC4624@elie.Belkin> <7v8v7wiv3a.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org,
-	Chris Rorvick <chris@rorvick.com>
+Subject: [PATCH 02/14] imap-send.c: remove struct msg_data
+Date: Mon, 14 Jan 2013 06:32:34 +0100
+Message-ID: <1358141566-26081-3-git-send-email-mhagger@alum.mit.edu>
+References: <1358141566-26081-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 06:20:34 2013
+X-From: git-owner@vger.kernel.org Mon Jan 14 06:34:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TucTF-0004Cn-B7
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 06:20:29 +0100
+	id 1TucgJ-00077r-0R
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jan 2013 06:33:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab3ANFUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 00:20:00 -0500
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:61485 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750787Ab3ANFT7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 00:19:59 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Jan 2013 00:19:59 EST
-X-AuditID: 12074414-b7f9b6d0000008b3-ff-50f393d9c3ce
+	id S1752234Ab3ANFdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 00:33:31 -0500
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:48135 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751095Ab3ANFda (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 00:33:30 -0500
+X-AuditID: 1207440d-b7f306d0000008b7-27-50f398aa496f
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 2C.01.02227.9D393F05; Mon, 14 Jan 2013 00:12:57 -0500 (EST)
-Received: from [192.168.69.140] (p57A25AA5.dip.t-dialin.net [87.162.90.165])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 4B.E0.02231.AA893F05; Mon, 14 Jan 2013 00:33:30 -0500 (EST)
+Received: from michael.fritz.box (p57A25AA5.dip.t-dialin.net [87.162.90.165])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0E5CsdX025674
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0E5Wt2j026427
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 14 Jan 2013 00:12:55 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
-In-Reply-To: <7v8v7wiv3a.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsUixO6iqHtz8ucAg+dPhSx2zt3HanF1i49F
-	15VuJouG3ivMFm9vLmF0YPXYOesuu8fFS8oeu0+zeiz72sni8XmTXABrFLdNUmJJWXBmep6+
-	XQJ3xswPm9kKDrNXNJ47wNLA2MLWxcjJISFgIjH3/SooW0ziwr31YLaQwGVGiXl7wrsYuYDs
-	M0wSs2eeYwFJ8ApoS6zZP40VxGYRUJW4sayJGcRmE9CVWNTTzARiiwoESCxeco4dol5Q4uTM
-	J2C9IgJqEhPbDrGADGUW6GOU+HJpBViDsICXxOf3/awQm9czSjS8sgOxOQXMJH5cmwsWZxbQ
-	kXjX94AZwpaX2P52DvMERoFZSHbMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
-	Fnq5mSV6qSmlmxghAS6yg/HISblDjAIcjEo8vJtLPgcIsSaWFVfmHmKU5GBSEuUN7wcK8SXl
-	p1RmJBZnxBeV5qQWH2KU4GBWEuENrQPK8aYkVlalFuXDpKQ5WJTEeb8tVvcTEkhPLEnNTk0t
-	SC2CycpwcChJ8IoDI1lIsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSr8cXAaAVJ
-	8QDtZQZp5y0uSMwFikK0nmLU5dj+u/05oxBLXn5eqpQ47+dJQEUCIEUZpXlwK2Dp7BWjONDH
-	wrzcIKN4gKkQbtIroCVMQEvOXngPsqQkESEl1cC4Nitgqcbto7K35S5oHF/972xd6vY3Xb8b
-	V5cbL86JcWzXyHkvMPPBybTYw+WPpaMl4qIrKnLfvk4LfdSaxnTAP/fifun/VTvK 
+	Mon, 14 Jan 2013 00:33:29 -0500
+X-Mailer: git-send-email 1.8.0.3
+In-Reply-To: <1358141566-26081-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLIsWRmVeSWpSXmKPExsUixO6iqLtqxucAg7Vn2Sy6rnQzWTT0XmG2
+	uL1iPrPFj5YeZgcWj7/vPzB5POvdw+hx8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGfNu72Mt
+	mClYcenuQcYGxvO8XYycHBICJhLrTp5lgrDFJC7cW8/WxcjFISRwmVHi+aV5LBDOWSaJJ10H
+	2ECq2AR0JRb1NIN1iAioSUxsO8QCYjMLpEh0PO9mBLGFBawkPi6cDFbPIqAqsfJxK1g9r4CL
+	xPTZE9ghtilIvN55iRXE5hRwlfj+8RQziC0EVPPwVDPbBEbeBYwMqxjlEnNKc3VzEzNzilOT
+	dYuTE/PyUot0jfRyM0v0UlNKNzFCAoh3B+P/dTKHGAU4GJV4eDeVfA4QYk0sK67MPcQoycGk
+	JMob3g8U4kvKT6nMSCzOiC8qzUktPsQowcGsJMIbWgeU401JrKxKLcqHSUlzsCiJ86otUfcT
+	EkhPLEnNTk0tSC2CycpwcChJ8HICI0VIsCg1PbUiLTOnBCHNxMEJIrhANvAAbfg8HWRDcUFi
+	bnFmOkTRKUZFKXHe1SAJAZBERmke3ABYrL9iFAf6R5j3H0gVDzBNwHW/AhrMBDT47IX3IINL
+	EhFSUg2MRps98lbsNU+OjfeQvS7iluc0e8JDicNsW7huWcb6bk1fcMK5s/cH7z6NazpOtedX
+	enLZnAjT9oxyYlvlz3OoQmLl4tDm6lx/nmTRw4ZsbZo3rSrWfZjsnmrUPSV9B+eL0D+xxyYo
+	btrz5bhDROEeod3VUkdr9056xMsRmKmlYFz3tfkr1xwlluKMREMt5qLiRABT+DcI 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213433>
 
-On 01/13/2013 11:20 PM, Junio C Hamano wrote:
-> After a quick survey of various distros, I think it is very unlikely
-> that we will see "distros move on to newer cvsps, leaving cvsimport
-> broken" situation. If anything, it is more like "distros decide to
-> ignore the new cvsps, until it is made to work with cvsimport" [*1*].
+Now that its flags member has been deleted, all that is left is a
+strbuf.  So use a strbuf directly.
 
-A better predictor of the distros' decisions is probably which other
-packages depend on cvsps.  As one data point: on Debian squeeze and on
-Ubuntu precise, only two packages depend on cvsps (git-cvs and
-bzr-cvsps-import) and one suggests it (chora2, "a code repository
-viewing component for horde framework").  So also by this standard they
-are unlikely to feel a lot of pressure to update quickly to cvsps3.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ imap-send.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-> I think it is probably sensible to [...]
-> 
-> Agreed?
-
-Yes, I agree that what you propose is a good strategy.
-
-Michael
-
+diff --git a/imap-send.c b/imap-send.c
+index 451d502..a8cb66a 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -68,10 +68,6 @@ struct store {
+ 	int recent; /* # of recent messages - don't trust this beyond the initial read */
+ };
+ 
+-struct msg_data {
+-	struct strbuf data;
+-};
+-
+ static const char imap_send_usage[] = "git imap-send < <mbox>";
+ 
+ #undef DRV_OK
+@@ -1279,7 +1275,7 @@ static void lf_to_crlf(struct strbuf *msg)
+  * Store msg to IMAP.  Also detach and free the data from msg->data,
+  * leaving msg->data empty.
+  */
+-static int imap_store_msg(struct store *gctx, struct msg_data *msg)
++static int imap_store_msg(struct store *gctx, struct strbuf *msg)
+ {
+ 	struct imap_store *ctx = (struct imap_store *)gctx;
+ 	struct imap *imap = ctx->imap;
+@@ -1287,11 +1283,11 @@ static int imap_store_msg(struct store *gctx, struct msg_data *msg)
+ 	const char *prefix, *box;
+ 	int ret;
+ 
+-	lf_to_crlf(&msg->data);
++	lf_to_crlf(msg);
+ 	memset(&cb, 0, sizeof(cb));
+ 
+-	cb.dlen = msg->data.len;
+-	cb.data = strbuf_detach(&msg->data, NULL);
++	cb.dlen = msg->len;
++	cb.data = strbuf_detach(msg, NULL);
+ 
+ 	box = gctx->name;
+ 	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
+@@ -1449,7 +1445,7 @@ static int git_imap_config(const char *key, const char *val, void *cb)
+ int main(int argc, char **argv)
+ {
+ 	struct strbuf all_msgs = STRBUF_INIT;
+-	struct msg_data msg = {STRBUF_INIT};
++	struct strbuf msg = STRBUF_INIT;
+ 	struct store *ctx = NULL;
+ 	int ofs = 0;
+ 	int r;
+@@ -1511,10 +1507,10 @@ int main(int argc, char **argv)
+ 		unsigned percent = n * 100 / total;
+ 
+ 		fprintf(stderr, "%4u%% (%d/%d) done\r", percent, n, total);
+-		if (!split_msg(&all_msgs, &msg.data, &ofs))
++		if (!split_msg(&all_msgs, &msg, &ofs))
+ 			break;
+ 		if (server.use_html)
+-			wrap_in_html(&msg.data);
++			wrap_in_html(&msg);
+ 		r = imap_store_msg(ctx, &msg);
+ 		if (r != DRV_OK)
+ 			break;
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.0.3
