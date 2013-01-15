@@ -1,108 +1,62 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v2 08/19] reset.c: share call to die_if_unmerged_cache()
-Date: Mon, 14 Jan 2013 21:47:40 -0800
-Message-ID: <1358228871-7142-9-git-send-email-martinvonz@gmail.com>
-References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
- <1358228871-7142-1-git-send-email-martinvonz@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Matt Kraai <kraai@ftbfs.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martinvonz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 06:57:07 2013
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: What's cooking in git.git (Jan 2013, #06; Mon, 14)
+Date: Tue, 15 Jan 2013 00:10:34 -0600
+Message-ID: <CAEUsAPZrp=racc4mY7thugPvGPhH9B_wNPwNx6HkvqUMnXzJ_Q@mail.gmail.com>
+References: <7vehhn8kub.fsf@alter.siamese.dyndns.org>
+	<7v1udn6tdg.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 07:11:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuzWB-0005MS-Ta
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 06:57:04 +0100
+	id 1Tuzje-00083P-JE
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 07:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752994Ab3AOF4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 00:56:44 -0500
-Received: from mail-yh0-f73.google.com ([209.85.213.73]:42946 "EHLO
-	mail-yh0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893Ab3AOF4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 00:56:43 -0500
-Received: by mail-yh0-f73.google.com with SMTP id 47so588096yhr.2
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 21:56:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:x-gm-message-state;
-        bh=R8dq1f44VeS+kB8w7Oy1kxfe/bGuUTI3AHWkbtHnvSQ=;
-        b=Juc+WfQmcqAUd6idzZXCCE5b/6/T5+Iy++Z7KSdjfW7Fi0sPp3ltbZD8JtF++3eX1q
-         Q1i2PZLi+4PLfKA+/xosZ09pWOoxDzBRZE1yOj0PFXw1CfNzlBcqn8Mulazjj+rkCI7l
-         IW3p+Hw5MtV3H7mF39k0+1OjyTLN41yk+ECtRYK9ScJHh6oqIEA6Sidnf+wFBa7Svh3k
-         mGA667u4vsQFe4mMjG7rEwP4Lxo57oSNpxhCyUaoREVv2dbin80F8stAZFoWSQFA6pH2
-         ofLtSrFGiDfPfElhsnglPv5Px2FeJu7RvLMWxvl30drDkEwmBb9hXC0OEyh+rx9/SgJE
-         eFHQ==
-X-Received: by 10.236.156.227 with SMTP id m63mr7704516yhk.17.1358228906616;
-        Mon, 14 Jan 2013 21:48:26 -0800 (PST)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id x63si231838yhl.2.2013.01.14.21.48.26
-        (version=TLSv1 cipher=AES128-SHA bits=128/128);
-        Mon, 14 Jan 2013 21:48:26 -0800 (PST)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 81DB7820050;
-	Mon, 14 Jan 2013 21:48:26 -0800 (PST)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 17291101779; Mon, 14 Jan 2013 21:48:26 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.454.gce43f05
-In-Reply-To: <1358228871-7142-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQk6O+6pa4mA8EvU2roTr8K0GRUTJz8TcF4bBbPhqE9nXgysQzN2Yf93e1upjazvo856aG9nxqoLsIzpLrxUk3VkJw1BFKFOpSJpPfjPO/Y1An/PfOJEy6LMa5AqaVCNgOC9KMI6XBUVn37YyOTqYlCha/FUed47X0A/0ty6cYNz5QTn0RFyJiJJjJ//vRc6RZeHvJEa
+	id S1752994Ab3AOGKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 01:10:37 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:59360 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752688Ab3AOGKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 01:10:35 -0500
+Received: by mail-lb0-f179.google.com with SMTP id gm13so3544743lbb.10
+        for <git@vger.kernel.org>; Mon, 14 Jan 2013 22:10:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=hos8DLrUEx4gUrZkGIq9vGJtBemDZWNI0Apx5e/i6H4=;
+        b=xXP41mWZLvbW+p/rcziqyUk3Whge3LAoDbaeAOn2/EmJfIq7PQ0T7/SmQ4zNdO3frs
+         CaSRLdOVYS02VmXYZzHOWS8u0YP2G8dsX8LyqFPfa7kPvTKhdEFLsT2IfS+Dbq/WCTVk
+         ulndKt6UV9xo2mBhdvQSq2wQbQz+2TXo1yBceXeXMnqUpR841FTGwwlHs9T5/GbgyhW5
+         Nn0HFuCtJmrWgRwjpOyObD4PJj87NrLOkFZcBvHxPJDki29DQvyySOVFz9SxuR5uLj7t
+         bdethHvqnj4fknYy/K2TX6UAb32hVPb4q1dBg6CQr06/4H0PohnW8ki7T2Rj+b2+f25q
+         E+3w==
+Received: by 10.152.113.165 with SMTP id iz5mr29458879lab.50.1358230234266;
+ Mon, 14 Jan 2013 22:10:34 -0800 (PST)
+Received: by 10.114.94.228 with HTTP; Mon, 14 Jan 2013 22:10:34 -0800 (PST)
+In-Reply-To: <7v1udn6tdg.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 4mHM5VTqYc94KWzG0HpAve6hpSk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213595>
 
-Use a single condition to guard the call to die_if_unmerged_cache for
-both --soft and --keep. This avoids the small distraction of the
-precondition check from the logic following it.
+On Mon, Jan 14, 2013 at 9:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I converted one of Chris's follow-up test tweaks to this to
+> illustrate how it can be done without breaking tests for the
+> original cvsimport, but didn't do all of them.  Chris, is this a
+> foundation we can work together on top?
 
-Also change an instance of
+Sure, looks straightforward and makes things easier.
 
-  if (e)
-    err = err || f();
+Thanks,
 
-to the almost as short, but clearer
-
-  if (e && !err)
-    err = f();
-
-(which is equivalent since we only care whether exit code is 0)
-
-Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
----
- builtin/reset.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 2187d64..4e34195 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -337,15 +337,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	/* Soft reset does not touch the index file nor the working tree
- 	 * at all, but requires them in a good order.  Other resets reset
- 	 * the index file to the tree object we are switching to. */
--	if (reset_type == SOFT)
-+	if (reset_type == SOFT || reset_type == KEEP)
- 		die_if_unmerged_cache(reset_type);
--	else {
--		int err;
--		if (reset_type == KEEP)
--			die_if_unmerged_cache(reset_type);
--		err = reset_index_file(sha1, reset_type, quiet);
--		if (reset_type == KEEP)
--			err = err || reset_index_file(sha1, MIXED, quiet);
-+
-+	if (reset_type != SOFT) {
-+		int err = reset_index_file(sha1, reset_type, quiet);
-+		if (reset_type == KEEP && !err)
-+			err = reset_index_file(sha1, MIXED, quiet);
- 		if (err)
- 			die(_("Could not reset index file to revision '%s'."), rev);
- 	}
--- 
-1.8.1.1.454.gce43f05
+Chris
