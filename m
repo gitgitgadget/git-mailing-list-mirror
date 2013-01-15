@@ -1,77 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-hg: store converted URL
-Date: Tue, 15 Jan 2013 12:10:19 -0800
-Message-ID: <7vobgq2ono.fsf@alter.siamese.dyndns.org>
-References: <1357760618-81222-1-git-send-email-max@quendi.de>
- <7vmwwbd43o.fsf@alter.siamese.dyndns.org>
- <64C81CD0-960A-47F2-89FC-8D3126B1F4D5@quendi.de>
- <7vzk0a4ekj.fsf@alter.siamese.dyndns.org>
- <7vr4lm4cez.fsf@alter.siamese.dyndns.org>
- <B35B3EA6-F01B-46D8-AC3D-0F7C8A45A06B@quendi.de>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
+Date: Tue, 15 Jan 2013 21:12:46 +0100
+Message-ID: <50F5B83E.9060800@web.de>
+References: <201301120650.46479.tboegi@web.de> <7vvcb37xfe.fsf@alter.siamese.dyndns.org> <50F28BB5.9080607@web.de> <20130113173207.GC5973@elie.Belkin> <7v4nikiu81.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:10:51 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaA==?= =?UTF-8?B?YXVzZW4=?= 
+	<tboegi@web.de>, git@vger.kernel.org, kraai@ftbfs.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:13:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvCqN-0001Uv-T8
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:10:48 +0100
+	id 1TvCsz-0005TN-77
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756107Ab3AOUK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 15:10:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36970 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752370Ab3AOUK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 15:10:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D65B1AD93;
-	Tue, 15 Jan 2013 15:10:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j2dXqMELO8+kqR6YG7Kp8eXKB7Y=; b=vbH+ro
-	ynA3SAidL3c3Ko9dN2JLg/lVsnnbCMJcwA3jrn2qgftwpo/ZFSV5L2i3i1FdgjO4
-	ki4uw+AZtm68sW06GEk4k0bFlGXH6ZCmnWVzFp5F6YH1A5uMICgDyIaCm8+e6beF
-	TUTisqa56ZUd81NS7dW9XUS1rBfyjrscj/Gog=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sN3atRAjXtO2rppOhLApu3+nsLDy9wDT
-	uqAzdL28T3i0Hbk6SfJzYCQDumlFh4NuzCjcALpjwdTT/1j63GoWUgBtdP4dkXVu
-	33mkmDam84WHkW2An6swFbvUJWE+tXw2DwjIZUGMSmIBJepRD5lTSy+shzMpFSui
-	Ky33QrIcT6o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9590AD91;
-	Tue, 15 Jan 2013 15:10:21 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46F90AD90; Tue, 15 Jan 2013
- 15:10:21 -0500 (EST)
-In-Reply-To: <B35B3EA6-F01B-46D8-AC3D-0F7C8A45A06B@quendi.de> (Max Horn's
- message of "Tue, 15 Jan 2013 19:10:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 96E217C8-5F4F-11E2-977E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754817Ab3AOUNI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 15:13:08 -0500
+Received: from mout.web.de ([212.227.17.12]:53898 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750863Ab3AOUNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 15:13:07 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0Lx7Ab-1St0ac1Ytd-01743y; Tue, 15 Jan 2013 21:12:47
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7v4nikiu81.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:5/yn4JojvclPchTA68I8A07ixjyGPDIDYKb/ha6O0l+
+ 2DTt/+w3FJ1ihna/nqc99k9ejL3VU4c06Mh7v06/ZMs+jZji9U
+ KeSDd0vHRIdkrIgISqYj0J3t43yrriICo89JBeg9wj9TfSTfw1
+ w7K3mLavzHM/rYNrtcMP5QFpKJVoTzlpKEgIsN/srTJUTuNWCX
+ 98BZiC2R48MkQGqdtcqMw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213670>
 
-Max Horn <max@quendi.de> writes:
+On 13.01.13 23:38, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>=20
+>> Hi,
+>>
+>> Torsten B=C3=B6gershausen wrote:
+>>
+>>> -	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use t=
+ype)';
+>>> +	/^\s*[^#]\s*which\s+[-a-zA-Z0-9]+$/ and err 'which is not portabl=
+e (please use type)';
+>>
+>> Hmm.  Neither the old version nor the new one matches what seem to
+>> be typical uses of 'which', based on a quick code search:
+>>
+>> 	if which sl >/dev/null 2>&1
+>> 	then
+>> 		sl -l
+>> 		...
+>> 	fi
+>>
+>> or
+>>
+>> 	if test -x "$(which sl 2>/dev/null)"
+>> 	then
+>> 		sl -l
+>> 		...
+>> 	fi
+>=20
+> Yes, these two misuses are what we want it to trigger on, so the
+> test is very easy to trigger and produce a false positive, but does
+> not trigger on what we really want to catch.
+>=20
+> That does not sound like a good benefit/cost ratio to me.
+>=20
+Thanks for comments, I think writing a regexp for which is difficult.
+What do we think about something like this for fishing for which:
 
-> So far, all I look at do not deal with this at all. Any attempts
-> to deal with it should be pretty easy to recognize: The
-> remote-$backend would have to store something into the git config,
-> or else, verify the opaque token and refuse to work with it under
-> certain conditions (e.g. when it contains a relative path). But
-> they don't. E.g. git-remote-testgit has the exact same problem.
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -644,6 +644,10 @@ yes () {
+                :
+        done
+ }
++which () {
++       echo >&2 "which is not portable (please use type)"
++       exit 1
++}
 
-Thanks for confirming what I suspected.  I think the way Felipe's
-patch makes remote-hg take responsibility of how $opaqueToken should
-look like for future invocations is the simplest and makes the most
-sense.  We could try to go fancier and end up over-engineering, but
-I'd rather have a simple fix in the tree first.
 
-Thanks.
+This will happen in runtime, which might be good enough ?
+
+
+@Matt:
+>The "[^#]" appears to ensure that there's at least one character
+>before the which and that it's not a pound sign.  Why is this done?
+This is simply wrong.
