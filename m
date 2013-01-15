@@ -1,73 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] attr: fix off-by-one directory component length
- calculation
-Date: Tue, 15 Jan 2013 12:49:05 -0800
-Message-ID: <7vfw222mv2.fsf@alter.siamese.dyndns.org>
-References: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
- <201301152014.28433.avila.jn@gmail.com>
- <7vwqve2qk3.fsf@alter.siamese.dyndns.org>
- <201301152053.58561.avila.jn@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 00/14] Remove unused code from imap-send.c
+Date: Tue, 15 Jan 2013 12:49:32 -0800
+Message-ID: <20130115204932.GB12524@google.com>
+References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <avila.jn@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:49:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:50:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvDRr-0000Qb-Bq
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:49:31 +0100
+	id 1TvDSH-0000zC-W4
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:49:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756664Ab3AOUtK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 15:49:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38435 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756610Ab3AOUtJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 15:49:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2648DAFAF;
-	Tue, 15 Jan 2013 15:49:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=JjzF/TsF3BTL
-	vsfcXhEEn4lzIZQ=; b=jaL6xpkVPe2ILO5m4pm+FjX1J4+j0wabRo5H5wo1+rGp
-	KINTrl7+YDzKTqdXgOSTRs2PsqLWN9e8aqjQ6PBsyNxCVoig94hW+pZxF0/ocLQf
-	u1HIJaqYd6b/1rrLoiqcaMnDCopT/zK/Ot5tqY+DwUBdLX5/wSOqqlM7N7WugrY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ck3uh2
-	n0nVanV0VLagpSJKPcktXM5vYLz5L8VsNKoNYRhlhDAVxjCb2/y5mI7aACMU+TsT
-	R1EjxOBVahD56FNYEQcdAxYHudvJ8y0irfrPVzRmG53c/hL74hloGpb6oLN44BkN
-	MXtEkoo5+V/hAMlibtccuhohKVn0QLX8vGZRU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AE5CAFAD;
-	Tue, 15 Jan 2013 15:49:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9676EAFAC; Tue, 15 Jan 2013
- 15:49:07 -0500 (EST)
-In-Reply-To: <201301152053.58561.avila.jn@gmail.com> (=?utf-8?Q?=22Jean-No?=
- =?utf-8?Q?=C3=ABl?= AVILA"'s message of "Tue, 15 Jan 2013 20:53:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 017B5AA4-5F55-11E2-AF3E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756559Ab3AOUti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 15:49:38 -0500
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:57741 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755989Ab3AOUth (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 15:49:37 -0500
+Received: by mail-pb0-f41.google.com with SMTP id xa7so273963pbc.0
+        for <git@vger.kernel.org>; Tue, 15 Jan 2013 12:49:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=iv6zG4bLTvZud38xyiQcXQ+7filDupi6a+Y5xWsJEL8=;
+        b=baHnjAjeoVEu0SEeAFbcYHDivHqFdrkDXnrUydEvYcEJ8GzLoTKoY/YnExjajAkzcH
+         2GFb+hEJwF31iqBLaluwQfuLigeA6FJa8pw8Mx+4KyBtgKzhxeRVbgdKXBOS0EENGsMt
+         IaSRXof4OInDYeHn6gptF9V2Wo1+P3izZH0qFFUPF+i4G7GVDG9iNqOLpAE7tAByxa2h
+         gJ68WC1reEXv+kBy04EyC/4ga82arQ0MDezXYXeAtpShuJEIUQBSoY2eKg8pBsTAnM+K
+         2XSW8pghhj03D3aYuRXHV3J2ar6ZjJdjCYSUIRotlr83b9dHp+ETO7i9CFFwukOadNxN
+         t76w==
+X-Received: by 10.68.242.3 with SMTP id wm3mr269437897pbc.44.1358282977191;
+        Tue, 15 Jan 2013 12:49:37 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id i5sm11462931pax.13.2013.01.15.12.49.34
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 15 Jan 2013 12:49:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213675>
 
-"Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> writes:
+Michael Haggerty wrote:
 
-> Btw, the test 10 to t9902 is failing on my Debian testing. Is it a kn=
-own=20
-> issue?
+>  imap-send.c | 308 +++++++++++-------------------------------------------------
+>  1 file changed, 55 insertions(+), 253 deletions(-)
 
-Which branch?
+Patch 14 is lovely.  Except for patch 6, for what it's worth these are
+all
 
-If you mean "'master' with the patch in this discussion applied", I
-didn't even have a chance to start today's integration cycle, so I
-don't know (it is not known to me).
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Nicely done.
