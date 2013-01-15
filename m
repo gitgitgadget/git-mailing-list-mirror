@@ -1,100 +1,71 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
-Date: Tue, 15 Jan 2013 21:12:46 +0100
-Message-ID: <50F5B83E.9060800@web.de>
-References: <201301120650.46479.tboegi@web.de> <7vvcb37xfe.fsf@alter.siamese.dyndns.org> <50F28BB5.9080607@web.de> <20130113173207.GC5973@elie.Belkin> <7v4nikiu81.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [RFC/PATCH] ignore memcmp() overreading in bsearch() callback
+Date: Tue, 15 Jan 2013 21:27:36 +0100
+Message-ID: <m2libunqdj.fsf@igel.home>
+References: <7v38y38hhm.fsf@alter.siamese.dyndns.org>
+	<50F57BDF.1050400@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaA==?= =?UTF-8?B?YXVzZW4=?= 
-	<tboegi@web.de>, git@vger.kernel.org, kraai@ftbfs.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:13:30 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:28:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvCsz-0005TN-77
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:13:29 +0100
+	id 1TvD78-0001iH-HR
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:28:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817Ab3AOUNI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 15:13:08 -0500
-Received: from mout.web.de ([212.227.17.12]:53898 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750863Ab3AOUNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 15:13:07 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0Lx7Ab-1St0ac1Ytd-01743y; Tue, 15 Jan 2013 21:12:47
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <7v4nikiu81.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:5/yn4JojvclPchTA68I8A07ixjyGPDIDYKb/ha6O0l+
- 2DTt/+w3FJ1ihna/nqc99k9ejL3VU4c06Mh7v06/ZMs+jZji9U
- KeSDd0vHRIdkrIgISqYj0J3t43yrriICo89JBeg9wj9TfSTfw1
- w7K3mLavzHM/rYNrtcMP5QFpKJVoTzlpKEgIsN/srTJUTuNWCX
- 98BZiC2R48MkQGqdtcqMw==
+	id S1755137Ab3AOU1q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 15:27:46 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:46286 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752705Ab3AOU1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 15:27:45 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3Ym35702gQz3hhwP;
+	Tue, 15 Jan 2013 21:27:38 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3Ym3566Mlgzbbcj;
+	Tue, 15 Jan 2013 21:27:38 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id 1mGgjyCX91hS; Tue, 15 Jan 2013 21:27:23 +0100 (CET)
+X-Auth-Info: kFZ3TUgqz8NW7rM0oRrJBRu3G8TYR02Qdc5kMW2icQI=
+Received: from igel.home (ppp-88-217-114-68.dynamic.mnet-online.de [88.217.114.68])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Tue, 15 Jan 2013 21:27:38 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id CEDDACA026; Tue, 15 Jan 2013 21:27:37 +0100 (CET)
+X-Yow: If elected, Zippy pledges to each and every American
+ a 55-year-old houseboy...
+In-Reply-To: <50F57BDF.1050400@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of
+	"Tue, 15 Jan 2013 16:55:11 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213671>
 
-On 13.01.13 23:38, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->=20
->> Hi,
->>
->> Torsten B=C3=B6gershausen wrote:
->>
->>> -	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use t=
-ype)';
->>> +	/^\s*[^#]\s*which\s+[-a-zA-Z0-9]+$/ and err 'which is not portabl=
-e (please use type)';
->>
->> Hmm.  Neither the old version nor the new one matches what seem to
->> be typical uses of 'which', based on a quick code search:
->>
->> 	if which sl >/dev/null 2>&1
->> 	then
->> 		sl -l
->> 		...
->> 	fi
->>
->> or
->>
->> 	if test -x "$(which sl 2>/dev/null)"
->> 	then
->> 		sl -l
->> 		...
->> 	fi
->=20
-> Yes, these two misuses are what we want it to trigger on, so the
-> test is very easy to trigger and produce a false positive, but does
-> not trigger on what we really want to catch.
->=20
-> That does not sound like a good benefit/cost ratio to me.
->=20
-Thanks for comments, I think writing a regexp for which is difficult.
-What do we think about something like this for fishing for which:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -644,6 +644,10 @@ yes () {
-                :
-        done
- }
-+which () {
-+       echo >&2 "which is not portable (please use type)"
-+       exit 1
-+}
+> +	return '\0' - ent->name[key->len];
 
+You need to cast to unsigned char first to make it consistent with
+memcmp and strcmp.
 
-This will happen in runtime, which might be good enough ?
+Andreas.
 
-
-@Matt:
->The "[^#]" appears to ensure that there's at least one character
->before the which and that it's not a pound sign.  Why is this done?
-This is simply wrong.
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
