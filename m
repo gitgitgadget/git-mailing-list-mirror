@@ -1,85 +1,87 @@
-From: Ross Lagerwall <rosslagerwall@gmail.com>
-Subject: Re: git grep performance regression
-Date: Tue, 15 Jan 2013 07:36:28 +0000
-Message-ID: <20130115073628.GA647@hobo.wolfson.cam.ac.uk>
-References: <20130114223800.GA12708@hobo.wolfson.cam.ac.uk>
- <CACsJy8A7FLYqdY2Mt5pUq0nH3N8mbZ4crkYJYFfepp19c0aWhg@mail.gmail.com>
- <CACsJy8AnABCisgSVL7Qh_-uejAJA3x1kzy=4i+uXm3+90m5tuA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 08:36:58 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/14] Remove unused code from imap-send.c
+Date: Tue, 15 Jan 2013 09:06:18 +0100
+Message-ID: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 09:07:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv14m-0002Ny-QA
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 08:36:53 +0100
+	id 1Tv1YB-0002Hs-Ly
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 09:07:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756524Ab3AOHgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 02:36:32 -0500
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:64940 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756482Ab3AOHgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 02:36:31 -0500
-Received: by mail-wi0-f181.google.com with SMTP id hq4so1983153wib.2
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 23:36:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=yp9FVtdVneIYKw7brWDZYEDjO5wi5BRQurwhtXLEWvM=;
-        b=U/smDpnQQgJY38pjH5ZLTwROVEqyYZLkQE+xOoyh+grM8mZYPdtmisvFp6RIfcfkyI
-         VztpBeKmrevq0vqaAe8yl6oPBQEkk2/YFnB8XmAoCbpMQrDwhXyUkOdTU+Z3JUmaa0uj
-         8gUhugXlhcL+kmjrZtW5Sk/+hFCkzR6PF3qvhw83MHs6sYaR5KtlStYViMsdnKoyMTr6
-         3PWHW5sgPR6DmSbe7t9YEzfEVM8o6H7w+9hHwRoDnGzjELgXTKcvoo7BMIEpNTbl8UOP
-         dR/WTg5j0OXGtEZ9PXwYpxNT2P4kbyCAS0Arzur8LsTP8xpQxQmdh3z7Kf/G/VE7n3GV
-         jNBw==
-X-Received: by 10.194.48.74 with SMTP id j10mr41577465wjn.36.1358235390480;
-        Mon, 14 Jan 2013 23:36:30 -0800 (PST)
-Received: from hobo ([2001:630:212:600:d63d:7eff:fe2c:aa8c])
-        by mx.google.com with ESMTPS id bd7sm2434711wib.8.2013.01.14.23.36.29
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Jan 2013 23:36:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AnABCisgSVL7Qh_-uejAJA3x1kzy=4i+uXm3+90m5tuA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2011-07-01)
+	id S1755723Ab3AOIGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 03:06:55 -0500
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:54676 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750904Ab3AOIGy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 03:06:54 -0500
+X-AuditID: 12074411-b7fa36d0000008cc-36-50f50e1d464b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 01.B9.02252.D1E05F05; Tue, 15 Jan 2013 03:06:53 -0500 (EST)
+Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0F86n5M029668
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 15 Jan 2013 03:06:52 -0500
+X-Mailer: git-send-email 1.8.0.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsUixO6iqCvL9zXAoH2+jUXXlW4mi4beK8wW
+	t1fMZ3Zg9vj7/gOTx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGfsO9zCVnCEu2Li7X6mBsYD
+	nF2MHBwSAiYS/04KdzFyApliEhfurWfrYuTiEBK4zCjx68lORgjnDJPEw11fmUCq2AR0JRb1
+	NIPZIgJqEhPbDrGA2MwCDhKbPzcygtjCArYSC3evAKthEVCVeHe3kx3E5hVwlpj87xATxDYF
+	idc7L7FOYORewMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXVC83s0QvNaV0EyPE94I7GGec
+	lDvEKMDBqMTDa2rwJUCINbGsuDL3EKMkB5OSKG8H19cAIb6k/JTKjMTijPii0pzU4kOMEhzM
+	SiK8Pu+AynlTEiurUovyYVLSHCxK4rx8S9T9hATSE0tSs1NTC1KLYLIyHBxKErwKvEBDBYtS
+	01Mr0jJzShDSTBycIIILZAMP0IZX3ECFvMUFibnFmekQRacYFaXEef/wACUEQBIZpXlwA2BR
+	+opRHOgfYV5RkD08wAiH634FNJgJaPCmvZ9BBpckIqSkGhglr0jo819gtz/sz/dO74b9Qy11
+	Hvci+70Tvt8SC7ff/k0h+KLL/927W39NL64VeTapZf+/wDXG/ds+F9nt2qWxX+LqRDljrxeB
+	RgeTtyZP5trGonmm6ME+M79HQst2Ls4y4v362sa/+/l+RY6VIc05O7/VfBFOl/B+9NEv6POu
+	nAWhl1f4/+RVYinOSDTUYi4qTgQAZsCno60CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213604>
 
-On Tue, Jan 15, 2013 at 11:38:32AM +0700, Duy Nguyen wrote:
-> dirlen is not expected to include the trailing slash, but
-> find_basename() does that. It messes up with the path filters for
-> push/pop in the next code. This brings grep performance closely back
-> to before for me. Ross, can you check (patch could be whitespace
-> damaged by gmail)?
-> 
+This is a re-roll, incorporating the feedback of Jonathan Nieder
+(thanks!).
 
-Yes, that did seem to bring back the performance to the old level.
+Differences from v1:
 
-I noticed that before the patch, the strace output was something like
-this:
-open("tools/vm/.gitattributes", O_RDONLY) = -1 ENOENT
-open("tools/vm//.gitattributes", O_RDONLY) = -1 ENOENT
-open("tools/vm//.gitattributes", O_RDONLY) = -1 ENOENT
-open("tools/vm//.gitattributes", O_RDONLY) = -1 ENOENT
-open("usr/.gitattributes", O_RDONLY)    = -1 ENOENT
-open("usr//.gitattributes", O_RDONLY)   = -1 ENOENT
-open("usr//.gitattributes", O_RDONLY)   = -1 ENOENT
-open("usr//.gitattributes", O_RDONLY)   = -1 ENOENT
-open("usr//.gitattributes", O_RDONLY)   = -1 ENOENT
-open("usr//.gitattributes", O_RDONLY)   = -1 ENOENT
+* Added comments to get_cmd_result() at the place where the
+  "NAMESPACE" response is skipped over.
 
-(and yes, the whitespace was damaged by Gmail!)
+* Added some comments to lf_to_crlf(), simplified the code a bit
+  further, and expanded the commit message.
 
-Regards
+* Replaced erroneously-deleted space in "APPEND" command in
+  imap_store_msg().
+
+I also moved the patch rewriting lf_to_crlf() to the end of the
+series, because it is not just dead-code elimination like the others.
+
+Michael Haggerty (14):
+  imap-send.c: remove msg_data::flags, which was always zero
+  imap-send.c: remove struct msg_data
+  iamp-send.c: remove unused struct imap_store_conf
+  imap-send.c: remove struct store_conf
+  imap-send.c: remove struct message
+  imap-send.c: remove some unused fields from struct store
+  imap-send.c: inline imap_parse_list() in imap_list()
+  imap-send.c: remove struct imap argument to parse_imap_list_l()
+  imap-send.c: remove namespace fields from struct imap
+  imap-send.c: remove unused field imap_store::trashnc
+  imap-send.c: use struct imap_store instead of struct store
+  imap-send.c: remove unused field imap_store::uidvalidity
+  imap-send.c: fold struct store into struct imap_store
+  imap-send.c: simplify logic in lf_to_crlf()
+
+ imap-send.c | 308 +++++++++++-------------------------------------------------
+ 1 file changed, 55 insertions(+), 253 deletions(-)
+
 -- 
-Ross Lagerwall
+1.8.0.3
