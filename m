@@ -1,120 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/14] imap-send.c: remove some unused fields from
- struct store
-Date: Tue, 15 Jan 2013 14:30:59 -0800
-Message-ID: <7vtxqi13ks.fsf@alter.siamese.dyndns.org>
-References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
- <1358237193-8887-7-git-send-email-mhagger@alum.mit.edu>
- <20130115203204.GA12524@google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC/PATCH 2/8 v3] git_remote_helpers: fix input when running under
+ Python 3
+Date: Tue, 15 Jan 2013 22:40:49 +0000
+Message-ID: <20130115224049.GZ4574@serenity.lan>
+References: <cover.1358018078.git.john@keeping.me.uk>
+ <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
+ <50F2296F.8030909@alum.mit.edu>
+ <20130113161724.GK4574@serenity.lan>
+ <50F38E12.6090207@alum.mit.edu>
+ <20130114094721.GQ4574@serenity.lan>
+ <20130115194809.GU4574@serenity.lan>
+ <7vbocq2mri.fsf@alter.siamese.dyndns.org>
+ <20130115215412.GX4574@serenity.lan>
+ <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 23:31:37 2013
+	"Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 23:41:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvF2W-0000CH-QM
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 23:31:29 +0100
+	id 1TvFCE-0006AI-Ig
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 23:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758347Ab3AOWbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 17:31:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37547 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757556Ab3AOWbC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 17:31:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB526A187;
-	Tue, 15 Jan 2013 17:31:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AkNjoWlI56GVIQOiu1rCCyccMsQ=; b=e91aRX
-	WPudqCFui/B9y1sts3ChuK8w3Vh0MGiClRAGzad6PHJ0gSp753js7eOs3JiHO2mb
-	PvP0sSoBgFH9hG7/D37jNcaYOzCAFwENLh1PCDmEQzn/QtKh0JG7dSjLQsIdXZCe
-	6Zg6GLHp1OLtVBlZzBF5mufIdvXKakUTnmwAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S36RZ7bdJdpezjW5Lgn4FcZHFeo0J93s
-	X4x/yeswENoVAvVWvyKWS0lc1KF8zL1VqmTiN6iS7yaC4svwArH5Q7eJ+nRiYPvS
-	l6ws8AhlRxpT0K+xbfhPWZMDNqN6Co2b65GGenoYLc3g+gu4pVyq1GItrH2QGq/J
-	/+mEwHg7xaY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0671A185;
-	Tue, 15 Jan 2013 17:31:01 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0632EA180; Tue, 15 Jan 2013
- 17:31:00 -0500 (EST)
-In-Reply-To: <20130115203204.GA12524@google.com> (Jonathan Nieder's message
- of "Tue, 15 Jan 2013 12:32:04 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D5B4C42-5F63-11E2-BCE7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758584Ab3AOWlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 17:41:07 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:39926 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757885Ab3AOWlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 17:41:04 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 0D94D606529;
+	Tue, 15 Jan 2013 22:41:03 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IAZ2I9Qimnlu; Tue, 15 Jan 2013 22:41:02 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 98EF96064B7;
+	Tue, 15 Jan 2013 22:41:01 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 84F01161E577;
+	Tue, 15 Jan 2013 22:41:01 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id veegXD3gcBmD; Tue, 15 Jan 2013 22:41:01 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 3C401161E557;
+	Tue, 15 Jan 2013 22:40:51 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213682>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Although 2to3 will fix most issues in Python 2 code to make it run under
+Python 3, it does not handle the new strict separation between byte
+strings and unicode strings.  There is one instance in
+git_remote_helpers where we are caught by this, which is when reading
+refs from "git for-each-ref".
 
-> Michael Haggerty wrote:
->
->> -			else if ((arg1 = next_arg(&cmd))) {
->> -				if (!strcmp("EXISTS", arg1))
->> -					ctx->gen.count = atoi(arg);
->> -				else if (!strcmp("RECENT", arg1))
->> -					ctx->gen.recent = atoi(arg);
->> +			} else if ((arg1 = next_arg(&cmd))) {
->> +				/* unused */
->
-> The above is just the right thing to do to ensure no behavior change.
-> Let's take a look at the resulting code, though:
->
-> 			if (... various reasonable things ...) {
-> 				...
-> 			} else if ((arg1 = next_arg(&cmd))) {
-> 				/* unused */
-> 			} else {
-> 				fprintf(stderr, "IMAP error: unable to parse untagged response\n");
-> 				return RESP_BAD;
->
-> Anyone forced by some bug to examine this "/* unused */" case is going
-> to have no clue what's going on.  In that respect, the old code was
-> much better, since it at least made it clear that one case where this
-> code gets hit is handling "<num> EXISTS" and "<num> RECENT" untagged
-> responses.
->
-> I suspect that original code did not have an implicit and intended
-> missing
->
-> 				else
-> 					; /* negligible response; ignore it */
->
-> but the intent was rather 
->
-> 				else {
-> 					fprintf(stderr, "IMAP error: I can't parse this\n");
-> 					return RESP_BAD;
-> 				}
->
-> Since actually fixing that is probably too aggressive for this patch,
-> how about a FIXME comment like the following?
->
-> 		/*
-> 		 * Unhandled response-data with at least two words.
-> 		 * Ignore it.
-> 		 *
-> 		 * NEEDSWORK: Previously this case handled '<num> EXISTS'
-> 		 * and '<num> RECENT' but as a probably-unintended side
-> 		 * effect it ignores other unrecognized two-word
-> 		 * responses.  imap-send doesn't ever try to read
-> 		 * messages or mailboxes these days, so consider
-> 		 * eliminating this case.
-> 		 */
+Fix this by operating on the returned string as a byte string rather
+than a unicode string.  As this method is currently only used internally
+by the class this does not affect code anywhere else.
 
-Hmph; it seems that it is not worth rerolling the whole thing only
-for this, so let me squash this in, replacing the /* unused */ with
-the large comment, and then merge the result to 'next'.
+Note that we cannot use byte strings in the source as the 'b' prefix is
+not supported before Python 2.7 so in order to maintain compatibility
+with the maximum range of Python versions we use an explicit call to
+encode().
+
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+
+On Tue, Jan 15, 2013 at 02:04:29PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>>> That really feels wrong.  Displaying is a separate issue and it is
+>>> the _right_ thing to punt the problem at the lower-level machinery
+>>> level.
+>>
+>> But the display will require decoding the ref name to a Unicode string,
+>> which depends on the encoding of the underlying ref name, so it feels
+>> like it should be decoded where it's read (see [1]).
+> 
+> If you botch the decoding in a way you cannot recover the original
+> byte string, you cannot create a ref whose name is the original byte
+> string, no?  Keeping the original byte string internally (this
+> includes where you use it to create new refs or update existing
+> refs), and attempting to convert it to Unicode when you choose to
+> show that string as a part of a message to the user (and falling
+> back to replacing some bytes to '?' if you cannot, but do so only in
+> the message), you won't have that problem.
+
+Actually, this method is currently only used internally so I don't think
+my argument holds.
+
+This is what keeping the refs as byte strings looks like.
+
+
+ git_remote_helpers/git/importer.py | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+index e28cc8f..c54846c 100644
+--- a/git_remote_helpers/git/importer.py
++++ b/git_remote_helpers/git/importer.py
+@@ -18,13 +18,16 @@ class GitImporter(object):
+ 
+     def get_refs(self, gitdir):
+         """Returns a dictionary with refs.
++
++        Note that the keys in the returned dictionary are byte strings as
++        read from git.
+         """
+         args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
+-        lines = check_output(args).strip().split('\n')
++        lines = check_output(args).strip().split('\n'.encode('utf-8'))
+         refs = {}
+         for line in lines:
+-            value, name = line.split(' ')
+-            name = name.strip('commit\t')
++            value, name = line.split(' '.encode('utf-8'))
++            name = name.strip('commit\t'.encode('utf-8'))
+             refs[name] = value
+         return refs
+ 
+-- 
+1.8.1
