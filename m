@@ -1,113 +1,84 @@
-From: John Keeping <john@keeping.me.uk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH 2/8 v2] git_remote_helpers: fix input when running
  under Python 3
-Date: Tue, 15 Jan 2013 21:54:12 +0000
-Message-ID: <20130115215412.GX4574@serenity.lan>
+Date: Tue, 15 Jan 2013 14:04:29 -0800
+Message-ID: <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
 References: <cover.1358018078.git.john@keeping.me.uk>
  <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
- <50F2296F.8030909@alum.mit.edu>
- <20130113161724.GK4574@serenity.lan>
- <50F38E12.6090207@alum.mit.edu>
- <20130114094721.GQ4574@serenity.lan>
+ <50F2296F.8030909@alum.mit.edu> <20130113161724.GK4574@serenity.lan>
+ <50F38E12.6090207@alum.mit.edu> <20130114094721.GQ4574@serenity.lan>
  <20130115194809.GU4574@serenity.lan>
  <7vbocq2mri.fsf@alter.siamese.dyndns.org>
+ <20130115215412.GX4574@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
 	"Eric S. Raymond" <esr@thyrsus.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 22:54:53 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Jan 15 23:05:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvET0-000331-Vh
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 22:54:47 +0100
+	id 1TvEcn-0001Ba-GE
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 23:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756351Ab3AOVy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 16:54:27 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:47331 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280Ab3AOVy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 16:54:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id D181A86600E;
-	Tue, 15 Jan 2013 21:54:25 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vwz1sUyTco1o; Tue, 15 Jan 2013 21:54:24 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 0EC5E866007;
-	Tue, 15 Jan 2013 21:54:24 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id EBB5F161E4A1;
-	Tue, 15 Jan 2013 21:54:23 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qTKVy4k966vV; Tue, 15 Jan 2013 21:54:23 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id E9129161E551;
-	Tue, 15 Jan 2013 21:54:14 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vbocq2mri.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755807Ab3AOWEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 17:04:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47079 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754012Ab3AOWEc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 17:04:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5C40AB8C;
+	Tue, 15 Jan 2013 17:04:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zpm/XCcw0D7qZVvZ1RsKT7v+wr4=; b=ehPa9z
+	yoJwJeu8Sx3Jt0io0En8XCyjdcIEBfl1FvmztsbDC/JrscRHG6aV+iNutsw5R3O4
+	0DCt2ft5HmHn6x190a9WmsagCBcqSvI0X2v0L9x7LUFhv8BB1f5E/zncYpEl+C/I
+	xue/NyRl4Dw4D+kTijim87hB1YoVTRZIZW1Ys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cJGjf7uwxOzIKrXaqzumqEO0qxhAxekV
+	DlfOO02qbuaIDve5Uog6ARC7kSQi+i7201KhJ1f7qyoU/UOILyaP4e+0FW8DDJQn
+	X3kujuLp1/oI3V7XZ5jaPJf93ONJx+FaoS0p1QeVupFnn+OsewCQepnl9Q9nTjQG
+	AjeLlOPgkYo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A449FAB8B;
+	Tue, 15 Jan 2013 17:04:31 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2715AB87; Tue, 15 Jan 2013
+ 17:04:30 -0500 (EST)
+In-Reply-To: <20130115215412.GX4574@serenity.lan> (John Keeping's message of
+ "Tue, 15 Jan 2013 21:54:12 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 899AA2C8-5F5F-11E2-B438-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213680>
 
-On Tue, Jan 15, 2013 at 12:51:13PM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
->> Although 2to3 will fix most issues in Python 2 code to make it run under
->> Python 3, it does not handle the new strict separation between byte
->> strings and unicode strings.  There is one instance in
->> git_remote_helpers where we are caught by this, which is when reading
->> refs from "git for-each-ref".
->>
->> While we could fix this by explicitly handling refs as byte strings,
->> this is merely punting the problem to users of the library since the
->> same problem will be encountered as soon you want to display the ref
->> name to a user.
->>
->> Instead of doing this, explicit decode the incoming byte string into a
->> unicode string.
-> 
-> That really feels wrong.  Displaying is a separate issue and it is
-> the _right_ thing to punt the problem at the lower-level machinery
-> level.
+John Keeping <john@keeping.me.uk> writes:
 
-But the display will require decoding the ref name to a Unicode string,
-which depends on the encoding of the underlying ref name, so it feels
-like it should be decoded where it's read (see [1]).
-
->> Following the lead of pygit2 (the Python bindings for
->> libgit2 - see [1] and [2]),...
-> 
-> I do not think other people getting it wrong is not an excuse to
-> repeat the same mistake.
+>> That really feels wrong.  Displaying is a separate issue and it is
+>> the _right_ thing to punt the problem at the lower-level machinery
+>> level.
 >
-> Is it really so cumbersome to handle byte strings as byte strings in
-> Python?
+> But the display will require decoding the ref name to a Unicode string,
+> which depends on the encoding of the underlying ref name, so it feels
+> like it should be decoded where it's read (see [1]).
 
-As [1] says, there is a potential for bugs whenever people attempt to
-combine Unicode and byte strings.  I think it also violates the
-principle of least surprise if a ref name (a string) doesn't behave like
-a normal string.
-
-[1] http://docs.python.org/3.3/howto/unicode.html#tips-for-writing-unicode-aware-programs
-
-
-John
+If you botch the decoding in a way you cannot recover the original
+byte string, you cannot create a ref whose name is the original byte
+string, no?  Keeping the original byte string internally (this
+includes where you use it to create new refs or update existing
+refs), and attempting to convert it to Unicode when you choose to
+show that string as a part of a message to the user (and falling
+back to replacing some bytes to '?' if you cannot, but do so only in
+the message), you won't have that problem.
