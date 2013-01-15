@@ -1,130 +1,73 @@
-From: George Karpenkov <george@metaworld.ru>
-Subject: Re: Error:non-monotonic index after failed recursive "sed" command
-Date: Tue, 15 Jan 2013 11:54:46 +1100
-Message-ID: <CAMoGvRJhwqRqdV=-AAqbjrDzcL2_zPUfaEhrQuHS+DjD3X9qTw@mail.gmail.com>
-References: <CAMoGvRKkSZqcoGtiebu6tuPndzOjQ1=JgQHb+iusAHpUbA2HbA@mail.gmail.com>
- <50F3F852.8060800@viscovery.net> <7v622zbn3s.fsf@alter.siamese.dyndns.org>
- <vpqobgrpoh7.fsf@grenoble-inp.fr> <CAMoGvRKMwP_JBvNNWoN=m9AX3MP9xVgBUwxELHtry_-8Um8WKQ@mail.gmail.com>
- <B10A5C9F770D48C9958F240D59B1A400@PhilipOakley>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] ignore memcmp() overreading in bsearch() callback
+Date: Mon, 14 Jan 2013 18:45:19 -0800
+Message-ID: <7va9sb6u68.fsf@alter.siamese.dyndns.org>
+References: <7v38y38hhm.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1301150055520.32206@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Jan 15 01:55:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Carlos =?utf-8?Q?Mar?= =?utf-8?Q?t=C3=ADn?= Nieto 
+	<cmn@elego.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 15 03:45:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuuoR-0006fO-NT
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 01:55:36 +0100
+	id 1TuwX1-0001TY-GJ
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 03:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757371Ab3AOAzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 19:55:10 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:56974 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757316Ab3AOAzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 19:55:08 -0500
-X-Greylist: delayed 47655 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Jan 2013 19:55:08 EST
-Received: by mail-lb0-f182.google.com with SMTP id go10so3311572lbb.41
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 16:55:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=lJE7U9xFQoSdwpCiq6sEk3bJ7Yc1MxIkSE/MxScvx4o=;
-        b=EcGwsF6T06p/yoB/MqSz0H5w47weNQXwfFw4d0ciiaUtgCSQSgcpFWwbI8nt5TNB6f
-         6PYuL8bfUG8yTAGXZnqFd2yPP2IIMXwYCChGaC75RqR6oyRmLKmZyPxjuXiHir02n2ZR
-         ADiDmpT8Q1ZI68OB7kYaKwmeciw3WM0rLLiXrJMIMQuLQSBxwwsRSIDtYpqSdWwpzIE8
-         2gRdacpDEmH92u6AMRsDglqTkOpYz5n2oZZ8IGKzkDqu9FRtfsySVZbi35bhWkEM4buS
-         WKlKcZDe3kUqKDlZYutPvmUF4cLyFxoGvl/Jdw7YqEbBP52eWTZuB1y1c2gh0GGoME4M
-         +LDw==
-Received: by 10.112.9.104 with SMTP id y8mr35843508lba.89.1358211306679; Mon,
- 14 Jan 2013 16:55:06 -0800 (PST)
-Received: by 10.112.59.1 with HTTP; Mon, 14 Jan 2013 16:54:46 -0800 (PST)
-In-Reply-To: <B10A5C9F770D48C9958F240D59B1A400@PhilipOakley>
-X-Google-Sender-Auth: NrsB2Ag3CHraMmq_BarYpce6hAI
+	id S1755935Ab3AOCpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 21:45:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33272 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751673Ab3AOCpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 21:45:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B81A9CF09;
+	Mon, 14 Jan 2013 21:45:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iJ0LA8vhC6z4QlGyLqqM4xr2U38=; b=gKvFWY
+	m0d9QzUYMYGD0aeEj885UiHYT9io7ZDQ8EIXJrsIl67JtR2HQ5XLgS6CpMEm35Wk
+	igx8F6wCpbbnZzTebxDLdiO3MBViP0GKlL2C6uJXVg4sJkH1MCM+mE0xojedKf86
+	3N+aiYHraMHrNPRr3PGuXX+tVAaJK1I7snw6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i8BIl4hY1LoUmdSKjVekjweOT5fSphg7
+	L+e3U7aUss8hTi194l9UqqTfy+klyeQd0Kiv7X9l48N6e6b+ROIkgqksdEHyX5S4
+	1EWd0MYYspsVZ8DLoKCf3pm8en1uFga9cmfjuZvDdobNaZEln6zIh3X8j11Wb2Y3
+	8hel06jkbRg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD3E2CF08;
+	Mon, 14 Jan 2013 21:45:21 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2878ECF05; Mon, 14 Jan 2013
+ 21:45:21 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1301150055520.32206@s15462909.onlinehome-server.info>
+ (Johannes Schindelin's message of "Tue, 15 Jan 2013 00:56:24 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9AB23F0A-5EBD-11E2-A5F7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213567>
 
-Happy ending!
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Turns out i have actually made a backup 3 days ago.
+> On Mon, 14 Jan 2013, Junio C Hamano wrote:
+>
+>> It appears that memcmp() uses the usual "one word at a time"
+>> comparison and triggers valgrind in a callback of bsearch() used in
+>> the refname search.  I can easily trigger problems in any script
+>> with test_commit (e.g. "sh t0101-at-syntax.sh --valgrind -i -v")
+>> without this suppression.
+>
+> I have no way to replicate that issue, but I take your word for it. With
+> that in mind, here is my ACK.
 
-My other work was on a branch + in a stash. Commits done on a branch
-were already present in a backup.
-I was able to get the stash working by copying corrupted .pack files
-from the backup, luckily all the new work wasn't packed yet.
-
-So i've just verified the log messages to see that no new commits were
-made, created a patch from the corrupted git repo of the stash,
-applied it on the backup, and wo-hooo, everything worked.
-And then I've pushed to origin to avoid such silliness in the future.
-
-Thanks and Regards,
-George
-
-On Tue, Jan 15, 2013 at 10:45 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "George Karpenkov" <george@metaworld.ru>
-> Sent: Monday, January 14, 2013 10:57 PM
->
->> Thanks everyone!
->>
->> Progress so far:
->>
->> After executing reverse sed command:
->> find .git -name '*.*' -exec sed -i 's/    /\t/g' {} \;
->
->
-> Have you counted how many substitutions there are in the pack file(s). It
-> may be sufficiently small that you can  simply try all the possible
-> combinations of fwd and reverse substitutions. Even if it takes a few days
-> the computer won't get bored ;-)
->
->>
->> And trying to switch the branch I get:
->>
->>> git checkout X
->>
->>
->> error: failed to read object 51a980792f26875d00acb79a19f043420f542cfa
->> at offset 41433013 from
->> .git/objects/pack/pack-8d629235ee9fec9c6683d42e3edb21a1b0f6e027.pack
->> fatal: packed object 51a980792f26875d00acb79a19f043420f542cfa (stored
->> in .git/objects/pack/pack-
->> 8d629235ee9fec9c6683d42e3edb21a1b0f6e027.pack) is corrupt
->>
->> So the actual .pack file is corrupt, unfortunately.
->>
->> On Tue, Jan 15, 2013 at 6:13 AM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>>
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> Everybody seems to be getting an impression that .idx is the only
->>>> thing that got corrupt.  Where does that come from?
->>>
->>>
->>> It's the only thing that appear in the error message. This does not
->>> imply that it is the only corrupt thing, but gives a little hope that it
->>> may still be the case.
->>>
->>> Actually, I thought the "read-only" protection should have protected
->>> files in object/ directory, but a little testing shows that "sed -i"
->>> gladly accepts to modify read-only files (technically, it does not
->>> modify it, but creates a temporary file with the new content, and then
->>> renames it to the new location). So, the hope that pack files are
->>> uncorrupted is rather thin unfortunately.
->>>
->>> --
->>> Matthieu Moy
->>> http://www-verimag.imag.fr/~moy/
->>
->> --
->
->
+Thanks.
