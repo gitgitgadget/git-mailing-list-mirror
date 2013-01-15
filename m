@@ -1,138 +1,141 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 11/14] imap-send.c: use struct imap_store instead of struct store
-Date: Tue, 15 Jan 2013 09:06:29 +0100
-Message-ID: <1358237193-8887-12-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 14/14] imap-send.c: simplify logic in lf_to_crlf()
+Date: Tue, 15 Jan 2013 09:06:32 +0100
+Message-ID: <1358237193-8887-15-git-send-email-mhagger@alum.mit.edu>
 References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 09:15:14 2013
+X-From: git-owner@vger.kernel.org Tue Jan 15 09:15:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv1ft-0000b5-Ox
+	id 1Tv1fu-0000b5-7j
 	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 09:15:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756804Ab3AOIOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 03:14:46 -0500
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:60598 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756494Ab3AOIOo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 03:14:44 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2013 03:14:44 EST
-X-AuditID: 12074412-b7f216d0000008e3-4e-50f50e3e5c4f
+	id S1756816Ab3AOIOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 03:14:49 -0500
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:50638 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753644Ab3AOIOs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 03:14:48 -0500
+X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2013 03:14:48 EST
+X-AuditID: 12074414-b7f9b6d0000008b3-08-50f50e442c23
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 01.54.02275.E3E05F05; Tue, 15 Jan 2013 03:07:26 -0500 (EST)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 16.2E.02227.44E05F05; Tue, 15 Jan 2013 03:07:32 -0500 (EST)
 Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0F86n5X029668
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0F86n5a029668
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 15 Jan 2013 03:07:25 -0500
+	Tue, 15 Jan 2013 03:07:31 -0500
 X-Mailer: git-send-email 1.8.0.3
 In-Reply-To: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqGvH9zXAYNlpAYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5Y/vYMU8F8kYreBeoNjDMF
-	uhg5OSQETCR6Or8zQdhiEhfurWfrYuTiEBK4zCjR+GovK4Rzhkmic+lCRpAqNgFdiUU9zWAd
-	IgJqEhPbDrGA2MwCDhKbPzeC1QgLhEi03JkKZrMIqEpsPrkdrJ5XwEXi2Nx1bBDbFCRe77zE
-	CmJzAsWv/jzGDGILCThLfNlwmnECI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbpmermZ
-	JXqpKaWbGCGhIrSDcf1JuUOMAhyMSjy8xgZfAoRYE8uKK3MPMUpyMCmJ8nZwfQ0Q4kvKT6nM
-	SCzOiC8qzUktPsQowcGsJMLr8w6onDclsbIqtSgfJiXNwaIkzvtzsbqfkEB6YklqdmpqQWoR
-	TFaGg0NJgjeGF2ioYFFqempFWmZOCUKaiYMTRHCBbOAB2vCKG6iQt7ggMbc4Mx2i6BSjopQ4
-	rxnIBAGQREZpHtwAWFS/YhQH+keYNwikigeYEOC6XwENZgIavGnvZ5DBJYkIKakGxnbulen7
-	1pzc+Wl724Pz/g+lHhy+mGw6+8v/pKTAU7EJXx223P3iGftzweHV+YWVi+/08Rxr2JkwPbza
-	zufttQ0b4qMWnnsn+WR72smzUjM3z5DfWrdYSuJuh2XotdivkZ16Rlny6uwGczLaXQTnhfZO
-	FOqLOGssaJ3Q/mz+6+dGt6LkO8ra85RYijMSDbWYi4oTAckuyK/FAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqOvC9zXAoOeajkXXlW4mi4beK8wW
+	t1fMZ3Zg9vj7/gOTx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGec7pvNUrBNuOJP8x7WBsbd
+	fF2MnBwSAiYSix7+ZoKwxSQu3FvPBmILCVxmlJj5trSLkQvIPsMk8f7Ef7AEm4CuxKKeZrAG
+	EQE1iYlth1hAbGYBB4nNnxsZQWxhAVeJY20zWUFsFgFViRunb4LFeQVcJB51HmCBWKYg8Xrn
+	JbAaTqD41Z/HmCEWO0t82XCacQIj7wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFuhZ6uZkl
+	eqkppZsYIaEisoPxyEm5Q4wCHIxKPLwmBl8ChFgTy4orcw8xSnIwKYnydnB9DRDiS8pPqcxI
+	LM6ILyrNSS0+xCjBwawkwuvzDqicNyWxsiq1KB8mJc3BoiTO+22xup+QQHpiSWp2ampBahFM
+	VoaDQ0mCV4EXaKhgUWp6akVaZk4JQpqJgxNEcIFs4AHa0A1SyFtckJhbnJkOUXSKUVFKnPcP
+	D1BCACSRUZoHNwAW1a8YxYH+EeYVBWnnASYEuO5XQIOZgAZv2vsZZHBJIkJKqoFx0ax9DSen
+	3tov9nfXxCkpaS2bWveocF+fl24Ws+Mdi0KRURHPmXl28QWGZdNyMk5lHO8RFF/lzjntYEiM
+	WqHG46TNJ7SZ6467fMz+5XAviutLj5vMGt1+1318RTFTjmbe+SrXXSMeZC7onfL7UI3fl7q2
+	AGuLd8aCITV1fxavCPt/cc/85/+VWIozEg21mIuKEwF+zinexQIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213619>
 
-In fact, all struct store instances are upcasts of struct imap_store
-anyway, so stop making the distinction.
+* The first character in the string used to be special-cased to get
+  around the fact that msg->buf[i - 1] is not defined for i == 0.
+  Instead, keep track of the previous character in a separate
+  variable, "lastc", initialized in such a way to let the loop handle
+  i == 0 correctly.
+
+* Make the two loops over the string look as similar as possible to
+  make it more obvious that the count computed in the first pass
+  agrees with the true length of the new string written in the second
+  pass.  As a side effect, this makes it possible to use the "j"
+  counter in place of lfnum and new_len.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- imap-send.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ imap-send.c | 52 +++++++++++++++++++++++-----------------------------
+ 1 file changed, 23 insertions(+), 29 deletions(-)
 
 diff --git a/imap-send.c b/imap-send.c
-index 909e4db..48c646c 100644
+index f2933e9..1d40207 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -782,9 +782,9 @@ static void imap_close_server(struct imap_store *ictx)
- 	free(imap);
- }
- 
--static void imap_close_store(struct store *ctx)
-+static void imap_close_store(struct imap_store *ctx)
- {
--	imap_close_server((struct imap_store *)ctx);
-+	imap_close_server(ctx);
- 	free(ctx);
- }
- 
-@@ -869,7 +869,7 @@ static int auth_cram_md5(struct imap_store *ctx, struct imap_cmd *cmd, const cha
- 	return 0;
- }
- 
--static struct store *imap_open_store(struct imap_server_conf *srvc)
-+static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
- {
- 	struct imap_store *ctx;
- 	struct imap *imap;
-@@ -1079,10 +1079,10 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
- 	} /* !preauth */
- 
- 	ctx->prefix = "";
--	return (struct store *)ctx;
-+	return ctx;
- 
- bail:
--	imap_close_store(&ctx->gen);
-+	imap_close_store(ctx);
+@@ -1081,42 +1081,36 @@ bail:
  	return NULL;
  }
  
-@@ -1128,9 +1128,8 @@ static void lf_to_crlf(struct strbuf *msg)
-  * Store msg to IMAP.  Also detach and free the data from msg->data,
-  * leaving msg->data empty.
-  */
--static int imap_store_msg(struct store *gctx, struct strbuf *msg)
-+static int imap_store_msg(struct imap_store *ctx, struct strbuf *msg)
++/*
++ * Insert CR characters as necessary in *msg to ensure that every LF
++ * character in *msg is preceded by a CR.
++ */
+ static void lf_to_crlf(struct strbuf *msg)
  {
--	struct imap_store *ctx = (struct imap_store *)gctx;
- 	struct imap *imap = ctx->imap;
- 	struct imap_cmd_cb cb;
- 	const char *prefix, *box;
-@@ -1142,7 +1141,7 @@ static int imap_store_msg(struct store *gctx, struct strbuf *msg)
- 	cb.dlen = msg->len;
- 	cb.data = strbuf_detach(msg, NULL);
- 
--	box = gctx->name;
-+	box = ctx->gen.name;
- 	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
- 	cb.create = 0;
- 	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
-@@ -1298,7 +1297,7 @@ int main(int argc, char **argv)
- {
- 	struct strbuf all_msgs = STRBUF_INIT;
- 	struct strbuf msg = STRBUF_INIT;
--	struct store *ctx = NULL;
-+	struct imap_store *ctx = NULL;
- 	int ofs = 0;
- 	int r;
- 	int total, n = 0;
-@@ -1354,7 +1353,7 @@ int main(int argc, char **argv)
+-	size_t new_len;
+ 	char *new;
+-	int i, j, lfnum = 0;
+-
+-	if (msg->buf[0] == '\n')
+-		lfnum++;
+-	for (i = 1; i < msg->len; i++) {
+-		if (msg->buf[i - 1] != '\r' && msg->buf[i] == '\n')
+-			lfnum++;
++	size_t i, j;
++	char lastc;
++
++	/* First pass: tally, in j, the size of the new string: */
++	for (i = j = 0, lastc = '\0'; i < msg->len; i++) {
++		if (msg->buf[i] == '\n' && lastc != '\r')
++			j++; /* a CR will need to be added here */
++		lastc = msg->buf[i];
++		j++;
  	}
  
- 	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
--	ctx->name = imap_folder;
-+	ctx->gen.name = imap_folder;
- 	while (1) {
- 		unsigned percent = n * 100 / total;
+-	new_len = msg->len + lfnum;
+-	new = xmalloc(new_len + 1);
+-	if (msg->buf[0] == '\n') {
+-		new[0] = '\r';
+-		new[1] = '\n';
+-		i = 1;
+-		j = 2;
+-	} else {
+-		new[0] = msg->buf[0];
+-		i = 1;
+-		j = 1;
+-	}
+-	for ( ; i < msg->len; i++) {
+-		if (msg->buf[i] != '\n') {
+-			new[j++] = msg->buf[i];
+-			continue;
+-		}
+-		if (msg->buf[i - 1] != '\r')
++	new = xmalloc(j + 1);
++
++	/*
++	 * Second pass: write the new string.  Note that this loop is
++	 * otherwise identical to the first pass.
++	 */
++	for (i = j = 0, lastc = '\0'; i < msg->len; i++) {
++		if (msg->buf[i] == '\n' && lastc != '\r')
+ 			new[j++] = '\r';
+-		/* otherwise it already had CR before */
+-		new[j++] = '\n';
++		lastc = new[j++] = msg->buf[i];
+ 	}
+-	strbuf_attach(msg, new, new_len, new_len + 1);
++	strbuf_attach(msg, new, j, j + 1);
+ }
  
+ /*
 -- 
 1.8.0.3
