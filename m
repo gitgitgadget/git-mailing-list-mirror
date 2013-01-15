@@ -1,81 +1,111 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] attr: make it build with DEBUG_ATTR again
-Date: Tue, 15 Jan 2013 09:49:26 +0700
-Message-ID: <1358218166-16592-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2013, #06; Mon, 14)
+Date: Mon, 14 Jan 2013 19:02:35 -0800
+Message-ID: <7v1udn6tdg.fsf@alter.siamese.dyndns.org>
+References: <7vehhn8kub.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <avila.jn@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 03:50:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: "Eric S. Raymond" <esr@thyrsus.com>,
+	Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 04:03:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuwbG-00055y-U1
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 03:50:07 +0100
+	id 1Tuwnk-0007Ou-CT
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 04:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756338Ab3AOCtq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2013 21:49:46 -0500
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:44312 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756137Ab3AOCtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 21:49:46 -0500
-Received: by mail-pa0-f51.google.com with SMTP id fb11so2635313pad.10
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 18:49:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=3AoBANNSzYfjezkWp3FhO7J8KCE0yDfDaqgTPgqialM=;
-        b=rnoXeX1w9L5IHz8Ju4QjvrPY3a2k+p9Ax30G1JSVHJYvPQj/vi8Lj1W/eb3TW0dSGG
-         16IjLR4xZ0LqyCNM/Pt4qspvz864Nz0coAjC2R7wPZyMvkz8p7OAUXQ4irCc6Z3lMrJ/
-         LpXpxLKTYnuUw++Ehho8p5q2wptXFa9i8X7se0azcT7dH1PgGy9qeJAdImBUVglqbwvQ
-         mptls22f3Q07POQabCPn/trPYG7oKmNhQ/22dUbQBU4oz0y20DR+8Dw+LXNFOed81uLR
-         QPGoIB0zF6TQNkr72+T+qKfU7COwX8RCad4T4SsJkP+hWDSSMRBQYiFIVWQV99fOVTxV
-         nqoQ==
-X-Received: by 10.66.84.232 with SMTP id c8mr56460577paz.8.1358218185685;
-        Mon, 14 Jan 2013 18:49:45 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id ou3sm9268057pbb.46.2013.01.14.18.49.42
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 14 Jan 2013 18:49:45 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 15 Jan 2013 09:49:28 +0700
-X-Mailer: git-send-email 1.8.0.rc3.18.g0d9b108
+	id S1752679Ab3AODCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 22:02:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45774 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752333Ab3AODCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 22:02:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2422AACBA;
+	Mon, 14 Jan 2013 22:02:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OQo6LHr/7jDO0PB+Zx/gwNs1Xmc=; b=Zr0a5k
+	/m3VPgZ9U/fvIiAfCGvUsf01vCczZGx1ij9x3isuPDUfutEd8CW5cjbPgvi6p0I2
+	U9iKjWnwBjCBAZM81tRDwspEaW7UXYao5C5j81hMcyIeax3/2pC8P6zMbtrit3tp
+	FWiZs/7frkWuw+SSnTlWL0ZZSeduo3prvGU0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Uom5yQB9nlNpb0ysnXRkPgXn5o2yUBMj
+	r+C3OgVScom9fRCGR9hkuDR1U20nb5Db61P+Mk2C9LUx6RFp4w73al0Yn6HxbuEk
+	wLmTUK2AYfoLAMLXDzd9I7QDB9QDLUxPLYqGLaYqL5aNPFpePeTadJkRwU0j+ueE
+	1vdbVJo2fXI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 193A4ACB9;
+	Mon, 14 Jan 2013 22:02:38 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CC5DACB7; Mon, 14 Jan 2013
+ 22:02:37 -0500 (EST)
+In-Reply-To: <7vehhn8kub.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 14 Jan 2013 14:23:56 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 045E011C-5EC0-11E2-A33F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213571>
 
-Commit 82dce99 (attr: more matching optimizations from .gitignore -
-2012-10-15) changed match_attr structure but it did not update
-DEBUG_ATTR-specific code. This fixes it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- attr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> [New Topics]
+>
+> * jc/cvsimport-upgrade (2013-01-14) 8 commits
+>  - t9600: adjust for new cvsimport
+>  - t9600: further prepare for sharing
+>  - cvsimport-3: add a sample test
+>  - cvsimport: make tests reusable for cvsimport-3
+>  - cvsimport: start adding cvsps 3.x support
+>  - cvsimport: introduce a version-switch wrapper
+>  - cvsimport: allow setting a custom cvsps (2.x) program name
+>  - Makefile: add description on PERL/PYTHON_PATH
+>
+>  The most important part of this series is the addition of the new
+>  cvsimport by Eric Raymond that works with cvsps 3.x.  Given some
+>  distros have inertia to be conservative, Git with cvsimport that
+>  does not work with both 3.x will block adoption of cvsps 3.x by
+>  them, and shipping Git with cvsimport that does not work with cvsps
+>  2.x will block such a version of Git, so we'll do the proven "both
+>  old and new are available, but we aim to deprecate and remove the
+>  old one in due time" strategy that we used successfully in the
+>  past.
 
-diff --git a/attr.c b/attr.c
-index 097ae87..0575bf7 100644
---- a/attr.c
-+++ b/attr.c
-@@ -693,7 +693,7 @@ static int fill_one(const char *what, struct match_=
-attr *a, int rem)
-=20
- 		if (*n =3D=3D ATTR__UNKNOWN) {
- 			debug_set(what,
--				  a->is_macro ? a->u.attr->name : a->u.pattern,
-+				  a->is_macro ? a->u.attr->name : a->u.pat.pattern,
- 				  attr, v);
- 			*n =3D v;
- 			rem--;
---=20
-1.8.0.rc3.18.g0d9b108
+My reading of the review discussion of this series, and the
+discussion in the $gmane/213170 thread, is that the approach
+outlined in this series is something Git-side is comfortable working
+with.
+
+I personally think it will be slightly less work on your side to
+keep the cvsps 3.x + new cvsimport combo improving, because you no
+longer need to worry about punting to the old cvsimport.  In
+addition, I think the new layout would make it easier for the new
+combo to gain trust of existing Git userbase over time by adding
+more t965x series of tests that correspond to the tests in the t960x
+series, working on the same (simple) CVS histories, demonstrating
+that the result would be what users expect, and guarding the code
+from future breakage.  By giving options to pick and choose both old
+and new cvsps, I think it will make it easier for distros to include
+cvsps 3.x sooner, promoting its adoption, which will in turn benefit
+us.
+
+I converted one of Chris's follow-up test tweaks to this to
+illustrate how it can be done without breaking tests for the
+original cvsimport, but didn't do all of them.  Chris, is this a
+foundation we can work together on top?
+
+Even though I assigned Author: to the "start adding cvsps 3" patch,
+I forgot to forge Eric's sign-off to it.  If Eric is OK with the
+direction this series is going, I'll do so and advance the rerolled
+series to 'next'.
+
+Thanks.
