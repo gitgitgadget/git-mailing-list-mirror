@@ -1,88 +1,150 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] test-lib.sh: unfilter GIT_PERF_*
-Date: Tue, 15 Jan 2013 11:31:50 -0800
-Message-ID: <7vsj622qft.fsf@alter.siamese.dyndns.org>
-References: <1358254409-15187-1-git-send-email-pclouds@gmail.com>
- <1358257856-3274-1-git-send-email-pclouds@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC/PATCH 2/8 v2] git_remote_helpers: fix input when running under
+ Python 3
+Date: Tue, 15 Jan 2013 19:48:09 +0000
+Message-ID: <20130115194809.GU4574@serenity.lan>
+References: <cover.1358018078.git.john@keeping.me.uk>
+ <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
+ <50F2296F.8030909@alum.mit.edu>
+ <20130113161724.GK4574@serenity.lan>
+ <50F38E12.6090207@alum.mit.edu>
+ <20130114094721.GQ4574@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 20:32:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 15 20:48:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvCF4-00048b-73
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 20:32:14 +0100
+	id 1TvCV3-00036w-Et
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 20:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280Ab3AOTby convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 14:31:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37481 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750698Ab3AOTbx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 14:31:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0006EADCC;
-	Tue, 15 Jan 2013 14:31:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=G+Ll0oxL3w7u
-	GMYQh5LPoAEg10s=; b=bj2r0+FUFVUHiasJ07ZmajMJsxyLLi2ChiWlCkn+pQZt
-	6qJduxJpeiFPCMtKGNgwt3AdGjfRB50RIWtkvTNQlK0UMrgpf4aAYfbi/AlYCtHx
-	zj1kOcevFNRknRp6JWE4iqIhKg/r2PEleeIlnXcEHEuaw+M5LjQlD2MQNYEuWvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=riPkFj
-	INRcu29MVhFhl3h09P8Rdhsa3MZbtfE/PludvdYZXpwr+Al4ThnMNmMbj0DajyQ3
-	tsPdcf4P6AroCUBEixbeHIwOxLqBxCWPEFYKWil4/DvVvBwt9+XIeWAPrdSOMnPN
-	CvRI+1DJ2cKScdWnTmEV2IgomuvoQWTolu2ww=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E869CADCB;
-	Tue, 15 Jan 2013 14:31:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50BE9ADC9; Tue, 15 Jan 2013
- 14:31:52 -0500 (EST)
-In-Reply-To: <1358257856-3274-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 15 Jan
- 2013 20:50:56 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 36A2A27E-5F4A-11E2-AB8F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755632Ab3AOTsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 14:48:23 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:38773 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754235Ab3AOTsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 14:48:21 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 830E36064D0;
+	Tue, 15 Jan 2013 19:48:20 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yHInr+yL0knU; Tue, 15 Jan 2013 19:48:19 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 9F018606506;
+	Tue, 15 Jan 2013 19:48:19 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 6DC16161E266;
+	Tue, 15 Jan 2013 19:48:19 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OmCgq+5SVdeG; Tue, 15 Jan 2013 19:48:19 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id C7094161E20D;
+	Tue, 15 Jan 2013 19:48:11 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <20130114094721.GQ4574@serenity.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213667>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Although 2to3 will fix most issues in Python 2 code to make it run under
+Python 3, it does not handle the new strict separation between byte
+strings and unicode strings.  There is one instance in
+git_remote_helpers where we are caught by this, which is when reading
+refs from "git for-each-ref".
 
-> These variables are user parameters to control how to run the perf
-> tests. Allow users to do so.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
+While we could fix this by explicitly handling refs as byte strings,
+this is merely punting the problem to users of the library since the
+same problem will be encountered as soon you want to display the ref
+name to a user.
 
-I think the Subject makes more sense, so I'd suggest replacing the
-current one with "PERF_", not with "PERF".
+Instead of doing this, explicit decode the incoming byte string into a
+unicode string.  Following the lead of pygit2 (the Python bindings for
+libgit2 - see [1] and [2]), use the filesystem encoding by default,
+providing a way for callers to override this if necessary.
 
->  t/test-lib.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index f50f834..e1c8c85 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -85,7 +85,7 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" =
--e '
->  		.*_TEST
->  		PROVE
->  		VALGRIND
-> -		PERF_AGGREGATING_LATER
-> +		PERF
->  	));
->  	my @vars =3D grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
->  	print join("\n", @vars);
+[1] https://github.com/libgit2/pygit2/blob/e34911b63e5d2266f9f72a4e3f32e27b13190feb/src/pygit2/reference.c#L261
+[2] https://github.com/libgit2/pygit2/blob/e34911b63e5d2266f9f72a4e3f32e27b13190feb/include/pygit2/utils.h#L55
+
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+
+I think this is in fact the best way to handle this, and I hope the
+above description clarified why I don't think we want to treat refs as
+byte strings in Python 3.
+
+My only remaining question is whether it would be better to set the
+error mode when decoding to "replace" instead of "strict" (the default).
+"strict" will cause a UnicodeError if the string cannot be decoded
+whereas "replace" will use U+FFFD (the replacement character). [3]
+
+I think it's better to use "strict" and let the user know that
+something has gone wrong rather than silently change the string, but I'd
+welcome other opinions.
+
+[3] http://docs.python.org/2/library/codecs.html#codec-base-classes
+
+ git_remote_helpers/git/importer.py | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+index e28cc8f..5bc16a4 100644
+--- a/git_remote_helpers/git/importer.py
++++ b/git_remote_helpers/git/importer.py
+@@ -1,5 +1,6 @@
+ import os
+ import subprocess
++import sys
+ 
+ from git_remote_helpers.util import check_call, check_output
+ 
+@@ -10,17 +11,26 @@ class GitImporter(object):
+     This importer simply delegates to git fast-import.
+     """
+ 
+-    def __init__(self, repo):
++    def __init__(self, repo, ref_encoding=None):
+         """Creates a new importer for the specified repo.
++
++        If ref_encoding is specified that refs are decoded using that
++        encoding.  Otherwise the system filesystem encoding is used.
+         """
+ 
+         self.repo = repo
++        self.ref_encoding = ref_encoding
+ 
+     def get_refs(self, gitdir):
+         """Returns a dictionary with refs.
+         """
+         args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
+-        lines = check_output(args).strip().split('\n')
++        encoding = self.ref_encoding
++        if encoding is None:
++            encoding = sys.getfilesystemencoding()
++            if encoding is None:
++                encoding = sys.getdefaultencoding()
++        lines = check_output(args).decode(encoding).strip().split('\n')
+         refs = {}
+         for line in lines:
+             value, name = line.split(' ')
+-- 
+1.8.1
