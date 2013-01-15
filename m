@@ -1,59 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] ignore memcmp() overreading in bsearch() callback
-Date: Tue, 15 Jan 2013 00:56:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1301150055520.32206@s15462909.onlinehome-server.info>
-References: <7v38y38hhm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Make git selectively and conditionally ignore certain
+ stat fields
+Date: Mon, 14 Jan 2013 16:11:38 -0800
+Message-ID: <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
+References: <7vmwwb8m25.fsf@alter.siamese.dyndns.org>
+ <1815551092.2039693.1358207014937.JavaMail.root@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 00:56:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, j sixt <j.sixt@viscovery.net>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 01:13:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuttZ-0001VW-Pm
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 00:56:50 +0100
+	id 1Tuu9v-0006lR-13
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 01:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757301Ab3ANX42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2013 18:56:28 -0500
-Received: from mout.gmx.net ([212.227.15.18]:58025 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751696Ab3ANX41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2013 18:56:27 -0500
-Received: from mailout-de.gmx.net ([10.1.76.12]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0M9cyP-1To3K10Cb9-00CwGv for
- <git@vger.kernel.org>; Tue, 15 Jan 2013 00:56:26 +0100
-Received: (qmail invoked by alias); 14 Jan 2013 23:56:25 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp012) with SMTP; 15 Jan 2013 00:56:25 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/s4C0i3PfsyMZlOmKCH4mUkUCd0QeaMrU2isiY63
-	7OtRZeRbSmE9x1
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <7v38y38hhm.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751673Ab3AOALm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2013 19:11:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33644 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751340Ab3AOALm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2013 19:11:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 324B8BCA1;
+	Mon, 14 Jan 2013 19:11:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/7GjQXMRHCAdG4TGrMHYjpHvhVI=; b=l0x+gg
+	Q4wDDz6PVkRBWXtmiywqXjJCzVOB2Ac6xQ0NhmAfsmbWhwHKlcuHT6WaqzOjibI/
+	hlZcEhFxknkv/JkFhzG9dcAkT+3VRGjYu4em6nG351I0HgJcm12OUg+d1xe4h2zo
+	iaIKxhOKI2ep+4SLoN1i4MsWYx6lRvsNXyIn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dcgFbRx8jTdl3S8gZilHPQHp1eHh8PKq
+	Tuv6oK70BnFurX0AGJ+/C0cZZy4whSmIA4vqJcethoGcVrAnZFUA0pd8t5ziBXtW
+	EIgolUnz4Cemw9IWofACLMTXeS5Rihip4all91yJ5uEN+4ik3VdVWa4yGCnOIANL
+	tHXjU34tHQ8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2667BBC9F;
+	Mon, 14 Jan 2013 19:11:41 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 826EFBC9D; Mon, 14 Jan 2013
+ 19:11:40 -0500 (EST)
+In-Reply-To: <1815551092.2039693.1358207014937.JavaMail.root@dewire.com>
+ (Robin Rosenberg's message of "Tue, 15 Jan 2013 00:43:34 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 22C59A24-5EA8-11E2-B4AB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213547>
 
-Hi Junio,
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-On Mon, 14 Jan 2013, Junio C Hamano wrote:
+> Semantically they're somewhat different. My flags are for ignoring
+> a value when it's not used as indicated by the value zero, while
+> trustctime is for ignoring untrustworthy, non-zero, values.
 
-> It appears that memcmp() uses the usual "one word at a time"
-> comparison and triggers valgrind in a callback of bsearch() used in
-> the refname search.  I can easily trigger problems in any script
-> with test_commit (e.g. "sh t0101-at-syntax.sh --valgrind -i -v")
-> without this suppression.
+Yeah, I realized that after writing that message.
 
-I have no way to replicate that issue, but I take your word for it. With
-that in mind, here is my ACK.
+> Another thing that I noticed, is that I probably wanto to be able to filter on the precision
+> of timestamps. Again, this i JGit-related. Current JGit has milliseconds precision (max), whereas
+> Git has down to nanosecond precision in timestamps. Newer JGits may get nanoseconds timestamps too,
+> but on current Linux versions JGit gets only integral seconds regardless of file system. 
+>
+> Would the names, milli, micro, nano be good for ignoring the tail when zero, or n1..n9 (obviously
+> n2 would be ok too). nN = ignore all but first N nsec digits if they are zero)?
 
-Ciao,
-Johannes
+It somehow starts to sound like over-engineering to solve a wrong
+problem.
+
+I'd say a simplistic "ignore if zero is stored" or even "ignore this
+as one of the systems that shares this file writes crap in it" may
+be sufficient, and if this is a jGit specific issue, it might even
+make sense to introduce a single configuration variable with string
+"jgit" somewhere in its name and bypass the stat field comparison
+for known-problematic fields, instead of having the user know and
+list what stat fields need special attention.
+
+Is this "the user edits in eclipse and then runs 'git status' from the
+terminal" problem?
