@@ -1,110 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 06/14] imap-send.c: remove some unused fields from
- struct store
-Date: Tue, 15 Jan 2013 12:32:04 -0800
-Message-ID: <20130115203204.GA12524@google.com>
-References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
- <1358237193-8887-7-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
+Date: Tue, 15 Jan 2013 12:38:44 -0800
+Message-ID: <7vk3re2ncb.fsf@alter.siamese.dyndns.org>
+References: <201301120650.46479.tboegi@web.de>
+ <7vvcb37xfe.fsf@alter.siamese.dyndns.org> <50F28BB5.9080607@web.de>
+ <20130113173207.GC5973@elie.Belkin> <7v4nikiu81.fsf@alter.siamese.dyndns.org>
+ <50F5B83E.9060800@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:32:38 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	kraai@ftbfs.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:39:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvDBV-00083n-FG
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:32:37 +0100
+	id 1TvDHo-0001MI-7P
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:39:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817Ab3AOUcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 15:32:15 -0500
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:46023 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752370Ab3AOUcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 15:32:12 -0500
-Received: by mail-pb0-f50.google.com with SMTP id wz7so265158pbc.9
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 12:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=+pkf8gQr5fOagavvCY8zIoum2xljdk/XY+be+RXc7n0=;
-        b=F2zKcKbhODs2FRqjasHpgPQZkhuv5h2lNLh+TnyotwC8aul2cTYr9JWj+V5KgJNGvw
-         IK/cFS3VbQivc8LV8oo8n6yp+XpWJ8xGdnG57F5ZakqpDTAipoQZkeBFHKHg7U6QEqKp
-         agw2sXCZPvR/OeCzkbRLA6tX7eAHwBjthYAZnZ1VGBO6LkKQcvgIoLb6BTuSlZDtccOp
-         pl8nFYio8+MqaJ1vWjMbb4UHstW6JNA1QLlWSxOFpsNhcVTbxPCjJCAIu3DV6ZSofeId
-         Av//yiSrgtTM9eMbhVuBla+V0KQGizpxnuVDH+5dMijjeR4hGWrd4+AzaCaw8zXyr9uV
-         qm0A==
-X-Received: by 10.68.204.103 with SMTP id kx7mr269973034pbc.33.1358281931929;
-        Tue, 15 Jan 2013 12:32:11 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id kl5sm10782289pbc.74.2013.01.15.12.32.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Jan 2013 12:32:10 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1358237193-8887-7-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755388Ab3AOUir convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 15:38:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62245 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754929Ab3AOUiq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 15:38:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 613B4A64F;
+	Tue, 15 Jan 2013 15:38:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=REd5U89xrlwp
+	PSD6Tt/LtdPfGig=; b=MXrJST2APJpeW29NAuDJf4H0DUCpC8/gZX/+6TrpTtQf
+	7/afL0gbXNUHVuoDkuLZZVThNLA+SzpLv52E8LNZmqqYZrHL1OBEjFPStwzzIYBr
+	4O3515UKHe6UsECNzBEq4nexAmGvyKx2Oklx4q5B4PehegxpGpTU/wKxGmIN2gA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hwBUJx
+	5loil0okv4oIOSr3nt/xFuJiz30e/jQ3p/VN4ilIGKhyJpMJfB/pN8+GvrhDCxPR
+	+T0XpsD5KhmaCYKqvlopqDN3BmQ3Do7GKT0rNyV0jPxalZ9LqJkrDAUjXzRmvfFJ
+	xxMbW0BNJhYD7fS3pMelMoOSGspFUepfdWIyA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56763A64E;
+	Tue, 15 Jan 2013 15:38:46 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7D8AA64D; Tue, 15 Jan 2013
+ 15:38:45 -0500 (EST)
+In-Reply-To: <50F5B83E.9060800@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of "Tue, 15 Jan 2013 21:12:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8ED24CFC-5F53-11E2-9C3F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213673>
 
-Michael Haggerty wrote:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> -			else if ((arg1 = next_arg(&cmd))) {
-> -				if (!strcmp("EXISTS", arg1))
-> -					ctx->gen.count = atoi(arg);
-> -				else if (!strcmp("RECENT", arg1))
-> -					ctx->gen.recent = atoi(arg);
-> +			} else if ((arg1 = next_arg(&cmd))) {
-> +				/* unused */
+> What do we think about something like this for fishing for which:
+>
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -644,6 +644,10 @@ yes () {
+>                 :
+>         done
+>  }
+> +which () {
+> +       echo >&2 "which is not portable (please use type)"
+> +       exit 1
+> +}
+>
+>
+> This will happen in runtime, which might be good enough ?
 
-The above is just the right thing to do to ensure no behavior change.
-Let's take a look at the resulting code, though:
+	if (
+		which frotz &&
+                test $(frobonitz --version" -le 2.0
+	   )
+        then
+		test_set_prereq FROTZ_FROBONITZ
+	else
+		echo >&2 "suitable Frotz/Frobonitz combo not available;"
+                echo >&2 "some tests may be skipped"
+	fi
 
-			if (... various reasonable things ...) {
-				...
-			} else if ((arg1 = next_arg(&cmd))) {
-				/* unused */
-			} else {
-				fprintf(stderr, "IMAP error: unable to parse untagged response\n");
-				return RESP_BAD;
-
-Anyone forced by some bug to examine this "/* unused */" case is going
-to have no clue what's going on.  In that respect, the old code was
-much better, since it at least made it clear that one case where this
-code gets hit is handling "<num> EXISTS" and "<num> RECENT" untagged
-responses.
-
-I suspect that original code did not have an implicit and intended
-missing
-
-				else
-					; /* negligible response; ignore it */
-
-but the intent was rather 
-
-				else {
-					fprintf(stderr, "IMAP error: I can't parse this\n");
-					return RESP_BAD;
-				}
-
-Since actually fixing that is probably too aggressive for this patch,
-how about a FIXME comment like the following?
-
-		/*
-		 * Unhandled response-data with at least two words.
-		 * Ignore it.
-		 *
-		 * NEEDSWORK: Previously this case handled '<num> EXISTS'
-		 * and '<num> RECENT' but as a probably-unintended side
-		 * effect it ignores other unrecognized two-word
-		 * responses.  imap-send doesn't ever try to read
-		 * messages or mailboxes these days, so consider
-		 * eliminating this case.
-		 */
+I somehow think this is a lost cause.
