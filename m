@@ -1,56 +1,63 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git grep performance regression
-Date: Tue, 15 Jan 2013 09:46:51 +0700
-Message-ID: <CACsJy8A7FLYqdY2Mt5pUq0nH3N8mbZ4crkYJYFfepp19c0aWhg@mail.gmail.com>
+Date: Mon, 14 Jan 2013 18:48:11 -0800
+Message-ID: <7v622z6u1g.fsf@alter.siamese.dyndns.org>
 References: <20130114223800.GA12708@hobo.wolfson.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <avila.jn@gmail.com>
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>
 To: Ross Lagerwall <rosslagerwall@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 03:47:48 2013
+X-From: git-owner@vger.kernel.org Tue Jan 15 03:48:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuwZ1-00036v-GA
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 03:47:47 +0100
+	id 1TuwZr-0003t1-OH
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 03:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756132Ab3AOCrX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2013 21:47:23 -0500
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:63503 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751673Ab3AOCrW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 21:47:22 -0500
-Received: by mail-oa0-f44.google.com with SMTP id n5so4783734oag.31
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 18:47:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=a7yq1fi7AoYsRTTmA0Ujxa3j6VrLm1JEgmXArjoCSvA=;
-        b=PWalbzyg10LRl0O6sN6/hZQBrERpMBwfHAwOq43q+Mxq9I/NEPZaf79kbxh1SRzemI
-         lC5MH4bwXCDpTOgnrDnJD/haCpbe47+joZRFwGQr77w253fBvSAPdVHKDO5hf5qiYp8Q
-         3bbxL2RoSmlYmufQbJDbiRQHYIDH9pJy/fYGe/wpY2dcK8F48UkVaBrnYc5mrS5hGWuF
-         xw/NoBOKGAB+bkj9VoyzOk6FLTY2HnyMYEHlwHB4BS3/lYSoLhsmxfEP1U5YXZpIAQPl
-         pWW/I78N1BPegWyZ4D25YEV7g7566vG6q89zuYSFIv1LBkEftARuN7vLmRdf0qNM8oj6
-         oJYg==
-Received: by 10.182.188.69 with SMTP id fy5mr9020204obc.74.1358218041339; Mon,
- 14 Jan 2013 18:47:21 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Mon, 14 Jan 2013 18:46:51 -0800 (PST)
-In-Reply-To: <20130114223800.GA12708@hobo.wolfson.cam.ac.uk>
+	id S1756229Ab3AOCsR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2013 21:48:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35125 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756137Ab3AOCsO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2013 21:48:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0B18A124;
+	Mon, 14 Jan 2013 21:48:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/dSXnRENO8h1
+	ml4fvFUZe4HRIQY=; b=FUNoyhMaG2uPmA5tzFJ7+FtDDIQDdX4ttHXObOkas2/6
+	CVNEi0+Rc8Ux12W+vCjtu27nGGhXx7imrmyo48Hreo4nRitZsiGOYLq1VYbZPvv1
+	aDqCdH/5tfCxkKC0xms31TidvGlVdFIda4HXJHjrwoZw1qEkfQS0111o6SYIX1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iSWwpq
+	FCUt6lAIAzzHNWAj0OlA5eMZAZI1xQvKrQr7UEf0qTvBxZ83nY1GnWN4dPhwr+qV
+	2LzATyuSnSX85sxMCJPeX4eF44Qa2xUBpVyr4XHM/yfCDO+G2P5qiBxRVF5cUCfS
+	YDSkR/g7/KA2L/fLNdzQjYf33O4zVSsIO7OuY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4114A123;
+	Mon, 14 Jan 2013 21:48:13 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 292B1A11E; Mon, 14 Jan 2013
+ 21:48:13 -0500 (EST)
+In-Reply-To: <20130114223800.GA12708@hobo.wolfson.cam.ac.uk> (Ross
+ Lagerwall's message of "Mon, 14 Jan 2013 22:38:00 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0137BF5C-5EBE-11E2-9CB1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213569>
 
-On Tue, Jan 15, 2013 at 5:38 AM, Ross Lagerwall <rosslagerwall@gmail.co=
-m> wrote:
-> Hi,
->
+Ross Lagerwall <rosslagerwall@gmail.com> writes:
+
 > I have noticed a performance regression in git grep between v1.8.1 an=
 d
 > v1.8.1.1:
@@ -69,34 +76,34 @@ d
 > real   0m0.501s
 > user   0m0.707s
 > sys    0m0.493s
-
-Interesting. I see the regression on linux-2.6 too (0.6s real vs 0.9s).
-
+>
+>
 > A bisect seems to indicate that it was introduced by 94bc67:
 > commit 94bc671a1f2e8610de475c2494d2763355a99f65
 > Author: Jean-No=C3=ABl AVILA <avila.jn@gmail.com>
 > Date:   Sat Dec 8 21:04:39 2012 +0100
 >
 >     Add directory pattern matching to attributes
->
+>    =20
 >     The manpage of gitattributes says: "The rules how the pattern
 >     matches paths are the same as in .gitignore files" and the gitign=
 ore
 >     pattern matching has a pattern ending with / for directory matchi=
 ng.
->
+>    =20
 >     This rule is specifically relevant for the 'export-ignore' rule u=
 sed
 >     for git archive.
+>    =20
+>     Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Not the real contributor to the regression, but it should be noted
-that glibc's strrchr does not employ a typical loop. Instead it
-advances with strchr with a note that strchr is much faster. It looks
-like strchr compares a word at a time instead of a byte. We might want
-to do the same.
+Hmph, that looks really bad, especially given that in the normal
+codepath like "git grep", we would never care about directories (the
+attributes are normally applied to real paths with contents, and the
+use by archive is an anomaly) and the implementation should be done
+in a way not to impose such excess and useless overhead.
 
-I don't have time to look into details now, but by enabling
-DEBUG_ATTR, it looks like this commit makes it push and pop patterns a
-lot more than without the commit.
---=20
-Duy
+We may end up reverting that patch for the time being X-<.
+
+Jean-No=C3=ABl, ideas?
