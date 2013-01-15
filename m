@@ -1,47 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] Make git selectively and conditionally ignore certain
- stat fields
-Date: Tue, 15 Jan 2013 08:02:45 +0100
-Message-ID: <50F4FF15.2080803@viscovery.net>
-References: <7vmwwb8m25.fsf@alter.siamese.dyndns.org> <1815551092.2039693.1358207014937.JavaMail.root@dewire.com> <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH v2] Make git selectively and conditionally ignore
+ certain stat fields
+Date: Tue, 15 Jan 2013 08:09:41 +0100 (CET)
+Message-ID: <1119893992.2134035.1358233781666.JavaMail.root@dewire.com>
+References: <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org, j sixt <j.sixt@viscovery.net>,
+	Shawn Pearce <spearce@spearce.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 08:03:17 2013
+X-From: git-owner@vger.kernel.org Tue Jan 15 08:10:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv0YF-0000da-Mt
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 08:03:16 +0100
+	id 1Tv0eq-0005mj-6T
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 08:10:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998Ab3AOHCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 02:02:54 -0500
-Received: from so.liwest.at ([212.33.55.24]:40350 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751814Ab3AOHCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 02:02:51 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Tv0Xm-0000A9-NS; Tue, 15 Jan 2013 08:02:46 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4BAD01660F;
-	Tue, 15 Jan 2013 08:02:46 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+	id S1752046Ab3AOHJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 02:09:43 -0500
+Received: from zimbra.dewire.com ([83.140.172.131]:47050 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971Ab3AOHJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 02:09:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 22663826D9;
+	Tue, 15 Jan 2013 08:09:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HhrSH8ablQuU; Tue, 15 Jan 2013 08:09:41 +0100 (CET)
+Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
+	by zimbra.dewire.com (Postfix) with ESMTP id B475E8267B;
+	Tue, 15 Jan 2013 08:09:41 +0100 (CET)
 In-Reply-To: <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5
-X-Spam-Score: -1.0 (-)
+X-Originating-IP: [213.67.12.15]
+X-Mailer: Zimbra 7.2.0_GA_2681 (ZimbraWebClient - FF3.0 (Mac)/7.2.0_GA_2681)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213602>
 
-Am 1/15/2013 1:11, schrieb Junio C Hamano:
+
+
+----- Ursprungligt meddelande -----
+> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+> 
+> > Semantically they're somewhat different. My flags are for ignoring
+> > a value when it's not used as indicated by the value zero, while
+> > trustctime is for ignoring untrustworthy, non-zero, values.
+> 
+> Yeah, I realized that after writing that message.
+> 
+> > Another thing that I noticed, is that I probably wanto to be able
+> > to filter on the precision
+> > of timestamps. Again, this i JGit-related. Current JGit has
+> > milliseconds precision (max), whereas
+> > Git has down to nanosecond precision in timestamps. Newer JGits may
+> > get nanoseconds timestamps too,
+> > but on current Linux versions JGit gets only integral seconds
+> > regardless of file system.
+> >
+> > Would the names, milli, micro, nano be good for ignoring the tail
+> > when zero, or n1..n9 (obviously
+> > n2 would be ok too). nN = ignore all but first N nsec digits if
+> > they are zero)?
+> 
+> It somehow starts to sound like over-engineering to solve a wrong
+> problem.
+> 
 > I'd say a simplistic "ignore if zero is stored" or even "ignore this
 > as one of the systems that shares this file writes crap in it" may
 > be sufficient, and if this is a jGit specific issue, it might even
@@ -50,17 +80,8 @@ Am 1/15/2013 1:11, schrieb Junio C Hamano:
 > for known-problematic fields, instead of having the user know and
 > list what stat fields need special attention.
 
-It was my suggestion to have a list of names to ignore because the answer
-to this question
+My first patch was something like that, just not using the word jgit. As
+for what fields to ignore, it's something that can be configured by EGit
+and documented on the EGit/JGit wiki. 
 
-> Is this "the user edits in eclipse and then runs 'git status' from the
-> terminal" problem?
-
-was "It is purely for performance in some situations" back then. But
-today, the answer is "Yes". With this new background, your suggestion to
-have just a single option that contains the token "jgit" may make more
-sense. (core.ignoreCygwinFSTricks may serve as a precedent.) The original
-patch was along this way, and the name contained "minimal", which I
-objected to.
-
--- Hannes
+-- robin
