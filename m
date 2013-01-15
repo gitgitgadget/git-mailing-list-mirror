@@ -1,92 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/8 v2] git_remote_helpers: fix input when running
- under Python 3
-Date: Tue, 15 Jan 2013 12:51:13 -0800
-Message-ID: <7vbocq2mri.fsf@alter.siamese.dyndns.org>
-References: <cover.1358018078.git.john@keeping.me.uk>
- <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
- <50F2296F.8030909@alum.mit.edu> <20130113161724.GK4574@serenity.lan>
- <50F38E12.6090207@alum.mit.edu> <20130114094721.GQ4574@serenity.lan>
- <20130115194809.GU4574@serenity.lan>
+From: Sebastian Staudt <koraktor@gmail.com>
+Subject: [PATCH] config.txt: Document help.htmlpath config parameter
+Date: Tue, 15 Jan 2013 21:56:21 +0100
+Message-ID: <20130115205621.GB49671@mormegil.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	"Eric S. Raymond" <esr@thyrsus.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:51:44 2013
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:56:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvDTt-0003Ye-Iz
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:51:37 +0100
+	id 1TvDYs-0002v2-Qt
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755896Ab3AOUvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 15:51:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40444 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752370Ab3AOUvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 15:51:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AF17B178;
-	Tue, 15 Jan 2013 15:51:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JJvMKt1/Jd1aP6x1U5zGcpKRJms=; b=ep+IHm
-	DfSOfR61aleu6V96EFxti6Zw5HW9XimT1r+h7MoCO3gb4CwE4lsXerRXFZd/f1P7
-	T1j/Mkz+jTzFH0/psG4xgx7em0G1bjmXzTHhUinpRDrSJOPBFsklaLrlEvS/bZNB
-	YGcGXi6AC5FPpja7DTKLe1y0Sa2VwxfajRdZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ML+YDvYeOEwg7F0YKNpG/3kzesJUejDb
-	FcOlQRERF9UJs6AtqMmJmpJ7T3QseUYHGoOAjQYcAl0AX3Wz4dkzvS+msM8EUBvQ
-	TvVpMgLaQaODjMda3/BctyMh9c5HTck/27BvFO+HJj3jau1as3xB8z0tmpCYg4L1
-	0qRokTniAsw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F038B177;
-	Tue, 15 Jan 2013 15:51:16 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90D23B176; Tue, 15 Jan 2013
- 15:51:15 -0500 (EST)
-In-Reply-To: <20130115194809.GU4574@serenity.lan> (John Keeping's message of
- "Tue, 15 Jan 2013 19:48:09 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4DC64AFE-5F55-11E2-9FF8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756395Ab3AOU40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 15:56:26 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:58367 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756323Ab3AOU4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 15:56:25 -0500
+Received: by mail-wi0-f171.google.com with SMTP id hn14so2776771wib.16
+        for <git@vger.kernel.org>; Tue, 15 Jan 2013 12:56:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=yHNDQmKLbuD/c1r5rlfq8vK1UadqP5rjC2cuOmoun6U=;
+        b=HRUJK8GwEu2dfY9OwL6FjRxxh9FJAmJrHK3cNCrSg6Se/nBBD+wfWAE0yyPPQXJY1U
+         mk9pnRoUhiMOiMa1Tf6VvgeJM0YZCvdGqM/LnPwqqdA7726iODH92SpUP115UJQMPeDF
+         cccESZRGqhSuTg2U625lUHWOltmmnyVBBEjgbX3hVG8GaytUDXFS1bA5aezcPteiOaip
+         +phYH8lACty6E7YqcfFXmOmLmGBp6cNxB6vI7zXWh7daTNr/OC0WPJaMzLtS3XOIjSHu
+         fbE5u+ixgA0DmmfpUjzMPWn/UntRq2Q3zFK8IcjZKPiqWHbtP+BDn0PpXEBzPyU+AJWC
+         2PoA==
+X-Received: by 10.180.107.130 with SMTP id hc2mr5955814wib.12.1358283384370;
+        Tue, 15 Jan 2013 12:56:24 -0800 (PST)
+Received: from mormegil.local (88-134-169-8-dynip.superkabel.de. [88.134.169.8])
+        by mx.google.com with ESMTPS id bw9sm5071741wib.5.2013.01.15.12.56.23
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 15 Jan 2013 12:56:23 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213677>
 
-John Keeping <john@keeping.me.uk> writes:
+Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
+---
+ Documentation/config.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> Although 2to3 will fix most issues in Python 2 code to make it run under
-> Python 3, it does not handle the new strict separation between byte
-> strings and unicode strings.  There is one instance in
-> git_remote_helpers where we are caught by this, which is when reading
-> refs from "git for-each-ref".
->
-> While we could fix this by explicitly handling refs as byte strings,
-> this is merely punting the problem to users of the library since the
-> same problem will be encountered as soon you want to display the ref
-> name to a user.
->
-> Instead of doing this, explicit decode the incoming byte string into a
-> unicode string.
-
-That really feels wrong.  Displaying is a separate issue and it is
-the _right_ thing to punt the problem at the lower-level machinery
-level.
-
-> Following the lead of pygit2 (the Python bindings for
-> libgit2 - see [1] and [2]),...
-
-I do not think other people getting it wrong is not an excuse to
-repeat the same mistake.
-
-Is it really so cumbersome to handle byte strings as byte strings in
-Python?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index bf8f911..e452ff8 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1351,6 +1351,12 @@ help.autocorrect::
+ 	value is 0 - the command will be just shown but not executed.
+ 	This is the default.
+ 
++help.htmlpath::
++	Specify the path where the HTML documentation resides. File system paths
++	and URLs are supported. HTML pages will be prefixed with this path when
++	help is displayed in the 'web' format. This defaults to the documentation
++	path of your Git installation.
++
+ http.proxy::
+ 	Override the HTTP proxy, normally configured using the 'http_proxy',
+ 	'https_proxy', and 'all_proxy' environment variables (see
+-- 
+1.8.1.1
