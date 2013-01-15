@@ -1,81 +1,136 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] test-lib.sh: unfilter GIT_PERF_*
-Date: Tue, 15 Jan 2013 19:53:29 +0700
-Message-ID: <1358254409-15187-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+From: Max Horn <max@quendi.de>
+Subject: [PATCH] remote-hg: fix handling of file perms when pushing
+Date: Tue, 15 Jan 2013 14:02:39 +0100
+Message-ID: <1358254959-50435-1-git-send-email-max@quendi.de>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Max Horn <max@quendi.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 13:53:39 2013
+X-From: git-owner@vger.kernel.org Tue Jan 15 14:03:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv61I-0004wC-TK
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 13:53:37 +0100
+	id 1Tv6Ag-0006AN-Gy
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 14:03:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554Ab3AOMxQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 07:53:16 -0500
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:51372 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752730Ab3AOMxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 07:53:15 -0500
-Received: by mail-pb0-f42.google.com with SMTP id rp2so26809pbb.15
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 04:53:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=vJnRW3+ZZ51mnZBHImEjFdA3lVuZk9s7A4tlk0dyejM=;
-        b=Bc9MBEKknsVmtEANk+/tsUW51fKZkcUgdaccI7j4gCxr9qnywHMgl4+uv9Piy2tsXV
-         FVYgEk5AMqGHwPJ9AMSNe1O6rHgi1hogzbumOukBoYtr7iyqM56rGshmqG60V3fZLCP5
-         Tqp4hpdTePRlLplmld2D0EoYN9Fa24W8rCep14YIfoRberFtbXXoGFI+BNHddbkkegWg
-         zNVb9Eow2CZ4JwIvczZ7ojxnWAJf2UQzYbP5giQQk0ZNLQqYqlgdzjzmEp46jaIBmajq
-         4n79l/cI6COoxZoIMJzBvVc5UhQMmvRk7CSwuW22gQducLGAwxjbQy9c3NdaVqoJLdRm
-         XYtQ==
-X-Received: by 10.68.236.100 with SMTP id ut4mr268305909pbc.92.1358254394801;
-        Tue, 15 Jan 2013 04:53:14 -0800 (PST)
-Received: from lanh ([115.74.52.72])
-        by mx.google.com with ESMTPS id wh4sm4722820pbc.18.2013.01.15.04.53.11
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 15 Jan 2013 04:53:13 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 15 Jan 2013 19:53:31 +0700
-X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
+	id S1756428Ab3AONC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 08:02:57 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:52112 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756245Ab3AONC4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 08:02:56 -0500
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id 1Tv6AH-0002kg-Kv; Tue, 15 Jan 2013 14:02:53 +0100
+X-Mailer: git-send-email 1.8.1.448.g79c577a.dirty
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1358254976;d98a47fc;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213632>
 
-These variables are user parameters to control how to run the perf
-tests. Allow users to do so.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Previously, when changing and committing an executable file, the file
+would loose its executable bit on the hg side. Likewise, symlinks ended
+up as "normal" files". This was not immediately apparent on the git side
+unless one did a fresh clone.
 ---
- t/test-lib.sh | 3 +++
- 1 file changed, 3 insertions(+)
+ contrib/remote-helpers/git-remote-hg     |  2 +-
+ contrib/remote-helpers/test-hg-hg-git.sh | 68 ++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 1 deletion(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f50f834..b8d35d1 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -86,6 +86,9 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e=
- '
- 		PROVE
- 		VALGRIND
- 		PERF_AGGREGATING_LATER
-+		PERF_LARGE_REPO
-+		PERF_REPEAT_COUNT
-+		PERF_REPO
- 	));
- 	my @vars =3D grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
- 	print join("\n", @vars);
---=20
-1.8.0.rc2.23.g1fb49df
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index 7c74d8b..328c2dc 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -53,7 +53,7 @@ def gittz(tz):
+     return '%+03d%02d' % (-tz / 3600, -tz % 3600 / 60)
+ 
+ def hgmode(mode):
+-    m = { '0100755': 'x', '0120000': 'l' }
++    m = { '100755': 'x', '120000': 'l' }
+     return m.get(mode, '')
+ 
+ def get_config(config):
+diff --git a/contrib/remote-helpers/test-hg-hg-git.sh b/contrib/remote-helpers/test-hg-hg-git.sh
+index 3e76d9f..7e3967f 100755
+--- a/contrib/remote-helpers/test-hg-hg-git.sh
++++ b/contrib/remote-helpers/test-hg-hg-git.sh
+@@ -109,6 +109,74 @@ setup () {
+ 
+ setup
+ 
++test_expect_success 'executable bit' '
++	mkdir -p tmp && cd tmp &&
++	test_when_finished "cd .. && rm -rf tmp" &&
++
++	(
++	git init -q gitrepo &&
++	cd gitrepo &&
++	echo alpha > alpha &&
++	chmod 0644 alpha &&
++	git add alpha &&
++	git commit -m "add alpha" &&
++	chmod 0755 alpha &&
++	git add alpha &&
++	git commit -m "set executable bit" &&
++	chmod 0644 alpha &&
++	git add alpha &&
++	git commit -m "clear executable bit"
++	) &&
++
++	for x in hg git; do
++		(
++		hg_clone_$x gitrepo hgrepo-$x &&
++		cd hgrepo-$x &&
++		hg_log . &&
++		hg manifest -r 1 -v &&
++		hg manifest -v
++		) > output-$x &&
++
++		git_clone_$x hgrepo-$x gitrepo2-$x &&
++		git_log gitrepo2-$x > log-$x
++	done &&
++	cp -r log-* output-* /tmp/foo/ &&
++
++	test_cmp output-hg output-git &&
++	test_cmp log-hg log-git
++'
++
++test_expect_success 'symlink' '
++	mkdir -p tmp && cd tmp &&
++	test_when_finished "cd .. && rm -rf tmp" &&
++
++	(
++	git init -q gitrepo &&
++	cd gitrepo &&
++	echo alpha > alpha &&
++	git add alpha &&
++	git commit -m "add alpha" &&
++	ln -s alpha beta &&
++	git add beta &&
++	git commit -m "add beta"
++	) &&
++
++	for x in hg git; do
++		(
++		hg_clone_$x gitrepo hgrepo-$x &&
++		cd hgrepo-$x &&
++		hg_log . &&
++		hg manifest -v
++		) > output-$x &&
++
++		git_clone_$x hgrepo-$x gitrepo2-$x &&
++		git_log gitrepo2-$x > log-$x
++	done &&
++
++	test_cmp output-hg output-git &&
++	test_cmp log-hg log-git
++'
++
+ test_expect_success 'merge conflict 1' '
+ 	mkdir -p tmp && cd tmp &&
+ 	test_when_finished "cd .. && rm -rf tmp" &&
+-- 
+1.8.1.448.g79c577a.dirty
