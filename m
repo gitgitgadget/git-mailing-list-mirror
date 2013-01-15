@@ -1,173 +1,70 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Tue, 15 Jan 2013 18:47:17 +0000
-Message-ID: <50F5A435.5090408@ramsay1.demon.co.uk>
-References: <2491041.bQ51Qu8HcA@thunderbird> <1890551.8jTmplCF6O@thunderbird> <BB541ECCD3F04E479F06CA491DDB598D@black> <50E92675.4010907@web.de> <20130106093211.GB10956@elie.Belkin> <50E946EB.1000709@web.de> <20130106095757.GC10956@elie.Belkin> <50E9647F.4090209@gmail.com> <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org> <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: [PATCH v3] am: invoke perl's strftime in C locale
+Date: Tue, 15 Jan 2013 23:05:17 +0400
+Message-ID: <20130115190517.GB7963@altlinux.org>
+References: <20130114205933.GA25947@altlinux.org> <20130115155953.GB21815@sigill.intra.peff.net> <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com> <20130115165058.GA29301@sigill.intra.peff.net> <20130115174015.GA7471@altlinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Stephen & Linda Smith <ischis2@cox.net>,
-	Eric Blake <eblake@redhat.com>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 19:55:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Antoine Pelisse <apelisse@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 20:05:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvBfg-0008LO-76
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 19:55:40 +0100
+	id 1TvBpW-0006yN-0K
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 20:05:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757260Ab3AOSzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 13:55:14 -0500
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:43983 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753305Ab3AOSzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 13:55:12 -0500
-X-Greylist: delayed 353 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2013 13:55:12 EST
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 2AF4D4004F2;
-	Tue, 15 Jan 2013 18:49:16 +0000 (GMT)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 9DF8C400445;	Tue, 15 Jan 2013 18:49:14 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Tue, 15 Jan 2013 18:49:12 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <50F303D8.20709@gmail.com>
-X-MDF-HostID: 19
+	id S1757706Ab3AOTFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 14:05:23 -0500
+Received: from vint.altlinux.org ([194.107.17.35]:46514 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757651Ab3AOTFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 14:05:18 -0500
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 843FC3F80005;
+	Tue, 15 Jan 2013 19:05:17 +0000 (UTC)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 75829519000D; Tue, 15 Jan 2013 23:05:17 +0400 (MSK)
+Content-Disposition: inline
+In-Reply-To: <20130115174015.GA7471@altlinux.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213660>
 
-Mark Levedahl wrote:
-> On 01/11/2013 03:17 PM, Alex Riesen wrote:
->> On Fri, Jan 11, 2013 at 9:08 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
->>> This short discussion on GitHub (file git-compat-util.h) might be relevant:
->>>
->>> https://github.com/msysgit/git/commit/435bdf8c7ffa493f8f6f2e8f329f8cc22db16ce6#commitcomment-2407194
->>>
->>> The change suggested there (to remove an inclusion of windows.h in
->>> git-compat-util.h) might simplify the solution a little. Might even
->>> remove the need for auto-configuration in Makefile (worked for me).
->> Just to be clear, the change is this:
->>
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index 4a1979f..780a919 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -85,12 +85,6 @@
->>   #define _NETBSD_SOURCE 1
->>   #define _SGI_SOURCE 1
->>
->> -#ifdef WIN32 /* Both MinGW and MSVC */
->> -#define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
->> -#include <winsock2.h>
->> -#include <windows.h>
->> -#endif
->> -
->>   #include <unistd.h>
->>   #include <stdio.h>
->>   #include <sys/stat.h>
->>
-> That change alone seems fine, no apparent change building on current 
-> cygwin. However, with that change the build still fails if 
-> CYGWIN_V15_WIN32API is defined, so unless someone can show the 
-> compilation works on cygwin1.5 WITHOUT defining CYGWIN_V15_WIN32API this 
-> change does not help. I do not have an older installation available, so 
-> cannot test. Frankly, assuming you can compile with that macro defined, 
-> I would suggest leaving well enough alone - an unsupported configuration 
-> is unsupported :^)
+This fixes "hg" patch format support for locales other than C and en_*.
+Before the change, git-am was making "Date:" line from hg changeset
+metadata according to the current locale, and this line was rejected
+later with "invalid date format" diagnostics because localized date
+strings are not supported.
 
-I haven't been following this thread too closely, so I may have misunderstood
-what you would like to test but, since I use cygwin 1.5, I tried the patch
-given below.
+Reported-by: Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
+Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
+---
 
-I only had time to compile test this patch (ie I have *not* run any of the
-tests - it takes over 3 hours for me), but it seems to work to that extent.
-(I also tried a few simple commands: status, diff, branch; seems to work OK.)
+ v3: alternative implementation using setlocale(LC_TIME, "C")
 
-If you would like me to test something else, just let me know.
+ git-am.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-HTH
+diff --git a/git-am.sh b/git-am.sh
+index c682d34..8677d8c 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -334,7 +334,8 @@ split_patches () {
+ 			# Since we cannot guarantee that the commit message is in
+ 			# git-friendly format, we put no Subject: line and just consume
+ 			# all of the message as the body
+-			perl -M'POSIX qw(strftime)' -ne 'BEGIN { $subject = 0 }
++			perl -M'POSIX qw(strftime :locale_h)' -ne '
++				BEGIN { setlocale(LC_TIME, "C"); $subject = 0 }
+ 				if ($subject) { print ; }
+ 				elsif (/^\# User /) { s/\# User/From:/ ; print ; }
+ 				elsif (/^\# Date /) {
 
-ATB,
-Ramsay Jones
-
--- >8 --
-diff --git a/Makefile b/Makefile
-index 1b30d7b..1c84f68 100644
---- a/Makefile
-+++ b/Makefile
-@@ -281,10 +281,6 @@ all::
- #
- # Define NO_REGEX if you have no or inferior regex support in your C library.
- #
--# Define CYGWIN_V15_WIN32API if you are using Cygwin v1.7.x but are not
--# using the current w32api packages. The recommended approach, however,
--# is to update your installation if compilation errors occur.
--#
- # Define HAVE_DEV_TTY if your system can open /dev/tty to interact with the
- # user.
- #
-@@ -1402,9 +1398,6 @@ ifdef NO_REGEX
- 	COMPAT_CFLAGS += -Icompat/regex
- 	COMPAT_OBJS += compat/regex/regex.o
- endif
--ifdef CYGWIN_V15_WIN32API
--	COMPAT_CFLAGS += -DCYGWIN_V15_WIN32API
--endif
- 
- ifdef USE_NED_ALLOCATOR
-        COMPAT_CFLAGS += -Icompat/nedmalloc
-diff --git a/compat/cygwin.c b/compat/cygwin.c
-index 5428858..0a9aa6d 100644
---- a/compat/cygwin.c
-+++ b/compat/cygwin.c
-@@ -1,13 +1,8 @@
- #define WIN32_LEAN_AND_MEAN
--#ifdef CYGWIN_V15_WIN32API
--#include "../git-compat-util.h"
--#include "win32.h"
--#else
- #include <sys/stat.h>
- #include <sys/errno.h>
- #include "win32.h"
- #include "../git-compat-util.h"
--#endif
- #include "../cache.h" /* to read configuration */
- 
- static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
-diff --git a/config.mak.uname b/config.mak.uname
-index bea34f0..5e493c9 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -158,7 +158,6 @@ ifeq ($(uname_O),Cygwin)
- 		NO_SYMLINK_HEAD = YesPlease
- 		NO_IPV6 = YesPlease
- 		OLD_ICONV = UnfortunatelyYes
--		CYGWIN_V15_WIN32API = YesPlease
- 	endif
- 	NO_THREAD_SAFE_PREAD = YesPlease
- 	NEEDS_LIBICONV = YesPlease
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e5a4b74..3186e55 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -85,12 +85,6 @@
- #define _NETBSD_SOURCE 1
- #define _SGI_SOURCE 1
- 
--#ifdef WIN32 /* Both MinGW and MSVC */
--#define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
--#include <winsock2.h>
--#include <windows.h>
--#endif
--
- #include <unistd.h>
- #include <stdio.h>
- #include <sys/stat.h>
+-- 
+ldv
