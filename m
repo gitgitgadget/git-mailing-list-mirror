@@ -1,82 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] ignore memcmp() overreading in bsearch() callback
-Date: Tue, 15 Jan 2013 09:18:44 -0800
-Message-ID: <20130115171844.GA32227@sigill.intra.peff.net>
-References: <7v38y38hhm.fsf@alter.siamese.dyndns.org>
- <20130115155043.GA21815@sigill.intra.peff.net>
- <7vmwwa4c8r.fsf@alter.siamese.dyndns.org>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: Re: [PATCH] am: invoke perl's strftime in C locale
+Date: Tue, 15 Jan 2013 21:40:16 +0400
+Message-ID: <20130115174015.GA7471@altlinux.org>
+References: <20130114205933.GA25947@altlinux.org> <20130115155953.GB21815@sigill.intra.peff.net> <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com> <20130115165058.GA29301@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 18:19:12 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 15 18:40:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvAAG-0006nL-M1
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 18:19:09 +0100
+	id 1TvAV9-0004OR-AZ
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 18:40:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757140Ab3AORSs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 12:18:48 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34209 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757098Ab3AORSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 12:18:47 -0500
-Received: (qmail 3077 invoked by uid 107); 15 Jan 2013 17:20:03 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Jan 2013 12:20:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Jan 2013 09:18:44 -0800
+	id S1756626Ab3AORkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 12:40:20 -0500
+Received: from vint.altlinux.org ([194.107.17.35]:41004 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756141Ab3AORkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 12:40:17 -0500
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 2A4023F80240;
+	Tue, 15 Jan 2013 17:40:16 +0000 (UTC)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 11B24519000D; Tue, 15 Jan 2013 21:40:16 +0400 (MSK)
 Content-Disposition: inline
-In-Reply-To: <7vmwwa4c8r.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20130115165058.GA29301@sigill.intra.peff.net>
+X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213654>
 
-On Tue, Jan 15, 2013 at 08:55:32AM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+--8t9RHnE3ZwKMSgU+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jan 15, 2013 at 08:50:59AM -0800, Jeff King wrote:
+> On Tue, Jan 15, 2013 at 05:42:12PM +0100, Antoine Pelisse wrote:
 >=20
-> > On Mon, Jan 14, 2013 at 03:36:21PM -0800, Junio C Hamano wrote:
-> >
-> >> It appears that memcmp() uses the usual "one word at a time"
-> >> comparison and triggers valgrind in a callback of bsearch() used i=
-n
-> >> the refname search.  I can easily trigger problems in any script
-> >> with test_commit (e.g. "sh t0101-at-syntax.sh --valgrind -i -v")
-> >> without this suppression.
-> >
-> > Out of curiosity, what platform do you see this on? I can't reprodu=
-ce on
-> > glibc.
+> > > This puts all of perl into the C locale, which would mean error messa=
+ges
+> > > from perl would be in English rather than the user's language. It
+> > > probably isn't a big deal, because that snippet of perl is short and =
+not
+> > > likely to produce problems, but I wonder how hard it would be to set =
+the
+> > > locale just for the strftime call.
+> >=20
+> > Maybe just setting LC_TIME to C would do ...
 >=20
->     Debian GNU/Linux 6.0.6 (squeeze), on Linux 2.6.32-5-amd64.
->     libc-bin              2.11.3-4
->     valgrind-3.6.0.SVN-Debian
->     gcc                   4:4.4.5-1
+> Yeah, that is a nice simple solution. Dmitry, does just setting LC_TIME
+> fix the problem for you?
 
-Interesting. I can reproduce easily on my squeeze machine, but not my
-wheezy. So presumably it is a false positive fixed either in libc (I
-have 2.13-38 on the "good" box) or valgrind (1:3.8.1-1).
+Just setting LC_TIME environment variable instead of LC_ALL would end up
+with unreliable solution because LC_ALL has the highest priority.
 
-However, the error that valgrind reports is on the call to
-"strlen(ent->name)", not memcmp (but it has suffered from the same SSE
-issues in the past).
+If keeping error messages from perl has the utmost importance, it could be
+achieved by
+-			perl -M'POSIX qw(strftime)' -ne 'BEGIN { $subject =3D 0 }
++			perl -M'POSIX qw(strftime :locale_h)' -ne '
++				BEGIN { setlocale(LC_TIME, "C"); $subject =3D 0 }
+but the little perl helper script we are talking about hardly worths so
+much efforts.
 
-So I feel pretty confident that it really is a false positive; you may
-want to double-check the offending call for the commit message (though =
-I
-would not be surprised if it is triggerable from both). I think it also
-means that Ren=C3=A9's suggestion to use strncmp cannot be relied on to
-silence the warning (though I am not opposed to doing it anyway if we
-think it is more clear).
 
--Peff
+--=20
+ldv
+
+--8t9RHnE3ZwKMSgU+
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlD1lH8ACgkQfKvmrJ41Nh6zkgCfQcXzo7oabgSdcIlpBqwkdb1H
+wgEAn12PYmFQZEDs8pOdCpRac6e7VUDt
+=5B/K
+-----END PGP SIGNATURE-----
+
+--8t9RHnE3ZwKMSgU+--
