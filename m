@@ -1,77 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] cvsimport: start adding cvsps 3.x support
-Date: Mon, 14 Jan 2013 22:44:09 -0800
-Message-ID: <7vehhn54jq.fsf@alter.siamese.dyndns.org>
-References: <7v8v7wiv3a.fsf@alter.siamese.dyndns.org>
- <1358127629-7500-1-git-send-email-gitster@pobox.com>
- <1358127629-7500-4-git-send-email-gitster@pobox.com>
- <CAEUsAPZV6rdFz5R6NN55qYr5se4bFJftE0xGSPAtXLp8jcO0vw@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] Make git selectively and conditionally ignore certain
+ stat fields
+Date: Tue, 15 Jan 2013 08:02:45 +0100
+Message-ID: <50F4FF15.2080803@viscovery.net>
+References: <7vmwwb8m25.fsf@alter.siamese.dyndns.org> <1815551092.2039693.1358207014937.JavaMail.root@dewire.com> <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jrnieder@gmail.com, mhagger@alum.mit.edu,
-	esr@thyrsus.com
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 07:44:52 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 08:03:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv0GN-0002Rg-6X
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 07:44:47 +0100
+	id 1Tv0YF-0000da-Mt
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 08:03:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962Ab3AOGoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 01:44:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43639 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751377Ab3AOGoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 01:44:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 250E563AE;
-	Tue, 15 Jan 2013 01:44:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FAfDvTz816pXjRJUwOzt11xneUI=; b=ZPjVfm
-	hXzMDt2M5wSJVFAfZ2huRoJ0GlELTvlq6zUxLh7OyrfoIKCE4rLsEn+PLkSPKIt8
-	CPVH1Ch/a785795B18gUBntZdApVFdl9n8AWo0sBObRrXP0C0YT5w3x52SrwzJyd
-	ZbqY7mZwsQcuYNdB2J/6r6ciLqPyO9I160qJA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SzEdFfvpOXMuhUt5qbyFvTumksKNhQj6
-	t2Rajmroo6+d6ufMUlJCSLj1I/dhc+JscffswqntI86yBaWsdBu6HJcnbzNRnCVw
-	1CIuVF5yNeCcGLht6TgLVcqOEswm+YMtyyORBC0djqdosTHjfcb350xv6JIsXfYX
-	Gsp3pKgZGnE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1725A63AD;
-	Tue, 15 Jan 2013 01:44:11 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DD9763AC; Tue, 15 Jan 2013
- 01:44:10 -0500 (EST)
-In-Reply-To: <CAEUsAPZV6rdFz5R6NN55qYr5se4bFJftE0xGSPAtXLp8jcO0vw@mail.gmail.com> (Chris
- Rorvick's message of "Tue, 15 Jan 2013 00:19:43 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F7A79F04-5EDE-11E2-AAA7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751998Ab3AOHCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 02:02:54 -0500
+Received: from so.liwest.at ([212.33.55.24]:40350 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751814Ab3AOHCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 02:02:51 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Tv0Xm-0000A9-NS; Tue, 15 Jan 2013 08:02:46 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 4BAD01660F;
+	Tue, 15 Jan 2013 08:02:46 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213601>
 
-Chris Rorvick <chris@rorvick.com> writes:
+Am 1/15/2013 1:11, schrieb Junio C Hamano:
+> I'd say a simplistic "ignore if zero is stored" or even "ignore this
+> as one of the systems that shares this file writes crap in it" may
+> be sufficient, and if this is a jGit specific issue, it might even
+> make sense to introduce a single configuration variable with string
+> "jgit" somewhere in its name and bypass the stat field comparison
+> for known-problematic fields, instead of having the user know and
+> list what stat fields need special attention.
 
-[jc: please elide parts you are not responding to, leaving enough
-lines to understand the context]
+It was my suggestion to have a list of names to ignore because the answer
+to this question
 
->> +    def command(self):
->> +        "Emit the command implied by all previous options."
->> +        return self.cvsps + "--fast-export " + self.opts
->
-> "--fast-export" string is missing a leading space.  With this fix and
-> the latest cvsps build I'm seeing 6 of 15 failures for t9650 which is
-> what I was getting out of the patched t9600.
+> Is this "the user edits in eclipse and then runs 'git status' from the
+> terminal" problem?
 
-Thanks; I'll amend it and push the result out, but I think we will
-need to rip this part out and form the command string in a saner way
-(e.g. if the path needs to have SP in it, e.g. "/Program Files/cvsps3",
-the above would not work correctly anyway).
+was "It is purely for performance in some situations" back then. But
+today, the answer is "Yes". With this new background, your suggestion to
+have just a single option that contains the token "jgit" may make more
+sense. (core.ignoreCygwinFSTricks may serve as a precedent.) The original
+patch was along this way, and the name contained "minimal", which I
+objected to.
+
+-- Hannes
