@@ -1,91 +1,91 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: Re: [PATCH] am: invoke perl's strftime in C locale
-Date: Tue, 15 Jan 2013 21:40:16 +0400
-Message-ID: <20130115174015.GA7471@altlinux.org>
-References: <20130114205933.GA25947@altlinux.org> <20130115155953.GB21815@sigill.intra.peff.net> <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com> <20130115165058.GA29301@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 15 18:40:44 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH] remote-hg: store converted URL
+Date: Tue, 15 Jan 2013 18:46:22 +0100
+Message-ID: <1C0B25E7-40B2-46AC-B730-1EBDC8A82B7C@quendi.de>
+References: <1357760618-81222-1-git-send-email-max@quendi.de> <7vmwwbd43o.fsf@alter.siamese.dyndns.org> <64C81CD0-960A-47F2-89FC-8D3126B1F4D5@quendi.de> <7vzk0a4ekj.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 18:46:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvAV9-0004OR-AZ
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 18:40:43 +0100
+	id 1TvAb2-0004ik-Rb
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 18:46:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756626Ab3AORkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 12:40:20 -0500
-Received: from vint.altlinux.org ([194.107.17.35]:41004 "EHLO
-	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141Ab3AORkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 12:40:17 -0500
-Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
-	by vint.altlinux.org (Postfix) with ESMTP id 2A4023F80240;
-	Tue, 15 Jan 2013 17:40:16 +0000 (UTC)
-Received: by wo.int.altlinux.org (Postfix, from userid 508)
-	id 11B24519000D; Tue, 15 Jan 2013 21:40:16 +0400 (MSK)
-Content-Disposition: inline
-In-Reply-To: <20130115165058.GA29301@sigill.intra.peff.net>
-X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
+	id S1755240Ab3AORq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 12:46:28 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:36211 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753305Ab3AORq1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 12:46:27 -0500
+Received: from ip-178-200-227-112.unitymediagroup.de ([178.200.227.112] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1TvAac-0006ew-LZ; Tue, 15 Jan 2013 18:46:22 +0100
+In-Reply-To: <7vzk0a4ekj.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1283)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1358271987;2664a1d3;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213655>
 
 
---8t9RHnE3ZwKMSgU+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 15.01.2013, at 17:05, Junio C Hamano wrote:
 
-On Tue, Jan 15, 2013 at 08:50:59AM -0800, Jeff King wrote:
-> On Tue, Jan 15, 2013 at 05:42:12PM +0100, Antoine Pelisse wrote:
->=20
-> > > This puts all of perl into the C locale, which would mean error messa=
-ges
-> > > from perl would be in English rather than the user's language. It
-> > > probably isn't a big deal, because that snippet of perl is short and =
-not
-> > > likely to produce problems, but I wonder how hard it would be to set =
-the
-> > > locale just for the strftime call.
-> >=20
-> > Maybe just setting LC_TIME to C would do ...
->=20
-> Yeah, that is a nice simple solution. Dmitry, does just setting LC_TIME
-> fix the problem for you?
+> Max Horn <max@quendi.de> writes:
+> 
+>> On 14.01.2013, at 19:14, Junio C Hamano wrote:
+>> 
+>>> What is lacking from this description is why it even needs to work
+>>> from a different working directory....
+> 
+> In your rewrite below, this is still lacking, I think.
 
-Just setting LC_TIME environment variable instead of LC_ALL would end up
-with unreliable solution because LC_ALL has the highest priority.
+Hm, I thought I made it clear: It has to change because relative paths only make sense when you know the reference point they are relative with.
 
-If keeping error messages from perl has the utmost importance, it could be
-achieved by
--			perl -M'POSIX qw(strftime)' -ne 'BEGIN { $subject =3D 0 }
-+			perl -M'POSIX qw(strftime :locale_h)' -ne '
-+				BEGIN { setlocale(LC_TIME, "C"); $subject =3D 0 }
-but the little perl helper script we are talking about hardly worths so
-much efforts.
+Typically. This is the pwd. But when I 
+
+  git clone repo newrepo
+  cd newrepo
+
+I just changed the PWD. The clone command was given the relative path "repo". If git were to use that, it would suddenly refer to a directory inside newrepo, not next to it. Bang. Hence, git expands the relative path to an absolute one in the above example.
+
+But git cannot do that for URLs in the form HELPER::PATH, because such a string is necessarily opaque to git.
+
+<snip>
+
+>> Thus when latter attempting to, say, "git pull"
+>> from inside gitrepo, remote-hg cannot resolve the relative path correctly,
+>> and the user sees an unexpected error.
+> 
+> ... "cannot resolve the relative path correctly" above sound like a
+> bug in remote-hg.  Something like:
+> 
+>    Cloning a local hg repository using a relative path, e.g.
+> 
+>      git clone hg::hgrepo gitrepo
+> 
+>    stores "hg::hgrepo" in gitrepo/.git/config as its URL.  When
+>    remote-hg is invoked by "git fetch", it chdirs to X (which is
+>    different from the "gitrepo" directory) and uses the URL (which
+>    is not correct, as it is a relative path but the cwd is
+>    different when it is used) to interact with the original
+>    "hgrepo", which will fail.
+> 
+> is needed, but you didn't explain what that X is.  Perhaps it is a
+> temporary directory.  Perhaps it is a hidden Hg repository somewhere
+> in gitrepo/.git directory.  Or something else.
+
+None of the above. Nor does the remote helper chdir anywhere. It is the user who has done the chdir: Away from the location he invoked "git clone" at, and into the new repository directory that previously did not even exist.
 
 
---=20
-ldv
 
---8t9RHnE3ZwKMSgU+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAlD1lH8ACgkQfKvmrJ41Nh6zkgCfQcXzo7oabgSdcIlpBqwkdb1H
-wgEAn12PYmFQZEDs8pOdCpRac6e7VUDt
-=5B/K
------END PGP SIGNATURE-----
-
---8t9RHnE3ZwKMSgU+--
+Cheers,
+Max
