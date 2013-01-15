@@ -1,151 +1,237 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v2 06/19] reset.c: remove unnecessary variable 'i'
-Date: Mon, 14 Jan 2013 21:47:38 -0800
-Message-ID: <1358228871-7142-7-git-send-email-martinvonz@gmail.com>
-References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
- <1358228871-7142-1-git-send-email-martinvonz@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Matt Kraai <kraai@ftbfs.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martinvonz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 07:17:53 2013
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH 3/3] cvsimport: start adding cvsps 3.x support
+Date: Tue, 15 Jan 2013 00:19:43 -0600
+Message-ID: <CAEUsAPZV6rdFz5R6NN55qYr5se4bFJftE0xGSPAtXLp8jcO0vw@mail.gmail.com>
+References: <7v8v7wiv3a.fsf@alter.siamese.dyndns.org>
+	<1358127629-7500-1-git-send-email-gitster@pobox.com>
+	<1358127629-7500-4-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, jrnieder@gmail.com, mhagger@alum.mit.edu,
+	esr@thyrsus.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 07:20:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuzqJ-0005HN-D8
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 07:17:51 +0100
+	id 1TuzsV-00072K-Lc
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 07:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767Ab3AOGRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 01:17:30 -0500
-Received: from mail-ea0-f201.google.com ([209.85.215.201]:49387 "EHLO
-	mail-ea0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752679Ab3AOGR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 01:17:29 -0500
-Received: by mail-ea0-f201.google.com with SMTP id e12so312781eaa.2
-        for <git@vger.kernel.org>; Mon, 14 Jan 2013 22:17:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:x-gm-message-state;
-        bh=MNmms9FizAmXBJvA3CgGT9zJnmXj59G3jMRbH+5Ld20=;
-        b=adesgeEeZ0xythQa/QpUHYHf1Eac8OHuwFPGFojxaXvEoEXrHs0Qg3d0zzCa7lJDzQ
-         iANdSB1u+WWqNAzt/veVqxnhpbBQg4JZ9HByOzFRUzUv5ahWS85mCYcNalhJ5xW952np
-         famcE8K4PYg5vx169NFoZhqF6vVmhKXv7cq6519x4sEjybyZtoxmtljiZZU/xxp2iCrE
-         FxV/gZmjmd/zkPjWpGdno2R9Sp0IiH98yztCEeBX/nX7EseBR9RSJHEoo/qzsG7MMWI4
-         zW5y0DJWsojPflG+dMjdwVGX8kKqEt3sWekjxt9IwwKAHlcuGBkKOeEcoZ6xl0oaU3G1
-         bhFA==
-X-Received: by 10.14.208.198 with SMTP id q46mr109695341eeo.0.1358228907634;
-        Mon, 14 Jan 2013 21:48:27 -0800 (PST)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id g9si5656473eeo.1.2013.01.14.21.48.27
-        (version=TLSv1 cipher=AES128-SHA bits=128/128);
-        Mon, 14 Jan 2013 21:48:27 -0800 (PST)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id D777E200057;
-	Mon, 14 Jan 2013 21:48:26 -0800 (PST)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 2EE1A101478; Mon, 14 Jan 2013 21:48:25 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.454.gce43f05
-In-Reply-To: <1358228871-7142-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQlabpXq+iYHe300rglahfqonZBZfLycD17qKr/SwY1xwTYXGqk15Ge37psDY2fkYK88yW9mSHPXyBRWzOD/dcKwGYhMXbafe94sEvLW6PPI1La+OgzW7ciYGLH7sZ3f3ZEFj9tCpJRtTbWfOkxoOl/r2ivBJZqzs+EOTOkra9EmnyIgZUU+njVm21l9Vk+uIlAZYRiK
+	id S1752205Ab3AOGTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 01:19:46 -0500
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:47875 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818Ab3AOGTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 01:19:45 -0500
+Received: by mail-lb0-f178.google.com with SMTP id l5so3547568lbo.9
+        for <git@vger.kernel.org>; Mon, 14 Jan 2013 22:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=3UTtKS6GZSREJYPXlERQuFg5jjwW4MtnhQxu0KO8rtU=;
+        b=eoOMVYTJbXFuKaA80mpOlOItUDppy1Y03ysxKxKcQemF560vxdhlwgXIyfW4FuXQww
+         PXMKhrDuf4JHSuok0KINO7T9SPH4TYaCSJRUyhK0A1fGR9R5jSKsL4JaizELoEfXGrj9
+         szxLaQ0qnjAaG+NOz04EoIa+BxVLLpedK0PEnCTXnEVbYn59Qr632AFlnO/JBfglSdSK
+         QvccLjq8pgtuYbo4pO10WtBBpcAfx9g5j+DSmYukMSqPDjoCMMk6YC5mYHnTX4Bcr2V5
+         jn5ErOHXkluvwiJ181Vvn1M1hfK+50rkCUm8OEnN7Dp1WnKwLVFEPVyrPMaagNV+SpAM
+         E9Qg==
+Received: by 10.112.82.202 with SMTP id k10mr36549989lby.22.1358230783497;
+ Mon, 14 Jan 2013 22:19:43 -0800 (PST)
+Received: by 10.114.94.228 with HTTP; Mon, 14 Jan 2013 22:19:43 -0800 (PST)
+In-Reply-To: <1358127629-7500-4-git-send-email-gitster@pobox.com>
+X-Google-Sender-Auth: JfGXJUOtBszKefe2zjjopQk8FcE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213597>
 
-Throughout most of parse_args(), the variable 'i' remains at 0. Many
-references are still made to the variable even when it could only have
-the value 0. This made at least me, who has relatively little
-experience with C programming styles, think that parts of the function
-was meant to be part of a loop. To avoid such confusion, remove the
-variable and also the 'argc' parameter and check for NULL trailing
-argv instead.
+On Sun, Jan 13, 2013 at 7:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The new cvsps 3.x series lacks support of some options cvsps 2.x
+> series had and used by cvsimport-2; add a replacement program from
+> the author of cvsps 3.x and allow users to choose it by setting the
+> GIT_CVSPS_VERSION environment variable to 3.  We would later add
+> support to auto-detect the version of installed cvsps to this code
+> when the environment variable is not set.
+>
+> Note that in this step, cvsimport-3 that relies on cvsps 3.x does
+> not have any test coverage.  As cvsimport-3 supports most of the
+> command line options cvsimport-2, we should be able to tweak some of
+> t96xx tests and run them with GIT_CVSPS_VERSION set to both 2 and 3,
+> but that is a topic of later patches that should come on top.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Makefile           |  18 ++-
+>  git-cvsimport-3.py | 344 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  git-cvsimport.sh   |   4 +-
+>  3 files changed, 359 insertions(+), 7 deletions(-)
+>  create mode 100755 git-cvsimport-3.py
+>
+> diff --git a/Makefile b/Makefile
+> index b022db2..060cdc2 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -470,8 +470,9 @@ SCRIPT_PERL += git-relink.perl
+>  SCRIPT_PERL += git-send-email.perl
+>  SCRIPT_PERL += git-svn.perl
+>
+> -SCRIPT_PYTHON += git-remote-testpy.py
+> +SCRIPT_PYTHON += git-cvsimport-3.py
+>  SCRIPT_PYTHON += git-p4.py
+> +SCRIPT_PYTHON += git-remote-testpy.py
+>
+>  SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+>           $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+> @@ -575,8 +576,11 @@ endif
+>  ifndef CVSPS2_PATH
+>         CVSPS2_PATH = cvsps
+>  endif
+> +ifndef CVSPS3_PATH
+> +       CVSPS3_PATH = cvsps
+> +endif
+>
+> -export PERL_PATH PYTHON_PATH CVSPS2_PATH
+> +export PERL_PATH PYTHON_PATH CVSPS2_PATH CVSPS3_PATH
+>
+>  LIB_FILE = libgit.a
+>  XDIFF_LIB = xdiff/lib.a
+> @@ -1515,6 +1519,7 @@ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
+>  PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
+>  TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
+>  CVSPS2_PATH_SQ = $(subst ','\'',$(CVSPS2_PATH))
+> +CVSPS3_PATH_SQ = $(subst ','\'',$(CVSPS3_PATH))
+>  DIFF_SQ = $(subst ','\'',$(DIFF))
+>
+>  LIBS = $(GITLIBS) $(EXTLIBS)
+> @@ -1757,12 +1762,15 @@ ifndef NO_PYTHON
+>  $(patsubst %.py,%,$(SCRIPT_PYTHON)): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
+>  $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
+>         $(QUIET_GEN)$(RM) $@ $@+ && \
+> -       INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_helpers -s \
+> +       INSTLIBDIR_SQ=`MAKEFLAGS= $(MAKE) -C git_remote_helpers -s \
+>                 --no-print-directory prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' \
+> -               instlibdir` && \
+> +               instlibdir | \
+> +               sed -e "s/'/'\''/g"` && \
+> +       echo "InstLibDir is <$$INSTLIBDIR_SQ>" && \
+>         sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
+>             -e 's|\(os\.getenv("GITPYTHONLIB"\)[^)]*)|\1,"@@INSTLIBDIR@@")|' \
+> -           -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+> +           -e 's|@@CVSPS3_PATH@@|$(CVSPS3_PATH_SQ)|g' \
+> +           -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR_SQ"'|g' \
+>             $@.py >$@+ && \
+>         chmod +x $@+ && \
+>         mv $@+ $@
+> diff --git a/git-cvsimport-3.py b/git-cvsimport-3.py
+> new file mode 100755
+> index 0000000..57f13b7
+> --- /dev/null
+> +++ b/git-cvsimport-3.py
+> @@ -0,0 +1,344 @@
+> +#!/usr/bin/env python
+> +#
+> +# Import CVS history into git
+> +#
+> +# Intended to be a near-workalike of Matthias Urlichs's Perl implementation.
+> +#
+> +# By Eric S. Raymond <esr@thyrsus.com>, December 2012
+> +# May be redistributed under the license of the git project.
+> +
+> +import sys
+> +
+> +if sys.hexversion < 0x02060000:
+> +    sys.stderr.write("git cvsimport: requires Python 2.6 or later.\n")
+> +    sys.exit(1)
+> +
+> +import os, getopt, subprocess, tempfile, shutil
+> +
+> +DEBUG_COMMANDS = 1
+> +
+> +class Fatal(Exception):
+> +    "Unrecoverable error."
+> +    def __init__(self, msg):
+> +        Exception.__init__(self)
+> +        self.msg = msg
+> +
+> +def do_or_die(dcmd, legend=""):
+> +    "Either execute a command or raise a fatal exception."
+> +    if legend:
+> +        legend = " "  + legend
+> +    if verbose >= DEBUG_COMMANDS:
+> +        sys.stdout.write("git cvsimport: executing '%s'%s\n" % (dcmd, legend))
+> +    try:
+> +        retcode = subprocess.call(dcmd, shell=True)
+> +        if retcode < 0:
+> +            raise Fatal("git cvsimport: child was terminated by signal %d." % -retcode)
+> +        elif retcode != 0:
+> +            raise Fatal("git cvsimport: child returned %d." % retcode)
+> +    except (OSError, IOError) as e:
+> +        raise Fatal("git cvsimport: execution of %s%s failed: %s" % (dcmd, legend, e))
+> +
+> +def capture_or_die(dcmd, legend=""):
+> +    "Either execute a command and capture its output or die."
+> +    if legend:
+> +        legend = " "  + legend
+> +    if verbose >= DEBUG_COMMANDS:
+> +        sys.stdout.write("git cvsimport: executing '%s'%s\n" % (dcmd, legend))
+> +    try:
+> +        return subprocess.check_output(dcmd, shell=True)
+> +    except subprocess.CalledProcessError as e:
+> +        if e.returncode < 0:
+> +            sys.stderr.write("git cvsimport: child was terminated by signal %d." % -e.returncode)
+> +        elif e.returncode != 0:
+> +            sys.stderr.write("git cvsimport: child returned %d." % e.returncode)
+> +        sys.exit(1)
+> +
+> +class cvsps:
+> +    "Method class for cvsps back end."
+> +
+> +    cvsps = "@@CVSPS3_PATH@@"
+> +    def __init__(self):
+> +        self.opts = ""
+> +        self.revmap = None
+> +    def set_repo(self, val):
+> +        "Set the repository root option."
+> +        if not val.startswith(":"):
+> +            if not val.startswith(os.sep):
+> +                val = os.path.abspath(val)
+> +            val = ":local:" + val
+> +        self.opts += " --root '%s'" % val
+> +    def set_authormap(self, val):
+> +        "Set the author-map file."
+> +        self.opts += " -A '%s'" % val
+> +    def set_fuzz(self, val):
+> +        "Set the commit-similarity window."
+> +        self.opts += " -z %s" % val
+> +    def set_nokeywords(self):
+> +        "Suppress CVS keyword expansion."
+> +        self.opts += " -k"
+> +    def add_opts(self, val):
+> +        "Add options to the engine command line."
+> +        self.opts += " " + val
+> +    def set_exclusion(self, val):
+> +        "Set a file exclusion regexp."
+> +        self.opts += " -n -f '%s'" % val
+> +    def set_after(self, val):
+> +        "Set a date threshold for incremental import."
+> +        self.opts += " -d '%s'" % val
+> +    def set_revmap(self, val):
+> +        "Set the file to which the engine should dump a reference map."
+> +        self.revmap = val
+> +        self.opts += " -R '%s'" % self.revmap
+> +    def set_module(self, val):
+> +        "Set the module to query."
+> +        self.opts += " " + val
+> +    def command(self):
+> +        "Emit the command implied by all previous options."
+> +        return self.cvsps + "--fast-export " + self.opts
 
-Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
----
-I explained a bit more why I was confused by the current style, but
-I'm also perfectly happy if you just drop the patch (there would be
-some minor conflicts in a later patch, though).
+"--fast-export" string is missing a leading space.  With this fix and
+the latest cvsps build I'm seeing 6 of 15 failures for t9650 which is
+what I was getting out of the patched t9600.
 
- builtin/reset.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 58f0f61..d89cf4d 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -198,9 +198,8 @@ static void die_if_unmerged_cache(int reset_type)
- 
- }
- 
--static const char **parse_args(int argc, const char **argv, const char *prefix, const char **rev_ret)
-+static const char **parse_args(const char **argv, const char *prefix, const char **rev_ret)
- {
--	int i = 0;
- 	const char *rev = "HEAD";
- 	unsigned char unused[20];
- 	/*
-@@ -211,34 +210,34 @@ static const char **parse_args(int argc, const char **argv, const char *prefix,
- 	 * git reset [-opts] -- <paths>...
- 	 * git reset [-opts] <paths>...
- 	 *
--	 * At this point, argv[i] points immediately after [-opts].
-+	 * At this point, argv points immediately after [-opts].
- 	 */
- 
--	if (i < argc) {
--		if (!strcmp(argv[i], "--")) {
--			i++; /* reset to HEAD, possibly with paths */
--		} else if (i + 1 < argc && !strcmp(argv[i+1], "--")) {
--			rev = argv[i];
--			i += 2;
-+	if (argv[0]) {
-+		if (!strcmp(argv[0], "--")) {
-+			argv++; /* reset to HEAD, possibly with paths */
-+		} else if (argv[1] && !strcmp(argv[1], "--")) {
-+			rev = argv[0];
-+			argv += 2;
- 		}
- 		/*
--		 * Otherwise, argv[i] could be either <rev> or <paths> and
-+		 * Otherwise, argv[0] could be either <rev> or <paths> and
- 		 * has to be unambiguous.
- 		 */
--		else if (!get_sha1_committish(argv[i], unused)) {
-+		else if (!get_sha1_committish(argv[0], unused)) {
- 			/*
--			 * Ok, argv[i] looks like a rev; it should not
-+			 * Ok, argv[0] looks like a rev; it should not
- 			 * be a filename.
- 			 */
--			verify_non_filename(prefix, argv[i]);
--			rev = argv[i++];
-+			verify_non_filename(prefix, argv[0]);
-+			rev = *argv++;
- 		} else {
- 			/* Otherwise we treat this as a filename */
--			verify_filename(prefix, argv[i], 1);
-+			verify_filename(prefix, argv[0], 1);
- 		}
- 	}
- 	*rev_ret = rev;
--	return i < argc ? get_pathspec(prefix, argv + i) : NULL;
-+	return argv[0] ? get_pathspec(prefix, argv) : NULL;
- }
- 
- int cmd_reset(int argc, const char **argv, const char *prefix)
-@@ -270,7 +269,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
- 						PARSE_OPT_KEEP_DASHDASH);
--	pathspec = parse_args(argc, argv, prefix, &rev);
-+	pathspec = parse_args(argv, prefix, &rev);
- 
- 	if (get_sha1_committish(rev, sha1))
- 		die(_("Failed to resolve '%s' as a valid ref."), rev);
--- 
-1.8.1.1.454.gce43f05
+Chris
