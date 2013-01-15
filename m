@@ -1,117 +1,93 @@
-From: Ben Walton <bdwalton@gmail.com>
-Subject: [PATCH 2/3] Allow Git::get_tz_offset to properly handle DST boundary times
-Date: Tue, 15 Jan 2013 23:10:04 +0000
-Message-ID: <1358291405-10173-3-git-send-email-bdwalton@gmail.com>
-References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
-Cc: esr@thyrsus.com, git@vger.kernel.org,
-	Ben Walton <bdwalton@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 16 00:11:12 2013
+From: Phil Hord <phil.hord@gmail.com>
+Subject: --simplify-merges returns too many references
+Date: Tue, 15 Jan 2013 18:12:59 -0500
+Message-ID: <CABURp0q0nhka+ivrs3+m+3C1N+FfTq2zJ=1rWp34tfGNQ3b30g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 00:13:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvFew-0000Dw-To
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 00:11:11 +0100
+	id 1TvFhT-0004Bq-Hi
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 00:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934197Ab3AOXKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 18:10:44 -0500
-Received: from jimi.chass.utoronto.ca ([128.100.160.32]:44871 "EHLO
-	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758776Ab3AOXKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 18:10:12 -0500
-Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:57196 ident=93)
-	  by jimi.chass.utoronto.ca with esmtp  (Exim 4.76)
-	 (envelope-from <bwalton@benandwen.net>)
-	 id 1TvFdx-0005dt-Qk ; Tue, 15 Jan 2013 18:10:09 -0500
-Received: from 86-42-159-147-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.159.147]:55554 helo=neilyoung)
-	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by hendrix.chass.utoronto.ca with esmtpsa (TLSv1:AES128-SHA:128)
-	 (Exim 4.76)
-	 (envelope-from <bwalton@benandwen.net>)
-	 id 1TvFdu-0005Cu-VO ; Tue, 15 Jan 2013 18:10:07 -0500
-Received: from bwalton by neilyoung with local (Exim 4.80)
-	(envelope-from <bwalton@benandwen.net>)
-	id 1TvFe4-0002hJ-8U; Tue, 15 Jan 2013 23:10:16 +0000
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
+	id S934184Ab3AOXNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 18:13:24 -0500
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:62839 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934144Ab3AOXNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 18:13:22 -0500
+Received: by mail-vc0-f175.google.com with SMTP id fy7so725444vcb.34
+        for <git@vger.kernel.org>; Tue, 15 Jan 2013 15:13:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=47xYO0HxAjqot5jv3CE2o29V6B+05W7EqsUl5LaYPzY=;
+        b=rBFPxFUljbVU8dJq2E4BP72TJJjw4wcqnU1Oe5me/vZE6ranmzdjs9QFQGBA9CIh7x
+         Dit7xetooyQdE9ZKvC4p6lmehRuGmkrUzzg2eH/ZqMGCERd/Ptt6W/xeDrRNNoNB0RmG
+         kWfNFx8lUUo2xvELy6ypXT+lBijKAQEreTQ9vzdDOf1gSgf0F7Gd9qeTuuAK783ADEjW
+         OsOe+31UM129CQNQnlK/swjbzoG+BJllfuYYzc+g1XgqzeIyoaKJVC/T5M1o62VxuVsN
+         m4of8oYLqx3++UqgGnE9VLZg2QHkpvmvB9FHqEyYs4+AZupQwOSNtq6QlfVRYahiGsgT
+         XeaQ==
+Received: by 10.52.71.174 with SMTP id w14mr93170704vdu.122.1358291599724;
+ Tue, 15 Jan 2013 15:13:19 -0800 (PST)
+Received: by 10.58.241.203 with HTTP; Tue, 15 Jan 2013 15:12:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213689>
 
-The Git::get_tz_offset is meant to provide a workalike replacement for
-the GNU strftime %z format specifier.  The algorithm used failed to
-properly handle DST boundary cases.
+I thought I understood the intent of the various history
+simplification switches, but maybe I am still confused.
 
-For example, the unix time 1162105199 in CST6CDT saw set_tz_offset
-improperly return -0600 instead of -0500.
+In git.git, I see three commits which touch stripspace.c:
 
-TZ=CST6CDT date -d @1162105199 +"%c %z"
-Sun 29 Oct 2006 01:59:59 AM CDT -0500
+$ git log  --oneline -- builtin/stripspace.c
+497215d Update documentation for stripspace
+c2857fb stripspace: fix outdated comment
+81b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
 
-$ zdump -v /usr/share/zoneinfo/CST6CDT | grep 2006
-/usr/share/zoneinfo/CST6CDT  Sun Apr  2 07:59:59 2006 UTC = Sun Apr  2
-01:59:59 2006 CST isdst=0 gmtoff=-21600
-/usr/share/zoneinfo/CST6CDT  Sun Apr  2 08:00:00 2006 UTC = Sun Apr  2
-03:00:00 2006 CDT isdst=1 gmtoff=-18000
-/usr/share/zoneinfo/CST6CDT  Sun Oct 29 06:59:59 2006 UTC = Sun Oct 29
-01:59:59 2006 CDT isdst=1 gmtoff=-18000
-/usr/share/zoneinfo/CST6CDT  Sun Oct 29 07:00:00 2006 UTC = Sun Oct 29
-01:00:00 2006 CST isdst=0 gmtoff=-21600
 
-To determine how many hours/minutes away from GMT a particular time
-was, we calculated the gmtime() of the requested time value and then
-used Time::Local's timelocal() function to turn the GMT-based time
-back into a scalar value representing seconds from the epoch.  Because
-GMT has no daylight savings time, timelocal() cannot handle the
-ambiguous times that occur at DST boundaries since there are two
-possible correct results.
+With --full-history and also with --dense, I see the same three commits:
 
-To work around the ambiguity at these boundaries, we must take into
-account the pre and post conversion values for is_dst as provided by
-both the original time value and the value that has been run through
-timelocal().  If the is_dst field of the two times disagree then we
-must modify the value returned from timelocal() by an hour in the
-correct direction.
+$ git log  --full-history --oneline -- builtin/stripspace.c
+497215d Update documentation for stripspace
+c2857fb stripspace: fix outdated comment
+81b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
 
-Signed-off-by: Ben Walton <bdwalton@gmail.com>
----
- perl/Git.pm |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+$ git log  --dense --oneline -- builtin/stripspace.c
+497215d Update documentation for stripspace
+c2857fb stripspace: fix outdated comment
+81b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 5649bcc..788b9b4 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -528,7 +528,27 @@ If TIME is not supplied, the current local time is used.
- sub get_tz_offset {
- 	# some systmes don't handle or mishandle %z, so be creative.
- 	my $t = shift || time;
-+	# timelocal() has a problem when it comes to DST ambiguity so
-+	# times that are on a DST boundary cannot be properly converted
-+	# using it.  we will possibly adjust its result depending on whehter
-+	# pre and post conversions agree on DST
- 	my $gm = timelocal(gmtime($t));
-+
-+	# we need to know whether we were originally in DST or not
-+	my $orig_dst = (localtime($t))[8];
-+	# and also whether timelocal thinks we're in DST
-+	my $conv_dst = (localtime($gm))[8];
-+
-+	# re-adjust $gm based on the DST value for the two times we're
-+	# handling.
-+	if ($orig_dst != $conv_dst) {
-+		if ($orig_dst == 1) {
-+			$gm -= 3600;
-+		} else {
-+			$gm += 3600;
-+		}
-+	}
-+
- 	my $sign = qw( + + - )[ $t <=> $gm ];
- 	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
- }
--- 
-1.7.10.4
+
+But with --simplify-merges, I see _more_ commits.
+
+$ git log  --simplify-merges --oneline -- builtin/stripspace.c
+634392b Add 'contrib/subtree/' from commit ...
+497215d Update documentation for stripspace
+c2857fb stripspace: fix outdated comment
+81b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
+610f043 Import branch 'git-p4' of git://repo.or.cz/fast-export
+b4d2b04 Merge git-gui
+0a8f4f0 Merge git://git.kernel.org/pub/scm/git/gitweb
+98e031f Merge git-tools repository under "tools" subdirectory
+5569bf9 Do a cross-project merge of Paul Mackerras' gitk visualizer
+
+
+None of the "new" commits touches this file.  The man page suggests
+that simplify-merges should result in fewer commits than full-history.
+
+"       --simplify-merges
+       Additional option to --full-history to remove some needless merges from
+       the resulting history, as there are no selected commits contributing to
+       this merge."
+
+
+Am I confused or is git?
+
+Phil
