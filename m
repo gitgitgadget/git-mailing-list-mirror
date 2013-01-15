@@ -1,123 +1,86 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 13/14] imap-send.c: fold struct store into struct imap_store
-Date: Tue, 15 Jan 2013 09:06:31 +0100
-Message-ID: <1358237193-8887-14-git-send-email-mhagger@alum.mit.edu>
-References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 09:08:04 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Make git selectively and conditionally ignore certain
+ stat fields
+Date: Tue, 15 Jan 2013 00:12:46 -0800
+Message-ID: <7va9sa6f0h.fsf@alter.siamese.dyndns.org>
+References: <7vy5fv71ad.fsf@alter.siamese.dyndns.org>
+ <1119893992.2134035.1358233781666.JavaMail.root@dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, j sixt <j.sixt@viscovery.net>,
+	Shawn Pearce <spearce@spearce.org>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 09:13:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv1Ys-0002qx-Vv
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 09:07:59 +0100
+	id 1Tv1du-0007D9-HO
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 09:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755754Ab3AOIHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 03:07:38 -0500
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:61413 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756252Ab3AOIHb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 03:07:31 -0500
-X-AuditID: 12074411-b7fa36d0000008cc-74-50f50e42cc98
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 74.B9.02252.24E05F05; Tue, 15 Jan 2013 03:07:30 -0500 (EST)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0F86n5Z029668
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 15 Jan 2013 03:07:29 -0500
-X-Mailer: git-send-email 1.8.0.3
-In-Reply-To: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMIsWRmVeSWpSXmKPExsUixO6iqOvE9zXA4OgDdYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5ouXydsWCvUMXa95eZGxiv
-	83UxcnJICJhIvHnTyARhi0lcuLeerYuRi0NI4DKjxM0vF9khnDNMEo+XLWMEqWIT0JVY1NMM
-	1iEioCYxse0QC4jNLOAgsflzI1iNsIC/xMfrV8FqWARUJdbfuMkKYvMKuEj8ffuIGWKbgsTr
-	nZfA4pxA8as/j4HFhQScJb5sOM04gZF3ASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdU73c
-	zBK91JTSTYyQYBHcwTjjpNwhRgEORiUeXlODLwFCrIllxZW5hxglOZiURHk7uL4GCPEl5adU
-	ZiQWZ8QXleakFh9ilOBgVhLh9XkHVM6bklhZlVqUD5OS5mBREuflW6LuJySQnliSmp2aWpBa
-	BJOV4eBQkuCN4QUaKliUmp5akZaZU4KQZuLgBBFcIBt4gDa84gYq5C0uSMwtzkyHKDrFqCgl
-	zmsGMkEAJJFRmgc3ABbXrxjFgf4R5g0CqeIBpgS47ldAg5mABm/a+xlkcEkiQkqqgXHu24XC
-	c0/52M9r+Xnv/ByfK1cyPhm8ePHNLXhVuOPxoHup3FfmLlj29GPDm5e3TC7nbZGySRCLOTEt
-	dbEP+/mFER2vjs1kfWd6++AsBwb1cFddbRGlwKRFxk93VdZ+l5sfLO40leH1r/pvK6Za7Yto
-	Tp/zeM/dSVO2bM7bZMPoPYf/Qo3x/pJrSizFGYmGWsxFxYkA1Lgp08YCAAA=
+	id S1756655Ab3AOIMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 03:12:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61632 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754758Ab3AOIMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 03:12:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E503F9B40;
+	Tue, 15 Jan 2013 03:12:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Pep0Fr2KUIcVT3ZE5A8OpH+DmyU=; b=TAJqvE
+	5YJuNV+00s0ins+7xncA8ruN9rfro+XIfTSxUFGUEVntaP3ZO0uFmLlSXae8RKhK
+	IqE17fmJNoxnx9Qe8wnGQ0njB06c9U7KM8bYKsAS0JZctAhzBoS97nu2jDfYXcSH
+	Y9B6VYMY3YtrBEwPZG04DtGncedOxBi7I1PDI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aH/ahdv8QxSTugSorxtpyc7NcwuCoSKN
+	LebPh3osP55j+6F9shyGltBX3/r+vNK8uReP+DEHw3gojVEgVT8a3NLWI4eEUWHK
+	gGP/SjUDtKJFvWsK2MbKhJcTMbzmRbfIAM0JQG0znzBNIjPZAeI6MUyE3I4XdTcx
+	QPNqoQW/lyA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D75659B3F;
+	Tue, 15 Jan 2013 03:12:48 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44D9C9B3E; Tue, 15 Jan 2013
+ 03:12:48 -0500 (EST)
+In-Reply-To: <1119893992.2134035.1358233781666.JavaMail.root@dewire.com>
+ (Robin Rosenberg's message of "Tue, 15 Jan 2013 08:09:41 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 594A30B2-5EEB-11E2-B9E6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213614>
 
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- imap-send.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+>> I'd say a simplistic "ignore if zero is stored" or even "ignore this
+>> as one of the systems that shares this file writes crap in it" may
+>> be sufficient, and if this is a jGit specific issue, it might even
+>> make sense to introduce a single configuration variable with string
+>> "jgit" somewhere in its name and bypass the stat field comparison
+>> for known-problematic fields, instead of having the user know and
+>> list what stat fields need special attention.
+>
+> My first patch was something like that, just not using the word jgit. As
+> for what fields to ignore, it's something that can be configured by EGit
+> and documented on the EGit/JGit wiki. 
 
-diff --git a/imap-send.c b/imap-send.c
-index a0f42bb..f2933e9 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -33,12 +33,6 @@ typedef void *SSL;
- #include <openssl/hmac.h>
- #endif
- 
--struct store {
--	/* currently open mailbox */
--	const char *name; /* foreign! maybe preset? */
--	int uidvalidity;
--};
--
- static const char imap_send_usage[] = "git imap-send < <mbox>";
- 
- #undef DRV_OK
-@@ -123,7 +117,9 @@ struct imap {
- };
- 
- struct imap_store {
--	struct store gen;
-+	/* currently open mailbox */
-+	const char *name; /* foreign! maybe preset? */
-+	int uidvalidity;
- 	struct imap *imap;
- 	const char *prefix;
- };
-@@ -618,7 +614,7 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 	*p++ = 0;
- 	arg = next_arg(&s);
- 	if (!strcmp("UIDVALIDITY", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->gen.uidvalidity = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
- 			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
- 			return RESP_BAD;
- 		}
-@@ -636,7 +632,7 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		for (; isspace((unsigned char)*p); p++);
- 		fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
- 	} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->gen.uidvalidity = atoi(arg)) ||
-+		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
- 		    !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
- 			fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
- 			return RESP_BAD;
-@@ -1140,7 +1136,7 @@ static int imap_store_msg(struct imap_store *ctx, struct strbuf *msg)
- 	cb.dlen = msg->len;
- 	cb.data = strbuf_detach(msg, NULL);
- 
--	box = ctx->gen.name;
-+	box = ctx->name;
- 	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
- 	cb.create = 0;
- 	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
-@@ -1352,7 +1348,7 @@ int main(int argc, char **argv)
- 	}
- 
- 	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
--	ctx->gen.name = imap_folder;
-+	ctx->name = imap_folder;
- 	while (1) {
- 		unsigned percent = n * 100 / total;
- 
--- 
-1.8.0.3
+That configurability is a slipperly slope to drag us into giving users
+more complexity that does not help them very much, I suspect.
+
+Earlier somebody mentioned "size and mtime is often enough", so I
+think a single option core.looseStatInfo (substitute "loose" with
+short, minimum or whatever adjective that is more appropriate---I am
+not good at picking phrases, it sounds to me a way to more loosely
+define stat info cleanliness than we usually do) that makes us
+ignore all fields (regardless of their zero-ness) other than those
+two fields might not be a bad way to go.
+
+I do not offhand know if such a loose mode is too simple and make it
+excessively risky, though.
