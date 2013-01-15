@@ -1,145 +1,155 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [RFC/PATCH 2/8 v3] git_remote_helpers: fix input when running under
- Python 3
-Date: Tue, 15 Jan 2013 22:40:49 +0000
-Message-ID: <20130115224049.GZ4574@serenity.lan>
+Subject: Re: [PATCH 3/8] git_remote_helpers: Force rebuild if python version
+ changes
+Date: Tue, 15 Jan 2013 22:58:05 +0000
+Message-ID: <20130115225805.GA4574@serenity.lan>
 References: <cover.1358018078.git.john@keeping.me.uk>
- <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
- <50F2296F.8030909@alum.mit.edu>
- <20130113161724.GK4574@serenity.lan>
- <50F38E12.6090207@alum.mit.edu>
- <20130114094721.GQ4574@serenity.lan>
- <20130115194809.GU4574@serenity.lan>
- <7vbocq2mri.fsf@alter.siamese.dyndns.org>
- <20130115215412.GX4574@serenity.lan>
- <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
+ <89f55d20da9a4c0a8490f95107cbf5d04219d0fb.1358018078.git.john@keeping.me.uk>
+ <20130112233044.GB23079@padd.com>
+ <20130113162605.GL4574@serenity.lan>
+ <20130113171402.GA1307@padd.com>
+ <20130113175238.GO4574@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	"Eric S. Raymond" <esr@thyrsus.com>,
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 23:41:32 2013
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 23:59:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvFCE-0006AI-Ig
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 23:41:30 +0100
+	id 1TvFTg-0008CA-Ee
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 23:59:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758584Ab3AOWlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 17:41:07 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:39926 "EHLO
+	id S934317Ab3AOW6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 17:58:21 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:46390 "EHLO
 	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757885Ab3AOWlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 17:41:04 -0500
+	with ESMTP id S934142Ab3AOW6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 17:58:17 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 0D94D606529;
-	Tue, 15 Jan 2013 22:41:03 +0000 (GMT)
+	by coyote.aluminati.org (Postfix) with ESMTP id 2F0C96064CB;
+	Tue, 15 Jan 2013 22:58:16 +0000 (GMT)
 X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
 X-Spam-Flag: NO
-X-Spam-Score: -11
+X-Spam-Score: -1
 X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=ham
 Received: from coyote.aluminati.org ([127.0.0.1])
 	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IAZ2I9Qimnlu; Tue, 15 Jan 2013 22:41:02 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 98EF96064B7;
-	Tue, 15 Jan 2013 22:41:01 +0000 (GMT)
+	with ESMTP id q9ZRJJbZtzjt; Tue, 15 Jan 2013 22:58:15 +0000 (GMT)
+Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
+	by coyote.aluminati.org (Postfix) with ESMTP id 662976064B7;
+	Tue, 15 Jan 2013 22:58:15 +0000 (GMT)
 Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 84F01161E577;
-	Tue, 15 Jan 2013 22:41:01 +0000 (GMT)
+	by aardwolf.aluminati.org (Postfix) with ESMTP id 4884F330E47;
+	Tue, 15 Jan 2013 22:58:15 +0000 (GMT)
 X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id veegXD3gcBmD; Tue, 15 Jan 2013 22:41:01 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+Received: from aardwolf.aluminati.org ([127.0.0.1])
+	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6o08NNP+X0+O; Tue, 15 Jan 2013 22:58:15 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 3C401161E557;
-	Tue, 15 Jan 2013 22:40:51 +0000 (GMT)
+	by aardwolf.aluminati.org (Postfix) with ESMTPSA id B1D7533002F;
+	Tue, 15 Jan 2013 22:58:07 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20130113175238.GO4574@serenity.lan>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213683>
 
-Although 2to3 will fix most issues in Python 2 code to make it run under
-Python 3, it does not handle the new strict separation between byte
-strings and unicode strings.  There is one instance in
-git_remote_helpers where we are caught by this, which is when reading
-refs from "git for-each-ref".
-
-Fix this by operating on the returned string as a byte string rather
-than a unicode string.  As this method is currently only used internally
-by the class this does not affect code anywhere else.
-
-Note that we cannot use byte strings in the source as the 'b' prefix is
-not supported before Python 2.7 so in order to maintain compatibility
-with the maximum range of Python versions we use an explicit call to
-encode().
-
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-
-On Tue, Jan 15, 2013 at 02:04:29PM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
->>> That really feels wrong.  Displaying is a separate issue and it is
->>> the _right_ thing to punt the problem at the lower-level machinery
->>> level.
->>
->> But the display will require decoding the ref name to a Unicode string,
->> which depends on the encoding of the underlying ref name, so it feels
->> like it should be decoded where it's read (see [1]).
+On Sun, Jan 13, 2013 at 05:52:38PM +0000, John Keeping wrote:
+> On Sun, Jan 13, 2013 at 12:14:02PM -0500, Pete Wyckoff wrote:
+>> john@keeping.me.uk wrote on Sun, 13 Jan 2013 16:26 +0000:
+>>> On Sat, Jan 12, 2013 at 06:30:44PM -0500, Pete Wyckoff wrote:
+>>> > john@keeping.me.uk wrote on Sat, 12 Jan 2013 19:23 +0000:
+>>> >> When different version of python are used to build via distutils, the
+>>> >> behaviour can change.  Detect changes in version and pass --force in
+>>> >> this case.
+>>> >[..]
+>>> >> diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
+>>> >[..]
+>>> >> +py_version=$(shell $(PYTHON_PATH) -c \
+>>> >> +	'import sys; print("%i.%i" % sys.version_info[:2])')
+>>> >> +
+>>> >>  all: $(pysetupfile)
+>>> >> -	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
+>>> >> +	$(QUIET)test "$$(cat GIT-PYTHON_VERSION 2>/dev/null)" = "$(py_version)" || \
+>>> >> +	flags=--force; \
+>>> >> +	$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build $$flags
+>>> >> +	$(QUIET)echo "$(py_version)" >GIT-PYTHON_VERSION
+>>> > 
+>>> > Can you depend on ../GIT-PYTHON-VARS instead?  It comes from
+>>> > 96a4647 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
+>>> > It doesn't check version, just path, but hopefully that's good
+>>> > enough.  I'm imagining a rule that would do "clean" if
+>>> > ../GIT-PYTHON-VARS changed, then build without --force.
+>>> 
+>>> I was trying to keep the git_remote_helpers directory self contained.  I
+>>> can't see how to depend on ../GIT-PYTHON-VARS in a way that is as simple
+>>> as this and keeps "make -C git_remote_helpers" working in a clean tree.
+>>> 
+>>> Am I missing something obvious here?
+>> 
+>> Not if it wants to stay self-contained; you're right.
+>> 
+>> I'm not thrilled with how git_remote_helpers/Makefile always
+>> runs setup.py, and always generates PYLIBDIR, and now always
+>> invokes python a third time to see if its version changed.
 > 
-> If you botch the decoding in a way you cannot recover the original
-> byte string, you cannot create a ref whose name is the original byte
-> string, no?  Keeping the original byte string internally (this
-> includes where you use it to create new refs or update existing
-> refs), and attempting to convert it to Unicode when you choose to
-> show that string as a part of a message to the user (and falling
-> back to replacing some bytes to '?' if you cannot, but do so only in
-> the message), you won't have that problem.
+> I don't think PYLIBDIR will be calculated unless it's used ('=' not
+> ':=' means its a deferred variable).
+> 
+> I wonder if the version check should move into setup.py - it would be
+> just as easy to check the file there and massage sys.args, although
+> possibly not as neat.
 
-Actually, this method is currently only used internally so I don't think
-my argument holds.
+For reference, putting the version check in setup.py looks like this:
 
-This is what keeping the refs as byte strings looks like.
+-- >8 --
 
-
- git_remote_helpers/git/importer.py | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
-index e28cc8f..c54846c 100644
---- a/git_remote_helpers/git/importer.py
-+++ b/git_remote_helpers/git/importer.py
-@@ -18,13 +18,16 @@ class GitImporter(object):
+diff --git a/git_remote_helpers/setup.py b/git_remote_helpers/setup.py
+index 6de41de..2c21eb5 100644
+--- a/git_remote_helpers/setup.py
++++ b/git_remote_helpers/setup.py
+@@ -3,6 +3,7 @@
+ """Distutils build/install script for the git_remote_helpers package."""
  
-     def get_refs(self, gitdir):
-         """Returns a dictionary with refs.
+ from distutils.core import setup
++import sys
+ 
+ # If building under Python3 we need to run 2to3 on the code, do this by
+ # trying to import distutils' 2to3 builder, which is only available in
+@@ -13,6 +14,24 @@ except ImportError:
+     # 2.x
+     from distutils.command.build_py import build_py
+ 
 +
-+        Note that the keys in the returned dictionary are byte strings as
-+        read from git.
-         """
-         args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
--        lines = check_output(args).strip().split('\n')
-+        lines = check_output(args).strip().split('\n'.encode('utf-8'))
-         refs = {}
-         for line in lines:
--            value, name = line.split(' ')
--            name = name.strip('commit\t')
-+            value, name = line.split(' '.encode('utf-8'))
-+            name = name.strip('commit\t'.encode('utf-8'))
-             refs[name] = value
-         return refs
- 
--- 
-1.8.1
++current_version = '%d.%d' % sys.version_info[:2]
++try:
++    f = open('GIT-PYTHON_VERSION', 'r')
++    latest_version = f.read().strip()
++    f.close()
++
++    if latest_version != current_version:
++        if not '--force' in sys.argv:
++            sys.argv.insert(0, '--force')
++except IOError:
++    pass
++
++f = open('GIT-PYTHON_VERSION', 'w')
++f.write(current_version)
++f.close()
++
++
+ setup(
+     name = 'git_remote_helpers',
+     version = '0.1.0',
