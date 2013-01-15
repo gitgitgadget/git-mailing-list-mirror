@@ -1,60 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] attr: fix off-by-one directory component length
- calculation
-Date: Tue, 15 Jan 2013 08:17:50 -0800
-Message-ID: <7vvcay4dzl.fsf@alter.siamese.dyndns.org>
-References: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] am: invoke perl's strftime in C locale
+Date: Tue, 15 Jan 2013 17:42:12 +0100
+Message-ID: <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com>
+References: <20130114205933.GA25947@altlinux.org>
+	<20130115155953.GB21815@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ross Lagerwall <rosslagerwall@gmail.com>,
-	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 17:18:17 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "Dmitry V. Levin" <ldv@altlinux.org>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 15 17:42:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tv9DJ-0001Qe-Rj
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 17:18:14 +0100
+	id 1Tv9as-0001OW-GD
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 17:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882Ab3AOQRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 11:17:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53177 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755118Ab3AOQRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 11:17:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68A09C6ED;
-	Tue, 15 Jan 2013 11:17:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D4VhPJGa+sAEX20hdD9PvmDHnjw=; b=bXQTR5
-	fOsk0jvW8rQJAnzg9Adko8odE2qMCM5Ad4KghhNaLIcThbRu2Yp+XsTnIa/67csw
-	URKlVPa9X3uJYtd0p2TAfDTDwAHAVJV5h9pH1r2DEFwbJlMw2iPwPp6/jj5ADDl6
-	ICPEuhIxoAI/XJZqSp+27WCo+Kn6/fvZxN/lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cShecKg2lv8irquXVyIi2EfUaar+7MNQ
-	UK+OPTwWpObzrhqAP32Nr+YNY9GlChZ5WHLHXko4B2tMi3Wzy89RI1sDdrwVXMrT
-	q6bnTlqvdqwDdF+7gmbkW32LaFC4Or7g9QJEZX+dYvZLdYqBVPEKsncKz7vDki5K
-	khs3OmSf1VQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CC60C6EC;
-	Tue, 15 Jan 2013 11:17:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D36C2C6E8; Tue, 15 Jan 2013
- 11:17:51 -0500 (EST)
-In-Reply-To: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 15 Jan
- 2013 20:35:24 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C60DE96-5F2F-11E2-9F15-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755806Ab3AOQmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 11:42:14 -0500
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:38905 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755118Ab3AOQmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 11:42:13 -0500
+Received: by mail-qa0-f42.google.com with SMTP id hg5so2523861qab.8
+        for <git@vger.kernel.org>; Tue, 15 Jan 2013 08:42:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=uFNrgoVKwct5tHGDBnuQrDrS7+odwzWQqhog3cKLlQs=;
+        b=psv8yW/OaqT2Z1aRcBGNMg5SiPe2SXCD7UxUuYW1xbCXipT7hOS/08ofqJNmfI/WfX
+         6rZmYLGJIY2XUaHvTxSjUE5dhLQ7SJlke3etnnXLSfa9jKY9jLQhBSGHe9JBaZxnHUzf
+         gKcGAfPRgX/7vKfJhUV1jKLc9vPjb1OT188fBgnYkoaHt15HKUD9aXMurHwDtDL+tMHf
+         dVlGxOrvD19uE9WAJRiJ81dfVFxSlOzoPyKh1LkyUeNj0CoRv2ZvZZcGrZF3g9gB94Xy
+         r3KGa07gXkk/ItseOzY++cUGsY6Dn2JwTYlAXl+y1shyqtM4tAAtXh0tk3zxvmyh3eHC
+         trIA==
+Received: by 10.49.62.39 with SMTP id v7mr88466450qer.15.1358268132765; Tue,
+ 15 Jan 2013 08:42:12 -0800 (PST)
+Received: by 10.49.11.233 with HTTP; Tue, 15 Jan 2013 08:42:12 -0800 (PST)
+In-Reply-To: <20130115155953.GB21815@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213646>
 
-Good spotting and a nicely explained patch.  Thanks.
+> This puts all of perl into the C locale, which would mean error messages
+> from perl would be in English rather than the user's language. It
+> probably isn't a big deal, because that snippet of perl is short and not
+> likely to produce problems, but I wonder how hard it would be to set the
+> locale just for the strftime call.
+
+Maybe just setting LC_TIME to C would do ...
+
+>From locale(7) man page:
+
+       LC_TIME
+              changes  the behavior of the strftime(3) function to
+display the current time in a locally acceptable form; for
+              example, most of Europe uses a 24-hour clock versus the
+12-hour clock used in the United States.
