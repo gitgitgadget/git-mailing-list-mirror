@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v2 02/19] reset $pathspec: exit with code 0 if successful
-Date: Mon, 14 Jan 2013 21:47:34 -0800
-Message-ID: <1358228871-7142-3-git-send-email-martinvonz@gmail.com>
+Subject: [PATCH v2 19/19] reset [--mixed]: use diff-based reset whether or not pathspec was given
+Date: Mon, 14 Jan 2013 21:47:51 -0800
+Message-ID: <1358228871-7142-20-git-send-email-martinvonz@gmail.com>
 References: <1357719376-16406-1-git-send-email-martinvonz@gmail.com>
  <1358228871-7142-1-git-send-email-martinvonz@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Matt Kraai <kraai@ftbfs.org>,
@@ -9,174 +9,94 @@ Cc: Junio C Hamano <gitster@pobox.com>, Matt Kraai <kraai@ftbfs.org>,
 	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
 	Martin von Zweigbergk <martinvonz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 06:49:03 2013
+X-From: git-owner@vger.kernel.org Tue Jan 15 06:49:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TuzOR-0007EL-2p
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 06:49:03 +0100
+	id 1TuzOQ-0007EL-JP
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 06:49:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755820Ab3AOFsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 00:48:36 -0500
-Received: from mail-qc0-f202.google.com ([209.85.216.202]:43824 "EHLO
-	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755723Ab3AOFs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755810Ab3AOFsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 00:48:35 -0500
+Received: from mail-qa0-f73.google.com ([209.85.216.73]:49985 "EHLO
+	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755729Ab3AOFs2 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 15 Jan 2013 00:48:28 -0500
-Received: by mail-qc0-f202.google.com with SMTP id s25so588896qcq.5
+Received: by mail-qa0-f73.google.com with SMTP id a19so345051qad.4
         for <git@vger.kernel.org>; Mon, 14 Jan 2013 21:48:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:x-gm-message-state;
-        bh=eaCryi77HGZFsVRgARNZLHD3rIObfHX2+MVSe0VAm/k=;
-        b=OQp6KZDL/EAm8n47LxrN48y7cJudlK8JeLniOKxqVcxEmDFC7/W4oZ1rEl+aGskmM9
-         LmXGp/PwF0VnGQxS7OiguR8PtAu1q3OjyRXtftKLYYqmWb5UBz+CTnDm82/RMlc//ei/
-         Y1IYf68yENPEUIdBvP7OfcWNhUyIHx0wa6rY7RAvIv0zJZQpiG+ae36JebCtiTGPeRzf
-         IESZlet7X5/qrY/5v35oVsMYnkasTdjr/3U16mxz+tCASG8ia0A+LJUa/TyBREugrWx2
-         8zOyrafFMsL+JQR0lRuR/qfZRx8zb7iERMw3RlGHXRn91jq8JknKQAMVgY4lGgUUKq3V
-         JmTA==
-X-Received: by 10.101.165.39 with SMTP id s39mr12700433ano.18.1358228907072;
+        bh=fcoY3evfiNpANlHH0AMT8ZZ4YvPs5ZPeDqp9rhTh6ZI=;
+        b=V2U8No1JdpUNt1UErH+oBOw8ZOLPWlE5bt2WtLKkU9UwNjCzaqOicwpGJ0uGlUhd7D
+         gX3Mp6r9dG7Rwx+SJsFC52UxHaPpLdj67jBZp4h7p8uNETPBrELJfrwTzg4Tab+bwD7O
+         02beOG4OVBvt5IHvP+7gpnZhraD/3bQsyHZvmmvwwWn7Fl6woTdbrivEKrg9Yo7f7slD
+         Ym8+SGudHCSuFx9njMc2o+dQEKObseg+FAm3qyTIRk6VkVgXI9z1KC/sJEE6I51KVnwD
+         mDJZt2tMPyFQkzeqxsTkDryY2ABs8avtEkq9Cwr8XYbfG6DjlpPc6Ew3nLIjErzxFjOg
+         g5+g==
+X-Received: by 10.236.120.70 with SMTP id o46mr47793580yhh.39.1358228907209;
         Mon, 14 Jan 2013 21:48:27 -0800 (PST)
-Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id s58si817819yhi.6.2013.01.14.21.48.27
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id r6si817626yhc.7.2013.01.14.21.48.27
         (version=TLSv1 cipher=AES128-SHA bits=128/128);
         Mon, 14 Jan 2013 21:48:27 -0800 (PST)
 Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 4B8CA100048;
-	Mon, 14 Jan 2013 21:48:26 -0800 (PST)
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 1E3E8820055;
+	Mon, 14 Jan 2013 21:48:27 -0800 (PST)
 Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id EED48101465; Mon, 14 Jan 2013 21:48:25 -0800 (PST)
+	id D1ABD1019AE; Mon, 14 Jan 2013 21:48:26 -0800 (PST)
 X-Mailer: git-send-email 1.8.1.1.454.gce43f05
 In-Reply-To: <1358228871-7142-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQlW52KlAaX+ew7uTT24Zvx8QfaQkN7lGE1leR1StSFXtdDN2zE2eysE6Wev3SqR8QHPZM8xFodgM4Rtx8jYvWMPg6G592+H4d+8KWCTdPIHgdUq9cWE3UWOs+MeGcmzZThOJ0l+dpeUdxddNFlVejFX9O/KRg4Nvv+3gy2UF9xavsQ+cIMkncJedeKbV57hDSgJJX5f
+X-Gm-Message-State: ALoCoQnFLTGXSVd4iMKz540uPPMjIGYeBcpWyszoTKbn8OjsIO59u7XTrbqVkmnxRpqs8MoNd/g25qrJqwqDcz7sCMZRWSUyB/FTRiUhZillCc7Zmk1vQlbutG0n28HT3X1LvBaHO7Ny5rDApFVgEUazrthSUVLZYLhqAZq7sx9JCmrlYktaj/gKnmxbevrV3Tu/ls0JfxZV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213580>
 
-"git reset $pathspec" currently exits with a non-zero exit code if the
-worktree is dirty after resetting, which is inconsistent with reset
-without pathspec, and it makes it harder to know whether the command
-really failed. Change it to exit with code 0 regardless of whether the
-worktree is dirty so that non-zero indicates an error.
+Thanks to b65982b (Optimize "diff-index --cached" using cache-tree,
+2009-05-20), resetting with paths is much faster than resetting
+without paths. Some timings for the linux-2.6 repo to illustrate this
+(best of five, warm cache):
 
-This makes the 4 "disambiguation" test cases in t7102 clearer since
-they all used to "fail", 3 of which "failed" due to changes in the
-work tree. Now only the ambiguous one fails.
+        reset       reset .
+real    0m0.219s    0m0.080s
+user    0m0.140s    0m0.040s
+sys     0m0.070s    0m0.030s
+
+These two commands should do the same thing, so instead of having the
+user type the trailing " ." to get the faster do_diff_cache()-based
+implementation, always use it when doing a mixed reset, with or
+without paths (so "git reset $rev" would also be faster).
+
+Timing "git reset" shows that it indeed becomes as fast as
+"git reset ." after this patch.
 
 Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
 ---
- builtin/reset.c               |  8 +++-----
- t/t2013-checkout-submodule.sh |  2 +-
- t/t7102-reset.sh              | 18 ++++++++++++------
- 3 files changed, 16 insertions(+), 12 deletions(-)
+It seems like a better solution would be for unpack_trees() learn the
+same tricks as do_diff_cache(). I'm leaving that a challange for the
+reader :-). I did have a look a unpack_trees(), but it looked rather
+overwhelming.
+
+ builtin/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/reset.c b/builtin/reset.c
-index 8cc7c72..65413d0 100644
+index 45b01eb..921afbe 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -119,19 +119,17 @@ static void print_new_head_line(struct commit *commit)
- 
- static int update_index_refresh(int fd, struct lock_file *index_lock, int flags)
- {
--	int result;
--
- 	if (!index_lock) {
- 		index_lock = xcalloc(1, sizeof(struct lock_file));
- 		fd = hold_locked_index(index_lock, 1);
- 	}
- 
--	result = refresh_index(&the_index, (flags), NULL, NULL,
--			       _("Unstaged changes after reset:")) ? 1 : 0;
-+	refresh_index(&the_index, (flags), NULL, NULL,
-+		      _("Unstaged changes after reset:"));
- 	if (write_cache(fd, active_cache, active_nr) ||
- 			commit_locked_index(index_lock))
- 		return error ("Could not refresh index");
--	return result;
-+	return 0;
- }
- 
- static void update_index_from_diff(struct diff_queue_struct *q,
-diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
-index 70edbb3..06b18f8 100755
---- a/t/t2013-checkout-submodule.sh
-+++ b/t/t2013-checkout-submodule.sh
-@@ -23,7 +23,7 @@ test_expect_success '"reset <submodule>" updates the index' '
- 	git update-index --refresh &&
- 	git diff-files --quiet &&
- 	git diff-index --quiet --cached HEAD &&
--	test_must_fail git reset HEAD^ submodule &&
-+	git reset HEAD^ submodule &&
- 	test_must_fail git diff-files --quiet &&
- 	git reset submodule &&
- 	git diff-files --quiet
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index b096dc8..81b2570 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -388,7 +388,8 @@ test_expect_success 'test --mixed <paths>' '
- 	echo 4 > file4 &&
- 	echo 5 > file1 &&
- 	git add file1 file3 file4 &&
--	test_must_fail git reset HEAD -- file1 file2 file3 &&
-+	git reset HEAD -- file1 file2 file3 &&
-+	test_must_fail git diff --quiet &&
- 	git diff > output &&
- 	test_cmp output expect &&
- 	git diff --cached > output &&
-@@ -402,7 +403,8 @@ test_expect_success 'test resetting the index at give paths' '
- 	>sub/file2 &&
- 	git update-index --add sub/file1 sub/file2 &&
- 	T=$(git write-tree) &&
--	test_must_fail git reset HEAD sub/file2 &&
-+	git reset HEAD sub/file2 &&
-+	test_must_fail git diff --quiet &&
- 	U=$(git write-tree) &&
- 	echo "$T" &&
- 	echo "$U" &&
-@@ -440,7 +442,8 @@ test_expect_success 'resetting specific path that is unmerged' '
- 		echo "100644 $F3 3	file2"
- 	} | git update-index --index-info &&
- 	git ls-files -u &&
--	test_must_fail git reset HEAD file2 &&
-+	git reset HEAD file2 &&
-+	test_must_fail git diff --quiet &&
- 	git diff-index --exit-code --cached HEAD
- '
- 
-@@ -449,7 +452,8 @@ test_expect_success 'disambiguation (1)' '
- 	git reset --hard &&
- 	>secondfile &&
- 	git add secondfile &&
--	test_must_fail git reset secondfile &&
-+	git reset secondfile &&
-+	test_must_fail git diff --quiet -- secondfile &&
- 	test -z "$(git diff --cached --name-only)" &&
- 	test -f secondfile &&
- 	test ! -s secondfile
-@@ -474,7 +478,8 @@ test_expect_success 'disambiguation (3)' '
- 	>secondfile &&
- 	git add secondfile &&
- 	rm -f secondfile &&
--	test_must_fail git reset HEAD secondfile &&
-+	git reset HEAD secondfile &&
-+	test_must_fail git diff --quiet &&
- 	test -z "$(git diff --cached --name-only)" &&
- 	test ! -f secondfile
- 
-@@ -486,7 +491,8 @@ test_expect_success 'disambiguation (4)' '
- 	>secondfile &&
- 	git add secondfile &&
- 	rm -f secondfile &&
--	test_must_fail git reset -- secondfile &&
-+	git reset -- secondfile &&
-+	test_must_fail git diff --quiet &&
- 	test -z "$(git diff --cached --name-only)" &&
- 	test ! -f secondfile
- '
+@@ -322,7 +322,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (reset_type != SOFT) {
+ 		struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 		int newfd = hold_locked_index(lock, 1);
+-		if (pathspec) {
++		if (reset_type == MIXED) {
+ 			if (read_from_tree(pathspec, sha1))
+ 				return 1;
+ 		} else {
 -- 
 1.8.1.1.454.gce43f05
