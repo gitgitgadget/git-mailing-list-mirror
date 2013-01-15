@@ -1,73 +1,59 @@
-From: Sebastian Staudt <koraktor@gmail.com>
-Subject: [PATCH] config.txt: Document help.htmlpath config parameter
-Date: Tue, 15 Jan 2013 21:56:21 +0100
-Message-ID: <20130115205621.GB49671@mormegil.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config.txt: Document help.htmlpath config parameter
+Date: Tue, 15 Jan 2013 13:51:12 -0800
+Message-ID: <7v38y22jzj.fsf@alter.siamese.dyndns.org>
+References: <20130115205621.GB49671@mormegil.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:56:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sebastian Staudt <koraktor@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 22:51:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvDYs-0002v2-Qt
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 21:56:47 +0100
+	id 1TvEPw-0006sB-OZ
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jan 2013 22:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756395Ab3AOU40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 15:56:26 -0500
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:58367 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756323Ab3AOU4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 15:56:25 -0500
-Received: by mail-wi0-f171.google.com with SMTP id hn14so2776771wib.16
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 12:56:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=yHNDQmKLbuD/c1r5rlfq8vK1UadqP5rjC2cuOmoun6U=;
-        b=HRUJK8GwEu2dfY9OwL6FjRxxh9FJAmJrHK3cNCrSg6Se/nBBD+wfWAE0yyPPQXJY1U
-         mk9pnRoUhiMOiMa1Tf6VvgeJM0YZCvdGqM/LnPwqqdA7726iODH92SpUP115UJQMPeDF
-         cccESZRGqhSuTg2U625lUHWOltmmnyVBBEjgbX3hVG8GaytUDXFS1bA5aezcPteiOaip
-         +phYH8lACty6E7YqcfFXmOmLmGBp6cNxB6vI7zXWh7daTNr/OC0WPJaMzLtS3XOIjSHu
-         fbE5u+ixgA0DmmfpUjzMPWn/UntRq2Q3zFK8IcjZKPiqWHbtP+BDn0PpXEBzPyU+AJWC
-         2PoA==
-X-Received: by 10.180.107.130 with SMTP id hc2mr5955814wib.12.1358283384370;
-        Tue, 15 Jan 2013 12:56:24 -0800 (PST)
-Received: from mormegil.local (88-134-169-8-dynip.superkabel.de. [88.134.169.8])
-        by mx.google.com with ESMTPS id bw9sm5071741wib.5.2013.01.15.12.56.23
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Jan 2013 12:56:23 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756905Ab3AOVvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 16:51:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63820 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756351Ab3AOVvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 16:51:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1106AB971;
+	Tue, 15 Jan 2013 16:51:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RstXHKQMUVGu6WuR61f4Py6+PUg=; b=So7ZlW
+	d0YXzj9xGcojhSWUmVCZPCnvZMrlXNtyuFQwT6fkjlObwzVpTpF579mLrbXkLj68
+	5/iQGzAU17Bx1bDg3kt/7besNyeaB6/JpbaflOuSWzyVaHKP+4r24iiQFoyi4yr6
+	dqE5CMP/ZWIf4xK3sbboRqy9CuxdhuuoOr3vM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=efcEaUJ2uUmk2yR2E/EQeCfIrFDxaQAt
+	+d5j26CeHvlfvVHJZpvmNbB9Hs94IM0mAkN81r+SR4Ncxj/M6wN2AoQ5BmTARDEy
+	hC9IvAbCzUEFhm9QcM6nuyxjHB7oUFUZT8Mo5oeb3eE1IqzHPUIVcTTxJPMlfo5d
+	dFHmfLxEEaw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 036CDB970;
+	Tue, 15 Jan 2013 16:51:15 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79B66B96E; Tue, 15 Jan 2013
+ 16:51:14 -0500 (EST)
+In-Reply-To: <20130115205621.GB49671@mormegil.local> (Sebastian Staudt's
+ message of "Tue, 15 Jan 2013 21:56:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AEE026CC-5F5D-11E2-A5C5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213678>
 
-Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
----
- Documentation/config.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+Thanks.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index bf8f911..e452ff8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1351,6 +1351,12 @@ help.autocorrect::
- 	value is 0 - the command will be just shown but not executed.
- 	This is the default.
- 
-+help.htmlpath::
-+	Specify the path where the HTML documentation resides. File system paths
-+	and URLs are supported. HTML pages will be prefixed with this path when
-+	help is displayed in the 'web' format. This defaults to the documentation
-+	path of your Git installation.
-+
- http.proxy::
- 	Override the HTTP proxy, normally configured using the 'http_proxy',
- 	'https_proxy', and 'all_proxy' environment variables (see
--- 
-1.8.1.1
+This will eventually go to the maintenance track as well.
