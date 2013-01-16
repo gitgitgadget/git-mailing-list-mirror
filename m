@@ -1,92 +1,170 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [GUILT]  [PATCH 7/7] Drop unneeded git version check.
-Date: Tue, 15 Jan 2013 18:31:44 -0800
-Message-ID: <20130116023144.GP12524@google.com>
-References: <20130116022606.GI12524@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] attr: fix off-by-one directory component length
+ calculation
+Date: Tue, 15 Jan 2013 18:33:21 -0800
+Message-ID: <7vbocp26xa.fsf@alter.siamese.dyndns.org>
+References: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
+ <201301152014.28433.avila.jn@gmail.com>
+ <7vwqve2qk3.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Bn4GKJzi4n5cMPp+26dovT795nUqcXGNLgapf+r_PFCw@mail.gmail.com>
+ <20130116020901.GA1041@duynguyen-vnpc.dek-tpc.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>,
-	Theodore Ts'o <tytso@mit.edu>, Iulian Udrea <iulian@linux.com>,
-	Axel Beckert <abe@deuxchevaux.org>
-To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Wed Jan 16 03:32:11 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>,
+	git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 03:33:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvInS-00069M-2f
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 03:32:10 +0100
+	id 1TvIp0-00009B-AN
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 03:33:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758121Ab3APCbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 21:31:49 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:61307 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758115Ab3APCbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 21:31:49 -0500
-Received: by mail-pb0-f54.google.com with SMTP id wz12so424002pbc.13
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 18:31:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=5R77SXo5cl/kTRPyQ+w6XB9KL6CyQ3iNYS4jGh5viJI=;
-        b=sCTr9rFLYRw1/L0/c1tcb5qtrMYE/l9WJHx7ciNzSwpVx4ZUroI+HyL887JaTIh6AI
-         KVH3FXascYIJkFgnHKxQIxcLSFEnQY5zwCMJ2P6UKUD9VMWp2iCJljuXRtqI6PdR4N7t
-         MetjkGv2tbkxAOx/YU0M5rNFVkiPP5ovS0uyy/TB8UydlICHr7QUtI6EedYUdg7VrXac
-         b+SGtfW3NXpQbcwiChYpeLU/1mx7dvcI4PWRUwH7/0dV4bYEdi+vvl2blMOLbRyBf8kq
-         bfG5MEI+ijyReqNnRFoxUWvgpP2ZoFhlMdif5I5hodj8dInXZwBgLP0vupdL8e9kwvJT
-         +uMw==
-X-Received: by 10.68.226.71 with SMTP id rq7mr270522746pbc.60.1358303508667;
-        Tue, 15 Jan 2013 18:31:48 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id gj1sm11299307pbc.11.2013.01.15.18.31.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Jan 2013 18:31:47 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130116022606.GI12524@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758051Ab3APCdZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 21:33:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37945 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756839Ab3APCdZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 21:33:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31DD7A3E5;
+	Tue, 15 Jan 2013 21:33:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JcmBGE3Wy3vT
+	Z1TjJ4KWHfUfPzE=; b=TY0KwwRog0EKYDtZ5pEtnGNude3GyGR6XLuVYGQFKFxW
+	1crTfk5tJCHKiEXOWPMsmzLBLUD5ASmftx0asRDRJQgbnURmfQiymamWJvprXFO5
+	cxDkckVFPU5FqkANsJhlbaqL69DXYuTtkVFp7q9ZgmLrXvYyH+eXUAvS7T+OzRs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EWGbbC
+	hwm9Xkkx5Buv6WxvBVTAJtL1WpIMEFTbStLY/XJWcvLaCkvgZXdRQrPjjxphajTY
+	rBNvqLpu0GQVCKN6idZbz5vGTQceyUvLgJ5y3p9vns18vJcZdUi2FjsVcbvqC5xj
+	RhhgW8u/iUTiMcSnlvCK8jQ2O2ZAuxX1NcSgs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27896A3E4;
+	Tue, 15 Jan 2013 21:33:24 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A3BBA3E3; Tue, 15 Jan 2013
+ 21:33:23 -0500 (EST)
+In-Reply-To: <20130116020901.GA1041@duynguyen-vnpc.dek-tpc.internal> (Duy
+ Nguyen's message of "Wed, 16 Jan 2013 09:09:01 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1944F2FA-5F85-11E2-B0D4-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213716>
 
-Git's compatibility record is pretty good, so there's no need to worry
-that newer versions of git will break the "git config" command.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Without this change, guilt errors out for git 1.8.  With it, all tests
-pass.
+> On Wed, Jan 16, 2013 at 08:08:03AM +0700, Duy Nguyen wrote:
+>> Actually I'd like to remove that function.
+>
+> This is what I had in mind:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Thanks for reading.
+I think the replacement logic to find the basename is moderately
+inferiour to the original.  For one thing (this may be somewhat
+subjective), it is less readable now.  Also the original only
+scanned the string from the beginning once (instead of letting
+strlen() to scan once and go back).
 
- guilt | 11 -----------
- 1 file changed, 11 deletions(-)
+The new code structure to inline the basename finding part and to
+pass the dirlen down the callchain may make sense, though.
 
-diff --git a/guilt b/guilt
-index 66a671a..6cb43e3 100755
---- a/guilt
-+++ b/guilt
-@@ -26,17 +26,6 @@ SUBDIRECTORY_OK=1
- . "$(git --exec-path)/git-sh-setup"
- 
- #
--# Git version check
--#
--gitver=`git --version | cut -d' ' -f3 | sed -e 's/^debian\.//'`
--case "$gitver" in
--	1.5.*)	;; # git config
--	1.6.*)	;; # git config
--	1.7.*)	;; # git config
--	*)	die "Unsupported version of git ($gitver)" ;;
--esac
--
--#
- # Shell library
- #
- usage()
--- 
-1.8.1
+>> -- 8< --
+> Subject: [PATCH] attr: avoid calling find_basename() twice per path
+>
+> find_basename() is only used inside collect_all_attrs(), called once
+> in prepare_attr_stack, then again after prepare_attr_stack()
+> returns. Both calls return exact same value. Reorder the code to do i=
+t
+> once.
+>
+> While at it, make use of "pathlen" to stop searching early if
+> possible.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  attr.c | 46 +++++++++++++++++++---------------------------
+>  1 file changed, 19 insertions(+), 27 deletions(-)
+>
+> diff --git a/attr.c b/attr.c
+> index cfc6748..04cb9a0 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -564,32 +564,12 @@ static void bootstrap_attr_stack(void)
+>  	attr_stack =3D elem;
+>  }
+> =20
+> -static const char *find_basename(const char *path)
+> -{
+> -	const char *cp, *last_slash =3D NULL;
+> -
+> -	for (cp =3D path; *cp; cp++) {
+> -		if (*cp =3D=3D '/' && cp[1])
+> -			last_slash =3D cp;
+> -	}
+> -	return last_slash ? last_slash + 1 : path;
+> -}
+> -
+> -static void prepare_attr_stack(const char *path)
+> +static void prepare_attr_stack(const char *path, int dirlen)
+>  {
+>  	struct attr_stack *elem, *info;
+> -	int dirlen, len;
+> +	int len;
+>  	const char *cp;
+> =20
+> -	dirlen =3D find_basename(path) - path;
+> -
+> -	/*
+> -	 * find_basename() includes the trailing slash, but we do
+> -	 * _not_ want it.
+> -	 */
+> -	if (dirlen)
+> -		dirlen--;
+> -
+>  	/*
+>  	 * At the bottom of the attribute stack is the built-in
+>  	 * set of attribute definitions, followed by the contents
+> @@ -769,15 +749,27 @@ static int macroexpand_one(int attr_nr, int rem=
+)
+>  static void collect_all_attrs(const char *path)
+>  {
+>  	struct attr_stack *stk;
+> -	int i, pathlen, rem;
+> -	const char *basename;
+> +	int i, pathlen, rem, dirlen =3D 0;
+> +	const char *basename =3D path, *cp;
+> =20
+> -	prepare_attr_stack(path);
+> +	pathlen =3D strlen(path);
+> +
+> +	/*
+> +	 * This loop is similar to strrchr(path, '/') except that the
+> +	 * trailing slash is skipped.
+> +	 */
+> +	for (cp =3D path + pathlen - 2; cp >=3D path; cp--) {
+> +		if (*cp =3D=3D '/') {
+> +			basename =3D cp + 1;
+> +			dirlen =3D cp - path;
+> +			break;
+> +		}
+> +	}
+> +
+> +	prepare_attr_stack(path, dirlen);
+>  	for (i =3D 0; i < attr_nr; i++)
+>  		check_all_attr[i].value =3D ATTR__UNKNOWN;
+> =20
+> -	basename =3D find_basename(path);
+> -	pathlen =3D strlen(path);
+>  	rem =3D attr_nr;
+>  	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
+>  		rem =3D fill(path, pathlen, basename, stk, rem);
