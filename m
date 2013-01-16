@@ -1,76 +1,66 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-Subject: Re: Question re. git remote repository
-Date: Wed, 16 Jan 2013 21:07:53 +0000
-Message-ID: <A0DB01D693D8EF439496BC8B037A0AEF32209584@xmb-rcd-x15.cisco.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/3] config: Introduce diff.algorithm variable
+Date: Wed, 16 Jan 2013 13:59:59 -0800
+Message-ID: <7v622wwzz4.fsf@alter.siamese.dyndns.org>
+References: <cover.1358322212.git.mprivozn@redhat.com>
+ <4e2aacd5bbf005f0e372589bf423a8cbd776bc6d.1358322212.git.mprivozn@redhat.com>
+ <7vbocpxbwp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 22:08:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, peff@peff.net
+To: Michal Privoznik <mprivozn@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 23:00:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvaDe-0000nV-U7
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 22:08:23 +0100
+	id 1Tvb29-0008ER-DS
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 23:00:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756738Ab3APVIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 16:08:01 -0500
-Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:35898 "EHLO
-	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756718Ab3APVIA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 16:08:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1049; q=dns/txt; s=iport;
-  t=1358370480; x=1359580080;
-  h=from:to:subject:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=WAflAH0vw0Rw9mV+MF8LxKZnQbNbH2ljVSwbMqbPrqI=;
-  b=GKAu84G9OU2T7e6YbjA4rKSGCnW2j0w1wo5WTHMX56d3WIG6oYPYRlf4
-   KHfXs9jBfu1dP37QGek0faUXsWGpFlsL02+X99ZLIVKsfkMy2r37ItopW
-   1phsRSx1O5ht9rNS+NzLRwA5fhkw8gpej7k9dFVoYRaieRkw/3EEoF97P
-   w=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EACsW91CtJXG8/2dsb2JhbABEvX8Wc4IeAQEBAwE6RA0BCBgKFEImAQQTCBKHeQUBDJkToBOQV2EDlyiPLYJ1giQ
-X-IronPort-AV: E=Sophos;i="4.84,480,1355097600"; 
-   d="scan'208";a="163422008"
-Received: from rcdn-core2-1.cisco.com ([173.37.113.188])
-  by rcdn-iport-5.cisco.com with ESMTP; 16 Jan 2013 21:07:54 +0000
-Received: from xhc-rcd-x03.cisco.com (xhc-rcd-x03.cisco.com [173.37.183.77])
-	by rcdn-core2-1.cisco.com (8.14.5/8.14.5) with ESMTP id r0GL7siB027098
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Wed, 16 Jan 2013 21:07:54 GMT
-Received: from xmb-rcd-x15.cisco.com ([169.254.5.248]) by
- xhc-rcd-x03.cisco.com ([173.37.183.77]) with mapi id 14.02.0318.004; Wed, 16
- Jan 2013 15:07:53 -0600
-Thread-Topic: Question re. git remote repository
-Thread-Index: Ac30LWwwwxPSFBTxQQKrBS900R+H4Q==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [171.71.137.42]
+	id S1757016Ab3APWAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 17:00:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57114 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756551Ab3APWAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 17:00:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9335BA8C7;
+	Wed, 16 Jan 2013 17:00:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RsDBTLajDtw34GpzYwVB1hShsBo=; b=ZP3jol
+	iClWES39016tod8w+/Xx5mJnhjYkjXcSw0szepFt+Xx6kp9IjEIAlKGUSCMSK0MQ
+	u4kl2FmZjkw4DyNvkLSxkNbGR88jwhDCZVZSSNrhncDRjovLp//LTHymZM6PRPOu
+	huiKKBjKBHId5TYgAUiJGpQGhhu9wxRBdcsJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kP/RmJrCEwj6YLMwo5xU4eqDr5vZ3Nbi
+	HocLHEG343xtVUn+xPJ+hEKcVQdQ+AaElHbHL4WKTRrRl2zOYHoNR4O9cQL8MTmu
+	g6u0QvSfavd2Bi492RjVHNxfy5MrKW9ehRuTJCgIf9ByC1n2ys2U9lNPFE7i+jwf
+	ufSgkhueDp0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B44FA8BE;
+	Wed, 16 Jan 2013 17:00:07 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44EDCA8B3; Wed, 16 Jan 2013
+ 17:00:03 -0500 (EST)
+In-Reply-To: <7vbocpxbwp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 16 Jan 2013 09:42:14 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 15BE5308-6028-11E2-B078-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213815>
 
-"Konstantin Khomoutov" <kostix+git@007spb.ru> wrote in message news:<20130116233744.7d0775eaec98ce154a9de180@domain007.com>...
-> On Wed, 16 Jan 2013 10:21:56 -0800
-> Jeff King <peff@peff.net> wrote:
-> > 
-> > I agree that performance is not ideal (although if you are on a fast
-> > LAN, it probably would not matter much), but I do not recall any
-> > specific bugs in that area. Can you elaborate?
-> 
-> Of course, if there are happy users of such setups, I would be glad to
-> hear as my precautions might well be unfounded for the recent versions
-> of Git.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm a happy user of git on network file systems (NFS and CIFS/SMB), although not a heavy user.
+> Will replace the one in 'pu' with this round.  Looking good.
+>
+> Thanks.
 
-> 1. http://code.google.com/p/msysgit/issues/detail?id=130
-
-I wouldn't be surprised if there are some subtle POSIX-Win32 compatibility issues here between msysgit and Samba (POSIX GIT, ported to use Win32 file system functions, sending those Win32 requests to a Samba server, and the Samba server translating those Win32 requests back into POSIX functions).
+By the way, wouldn't we want some tests to protect this feature from
+future breakages?
