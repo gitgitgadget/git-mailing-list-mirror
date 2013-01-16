@@ -1,84 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Move Git::SVN::get_tz to Git::get_tz_offset
-Date: Wed, 16 Jan 2013 12:36:18 -0800
-Message-ID: <7vehhkx3ul.fsf@alter.siamese.dyndns.org>
-References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
- <1358291405-10173-2-git-send-email-bdwalton@gmail.com>
- <7vehhlyw90.fsf@alter.siamese.dyndns.org>
- <CAP30j164UD9gNRbZ=uCQjgpDODWnGtYmHcWES2P=YPryL=FbZA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2] Allow custom "comment char"
+Date: Wed, 16 Jan 2013 22:02:27 +0100
+Message-ID: <50F71563.20406@web.de>
+References: <1358275827-5244-1-git-send-email-ralf.thielow@gmail.com> <1358363928-16729-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: esr <esr@thyrsus.com>, git <git@vger.kernel.org>
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:36:47 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 22:02:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvZj1-0005oM-QQ
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 21:36:44 +0100
+	id 1Tva8L-0001Fj-N4
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 22:02:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756429Ab3APUgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 15:36:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65128 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756152Ab3APUgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 15:36:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD7D7CC73;
-	Wed, 16 Jan 2013 15:36:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xlY7LxVO7Y2no5HG4tj4y4c/r1M=; b=clK4HZ
-	kd3id8CRWqTehskUOHKIsp9UQxNlw0OptXwX71BqdlTnShSY+C0y7xh4KkgqSG0a
-	+pNO02A5tP8aXXZbgel21yAhRXOHgdSOxUH4TWtkpk8/fNXTZZ2H5TX3UqmsrREb
-	b8Pe156Lu1KUG9qn/zhQ5ofwQ5g6Q0d7DQ7n0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wI98cwU0ZwNPkIilFt6D8GHiMRqVb3f6
-	7QJ7rNghv53LYwFuou9vgQoWkeNEHfSLWvqf1tYQL3kkjo58HgaMdAv47c5uJVub
-	upwAt0EQhORPKgcQnd1AFwkH8ehgTcWnq/obEU15UK80yqMjYz1UATPIqJNRZemY
-	MRJOZnJlVwo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C77FECC71;
-	Wed, 16 Jan 2013 15:36:20 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34D06CC6D; Wed, 16 Jan 2013
- 15:36:20 -0500 (EST)
-In-Reply-To: <CAP30j164UD9gNRbZ=uCQjgpDODWnGtYmHcWES2P=YPryL=FbZA@mail.gmail.com> (Ben
- Walton's message of "Wed, 16 Jan 2013 20:16:55 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 627CEF62-601C-11E2-A740-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756686Ab3APVCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 16:02:33 -0500
+Received: from mout.web.de ([212.227.15.4]:58336 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756131Ab3APVCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 16:02:31 -0500
+Received: from [192.168.178.41] ([91.3.180.56]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0LlWGZ-1TKasl1CUR-00b7nm; Wed, 16 Jan 2013 22:02:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <1358363928-16729-1-git-send-email-ralf.thielow@gmail.com>
+X-Enigmail-Version: 1.5
+X-Provags-ID: V02:K0:UoCdUhjtaogRcisSAMK6A+XoVNea5RztKQ2m8rnnEEO
+ siSrlXK4sHGLpI+DtZuMaCfd6HcFHBdZ2ewH6leZWiau7A4eEB
+ WA2ExM1uA73lyj5YeIIcKoO/lYdfcfLzh8p4UHEeyQzy68Yjvo
+ rdGfwUqRqwAi2oRjFNdAclui8W3Zl3Z/aNrOv1kdR9ciyHicaj
+ ag3j6AUiufOL4W3gjY+Dw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213812>
 
-Ben Walton <bdwalton@gmail.com> writes:
+Am 16.01.2013 20:18, schrieb Ralf Thielow:
+> From: Junio C Hamano <gitster@pobox.com>
+> 
+> Some users do want to write a line that begin with a pound sign, #,
+> in their commit log message.  Many tracking system recognise
+> a token of #<bugid> form, for example.
+> 
+> The support we offer these use cases is not very friendly to the end
+> users.  They have a choice between
+> 
+>  - Don't do it.  Avoid such a line by rewrapping or indenting; and
+> 
+>  - Use --cleanup=whitespace but remove all the hint lines we add.
+> 
+> Give them a way to set a custom comment char, e.g.
+> 
+>     $ git -c core.commentchar="%" commit
+> 
+> so that they do not have to do either of the two workarounds.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> Junio, thanks for the code in your reply to the
+> first version. It works very well and looks nice.
+> I was also unhappy about this "\n%c\n" thing and
+> pretty unsure with the code in "git-submodule.sh".
 
-> On Wed, Jan 16, 2013 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Ben Walton <bdwalton@gmail.com> writes:
->>
->>> +sub get_tz_offset {
->>> +     # some systmes don't handle or mishandle %z, so be creative.
->>
->> Hmph.  I wonder if we can use %z if it is handled correctly and fall
->> back to this code only on platforms that are broken?
->
-> That would be perfectly acceptable to me.  The reason I set it up to
-> always run through this function here is that when I originally added
-> this function for git-svn, I'd made it conditional and Eric Wong
-> preferred that the function be used exclusively[1].  I opted to take
-> the same approach here to keep things congrous.
->
-> If it were to be conditional, I think I'd add a variable to the build
-> system and have the code leverage that at runtime instead of the
-> try/except approach I attempted in 2009.
-
-If the code was originally unconditional for a reason (and I think
-being bug-to-bug compatible across platforms is actually a good
-thing in a tool like importers), I would not object to it.  Thanks
-for the back-story.
+I can't see anything wrong with it (but didn't have the time to
+test it). On my todo list (but *way* down) is the task to replace
+the call to "git submodule summary --for-status ..." in
+wt_status_print_submodule_summary() with a call to "git diff
+--submodule" (and - at least in the long term - rip out the
+--for-status option from the submodule script). Maybe now is a
+good time for someone else to tackle that? (especially as the new
+strbuf_commented_add*() functions should make that rather easy)
