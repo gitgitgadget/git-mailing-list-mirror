@@ -1,61 +1,87 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] attr: fix off-by-one directory component length calculation
-Date: Wed, 16 Jan 2013 08:03:25 +0700
-Message-ID: <CACsJy8AxUfi0kY_tSy2AfmQSfUiFs3von3FUexJQxo2+kYQSiw@mail.gmail.com>
-References: <1358256924-31578-1-git-send-email-pclouds@gmail.com> <201301152014.28433.avila.jn@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [RFC/PATCH] ignore memcmp() overreading in bsearch() callback
+Date: Wed, 16 Jan 2013 02:08:16 +0100
+Message-ID: <50F5FD80.1000808@lsrfire.ath.cx>
+References: <7v38y38hhm.fsf@alter.siamese.dyndns.org> <50F57BDF.1050400@lsrfire.ath.cx> <m2libunqdj.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <avila.jn@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 02:04:17 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 02:08:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvHQO-0006YC-CP
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 02:04:16 +0100
+	id 1TvHUl-0004Zn-CR
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 02:08:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757246Ab3APBD4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 20:03:56 -0500
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:61285 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757218Ab3APBDz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2013 20:03:55 -0500
-Received: by mail-oa0-f54.google.com with SMTP id n9so854261oag.27
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 17:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=86ZYHhLGvXkpV0pKxcixtRhdQ0gKAkvCajfj9IbJg3Q=;
-        b=JWEKWy2BnjXV0FLumcNi9ffcfKQsL5qL/9GvbBDHfer/br65/h3QK3oviRv9zWm2cw
-         firi6Jjxx7icUHDND3ip3VLAh1ezQaL9hS5tJUP87hWR+smLODT7ar0Lgw8gUValDO74
-         Hi4fR7L+dtV5DFOW+/JVU4gaSwIiv39dEfKc50f8p6imMwB/kyEBQ+BkdJb943kH7Kkx
-         YeP9WGnT+Tny7S8T3kjVH4KN3ORaVEkcsvwlsK6jMvTnGn+rkT+yQ2hCuZwKx0dtTRvK
-         p7CRtns+kWiNavrob1rtMupI25b92fB4LRiy27odeqqB7KiUBRgDCErUijdhDhTZPLkZ
-         7Z7g==
-Received: by 10.60.8.131 with SMTP id r3mr55675519oea.14.1358298235129; Tue,
- 15 Jan 2013 17:03:55 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Tue, 15 Jan 2013 17:03:25 -0800 (PST)
-In-Reply-To: <201301152014.28433.avila.jn@gmail.com>
+	id S1757462Ab3APBIZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2013 20:08:25 -0500
+Received: from india601.server4you.de ([85.25.151.105]:37666 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757147Ab3APBIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 20:08:24 -0500
+Received: from [192.168.2.105] (p4FFDA529.dip.t-dialin.net [79.253.165.41])
+	by india601.server4you.de (Postfix) with ESMTPSA id 3B0971D4;
+	Wed, 16 Jan 2013 02:08:22 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <m2libunqdj.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213699>
 
-On Wed, Jan 16, 2013 at 2:14 AM, Jean-No=C3=ABl AVILA <avila.jn@gmail.c=
-om> wrote:
-> I did not monitor the system calls when writing that patch.
-> Where is the perf framework?
+Am 15.01.2013 21:27, schrieb Andreas Schwab:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> +	return '\0' - ent->name[key->len];
+>=20
+> You need to cast to unsigned char first to make it consistent with
+> memcmp and strcmp.
 
-It's in t/perf. I think you can do:
+Thanks for catching this!
 
-=2E/run HEAD .
+-- >8 --
+Subject: [PATCH] refs: use strncmp() instead of strlen() and memcmp()
 
-to run and compare performance of HEAD and working directory (assume
-you haven't commit yet). Check out the README file.
+Simplify ref_entry_cmp_sslice() by using strncmp() to compare the
+length-limited key and a NUL-terminated entry.  While we're at it,
+retain the const attribute of the input pointers.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ refs.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 541fec2..5129da0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -333,14 +333,12 @@ struct string_slice {
+=20
+ static int ref_entry_cmp_sslice(const void *key_, const void *ent_)
+ {
+-	struct string_slice *key =3D (struct string_slice *)key_;
+-	struct ref_entry *ent =3D *(struct ref_entry **)ent_;
+-	int entlen =3D strlen(ent->name);
+-	int cmplen =3D key->len < entlen ? key->len : entlen;
+-	int cmp =3D memcmp(key->str, ent->name, cmplen);
++	const struct string_slice *key =3D key_;
++	const struct ref_entry *ent =3D *(const struct ref_entry * const *)en=
+t_;
++	int cmp =3D strncmp(key->str, ent->name, key->len);
+ 	if (cmp)
+ 		return cmp;
+-	return key->len - entlen;
++	return '\0' - (unsigned char)ent->name[key->len];
+ }
+=20
+ /*
 --=20
-Duy
+1.8.0
