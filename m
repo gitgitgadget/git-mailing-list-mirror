@@ -1,294 +1,197 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow custom "comment char"
-Date: Tue, 15 Jan 2013 22:23:24 -0800
-Message-ID: <7vmww9zlwj.fsf@alter.siamese.dyndns.org>
-References: <7vk3rk25iw.fsf_-_@alter.siamese.dyndns.org>
- <1358275827-5244-1-git-send-email-ralf.thielow@gmail.com>
- <7v622y45wy.fsf@alter.siamese.dyndns.org>
+From: Michal Privoznik <mprivozn@redhat.com>
+Subject: [PATCH v3 3/3] diff: Introduce --diff-algorithm command line option
+Date: Wed, 16 Jan 2013 08:51:58 +0100
+Message-ID: <9ab743d384a9de33a3410fac9ee3e74acf964700.1358322212.git.mprivozn@redhat.com>
+References: <cover.1358322212.git.mprivozn@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jrnieder@gmail.com, git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 07:23:53 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: gitster@pobox.com, trast@student.ethz.ch, peff@peff.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 16 08:52:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvMPd-0002TH-PH
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 07:23:50 +0100
+	id 1TvNnY-0006KG-MD
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 08:52:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778Ab3APGX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 01:23:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59834 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752472Ab3APGX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 01:23:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05944592D;
-	Wed, 16 Jan 2013 01:23:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nwQmuNZXrWXH+sNjjZxlAo4GSuk=; b=wRyHAq
-	SBydXlzbQIgdeNS12NCFVVHjfCbV9yYaRDW5sQWT6JQbtZ2gzrbhJzslTdp9W1EB
-	Wa88uwhDdnOslxo2cegodhrOMotzfF6N3MFvCaDzIPq2D5AXR05d8hjzzZn6l00Y
-	Yx8nG+wXuCvo3X+oX6M40TuFoam6LxfD7y9TA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OVs5V6rrbfrCLiX3KtRcl3wtvVpdeK2p
-	FAlFPXP6AWfOCMObNanZ7kO8McV+GaEauRwNxRng8TS8Sd5O6zW9e7XIWKlLrIC0
-	yelED+hsJ/rwLwLlZYqZokPZu2Fx6r9M3qgu7tta8L8KamMyZI+l5ZRTGd6xgBRD
-	sELFPKjM/l0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDCF8592B;
-	Wed, 16 Jan 2013 01:23:26 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F042C5929; Wed, 16 Jan 2013
- 01:23:25 -0500 (EST)
-In-Reply-To: <7v622y45wy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 15 Jan 2013 11:12:13 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C44CBE8-5FA5-11E2-A1D8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758677Ab3APHwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 02:52:16 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:4399 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758660Ab3APHwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 02:52:15 -0500
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0G7q7Nq023936
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 16 Jan 2013 02:52:07 -0500
+Received: from bart.brq.redhat.com (dhcp-27-249.brq.redhat.com [10.34.27.249])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id r0G7pxJY019996;
+	Wed, 16 Jan 2013 02:52:06 -0500
+In-Reply-To: <cover.1358322212.git.mprivozn@redhat.com>
+In-Reply-To: <cover.1358322212.git.mprivozn@redhat.com>
+References: <cover.1358322212.git.mprivozn@redhat.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213733>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Since command line options have higher priority than config file
+variables and taking previous commit into account, we need a way
+how to specify myers algorithm on command line. However,
+inventing `--myers` is not the right answer. We need far more
+general option, and that is `--diff-algorithm`.
 
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
-> ...
-> Looks like a good progress overall, except for nits here and there.
->
->> diff --git a/builtin/notes.c b/builtin/notes.c
->> index 453457a..5e84e35 100644
->> --- a/builtin/notes.c
->> +++ b/builtin/notes.c
->> @@ -92,10 +92,7 @@ static const char * const git_notes_get_ref_usage[] = {
->>  };
->>  
->>  static const char note_template[] =
->> -	"\n"
->> -	"#\n"
->> -	"# Write/edit the notes for the following object:\n"
->> -	"#\n";
->> +	"Write/edit the notes for the following object:";
->
-> I think this (and its use site that manually adds "\n#\n") is a
-> symptom of strbuf_commented_add*() function not designed right.
-> When it iterates over lines and adds each of them in a commented out
-> form, it could check if the line is an empty one and refrain from
-> adding a trailing SP if that is the case.  Then this can become
->
->     "\nWrite/edit the notes...\n\n";
->
-> You have to create the "\n" blank line at the beginning manually,
-> but that is logically outside the commented out block, so it is not
-> a problem.
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ Documentation/diff-options.txt         | 21 +++++++++++++++++++++
+ contrib/completion/git-completion.bash | 11 +++++++++++
+ diff.c                                 | 12 +++++++++++-
+ diff.h                                 |  2 ++
+ merge-recursive.c                      |  9 +++++++++
+ 5 files changed, 54 insertions(+), 1 deletion(-)
 
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index 22ec5b6..1b8d95f 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -975,13 +975,19 @@ cmd_summary() {
->>  		echo
->>  	done |
->>  	if test -n "$for_status"; then
->> +		comment_char=`git config core.commentchar`
->> +		if [ ! -n "$comment_char" ]; then
->> +			comment_char='#'
->> +		elif [ ${#comment_char} -gt 1 ]; then
->
-> Not portable, I think.
->
->> +		echo "$comment_char"
->> +		sed -e "s|^|$comment_char |" -e "s|^$comment_char $|$comment_char|"
->
-> Can $comment_char be a '|'?
-
-I think it may be the easiest to teach one of the pure-helper
-commands, e.g. "git stripspace", to do this kind of thing for you
-with a new option.
-
-To summarize, along the lines of the attached patch (on top of
-jc/custom-comment-char topic).
-
- builtin/branch.c     | 20 +++++++++-----------
- builtin/stripspace.c | 35 +++++++++++++++++++++++++++++------
- strbuf.c             | 42 +++++++++++++++++++++++++++++++++++++++++-
- strbuf.h             |  4 ++++
- 4 files changed, 83 insertions(+), 18 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7f8865a..42de4c5 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -707,18 +707,16 @@ static int edit_branch_description(const char *branch_name)
- 	if (!buf.len || buf.buf[buf.len-1] != '\n')
- 		strbuf_addch(&buf, '\n');
- 	/*
--	 * NEEDSWORK: introduce a strbuf_commented_addf(), possibly
--	 * sharing code with status_vprintf(), that makes each line
--	 * commented with comment_line_char, and use it here and from
--	 * other places (e.g. write_commented_object() and create_note()
--	 * in builtin/notes.c and create_tag() in builtin/tag.c).
-+	 * NEEDSWORK: convert more code to use this:
-+	 * (e.g. write_commented_object() and create_note() in
-+	 * builtin/notes.c and create_tag() in builtin/tag.c).
- 	 */
--	strbuf_addf(&buf,
--		    "%c Please edit the description for the branch\n"
--		    "%c   %s\n"
--		    "%c Lines starting with '%c' will be stripped.\n",
--		    comment_line_char, comment_line_char,
--		    branch_name, comment_line_char, comment_line_char);
-+	strbuf_commented_addf(&buf,
-+			      "Please edit the description for the branch\n"
-+			      "  %s\n"
-+			      "Lines starting with '%c' will be stripped.\n",
-+			      branch_name, comment_line_char);
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 39f2c50..6f11c34 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -55,6 +55,27 @@ endif::git-format-patch[]
+ --histogram::
+ 	Generate a diff using the "histogram diff" algorithm.
+ 
++--diff-algorithm={patience|minimal|histogram|myers}::
++	Choose a diff algorithm. The variants are as follows:
+++
++--
++`default`, `myers`;;
++	The basic greedy diff algorithm. Currently, this happens to be
++	the default algorithm as well.
++`minimal`;;
++	Spend extra time to make sure the smallest possible diff is
++	produced.
++`patience`;;
++	Use "patience diff" algorithm when generating patches.
++`histogram`;;
++	This algorithm extends the patience algorithm to "support
++	low-occurrence common elements".
++--
+++
++For instance, if you configured diff.algorithm variable to a
++non-default value and want to use the default one, then you
++have to use `--diff-algorithm=default` option.
 +
- 	fp = fopen(git_path(edit_description), "w");
- 	if ((fwrite(buf.buf, 1, buf.len, fp) < buf.len) || fclose(fp)) {
- 		strbuf_release(&buf);
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index 600ca66..790b500 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -66,21 +66,44 @@ void stripspace(struct strbuf *sb, int skip_comments)
- 	strbuf_setlen(sb, j);
+ --stat[=<width>[,<name-width>[,<count>]]]::
+ 	Generate a diffstat. By default, as much space as necessary
+ 	will be used for the filename part, and the rest for the graph
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 33e25dc..d592cf9 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1021,6 +1021,8 @@ _git_describe ()
+ 	__gitcomp_nl "$(__git_refs)"
  }
  
-+static void comment_lines(struct strbuf *buf)
-+{
-+	char *msg;
-+	size_t len;
++__git_diff_algorithms="myers minimal patience histogram"
 +
-+	msg = strbuf_detach(buf, &len);
-+	strbuf_add_commented_lines(buf, msg, len);
-+}
-+
- int cmd_stripspace(int argc, const char **argv, const char *prefix)
+ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--patch-with-stat --name-only --name-status --color
+ 			--no-color --color-words --no-renames --check
+@@ -1035,6 +1037,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--raw
+ 			--dirstat --dirstat= --dirstat-by-file
+ 			--dirstat-by-file= --cumulative
++			--diff-algorithm=
+ "
+ 
+ _git_diff ()
+@@ -1042,6 +1045,10 @@ _git_diff ()
+ 	__git_has_doubledash && return
+ 
+ 	case "$cur" in
++	--diff-algorithm=*)
++		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
++		return
++		;;
+ 	--*)
+ 		__gitcomp "--cached --staged --pickaxe-all --pickaxe-regex
+ 			--base --ours --theirs --no-index
+@@ -2114,6 +2121,10 @@ _git_show ()
+ 			" "" "${cur#*=}"
+ 		return
+ 		;;
++	--diff-algorithm=*)
++		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
++		return
++		;;
+ 	--*)
+ 		__gitcomp "--pretty= --format= --abbrev-commit --oneline
+ 			$__git_diff_common_options
+diff --git a/diff.c b/diff.c
+index 7d6cc4c..5fa40e9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -144,7 +144,7 @@ static int git_config_rename(const char *var, const char *value)
+ 	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
+ }
+ 
+-static long parse_algorithm_value(const char *value)
++long parse_algorithm_value(const char *value)
  {
- 	struct strbuf buf = STRBUF_INIT;
- 	int strip_comments = 0;
-+	enum { INVAL = 0, STRIP_SPACE = 1, COMMENT_LINES = 2 } mode = STRIP_SPACE;
-+
-+	if (argc == 2) {
-+		if (!strcmp(argv[1], "-s") ||
-+		    !strcmp(argv[1], "--strip-comments")) {
-+			strip_comments = 1;
-+		} else if (!strcmp(argv[1], "-c")) {
-+			mode = COMMENT_LINES;
-+			git_config(git_default_config, NULL);
-+		} else {
-+			mode = INVAL;
-+		}
-+	} else if (argc > 1)
-+		mode = INVAL;
- 
--	if (argc == 2 && (!strcmp(argv[1], "-s") ||
--				!strcmp(argv[1], "--strip-comments")))
--		strip_comments = 1;
--	else if (argc > 1)
--		usage("git stripspace [-s | --strip-comments] < input");
-+	if (mode == INVAL)
-+		usage("git stripspace [-s|-c] <input");
- 
- 	if (strbuf_read(&buf, 0, 1024) < 0)
- 		die_errno("could not read the input");
- 
--	stripspace(&buf, strip_comments);
-+	if (mode == STRIP_SPACE)
-+		stripspace(&buf, strip_comments);
-+	else /* i.e. COMMENT_LINES */
-+		comment_lines(&buf);
- 
- 	write_or_die(1, buf.buf, buf.len);
- 	strbuf_release(&buf);
-diff --git a/strbuf.c b/strbuf.c
-index 9a373be..d0525c8 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -411,12 +411,17 @@ int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
- 	return len;
- }
- 
--void strbuf_add_lines(struct strbuf *out, const char *prefix,
-+static void add_lines(struct strbuf *out,
-+		      const char *prefix1,
-+		      const char *prefix2,
- 		      const char *buf, size_t size)
- {
- 	while (size) {
-+		const char *prefix;
- 		const char *next = memchr(buf, '\n', size);
- 		next = next ? (next + 1) : (buf + size);
-+
-+		prefix = (prefix2 && buf[0] == '\n') ? prefix2 : prefix1;
- 		strbuf_addstr(out, prefix);
- 		strbuf_add(out, buf, next - buf);
- 		size -= next - buf;
-@@ -425,6 +430,41 @@ void strbuf_add_lines(struct strbuf *out, const char *prefix,
- 	strbuf_complete_line(out);
- }
- 
-+void strbuf_add_lines(struct strbuf *out, const char *prefix,
-+		      const char *buf, size_t size)
-+{
-+	add_lines(out, prefix, NULL, buf, size);
-+}
-+
-+void strbuf_add_commented_lines(struct strbuf *out,
-+				const char *buf, size_t size)
-+{
-+	static char prefix1[3];
-+	static char prefix2[2];
-+
-+	if (prefix1[0] != comment_line_char) {
-+		sprintf(prefix1, "%c ", comment_line_char);
-+		sprintf(prefix2, "%c", comment_line_char);
+ 	if (!value)
+ 		return -1;
+@@ -3634,6 +3634,16 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
+ 	else if (!strcmp(arg, "--histogram"))
+ 		options->xdl_opts = DIFF_WITH_ALG(options, HISTOGRAM_DIFF);
++	else if (!prefixcmp(arg, "--diff-algorithm=")) {
++		long value = parse_algorithm_value(arg+17);
++		if (value < 0)
++			return error("option diff-algorithm accepts \"myers\", "
++				     "\"minimal\", \"patience\" and \"histogram\"");
++		/* clear out previous settings */
++		DIFF_XDL_CLR(options, NEED_MINIMAL);
++		options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
++		options->xdl_opts |= value;
 +	}
-+	add_lines(out, prefix1, prefix2, buf, size);
-+}
-+
-+void strbuf_commented_addf(struct strbuf *sb, const char *fmt, ...)
-+{
-+	va_list params;
-+	struct strbuf buf = STRBUF_INIT;
-+	int incomplete_line = sb->len && sb->buf[sb->len - 1] != '\n';
-+
-+	va_start(params, fmt);
-+	strbuf_vaddf(&buf, fmt, params);
-+	va_end(params);
-+
-+	strbuf_add_commented_lines(sb, buf.buf, buf.len);
-+	if (incomplete_line)
-+		sb->buf[--sb->len] = '\0';
-+	strbuf_release(&buf);
-+}
-+
- void strbuf_addstr_xml_quoted(struct strbuf *buf, const char *s)
- {
- 	while (*s) {
-diff --git a/strbuf.h b/strbuf.h
-index ecae4e2..1eb0c75 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -131,10 +131,14 @@ extern void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *
  
- __attribute__((format (printf,2,3)))
- extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
-+__attribute__((format (printf,2,3)))
-+extern void strbuf_commented_addf(struct strbuf *sb, const char *fmt, ...);
- __attribute__((format (printf,2,0)))
- extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+ 	/* flags options */
+ 	else if (!strcmp(arg, "--binary")) {
+diff --git a/diff.h b/diff.h
+index a47bae4..54c2590 100644
+--- a/diff.h
++++ b/diff.h
+@@ -333,6 +333,8 @@ extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
  
- extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *buf, size_t size);
-+extern void strbuf_add_commented_lines(struct strbuf *out, const char *buf, size_t size);
+ extern int parse_rename_score(const char **cp_p);
+ 
++extern long parse_algorithm_value(const char *value);
 +
- 
- /*
-  * Append s to sb, with the characters '<', '>', '&' and '"' converted
+ extern int print_stat_summary(FILE *fp, int files,
+ 			      int insertions, int deletions);
+ extern void setup_diff_pager(struct diff_options *);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 33ba5dc..ea9dbd3 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2068,6 +2068,15 @@ int parse_merge_opt(struct merge_options *o, const char *s)
+ 		o->xdl_opts = DIFF_WITH_ALG(o, PATIENCE_DIFF);
+ 	else if (!strcmp(s, "histogram"))
+ 		o->xdl_opts = DIFF_WITH_ALG(o, HISTOGRAM_DIFF);
++	else if (!strcmp(s, "diff-algorithm=")) {
++		long value = parse_algorithm_value(s+15);
++		if (value < 0)
++			return -1;
++		/* clear out previous settings */
++		DIFF_XDL_CLR(o, NEED_MINIMAL);
++		o->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
++		o->xdl_opts |= value;
++	}
+ 	else if (!strcmp(s, "ignore-space-change"))
+ 		o->xdl_opts |= XDF_IGNORE_WHITESPACE_CHANGE;
+ 	else if (!strcmp(s, "ignore-all-space"))
+-- 
+1.8.0.2
