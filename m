@@ -1,34 +1,34 @@
 From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH 2/3] t5551: do not assume the "matching" push is the default
-Date: Tue, 15 Jan 2013 21:05:07 -0500
-Message-ID: <9527529195b1364b47774001a8709cda3ba6fdd5.1358301792.git.brian@gernhardtsoftware.com>
+Subject: [PATCH 3/3] t5570: do not assume the "matching" push is the default
+Date: Tue, 15 Jan 2013 21:05:08 -0500
+Message-ID: <bf3e44800542d2d0834cf25caf08ff5851142f67.1358301792.git.brian@gernhardtsoftware.com>
 References: <cover.1358301792.git.brian@gernhardtsoftware.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Brian Gernhardt <brian@gernhardtsoftware.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 03:12:58 2013
+X-From: git-owner@vger.kernel.org Wed Jan 16 03:13:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvIUo-0003OL-L6
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 03:12:54 +0100
+	id 1TvIUw-0003eP-FE
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 03:13:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757984Ab3APCMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 21:12:34 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:55697 "EHLO
+	id S1757972Ab3APCMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 21:12:33 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:55695 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757672Ab3APCMb (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1757520Ab3APCMb (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 15 Jan 2013 21:12:31 -0500
 Received: by silverinsanity.com (Postfix, from userid 5001)
-	id DEDA9117008A; Wed, 16 Jan 2013 02:06:10 +0000 (UTC)
+	id 9D755117008B; Wed, 16 Jan 2013 02:06:11 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=3.5 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.5
 Received: from localhost.localdomain (cpe-142-105-190-134.rochester.res.rr.com [142.105.190.134])
-	by silverinsanity.com (Postfix) with ESMTPA id 5A2BA117005D;
+	by silverinsanity.com (Postfix) with ESMTPA id EBA32117005D;
 	Wed, 16 Jan 2013 02:06:10 +0000 (UTC)
 X-Mailer: git-send-email 1.8.1.rc1.222.gec797b3
 In-Reply-To: <cover.1358301792.git.brian@gernhardtsoftware.com>
@@ -38,19 +38,19 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213706>
 
 Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
 ---
- t/t5551-http-fetch.sh | 1 +
+ t/t5570-git-daemon.sh | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-index c5cd2e3..1b55086 100755
---- a/t/t5551-http-fetch.sh
-+++ b/t/t5551-http-fetch.sh
-@@ -13,6 +13,7 @@ LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5551'}
- start_httpd
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index a3a4e47..f01edff 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -8,6 +8,7 @@ LIB_GIT_DAEMON_PORT=${LIB_GIT_DAEMON_PORT-5570}
+ start_git_daemon
  
  test_expect_success 'setup repository' '
 +	git config push.default matching &&
