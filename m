@@ -1,84 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [BUG] Possible bug in `remote set-url --add --push`
-Date: Wed, 16 Jan 2013 20:30:47 +0100
-Message-ID: <m2ip6x0vtk.fsf@igel.home>
-References: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com>
-	<7vliby98r7.fsf@alter.siamese.dyndns.org> <4836187.09xoy3kJnj@blacky>
-	<CAN8TAOv0Cm8CgiJSweFtRzOqO78OtNKa4G+x7z6M5Bt+odUmiQ@mail.gmail.com>
-	<50F40316.7010308@drmicha.warpmail.net>
-	<7v1udnbmyz.fsf@alter.siamese.dyndns.org>
-	<1D472234-A0A5-4F02-878D-D05DEE995FCD@gmail.com>
-	<7vpq1755jb.fsf@alter.siamese.dyndns.org>
-	<7vip6z54rh.fsf@alter.siamese.dyndns.org>
-	<50F524F8.5090803@drmicha.warpmail.net>
-	<7v4nii5tp2.fsf@alter.siamese.dyndns.org>
-	<50F668FB.5000805@drmicha.warpmail.net>
-	<7v622xyvnd.fsf@alter.siamese.dyndns.org>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: Question re. git remote repository
+Date: Wed, 16 Jan 2013 23:37:44 +0400
+Message-ID: <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
+References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
+	<20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
+	<20130116182156.GB4426@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jardel Weyrich <jweyrich@gmail.com>,
-	Sascha Cunz <sascha-ml@babbelbox.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 20:31:20 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
+	"Lang, David" <David.Lang@uhn.ca>,
+	"'git@vger.kernel.org'" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 16 20:38:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvYhi-00038A-Ns
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 20:31:19 +0100
+	id 1TvYok-0005nx-1P
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 20:38:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757236Ab3APTa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 14:30:57 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:52484 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757183Ab3APTa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 14:30:56 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3Ymdn43w8bz3hhff;
-	Wed, 16 Jan 2013 20:30:48 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3Ymdn42nFdzbbfx;
-	Wed, 16 Jan 2013 20:30:48 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id vdhhpwxrn6CC; Wed, 16 Jan 2013 20:30:30 +0100 (CET)
-X-Auth-Info: pxc17XEUDZmoAkn9nNL8cibpPk3AbAoqrTC7gJEX36A=
-Received: from igel.home (ppp-88-217-105-253.dynamic.mnet-online.de [88.217.105.253])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Wed, 16 Jan 2013 20:30:47 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 71EDCCA2A1; Wed, 16 Jan 2013 20:30:47 +0100 (CET)
-X-Yow: Let me do my TRIBUTE to FISHNET STOCKINGS...
-In-Reply-To: <7v622xyvnd.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 16 Jan 2013 07:50:30 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.92 (gnu/linux)
+	id S1757327Ab3APTiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 14:38:08 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:53892 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756606Ab3APTiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 14:38:04 -0500
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r0GJbiSG012412;
+	Wed, 16 Jan 2013 23:37:45 +0400
+In-Reply-To: <20130116182156.GB4426@sigill.intra.peff.net>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213805>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, 16 Jan 2013 10:21:56 -0800
+Jeff King <peff@peff.net> wrote:
 
-> I actually think my earlier "it shouldn't be the same (push)" is not
-> needed and probably is actively wrong.  Just like you can tell
-> between
->
->     (only one .url)                     (both .url and .pushurl)
->
->     origin there (fetch/push)           origin there (fetch)
->                                         origin there (push)
+Thanks for elaborating on the "origin" -- I intended to write up on its
+special status but got distracted and sent my message missing that
+bit ;-)
 
-What should happen when you have a .pushinsteadof configured that
-modifies .url for pushing?
+[...]
+> > > Ideally we'd prefer to simply create our remote repository on a
+> > > drive of one of our local network servers. Is this possible?
+> > 
+> > Yes, this is possible, but it's not advised to keep such a
+> > "reference" repository on an exported networked drive for a number
+> > of reasons (both performance and bug-free operation).
+> 
+> I agree that performance is not ideal (although if you are on a fast
+> LAN, it probably would not matter much), but I do not recall any
+> specific bugs in that area. Can you elaborate?
 
-Andreas.
+This one [1] for instance.  I also recall seing people having other
+"mystical" problems with setups like this so I somehow developed an idea
+than having a repository on a networked drive is asking for troubles.
+Of course, if there are happy users of such setups, I would be glad to
+hear as my precautions might well be unfounded for the recent versions
+of Git.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1. http://code.google.com/p/msysgit/issues/detail?id=130
