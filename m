@@ -1,79 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-remote: distinguish between default and configured
- URLs
-Date: Wed, 16 Jan 2013 11:19:46 -0800
-Message-ID: <7vvcaxvstp.fsf@alter.siamese.dyndns.org>
-References: <7v4nii5tp2.fsf@alter.siamese.dyndns.org>
- <a5bf3511b3ecf4e9243d550d11ab977f95ecea30.1358331096.git.git@drmicha.warpmail.net> <20130116104222.GA15125@farnsworth.metanate.com> <50F6A0F0.70800@drmicha.warpmail.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [BUG] Possible bug in `remote set-url --add --push`
+Date: Wed, 16 Jan 2013 20:30:47 +0100
+Message-ID: <m2ip6x0vtk.fsf@igel.home>
+References: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com>
+	<7vliby98r7.fsf@alter.siamese.dyndns.org> <4836187.09xoy3kJnj@blacky>
+	<CAN8TAOv0Cm8CgiJSweFtRzOqO78OtNKa4G+x7z6M5Bt+odUmiQ@mail.gmail.com>
+	<50F40316.7010308@drmicha.warpmail.net>
+	<7v1udnbmyz.fsf@alter.siamese.dyndns.org>
+	<1D472234-A0A5-4F02-878D-D05DEE995FCD@gmail.com>
+	<7vpq1755jb.fsf@alter.siamese.dyndns.org>
+	<7vip6z54rh.fsf@alter.siamese.dyndns.org>
+	<50F524F8.5090803@drmicha.warpmail.net>
+	<7v4nii5tp2.fsf@alter.siamese.dyndns.org>
+	<50F668FB.5000805@drmicha.warpmail.net>
+	<7v622xyvnd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
 	Jardel Weyrich <jweyrich@gmail.com>,
-	Sascha Cunz <sascha-ml@babbelbox.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 16 20:20:11 2013
+	Sascha Cunz <sascha-ml@babbelbox.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 20:31:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvYWw-0003Wg-Fc
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 20:20:10 +0100
+	id 1TvYhi-00038A-Ns
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 20:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756856Ab3APTTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 14:19:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49884 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754027Ab3APTTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 14:19:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B226AB83;
-	Wed, 16 Jan 2013 14:19:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QTGSGB4ENOrmnu5rhB8wnNIepNs=; b=hXuzlQ
-	TS8UL7j74DpwX6VazxZoeJWIM67BGpoBeRm2hqA+5o/Ixbp+S90zghAs5bGlnzcv
-	79tTZDlP/k3z/RN+4kL4hV84Rx3dQiq+eaEt8Pu/FromQyrsc6/KOTZ7icopfFwP
-	1/BdBQw4BYFJuofvt0y4ajaSxIcc1FaQUI7+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IkdqdfG0uUxYSDjL/vup/ZIgFVxpquw+
-	70lse+NNNUZPn5l52b/nK5erFUfkwHDs2esyvMcBWqfR3xqmlC6bwHA76m1O6SC8
-	84WXHxhK9tghrJoZAYtWZa3/uNIdkD+TfbxNp8G2UudVzgYAeD5nd0hzqCgPj4Bx
-	GNC9ZVN77gI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D92FAB82;
-	Wed, 16 Jan 2013 14:19:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01053AB71; Wed, 16 Jan 2013
- 14:19:47 -0500 (EST)
-In-Reply-To: <50F6A0F0.70800@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed, 16 Jan 2013 13:45:36 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B152F9C0-6011-11E2-A2E6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757236Ab3APTa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 14:30:57 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:52484 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757183Ab3APTa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 14:30:56 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3Ymdn43w8bz3hhff;
+	Wed, 16 Jan 2013 20:30:48 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3Ymdn42nFdzbbfx;
+	Wed, 16 Jan 2013 20:30:48 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id vdhhpwxrn6CC; Wed, 16 Jan 2013 20:30:30 +0100 (CET)
+X-Auth-Info: pxc17XEUDZmoAkn9nNL8cibpPk3AbAoqrTC7gJEX36A=
+Received: from igel.home (ppp-88-217-105-253.dynamic.mnet-online.de [88.217.105.253])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Wed, 16 Jan 2013 20:30:47 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 71EDCCA2A1; Wed, 16 Jan 2013 20:30:47 +0100 (CET)
+X-Yow: Let me do my TRIBUTE to FISHNET STOCKINGS...
+In-Reply-To: <7v622xyvnd.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 16 Jan 2013 07:50:30 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213804>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> In short, the separate listing is correct, but in this case there's no
-> improvement in readability.
+> I actually think my earlier "it shouldn't be the same (push)" is not
+> needed and probably is actively wrong.  Just like you can tell
+> between
+>
+>     (only one .url)                     (both .url and .pushurl)
+>
+>     origin there (fetch/push)           origin there (fetch)
+>                                         origin there (push)
 
-Yes, I think the "insteadOf" rewrite is a related but a separate
-issue.
+What should happen when you have a .pushinsteadof configured that
+modifies .url for pushing?
 
-Is "remote -v" meant for diagnosing remote.origin.{url,pushurl} that
-are misconfigured?
+Andreas.
 
-If not, the output just should just say the final outcome, i.e. what
-destinations we will fetch from and push to, without cluttering the
-output.
-
-If on the other hand it is to help users debug their configuration,
-the output also needs to explain exactly what made us decide those
-destinations to use (e.g. to discover there was a leftover insteadof
-in $HOME/.gitconfig the user forgot about).
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
