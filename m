@@ -1,75 +1,82 @@
-From: David Lang <david@lang.hm>
-Subject: Re: Question re. git remote repository
-Date: Wed, 16 Jan 2013 15:00:41 -0800 (PST)
-Message-ID: <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
-References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca> <20130116220615.48c159546bccfa5b9cd9028e@domain007.com> <20130116182156.GB4426@sigill.intra.peff.net> <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
- <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 1/2] fix clang -Wconstant-conversion with bit fields
+Date: Wed, 16 Jan 2013 23:08:00 +0000
+Message-ID: <20130116230800.GB4574@serenity.lan>
+References: <20130116182449.GA4881@sigill.intra.peff.net>
+ <1358376443-7404-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
-	Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Lang, David" <David.Lang@uhn.ca>
-To: Stephen Smith <ishchis2@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:02:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Max Horn <max@quendi.de>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:08:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvc0N-00034G-BB
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 00:02:47 +0100
+	id 1Tvc5y-0002V5-0R
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 00:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757280Ab3APXC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 18:02:26 -0500
-Received: from mail.lang.hm ([64.81.33.126]:33511 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757136Ab3APXCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 18:02:25 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id r0GN26Fv027574;
-	Wed, 16 Jan 2013 15:02:06 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1755473Ab3APXIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 18:08:12 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:53793 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755337Ab3APXIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 18:08:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 18B876064CF;
+	Wed, 16 Jan 2013 23:08:11 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YcIefDs1qO7W; Wed, 16 Jan 2013 23:08:10 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 7012A6064B7;
+	Wed, 16 Jan 2013 23:08:10 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 63460161E550;
+	Wed, 16 Jan 2013 23:08:10 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J1nEvdmwFX-N; Wed, 16 Jan 2013 23:08:10 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id D1F95161E276;
+	Wed, 16 Jan 2013 23:08:02 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <1358376443-7404-1-git-send-email-apelisse@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213821>
 
-On Wed, 16 Jan 2013, Stephen Smith wrote:
+On Wed, Jan 16, 2013 at 11:47:22PM +0100, Antoine Pelisse wrote:
+> clang incorrectly reports a constant conversion warning (implicit
+> truncation to bit field) when using the "flag &= ~FLAG" form, because
+> ~FLAG needs to be truncated.
+> 
+> Convert this form to "flag = flag & ~FLAG" fixes the issue as
+> the right operand now fits into the bit field.
+> 
+> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+> ---
+> I'm sorry about this fix, it really seems bad, yet it's one step closer
+> to warning-free clang compilation.
+> 
+> It seems quite clear to me that it's a bug in clang.
 
->>>>> Ideally we'd prefer to simply create our remote repository on a
->>>>> drive of one of our local network servers. Is this possible?
->>>>
->>>> Yes, this is possible, but it's not advised to keep such a
->>>> "reference" repository on an exported networked drive for a number
->>>> of reasons (both performance and bug-free operation).
->>>
->>> I agree that performance is not ideal (although if you are on a fast
->>> LAN, it probably would not matter much), but I do not recall any
->>> specific bugs in that area. Can you elaborate?
->>
->> This one [1] for instance.  I also recall seing people having other
->> "mystical" problems with setups like this so I somehow developed an idea
->> than having a repository on a networked drive is asking for troubles.
->> Of course, if there are happy users of such setups, I would be glad to
->> hear as my precautions might well be unfounded for the recent versions
->> of Git.
->>
->> 1. http://code.google.com/p/msysgit/issues/detail?id=130
->
-> A group I was with used a master repository on a windows share for quite some time without a database corruption being seen.   --
+Which version of clang did you see this with?  I don't get these
+warnings with clang 3.2.
 
-I think the risk is that if you have multiple people doing actions on the shared 
-filesystem you can run into trouble.
 
-As long as only one copy of git is ever running against the repository, I don't 
-see any reason for there to be a problem.
-
-But if you try to have one filesystem, with multiple people running git on their 
-machines against that shared filesystem, I would expect you to have all sorts of 
-problems.
-
-David Lang
+John
