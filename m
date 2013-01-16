@@ -1,114 +1,61 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH v6 0/8] push: update remote tags only with force
-Date: Wed, 16 Jan 2013 14:32:03 +0100
-Message-ID: <DBF53EC2-A669-4B77-B88E-BFCDF43C862E@quendi.de>
-References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 14:32:41 2013
+From: Timothy Kretschmer <timothykretschmer@gmail.com>
+Subject: Unable to convert a subversion repo to git
+Date: Wed, 16 Jan 2013 09:06:58 -0500
+Message-ID: <CAO2=c4nr8PsbHmyKptWewQMmpqWP=YasKZSnCuB9CCkExpSF8A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 15:07:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvT6b-0004tV-5Y
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 14:32:37 +0100
+	id 1TvTeX-0000AE-Rs
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 15:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246Ab3APNcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 08:32:16 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:57634 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753869Ab3APNcP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 08:32:15 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TvT63-0003w5-HO; Wed, 16 Jan 2013 14:32:03 +0100
-In-Reply-To: <1354239700-3325-1-git-send-email-chris@rorvick.com>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1358343135;cb65bfeb;
+	id S1755744Ab3APOHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 09:07:21 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:41040 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754025Ab3APOHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 09:07:19 -0500
+Received: by mail-ie0-f179.google.com with SMTP id k14so2505215iea.10
+        for <git@vger.kernel.org>; Wed, 16 Jan 2013 06:07:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:sender:from:date:x-google-sender-auth
+         :message-id:subject:to:content-type;
+        bh=1RfFbB7gj4pxmbLfOAN/96/WIpk6PzOryIezzQAFDOQ=;
+        b=aiNgo+u6bGqnsAdEPWVPLWf42L64CgqB4YHZrLb+YS1UBUZkpTGSXt2ptfZ4d5kYNc
+         gm0lbs5ndylUdPKWDpTk3TCei7VmcwtLx6Byn4BdhBsqYFRI9djqNjRXu0yjCqcy20JO
+         KHVwiFO9V9z8rdUPYhcoXj7MSj/OKKaVB0KVButHlhrBUlweFVoqcVuX8lXv25A21Nox
+         l9lbK5zJdKEsX6wklCgrMT3YB8Ep/g6wLSUYcqjGp6cjvmtmIqz/R9F1yRphpIHdQBdT
+         l/4iMkqypEqePy9+V8rrkYEGqyYO8vpyV6ttjWyrozSpUZJS6MzoUBgfWHPBsEoO93oS
+         dkjQ==
+X-Received: by 10.50.216.200 with SMTP id os8mr833435igc.74.1358345239345;
+ Wed, 16 Jan 2013 06:07:19 -0800 (PST)
+Received: by 10.64.92.34 with HTTP; Wed, 16 Jan 2013 06:06:58 -0800 (PST)
+X-Google-Sender-Auth: 0_xaIk1oC5ajdhSyO24CpFM7Piw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213755>
 
-Hi there,
+I am seeing the following output while converting a subversion repo to git.
 
-I was just working on improving git-remote-helper.txt by documenting how remote helper can signal error conditions to git. This lead me to notice a (to me) surprising change in behavior between master and next that I traced back to this patch series.
+ >Found possible branch point: <repo-url>/trunk =>
+<repo-url>/branches/CMT_PHASE3, 18441
+> fatal: Not a valid object name refs/remotes/BlueSimViewer 5.0 20110316 Branch
+> cat-file commit refs/remotes/BlueSimViewer 5.0 20110316 Branch: command returned error: 128
 
-Specifically:
+The command I am running to convert the repo is
 
-On 30.11.2012, at 02:41, Chris Rorvick wrote:
+> git svn clone <repo-url> -A authors-transform.txt --stdlayout bluebox-git > svnlist
 
-> This patch series originated in response to the following thread:
-> 
->  http://thread.gmane.org/gmane.comp.version-control.git/208354
-> 
-> I made some adjustments based on Junio's last round of feedback
-> including a new patch reworking the "push rules" comment in remote.c.
-> Also refined some of the log messages--nothing major.  Finally, took a
-> stab at putting something together for the release notes, see below.
+I am running git version 1.8.1.1 on an Ubuntu 12.10 server. I am happy
+to provide any other information that would be helpful.
 
->From the discussion in that gmane thread and from the commits in this series, I had the impression that it should mostly affect pushing tags. However, this is not the case: It also changes messages upon regular push "conflicts. Consider this test script:
-
-
-#!/bin/sh -ex
-git init repo_orig
-cd repo_orig
-echo a > a
-git add a
-git commit -m a
-cd ..
-
-git clone repo_orig repo_clone
-
-cd repo_orig
-echo b > b
-git add b
-git commit -m b
-cd ..
-
-cd repo_clone
-echo B > b
-git add b
-git commit -m B
-git push
-
-
-With git 1.8.1, I get this message:
-
- ! [rejected]        master -> master (non-fast-forward)
-error: failed to push some refs to '/Users/mhorn/Projekte/foreign/gitifyhg/bugs/git-push-conflict/repo_orig'
-hint: Updates were rejected because the tip of your current branch is behind
-hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
-hint: before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-
-
-
-But with next, I get this:
-
-
- ! [rejected]        master -> master (already exists)
-error: failed to push some refs to '/Users/mhorn/Projekte/foreign/gitifyhg/bugs/git-push-conflict/repo_orig'
-hint: Updates were rejected because the destination reference already exists
-hint: in the remote.
-
-
-This looks like a regression to me. No tags were involve, and the new message is very confusing if not outright wrong -- at least in my mind, but perhaps I am missing a way to interpret it "correctly" ? What am I missing?
-
-
-Cheers,
-Max
+I appreciate any assistance you can provide in this matter,
+  -Tim
