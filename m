@@ -1,75 +1,63 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH 4/7] contrib/subtree: Better Error Handling for add
-Date: Tue, 15 Jan 2013 21:21:09 -0600
-Message-ID: <87r4llq0d6.fsf@waller.obbligato.org>
-References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
-	<1357646997-28675-5-git-send-email-greened@obbligato.org>
-	<7v7gnneco2.fsf@alter.siamese.dyndns.org>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH 0/7] guilt patches, including git 1.8 support
+Date: Tue, 15 Jan 2013 22:26:06 -0500
+Message-ID: <20130116032606.GA6052@thunk.org>
+References: <20130116022606.GI12524@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 04:22:11 2013
+Cc: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>, git@vger.kernel.org,
+	Per Cederqvist <cederp@opera.com>,
+	Iulian Udrea <iulian@linux.com>,
+	Axel Beckert <abe@deuxchevaux.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 04:26:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvJZp-0001zG-MO
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 04:22:10 +0100
+	id 1TvJe9-0008NI-F5
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 04:26:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758106Ab3APDVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 22:21:49 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:34935 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756860Ab3APDVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 22:21:49 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1TvJha-0003Gh-Vn; Tue, 15 Jan 2013 21:30:11 -0600
-In-Reply-To: <7v7gnneco2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 08 Jan 2013 10:45:49 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S1757583Ab3APD0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 22:26:17 -0500
+Received: from li9-11.members.linode.com ([67.18.176.11]:43684 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757485Ab3APD0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 22:26:16 -0500
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1TvJdg-0003Db-5n; Wed, 16 Jan 2013 03:26:08 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id BD2CE2E99A0; Tue, 15 Jan 2013 22:26:06 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130116022606.GI12524@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213724>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jan 15, 2013 at 06:26:06PM -0800, Jonathan Nieder wrote:
+> Hi Jeff and other guilty parties,
+> 
+> I collected all the guilt patches I could find on-list and added one
+> of my own.  Completely untested, except for running the regression
+> tests.  These are also available via git protocol from
+> 
+>   git://repo.or.cz/guilt/mob.git mob
 
-> "David A. Greene" <greened@obbligato.org> writes:
->
->> From: "David A. Greene" <greened@obbligato.org>
->>
->> Check refspecs for validity before passing them on to other commands.
->> This lets us generate more helpful error messages.
->>
->> Signed-off-by: David A. Greene <greened@obbligato.org>
->> ---
->>  contrib/subtree/git-subtree.sh |   12 +++++++++---
->>  1 file changed, 9 insertions(+), 3 deletions(-)
->>
->> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->> index cac0680..d53eaee 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -508,12 +508,18 @@ cmd_add()
->>  	ensure_clean
->>  	
->>  	if [ $# -eq 1 ]; then
->> -		"cmd_add_commit" "$@"
->> +	    git rev-parse -q --verify "$1^{commit}" >/dev/null ||
->> +            die "'$1' does not refer to a commit"
->
-> Where do these uneven indentation come from?  Is it mimicking
-> existing breakage in the script?
+Jonathan, thanks for collecting all of the guilt patches!  Your repro
+was also very much really useful since I hadn't grabbed the latest
+patches from jeffpc's repo before it disappeared after the kernel.org
+security shutdown.  
 
-Huh.  I'm not sure how that happened.  I'll fix it if you haven't got to
-it already.
+Jeff, do you need some help getting your repro on kernel.org
+re-established?
 
-                            -David
+							- Ted
