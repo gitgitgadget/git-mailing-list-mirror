@@ -1,68 +1,74 @@
-From: Max Horn <max@quendi.de>
-Subject: [PATCH] fix some clang warnings
-Date: Wed, 16 Jan 2013 15:53:23 +0100
-Message-ID: <1358348003-11130-1-git-send-email-max@quendi.de>
-Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	Max Horn <max@quendi.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 16 15:54:13 2013
+From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Subject: Re: [PATCH 0/7] guilt patches, including git 1.8 support
+Date: Wed, 16 Jan 2013 10:04:59 -0500
+Message-ID: <20130116150458.GA21612@poseidon.cudanet.local>
+References: <20130116022606.GI12524@google.com>
+ <20130116032606.GA6052@thunk.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Per Cederqvist <cederp@opera.com>,
+	Iulian Udrea <iulian@linux.com>,
+	Axel Beckert <abe@deuxchevaux.org>
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 16 16:11:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvUNW-00051f-Di
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 15:54:10 +0100
+	id 1TvUeU-0007Ar-3o
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 16:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756028Ab3APOxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 09:53:43 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:46830 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755173Ab3APOxk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 09:53:40 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	id 1TvUN0-00088F-9L; Wed, 16 Jan 2013 15:53:38 +0100
-X-Mailer: git-send-email 1.8.1.1.435.g4e2ebdf
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1358348020;aabc99cb;
+	id S1754142Ab3APPLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 10:11:21 -0500
+Received: from josefsipek.net ([64.9.206.49]:1654 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752613Ab3APPLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 10:11:21 -0500
+X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jan 2013 10:11:21 EST
+Received: from poseidon.cudanet.local (208-44-138-156.dia.static.qwest.net [208.44.138.156])
+	by josefsipek.net (Postfix) with ESMTPSA id 3B8941184B;
+	Wed, 16 Jan 2013 10:05:02 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130116032606.GA6052@thunk.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213757>
 
+On Tue, Jan 15, 2013 at 10:26:06PM -0500, Theodore Ts'o wrote:
+> On Tue, Jan 15, 2013 at 06:26:06PM -0800, Jonathan Nieder wrote:
+> > Hi Jeff and other guilty parties,
+> > 
+> > I collected all the guilt patches I could find on-list and added one
+> > of my own.  Completely untested, except for running the regression
+> > tests.  These are also available via git protocol from
+> > 
+> >   git://repo.or.cz/guilt/mob.git mob
+> 
+> Jonathan, thanks for collecting all of the guilt patches!  Your repro
+> was also very much really useful since I hadn't grabbed the latest
+> patches from jeffpc's repo before it disappeared after the kernel.org
+> security shutdown.  
 
-Signed-off-by: Max Horn <max@quendi.de>
----
- cache.h           | 2 +-
- git-compat-util.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+I had repo.or.cz mirroring all along.  :)
 
-diff --git a/cache.h b/cache.h
-index c257953..5c8440b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1148,7 +1148,7 @@ extern int check_repository_format_version(const char *var, const char *value, v
- extern int git_env_bool(const char *, int);
- extern int git_config_system(void);
- extern int config_error_nonbool(const char *);
--#ifdef __GNUC__
-+#if defined(__GNUC__) && ! defined(__clang__)
- #define config_error_nonbool(s) (config_error_nonbool(s), -1)
- #endif
- extern const char *get_log_output_encoding(void);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4f022a3..cc2abee 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -310,7 +310,7 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
-  * behavior. But since we're only trying to help gcc, anyway, it's OK; other
-  * compilers will fall back to using the function as usual.
-  */
--#ifdef __GNUC__
-+#if defined(__GNUC__) && ! defined(__clang__)
- #define error(fmt, ...) (error((fmt), ##__VA_ARGS__), -1)
- #endif
- 
+> Jeff, do you need some help getting your repro on kernel.org
+> re-established?
+
+Yes and no.  I was hoping to find some time to restore all the web content
+on my server, and start using repo.or.cz as the public git repo.  With that
+said, I have only two sigs for my gpg key.  (Guilt isn't really related to
+linux...)
+
+Thanks,
+
+Jeff.
+
 -- 
-1.8.1.1.435.g4e2ebdf
+Only two things are infinite, the universe and human stupidity, and I'm not
+sure about the former.
+		- Albert Einstein
