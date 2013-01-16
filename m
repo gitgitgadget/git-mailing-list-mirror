@@ -1,201 +1,79 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH 1/2] fix clang -Wconstant-conversion with bit fields
-Date: Wed, 16 Jan 2013 23:47:22 +0100
-Message-ID: <1358376443-7404-1-git-send-email-apelisse@gmail.com>
-References: <20130116182449.GA4881@sigill.intra.peff.net>
-Cc: git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: John Keeping <john@keeping.me.uk>, Max Horn <max@quendi.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 23:48:35 2013
+From: Stephen Smith <ishchis2@gmail.com>
+Subject: Re: Question re. git remote repository
+Date: Wed, 16 Jan 2013 15:59:04 -0700
+Message-ID: <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
+References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca> <20130116220615.48c159546bccfa5b9cd9028e@domain007.com> <20130116182156.GB4426@sigill.intra.peff.net> <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>,
+	Konstantin Khomoutov <kostix+git@007spb.ru>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"Lang, David" <David.Lang@uhn.ca>
+To: Konstantin Khomoutov <kostix+git@007spb.ru>
+X-From: git-owner@vger.kernel.org Wed Jan 16 23:58:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvbmb-00081i-13
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 23:48:33 +0100
+	id 1TvbwR-0005kx-3B
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 23:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758022Ab3APWsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 17:48:10 -0500
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:43197 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757690Ab3APWsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 17:48:08 -0500
-Received: by mail-wg0-f51.google.com with SMTP id gg4so1255120wgb.30
-        for <git@vger.kernel.org>; Wed, 16 Jan 2013 14:48:06 -0800 (PST)
+	id S1758063Ab3APW6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 17:58:20 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33706 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757773Ab3APW6S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 17:58:18 -0500
+Received: by mail-pa0-f52.google.com with SMTP id fb1so1055811pad.25
+        for <git@vger.kernel.org>; Wed, 16 Jan 2013 14:58:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=sfzNNX7XrFKRdH/LXyNzmtC4taj4mo7YOQV01ov06cI=;
-        b=Bf6ybB4XdLOjfOq9MVN8FQ1G5Qy5UlBpwBE/8B8SHbLrukVeJK8A849r4Jea5kTGX2
-         kzo6K7EC1aZ8585d3yw9UE9oW75tPvRe0cNe9aF5qM8w5BU9XWMwyTTs3F/gvM30etNa
-         dPive0zExx4gggn3Dtt42BMZU3pLiIjD4RJ31xmG7NObxjdOzpyR/Jeu5dnimBFbvdVU
-         lBqoWZQ8sTcaOwynfAZSeHTLmVYQ7CDct850KrBQ4+9AigBmU9S+jrpCoouWAgy2HXC0
-         x4N35rpq6WIkkzsuzG+XnzMph9cLCa9z/JlPb+3vJfoZIQZoht4vhgH7RfYuWFJZQuIC
-         lePQ==
-X-Received: by 10.180.97.68 with SMTP id dy4mr4886129wib.7.1358376486888;
-        Wed, 16 Jan 2013 14:48:06 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id hu8sm10435375wib.6.2013.01.16.14.48.05
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Jan 2013 14:48:06 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.435.g20d29be.dirty
-In-Reply-To: <20130116182449.GA4881@sigill.intra.peff.net>
+        h=x-received:references:mime-version:in-reply-to:content-type
+         :content-transfer-encoding:message-id:cc:x-mailer:from:subject:date
+         :to;
+        bh=TXoOXs6GChE6BZ5FnzG2NqkfrA1Skr1Ni7fytEFLBhI=;
+        b=Jol4p8UIHc/i+KqZ0LGKCsh+ANrwe9o+MpsEQ8d9RA5tdbyrr+OgD2bY00wZ/YAfk5
+         P1ZVbXwXnWm3SWFa+bEmi7ywHICMuB6sFfHEdG8/o+1wW7ll971ruRTr2Q6mfn+eroC/
+         uafnBtkcOS3V7uyJLQ/KbNIDpe/q7N5ppU0FEA9bsRoKVV1ExGctZirlWSmkmWPvriv4
+         CyWXliJ7jUG9M07W5O7xZ29orkD6e108G0cPwArvp0hOXiPoqygAhXDuv1TQK2jCCYI4
+         Gwwko5VkhE7+4APl088N6x9utS1o9fVltFbuxil0ORdKxT6HnnzEASItsgfh25EDesSl
+         1Nfw==
+X-Received: by 10.68.223.230 with SMTP id qx6mr7156355pbc.159.1358377097683;
+        Wed, 16 Jan 2013 14:58:17 -0800 (PST)
+Received: from [10.3.46.124] (mobile-166-137-218-055.mycingular.net. [166.137.218.55])
+        by mx.google.com with ESMTPS id c2sm13753397pay.34.2013.01.16.14.58.15
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 16 Jan 2013 14:58:16 -0800 (PST)
+In-Reply-To: <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
+X-Mailer: iPhone Mail (10A551)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213819>
 
-clang incorrectly reports a constant conversion warning (implicit
-truncation to bit field) when using the "flag &= ~FLAG" form, because
-~FLAG needs to be truncated.
 
-Convert this form to "flag = flag & ~FLAG" fixes the issue as
-the right operand now fits into the bit field.
+>>>> Ideally we'd prefer to simply create our remote repository on a
+>>>> drive of one of our local network servers. Is this possible?
+>>> 
+>>> Yes, this is possible, but it's not advised to keep such a
+>>> "reference" repository on an exported networked drive for a number
+>>> of reasons (both performance and bug-free operation).
+>> 
+>> I agree that performance is not ideal (although if you are on a fast
+>> LAN, it probably would not matter much), but I do not recall any
+>> specific bugs in that area. Can you elaborate?
+> 
+> This one [1] for instance.  I also recall seing people having other
+> "mystical" problems with setups like this so I somehow developed an idea
+> than having a repository on a networked drive is asking for troubles.
+> Of course, if there are happy users of such setups, I would be glad to
+> hear as my precautions might well be unfounded for the recent versions
+> of Git.
+> 
+> 1. http://code.google.com/p/msysgit/issues/detail?id=130
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
-I'm sorry about this fix, it really seems bad, yet it's one step closer
-to warning-free clang compilation.
-
-It seems quite clear to me that it's a bug in clang.
-
- bisect.c           | 2 +-
- builtin/checkout.c | 2 +-
- builtin/reflog.c   | 4 ++--
- commit.c           | 4 ++--
- revision.c         | 8 ++++----
- upload-pack.c      | 4 ++--
- 6 files changed, 12 insertions(+), 12 deletions(-)
-
-diff --git a/bisect.c b/bisect.c
-index bd1b7b5..34ac01d 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -63,7 +63,7 @@ static void clear_distance(struct commit_list *list)
- {
- 	while (list) {
- 		struct commit *commit = list->item;
--		commit->object.flags &= ~COUNTED;
-+		commit->object.flags = commit->object.flags & ~COUNTED;
- 		list = list->next;
- 	}
- }
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a9c1b5a..2c83234 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -717,7 +717,7 @@ static void orphaned_commit_warning(struct commit *old, struct commit *new)
- 	init_revisions(&revs, NULL);
- 	setup_revisions(0, NULL, &revs, NULL);
-
--	object->flags &= ~UNINTERESTING;
-+	object->flags = object->flags & ~UNINTERESTING;
- 	add_pending_object(&revs, object, sha1_to_hex(object->sha1));
-
- 	for_each_ref(add_pending_uninteresting_ref, &revs);
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index b3c9e27..3079c81 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -170,7 +170,7 @@ static int commit_is_complete(struct commit *commit)
- 	}
- 	/* clear flags from the objects we traversed */
- 	for (i = 0; i < found.nr; i++)
--		found.objects[i].item->flags &= ~STUDYING;
-+		found.objects[i].item->flags = found.objects[i].item->flags&  ~STUDYING;
- 	if (is_incomplete)
- 		commit->object.flags |= INCOMPLETE;
- 	else {
-@@ -229,7 +229,7 @@ static void mark_reachable(struct expire_reflog_cb *cb)
- 	struct commit_list *leftover = NULL;
-
- 	for (pending = cb->mark_list; pending; pending = pending->next)
--		pending->item->object.flags &= ~REACHABLE;
-+		pending->item->object.flags = pending->item->object.flags & ~REACHABLE;
-
- 	pending = cb->mark_list;
- 	while (pending) {
-diff --git a/commit.c b/commit.c
-index e8eb0ae..800779d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -883,7 +883,7 @@ struct commit_list *reduce_heads(struct commit_list *heads)
-
- 	/* Uniquify */
- 	for (p = heads; p; p = p->next)
--		p->item->object.flags &= ~STALE;
-+		p->item->object.flags = p->item->object.flags & ~STALE;
- 	for (p = heads, num_head = 0; p; p = p->next) {
- 		if (p->item->object.flags & STALE)
- 			continue;
-@@ -894,7 +894,7 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 	for (p = heads, i = 0; p; p = p->next) {
- 		if (p->item->object.flags & STALE) {
- 			array[i++] = p->item;
--			p->item->object.flags &= ~STALE;
-+			p->item->object.flags = p->item->object.flags & ~STALE;
- 		}
- 	}
- 	num_head = remove_redundant(array, num_head);
-diff --git a/revision.c b/revision.c
-index d7562ee..ed1c16d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -787,9 +787,9 @@ static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *li
-
- 	/* We are done with the TMP_MARK */
- 	for (p = list; p; p = p->next)
--		p->item->object.flags &= ~TMP_MARK;
-+		p->item->object.flags = p->item->object.flags & ~TMP_MARK;
- 	for (p = bottom; p; p = p->next)
--		p->item->object.flags &= ~TMP_MARK;
-+		p->item->object.flags = p->item->object.flags & ~TMP_MARK;
- 	free_commit_list(rlist);
- }
-
-@@ -1948,7 +1948,7 @@ static int remove_duplicate_parents(struct commit *commit)
- 	/* count them while clearing the temporary mark */
- 	surviving_parents = 0;
- 	for (p = commit->parents; p; p = p->next) {
--		p->item->object.flags &= ~TMP_MARK;
-+		p->item->object.flags = p->item->object.flags & ~TMP_MARK;
- 		surviving_parents++;
- 	}
- 	return surviving_parents;
-@@ -2378,7 +2378,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
-
- 		if (revs->reflog_info) {
- 			fake_reflog_parent(revs->reflog_info, commit);
--			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
-+			commit->object.flags = commit->object.flags & ~(ADDED | SEEN | SHOWN);
- 		}
-
- 		/*
-diff --git a/upload-pack.c b/upload-pack.c
-index 7c05b15..74d8f0e 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -113,7 +113,7 @@ static int do_rev_list(int in, int out, void *user_data)
- 	for (i = 0; i < want_obj.nr; i++) {
- 		struct object *o = want_obj.objects[i].item;
- 		/* why??? */
--		o->flags &= ~UNINTERESTING;
-+		o->flags = o->flags & ~UNINTERESTING;
- 		add_pending_object(&revs, o, NULL);
- 	}
- 	for (i = 0; i < have_obj.nr; i++) {
-@@ -700,7 +700,7 @@ static void receive_needs(void)
- 				struct commit_list *parents;
- 				packet_write(1, "unshallow %s",
- 					sha1_to_hex(object->sha1));
--				object->flags &= ~CLIENT_SHALLOW;
-+				object->flags = object->flags & ~CLIENT_SHALLOW;
- 				/* make sure the real parents are parsed */
- 				unregister_shallow(object->sha1);
- 				object->parsed = 0;
---
-1.8.1.1.435.g20d29be.dirty
+A group I was with used a master repository on a windows share for quite some time without a database corruption being seen.   
