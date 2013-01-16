@@ -1,83 +1,79 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v2] Make git selectively and conditionally ignore certain stat fields
-Date: Wed, 16 Jan 2013 20:14:20 +0000
-Message-ID: <50F70A1C.1000508@ramsay1.demon.co.uk>
-References: <7vy5fv71ad.fsf@alter.siamese.dyndns.org> <1119893992.2134035.1358233781666.JavaMail.root@dewire.com> <7va9sa6f0h.fsf@alter.siamese.dyndns.org>
+From: Ben Walton <bdwalton@gmail.com>
+Subject: Re: [PATCH 1/3] Move Git::SVN::get_tz to Git::get_tz_offset
+Date: Wed, 16 Jan 2013 20:16:55 +0000
+Message-ID: <CAP30j164UD9gNRbZ=uCQjgpDODWnGtYmHcWES2P=YPryL=FbZA@mail.gmail.com>
+References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
+	<1358291405-10173-2-git-send-email-bdwalton@gmail.com>
+	<7vehhlyw90.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org,
-	j sixt <j.sixt@viscovery.net>,
-	Shawn Pearce <spearce@spearce.org>
+Cc: esr <esr@thyrsus.com>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:17:03 2013
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:17:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvZPv-0002AD-Vp
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 21:17:00 +0100
+	id 1TvZQE-0002i0-BF
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 21:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753587Ab3APUQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 15:16:40 -0500
-Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:47552 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753193Ab3APUQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 15:16:39 -0500
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 23041A0C080;
-	Wed, 16 Jan 2013 20:16:37 +0000 (GMT)
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 2E5CAA0C073;	Wed, 16 Jan 2013 20:16:36 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Wed, 16 Jan 2013 20:16:34 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20121010 Thunderbird/16.0.1
-In-Reply-To: <7va9sa6f0h.fsf@alter.siamese.dyndns.org>
-X-MDF-HostID: 9
+	id S1753698Ab3APUQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 15:16:58 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:45384 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753193Ab3APUQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 15:16:57 -0500
+Received: by mail-lb0-f170.google.com with SMTP id j14so1345212lbo.29
+        for <git@vger.kernel.org>; Wed, 16 Jan 2013 12:16:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=R6KaOXiFMuTE5UX5z+bku2K/n51shW0+y1jvGWlVH24=;
+        b=KeOjLFVQ48gCtq5imuWqJcdqzxbXQCOXe+un/LP4vljic0eR8jocH/2IiLlsMXIngW
+         iR4e5BYj341O5di31HslhT/Zr3DT6pVq0eMle3NE5zJNkyjZ687LE80M1bgvBp1OndVB
+         rZebOW2nkwE8HTbRnSg0GuiIQe56+92J/MaEfS2BtLQUSa/8cE6x+oe8hoATw8vzxmUl
+         CE0d1s2k0jrkkTowSFLlECmMjTWze9mVZ87XMLvycK6oxI4j3d2y/6YIvTYnRu7+TwmC
+         Nt3LyyXenWjENDkqN+NYuuu+LleAGoWjILZWEbw+ahaVS755+eO9TPPI18Xb+8pb4GaR
+         ccpg==
+X-Received: by 10.152.113.6 with SMTP id iu6mr2375534lab.43.1358367415900;
+ Wed, 16 Jan 2013 12:16:55 -0800 (PST)
+Received: by 10.114.29.129 with HTTP; Wed, 16 Jan 2013 12:16:55 -0800 (PST)
+In-Reply-To: <7vehhlyw90.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213809>
 
-Junio C Hamano wrote:
-> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+On Wed, Jan 16, 2013 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ben Walton <bdwalton@gmail.com> writes:
+>
+>> +sub get_tz_offset {
+>> +     # some systmes don't handle or mishandle %z, so be creative.
+>
+> Hmph.  I wonder if we can use %z if it is handled correctly and fall
+> back to this code only on platforms that are broken?
 
-> That configurability is a slipperly slope to drag us into giving users
-> more complexity that does not help them very much, I suspect.
-> 
-> Earlier somebody mentioned "size and mtime is often enough", so I
-> think a single option core.looseStatInfo (substitute "loose" with
-> short, minimum or whatever adjective that is more appropriate---I am
-> not good at picking phrases, it sounds to me a way to more loosely
-> define stat info cleanliness than we usually do) that makes us
-> ignore all fields (regardless of their zero-ness) other than those
-> two fields might not be a bad way to go.
+That would be perfectly acceptable to me.  The reason I set it up to
+always run through this function here is that when I originally added
+this function for git-svn, I'd made it conditional and Eric Wong
+preferred that the function be used exclusively[1].  I opted to take
+the same approach here to keep things congrous.
 
-At one point, I used to build (and test) the MSVC version of git on
-cygwin, which leads to exactly the same problem. So, this is not just
-an EGit/JGit vs c-git issue, although there can't be many people that
-will have this problem. (Mixing the MinGW and cygwin versions on the
-same repo will also have this problem).
+If it were to be conditional, I think I'd add a variable to the build
+system and have the code leverage that at runtime instead of the
+try/except approach I attempted in 2009.
 
-I had a patch which, essentially, did what you suggest above; ie ignore
-everything other than size and mtime, *including* ignoring the zero-ness
-in the index. (I just don't understand why you would think of doing
-otherwise!! ;-) ). As part of that patch, I also suppressed the "empty diff"
-output that used to be shown for stat-dirty files (that's been fixed now
-right?), otherwise using gitk was a pain.
+Thanks
+-Ben
 
-[BTW, given the "schizophrenic stat" functions on cygwin, you can have
-this problem with the cygwin version of git - all on it's lonesome!]
+[1] http://lists-archives.com/git/683572-git-svn-fix-for-systems-without-strftime-z.html
+--
+---------------------------------------------------------------------------------------------------------------------------
+Take the risk of thinking for yourself.  Much more happiness,
+truth, beauty and wisdom will come to you that way.
 
-I can't help with naming, BTW, since I called the config variable
-"core.ramsay-stat". :-P
-
-> 
-> I do not offhand know if such a loose mode is too simple and make it
-> excessively risky, though.
-
-I suspect it would be fine ... *however*, I never sent my patch because
-I didn't think there would be many idiots^H^H^H^H^H^H pioneers like me! :-D
-
-ATB,
-Ramsay Jones
+-Christopher Hitchens
+---------------------------------------------------------------------------------------------------------------------------
