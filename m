@@ -1,79 +1,84 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-remote: distinguish between default and configured
- URLs
-Date: Wed, 16 Jan 2013 11:27:06 +0100
-Message-ID: <50F6807A.6080800@drmicha.warpmail.net>
-References: <7v4nii5tp2.fsf@alter.siamese.dyndns.org> <a5bf3511b3ecf4e9243d550d11ab977f95ecea30.1358331096.git.git@drmicha.warpmail.net>
+From: Ben Walton <bdwalton@gmail.com>
+Subject: Re: [PATCH 3/3] Avoid non-portable strftime format specifiers in git-cvsimport
+Date: Wed, 16 Jan 2013 10:38:09 +0000
+Message-ID: <CAP30j153s970=2WKqxWTVGRAaJ9jEXg9ETF8OFU=-nDK=BAxfg@mail.gmail.com>
+References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
+	<1358291405-10173-4-git-send-email-bdwalton@gmail.com>
+	<CAEUsAPZakGKUmQWrsTaF1cpbQm0Y4C3sDxCWD_i1gkQxeC-bRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jardel Weyrich <jweyrich@gmail.com>,
-	Sascha Cunz <sascha-ml@babbelbox.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 16 11:27:36 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, esr@thyrsus.com,
+	git <git@vger.kernel.org>
+To: Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 11:38:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvQDS-0000pl-CL
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 11:27:30 +0100
+	id 1TvQOA-00021m-LN
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 11:38:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758757Ab3APK1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 05:27:08 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:54825 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758678Ab3APK1G (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 05:27:06 -0500
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C079420B65;
-	Wed, 16 Jan 2013 05:27:05 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 16 Jan 2013 05:27:05 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=LJLFDouZ0KM5bhVabeQSar
-	oJy4w=; b=hYKXHu5SkyMWYwxtI0+Y+Q485MjHVTmZTvXMQxC3eHYhLnitj008YL
-	H5SqqdDDH4QaC6mBZ3fdS7ZgErKzp9c1cCuuLtCh9St0APvki9CuIXnlta8WNcS+
-	szTJ83Nl0o2kZXkuIGM0PYR4MXzq/RuvMwvoVd36OWeApaeDy6SEY=
-X-Sasl-enc: bf+bRl2DhDgymGoHdC70OwZ3XC/Hlrv+EBYswE5g2KLT 1358332025
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id EEF6D8E0801;
-	Wed, 16 Jan 2013 05:27:04 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <a5bf3511b3ecf4e9243d550d11ab977f95ecea30.1358331096.git.git@drmicha.warpmail.net>
+	id S1758812Ab3APKiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 05:38:12 -0500
+Received: from mail-la0-f51.google.com ([209.85.215.51]:54322 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758752Ab3APKiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 05:38:11 -0500
+Received: by mail-la0-f51.google.com with SMTP id fj20so1211315lab.38
+        for <git@vger.kernel.org>; Wed, 16 Jan 2013 02:38:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=Fr4TcYtlgfUcVxxVH0zWv5B4qcfT2ktpNeWC6f0kse8=;
+        b=DK+QB4vlPxxOyQ01LYcpHrSDJJBaqNOZ9m3NXesZbJCrSEl/A88kqPoHLNyNgd8NBT
+         ywJX9T7YKvfJt8bw2vu9z6F306xFUCq3X4E6QT6Wz34yQrSfIm7s8eRzxVDrxp+UVGXa
+         u9qNH9MqvybIfIVXHwfTTlm+DHd7q6qyiulmecA13Y+iQ7+oJphON/jCbYFoHua9W/c0
+         gZ54djWIYqiVt1NauyL+bu+Rdj5Bswjo8KmdDqPXAW1DX0NpxTHLRZuMyBGJ5xcS7/BS
+         VifMMkfCTvXbCw7aWyJSptYSniq0ckT5GPnySB0bPy8ovKZ1HJq52kJMab7s7cf3llOF
+         otJw==
+X-Received: by 10.112.54.6 with SMTP id f6mr426613lbp.71.1358332689505; Wed,
+ 16 Jan 2013 02:38:09 -0800 (PST)
+Received: by 10.114.29.129 with HTTP; Wed, 16 Jan 2013 02:38:09 -0800 (PST)
+In-Reply-To: <CAEUsAPZakGKUmQWrsTaF1cpbQm0Y4C3sDxCWD_i1gkQxeC-bRQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213745>
 
-Michael J Gruber venit, vidit, dixit 16.01.2013 11:14:
-> The current output of "git remote -v" does not distinguish between
-> explicitly configured push URLs and those coming from fetch lines.
-> 
-> Revise the output so so that URLs are distinguished by their labels:
-> 
-> (fetch): fetch config used for fetching only
-> (fetch/push): fetch config used for fetching and pushing
-> (fetch fallback/push): fetch config used for pushing only
-> (fetch fallback): fetch config which is unused
-> (push): push config used for pushing
-> 
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Maybe something like this? It even seems to make the code in get_one_entry
-> clearer.
-> 
-> I yet have to look at the tests, doc and other git-remote invocations.
+On Wed, Jan 16, 2013 at 1:53 AM, Chris Rorvick <chris@rorvick.com> wrote:
+> On Tue, Jan 15, 2013 at 5:10 PM, Ben Walton <bdwalton@gmail.com> wrote:
+>> Neither %s or %z are portable strftime format specifiers.  There is no
+>> need for %s in git-cvsimport as the supplied time is already in
+>> seconds since the epoch.  For %z, use the function get_tz_offset
+>> provided by Git.pm instead.
+>
+> Out of curiosity, which platforms are affected?  Assuming DST is a 1
+> hour shift (patch 2/3) is not necessarily portable either, though this
+> currently appears to only affect a small island off of the coast of
+> Australia.  :-)
 
-Okay, so "git remote show remotename" copied the logic from "git remote
--v" but neither reused the code nor the output format. I guess we'd have
-to implement the new logic and keep the old format? Refactoring would
-require settling on a common format. Both outputs should be
-ui-as-ui-can, but I'm afraid people are still grepping the output in
-their scripts :(
+My primary motivation on this change was for solaris.  %s isn't
+supported in 10 (not sure about 11) and %z was only added in 10.  The
+issue affects other older platforms as well.
 
-Michael
+Good point about the 1 hour assumption.  Is it worth hacking in
+additional logic to handle Lord Howe Island?  I think it's likely a
+case of "in for a penny, in for a pound" but that could lead to
+madness when it comes to time zones.  Either way, the function behaves
+better now than before.
+
+(I wasn't aware of the half hour oddball wrt to DST, so I learned
+something new here too!)
+
+Thanks
+-Ben
+--
+---------------------------------------------------------------------------------------------------------------------------
+Take the risk of thinking for yourself.  Much more happiness,
+truth, beauty and wisdom will come to you that way.
+
+-Christopher Hitchens
+---------------------------------------------------------------------------------------------------------------------------
