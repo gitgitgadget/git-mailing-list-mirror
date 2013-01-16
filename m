@@ -1,76 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-hg: fix handling of file perms when pushing
-Date: Tue, 15 Jan 2013 15:51:53 -0800
-Message-ID: <7vfw220zty.fsf@alter.siamese.dyndns.org>
-References: <1358254959-50435-1-git-send-email-max@quendi.de>
- <1E49829A-0675-40D2-97C6-FD62982A0923@quendi.de>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [RFC/PATCH 2/8 v3] git_remote_helpers: fix input when running
+ under Python 3
+Date: Tue, 15 Jan 2013 19:03:16 -0500
+Message-ID: <20130116000316.GA26999@padd.com>
+References: <a8c3aabfab64f49fa0cbb2d45bda79997a875ee8.1358018078.git.john@keeping.me.uk>
+ <50F2296F.8030909@alum.mit.edu>
+ <20130113161724.GK4574@serenity.lan>
+ <50F38E12.6090207@alum.mit.edu>
+ <20130114094721.GQ4574@serenity.lan>
+ <20130115194809.GU4574@serenity.lan>
+ <7vbocq2mri.fsf@alter.siamese.dyndns.org>
+ <20130115215412.GX4574@serenity.lan>
+ <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
+ <20130115224049.GZ4574@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Jan 16 00:52:35 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	"Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 16 01:03:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvGIw-0002dM-W6
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 00:52:31 +0100
+	id 1TvGU0-0002kn-D1
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 01:03:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758589Ab3AOXv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 18:51:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36733 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755807Ab3AOXv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 18:51:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 932A7A411;
-	Tue, 15 Jan 2013 18:51:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VJjI1efkCe5wnO7FMEtpGwToiNU=; b=luoO7f
-	TfNnlsJkug+TkrvNPVX96UOEonTwz7ndmrytmP9nQcY5TWwvtDXScsJYOdw20gLk
-	MCx+W7l0FL07q8sN+NhjlW/D+/ohK7xAno1uE3QSoWNUxrH+ggQvFIK6f1na/v6b
-	JUI4odlCkruhoMnd3ow9xecRFUF+H4uKufvHA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZVJBAzll+wpPMPkzlc7n/VYq6nFSC/cP
-	nLmN93JS1MUSCnFiqIypsknpUCqBPQ3fP4VMJ0ux9WYU1+wQ98fV4yxLZuaprRmL
-	0/Fss7zCYtVk1EMEO3/Vw7q6gtWMT23OiWPqMy6Rqs/fP+88cvZscYy/7g9ZkajO
-	qwnO16Sxj6w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88140A410;
-	Tue, 15 Jan 2013 18:51:55 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 063D3A40D; Tue, 15 Jan 2013
- 18:51:54 -0500 (EST)
-In-Reply-To: <1E49829A-0675-40D2-97C6-FD62982A0923@quendi.de> (Max Horn's
- message of "Tue, 15 Jan 2013 14:06:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A911F2C-5F6E-11E2-BC7F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932574Ab3APADX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 19:03:23 -0500
+Received: from honk.padd.com ([74.3.171.149]:41151 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932403Ab3APADU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 19:03:20 -0500
+Received: from arf.padd.com (unknown [50.55.142.224])
+	by honk.padd.com (Postfix) with ESMTPSA id 7623932C9;
+	Tue, 15 Jan 2013 16:03:19 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id F0D7A249B4; Tue, 15 Jan 2013 19:03:16 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130115224049.GZ4574@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213694>
 
-Max Horn <max@quendi.de> writes:
+john@keeping.me.uk wrote on Tue, 15 Jan 2013 22:40 +0000:
+> This is what keeping the refs as byte strings looks like.
 
-> On 15.01.2013, at 14:02, Max Horn wrote:
->
->> Previously, when changing and committing an executable file, the file
->> would loose its executable bit on the hg side. Likewise, symlinks ended
->> up as "normal" files". This was not immediately apparent on the git side
->> unless one did a fresh clone.
->
-> Sorry, forgot to sign off, please add:
->
-> Signed-off-by: Max Horn <max@quendi.de>
->
-> Max
+As John knows, it is not possible to interpret text from a byte
+string without talking about the character encoding.
 
-Thanks; merged together with the other patch from Felipe to 'next'.
+Git is (largely) a C program and uses the character set defined
+in the C standard, which is a subset of ASCII.  But git does
+"math" on strings, like this snippet that takes something from
+argv[] and prepends "refs/heads/":
 
-Unfortunately I noticed the "loose" typo (I think you meant "lose")
-after I pushed out the results X-<.
+    strcpy(refname, "refs/heads/");
+    strcpy(refname + strlen("refs/heads/"), ret->name);
+
+The result doesn't talk about what character set it is using,
+but because it combines a prefix from ASCII with its input,
+git makes the assumption that the input is ASCII-compatible.
+
+If you feed a UTF-16 string in argv, e.g.
+
+    $ echo master | iconv -f ascii -t utf16 | xargs git branch
+    xargs: Warning: a NUL character occurred in the input.  It cannot be passed through in the argument list.  Did you mean to use the --null option?
+    fatal: Not a valid object name: ''.
+
+you get an error about NUL, and not the branch you hoped for.
+Git assumes that the input character set contains roughly ASCII
+in byte positions 0..127.
+
+That's one small reason why the useful character encodings put
+ASCII in the 0..127 range, including utf-8, big5 and shift-jis.
+ASCII is indeed special due to its legacy, and both C and Python
+recognize this.
+
+> diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+> @@ -18,13 +18,16 @@ class GitImporter(object):
+>  
+>      def get_refs(self, gitdir):
+>          """Returns a dictionary with refs.
+> +
+> +        Note that the keys in the returned dictionary are byte strings as
+> +        read from git.
+>          """
+>          args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
+> -        lines = check_output(args).strip().split('\n')
+> +        lines = check_output(args).strip().split('\n'.encode('utf-8'))
+>          refs = {}
+>          for line in lines:
+> -            value, name = line.split(' ')
+> -            name = name.strip('commit\t')
+> +            value, name = line.split(' '.encode('utf-8'))
+> +            name = name.strip('commit\t'.encode('utf-8'))
+>              refs[name] = value
+>          return refs
+
+I'd suggest for this Python conundrum using byte-string literals, e.g.:
+
+        lines = check_output(args).strip().split(b'\n')
+	value, name = line.split(b' ')
+	name = name.strip(b'commit\t')
+
+Essentially identical to what you have, but avoids naming "utf-8" as
+the encoding.  It instead relies on Python's interpretation of
+ASCII characters in string context, which is exactly what C does.
+
+		-- Pete
