@@ -1,74 +1,91 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] attr: fix off-by-one directory component length calculation
-Date: Wed, 16 Jan 2013 10:12:16 +0700
-Message-ID: <CACsJy8C2uEgwozpWBfowYJea3XRB72rhzjsSFuG9Ud0afuQy6w@mail.gmail.com>
-References: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
- <201301152014.28433.avila.jn@gmail.com> <7vwqve2qk3.fsf@alter.siamese.dyndns.org>
- <CACsJy8Bn4GKJzi4n5cMPp+26dovT795nUqcXGNLgapf+r_PFCw@mail.gmail.com>
- <20130116020901.GA1041@duynguyen-vnpc.dek-tpc.internal> <7vbocp26xa.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org
+Subject: Re: [PATCH 2/7] contrib/subtree: Use %B for Split Subject/Body
+Date: Tue, 15 Jan 2013 21:14:32 -0600
+Message-ID: <87622xrf8n.fsf@waller.obbligato.org>
+References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
+	<1357646997-28675-3-git-send-email-greened@obbligato.org>
+	<7vmwwjedei.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <avila.jn@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Techlive Zheng <techlivezheng@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 04:13:09 2013
+X-From: git-owner@vger.kernel.org Wed Jan 16 04:15:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvJR6-0005PG-9e
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 04:13:08 +0100
+	id 1TvJTY-000169-1X
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 04:15:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792Ab3APDMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 22:12:47 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:47155 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756776Ab3APDMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 22:12:47 -0500
-Received: by mail-ob0-f181.google.com with SMTP id oi10so906719obb.26
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 19:12:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Oa23hNTw0wSMtemNL5gX94hTwMMTUj0MZ5UTGoe5R80=;
-        b=BzVau3T+OKBol1lxRfs/ONMvTx/G4EirYFaSI6siMVGytC4ADcMrcHYHbhud1Bir8w
-         gzKjzEpQ3xi9y/DRJdDLHQsGr0gk/bjdXL6ipZM+8M+QLKljwFzeY9eJRmXVfoAqOQyo
-         Zx8oFJQf9b3jIvx+pE6QBe2aeOwXZsaZ6kGmtr6SErspI68fMdtzvJxQJZbiBYMs4DTf
-         +H+q1Bxq9jmGjc0G0jQlF2jNc9d0vGn+gpJvliHNya51KnqW9K/oM+nYDnUC/JNVGMPw
-         raFv7uAditKF3mxDX9Jx5zdx4UWAKoy2oT2xOxLULB6OZQJdztXNc+W8Ac8aFMLPP1ky
-         Ciaw==
-Received: by 10.182.0.19 with SMTP id 19mr60848162oba.15.1358305966673; Tue,
- 15 Jan 2013 19:12:46 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Tue, 15 Jan 2013 19:12:16 -0800 (PST)
-In-Reply-To: <7vbocp26xa.fsf@alter.siamese.dyndns.org>
+	id S1757072Ab3APDPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 22:15:18 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:34793 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756660Ab3APDPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 22:15:17 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <greened@obbligato.org>)
+	id 1TvJbG-0003F5-BO; Tue, 15 Jan 2013 21:23:38 -0600
+In-Reply-To: <7vmwwjedei.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 08 Jan 2013 10:29:57 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213720>
 
-On Wed, Jan 16, 2013 at 9:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> "David A. Greene" <greened@obbligato.org> writes:
 >
->> On Wed, Jan 16, 2013 at 08:08:03AM +0700, Duy Nguyen wrote:
->>> Actually I'd like to remove that function.
+>> From: Techlive Zheng <techlivezheng@gmail.com>
 >>
->> This is what I had in mind:
+>> Use %B to format the commit message and body to avoid an extra newline
+>> if a commit only has a subject line.
+>>
+>> Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
+>>
+>> Signed-off-by: David A. Greene <greened@obbligato.org>
+>> ---
 >
-> I think the replacement logic to find the basename is moderately
-> inferiour to the original.  For one thing (this may be somewhat
-> subjective), it is less readable now.
+> This time (only), I'll try to fix them up at my end, but please
+> check your toolchain, find out where the extra blank line between
+> S-o-b: lines we see above come from, and fix that, so that I won't
+> have to do so again.
 
-Yeah, maybe it's micro optimization.
+Will do.
 
-> Also the original only
-> scanned the string from the beginning once (instead of letting
-> strlen() to scan once and go back).
+>>  contrib/subtree/git-subtree.sh     |    6 +++++-
+>>  contrib/subtree/t/t7900-subtree.sh |   15 +++++++++++++++
+>>  2 files changed, 20 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+>> index 920c664..5341b36 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -296,7 +296,11 @@ copy_commit()
+>>  	# We're going to set some environment vars here, so
+>>  	# do it in a subshell to get rid of them safely later
+>>  	debug copy_commit "{$1}" "{$2}" "{$3}"
+>> -	git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%s%n%n%b' "$1" |
+>> +	# Use %B rather than %s%n%n%b to handle the special case of a
+>> +	# commit that only has a subject line.  We don't want to
+>> +	# introduce a newline after the subject, causing generation of
+>> +	# a new hash.
+>> +	git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%B' "$1" |
+>
+> The new format template is fine, but I do not think the comment
+> should be there.  It does not give any useful information to people
+> who are reading the end result of applying this patch and is useful
+> only in the context of comparing the old and new templates, iow, it
+> belongs to the commit log message.
 
-But we do need to strlen() anyway in collect_all_attrs(). So we scan
-the string 3 times (strlen + 2 * find_basename) in the original. Now
-we do it twice
--- 
-Duy
+I'll delete the comment.
+
+                           -David
