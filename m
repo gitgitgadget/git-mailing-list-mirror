@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [GUILT] [PATCH 4/7] Handle empty patches and patches with only a
- header.
-Date: Tue, 15 Jan 2013 18:28:27 -0800
-Message-ID: <20130116022827.GM12524@google.com>
+Subject: [GUILT] [PATCH 5/7] Fix fatal "guilt graph" error in sha1sum
+ invocation.
+Date: Tue, 15 Jan 2013 18:29:13 -0800
+Message-ID: <20130116022913.GN12524@google.com>
 References: <20130116022606.GI12524@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -10,41 +10,41 @@ Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>,
 	Theodore Ts'o <tytso@mit.edu>, Iulian Udrea <iulian@linux.com>,
 	Axel Beckert <abe@deuxchevaux.org>
 To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Wed Jan 16 03:28:59 2013
+X-From: git-owner@vger.kernel.org Wed Jan 16 03:29:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvIkG-0001c2-S0
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 03:28:53 +0100
+	id 1TvIl2-0002fH-4b
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 03:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757597Ab3APC2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2013 21:28:32 -0500
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:59505 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756818Ab3APC2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2013 21:28:32 -0500
-Received: by mail-pb0-f43.google.com with SMTP id um15so424909pbc.16
-        for <git@vger.kernel.org>; Tue, 15 Jan 2013 18:28:31 -0800 (PST)
+	id S1758070Ab3APC3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2013 21:29:19 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:51329 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758050Ab3APC3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2013 21:29:17 -0500
+Received: by mail-da0-f46.google.com with SMTP id p5so329462dak.19
+        for <git@vger.kernel.org>; Tue, 15 Jan 2013 18:29:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=KxjHyNYDwVjYL2HjUx2BYzFDxwuXVqrPRQZUR1IlzyU=;
-        b=TbwrZ75yLx4kgeMdqKcvbH8MBMR6moSjD3nAS0c7q1PWI9NuUcfh8EbfoL/LhbTCsr
-         iUvpg+K9K0xc0kZtlsb+nvKtinZQjQvFD517gD/sOtc4RdDcVKnTXukDRjcj4jZqK25o
-         SrsFamNEoPYLUR0JV37+o0Ad51a8abGAOcAzR4Kb1MB+Rg9hFChKsMCWramVcIAivXQu
-         eQHt/C3nPgsJJ4QnfLuSUawITZaRqmBF4Ii9ZKp7KM83ccJWe/rQR1zCyfOF56uSA/JD
-         SPhQ+MQPoWM4PCEJT7aGQ99Jcrza4ETC8Fszmu9ddLhbDsR1NxzWYJ/1t8a2o6/z/h7G
-         KdHQ==
-X-Received: by 10.68.231.10 with SMTP id tc10mr267766295pbc.81.1358303311786;
-        Tue, 15 Jan 2013 18:28:31 -0800 (PST)
+        bh=+lSeHeZ7avLgb1QliCzRVVamN8fYxetVxnVXWwxqBFc=;
+        b=NAe5U+0nY52kgcnJveZPsIMpUQ8Gt4knOE5ZssFTyROFrBbU3J27RwqU8tnXnzlv7p
+         LokTxkJLY4N1vJ/YOKB1cshyzsbv1uq+OY0s374yHaCmXnLUWOgHVjFNVRAOwJ9/pOKv
+         EKctGxUoSHTivW2cQzHNa41qhTfoz+CJS5X+v3d8/415A2SzegsMnhI6c55ywxGGLxHq
+         /N+CEJWa0JoCzlWp6W26/WZDUbivIgd/tTVw2i3JQlEatFpr0Xwi/nfiyKMajSy7csmE
+         hTvKw1LosWjLw3SnI/Atzo4A0KaTiFaf5VTAl26c863UwJwCoAjdRJXbniy0KkTXuGLk
+         Y+Dg==
+X-Received: by 10.68.192.97 with SMTP id hf1mr269558559pbc.106.1358303357318;
+        Tue, 15 Jan 2013 18:29:17 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id rk6sm11292631pbc.20.2013.01.15.18.28.29
+        by mx.google.com with ESMTPS id z10sm11944530pax.38.2013.01.15.18.29.15
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Jan 2013 18:28:30 -0800 (PST)
+        Tue, 15 Jan 2013 18:29:16 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20130116022606.GI12524@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -52,34 +52,90 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213713>
 
 From: Per Cederqvist <cederp@opera.com>
-Date: Mon, 30 Apr 2012 12:29:55 +0200
+Date: Wed, 14 Mar 2012 14:34:38 +0100
 
-"git apply --numstat" in Git 1.7.10 gives an error message unless the
-patch contains a diff, so don't attempt to apply it unless we find a
-'^diff'.
+Fix the compatibility function sha1 so that it reads from
+stdin (and not a file with a zero-length file name) when
+no argument is supplied.
+
+[jn: adapted to also handle newer versions of OpenSSL,
+ based on reports from Andreas Schwab and John Szakmeister.
+
+ $ openssl dgst -sha1</dev/null
+ da39a3ee5e6b4b0d3255bfef95601890afd80709
+ $ openssl version
+ OpenSSL 0.9.8o 01 Jun 2010
+
+ $ openssl dgst -sha1 </dev/null
+ (stdin)= da39a3ee5e6b4b0d3255bfef95601890afd80709
+ $ openssl version
+ OpenSSL 1.0.0d 8 Feb 2011
+]
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
-Acked-by: Jeff Sipek <jeffpc@josefsipek.net>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- guilt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ os.Darwin | 7 ++++++-
+ os.Linux  | 7 ++++++-
+ os.SunOS  | 7 ++++++-
+ 3 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/guilt b/guilt
-index 7f6806e..5bcc498 100755
---- a/guilt
-+++ b/guilt
-@@ -611,7 +611,7 @@ push_patch()
- 		cd_to_toplevel
+diff --git a/os.Darwin b/os.Darwin
+index 470f5fb..3f23121 100644
+--- a/os.Darwin
++++ b/os.Darwin
+@@ -27,7 +27,12 @@ head_n()
+ # usage: sha1 [file]
+ sha1()
+ {
+-	openssl dgst -sha1 "$1" | sed "s,SHA1.\(.*\).= \(.*\),\2  \1,"
++	if [ $# = 1 ]
++	then
++		openssl dgst -sha1 "$1" | sed "s,SHA1.\(.*\).= \(.*\),\2  \1,"
++	else
++		openssl dgst -sha1 | sed 's,\(.*= \)*\(.*\),\2  -,'
++	fi
+ }
  
- 		# apply the patch if and only if there is something to apply
--		if [ `git apply --numstat "$p" | wc -l` -gt 0 ]; then
-+		if grep -q '^diff ' "$p" && [ `git apply --numstat "$p" | wc -l` -gt 0 ]; then
- 			if [ "$bail_action" = abort ]; then
- 				reject=""
- 			fi
+ # usage: cp_a <src> <dst>
+diff --git a/os.Linux b/os.Linux
+index 30b9cb0..aaebf88 100644
+--- a/os.Linux
++++ b/os.Linux
+@@ -30,7 +30,12 @@ head_n()
+ # usage: sha1 [file]
+ sha1()
+ {
+-	sha1sum "$1"
++	if [ $# = 1 ]
++	then
++		sha1sum "$1"
++	else
++		sha1sum
++	fi
+ }
+ 
+ # usage: cp_a <src> <dst>
+diff --git a/os.SunOS b/os.SunOS
+index 30b9cb0..aaebf88 100644
+--- a/os.SunOS
++++ b/os.SunOS
+@@ -30,7 +30,12 @@ head_n()
+ # usage: sha1 [file]
+ sha1()
+ {
+-	sha1sum "$1"
++	if [ $# = 1 ]
++	then
++		sha1sum "$1"
++	else
++		sha1sum
++	fi
+ }
+ 
+ # usage: cp_a <src> <dst>
 -- 
 1.8.1
