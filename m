@@ -1,97 +1,104 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [BUG] Possible bug in `remote set-url --add --push`
-Date: Wed, 16 Jan 2013 17:24:29 +0100
-Message-ID: <50F6D43D.2000509@drmicha.warpmail.net>
-References: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com> <7vliby98r7.fsf@alter.siamese.dyndns.org> <4836187.09xoy3kJnj@blacky> <CAN8TAOv0Cm8CgiJSweFtRzOqO78OtNKa4G+x7z6M5Bt+odUmiQ@mail.gmail.com> <50F40316.7010308@drmicha.warpmail.net> <7v1udnbmyz.fsf@alter.siamese.dyndns.org> <1D472234-A0A5-4F02-878D-D05DEE995FCD@gmail.com> <7vpq1755jb.fsf@alter.siamese.dyndns.org> <7vip6z54rh.fsf@alter.siamese.dyndns.org> <50F524F8.5090803@drmicha.warpmail.net> <7v4nii5tp2.fsf@alter.siamese.dyndns.org> <CABURp0rR_wB6vcjrZajQU_=AVVvBq-aTGpggh5XxdCMYis3-ag@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/8] push: update remote tags only with force
+Date: Wed, 16 Jan 2013 08:36:01 -0800
+Message-ID: <7vsj61xez2.fsf@alter.siamese.dyndns.org>
+References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
+ <DBF53EC2-A669-4B77-B88E-BFCDF43C862E@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jardel Weyrich <jweyrich@gmail.com>,
-	Sascha Cunz <sascha-ml@babbelbox.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 17:25:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Rorvick <chris@rorvick.com>, git@vger.kernel.org,
+	Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Jan 16 17:36:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvVnP-0003E6-2i
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 17:24:59 +0100
+	id 1TvVyb-0004Kz-NH
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 17:36:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758666Ab3APQYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 11:24:33 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:36302 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756390Ab3APQY3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 11:24:29 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id AB8FE20E75;
-	Wed, 16 Jan 2013 11:24:28 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 16 Jan 2013 11:24:28 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=3aNMUtwUhZMKMUp/UBWhh8
-	k3Y2g=; b=AXjPCmDBDSIuVIK/PlkxBXAkiC3I0kqmcmAsI+VgoJVDFHUQu7L1eE
-	NZQ9FMsEwH/A/2YBo1xcg5sQD6MSR/+ulaR/g18NVLWNAxLIoXeMyP3urYjWDtAB
-	N9opOsguUhMHWZxM27X/dmmgLGfy4txaxfGMsTm/ndHJywNlFdQS8=
-X-Sasl-enc: BVVUIwyhtWtE0xfzrMXhIAi5CqBJ6robfsgJO4aOIidm 1358353468
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A519A4827D6;
-	Wed, 16 Jan 2013 11:24:27 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <CABURp0rR_wB6vcjrZajQU_=AVVvBq-aTGpggh5XxdCMYis3-ag@mail.gmail.com>
+	id S1758521Ab3APQgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 11:36:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42815 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757884Ab3APQgG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 11:36:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8B0DB75C;
+	Wed, 16 Jan 2013 11:36:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KSZNHKFwnvNy7oyHQ6IIljcpj2E=; b=cVX85R
+	5HOJRFj2iyMFOeMnpGHT81HzK1k9FF7VIthZ0bE1ZoaWPvp6OLqy38Zz1rpBnHif
+	iqnvZ9G5YYu2rYyBK8burdhiCiEwE1uE9Y4tcK/g0sCYEItYuqoQJlme4FZXi8Mz
+	4L8bwzvgvrXIgTPMJpzH+76A69M5v680XEZlc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Axip3dF7vyPQxOoqG1K33rg1iODDLjAL
+	KzVKv6zDCbcsonyYO32zdqWqgZigFbVdu7kDorTt05zhAaU8pw1AgmwhslVplqM6
+	g/488DiBITcezIWiPWQKoJDGwxK0jSWxxtJsZp+UeAVXk1Dx09nI5qNssjngAgQ2
+	OzX/BW+ZtLw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF147B75A;
+	Wed, 16 Jan 2013 11:36:04 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C23B7B751; Wed, 16 Jan 2013
+ 11:36:03 -0500 (EST)
+In-Reply-To: <DBF53EC2-A669-4B77-B88E-BFCDF43C862E@quendi.de> (Max Horn's
+ message of "Wed, 16 Jan 2013 14:32:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D1B1972E-5FFA-11E2-B63A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213766>
 
-Phil Hord venit, vidit, dixit 16.01.2013 17:15:
-> On Tue, Jan 15, 2013 at 10:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Michael J Gruber <git@drmicha.warpmail.net> writes:
->>
->>> That being said, I don't mind changing the behaviour of set-url.
->>
->> I do not think we want to change the behaviour of set-url.
-> 
-> I agree with Michael that changing the set-url behavior would be
-> appropriate here.  If I say "--add" this pushUrl, don't I mean to
-> create an additional url which is pushed to?
+Max Horn <max@quendi.de> writes:
 
-I said I wouldn't mind, I didn't vote for it.
+> But with next, I get this:
+>
+>
+>  ! [rejected]        master -> master (already exists)
+> error: failed to push some refs to '/Users/mhorn/Proje...o_orig'
+> hint: Updates were rejected because the destination reference already exists
+> hint: in the remote.
+>
+> This looks like a regression to me.
 
-> I agree that it makes the config situation messy; this is currently a
-> "clean" sequence, in that it leaves the config unchanged after both
-> steps are completed:
-> 
->   git remote set-url --add --push origin /tmp/foo
->   git remote set-url --delete --push origin /tmp/foo
-> 
-> If the behavior is changed like Michael suggested, it would not leave
-> the config clean (unless heroic steps were taken to keep track).  But
-> I'm not sure that's such a bad thing.  In simple command sequences,
-> the results would be clean and the only behavior change is that the
-> initial "--add" really acts like "add" and not "replace".  But more
-> complex sequences could be devised which were affected by this change.
-> 
-> I'm curious, Junio.  Do you think the set-url behavior is correct
-> as-is, or that changing it will cause breakage for some workflows, or
-> that it complicates the operation too much for people who are already
-> used to the config layout?
+It is an outright bug.  The new helper function is_forwrdable() is
+bogus to assume that both original and updated objects can be
+locally inspected, but you do not necessarily have the original
+locally.
 
-For "set url --add --push" on top of a push url only being defaulted
-from a fetch url, both behaviours (replace or add, i.e. current or new)
-make sense to me. So the questions are:
+ remote.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-- Is it worth and possible changing?
-- How to best describe it in "remote -v" and "remote show" output?
-
-My patch answered to "no" to the first question and answers the second
-one in cases where (push)insteadof is not used to transform one fetch
-config into two different urls for fetch and push. I think :)
-
-Michael
+diff --git a/remote.c b/remote.c
+index aa6b719..4a253ef 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1286,9 +1286,12 @@ static inline int is_forwardable(struct ref* ref)
+ 	if (!prefixcmp(ref->name, "refs/tags/"))
+ 		return 0;
+ 
+-	/* old object must be a commit */
++	/*
++	 * old object must be a commit, but we may be forcing
++	 * without having it in the first place!
++	 */
+ 	o = parse_object(ref->old_sha1);
+-	if (!o || o->type != OBJ_COMMIT)
++	if (o && o->type != OBJ_COMMIT)
+ 		return 0;
+ 
+ 	/* new object must be commit-ish */
