@@ -1,79 +1,124 @@
-From: Ben Walton <bdwalton@gmail.com>
-Subject: Re: [PATCH 1/3] Move Git::SVN::get_tz to Git::get_tz_offset
-Date: Wed, 16 Jan 2013 20:16:55 +0000
-Message-ID: <CAP30j164UD9gNRbZ=uCQjgpDODWnGtYmHcWES2P=YPryL=FbZA@mail.gmail.com>
-References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
-	<1358291405-10173-2-git-send-email-bdwalton@gmail.com>
-	<7vehhlyw90.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Allow custom "comment char"
+Date: Wed, 16 Jan 2013 12:30:39 -0800
+Message-ID: <7vip6wx440.fsf@alter.siamese.dyndns.org>
+References: <1358275827-5244-1-git-send-email-ralf.thielow@gmail.com>
+ <1358363928-16729-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: esr <esr@thyrsus.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:17:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: jrnieder@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:31:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvZQE-0002i0-BF
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 21:17:18 +0100
+	id 1TvZdY-0005uX-B1
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 21:31:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753698Ab3APUQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 15:16:58 -0500
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:45384 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753193Ab3APUQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 15:16:57 -0500
-Received: by mail-lb0-f170.google.com with SMTP id j14so1345212lbo.29
-        for <git@vger.kernel.org>; Wed, 16 Jan 2013 12:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=R6KaOXiFMuTE5UX5z+bku2K/n51shW0+y1jvGWlVH24=;
-        b=KeOjLFVQ48gCtq5imuWqJcdqzxbXQCOXe+un/LP4vljic0eR8jocH/2IiLlsMXIngW
-         iR4e5BYj341O5di31HslhT/Zr3DT6pVq0eMle3NE5zJNkyjZ687LE80M1bgvBp1OndVB
-         rZebOW2nkwE8HTbRnSg0GuiIQe56+92J/MaEfS2BtLQUSa/8cE6x+oe8hoATw8vzxmUl
-         CE0d1s2k0jrkkTowSFLlECmMjTWze9mVZ87XMLvycK6oxI4j3d2y/6YIvTYnRu7+TwmC
-         Nt3LyyXenWjENDkqN+NYuuu+LleAGoWjILZWEbw+ahaVS755+eO9TPPI18Xb+8pb4GaR
-         ccpg==
-X-Received: by 10.152.113.6 with SMTP id iu6mr2375534lab.43.1358367415900;
- Wed, 16 Jan 2013 12:16:55 -0800 (PST)
-Received: by 10.114.29.129 with HTTP; Wed, 16 Jan 2013 12:16:55 -0800 (PST)
-In-Reply-To: <7vehhlyw90.fsf@alter.siamese.dyndns.org>
+	id S1756546Ab3APUao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 15:30:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59233 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756152Ab3APUan (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 15:30:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD351C781;
+	Wed, 16 Jan 2013 15:30:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lbys0mZPkWt4w9+kO6EtdqnggQQ=; b=dDe25s
+	z63+1G6r5IeGIvKdXCFR6iaEmNKb2vlrs+RdM4OOo326Q52PTa52NStQrgArI3A4
+	RCEkn3W18DjrJg6MQXB2GjmdaBIbCaIyNberk+qUC1FbzzqFmPeLkyYmS+pQ0+8n
+	TJnI+ENxcoqwhMbPBSsaifTlejk6EYZt2gFis=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dw8AaRuAzb5cl9CNA5WNSms7v5VTN6wb
+	KxKXq/Y5mL3if0JYxh9UNG0hH242WwIwy+864YW0Q0b9oG8aaYr6waKHYjcMsoDR
+	AqwkKA8gb0l2qVn3z9RzsGnLlEvRl/fZhM/M2JDT8iYzhZm1vUF8uCps5W+Qo0Xu
+	3RPNNzW1n9E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFBC3C780;
+	Wed, 16 Jan 2013 15:30:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8462AC77A; Wed, 16 Jan 2013
+ 15:30:41 -0500 (EST)
+In-Reply-To: <1358363928-16729-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+ Thielow's message of "Wed, 16 Jan 2013 20:18:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98C1206C-601B-11E2-BB1C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213810>
 
-On Wed, Jan 16, 2013 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ben Walton <bdwalton@gmail.com> writes:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
+
+> From: Junio C Hamano <gitster@pobox.com>
 >
->> +sub get_tz_offset {
->> +     # some systmes don't handle or mishandle %z, so be creative.
+> Some users do want to write a line that begin with a pound sign, #,
+> in their commit log message.  Many tracking system recognise
+> a token of #<bugid> form, for example.
 >
-> Hmph.  I wonder if we can use %z if it is handled correctly and fall
-> back to this code only on platforms that are broken?
+> The support we offer these use cases is not very friendly to the end
+> users.  They have a choice between
+>
+>  - Don't do it.  Avoid such a line by rewrapping or indenting; and
+>
+>  - Use --cleanup=whitespace but remove all the hint lines we add.
+>
+> Give them a way to set a custom comment char, e.g.
+>
+>     $ git -c core.commentchar="%" commit
+>
+> so that they do not have to do either of the two workarounds.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> Junio, thanks for the code in your reply to the
+> first version. It works very well and looks nice.
+> I was also unhappy about this "\n%c\n" thing and
+> pretty unsure with the code in "git-submodule.sh".
+> But with this, it looks good to me. Thanks.
+>
+> Changes in v2:
+> - extend "git stripspace" with an option to make
+>   it's input being converted to commented lines
+> - teach git-submodule.sh using this
+> - rename strbuf_commented_addstr to strbuf_add_commented_lines
+>   and improve it's design
 
-That would be perfectly acceptable to me.  The reason I set it up to
-always run through this function here is that when I originally added
-this function for git-svn, I'd made it conditional and Eric Wong
-preferred that the function be used exclusively[1].  I opted to take
-the same approach here to keep things congrous.
+Oh, I love it when something like this happens.  Throw a "perhaps
+along these lines" patch and then a finished product that fills the
+gaps I didn't bother to fill magically appears, even with tests and
+updates to comments and documentation.
 
-If it were to be conditional, I think I'd add a variable to the build
-system and have the code leverage that at runtime instead of the
-try/except approach I attempted in 2009.
+What good things did I do recently to deserve such a luck? ;-)
 
-Thanks
--Ben
+> @@ -66,21 +67,52 @@ void stripspace(struct strbuf *sb, int skip_comments)
+>  	strbuf_setlen(sb, j);
+>  }
+>  
+> +static void comment_lines(struct strbuf *buf)
+> +{
+> +	char *msg;
+> +	size_t len;
+> +
+> +	msg = strbuf_detach(buf, &len);
+> +	strbuf_add_commented_lines(buf, msg, len);
+> +}
 
-[1] http://lists-archives.com/git/683572-git-svn-fix-for-systems-without-strftime-z.html
---
----------------------------------------------------------------------------------------------------------------------------
-Take the risk of thinking for yourself.  Much more happiness,
-truth, beauty and wisdom will come to you that way.
+This leaks msg (inherited from my "perhaps along these lines"
+patch).  I think I can just add free(msg) at the end.
 
--Christopher Hitchens
----------------------------------------------------------------------------------------------------------------------------
+> +	if (strip_comments || mode == COMMENT_LINES)
+> +		git_config(git_default_config, NULL);
+
+Nice spotting.  The "along these lines" patch broke "stripspace -s"
+under custom comment line char; this fixes it.
+
+Thanks.
