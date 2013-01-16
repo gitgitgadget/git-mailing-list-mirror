@@ -1,91 +1,68 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: Question re. git remote repository
-Date: Wed, 16 Jan 2013 22:06:15 +0400
-Message-ID: <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
-References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH v2 17/19] fixup! reset $sha1 $pathspec: require $sha1 only
+ to be treeish
+Date: Wed, 16 Jan 2013 10:08:59 -0800
+Message-ID: <CANiSa6hyWGyn5-UGF6_3KPw7ut6TOqZU+b=xLH7DBpa+tW8sZw@mail.gmail.com>
+References: <1358228871-7142-18-git-send-email-martinvonz@gmail.com>
+	<1358359235-10213-1-git-send-email-martinvonz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "'git@vger.kernel.org'" <git@vger.kernel.org>
-To: "Lang, David" <David.Lang@uhn.ca>
-X-From: git-owner@vger.kernel.org Wed Jan 16 19:06:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Matt Kraai <kraai@ftbfs.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 19:09:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvXNu-0006VA-KV
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 19:06:46 +0100
+	id 1TvXQR-0001se-Am
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 19:09:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757082Ab3APSG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 13:06:26 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:53465 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757077Ab3APSGZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 13:06:25 -0500
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r0GI6GGi008698;
-	Wed, 16 Jan 2013 22:06:18 +0400
-In-Reply-To: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
-X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1755620Ab3APSJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 13:09:01 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:61456 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754104Ab3APSJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 13:09:00 -0500
+Received: by mail-ie0-f173.google.com with SMTP id e13so3103802iej.32
+        for <git@vger.kernel.org>; Wed, 16 Jan 2013 10:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=h0J0ssubNY+4kJrJZlQIA9INi2LyP9HXoSTntoixTmU=;
+        b=gXz1XDq7WGD2QKvqUxv35Fb1tK8gOZGSxOzygj62u58K++Lu3DnhnGLpiofmy04I3G
+         nItVoKV99t3YdHC/uXk7b0bbPLXQLJvCUEwH9DzpdnnYo6S4MFUblBflKGXT2b05Z0+z
+         dWnflDTlNmf4aHYXN/wgwtG/1wta02sHYgqVKImU+1kIZOlgTYAFp113MiP9zTReSIN0
+         n98y7GDJsvULAyFLv6Q1c898oSotvddFlZV7Ey+Cf9beoVwbAqTFf9K+4+HsX7LzBbkb
+         pwd8Fo4IAIUQzQtDCiV+ou2UeIL2btDEGQ8VRTJ3QYDlMjPxF3BkyUYLO5mKxK83jr1s
+         mT+w==
+X-Received: by 10.42.153.70 with SMTP id l6mr1253592icw.50.1358359740023; Wed,
+ 16 Jan 2013 10:09:00 -0800 (PST)
+Received: by 10.64.86.68 with HTTP; Wed, 16 Jan 2013 10:08:59 -0800 (PST)
+In-Reply-To: <1358359235-10213-1-git-send-email-martinvonz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213786>
 
-On Wed, 16 Jan 2013 17:49:09 +0000
-"Lang, David" <David.Lang@uhn.ca> wrote:
+On Wed, Jan 16, 2013 at 10:00 AM, Martin von Zweigbergk
+<martinvonz@gmail.com> wrote:
+> ---
+>
+> Sorry, I forgot the documentation updates. I hope this looks ok. Can
+> you squash this in, Junio? Thanks.
 
-> We're just in the process of investigating a versioning tool and are
-> very interesting in git. We have one question we're hoping someone
-> can answer. In regards to the repositories, I think I understand
-> correctly that each developer will have a local repository that they
-> will work from, and that there will also be a remote repository
-> (origin) that will hold the original version of the project.
+I see the series just entered 'next', so I guess it would have to go
+on top then. Perhaps with a commit message like as simple as the
+following. Let me know if you prefer it to be resent as a proper
+patch. Sorry about the noise.
 
-The name "origin" is purely arbitrary: any local repository might have
+reset: update documentation to require only tree-ish with paths
 
-> It appears from the limited reading I've done that the remote
-> repository must be hosted at github.com. Is this the case?
-Of course not.  github is just a Git hosting provider.  There are
-plenty of them -- both commercial and not-for-profit (a well-known
-service bitbucket.org is one example).
-
-> Ideally we'd prefer to simply create our remote repository on a drive
-> of one of our local network servers. Is this possible?
-
-Yes, this is possible, but it's not advised to keep such a "reference"
-repository on an exported networked drive for a number of reasons (both
-performance and bug-free operation).
-
-Instead, the canonical way to host "reference" repositories is to make
-them accessible via SSH or via HTTP[S].  To do this, a server running
-some POSIX OS (Linux- or *BSD-based) is the best bet.  Both kinds of
-access require Git itself installed on the server.  Obviously, SSH
-access requires an SSH server software (such as OpenSSH) as well and
-HTTP[S] access requires a web server (such as Apache).  Of course,
-everything mentioned is available on any sensible OS you might install
-on your server.  Read-only access might be provided by a special tool
-named "Git daemon" which is a part of Git.
-
-If you have more than a couple of developers you might want to install
-certain front-end Git software on the server which provides for
-"virtualized" Git users and fine-grained control over who can do what.
-Using gitolite [3] for this is the current trend.
-
-Web-browsing for your repositories, if needed, is usually provided by
-the tool named gitweb [4].
-
-Everything I've just summarised is well explained in [5] and [6] (as an
-addendum).
-
-Another approach is to set up a "turn-key" solution such as GitLab [1]
-or gitblit [2].
-
-1. http://gitlabhq.com/
-2. http://gitblit.com/
-3. https://github.com/sitaramc/gitolite
-4. https://git.wiki.kernel.org/index.php/Gitweb
-5. http://git-scm.com/book/en/Git-on-the-Server
-6. http://git-scm.com/2010/03/04/smart-http.html
+When resetting with paths, we no longer require a commit argument, but
+only a tree-ish. Update the documentation and synopsis accordingly.
