@@ -1,67 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clean.c, ls-files.c: respect encapsulation of
- exclude_list_groups
-Date: Wed, 16 Jan 2013 09:43:46 -0800
-Message-ID: <7v7gndxbu5.fsf@alter.siamese.dyndns.org>
-References: <CAOkDyE-p9WLrsFZjPb9sY+YEypkF2wDxMybBkCT-76jBbKOmCA@mail.gmail.com>
- <1358342758-30503-1-git-send-email-git@adamspiers.org>
+From: "Lang, David" <David.Lang@uhn.ca>
+Subject: Question re. git remote repository
+Date: Wed, 16 Jan 2013 17:49:09 +0000
+Message-ID: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 18:44:13 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "'git@vger.kernel.org'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 18:49:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvX21-00089J-Ky
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 18:44:09 +0100
+	id 1TvX7S-0007n6-OM
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 18:49:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756199Ab3APRnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 12:43:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62168 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756147Ab3APRns (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 12:43:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AA6FBDC2;
-	Wed, 16 Jan 2013 12:43:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S+EVtCPLsC+wUPHfF9234dtK85E=; b=PLE0+s
-	0YPYnngtEqYRZuoHoOP2/UkMd5+WNnIGI5QO1dQJwlejPu2iCR1Wq9G+huP54qtU
-	DRT/y/IotRIYBo4I3nM7mk6qKWt+LsU2ahTha9QerssgDSNfVlZQmXGud0XYK50F
-	DZDf7evUX1EdlM4zJyOXqgqmGrI08tBxCkETE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hNL9iX04aZAOQW9H0eSY6U5RifBGw2AC
-	5MK4pOdkW8sAY+pIixM04LqCK5W4SmF5nb+3qVs2QuZ7b96QA5DzPB3oWfc64RTj
-	6VPPErIHsqvVtSEMFE7HCh9jDuyPeKwpP5C8VFsReWZH1IRIOPEDebX+3pozya5v
-	m1xj7Xw3xmg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BCFEBDC0;
-	Wed, 16 Jan 2013 12:43:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC520BDBC; Wed, 16 Jan 2013
- 12:43:47 -0500 (EST)
-In-Reply-To: <1358342758-30503-1-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Wed, 16 Jan 2013 13:25:58 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 47FD1FB2-6004-11E2-A6B8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756448Ab3APRtW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2013 12:49:22 -0500
+Received: from gwb.gw.one-mail.on.ca ([142.46.227.139]:17085 "EHLO
+	gwb01.gw.one-mail.on.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756260Ab3APRtV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 12:49:21 -0500
+Received: from smtpb02.one-mail.on.ca (tlsb.tls.one-mail.on.ca [10.250.26.62])
+	by gwb01.gw.one-mail.on.ca (gwb01) with ESMTP id r0GHnK5a024013
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Wed, 16 Jan 2013 12:49:20 -0500
+Received: from uhnsmtp003.uhn.on.ca (uhnsmtp003.uhn.on.ca [199.212.7.88])
+	(authenticated bits=0)
+	by smtpb02.one-mail.on.ca (smtpb02) with ESMTP id r0GHnGV6007806
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=OK)
+	for <git@vger.kernel.org>; Wed, 16 Jan 2013 12:49:17 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ap0EAOnm9lAKPg49/2dsb2JhbABCA74Vc4IgBV8sASpWJgEEG8EcjQqBAIJNYQOILI58kiKBZj4
+Thread-Topic: Question re. git remote repository
+Thread-Index: Ac30EcbOnE5PXSeuRLaLkaBQ75QiNQ==
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.2.19.202]
+x-tm-as-product-ver: SMEX-10.2.0.2087-7.000.1014-19560.000
+x-tm-as-result: No--32.275600-8.000000-31
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+X-CT-Refid: str=0001.0A020202.50F6E81D.00FC:SCFSTAT15037076,ss=1,fgs=0
+X-Spam-Score: 0.00%
+X-Spam-Analysis: v=1.1 cv=aVuH+yJaJQ3XxwVNIQ0kqFsStq18sPiz0wg/0xjW2bs= c=1 sm=1 a=q7aWwITXUpIA:10 a=8nJEP1OIZ-IA:10 a=h8FGBgC4kO2qrAwYUDRSMg==:17 a=NEAV23lmAAAA:8 a=CQ6_qcCJVzyZAYUkiyAA:9 a=wPNLvfGTeEIA:10 a=Y9SVY9gFtQoA:10 a=vlnTKxGs3H4A:10 a=h8FGBgC4kO2qrAwYUDRSMg==:117%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213780>
 
-Adam Spiers <git@adamspiers.org> writes:
+Hello,
 
-> Consumers of the dir.c traversal API should avoid assuming knowledge
-> of the internal implementation of exclude_list_groups.  Therefore
-> when adding items to an exclude list, it should be accessed via the
-> pointer returned from add_exclude_list(), rather than by referencing
-> a location within dir.exclude_list_groups[EXC_CMDL].
+We're just in the process of investigating a versioning tool and are ve=
+ry interesting in git. We have one question we're hoping someone can an=
+swer. In regards to the repositories, I think I understand correctly th=
+at each developer will have a local repository that they will work from=
+, and that there will also be a remote repository (origin) that will ho=
+ld the original version of the project.
 
-Sounds sensible.
+It appears from the limited reading I've done that the remote repositor=
+y must be hosted at github.com. Is this the case? Ideally we'd prefer t=
+o simply create our remote repository on a drive of one of our local ne=
+twork servers. Is this possible?
+
+Thanks in advance for the help.
+
+David=A0Lang=A0|=A0Application Developer=A0|=A0Tel:=A0416-340-4800 x.52=
+77
+Cardiac IT Dept - Toronto General Hospital
+The University Health Network
+200 Elizabeth St.
+Toronto, ON=A0=A0 M5G 2C4
+
+
+This e-mail may contain confidential and/or privileged information for =
+the sole use of the intended recipient.=20
+Any review or distribution by anyone other than the person for whom it =
+was originally intended is strictly prohibited.=20
+If you have received this e-mail in error, please contact the sender an=
+d delete all copies.=20
+Opinions, conclusions or other information contained in this e-mail may=
+ not be that of the organization.
