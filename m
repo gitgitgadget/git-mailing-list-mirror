@@ -1,87 +1,104 @@
-From: Phil Hord <phil.hord@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [BUG] Possible bug in `remote set-url --add --push`
-Date: Wed, 16 Jan 2013 11:15:37 -0500
-Message-ID: <CABURp0rR_wB6vcjrZajQU_=AVVvBq-aTGpggh5XxdCMYis3-ag@mail.gmail.com>
-References: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com>
- <7vliby98r7.fsf@alter.siamese.dyndns.org> <4836187.09xoy3kJnj@blacky>
- <CAN8TAOv0Cm8CgiJSweFtRzOqO78OtNKa4G+x7z6M5Bt+odUmiQ@mail.gmail.com>
- <50F40316.7010308@drmicha.warpmail.net> <7v1udnbmyz.fsf@alter.siamese.dyndns.org>
- <1D472234-A0A5-4F02-878D-D05DEE995FCD@gmail.com> <7vpq1755jb.fsf@alter.siamese.dyndns.org>
- <7vip6z54rh.fsf@alter.siamese.dyndns.org> <50F524F8.5090803@drmicha.warpmail.net>
- <7v4nii5tp2.fsf@alter.siamese.dyndns.org>
+Date: Wed, 16 Jan 2013 17:19:23 +0100
+Message-ID: <50F6D30B.9030703@drmicha.warpmail.net>
+References: <CAN8TAOsnX1Mr72LPa47KKXDeUZPgSHTJ6u4YpPFPrtsK7VdN+A@mail.gmail.com> <7vliby98r7.fsf@alter.siamese.dyndns.org> <4836187.09xoy3kJnj@blacky> <CAN8TAOv0Cm8CgiJSweFtRzOqO78OtNKa4G+x7z6M5Bt+odUmiQ@mail.gmail.com> <50F40316.7010308@drmicha.warpmail.net> <7v1udnbmyz.fsf@alter.siamese.dyndns.org> <1D472234-A0A5-4F02-878D-D05DEE995FCD@gmail.com> <7vpq1755jb.fsf@alter.siamese.dyndns.org> <7vip6z54rh.fsf@alter.siamese.dyndns.org> <50F524F8.5090803@drmicha.warpmail.net> <7v4nii5tp2.fsf@alter.siamese.dyndns.org> <50F668FB.5000805@drmicha.warpmail.net> <7v622xyvnd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jardel Weyrich <jweyrich@gmail.com>,
+Content-Transfer-Encoding: 7bit
+Cc: Jardel Weyrich <jweyrich@gmail.com>,
 	Sascha Cunz <sascha-ml@babbelbox.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 17:16:39 2013
+X-From: git-owner@vger.kernel.org Wed Jan 16 17:19:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvVfI-0006xK-FL
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 17:16:36 +0100
+	id 1TvViM-0003RO-Pj
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 17:19:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758611Ab3APQP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 11:15:59 -0500
-Received: from mail-vc0-f173.google.com ([209.85.220.173]:55958 "EHLO
-	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758030Ab3APQP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 11:15:58 -0500
-Received: by mail-vc0-f173.google.com with SMTP id fl15so1502922vcb.32
-        for <git@vger.kernel.org>; Wed, 16 Jan 2013 08:15:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=t1ZPe1yMYRuV2ApkCCbRxlZvVGTcieFUNa+5DLs8GXM=;
-        b=K2qb5C6KeqZSobueiq4+jJjD4+RIqmmCB4O+1WCx0L5fknbPRp6YLQsN1ADboTpkm4
-         RYDYalxBwJ/lB9voGXd8RLvvMqb01uPRzPWPXdY4N55Q2OJfTkqZjgDXk97rULqfEOSR
-         XORpweSaTEmC5za1w2yhCri1pO3NV6EEKTjMxG1pHQh6cgPkGg66wGHPQRCAMiARL7vB
-         cQj3Lmzk5Um9SuNtO+aqxaL7VOLuuu2w8T8zmOBy5AG1z4LPB276wN10vwVmKyah6dA2
-         DlrGZEudlktxqK+PEdy/1EHaejTAPEuSs2yvi9VD/GP8/Hp+3Ei14AdZDgFL+z+u+vgO
-         ooqg==
-X-Received: by 10.52.71.174 with SMTP id w14mr1502769vdu.122.1358352957981;
- Wed, 16 Jan 2013 08:15:57 -0800 (PST)
-Received: by 10.58.241.203 with HTTP; Wed, 16 Jan 2013 08:15:37 -0800 (PST)
-In-Reply-To: <7v4nii5tp2.fsf@alter.siamese.dyndns.org>
+	id S1758721Ab3APQT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 11:19:26 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:53663 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758746Ab3APQTX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 11:19:23 -0500
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 30FB620F96;
+	Wed, 16 Jan 2013 11:19:22 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 16 Jan 2013 11:19:22 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=iI7+dWd0kQq0Rvm0mg9Lo+
+	PqOWI=; b=HUe6/ltK4R3JMMUZInpbPP5hVd3j9XnFROop+YXWH20vq0S1VPSaAJ
+	bSKfD7dWzxoBRAx3jmb17Gy6c+EgRDmdNOoYV+jKJEWZi+Qyl10+pfRRkPn2Lcfx
+	7ySGls/yMPhoBbGW5BnPwctIg6ufqPr0hsEyy4yJ4pnQXX5BTtjVE=
+X-Sasl-enc: YTXVJBauHUdEKoFJ/2h6MV7Tr1zsX/oI0vM+lSwiTHoE 1358353161
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 730018E07FA;
+	Wed, 16 Jan 2013 11:19:21 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <7v622xyvnd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213763>
 
-On Tue, Jan 15, 2013 at 10:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano venit, vidit, dixit 16.01.2013 16:50:
 > Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->> That being said, I don't mind changing the behaviour of set-url.
->
-> I do not think we want to change the behaviour of set-url.
+> 
+>> Junio C Hamano venit, vidit, dixit 15.01.2013 16:53:
+>> ...
+>>>  * When there are more than one URLs, and there is no pushURL, then
+>>>    show the first URL as (fetch/push), and the remainder in a
+>>>    notation that says it is used only for push, but it shouldn't be
+>>>    the same "(push)"; the user has to be able to distinguish it from
+>>>    the pushURLs in a repository that also has URLs.
+>>
+>> Maybe "(fetch fallback/push)" if we do use it as a fallback? If we don't
+>> we probably should?
+> 
+> I actually think my earlier "it shouldn't be the same (push)" is not
+> needed and probably is actively wrong.  Just like you can tell
+> between
+> 
+>     (only one .url)                     (both .url and .pushurl)
+> 
+>     origin there (fetch/push)           origin there (fetch)
+>                                         origin there (push)
+> 
+> even when the value of the URL/PushURL, i.e. "there", is the same
+> between .url and .pushurl, you should be able to tell between
+> 
+>     (two .url, no .pushurl)             (one .url and one .pushurl)
+> 
+>     origin there (fetch/push)           origin there (fetch)
+>     origin another (push)               origin another (push)
+> 
+> So let's not make it too complex and forget about the different kind
+> of "(push)".
+> 
+> A case that is a potential misconfiguration would look like:
+> 
+>     (two .url, one .pushurl)
+> 
+>     origin there (fetch)
+>     origin some  (unused)
+>     origin another (push)
+> 
+> I think.
 
-I agree with Michael that changing the set-url behavior would be
-appropriate here.  If I say "--add" this pushUrl, don't I mean to
-create an additional url which is pushed to?
+I'm sorry but E_NOPARSE. I can't grok the above at all. But I'll try
+again tomorrow ;)
 
-I agree that it makes the config situation messy; this is currently a
-"clean" sequence, in that it leaves the config unchanged after both
-steps are completed:
+In any case, the issue with (push)instead of that John mentions bothers
+me: there are "two specified URLs" but one URL in config only; my patch
+doesn't make that case clearer at all. My early attempts at amending
+struct remote produced too many segfaults to continue today...
 
-  git remote set-url --add --push origin /tmp/foo
-  git remote set-url --delete --push origin /tmp/foo
-
-If the behavior is changed like Michael suggested, it would not leave
-the config clean (unless heroic steps were taken to keep track).  But
-I'm not sure that's such a bad thing.  In simple command sequences,
-the results would be clean and the only behavior change is that the
-initial "--add" really acts like "add" and not "replace".  But more
-complex sequences could be devised which were affected by this change.
-
-I'm curious, Junio.  Do you think the set-url behavior is correct
-as-is, or that changing it will cause breakage for some workflows, or
-that it complicates the operation too much for people who are already
-used to the config layout?
-
-Phil
+Michael
