@@ -1,86 +1,90 @@
-From: "Lang, David" <David.Lang@uhn.ca>
-Subject: Question re. git remote repository
-Date: Wed, 16 Jan 2013 17:49:09 +0000
-Message-ID: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] fix some clang warnings
+Date: Wed, 16 Jan 2013 09:50:57 -0800
+Message-ID: <20130116175057.GB27525@sigill.intra.peff.net>
+References: <1358348003-11130-1-git-send-email-max@quendi.de>
+ <20130116160410.GC22400@sigill.intra.peff.net>
+ <7vk3rdxe5y.fsf@alter.siamese.dyndns.org>
+ <CALWbr2z4TiynwOR3Lk4005dbZaLtcHK3J01ZF73wp8Q7Rm6YBA@mail.gmail.com>
+ <20130116171809.GA2476@farnsworth.metanate.com>
+ <7FDA1B56-731E-4BA2-8FE5-196B965FFFDB@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "'git@vger.kernel.org'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 18:49:47 2013
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Jan 16 18:51:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvX7S-0007n6-OM
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 18:49:47 +0100
+	id 1TvX92-0001i5-MT
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 18:51:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756448Ab3APRtW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2013 12:49:22 -0500
-Received: from gwb.gw.one-mail.on.ca ([142.46.227.139]:17085 "EHLO
-	gwb01.gw.one-mail.on.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756260Ab3APRtV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 12:49:21 -0500
-Received: from smtpb02.one-mail.on.ca (tlsb.tls.one-mail.on.ca [10.250.26.62])
-	by gwb01.gw.one-mail.on.ca (gwb01) with ESMTP id r0GHnK5a024013
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-	for <git@vger.kernel.org>; Wed, 16 Jan 2013 12:49:20 -0500
-Received: from uhnsmtp003.uhn.on.ca (uhnsmtp003.uhn.on.ca [199.212.7.88])
-	(authenticated bits=0)
-	by smtpb02.one-mail.on.ca (smtpb02) with ESMTP id r0GHnGV6007806
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=OK)
-	for <git@vger.kernel.org>; Wed, 16 Jan 2013 12:49:17 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ap0EAOnm9lAKPg49/2dsb2JhbABCA74Vc4IgBV8sASpWJgEEG8EcjQqBAIJNYQOILI58kiKBZj4
-Thread-Topic: Question re. git remote repository
-Thread-Index: Ac30EcbOnE5PXSeuRLaLkaBQ75QiNQ==
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.2.19.202]
-x-tm-as-product-ver: SMEX-10.2.0.2087-7.000.1014-19560.000
-x-tm-as-result: No--32.275600-8.000000-31
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-X-CT-Refid: str=0001.0A020202.50F6E81D.00FC:SCFSTAT15037076,ss=1,fgs=0
-X-Spam-Score: 0.00%
-X-Spam-Analysis: v=1.1 cv=aVuH+yJaJQ3XxwVNIQ0kqFsStq18sPiz0wg/0xjW2bs= c=1 sm=1 a=q7aWwITXUpIA:10 a=8nJEP1OIZ-IA:10 a=h8FGBgC4kO2qrAwYUDRSMg==:17 a=NEAV23lmAAAA:8 a=CQ6_qcCJVzyZAYUkiyAA:9 a=wPNLvfGTeEIA:10 a=Y9SVY9gFtQoA:10 a=vlnTKxGs3H4A:10 a=h8FGBgC4kO2qrAwYUDRSMg==:117%
+	id S1753846Ab3APRvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 12:51:03 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35397 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753464Ab3APRvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 12:51:02 -0500
+Received: (qmail 13723 invoked by uid 107); 16 Jan 2013 17:52:19 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 16 Jan 2013 12:52:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Jan 2013 09:50:57 -0800
+Content-Disposition: inline
+In-Reply-To: <7FDA1B56-731E-4BA2-8FE5-196B965FFFDB@quendi.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213781>
 
-Hello,
+On Wed, Jan 16, 2013 at 06:26:35PM +0100, Max Horn wrote:
 
-We're just in the process of investigating a versioning tool and are ve=
-ry interesting in git. We have one question we're hoping someone can an=
-swer. In regards to the repositories, I think I understand correctly th=
-at each developer will have a local repository that they will work from=
-, and that there will also be a remote repository (origin) that will ho=
-ld the original version of the project.
+> > On Wed, Jan 16, 2013 at 06:12:57PM +0100, Antoine Pelisse wrote:
+> >> FWIW, I also happen to have the warning:
+> >> 
+> >> advice.c:69:2: warning: expression result unused [-Wunused-value]
+> >>        error("'%s' is not possible because you have unmerged files.", me);
+> >>        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >> ./git-compat-util.h:314:55: note: expanded from:
+> >> #define error(fmt, ...) (error((fmt), ##__VA_ARGS__), -1)
+> >>                                                      ^~
+> >> 
+> >> with clang: Ubuntu clang version 3.0-6ubuntu3 (tags/RELEASE_30/final)
+> >> (based on LLVM 3.0)
+> > 
+> > I have the same output with:
+> > 
+> > clang version 3.2 (tags/RELEASE_32/final)
+> 
+> Sorry for not being more specific in my message. I have this with 
+> 
+> Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)
 
-It appears from the limited reading I've done that the remote repositor=
-y must be hosted at github.com. Is this the case? Ideally we'd prefer t=
-o simply create our remote repository on a drive of one of our local ne=
-twork servers. Is this possible?
+So it seems pretty common, and is just that clang is more concerned
+about this than gcc. I think your patch is a reasonable workaround. It
+seems a little weird to me that clang defines __GNUC__, but I assume
+there are good reasons for it. The commit message should probably be
+along the lines of:
 
-Thanks in advance for the help.
+  Commit a469a10 wraps some error calls in macros to give the compiler a
+  chance to do more static analysis on their constant -1 return value.
+  We limit the use of these macros to __GNUC__, since gcc is the primary
+  beneficiary of the new information, and because we use GNU features
+  for handling variadic macros.
 
-David=A0Lang=A0|=A0Application Developer=A0|=A0Tel:=A0416-340-4800 x.52=
-77
-Cardiac IT Dept - Toronto General Hospital
-The University Health Network
-200 Elizabeth St.
-Toronto, ON=A0=A0 M5G 2C4
+  However, clang also defines __GNUC__, but generates warnings (due to
+  throwing away the return value from the first half of the macro). We
+  can squelch the warning by turning off these macros when clang is in
+  use.
 
+I'm confused, though, why your patch does not have a matching update to
+the opterror macro in parse-options.h. It uses exactly the same
+technique. Does it not generate a warning?
 
-This e-mail may contain confidential and/or privileged information for =
-the sole use of the intended recipient.=20
-Any review or distribution by anyone other than the person for whom it =
-was originally intended is strictly prohibited.=20
-If you have received this e-mail in error, please contact the sender an=
-d delete all copies.=20
-Opinions, conclusions or other information contained in this e-mail may=
- not be that of the organization.
+-Peff
