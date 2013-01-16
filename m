@@ -1,76 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 07/14] imap-send.c: inline imap_parse_list() in
- imap_list()
-Date: Wed, 16 Jan 2013 07:34:52 -0800
-Message-ID: <7vip6xywdf.fsf@alter.siamese.dyndns.org>
-References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
- <1358237193-8887-8-git-send-email-mhagger@alum.mit.edu>
- <20130115185147.GB14552@ftbfs.org> <50F66422.3010502@alum.mit.edu>
+Subject: Re: [PATCH 1/3] Move Git::SVN::get_tz to Git::get_tz_offset
+Date: Wed, 16 Jan 2013 07:37:31 -0800
+Message-ID: <7vehhlyw90.fsf@alter.siamese.dyndns.org>
+References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
+ <1358291405-10173-2-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jan 16 16:35:19 2013
+Cc: esr@thyrsus.com, git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 16:38:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvV1L-0001l3-De
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 16:35:19 +0100
+	id 1TvV3q-0005z2-R5
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 16:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754318Ab3APPe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 10:34:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50487 "EHLO
+	id S1754888Ab3APPhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 10:37:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51965 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752472Ab3APPe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 10:34:58 -0500
+	id S1752688Ab3APPhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 10:37:33 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49DD3AB94;
-	Wed, 16 Jan 2013 10:34:55 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85732AD8F;
+	Wed, 16 Jan 2013 10:37:33 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YwIEILR63z2oQdcEXweMrhklMrg=; b=ns4ZKd
-	XerKpXGlz4afxgG5AolxymYxRravhbw1SMNrnyKqAR4/R6hmrtEo0yTt9uryHBN8
-	JVTPqD12O8KfoTi3u3g0IULeYG8LSvYxVizwBW6eUv+60PFtqMW4ggqHIqXZXDvd
-	R1l9zBPaEURi1R/nRLXrqJyG2J68GjuCctN8E=
+	:content-type; s=sasl; bh=J2TdkXN0Zr5JwsuZbWOpCfK61BA=; b=h0HawT
+	DRA494cRMtrzqTUwwzB/5ql26Z7pMgKZh8TjnaPlviXs5cdbEIkkQt4fCZUGoyOj
+	ZeFUn9IHembGtHomLzYboPNr26lqtmilXcPeHwCK5woZdT4V8rIvjMbosngdhZXv
+	LskZYe0kqlmJAx0+gZ4iy460AipX71KrPRIOM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aWJVpEJno3tk70GxRoq+WlAhfktfxSxR
-	EIOZaR2CYMTn9uvaNs7y/y+hNUcT1yZYAnNNEN4MeQ0x6g5/FSCM1lShdm5kwWo/
-	MlxuxoXHJlX9hKAGhsCSFowUmwfdzQRnX6uZHybcavRmpaplGj2qBPVjeQOW05Ay
-	3/wzvbfHwzw=
+	:content-type; q=dns; s=sasl; b=hlK5gQdk0CM3yli9kTn/6LNIDXxs6itC
+	066t5lj07vPLOkh+2PLZA3srWHSsnxStESzXaUIkY7/Py4oJGQA69gFZFzE7CYxU
+	DLxW4DKqodZ8mmXRRnZQjMp7/P3Pzff+moxJ/PxNSxsU4Zwprb5rQzR3teIuX3c5
+	/gghMiEIsC8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E75AAB93;
-	Wed, 16 Jan 2013 10:34:55 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AADFAD8E;
+	Wed, 16 Jan 2013 10:37:33 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1A9CAB92; Wed, 16 Jan 2013
- 10:34:54 -0500 (EST)
-In-Reply-To: <50F66422.3010502@alum.mit.edu> (Michael Haggerty's message of
- "Wed, 16 Jan 2013 09:26:10 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E82B1AD8C; Wed, 16 Jan 2013
+ 10:37:32 -0500 (EST)
+In-Reply-To: <1358291405-10173-2-git-send-email-bdwalton@gmail.com> (Ben
+ Walton's message of "Tue, 15 Jan 2013 23:10:03 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 46B2436A-5FF2-11E2-BD1B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A5013BA6-5FF2-11E2-B26F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213759>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Ben Walton <bdwalton@gmail.com> writes:
 
-> On 01/15/2013 07:51 PM, Matt Kraai wrote:
->> On Tue, Jan 15, 2013 at 09:06:25AM +0100, Michael Haggerty wrote:
->>> -static struct imap_list *parse_imap_list(struct imap *imap, char **sp)
->>> +static struct imap_list *parse_list(char **sp)
->> 
->> The commit subject refers to imap_parse_list and imap_list whereas the
->> code refers to parse_imap_list and parse_list.
->
-> Yes, you're right.  Thanks.
+> +sub get_tz_offset {
+> +	# some systmes don't handle or mishandle %z, so be creative.
 
-I think I've fixed this (and some other minor points in other
-patches in the series) while queuing; please check master..3691031c
-after fetching from me.
-
-Thanks.
+Hmph.  I wonder if we can use %z if it is handled correctly and fall
+back to this code only on platforms that are broken?
