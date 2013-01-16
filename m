@@ -1,66 +1,150 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH] fix some clang warnings
-Date: Wed, 16 Jan 2013 18:26:35 +0100
-Message-ID: <7FDA1B56-731E-4BA2-8FE5-196B965FFFDB@quendi.de>
-References: <1358348003-11130-1-git-send-email-max@quendi.de> <20130116160410.GC22400@sigill.intra.peff.net> <7vk3rdxe5y.fsf@alter.siamese.dyndns.org> <CALWbr2z4TiynwOR3Lk4005dbZaLtcHK3J01ZF73wp8Q7Rm6YBA@mail.gmail.com> <20130116171809.GA2476@farnsworth.metanate.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
+From: Chris Hiestand <chiestand@salk.edu>
+Subject: Re: [PATCH] Add Auto-Submitted header to post-receive-email
+Date: Wed, 16 Jan 2013 09:29:14 -0800
+Message-ID: <258F0FE2-D014-4624-A1E2-721E51F0E12C@salk.edu>
+References: <E4715C92-2BE5-484E-A55B-273CAB5EB6B4@salk.edu> <67C048AA-0DA7-4397-A257-E0BE66089A5D@salk.edu> <7v392b8fv3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jan 16 18:27:10 2013
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 18:37:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvWlY-0007Fq-4K
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 18:27:08 +0100
+	id 1TvWvd-00061S-SV
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 18:37:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756289Ab3APR0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 12:26:47 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:53666 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756114Ab3APR0r (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 12:26:47 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1TvWl2-0004ti-4W; Wed, 16 Jan 2013 18:26:36 +0100
-In-Reply-To: <20130116171809.GA2476@farnsworth.metanate.com>
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1358357206;10fd4354;
+	id S1754454Ab3APRhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 12:37:11 -0500
+Received: from riis.snl.salk.edu ([198.202.70.55]:43993 "EHLO
+	riis.snl.salk.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752211Ab3APRhK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 12:37:10 -0500
+X-Greylist: delayed 476 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jan 2013 12:37:10 EST
+Received: from [172.18.0.8] (wsip-68-15-20-133.sd.sd.cox.net [68.15.20.133])
+	(Authenticated sender: chiestand)
+	by riis.snl.salk.edu (Postfix) with ESMTPSA id 45116EE06E;
+	Wed, 16 Jan 2013 09:29:13 -0800 (PST)
+In-Reply-To: <7v392b8fv3.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1499)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213776>
+
+Andy, do you have any thoughts on adding this email header to
+contrib/hooks/post-receive-email? This patch shouldn't cause problems for anyone
+with a sanely configured mail delivery agent, and the additional header is very
+useful in toggling auto responses.
 
 
-On 16.01.2013, at 18:18, John Keeping wrote:
+This conforms to RFC3834 and is useful in preventing eg
+vacation auto-responders from replying by default
 
-> On Wed, Jan 16, 2013 at 06:12:57PM +0100, Antoine Pelisse wrote:
->> FWIW, I also happen to have the warning:
->> 
->> advice.c:69:2: warning: expression result unused [-Wunused-value]
->>        error("'%s' is not possible because you have unmerged files.", me);
->>        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> ./git-compat-util.h:314:55: note: expanded from:
->> #define error(fmt, ...) (error((fmt), ##__VA_ARGS__), -1)
->>                                                      ^~
->> 
->> with clang: Ubuntu clang version 3.0-6ubuntu3 (tags/RELEASE_30/final)
->> (based on LLVM 3.0)
+Signed-off-by: Chris Hiestand <chiestand@salk.edu>
+---
+ contrib/hooks/post-receive-email |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index b2171a0..0e5b72d 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -237,6 +237,7 @@ generate_email_header()
+ 	X-Git-Reftype: $refname_type
+ 	X-Git-Oldrev: $oldrev
+ 	X-Git-Newrev: $newrev
++	Auto-Submitted: auto-generated
+ 
+ 	This is an automated email from the git hooks/post-receive script. It was
+ 	generated because a ref change was pushed to the repository containing
+-- 
+1.7.10.4
+
+
+
+
+
+On Sep 21, 2012, at 10:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+
+> Chris Hiestand <chiestand@salk.edu> writes:
 > 
-> I have the same output with:
+>> My email in April went unanswered so I'm resending it. An Auto-Submitted header
+>> would be an improvement to the standard [git] post receive email.
+>> 
+>> Thanks,
+>> Chris
+>> 
+>> 
+>> Begin forwarded message:
+>> 
+>>> From: Chris Hiestand <chiestand@salk.edu>
+>>> Subject: [PATCH] Add Auto-Submitted header to post-receive-email
+>>> Date: April 14, 2012 6:15:10 PM PDT
+>>> To: git@vger.kernel.org, gitster@pobox.com
+>>> 
+>>> Hi,
+>>> 
+>>> I think the Auto-Submitted header is a useful hook mail header to include by default.
+>>> 
+>>> This conforms to RFC3834 and is useful in preventing e.g. vacation auto-responders
+>>> from replying by default.
+>>> 
+>>> Perhaps you have already considered this and decided not to include it, but I found
+>>> no record of such a conversation on this list.
 > 
-> clang version 3.2 (tags/RELEASE_32/final)
-
-Sorry for not being more specific in my message. I have this with 
-
-Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)
-
-
-Max
+> I think the lack of response is generally lack of interest, and the
+> primary reason for that was because the To/Cc list did not contain
+> anybody who touched this particular file in the past (and no, I am
+> not among them; as contrib/README says, I am often the wrong person
+> to ask if a patch to contrib/ material makes sense).
+> 
+>>> From 358fc3ae1ebfd7723d54e4033d3e9a9a0322c873 Mon Sep 17 00:00:00 2001
+>>> From: Chris Hiestand <chiestand@salk.edu>
+>>> Date: Sat, 14 Apr 2012 17:58:39 -0700
+>>> Subject: [PATCH] Add Auto-Submitted header to post-receive-email
+> 
+> These four lines should not be in the body of the e-mail message
+> (see Documentation/SubmittingPatches).
+> 
+>>> Adds Auto-Submitted: auto-generated to post-receive-email header
+>>> This conforms to RFC3834 and is useful in preventing eg
+>>> vacation auto-responders from replying by default
+>>> ---
+>>> contrib/hooks/post-receive-email |    1 +
+>>> 1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> Even for contrib/ material, please always sign-off your patch (see
+> Documentation/SubmittingPatches).
+> 
+>>> 
+>>> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+>>> index 01af9df..282507c 100755
+>>> --- a/contrib/hooks/post-receive-email
+>>> +++ b/contrib/hooks/post-receive-email
+>>> @@ -237,6 +237,7 @@ generate_email_header()
+>>> 	X-Git-Reftype: $refname_type
+>>> 	X-Git-Oldrev: $oldrev
+>>> 	X-Git-Newrev: $newrev
+>>> +	Auto-Submitted: auto-generated
+>>> 
+>>> 	This is an automated email from the git hooks/post-receive script. It was
+>>> 	generated because a ref change was pushed to the repository containing
+> 
+> I think the choice of "auto-generated" is a sensible one, as
+> responding to a 'push' is like triggered by 'cron'.
+> 
+> I'd however appreciate comments from people who either worked on
+> this code or list regulars who actually use this code in the
+> production.
+> 
+> Thanks.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
