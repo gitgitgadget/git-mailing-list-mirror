@@ -1,74 +1,76 @@
-From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-Subject: Re: [PATCH 0/7] guilt patches, including git 1.8 support
-Date: Wed, 16 Jan 2013 10:04:59 -0500
-Message-ID: <20130116150458.GA21612@poseidon.cudanet.local>
-References: <20130116022606.GI12524@google.com>
- <20130116032606.GA6052@thunk.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 07/14] imap-send.c: inline imap_parse_list() in
+ imap_list()
+Date: Wed, 16 Jan 2013 07:34:52 -0800
+Message-ID: <7vip6xywdf.fsf@alter.siamese.dyndns.org>
+References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu>
+ <1358237193-8887-8-git-send-email-mhagger@alum.mit.edu>
+ <20130115185147.GB14552@ftbfs.org> <50F66422.3010502@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Per Cederqvist <cederp@opera.com>,
-	Iulian Udrea <iulian@linux.com>,
-	Axel Beckert <abe@deuxchevaux.org>
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jan 16 16:11:45 2013
+Cc: Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 16 16:35:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvUeU-0007Ar-3o
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 16:11:42 +0100
+	id 1TvV1L-0001l3-De
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jan 2013 16:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142Ab3APPLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 10:11:21 -0500
-Received: from josefsipek.net ([64.9.206.49]:1654 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752613Ab3APPLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 10:11:21 -0500
-X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jan 2013 10:11:21 EST
-Received: from poseidon.cudanet.local (208-44-138-156.dia.static.qwest.net [208.44.138.156])
-	by josefsipek.net (Postfix) with ESMTPSA id 3B8941184B;
-	Wed, 16 Jan 2013 10:05:02 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20130116032606.GA6052@thunk.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754318Ab3APPe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 10:34:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50487 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752472Ab3APPe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 10:34:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49DD3AB94;
+	Wed, 16 Jan 2013 10:34:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YwIEILR63z2oQdcEXweMrhklMrg=; b=ns4ZKd
+	XerKpXGlz4afxgG5AolxymYxRravhbw1SMNrnyKqAR4/R6hmrtEo0yTt9uryHBN8
+	JVTPqD12O8KfoTi3u3g0IULeYG8LSvYxVizwBW6eUv+60PFtqMW4ggqHIqXZXDvd
+	R1l9zBPaEURi1R/nRLXrqJyG2J68GjuCctN8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aWJVpEJno3tk70GxRoq+WlAhfktfxSxR
+	EIOZaR2CYMTn9uvaNs7y/y+hNUcT1yZYAnNNEN4MeQ0x6g5/FSCM1lShdm5kwWo/
+	MlxuxoXHJlX9hKAGhsCSFowUmwfdzQRnX6uZHybcavRmpaplGj2qBPVjeQOW05Ay
+	3/wzvbfHwzw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E75AAB93;
+	Wed, 16 Jan 2013 10:34:55 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1A9CAB92; Wed, 16 Jan 2013
+ 10:34:54 -0500 (EST)
+In-Reply-To: <50F66422.3010502@alum.mit.edu> (Michael Haggerty's message of
+ "Wed, 16 Jan 2013 09:26:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 46B2436A-5FF2-11E2-BD1B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213758>
 
-On Tue, Jan 15, 2013 at 10:26:06PM -0500, Theodore Ts'o wrote:
-> On Tue, Jan 15, 2013 at 06:26:06PM -0800, Jonathan Nieder wrote:
-> > Hi Jeff and other guilty parties,
-> > 
-> > I collected all the guilt patches I could find on-list and added one
-> > of my own.  Completely untested, except for running the regression
-> > tests.  These are also available via git protocol from
-> > 
-> >   git://repo.or.cz/guilt/mob.git mob
-> 
-> Jonathan, thanks for collecting all of the guilt patches!  Your repro
-> was also very much really useful since I hadn't grabbed the latest
-> patches from jeffpc's repo before it disappeared after the kernel.org
-> security shutdown.  
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I had repo.or.cz mirroring all along.  :)
+> On 01/15/2013 07:51 PM, Matt Kraai wrote:
+>> On Tue, Jan 15, 2013 at 09:06:25AM +0100, Michael Haggerty wrote:
+>>> -static struct imap_list *parse_imap_list(struct imap *imap, char **sp)
+>>> +static struct imap_list *parse_list(char **sp)
+>> 
+>> The commit subject refers to imap_parse_list and imap_list whereas the
+>> code refers to parse_imap_list and parse_list.
+>
+> Yes, you're right.  Thanks.
 
-> Jeff, do you need some help getting your repro on kernel.org
-> re-established?
+I think I've fixed this (and some other minor points in other
+patches in the series) while queuing; please check master..3691031c
+after fetching from me.
 
-Yes and no.  I was hoping to find some time to restore all the web content
-on my server, and start using repo.or.cz as the public git repo.  With that
-said, I have only two sigs for my gpg key.  (Guilt isn't really related to
-linux...)
-
-Thanks,
-
-Jeff.
-
--- 
-Only two things are infinite, the universe and human stupidity, and I'm not
-sure about the former.
-		- Albert Einstein
+Thanks.
