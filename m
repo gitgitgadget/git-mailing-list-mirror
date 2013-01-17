@@ -1,122 +1,124 @@
-From: Peter Wu <lekensteyn@gmail.com>
-Subject: [PATCH] git-svn: do not escape certain characters in paths
-Date: Thu, 17 Jan 2013 23:07:31 +0100
-Message-ID: <1472347.NT5gjdj3yd@al>
+From: "Lang, David" <David.Lang@uhn.ca>
+Subject: RE: Question re. git remote repository
+Date: Thu, 17 Jan 2013 21:53:29 +0000
+Message-ID: <201301172153.r0HLrU4F019815@smtpb02.one-mail.on.ca>
+References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
+ <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
+ <20130116182156.GB4426@sigill.intra.peff.net>
+ <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
+ <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
+ <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 17 23:08:06 2013
+Content-Transfer-Encoding: 8BIT
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
+	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Stephen Smith <ishchis2@gmail.com>
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Thu Jan 17 23:12:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvxcw-0004De-9r
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 23:08:02 +0100
+	id 1Tvxh1-0000vH-PF
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 23:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755112Ab3AQWHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 17:07:38 -0500
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:59383 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754064Ab3AQWHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 17:07:36 -0500
-Received: by mail-ee0-f49.google.com with SMTP id d4so1432511eek.36
-        for <git@vger.kernel.org>; Thu, 17 Jan 2013 14:07:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type;
-        bh=Ov+pAqxMlhHkJVzfj5wlOiJevyu6Af/CWTDOS3HnyeQ=;
-        b=rZ+J5njGTFolZKmk2oP+9WVhUAP7DN5a7GpCCOW4IZLErTnUoqAisOGvOBPr1tHws4
-         9Kevi2iyepowuf44o4dI3LL2aSjW/zNzH97Im4DADfUKevxwPlBSshWpqrTj8dReb4or
-         b3Xtr7OKi19A6SbrljxSQ7GunuSGnkdZe5vTgQr3xjyCaB33s1onzgvyI07U4e4qjk1z
-         eUfzbwoCwBuufDHnIONrogfVrBxn019iVIePlPJUoovOc4zQUnKUwWSDPD1H5k4KqzxL
-         luikkI4CccvUX7x4PJdqrS3EtrvMtXUfJgSs5soesmk3GqY2fCTJnW0E72xkocMMW4cl
-         nhVQ==
-X-Received: by 10.14.209.193 with SMTP id s41mr18615472eeo.9.1358460455188;
-        Thu, 17 Jan 2013 14:07:35 -0800 (PST)
-Received: from al.localnet (ip4da018ae.direct-adsl.nl. [77.160.24.174])
-        by mx.google.com with ESMTPS id l3sm4527557een.14.2013.01.17.14.07.33
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jan 2013 14:07:34 -0800 (PST)
-User-Agent: KMail/4.9.5 (Linux/3.7.1-2-custom; KDE/4.9.5; x86_64; ; )
+	id S1751825Ab3AQWLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 17:11:55 -0500
+Received: from gwfb01.gwf.one-mail.on.ca ([142.46.227.146]:45790 "EHLO
+	gwfa01.gwf.one-mail.on.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751328Ab3AQWLy convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 17:11:54 -0500
+X-Greylist: delayed 1091 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jan 2013 17:11:54 EST
+Received: from gwb01.gw.one-mail.on.ca (gw01.local.one.mail [10.250.13.132])
+	by sshone0bgf01.int.ssha.ca (Switch-3.3.3/Switch-3.3.3) with ESMTP id r0HLsiRD019445
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Thu, 17 Jan 2013 16:54:44 -0500
+Received: from smtpb02.one-mail.on.ca (tlsb.tls.one-mail.on.ca [10.250.26.62])
+	by gwb01.gw.one-mail.on.ca (gwb01) with ESMTP id r0HLra1K029282
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Thu, 17 Jan 2013 16:53:36 -0500
+Received: from uhnsmtp004.uhn.on.ca (uhnsmtp004.uhn.on.ca [199.212.7.89])
+	(authenticated bits=0)
+	by smtpb02.one-mail.on.ca (smtpb02) with ESMTP id r0HLrU4F019815
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=OK)
+	for <git@vger.kernel.org>; Thu, 17 Jan 2013 16:53:31 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ap8EAPtx+FAKPg5D/2dsb2JhbABFvklzgh4BAQEEOiUaDAQCAQgRBAEBCxQJBzIUCQgCBA4FCIgdu0iQWGEDlyiSIoIk
+Thread-Topic: Question re. git remote repository
+Thread-Index: AQHN9BQsnE5PXSeuRLaLkaBQ75QiNZhMmGQAgAAVLgCAADhAAIAAAHSAgAEp7QA=
+In-Reply-To: <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.2.19.202]
+x-tm-as-product-ver: SMEX-10.2.0.2087-7.000.1014-19564.002
+x-tm-as-result: No--54.743300-8.000000-31
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+X-CT-Refid: str=0001.0A020203.50F872DB.00F8:SCFSTAT15037076,ss=1,fgs=0
+X-Spam-Score: 0.00%
+X-Spam-Analysis: v=1.1 cv=aVuH+yJaJQ3XxwVNIQ0kqFsStq18sPiz0wg/0xjW2bs= c=1 sm=1 a=q7aWwITXUpIA:10 a=IcfhDb_qSfAA:10 a=kj9zAlcOel0A:10 a=05+XHyEUMwofaMpFvQLczg==:17 a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8 a=h_gc_OxNfNfZWGqjTCoA:9 a=CjuIK1q_8ugA:10 a=05+XHyEUMwofaMpFvQLczg==:117%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213882>
 
-Subversion 1.7 and newer implement HTTPv2, an extension that should make HTTP
-more efficient. Servers with support for this protocol will make the subversion
-client library take an alternative code path that checks (with assertions)
-whether the URL is "canonical" or not.
+Hi David,
 
-This patch fixes an issue I encountered while trying to `git svn dcommit` a
-rename action for a file containing a single quote character ("User's Manual"
-to "UserMan.tex"). It does not happen for older subversion 1.6 servers nor
-non-HTTP(S) protocols such as the native svn protocol, only on an Apache server
-shipping SVN 1.7. Trying to `git svn dcommit` under the aforementioned
-conditions yields the following error which aborts the commit process:
+Ok, now I'm really lost! This is definitely due to my newbie git status but I'll ask anyway. I'm confused by your statement "... if you try to have one filesystem, with multiple people running git on their machines against that shared filesystem, I would expect you to have all sorts of problems."
 
-    Committing to http://example.com/svn ...
-    perl: subversion/libsvn_subr/dirent_uri.c:1520: uri_skip_ancestor:
-Assertion `svn_uri_is_canonical(child_uri, ((void *)0))' failed.
-    error: git-svn died of signal 6
+Isn't that the whole point of git, or any versioning system? I thought the idea was that each developer installed git locally on their machines and (as needed) committed their changes to the master repository which resides externally to any of the local machines, such as on a network server (and which I'm assuming has git installed locally as well).
 
-An analysis of the subversion source for the cause:
+What am I missing?
 
-- The assertion originates from uri_skip_ancestor which calls
-  svn_uri_is_canonical, which fails when the URL contains percent-encoded values
-  that do not necessarily have to be encoded (not "canonical" enough). This is
-  done by a table lookup in libsvn_subr/path.c. Putting some debugging prints
-  revealed that the character ' is indeed encoded to %27 which is not
-  considered canonical.
-- url_skip_ancestor is called by svn_ra_neon__get_baseline_info with the root
-  repository URL and path as parameters;
-- which is called by copy_resource (libsvn_ra_neon/commit.c) for a copy action
-  (or in my case, renaming which is actually copy + delete old);
-- which is called by commit_add_dir;
-- which is assigned as a structure method "add_file" in
-  svn_ra_neon__get_commit_editor.
+The 'other' David Lang   ;-)
 
-In the whole path, the path argument is not modified.
+-----Original Message-----
+From: David Lang [mailto:david@lang.hm] 
+Sent: Wednesday, January 16, 2013 6:01 PM
+To: Stephen Smith
+Cc: Konstantin Khomoutov; Jeff King; git@vger.kernel.org; Lang, David
+Subject: Re: Question re. git remote repository
 
-Through some more uninteresting wrapper functions, the Perl bindings gives you
-access to the add_file method which will pass the path argument without
-modifications to svn.
+On Wed, 16 Jan 2013, Stephen Smith wrote:
 
-git-svn calls the "R"(ename) subroutine in Git::SVN::Editor which contains:
-326         my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
-327                                 $self->url_path($m->{file_a}), $self->{r});
-"repo_path" basically returns the path as-is, unless the "svn.pathnameencoding"
-configuration property is set. "url_path" tries to escape some special
-characters, but does not take all special characters into account, thereby
-causing the path to contain some escaped characters which do not have to be
-escaped.
+>>>>> Ideally we'd prefer to simply create our remote repository on a 
+>>>>> drive of one of our local network servers. Is this possible?
+>>>>
+>>>> Yes, this is possible, but it's not advised to keep such a 
+>>>> "reference" repository on an exported networked drive for a number 
+>>>> of reasons (both performance and bug-free operation).
+>>>
+>>> I agree that performance is not ideal (although if you are on a fast 
+>>> LAN, it probably would not matter much), but I do not recall any 
+>>> specific bugs in that area. Can you elaborate?
+>>
+>> This one [1] for instance.  I also recall seing people having other 
+>> "mystical" problems with setups like this so I somehow developed an 
+>> idea than having a repository on a networked drive is asking for troubles.
+>> Of course, if there are happy users of such setups, I would be glad 
+>> to hear as my precautions might well be unfounded for the recent 
+>> versions of Git.
+>>
+>> 1. http://code.google.com/p/msysgit/issues/detail?id=130
+>
+> A group I was with used a master repository on a windows share for quite some time without a database corruption being seen.   --
 
-The list of characters not to be escaped are taken from the
-subversion/libsvn_subr/path.c file to fully account for all characters. Tested
-with a filename containing all characters in the range 0x20 to 0x78 (inclusive).
+I think the risk is that if you have multiple people doing actions on the shared filesystem you can run into trouble.
 
-Signed-off-by: Peter Wu <lekensteyn@gmail.com>
----
- perl/Git/SVN/Editor.pm | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+As long as only one copy of git is ever running against the repository, I don't see any reason for there to be a problem.
 
-diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
-index 3bbc20a..30f92cb 100644
---- a/perl/Git/SVN/Editor.pm
-+++ b/perl/Git/SVN/Editor.pm
-@@ -145,7 +145,8 @@ sub repo_path {
- sub url_path {
- 	my ($self, $path) = @_;
- 	if ($self->{url} =~ m#^https?://#) {
--		$path =~ s!([^~a-zA-Z0-9_./-])!uc sprintf("%%%02x",ord($1))!eg;
-+		# characters are taken from subversion/libsvn_subr/path.c
-+		$path =~ s#([^~a-zA-Z0-9_./!$&'()*+,-])#uc sprintf("%%%02x",ord($1))#eg;
- 	}
- 	$self->{url} . '/' . $self->repo_path($path);
- }
--- 
-1.8.1.1
+But if you try to have one filesystem, with multiple people running git on their machines against that shared filesystem, I would expect you to have all sorts of problems.
+
+David Lang
+
+This e-mail may contain confidential and/or privileged information for the sole use of the intended recipient. 
+Any review or distribution by anyone other than the person for whom it was originally intended is strictly prohibited. 
+If you have received this e-mail in error, please contact the sender and delete all copies. 
+Opinions, conclusions or other information contained in this e-mail may not be that of the organization.
