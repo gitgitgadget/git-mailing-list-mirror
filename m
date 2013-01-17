@@ -1,95 +1,79 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 3/8] git_remote_helpers: Force rebuild if python version
- changes
-Date: Wed, 16 Jan 2013 19:27:08 -0500
-Message-ID: <20130117002708.GA15517@padd.com>
-References: <cover.1358018078.git.john@keeping.me.uk>
- <89f55d20da9a4c0a8490f95107cbf5d04219d0fb.1358018078.git.john@keeping.me.uk>
- <20130112233044.GB23079@padd.com>
- <20130113162605.GL4574@serenity.lan>
- <20130113171402.GA1307@padd.com>
- <20130113175238.GO4574@serenity.lan>
- <20130115225805.GA4574@serenity.lan>
+Subject: Re: [RFC/PATCH 2/8 v3] git_remote_helpers: fix input when running
+ under Python 3
+Date: Wed, 16 Jan 2013 19:29:55 -0500
+Message-ID: <20130117002955.GB15517@padd.com>
+References: <20130113161724.GK4574@serenity.lan>
+ <50F38E12.6090207@alum.mit.edu>
+ <20130114094721.GQ4574@serenity.lan>
+ <20130115194809.GU4574@serenity.lan>
+ <7vbocq2mri.fsf@alter.siamese.dyndns.org>
+ <20130115215412.GX4574@serenity.lan>
+ <7vy5fu14sy.fsf@alter.siamese.dyndns.org>
+ <20130115224049.GZ4574@serenity.lan>
+ <20130116000316.GA26999@padd.com>
+ <20130116094418.GA9089@river>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	"Eric S. Raymond" <esr@thyrsus.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
 To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Jan 17 01:27:38 2013
+X-From: git-owner@vger.kernel.org Thu Jan 17 01:30:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvdKQ-0003gS-6K
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 01:27:34 +0100
+	id 1TvdN5-0007bZ-Ay
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 01:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757252Ab3AQA1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 19:27:13 -0500
-Received: from honk.padd.com ([74.3.171.149]:41700 "EHLO honk.padd.com"
+	id S1757477Ab3AQA37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 19:29:59 -0500
+Received: from honk.padd.com ([74.3.171.149]:41706 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755637Ab3AQA1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2013 19:27:12 -0500
+	id S1756878Ab3AQA36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 19:29:58 -0500
 Received: from arf.padd.com (unknown [50.52.174.88])
-	by honk.padd.com (Postfix) with ESMTPSA id 64F5632C9;
-	Wed, 16 Jan 2013 16:27:11 -0800 (PST)
+	by honk.padd.com (Postfix) with ESMTPSA id 5C54C20B7;
+	Wed, 16 Jan 2013 16:29:57 -0800 (PST)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 0C82B2B95E; Wed, 16 Jan 2013 19:27:08 -0500 (EST)
+	id 23C702B95E; Wed, 16 Jan 2013 19:29:55 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20130115225805.GA4574@serenity.lan>
+In-Reply-To: <20130116094418.GA9089@river>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213830>
 
-john@keeping.me.uk wrote on Tue, 15 Jan 2013 22:58 +0000:
-> For reference, putting the version check in setup.py looks like this:
+john@keeping.me.uk wrote on Wed, 16 Jan 2013 09:45 +0000:
+> On Tue, Jan 15, 2013 at 07:03:16PM -0500, Pete Wyckoff wrote:
+> > I'd suggest for this Python conundrum using byte-string literals, e.g.:
+> > 
+> >         lines = check_output(args).strip().split(b'\n')
+> > 	value, name = line.split(b' ')
+> > 	name = name.strip(b'commit\t')
+> > 
+> > Essentially identical to what you have, but avoids naming "utf-8" as
+> > the encoding.  It instead relies on Python's interpretation of
+> > ASCII characters in string context, which is exactly what C does.
 > 
-> -- >8 --
+> The problem is that AFAICT the byte-string prefix is only available in
+> Python 2.7 and later (compare [1] and [2]).  I think we need this more
+> convoluted code if we want to keep supporting Python 2.6 (although
+> perhaps 'ascii' would be a better choice than 'utf-8').
 > 
-> diff --git a/git_remote_helpers/setup.py b/git_remote_helpers/setup.py
-> index 6de41de..2c21eb5 100644
-> --- a/git_remote_helpers/setup.py
-> +++ b/git_remote_helpers/setup.py
-> @@ -3,6 +3,7 @@
->  """Distutils build/install script for the git_remote_helpers package."""
->  
->  from distutils.core import setup
-> +import sys
->  
->  # If building under Python3 we need to run 2to3 on the code, do this by
->  # trying to import distutils' 2to3 builder, which is only available in
-> @@ -13,6 +14,24 @@ except ImportError:
->      # 2.x
->      from distutils.command.build_py import build_py
->  
-> +
-> +current_version = '%d.%d' % sys.version_info[:2]
-> +try:
-> +    f = open('GIT-PYTHON_VERSION', 'r')
-> +    latest_version = f.read().strip()
-> +    f.close()
-> +
-> +    if latest_version != current_version:
-> +        if not '--force' in sys.argv:
-> +            sys.argv.insert(0, '--force')
-> +except IOError:
-> +    pass
-> +
-> +f = open('GIT-PYTHON_VERSION', 'w')
-> +f.write(current_version)
-> +f.close()
-> +
-> +
->  setup(
->      name = 'git_remote_helpers',
->      version = '0.1.0',
-> 
+> [1] http://docs.python.org/2.6/reference/lexical_analysis.html#literals
+> [2] http://docs.python.org/2.7/reference/lexical_analysis.html#literals
 
-That's about the same overhead as doing it in the Makefile,
-and a bit more obscure.  I don't mind your initial version
-so much anymore.  Thanks for thinking about it.
+Drat.  The b'' syntax seems to work on 2.6.8, in spite of
+the docs, but certainly isn't in 2.5.
+
+I think you had hit on the best compromise with encoding,
+but maybe ascii is a little less presumptuous than utf-8,
+and more indicative of the encoding assumption.
 
 		-- Pete
