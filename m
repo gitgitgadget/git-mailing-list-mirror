@@ -1,94 +1,85 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 6/8] git-remote-testpy: hash bytes explicitly
-Date: Thu, 17 Jan 2013 21:05:06 +0000
-Message-ID: <20130117210506.GJ4574@serenity.lan>
-References: <cover.1358448207.git.john@keeping.me.uk>
- <66c42ff65eddde494f40d0a582e89a081b4ab8e8.1358448207.git.john@keeping.me.uk>
- <7vtxqftulq.fsf@alter.siamese.dyndns.org>
- <20130117210048.GI4574@serenity.lan>
+From: James Nylen <jnylen@gmail.com>
+Subject: Re: [PATCH 2/8] Add --unannotate
+Date: Thu, 17 Jan 2013 16:07:05 -0500
+Message-ID: <CABVa4NhK3FR-NsTq6Vt6yrgneQmMxF5ANmN6pF8k3fHeOLd0JA@mail.gmail.com>
+References: <1357012655-24974-1-git-send-email-greened@obbligato.org>
+	<1357012655-24974-3-git-send-email-greened@obbligato.org>
+	<7v623ga8vs.fsf@alter.siamese.dyndns.org>
+	<87sj6kfsbz.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Pete Wyckoff <pw@padd.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 22:05:41 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Thu Jan 17 22:07:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvwea-0002Xj-VD
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 22:05:41 +0100
+	id 1TvwgM-0004oP-Qi
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 22:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756073Ab3AQVFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 16:05:17 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:50294 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754817Ab3AQVFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 16:05:16 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5FAD6606587;
-	Thu, 17 Jan 2013 21:05:15 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kxsbeuvR6sc9; Thu, 17 Jan 2013 21:05:15 +0000 (GMT)
-Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
-	by coyote.aluminati.org (Postfix) with ESMTP id DAAE260656B;
-	Thu, 17 Jan 2013 21:05:14 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by aardwolf.aluminati.org (Postfix) with ESMTP id B831E276DFE;
-	Thu, 17 Jan 2013 21:05:14 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from aardwolf.aluminati.org ([127.0.0.1])
-	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9TS2nOc9UsPa; Thu, 17 Jan 2013 21:05:14 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by aardwolf.aluminati.org (Postfix) with ESMTPSA id 9E40E276DFB;
-	Thu, 17 Jan 2013 21:05:08 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20130117210048.GI4574@serenity.lan>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755279Ab3AQVHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 16:07:08 -0500
+Received: from mail-vb0-f41.google.com ([209.85.212.41]:35605 "EHLO
+	mail-vb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754086Ab3AQVHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 16:07:07 -0500
+Received: by mail-vb0-f41.google.com with SMTP id l22so3018978vbn.28
+        for <git@vger.kernel.org>; Thu, 17 Jan 2013 13:07:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=DnbLMlkp5XqJkzI5/4g76ZvTNcIuWP69Y8OWmDcqDWU=;
+        b=PAji8m01DNIC6RY/OuTSqJEVWDP56fNJZ3mkfzarggN5Il3i0Ea2C3UC+Z13KkuGaB
+         s6ZVcXm672Ll9U3/cojqysm6h3y2NeO/T5Uiv589GU7wDvASZjo7AhVUPy64OD/Q5vYu
+         kBI7lvDslNeNE6vF78loNQhKUYqZudXxpNu1wz4NuszxA/6siB9kob2lrXamWV+StLK9
+         DFUWld90JeHcmtMXOEhKR40MtoesmDX692xYsYsrOsuYhNU5CRuYme7eGSHTrIogD2ZM
+         F9Tslzs+ugedByftzmeqnRX30HrE4sejkg9D5vJ5wzcoh5w8krqvh6ferwASMk5lSiKe
+         obOQ==
+X-Received: by 10.52.76.170 with SMTP id l10mr6215291vdw.83.1358456825836;
+ Thu, 17 Jan 2013 13:07:05 -0800 (PST)
+Received: by 10.220.125.65 with HTTP; Thu, 17 Jan 2013 13:07:05 -0800 (PST)
+In-Reply-To: <87sj6kfsbz.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213880>
 
-On Thu, Jan 17, 2013 at 09:00:48PM +0000, John Keeping wrote:
-> On Thu, Jan 17, 2013 at 12:36:33PM -0800, Junio C Hamano wrote:
->> John Keeping <john@keeping.me.uk> writes:
->> 
->>> Under Python 3 'hasher.update(...)' must take a byte string and not a
->>> unicode string.  Explicitly encode the argument to this method as UTF-8
->>> so that this code works under Python 3.
+On Tue, Jan 1, 2013 at 5:31 PM,  <greened@obbligato.org> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> "David A. Greene" <greened@obbligato.org> writes:
+>>
+>>> From: James Nylen <jnylen@gmail.com>
 >>>
->>> This moves the required Python version forward to 2.0.
->>>
->>> Signed-off-by: John Keeping <john@keeping.me.uk>
->>> ---
->> 
->> Hmph.  So what happens when the path is _not_ encoded in UTF-8?
-> 
-> Do you mean encodable?  As you say below it will currently throw an
-> exception.
+>>> Teach git-subtree about --unannotate.  This option strips a prefix
+>>> from a commit message when doing a subtree split.
+>>
+>> Hrm.  This looks like a workaround for a short-sighted misdesign of
+>> the annotate option that only allowed prefixing a fixed string.  I
+>> have to wonder if it is better to deprecate --annotate and replace
+>> it with a more general "commit log rewriting" facility that can
+>> cover both use cases?
+>
+> That's not a bad idea.  I'd have to think a bit about a sensible design.
+> Do you have any ideas, James?
 
-Now my brain's not working - we shouldn't get an error converting from a
-Unicode string to UTF-8, so I think this patch is OK as it is.
+I just now saw these emails.  I'm having a hard time thinking of any
+good use case other than:
 
-> > Is the repo.hash (and local.hash that gets a copy of it) something
-> > that needs to stay the same across multiple invocations of this
-> > remote helper, and between the currently shipped Git and the version
-> > of Git after applying this patch?
-> 
-> It's used to specify the path of the repository for importing or
-> exporting, so it should stay consistent across invocations.  However,
-> this is only an example remote helper so I don't think we should worry
-> if it changes from one Git release to the next.
+ - add "fancylib" as a subtree of "myprog"
+ - commit to myprog repo: "fancylib: don't crash as much"
+ - split these commits back out to fancylib's main repo, and remove
+the "fancylib: " prefix
+
+You could potentially have something like "Don't crash as much
+(fancylib)" but that's awkward.  What might you want to do with a
+pattern-based rewrite that doesn't involve removing a prefix when
+splitting commits?
+
+In fact, I don't see the use of the original --annotate option at all,
+since it causes more detailed commit messages in the smaller of the
+two repositories.
