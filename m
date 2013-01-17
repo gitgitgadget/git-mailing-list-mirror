@@ -1,80 +1,82 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 07/14] imap-send.c: inline imap_parse_list() in imap_list()
-Date: Thu, 17 Jan 2013 05:43:59 +0100
-Message-ID: <50F7818F.5010106@alum.mit.edu>
-References: <1358237193-8887-1-git-send-email-mhagger@alum.mit.edu> <1358237193-8887-8-git-send-email-mhagger@alum.mit.edu> <20130115185147.GB14552@ftbfs.org> <50F66422.3010502@alum.mit.edu> <7vip6xywdf.fsf@alter.siamese.dyndns.org>
+From: Matt Seitz <mseitz@mhseitz.onmicrosoft.com>
+Subject: Re: Question re. git remote repository
+Date: Thu, 17 Jan 2013 05:20:07 +0000
+Message-ID: <1BBEF94B6B46E54980290D150A6F2EDD46B718CB@BLUPRD0612MB625.namprd06.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 05:44:30 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "david@lang.hm" <david@lang.hm>,
+	"'matseitz@cisco.com'" <matseitz@cisco.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 06:21:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvhL1-0003ih-45
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 05:44:27 +0100
+	id 1TvhuO-000872-F1
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 06:21:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758538Ab3AQEoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 23:44:05 -0500
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:48504 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757464Ab3AQEoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 23:44:04 -0500
-X-AuditID: 1207440f-b7f276d0000008b2-79-50f78192a17b
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 3A.B9.02226.29187F05; Wed, 16 Jan 2013 23:44:02 -0500 (EST)
-Received: from [192.168.69.140] (p57A25AE7.dip.t-dialin.net [87.162.90.231])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0H4i0uF015788
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 16 Jan 2013 23:44:01 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <7vip6xywdf.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqDup8XuAwfT3phZdV7qZLBp6rzBb
-	vL25hNGidfYZFgcWj1dP+tk8ds66y+5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGWfmb2cs
-	WMpWMflAWgPjFNYuRk4OCQETiRfdu1kgbDGJC/fWs3UxcnEICVxmlDi7ookVwjnDJPHh8XxG
-	kCpeAW2Je2+ugXWwCKhK9D97yA5iswnoSizqaWYCsUUFwiR6X5+DqheUODnzCVi9iICaxMS2
-	Q2A2s0CKxMJj68B6hQWCJNZ0dLFDLHvBKLH/0kU2kASngJnEudn/mSAadCTe9T1ghrDlJba/
-	ncM8gVFgFpIds5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrolebmaJXmpK6SZG
-	SEDz72DsWi9ziFGAg1GJh9fi1rcAIdbEsuLK3EOMkhxMSqK8OlXfA4T4kvJTKjMSizPii0pz
-	UosPMUpwMCuJ8K7JA8rxpiRWVqUW5cOkpDlYlMR51Zeo+wkJpCeWpGanphakFsFkZTg4lCR4
-	pzQANQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDYjW+GBitICkeoL0NIO28xQWJ
-	uUBRiNZTjLoc23+3P2cUYsnLz0uVEuedCFIkAFKUUZoHtwKWvl4xigN9LMw7A6SKB5j64Ca9
-	AlrCBLRk097PIEtKEhFSUg2M/Zq8XALFAiKJlbIfl3Xc6PTR/3t1i3Ns4C6e5T13FvW+2qK+
-	Jp/x/KrnRd134oJ2T7xf3ad8bnHOJWt3E0dP+7en45S/vf7+4M7aaNajHWlZrVcv 
+	id S1753284Ab3AQFUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 00:20:39 -0500
+Received: from co9ehsobe004.messaging.microsoft.com ([207.46.163.27]:32825
+	"EHLO co9outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752238Ab3AQFUi convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 00:20:38 -0500
+Received: from mail159-co9-R.bigfish.com (10.236.132.244) by
+ CO9EHSOBE006.bigfish.com (10.236.130.69) with Microsoft SMTP Server id
+ 14.1.225.23; Thu, 17 Jan 2013 05:20:37 +0000
+Received: from mail159-co9 (localhost [127.0.0.1])	by
+ mail159-co9-R.bigfish.com (Postfix) with ESMTP id 59BB1401F5;	Thu, 17 Jan
+ 2013 05:20:37 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:132.245.1.181;KIP:(null);UIP:(null);IPV:NLI;H:BLUPRD0612HT001.namprd06.prod.outlook.com;RD:none;EFVD:NLI
+X-SpamScore: 5
+X-BigFish: VS5(zz98dI1432Izz1ee6h1de0h1202h1e76h1d1ah1d2ah1957ozzz31h87h2a8h668h839h944hd25h1220h1288h12a5h12a9h12bdh137ah13b6h13eah1441h1504h1537h153bh15d0h162dh1631h1758h1155h)
+Received-SPF: softfail (mail159-co9: transitioning domain of mhseitz.onmicrosoft.com does not designate 132.245.1.181 as permitted sender) client-ip=132.245.1.181; envelope-from=mseitz@mhseitz.onmicrosoft.com; helo=BLUPRD0612HT001.namprd06.prod.outlook.com ;.outlook.com ;
+X-FB-DOMAIN-IP-MATCH: fail
+Received: from mail159-co9 (localhost.localdomain [127.0.0.1]) by mail159-co9
+ (MessageSwitch) id 1358400034481644_14713; Thu, 17 Jan 2013 05:20:34 +0000
+ (UTC)
+Received: from CO9EHSMHS029.bigfish.com (unknown [10.236.132.246])	by
+ mail159-co9.bigfish.com (Postfix) with ESMTP id 733782005F;	Thu, 17 Jan 2013
+ 05:20:34 +0000 (UTC)
+Received: from BLUPRD0612HT001.namprd06.prod.outlook.com (132.245.1.181) by
+ CO9EHSMHS029.bigfish.com (10.236.130.39) with Microsoft SMTP Server (TLS) id
+ 14.1.225.23; Thu, 17 Jan 2013 05:20:32 +0000
+Received: from BLUPRD0612MB625.namprd06.prod.outlook.com ([169.254.1.12]) by
+ BLUPRD0612HT001.namprd06.prod.outlook.com ([10.255.217.162]) with mapi id
+ 14.16.0257.004; Thu, 17 Jan 2013 05:20:23 +0000
+Thread-Topic: Question re. git remote repository
+Thread-Index: Ac30clBfiS9Wz5z5QQCdt+r50PLYHg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [69.228.170.69]
+X-OriginatorOrg: mhseitz.onmicrosoft.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213842>
 
-On 01/16/2013 04:34 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+"David Lang" <david@lang.hm> wrote in message news:<alpine.DEB.2.02.1301161843390.21503@nftneq.ynat.uz>...
+> >>
+> >> On Thu, 17 Jan 2013, Matt Seitz (matseitz) wrote:
+> >>
+> >>> 2. a repository where only one user does "git add" and "git commit",
+> >> while other users will do "git pull", the peer-to-peer model (you pull changes
+> >> from me, I pull changes from you).
+> >>
 > 
->> On 01/15/2013 07:51 PM, Matt Kraai wrote:
->>> On Tue, Jan 15, 2013 at 09:06:25AM +0100, Michael Haggerty wrote:
->>>> -static struct imap_list *parse_imap_list(struct imap *imap, char **sp)
->>>> +static struct imap_list *parse_list(char **sp)
->>>
->>> The commit subject refers to imap_parse_list and imap_list whereas the
->>> code refers to parse_imap_list and parse_list.
->>
->> Yes, you're right.  Thanks.
-> 
-> I think I've fixed this (and some other minor points in other
-> patches in the series) while queuing; please check master..3691031c
-> after fetching from me.
+> you may _be_ safe, and if others who really know the internals speak up, take 
+> their word on it. 
 
-Looks good.  Thanks.
+Well, we already have Linus's article.  I guess the question is whether the use case I describe above falls under:
 
-Michael
+A. "maintenance operations"
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+B. "normal git workflow"
+
+Personally, I would consider this use case to be a "normal git workflow".
