@@ -1,113 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 0/8] push: update remote tags only with force
-Date: Wed, 16 Jan 2013 22:59:06 -0800
-Message-ID: <7vehhkuwg5.fsf@alter.siamese.dyndns.org>
-References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
- <DBF53EC2-A669-4B77-B88E-BFCDF43C862E@quendi.de>
- <7vsj61xez2.fsf@alter.siamese.dyndns.org>
- <7vobgpxeel.fsf@alter.siamese.dyndns.org>
- <CAEUsAPb0Zg0x78e+12NqXA4PRBkOUO89KTgxtwxujS1KOx9NYg@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] fix some clang warnings
+Date: Thu, 17 Jan 2013 10:24:27 +0000
+Message-ID: <20130117102427.GC4574@serenity.lan>
+References: <CALWbr2z4TiynwOR3Lk4005dbZaLtcHK3J01ZF73wp8Q7Rm6YBA@mail.gmail.com>
+ <20130116171809.GA2476@farnsworth.metanate.com>
+ <7FDA1B56-731E-4BA2-8FE5-196B965FFFDB@quendi.de>
+ <20130116175057.GB27525@sigill.intra.peff.net>
+ <20130116180041.GC27525@sigill.intra.peff.net>
+ <20130116181203.GB2476@farnsworth.metanate.com>
+ <20130116181558.GA4426@sigill.intra.peff.net>
+ <20130116182240.GC2476@farnsworth.metanate.com>
+ <20130116182449.GA4881@sigill.intra.peff.net>
+ <20130116190137.GD2476@farnsworth.metanate.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Max Horn <max@quendi.de>, git@vger.kernel.org,
-	Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kacper Kornet <draenog@pld-linux.org>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 07:59:39 2013
+Cc: Max Horn <max@quendi.de>, Antoine Pelisse <apelisse@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 17 11:25:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvjRo-0001kF-0u
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 07:59:36 +0100
+	id 1Tvmeg-0001TY-Kb
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 11:25:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101Ab3AQG7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 01:59:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57228 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754465Ab3AQG7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 01:59:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE92173E9;
-	Thu, 17 Jan 2013 01:59:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8eipJY3gOWcRq4lTq7IU+W37p6k=; b=F2QHbl
-	zw2TkH8hAlxPNPIJVv3qG9npa057/VsjfHKVvrfbWYTfo5Lm9JOPsFFwC8dYQVK5
-	DjzePxSse/r8clGVlONPqLc0Lms8Y7icfS3XM9DkKNsaW5N5xAbnpKF6ZPRybvEe
-	zyX9tTTxzeTnJgGqsUDSnoMnEUp67+JnLrWok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aSl0sVAGqmcaqO630umKg9ZSAxoK2L3u
-	xNAY+Vdv7jbkXssZCMjyeHUHdTkLvja73G2mxmpvIles7adAlwxGcOoel2z6eFLg
-	H5DjvKXr8xZJh/i4uB7U0/7Ey/6X9OU9bB/oGytTVBtvx0wKIIT8EiXMZvhLJUeu
-	ugUxJgtwu7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41C2E73E6;
-	Thu, 17 Jan 2013 01:59:10 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A71373E1; Thu, 17 Jan 2013
- 01:59:09 -0500 (EST)
-In-Reply-To: <CAEUsAPb0Zg0x78e+12NqXA4PRBkOUO89KTgxtwxujS1KOx9NYg@mail.gmail.com> (Chris
- Rorvick's message of "Thu, 17 Jan 2013 00:20:13 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 64541B4C-6073-11E2-AE2E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759510Ab3AQKYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 05:24:45 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:52885 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759493Ab3AQKYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 05:24:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id D45D722BBE;
+	Thu, 17 Jan 2013 10:24:42 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NF5ehA6NeWA5; Thu, 17 Jan 2013 10:24:39 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by hyena.aluminati.org (Postfix) with ESMTP id D26CA22F97;
+	Thu, 17 Jan 2013 10:24:38 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 9E3CE161E556;
+	Thu, 17 Jan 2013 10:24:38 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ol5k6XTU3+gH; Thu, 17 Jan 2013 10:24:38 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 971C5161E52B;
+	Thu, 17 Jan 2013 10:24:29 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <20130116190137.GD2476@farnsworth.metanate.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213846>
 
-Chris Rorvick <chris@rorvick.com> writes:
+On Wed, Jan 16, 2013 at 07:01:37PM +0000, John Keeping wrote:
+> On Wed, Jan 16, 2013 at 10:24:49AM -0800, Jeff King wrote:
+> > On Wed, Jan 16, 2013 at 06:22:40PM +0000, John Keeping wrote:
+> > 
+> > Thanks for checking. I'd rather squelch the warning completely (as in my
+> > re-post of Max's patch from a few minutes ago), and we can loosen it
+> > (possibly with a version check) later when a fix is widely disseminated.
+> 
+> I checked again with a trunk build of clang and the warning's still
+> there, so I've created a clang bug [1] to see if they will change the
+> behaviour.
+> 
+> [1] http://llvm.org/bugs/show_bug.cgi?id=14968
 
-> On Wed, Jan 16, 2013 at 10:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> It is fine when pushing into "refs/tags/" hierarchy.  It is *NOT*
->> OK if the type check does not satisfy this function.  In that case,
->> we do not actually see the existence of the destination as a
->> problem, but it is reported as such.  We are blocking because we do
->> not like the type of the new object or the type of the old object.
->> If the destination points at a commit, the push can succeed if the
->> user changes what object to push, so saying "you cannot push because
->> the destination already exists" is just wrong in such a case.
->
-> So the solution is to revert back to recommending a merge?
+Well, that was quick!  This warning is now gone when using a fresh trunk
+build of clang.
 
-Of course not, because at that point you may not even have what you
-were attempting to overwrite.  Nobody says it is even something you
-could merge.
+>From [2], it looks like this will become version 3.3 (in about 5
+months).  So should we change the condition to:
 
-The recommended solution certainly will involve a "fetch" (not
-"pull" or "pull --rebase").  You fetch from over there to check what
-you were about to overwrite, examine the situation to decide what
-the appropriate action is.
+#if defined(__GNUC__) && (!defined(__clang__) ||
+	__clang_major__ > 3 || \
+        (__clang__major == 3 && __clang_minor__ >= 3)
 
-The point is that Git in general, and the codepath that was touched
-by the patch in particular, does not have enough information to
-decide what the appropriate action is for the user, especially when
-the ref is outside the ones we know what the conventional uses of
-them are.  We can make policy decisions like "tags are meant to be
-unmoving anchor points, so it is unusual to overwrite any old with
-any new", "heads are meant to be branch tips, and because rewinding
-them while more than one repositories are working with them will
-cause issues to other repositories, it is unusual to push a
-non-fast-forward" and enforcement mechanism for such policy
-decisions will help users, but that is only because we know what
-their uses are.
 
-The immediate action we should take is to get closer to the original
-behaviour of not complaining with "ref already exists", which is
-nonsensical.  That does not mean that we will forbid improving the
-codepath by giving different advices depending on the case.
+[2] http://llvm.org/docs/HowToReleaseLLVM.html
 
-One of the new advices could tell them to "fetch it and inspect the
-situation", if old is not something we do not even have (hence we
-cannot check its type, let alone the ancestry relationship of it
-with new), for example.
+
+John
