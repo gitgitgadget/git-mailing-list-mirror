@@ -1,99 +1,101 @@
-From: Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>
-Subject: Re: GIT get corrupted on lustre
-Date: Thu, 17 Jan 2013 11:41:13 -0500
-Message-ID: <50F829A9.7090606@calculquebec.ca>
-References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com> <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] fix clang -Wtautological-compare with unsigned enum
+Date: Thu, 17 Jan 2013 08:44:20 -0800
+Message-ID: <CA+55aFxYSX2iYPSafKdCDSfWSMfQxP3R3Hqh8GuiiR6EbWfk3w@mail.gmail.com>
+References: <20130116182449.GA4881@sigill.intra.peff.net> <1358376443-7404-1-git-send-email-apelisse@gmail.com>
+ <1358376443-7404-2-git-send-email-apelisse@gmail.com> <CALWbr2wk+78zxGKCo-hCOwMuMOzdGspYvMu7PA6o0OYM3Y3m4A@mail.gmail.com>
+ <20130117110008.GD4574@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?S=E9bastien_?= =?ISO-8859-1?Q?Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-X-From: git-owner@vger.kernel.org Thu Jan 17 17:41:35 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Antoine Pelisse <apelisse@gmail.com>, Max Horn <max@quendi.de>,
+	git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jan 17 17:45:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvsX0-0008HP-Uy
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 17:41:35 +0100
+	id 1TvsaM-0004Cn-R0
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 17:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757232Ab3AQQlO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jan 2013 11:41:14 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:61960 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757073Ab3AQQlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 11:41:13 -0500
-Received: by mail-qa0-f46.google.com with SMTP id r4so4440836qaq.19
-        for <git@vger.kernel.org>; Thu, 17 Jan 2013 08:41:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=o0REREI45mVDDt0JFhEUyPc/AbSjjyQB23r3xmkplmE=;
-        b=h/OmR48LD7V4xV//i8yM2DKJmggdJrnXQmYHRZjM4QWOutpd0L1bjcleTt8x6YPbsq
-         8cpMyQR3YEV7V08eWb3HiI9h1ViZ5/WQKT57Ik5Vva1KaEKe3jc6nX1WL0/ytudEKz62
-         L4Lb4+W19I0qBlYTxcvSwkpZxNw+hybSQUg/QjPRJTObJkdEU3K8VTX3ov5vhyCpvbzx
-         R1XEf2Q1ckKo+QlGB1+PTSs1MRXslIwZBgDuCBKVQ/gZR5ICJENgwNnt8QYIg5jqyIip
-         9Qu9yajDG3ef758/n0WjCWH2nT3x6dyX+MIbIv8PslMpfL5QIS2+1Pq97rV9jt1z6stC
-         t5fw==
-X-Received: by 10.49.127.180 with SMTP id nh20mr7070737qeb.19.1358440872861;
-        Thu, 17 Jan 2013 08:41:12 -0800 (PST)
-Received: from dhcp-106-204.gel.ulaval.ca ([2620:0:1af0:f100:618d:6e9f:f467:219e])
-        by mx.google.com with ESMTPS id ks10sm1066944qeb.13.2013.01.17.08.41.10
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jan 2013 08:41:11 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil>
-X-Gm-Message-State: ALoCoQksHff8eilQoTn/OamrE6g290Cx4x67SPfPI3SASI85vATl3Am2djSwQIVHNdQhIEKEJuQI
+	id S1755257Ab3AQQom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 11:44:42 -0500
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:39648 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751411Ab3AQQol (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 11:44:41 -0500
+Received: by mail-vc0-f169.google.com with SMTP id gb23so2678027vcb.14
+        for <git@vger.kernel.org>; Thu, 17 Jan 2013 08:44:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=jp7JJaSUZtDD/Ubyc9wD9GD6518jTSGAwLSaz8qvvXg=;
+        b=d06LsKFT0SfLONZ7cq1UxFhmlTLC+j6Xj3R5IHELjG0dtVZN2leDttAG1bbPNVs6OG
+         muOtFbS6EEzpJhCgWw/qTt0x7jNTVD/EXNT9SnNtbl/UXs83TffxGAfoG2F76mdx75x9
+         49+FNVB+dh4jr3MAL6U2j+ck+MMuMtXPPbK184UqA+S7T/bAn/OK5Fxzgef1DON27BnX
+         K7ykkI51kHSlAplo88Xvr/EARYVljKpP+zpBPgFkyrR+tNDEqOdKHbZfH3dwhnVwTxSE
+         9Cu3D/D4nwOzGchO1iNkL5mEkpF3YgH+naM9dxrUwum24zVyJARKgmaKoEFb+KVMKqbl
+         l2Fg==
+X-Received: by 10.52.92.42 with SMTP id cj10mr5333083vdb.102.1358441080711;
+ Thu, 17 Jan 2013 08:44:40 -0800 (PST)
+Received: by 10.220.249.199 with HTTP; Thu, 17 Jan 2013 08:44:20 -0800 (PST)
+In-Reply-To: <20130117110008.GD4574@serenity.lan>
+X-Google-Sender-Auth: xzMKvuGmKJ-cpWxXecgdFcyOK4E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213857>
 
-I don't know of any lustre filesystem that is used on Windows. Barely=20
-anybody uses Windows in the HPC industry.
-This is a Linux cluster.
-
-Maxime Boissonneault
-
-Le 2013-01-17 11:40, Pyeron, Jason J CTR (US) a =E9crit :
->> -----Original Message-----
->> From: Eric Chamberland
->> Sent: Thursday, January 17, 2013 11:31 AM
->>
->> On 01/17/2013 09:23 AM, Philippe Vaucher wrote:
->>>> Anyone has a new idea?
->>> Did you try Jeff King's code to confirm his idea?
->>>
->>> Philippe
->>>
->> Yes I did, but it was running without any problem....
->>
->> I find that my test case is "simple" (fresh git clone then "git gc" =
-in
->> a
->> crontab), I bet anyone who has access to a Lustre filesystem can
->> reproduce the problem...  The problem is to have such a filesystem t=
-o
->> do
->> the tests....
-> Stabbing in the dark, but can you log the details with ProcessMon?
+On Thu, Jan 17, 2013 at 3:00 AM, John Keeping <john@keeping.me.uk> wrote:
 >
-> http://technet.microsoft.com/en-us/sysinternals/bb896645
+> There's also a warning that triggers with clang 3.2 but not clang trunk, which
+> I think is a legitimate warning - perhaps someone who understands integer type
+> promotion better than me can explain why the code is OK (patch->score is
+> declared as 'int'):
 >
->> But I am available to do it...
-> -Jason
+> builtin/apply.c:1044:47: warning: comparison of constant 18446744073709551615
+>     with expression of type 'int' is always false
+>     [-Wtautological-constant-out-of-range-compare]
+>         if ((patch->score = strtoul(line, NULL, 10)) == ULONG_MAX)
+>             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
 
+The warning seems to be very very wrong, and implies that clang has
+some nasty bug in it.
 
---=20
----------------------------------
-Maxime Boissonneault
-Analyste de calcul - Calcul Qu=E9bec, Universit=E9 Laval
-Ph. D. en physique
+Since patch->score is 'int', and UNLONG_MAX is 'unsigned long', the
+conversion rules for the comparison is that the int result from the
+assignment is cast to unsigned long. And if you cast (int)-1 to
+unsigned long, you *do* get ULONG_MAX. That's true regardless of
+whether "long" has the same number of bits as "int" or is bigger. The
+implicit cast will be done as a sign-extension (unsigned long is not
+signed, but the source type of 'int' *is* signed, and that is what
+determines the sign extension on casting).
+
+So the "is always false" is pure and utter crap. clang is wrong, and
+it is wrong in a way that implies that it actually generates incorrect
+code. It may well be worth making a clang bug report about this.
+
+That said, clang is certainly understandably confused. The code
+depends on subtle conversion rules and bit patterns, and is clearly
+very confusingly written.
+
+So it would probably be good to rewrite it as
+
+    unsigned long val = strtoul(line, NULL, 10);
+    if (val == ULONG_MAX) ..
+    patch->score = val;
+
+instead. At which point you might as well make the comparison be ">=
+INT_MAX" instead, since anything bigger than that is going to be
+bogus.
+
+So the git code is probably worth cleaning up, but for git it would be
+a cleanup. For clang, this implies a major bug and bad code
+generation.
+
+                   Linus
+                     Linus
