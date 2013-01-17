@@ -1,124 +1,137 @@
-From: "Lang, David" <David.Lang@uhn.ca>
-Subject: RE: Question re. git remote repository
-Date: Thu, 17 Jan 2013 21:53:29 +0000
-Message-ID: <201301172153.r0HLrU4F019815@smtpb02.one-mail.on.ca>
-References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
- <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
- <20130116182156.GB4426@sigill.intra.peff.net>
- <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
- <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
- <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] git-svn: teach find-rev to find near matches
+Date: Thu, 17 Jan 2013 22:19:33 +0000
+Message-ID: <20130117221933.GK4574@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
-	Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Stephen Smith <ishchis2@gmail.com>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Thu Jan 17 23:12:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 17 23:20:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvxh1-0000vH-PF
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 23:12:16 +0100
+	id 1TvxoX-0001jQ-SV
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 23:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825Ab3AQWLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 17:11:55 -0500
-Received: from gwfb01.gwf.one-mail.on.ca ([142.46.227.146]:45790 "EHLO
-	gwfa01.gwf.one-mail.on.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751328Ab3AQWLy convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 17:11:54 -0500
-X-Greylist: delayed 1091 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jan 2013 17:11:54 EST
-Received: from gwb01.gw.one-mail.on.ca (gw01.local.one.mail [10.250.13.132])
-	by sshone0bgf01.int.ssha.ca (Switch-3.3.3/Switch-3.3.3) with ESMTP id r0HLsiRD019445
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-	for <git@vger.kernel.org>; Thu, 17 Jan 2013 16:54:44 -0500
-Received: from smtpb02.one-mail.on.ca (tlsb.tls.one-mail.on.ca [10.250.26.62])
-	by gwb01.gw.one-mail.on.ca (gwb01) with ESMTP id r0HLra1K029282
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-	for <git@vger.kernel.org>; Thu, 17 Jan 2013 16:53:36 -0500
-Received: from uhnsmtp004.uhn.on.ca (uhnsmtp004.uhn.on.ca [199.212.7.89])
-	(authenticated bits=0)
-	by smtpb02.one-mail.on.ca (smtpb02) with ESMTP id r0HLrU4F019815
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=OK)
-	for <git@vger.kernel.org>; Thu, 17 Jan 2013 16:53:31 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ap8EAPtx+FAKPg5D/2dsb2JhbABFvklzgh4BAQEEOiUaDAQCAQgRBAEBCxQJBzIUCQgCBA4FCIgdu0iQWGEDlyiSIoIk
-Thread-Topic: Question re. git remote repository
-Thread-Index: AQHN9BQsnE5PXSeuRLaLkaBQ75QiNZhMmGQAgAAVLgCAADhAAIAAAHSAgAEp7QA=
-In-Reply-To: <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.2.19.202]
-x-tm-as-product-ver: SMEX-10.2.0.2087-7.000.1014-19564.002
-x-tm-as-result: No--54.743300-8.000000-31
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-X-CT-Refid: str=0001.0A020203.50F872DB.00F8:SCFSTAT15037076,ss=1,fgs=0
-X-Spam-Score: 0.00%
-X-Spam-Analysis: v=1.1 cv=aVuH+yJaJQ3XxwVNIQ0kqFsStq18sPiz0wg/0xjW2bs= c=1 sm=1 a=q7aWwITXUpIA:10 a=IcfhDb_qSfAA:10 a=kj9zAlcOel0A:10 a=05+XHyEUMwofaMpFvQLczg==:17 a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8 a=h_gc_OxNfNfZWGqjTCoA:9 a=CjuIK1q_8ugA:10 a=05+XHyEUMwofaMpFvQLczg==:117%
+	id S1752879Ab3AQWTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 17:19:41 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:53126 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751869Ab3AQWTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 17:19:40 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id EBE326064EB;
+	Thu, 17 Jan 2013 22:19:39 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 77dseH-ihNJs; Thu, 17 Jan 2013 22:19:39 +0000 (GMT)
+Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
+	by coyote.aluminati.org (Postfix) with ESMTP id 613266064CF;
+	Thu, 17 Jan 2013 22:19:39 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by aardwolf.aluminati.org (Postfix) with ESMTP id 347DD276DFE;
+	Thu, 17 Jan 2013 22:19:39 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from aardwolf.aluminati.org ([127.0.0.1])
+	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id F6jhVn9t9Xcr; Thu, 17 Jan 2013 22:19:39 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by aardwolf.aluminati.org (Postfix) with ESMTPSA id 23F8D276DFB;
+	Thu, 17 Jan 2013 22:19:35 +0000 (GMT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213883>
 
-Hi David,
+When a single SVN repository is split into multiple Git repositories
+many SVN revisions will exist in only one of the Git repositories
+created.  For some projects the only way to build a working artifact is
+to check out corresponding versions of various repositories, with no
+indication of what those are in the Git world - in the SVN world the
+revision numbers are sufficient.
 
-Ok, now I'm really lost! This is definitely due to my newbie git status but I'll ask anyway. I'm confused by your statement "... if you try to have one filesystem, with multiple people running git on their machines against that shared filesystem, I would expect you to have all sorts of problems."
+By adding "--before" to "git-svn find-rev" we can say "tell me what this
+repository looked like when that other repository looked like this":
 
-Isn't that the whole point of git, or any versioning system? I thought the idea was that each developer installed git locally on their machines and (as needed) committed their changes to the master repository which resides externally to any of the local machines, such as on a network server (and which I'm assuming has git installed locally as well).
+    git svn find-rev --before \
+        r$(git --git-dir=/over/there.git svn find-rev HEAD)
 
-What am I missing?
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ Documentation/git-svn.txt | 10 ++++++++++
+ git-svn.perl              | 12 ++++++++++--
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-The 'other' David Lang   ;-)
-
------Original Message-----
-From: David Lang [mailto:david@lang.hm] 
-Sent: Wednesday, January 16, 2013 6:01 PM
-To: Stephen Smith
-Cc: Konstantin Khomoutov; Jeff King; git@vger.kernel.org; Lang, David
-Subject: Re: Question re. git remote repository
-
-On Wed, 16 Jan 2013, Stephen Smith wrote:
-
->>>>> Ideally we'd prefer to simply create our remote repository on a 
->>>>> drive of one of our local network servers. Is this possible?
->>>>
->>>> Yes, this is possible, but it's not advised to keep such a 
->>>> "reference" repository on an exported networked drive for a number 
->>>> of reasons (both performance and bug-free operation).
->>>
->>> I agree that performance is not ideal (although if you are on a fast 
->>> LAN, it probably would not matter much), but I do not recall any 
->>> specific bugs in that area. Can you elaborate?
->>
->> This one [1] for instance.  I also recall seing people having other 
->> "mystical" problems with setups like this so I somehow developed an 
->> idea than having a repository on a networked drive is asking for troubles.
->> Of course, if there are happy users of such setups, I would be glad 
->> to hear as my precautions might well be unfounded for the recent 
->> versions of Git.
->>
->> 1. http://code.google.com/p/msysgit/issues/detail?id=130
->
-> A group I was with used a master repository on a windows share for quite some time without a database corruption being seen.   --
-
-I think the risk is that if you have multiple people doing actions on the shared filesystem you can run into trouble.
-
-As long as only one copy of git is ever running against the repository, I don't see any reason for there to be a problem.
-
-But if you try to have one filesystem, with multiple people running git on their machines against that shared filesystem, I would expect you to have all sorts of problems.
-
-David Lang
-
-This e-mail may contain confidential and/or privileged information for the sole use of the intended recipient. 
-Any review or distribution by anyone other than the person for whom it was originally intended is strictly prohibited. 
-If you have received this e-mail in error, please contact the sender and delete all copies. 
-Opinions, conclusions or other information contained in this e-mail may not be that of the organization.
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 69decb1..34d438b 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -346,6 +346,16 @@ Any other arguments are passed directly to 'git log'
+ 	corresponding git commit hash (this can optionally be followed by a
+ 	tree-ish to specify which branch should be searched).  When given a
+ 	tree-ish, returns the corresponding SVN revision number.
+++
++--before;;
++	Don't require an exact match if given an SVN revision, instead find
++	the commit corresponding to the state of the SVN repository (on the
++	current branch) at the specified revision.
+++
++--after;;
++	Don't require an exact match if given an SVN revision; if there is
++	not an exact match return the closest match searching forward in the
++	history.
+ 
+ 'set-tree'::
+ 	You should consider using 'dcommit' instead of this command.
+diff --git a/git-svn.perl b/git-svn.perl
+index bd5266c..d086694 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -114,6 +114,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_message, $_file, $_branch_dest,
+ 	$_template, $_shared,
+ 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
++	$_before, $_after,
+ 	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+ 	$_commit_url, $_tag, $_merge_info, $_interactive);
+@@ -258,7 +259,8 @@ my %cmd = (
+ 			} ],
+ 	'find-rev' => [ \&cmd_find_rev,
+ 	                "Translate between SVN revision numbers and tree-ish",
+-			{} ],
++			{ 'before' => \$_before,
++			  'after' => \$_after } ],
+ 	'rebase' => [ \&cmd_rebase, "Fetch and rebase your working directory",
+ 			{ 'merge|m|M' => \$_merge,
+ 			  'verbose|v' => \$_verbose,
+@@ -1191,7 +1193,13 @@ sub cmd_find_rev {
+ 			    "$head history\n";
+ 		}
+ 		my $desired_revision = substr($revision_or_hash, 1);
+-		$result = $gs->rev_map_get($desired_revision, $uuid);
++		if ($_before) {
++			$result = $gs->find_rev_before($desired_revision, 1);
++		} elsif ($_after) {
++			$result = $gs->find_rev_after($desired_revision, 1);
++		} else {
++			$result = $gs->rev_map_get($desired_revision, $uuid);
++		}
+ 	} else {
+ 		my (undef, $rev, undef) = cmt_metadata($revision_or_hash);
+ 		$result = $rev;
+-- 
+1.8.1.1
