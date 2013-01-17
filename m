@@ -1,84 +1,78 @@
-From: Jay Vee <jvsrvcs@gmail.com>
-Subject: git pull - reporting that I modified files, but I did not
-Date: Thu, 17 Jan 2013 12:29:07 -0700
-Message-ID: <CADq_mb-k8mP6PAsPciYEkx6fvFNdGK+ejsFEZ4nCJVcUQ6odGg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Changing Spell checker under GIT
+Date: Thu, 17 Jan 2013 12:17:11 -0800
+Message-ID: <20130117201711.GB13449@google.com>
+References: <189327E1D7E3B64286ED8625AAEC642C08633B01@MDHQEXCH01.enginsol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 17 20:29:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Mike Hall <mikehall@enginsol.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 21:17:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvv9Y-0003IJ-GS
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 20:29:32 +0100
+	id 1TvvuA-00034n-Se
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 21:17:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755594Ab3AQT3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 14:29:11 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:48980 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754986Ab3AQT3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 14:29:10 -0500
-Received: by mail-qa0-f46.google.com with SMTP id r4so4597062qaq.5
-        for <git@vger.kernel.org>; Thu, 17 Jan 2013 11:29:08 -0800 (PST)
+	id S1756161Ab3AQURU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 15:17:20 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:45607 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755742Ab3AQURU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 15:17:20 -0500
+Received: by mail-pa0-f52.google.com with SMTP id fb1so1669609pad.25
+        for <git@vger.kernel.org>; Thu, 17 Jan 2013 12:17:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=71QlVYxUnIolxitW9s5TfzJDyrb6Jm1aL66oHHixoeA=;
-        b=TF9Z7Bktk4g7A59d678srQNI8KOrhPv7vucykLGtF0q7vTbBJP5JmVIZDkIQC9j1vk
-         R8VKxYAVf1f3ThKtcvvlEXCMdAzNA1dDsta3ULUh0uzvClu51mbG3IAIA0SAAcxZ3Ak5
-         hI/LI3gBXgEgeRWQ+UkHVwVA35+qlF4ZUsMdLxFJ6THdXXV0hGxxCBqe0Cc3mcArlGZD
-         m9SqndA/OwtUcbneM0/DCWdd0SQWrCkZ7LdECp0d3SWGAcMzCsqJ5qGDwFcWhNeGNK9f
-         CCNTFGtlntM1t4BMalE81ocstGxTdA1JUGvq80nDM4/lD4BtV9g/RPAKq+U1jYOXKyQD
-         EQnw==
-X-Received: by 10.229.178.101 with SMTP id bl37mr1487070qcb.131.1358450947694;
- Thu, 17 Jan 2013 11:29:07 -0800 (PST)
-Received: by 10.229.75.194 with HTTP; Thu, 17 Jan 2013 11:29:07 -0800 (PST)
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=5Ja9AQFYeE0B6G6Gvs32rXZtOiUiI0A0lDKLND9nuqw=;
+        b=mvDS9m0ErEHa6DmTUlUKmll8a9DsrIXk+JDgo05XlzRBF9wCvouf8Yi0aooGZS7XxW
+         KbMkrrapTiel4znzy7r13/W35xHKBOCuAio4sPQuB2Yyjd0ygkLp8AuCJFJTWQNednFy
+         UyfXOOKJP/GHdCTPRyp0iBrJykEd8rORlqxl2hpM5j9T5nUWwa8pA420mPbyqwwM/GpJ
+         R2vC2cfPi08RMWmBrVAWHHNyZ5bqrGiDFtl1rwqMuKSJwSDTs4A9Yh077SrqgNnL8RlS
+         VRsUPpVxQgykk30I3FaRRELwi0f7xlIFKuTS1Y4mtSwtnPaFpj553bb6LUItqLN2Sv3t
+         y3kw==
+X-Received: by 10.66.80.162 with SMTP id s2mr16663362pax.61.1358453839689;
+        Thu, 17 Jan 2013 12:17:19 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id oc8sm447877pbb.39.2013.01.17.12.17.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 17 Jan 2013 12:17:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <189327E1D7E3B64286ED8625AAEC642C08633B01@MDHQEXCH01.enginsol.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213874>
 
-When I do a git pull, I am getting a messages that changes to local
-files would be overwritten by a merge, but  I have not changed these
-files locally at all, I have not opened them in my IDE.
-This happens every now and then.
+Hi Mike,
 
-1) Why does this happen?
+Mike Hall wrote:
 
-2) How do I prevent this from happening in the future?
+> As my organization has change from RedHat 5 to RedHat 6 Linux,
+> it appears that RedHat is trying to replace (deprecate) ispell/aspell
+> with a different tool (hunspell).
+>
+> It appears that GIT GUI current supports changing the dictionary used
+> to support spell checks.   Is there currently a way to change the
+> spell check program to be used(can't find in documentation or version
+> of code that I'm currently installing), or would someone consider this
+> as a future program change?
 
-3) How do I get out of this state so that I can do a git pull and
-rebuild my code?
+git-gui uses the aspell command as a spellchecker.  A patch to add
+hunspell support sounds like it would be a nice addition.  If you'd
+like to work on it, then "lib/spellcheck.tcl" in
 
----
-In other instances, when I do a git pull (not getting the message
-above,  I will see something like:
-M      src/MyClass.java      <= a file that I did not touch or modify
-D       src/AnotherClass.java   <= a file that I did not delete or touch
-M     src/MyModifiedClass.java   <= a file that I indeed modified for
-which in the pull there are no merge conflicts.
+  git://repo.or.cz/git-gui
 
-and the pull is successful, (then I want to push my changes), but I
-did not change either of the above two files
+might be a good place to start.
 
-If I see the above, am I OK to push?  My thinking is that git thinks I
-changed 'src/MyClass.java' and if I do a diff there are differences,
-but I do not want to push because I NEVER TOUCHED THAT FILE IN ANY
-WAY.
-
-What is going on here?  Maybe this is normal and I simply do not
-understand correctly.
-
-What is happening?  I would expect to see only line items 'M' and 'D'
-for files that I personally have modified and deleted.
-If I push at this point, will I overwrite changes in the repo pushed
-by others and muck things up?
-
-thanks
-
-
-J.V.
+Hope that helps,
+Jonathan
