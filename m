@@ -1,31 +1,31 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2 5/8] svn-fe: allow svnrdump_sim.py to run with Python 3
-Date: Thu, 17 Jan 2013 18:53:58 +0000
-Message-ID: <649f0d65308358637d923483df6b780ebcce5d82.1358448207.git.john@keeping.me.uk>
+Subject: [PATCH v2 6/8] git-remote-testpy: hash bytes explicitly
+Date: Thu, 17 Jan 2013 18:53:59 +0000
+Message-ID: <66c42ff65eddde494f40d0a582e89a081b4ab8e8.1358448207.git.john@keeping.me.uk>
 References: <cover.1358448207.git.john@keeping.me.uk>
 Cc: John Keeping <john@keeping.me.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
 	Pete Wyckoff <pw@padd.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 19:56:52 2013
+X-From: git-owner@vger.kernel.org Thu Jan 17 19:57:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvudu-0005Dz-Cl
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 19:56:50 +0100
+	id 1TvueF-0005fH-7a
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 19:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753685Ab3AQS4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 13:56:30 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:56515 "EHLO
+	id S1756273Ab3AQS4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 13:56:48 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:56607 "EHLO
 	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752157Ab3AQS43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 13:56:29 -0500
+	with ESMTP id S1756200Ab3AQS4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 13:56:42 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 02C4ECDA56C;
-	Thu, 17 Jan 2013 18:56:29 +0000 (GMT)
-X-Quarantine-ID: <FFMITrL8nAX3>
+	by jackal.aluminati.org (Postfix) with ESMTP id 8B772CDA583;
+	Thu, 17 Jan 2013 18:56:42 +0000 (GMT)
+X-Quarantine-ID: <AQ3wZkPh95xS>
 X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 X-Spam-Flag: NO
@@ -36,24 +36,24 @@ X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
 	autolearn=ham
 Received: from jackal.aluminati.org ([127.0.0.1])
 	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FFMITrL8nAX3; Thu, 17 Jan 2013 18:56:23 +0000 (GMT)
+	with ESMTP id AQ3wZkPh95xS; Thu, 17 Jan 2013 18:56:37 +0000 (GMT)
 Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
-	by jackal.aluminati.org (Postfix) with ESMTP id 38B59CDA5AE;
-	Thu, 17 Jan 2013 18:56:22 +0000 (GMT)
+	by jackal.aluminati.org (Postfix) with ESMTP id B3321CDA5AE;
+	Thu, 17 Jan 2013 18:56:37 +0000 (GMT)
 Received: from localhost (localhost [127.0.0.1])
-	by aardwolf.aluminati.org (Postfix) with ESMTP id 1D522276DFE;
-	Thu, 17 Jan 2013 18:56:22 +0000 (GMT)
-X-Quarantine-ID: <BJeXSv5oYcbj>
+	by aardwolf.aluminati.org (Postfix) with ESMTP id 922D5276DFE;
+	Thu, 17 Jan 2013 18:56:37 +0000 (GMT)
+X-Quarantine-ID: <kaVmsl27lKyX>
 X-Virus-Scanned: Debian amavisd-new at aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 Received: from aardwolf.aluminati.org ([127.0.0.1])
 	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BJeXSv5oYcbj; Thu, 17 Jan 2013 18:56:21 +0000 (GMT)
+	with ESMTP id kaVmsl27lKyX; Thu, 17 Jan 2013 18:56:37 +0000 (GMT)
 Received: from river.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by aardwolf.aluminati.org (Postfix) with ESMTPSA id 9F5C8276DFB;
-	Thu, 17 Jan 2013 18:56:10 +0000 (GMT)
+	by aardwolf.aluminati.org (Postfix) with ESMTPSA id D1D2B276DFB;
+	Thu, 17 Jan 2013 18:56:22 +0000 (GMT)
 X-Mailer: git-send-email 1.8.1
 In-Reply-To: <cover.1358448207.git.john@keeping.me.uk>
 In-Reply-To: <cover.1358448207.git.john@keeping.me.uk>
@@ -62,38 +62,44 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213868>
 
-The changes to allow this script to run with Python 3 are minimal and do
-not affect its functionality on the versions of Python 2 that are
-already supported (2.4 onwards).
+Under Python 3 'hasher.update(...)' must take a byte string and not a
+unicode string.  Explicitly encode the argument to this method as UTF-8
+so that this code works under Python 3.
+
+This moves the required Python version forward to 2.0.
 
 Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
- contrib/svn-fe/svnrdump_sim.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-remote-testpy.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
-index 17cf6f9..4e78a1c 100755
---- a/contrib/svn-fe/svnrdump_sim.py
-+++ b/contrib/svn-fe/svnrdump_sim.py
-@@ -14,7 +14,7 @@ if sys.hexversion < 0x02040000:
+diff --git a/git-remote-testpy.py b/git-remote-testpy.py
+index d94a66a..f8dc196 100644
+--- a/git-remote-testpy.py
++++ b/git-remote-testpy.py
+@@ -31,9 +31,9 @@ from git_remote_helpers.git.exporter import GitExporter
+ from git_remote_helpers.git.importer import GitImporter
+ from git_remote_helpers.git.non_local import NonLocalGit
  
- def getrevlimit():
-         var = 'SVNRMAX'
--        if os.environ.has_key(var):
-+        if var in os.environ:
-                 return os.environ[var]
-         return None
+-if sys.hexversion < 0x01050200:
+-    # os.makedirs() is the limiter
+-    sys.stderr.write("git-remote-testgit: requires Python 1.5.2 or later.\n")
++if sys.hexversion < 0x02000000:
++    # string.encode() is the limiter
++    sys.stderr.write("git-remote-testgit: requires Python 2.0 or later.\n")
+     sys.exit(1)
  
-@@ -44,7 +44,7 @@ def writedump(url, lower, upper):
+ def get_repo(alias, url):
+@@ -45,7 +45,7 @@ def get_repo(alias, url):
+     repo.get_head()
  
- if __name__ == "__main__":
-         if not (len(sys.argv) in (3, 4, 5)):
--                print "usage: %s dump URL -rLOWER:UPPER"
-+                print("usage: %s dump URL -rLOWER:UPPER")
-                 sys.exit(1)
-         if not sys.argv[1] == 'dump': raise NotImplementedError('only "dump" is suppported.')
-         url = sys.argv[2]
+     hasher = _digest()
+-    hasher.update(repo.path)
++    hasher.update(repo.path.encode('utf-8'))
+     repo.hash = hasher.hexdigest()
+ 
+     repo.get_base_path = lambda base: os.path.join(
 -- 
 1.8.1.1.260.g99b33f4.dirty
