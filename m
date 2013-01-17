@@ -1,103 +1,98 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
+From: David Lang <david@lang.hm>
 Subject: RE: Question re. git remote repository
-Date: Thu, 17 Jan 2013 01:09:00 +0000
-Message-ID: <A0DB01D693D8EF439496BC8B037A0AEF32209A54@xmb-rcd-x15.cisco.com>
-References: <A0DB01D693D8EF439496BC8B037A0AEF322098A4@xmb-rcd-x15.cisco.com>
- <alpine.DEB.2.02.1301161617240.21503@nftneq.ynat.uz>
+Date: Wed, 16 Jan 2013 17:26:13 -0800 (PST)
+Message-ID: <alpine.DEB.2.02.1301161721110.21503@nftneq.ynat.uz>
+References: <A0DB01D693D8EF439496BC8B037A0AEF322098A4@xmb-rcd-x15.cisco.com> <alpine.DEB.2.02.1301161617240.21503@nftneq.ynat.uz> <A0DB01D693D8EF439496BC8B037A0AEF32209A54@xmb-rcd-x15.cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	"ishchis2@gmail.com" <ishchis2@gmail.com>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Thu Jan 17 02:09:26 2013
+To: "Matt Seitz (matseitz)" <matseitz@cisco.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 02:28:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tvdyv-0003YG-Nt
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 02:09:26 +0100
+	id 1TveGw-0003TK-2m
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 02:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756323Ab3AQBJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2013 20:09:03 -0500
-Received: from rcdn-iport-1.cisco.com ([173.37.86.72]:13546 "EHLO
-	rcdn-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755652Ab3AQBJC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2013 20:09:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1452; q=dns/txt; s=iport;
-  t=1358384942; x=1359594542;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=/ixQ3vhvtSwtGjfYP7BlIUz/S6puKBmivocj1wgxuzw=;
-  b=f71NLDyGr2FoGcxGa4yy2NGoexocMGLJP2YAdBm0lR9IBWvYtX8FPsF/
-   RTCDH8rRU6d2pW5Dzi0hys2QnMRSPlOyFDavkpskd5nYZmIQ4ORBj0xm+
-   jZc/zQCtcPhBDBVl9zPjtm8Sc+o5mgsIef4XhhZ4Uks3afddXbB8CAXtK
-   M=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EADNO91CtJXG//2dsb2JhbABEvgEWc4IeAQEBAwE6PwULAgEIFQMKFAkHMhQRAQEEDgUIiAsFAQy5GJBXYQOXKI8tgnWCJA
-X-IronPort-AV: E=Sophos;i="4.84,483,1355097600"; 
-   d="scan'208";a="163307223"
-Received: from rcdn-core2-4.cisco.com ([173.37.113.191])
-  by rcdn-iport-1.cisco.com with ESMTP; 17 Jan 2013 01:09:00 +0000
-Received: from xhc-aln-x08.cisco.com (xhc-aln-x08.cisco.com [173.36.12.82])
-	by rcdn-core2-4.cisco.com (8.14.5/8.14.5) with ESMTP id r0H190Wr003914
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Thu, 17 Jan 2013 01:09:00 GMT
-Received: from xmb-rcd-x15.cisco.com ([169.254.5.248]) by
- xhc-aln-x08.cisco.com ([173.36.12.82]) with mapi id 14.02.0318.004; Wed, 16
- Jan 2013 19:09:00 -0600
-Thread-Topic: Question re. git remote repository
-Thread-Index: Ac30QapFxgO7vxkcSpqZYTWiS/u7TwAOT+SAAAxmn8A=
-In-Reply-To: <alpine.DEB.2.02.1301161617240.21503@nftneq.ynat.uz>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [171.71.137.42]
+	id S1758095Ab3AQB1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2013 20:27:41 -0500
+Received: from mail.lang.hm ([64.81.33.126]:44878 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755928Ab3AQB1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2013 20:27:41 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id r0H1RcbX028504;
+	Wed, 16 Jan 2013 17:27:38 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <A0DB01D693D8EF439496BC8B037A0AEF32209A54@xmb-rcd-x15.cisco.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213833>
 
-> From: David Lang [mailto:david@lang.hm]
-> 
-> On Wed, 16 Jan 2013, Matt Seitz (matseitz) wrote:
-> 
-> > Linus seemed to think it should work:
-> >
-> > http://permalink.gmane.org/gmane.comp.version-control.git/122670
-> 
-> In the link you point at, he says that you can have problems with some
-> types of
-> actions. He points out things like git prune, 
+On Thu, 17 Jan 2013, Matt Seitz (matseitz) wrote:
 
-Linus wrote:
+>> From: David Lang [mailto:david@lang.hm]
+>>
+>> On Wed, 16 Jan 2013, Matt Seitz (matseitz) wrote:
+>>
+>>> Linus seemed to think it should work:
+>>>
+>>> http://permalink.gmane.org/gmane.comp.version-control.git/122670
+>>
+>> In the link you point at, he says that you can have problems with some
+>> types of
+>> actions. He points out things like git prune,
+>
+> Linus wrote:
+>
+> You do need to be a bit careful if you do maintenance operations
+> concurrently (I would suggest avoiding doing concurrent "git gc --prune",
+> for example), but any normal git workflow should be fine.
+>
+>> but I would also say that there
+>> are probably race conditions if you have two git processes that try to
+>> change the HEAD to different things at the same time.
+>
+> What makes you think there are race conditions?
+>
+> Linus wrote:
+>
+> And git doesn't have "proper locking", because it doesn't need it for
+> database ops: git objects are stable. For refs, git should be using the
+> proper NFS-safe "create and atomic rename" ops.
 
-You do need to be a bit careful if you do maintenance operations 
-concurrently (I would suggest avoiding doing concurrent "git gc --prune", 
-for example), but any normal git workflow should be fine.
+As Linus points out, objects are stable, so when you create objects you don't 
+have to worry about locking, if two things write an object at the same time, the 
+same contents are being written so races don't matter.
 
-> but I would also say that there
-> are probably race conditions if you have two git processes that try to
-> change the HEAD to different things at the same time.
+However, if you have two people doing a commit or merge, you will get different 
+results based on the order they are happening in. This seems to be exactly the 
+type of thing that falls into the 'maintinance operations' category.
 
-What makes you think there are race conditions?
+Linus says that git does not have "proper locking", so think about it, what do 
+you think will happen if person A does git add a/b; git commit and person B does 
+git add c/d; git commit?
 
-Linus wrote:
+Since the tree will look different depending on what order these four commands 
+execute in, the resulting HEAD could have multiple different values depending on 
+the order. The individual commits may even be different.
 
-And git doesn't have "proper locking", because it doesn't need it for 
-database ops: git objects are stable. For refs, git should be using the 
-proper NFS-safe "create and atomic rename" ops.
+David Lang
 
-> > And "git init" specifically has a "shared" option:
-> >
-> > --shared[=(false|true|umask|group|all|world|everybody|0xxx)]
-> 
-> I think this is dealing with multiple users _reading_ a repository, not
-> making
-> updates to it at the same time.
-
-The description of "shared" says "This allows users belonging to the same group to push into that repository."  The "push" command is about making updates.
+>>> And "git init" specifically has a "shared" option:
+>>>
+>>> --shared[=(false|true|umask|group|all|world|everybody|0xxx)]
+>>
+>> I think this is dealing with multiple users _reading_ a repository, not
+>> making
+>> updates to it at the same time.
+>
+> The description of "shared" says "This allows users belonging to the same 
+> group to push into that repository."  The "push" command is about making 
+> updates.
