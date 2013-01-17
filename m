@@ -1,53 +1,84 @@
-From: Mike Hall <mikehall@enginsol.com>
-Subject: Changing Spell checker under GIT
-Date: Thu, 17 Jan 2013 19:08:09 +0000
-Message-ID: <189327E1D7E3B64286ED8625AAEC642C08633B01@MDHQEXCH01.enginsol.com>
+From: Jay Vee <jvsrvcs@gmail.com>
+Subject: git pull - reporting that I modified files, but I did not
+Date: Thu, 17 Jan 2013 12:29:07 -0700
+Message-ID: <CADq_mb-k8mP6PAsPciYEkx6fvFNdGK+ejsFEZ4nCJVcUQ6odGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 20:13:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 17 20:29:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvuuT-0000my-Qr
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 20:13:58 +0100
+	id 1Tvv9Y-0003IJ-GS
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 20:29:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930Ab3AQTNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 14:13:37 -0500
-Received: from mail.enginsol.com ([50.201.218.97]:23306 "EHLO
-	mdhqvexch02.enginsol.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751814Ab3AQTNg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 14:13:36 -0500
-X-Greylist: delayed 324 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jan 2013 14:13:36 EST
-Received: from MDHQEXCH01.enginsol.com ([fe80::950:2edd:ebfe:c41c]) by
- mdhqvexch02.enginsol.com ([fe80::5d8d:6e38:3552:78b5%11]) with mapi id
- 14.01.0438.000; Thu, 17 Jan 2013 14:08:09 -0500
-Thread-Topic: Changing Spell checker under GIT
-Thread-Index: Ac305f0qGztgOaIBRG6flTB3+MKK6w==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [63.239.65.11]
+	id S1755594Ab3AQT3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 14:29:11 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:48980 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754986Ab3AQT3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 14:29:10 -0500
+Received: by mail-qa0-f46.google.com with SMTP id r4so4597062qaq.5
+        for <git@vger.kernel.org>; Thu, 17 Jan 2013 11:29:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=71QlVYxUnIolxitW9s5TfzJDyrb6Jm1aL66oHHixoeA=;
+        b=TF9Z7Bktk4g7A59d678srQNI8KOrhPv7vucykLGtF0q7vTbBJP5JmVIZDkIQC9j1vk
+         R8VKxYAVf1f3ThKtcvvlEXCMdAzNA1dDsta3ULUh0uzvClu51mbG3IAIA0SAAcxZ3Ak5
+         hI/LI3gBXgEgeRWQ+UkHVwVA35+qlF4ZUsMdLxFJ6THdXXV0hGxxCBqe0Cc3mcArlGZD
+         m9SqndA/OwtUcbneM0/DCWdd0SQWrCkZ7LdECp0d3SWGAcMzCsqJ5qGDwFcWhNeGNK9f
+         CCNTFGtlntM1t4BMalE81ocstGxTdA1JUGvq80nDM4/lD4BtV9g/RPAKq+U1jYOXKyQD
+         EQnw==
+X-Received: by 10.229.178.101 with SMTP id bl37mr1487070qcb.131.1358450947694;
+ Thu, 17 Jan 2013 11:29:07 -0800 (PST)
+Received: by 10.229.75.194 with HTTP; Thu, 17 Jan 2013 11:29:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213873>
 
-As my organization has change from RedHat 5 to RedHat 6 Linux,
-it appears that RedHat is trying to replace (deprecate) ispell/aspell
-with a different tool (hunspell).
+When I do a git pull, I am getting a messages that changes to local
+files would be overwritten by a merge, but  I have not changed these
+files locally at all, I have not opened them in my IDE.
+This happens every now and then.
 
-It appears that GIT GUI current supports changing the dictionary used
-to support spell checks.   Is there currently a way to change the
-spell check program to be used(can't find in documentation or version
-of code that I'm currently installing), or would someone consider this
-as a future program change?
+1) Why does this happen?
 
-Thanks for your time.
-Mike Hall
+2) How do I prevent this from happening in the future?
+
+3) How do I get out of this state so that I can do a git pull and
+rebuild my code?
+
+---
+In other instances, when I do a git pull (not getting the message
+above,  I will see something like:
+M      src/MyClass.java      <= a file that I did not touch or modify
+D       src/AnotherClass.java   <= a file that I did not delete or touch
+M     src/MyModifiedClass.java   <= a file that I indeed modified for
+which in the pull there are no merge conflicts.
+
+and the pull is successful, (then I want to push my changes), but I
+did not change either of the above two files
+
+If I see the above, am I OK to push?  My thinking is that git thinks I
+changed 'src/MyClass.java' and if I do a diff there are differences,
+but I do not want to push because I NEVER TOUCHED THAT FILE IN ANY
+WAY.
+
+What is going on here?  Maybe this is normal and I simply do not
+understand correctly.
+
+What is happening?  I would expect to see only line items 'M' and 'D'
+for files that I personally have modified and deleted.
+If I push at this point, will I overwrite changes in the repo pushed
+by others and muck things up?
+
+thanks
+
+
+J.V.
