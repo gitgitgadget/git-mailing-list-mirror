@@ -1,77 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/8] git-remote-testpy: hash bytes explicitly
-Date: Thu, 17 Jan 2013 12:43:06 -0800
-Message-ID: <7vmww7tuat.fsf@alter.siamese.dyndns.org>
-References: <cover.1358448207.git.john@keeping.me.uk>
- <66c42ff65eddde494f40d0a582e89a081b4ab8e8.1358448207.git.john@keeping.me.uk>
- <7vtxqftulq.fsf@alter.siamese.dyndns.org>
+From: James Nylen <jnylen@gmail.com>
+Subject: Re: [PATCH] Add --unannotate option to git-subtree
+Date: Thu, 17 Jan 2013 15:56:57 -0500
+Message-ID: <CABVa4NhwcD584ptSazOR9WvSWep1z+krhxkWDvUk8nXaF8EYxQ@mail.gmail.com>
+References: <CABVa4NinSighUn7GKbzMx9qZj3Ao2dCtEZxUqCPwO9TocZ8Kkg@mail.gmail.com>
+	<87a9st4sb8.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Pete Wyckoff <pw@padd.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Jan 17 21:43:49 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Thu Jan 17 21:57:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TvwJL-00013t-0B
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 21:43:43 +0100
+	id 1TvwWW-0000iP-MM
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jan 2013 21:57:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432Ab3AQUnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 15:43:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52781 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753689Ab3AQUnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 15:43:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB183C869;
-	Thu, 17 Jan 2013 15:43:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=giHT6iuhvSezv52HbjYRE2VYIgc=; b=mmILpg
-	lAJcoIUDxVjYUg6J8frLt1w96qLW56xR3VCsgj7I7MjtrA+ez2sUO8NXeRzcRguC
-	weJwmZ0BpO8b+zKgxf7fkZY/3g6g61I8UD7X75tu0T08QGP44Sx/kQwhG9dO1mfr
-	xSl3cIq+Twfxdmp7zjr6WsefCeNgIt+AYRPSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=paTHb/7gI3xhj9JnCWIJXNYjyyFFhth7
-	yv0G49rDskdcPQm2QC0s8Ck4nx+O7SX7XHBtU7ppOpDooL6n0zyvQA2bz357TvMb
-	9Qal1YkwiafaGYqB9eiPhr0XQAv8ba9GLU9AnI7tRm+Ce25IkFId4ot0nBEpcgl3
-	+jBT+sMHjKQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE747C868;
-	Thu, 17 Jan 2013 15:43:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F3C5C864; Thu, 17 Jan 2013
- 15:43:08 -0500 (EST)
-In-Reply-To: <7vtxqftulq.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 17 Jan 2013 12:36:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 801D0AE6-60E6-11E2-ACE7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754885Ab3AQU47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 15:56:59 -0500
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:63933 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814Ab3AQU46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 15:56:58 -0500
+Received: by mail-vc0-f180.google.com with SMTP id p16so2969966vcq.39
+        for <git@vger.kernel.org>; Thu, 17 Jan 2013 12:56:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=npw0TgUjjleX13BwUvAho4zdRtr1pFwedMmgeSlbPYY=;
+        b=ChcBx5dvpXfpgyEqROfUlUywUOYl3mOvMcSCUnkMnFjzwtN9Lh4ihiKAU41vTdw4SV
+         eVZD6Mg1Ooa63QyJiipkD5dCAmE/IGKMAzLR+l4a7YouwPTRSu1MkJKVjMmNxVd777ZE
+         75JUudTQtrBzzqxDK5VHIrd8enNN+nGFJacbSLW2D1atqdtODyCink0vdQXJoQUt1Fro
+         JNGus3f6aWBg3ivk75reYFc+aRL9+gpM25dnKDYsruPdeBdxsB/1sAr/eugHixJwGdkg
+         u64m26htQ2kxlF/1TWMtQAeruJPFN0veQ+bogm67e8mbACtJOBwkqLvdyDDe9DufEF5m
+         ufRw==
+X-Received: by 10.52.70.205 with SMTP id o13mr6161124vdu.75.1358456217905;
+ Thu, 17 Jan 2013 12:56:57 -0800 (PST)
+Received: by 10.220.125.65 with HTTP; Thu, 17 Jan 2013 12:56:57 -0800 (PST)
+In-Reply-To: <87a9st4sb8.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213877>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> John Keeping <john@keeping.me.uk> writes:
+On Mon, Dec 31, 2012 at 8:15 PM,  <greened@obbligato.org> wrote:
+> James Nylen <jnylen@gmail.com> writes:
 >
->> Under Python 3 'hasher.update(...)' must take a byte string and not a
->> unicode string.  Explicitly encode the argument to this method as UTF-8
->> so that this code works under Python 3.
->>
->> This moves the required Python version forward to 2.0.
->>
->> Signed-off-by: John Keeping <john@keeping.me.uk>
->> ---
+>> Rather than adding a marker to each commit when splitting out the
+>> commits back to the subproject, --unannotate removes the specified
+>> string (or bash glob pattern) from the beginning of the first line of
+>> the commit message.  This enables the following workflow:
 >
-> Hmph.  So what happens when the path is _not_ encoded in UTF-8?
+> I applied the patch to my working copy but it doesn't seem to do
+> what I'd expect.  The test script does something like this:
+>
+> - create project A
+> - add file to project A with message "subproj: add F1"
+> - add file to project A with message "subproj: add F2"
+> - add project A as a subtree of project B under directory subdir
+> - add a file to subdir with message "subproj: add F3"
+> - do a split --unannotate="subproj:"
+>
+> I expected to see a log with no mention of "subproj" anywhere.  Instead
+> I get:
+>
+> add F3
+> subproj: add F2
+> subproj: add F1
+>
+> Is this as you intend?  Is --unannotate only supposed to strip the
+> string for commits added when A was a subtree of B?
+>
+> I guess this behavior makes sense in that the user would want to
+> see the same commits that existed before A became a subproject.
+>
+>                    -David
 
-Oh, my brain was not working. Forget this part, and sorry for the
-noise.  We are not decoding a bytestring to an array of unicode
-characters, but going the other way around here.
+Wow, I missed a bunch of emails on this.  Thanks for applying and for
+writing tests!
+
+This is as intended.  You wouldn't want subtree to modify commits that
+occurred in the full repository for project A.  Furthermore, you
+wouldn't have a "subproj:" commit in project A's standalone repo since
+it wasn't a subproject at that time.
+
+The --annotate option confused me because it was the reverse of what I
+wanted.  As in your example, a typical use would be 'add a file to
+subdir with message "subproj: add F3" ' to make it clear that you were
+committing to the "subproj" part of a larger repository.  Then, when
+splitting back out to subproj's main repository, you'd want to remove
+the prefix.
